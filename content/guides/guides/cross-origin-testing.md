@@ -14,45 +14,17 @@ capability to visit multiple origins in a single test via the
 
 Cypress limits each test to visiting domains that share the same superdomain. If
 a navigation occurs that does not meet the same superdomain rule, the
-[`cy.origin`](/api/commands/origin) command must be used to execute assertions
-inside the newly navigated origin.
+[`cy.origin()`](/api/commands/origin) command must be used to execute Cypress
+commands inside the newly navigated origin.
 
 But what is same superdomain? It is actually very similar to that of same
 origin! Two URLs have the same origin if the protocol, port (if specified), and
-host are the same for both. Cypress automatically handles hosts of the same
-superdomain by injecting the
+host match. Cypress automatically handles hosts of the same superdomain by
+injecting the
 [`document.domain`](https://developer.mozilla.org/en-US/docs/Web/API/Document/domain)
 property into the visited `text/html` pages. This is why navigations without the
 use of the [`cy.origin()`](/api/commands/origin) command are solely scope to the
 same superdomain.
-
-Given the URLs below, all have the same superdomain compared to
-`https://www.cypress.io`.
-
-- `https://cypress.io`
-- `https://docs.cypress.io`
-- `https://example.cypress.io/commands/querying`
-
-The URLs below, however, will have different superdomains/origins compared to
-`https://www.cypress.io`.
-
-- `http://www.cypress.io` (Different protocol)
-- `https://docs.cypress.io:81` (Different port)
-- `https://www.auth0.com/` (Different host of different superdomain)
-
-The `http://localhost` URLs differ if their ports are different. For example,
-the `http://localhost:3000` URL is considered to be a different origin from the
-`http://localhost:8080` URL.
-
-The rules are:
-
-- <Icon name="exclamation-triangle" color="red"></Icon> You **cannot**
-  [visit](/api/commands/visit) two domains of different superdomains in the same
-  test and continue to interact with the page without the use of the
-  [`cy.origin`](/api/commands/origin) command.
-- <Icon name="check-circle" color="green"></Icon> You **can**
-  [visit](/api/commands/visit) two or more domains of different origin in
-  **different** tests without needing [`cy.origin`](/api/commands/origin).
 
 We understand this is a bit complicated to understand, so we have built a nifty
 chart to help clarify the differences!
@@ -79,9 +51,38 @@ chart to help clarify the differences!
 └─────────────┴───────────┴─────────────────────────┴──────────┴────────────────┴───────┘
 ```
 
+Given the URLs below, all have the same superdomain compared to
+`https://www.cypress.io`.
+
+- `https://cypress.io`
+- `https://docs.cypress.io`
+- `https://example.cypress.io/commands/querying`
+
+The URLs below, however, will have different superdomains/origins compared to
+`https://www.cypress.io`.
+
+- `http://www.cypress.io` (Different protocol)
+- `https://docs.cypress.io:81` (Different port)
+- `https://www.auth0.com/` (Different host of different superdomain)
+
+The `http://localhost` URLs differ if their ports are different. For example,
+the `http://localhost:3000` URL is considered to be a different origin from the
+`http://localhost:8080` URL.
+
+The rules are:
+
+- <Icon name="exclamation-triangle" color="red"></Icon> You **cannot**
+  [visit](/api/commands/visit) two domains of different superdomains in the same
+  test and continue to interact with the page without the use of the
+  [`cy.origin()`](/api/commands/origin) command.
+- <Icon name="check-circle" color="green"></Icon> You **can**
+  [visit](/api/commands/visit) two or more domains of different origin in
+  **different** tests without needing [`cy.origin()`](/api/commands/origin).
+
 For practical purposes, this means the following:
 
 ```javascript
+// This test will run without error
 it('navigates', () => {
   cy.visit('https://www.cypress.io')
   cy.visit('https://docs.cypress.io')
@@ -90,12 +91,16 @@ it('navigates', () => {
 ```
 
 ```javascript
+// this will error because stackoverflow.com doesn't match the cypress.io superdomain
 it('navigates', () => {
   cy.visit('https://www.cypress.io')
   cy.visit('https://stackoverflow.com')
-  cy.get('selector') // this will error w/o cy.origin wrap
+  cy.get('selector')
 })
 ```
+
+To fix the above cross-origin error, use `cy.origin()` to indicate which origin
+the sequential command should run against:
 
 ```javascript
 it('navigates', () => {
@@ -137,7 +142,7 @@ As a best practice, you should not visit or interact with a 3rd party service
 not under your control. However, there are exceptions! If your organization uses
 Single Sign On (SSO) or OAuth then you might involve a 3rd party service other
 than your superdomain, which can be safely tested with
-[`cy.origin`](/api/commands/origin).
+[`cy.origin()`](/api/commands/origin).
 
 We've written several other guides specifically about handling this situation.
 
