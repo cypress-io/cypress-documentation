@@ -7,7 +7,7 @@ e2eSpecific: true
 
 ## <Icon name="graduation-cap"></Icon> What you'll learn
 
-- Login to [Okta](https://okta.com) through the UI with
+- Log in to [Okta](https://okta.com) through the UI with
   [`cy.origin()`](/api/commands/origin)
 - Programmatically authenticate with [Okta](https://okta.com) via a custom
   Cypress command
@@ -78,7 +78,7 @@ require('dotenv').config()
 
 There are two ways you can authenticate to Okta:
 
-- [Login with cy.origin()](/guides/end-to-end-testing/okta-authentication#Login-with-cy-origin)
+- [Login with `cy.origin()`](/guides/end-to-end-testing/okta-authentication#Login-with-cy-origin)
 - [Programmatic Access](/guides/end-to-end-testing/okta-authentication#Programmatic-Login)
 
 ### Login with [`cy.origin()`](/api/commands/origin)
@@ -124,8 +124,8 @@ Cypress.Commands.add('loginByOkta', (username: string, password: string) => {
 })
 ```
 
-Secondly, we can use our `loginByOkta` command in the test. Below is our test to
-login as a user via [Okta](https://okta.com) and run a few basic sanity tests.
+Now, we can use our `loginByOkta` command in the test. Below is our test to
+login as a user via [Okta](https://okta.com) and run a few basic sanity checks.
 
 <Alert type="success">
 
@@ -178,7 +178,7 @@ Cypress.Commands.add('loginByOkta', (username: string, password: string) => {
 ### Programmatic Login
 
 Next, we will write a command named `loginByOktaApi` to perform a programmatic
-login into [Okta](https://okta.com) and set an item in localStorage with the
+login into [Okta](https://okta.com) and set an item in `localStorage` with the
 authenticated users details, which we will use in our application code to verify
 we are authenticated under test.
 
@@ -283,8 +283,8 @@ is in the
 
 <strong class="alert-header">Note</strong>
 
-The previous sections focused on the programmatic Okta authentication practice
-within Cypress tests. To use this practice it is assumed you are testing an app
+The previous section focused on the programmatic Okta authentication practice
+within Cypress tests. To use this practice, it is assumed you are testing an app
 appropriately built or adapted to use Okta.
 
 Unlike programmatic login, authenticating with
