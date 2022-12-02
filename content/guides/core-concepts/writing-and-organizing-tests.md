@@ -17,9 +17,9 @@ title: Writing and Organizing Tests
 
 <strong class="alert-header">Best Practices</strong>
 
-We recently gave a "Best Practices" conference talk at AssertJS (February 2018).
-This video demonstrates how to approach breaking down your application and
-organizing your tests.
+We gave a "Best Practices" conference talk at AssertJS (February 2018). This
+video demonstrates how to approach breaking down your application and organizing
+your tests.
 
 <Icon name="play-circle"></Icon>
 [https://www.youtube.com/watch?v=5XQOK0v_YRE](https://www.youtube.com/watch?v=5XQOK0v_YRE)
@@ -564,17 +564,6 @@ it.skip('returns "fizz" when number is multiple of 3', () => {
 
 ### Test Isolation
 
-<Alert type="warning">
-
-<strong class="alert-header"><Icon name="exclamation-triangle"></Icon>
-Experimental</strong>
-
-The concept of test isolation is currently experimental, and can be enabled by
-setting the [`experimentalSessionAndOrigin`](/guides/references/experiments)
-option to `true` in the Cypress config.
-
-</Alert>
-
 <Alert type="success">
 
 <Icon name="check-circle" color="green"></Icon> **Best Practice:** Tests should
@@ -619,19 +608,8 @@ and `off`.
 
 ###### On Mode
 
-<Alert type="warning">
-
-<strong class="alert-header"><Icon name="exclamation-triangle"></Icon>
-Experimental</strong>
-
-`on` mode is currently experimental and can be enabled by setting
-the [`experimentalSessionAndOrigin`](/guides/references/experiments) flag
-to `true` in the Cypress config. This is the default test isolation behavior
-when using the `experimentalSessionAndOrigin` experiment.
-
-</Alert>
-
-When in `on` mode, Cypress resets the browser context _before_ each test by:
+This is the default test isolation behavior in Cypress. When in `on` mode,
+Cypress resets the browser context _before_ each test by:
 
 - clearing the dom state by visiting `about:blank`
 - clearing [cookies](/api/cypress-api/cookies) in all domains
@@ -652,28 +630,18 @@ is so tests can reliably pass when run standalone or in a randomized order.
 
 ###### Off Mode
 
-<Alert type="warning">
-
-<strong class="alert-header"><Icon name="exclamation-triangle"></Icon>
-Experimental</strong>
-
-`off` mode is currently experimental and can be enabled by setting
-the [`experimentalSessionAndOrigin`](/guides/references/experiments) flag
-to `true` in the Cypress config.
-
-</Alert>
-
 When in `off` mode, Cypress will not alter the browser context before the test
 starts. The page does not clear between tests and cookies, local storage and
 session storage will be available across tests in that suite. Additionally, the
 `cy.session()` command will only clear the current browser context when
 establishing the browser session - the current page will not clear.
 
-It is important to note that turning test isolation `off` may improve the
-overall performance of end-to-end tests, however, previous tests could be impact
-the browser state. It is important to be extremely mindful of how test are
-written when using this mode and ensure tests continue to run independent from
-one other.
+It is important to note that while turning test isolation `off` may improve the
+overall performance of end-to-end tests, it can however cause state to "leak"
+between tests. This can make later tests dependent on the results of earlier
+tests, and potentially cause misleading test failures. It is important to be
+extremely mindful of how tests are written when using this mode, and ensure that
+tests continue to run independently of one another.
 
 ###### Mode Comparison
 
@@ -686,13 +654,16 @@ one other.
 
 Cypress only support testIsolation `on` in component testing.
 
-When running component tests, the browser context will allow start in a clean
-slate because Cypress will
+When running component tests, Cypress resets the browser context _before_ each
+test by:
 
-- clear the page
-- clear [cookies](/api/cypress-api/cookies)
-- clear
+- clearing the page
+- clearing [cookies](/api/cypress-api/cookies)
+- clearing
   [`localStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)
+- clearing
+  [`sessionStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage)
+  in all domains
 
 ### Test Configuration
 
