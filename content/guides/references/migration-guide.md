@@ -177,7 +177,7 @@ test and verify it can run successfully without the test before it.
 ### Behavior Changes in Alias Resolution
 
 Cypress always re-queries aliases when they are referenced. This can result in
-certain tests that used to pass failing. For example,
+certain tests that used to pass could start to fail. For example,
 
 ```js
 cy.findByTestId('popover')
