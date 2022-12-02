@@ -467,7 +467,7 @@ separate tests.
 See our [Web Security](/guides/guides/web-security#Limitations) documentation
 for more information and workarounds.
 
-### <Icon name="exclamation-triangle" color="red"></Icon> `cy.visit()` succeeded, but commands are timing out because you visited a different origin domain without using `cy.origin()`
+### <Icon name="exclamation-triangle" color="red"></Icon> `cy.visit()` succeeded, but commands are timing out
 
 As of Cypress [v12.0.0](https://on.cypress.io/changelog#12-0-0), users can
 navigate to multiple domains in a single test. The following test will succeed
