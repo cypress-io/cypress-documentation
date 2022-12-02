@@ -131,12 +131,11 @@ Security page regarding
 
 #### Other workarounds
 
-There are other ways of testing the interaction between 2 superdomains. Because
-the browser has a natural security barrier called `origin policy` this means
-that state like `localStorage`, `cookies`, `service workers` and many other APIs
-are not shared between them anyways. Cypress does offer APIs around
-`localStorage`, `sessionStorage`, and `cookies` that are not limited to this
-restriction.
+There are other ways of testing the interaction between two superdomains. The
+browser has a natural security barrier called `origin policy` this means that
+state like `localStorage`, `cookies`, `service workers` and many other APIs are
+not shared between them anyways. Cypress does offer APIs around `localStorage`,
+`sessionStorage`, and `cookies` that are not limited to this restriction.
 
 As a best practice, you should not visit or interact with a 3rd party service
 not under your control. However, there are exceptions! If your organization uses

@@ -309,7 +309,7 @@ are common for:
   Cognito, and others via username/password authentication. These domains and
   service instances are usually owned and controlled by you or your
   organization.
-- CMS instances, such as a Contenful or Wordpress instance.
+- CMS instances, such as a Contentful or Wordpress instance.
 - Other types of services under a domain in which you control.
 
 Other services, such as social logins through popular media providers, are not
