@@ -17,9 +17,9 @@ title: Writing and Organizing Tests
 
 <strong class="alert-header">Best Practices</strong>
 
-We recently gave a "Best Practices" conference talk at AssertJS (February 2018).
-This video demonstrates how to approach breaking down your application and
-organizing your tests.
+We gave a "Best Practices" conference talk at AssertJS (February 2018). This
+video demonstrates how to approach breaking down your application and organizing
+your tests.
 
 <Icon name="play-circle"></Icon>
 [https://www.youtube.com/watch?v=5XQOK0v_YRE](https://www.youtube.com/watch?v=5XQOK0v_YRE)
@@ -564,26 +564,32 @@ it.skip('returns "fizz" when number is multiple of 3', () => {
 
 ### Test Isolation
 
-Cypress will start each test with a clean test slate by restoring and clearing
-all:
+<Alert type="success">
 
-- [aliases](/api/commands/as)
-- [clock mocks](/api/commands/clock)
-- [intercepts](/api/commands/intercept)
-- [routes](/api/commands/route)
-- [spies](/api/commands/spy)
-- [stubs](/api/commands/stub)
-- [viewport changes](/api/commands/viewport)
+<Icon name="check-circle" color="green"></Icon> **Best Practice:** Tests should
+always be able to be run independently from one another **and still pass**.
 
-In additional to a clean test slate, Cypress also believes in running tests in a
-clean test and browser context such that the application or component under test
-behaves consistently when ran. This behavior is described as `testIsolation`.
+</Alert>
+
+As stated in our mission, we hold ourselves accountable to champion a testing
+process that actually works, and have built Cypress to guide developers towards
+writing independent tests from the start.
+
+We do this by cleaning up test state and the browser context _before_ each test
+to ensure that the operation of one test does not affect another test later on.
+The goal for each test should be to **reliably pass** whether run in isolation
+or consecutively with other tests. Having tests that depend on the state of an
+earlier test can potentially cause nondeterministic test failures which makes
+debugging challenging.
+
+The behavior of running tests in a clean browser context is described as
+`testIsolation`.
 
 The test isolation is a global configuration and can be overridden for
 end-to-end testing at the `describe` level with the
 [`testIsolation`](/guides/references/configuration#e2e) option.
 
-To learn more about this behavior and the tradeoffs of disabling it, review our
+To learn more about this behavior and the trade-offs of disabling it, review our
 [Test Isolation guide](/guides/core-concepts/test-isolation).
 
 ### Test Configuration
