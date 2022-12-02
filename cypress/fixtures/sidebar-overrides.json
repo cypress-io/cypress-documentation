@@ -10,7 +10,7 @@
     "/guides/core-concepts/interacting-with-elements": "core-concepts"
   },
   "PAGE_TITLE": {
-    "/guides/dashboard/introduction": "Dashboard",
+    "/guides/cloud/introduction": "Cypress Cloud",
     "/guides/core-concepts/retry-ability": "Retry-ability",
     "/guides/core-concepts/interacting-with-elements": "Interacting with Elements",
     "/guides/end-to-end-testing/protractor-to-cypress": "Migrating from Protractor to Cypress",
