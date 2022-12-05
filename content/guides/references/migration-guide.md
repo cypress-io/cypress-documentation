@@ -132,7 +132,7 @@ describe('workflow', { testIsolation: false }, () => {
 })
 ```
 
-It is important to note that disabling test isolation may improve the overall
+It is important to note that while disabling test isolation may improve the overall
 performance of end-to-end tests, it can cause state to "leak" between tests.
 This can make later tests dependent on the results of earlier tests, and
 potentially cause misleading test failures. It is important to be extremely
