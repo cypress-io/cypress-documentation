@@ -82,7 +82,7 @@ it('validates the change', () => {
 })
 ```
 
-After migrating and `testIsolation=true` by default, this flow would need to be
+After migrating, when `testIsolation=true` by default, this flow would need to be
 contained within a single test. While the above practice has always been
 [discouraged](/guides/references/best-practices#Having-tests-rely-on-the-state-of-previous-tests)
 we know some users have historically written tests this way, often to get around
