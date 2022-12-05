@@ -29,7 +29,7 @@ We do this by cleaning up state _before_ each test to ensure that the operation
 of one test does not affect another test later on. The goal for each test should
 be to **reliably pass** whether run in isolation or consecutively with other
 tests. Having tests that depend on the state of an earlier test can potentially
-cause nondeterministic test failures which makes debugging challenging.
+cause nondeterministic test failures which make debugging challenging.
 
 Cypress will start each test with a clean test slate by restoring and clearing
 all:
