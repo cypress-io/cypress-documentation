@@ -268,9 +268,10 @@ command instead.
 
 #### `.invoke()`
 
-[`.invoke()`](/api/commands/invoke) now throws an error if the function returns
-a promise. If you wish to call a method that returns a promise and wait for it
-to resolve, use [`.then()`](/api/commands/then) instead of `.invoke()`.
+The [`.invoke()`](/api/commands/invoke) command now throws an error if the
+function returns a promise. If you wish to call a method that returns a promise
+and wait for it to resolve, use [`.then()`](/api/commands/then) instead of
+`.invoke()`.
 
 ```diff
 cy.wrap(myAPI)
@@ -295,7 +296,72 @@ assertions to their own chain. For example, rewrite
 
 #### `.should()`
 
-[`.should()`](/api/commands/should) now throws an error if Cypress commands are
+The [`.should()`](/api/commands/should) assertion now throws an error if Cypress
+commands are invoked from inside a `.should()` callback. This previously
+resulted in unusual and undefined behavior. If you wish to execute a series of
+commands on the yielded value, use`.then()` instead.
+
+```diff
+cy.get('button')
+-  .should(($button) => {
+
+    })
++  .then(api => api.makeARequest('http://example.com'))
+   .then(res => { ...handle response... })
+```
+
+#### `.within()`
+
+The [`.within()`](/api/commands/within) command now throws an error if it is
+passed multiple elements as the subject. This previously resulted in
+inconsistent behavior, where some commands would use all passed in elements,
+some would use only the first and ignore the rest, and
+[`.screenshot()`](/api/commands/screenshot) would throw an error if used inside
+a `.within()` block with multiple elements.
+
+If you were relying on the old behavior, you have several options depending on
+the desired result.
+
+The simplest option is to reduce the subject to a single element.
+
+```diff
+cy.get('tr')
++  .first() // Limit the subject to a single element before calling .within()
+  .within(() => {
+    cy.contains('Edit').click()
+  })
+```
+
+If you have multiple subjects and wish to run commands over the collection as a
+whole, you can alias the subject rather than use `.within()`.
+
+```diff
+cy.get('tr')
+-  .within(() => {
+-    cy.get('td').should('have.class', 'foo')
+-    cy.get('td').should('have.class', 'bar')
+-  })
++  .as('rows') // Store multiple elements as an alias
+
++cy.get('@rows').find('td').should('have.class', 'foo')
++cy.get('@rows').find('td').should('have.class', 'bar')
+```
+
+Or if you have a collection and want to run commands over every element, use
+`.each()` in conjunction with `.within()`.
+
+```diff
+cy.get('tr')
+-  .within(() => {
+-    cy.contains('Edit').should('have.attr', 'disabled')
+-  })
++  .each($tr => {
++    cy.wrap($tr).within(() => {
++      cy.contains('Edit').should('have.attr', 'disabled')
++    })
++  })
+```
+
 invoked from inside a `.should()` callback. This previously resulted in unusual
 and undefined behavior. If you wish to execute a series of commands on the
 yielded value, use`.then()` instead.
