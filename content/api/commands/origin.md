@@ -63,9 +63,10 @@ cy.get('h1').contains('My cool site under test')
 ```js
 const hits = getHits()
 cy.visit('https://www.acme.com/history/founder')
-// to interact with cross-origin content, move this inside cy.origin() callback
+// To interact with cross-origin content, move this inside cy.origin() callback
 cy.get('h1').contains('About our Founder, Marvin Acme')
-cy.origin('https://www.acme.com', () => {
+// Domain must be a precise match including subdomain, i.e. www.acme.com
+cy.origin('acme.com', () => {
   cy.visit('/history/founder')
   cy.get('h1').contains('About our Founder, Marvin Acme')
   // Fails because hits is not passed in via args
@@ -81,7 +82,8 @@ cy.get('h1').contains('My cool site under test')
 
 A URL specifying the secondary origin in which the callback is to be executed.
 This should at the very least contain a hostname, and may also include the
-protocol, port number & path. Query params are not supported.
+protocol, port number & path. The hostname must precisely match that of the
+secondary origin, including all subdomains. Query params are not supported.
 
 This argument will be used in two ways:
 
