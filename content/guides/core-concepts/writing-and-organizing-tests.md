@@ -236,12 +236,12 @@ module API option, if specified)
   - `cypress/videos/file/one.cy.js.mp4`
   - `cypress/videos/two.cy.js.mp4`
 
-#### Assets in Cypress Dashboard
+#### Assets in Cypress Cloud
 
 <DocsImage src="/img/dashboard/videos-of-recorded-test-run.png" alt="Video of test runs"></DocsImage>
 
 Instead of administering assets yourself, you can
-[save them to the cloud with Cypress Dashboard](/guides/dashboard/runs#Run-details).
+[save them to the cloud with Cypress Cloud](/guides/cloud/runs#Run-details).
 Screenshots and videos are stored permanently, attached to their respective test
 results, and easily shared or browsed through our web interface.
 
@@ -876,9 +876,10 @@ describe('TodoMVC', () => {
 
   it.skip('adds 2 todos', function () {
     cy.visit('/')
-    cy.get('[data-testid="new-todo"]')
-      .type('learn testing{enter}')
-      .type('be cool{enter}')
+    cy.get('[data-testid="new-todo"]').as('new').type('learn testing{enter}')
+
+    cy.get('@new').type('be cool{enter}')
+
     cy.get('[data-testid="todo-list"] li').should('have.length', 100)
   })
 
@@ -916,9 +917,10 @@ describe('TodoMVC', () => {
   })
 
   it('adds 2 todos', () => {
-    cy.get('[data-testid="new-todo"]')
-      .type('learn testing{enter}')
-      .type('be cool{enter}')
+    cy.get('[data-testid="new-todo"]').as('new').type('learn testing{enter}')
+
+    cy.get('@new').type('be cool{enter}')
+
     cy.get('[data-testid="todo-list"] li').should('have.length', 2)
   })
 })

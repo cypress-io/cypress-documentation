@@ -6,6 +6,10 @@ Stop `cy` commands from running and allow interaction with the application under
 test. You can then "resume" running all commands or choose to step through the
 "next" commands from the Command Log.
 
+It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried) to
+chain further commands that rely on a DOM element as the subject after
+`.pause()`.
+
 <Alert type="info">
 
 This does not set a `debugger` in your code, unlike
@@ -44,8 +48,10 @@ Pass in an options object to change the default behavior of `.pause()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`.pause()` yields the same subject it was given from the previous
-command.</li></List>
+- `.pause()` yields the same subject it was given.
+- It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried)
+  to chain further commands that rely on a DOM element as the subject after
+  `.pause()`.
 
 ## Examples
 
@@ -127,7 +133,7 @@ will run only the next command and pause again.
 
 ## See also
 
-- [Dashboard](https://on.cypress.io/dashboard)
+- [Cypress Cloud](https://on.cypress.io/cloud)
 - [`cy.debug()`](/api/commands/debug)
 - [`cy.log()`](/api/commands/log)
 - [`cy.screenshot()`](/api/commands/screenshot)

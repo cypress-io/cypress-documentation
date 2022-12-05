@@ -18,7 +18,7 @@ end-to-end tests
 [device sizes](/api/commands/viewport), but also includes
 [visual regression tests](/guides/tooling/visual-testing), API tests, unit
 tests, and runs them all in an
-[efficient CI pipeline](https://dashboard.cypress.io/projects/7s5okt).
+[efficient CI pipeline](https://cloud.cypress.io/projects/7s5okt).
 
 The app is bundled with everything you need,
 [just clone the repository](https://github.com/cypress-io/cypress-realworld-app)
@@ -224,8 +224,8 @@ to assign the return value of Commands with `const`, `let`, or `var`.
 <Alert type="success">
 
 <Icon name="check-circle" color="green"></Icon> **Best Practice:** Use
-[closures to access and store](/guides/core-concepts/variables-and-aliases) what
-Commands yield you.
+[aliases and closures to access and store](/guides/core-concepts/variables-and-aliases)
+what Commands yield you.
 
 </Alert>
 
@@ -242,6 +242,10 @@ cy.visit('https://example.cypress.io')
 
 // nope, fails
 a.first().click()
+
+// Instead, do this.
+cy.get('a').as('links')
+cy.get('@links').first().click()
 ```
 
 <Alert type="info">
@@ -964,12 +968,12 @@ shipped. This issue is compounded further if you have dependent chains of
 branches waiting to be merged.
 
 One solution to this problem is
-[Smart Orchestration with the Cypress Dashboard](/guides/dashboard/smart-orchestration).
+[Smart Orchestration with Cypress Cloud](/guides/cloud/smart-orchestration).
 Using a combination of [parallelization](/guides/guides/parallelization),
 [load balancing](/guides/guides/parallelization#Balance-strategy),
-[test run cancellation](/guides/dashboard/smart-orchestration#Cancel-test-run-when-a-test-fails),
+[test run cancellation](/guides/cloud/smart-orchestration#Cancel-test-run-when-a-test-fails),
 and
-[running failed specs first](/guides/dashboard/smart-orchestration#Run-failed-specs-first),
+[running failed specs first](/guides/cloud/smart-orchestration#Run-failed-specs-first),
 Smart Orchestration maximizes your available compute resources & minimizes
 waste.
 

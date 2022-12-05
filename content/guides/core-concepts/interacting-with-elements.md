@@ -28,16 +28,17 @@ Some commands in Cypress are for interacting with the DOM such as:
 - [`.trigger()`](/api/commands/trigger)
 - [`.selectFile()`](/api/commands/selectfile)
 
-These commands simulate a user interacting with your application. Under the
-hood, Cypress fires the events a browser would fire thus causing your
-application's event bindings to fire.
+We call these "action commands." These actions simulate a user interacting with
+your application. Under the hood, Cypress fires the events a browser would fire
+thus causing your application's event bindings to fire.
 
 Prior to issuing any of the commands, we check the current state of the DOM and
 take some actions to ensure the DOM element is "ready" to receive the action.
 
-Cypress will wait for the element to pass all of these checks for the duration
-of the [`defaultCommandTimeout`](/guides/references/configuration#Timeouts)
-(described in depth in the
+Cypress will watch the DOM - re-running the queries that yielded the current
+subject - until an element passes all of these checks for the duration of the
+[`defaultCommandTimeout`](/guides/references/configuration#Timeouts) (described
+in depth in the
 [Default Assertions](/guides/core-concepts/introduction-to-cypress#Default-Assertions)
 core concept guide).
 
@@ -102,12 +103,14 @@ Cypress checks whether an element's `disabled` property is `true`.
 
 ### Detached
 
-When many applications rerender the DOM, they actually remove the DOM element
-and insert a new DOM element in its place with the newly change attributes.
+Cypress checks whether an element you are making assertions on is still within
+the `document` of the application under test.
 
-Cypress checks whether an element you are making assertions is detached from the
-DOM. This checks that the element is still within the `document` of the
-application under test.
+When many applications rerender the DOM, they actually remove the DOM element
+and insert a new DOM element in its place with the newly change attributes. This
+is why it's important not to chain _action commands_ together - cypress can
+re-run queries to locate the fresh element, but it will
+[never re-run commands](/guides/core-concepts/retry-ability).
 
 ### Readonly
 
@@ -240,7 +243,7 @@ algorithms that we described above.
 
 In fact we only ever scroll elements into view when actionable commands are
 running using the above algorithms. We _do not_ scroll elements into view on
-regular DOM commands like [`cy.get()`](/api/commands/get) or
+regular DOM queries like [`cy.get()`](/api/commands/get) or
 [`.find()`](/api/commands/find).
 
 The reason we scroll an element into view when hovering over a snapshot is to

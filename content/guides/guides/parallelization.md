@@ -10,7 +10,7 @@ title: Parallelization
 - How to group test runs
 - Strategies for grouping test runs
 - How load-balancing of tests works
-- What test insights are available on the Dashboard
+- What test insights are available on Cypress Cloud
 
 </Alert>
 
@@ -27,8 +27,8 @@ also technically run on a single machine, we do not recommend it since this
 machine would require significant resources to run your tests efficiently.
 
 This guide assumes you already have your project running and
-[recording](/guides/dashboard/projects#Setup) within Continuous Integration. If
-you have not set up your project yet, check out our
+[recording](/guides/cloud/projects#Setup) within Continuous Integration. If you
+have not set up your project yet, check out our
 [Continuous Integration guide](/guides/continuous-integration/introduction). If
 you are running or planning to run tests across multiple browsers (Firefox,
 Chrome, or Edge), we also recommend checking out our
@@ -66,23 +66,21 @@ Running tests in parallel requires the
 [`--record` flag](/guides/guides/command-line#cypress-run) be passed. This
 ensures Cypress can properly collect the data needed to parallelize future runs.
 This also gives you the full benefit of seeing the results of your parallelized
-tests in our [Dashboard Service](/guides/dashboard/introduction). If you have
-not set up your project to record, check out our
-[setup guide](/guides/dashboard/projects#Setup).
+tests in [Cypress Cloud](/guides/cloud/introduction). If you have not set up
+your project to record, check out our
+[setup guide](/guides/cloud/projects#Setup).
 
 </Alert>
 
 ## CI parallelization interactions
 
-During parallelization mode, the Cypress
-[Dashboard Service](/guides/dashboard/introduction) interacts with your CI
-machines to orchestrate the parallelization of a test run via
-[load-balancing](#Balance-strategy) of specs across available CI machines by the
-following process:
+During parallelization mode, [Cypress Cloud](/guides/cloud/introduction)
+interacts with your CI machines to orchestrate the parallelization of a test run
+via [load-balancing](#Balance-strategy) of specs across available CI machines by
+the following process:
 
-1. CI machines contact the Cypress
-   [Dashboard Service](/guides/dashboard/introduction) to indicate which spec
-   files to run in the project.
+1. CI machines contact [Cypress Cloud](/guides/cloud/introduction) to indicate
+   which spec files to run in the project.
 2. A machine opts in to receiving a spec file to run by contacting Cypress.
 3. Upon receiving requests from a CI machine, Cypress calculates the estimated
    duration to test each spec file.
@@ -97,9 +95,8 @@ following process:
    considering the test run as fully complete. This is done to better support
    [grouping of runs](#Grouping-test-runs).
 
-In short: each Cypress instance sends a list of the spec files to the Dashboard
-Service, and the service sends back one spec at a time to each application to
-run.
+In short: each Cypress instance sends a list of the spec files to Cypress Cloud,
+which sends back one spec at a time to each application to run.
 
 ### Parallelization process
 
@@ -112,10 +109,10 @@ in your CI provider. Cypress calculates which spec file to run based on the data
 collected from previous runs. This ensures that your spec files run as fast as
 possible, with no need for manual configuration.
 
-As more and more tests are recorded to the Cypress Dashboard, Cypress can better
-predict how long a given spec file will take to run. To prevent irrelevant data
-from affecting the duration prediction, Cypress doesn't use old historical run
-data regarding the spec file.
+As more and more tests are recorded to Cypress Cloud, Cypress can better predict
+how long a given spec file will take to run. To prevent irrelevant data from
+affecting the duration prediction, Cypress doesn't use old historical run data
+regarding the spec file.
 
 ### Spec duration history analysis
 
@@ -139,8 +136,8 @@ estimates for each browser a spec file was tested against.
 
 The examples below are from a run of our
 [Kitchen Sink Example](https://github.com/cypress-io/cypress-example-kitchensink)
-project. You can see the results of this run on the
-[Cypress Dashboard](https://dashboard.cypress.io/projects/4b7344/runs/2929/specs).
+project. You can see the results of this run on
+[Cypress Cloud](https://cloud.cypress.io/projects/4b7344/runs/2929/specs).
 
 ### Without parallelization
 
@@ -209,7 +206,7 @@ file and it finished in **59 seconds**.
 ```
 
 The difference in running times and machines used is very clear when looking at
-the [Machines View](#Machines-View) on the Dashboard. Notice how the run
+the [Machines View](#Machines-View) on Cypress Cloud. Notice how the run
 parallelized across 2 machines automatically ran all specs based on their
 duration, while the run without parallelization did not.
 
@@ -252,7 +249,7 @@ more.
 ### Grouping by browser
 
 You can test your application against different browsers and view the results
-under a single run within the Dashboard. Below, we name our groups the same name
+under a single run within Cypress Cloud. Below, we name our groups the same name
 as the browser being tested:
 
 - The first group can be called `Windows/Chrome 69`.
@@ -306,7 +303,7 @@ configuration for the project.
 </Alert>
 
 Labeling these groups in this manner helps up later when we review our test runs
-in the Cypress Dashboard, as shown below:
+in Cypress Cloud, as shown below:
 
 <DocsImage src="/img/guides/parallelization/timeline-collapsed.png" alt="Timeline view with grouping and parallelization" ></DocsImage>
 
@@ -396,14 +393,13 @@ the last known CI machine has completed as shown in the diagram below:
 <DocsImage src="/img/guides/parallelization/run-completion-delay.png" alt="Test run completion delay"></DocsImage>
 
 This **delay is 60 seconds by default**, but is
-[configurable within the Dashboard project settings page](/guides/dashboard/projects#Run-completion-delay).
+[configurable within Cypress Cloud project settings page](/guides/cloud/projects#Run-completion-delay).
 
-## Visualizing parallelization and groups in the Dashboard
+## Visualizing parallelization and groups in Cypress Cloud
 
-You can see the result of each spec file that ran within the
-[Dashboard Service](/guides/dashboard/introduction) in the run's **Specs** tab.
-Specs are visualized within a **Timeline**, **Bar Chart**, and **Machines**
-view.
+You can see the result of each spec file that ran within
+[Cypress Cloud](/guides/cloud/introduction) in the run's **Specs** tab. Specs
+are visualized within a **Timeline**, **Bar Chart**, and **Machines** view.
 
 ### Timeline View
 

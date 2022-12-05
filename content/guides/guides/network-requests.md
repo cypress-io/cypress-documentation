@@ -396,8 +396,8 @@ Check out the example:
 - <Icon name="github"></Icon>
   [Auto-complete test code](https://github.com/cypress-io/cypress-realworld-app/blob/07a6483dfe7ee44823380832b0b23a4dacd72504/cypress/tests/ui/new-transaction.spec.ts#L36-L50)
 - <Icon name="video"></Icon>
-  [Auto-complete test run video recording](https://dashboard.cypress.io/projects/7s5okt/runs/2352/test-results/3bf064fd-6959-441c-bf31-a9f276db0627/video)
-  in Cypress Dashboard.
+  [Auto-complete test run video recording](https://cloud.cypress.io/projects/7s5okt/runs/2352/test-results/3bf064fd-6959-441c-bf31-a9f276db0627/video)
+  in Cypress Cloud.
 
 </Alert>
 
