@@ -7,22 +7,12 @@ e2eSpecific: true
 
 ## <Icon name="graduation-cap"></Icon> What you'll learn
 
+- Log in to [Auth0](https://auth0.com) through the UI with
+  [`cy.origin()`](/api/commands/origin)
 - Programmatically authenticate with [Auth0](https://auth0.com) via a custom
   Cypress command
 - Adapting your [Auth0](https://auth0.com) application for programmatic
   authentication during testing
-
-</Alert>
-
-<Alert type="success">
-
-<strong class="alert-header">Why authenticate programmatically?</strong>
-
-Typically, logging in a user within your app by authenticating via a third-party
-provider requires visiting login pages hosted on a different domain. Since each
-Cypress test is limited to visiting domains of the same origin, we can subvert
-visiting and testing third-party login pages by programmatically interacting
-with the third-party authentication API to login a user.
 
 </Alert>
 
@@ -33,6 +23,22 @@ Page Application using the
 [Classic Universal Login Experience](https://auth0.com/docs/universal-login/classic).
 This configuration is recommended for a "Test Tenant" and/or "Test API" setup
 for automated end-to-end testing.
+
+</Alert>
+
+<Alert type="success">
+
+<strong class="alert-header">Authenticate by visiting a different domain with
+[`cy.origin()`](/api/commands/origin)</strong>
+
+Typically, logging in a user within your app by authenticating via a third-party
+provider requires visiting a login page hosted on a different domain. Before
+Cypress [v12.0.0](https://on.cypress.io/changelog#12-0-0), Cypress tests were
+limited to visiting domains of the same origin, making programmatic login the
+only option for authenticating users with a third-party API. As of Cypress
+[v12.0.0](https://on.cypress.io/changelog#12-0-0), Cypress tests are no longer
+limited to visiting domains of a single origin, meaning you can easily
+authenticate with [Auth0](https://auth0.com) via the UI!
 
 </Alert>
 
@@ -111,9 +117,145 @@ require('dotenv').config()
 }
 ```
 
+Note that `auth0_client_secret` is only needed for
+[programmatic login](#Programmatic-Login).
+
 :::
 
 ## Custom Command for Auth0 Authentication
+
+There are two ways you can authenticate to Auth0:
+
+- [Login with `cy.origin()`](#Login-with-cy-origin)
+- [Programmatic Login](#Programmatic-Login)
+
+### Login with [`cy.origin()`](/api/commands/origin)
+
+Next, we'll write a custom command called `loginToAuth0` to perform a login to
+[Auth0](https://auth0.com). This command will use
+[`cy.origin()`](/api/commands/origin) to
+
+1. Navigate to the Auth0 login
+2. Input user credentials
+3. Sign in and redirect back to the
+   [Cypress Real World App](https://github.com/cypress-io/cypress-realworld-app)
+4. Cache the results with [`cy.session()`](/api/commands/session)
+
+```js
+// cypress/support/auth-provider-commands/auth0.ts
+
+Cypress.Commands.add('loginToAuth0', (username: string, password: string) => {
+  const log = Cypress.log({
+    displayName: 'AUTH0 LOGIN',
+    message: [`🔐 Authenticating | ${username}`],
+    // @ts-ignore
+    autoEnd: false,
+  })
+  log.snapshot('before')
+
+  // App landing page redirects to Auth0.
+  cy.visit('/')
+
+  // Login on Auth0 (we'll add caching later).
+  cy.origin(
+    Cypress.env('auth0_domain'),
+    { username, password },
+    ({ username, password }) => {
+      cy.get('input#username').type(username)
+      cy.get('input#password').type(password)
+      cy.contains('button[value=default]', 'Continue').click()
+    }
+  )
+
+  // Ensure Auth0 has redirected us back to the RWA.
+  cy.url().should('equal', 'http://localhost:3000/')
+
+  log.snapshot('after')
+  log.end()
+})
+```
+
+Now, we can use our `loginToAuth0` command in the test. Below is our test to
+login as a user via Auth0 and run a basic sanity check.
+
+<Alert type="success">
+
+The
+[runnable version of this test](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/tests/ui-auth-providers/auth0.spec.ts)
+is in the
+[Cypress Real World App](https://github.com/cypress-io/cypress-realworld-app).
+
+</Alert>
+
+```js
+describe('Auth0', function () {
+  beforeEach(function () {
+    cy.task('db:seed')
+    cy.intercept('POST', '/graphql').as('createBankAccount')
+    cy.loginToAuth0(
+      Cypress.env('auth0_username'),
+      Cypress.env('auth0_password')
+    )
+    cy.visit('/')
+  })
+
+  it('shows onboarding', function () {
+    cy.contains('Get Started').should('be.visible')
+  })
+})
+```
+
+Lastly, we can refactor our login command to take advantage of
+[`cy.session()`](/api/commands/session) to store our logged in user so we don't
+have to reauthenticate before every test.
+
+```js
+Cypress.Commands.add('loginToAuth0', (username: string, password: string) => {
+  const log = Cypress.log({
+    displayName: 'AUTH0 LOGIN',
+    message: [`🔐 Authenticating | ${username}`],
+    // @ts-ignore
+    autoEnd: false,
+  })
+  log.snapshot('before')
+
+  const args = { username, password }
+  cy.session(
+    args,
+    () => {
+      // App landing page redirects to Auth0.
+      cy.visit('/')
+
+      // Login on Auth0.
+      cy.origin(
+        Cypress.env('auth0_domain'),
+        { args },
+        ({ username, password }) => {
+          cy.get('input#username').type(username)
+          cy.get('input#password').type(password)
+          cy.contains('button[value=default]', 'Continue').click()
+        }
+      )
+
+      // Ensure Auth0 has redirected us back to the RWA.
+      cy.url().should('equal', 'http://localhost:3000/')
+    },
+    {
+      validate: () => {
+        // Validate presence of access token in localStorage.
+        cy.wrap(localStorage)
+          .invoke('getItem', 'authAccessToken')
+          .should('exist')
+      },
+    }
+  )
+
+  log.snapshot('after')
+  log.end()
+})
+```
+
+### Programmatic Login
 
 Below is a command to programmatically login into [Auth0](https://auth0.com),
 using the
