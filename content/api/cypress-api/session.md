@@ -38,7 +38,7 @@ retrieve.
 ### Clearing the all session data
 
 By default, Cypress will clear the current session data **before** each test
-when `testIsolation` is enabled. However, to you can remove all cached session
+when `testIsolation` is enabled. You can also remove all cached session
 data with `Cypress.session.clearAllSavedSessions()`.
 
 ```js
