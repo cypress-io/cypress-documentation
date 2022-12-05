@@ -408,13 +408,13 @@ packages and other files.
 
 <Alert type="warning">
 
-Using `import()` and `require()` within the callback requires requires enabling
+Using `import()` and `require()` within the callback requires enabling
 the [`experimentalOriginDependencies`](/guides/references/experiments) flag in
-the Cypress configuration and using version 5.15.0 or greater of the
+the Cypress configuration and using version `5.15.0` or greater of the
 [`@cypress/webpack-preprocessor`](https://github.com/cypress-io/cypress/tree/master/npm/webpack-preprocessor).
 The `@cypress/webpack-preprocessor` is included in Cypress by default, but if
 your project installs its own version in the Cypress configuration, make sure it
-is version 5.15.0 or greater.
+is version `5.15.0` or greater.
 
 If using an older version of the webpack or a different preprocessor, you'll see
 an error that includes the following text:
@@ -428,7 +428,7 @@ _Using `require()` or `import()` to include dependencies requires enabling the
 <Alert type="warning">
 
 Using `require()` or `import()` within the callback from a `node_modules` plugin
-is not currently supported. We anticipate to add support with issue
+is not currently supported. We anticipate adding support with issue
 [#24976](https://github.com/cypress-io/cypress/issues/24976).
 
 </Alert>
