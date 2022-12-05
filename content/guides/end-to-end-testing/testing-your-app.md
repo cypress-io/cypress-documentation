@@ -420,10 +420,12 @@ maintainable, and they're certainly not very elegant. A much better solution is
 to write a custom `cy.login()` [command](/api/cypress-api/custom-commands).
 
 Custom commands allow you to easily encapsulate and reuse Cypress test logic.
-They're basically just functions, but with some added sugar to allow you to use
-them with the same chaining API as the built-in Cypress commands. Here's an
-example of the login code from the previous section converted into a custom
-command:
+They let you add your own functionality to your test suite and then use it with
+the same
+[chainable and asynchronous API](guides/core-concepts/introduction-to-cypress#The-Cypress-Command-Queue)
+as the built-in Cypress commands. Lets make the above login example a custom
+command and add it to `cypress/support/commands.js` so it can be leveraged in
+any spec file:
 
 ```js
 // In cypress/support/commands.js
@@ -434,7 +436,7 @@ Cypress.Commands.add('login', (username, password) => {
   cy.get('input[name=username]').type(username)
 
   // {enter} causes the form to submit
-  cy.get('input[name=password]').type(`${password}{enter}`)
+  cy.get('input[name=password]').type(`${password}{enter}`, { log: false })
 
   // we should be redirected to /dashboard
   cy.url().should('include', '/dashboard')
@@ -461,12 +463,13 @@ it('does something on a secured page', function () {
 You're probably wondering what happened to our advice about logging in "only
 once". The custom command above will work just fine for testing your secured
 pages, but if you have more than a handful of tests, logging in before every
-test is going to add a lot of running time to your suite.
+test is going to increase the overall run time of your suite.
 
-Luckily, Cypress provides the [`cy.session()` command](/api/commands/session), a
-powerful performance tool that lets you cache user session data and reuse it for
-multiple tests without going through multiple login flows! Let's modify the
-`cy.login()` command from our previous example to use `cy.session()`:
+Luckily, Cypress provides the [`cy.session()`](/api/commands/session) command, a
+powerful performance tool that lets you cache the browser context associated
+with your user and reuse it for multiple tests without going through multiple
+login flows! Let's modify the custom `cy.login()` command from our previous
+example to use `cy.session()`:
 
 ```js
 Cypress.Commands.add('login', (username, password) => {
@@ -475,7 +478,7 @@ Cypress.Commands.add('login', (username, password) => {
     () => {
       cy.visit('/login')
       cy.get('input[name=username]').type(username)
-      cy.get('input[name=password]').type(`${password}{enter}`)
+      cy.get('input[name=password]').type(`${password}{enter}`, { log: false })
       cy.url().should('include', '/dashboard')
       cy.get('h1').should('contain', username)
     },
@@ -488,9 +491,20 @@ Cypress.Commands.add('login', (username, password) => {
 })
 ```
 
-There's a lot going on here that's out of the scope of this introduction, so for
-a more in-depth explanation of how `cy.session()` works,
-[read the API docs](/api/commands/session).
+<Alert type="info">
+
+<strong class="alert-header">Third-Party Login</strong>
+
+If your app implements login via a third-party authentication provider such as
+[Auth0](https://auth0.com/) or [Okta](https://www.okta.com/), you can use the
+[`cy.origin()`](/api/commands/origin) command to include their login pages as
+part of your authentication tests.
+
+</Alert>
+
+There's a lot going on here that's out of the scope for this introduction.
+Please check out the [`cy.session()`](/api/commands/session) documentation for a
+more in-depth explanation.
 
 <Alert type="info">
 
