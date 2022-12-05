@@ -173,21 +173,33 @@ cy.getSessionStorage('token').should('eq', 'abc123')
 #### Log in command using UI
 
 ```js
-Cypress.Commands.add('typeLogin', (user) => {
-  cy.get('input[name=email]').type(user.email)
-
-  cy.get('input[name=password]').type(user.password)
+Cypress.Commands.add('loginViaUi', (user) => {
+  cy.session(
+    user,
+    () => {
+      cy.visit('/login')
+      cy.get('input[name=email]').type(user.email)
+      cy.get('input[name=password]').type(user.password)
+      cy.click('button#login')
+      cy.get('h1').contains(`Welcome back ${user.name}!`)
+    },
+    {
+      validate: () => {
+        cy.getCookie('auth_key').should('exist')
+      },
+    }
+  )
 })
 ```
 
 ```js
-cy.typeLogin({ email: 'fake@email.com', password: 'Secret1' })
+cy.loginViaUi({ email: 'fake@email.com', password: '$ecret1', name: 'johndoe' })
 ```
 
 #### Log in command using request
 
 ```javascript
-Cypress.Commands.add('login', (userType, options = {}) => {
+Cypress.Commands.add('loginViaApi', (userType, options = {}) => {
   // this is an example of skipping your UI and logging in programmatically
 
   // setup some basic types
@@ -232,10 +244,10 @@ Cypress.Commands.add('login', (userType, options = {}) => {
 
 ```javascript
 // can start a chain off of cy
-cy.login('admin')
+cy.loginViaApi('admin')
 
 // can be chained but will not receive the previous subject
-cy.get('button').login('user')
+cy.get('button').loginViaApi('user')
 ```
 
 #### Log out command using UI
@@ -245,6 +257,8 @@ Cypress.Commands.add('logout', () => {
   cy.contains('Login').should('not.exist')
   cy.get('.avatar').click()
   cy.contains('Logout').click()
+  cy.get('h1').contains('Login')
+  cy.getCookie('auth_key').should('not.exist')
 })
 ```
 
