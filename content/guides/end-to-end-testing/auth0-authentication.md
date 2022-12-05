@@ -205,6 +205,8 @@ describe('Auth0', function () {
 })
 ```
 
+<DocsVideo src="/img/examples/auth0-origin.mp4"></DocsVideo>
+
 Lastly, we can refactor our login command to take advantage of
 [`cy.session()`](/api/commands/session) to store our logged in user so we don't
 have to reauthenticate before every test.
@@ -254,6 +256,8 @@ Cypress.Commands.add('loginToAuth0', (username: string, password: string) => {
   log.end()
 })
 ```
+
+<DocsVideo src="/img/examples/auth0-session-restore.mp4"></DocsVideo>
 
 ### Programmatic Login
 
