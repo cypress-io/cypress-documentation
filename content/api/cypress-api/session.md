@@ -30,8 +30,7 @@ Clearing all session and automatically re-running the spec
 
 **<Icon name="angle-right"></Icon> id** **_(String)_**
 
-The name of the session whom's data storage and cookie data you'd like to
-retrieve.
+The name of the session used to retrieve data storage and cookie data.
 
 ## Examples
 
