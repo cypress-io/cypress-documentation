@@ -417,7 +417,7 @@ above into every one of your tests that needs an authenticated user. Or you
 could even put all your tests in one big spec file and put the login code in a
 `beforeEach` block. But neither of those approaches is particularly
 maintainable, and they're certainly not very elegant. A much better solution is
-to use a `cy.login()` [custom command](/api/cypress-api/custom-commands).
+to write a custom `cy.login()` [command](/api/cypress-api/custom-commands).
 
 Custom commands allow you to easily encapsulate and reuse Cypress test logic.
 They're basically just functions, but with some added sugar to allow you to use
