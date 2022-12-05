@@ -408,9 +408,9 @@ packages and other files.
 
 <Alert type="warning">
 
-Using `import()` and `require()` within the callback requires enabling
-the [`experimentalOriginDependencies`](/guides/references/experiments) flag in
-the Cypress configuration and using version `5.15.0` or greater of the
+Using `import()` and `require()` within the callback requires enabling the
+[`experimentalOriginDependencies`](/guides/references/experiments) flag in the
+Cypress configuration and using version `5.15.0` or greater of the
 [`@cypress/webpack-preprocessor`](https://github.com/cypress-io/cypress/tree/master/npm/webpack-preprocessor).
 The `@cypress/webpack-preprocessor` is included in Cypress by default, but if
 your project installs its own version in the Cypress configuration, make sure it
