@@ -408,13 +408,6 @@ packages and other files.
 
 <Alert type="warning">
 
-Using `require()` or `import()` within the callback from a `node_modules` plugin
-is not currently supported.
-
-</Alert>
-
-<Alert type="warning">
-
 Using `import()` and `require()` within the callback requires requires enabling
 the [`experimentalOriginDependencies`](/guides/references/experiments) flag in
 the Cypress configuration and using version 5.15.0 or greater of the
@@ -429,6 +422,14 @@ an error that includes the following text:
 _Using `require()` or `import()` to include dependencies requires enabling the
 `experimentalOriginDependencies` flag and using the latest version of
 `@cypress/webpack-preprocessor`._
+
+</Alert>
+
+<Alert type="warning">
+
+Using `require()` or `import()` within the callback from a `node_modules` plugin
+is not currently supported. We anticipate to add support with issue
+[#24976](https://github.com/cypress-io/cypress/issues/24976).
 
 </Alert>
 
