@@ -198,6 +198,10 @@
               "slug": "writing-and-organizing-tests"
             },
             {
+              "title": "Test Isolation",
+              "slug": "test-isolation"
+            },
+            {
               "title": "Retry-ability",
               "slug": "retry-ability"
             },

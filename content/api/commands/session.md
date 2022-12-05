@@ -12,8 +12,8 @@ tests.
 
 The `cy.session()` command will inherit the
 [`testIsolation`](/guides/core-concepts/writing-and-organizing-tests#Test-Isolation)
-mode value to determine whether or not the page is cleared when caching and
-restoring the browser context.
+value to determine whether or not the page is cleared when caching and restoring
+the browser context.
 
 ## Syntax
 
@@ -102,11 +102,11 @@ runs, Cypress will preserve all cookies, `sessionStorage`, and `localStorage`,
 so that subsequent calls to `cy.session()` with the same `id` will bypass
 `setup` and just restore the cached session data.
 
-The page is cleared before `setup` when `testIsolation='on'` and is not cleared
-when `testIsolation='off'`.
+The page is cleared before `setup` when `testIsolation` is enabled and is not
+cleared when `testIsolation` is disabled.
 
 Cookies, local storage and session storage in all domains are always cleared
-before `setup` runs, regardless of the testIsolation configuration.
+before `setup` runs, regardless of the `testIsolation` configuration.
 
 **<Icon name="angle-right"></Icon> options** **_(Object)_**
 
@@ -645,13 +645,13 @@ it('t3', () => {
 
 ### When the page and session data are cleared
 
-### Test Isolation `on`
+### Test Isolation Enabled
 
 The page is cleared and cookies, local storage and session storage (session
-data) in all domains are cleared automatically when `cy.session()` runs and
-`testIsolation` is `on`. This guarantees consistent behavior whether a session
-is being created or restored and allows you to switch sessions without first
-having to explicitly log out.
+data) in all domains are cleared automatically when `cy.session()` runs and test
+isolation is enabled with `testIsolation=true`, This guarantees consistent
+behavior whether a session is being created or restored and allows you to switch
+sessions without first having to explicitly log out.
 
 |                            |               Page cleared (test)               |              Session data cleared               |
 | -------------------------- | :---------------------------------------------: | :---------------------------------------------: |
@@ -661,10 +661,10 @@ having to explicitly log out.
 [`cy.visit()`](/api/commands/visit) must be explicitly called afterwards to
 ensure the page to test is loaded.
 
-### Test Isolation `off`
+### Test Isolation Disabled
 
-When `testIsolation` is `off`, the page will not clear, however, the session
-data will clear when `cy.session()` runs.
+When test isolation is disabled with `testIsolation=false`, the page will not
+clear, however, the session data will clear when `cy.session()` runs.
 
 |                            | Page cleared (test) |              Session data cleared               |
 | -------------------------- | :-----------------: | :---------------------------------------------: |
@@ -674,13 +674,13 @@ data will clear when `cy.session()` runs.
 [`cy.visit()`](/api/commands/visit) does not need to be called afterwards to
 ensure the page to test is loaded.
 
-NOTE: Turning test isolation off may improve performance of end-to-end tests,
+NOTE: Disabling test isolation may improve performance of end-to-end tests,
 however, previous tests could impact the browser state of the next test and
 cause inconsistency when using .only(). Be mindful to write isolated tests when
-test isolation is off.
+test isolation is disabled.
 
-When test isolation is `off`, it is encouraged to setup your session in a before
-hook or in the first test to ensure a clean setup.
+When test isolation is disabled, it is encouraged to setup your session in a
+before hook or in the first test to ensure a clean setup.
 
 ### Session caching
 
@@ -823,9 +823,10 @@ generate random unique ids if an arbitrary name-space does not meet your needs.
 
 #### Why are all my Cypress commands failing after calling `cy.session()`?
 
-When test isolation is `on`, ensure that you're calling
-[`cy.visit()`](/api/commands/visit) after calling `cy.session()`, otherwise your
-tests will be running on a blank page.
+When
+[`testIsolation`](/guides/core-concepts/writing-and-organizing-tests#Test-Isolation)
+is enabled, ensure that you're calling [`cy.visit()`](/api/commands/visit) after
+calling `cy.session()`, otherwise your tests will be running on a blank page.
 
 #### Why am I seeing `401` errors after calling `cy.session()`?
 

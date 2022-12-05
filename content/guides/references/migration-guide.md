@@ -13,10 +13,9 @@ The Session and Origin experiment has been released as General Availability
 free of issues in the majority of use cases. With releasing this as GA, the
 `experimentalSessionAndOrigin` flag has been removed, the
 [`cy.origin()`](<(/api/commands/origin)>) and
-[`cy.session()`](/api/commands/session) commands are generally available and the
-concept of
+[`cy.session()`](/api/commands/session) commands are generally available and
 [Test Isolation](/guides/core-concepts/writing-and-organizing-tests#Test-Isolation)
-has been introduced.
+is enabled by default.
 
 ### Node.js 14+ support
 
@@ -34,8 +33,8 @@ version supported to install Cypress is Node.js 14+.
 
 The
 [`testIsolation`](/guides/core-concepts/writing-and-organizing-tests#Test-Isolation)
-config option defaults to `on`. This means Cypress resets the browser context
-_before_ each test by:
+config option is enabled by default. This means Cypress resets the browser
+context _before_ each test by:
 
 - clearing the dom state by visiting `about:blank`
 - clearing [cookies](/api/cypress-api/cookies) in all domains
@@ -83,8 +82,8 @@ it('validates the change', () => {
 })
 ```
 
-After migrating, when `testIsolation='on'`, this flow would need to be contained
-within a single test. While the above practice has always been
+After migrating, when `testIsolation=true` by default, this flow would need to
+be contained within a single test. While the above practice has always been
 [discouraged](/guides/references/best-practices#Having-tests-rely-on-the-state-of-previous-tests)
 we know some users have historically written tests this way, often to get around
 the `same-origin` restrictions. But with [`cy.origin()`](/api/commands/origin)
@@ -124,27 +123,27 @@ application logins, while users also benefit from the test isolation guardrails
 to write independent, reliable and deterministic tests from the start.
 
 If for whatever reason you still need to persist the dom and browser context
-between tests, you can set `testIsolation='off` on the root configuration or at
-the suite-level. For example:
+between tests, you can disable test isolation by setting `testIsolation=false`
+on the root configuration or at the suite-level. For example:
 
 ```js
-describe('workflow', { testIsolation: 'off' }, () => {
+describe('workflow', { testIsolation: false }, () => {
   ...
 })
 ```
 
-It is important to note that while turning test isolation `off` may improve the
-overall performance of end-to-end tests, it can however cause state to "leak"
-between tests. This can make later tests dependent on the results of earlier
-tests, and potentially cause misleading test failures. It is important to be
-extremely mindful of how tests are written when using this mode, and ensure that
-tests continue to run independently of one another.
+It is important to note that while disabling test isolation may improve the
+overall performance of end-to-end tests, it can cause state to "leak" between
+tests. This can make later tests dependent on the results of earlier tests, and
+potentially cause misleading test failures. It is important to be extremely
+mindful of how tests are written when using this mode, and ensure that tests
+continue to run independently of one another.
 
 <Badge type="danger">For example</Badge>the following tests are not independent
 nor deterministic:
 
 ```js
-describe('workflow', { testIsolation: 'off' }, () => {
+describe('workflow', { testIsolation: false }, () => {
   it('logs in', () => {
     cy.visit('my-app.com/log-in)
     cy.get('username').type('User1')
