@@ -63,9 +63,9 @@ describe('Dashboard', { testIsolation: false }, () => {
 ### Verified the Applied Session Data
 
 To check all cookies, localStorage and sessionStorage that was applied after
-`cy.session()` completes. You can use `Cypress.session.getCurrentSessionData()`.
+`cy.session()` completes, you can use `Cypress.session.getCurrentSessionData()`.
 This can be helpful for quickly analyzing the current browser context while
-writing you `cy.session()` command.
+writing your `cy.session()` command.
 
 Since this is an all-in-one helper of the `cy.getAllCookies()`,
 `cy.getAllLocalStorage()` and `cy.getAllSessionStorage()` commands, we generally
