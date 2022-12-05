@@ -12,8 +12,8 @@ tests.
 
 The `cy.session()` command will inherit the
 [`testIsolation`](/guides/core-concepts/writing-and-organizing-tests#Test-Isolation)
-mode value to determine whether or not the page is cleared when caching and
-restoring the browser context.
+value to determine whether or not the page is cleared when caching and restoring
+the browser context.
 
 ## Syntax
 
@@ -27,6 +27,15 @@ cy.session(id, setup, options)
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
+// Caching session when logging in via page visit
+cy.session(name, () => {
+  cy.visit('/login')
+  cy.get('[data-test=name]').type(name)
+  cy.get('[data-test=password]').type('s3cr3t')
+  cy.get('form').contains('Log In').click()
+  cy.url().should('contain', '/login-successful')
+})
+
 // Caching session when logging in via API
 cy.session(username, () => {
   cy.request({
@@ -36,15 +45,6 @@ cy.session(username, () => {
   }).then(({ body }) => {
     window.localStorage.setItem('authToken', body.token)
   })
-})
-
-// Caching session when logging in via page visit
-cy.session(name, () => {
-  cy.visit('/login')
-  cy.get('[data-test=name]').type(name)
-  cy.get('[data-test=password]').type('s3cr3t')
-  cy.get('form').contains('Log In').click()
-  cy.url().should('contain', '/login-successful')
 })
 ```
 
@@ -98,15 +98,16 @@ serialize into an identifier, so exercise care with the data you specify.
 
 This function is called whenever a session for the given `id` hasn't yet been
 cached, or if it's no longer valid (see the `validate` option). After `setup`
-runs, Cypress will preserve all cookies, `sessionStorage`, and `localStorage`,
-so that subsequent calls to `cy.session()` with the same `id` will bypass
-`setup` and just restore the cached session data.
+and `validate` runs for the first time, Cypress will preserve all cookies,
+`sessionStorage`, and `localStorage`, so that subsequent calls to `cy.session()`
+with the same `id` will bypass setup and just restore and validate the cached
+session data.
 
-The page is cleared before `setup` when `testIsolation='on'` and is not cleared
-when `testIsolation='off'`.
+The page is cleared before `setup` when `testIsolation` is enabled and is not
+cleared when `testIsolation` is disabled.
 
 Cookies, local storage and session storage in all domains are always cleared
-before `setup` runs, regardless of the testIsolation configuration.
+before `setup` runs, regardless of the `testIsolation` configuration.
 
 **<Icon name="angle-right"></Icon> options** **_(Object)_**
 
@@ -131,13 +132,11 @@ command with a call to `cy.session()`.
 
 ```javascript
 Cypress.Commands.add('login', (username, password) => {
-  cy.request({
-    method: 'POST',
-    url: '/login',
-    body: { username, password },
-  }).then(({ body }) => {
-    window.localStorage.setItem('authToken', body.token)
-  })
+  cy.visit('/login')
+  cy.get('[data-test=name]').type(username)
+  cy.get('[data-test=password]').type(password)
+  cy.get('form').contains('Log In').click()
+  cy.url().should('contain', '/login-successful')
 })
 ```
 
@@ -146,13 +145,11 @@ Cypress.Commands.add('login', (username, password) => {
 ```javascript
 Cypress.Commands.add('login', (username, password) => {
   cy.session([username, password], () => {
-    cy.request({
-      method: 'POST',
-      url: '/login',
-      body: { username, password },
-    }).then(({ body }) => {
-      window.localStorage.setItem('authToken', body.token)
-    })
+    cy.visit('/login')
+    cy.get('[data-test=name]').type(username)
+    cy.get('[data-test=password]').type(password)
+    cy.get('form').contains('Log In').click()
+    cy.url().should('contain', '/login-successful')
   })
 })
 ```
@@ -164,13 +161,11 @@ Cypress.Commands.add('login', (username, password) => {
   cy.session(
     [username, password],
     () => {
-      cy.request({
-        method: 'POST',
-        url: '/login',
-        body: { username, password },
-      }).then(({ body }) => {
-        window.localStorage.setItem('authToken', body.token)
-      })
+      cy.visit('/login')
+      cy.get('[data-test=name]').type(username)
+      cy.get('[data-test=password]').type(password)
+      cy.get('form').contains('Log In').click()
+      cy.url().should('contain', '/login-successful')
     },
     {
       validate() {
@@ -227,83 +222,13 @@ const login = (name, password) => {
     },
     {
       validate() {
+        // Protected URLs should return a 40x http code if user is unauthorized,
+        // and by default this will cause cy.visit() to fail
         cy.visit('/account-details')
       },
     }
   )
 }
-```
-
-### Asserting the session inside setup
-
-Because `cy.session()` caches session data immediately after the `setup`
-function completes, it's a best practice to assert that the login process has
-completed at the end of session setup, to ensure that `setup` doesn't return
-before the session data is available to be cached.
-
-Asserting sessions in this way can help simplify your login custom command, and
-reduce the need to
-[conditionally cache sessions](#Conditionally-caching-a-session).
-
-```javascript
-cy.session('user', () => {
-  cy.visit('/login')
-  cy.get('[data-test=name]').type(name)
-  cy.get('[data-test=password]').type('p4ssw0rd123')
-  cy.get('#login').click()
-  // Wait for the post-login redirect to ensure that the
-  // session actually exists to be cached
-  cy.url().should('contain', '/login-successful')
-})
-```
-
-### Conditionally caching a session
-
-Specs usually contain two types of tests where logins are necessary:
-
-1. Testing functionality that only exists for logged-in users
-2. Testing the act of logging in
-
-For the first, caching sessions can be incredibly useful for reducing the amount
-of time it takes to run tests. However, for the second, it may be necessary to
-_not_ cache the session, so that other things can be asserted about the login
-process.
-
-In this case, it can be helpful to create a custom login command that will
-conditionally cache the session. However, wherever possible, it's better to
-[assert the session inside setup](#Asserting-the-session-inside-setup).
-
-```javascript
-Cypress.Commands.add('login', (name, { cacheSession = true } = {}) => {
-  const login = () => {
-    cy.visit('/login')
-    cy.get('[data-test=name]').type(name)
-    cy.get('[data-test=password]').type('p4ssw0rd123')
-    cy.get('#login').click()
-  }
-  if (cacheSession) {
-    cy.session(name, login)
-  } else {
-    login()
-  }
-})
-
-// Testing the login flow itself
-describe('login', () => {
-  it('should redirect to the correct page after logging in', () => {
-    cy.login('user', { cacheSession: false })
-    cy.url().should('contain', '/login-successful')
-  })
-})
-
-// Testing something that simply requires being logged in
-describe('account details', () => {
-  it('should have the correct document title', () => {
-    cy.login('user')
-    cy.visit('/account')
-    cy.title().should('eq', 'User Account Details')
-  })
-})
 ```
 
 ### Switching sessions inside tests
@@ -472,9 +397,10 @@ const loginByApi = (name, password) => {
 
 ### Where to call `cy.visit()`
 
-If you call [`cy.visit()`](/api/commands/visit) immediately after `cy.session()`
-in your login function or custom command, it will effectively behave the same as
-a login function without any session caching.
+Intuitively it seems that you should call [`cy.visit()`](/api/commands/visit)
+immediately after `cy.session()` in your login function or custom command, so it
+behaves (from the point of view of the subsequent test) exactly the same as a
+login function without `cy.session()`.
 
 ```javascript
 const login = (name) => {
@@ -501,10 +427,11 @@ it('should test something else on the /home page', () => {
 })
 ```
 
-However, any time you want to test something on a different page, you will need
-to call `cy.visit()` at the beginning of that test, which will then be
-effectively calling `cy.visit()` twice in a row, which will result in slightly
-slower tests.
+However, if you want to test something on a different page, you will need to
+call `cy.visit()` at the beginning of that test, which means you will be calling
+`cy.visit()` a **second** time in your test. Since `cy.visit()` waits for the
+visited page to become active before continuing, this could add up to an
+unacceptable waste of time.
 
 ```javascript
 // ...continued...
@@ -515,10 +442,10 @@ it('should test something on the /other page', () => {
 })
 ```
 
-Tests will often be faster if you call `cy.visit()` only when necessary. This
-works especially well when
+Tests will obviously be faster if you call `cy.visit()` only when necessary.
+This can be easily realised by
 [organizing tests into suites](/guides/core-concepts/writing-and-organizing-tests#Test-Structure)
-and calling `cy.visit()` after logging in inside a
+and calling `cy.visit()` **after** logging in, inside a
 [`beforeEach`](/guides/core-concepts/writing-and-organizing-tests#Hooks) hook.
 
 ```javascript
@@ -645,13 +572,13 @@ it('t3', () => {
 
 ### When the page and session data are cleared
 
-### Test Isolation `on`
+### Test Isolation Enabled
 
 The page is cleared and cookies, local storage and session storage (session
-data) in all domains are cleared automatically when `cy.session()` runs and
-`testIsolation` is `on`. This guarantees consistent behavior whether a session
-is being created or restored and allows you to switch sessions without first
-having to explicitly log out.
+data) in all domains are cleared automatically when `cy.session()` runs and test
+isolation is enabled with `testIsolation=true`, This guarantees consistent
+behavior whether a session is being created or restored and allows you to switch
+sessions without first having to explicitly log out.
 
 |                            |               Page cleared (test)               |              Session data cleared               |
 | -------------------------- | :---------------------------------------------: | :---------------------------------------------: |
@@ -661,10 +588,10 @@ having to explicitly log out.
 [`cy.visit()`](/api/commands/visit) must be explicitly called afterwards to
 ensure the page to test is loaded.
 
-### Test Isolation `off`
+### Test Isolation Disabled
 
-When `testIsolation` is `off`, the page will not clear, however, the session
-data will clear when `cy.session()` runs.
+When test isolation is disabled with `testIsolation=false`, the page will not
+clear, however, the session data will clear when `cy.session()` runs.
 
 |                            | Page cleared (test) |              Session data cleared               |
 | -------------------------- | :-----------------: | :---------------------------------------------: |
@@ -674,13 +601,13 @@ data will clear when `cy.session()` runs.
 [`cy.visit()`](/api/commands/visit) does not need to be called afterwards to
 ensure the page to test is loaded.
 
-NOTE: Turning test isolation off may improve performance of end-to-end tests,
+NOTE: Disabling test isolation may improve performance of end-to-end tests,
 however, previous tests could impact the browser state of the next test and
 cause inconsistency when using .only(). Be mindful to write isolated tests when
-test isolation is off.
+test isolation is disabled.
 
-When test isolation is `off`, it is encouraged to setup your session in a before
-hook or in the first test to ensure a clean setup.
+When test isolation is disabled, it is encouraged to setup your session in a
+before hook or in the first test to ensure a clean setup.
 
 ### Session caching
 
@@ -823,9 +750,10 @@ generate random unique ids if an arbitrary name-space does not meet your needs.
 
 #### Why are all my Cypress commands failing after calling `cy.session()`?
 
-When test isolation is `on`, ensure that you're calling
-[`cy.visit()`](/api/commands/visit) after calling `cy.session()`, otherwise your
-tests will be running on a blank page.
+When
+[`testIsolation`](/guides/core-concepts/writing-and-organizing-tests#Test-Isolation)
+is enabled, ensure that you're calling [`cy.visit()`](/api/commands/visit) after
+calling `cy.session()`, otherwise your tests will be running on a blank page.
 
 #### Why am I seeing `401` errors after calling `cy.session()`?
 

@@ -198,6 +198,10 @@
               "slug": "writing-and-organizing-tests"
             },
             {
+              "title": "Test Isolation",
+              "slug": "test-isolation"
+            },
+            {
               "title": "Retry-ability",
               "slug": "retry-ability"
             },
@@ -320,6 +324,14 @@
             {
               "title": "Cross Browser Testing",
               "slug": "cross-browser-testing"
+            },
+            {
+              "title": "Cross Origin Testing",
+              "slug": "cross-origin-testing"
+            },
+            {
+              "title": "Web Security",
+              "slug": "web-security"
             }
           ]
         },

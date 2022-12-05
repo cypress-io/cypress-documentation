@@ -150,7 +150,7 @@ describe('detachment example', () => {
 })
 -->
 
-<DocsImage src="/img/guides/references/cy-method-failed-page-updated.png" alt="cy.method() failed because the page updated" ></DocsImage>
+<DocsImage src="/img/guides/references/cypress-method-failed-page-updated.png" alt="cy.method() failed because the page updated" ></DocsImage>
 
 Cypress errors because after a command, the subject becomes 'fixed' to a
 specific element - since it can't retry commands, if the element becomes
@@ -430,11 +430,29 @@ it('does not forget to return a promise', () => {
 
 ### <Icon name="exclamation-triangle" color="red"></Icon> `cy.visit()` failed because you are attempting to visit a second unique domain
 
-::include{file=partials/single-domain-workaround.md}
+<Alert>
+
+<strong class="alert-header">Note</strong>
+
+This error only pertains to Cypress version `v11.0.0` and under. As of Cypress
+[v12.0.0](https://on.cypress.io/changelog#12-0-0), users can navigate to
+multiple domains in a single test.
+
+</Alert>
+
+See our [Web Security](/guides/guides/web-security#Limitations) documentation.
 
 ### <Icon name="exclamation-triangle" color="red"></Icon> `cy.visit()` failed because you are attempting to visit a different origin domain
 
-::include{file=partials/single-domain-workaround.md}
+<Alert>
+
+<strong class="alert-header">Note</strong>
+
+This error only pertains to Cypress version `v11.0.0` and under. As of Cypress
+[v12.0.0](https://on.cypress.io/changelog#12-0-0), users can navigate to
+multiple domains in a single test.
+
+</Alert>
 
 Two URLs have the same origin if the `protocol`, `port` (if specified), and
 `host` are the same for both. You can only visit domains that are of the
@@ -445,6 +463,54 @@ general
 You can visit urls that are of different origin across different tests, so you
 may consider splitting your `cy.visit()` of different origin domains into
 separate tests.
+
+See our [Web Security](/guides/guides/web-security#Limitations) documentation
+for more information and workarounds.
+
+### <Icon name="exclamation-triangle" color="red"></Icon> `cy.visit()` succeeded, but commands are timing out
+
+As of Cypress [v12.0.0](https://on.cypress.io/changelog#12-0-0), users can
+navigate to multiple domains in a single test. The following test will succeed
+as-is:
+
+```javascript
+it('navigates to docs.cypress.io', () => {
+  cy.visit('http://localhost:3000')
+  cy.visit('https://docs.cypress.io') // visit a different superdomain
+})
+```
+
+However, when the newly visited URL is not considered the same superdomain, the
+[`cy.origin()`](/api/commands/origin) command **must** be used to interact with
+the newly visited domain. The following test is incorrect:
+
+```javascript
+it('navigates to docs.cypress.io and runs additional commands', () => {
+  cy.visit('http://localhost:3000')
+  cy.visit('https://docs.cypress.io') // visit a different superdomain
+  cy.get('h1').should('contain', 'Why Cypress?') // fails
+})
+```
+
+And will result in the following error:
+
+<DocsImage src="/img/guides/references/cy-visit-subsequent-commands-timed-out.png" alt="cy.visit() subsequent commands timed out" ></DocsImage>
+
+In order to fix this, our `cy.get()` command **must** be wrapped with the
+[`cy.origin()`](/api/commands/origin) command, like so:
+
+```javascript
+it('navigates to docs.cypress.io and runs additional commands', () => {
+  cy.visit('http://localhost:3000')
+  cy.visit('https://docs.cypress.io') // visit a different superdomain
+  cy.origin('https://docs.cypress.io', () => {
+    cy.get('h1').should('contain', 'Why Cypress?') // now succeeds!
+  })
+})
+```
+
+See our [Web Security](/guides/guides/web-security#Limitations) documentation
+for more information and workarounds.
 
 ### <Icon name="exclamation-triangle" color="red"></Icon> `Cypress.addParentCommand()` / `Cypress.addDualCommand()` / `Cypress.addChildCommand()` has been removed and replaced by `Cypress.Commands.add()`
 

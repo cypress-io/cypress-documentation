@@ -12,7 +12,9 @@ e2eSpecific: true
 - Programmatically authenticate with [Okta](https://okta.com) via a custom
   Cypress command
 - Adapting your [Okta](https://okta.com) application for programmatic
-  authentication during testing </Alert>
+  authentication during testing
+
+</Alert>
 
 <Alert type="warning">
 

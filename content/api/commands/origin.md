@@ -22,7 +22,10 @@ patterns commonly found in framebusting. When using the `cy.origin()` command,
 the third party code may also need to be modified for framebusting techniques.
 This can be enabled by setting the
 [`experimentalModifyObstructiveThirdPartyCode`](/guides/references/experiments)
-flag to `true` in the Cypress configuration.
+flag to `true` in the Cypress configuration. More information about this
+experimental flag can be found on our
+[Web Security](/guides/guides/web-security#Modifying-Obstructive-Third-Party-Code)
+page.
 
 </Alert>
 
@@ -60,9 +63,10 @@ cy.get('h1').contains('My cool site under test')
 ```js
 const hits = getHits()
 cy.visit('https://www.acme.com/history/founder')
-// to interact with cross-origin content, move this inside cy.origin() callback
+// To interact with cross-origin content, move this inside cy.origin() callback
 cy.get('h1').contains('About our Founder, Marvin Acme')
-cy.origin('https://www.acme.com', () => {
+// Domain must be a precise match including subdomain, i.e. www.acme.com
+cy.origin('acme.com', () => {
   cy.visit('/history/founder')
   cy.get('h1').contains('About our Founder, Marvin Acme')
   // Fails because hits is not passed in via args
@@ -78,7 +82,8 @@ cy.get('h1').contains('My cool site under test')
 
 A URL specifying the secondary origin in which the callback is to be executed.
 This should at the very least contain a hostname, and may also include the
-protocol, port number & path. Query params are not supported.
+protocol, port number & path. The hostname must precisely match that of the
+secondary origin, including all subdomains. Query params are not supported.
 
 This argument will be used in two ways:
 
@@ -408,18 +413,28 @@ packages and other files.
 
 <Alert type="warning">
 
-Using `import()` and `require()` within the callback requires version 5.15.0 or
-greater of the
+Using `import()` and `require()` within the callback requires enabling the
+[`experimentalOriginDependencies`](/guides/references/experiments) flag in the
+Cypress configuration and using version `5.15.0` or greater of the
 [`@cypress/webpack-preprocessor`](https://github.com/cypress-io/cypress/tree/master/npm/webpack-preprocessor).
-This is included in Cypress by default, but if your project installs its own
-version of `@cypress/webpack-preprocessor` that is set up in your Cypress
-config, make sure it is version 5.15.0 or greater.
+The `@cypress/webpack-preprocessor` is included in Cypress by default, but if
+your project installs its own version in the Cypress configuration, make sure it
+is version `5.15.0` or greater.
 
 If using an older version of the webpack or a different preprocessor, you'll see
 an error that includes the following text:
 
-_Using require() or import() to include dependencies requires using the latest
-version of @cypress/webpack-preprocessor._
+_Using `require()` or `import()` to include dependencies requires enabling the
+`experimentalOriginDependencies` flag and using the latest version of
+`@cypress/webpack-preprocessor`._
+
+</Alert>
+
+<Alert type="warning">
+
+Using `require()` or `import()` within the callback from a `node_modules` plugin
+is not currently supported. We anticipate adding support with issue
+[#24976](https://github.com/cypress-io/cypress/issues/24976).
 
 </Alert>
 

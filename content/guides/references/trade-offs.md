@@ -22,7 +22,10 @@ to have. In a sense they prevent you from writing bad, slow, or flaky tests.
 - There will never be support for [multiple browser tabs](#Multiple-tabs).
 - You cannot use Cypress to drive
   [two browsers at the same time](#Multiple-browsers-open-at-the-same-time).
-- Each test is bound to a [single origin](#Same-origin).
+- Each test is bound to a single superdomain. Cross-origin navigation inside
+  tests can be enabled by using the [`cy.origin`](/api/commands/origin) command.
+  Please read our
+  [Cross Origin Testing Guide](/guides/guides/cross-origin-testing).
 
 #### Temporary trade-offs:
 
