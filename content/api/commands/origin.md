@@ -22,7 +22,10 @@ patterns commonly found in framebusting. When using the `cy.origin()` command,
 the third party code may also need to be modified for framebusting techniques.
 This can be enabled by setting the
 [`experimentalModifyObstructiveThirdPartyCode`](/guides/references/experiments)
-flag to `true` in the Cypress configuration.
+flag to `true` in the Cypress configuration. More information about this
+experimental flag can be found on our
+[Web Security](/guides/guides/web-security#Modifying-Obstructive-Third-Party-Code)
+page.
 
 </Alert>
 

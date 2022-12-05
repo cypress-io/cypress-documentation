@@ -324,6 +324,14 @@
             {
               "title": "Cross Browser Testing",
               "slug": "cross-browser-testing"
+            },
+            {
+              "title": "Cross Origin Testing",
+              "slug": "cross-origin-testing"
+            },
+            {
+              "title": "Web Security",
+              "slug": "web-security"
             }
           ]
         },
