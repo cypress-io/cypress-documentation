@@ -34,7 +34,7 @@ const config = {
     [
       'classic',
       /** @type {import('@docusaurus/preset-classic').Options} */
-      ({
+      {
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
           editUrl: 'https://github.com/cypress-io/cypress-docs/tree/master/',
@@ -56,7 +56,14 @@ const config = {
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
         },
-      }),
+        // un-comment for launch
+        // googleAnalytics: { 
+        //   trackingID: 'UA-59606812-1',
+        // },
+        // gtag: {
+        //   trackingID: 'GTM-KNKBWLD',
+        // }
+      },
     ],
   ],
 
