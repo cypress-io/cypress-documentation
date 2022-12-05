@@ -37,8 +37,8 @@ The name of the session used to retrieve data storage and cookie data.
 ### Clearing the all session data
 
 By default, Cypress will clear the current session data **before** each test
-when `testIsolation` is enabled. You can also remove all cached session
-data with `Cypress.session.clearAllSavedSessions()`.
+when `testIsolation` is enabled. You can also remove all cached session data
+with `Cypress.session.clearAllSavedSessions()`.
 
 ```js
 Cypress.session.clearAllSavedSessions()
@@ -69,8 +69,8 @@ writing your `cy.session()` command.
 
 Since this is an all-in-one helper of the `cy.getAllCookies()`,
 `cy.getAllLocalStorage()` and `cy.getAllSessionStorage()` commands, we generally
-recommend leveraging these commands for asserting the correct session data has been
-applied in the session validation block.
+recommend leveraging these commands for asserting the correct session data has
+been applied in the session validation block.
 
 ```js
 it('debug session', () => {
