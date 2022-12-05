@@ -824,7 +824,7 @@ generate random unique ids if an arbitrary name-space does not meet your needs.
 #### Why are all my Cypress commands failing after calling `cy.session()`?
 
 When
-[`testIsolation`](/guides/core-concepts/writing-and-organizing-tests#Test-Isolation)is
+[`testIsolation`](/guides/core-concepts/writing-and-organizing-tests#Test-Isolation) is
 enabled, ensure that you're calling [`cy.visit()`](/api/commands/visit) after
 calling `cy.session()`, otherwise your tests will be running on a blank page.
 
