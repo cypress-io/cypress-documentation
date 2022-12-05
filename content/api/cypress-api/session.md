@@ -13,9 +13,9 @@ command.
 Cypress.session.clearAllSavedSessions()
 // Clear all storage and cookie date across all origins associated with the current session.
 Cypress.session.clearCurrentSessionData()
-// Get all storage and cookie date across all origins associated with the current session.
+// Get all storage and cookie data across all origins associated with the current session.
 Cypress.session.getCurrentSessionData()
-// Get all storage and cookie date saved on the backend associated with the provided session id.
+// Get all storage and cookie data saved on the backend associated with the provided session id.
 Cypress.session.getSession(id)
 ```
 
@@ -30,7 +30,7 @@ Clearing all session and automatically re-running the spec
 
 **<Icon name="angle-right"></Icon> id** **_(String)_**
 
-The name of the session whom's data storage and cookie date you'd like to
+The name of the session whom's data storage and cookie data you'd like to
 retrieve.
 
 ## Examples
