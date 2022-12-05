@@ -310,6 +310,69 @@ cy.get('button')
    .then(res => { ...handle response... })
 ```
 
+#### `.within()`
+
+[`.within()`](/api/commands/within) now throws an error if it is passed multiple
+elements as the subject. This previously resulted in inconsistent behavior,
+where some commands would use all passed in elements, some would use only the
+first and ignore the rest, and `.screenshot()` would throw an error.
+
+If you were relying on the old behavior, you have several options depending on
+the desired result.
+
+The simplest option is to reduce the subject to a single element.
+
+```diff
+cy.get('tr')
++  .first() // Limit the subject to a single element before calling .within()
+  .within(() => {
+    cy.contains('Edit').click()
+  })
+```
+
+If you have multiple subjects and wish to run commands over the collection as a
+whole, you can alias the subject rather than use `.within()`.
+
+```diff
+cy.get('tr')
+-  .within(() => {
+-    cy.contains('foo')
+-    cy.contains('bar')
+-  })
++  .as('rows') // Store multiple elements as an alias
+
++cy.get('@rows').contains('foo')
++cy.get('@rows').contains('bar')
+```
+
+Or if you have a collection and want to run commands over every element, use
+`.each()` in conjunction with `.within()`.
+
+```diff
+cy.get('tr')
+-  .within(() => {
+-    cy.contains('Edit').should('have.attr', 'disabled')
+-  })
++  .each($tr => {
++    cy.wrap($tr).within(() => {
++      cy.contains('Edit').should('have.attr', 'disabled')
++    })
++  })
+```
+
+invoked from inside a `.should()` callback. This previously resulted in unusual
+and undefined behavior. If you wish to execute a series of commands on the
+yielded value, use`.then()` instead.
+
+```diff
+cy.get('button')
+-  .should(($button) => {
+
+    })
++  .then(api => api.makeARequest('http://example.com'))
+   .then(res => { ...handle response... })
+```
+
 #### `Cypress.Commands.overwrite()`
 
 In Cypress 12.0.0, we introduced a new command type, called queries. A query is

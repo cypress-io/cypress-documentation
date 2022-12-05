@@ -20,7 +20,9 @@ chain further commands that rely on the subject after `.within()`.
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.get('.list').within(($list) => {}) // Yield the `.list` and scope all commands within it
+cy.get('.list')
+  .first()
+  .within(($list) => {}) // Yield the first `.list` and scope all commands within it
 ```
 
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
@@ -28,6 +30,7 @@ cy.get('.list').within(($list) => {}) // Yield the `.list` and scope all command
 ```javascript
 cy.within(() => {}) // Errors, cannot be chained off 'cy'
 cy.getCookies().within(() => {}) // Errors, 'getCookies' does not yield DOM element
+cy.get('div').within(($divs) => {}) // Probably errors, because get('div') yields multiple elements
 ```
 
 ### Arguments
