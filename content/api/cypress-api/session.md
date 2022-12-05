@@ -69,8 +69,8 @@ writing your `cy.session()` command.
 
 Since this is an all-in-one helper of the `cy.getAllCookies()`,
 `cy.getAllLocalStorage()` and `cy.getAllSessionStorage()` commands, we generally
-recommend leverage the commands for asserting the correct session data has been
-applied in the session validation.
+recommend leveraging these commands for asserting the correct session data has been
+applied in the session validation block.
 
 ```js
 it('debug session', () => {
