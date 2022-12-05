@@ -149,4 +149,5 @@ We've written several other guides specifically about handling this situation.
 - [Web Security: Common Workarounds](/guides/guides/web-security#Common-Workarounds)
 - [Recipes: Logging In - Single Sign On](/examples/examples/recipes#Logging-In)
 - [Guides: Amazon Cognito Authentication](/guides/end-to-end-testing/amazon-cognito-authentication)
+- [Guides: Auth0 Authentication](/guides/end-to-end-testing/auth0-authentication)
 - [Guides: Okta Authentication](/guides/end-to-end-testing/okta-authentication)
