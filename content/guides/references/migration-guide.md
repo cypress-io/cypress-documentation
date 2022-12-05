@@ -82,8 +82,8 @@ it('validates the change', () => {
 })
 ```
 
-After migrating, when `testIsolation=true` by default, this flow would need to be
-contained within a single test. While the above practice has always been
+After migrating, when `testIsolation=true` by default, this flow would need to
+be contained within a single test. While the above practice has always been
 [discouraged](/guides/references/best-practices#Having-tests-rely-on-the-state-of-previous-tests)
 we know some users have historically written tests this way, often to get around
 the `same-origin` restrictions. But with [`cy.origin()`](/api/commands/origin)
@@ -132,9 +132,9 @@ describe('workflow', { testIsolation: false }, () => {
 })
 ```
 
-It is important to note that while disabling test isolation may improve the overall
-performance of end-to-end tests, it can cause state to "leak" between tests.
-This can make later tests dependent on the results of earlier tests, and
+It is important to note that while disabling test isolation may improve the
+overall performance of end-to-end tests, it can cause state to "leak" between
+tests. This can make later tests dependent on the results of earlier tests, and
 potentially cause misleading test failures. It is important to be extremely
 mindful of how tests are written when using this mode, and ensure that tests
 continue to run independently of one another.

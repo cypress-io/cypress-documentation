@@ -52,8 +52,8 @@ end-to-end testing at the `describe` level with the
 
 ## Test Isolation in End-to-End Testing
 
-Cypress supports enabling or disabling test isolation in end-to-end testing
-to describe if a suite of tests should run in a clean browser context or not.
+Cypress supports enabling or disabling test isolation in end-to-end testing to
+describe if a suite of tests should run in a clean browser context or not.
 
 ### Test Isolation Enabled
 
