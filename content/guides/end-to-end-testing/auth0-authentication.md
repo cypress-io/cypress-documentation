@@ -11,7 +11,7 @@ e2eSpecific: true
   [`cy.origin()`](/api/commands/origin)
 - Programmatically authenticate with [Auth0](https://auth0.com) via a custom
   Cypress command
-- Adapting your [Auth0](https://auth0.com) application for programmatic
+- Adapt your [Auth0](https://auth0.com) application for programmatic
   authentication during testing
 
 </Alert>
@@ -159,10 +159,10 @@ Cypress.Commands.add('loginToAuth0', (username: string, password: string) => {
   // Login on Auth0 (we'll add caching later).
   cy.origin(
     Cypress.env('auth0_domain'),
-    { username, password },
+    { args: { username, password } },
     ({ username, password }) => {
       cy.get('input#username').type(username)
-      cy.get('input#password').type(password)
+      cy.get('input#password').type(password, { log: false })
       cy.contains('button[value=default]', 'Continue').click()
     }
   )
@@ -221,7 +221,7 @@ Cypress.Commands.add('loginToAuth0', (username: string, password: string) => {
 
   const args = { username, password }
   cy.session(
-    args,
+    `auth0-${username}`,
     () => {
       // App landing page redirects to Auth0.
       cy.visit('/')
@@ -232,7 +232,7 @@ Cypress.Commands.add('loginToAuth0', (username: string, password: string) => {
         { args },
         ({ username, password }) => {
           cy.get('input#username').type(username)
-          cy.get('input#password').type(password)
+          cy.get('input#password').type(password, { log: false })
           cy.contains('button[value=default]', 'Continue').click()
         }
       )
@@ -260,7 +260,7 @@ Cypress.Commands.add('loginToAuth0', (username: string, password: string) => {
 Below is a command to programmatically login into [Auth0](https://auth0.com),
 using the
 [/oauth/token endpoint](https://auth0.com/docs/protocols/protocol-oauth2#token-endpoint)
-and set an item in localStorage with the authenticated users details, which we
+and set an item in `localStorage` with the authenticated users details, which we
 will use in our application code to verify we are authenticated under test.
 
 The `loginByAuth0Api` command will execute the following steps:
@@ -268,8 +268,8 @@ The `loginByAuth0Api` command will execute the following steps:
 1. Use the
    [/oauth/token endpoint](https://auth0.com/docs/protocols/protocol-oauth2#token-endpoint)
    to perform the programmatic login.
-2. Finally the `auth0Cypress` localStorage item is set with the `access token`,
-   `id_token` and user profile.
+2. Finally the `auth0Cypress` `localStorage` item is set with the
+   `access token`, `id_token` and user profile.
 
 ```jsx
 // cypress/support/commands.js
@@ -358,17 +358,6 @@ describe('Auth0', function () {
 })
 ```
 
-<Alert type="success">
-
-<strong class="alert-header">Try it out</strong>
-
-The
-[runnable version of this test](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/tests/ui-auth-providers/auth0.spec.ts)
-is in the
-[Cypress Real World App](https://github.com/cypress-io/cypress-realworld-app).
-
-</Alert>
-
 ## Adapting an Auth0 App for Testing
 
 <Alert type="info">
@@ -380,7 +369,11 @@ within Cypress tests. To use this practice it is assumed you are testing an app
 appropriately built or adapted to use Auth0.
 
 The following sections provides guidance on building or adapting an app to use
-Auth0 authentication.
+Auth0 authentication. Please note that if you are
+[logging in with `cy.origin()`](#Login-with-cy-origin) and your app is already
+successfully integrated with Auth0, you do not need to make any further changes
+to your app and the remainder of this guide should be regarded as purely
+informational.
 
 </Alert>
 
@@ -562,7 +555,7 @@ if (process.env.REACT_APP_AUTH0) {
 
 An update to our
 [AppAuth0.tsx component](https://github.com/cypress-io/cypress-realworld-app/blob/develop/src/containers/AppAuth0.tsx)
-is needed to conditionally use the `auth0Cypress` localStorage item.
+is needed to conditionally use the `auth0Cypress` `localStorage` item.
 
 In the code below, we conditionally apply a `useEffect` block based on being
 under test with Cypress (using `window.Cypress`).
