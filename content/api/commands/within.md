@@ -20,7 +20,9 @@ chain further commands that rely on the subject after `.within()`.
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.get('.list').within(($list) => {}) // Yield the `.list` and scope all commands within it
+cy.get('.list')
+  .first()
+  .within(($list) => {}) // Yield the first `.list` and scope all commands within it
 ```
 
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
@@ -28,6 +30,7 @@ cy.get('.list').within(($list) => {}) // Yield the `.list` and scope all command
 ```javascript
 cy.within(() => {}) // Errors, cannot be chained off 'cy'
 cy.getCookies().within(() => {}) // Errors, 'getCookies' does not yield DOM element
+cy.get('div').within(($divs) => {}) // Probably errors, because get('div') yields multiple elements
 ```
 
 ### Arguments
@@ -179,7 +182,8 @@ cy.get('form').within(($form) => {
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-<List><li>`.within()` requires being chained off a previous command.</li></List>
+- `.within()` requires being chained off a previous command that yields exactly
+  one DOM element.
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
@@ -211,10 +215,11 @@ outputs the following:
 
 ## History
 
-| Version                                       | Changes                                                 |
-| --------------------------------------------- | ------------------------------------------------------- |
-| [< 0.3.3](/guides/references/changelog#0-3-3) | `.within()` command added                               |
-| [5.4.0](/guides/references/changelog#5-4-0)   | fixed the yielded value to always be the parent element |
+| Version                                       | Changes                                                                          |
+| --------------------------------------------- | -------------------------------------------------------------------------------- |
+| [12.0.0](/guides/references/changelog#12-0-0) | `.within()` now throws an error when given more than one element as the subject. |
+| [5.4.0](/guides/references/changelog#5-4-0)   | fixed the yielded value to always be the parent element                          |
+| [< 0.3.3](/guides/references/changelog#0-3-3) | `.within()` command added                                                        |
 
 ## See also
 
