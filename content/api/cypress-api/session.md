@@ -77,7 +77,7 @@ it('debug session', () => {
     cy.session('id', () => {
         ...
     })
-    cy.then(async () => {
+    .then(async () => {
         const sessionData = await Cypress.session.getCurrentSessionData()
         cy.debug()s
     })
@@ -98,7 +98,7 @@ it('debug session', () => {
     cy.session('id', () => {
         ...
     })
-    cy.then(async () => {
+    .then(async () => {
         const sessionData = await Cypress.session.getSession('id')
         cy.debug()
     })
