@@ -158,10 +158,10 @@ mount without any issues.
 ### Your First Component Test
 
 To get started, go back to the Cypress test app and, in the "Create your first
-spec" screen, click "Create from Vue component".
+spec" screen, click "Create from component".
 
-A modal will pop up listing all the components that is found in your app. Select
-the **Stepper.vue** component:
+A modal will pop up listing all the components that are found in your app.
+Select the **Stepper.vue** component:
 
 <DocsImage 
   src="/img/guides/component-testing/create-from-component-vue.jpg">
@@ -177,7 +177,7 @@ import Stepper from './Stepper.vue'
 
 describe('<Stepper />', () => {
   it('renders', () => {
-    // see: https://test-utils.vuejs.org/guide/
+    // see: https://on.cypress.io/mounting-vue
     cy.mount(Stepper)
   })
 })

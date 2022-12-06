@@ -96,6 +96,8 @@ When the test runner appears, it won't find any specs because we haven't created
 any yet. However, we don't currently have a component, either. Let's change
 that!
 
+<!-- TODO: REPLACE THIS WITH SCREENSHOT THAT SHOWS CREATE FROM COMPONENT CARD -->
+
 <DocsImage 
   src="/img/guides/component-testing/create-your-first-spec.jpg"> </DocsImage>
 
@@ -159,17 +161,30 @@ mount without any issues.
 
 ### Your First Component Test
 
-To get started, create a spec file in the same directory as the **Stepper.jsx**
-file and name it **Stepper.cy.jsx**. Then paste the following into it:
+To get started, go back to the Cypress test app and, in the "Create your first
+spec" screen, click "Create from component".
+
+A modal will pop up listing all the component files that are found in your app.
+Expand the row for **Stepper.jsx** and select the **Stepper** component:
+
+<!-- TODO: REPLACE THIS WITH CREATE FROM REACT SCREENSHOT -->
+
+<DocsImage 
+  src="/img/guides/component-testing/create-from-component-vue.jpg">
+</DocsImage>
+
+A spec file was created at **src/component/Stepper.cy.jsx**:
 
 <code-group>
 <code-block label="src/components/Stepper.cy.jsx" active>
 
 ```js
+import React from 'react'
 import Stepper from './Stepper'
 
-describe('<Stepper>', () => {
-  it('mounts', () => {
+describe('<Stepper />', () => {
+  it('renders', () => {
+    // see: https://on.cypress.io/mounting-react
     cy.mount(<Stepper />)
   })
 })
