@@ -2,7 +2,414 @@
 title: Migration Guide
 ---
 
-## Migrating to Cypress version 11.0
+## Migrating to Cypress 12.0
+
+This guide details the changes and how to change your code to migrate to Cypress
+version 12.0.
+[See the full changelog for version 12.0](/guides/references/changelog#12-0-0).
+
+The Session and Origin experiment has been released as General Availability
+(GA), meaning that we have deemed this experiment to be feature complete and
+free of issues in the majority of use cases. With releasing this as GA, the
+`experimentalSessionAndOrigin` flag has been removed, the
+[`cy.origin()`](<(/api/commands/origin)>) and
+[`cy.session()`](/api/commands/session) commands are generally available and
+[Test Isolation](/guides/core-concepts/writing-and-organizing-tests#Test-Isolation)
+is enabled by default.
+
+### Node.js 14+ support
+
+Cypress comes bundled with its own
+[Node.js version](https://github.com/cypress-io/cypress/blob/develop/.node-version).
+However, installing the `cypress` npm package uses the Node.js version installed
+on your system.
+
+Node.js 12 reached its end of life on April 30, 2022.
+[See Node's release schedule](https://github.com/nodejs/Release). This Node.js
+version will no longer be supported when installing Cypress. The minimum Node.js
+version supported to install Cypress is Node.js 14+.
+
+### Test Isolation
+
+The
+[`testIsolation`](/guides/core-concepts/writing-and-organizing-tests#Test-Isolation)
+config option is enabled by default. This means Cypress resets the browser
+context _before_ each test by:
+
+- clearing the dom state by visiting `about:blank`
+- clearing [cookies](/api/cypress-api/cookies) in all domains
+- clearing
+  [`localStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)
+  in all domains
+- clearing
+  [`sessionStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage)
+  in all domains
+
+Test suites that relied on the application to persist between tests may have to
+be updated to revisit their application and rebuild the browser state for each
+test that needs it.
+
+Before this change, it was possible to write tests such that you could rely on
+the application (i.e. DOM state) to persist between tests. For example you could
+log in to a CMS in the first test, change some content in the second test,
+verify the new version is displayed on a different URL in the third, and log out
+in the fourth.
+
+Here's a simplified example of such a test strategy.
+
+<Badge type="danger">Before</Badge> Multiple small tests against different
+origins
+
+```js
+it('logs in', () => {
+  cy.visit('https://supersecurelogons.com')
+  cy.get('input#password').type('Password123!')
+  cy.get('button#submit').click()
+})
+
+it('updates the content', () => {
+  // already on page redirect from clicking button#submit
+  cy.get('#current-user').contains('logged in')
+  cy.get('button#edit-1').click()
+  cy.get('input#title').type('Updated title')
+  cy.get('button#submit').click()
+  cy.get('.toast').type('Changes saved!')
+})
+
+it('validates the change', () => {
+  cy.visit('/items/1')
+  cy.get('h1').contains('Updated title')
+})
+```
+
+After migrating, when `testIsolation=true` by default, this flow would need to
+be contained within a single test. While the above practice has always been
+[discouraged](/guides/references/best-practices#Having-tests-rely-on-the-state-of-previous-tests)
+we know some users have historically written tests this way, often to get around
+the `same-origin` restrictions. But with [`cy.origin()`](/api/commands/origin)
+you no longer need these kind of brittle hacks, as your multi-origin logic can
+all reside in a single test, like the following.
+
+<Badge type="success">After</Badge> One big test using `cy.origin()`
+
+```js
+it('securely edits content', () => {
+  cy.origin('supersecurelogons.com', () => {
+    cy.visit('https://supersecurelogons.com')
+    cy.get('input#password').type('Password123!')
+    cy.get('button#submit').click()
+  })
+
+  cy.origin('mycms.com', () => {
+    cy.url().should('contain', 'cms')
+    cy.get('#current-user').contains('logged in')
+    cy.get('button#edit-1').click()
+    cy.get('input#title').type('Updated title')
+    cy.get('button#submit').click()
+    cy.get('.toast').type('Changes saved!')
+  })
+
+  cy.visit('/items/1')
+  cy.get('h1').contains('Updated title')
+})
+```
+
+The just-released `cy.session()` command can be used to setup and cache cookies,
+local storage and session storage between tests to easily re-establish the
+previous (or common) browser contexts needed in a suite. This command will run
+setup on its initial execution and will restore the saved browser state on each
+sequential command execution. This command reduces the need for repeated
+application logins, while users also benefit from the test isolation guardrails
+to write independent, reliable and deterministic tests from the start.
+
+If for whatever reason you still need to persist the dom and browser context
+between tests, you can disable test isolation by setting `testIsolation=false`
+on the root configuration or at the suite-level. For example:
+
+```js
+describe('workflow', { testIsolation: false }, () => {
+  ...
+})
+```
+
+It is important to note that while disabling test isolation may improve the
+overall performance of end-to-end tests, it can cause state to "leak" between
+tests. This can make later tests dependent on the results of earlier tests, and
+potentially cause misleading test failures. It is important to be extremely
+mindful of how tests are written when using this mode, and ensure that tests
+continue to run independently of one another.
+
+<Badge type="danger">For example</Badge>the following tests are not independent
+nor deterministic:
+
+```js
+describe('workflow', { testIsolation: false }, () => {
+  it('logs in', () => {
+    cy.visit('my-app.com/log-in)
+    cy.get('username').type('User1')
+    cy.get('password').type(Cypress.env('User1_password'))
+    cy.get('button#login').click()
+    cy.contains('User1')
+  })
+
+  it('clicks user profile', () => {
+    cy.get('User1').find('#profile_avatar).click()
+    cy.contains('Email Preferences')
+  })
+
+  it('updates profile', () => {
+    cy.get('button#edit')
+    cy.get('email').type('user1@email.com')
+    cy.get('button#save').click()
+  })
+})
+```
+
+In the above example, each test is relying on the previous test to be
+_successful_ to correctly execute. If at any point, the first or second test
+fails, the sequential test(s) will automatically fail and provide unreliable
+debugging errors since the errors are representative of the previous test.
+
+The best way to ensure your tests are independent is to add a `.only()` to your
+test and verify it can run successfully without the test before it.
+
+### Behavior Changes in Alias Resolution
+
+Cypress always re-queries aliases when they are referenced. This can result in
+certain tests that used to pass could start to fail. For example,
+
+```js
+cy.findByTestId('popover')
+  .findByRole('button', { expanded: true })
+  .as('button')
+  .click()
+
+cy.get('@button').should('have.attr', 'aria-expanded', 'false')
+```
+
+previously passed, because the initial button was collapsed when first queried,
+and then later expanded. However, in Cypress 12, this test fails because the
+alias is always re-queried from the DOM, effectively resulting in the following
+execution:
+
+```js
+cy.findByTestId('popover').findByRole('button', { expanded: true }).click()
+
+cy.findByTestId('popover')
+  .findByRole('button', { expanded: true }) // A button which matches here (is expanded)...
+  .should('have.attr', 'aria-expanded', 'false') // ...will never pass this assertion.
+```
+
+You can rewrite tests like this to be more specific; in our case, we changed the
+alias to be the first button rather than the unexpanded button.
+
+```js
+cy.findByTestId('popover').findAllByRole('button').first().as('button')
+```
+
+### Command / Cypress API Changes
+
+#### `Cypress.Cookies.defaults` and `Cypress.Cookies.preserveOnce`
+
+The `Cypress.Cookies.defaults` and `CypressCookies.preserveOnce` APIs been
+removed. Use the [`cy.session()`](/api/commands/session) command to preserve
+cookies (and local and session storage) between tests.
+
+```diff
+describe('Dashboard', () => {
+  beforeEach(() => {
+-    cy.login()
+-    Cypress.Cookies.preserveOnce('session_id', 'remember_token')
++    cy.session('unique_identifier', cy.login, {
++       validate () {
++        cy.getCookies().should('have.length', 2)
++       },
++       cacheAcrossSpecs: true
++    })
+  })
+```
+
+#### `cy.server()`, `cy.route()` and `Cypress.Server.defaults`
+
+The` cy.server()` and` cy.route()` commands and the `Cypress.server.defaults`
+API has been removed. Use the [`cy.intercept()`](/api/commands/intercept)
+command instead.
+
+```diff
+  it('can encode + decode headers', () => {
+-   Cypress.Server.defaults({
+-     delay: 500,
+-     method: 'GET',
+-   })
+-   cy.server()
+-   cy.route(/api/, () => {
+-      return {
+-        'test': 'We’ll',
+-      }
+-    }).as('getApi')
++   cy.intercept('GET', /api/, (req) => {
++      req.on('response', (res) => {
++        res.setDelay(500)
++      })
++      req.body.'test': 'We’ll'
++    }).as('getApi')
+    cy.visit('/index.html')
+    cy.window().then((win) => {
+      const xhr = new win.XMLHttpRequest
+      xhr.open('GET', '/api/v1/foo/bar?a=42')
+      xhr.send()
+    })
+
+    cy.wait('@getApi')
+-   .its('url').should('include', 'api/v1')
++   .its('request.url').should('include', 'api/v1')
+  })
+```
+
+#### `.invoke()`
+
+The [`.invoke()`](/api/commands/invoke) command now throws an error if the
+function returns a promise. If you wish to call a method that returns a promise
+and wait for it to resolve, use [`.then()`](/api/commands/then) instead of
+`.invoke()`.
+
+```diff
+cy.wrap(myAPI)
+-  .invoke('makeARequest', 'http://example.com')
++  .then(api => api.makeARequest('http://example.com'))
+   .then(res => { ...handle response... })
+```
+
+If `.invoke()` is followed by additional commands or assertions, it will call
+the named function multiple times. This has the benefit that the chained
+assertions can more reliably use the function's return value.
+
+If this behavior is undesirable because you expect the function to be invoked
+only once, break the command chain and move the chained commands and/or
+assertions to their own chain. For example, rewrite
+
+```diff
+- cy.get('input').invoke('val', 'text').type('newText')
++ cy.get('input').invoke('val', 'text')
++ cy.get('input').type('newText')
+```
+
+#### `.should()`
+
+The [`.should()`](/api/commands/should) assertion now throws an error if Cypress
+commands are invoked from inside a `.should()` callback. This previously
+resulted in unusual and undefined behavior. If you wish to execute a series of
+commands on the yielded value, use`.then()` instead.
+
+```diff
+cy.get('button')
+-  .should(($button) => {
+
+    })
++  .then(api => api.makeARequest('http://example.com'))
+   .then(res => { ...handle response... })
+```
+
+#### `.within()`
+
+The [`.within()`](/api/commands/within) command now throws an error if it is
+passed multiple elements as the subject. This previously resulted in
+inconsistent behavior, where some commands would use all passed in elements,
+some would use only the first and ignore the rest, and
+[`.screenshot()`](/api/commands/screenshot) would throw an error if used inside
+a `.within()` block with multiple elements.
+
+If you were relying on the old behavior, you have several options depending on
+the desired result.
+
+The simplest option is to reduce the subject to a single element.
+
+```diff
+cy.get('tr')
++  .first() // Limit the subject to a single element before calling .within()
+  .within(() => {
+    cy.contains('Edit').click()
+  })
+```
+
+If you have multiple subjects and wish to run commands over the collection as a
+whole, you can alias the subject rather than use `.within()`.
+
+```diff
+cy.get('tr')
+-  .within(() => {
+-    cy.get('td').should('have.class', 'foo')
+-    cy.get('td').should('have.class', 'bar')
+-  })
++  .as('rows') // Store multiple elements as an alias
+
++cy.get('@rows').find('td').should('have.class', 'foo')
++cy.get('@rows').find('td').should('have.class', 'bar')
+```
+
+Or if you have a collection and want to run commands over every element, use
+`.each()` in conjunction with `.within()`.
+
+```diff
+cy.get('tr')
+-  .within(() => {
+-    cy.contains('Edit').should('have.attr', 'disabled')
+-  })
++  .each($tr => {
++    cy.wrap($tr).within(() => {
++      cy.contains('Edit').should('have.attr', 'disabled')
++    })
++  })
+```
+
+#### `Cypress.Commands.overwrite()`
+
+In Cypress 12.0.0, we introduced a new command type, called queries. A query is
+a small and fast command for getting data from the window or DOM. This
+distinction is important because Cypress can retry chains of queries, keeping
+the yielded subject up-to-date as a page rerenders.
+
+With the introduction of query commands, the following commands have been
+re-categorized and can no longer be overwritten with
+[`Cypress.Commands.overwrite()`](api/cypress-api/custom-commands#Overwrite-Existing-Commands):
+
+- [`.as()`](/api/commands/as)
+- [`.children()`](/api/commands/children)
+- [`.closest()`](/api/commands/closest)
+- [`.contains()`](/api/commands/contains)
+- [`cy.debug()`](/api/commands/debug)
+- [`cy.document()`](/api/commands/document)
+- [`.eq()`](/api/commands/eq)
+- [`.filter()`](/api/commands/filter)
+- [`.find()`](/api/commands/find)
+- [`.first()`](/api/commands/first)
+- [`.focused()`](/api/commands/focused)
+- [`.get()`](/api/commands/get)
+- [`.hash()`](/api/commands/hash)
+- [`.its()`](/api/commands/its)
+- [`.last()`](/api/commands/last)
+- [`cy.location()`](/api/commands/location)
+- [`.next()`](/api/commands/next)
+- [`.nextAll()`](/api/commands/nextall)
+- [`.not()`](/api/commands/not)
+- [`.parent()`](/api/commands/parent)
+- [`.parents()`](/api/commands/parents)
+- [`.parentsUntil()`](/api/commands/parentsuntil)
+- [`.prev()`](/api/commands/prev)
+- [`.prevUntil()`](/api/commands/prevuntil)
+- [`cy.root()`](/api/commands/root)
+- [`.shadow()`](/api/commands/shadow)
+- [`.siblings()`](/api/commands/siblings)
+- [`cy.title()`](/api/commands/title)
+- [`cy.url()`](/api/commands/url)
+- [`cy.window()`](/api/commands/window)
+
+If you were previously overwriting one of the above commands, try adding your
+version as a new command using
+[`Cypress.Commands.add()`](api/cypress-api/custom-commands) under a different
+name.
+
+## Migrating to Cypress 11.0
 
 This guide details the changes and how to change your code to migrate to Cypress
 version 11.0.
@@ -268,7 +675,7 @@ export default defineConfig({
 Vite 3+ users could make use of the
 [`mergeConfig`](https://vitejs.dev/guide/api-javascript.html#mergeconfig) API.
 
-## Migrating to Cypress version 10.0
+## Migrating to Cypress 10.0
 
 This guide details the changes and how to change your code to migrate to Cypress
 version 10.0.

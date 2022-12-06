@@ -1,0 +1,95 @@
+---
+title: getAllSessionStorage
+---
+
+Get
+[`sessionStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage)
+data for all origins with which the test has interacted.
+
+## Syntax
+
+```javascript
+cy.getAllSessionStorage()
+cy.getAllSessionStorage(options)
+```
+
+### Usage
+
+**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+
+```javascript
+cy.getAllSessionStorage()
+```
+
+### Arguments
+
+**<Icon name="angle-right"></Icon> options** **_(Object)_**
+
+Pass in an options object to change the default behavior of
+`cy.getAllSessionStorage()`.
+
+| Option | Default | Description                                                                              |
+| ------ | ------- | ---------------------------------------------------------------------------------------- |
+| `log`  | `true`  | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
+
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+
+`cy.getAllSessionStorage()` yields an object where the keys are origins and the
+values are key-value pairs of `sessionStorage` data.
+
+For example, if `key1` is set to `value1` on `https://example.com` and `key2` is
+set to `value2` on `https://other.com`, `cy.getAllSessionStorage()` will yield:
+
+```js
+{
+  'https://example.com': {
+    key1: 'value1',
+  },
+  'https://other.com': {
+    key2: 'value2',
+  },
+}
+```
+
+## Examples
+
+### Get all sessionStorage
+
+```javascript
+cy.visit('https://example.com', {
+  onBeforeLoad(win) {
+    win.sessionStorage.setItem('key', 'value')
+  },
+})
+
+cy.getAllSessionStorage().then((result) => {
+  expect(result).to.deep.equal({
+    'https://example.com': {
+      key: 'value',
+    },
+  })
+})
+```
+
+## Rules
+
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+
+- `cy.getAllSessionStorage()` requires being chained off of `cy`.
+
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+
+<List><li>`cy.getAllSessionStorage()` will only run assertions you have chained
+once, and will not [retry](/guides/core-concepts/retry-ability).</li></List>
+
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+
+- `cy.getAllSessionStorage()` cannot time out.
+
+## See also
+
+- [`cy.clearAllLocalStorage()`](/api/commands/clearalllocalstorage)
+- [`cy.clearAllSessionStorage()`](/api/commands/clearallsessionstorage)
+- [`cy.clearCookies()`](/api/commands/clearcookies)
+- [`cy.clearsessionStorage()`](/api/commands/clearsessionStorage)
+- [`cy.getAllLocalStorage()`](/api/commands/getalllocalstorage)

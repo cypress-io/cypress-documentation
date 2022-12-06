@@ -43,9 +43,8 @@ with Cypress.
 ### Visual Studio Code
 
 - [Cypress Fixture-IntelliSense](https://marketplace.visualstudio.com/items?itemName=JosefBiehler.cypress-fixture-intellisense):
-  Supports your [cy.fixture()](/api/commands/fixture) and
-  [`cy.route(..., "fixture:")`](/api/commands/route) commands by providing
-  intellisense for existing fixtures.
+  Supports your [cy.fixture()](/api/commands/fixture) by providing intellisense
+  for existing fixtures.
 - [Cypress Helper](https://marketplace.visualstudio.com/items?itemName=Shelex.vscode-cy-helper):
   Various helpers and commands for integration with Cypress.
 - [Cypress Snippets](https://marketplace.visualstudio.com/items?itemName=andrew-codes.cypress-snippets):

@@ -140,7 +140,7 @@ For more options regarding screenshots, view the
 
 | Option                  | Default                              | Description                                                                                                                                                                                                                                                                                                                                                        |
 | ----------------------- | ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `chromeWebSecurity`     | `true`                               | Whether to enable Chromium-based browser's Web Security for same-origin policy and insecure mixed content. [Read more about Web Security](/guides/guides/web-security).                                                                                                                                                                                            |
+| `chromeWebSecurity`     | `true`                               | Whether to enable Chromium-based browser's Web Security for same-origin policy and insecure mixed content.                                                                                                                                                            |
 | `blockHosts`            | `null`                               | A String or Array of hosts that you wish to block traffic for. [Please read the notes for examples on using this.](#blockHosts)                                                                                                                                                                                                                                    |
 | `modifyObstructiveCode` | `true`                               | Whether Cypress will search for and replace obstructive JS code in `.js` or `.html` files. [Please read the notes for more information on this setting.](#modifyObstructiveCode)                                                                                                                                                                                   |
 | `userAgent`             | `null`                               | Enables you to override the default user agent the browser sends in all request headers. User agent values are typically used by servers to help identify the operating system, browser, and browser version. See [User-Agent MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent) for example user agent values.              |
@@ -200,16 +200,16 @@ creating `e2e` and `component` objects inside your Cypress configuration.
 These options are available to be specified inside the `e2e` configuration
 object:
 
-| Option                         | Default                               | Description                                                                                                                                                                                                                                                               |
-| ------------------------------ | ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `baseUrl`                      | `null`                                | URL used as prefix for [`cy.visit()`](/api/commands/visit) or [`cy.request()`](/api/commands/request) command's URL.                                                                                                                                                      |
-| `setupNodeEvents`              | `null`                                | Function in which node events can be registered and config can be modified. Takes the place of the (removed) pluginFile option. [Please read the notes for examples on using this.](#setupNodeEvents)                                                                     |
-| `supportFile`                  | `cypress/support/e2e.{js,jsx,ts,tsx}` | Path to file to load before spec files load. This file is compiled and bundled. (Pass `false` to disable)                                                                                                                                                                 |
-| `specPattern`                  | `cypress/e2e/**/*.cy.{js,jsx,ts,tsx}` | A String or Array of glob patterns of the test files to load.                                                                                                                                                                                                             |
-| `excludeSpecPattern`           | `*.hot-update.js`                     | A String or Array of glob patterns used to ignore test files that would otherwise be shown in your list of tests. [Please read the notes on using this.](#excludeSpecPattern)                                                                                             |
-| `experimentalSessionAndOrigin` | `false`                               | Enables cross-origin and improved session support, including the [`cy.origin()`](/api/commands/origin) and [`cy.session()`](/api/commands/session) commands. This enables `testIsolation=on` by default. Only available in end-to-end testing.                            |
-| `slowTestThreshold`            | `10000`                               | Time, in milliseconds, to consider a test "slow" during `cypress run`. A slow test will display in orange text in the default reporter.                                                                                                                                   |
-| `testIsolation`                | null                                  | The [test isolation level](/guides/core-concepts/writing-and-organizing-tests#Test-Isolation) applied to ensure a clean slate between tests. This option is only available when `experimentalSessionAndOrigin=true`, then it defaults to `on`. Options are `on` or `off`. |
+| Option               | Default                               | Description                                                                                                                                                                                           |
+| -------------------- | ------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `baseUrl`            | `null`                                | URL used as prefix for [`cy.visit()`](/api/commands/visit) or [`cy.request()`](/api/commands/request) command's URL.                                                                                  |
+| `setupNodeEvents`    | `null`                                | Function in which node events can be registered and config can be modified. Takes the place of the (removed) pluginFile option. [Please read the notes for examples on using this.](#setupNodeEvents) |
+| `supportFile`        | `cypress/support/e2e.{js,jsx,ts,tsx}` | Path to file to load before spec files load. This file is compiled and bundled. (Pass `false` to disable)                                                                                             |
+| `specPattern`        | `cypress/e2e/**/*.cy.{js,jsx,ts,tsx}` | A String or Array of glob patterns of the test files to load.                                                                                                                                         |
+| `excludeSpecPattern` | `*.hot-update.js`                     | A String or Array of glob patterns used to ignore test files that would otherwise be shown in your list of tests. [Please read the notes on using this.](#excludeSpecPattern)                         |
+| `slowTestThreshold`  | `10000`                               | Time, in milliseconds, to consider a test "slow" during `cypress run`. A slow test will display in orange text in the default reporter.                                                               |
+| `testIsolation`        | `true`                      | Whether or not  [test isolation](/guides/core-concepts/writing-and-organizing-tests#Test-Isolation) is enabled to ensure a clean browser context between tests. |
+| Option                         | Default                               | Description                                    |
 | `experimentalRunAllSpecs`      | `false`                               | Enables the "Run All Specs" UI feature, allowing the execution of multiple specs sequentially.                                                                                                                                                                            |
 
 :::cypress-config-example{noJson}
@@ -759,6 +759,9 @@ not** implement these security measures. Additionally it's possible that the
 patterns we search for may accidentally rewrite valid JS code. If that's the
 case, please disable this option.
 
+Details for `experimentalModifyObstructiveThirdPartyCode` can be found
+[here](/guides/guides/web-security#Modifying-Obstructive-Third-Party-Code).
+
 ### setupNodeEvents
 
 The `setupNodeEvents` function allows you to tap into, modify, or extend the
@@ -852,6 +855,7 @@ DEBUG=cypress:cli,cypress:server:specs
 
 | Version                                       | Changes                                                                               |
 | --------------------------------------------- | ------------------------------------------------------------------------------------- |
+| [11.0.0](/guides/references/changelog#11-0-0) | Removed `e2e.experimentalSessionAndOrigin` option.                                    |
 | [10.4.0](/guides/references/changelog#10-4-0) | Added `e2e.testIsolation` option.                                                     |
 | [10.0.0](/guides/references/changelog#10-0-0) | Reworked page to support new `cypress.config.js` and deprecated `cypress.json` files. |
 | [8.7.0](/guides/references/changelog#8-7-0)   | Added `slowTestThreshold` option.                                                     |

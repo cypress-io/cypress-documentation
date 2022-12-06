@@ -21,13 +21,12 @@ cy.contains('ul').end() // Yield 'null' instead of 'ul' element
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
 
 ```javascript
-cy.end() // Does not make sense to chain off 'cy'
+cy.end()
 ```
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`.end()` yields `null`.</li><li>`.end()` cannot be chained
-further.</li></List>
+- `.end()` yields `null`.
 
 ## Examples
 

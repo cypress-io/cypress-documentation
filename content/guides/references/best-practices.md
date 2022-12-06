@@ -224,8 +224,8 @@ to assign the return value of Commands with `const`, `let`, or `var`.
 <Alert type="success">
 
 <Icon name="check-circle" color="green"></Icon> **Best Practice:** Use
-[closures to access and store](/guides/core-concepts/variables-and-aliases) what
-Commands yield you.
+[aliases and closures to access and store](/guides/core-concepts/variables-and-aliases)
+what Commands yield you.
 
 </Alert>
 
@@ -242,6 +242,10 @@ cy.visit('https://example.cypress.io')
 
 // nope, fails
 a.first().click()
+
+// Instead, do this.
+cy.get('a').as('links')
+cy.get('@links').first().click()
 ```
 
 <Alert type="info">
@@ -279,39 +283,58 @@ to visit or interact with sites or servers you do not control.
 <Alert type="success">
 
 <Icon name="check-circle" color="green"></Icon> **Best Practice:** Only test
-what you control. Try to avoid requiring a 3rd party server. When necessary,
-always use [`cy.request()`](/api/commands/request) to talk to 3rd party servers
-via their APIs.
+what you control. Try to avoid requiring a 3rd party server. When necessary, use
+[`cy.request()`](/api/commands/request) to talk to 3rd party servers via their
+APIs. If possible, cache results via [`cy.session()`](/api/commands/session) to
+avoid repeat visits.
 
 </Alert>
 
 One of the first things many of our users attempt to do is involve 3rd party
-servers in their tests.
+servers or services in their tests.
 
-You may want to access 3rd party servers in several situations:
+You may want to access 3rd party services in several situations:
 
 1. Testing log in when your app uses another provider via OAuth.
 2. Verifying your server updates a 3rd party server.
 3. Checking your email to see if your server sent a "forgot password" email.
 
-Initially you may be tempted to use [`cy.visit()`](/api/commands/visit) or use
-Cypress to traverse to the 3rd party login window.
+Most of the time, these situations can be safely tested with
+[`cy.visit()`](/api/commands/visit) and [`cy.origin()`](/api/commands/origin).
+However, you will only want to utilize these commands for resources in your
+control, either by controlling the domain or hosted instance. These use cases
+are common for:
 
-However, you should **never** use your UI or visit a 3rd party site when testing
-because:
+- Authentication as a service platforms, such as Auth0, Okta, Microsoft, AWS
+  Cognito, and others via username/password authentication. These domains and
+  service instances are usually owned and controlled by you or your
+  organization.
+- CMS instances, such as a Contentful or Wordpress instance.
+- Other types of services under a domain in which you control.
 
-- It is incredibly time consuming and slows down your tests.
+Other services, such as social logins through popular media providers, are not
+recommended. Social logins will likely work, especially if run locally. However,
+we consider this a bad practice and do not recommend it because:
+
+- It is incredibly time consuming and slows down your tests (unless using
+  [`cy.session()`](/api/commands/session)).
 - The 3rd party site may have changed or updated its content.
 - The 3rd party site may be having issues outside of your control.
 - The 3rd party site may detect you are testing via a script and block you.
+- The 3rd party site might have policies against automated login, leading to
+  banning of accounts.
+- The 3rd party site might detect you are a bot, and provide mechanisms such as
+  two-factor authentication, captchas, and other means to prevent automation.
+  This is common with continuous integration platforms and general automation.
 - The 3rd party site may be running A/B campaigns.
 
 Let's look at a few strategies for dealing with these situations.
 
 ### When logging in:
 
-Many OAuth providers run A/B experiments, which means that their login screen is
-dynamically changing. This makes automated testing difficult.
+Many OAuth providers, especially social logins, run A/B experiments, which means
+that their login screen is dynamically changing. This makes automated testing
+difficult.
 
 Many OAuth providers also throttle the number of web requests you can make to
 them. For instance, if you try to test Google, Google will **automatically**
@@ -324,19 +347,27 @@ affect other tests downstream.
 
 **Here are potential solutions to alleviate these problems:**
 
-1. [Stub](/api/commands/stub) out the OAuth provider and bypass using their UI
-   altogether. You could trick your application into believing the OAuth
-   provider has passed its token to your application.
-2. If you **must** get a real token you can use
-   [`cy.request()`](/api/commands/request) and use the **programmatic** API that
-   your OAuth provider provides. These APIs likely change **more** infrequently
-   and you avoid problems like throttling and A/B campaigns.
-3. Instead of having your test code bypass OAuth, you could also ask your server
+1. Use another platform that you control to log in with username and password
+   via [`cy.origin()`](/api/commands/origin). This likely guarantees that you
+   will not run into the problems listed above, while still being able to
+   automate your login flow. You can reduce the amount of authentication
+   requests by utilizing [`cy.session()`](/api/commands/session).
+2. [Stub](/api/commands/stub) out the OAuth provider and bypass it using their
+   UI altogether if [`cy.origin()`](/api/commands/origin) is not an option. You
+   could trick your application into believing the OAuth provider has passed its
+   token to your application.
+3. If you **must** get a real token and [`cy.origin()`](/api/commands/origin) is
+   not an option, you can use [`cy.request()`](/api/commands/request) and use
+   the **programmatic** API that your OAuth provider provides. These APIs likely
+   change **more** infrequently and you avoid problems like throttling and A/B
+   campaigns.
+4. Instead of having your test code bypass OAuth, you could also ask your server
    for help. Perhaps all an OAuth token does is generate a user in your
    database. Oftentimes OAuth is only useful initially and your server
    establishes its own session with the client. If that is the case, use
    [`cy.request()`](/api/commands/request) to get the session directly from your
-   server and bypass the provider altogether.
+   server and bypass the provider altogether if
+   [`cy.origin()`](/api/commands/origin) is not an option.
 
 <Alert type="info">
 
@@ -385,7 +416,7 @@ email's functionality and visual style:
   alt="The test finds and clicks the Confirm registration button"></DocsImage>
 
 3. In other cases, you should try using [`cy.request()`](/api/commands/request)
-   command to query the an endpoint on your server that tells you what email has
+   command to query the endpoint on your server that tells you what email has
    been queued or delivered. That would give you a programmatic way to know
    without involving the UI. Your server would have to expose this endpoint.
 4. You could also use `cy.request()` to a 3rd party email recipient server that

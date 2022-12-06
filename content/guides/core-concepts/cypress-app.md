@@ -171,9 +171,8 @@ the Application or Component Under Test, and exploring its DOM.
 
 The left-hand side of the Test Runner is a visual representation of your test
 suite. Each test block is properly nested and each test, when clicked, displays
-every Cypress command and assertion executed within the test's block as well as
-any command or assertion executed in relevant `before`, `beforeEach`,
-`afterEach`, and `after` hooks.
+every Cypress command executed within the test's block as well as any commands
+executed in relevant `before`, `beforeEach`, `afterEach`, and `after` hooks.
 
 <DocsImage src="/img/guides/core-concepts/cypress-app/command-log.png" alt="Cypress app" width-600></DocsImage>
 
@@ -187,10 +186,9 @@ file where the code is located. Clicking on this link will open the file in your
 
 ### Time traveling
 
-Each command and assertion, when hovered over, restores the Application or
-Component Under Test (right-hand side) to the state it was in when that command
-executed. This allows you to **time travel** back to previous states when
-testing.
+Each command, when hovered over, restores the Application or Component Under
+Test (right-hand side) to the state it was in when that command executed. This
+allows you to **time travel** back to previous states when testing.
 
 <Alert type="info">
 
@@ -218,10 +216,10 @@ the URL that was present when the snapshot was taken.
 
 ### Pinning snapshots
 
-Each command, assertion, or error, when clicked on, displays extra information
-in the dev tools console. Clicking also **pins** the Application or Component
-Under Test (right-hand side) to its previous state, or **snapshot**, when the
-command executed.
+Each command, when clicked on, displays extra information in the dev tools
+console. Clicking also **pins** the Application or Component Under Test
+(right-hand side) to its previous state, or **snapshot**, when the command
+executed.
 
 In the following example, clicking on the `CLICK` command highlights it in
 purple, and does three other things worth noting:
@@ -547,7 +545,7 @@ debugging tools to help you understand a test. You can:
 
 ### Console output
 
-Besides Commands being interactive, they also output additional debugging
+Besides commands being interactive, they also output additional debugging
 information to your console.
 
 Open up your Dev Tools and click on the `GET` for the `.action-email` class

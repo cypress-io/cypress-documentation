@@ -4,6 +4,9 @@ title: clear
 
 Clear the value of an `input` or `textarea`.
 
+It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried) to
+chain further commands that rely on the subject after `.clear()`.
+
 <Alert type="info">
 
 An alias for [`.type('{selectall}{backspace}')`](/api/commands/type)
@@ -52,8 +55,9 @@ Pass in an options object to change the default behavior of `.clear()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`.clear()` yields the same subject it was given from the previous
-command.</li></List>
+- `.clear()` yields the same subject it was given.
+- It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried)
+  to chain further commands that rely on the subject after `.clear()`.
 
 ## Examples
 
