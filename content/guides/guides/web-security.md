@@ -70,7 +70,8 @@ need to be aware of.
 
 Cypress changes its own host URL to match that of your applications. With the
 exception of `cy.origin`, Cypress requires that the URLs navigated to have the
-same superdomain for the entirety of a single test.
+[same superdomain](/guides/guides/cross-origin-testing#Parts-of-a-URL) for the
+entirety of a single test.
 
 If you attempt to visit two different superdomains, the `cy.origin` command must
 be used to wrap Cypress commands of the second visited domain. Otherwise,
