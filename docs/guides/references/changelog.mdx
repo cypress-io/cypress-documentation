@@ -2,6 +2,218 @@
 title: Changelog
 ---
 
+## 12.0.1
+
+_Released 12/06/2022_
+
+**Bugfixes:**
+
+- Fixed a regression in [11.2.0](#11-2-0) where a stale spec search pattern was
+  shown in the spec search bar after re-launching Cypress. Fixes
+  [#24936](https://github.com/cypress-io/cypress/issues/24936)
+- Fixed a regression in [12.0.0](#12-0-0) where tests scaffolded into new
+  projects were using a removed api. Fixed in
+  [#25006](https://github.com/cypress-io/cypress/pull/25006)
+- Fixed regression in [12.0.0](#12-0-0) where setting `e2e.testIsolation=false`
+  caused invalid configuration validation when running `cypress run --component`.
+  Fixes [#25007](https://github.com/cypress-io/cypress/issues/25007)
+- Fixed a regression introduced in [12.0.0](#12-0-0) that sometimes does not
+  allow cy.origin() to communicate correctly with the navigated to domain. Fixes
+  [#25010](https://github.com/cypress-io/cypress/issues/25010)
+
+## 12.0.0
+
+_Released 12/06/2022_
+
+**Summary:**
+
+The Session and Origin Experiment is now generally available for end-to-end
+testing. This means Cypress now fully supports:
+
+- Testing multiple origins in a single test with the new
+  [`cy.origin()`](/api/commands/origin) command.
+- Caching and restoring cookies,
+  [`localStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage),
+  and
+  [`sessionStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)
+  between tests
+- Configuring
+  [`testIsolation`](/guides/core-concepts/writing-and-organizing-tests#Test-Isolation)
+  in suites to define whether or not the browser context is cleaned or persisted
+  between tests
+
+Additionally in this release, enhancements were made to how Cypress manages DOM
+element resolution to reduce the likelihood of hitting detached DOM errors due
+to maintaining stale DOM references. We've updated our
+[Retry-ability Guide](/guides/core-concepts/retry-ability) with all the details
+if you'd like to learn more.
+
+Read more about 12.0 in
+[our blog post](https://on.cypress.io/cypress-12-release).
+
+**Breaking Changes:**
+
+- Cypress dropped support for Node.js 12, 15 and 17. Those versions have reached
+  end-of-life. Installing Cypress on your system now requires Node.js 14, 16 or
+  18+. Addressed in [#24885](https://github.com/cypress-io/cypress/pull/24885).
+- Cypress has always recommended writing tests in a clean context. In Cypress
+  12, we enforce running tests in a clean browser context through
+  [test isolation](/guides/core-concepts/writing-and-organizing-tests#Test-Isolation).
+  This option is configurable, but is enabled by default. Whether enabled or
+  disabled, this changes how Cypress cleans up the browser context before each
+  test and you may experience test errors with this upgrade. To better
+  understand the full impact of this change, please review the
+  [migration guide](/guides/references/migration-guide#test-isolation).
+  - In Cypress v12, the `testIsolation` configuration values have changed from
+    `on` or `off` to `true` or `false`. Addressed in
+    [#24935](https://github.com/cypress-io/cypress/pull/24935).
+- The `experimentalSessionAndOrigin` configuration option has been removed and
+  all functionality associated with this experiment is now enabled by default,
+  with the exception of using `require` and `import` with callback supplied to
+  the [`cy.origin()`](/api/commands/origin) command. To leverage external
+  dependencies in `cy.origin()` callbacks, set the new
+  [`e2e.experimentalOriginDependencies`](guides/references/experiments#End-to-End-Testing)
+  configuration option to `true`. Addresses
+  [#21471](https://github.com/cypress-io/cypress/issues/21471).
+- The `Cookies.defaults` and `Cookies.preserveOnce` APIs have been removed. Use
+  the new [`cy.session()`](/api/commands/session) command to preserve cookies
+  between tests. Addresses
+  [#21472](https://github.com/cypress-io/cypress/issues/21472).
+- The `cy.server()` and `cy.route()` commands have been removed. Additionally,
+  the corresponding `Cypress.Server.defaults` API has also been removed. Use the
+  [`cy.intercept()`(/api/commands/intercept) command to stub network responses
+  and requests. Addresses
+  [#22126](https://github.com/cypress-io/cypress/issues/22126).
+- The Cookie commands now uses the `hostname` as the domain by default instead
+  of the `superdomain`. This change aligns Cypress' cookie rules with the
+  browser cookie rules. This may affect what cookies are returned by
+  [`cy.getCookie()`](/api/commands/getcookie), what cookies are set with
+  [`cy.setCookie()`](/api/commands/setcookie), and the cookies cleared with
+  [`cy.clearCookies()`](/api/commands/clearcookies). Addresses
+  [#363](https://github.com/cypress-io/cypress/issues/363),
+  [#5723](https://github.com/cypress-io/cypress/issues/5723) and
+  [#24526](https://github.com/cypress-io/cypress/issues/24526).
+- The [`.within()`](/api/commands/within) command now requires a single subject
+  and throws an error if given more than one subject. This change adds
+  consistency around how `.within()` behaves across commands. Previously some
+  commands inside a `.within()` callback would silently select the first
+  element, while others would use all of the previously yielded subjects, and
+  others would throw an error. Addressed in
+  [#24975](https://github.com/cypress-io/cypress/pull/24975).
+- Cypress now throws an error if any Cypress commands are invoked from inside a
+  [`.should()`](/api/commands/should) callback. This previously resulted in
+  unusual and undefined behavior. Addresses
+  [#5963](https://github.com/cypress-io/cypress/issues/5963),
+  [#14656](https://github.com/cypress-io/cypress/issues/14656) and
+  [#22587](https://github.com/cypress-io/cypress/issues/22587).
+- The [`.invoke()`](/api/commands/invoke) command now throws an error if the
+  invoked function returns a promise. If you wish to call a method that returns
+  a promise and wait for it to resolve, use [`.then()`](/api/commands/then)
+  instead of `.invoke()`. Addressed in
+  [#24417](https://github.com/cypress-io/cypress/pull/24417).
+- The [`cy.request()`](/api/commands/request) command now uses
+  [`querystringify`](https://www.npmjs.com/package/querystringify) to stringify
+  & parse the `qs` options. This change aligns with how the
+  [`cy.visit()`](/api/commands/visit) command generates urls with query
+  parameters. Addressed in
+  [#20302](https://github.com/cypress-io/cypress/pull/20302).
+
+**Features:**
+
+- Added a new configuration option called `testIsolation`, which defaults to
+  `true`. This option can be set at the `e2e` or suite-level to determine
+  whether or not
+  [test isolation](/guides/core-concepts/writing-and-organizing-tests#Test-Isolation)
+  is enabled to ensure a clean browser context between tests. Addressed in
+  [#22230](https://github.com/cypress-io/cypress/pull/22230).
+- The previously experimental Cypress command,
+  [`cy.origin()`](/api/commands/origin), is now generally available in
+  end-to-end testing. This command allows testing multiple origins in a single
+  test. Addresses [#17336](https://github.com/cypress-io/cypress/issues/17336).
+- The previously experimental Cypress command,
+  [`cy.session()`](/api/commands/session), is now generally available. This
+  command caches and restores `cookies`,
+  [`localStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage),
+  and
+  [`sessionStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)
+  in order to recreate a consistent browser context between tests. Addresses
+  [#20977](https://github.com/cypress-io/cypress/issues/20977).
+- Added a new Cypress command,
+  [`cy.getAllLocalStorage()`](/api/commands/getAllLocalStorage), to get
+  [`localStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)
+  data for all origins with which the test has interacted. Addresses
+  [#24276](https://github.com/cypress-io/cypress/issues/24276).
+- Added a new Cypress command,
+  [`cy.clearAllLocalStorage()`](/api/commands/clearAllLocalStorage), to clear
+  [`localStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)
+  data for all origins with which the test has interacted. Addresses
+  [#24276](https://github.com/cypress-io/cypress/issues/24276).
+- Added a new Cypress command,
+  [`cy.getAllSessionStorage()`](/api/commands/getAllSessionStorage), to get
+  [`sessionStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage)
+  data for all origins with which the test has interacted. Addresses
+  [#24276](https://github.com/cypress-io/cypress/issues/24276).
+- Added a new Cypress command,
+  [`cy.clearAllSessionStorage()`](/api/commands/clearAllSessionStorage), to
+  clear
+  [`sessionStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage)
+  data for all origins with which the test has interacted. Addresses
+  [#24276](https://github.com/cypress-io/cypress/issues/24276).
+- Added a new configuration option called
+  [`experimentalOriginDependencies`](guides/references/experiments#End-to-End-Testing),
+  which defaults to `false`. This option enables support for `require` and
+  `import` within the callback supplied to the
+  [`cy.origin()`](/api/commands/origin) command in end-to-end testing.
+  Previously this feature was enabled through the `experimentalSessionAndOrigin`
+  configuration option. `experimentalOriginDependencies` was added as a
+  configuration option in Cypress 12, instead of being enabled by default, due
+  to increased Node.js memory usage associated with this option that needs to be
+  addressed before making this behavior generally available. See issue
+  [#24976](https://github.com/cypress-io/cypress/issues/24976) for more
+  information. Addressed in
+  [#24931](https://github.com/cypress-io/cypress/pull/24931).
+- Added a new `Cypress.ensure` API which provides several methods that can be
+  helpful when writing customs commands. Addressed in
+  [#24697](https://github.com/cypress-io/cypress/pull/24697).
+- Added a new "Run All" button to the
+  [`experimentalRunAllSpecs`](guides/references/experiments#End-to-End-Testing)
+  experiment which enables running all spec files returned from the
+  `specPattern` glob or an array of globs, regardless of the specs sharing a
+  root folder. Addresses
+  [#24759](https://github.com/cypress-io/cypress/issues/24759).
+- Further improved bundling in the binary to reduce startup and unzip time.
+  Addressed in [#24909](https://github.com/cypress-io/cypress/pull/24909)
+
+**Bugfixes:**
+
+- Fixed a regression in [10.11.0](#10-11-0) where the Launchpad no longer showed
+  a loading spinner on startup to indicate that it had successfully started and
+  was in a loading state. Fixed
+  [#24950](https://github.com/cypress-io/cypress/issues/24950).
+- Fixed the "Create Spec from Component" capability to correctly scaffold the
+  component spec from a component which contains special characters in its name.
+  Before this change, a spec was scaffolded with either the wrong spec name or
+  the incorrect component import which led to invalid JS errors. Fixes
+  [#23492](https://github.com/cypress-io/cypress/issues/23492).
+- Corrected Cypress environment variable resolution to correctly resolve
+  environment variables set with `npm config set`. Fixes
+  [#24556](https://github.com/cypress-io/cypress/issues/24556).
+- When
+  [`experimentalRunAllSpecs=true`](guides/references/experiments#End-to-End-Testing),
+  the "Run N specs" directory-level buttons in the Inline Specs List now
+  function correctly when activated by the keyboard. Fixes
+  [#24762](https://github.com/cypress-io/cypress/pull/24762).
+- Fixed unexpected behaviors when verifying a cookie was not returned from
+  [`cy.getCookie()`](/api/commands/getcookie). Now it's possible to explicitly
+  assert the cookie did not exist with
+  `cy.getCookie('foo1').should('not.exist')`. Previously users had to verify
+  cookies properties did not exist with `.its('value').should('equal', null)`.
+  Addressed in [#24203](https://github.com/cypress-io/cypress/pull/24203).
+- Fixed the console output returned from clicking on an aliased intercept in the
+  Command Log. It now logs the yielded request/response object associated to the
+  intercepted call when clicked, where previously it did not log these details.
+  Fixed in [#24623](https://github.com/cypress-io/cypress/pull/24623).
+
 ## 11.2.0
 
 _Released 11/22/2022_
