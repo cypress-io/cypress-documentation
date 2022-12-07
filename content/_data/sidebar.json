@@ -198,6 +198,10 @@
               "slug": "writing-and-organizing-tests"
             },
             {
+              "title": "Test Isolation",
+              "slug": "test-isolation"
+            },
+            {
               "title": "Retry-ability",
               "slug": "retry-ability"
             },
@@ -320,6 +324,10 @@
             {
               "title": "Cross Browser Testing",
               "slug": "cross-browser-testing"
+            },
+            {
+              "title": "Cross Origin Testing",
+              "slug": "cross-origin-testing"
             },
             {
               "title": "Web Security",
@@ -484,72 +492,88 @@
           ]
         },
         {
-          "title": "Events",
-          "slug": "events",
-          "children": [
-            {
-              "title": "Catalog of Events",
-              "slug": "catalog-of-events"
-            }
-          ]
-        },
-        {
           "title": "Assertions",
-          "slug": "assertions",
-          "children": [
-            {
-              "title": "All Assertions",
-              "redirect": "/guides/references/assertions"
-            }
-          ]
-        },
-        {
-          "title": "Commands",
           "slug": "commands",
           "children": [
+            {
+              "title": "Assertions Reference",
+              "redirect": "/guides/references/assertions"
+            },
             {
               "title": "and",
               "slug": "and"
             },
             {
-              "title": "as",
-              "slug": "as"
-            },
+              "title": "should",
+              "slug": "should"
+            }
+          ]
+        },
+        {
+          "title": "Actions",
+          "slug": "commands",
+          "children": [
             {
-              "title": "blur",
-              "slug": "blur"
-            },
-            {
-              "title": "check",
-              "slug": "check"
-            },
-            {
-              "title": "children",
-              "slug": "children"
+              "title": "Actionability Guide",
+              "redirect": "/guides/core-concepts/interacting-with-elements"
             },
             {
               "title": "clear",
               "slug": "clear"
             },
             {
-              "title": "clearCookie",
-              "slug": "clearcookie"
-            },
-            {
-              "title": "clearCookies",
-              "slug": "clearcookies"
-            },
-            {
-              "title": "clearLocalStorage",
-              "slug": "clearlocalstorage"
-            },
-            {
               "title": "click",
               "slug": "click"
             },
             {
-              "title": "clock",
-              "slug": "clock"
+              "title": "check",
+              "slug": "check"
+            },
+            {
+              "title": "dblclick",
+              "slug": "dblclick"
+            },
+            {
+              "title": "rightclick",
+              "slug": "rightclick"
+            },
+            {
+              "title": "select",
+              "slug": "select"
+            },
+            {
+              "title": "selectFile",
+              "slug": "selectfile"
+            },
+            {
+              "title": "trigger",
+              "slug": "trigger"
+            },
+            {
+              "title": "type",
+              "slug": "type"
+            },
+            {
+              "title": "uncheck",
+              "slug": "uncheck"
+            }
+          ]
+        },
+        {
+          "title": "Queries",
+          "slug": "commands",
+          "children": [
+            {
+              "title": "Retry-ability Guide",
+              "redirect": "/guides/core-concepts/retry-ability"
+            },
+            {
+              "title": "as",
+              "slug": "as"
+            },
+            {
+              "title": "children",
+              "slug": "children"
             },
             {
               "title": "closest",
@@ -560,10 +584,6 @@
               "slug": "contains"
             },
             {
-              "title": "dblclick",
-              "slug": "dblclick"
-            },
-            {
               "title": "debug",
               "slug": "debug"
             },
@@ -572,20 +592,8 @@
               "slug": "document"
             },
             {
-              "title": "each",
-              "slug": "each"
-            },
-            {
-              "title": "end",
-              "slug": "end"
-            },
-            {
               "title": "eq",
               "slug": "eq"
-            },
-            {
-              "title": "exec",
-              "slug": "exec"
             },
             {
               "title": "filter",
@@ -600,14 +608,6 @@
               "slug": "first"
             },
             {
-              "title": "fixture",
-              "slug": "fixture"
-            },
-            {
-              "title": "focus",
-              "slug": "focus"
-            },
-            {
               "title": "focused",
               "slug": "focused"
             },
@@ -616,28 +616,8 @@
               "slug": "get"
             },
             {
-              "title": "getCookie",
-              "slug": "getcookie"
-            },
-            {
-              "title": "getCookies",
-              "slug": "getcookies"
-            },
-            {
-              "title": "go",
-              "slug": "go"
-            },
-            {
               "title": "hash",
               "slug": "hash"
-            },
-            {
-              "title": "hover",
-              "slug": "hover"
-            },
-            {
-              "title": "intercept",
-              "slug": "intercept"
             },
             {
               "title": "invoke",
@@ -656,14 +636,6 @@
               "slug": "location"
             },
             {
-              "title": "log",
-              "slug": "log"
-            },
-            {
-              "title": "mount",
-              "slug": "mount"
-            },
-            {
               "title": "next",
               "slug": "next"
             },
@@ -680,10 +652,6 @@
               "slug": "not"
             },
             {
-              "title": "origin",
-              "slug": "origin"
-            },
-            {
               "title": "parent",
               "slug": "parent"
             },
@@ -694,10 +662,6 @@
             {
               "title": "parentsUntil",
               "slug": "parentsuntil"
-            },
-            {
-              "title": "pause",
-              "slug": "pause"
             },
             {
               "title": "prev",
@@ -712,6 +676,128 @@
               "slug": "prevuntil"
             },
             {
+              "title": "root",
+              "slug": "root"
+            },
+            {
+              "title": "shadow",
+              "slug": "shadow"
+            },
+            {
+              "title": "siblings",
+              "slug": "siblings"
+            },
+            {
+              "title": "title",
+              "slug": "title"
+            },
+            {
+              "title": "url",
+              "slug": "url"
+            },
+            {
+              "title": "window",
+              "slug": "window"
+            }
+          ]
+        },
+        {
+          "title": "Other Commands",
+          "slug": "commands",
+          "children": [
+            {
+              "title": "blur",
+              "slug": "blur"
+            },
+            {
+              "title": "clearAllLocalStorage",
+              "slug": "clearalllocalstorage"
+            },
+            {
+              "title": "clearAllSessionStorage",
+              "slug": "clearallsessionstorage"
+            },
+            {
+              "title": "clearCookie",
+              "slug": "clearcookie"
+            },
+            {
+              "title": "clearCookies",
+              "slug": "clearcookies"
+            },
+            {
+              "title": "clearLocalStorage",
+              "slug": "clearlocalstorage"
+            },
+            {
+              "title": "clock",
+              "slug": "clock"
+            },
+            {
+              "title": "each",
+              "slug": "each"
+            },
+            {
+              "title": "end",
+              "slug": "end"
+            },
+            {
+              "title": "exec",
+              "slug": "exec"
+            },
+            {
+              "title": "fixture",
+              "slug": "fixture"
+            },
+            {
+              "title": "focus",
+              "slug": "focus"
+            },
+            {
+              "title": "getAllLocalStorage",
+              "slug": "getalllocalstorage"
+            },
+            {
+              "title": "getAllSessionStorage",
+              "slug": "getallsessionstorage"
+            },
+            {
+              "title": "getCookie",
+              "slug": "getcookie"
+            },
+            {
+              "title": "getCookies",
+              "slug": "getcookies"
+            },
+            {
+              "title": "go",
+              "slug": "go"
+            },
+            {
+              "title": "hover",
+              "slug": "hover"
+            },
+            {
+              "title": "intercept",
+              "slug": "intercept"
+            },
+            {
+              "title": "log",
+              "slug": "log"
+            },
+            {
+              "title": "mount",
+              "slug": "mount"
+            },
+            {
+              "title": "origin",
+              "slug": "origin"
+            },
+            {
+              "title": "pause",
+              "slug": "pause"
+            },
+            {
               "title": "readFile",
               "slug": "readfile"
             },
@@ -722,18 +808,6 @@
             {
               "title": "request",
               "slug": "request"
-            },
-            {
-              "title": "rightclick",
-              "slug": "rightclick"
-            },
-            {
-              "title": "root",
-              "slug": "root"
-            },
-            {
-              "title": "route",
-              "slug": "route"
             },
             {
               "title": "screenshot",
@@ -748,36 +822,12 @@
               "slug": "scrollto"
             },
             {
-              "title": "select",
-              "slug": "select"
-            },
-            {
-              "title": "selectFile",
-              "slug": "selectfile"
-            },
-            {
-              "title": "server",
-              "slug": "server"
-            },
-            {
               "title": "session",
               "slug": "session"
             },
             {
               "title": "setCookie",
               "slug": "setcookie"
-            },
-            {
-              "title": "shadow",
-              "slug": "shadow"
-            },
-            {
-              "title": "should",
-              "slug": "should"
-            },
-            {
-              "title": "siblings",
-              "slug": "siblings"
             },
             {
               "title": "spread",
@@ -808,26 +858,6 @@
               "slug": "tick"
             },
             {
-              "title": "title",
-              "slug": "title"
-            },
-            {
-              "title": "trigger",
-              "slug": "trigger"
-            },
-            {
-              "title": "type",
-              "slug": "type"
-            },
-            {
-              "title": "uncheck",
-              "slug": "uncheck"
-            },
-            {
-              "title": "url",
-              "slug": "url"
-            },
-            {
               "title": "viewport",
               "slug": "viewport"
             },
@@ -840,20 +870,26 @@
               "slug": "wait"
             },
             {
-              "title": "window",
-              "slug": "window"
+              "title": "wrap",
+              "slug": "wrap"
             },
             {
               "title": "within",
               "slug": "within"
             },
             {
-              "title": "wrap",
-              "slug": "wrap"
-            },
-            {
               "title": "writeFile",
               "slug": "writefile"
+            }
+          ]
+        },
+        {
+          "title": "Events",
+          "slug": "events",
+          "children": [
+            {
+              "title": "Catalog of Events",
+              "slug": "catalog-of-events"
             }
           ]
         },
@@ -896,8 +932,12 @@
           "slug": "cypress-api",
           "children": [
             {
-              "title": "Commands",
+              "title": "Custom Commands",
               "slug": "custom-commands"
+            },
+            {
+              "title": "Custom Queries",
+              "slug": "custom-queries"
             },
             {
               "title": "Cookies",
@@ -914,10 +954,6 @@
             {
               "title": "SelectorPlayground",
               "slug": "selector-playground-api"
-            },
-            {
-              "title": "Server",
-              "slug": "cypress-server"
             },
             {
               "title": "arch",

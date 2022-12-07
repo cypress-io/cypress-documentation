@@ -35,11 +35,13 @@ Pass in an options object to change the default behavior of `.root()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-`.root()` yields the root DOM element.
+`cy.root()` yields the root DOM element.
 
 The root element yielded is `<html>` by default. However, when calling `.root()`
 from a [`.within()`](/api/commands/within) command, the root element will point
 to the element you are "within".
+
+`cy.root()` is a query, and it is _safe_ to chain further commands.
 
 ## Examples
 

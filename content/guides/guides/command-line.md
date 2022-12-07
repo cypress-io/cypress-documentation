@@ -414,7 +414,7 @@ cypress run --project tests/e2e --spec ./tests/e2e/cypress/e2e/spec.js
 #### `cypress run --tag <tag>`
 
 Add a tag or tags to the recorded run. This can be used to help identify
-separate run when displayed in Cypress Cloud.
+separate runs when displayed in Cypress Cloud.
 
 ```shell
 cypress run  --record --tag "staging"
@@ -699,23 +699,23 @@ for some reason failed to install the matching binary version.
 
 ```shell
 cypress version
-Cypress package version: 6.0.0
-Cypress binary version: 6.0.0
-Electron version: 10.1.5
-Bundled Node version: 12.14.1
+Cypress package version: 12.0.0
+Cypress binary version: 12.0.0
+Electron version: 21.0.0
+Bundled Node version: 16.16.0
 ```
 
 You can print each individual component's version number also.
 
 ```shell
 cypress version --component package
-6.0.0
+12.0.0
 cypress version --component binary
-6.0.0
+12.0.0
 cypress version --component electron
-10.1.5
+21.0.0
 cypress version --component node
-12.14.1
+16.16.0
 ```
 
 ### `cypress cache [command]`
