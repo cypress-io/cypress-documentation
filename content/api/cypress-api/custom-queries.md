@@ -25,7 +25,7 @@ differences between commands and queries, see our
 <Alert type="info">
 
 If you want to chain together existing Cypress commands as a shortcut, you
-probably want to write a [custom command](/api/cypress-api/custom-command)
+probably want to write a [custom command](/api/cypress-api/custom-commands)
 instead.
 
 You'll also want to write a command instead of a query if your method needs to

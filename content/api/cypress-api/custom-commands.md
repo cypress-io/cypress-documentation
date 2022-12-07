@@ -9,7 +9,7 @@ defined below.
 <Alert type="info">
 
 If you want your method to have builtin
-[retry-ability](/guides/core-concepts/retrysability), and especially if you
+[retry-ability](/guides/core-concepts/retry-ability), and especially if you
 return a DOM element for further commands to act on, consider writing a
 [custom query](/api/cypress-api/custom-queries) instead.
 

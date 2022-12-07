@@ -68,8 +68,8 @@ artificially like you would in an unit test. For instance you can:
   of your application directly from your test code.
 - Test edge cases like 'empty views' by forcing your server to send empty
   responses.
-- Test how your application responds to errors on your server by
-  [modifying response status codes to be 500](/api/commands/route).
+- Test how your application responds to errors on your server by modifying
+  response status codes to be 500.
 - Modify DOM elements directly - like forcing hidden elements to be shown.
 - Use 3rd party plugins programmatically. Instead of fussing with complex UI
   widgets like multi selects, autocompletes, drop downs, tree views or

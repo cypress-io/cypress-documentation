@@ -769,8 +769,8 @@ same time.
 We have built Cypress to support this use case. In fact, Cypress **does not**
 clean up its own internal state when the test ends. We **want** you to have
 dangling state at the end of the test! Things like [stubs](/api/commands/stub),
-[spies](/api/commands/spy), even [routes](/api/commands/route) are **not**
-removed at the end of the test. This means your application will behave
+[spies](/api/commands/spy), even [intercepts](/api/commands/intercept) are
+**not** removed at the end of the test. This means your application will behave
 identically while it is running Cypress commands or when you manually work with
 it after a test ends.
 

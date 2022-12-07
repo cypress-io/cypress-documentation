@@ -2554,9 +2554,9 @@ it('test', () => {
 
 ### `cy.wait(alias)` type
 
-[cy.route()](/api/commands/route) is deprecated in 6.0.0. We encourage the use
-of [cy.intercept()][intercept] instead. Due to this deprecation, the type
-yielded by [cy.wait(alias)](/api/commands/wait) has changed.
+`cy.route()` is deprecated in 6.0.0. We encourage the use of
+[cy.intercept()][intercept] instead. Due to this deprecation, the type yielded
+by [cy.wait(alias)](/api/commands/wait) has changed.
 
 <Badge type="danger">Before</Badge> Before 6.0.0,
 [cy.wait(alias)](/api/commands/wait) would yield an object of type `WaitXHR`.
@@ -2921,8 +2921,8 @@ const blob = Cypress.Blob.base64StringToBlob(this.logo, 'image/png')
 
 ### `cy.server()` `whitelist` option renamed
 
-The [cy.server()](/api/commands/server) `whitelist` option has been renamed to
-`ignore` to more closely reflect its behavior.
+The `cy.server()` `whitelist` option has been renamed to `ignore` to more
+closely reflect its behavior.
 
 <Badge type="danger">Before</Badge> `whitelist` option
 
