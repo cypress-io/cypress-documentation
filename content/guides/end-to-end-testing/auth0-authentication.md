@@ -117,10 +117,10 @@ require('dotenv').config()
 }
 ```
 
+:::
+
 Note that `auth0_client_secret` is only needed for
 [programmatic login](#Programmatic-Login).
-
-:::
 
 ## Custom Command for Auth0 Authentication
 
