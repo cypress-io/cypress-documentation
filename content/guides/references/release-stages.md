@@ -42,25 +42,25 @@ to be feature complete and free of issues in the majority of use cases.
 
 ## Beta
 
-Beta features are features that we are looking to gather user feedback on
-by providing them as default functionality before an official release. Beta
-features may not be feature complete, but they should be close enough where
-large, possibly breaking, changes to, either the API or functionality are few and far between, 
-and would be largely motivated by real-world user feedback provided during the Beta stage.
+Beta features may not be feature complete, but they should be close enough where
+major changes are not expected. Beta features consist of features that we are
+looking to gather user feedback on by providing them as default functionality
+before an official release.
 
 **Strategies for releasing and communicating changes to Beta features**
 
 - Modifications
   - Modifications can be introduced during any release cycle.
-  - Modifications will be documented, with recommended code changes
-  highlighted if appropriate.
+  - Modifications will be documented, with recommended code changes highlighted
+    if appropriate.
 - Breaking Changes
   - Breaking changes can be introduced during any release cycle and do not bump
     semver by a major version
   - Breaking changes require in-app messaging to help users unblock themselves
     as needed
-  - The introduction and impact of breaking changes should be carefully considered
-    at this stage as the cost to users is higher than with an alpha feature.
+  - The introduction and impact of breaking changes should be carefully
+    considered at this stage as the cost to users is higher than with an alpha
+    feature.
 - Removals
   - Removal of any new functionality related to the feature can happen during
     any release cycle and will increment semver. These do not need to coincide
@@ -79,8 +79,8 @@ features may not be feature complete and changes are possible during this stage.
 - Modifications
   - Modifications can be introduced during any release cycle and may or may not
     increment semver.
-  - Modifications will be documented, with recommended code changes
-  highlighted if appropriate.
+  - Modifications will be documented, with recommended code changes highlighted
+    if appropriate.
 - Breaking Changes
   - Breaking changes can be introduced during any release cycle and do not bump
     semver by a major version
@@ -91,12 +91,12 @@ features may not be feature complete and changes are possible during this stage.
 ## Experimental
 
 Experimental features consist of features that we are looking to gather user
-feedback on before we commit fully to further development of the feature.
-These type of features require you to opt-in to via a configuration
-value prefixed with `experimental`. These types of features may be unstable
-and contain issues. You should expect to see frequent changes and improvements
-during the feature’s experimental lifetime. The current experimental features
-can be found [here](guides/references/experiments).
+feedback on before we commit fully to further development of the feature. These
+type of features require you to opt-in to via a configuration value prefixed
+with `experimental`. These types of features may be unstable and contain issues.
+You should expect to see frequent changes and improvements during the feature’s
+experimental lifetime. The current experimental features can be found
+[here](guides/references/experiments).
 
 **Strategies for releasing and communicating changes to experimental features**
 
