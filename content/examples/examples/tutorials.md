@@ -94,12 +94,11 @@ some best practices like using `beforeEach` and defining our application's
 
 ### 3. Form submission and XHRs
 
-We will implement form submission for our todo app, leveraging
-[`cy.server()`](/api/commands/server) and [`cy.route()`](/api/commands/route) to
-stub calls to our API. We will iterate on our test and implementation, focusing
-on the application's "happy path" first. Once our form is working, we'll use
-another stubbed XHR call to setup a failure scenario and implement the code to
-properly display an error message.
+We will implement form submission for our todo app, leveraging `cy.server()` and
+`cy.route()` to stub calls to our API. We will iterate on our test and
+implementation, focusing on the application's "happy path" first. Once our form
+is working, we'll use another stubbed XHR call to setup a failure scenario and
+implement the code to properly display an error message.
 
 <Icon name="github"></Icon>
 [Get the completed code for this lesson on GitHub](https://github.com/cypress-io/cypress-tutorial-build-todo/tree/03_form_sub)
@@ -109,10 +108,9 @@ properly display an error message.
 ### 4. Loading data with fixtures
 
 We will implement the initial data load for our todo app, leveraging
-[`cy.server()`](/api/commands/server) and [`cy.route()`](/api/commands/route) to
-stub the API call to load our data. We will use
-[fixture data](/api/commands/fixture#Shortcuts) to seed our application state.
-As we iterate on our test and app code, we will create and use a
+`cy.server()` and `cy.route()` to stub the API call to load our data. We will
+use [fixture data](/api/commands/fixture#Shortcuts) to seed our application
+state. As we iterate on our test and app code, we will create and use a
 [custom command](/api/cypress-api/custom-commands) to avoid unnecessary code
 duplication and keep our tests clean and readable.
 
