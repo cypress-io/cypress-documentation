@@ -416,6 +416,10 @@
               "slug": "configuration"
             },
             {
+              "title": "Release Stages",
+              "slug": "release-stages"
+            },
+            {
               "title": "Legacy Configuration",
               "slug": "legacy-configuration"
             },
