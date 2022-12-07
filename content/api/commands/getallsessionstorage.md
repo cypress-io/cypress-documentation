@@ -91,5 +91,5 @@ once, and will not [retry](/guides/core-concepts/retry-ability).</li></List>
 - [`cy.clearAllLocalStorage()`](/api/commands/clearalllocalstorage)
 - [`cy.clearAllSessionStorage()`](/api/commands/clearallsessionstorage)
 - [`cy.clearCookies()`](/api/commands/clearcookies)
-- [`cy.clearsessionStorage()`](/api/commands/clearsessionStorage)
+- [`cy.clearLocalStorage()`](/api/commands/clearlocalstorage)
 - [`cy.getAllLocalStorage()`](/api/commands/getalllocalstorage)
