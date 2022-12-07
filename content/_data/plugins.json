@@ -1133,6 +1133,18 @@
           "badge": "official"
         }
       ]
+    },
+    {
+      "name": "cypress-gmail-tester",
+      "plugins": [
+        {
+          "name": "cypress-gmail-tester",
+          "description": "Use Cypress E2E tests to check Gmail-based inboxes.",
+          "link": "https://github.com/levz0r/cypress-gmail-tester",
+          "keywords": ["cypress", "cypress-plugin", "cypress-gmail-tester", "gmail-tester"],
+          "badge": "community"
+        }
+      ]
     }
   ]
 }
