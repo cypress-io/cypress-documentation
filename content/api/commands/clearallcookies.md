@@ -7,8 +7,10 @@ Clear all browser cookies.
 <Alert type="warning">
 
 Cypress automatically clears all cookies _before_ each test to prevent state
-from being shared across tests. You shouldn't need to use this command unless
-you're using it to clear a specific cookie inside a single test.
+from being shared across tests when
+[test isolation](/guides/core-concepts/writing-and-organizing-tests#Test-Isolation)
+is enabled. You shouldn't need to use this command unless you're using it to
+clear all cookies inside a single test or test isolation is disabled.
 
 </Alert>
 
