@@ -2,7 +2,7 @@
 title: getCookies
 ---
 
-Get all of the browser cookies.
+Get browser cookies for the current domain or the specified domain.
 
 ## Syntax
 
@@ -16,7 +16,7 @@ cy.getCookies(options)
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.getCookies() // Get all cookies
+cy.getCookies() // Get cookies for the currrent domain
 ```
 
 ### Arguments

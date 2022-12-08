@@ -1,0 +1,75 @@
+---
+title: clearAllCookies
+---
+
+Clear all browser cookies.
+
+<Alert type="warning">
+
+Cypress automatically clears all cookies _before_ each test to prevent state
+from being shared across tests. You shouldn't need to use this command unless
+you're using it to clear a specific cookie inside a single test.
+
+</Alert>
+
+## Syntax
+
+```javascript
+cy.clearAllCookies()
+cy.clearAllCookies(options)
+```
+
+### Usage
+
+**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+
+```javascript
+cy.clearAllCookies() // Clear all cookies
+```
+
+### Arguments
+
+**<Icon name="angle-right"></Icon> options** **_(Object)_**
+
+Pass in an options object to change the default behavior of
+`cy.clearAllCookies()`.
+
+| Option    | Default                                                        | Description                                                                              |
+| --------- | -------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `log`     | `true`                                                         | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
+| `timeout` | [`responseTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.clearAllCookies()` to resolve before [timing out](#Timeouts)        |
+
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+
+- `cy.clearAllCookies()` yields `null`.
+
+## Rules
+
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+
+- `cy.clearAllCookies()` requires being chained off of `cy`.
+
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+
+- `cy.clearAllCookies()` cannot have any assertions chained.
+
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+
+- `cy.clearAllCookies()` should never time out.
+
+<Alert type="warning">
+
+Because `cy.clearAllCookies()` is asynchronous it is technically possible for
+there to be a timeout while talking to the internal Cypress automation APIs. But
+for practical purposes it should never happen.
+
+</Alert>
+
+## See also
+
+- [`cy.clearCookie()`](/api/commands/clearcookie)
+- [Cypress Cookies API](/api/cypress-api/cookies)
+- [`cy.getAllCookies()`](/api/commands/getallcookies)
+- [`cy.getCookie()`](/api/commands/getcookie)
+- [`cy.getCookies()`](/api/commands/getcookies)
+- [`cy.setCookie()`](/api/commands/setcookie)

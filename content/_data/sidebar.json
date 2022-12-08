@@ -706,6 +706,10 @@
               "slug": "blur"
             },
             {
+              "title": "clearAllCookies",
+              "slug": "clearallCookies"
+            },
+            {
               "title": "clearAllLocalStorage",
               "slug": "clearalllocalstorage"
             },
@@ -748,6 +752,10 @@
             {
               "title": "focus",
               "slug": "focus"
+            },
+            {
+              "title": "getAllCookies",
+              "slug": "getallcookies"
             },
             {
               "title": "getAllLocalStorage",

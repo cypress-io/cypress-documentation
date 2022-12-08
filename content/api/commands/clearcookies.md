@@ -2,7 +2,7 @@
 title: clearCookies
 ---
 
-Clear all browser cookies for current domain and subdomain.
+Clear browser cookies for current domain and subdomain.
 
 <Alert type="warning">
 
@@ -24,7 +24,7 @@ cy.clearCookies(options)
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.clearCookies() // clear all cookies
+cy.clearCookies() // Clear cookies for the currrent domain
 ```
 
 ### Arguments
@@ -47,7 +47,7 @@ Pass in an options object to change the default behavior of `cy.clearCookies()`.
 
 ### No Args
 
-#### Clear all cookies after logging in <E2EOnlyBadge />
+#### Clear cookies after logging in <E2EOnlyBadge />
 
 In this example, on first login our server sends us back a session cookie. After
 invoking `cy.clearCookies()` this clears the session cookie, and upon navigating
