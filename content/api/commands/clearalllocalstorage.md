@@ -8,11 +8,11 @@ data for all origins with which the test has interacted.
 
 <Alert type="warning">
 
-Cypress automatically runs this command _before_ each test to prevent state from
-being shared across tests when
+Cypress automatically clears all local storage _before_ each test to prevent
+state from being shared across tests when
 [test isolation](/guides/core-concepts/writing-and-organizing-tests#Test-Isolation)
-is `on`. You shouldn't need to use this command unless you're using it to clear
-localStorage inside a single test or test isolation is `off`.
+is enabled. You shouldn't need to use this command unless you're using it to
+clear localStorage inside a single test or test isolation is disabled.
 
 </Alert>
 
