@@ -309,7 +309,7 @@ logic wrapped around it.
 ## Validation
 
 As noted in the examples above, Cypress performs very little validation around
-queries - it is the repsonsibility of each implementation to ensure that its
+queries - it is the responsibility of each implementation to ensure that its
 arguments and subject are of the correct type.
 
 Cypress has several builtin 'ensures' which can be helpful in this regard:
