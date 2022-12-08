@@ -59,7 +59,7 @@ Let's look at the last chain of commands:
 
 ```javascript
 cy.get('.todoapp') // query
-  .children('.todo-list li') // query
+  .find('.todo-list li') // query
   .should('have.length', 1) // assertion
 ```
 

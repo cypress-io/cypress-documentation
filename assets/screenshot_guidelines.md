@@ -1,10 +1,10 @@
 ### The following is a list of direct links to sections that include a screenshot, animated gif, or video with associated code to recreate. Remember that the viewport will need to be zoomed, probably beyond what you'd expect, so that the areas of interest are visible when sized down to the main content well. In most cases below the viewport was at 150%. 
 
-### The best workflow for high quailty/small output so far is to capture via quicktime -> trim accordingly -> convert file via https://gif.ski @960xXXX | speed at 1 notch | 20FPS | maxed out quality | loop forever (or comprable using the gifski CLI). 
+### The best workflow for high quality/small output so far is to capture via quicktime -> trim accordingly -> convert file via https://gif.ski @960xXXX | speed at 1 notch | 20FPS | maxed out quality | loop forever (or comparable using the gifski CLI). 
 
 # Cypress App v10 UI (no specific application)
   
-http://localhost:3000/guides/getting-started/writing-your-first-end-to-end-test#Write-your-first-test
+http://localhost:3000/guides/end-to-end-testing/writing-your-first-end-to-end-test#Write-your-first-test
 ```js
 describe('My First Test', () => {
   it('Does not do much!', () => {
@@ -19,7 +19,7 @@ describe('My First Test', () => {
 })
 ```
   
-http://localhost:3000/guides/getting-started/writing-your-first-end-to-end-test#Step-2-Query-for-an-element
+http://localhost:3000/guides/end-to-end-testing/writing-your-first-end-to-end-test#Step-2-Query-for-an-element
 ```js
 describe('My First Test', () => {
   it('finds the content "type"', () => {
@@ -30,7 +30,7 @@ describe('My First Test', () => {
 })
 ```
   
-http://localhost:3000/guides/getting-started/testing-your-app#Step-2-Visit-your-server
+http://localhost:3000/guides/end-to-end-testing/testing-your-app#Step-2-Visit-your-server
 1) touch cypress/e2e/home_page.cy.js -> capture full app UI with spec
 ```js
 describe('The Home Page', () => {

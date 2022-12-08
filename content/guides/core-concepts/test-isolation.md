@@ -37,7 +37,6 @@ all:
 - [aliases](/api/commands/as)
 - [clock mocks](/api/commands/clock)
 - [intercepts](/api/commands/intercept)
-- [routes](/api/commands/route)
 - [spies](/api/commands/spy)
 - [stubs](/api/commands/stub)
 - [viewport changes](/api/commands/viewport)

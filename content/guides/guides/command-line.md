@@ -414,7 +414,7 @@ cypress run --project tests/e2e --spec ./tests/e2e/cypress/e2e/spec.js
 #### `cypress run --tag <tag>`
 
 Add a tag or tags to the recorded run. This can be used to help identify
-separate run when displayed in Cypress Cloud.
+separate runs when displayed in Cypress Cloud.
 
 ```shell
 cypress run  --record --tag "staging"
