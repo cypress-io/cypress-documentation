@@ -114,7 +114,7 @@ following:
 
 - [`cy.clearCookies()`](/api/commands/clearcookies)
 - [`cy.clearLocalStorage()`](/api/commands/clearlocalstorage)
-- [Cypress Cookies API](/api/cypress-api/cookies)
-- [`cy.getCookie()`](/api/commands/getcookie)
 - [`cy.getCookies()`](/api/commands/getcookies)
+- [`cy.getCookie()`](/api/commands/getcookie)
 - [`cy.setCookie()`](/api/commands/setcookie)
+- [`Cypress.Cookies.debug()`](/api/cypress-api/cookies)
