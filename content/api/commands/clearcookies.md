@@ -2,7 +2,7 @@
 title: clearCookies
 ---
 
-Clear browser cookies for current domain and subdomain.
+Clear browser cookies for a domain.
 
 <Alert type="warning">
 
