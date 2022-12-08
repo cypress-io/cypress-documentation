@@ -36,14 +36,14 @@ Pass in an options object to change the default behavior of
 `cy.getAllCookies()` yields an array of cookie objects. Each cookie object has
 the following properties:
 
-- `domain`
-- `expiry` _(if specified)_
-- `httpOnly`
-- `name`
-- `path`
-- `sameSite` _(if specified)_
-- `secure`
-- `value`
+- `domain`: _(String)_
+- `expiry`: _(Number)_ _(if specified)_
+- `httpOnly`: _(Boolean)_
+- `name`: _(String)_
+- `path`: _(String)_
+- `sameSite`: _(String)_ _(if specified)_
+- `secure`: _(Boolean)_
+- `value`: _(String)_
 
 `cy.getAllCookies()` is not a query. It will not update the returned list if
 further cookies are added after it initially executes.
