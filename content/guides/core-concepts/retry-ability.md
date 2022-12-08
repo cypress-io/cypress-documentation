@@ -111,8 +111,8 @@ app.TodoModel.prototype.addTodo = function (title) {
 ```
 
 The test still passes! `cy.get('.todo-list')` passes immediately - the
-`todo-list` exists - but `.children('li').should('have.length', 1)` show the
-spinning indicators, meaning Cypress is requerying for them.
+`todo-list` exists - but `.find('.todo-list li').should('have.length', 1)` show
+the spinning indicators, meaning Cypress is requerying for them.
 
 <DocsImage src="/img/guides/retry-ability/retry-assertion.gif" alt="Retrying assertion"></DocsImage>
 
@@ -220,8 +220,9 @@ cy.get('[data-testid="mobile-nav"]', { timeout: 10000 })
   .and('contain', 'Home')
 ```
 
-Cypress will retry for up to 10 seconds to find a visible element of class
-`mobile-nav` with text containing "Home". For more examples, read the
+Cypress will retry for up to 10 seconds to find a visible element with
+`data-testid` attribute `mobile-nav` with text containing "Home". For more
+examples, read the
 [Timeouts](/guides/core-concepts/introduction-to-cypress#Timeouts) section in
 the "Introduction to Cypress" guide.
 
@@ -238,10 +239,10 @@ cy.get('[data-testid="ssr-error"]', { timeout: 0 }).should('not.exist')
 
 ## Only queries are retried
 
-Any command that isn't a query, such as `cy.click()`, follows different rules
-than queries do. Cypress will retry any queries _leading up to_ a command, and
-retry any assertions _after_ a command, but commands themselves never retry -
-nor does anything leading up to them after they've resolved.
+Any command that isn't a query, such as `.click()`, follows different rules than
+queries do. Cypress will retry any queries _leading up to_ a command, and retry
+any assertions _after_ a command, but commands themselves never retry - nor does
+anything leading up to them after they've resolved.
 
 Most commands are not retried because they could potentially change the state of
 the application under test. For example, Cypress will not retry the
