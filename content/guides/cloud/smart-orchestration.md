@@ -10,14 +10,13 @@ to speed up test runs, accelerate debugging workflows, and reduce costs:
 - [Load Balancing](/guides/guides/parallelization#Balance-strategy): Optimize CI
   resources and minimize test duration by intelligently prioritizing running of
   test spec files during parallelization.
-- [Run failed specs first](#Run-failed-specs-first): Quickly verify that your
-  latest changes fixed a build by prioritizing the specs that failed in the
-  previous Cypress run.
-- [Cancel test run when a test fails](#Cancel-test-run-when-a-test-fails): Save
-  on CI resources by automatically canceling a Cypress run upon the first test
-  failure.
+- [Spec Prioritization](#Spec-Prioritization): Quickly verify that your latest
+  changes fixed a build by prioritizing the specs that failed in the previous
+  Cypress run.
+- [Auto Cancellation](#Cancel-test-run-when-a-test-fails): Save on CI resources
+  by automatically canceling a Cypress run upon the first test failure.
 
-## Run failed specs first
+## Spec Prioritization
 
 It is often helpful to be **aware of test failures earlier within a CI test run
 so that debugging and iterations can resume and progress much faster**. Being
@@ -42,27 +41,27 @@ time.**
 
 </Alert>
 
-### Toggle running of failed specs first
+### Activate Spec Prioritization in Cypress Cloud
 
 <Alert type="success">
 
 <strong class="alert-header"><Icon name="star"></Icon> Premium Cypress Cloud
 Feature</strong>
 
-**Running failed specs first** is a _Smart Orchestration_ feature available to
-users with a [Business Cypress Cloud plan](https://cypress.io/pricing).
+**Spec Prioritization** is a _Smart Orchestration_ feature available to users
+with a [Business Cypress Cloud plan](https://cypress.io/pricing).
 
 </Alert>
 
-Controlling running of failed specs first is a _Smart Orchestration_ feature
-that is managed within a project's settings.
+Spec Prioritization is a _Smart Orchestration_ feature that is managed within a
+project's settings.
 
 To enable or disable this feature:
 
 1. Select the desired project within Projects view to visit Cypress Cloud.
 2. Click "Project Settings" with the right-hand sidebar.
 3. Scroll to the Smart Orchestration section within Project Settings page.
-4. Toggle "Run failed specs first."
+4. Toggle "Spec Prioritization".
 
 <DocsImage src="/img/guides/smart-orchestration/enable-run-failed-specs-first.png" alt="Enable running of failed specs first"></DocsImage>
 
@@ -70,13 +69,12 @@ To enable or disable this feature:
 
 <strong class="alert-header">CI Tip: Reduce Costs</strong>
 
-In addition to saving time by running failed specs first, also consider
-[canceling test runs on first failure](#Cancel-test-run-when-a-test-fails) to
-also save on CI costs.
+In addition to saving time with Spec Prioritization, also consider
+[Auto Cancellation](#Auto-Cancellation) to further save on CI costs.
 
 </Alert>
 
-## Cancel test run when a test fails
+## Auto Cancellation
 
 Continuous Integration (CI) pipelines are typically costly processes that can
 demand significant compute time. **When a test failure occurs in CI, it often
@@ -99,21 +97,20 @@ failure will:
 
 </Alert>
 
-### Toggle cancellation of test runs upon first failure
+### Activate Auto Cancellation in Cypress Cloud
 
 <Alert type="success">
 
 <strong class="alert-header"><Icon name="star"></Icon> Premium Cypress Cloud
 Feature</strong>
 
-**Canceling test runs when a test fails** is a _Smart Orchestration_ feature
-available to users with a
-[Business Cypress Cloud plan](https://cypress.io/pricing).
+**Auto Cancellation** is a _Smart Orchestration_ feature available to users with
+a [Business Cypress Cloud plan](https://cypress.io/pricing).
 
 </Alert>
 
-Controlling cancellation of test runs upon the first failed test is a _Smart
-Orchestration_ feature that is managed within a project's settings.
+Auto Cancellation is a _Smart Orchestration_ feature that is managed within a
+project's settings.
 
 <Alert type="info">
 
@@ -121,8 +118,8 @@ Orchestration_ feature that is managed within a project's settings.
 
 If your development, testing, or QA teams operate in a highly collaborative
 workflow where multiple people are working on various test failures at the same
-time, it may be helpful to disable run cancellation upon first failure, so **all
-failing tests can be surfaced for each test run**.
+time, it may be helpful to disable Auto Cancellation, so **all failing tests can
+be surfaced for each test run**.
 
 </Alert>
 
@@ -130,8 +127,8 @@ To enable or disable this feature:
 
 1. Select the desired project within Projects view to visit Cypress Cloud.
 2. Click "Project Settings" with the right-hand sidebar.
-3. Scroll to the Smart Orchestration section within Project Settings page
-4. Toggle "Cancel run when a test fails."
+3. Scroll to the Smart Orchestration section within Project Settings page.
+4. Toggle "Auto Cancellation".
 
 <DocsImage src="/img/guides/smart-orchestration/enable-cancel-run.png" alt="Enable cancellation of test runs upon first failure"></DocsImage>
 
@@ -139,8 +136,8 @@ To enable or disable this feature:
 
 <strong class="alert-header">CI Tip: Save Time</strong>
 
-In addition to reducing CI costs by canceling test runs on first failure, also
-consider [running failed specs first](#Run-failed-specs-first) to reduce the
-time it takes to fix issues and deploy changes.
+In addition to reducing CI costs with Auto Cancellation, also consider
+[Spec Prioritization](#Spec-Prioritization) to reduce the time it takes to fix
+issues and deploy changes.
 
 </Alert>
