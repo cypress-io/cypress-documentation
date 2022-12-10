@@ -180,7 +180,7 @@ CYPRESS_DOWNLOAD_MIRROR="https://www.example.com" cypress install
 Cypress will then attempt to download a binary with this format:
 `https://www.example.com/desktop/:version?platform=p`
 
-## Using a custom CA
+## Using a custom certificate authority (CA)
 
 Cypress can be configured to use the `ca` and `cafile` options from your NPM
 config file to download the Cypress binary.
@@ -189,9 +189,16 @@ For example, to use the CA at `/home/person/certs/ca.crt` when downloading
 Cypress, add the following to your `.npmrc`:
 
 ```shell
-CYPRESS_DOWNLOAD_USE_CA=1
-ca=/home/person/certs/ca.crt
+cafile=/home/person/certs/ca.crt
 ```
+
+If neither `cafile` nor `ca` are set, Cypress looks at the system environment
+variable `NODE_EXTRA_CA_CERTS` and uses the corresponding certificate(s) as an
+extension for the trusted certificate authority when downloading the Cypress
+binary.
+
+Note that the npm config is used as a replacement, and the node environment
+variable is used as an extension.
 
 ## Opt out of sending exception data to Cypress
 
@@ -236,6 +243,15 @@ To save the `CYPRESS_CRASH_REPORTS` variable for use in all new shells, use
 ```shell
 setx CYPRESS_CRASH_REPORTS 0
 ```
+
+## Opt out of Cypress commercial messaging
+
+Cypress may occasionally display messages in your CI logs related to our
+commercial offerings and how they could benefit you during your workflows.
+
+If you would like to opt out of all commercial messaging, you can do so by
+setting `CYPRESS_COMMERCIAL_RECOMMENDATIONS=0` in your system environment
+variables.
 
 ## Install pre-release version
 

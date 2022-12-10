@@ -17,9 +17,9 @@ title: Writing and Organizing Tests
 
 <strong class="alert-header">Best Practices</strong>
 
-We recently gave a "Best Practices" conference talk at AssertJS (February 2018).
-This video demonstrates how to approach breaking down your application and
-organizing your tests.
+We gave a "Best Practices" conference talk at AssertJS (February 2018). This
+video demonstrates how to approach breaking down your application and organizing
+your tests.
 
 <Icon name="play-circle"></Icon>
 [https://www.youtube.com/watch?v=5XQOK0v_YRE](https://www.youtube.com/watch?v=5XQOK0v_YRE)
@@ -236,12 +236,12 @@ module API option, if specified)
   - `cypress/videos/file/one.cy.js.mp4`
   - `cypress/videos/two.cy.js.mp4`
 
-#### Assets in Cypress Dashboard
+#### Assets in Cypress Cloud
 
 <DocsImage src="/img/dashboard/videos-of-recorded-test-run.png" alt="Video of test runs"></DocsImage>
 
 Instead of administering assets yourself, you can
-[save them to the cloud with Cypress Dashboard](/guides/dashboard/runs#Run-details).
+[save them to the cloud with Cypress Cloud](/guides/cloud/runs#Run-details).
 Screenshots and videos are stored permanently, attached to their respective test
 results, and easily shared or browsed through our web interface.
 
@@ -378,7 +378,7 @@ Cypress will be a breeze.
 <Alert type="info">
 
 To start writing tests for your app, follow our guides for writing your first
-[Component](/guides/component-testing/writing-your-first-component-test) or
+[Component](/guides/component-testing/overview) or
 [End-to-End](/guides/end-to-end-testing/writing-your-first-end-to-end-test)
 test.
 
@@ -564,17 +564,6 @@ it.skip('returns "fizz" when number is multiple of 3', () => {
 
 ### Test Isolation
 
-<Alert type="warning">
-
-<strong class="alert-header"><Icon name="exclamation-triangle"></Icon>
-Experimental</strong>
-
-The concept of test isolation is currently experimental, and can be enabled by
-setting the [`experimentalSessionAndOrigin`](/guides/references/experiments)
-option to `true` in the Cypress config.
-
-</Alert>
-
 <Alert type="success">
 
 <Icon name="check-circle" color="green"></Icon> **Best Practice:** Tests should
@@ -586,113 +575,22 @@ As stated in our mission, we hold ourselves accountable to champion a testing
 process that actually works, and have built Cypress to guide developers towards
 writing independent tests from the start.
 
-We do this by cleaning up state _before_ each test to ensure that the operation
-of one test does not affect another test later on. The goal for each test should
-be to **reliably pass** whether run in isolation or consecutively with other
-tests. Having tests that depend on the state of an earlier test can potentially
-cause nondeterministic test failures which makes debugging challenging.
+We do this by cleaning up test state and the browser context _before_ each test
+to ensure that the operation of one test does not affect another test later on.
+The goal for each test should be to **reliably pass** whether run in isolation
+or consecutively with other tests. Having tests that depend on the state of an
+earlier test can potentially cause nondeterministic test failures which makes
+debugging challenging.
 
-Cypress will start each test with a clean test slate by restoring and clearing
-all:
+The behavior of running tests in a clean browser context is described as
+`testIsolation`.
 
-- [aliases](/api/commands/as)
-- [clock mocks](/api/commands/clock)
-- [intercepts](/api/commands/intercept)
-- [routes](/api/commands/route)
-- [spies](/api/commands/spy)
-- [stubs](/api/commands/stub)
-- [viewport changes](/api/commands/viewport)
+The test isolation is a global configuration and can be overridden for
+end-to-end testing at the `describe` level with the
+[`testIsolation`](/guides/references/configuration#e2e) option.
 
-In additional to a clean test slate, Cypress also believes in running tests in a
-clean browser context such that the application or component under test behaves
-consistently when ran. This concept is described as `testIsolation`.
-
-The test isolation mode is a global configuration and can be overridden at the
-`describe` level with the
-[`testIsolation`](/guides/references/configuration#Global) option.
-
-#### End-to-end testing
-
-Cypress supports the following modes of test isolation in end-to-end testing to
-describe if a suite of tests should run in a clean browser context or not: `on`
-and `off`.
-
-###### On Mode
-
-<Alert type="warning">
-
-<strong class="alert-header"><Icon name="exclamation-triangle"></Icon>
-Experimental</strong>
-
-`on` mode is currently experimental and can be enabled by setting
-the [`experimentalSessionAndOrigin`](/guides/references/experiments) flag
-to `true` in the Cypress config. This is the default test isolation behavior
-when using the `experimentalSessionAndOrigin` experiment.
-
-</Alert>
-
-When in `on` mode, Cypress resets the browser context _before_ each test by:
-
-- clearing the dom state by visiting `about:blank`
-- clearing [cookies](/api/cypress-api/cookies) in all domains
-- clearing
-  [`localStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)
-  in all domains
-- clearing
-  [`sessionStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage)
-  in all domains
-
-Because the test starts in a fresh browser context, you must re-visit your
-application and perform the series of interactions needed to build the dom and
-browser state for each test.
-
-Additionally, the `cy.session()` command will inherent this mode and will clear
-the page and current browser context when establishing a browser session. This
-is so tests can reliably pass when run standalone or in a randomized order.
-
-###### Off Mode
-
-<Alert type="warning">
-
-<strong class="alert-header"><Icon name="exclamation-triangle"></Icon>
-Experimental</strong>
-
-`off` mode is currently experimental and can be enabled by setting
-the [`experimentalSessionAndOrigin`](/guides/references/experiments) flag
-to `true` in the Cypress config.
-
-</Alert>
-
-When in `off` mode, Cypress will not alter the browser context before the test
-starts. The page does not clear between tests and cookies, local storage and
-session storage will be available across tests in that suite. Additionally, the
-`cy.session()` command will only clear the current browser context when
-establishing the browser session - the current page will not clear.
-
-It is important to note that turning test isolation `off` may improve the
-overall performance of end-to-end tests, however, previous tests could be impact
-the browser state. It is important to be extremely mindful of how test are
-written when using this mode and ensure tests continue to run independent from
-one other.
-
-###### Mode Comparison
-
-| testIsolation | beforeEach test                                                                                                                                  | cy.session()                                                                                                                                     |
-| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `on`          | - clears page by visiting `about:blank`<br>- clears cookies in all domains<br>- local storage in all domains<br>- session storage in all domains | - clears page by visiting `about:blank`<br>- clears cookies in all domains<br>- local storage in all domains<br>- session storage in all domains |
-| `off`         | does not alter the current browser context                                                                                                       | <br>- clears cookies in all domains<br>- local storage in all domains<br>- session storage in all domains                                        |
-
-##### Component testing
-
-Cypress only support testIsolation `on` in component testing.
-
-When running component tests, the browser context will allow start in a clean
-slate because Cypress will
-
-- clear the page
-- clear [cookies](/api/cypress-api/cookies)
-- clear
-  [`localStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)
+To learn more about this behavior and the trade-offs of disabling it, review our
+[Test Isolation guide](/guides/core-concepts/test-isolation).
 
 ### Test Configuration
 
@@ -905,9 +803,10 @@ describe('TodoMVC', () => {
 
   it.skip('adds 2 todos', function () {
     cy.visit('/')
-    cy.get('[data-testid="new-todo"]')
-      .type('learn testing{enter}')
-      .type('be cool{enter}')
+    cy.get('[data-testid="new-todo"]').as('new').type('learn testing{enter}')
+
+    cy.get('@new').type('be cool{enter}')
+
     cy.get('[data-testid="todo-list"] li').should('have.length', 100)
   })
 
@@ -945,9 +844,10 @@ describe('TodoMVC', () => {
   })
 
   it('adds 2 todos', () => {
-    cy.get('[data-testid="new-todo"]')
-      .type('learn testing{enter}')
-      .type('be cool{enter}')
+    cy.get('[data-testid="new-todo"]').as('new').type('learn testing{enter}')
+
+    cy.get('@new').type('be cool{enter}')
+
     cy.get('[data-testid="todo-list"] li').should('have.length', 2)
   })
 })

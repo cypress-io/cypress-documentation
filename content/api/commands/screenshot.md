@@ -64,8 +64,9 @@ For more details on these options and to set some as defaults across all uses of
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`.screenshot()` yields the same subject it was given from the previous
-command.</li></List>
+- `.screenshot()` yields the same subject it was given.
+- It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried)
+  to chain further commands that rely on the subject after `.screenshot()`.
 
 ## Examples
 
@@ -248,8 +249,8 @@ off by setting `screenshotOnRunFailure` to `false` within your
 
 #### Screenshots in CI
 
-You can see screenshots taken during a CI run in the
-[Dashboard Service](https://on.cypress.io/dashboard) without any extra work.
+You can see screenshots taken during a CI run in
+[Cypress Cloud](https://on.cypress.io/cloud) without any extra work.
 
 Alternatively, to see screenshots in your Continuous Integration UI, most CI
 providers document a way to export the screenshots as artifacts and to make them
@@ -351,7 +352,7 @@ following:
 - [After Screenshot API](/api/plugins/after-screenshot-api)
 - [`cy.debug()`](/api/commands/debug)
 - [`Cypress.Screenshot`](/api/cypress-api/screenshot-api)
-- [Dashboard Service](/guides/dashboard/introduction)
+- [Cypress Cloud](/guides/cloud/introduction)
 - [`.pause()`](/api/commands/pause)
 - [Screenshots and Videos](/guides/guides/screenshots-and-videos)
 - [Visual Testing](/guides/tooling/visual-testing)

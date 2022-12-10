@@ -27,6 +27,7 @@ Pass in an options object to change the default behavior of `cy.getCookies()`.
 
 | Option    | Default                                                        | Description                                                                              |
 | --------- | -------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `domain`  | Hostname of the current URL                                    | Retrieves the cookies from the specified domain                                          |
 | `log`     | `true`                                                         | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 | `timeout` | [`responseTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.getCookies()` to resolve before [timing out](#Timeouts)             |
 
@@ -43,6 +44,9 @@ following properties:
 - `sameSite` _(if specified)_
 - `secure`
 - `value`
+
+`cy.getCookies()` is not a query. It will not update the returned list if
+further cookies are added after it initially executes.
 
 ## Examples
 
