@@ -322,9 +322,9 @@ Cypress has several builtin 'ensures' which can be helpful in this regard:
 - `cy.ensureElement(subject, queryName)`: Ensure that the passed in `subject` is
   one or more DOM elements.
 - `cy.ensureWindow(subject)`: Ensure that the passed in `subject` is a
-  `document`.
-- `cy.ensureDocument(subject)`: Ensure that the passed in `subject` is a
   `window`.
+- `cy.ensureDocument(subject)`: Ensure that the passed in `subject` is a
+  `document`.
 
 - `cy.ensureAttached(subject, queryName)`: Ensure that DOM element(s) are
   attached to the page.
