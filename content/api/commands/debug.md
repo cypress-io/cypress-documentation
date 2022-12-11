@@ -43,8 +43,8 @@ Pass in an options object to change the default behavior of `.debug()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`.debug()` yields the same subject it was given from the previous
-command.</li></List>
+- `.debug()` yields the same subject it was given from the previous command.
+- `.debug()` is a query, and it is _safe_ to chain further commands.
 
 ## Examples
 
@@ -92,7 +92,7 @@ the following:
 
 ## See also
 
-- [Dashboard](https://on.cypress.io/dashboard)
+- [Cypress Cloud](https://on.cypress.io/cloud)
 - [`.pause()`](/api/commands/pause)
 - [`cy.log()`](/api/commands/log)
 - [`cy.screenshot()`](/api/commands/screenshot)

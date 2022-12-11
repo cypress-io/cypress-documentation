@@ -129,7 +129,7 @@
         },
         {
           "name": "Knapsack Pro Cypress",
-          "description": "Dynamic tests split across parallel CI nodes with Knapsack Pro Queue Mode to get faster CI builds. Note - this is 3rd party implementation, different from the Cypress Dashboard parallelization.",
+          "description": "Dynamic tests split across parallel CI nodes with Knapsack Pro Queue Mode to get faster CI builds. Note - this is 3rd party implementation, different from Cypress Cloud parallelization.",
           "link": "https://github.com/KnapsackPro/knapsack-pro-cypress",
           "keywords": ["CI parallelisation", "continuous-integration"],
           "badge": "community"
@@ -349,12 +349,26 @@
           "link": "https://chrome.google.com/webstore/detail/cypress-chrome-recorder/fellcphjglholofndfmmjmheedhomgin",
           "keywords": ["recording", "chrome", "extension", "devtools"],
           "badge": "official"
+        },
+        {
+          "name": "cypress-codegen",
+          "description": "A Cypress plugin which automatically adds and enables IntelliSense for custom commands",
+          "link": "https://github.com/ExpediaGroup/cypress-codegen",
+          "keywords": ["commands", "development", "codegen"],
+          "badge": "community"
         }
       ]
     },
     {
       "name": "Custom Commands",
       "plugins": [
+         {
+          "name": "cypress-plugin-api",
+          "description": "Cypress plugin for effective API testing. Imagine Postman, but in Cypress.",
+          "link": "https://github.com/filiphric/cypress-plugin-api",
+          "keywords": ["api"],
+          "badge": "community"
+        },
         {
           "name": "cy-view",
           "description": "Run tests on multiple URLs at various viewport sizes.",
@@ -632,12 +646,19 @@
           "badge": "community"
         }, 
         {
+          "name": "cypress-if",
+          "description": "Easy conditional if-else logic for your Cypress tests",
+          "link": "https://github.com/bahmutov/cypress-if",
+          "keywords": ["commands"],
+          "badge": "community"
+        },
+        {
           "name": "@mavrou/cy-grapgql",
           "description": "Cypress commands for end-to-end GraphQL testing",
           "link": "https://github.com/dimavroudis/cy-graphql",
           "keywords": ["commands", "graphQL"],
           "badge": "community"
-        }
+        },
       ]
     },
     {
@@ -889,6 +910,13 @@
       "description": "Visual testing is a great complement to functional testing",
       "plugins": [
         {
+          "name": "Argos",
+          "description": "Automate visual testing in your CI",
+          "link": "https://docs.argos-ci.com/cypress",
+          "keywords": ["devX", "screenshots"],
+          "badge": "verified"
+        },
+        {
           "name": "Applitools",
           "description": "Fast, easy and reliable visual UI testing with Cypress",
           "link": "https://applitools.com/tutorials/cypress.html",
@@ -918,7 +946,7 @@
         },
         {
           "name": "Cypress Image Snapshot",
-          "description": "Catch visual regressions and compare image diffs locally and in Cypress Dashboard.",
+          "description": "Catch visual regressions and compare image diffs locally and in Cypress Cloud.",
           "link": "https://github.com/palmerhq/cypress-image-snapshot",
           "keywords": ["image-diff", "snapshot"],
           "badge": "community"

@@ -72,7 +72,7 @@ cy.get('button').then(($btn) => {
 
 If you're familiar with
 [native Promises](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)
-the Cypress `.then()` works the same way. You can continue to nest more Cypress
+the Cypress `.then()` works similarly. You can continue to nest more Cypress
 commands inside of the `.then()`.
 
 Each nested command has access to the work done in previous commands. This ends
@@ -355,8 +355,8 @@ it('is not using aliases correctly', function () {
 })
 ```
 
-The same principles we introduced many times before apply to this situation. If
-you want to access what a command yields you have to do it in a closure using a
+The same principles we introduced before apply to this situation. If you want to
+access what a command yields you have to do it in a closure using a
 [`.then()`](/api/commands/then).
 
 ```js
@@ -413,14 +413,32 @@ it('utilize users in some way', function () {
 
 By using [`cy.get()`](/api/commands/get) we avoid the use of `this`.
 
-Keep in mind that there are use cases for both approaches because they have
-different ergonomics.
+Keep in mind that there are use cases for both approaches because they have one
+major difference.
 
-When using `this.users` we have access to it synchronously, whereas when using
-`cy.get('@users')` it becomes an asynchronous command.
+When using `this.users`, it is stored on the context when it is first evaluated.
+But when using `cy.get('@users')`, any queries are re-evaluated every time the
+alias is accessed.
 
-You can think of the `cy.get('@users')` as doing the same thing as
-[`cy.wrap(this.users)`](/api/commands/wrap).
+```javascript
+const favorites = { color: 'blue' }
+
+cy.wrap(favorites).its('color').as('favoriteColor')
+
+cy.then(function () {
+  favorites.color = 'red'
+})
+
+cy.get('@favoriteColor').then(function (aliasValue) {
+  expect(aliasColor).to.eql('red')
+
+  expect(this.color).to.eql('blue')
+})
+```
+
+In the second `.then()` block, `cy.get('@favoriteColor')` runs
+`cy.wrap(favorites).its('color')` fresh each time, but `this.color` was set when
+the alias was first stored, back when our favorite color was blue.
 
 ### Elements
 
@@ -450,10 +468,9 @@ existing alias called `rows` and returns the reference (if it finds it).
 
 #### Stale Elements:
 
-In many single-page JavaScript applications the DOM re-renders parts of the
-application constantly. If you alias DOM elements that have been removed from
-the DOM by the time you call [`cy.get()`](/api/commands/get) with the alias,
-Cypress automatically re-queries the DOM to find these elements again.
+In many single-page applications, the JavaScript re-renders parts of the DOM
+constantly. This is why we always re-run queries when you fetch an alias, so you
+never end up with stale elements.
 
 ```html
 <ul id="todos">
@@ -476,34 +493,30 @@ place.
 
 ```javascript
 cy.get('[data-testid="todos"] li').first().as('firstTodo')
+
 cy.get('@firstTodo').find('.edit').click()
+
 cy.get('@firstTodo')
   .should('have.class', 'editing')
   .find('input')
   .type('Clean the kitchen')
 ```
 
-When we reference `@firstTodo`, Cypress checks to see if all of the elements it
-is referencing are still in the DOM. If they are, it returns those existing
-elements. If they aren't, Cypress replays the commands leading up to the alias
-definition.
+Every time we reference `@firstTodo`, Cypress re-runs the queries leading up to
+the alias definition.
 
-In our case it would re-issue the commands: `cy.get('#todos li').first()`.
+In our case it would re-query the DOM using: `cy.get('#todos li').first()`.
 Everything works because the new `<li>` is found.
 
 <Alert type="warning">
 
 _Usually_, replaying previous commands will return what you expect, but not
-always. It is recommended that you **alias elements as soon as possible**
-instead of further down a chain of commands.
+always. It is recommended that you **alias elements before running commands**.
 
-- `cy.get('nav header [data-testid="user"]').as('user')`
+- `cy.get('nav').find('header').find('[data-testid="user"]').as('user').click()`
   <Icon name="check-circle" color="green"></Icon> (good)
-- `cy.get('nav').find('header').find('[data-testid="user"]').as('user')`
+- `cy.get('nav').find('header').find('[data-testid="user"]').click().as('user')`
   <Icon name="exclamation-triangle" color="red"></Icon> (bad)
-
-When in doubt, you can _always_ issue a regular [`cy.get()`](/api/commands/get)
-to query for the elements again.
 
 </Alert>
 

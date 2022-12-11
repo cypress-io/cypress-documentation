@@ -2,8 +2,8 @@
 title: and
 ---
 
-Create an assertion. Assertions are automatically retried until they pass or
-time out.
+Create an assertion. Assertions are automatically retried as part of the
+previous command until they pass or time out.
 
 <Alert type="info">
 
@@ -33,7 +33,9 @@ An alias of [`.should()`](/api/commands/should)
 
 ```javascript
 cy.get('.err').should('be.empty').and('be.hidden') // Assert '.err' is empty & hidden
+
 cy.contains('Login').and('be.visible') // Assert el is visible
+
 cy.wrap({ foo: 'bar' })
   .should('have.property', 'foo') // Assert 'foo' property exists
   .and('eq', 'bar') // Assert 'foo' property is 'bar'
@@ -42,7 +44,10 @@ cy.wrap({ foo: 'bar' })
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
 
 ```javascript
-cy.and('eq', '42') // Should not be chained off 'cy'
+cy.and('eq', '42') // Can not be chained off 'cy'
+
+cy.get('button').click().and('be.focused') // Should not be chained off
+// action commands that may update the DOM
 ```
 
 ### Arguments
@@ -68,8 +73,9 @@ Whatever was passed to the function is what is yielded.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>In most cases, `.and()` yields the same subject it was given from the
-previous command.</li></List>
+- In most cases, `.and()` yields the same subject it was given.
+- `.and()` is an assertion, and it is _safe_ to chain further commands that use
+  the subject.
 
 ```javascript
 cy.get('nav') // yields <nav>

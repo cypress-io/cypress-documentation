@@ -71,8 +71,9 @@ Pass in an options object to change the default behavior of `cy.fixture()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-`cy.fixture()` yields the contents of the file. Formatting is determined by its
-file extension.
+- `cy.fixture()` yields the contents of the file. Formatting is determined by
+  its file extension.
+- The yielded subject is **not** updated if the contents change on disk.
 
 ## Examples
 
@@ -293,7 +294,7 @@ test, and thus Cypress loads them just once. Even if you overwrite the fixture
 file itself, the already loaded fixture data remains the same.
 
 If you wish to dynamically change the contents of a file during your tests,
-consider [`cy.readFile()`](/api/commands/readFile) instead.
+consider [`cy.readFile()`](/api/commands/readfile) instead.
 
 For example, if you want to reply to a network request with different object,
 the following **will not work**:
@@ -363,7 +364,7 @@ practical purposes it should never happen.
 - [Guide: Variables and Aliases](/guides/core-concepts/variables-and-aliases)
 - [`cy.intercept()`](/api/commands/intercept)
 - [`.then()`](/api/commands/then)
-- [`.readFile()`](/api/commands/readFile) for a similar command without caching
+- [`.readFile()`](/api/commands/readfile) for a similar command without caching
   and with builtin retryability
 - [Recipe: Bootstrapping App Test Data](/examples/examples/recipes#Server-Communication)
 - [Fixtures](https://github.com/cypress-io/testing-workshop-cypress#fixtures)

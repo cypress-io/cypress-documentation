@@ -21,17 +21,17 @@ Cypress testing experience.
 
 <Alert type="info">
 
-<strong class="alert-header">Dashboard integration</strong>
+<strong class="alert-header">Cypress Cloud integration</strong>
 
-When you configure Cypress to record tests to the
-[Dashboard](/guides/dashboard/introduction), you'll see data from your latest
-recorded runs directly in Cypress. This increased visibility into your test
-history allows you to debug your tests faster and more effectively, all within
-your local workflow.
+When you configure the open-source Cypress app to record tests to
+[Cypress Cloud](/guides/cloud/introduction), you'll see data from your latest
+recorded runs directly in the Cypress app. This increased visibility into your
+test history allows you to debug your tests faster and more effectively, all
+within your local workflow.
 
-The data used by these features is pulled from the Dashboard, so they will only
+The data used by these features is pulled from Cypress Cloud, so they will only
 reflect test results that were
-[recorded](/guides/dashboard/projects#Set-up-a-project-to-record).
+[recorded](/guides/cloud/projects#Set-up-a-project-to-record).
 
 If you're not sure whether you're logged in, you can always check using the
 profile control in the top right of the window.
@@ -78,11 +78,11 @@ statuses. Results are scoped to your current git branch if available, falling
 back to the default branch if not, then finally all branches.
 
 With this intelligence you can monitor, run, and fix tests locally within CI
-workflows, and then further dig into your results by clicking through to the
-Dashboard.
+workflows, and then further dig into your results by clicking through to Cypress
+Cloud.
 
-The runs data is sourced from the Dashboard (see [note above](#Overview)) so
-should be the same everywhere.
+The runs data is sourced from Cypress Cloud (see [note above](#Overview)) so it
+will be the same everywhere.
 
 #### Average duration
 
@@ -90,7 +90,7 @@ This column indicates the time taken to run the entire spec file, averaged over
 the last four runs, so that you can quickly identify and take action to improve
 the performance of your long-running tests.
 
-Again, this analysis comes from the Dashboard.
+Again, this analysis comes from Cypress Cloud.
 
 #### Flake annotation
 
@@ -98,8 +98,8 @@ Again, this analysis comes from the Dashboard.
 
 <strong class="alert-header">What is a flaky test?</strong>
 
-A test is considered to be [flaky](/guides/dashboard/flaky-test-management) when
-it can pass and fail across multiple retry attempts without any code changes.
+A test is considered to be [flaky](/guides/cloud/flaky-test-management) when it
+can pass and fail across multiple retry attempts without any code changes.
 
 </Alert>
 
@@ -116,21 +116,48 @@ tooltip with the following analytics, based off the last 50 runs:
 - Last flaky (how many runs ago)
 
 Clicking on the flake indicator will take you to the spec’s
-[Flaky Test Analytics in the Dashboard](https://dashboard.cypress.io/projects/7s5okt/analytics/flaky-tests).
+[Flaky Test Analytics in Cypress Cloud](https://cloud.cypress.io/projects/7s5okt/analytics/flaky-tests).
+
+#### Running Specs
+
+<DocsImage src="/img/guides/core-concepts/cypress-app/spec-page.png" alt="Spec Explorer"></DocsImage>
+
+To run a spec, simply click the row with the spec you would like to run. You
+will be taken to the [Test Runner](#The-Test-Runner) and the spec will execute.
+You can narrow down the list of specs by typing into the search bar (1).
+
+It is also possible to run multiple specs sequentially using the
+[`experimentalRunAllSpecs`](guides/references/experiments#End-to-End-Testing)
+(2).
+
+<Alert type="warning">
+
+<strong class="alert-header">Experimental Run All Specs</strong>
+
+`experimentalRunAllSpecs` currently works with End to End Testing.
+
+Running multiple specs sequentially is currently an
+[experimental feature](/guides/references/configuration#Experiments) and it may
+change in the future. There are some known limitations outlined in this
+[GitHub Discussion](https://github.com/cypress-io/cypress/discussions/21628).
+
+Running a large number of specs sequentially can consume more resources.
+
+</Alert>
 
 ### Project Runs
 
 <DocsImage src="/img/guides/core-concepts/cypress-app/recorded-runs.png" alt="Recorded Runs"></DocsImage>
 
 This screen shows detailed information about the most recently recorded
-[test runs](/guides/dashboard/runs) across all git branches, latest first. This
-data comes from the Dashboard (see [note above](#Overview)) so should be the
-same everywhere.
+[test runs](/guides/cloud/runs) across all git branches, latest first. This data
+comes from Cypress Cloud (see [note above](#Overview)) so should be the same
+everywhere.
 
 The title of each run is taken from the
 [git commit message](https://www.educative.io/edpresso/git-commit-message-simply-explained)
 for that change, and clicking on it will take you to the corresponding run page
-in the Dashboard.
+in Cypress Cloud.
 
 ## The Test Runner
 
@@ -144,9 +171,8 @@ the Application or Component Under Test, and exploring its DOM.
 
 The left-hand side of the Test Runner is a visual representation of your test
 suite. Each test block is properly nested and each test, when clicked, displays
-every Cypress command and assertion executed within the test's block as well as
-any command or assertion executed in relevant `before`, `beforeEach`,
-`afterEach`, and `after` hooks.
+every Cypress command executed within the test's block as well as any commands
+executed in relevant `before`, `beforeEach`, `afterEach`, and `after` hooks.
 
 <DocsImage src="/img/guides/core-concepts/cypress-app/command-log.png" alt="Cypress app" width-600></DocsImage>
 
@@ -160,10 +186,9 @@ file where the code is located. Clicking on this link will open the file in your
 
 ### Time traveling
 
-Each command and assertion, when hovered over, restores the Application or
-Component Under Test (right-hand side) to the state it was in when that command
-executed. This allows you to **time travel** back to previous states when
-testing.
+Each command, when hovered over, restores the Application or Component Under
+Test (right-hand side) to the state it was in when that command executed. This
+allows you to **time travel** back to previous states when testing.
 
 <Alert type="info">
 
@@ -191,10 +216,10 @@ the URL that was present when the snapshot was taken.
 
 ### Pinning snapshots
 
-Each command, assertion, or error, when clicked on, displays extra information
-in the dev tools console. Clicking also **pins** the Application or Component
-Under Test (right-hand side) to its previous state, or **snapshot**, when the
-command executed.
+Each command, when clicked on, displays extra information in the dev tools
+console. Clicking also **pins** the Application or Component Under Test
+(right-hand side) to its previous state, or **snapshot**, when the command
+executed.
 
 In the following example, clicking on the `CLICK` command highlights it in
 purple, and does three other things worth noting:
@@ -405,6 +430,14 @@ The Selector Playground is an interactive feature that helps you:
 
 <DocsVideo src="/img/snippets/selector-playground.mp4" title="Selector Playground demo"></DocsVideo>
 
+<Alert type="info">
+
+Needing a low code approach to create tests? Use
+[Cypress Studio](/guides/references/cypress-studio) to record your browser
+interactions.
+
+</Alert>
+
 ### Uniqueness
 
 Cypress will automatically calculate a **unique selector** to use targeted
@@ -512,7 +545,7 @@ debugging tools to help you understand a test. You can:
 
 ### Console output
 
-Besides Commands being interactive, they also output additional debugging
+Besides commands being interactive, they also output additional debugging
 information to your console.
 
 Open up your Dev Tools and click on the `GET` for the `.action-email` class

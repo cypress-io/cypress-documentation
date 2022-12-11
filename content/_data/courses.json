@@ -1,5 +1,31 @@
 {
   "courses": [
+     {
+      "title": "Cypress with TypeScript",
+      "url": "https://testautomationu.applitools.com/cypress-with-typescript/",
+      "author": "Filip Hric",
+      "authorTwitter": "@filip_hric",
+      "sourceName": "Test automation university",
+      "sourceUrl": "https://testautomationu.applitools.com",
+      "free": true
+     },
+     {
+      "title": "Write, Test, and Debug Vue 3 Components in the Browser Using Cypress",
+      "url": "https://egghead.io/courses/write-test-and-debug-vue-3-components-in-the-browser-using-cypress-3723fe80?af=1mdhb0",
+      "author": "Filip Hric",
+      "authorTwitter": "@filip_hric",
+      "sourceName": "egghead.io",
+      "sourceUrl": "https://egghead.io"
+    },
+    {
+      "title": "Cypress 10 Fundamentals",
+      "url": "https://university.blazemeter.com/users/sign_in?next=%2Fenrollments%2F130677466%2Fdetails",
+      "author": "Gleb Bahmutov",
+      "authorTwitter": "bahmutov",
+      "sourceName": "Blazemeter University",
+      "sourceUrl": "https://www.blazemeter.com/university",
+      "free":true
+    },
     {
       "title": "Cypress 9 Fundamentals",
       "url": "https://app.pluralsight.com/library/courses/cypress-9-fundamentals/",

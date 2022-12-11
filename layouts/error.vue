@@ -58,7 +58,7 @@ export default {
                 <li class="list-none">
                   <Icon name="angle-right" class="mr-2"></Icon
                   ><a href="https://www.cypress.io/dashboard/"
-                    >The Cypress Dashboard</a
+                    >Cypress Cloud</a
                   >
                 </li>
               </ul>

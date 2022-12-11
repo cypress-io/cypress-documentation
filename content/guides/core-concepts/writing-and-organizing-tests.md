@@ -17,9 +17,9 @@ title: Writing and Organizing Tests
 
 <strong class="alert-header">Best Practices</strong>
 
-We recently gave a "Best Practices" conference talk at AssertJS (February 2018).
-This video demonstrates how to approach breaking down your application and
-organizing your tests.
+We gave a "Best Practices" conference talk at AssertJS (February 2018). This
+video demonstrates how to approach breaking down your application and organizing
+your tests.
 
 <Icon name="play-circle"></Icon>
 [https://www.youtube.com/watch?v=5XQOK0v_YRE](https://www.youtube.com/watch?v=5XQOK0v_YRE)
@@ -236,6 +236,15 @@ module API option, if specified)
   - `cypress/videos/file/one.cy.js.mp4`
   - `cypress/videos/two.cy.js.mp4`
 
+#### Assets in Cypress Cloud
+
+<DocsImage src="/img/dashboard/videos-of-recorded-test-run.png" alt="Video of test runs"></DocsImage>
+
+Instead of administering assets yourself, you can
+[save them to the cloud with Cypress Cloud](/guides/cloud/runs#Run-details).
+Screenshots and videos are stored permanently, attached to their respective test
+results, and easily shared or browsed through our web interface.
+
 To learn more about videos and settings available, see
 [Screenshots and Videos](/guides/guides/screenshots-and-videos#Screenshots)
 
@@ -369,9 +378,17 @@ Cypress will be a breeze.
 <Alert type="info">
 
 To start writing tests for your app, follow our guides for writing your first
-[Component](/guides/component-testing/writing-your-first-component-test) or
+[Component](/guides/component-testing/overview) or
 [End-to-End](/guides/end-to-end-testing/writing-your-first-end-to-end-test)
 test.
+
+</Alert>
+
+<Alert type="info">
+
+Needing a low code approach to create tests? Use
+[Cypress Studio](/guides/references/cypress-studio) to record your browser
+interactions.
 
 </Alert>
 
@@ -549,60 +566,31 @@ it.skip('returns "fizz" when number is multiple of 3', () => {
 
 <Alert type="success">
 
-<Icon name="check-circle" color="green"></Icon> **Best Practice:** Clean up
-state **before** tests run.
+<Icon name="check-circle" color="green"></Icon> **Best Practice:** Tests should
+always be able to be run independently from one another **and still pass**.
 
 </Alert>
 
-Test isolation is the practice of resetting application state _before_ each
-test.
+As stated in our mission, we hold ourselves accountable to champion a testing
+process that actually works, and have built Cypress to guide developers towards
+writing independent tests from the start.
 
-Cleaning up state ensures that the operation of one test does not affect another
-test later on. The goal for each test should be to reliably pass whether run in
-isolation or consecutively with other tests. Having tests that depend on the
-state of an earlier test can potentially cause nondeterministic test failures.
+We do this by cleaning up test state and the browser context _before_ each test
+to ensure that the operation of one test does not affect another test later on.
+The goal for each test should be to **reliably pass** whether run in isolation
+or consecutively with other tests. Having tests that depend on the state of an
+earlier test can potentially cause nondeterministic test failures which makes
+debugging challenging.
 
-Cypress supports two modes of test isolation, `legacy` and `strict`.
+The behavior of running tests in a clean browser context is described as
+`testIsolation`.
 
-#### Legacy Mode
+The test isolation is a global configuration and can be overridden for
+end-to-end testing at the `describe` level with the
+[`testIsolation`](/guides/references/configuration#e2e) option.
 
-When in `legacy` mode, Cypress handles resetting the state for:
-
-- [aliases](/api/commands/as)
-- [cookies](/api/commands/clearcookies)
-- [clock](/api/commands/clock)
-- [intercept](/api/commands/intercept)
-- [localStorage](/api/commands/clearlocalstorage)
-- [routes](/api/commands/route)
-- [sessions](/api/commands/session)
-- [spies](/api/commands/spy)
-- [stubs](/api/commands/stub)
-- [viewport](/api/commands/viewport)
-
-#### Strict Mode
-
-<Alert type="warning">
-
-<strong class="alert-header"><Icon name="exclamation-triangle"></Icon>
-Experimental</strong>
-
-`strict` mode is currently experimental and can be enabled by setting
-the [`experimentalSessionAndOrigin`](/guides/references/experiments) flag
-to `true` in the Cypress config. This is the default test isolation behavior
-when using the `experimentalSessionAndOrigin` experiment.
-
-</Alert>
-
-When in `strict` mode, Cypress handles resetting the state for everything
-outlined above for `legacy` mode, in addition to clearing the page by visiting
-`about:blank` before each test. This clears the dom's state and non-persistent
-browser state. This forces you to re-visit your application and perform the
-series of interactions needed to build the dom and browser state so the tests
-can reliably pass when run standalone or in a randomized order.
-
-The test isolation mode is a global configuration and can be overridden at the
-`describe` level with the
-[`testIsolation`](/guides/references/configuration#Global) option.
+To learn more about this behavior and the trade-offs of disabling it, review our
+[Test Isolation guide](/guides/core-concepts/test-isolation).
 
 ### Test Configuration
 
@@ -815,9 +803,10 @@ describe('TodoMVC', () => {
 
   it.skip('adds 2 todos', function () {
     cy.visit('/')
-    cy.get('[data-testid="new-todo"]')
-      .type('learn testing{enter}')
-      .type('be cool{enter}')
+    cy.get('[data-testid="new-todo"]').as('new').type('learn testing{enter}')
+
+    cy.get('@new').type('be cool{enter}')
+
     cy.get('[data-testid="todo-list"] li').should('have.length', 100)
   })
 
@@ -855,9 +844,10 @@ describe('TodoMVC', () => {
   })
 
   it('adds 2 todos', () => {
-    cy.get('[data-testid="new-todo"]')
-      .type('learn testing{enter}')
-      .type('be cool{enter}')
+    cy.get('[data-testid="new-todo"]').as('new').type('learn testing{enter}')
+
+    cy.get('@new').type('be cool{enter}')
+
     cy.get('[data-testid="todo-list"] li').should('have.length', 2)
   })
 })

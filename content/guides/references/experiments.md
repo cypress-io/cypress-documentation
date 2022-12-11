@@ -2,7 +2,7 @@
 title: Experiments
 ---
 
-If you'd like to try out what we're working on in Cypress, you can enable beta
+If you'd like to try out what we're working on in Cypress, you can enable alpha
 features for your project by turning on the experimental features you'd like to
 try.
 
@@ -39,10 +39,11 @@ creating `e2e` and `component` objects inside your Cypress configuration.
 These experiments are available to be specified inside the `e2e` configuration
 object:
 
-| Option                         | Default | Description                                                                                                                                                                                                  |
-| ------------------------------ | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `experimentalSessionAndOrigin` | `false` | Enables cross-origin and improved session support, including the [`cy.origin()`](/api/commands/origin) and [`cy.session()`](/api/commands/session) commands. This enables `testIsolation=strict` by default. |
-| `experimentalStudio`           | `false` | Generate and save commands directly to your test suite by interacting with your app as an end user would.                                                                                                    |
+| Option                           | Default | Description                                                                                               |
+| -------------------------------- | ------- | --------------------------------------------------------------------------------------------------------- |
+| `experimentalStudio`             | `false` | Generate and save commands directly to your test suite by interacting with your app as an end user would. |
+| `experimentalRunAllSpecs`        | `false` | Enables the "Run All Specs" UI feature, allowing the execution of multiple specs sequentially.            |
+| `experimentalOriginDependencies` | `false` | Enables support for `require`/`import` within `cy.origin`.                                                |
 
 ### Component Testing
 
@@ -57,7 +58,9 @@ configuration object:
 
 | Version                                       | Changes                                                                                                                      |
 | --------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| [10.8.0](/guides/references/changelog#10-x-y) | Added `experimentalWebKitSupport`.                                                                                           |
+| [12.0.0](/guides/references/changelog#12-0-0) | Removed `experimentalSessionAndOrigin` and made it the default behavior. Added `experimentalOriginDependencies`.             |
+| [11.2.0](/guides/references/changelog#11-2-0) | Added `experimentalRunAllSpecs`.                                                                                             |
+| [10.8.0](/guides/references/changelog#10-8-0) | Added `experimentalWebKitSupport`.                                                                                           |
 | [10.6.0](/guides/references/changelog#10-6-0) | Added support for `experimentalSingleTabRunMode`.                                                                            |
 | [10.4.0](/guides/references/changelog#10-4-0) | Added support for `experimentalModifyObstructiveThirdPartyCode`.                                                             |
 | [9.6.0](/guides/references/changelog#9-6-0)   | Added support for `experimentalSessionAndOrigin` and removed `experimentalSessionSupport`.                                   |

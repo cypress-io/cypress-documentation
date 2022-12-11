@@ -1,0 +1,60 @@
+---
+title: Svelte Examples
+---
+
+## Mounting Components
+
+### Using `cy.mount()`
+
+To mount a component with `cy.mount()`, import the component and pass it to the
+method:
+
+```ts
+import { Stepper } from './stepper.svelte'
+
+it('mounts', () => {
+  cy.mount(Stepper)
+})
+```
+
+### Passing Data to a Component
+
+You can pass props to a component by setting props in the options: `cy.mount()`:
+
+```ts
+it('mounts', () => {
+  cy.mount(Stepper, { props: { count: 100 } })
+})
+```
+
+### Testing Event Handlers
+
+To test emitted events from a Svelte component, we can use access the component
+instances and use `$on` method to listen to events raised. We can also pass in a
+Cypress spy so we can query the spy later for results. In the example below, we
+listen to the `change` event and validate it was called as expected:
+
+```js
+it('clicking + fires a change event with the incremented value', () => {
+  const changeSpy = cy.spy().as('changeSpy')
+  cy.mount(Stepper).then(({ component }) => {
+    component.$on('change', changeSpy)
+  })
+  cy.get('[data-cy=increment]').click()
+  cy.get('@changeSpy').should('have.been.calledWithMatch', {
+    detail: { count: 1 },
+  })
+})
+```
+
+### Accessing the Component Instance
+
+There might be times when you might want to access the component instance
+directly in your tests. To do so, use `.then()`, which enables us to work with
+the subject that was yielded from the `cy.mount()` command.
+
+```js
+cy.mount(Stepper).then(({ component }) => {
+  //component is the rendered instance of Stepper
+})
+```
