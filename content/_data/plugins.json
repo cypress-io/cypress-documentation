@@ -651,6 +651,13 @@
           "link": "https://github.com/bahmutov/cypress-if",
           "keywords": ["commands"],
           "badge": "community"
+        },
+        {
+          "name": "@mavrou/cy-grapgql",
+          "description": "Cypress commands for end-to-end GraphQL testing",
+          "link": "https://github.com/dimavroudis/cy-graphql",
+          "keywords": ["commands", "graphQL"],
+          "badge": "community"
         }
       ]
     },
