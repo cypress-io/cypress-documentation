@@ -321,11 +321,9 @@ Cypress has several builtin 'ensures' which can be helpful in this regard:
   implemented for commmands.
 - `cy.ensureElement(subject, queryName)`: Ensure that the passed in `subject` is
   one or more DOM elements.
-- `cy.ensureWindow(subject)`: Ensure that the passed in `subject` is a
-  `document`.
+- `cy.ensureWindow(subject)`: Ensure that the passed in `subject` is a `window`.
 - `cy.ensureDocument(subject)`: Ensure that the passed in `subject` is a
-  `window`.
-
+  `document`.
 - `cy.ensureAttached(subject, queryName)`: Ensure that DOM element(s) are
   attached to the page.
 - `cy.ensureNotDisabled(subject)`: Ensure that form elements aren't disabled.
