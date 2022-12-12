@@ -465,7 +465,7 @@ flag also does the following:
 
 - Adjusts the User Agent in Electron to appear more chrome-like. This option can
   be overridden with the
-  [userAgent](http://localhost:3000/guides/references/configuration#Browser)
+  [userAgent](/guides/references/configuration#Browser)
   config option.
 - Removes
   [Subresource Integrity (SRI)](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity)
