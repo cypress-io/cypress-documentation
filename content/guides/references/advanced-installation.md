@@ -173,8 +173,8 @@ Cypress will then attempt to download a binary with this format:
 ## Download path template
 
 Starting with Cypress 9.3.0, you can use the `CYPRESS_DOWNLOAD_PATH_TEMPLATE`
-environment variable to download the Cypress binary from a custom URL
-that's generated based on endpoint, version, platform and architecture.
+environment variable to download the Cypress binary from a custom URL that's
+generated based on endpoint, version, platform and architecture.
 
 **The following replacements are supported:**
 
