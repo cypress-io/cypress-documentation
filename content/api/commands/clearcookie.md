@@ -39,14 +39,13 @@ Pass in an options object to change the default behavior of `cy.clearCookie()`.
 
 | Option    | Default                                                        | Description                                                                              |
 | --------- | -------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| `domain`  | Superdomain of the current URL                                 | Clears the cookie from the specified domain                                              |
+| `domain`  | Hostname of the current URL                                    | Clears the cookie from the specified domain                                              |
 | `log`     | `true`                                                         | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 | `timeout` | [`responseTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.clearCookie()` to resolve before [timing out](#Timeouts)            |
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`cy.clearCookie()` yields `null`.</li><li>`cy.clearCookie()` cannot be
-chained further.</li></List>
+- `cy.clearCookie()` yields `null`.
 
 ## Examples
 

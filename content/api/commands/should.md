@@ -66,8 +66,8 @@ Whatever was passed to the function is what is yielded.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>In most cases, `.should()` yields the same subject it was given from
-the previous command.</li></List>
+In most cases, `.should()` yields the same subject it was given from the
+previous command.
 
 ```javascript
 cy.get('nav') // yields <nav>
@@ -84,6 +84,9 @@ cy.get('nav') // yields <nav>
   .should('have.css', 'font-family') // yields 'sans-serif'
   .and('match', /serif/) // yields 'sans-serif'
 ```
+
+`.should()` is an assertion, and it is _safe_ to chain further commands that use
+the subject.
 
 ## Examples
 
@@ -171,6 +174,35 @@ like to assert on.
 Be sure _not_ to include any code that has side effects in your callback
 function. The callback function will be retried over and over again until no
 assertions within it throw.
+
+You cannot invoke Cypress commands inside of a `.should()` callback function.
+Use Cypress commands before or after `.should()` instead.
+
+**<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
+
+```javascript
+cy.get('p').should(($p) => {
+  cy.log($p)
+  // ...
+})
+```
+
+**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+
+```javascript
+cy.get('p')
+  .should(($p) => {
+    // ...
+  })
+  .log()
+
+// or
+
+cy.get('p').then(($p) => {
+  // ...
+  cy.log($p)
+})
+```
 
 #### Verify length, content, and classes from multiple `<p>`
 
@@ -467,10 +499,11 @@ following:
 
 ## History
 
-| Version                                       | Changes                           |
-| --------------------------------------------- | --------------------------------- |
-| [0.11.4](/guides/references/changelog#0-11-4) | Allows callback function argument |
-| [< 0.3.3](/guides/references/changelog#0-3-3) | `.should()` command added         |
+| Version                                       | Changes                                         |
+| --------------------------------------------- | ----------------------------------------------- |
+| [11.0.0](/guides/references/changelog#11-0-0) | Throw error if Cypress command used in callback |
+| [0.11.4](/guides/references/changelog#0-11-4) | Allows callback function argument               |
+| [< 0.3.3](/guides/references/changelog#0-3-3) | `.should()` command added                       |
 
 ## See also
 

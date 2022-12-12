@@ -651,6 +651,13 @@
           "link": "https://github.com/bahmutov/cypress-if",
           "keywords": ["commands"],
           "badge": "community"
+        },
+        {
+          "name": "cypress-mongodb",
+          "description": "Plugin that allows interaction with MongoDB server using Cypress commands.",
+          "link": "https://github.com/Zaista/cypress-mongodb",
+          "keywords": ["testing", "commands", "mongodb", "mongo", "database", "db"],
+          "badge": "community"
         }
       ]
     },

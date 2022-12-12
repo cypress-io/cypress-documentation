@@ -37,7 +37,7 @@ Pass in an options object to change the default behavior of `cy.wrap()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`cy.wrap()` 'yields the object it was called with' </li></List>
+- `cy.wrap()` yields the object it was called with.
 
 ## Examples
 

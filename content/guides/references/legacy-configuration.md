@@ -210,8 +210,8 @@ cypress open --config '{"watchForFileChanges":false,"testFiles":["**/*.js","**/*
 ### Runner Specific Overrides
 
 You can override configuration for either the E2E or
-[Component Testing](/guides/component-testing/introduction/) runner using the
-`e2e` and `component` options.
+[Component Testing](/guides/component-testing/overview/) runner using the `e2e`
+and `component` options.
 
 #### Examples
 
