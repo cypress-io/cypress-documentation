@@ -250,7 +250,7 @@ following:
 ## See also
 
 - [`.check()`](/api/commands/check)
-- [`.click()` examples in kitchensink app](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/cypress/integration/2-advanced-examples/actions.spec.js#L67)
+- [`.click()` examples in kitchensink app](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/cypress/e2e/2-advanced-examples/actions.cy.js#L67)
 - [`.dblclick()`](/api/commands/dblclick)
 - [`.rightclick()`](/api/commands/rightclick)
 - [`.select()`](/api/commands/select)
