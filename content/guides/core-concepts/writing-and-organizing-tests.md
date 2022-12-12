@@ -17,9 +17,9 @@ title: Writing and Organizing Tests
 
 <strong class="alert-header">Best Practices</strong>
 
-We recently gave a "Best Practices" conference talk at AssertJS (February 2018).
-This video demonstrates how to approach breaking down your application and
-organizing your tests.
+We gave a "Best Practices" conference talk at AssertJS (February 2018). This
+video demonstrates how to approach breaking down your application and organizing
+your tests.
 
 <Icon name="play-circle"></Icon>
 [https://www.youtube.com/watch?v=5XQOK0v_YRE](https://www.youtube.com/watch?v=5XQOK0v_YRE)
@@ -215,7 +215,7 @@ module API option, if specified)
 
 - Spec file found
   - `cypress/e2e/path/to/file/one.cy.js`
-- Common ancester paths (calculated at runtime)
+- Common ancestor paths (calculated at runtime)
   - `cypress/e2e/path/to/file`
 - Generated screenshot file
   - `cypress/screenshots/one.cy.js/your-screenshot.png`
@@ -227,7 +227,7 @@ module API option, if specified)
 - Spec files found
   - `cypress/e2e/path/to/file/one.cy.js`
   - `cypress/e2e/path/to/two.cy.js`
-- Common ancester paths (calculated at runtime)
+- Common ancestor paths (calculated at runtime)
   - `cypress/e2e/path/to/`
 - Generated screenshot files
   - `cypress/screenshots/file/one.cy.js/your-screenshot.png`
@@ -235,6 +235,15 @@ module API option, if specified)
 - Generated video files
   - `cypress/videos/file/one.cy.js.mp4`
   - `cypress/videos/two.cy.js.mp4`
+
+#### Assets in Cypress Cloud
+
+<DocsImage src="/img/dashboard/videos-of-recorded-test-run.png" alt="Video of test runs"></DocsImage>
+
+Instead of administering assets yourself, you can
+[save them to the cloud with Cypress Cloud](/guides/cloud/runs#Run-details).
+Screenshots and videos are stored permanently, attached to their respective test
+results, and easily shared or browsed through our web interface.
 
 To learn more about videos and settings available, see
 [Screenshots and Videos](/guides/guides/screenshots-and-videos#Screenshots)
@@ -290,15 +299,15 @@ in an error when Cypress loads.
 
 ::testing-type-specific-option{option=supportFile}
 
-The Cypress App automatically creates an example support file for each
-configured testing type, which has several commented out examples.
+Cypress automatically creates an example support file for each configured
+testing type, which has several commented out examples.
 
 This file runs **before** every single spec file. We do this purely as a
 convenience mechanism so you don't have to import this file.
 
 By default Cypress will automatically include type-specific support files. For
 E2E, the default is `cypress/support/e2e.{js,jsx,ts,tsx}`, and for Component
-Testing `cypress/support/e2e.{js,jsx,ts,tsx}`.
+Testing `cypress/support/component.{js,jsx,ts,tsx}`.
 
 The support file is a great place to put reusable behavior such as
 [custom commands](/api/cypress-api/custom-commands) or global overrides that you
@@ -369,9 +378,17 @@ Cypress will be a breeze.
 <Alert type="info">
 
 To start writing tests for your app, follow our guides for writing your first
-[Component](/guides/component-testing/writing-your-first-component-test) or
+[Component](/guides/component-testing/overview) or
 [End-to-End](/guides/end-to-end-testing/writing-your-first-end-to-end-test)
 test.
+
+</Alert>
+
+<Alert type="info">
+
+Needing a low code approach to create tests? Use
+[Cypress Studio](/guides/references/cypress-studio) to record your browser
+interactions.
 
 </Alert>
 
@@ -544,6 +561,36 @@ it.skip('returns "fizz" when number is multiple of 3', () => {
   numsExpectedToEq([9, 12, 18], 'fizz')
 })
 ```
+
+### Test Isolation
+
+<Alert type="success">
+
+<Icon name="check-circle" color="green"></Icon> **Best Practice:** Tests should
+always be able to be run independently from one another **and still pass**.
+
+</Alert>
+
+As stated in our mission, we hold ourselves accountable to champion a testing
+process that actually works, and have built Cypress to guide developers towards
+writing independent tests from the start.
+
+We do this by cleaning up test state and the browser context _before_ each test
+to ensure that the operation of one test does not affect another test later on.
+The goal for each test should be to **reliably pass** whether run in isolation
+or consecutively with other tests. Having tests that depend on the state of an
+earlier test can potentially cause nondeterministic test failures which makes
+debugging challenging.
+
+The behavior of running tests in a clean browser context is described as
+`testIsolation`.
+
+The test isolation is a global configuration and can be overridden for
+end-to-end testing at the `describe` level with the
+[`testIsolation`](/guides/references/configuration#e2e) option.
+
+To learn more about this behavior and the trade-offs of disabling it, review our
+[Test Isolation guide](/guides/core-concepts/test-isolation).
 
 ### Test Configuration
 
@@ -729,7 +776,7 @@ After the Cypress spec completes every test has one of 4 statuses: **passed**,
 Passed tests have successfully completed all their commands without failing any
 assertions. The test screenshot below shows a passed test:
 
-<DocsImage src="/img/guides/core-concepts/v10/todo-mvc-passing-test.png" alt="Cypress App with a single passed test"></DocsImage>
+<DocsImage src="/img/guides/core-concepts/v10/todo-mvc-passing-test.png" alt="Cypress with a single passed test"></DocsImage>
 
 Note that a test can pass after several
 [test retries](/guides/guides/test-retries). In that case the Command Log shows
@@ -740,7 +787,7 @@ some failed attempts, but ultimately the entire test finishes successfully.
 Good news - the failed test has found a problem. Could be much worse - it could
 be a user hitting this bug!
 
-<DocsImage src="/img/guides/core-concepts/v10/todo-mvc-failing-test.png" alt="Cypress App with a single failed test"></DocsImage>
+<DocsImage src="/img/guides/core-concepts/v10/todo-mvc-failing-test.png" alt="Cypress with a single failed test"></DocsImage>
 
 After a test fails, the screenshots and videos can help find the problem so it
 can be fixed.
@@ -756,9 +803,10 @@ describe('TodoMVC', () => {
 
   it.skip('adds 2 todos', function () {
     cy.visit('/')
-    cy.get('[data-testid="new-todo"]')
-      .type('learn testing{enter}')
-      .type('be cool{enter}')
+    cy.get('[data-testid="new-todo"]').as('new').type('learn testing{enter}')
+
+    cy.get('@new').type('be cool{enter}')
+
     cy.get('[data-testid="todo-list"] li').should('have.length', 100)
   })
 
@@ -771,7 +819,7 @@ describe('TodoMVC', () => {
 All 3 tests above are marked _pending_ when Cypress finishes running the spec
 file.
 
-<DocsImage src="/img/guides/core-concepts/v10/todo-mvc-pending-tests.png" alt="Cypress App with three pending test"></DocsImage>
+<DocsImage src="/img/guides/core-concepts/v10/todo-mvc-pending-tests.png" alt="Cypress with three pending test"></DocsImage>
 
 So remember - if you (the test writer) knowingly skip a test using one of the
 above three ways, Cypress counts it as a _pending_ test.
@@ -796,9 +844,10 @@ describe('TodoMVC', () => {
   })
 
   it('adds 2 todos', () => {
-    cy.get('[data-testid="new-todo"]')
-      .type('learn testing{enter}')
-      .type('be cool{enter}')
+    cy.get('[data-testid="new-todo"]').as('new').type('learn testing{enter}')
+
+    cy.get('@new').type('be cool{enter}')
+
     cy.get('[data-testid="todo-list"] li').should('have.length', 2)
   })
 })
@@ -806,7 +855,7 @@ describe('TodoMVC', () => {
 
 If the `beforeEach` hook completes and both tests finish, two tests are passing.
 
-<DocsImage src="/img/guides/core-concepts/v10/todo-mvc-2-tests-passing.png" alt="Cypress App showing two passing tests"></DocsImage>
+<DocsImage src="/img/guides/core-concepts/v10/todo-mvc-2-tests-passing.png" alt="Cypress showing two passing tests"></DocsImage>
 
 But what happens if a command inside the `beforeEach` hook fails? For example,
 let's pretend we want to visit a non-existent page `/does-not-exist` instead of
@@ -824,12 +873,12 @@ once, why would we execute it _again_ before the second test? It would just fail
 the same way! So Cypress _skips_ the remaining tests in that block, because they
 would also fail due to the `beforeEach` hook failure.
 
-<DocsImage src="/img/guides/core-concepts/v10/todo-mvc-failed-and-skipped-tests.png" alt="Cypress App showing one failed and one skipped test"></DocsImage>
+<DocsImage src="/img/guides/core-concepts/v10/todo-mvc-failed-and-skipped-tests.png" alt="Cypress showing one failed and one skipped test"></DocsImage>
 
 If we collapse the test commands, we can see the empty box marking the skipped
 test "adds 2 todos".
 
-<DocsImage src="/img/guides/core-concepts/v10/todo-mvc-skipped-test.png" alt="Cypress App showing one skipped test"></DocsImage>
+<DocsImage src="/img/guides/core-concepts/v10/todo-mvc-skipped-test.png" alt="Cypress showing one skipped test"></DocsImage>
 
 The tests that were meant to be executed but were skipped due to some run-time
 problem are marked "skipped" by Cypress.

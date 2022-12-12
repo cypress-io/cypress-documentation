@@ -43,15 +43,15 @@ of the standard configuration. **These values are read only and cannot be
 modified from the `setupNodeEvents` function in the Cypress configuration.**
 
 - `configFile`: The absolute path to the Cypress configuration file. See the
-  [--config-file](guides/guides/command-line#cypress-open) and
-  [configFile](guides/guides/module-api) docs for more information on this
+  [--config-file](/guides/guides/command-line#cypress-open) and
+  [configFile](/guides/guides/module-api) docs for more information on this
   value.
 - `projectRoot`: The absolute path to the root of the project (e.g.
   `/Users/me/dev/my-project`)
 
 </Alert>
 
-Resolved values will show up in the "Settings" tab of the Cypress App.
+Resolved values will show up in the "Settings" tab.
 
 <DocsImage src="/img/guides/configuration/plugin-configuration.png" alt="Resolved configuration in the Desktop app" ></DocsImage>
 
@@ -198,7 +198,7 @@ You can access the type of tests running via the `config.testingType` property.
 The testing type is either `e2e` or `component` depending on if the
 [E2E Testing](/guides/core-concepts/testing-types#What-is-E2E-Testing) or
 [Component Testing](/guides/core-concepts/testing-types#What-is-Component-Testing)
-type was selected in the Cypress App. This allows you to configure test
+type was selected in the Cypress Launchpad. This allows you to configure test
 type-specific plugins.
 
 ## History

@@ -102,7 +102,7 @@ activities, best practices and information sharing.
 - Combined coverage with Jest and Cypress via
   [Cypress code coverage plugin](https://github.com/cypress-io/code-coverage)
 - linters and pre-commit hooks: Eslint, Prettier, Js-beautify, Husky
-- recording test results on Cypress Dashboard
+- recording test results on Cypress Cloud
 
 ## More examples
 

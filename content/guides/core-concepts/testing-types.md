@@ -141,7 +141,7 @@ set of tests specializing in what they do best.
 </Alert>
 
 To learn more about component testing in Cypress, visit our guide on
-[Testing Your Components with Cypress](/guides/component-testing/writing-your-first-component-test).
+[Testing Your Components with Cypress](/guides/component-testing/overview).
 
 ## Testing Type Comparison
 

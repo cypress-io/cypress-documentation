@@ -25,11 +25,15 @@ export const redirects = [
   },
   {
     path: '/guides/component-testing',
-    redirect: '/guides/component-testing/writing-your-first-component-test',
+    redirect: '/guides/component-testing/overview',
+  },
+  {
+    path: '/guides/component-testing/writing-your-first-component-test',
+    redirect: '/guides/component-testing/overview',
   },
   {
     path: '/guides/dashboard/dashboard-introduction',
-    redirect: '/guides/dashboard/introduction',
+    redirect: '/guides/cloud/introduction',
   },
   {
     path: '/guides/references/bundled-tools',

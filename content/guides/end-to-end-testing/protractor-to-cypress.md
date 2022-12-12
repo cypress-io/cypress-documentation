@@ -84,21 +84,20 @@ and often runs through tests too fast for the human eye. Without additional
 configuration, this often leads to a reliance on lengthy terminal messages that
 can be expensive from a context-switching perspective.
 
-With the [Cypress App](/guides/core-concepts/cypress-app), your tests run in an
-interactive browser environment in real time. The Cypress App's
-[command log](/guides/core-concepts/cypress-app#Command-Log) displays the tests
+With [Cypress](/guides/core-concepts/cypress-app), your tests run in an
+interactive browser environment in real time. Cypress's
+[Command Log](/guides/core-concepts/cypress-app#Command-Log) displays the tests
 from your test suite and their assertions. When you
 [click on a command or assertion](https://docs.cypress.io/guides/core-concepts/cypress-app#Clicking-on-Commands)
-in the command log, the Cypress App displays a DOM snapshot from that point in
-time so you can see what the application under test looked like at the time of
-the test's execution. This allows you to see the **real rendered UI** and the
-behavior of the app under **real user interactions.** Since the app is loaded
-within a real browser, you can also manually explore its behavior while it is
-under the state of a desired test scenario.
+in the command log, a DOM snapshot displays so you can see what the application
+under test looked like at the time of the test's execution. This allows you to
+see the **real rendered UI** and the behavior of the app under **real user
+interactions.** Since the app is loaded within a real browser, you can also
+manually explore its behavior while it is under the state of a desired test
+scenario.
 
-The Cypress App also helps you to write your tests by making it as easy as
-possible to find the right CSS selectors for the DOM elements in your
-application with its
+Cypress also helps you to write your tests by making it as easy as possible to
+find the right CSS selectors for the DOM elements in your application with its
 [Selector Playground](https://docs.cypress.io/guides/core-concepts/cypress-app#Selector-Playground).
 The Selector Playground helps you cut down on time spent finding the right
 selectors so you can focus on what's important: writing tests that verify your
@@ -121,15 +120,14 @@ confidence.
 
 ### Time travel through tests
 
-The Cypress App gives you time travel capabilities to see exactly how your app
-was behaving at any point during test execution. Cypress takes DOM snapshots of
-your application under test as the Cypress App executes the commands and
-assertions in your tests. This enables you to view the **real UI** of your
-application at any point during your tests' execution. By clicking from one
-command to another in the
-[command log](/guides/core-concepts/cypress-app#Command-Log), you can see which
-elements Cypress acted upon and how your application responded to the simulated
-**real user behavior**.
+Cypress gives you time travel capabilities to see exactly how your app was
+behaving at any point during test execution. Cypress takes DOM snapshots of your
+application under test as the commands and assertions in your tests are
+executed. This enables you to view the **real UI** of your application at any
+point during your tests' execution. By clicking from one command to another in
+the [command log](/guides/core-concepts/cypress-app#Command-Log), you can see
+which elements Cypress acted upon and how your application responded to the
+simulated **real user behavior**.
 
 <DocsVideo src="/img/guides/migrating-to-cypress/interactivity.mp4" title="Time travel debugging"></DocsVideo>
 
@@ -158,9 +156,9 @@ will fail in a CI environment when they otherwise would pass on a developer's
 machine. Enabling test retries in the Cypress configuration can help you to get
 unblocked when unpredictable, flaky tests are occasionally failing.
 
-The Cypress Dashboard goes a step further and helps you and your team to
-[detect flaky tests](/guides/dashboard/flaky-test-management) that run in your
-CI/CD pipeline.
+Cypress Cloud goes a step further and helps you and your team to
+[detect flaky tests](/guides/cloud/flaky-test-management) that run in your CI/CD
+pipeline.
 
 ## Getting Started
 
@@ -191,7 +189,7 @@ You can also use the following command to start Cypress in `open` mode:
 ng run {your-project-name}:cypress-open
 ```
 
-Both of these commands will launch the Cypress App in an Electron browser.
+Both of these commands will launch Cypress in an Electron browser.
 
 You can also launch Cypress via `run` mode, which runs headlessly:
 
@@ -205,8 +203,8 @@ Check out the
 [Cypress Angular Schematic Configuration section](#Angular-Schematic-Configuration)
 documentation for more details like how to
 [configure your tests to run in a specific browser](#Running-the-builder-with-a-specific-browser)
-or [record test results](#Recording-test-results-to-the-Cypress-Dashboard) to
-the [Cypress Dashboard](https://docs.cypress.io/guides/dashboard/introduction).
+or [record test results](#Recording-test-results-to-Cypress-Cloud) to
+[Cypress Cloud](https://docs.cypress.io/guides/cloud/introduction).
 
 </Alert>
 
@@ -1085,8 +1083,8 @@ environment.
 
 ## Parallelization
 
-The [Cypress Dashboard Service](/guides/dashboard/introduction) allows you to
-run your test files in parallel across multiple CI machines.
+[Cypress Cloud](/guides/cloud/introduction) allows you to run your test files in
+parallel across multiple CI machines.
 
 With Cypress, your tests can be
 [parallelized on a per spec file basis](https://docs.cypress.io/guides/guides/parallelization).
@@ -1143,12 +1141,11 @@ to learn more.
 
 </Alert>
 
-### Recording test results to the Cypress Dashboard
+### Recording test results to Cypress Cloud
 
 We recommend setting your
-[Cypress Dashboard](https://docs.cypress.io/guides/dashboard/introduction)
-recording key as an environment variable and _NOT_ as a builder option when
-running it in CI.
+[Cypress Cloud](https://docs.cypress.io/guides/cloud/introduction) recording key
+as an environment variable and _NOT_ as a builder option when running it in CI.
 
 ```json
 "cypress-run": {
@@ -1167,8 +1164,8 @@ running it in CI.
 ```
 
 Read the docs on
-[recording test results](http://on.cypress.io/recording-project-runs) to the
-[Cypress Dashboard](/guides/dashboard/introduction) to learn more.
+[recording test results](http://on.cypress.io/recording-project-runs) to
+[Cypress Cloud](/guides/cloud/introduction) to learn more.
 
 ### Specifying a custom Cypress configuration file
 

@@ -11,6 +11,14 @@ subject, use [`.its()`](/api/commands/its).
 
 </Alert>
 
+<Alert type="warn">
+
+If you chain further commands off of `.invoke()`, it will be called multiple
+times. If you only want the method to be called once, end your chain with
+`.invoke()` and start fresh with `cy` afterwards.
+
+</Alert>
+
 ## Syntax
 
 ```javascript
@@ -26,8 +34,9 @@ subject, use [`.its()`](/api/commands/its).
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.wrap({ animate: fn }).invoke('animate') // Invoke the 'animate' function
+cy.get('.input').invoke('val').should('eq', 'foo') // Invoke the 'val' function
 cy.get('.modal').invoke('show') // Invoke the jQuery 'show' function
+cy.wrap({ animate: fn }).invoke('animate') // Invoke the 'animate' function
 ```
 
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
@@ -35,6 +44,9 @@ cy.get('.modal').invoke('show') // Invoke the jQuery 'show' function
 ```javascript
 cy.invoke('convert') // Errors, cannot be chained off 'cy'
 cy.wrap({ name: 'Jane' }).invoke('name') // Errors, 'name' is not a function
+cy.wrap({ animate: fn })
+  .invoke('animate')
+  .then(() => {}) // 'animate' will be called multiple times
 ```
 
 ### Arguments
@@ -56,6 +68,13 @@ Pass in an options object to change the default behavior of `.invoke()`.
 
 Additional arguments to be given to the function call. There is no limit to the
 number of arguments.
+
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+
+- `.invoke()` yields the return value of the method.
+- `.invoke()` is a query, and it is _safe_ to chain further commands.
+- If you chain additional commands off of `.invoke()`, the function will be
+  called multiple times!
 
 ## Examples
 
@@ -142,53 +161,6 @@ const double = (n) => n * n
 // picks function with index 1 and calls it with argument 4
 cy.wrap([reverse, double]).invoke(1, 4).should('eq', 16)
 ```
-
-### Invoking an async function
-
-In this example we have a little text input field and we invoke an async action
-which will disable this input field. `.invoke()` will then wait until the
-Promise resolves and only then will continue executing to check if it really has
-been disabled.
-
-Our input field
-
-```html
-<input type="text" name="text" data-cy="my-text-input" />
-```
-
-The Cypress Test with `cy.invoke()` awaiting the promise:
-
-```javascript
-function disableElementAsync(element) {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      element.disabled = true
-      resolve()
-    }, 3000)
-  })
-}
-
-cy.get('[data-cy=my-text-input]').then((textElements) => {
-  cy.wrap({ disableElementAsync }).invoke(
-    'disableElementAsync',
-    textElements[0]
-  )
-})
-
-// log message appears after 3 seconds
-cy.log('after invoke')
-
-// assert UI
-cy.get('[data-cy=my-text-input]').should('be.disabled')
-```
-
-<Alert type="info">
-
-For a full example where invoke is used to await async Vuex store actions, visit
-the recipe:
-[Vue + Vuex + REST](https://github.com/cypress-io/cypress-example-recipes)
-
-</Alert>
 
 ### jQuery method
 
@@ -309,10 +281,11 @@ following:
 
 ## History
 
-| Version                                     | Changes                                                       |
-| ------------------------------------------- | ------------------------------------------------------------- |
-| [3.8.0](/guides/references/changelog#3-8-0) | Added support for `options` argument                          |
-| [3.7.0](/guides/references/changelog#3-7-0) | Added support for arguments of type Number for `functionName` |
+| Version                                       | Changes                                                       |
+| --------------------------------------------- | ------------------------------------------------------------- |
+| [12.0.0](/guides/references/changelog#12-0-0) | `.invoke()` no longer supports promises or async functions    |
+| [3.8.0](/guides/references/changelog#3-8-0)   | Added support for `options` argument                          |
+| [3.7.0](/guides/references/changelog#3-7-0)   | Added support for arguments of type Number for `functionName` |
 
 ## See also
 

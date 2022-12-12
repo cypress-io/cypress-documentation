@@ -64,7 +64,8 @@ Pass in an options object to change the default behavior of `.contains()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`.contains()` yields the new DOM element it found.</li></List>
+- `.contains()` yields the new DOM element it found.
+- `.contains()` is a query, and it is _safe_ to chain further commands.
 
 ## Examples
 
@@ -341,6 +342,29 @@ yielded before the `.contains()`.
 ```javascript
 // yields <span>
 cy.get('#main').contains('Jane Lane')
+```
+
+### Default `<input type="submit">` labels
+
+When the `value` attribute is omitted from an `<input type="submit">`, the
+default label is used and can be locale-dependent.
+[More info at MDN.](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/submit#omitting_the_value_attribute)
+
+When this happens, the `value` is an empty string, and there is no programmatic
+way for Cypress to filter elements by the label displayed by the user agent.
+This can cause unexpected failures when using `cy.contains()` with submit
+buttons.
+
+The solution in this case is to:
+
+```js
+ // assert the empty string
+ cy.get('input').should('have.value', '')
+
+ // ---or---
+
+ // if possible, set the `value` attribute
+ <input type=submit value="Submit" />
 ```
 
 ### Preferences

@@ -242,15 +242,21 @@
   @apply pt-6;
   @apply pb-5;
   @apply bg-gray-100;
-  @apply mb-8;
+  @apply mt-4;
+  @apply mb-4;
   @apply italic;
+}
+
+.nuxt-content blockquote p {
+  @apply mb-0;
 }
 
 .nuxt-content > p {
   @apply mb-0;
 }
 
-.nuxt-content svg, .toc-content svg {
+.nuxt-content svg,
+.toc-content svg {
   height: 1em;
   width: 1em;
   @apply inline-block;
@@ -398,8 +404,23 @@ span.token.keyword.control-flow {
 
 /* This style seems to be stripped out of css in prod builds from FA, so adding it in manually */
 .svg-inline--fa {
-    display: inline-block;
-    font-size: inherit;
-    height: 1em;
-    vertical-align: -0.125em;
+  display: inline-block;
+  font-size: inherit;
+  height: 1em;
+  vertical-align: -0.125em;
+}
+
+.api-table caption {
+  text-align: left;
+  margin: 4px;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.api-table thead td {
+  font-weight: bold;
+}
+
+.api-table.table-list td:first-child {
+  font-weight: bold;
 }

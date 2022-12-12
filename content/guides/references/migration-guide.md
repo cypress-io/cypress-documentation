@@ -2,17 +2,690 @@
 title: Migration Guide
 ---
 
-<DocsVideo src="https://youtube.com/embed/mIqKNhLlPcU"></DocsVideo>
+## Migrating to Cypress 12.0
 
-## Migrating to Cypress version 10.0
+This guide details the changes and how to change your code to migrate to Cypress
+version 12.0.
+[See the full changelog for version 12.0](/guides/references/changelog#12-0-0).
+
+The Session and Origin experiment has been released as General Availability
+(GA), meaning that we have deemed this experiment to be feature complete and
+free of issues in the majority of use cases. With releasing this as GA, the
+`experimentalSessionAndOrigin` flag has been removed, the
+[`cy.origin()`](<(/api/commands/origin)>) and
+[`cy.session()`](/api/commands/session) commands are generally available and
+[Test Isolation](/guides/core-concepts/writing-and-organizing-tests#Test-Isolation)
+is enabled by default.
+
+### Node.js 14+ support
+
+Cypress comes bundled with its own
+[Node.js version](https://github.com/cypress-io/cypress/blob/develop/.node-version).
+However, installing the `cypress` npm package uses the Node.js version installed
+on your system.
+
+Node.js 12 reached its end of life on April 30, 2022.
+[See Node's release schedule](https://github.com/nodejs/Release). This Node.js
+version will no longer be supported when installing Cypress. The minimum Node.js
+version supported to install Cypress is Node.js 14+.
+
+### Test Isolation
+
+The
+[`testIsolation`](/guides/core-concepts/writing-and-organizing-tests#Test-Isolation)
+config option is enabled by default. This means Cypress resets the browser
+context _before_ each test by:
+
+- clearing the dom state by visiting `about:blank`
+- clearing [cookies](/api/cypress-api/cookies) in all domains
+- clearing
+  [`localStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)
+  in all domains
+- clearing
+  [`sessionStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage)
+  in all domains
+
+Test suites that relied on the application to persist between tests may have to
+be updated to revisit their application and rebuild the browser state for each
+test that needs it.
+
+Before this change, it was possible to write tests such that you could rely on
+the application (i.e. DOM state) to persist between tests. For example you could
+log in to a CMS in the first test, change some content in the second test,
+verify the new version is displayed on a different URL in the third, and log out
+in the fourth.
+
+Here's a simplified example of such a test strategy.
+
+<Badge type="danger">Before</Badge> Multiple small tests against different
+origins
+
+```js
+it('logs in', () => {
+  cy.visit('https://supersecurelogons.com')
+  cy.get('input#password').type('Password123!')
+  cy.get('button#submit').click()
+})
+
+it('updates the content', () => {
+  // already on page redirect from clicking button#submit
+  cy.get('#current-user').contains('logged in')
+  cy.get('button#edit-1').click()
+  cy.get('input#title').type('Updated title')
+  cy.get('button#submit').click()
+  cy.get('.toast').type('Changes saved!')
+})
+
+it('validates the change', () => {
+  cy.visit('/items/1')
+  cy.get('h1').contains('Updated title')
+})
+```
+
+After migrating, when `testIsolation=true` by default, this flow would need to
+be contained within a single test. While the above practice has always been
+[discouraged](/guides/references/best-practices#Having-tests-rely-on-the-state-of-previous-tests)
+we know some users have historically written tests this way, often to get around
+the `same-origin` restrictions. But with [`cy.origin()`](/api/commands/origin)
+you no longer need these kind of brittle hacks, as your multi-origin logic can
+all reside in a single test, like the following.
+
+<Badge type="success">After</Badge> One big test using `cy.origin()`
+
+```js
+it('securely edits content', () => {
+  cy.origin('supersecurelogons.com', () => {
+    cy.visit('https://supersecurelogons.com')
+    cy.get('input#password').type('Password123!')
+    cy.get('button#submit').click()
+  })
+
+  cy.origin('mycms.com', () => {
+    cy.url().should('contain', 'cms')
+    cy.get('#current-user').contains('logged in')
+    cy.get('button#edit-1').click()
+    cy.get('input#title').type('Updated title')
+    cy.get('button#submit').click()
+    cy.get('.toast').type('Changes saved!')
+  })
+
+  cy.visit('/items/1')
+  cy.get('h1').contains('Updated title')
+})
+```
+
+The just-released `cy.session()` command can be used to setup and cache cookies,
+local storage and session storage between tests to easily re-establish the
+previous (or common) browser contexts needed in a suite. This command will run
+setup on its initial execution and will restore the saved browser state on each
+sequential command execution. This command reduces the need for repeated
+application logins, while users also benefit from the test isolation guardrails
+to write independent, reliable and deterministic tests from the start.
+
+If for whatever reason you still need to persist the dom and browser context
+between tests, you can disable test isolation by setting `testIsolation=false`
+on the root configuration or at the suite-level. For example:
+
+```js
+describe('workflow', { testIsolation: false }, () => {
+  ...
+})
+```
+
+It is important to note that while disabling test isolation may improve the
+overall performance of end-to-end tests, it can cause state to "leak" between
+tests. This can make later tests dependent on the results of earlier tests, and
+potentially cause misleading test failures. It is important to be extremely
+mindful of how tests are written when using this mode, and ensure that tests
+continue to run independently of one another.
+
+<Badge type="danger">For example</Badge>the following tests are not independent
+nor deterministic:
+
+```js
+describe('workflow', { testIsolation: false }, () => {
+  it('logs in', () => {
+    cy.visit('my-app.com/log-in)
+    cy.get('username').type('User1')
+    cy.get('password').type(Cypress.env('User1_password'))
+    cy.get('button#login').click()
+    cy.contains('User1')
+  })
+
+  it('clicks user profile', () => {
+    cy.get('User1').find('#profile_avatar).click()
+    cy.contains('Email Preferences')
+  })
+
+  it('updates profile', () => {
+    cy.get('button#edit')
+    cy.get('email').type('user1@email.com')
+    cy.get('button#save').click()
+  })
+})
+```
+
+In the above example, each test is relying on the previous test to be
+_successful_ to correctly execute. If at any point, the first or second test
+fails, the sequential test(s) will automatically fail and provide unreliable
+debugging errors since the errors are representative of the previous test.
+
+The best way to ensure your tests are independent is to add a `.only()` to your
+test and verify it can run successfully without the test before it.
+
+### Behavior Changes in Alias Resolution
+
+Cypress always re-queries aliases when they are referenced. This can result in
+certain tests that used to pass could start to fail. For example,
+
+```js
+cy.findByTestId('popover')
+  .findByRole('button', { expanded: true })
+  .as('button')
+  .click()
+
+cy.get('@button').should('have.attr', 'aria-expanded', 'false')
+```
+
+previously passed, because the initial button was collapsed when first queried,
+and then later expanded. However, in Cypress 12, this test fails because the
+alias is always re-queried from the DOM, effectively resulting in the following
+execution:
+
+```js
+cy.findByTestId('popover').findByRole('button', { expanded: true }).click()
+
+cy.findByTestId('popover')
+  .findByRole('button', { expanded: true }) // A button which matches here (is expanded)...
+  .should('have.attr', 'aria-expanded', 'false') // ...will never pass this assertion.
+```
+
+You can rewrite tests like this to be more specific; in our case, we changed the
+alias to be the first button rather than the unexpanded button.
+
+```js
+cy.findByTestId('popover').findAllByRole('button').first().as('button')
+```
+
+### Command / Cypress API Changes
+
+#### `Cypress.Cookies.defaults` and `Cypress.Cookies.preserveOnce`
+
+The `Cypress.Cookies.defaults` and `CypressCookies.preserveOnce` APIs been
+removed. Use the [`cy.session()`](/api/commands/session) command to preserve
+cookies (and local and session storage) between tests.
+
+```diff
+describe('Dashboard', () => {
+  beforeEach(() => {
+-    cy.login()
+-    Cypress.Cookies.preserveOnce('session_id', 'remember_token')
++    cy.session('unique_identifier', cy.login, {
++       validate () {
++        cy.getCookies().should('have.length', 2)
++       },
++       cacheAcrossSpecs: true
++    })
+  })
+```
+
+#### `cy.server()`, `cy.route()` and `Cypress.Server.defaults`
+
+The` cy.server()` and` cy.route()` commands and the `Cypress.server.defaults`
+API has been removed. Use the [`cy.intercept()`](/api/commands/intercept)
+command instead.
+
+```diff
+  it('can encode + decode headers', () => {
+-   Cypress.Server.defaults({
+-     delay: 500,
+-     method: 'GET',
+-   })
+-   cy.server()
+-   cy.route(/api/, () => {
+-      return {
+-        'test': 'We’ll',
+-      }
+-    }).as('getApi')
++   cy.intercept('GET', /api/, (req) => {
++      req.on('response', (res) => {
++        res.setDelay(500)
++      })
++      req.body.'test': 'We’ll'
++    }).as('getApi')
+    cy.visit('/index.html')
+    cy.window().then((win) => {
+      const xhr = new win.XMLHttpRequest
+      xhr.open('GET', '/api/v1/foo/bar?a=42')
+      xhr.send()
+    })
+
+    cy.wait('@getApi')
+-   .its('url').should('include', 'api/v1')
++   .its('request.url').should('include', 'api/v1')
+  })
+```
+
+#### `.invoke()`
+
+The [`.invoke()`](/api/commands/invoke) command now throws an error if the
+function returns a promise. If you wish to call a method that returns a promise
+and wait for it to resolve, use [`.then()`](/api/commands/then) instead of
+`.invoke()`.
+
+```diff
+cy.wrap(myAPI)
+-  .invoke('makeARequest', 'http://example.com')
++  .then(api => api.makeARequest('http://example.com'))
+   .then(res => { ...handle response... })
+```
+
+If `.invoke()` is followed by additional commands or assertions, it will call
+the named function multiple times. This has the benefit that the chained
+assertions can more reliably use the function's return value.
+
+If this behavior is undesirable because you expect the function to be invoked
+only once, break the command chain and move the chained commands and/or
+assertions to their own chain. For example, rewrite
+
+```diff
+- cy.get('input').invoke('val', 'text').type('newText')
++ cy.get('input').invoke('val', 'text')
++ cy.get('input').type('newText')
+```
+
+#### `.should()`
+
+The [`.should()`](/api/commands/should) assertion now throws an error if Cypress
+commands are invoked from inside a `.should()` callback. This previously
+resulted in unusual and undefined behavior. If you wish to execute a series of
+commands on the yielded value, use`.then()` instead.
+
+```diff
+cy.get('button')
+-  .should(($button) => {
+
+    })
++  .then(api => api.makeARequest('http://example.com'))
+   .then(res => { ...handle response... })
+```
+
+#### `.within()`
+
+The [`.within()`](/api/commands/within) command now throws an error if it is
+passed multiple elements as the subject. This previously resulted in
+inconsistent behavior, where some commands would use all passed in elements,
+some would use only the first and ignore the rest, and
+[`.screenshot()`](/api/commands/screenshot) would throw an error if used inside
+a `.within()` block with multiple elements.
+
+If you were relying on the old behavior, you have several options depending on
+the desired result.
+
+The simplest option is to reduce the subject to a single element.
+
+```diff
+cy.get('tr')
++  .first() // Limit the subject to a single element before calling .within()
+  .within(() => {
+    cy.contains('Edit').click()
+  })
+```
+
+If you have multiple subjects and wish to run commands over the collection as a
+whole, you can alias the subject rather than use `.within()`.
+
+```diff
+cy.get('tr')
+-  .within(() => {
+-    cy.get('td').should('have.class', 'foo')
+-    cy.get('td').should('have.class', 'bar')
+-  })
++  .as('rows') // Store multiple elements as an alias
+
++cy.get('@rows').find('td').should('have.class', 'foo')
++cy.get('@rows').find('td').should('have.class', 'bar')
+```
+
+Or if you have a collection and want to run commands over every element, use
+`.each()` in conjunction with `.within()`.
+
+```diff
+cy.get('tr')
+-  .within(() => {
+-    cy.contains('Edit').should('have.attr', 'disabled')
+-  })
++  .each($tr => {
++    cy.wrap($tr).within(() => {
++      cy.contains('Edit').should('have.attr', 'disabled')
++    })
++  })
+```
+
+#### `Cypress.Commands.overwrite()`
+
+In Cypress 12.0.0, we introduced a new command type, called queries. A query is
+a small and fast command for getting data from the window or DOM. This
+distinction is important because Cypress can retry chains of queries, keeping
+the yielded subject up-to-date as a page rerenders.
+
+With the introduction of query commands, the following commands have been
+re-categorized and can no longer be overwritten with
+[`Cypress.Commands.overwrite()`](api/cypress-api/custom-commands#Overwrite-Existing-Commands):
+
+- [`.as()`](/api/commands/as)
+- [`.children()`](/api/commands/children)
+- [`.closest()`](/api/commands/closest)
+- [`.contains()`](/api/commands/contains)
+- [`cy.debug()`](/api/commands/debug)
+- [`cy.document()`](/api/commands/document)
+- [`.eq()`](/api/commands/eq)
+- [`.filter()`](/api/commands/filter)
+- [`.find()`](/api/commands/find)
+- [`.first()`](/api/commands/first)
+- [`.focused()`](/api/commands/focused)
+- [`.get()`](/api/commands/get)
+- [`.hash()`](/api/commands/hash)
+- [`.its()`](/api/commands/its)
+- [`.last()`](/api/commands/last)
+- [`cy.location()`](/api/commands/location)
+- [`.next()`](/api/commands/next)
+- [`.nextAll()`](/api/commands/nextall)
+- [`.not()`](/api/commands/not)
+- [`.parent()`](/api/commands/parent)
+- [`.parents()`](/api/commands/parents)
+- [`.parentsUntil()`](/api/commands/parentsuntil)
+- [`.prev()`](/api/commands/prev)
+- [`.prevUntil()`](/api/commands/prevuntil)
+- [`cy.root()`](/api/commands/root)
+- [`.shadow()`](/api/commands/shadow)
+- [`.siblings()`](/api/commands/siblings)
+- [`cy.title()`](/api/commands/title)
+- [`cy.url()`](/api/commands/url)
+- [`cy.window()`](/api/commands/window)
+
+If you were previously overwriting one of the above commands, try adding your
+version as a new command using
+[`Cypress.Commands.add()`](api/cypress-api/custom-commands) under a different
+name.
+
+## Migrating to Cypress 11.0
+
+This guide details the changes and how to change your code to migrate to Cypress
+version 11.0.
+[See the full changelog for version 11.0](/guides/references/changelog#11-0-0).
+
+### Component Testing Updates
+
+As of Cypress 11, Component Testing is now generally available. There are some
+minor breaking changes. Most projects should be able to migrate without any code
+modifications.
+
+#### Changes to Mounting Options
+
+Each major library we support has a `mount` function with two arguments:
+
+1. The component
+2. Mounting Options
+
+Mounting options previously had several properties that are now removed:
+
+- cssFile, cssFiles
+- style, styles
+- stylesheet, stylesheets
+
+Read more about the rationale
+[here](https://www.cypress.io/blog/2022/11/04/upcoming-changes-to-component-testing/).
+We recommend writing test-specific styles in a separate `css` file you import in
+your test, or in your `supportFile`.
+
+#### Before (Cypress 10)
+
+```jsx
+import { mount } from 'cypress/react'
+import { Card } from './Card'
+
+it('renders some content', () => {
+  cy.mount(<Card title="title" />, {
+    styles: `
+      .card { width: 100px; }
+    `,
+    stylesheets: [
+      'https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css',
+    ],
+  })
+})
+```
+
+#### After (Cypress 11)
+
+```js
+/** style.css */
+@import "https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css";
+.card { width: 100px }
+
+/** Card.cy.jsx */
+import { mount } from 'cypress/react'
+import { Card } from './Card'
+import './styles.css' // contains CDN link and custom styling.
+
+it('renders some content', () => {
+  cy.mount(<Card title="title" />)
+})
+```
+
+### React - `mountHook` Removed
+
+`mountHook` from `cypress/react` has been removed. Read more about the rationale
+[here](https://www.cypress.io/blog/2022/11/04/upcoming-changes-to-component-testing/).
+
+We recommend simply replacing it with `mount` and a component.
+
+Consider the following `useCounter` hook:
+
+```js
+import { useState, useCallback } from 'react'
+
+function useCounter() {
+  const [count, setCount] = useState(0)
+  const increment = useCallback(() => setCount((x) => x + 1), [])
+
+  return { count, increment }
+}
+```
+
+#### Before - Cypress 10 and `mountHook`
+
+```js
+import { mountHook } from 'cypress/react'
+import { useCounter } from './useCounter'
+
+it('increments the count', () => {
+  mountHook(() => useCounter()).then((result) => {
+    expect(result.current.count).to.equal(0)
+    result.current.increment()
+    expect(result.current.count).to.equal(1)
+    result.current.increment()
+    expect(result.current.count).to.equal(2)
+  })
+})
+```
+
+#### After - Cypress 11 and `mount`
+
+```js
+import { useCounter } from './useCounter'
+
+it('increments the count', () => {
+  function Counter() {
+    const { count, increment } = useCounter()
+    return (
+      <>
+        <h1 name="count">Count is {{ count }}</h1>
+        <button onClick={increment}>Increment</button>
+      </>
+    )
+  }
+
+  cy.mount(<Counter />).then(() => {
+    cy.get('[name="count"]')
+      .should('contain', 0)
+      .get('button')
+      .click()
+      .get('[name="count"]')
+      .should('contain', 1)
+  })
+})
+```
+
+### React - `unmount` Removed
+
+`unmount` from `cypress/react` has been removed. Read more about the rationale
+[here](https://www.cypress.io/blog/2022/11/04/upcoming-changes-to-component-testing/).
+We recommend using the API React provides for unmounting components,
+[unmountComponentAtNode](https://reactjs.org/docs/react-dom.html#unmountcomponentatnode).
+
+#### Before - Cypress 10 and `unmount`
+
+```js
+import { unmount } from 'cypress/react'
+
+it('calls the prop', () => {
+  cy.mount(<Comp onUnmount={cy.stub().as('onUnmount')} />)
+  cy.contains('My component')
+
+  unmount()
+
+  // the component is gone from the DOM
+  cy.contains('My component').should('not.exist')
+  cy.get('@onUnmount').should('have.been.calledOnce')
+})
+```
+
+#### After - Cypress 11 and `unmountComponentAtNode`
+
+```js
+import { getContainerEl } from 'cypress/react'
+import ReactDom from 'react-dom'
+
+it('calls the prop', () => {
+  cy.mount(<Comp onUnmount={cy.stub().as('onUnmount')} />)
+  cy.contains('My component')
+
+  cy.then(() => ReactDom.unmountComponentAtNode(getContainerEl()))
+
+  // the component is gone from the DOM
+  cy.contains('My component').should('not.exist')
+  cy.get('@onUnmount').should('have.been.calledOnce')
+})
+```
+
+### Vue - `mountCallback` Removed
+
+`mountCallback` from `cypress/vue` has been removed. Read more about the
+rationale
+[here](https://www.cypress.io/blog/2022/11/04/upcoming-changes-to-component-testing/).
+We recommend using `mount`.
+
+#### Before - Cypress 10 and `mountCallback`
+
+```js
+import { mountCallback } from 'cypress/vue'
+
+beforeEach(mountCallback(MessageList))
+
+it('shows no messages', () => {
+  getItems().should('not.exist')
+})
+```
+
+#### After - Cypress 11 and `mount`
+
+```js
+beforeEach(() => cy.mount(MessageList))
+
+it('shows no messages', () => {
+  getItems().should('not.exist')
+})
+```
+
+### Angular - Providers Mounting Options Change
+
+There is one breaking change for Angular users in regards to providers. In
+Cypress 10, we took any providers passed as part of the Mounting Options and
+overrode the component providers via the `TestBed.overrideComponent` API.
+
+In Cypress 11, providers passed as part of the Mounting Options will be assigned
+at the module level using the `TestBed.configureTestingModule` API.
+
+This means that module-level providers (resolved from imports or
+`@Injectable({ providedIn: 'root' })` can be overridden, but providers specified
+in `@Component({ providers: [...] })` will not be overridden when using
+`cy.mount(MyComponent, { providers: [...] })`.
+
+To override component-level providers, use the `TestBed.overrideComponent` API.
+
+See a concrete example
+[here](https://www.cypress.io/blog/2022/11/04/upcoming-changes-to-component-testing/#angularproviders-priority).
+
+### Vite Dev Server (`cypress/vite-dev-server`)
+
+When providing an inline `viteConfig` inside of `cypress.config`, any
+`vite.config.js` file is not automatically merged.
+
+#### Before - Cypress 10 and `viteConfig`
+
+```js
+import { defineConfig } from 'cypress'
+
+export default defineConfig({
+  component: {
+    devServer: {
+      framework: 'react',
+      bundler: 'vite',
+      viteConfig: {
+        // ... custom vite config ...
+        // result merged with `vite.config` file if present
+      },
+    },
+  },
+})
+```
+
+#### After - Cypress 11 and `viteConfig`
+
+```js
+import { defineConfig } from 'cypress'
+import viteConfig from './vite.config'
+
+export default defineConfig({
+  component: {
+    devServer: {
+      framework: 'react',
+      bundler: 'vite',
+      viteConfig: {
+        ...viteConfig,
+        // ... other overrides ...
+      },
+    },
+  },
+})
+```
+
+Vite 3+ users could make use of the
+[`mergeConfig`](https://vitejs.dev/guide/api-javascript.html#mergeconfig) API.
+
+## Migrating to Cypress 10.0
 
 This guide details the changes and how to change your code to migrate to Cypress
 version 10.0.
 [See the full changelog for version 10.0](/guides/references/changelog#10-0-0).
 
-### Cypress App Changes
+<DocsVideo src="https://youtube.com/embed/mIqKNhLlPcU"></DocsVideo>
 
-- The “Run all specs” and “Run filtered specs” functionality have been removed.
+### Cypress Changes
+
+- The "Run all specs" and "Run filtered specs" functionality have been removed.
 - The experimental "Cypress Studio" has been removed and will be
   rethought/revisited in a later release.
 - Unsupported browser versions can no longer be run via `cypress run` or
@@ -35,9 +708,9 @@ Because of this, support for `cypress.json` has been removed. Documentation for
 
 Related notes:
 
-- If no config file exists when you open the Cypress App, the automatic set up
-  process will begin and either a JavaScript or TypeScript config file will be
-  created depending on what your project uses.
+- If no config file exists when you open Cypress, the automatic set up process
+  will begin and either a JavaScript or TypeScript config file will be created
+  depending on what your project uses.
 - You may use the `--config-file` command line flag or the `configFile`
   [module API](/guides/guides/module-api) option to specify a `.js` or `.ts`
   file. JSON config files are no longer supported.
@@ -149,7 +822,7 @@ Related notes:
 
 <Alert type="info">
 
-See the dev server documentation for the UI framework you’re using for more
+See the dev server documentation for the UI framework you're using for more
 specific instructions on what the `devServer` should be for that framework. Some
 examples can be found in our
 [framework documentation](/guides/component-testing/component-framework-configuration).
@@ -340,7 +1013,7 @@ Default values
   ignore value)
 - `component.excludeSpecPattern` default value is
   `['/snapshots/*', '/image_snapshots/*']` updated from `*.hot-update.js`
-- The `**/node_modules/**` pattern is automatically added to both
+- The `**/node_modules/**` pattern is automatically added to both
   `e2e.specExcludePattern` and `component.specExcludePattern`, and does not need
   to be specified (and can't be overridden).
 
@@ -625,11 +1298,11 @@ config will result in an error when Cypress loads.
 
 <Alert type="danger">
 
-For Cypress Dashboard users, changing your `specPattern` and files names or
-extensions of your spec files will result in a loss of data in the Cypress
-Dashboard. Because of this, if we detect your project is using the Dashboard
-during automatic migration, we won't suggest changing your spec files. We also
-don't recommend doing it manually if you are a Dashboard user.
+For Cypress Cloud users, changing your `specPattern` and files names or
+extensions of your spec files will result in a loss of data in Cypress Cloud.
+Because of this, if we detect your project is using Cypress Cloud during
+automatic migration, we won't suggest changing your spec files. We also don't
+recommend doing it manually if you are a Cypress Cloud user.
 
 </Alert>
 
@@ -639,7 +1312,7 @@ Generated screenshots and videos will still be created inside their respective
 [folders](/guides/references/configuration#Folders-Files) (`screenshotsFolder`,
 `videosFolder`). However, the paths of generated files inside those folders will
 be stripped of any common ancestor paths shared between all spec files found by
-the `specPattern` option (or via the `--spec` command line option or `spec`
+the `specPattern` option (or via the `--spec` command line option or `spec`
 module API option, if specified).
 
 Here are a few examples, assuming the value of `videosFolder` is
@@ -682,7 +1355,7 @@ support file from one our supported frameworks.
 #### `Cypress.Commands.add()`
 
 [`Cypress.Commands.add()`](/api/cypress-api/custom-commands) has been updated to
-allow the built-in “placeholder” custom `mount` and `hover` commands to be
+allow the built-in "placeholder" custom `mount` and `hover` commands to be
 overwritten without needing to use `Cypress.Commands.overwrite()`.
 
 ### Component Testing Changes
@@ -1881,9 +2554,9 @@ it('test', () => {
 
 ### `cy.wait(alias)` type
 
-[cy.route()](/api/commands/route) is deprecated in 6.0.0. We encourage the use
-of [cy.intercept()][intercept] instead. Due to this deprecation, the type
-yielded by [cy.wait(alias)](/api/commands/wait) has changed.
+`cy.route()` is deprecated in 6.0.0. We encourage the use of
+[cy.intercept()][intercept] instead. Due to this deprecation, the type yielded
+by [cy.wait(alias)](/api/commands/wait) has changed.
 
 <Badge type="danger">Before</Badge> Before 6.0.0,
 [cy.wait(alias)](/api/commands/wait) would yield an object of type `WaitXHR`.
@@ -2248,8 +2921,8 @@ const blob = Cypress.Blob.base64StringToBlob(this.logo, 'image/png')
 
 ### `cy.server()` `whitelist` option renamed
 
-The [cy.server()](/api/commands/server) `whitelist` option has been renamed to
-`ignore` to more closely reflect its behavior.
+The `cy.server()` `whitelist` option has been renamed to `ignore` to more
+closely reflect its behavior.
 
 <Badge type="danger">Before</Badge> `whitelist` option
 

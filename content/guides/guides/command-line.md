@@ -9,7 +9,7 @@ title: Command Line
 - How to run Cypress from the command line
 - How to specify which spec files to run
 - How to launch other browsers
-- How to record your tests to the Dashboard
+- How to record your tests to Cypress Cloud
 
 </Alert>
 
@@ -73,11 +73,11 @@ your `package.json`
 }
 ```
 
-...and want to run tests from a single spec file and record the results on the
-Dashboard, the command should be:
+...and want to run tests from a single spec file and record the results with
+Cypress Cloud, the command should be:
 
 ```shell
-npm run cy:run -- --record --spec "cypress/e2e/my-spec.cy.js"
+npm run cy:run --record --spec "cypress/e2e/my-spec.cy.js"
 ```
 
 If you are using the [npx](https://github.com/zkat/npx) tool, you can invoke the
@@ -121,7 +121,7 @@ cypress run [options]
 | `--headless`               | [Hide the browser instead of running headed (default during `cypress run`)](#cypress-run-headless)                                                                                         |
 | `--help`, `-h`             | Output usage information                                                                                                                                                                   |
 | `--key`, `-k`              | [Specify your secret record key](#cypress-run-record-key-lt-record-key-gt)                                                                                                                 |
-| `--no-exit`                | [Keep the Cypress App open after tests in a spec file run](#cypress-run-no-exit)                                                                                                           |
+| `--no-exit`                | [Keep Cypress open after tests in a spec file run](#cypress-run-no-exit)                                                                                                                   |
 | `--parallel`               | [Run recorded specs in parallel across multiple machines](#cypress-run-parallel)                                                                                                           |
 | `--port`,`-p`              | [Override default port](#cypress-run-port-lt-port-gt)                                                                                                                                      |
 | `--project`, `-P`          | [Path to a specific project](#cypress-run-project-lt-project-path-gt)                                                                                                                      |
@@ -273,7 +273,7 @@ cypress run --headed
 
 #### `cypress run --no-exit`
 
-To prevent the Cypress App from exiting after running tests in a spec file, use
+To prevent Cypress from exiting after running tests in a spec file, use
 `--no-exit`.
 
 You can pass `--headed --no-exit` in order to view the **command log** or have
@@ -319,18 +319,20 @@ cypress run --project ./some/nested/folder
 
 #### `cypress run --record --key <record-key>`
 
-Record video of tests running after
-[setting up your project to record](/guides/dashboard/projects#Setup). After
-setting up your project you will be given a **Record Key**.
+Record your test results to [Cypress Cloud](/guides/cloud/introduction). For
+this option to work you must first
+[set up your project to record](/guides/cloud/projects#Setup), make sure your
+`projectId` is set in your
+[Cypress configuration file](/guides/references/configuration#Configuration-File),
+and append your **Record Key** to the command.
 
 ```shell
 cypress run --record --key <record_key>
 ```
 
 If you set the **Record Key** as the environment variable `CYPRESS_RECORD_KEY`,
-you can omit the `--key` flag.
-
-You'd typically set this environment variable when running in
+you can omit the `--key` flag. You'd typically set this environment variable
+when running in
 [Continuous Integration](/guides/continuous-integration/introduction).
 
 ```shell
@@ -343,7 +345,11 @@ Now you can omit the `--key` flag.
 cypress run --record
 ```
 
-You can [read more about recording runs here](/guides/dashboard/projects#Setup).
+For more information on recording runs, see the
+[Cypress Cloud setup instructions](/guides/cloud/projects#Setup). For an
+in-depth explanation of how Cypress uses your record key and `projectId` to save
+your test results to Cypress Cloud, see the
+[Identification section](/guides/cloud/projects#Identification).
 
 #### `cypress run --reporter <reporter>`
 
@@ -408,7 +414,7 @@ cypress run --project tests/e2e --spec ./tests/e2e/cypress/e2e/spec.js
 #### `cypress run --tag <tag>`
 
 Add a tag or tags to the recorded run. This can be used to help identify
-separate run when displayed in the Dashboard.
+separate runs when displayed in Cypress Cloud.
 
 ```shell
 cypress run  --record --tag "staging"
@@ -420,9 +426,9 @@ Give a run multiple tags.
 cypress run --record --tag "production,nightly"
 ```
 
-The Dashboard will display any tags sent with the appropriate run.
+Cypress Cloud will display any tags sent with the appropriate run.
 
-<DocsImage src="/img/dashboard/dashboard-run-with-tags.png" alt="Cypress run in the Dashboard displaying flags" ></DocsImage>
+<DocsImage src="/img/dashboard/dashboard-run-with-tags.png" alt="Cypress run in Cypress Cloud displaying flags" ></DocsImage>
 
 #### Exit code
 
@@ -476,7 +482,7 @@ $ echo $?
 
 ### `cypress open`
 
-Opens the Cypress App.
+Opens Cypress.
 
 ```shell
 cypress open [options]
@@ -485,12 +491,12 @@ cypress open [options]
 #### Options:
 
 Options passed to `cypress open` will automatically be applied to the project
-you open. These persist on all projects until you quit the Cypress App. These
-options will also override values in the Cypress configuration file.
+you open. These persist on all projects until you quit Cypress. These options
+will also override values in the Cypress configuration file.
 
 By passing `--browser` and `--e2e` or `--component` when launching a project,
-you can open the Cypress App and launch the browser at the same time. Otherwise,
-you will be guided through selecting a browser, project, and/or testing type.
+you can open Cypress and launch the browser at the same time. Otherwise, you
+will be guided through selecting a browser, project, and/or testing type.
 
 | Option                | Description                                                                                                                   |
 | --------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
@@ -518,8 +524,7 @@ with Cypress:
 cypress open --browser /usr/bin/chromium
 ```
 
-If found, the specified browser will be added to the list of available browsers
-in the Cypress App.
+If found, the specified browser will be added to the list of available browsers.
 
 Currently, only browsers in the Chrome family (including the new Chromium-based
 Microsoft Edge and Brave) and Firefox are supported.
@@ -610,7 +615,7 @@ Prints information about Cypress and the current environment such as:
 - Any environment variables that control
   [proxy configuration](/guides/references/proxy-configuration).
 - Any environment variables that start with the `CYPRESS` prefix (with sensitive
-  variables like [record key](/guides/dashboard/projects#Record-keys) masked for
+  variables like [record key](/guides/cloud/projects#Record-keys) masked for
   security).
 - The location where run-time data is stored.
 - The location where the Cypress binary is cached.
@@ -694,23 +699,23 @@ for some reason failed to install the matching binary version.
 
 ```shell
 cypress version
-Cypress package version: 6.0.0
-Cypress binary version: 6.0.0
-Electron version: 10.1.5
-Bundled Node version: 12.14.1
+Cypress package version: 12.0.0
+Cypress binary version: 12.0.0
+Electron version: 21.0.0
+Bundled Node version: 16.16.0
 ```
 
 You can print each individual component's version number also.
 
 ```shell
 cypress version --component package
-6.0.0
+12.0.0
 cypress version --component binary
-6.0.0
+12.0.0
 cypress version --component electron
-10.1.5
+21.0.0
 cypress version --component node
-12.14.1
+16.16.0
 ```
 
 ### `cypress cache [command]`

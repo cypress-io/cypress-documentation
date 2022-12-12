@@ -6,7 +6,7 @@ title: Opening the App
 
 ## <Icon name="graduation-cap"></Icon> What you'll learn
 
-- How to start the Cypress app from the command line
+- How to start Cypress from the command line
 - How to start your testing journey with the Launchpad
 - How to choose a testing type
 - How to launch a browser
@@ -44,7 +44,7 @@ yarn run cypress open
 $(npm bin)/cypress open
 ```
 
-After a moment, the Cypress App will launch.
+After a moment, the Cypress Launchpad will open.
 
 ### Adding npm Scripts
 
@@ -128,4 +128,4 @@ START BUTTON!</strong>
 Time to get testing! If you chose
 [to start with E2E Testing, go here](/guides/end-to-end-testing/writing-your-first-end-to-end-test).
 Alternatively, if you decided
-[to try Component Testing, go here](/guides/component-testing/writing-your-first-component-test).
+[to try Component Testing, go here](/guides/component-testing/overview).

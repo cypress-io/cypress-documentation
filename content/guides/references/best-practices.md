@@ -18,7 +18,7 @@ end-to-end tests
 [device sizes](/api/commands/viewport), but also includes
 [visual regression tests](/guides/tooling/visual-testing), API tests, unit
 tests, and runs them all in an
-[efficient CI pipeline](https://dashboard.cypress.io/projects/7s5okt).
+[efficient CI pipeline](https://cloud.cypress.io/projects/7s5okt).
 
 The app is bundled with everything you need,
 [just clone the repository](https://github.com/cypress-io/cypress-realworld-app)
@@ -198,6 +198,20 @@ If the answer is **no** because the text could be changed - then use
 [`cy.get()`](/api/commands/get) with data attributes. Changing the text to
 `Save` would then not cause a test failure.
 
+### Cypress and Testing Library
+
+Cypress loves the Testing Library project. We use Testing Library internally,
+and our philosophy aligns closely with Testing Library's ethos and approach to
+writing tests. We strongly endorse their best practices.
+
+You can use the
+[Cypress Testing Library](https://testing-library.com/docs/cypress-testing-library/intro/)
+package to use the familiar testing library methods (like `findByRole`,
+`findByLabelText`, etc...) to select elements in Cypress specs.
+
+In particular, if you're looking for more resources to understand how we
+recommend you approach testing your components, look to:
+
 ## Assigning Return Values
 
 <Alert type="danger">
@@ -210,8 +224,8 @@ to assign the return value of Commands with `const`, `let`, or `var`.
 <Alert type="success">
 
 <Icon name="check-circle" color="green"></Icon> **Best Practice:** Use
-[closures to access and store](/guides/core-concepts/variables-and-aliases) what
-Commands yield you.
+[aliases and closures to access and store](/guides/core-concepts/variables-and-aliases)
+what Commands yield you.
 
 </Alert>
 
@@ -228,6 +242,10 @@ cy.visit('https://example.cypress.io')
 
 // nope, fails
 a.first().click()
+
+// Instead, do this.
+cy.get('a').as('links')
+cy.get('@links').first().click()
 ```
 
 <Alert type="info">
@@ -265,39 +283,58 @@ to visit or interact with sites or servers you do not control.
 <Alert type="success">
 
 <Icon name="check-circle" color="green"></Icon> **Best Practice:** Only test
-what you control. Try to avoid requiring a 3rd party server. When necessary,
-always use [`cy.request()`](/api/commands/request) to talk to 3rd party servers
-via their APIs.
+what you control. Try to avoid requiring a 3rd party server. When necessary, use
+[`cy.request()`](/api/commands/request) to talk to 3rd party servers via their
+APIs. If possible, cache results via [`cy.session()`](/api/commands/session) to
+avoid repeat visits.
 
 </Alert>
 
 One of the first things many of our users attempt to do is involve 3rd party
-servers in their tests.
+servers or services in their tests.
 
-You may want to access 3rd party servers in several situations:
+You may want to access 3rd party services in several situations:
 
 1. Testing log in when your app uses another provider via OAuth.
 2. Verifying your server updates a 3rd party server.
 3. Checking your email to see if your server sent a "forgot password" email.
 
-Initially you may be tempted to use [`cy.visit()`](/api/commands/visit) or use
-Cypress to traverse to the 3rd party login window.
+Most of the time, these situations can be safely tested with
+[`cy.visit()`](/api/commands/visit) and [`cy.origin()`](/api/commands/origin).
+However, you will only want to utilize these commands for resources in your
+control, either by controlling the domain or hosted instance. These use cases
+are common for:
 
-However, you should **never** use your UI or visit a 3rd party site when testing
-because:
+- Authentication as a service platforms, such as Auth0, Okta, Microsoft, AWS
+  Cognito, and others via username/password authentication. These domains and
+  service instances are usually owned and controlled by you or your
+  organization.
+- CMS instances, such as a Contentful or Wordpress instance.
+- Other types of services under a domain in which you control.
 
-- It is incredibly time consuming and slows down your tests.
+Other services, such as social logins through popular media providers, are not
+recommended. Social logins will likely work, especially if run locally. However,
+we consider this a bad practice and do not recommend it because:
+
+- It is incredibly time consuming and slows down your tests (unless using
+  [`cy.session()`](/api/commands/session)).
 - The 3rd party site may have changed or updated its content.
 - The 3rd party site may be having issues outside of your control.
 - The 3rd party site may detect you are testing via a script and block you.
+- The 3rd party site might have policies against automated login, leading to
+  banning of accounts.
+- The 3rd party site might detect you are a bot, and provide mechanisms such as
+  two-factor authentication, captchas, and other means to prevent automation.
+  This is common with continuous integration platforms and general automation.
 - The 3rd party site may be running A/B campaigns.
 
 Let's look at a few strategies for dealing with these situations.
 
 ### When logging in:
 
-Many OAuth providers run A/B experiments, which means that their login screen is
-dynamically changing. This makes automated testing difficult.
+Many OAuth providers, especially social logins, run A/B experiments, which means
+that their login screen is dynamically changing. This makes automated testing
+difficult.
 
 Many OAuth providers also throttle the number of web requests you can make to
 them. For instance, if you try to test Google, Google will **automatically**
@@ -310,19 +347,27 @@ affect other tests downstream.
 
 **Here are potential solutions to alleviate these problems:**
 
-1. [Stub](/api/commands/stub) out the OAuth provider and bypass using their UI
-   altogether. You could trick your application into believing the OAuth
-   provider has passed its token to your application.
-2. If you **must** get a real token you can use
-   [`cy.request()`](/api/commands/request) and use the **programmatic** API that
-   your OAuth provider provides. These APIs likely change **more** infrequently
-   and you avoid problems like throttling and A/B campaigns.
-3. Instead of having your test code bypass OAuth, you could also ask your server
+1. Use another platform that you control to log in with username and password
+   via [`cy.origin()`](/api/commands/origin). This likely guarantees that you
+   will not run into the problems listed above, while still being able to
+   automate your login flow. You can reduce the amount of authentication
+   requests by utilizing [`cy.session()`](/api/commands/session).
+2. [Stub](/api/commands/stub) out the OAuth provider and bypass it using their
+   UI altogether if [`cy.origin()`](/api/commands/origin) is not an option. You
+   could trick your application into believing the OAuth provider has passed its
+   token to your application.
+3. If you **must** get a real token and [`cy.origin()`](/api/commands/origin) is
+   not an option, you can use [`cy.request()`](/api/commands/request) and use
+   the **programmatic** API that your OAuth provider provides. These APIs likely
+   change **more** infrequently and you avoid problems like throttling and A/B
+   campaigns.
+4. Instead of having your test code bypass OAuth, you could also ask your server
    for help. Perhaps all an OAuth token does is generate a user in your
    database. Oftentimes OAuth is only useful initially and your server
    establishes its own session with the client. If that is the case, use
    [`cy.request()`](/api/commands/request) to get the session directly from your
-   server and bypass the provider altogether.
+   server and bypass the provider altogether if
+   [`cy.origin()`](/api/commands/origin) is not an option.
 
 <Alert type="info">
 
@@ -353,7 +398,7 @@ passwords, your server schedules an email to be delivered.
 
 1. If your application is running locally and is sending the emails directly
    through an SMTP server, you can use a temporary local test SMTP server
-   running inside the Cypress App. Read the blog post
+   running inside Cypress. Read the blog post
    ["Testing HTML Emails using Cypress"](https://www.cypress.io/blog/2021/05/11/testing-html-emails-using-cypress/)
    for details.
 2. If your application is using a 3rd party email service, or you cannot stub
@@ -371,7 +416,7 @@ email's functionality and visual style:
   alt="The test finds and clicks the Confirm registration button"></DocsImage>
 
 3. In other cases, you should try using [`cy.request()`](/api/commands/request)
-   command to query the an endpoint on your server that tells you what email has
+   command to query the endpoint on your server that tells you what email has
    been queued or delivered. That would give you a programmatic way to know
    without involving the UI. Your server would have to expose this endpoint.
 4. You could also use `cy.request()` to a 3rd party email recipient server that
@@ -724,8 +769,8 @@ same time.
 We have built Cypress to support this use case. In fact, Cypress **does not**
 clean up its own internal state when the test ends. We **want** you to have
 dangling state at the end of the test! Things like [stubs](/api/commands/stub),
-[spies](/api/commands/spy), even [routes](/api/commands/route) are **not**
-removed at the end of the test. This means your application will behave
+[spies](/api/commands/spy), even [intercepts](/api/commands/intercept) are
+**not** removed at the end of the test. This means your application will behave
 identically while it is running Cypress commands or when you manually work with
 it after a test ends.
 
@@ -800,11 +845,10 @@ beforeEach(() => {
 ### Is resetting the state necessary?
 
 One final question you should ask yourself is - is resetting the state even
-necessary? Remember, Cypress already automatically clears
-[localStorage](/api/commands/clearlocalstorage),
-[cookies](/api/commands/clearcookies), sessions, etc before each test. Make sure
-you are not trying to clean up state that is already cleaned up by Cypress
-automatically.
+necessary? Remember, Cypress already automatically enforces
+[test isolation](/guides/core-concepts/writing-and-organizing-tests#Test-Isolation)
+by clearing state before each test. Make sure you are not trying to clean up
+state that is already cleaned up by Cypress automatically.
 
 If the state you are trying to clean lives on the server - by all means, clean
 that state. You will need to run these types of routines! But if the state is
@@ -940,6 +984,26 @@ cy.wait('@getUsers') // <--- wait explicitly for this route to finish
 cy.get('table tr').should('have.length', 2)
 ```
 
+## Running Tests Intelligently
+
+As your test suite grows and takes longer to run, you may find yourself hitting
+performance bottlenecks on your CI system. We recommend integrating your source
+control system with your test suite such that merges are blocked until all your
+Cypress tests have passed. The downside of this is that longer test execution
+times slow the velocity at which branches may be merged and features may be
+shipped. This issue is compounded further if you have dependent chains of
+branches waiting to be merged.
+
+One solution to this problem is
+[Smart Orchestration with Cypress Cloud](/guides/cloud/smart-orchestration).
+Using a combination of [parallelization](/guides/guides/parallelization),
+[load balancing](/guides/guides/parallelization#Balance-strategy),
+[test run cancellation](/guides/cloud/smart-orchestration#Cancel-test-run-when-a-test-fails),
+and
+[running failed specs first](/guides/cloud/smart-orchestration#Run-failed-specs-first),
+Smart Orchestration maximizes your available compute resources & minimizes
+waste.
+
 ## Web Servers
 
 <Alert type="danger">
@@ -978,8 +1042,8 @@ Trying to start a web server from [cy.exec()](/api/commands/exec) or
 
 Because there is no guarantee that code running in an `after` will always run.
 
-While working in the Cypress App you can always restart / refresh while in the
-middle of a test. When that happens, code in an `after` won't execute.
+While working in the Cypress Test Runner you can always restart / refresh while
+in the middle of a test. When that happens, code in an `after` won't execute.
 
 **What should I do then?**
 
@@ -1066,7 +1130,7 @@ load the main window in the `baseUrl` you specified as soon as your tests start.
 Having a `baseUrl` set gives you the added bonus of seeing an error if your
 server is not running during `cypress open` at the specified `baseUrl`.
 
-<DocsImage src="/img/guides/references/cypress-ensures-baseUrl-server-is-running.png" alt="Cypress App with warning about how Cypress could not verify server set as the baseUrl is running"></DocsImage>
+<DocsImage src="/img/guides/references/cypress-ensures-baseUrl-server-is-running.png" alt="Cypress Launchpad with warning about how Cypress could not verify server set as the baseUrl is running"></DocsImage>
 
 We also display an error if your server is not running at the specified
 `baseUrl` during `cypress run` after several retries.

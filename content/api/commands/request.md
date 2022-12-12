@@ -327,8 +327,8 @@ cy
 #### Request is not displayed in the Network Tab of Developer Tools
 
 Cypress does not _actually_ make an XHR request from the browser. We are
-actually making the HTTP request from the Cypress App (in Node). So, you won't
-see the request inside of your Developer Tools.
+actually making the HTTP request from Cypress (in Node). So, you won't see the
+request inside of your Developer Tools.
 
 ### CORS
 
@@ -357,12 +357,9 @@ browser cookies.
 In other words, `cy.request()` transparently performs all of the underlying
 functions as if it came from the browser.
 
-### [`cy.intercept()`](/api/commands/intercept), [`cy.server()`](/api/commands/server), and [`cy.route()`](/api/commands/route)
+### [`cy.intercept()`](/api/commands/intercept)
 
-#### `cy.request()` sends requests to actual endpoints, bypassing those defined using `cy.route()` or `cy.intercept()`
-
-`cy.server()` and any configuration passed to
-[`cy.server()`](/api/commands/server) has no effect on `cy.request()`.
+#### `cy.request()` sends requests to actual endpoints, bypassing those defined using `cy.intercept()`
 
 The intention of `cy.request()` is to be used for checking endpoints on an
 actual, running server without having to start the front end application.
