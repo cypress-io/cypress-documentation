@@ -562,7 +562,7 @@ describe('Assertions', () => {
 ```
 
 http://localhost:3000/guides/core-concepts/retry-ability#Correctly-waiting-for-values (gif)
-1) Run the last test in [this spec](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/cypress/integration/2-advanced-examples/assertions.spec.js)
+1) Run the last test in [this spec](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/cypress/e2e/2-advanced-examples/assertions.cy.js)
 2) Hide the surrounding html to isolate the random counter & bump up font-size in-line to make visible in example
 ```js
 cy.get('#random-number').should(($div) => {
@@ -639,7 +639,7 @@ describe('TodoMVC - React', function () {
 
 http://localhost:3000/guides/core-concepts/cypress-app#What-you-ll-learn
 1) Hero image of Cypress GUI
-Load [this test](https://github.com/cypress-io/cypress-example-todomvc/blob/724757df744c499a3596ca45c2c57da3aad371a5/cypress/integration/app_spec.js#L89) 
+Load [this test](https://github.com/cypress-io/cypress-example-todomvc/blob/master/cypress/e2e/app.cy.js#L89) 
 
 http://localhost:3000/guides/core-concepts/cypress-app#Finding-Selectors (gif)
 ```html

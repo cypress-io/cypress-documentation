@@ -309,7 +309,7 @@ logic wrapped around it.
 ## Validation
 
 As noted in the examples above, Cypress performs very little validation around
-queries - it is the repsonsibility of each implementation to ensure that its
+queries - it is the responsibility of each implementation to ensure that its
 arguments and subject are of the correct type.
 
 Cypress has several builtin 'ensures' which can be helpful in this regard:
@@ -321,11 +321,9 @@ Cypress has several builtin 'ensures' which can be helpful in this regard:
   implemented for commmands.
 - `cy.ensureElement(subject, queryName)`: Ensure that the passed in `subject` is
   one or more DOM elements.
-- `cy.ensureWindow(subject)`: Ensure that the passed in `subject` is a
-  `document`.
+- `cy.ensureWindow(subject)`: Ensure that the passed in `subject` is a `window`.
 - `cy.ensureDocument(subject)`: Ensure that the passed in `subject` is a
-  `window`.
-
+  `document`.
 - `cy.ensureAttached(subject, queryName)`: Ensure that DOM element(s) are
   attached to the page.
 - `cy.ensureNotDisabled(subject)`: Ensure that form elements aren't disabled.
