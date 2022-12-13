@@ -97,7 +97,7 @@ The following example demonstrates a nightly CI schedule against production
 ```yaml
 version: 2.1
 orbs:
-  cypress: cypress-io/cypress@1
+  cypress: cypress-io/cypress@2
 workflows:
   nightly:
     triggers:
@@ -128,7 +128,7 @@ Firefox issues can be caught before a production release:
 ```yaml
 version: 2.1
 orbs:
-  cypress: cypress-io/cypress@1
+  cypress: cypress-io/cypress@2
 workflows:
   test_develop:
     jobs:
@@ -169,7 +169,7 @@ Circle CI workflow UI to distinguish the jobs.
 ```yaml
 version: 2.1
 orbs:
-  cypress: cypress-io/cypress@1
+  cypress: cypress-io/cypress@2
 workflows:
   build:
     jobs:
@@ -217,7 +217,7 @@ named `firefox`.
 ```yaml
 version: 2.1
 orbs:
-  cypress: cypress-io/cypress@1
+  cypress: cypress-io/cypress@2
 workflows:
   build:
     jobs:
