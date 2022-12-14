@@ -397,7 +397,9 @@ under your immediate test control, cross-origin errors may still tend to creep
 up. We don't recommend visiting or interacting with sites you
 [do not control](/guides/references/best-practices#Visiting-external-sites).
 However, if this is necessary, most of these issues can usually be remedied by
-either apply the [modify obstructive third-party code]() experimental flag or by
+applying` the
+[modify obstructive third-party code](/guides/references/experiments#Configuration)
+experimental flag or by
 [disabling web security](/guides/guides/web-security#Disabling-Web-Security).
 
 ## Disabling Web Security
