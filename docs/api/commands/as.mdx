@@ -3,8 +3,8 @@ title: as
 ---
 
 Assign an alias for later use. Reference the alias later within a
-[`cy.get()`](/api/commands/get) or [`cy.wait()`](/api/commands/wait) command
-with an `@` prefix.
+[`cy.get()`](/api/commands/get) query or [`cy.wait()`](/api/commands/wait)
+command with an `@` prefix.
 
 :::info
 
@@ -46,8 +46,8 @@ using an `@` prefix.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-- `.as()` yields the same subject it was given from the previous
-command.
+- `.as()` yields the same subject it was given.
+- It is _safe_ to chain further commands after `.as()`.
 
 ## Examples
 
@@ -179,7 +179,7 @@ describe('A fixture', () => {
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
 - `.as()` is a utility command.</li><li>`.as()` will not run assertions.
-Assertions will pass through as if this command did not exist.
+  Assertions will pass through as if this command did not exist.
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
@@ -199,7 +199,10 @@ cy.intercept('PUT', /^\/users\/\d+/).as('userPut')
 
 Aliases of routes display in the routes instrument panel:
 
-<DocsImage src="/img/api/as/routes-table-in-command-log.png" alt="Command log for route" ></DocsImage>
+<DocsImage
+  src="/img/api/as/routes-table-in-command-log.png"
+  alt="Command log for route"
+></DocsImage>
 
 ## See also
 

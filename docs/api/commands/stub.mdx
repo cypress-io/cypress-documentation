@@ -4,6 +4,9 @@ title: stub
 
 Replace a function, record its usage and control its behavior.
 
+`cy.stub()` is a utility function, and is not a Cypress command, query or
+assertion. It is not retryable, chainable, or timeout-able.
+
 :::info
 
 **Note:** `.stub()` assumes you are already familiar with our guide:
@@ -25,6 +28,7 @@ cy.stub(object, method, replacerFn)
 
 ```javascript
 cy.stub(user, 'addFriend')
+cy.stub(user, 'addFriend').as('addFriend')
 ```
 
 ### Arguments
@@ -43,11 +47,10 @@ The function used to replace the `method` on the `object`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-Unlike most Cypress commands, `cy.stub()` is _synchronous_ and returns a value
-(the stub) instead of a Promise-like chain-able object.
-
-`cy.stub()` returns a [Sinon.js stub](http://sinonjs.org). All methods found on
-[Sinon.js](http://sinonjs.org) spies and stubs are supported.
+- `cy.stub()` is _synchronous_ and returns a value (the stub) instead of a
+  Promise-like chain-able object. It can be aliased.
+- `cy.stub()` returns a [Sinon.js stub](http://sinonjs.org). All methods found
+  on [Sinon.js](http://sinonjs.org) spies and stubs are supported.
 
 ## Examples
 
@@ -163,8 +166,9 @@ const stub = cy.stub(obj, 'foo').log(false)
 
 ### Aliases
 
-Adding an alias using [`.as()`](/api/commands/as) to stubs makes them easier to
-identify in error messages and Cypress's command log.
+You can alias stubs, similar to how [`.as()`](/api/commands/as) works. This can
+make your stubs easier to identify in error messages and Cypress's command log,
+and allows you to assert against them later using `cy.get()`.
 
 ```javascript
 const obj = {
@@ -174,8 +178,9 @@ const stub = cy.stub(obj, 'foo').as('anyArgs')
 const withFoo = stub.withArgs('foo').as('withFoo')
 
 obj.foo()
+
 expect(stub).to.be.called
-expect(withFoo).to.be.called // purposefully failing assertion
+cy.get('@withFoo').should('be.called') // purposefully failing assertion
 ```
 
 You will see the following in the command log:
@@ -205,20 +210,6 @@ that `cy.spy()` does not replace the method, it only wraps it. So, while
 invocations are recorded, the original method is still called. This can be very
 useful when testing methods on native browser objects. You can verify a method
 is being called by your test and still have the original method action invoked.
-
-## Rules
-
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
-
-- `cy.stub()` requires being chained off of `cy`.
-
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
-
-- `cy.stub()` cannot have any assertions chained.
-
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
-
-- `cy.stub()` cannot time out.
 
 ## Command Log
 

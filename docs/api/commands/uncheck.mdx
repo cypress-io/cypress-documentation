@@ -4,6 +4,9 @@ title: uncheck
 
 Uncheck checkbox(es).
 
+It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried) to
+chain further commands that rely on the subject after `.uncheck()`.
+
 ## Syntax
 
 ```javascript
@@ -55,8 +58,9 @@ Pass in an options object to change the default behavior of `.uncheck()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-- `.uncheck()` yields the same subject it was given from the previous
-command.
+- `.uncheck()` yields the same subject it was given.
+- It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried)
+  to chain further commands that rely on the subject after `.uncheck()`.
 
 ## Examples
 
@@ -104,21 +108,20 @@ cy.get('[type="checkbox"]').uncheck(['ga', 'ca'])
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
 - `.uncheck()` requires being chained off a command that yields DOM
-element(s).</li><li>.uncheck() requires the element to have type
-`checkbox`.
+  element(s).</li><li>.uncheck() requires the element to have type `checkbox`.
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
 - `.uncheck()` will automatically wait for the element to reach an
-[actionable state](/guides/core-concepts/interacting-with-elements)</li><li>`.uncheck()`
-will automatically [retry](/guides/core-concepts/retry-ability) until all
-chained assertions have passed
+  [actionable state](/guides/core-concepts/interacting-with-elements)</li><li>`.uncheck()`
+  will automatically [retry](/guides/core-concepts/retry-ability) until all
+  chained assertions have passed
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
 - `.uncheck()` can time out waiting for the element to reach an
-[actionable state](/guides/core-concepts/interacting-with-elements).</li><li>`.uncheck()`
-can time out waiting for assertions you've added to pass.
+  [actionable state](/guides/core-concepts/interacting-with-elements).</li><li>`.uncheck()`
+  can time out waiting for assertions you've added to pass.
 
 ## Command Log
 
@@ -134,12 +137,18 @@ cy.get('[data-js="choose-all"]')
 
 The commands above will display in the Command Log as:
 
-<DocsImage src="/img/api/uncheck/test-unchecking-a-checkbox.png" alt="Command Log uncheck" ></DocsImage>
+<DocsImage
+  src="/img/api/uncheck/test-unchecking-a-checkbox.png"
+  alt="Command Log uncheck"
+></DocsImage>
 
 When clicking on `uncheck` within the command log, the console outputs the
 following:
 
-<DocsImage src="/img/api/uncheck/console-shows-events-from-clicking-the-checkbox.png" alt="Console Log uncheck" ></DocsImage>
+<DocsImage
+  src="/img/api/uncheck/console-shows-events-from-clicking-the-checkbox.png"
+  alt="Console Log uncheck"
+></DocsImage>
 
 ## History
 

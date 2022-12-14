@@ -4,6 +4,9 @@ title: click
 
 Click a DOM element.
 
+It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried) to
+chain further commands that rely on the subject after `.click()`.
+
 ## Syntax
 
 ```javascript
@@ -40,7 +43,10 @@ The position where the click should be issued. The `center` position is the
 default position. Valid positions are `topLeft`, `top`, `topRight`, `left`,
 `center`, `right`, `bottomLeft`, `bottom`, and `bottomRight`.
 
-<DocsImage src="/img/api/coordinates-diagram.jpg" alt="cypress-command-positions-diagram" ></DocsImage>
+<DocsImage
+  src="/img/api/coordinates-diagram.jpg"
+  alt="cypress-command-positions-diagram"
+></DocsImage>
 
 **<Icon name="angle-right" /> x** **_(Number)_**
 
@@ -70,8 +76,9 @@ Pass in an options object to change the default behavior of `.click()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-- `.click()` yields the same subject it was given from the previous
-command.
+- `.click()` yields the same subject it was given.
+- It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried)
+  to chain further commands that rely on the subject after `.click()`.
 
 ## Examples
 
@@ -203,21 +210,20 @@ then the element will not receive focus as per the spec.
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-- `.click()` requires being chained off a command that yields DOM
-element(s).
+- `.click()` requires being chained off a command that yields DOM element(s).
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
 - `.click()` will automatically wait for the element to reach an
-[actionable state](/guides/core-concepts/interacting-with-elements)</li><li>`.click()`
-will automatically [retry](/guides/core-concepts/retry-ability) until all
-chained assertions have passed
+  [actionable state](/guides/core-concepts/interacting-with-elements)</li><li>`.click()`
+  will automatically [retry](/guides/core-concepts/retry-ability) until all
+  chained assertions have passed
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
 - `.click()` can time out waiting for the element to reach an
-[actionable state](/guides/core-concepts/interacting-with-elements).</li><li>`.click()`
-can time out waiting for assertions you've added to pass.
+  [actionable state](/guides/core-concepts/interacting-with-elements).</li><li>`.click()`
+  can time out waiting for assertions you've added to pass.
 
 ## Command Log
 
@@ -229,12 +235,18 @@ cy.get('.action-btn').click()
 
 The commands above will display in the Command Log as:
 
-<DocsImage src="/img/api/click/click-button-in-form-during-test.png" alt="Command log for click" ></DocsImage>
+<DocsImage
+  src="/img/api/click/click-button-in-form-during-test.png"
+  alt="Command log for click"
+></DocsImage>
 
 When clicking on `click` within the command log, the console outputs the
 following:
 
-<DocsImage src="/img/api/click/click-coords-and-events-in-console.png" alt="console.log for click" ></DocsImage>
+<DocsImage
+  src="/img/api/click/click-coords-and-events-in-console.png"
+  alt="console.log for click"
+></DocsImage>
 
 ## History
 

@@ -57,6 +57,7 @@ Pass in an options object to change the default behavior of `.filter()`.
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 - `.filter()` yields the new DOM element(s) it found.
+- `.filter()` is a query, and it is _safe_ to chain further commands.
 
 ## Examples
 
@@ -124,22 +125,21 @@ cy.get('[data-testid="testattr"]').filter(':contains("Hello\u00a0world")')
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-- `.filter()` requires being chained off a command that yields DOM
-element(s).
+- `.filter()` requires being chained off a command that yields DOM element(s).
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-- `.filter()` will automatically
-[retry](/guides/core-concepts/retry-ability) until the element(s)
-[exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.filter()`
-will automatically [retry](/guides/core-concepts/retry-ability) until all
-chained assertions have passed
+- `.filter()` will automatically [retry](/guides/core-concepts/retry-ability)
+  until the element(s)
+  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.filter()`
+  will automatically [retry](/guides/core-concepts/retry-ability) until all
+  chained assertions have passed
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
 - `.filter()` can time out waiting for the element(s) to
-[exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).</li><li>`.filter()`
-can time out waiting for assertions you've added to pass.
+  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).</li><li>`.filter()`
+  can time out waiting for assertions you've added to pass.
 
 ## Command Log
 
@@ -151,12 +151,18 @@ cy.get('.left-nav>.nav').find('>li').filter('.active')
 
 The commands above will display in the Command Log as:
 
-<DocsImage src="/img/api/filter/filter-el-by-selector.png" alt="Command Log filter" ></DocsImage>
+<DocsImage
+  src="/img/api/filter/filter-el-by-selector.png"
+  alt="Command Log filter"
+></DocsImage>
 
 When clicking on the `filter` command within the command log, the console
 outputs the following:
 
-<DocsImage src="/img/api/filter/console-shows-list-and-filtered-element.png" alt="console.log filter" ></DocsImage>
+<DocsImage
+  src="/img/api/filter/console-shows-list-and-filtered-element.png"
+  alt="console.log filter"
+></DocsImage>
 
 ## See also
 

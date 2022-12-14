@@ -52,6 +52,7 @@ Pass in an options object to change the default behavior of `.find()`.
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 - `.find()` yields the new DOM element(s) it found.
+- `.find()` is a query, and it is _safe_ to chain further commands.
 
 ## Examples
 
@@ -75,22 +76,21 @@ cy.get('#parent').find('li')
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-- `.find()` requires being chained off a command that yields DOM
-element(s).
+- `.find()` requires being chained off a command that yields DOM element(s).
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-- `.find()` will automatically
-[retry](/guides/core-concepts/retry-ability) until the element(s)
-[exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.find()`
-will automatically [retry](/guides/core-concepts/retry-ability) until all
-chained assertions have passed
+- `.find()` will automatically [retry](/guides/core-concepts/retry-ability)
+  until the element(s)
+  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.find()`
+  will automatically [retry](/guides/core-concepts/retry-ability) until all
+  chained assertions have passed
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
 - `.find()` can time out waiting for the element(s) to
-[exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).</li><li>`.find()`
-can time out waiting for assertions you've added to pass.
+  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).</li><li>`.find()`
+  can time out waiting for assertions you've added to pass.
 
 ## Command Log
 
@@ -102,12 +102,18 @@ cy.get('.left-nav>.nav').find('>li')
 
 The commands above will display in the Command Log as:
 
-<DocsImage src="/img/api/find/find-li-of-uls-in-test.png" alt="Command Log find" ></DocsImage>
+<DocsImage
+  src="/img/api/find/find-li-of-uls-in-test.png"
+  alt="Command Log find"
+></DocsImage>
 
 When clicking on the `find` command within the command log, the console outputs
 the following:
 
-<DocsImage src="/img/api/find/find-in-console-shows-list-and-yields.png" alt="console.log find" ></DocsImage>
+<DocsImage
+  src="/img/api/find/find-in-console-shows-list-and-yields.png"
+  alt="console.log find"
+></DocsImage>
 
 ## History
 

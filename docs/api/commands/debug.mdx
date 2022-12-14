@@ -43,8 +43,8 @@ Pass in an options object to change the default behavior of `.debug()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-- `.debug()` yields the same subject it was given from the previous
-command.
+- `.debug()` yields the same subject it was given from the previous command.
+- `.debug()` is a query, and it is _safe_ to chain further commands.
 
 ## Examples
 
@@ -60,14 +60,12 @@ cy.get('a').debug().should('have.attr', 'href')
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-- `.debug()` can be chained off of `cy` or off another
-command.
+- `.debug()` can be chained off of `cy` or off another command.
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-- `.debug()` is a utility command.</li><li>`.debug()` will not run
-assertions. Assertions will pass through as if this command did not
-exist.
+- `.debug()` is a utility command.</li><li>`.debug()` will not run assertions.
+  Assertions will pass through as if this command did not exist.
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
@@ -83,16 +81,22 @@ cy.get('.ls-btn').click({ force: true }).debug()
 
 The commands above will display in the Command Log as:
 
-<DocsImage src="/img/api/debug/how-debug-displays-in-command-log.png" alt="Command Log debug" ></DocsImage>
+<DocsImage
+  src="/img/api/debug/how-debug-displays-in-command-log.png"
+  alt="Command Log debug"
+></DocsImage>
 
 When clicking on the `debug` command within the command log, the console outputs
 the following:
 
-<DocsImage src="/img/api/debug/console-gives-all-debug-info-for-command.png" alt="console.log debug" ></DocsImage>
+<DocsImage
+  src="/img/api/debug/console-gives-all-debug-info-for-command.png"
+  alt="console.log debug"
+></DocsImage>
 
 ## See also
 
-- [Dashboard](https://on.cypress.io/dashboard)
+- [Cypress Cloud](https://on.cypress.io/cloud)
 - [`.pause()`](/api/commands/pause)
 - [`cy.log()`](/api/commands/log)
 - [`cy.screenshot()`](/api/commands/screenshot)

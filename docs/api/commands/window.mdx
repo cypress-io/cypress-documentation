@@ -32,7 +32,8 @@ Pass in an options object to change the default behavior of `cy.window()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-- `cy.window()` yields the `window` object
+- `cy.window()` yields the `window` object.
+- `cy.window()` is a query, and it is _safe_ to chain further commands.
 
 ## Examples
 
@@ -207,14 +208,12 @@ it('should trigger KeyboardEvent with .type inside Cypress event listener', (don
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-- `cy.window()` will automatically
-[retry](/guides/core-concepts/retry-ability) until all chained assertions have
-passed
+- `cy.window()` will automatically [retry](/guides/core-concepts/retry-ability)
+  until all chained assertions have passed
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-- `cy.window()` can time out waiting for assertions you've added to
-pass.
+- `cy.window()` can time out waiting for assertions you've added to pass.
 
 ## Command Log
 
@@ -226,12 +225,18 @@ cy.window()
 
 The commands above will display in the Command Log as:
 
-<DocsImage src="/img/api/window/window-command-log-for-cypress-tests.png" alt="Command Log window" ></DocsImage>
+<DocsImage
+  src="/img/api/window/window-command-log-for-cypress-tests.png"
+  alt="Command Log window"
+></DocsImage>
 
 When clicking on `window` within the command log, the console outputs the
 following:
 
-<DocsImage src="/img/api/window/console-shows-the-applications-window-object-being-tested.png" alt="Console Log window" ></DocsImage>
+<DocsImage
+  src="/img/api/window/console-shows-the-applications-window-object-being-tested.png"
+  alt="Console Log window"
+></DocsImage>
 
 ## History
 

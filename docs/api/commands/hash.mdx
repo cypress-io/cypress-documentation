@@ -41,14 +41,11 @@ Pass in an options object to change the default behavior of `cy.hash()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-#### When the current URL contains a hash:
-
-- `cy.hash()` "yields the current URL's hash (including the `#`
-character)" 
-
-#### When the current URL does not contain a hash:
-
-- `cy.hash()` "yields an empty string" 
+- When the current URL contains a hash, `cy.hash()` yields the current URL's
+  hash (including the `#` character).
+- When the current URL does not contain a hash, `cy.hash()` yields an empty
+  string.
+- `cy.hash()` is a query, and it is _safe_ to chain further commands.
 
 ## Examples
 
@@ -84,14 +81,12 @@ cy.hash().should('match', /users\/.+$/) // => true
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-- `cy.hash()` will automatically
-[retry](/guides/core-concepts/retry-ability) until all chained assertions have
-passed
+- `cy.hash()` will automatically [retry](/guides/core-concepts/retry-ability)
+  until all chained assertions have passed
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-- `cy.hash()` can time out waiting for assertions you've added to
-pass.
+- `cy.hash()` can time out waiting for assertions you've added to pass.
 
 ## Command Log
 
@@ -103,12 +98,18 @@ cy.hash().should('eq', '#users/new')
 
 The commands above will display in the Command Log as:
 
-<DocsImage src="/img/api/hash/test-url-hash-for-users-page.png" alt="Command Log for hash" ></DocsImage>
+<DocsImage
+  src="/img/api/hash/test-url-hash-for-users-page.png"
+  alt="Command Log for hash"
+></DocsImage>
 
 When clicking on `hash` within the command log, the console outputs the
 following:
 
-<DocsImage src="/img/api/hash/hash-command-yields-url-after-hash.png" alt="Console Log for hash" ></DocsImage>
+<DocsImage
+  src="/img/api/hash/hash-command-yields-url-after-hash.png"
+  alt="Console Log for hash"
+></DocsImage>
 
 ## See also
 

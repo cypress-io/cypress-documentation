@@ -4,6 +4,9 @@ title: clear
 
 Clear the value of an `input` or `textarea`.
 
+It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried) to
+chain further commands that rely on the subject after `.clear()`.
+
 :::info
 
 An alias for [`.type('{selectall}{backspace}')`](/api/commands/type)
@@ -52,8 +55,9 @@ Pass in an options object to change the default behavior of `.clear()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-- `.clear()` yields the same subject it was given from the previous
-command.
+- `.clear()` yields the same subject it was given.
+- It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried)
+  to chain further commands that rely on the subject after `.clear()`.
 
 ## Examples
 
@@ -86,21 +90,21 @@ Please read the [`.type()`](/api/commands/type) documentation for more details.
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
 - `.clear()` requires being chained off a command that yields DOM
-element(s).</li><li>`.clear()` requires the element to be an `input` or
-`textarea`.
+  element(s).</li><li>`.clear()` requires the element to be an `input` or
+  `textarea`.
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
 - `.clear()` will automatically wait for the element to reach an
-[actionable state](/guides/core-concepts/interacting-with-elements)</li><li>`.clear()`
-will automatically [retry](/guides/core-concepts/retry-ability) until all
-chained assertions have passed
+  [actionable state](/guides/core-concepts/interacting-with-elements)</li><li>`.clear()`
+  will automatically [retry](/guides/core-concepts/retry-ability) until all
+  chained assertions have passed
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
 - `.clear()` can time out waiting for the element to reach an
-[actionable state](/guides/core-concepts/interacting-with-elements).</li><li>`.clear()`
-can time out waiting for assertions you've added to pass.
+  [actionable state](/guides/core-concepts/interacting-with-elements).</li><li>`.clear()`
+  can time out waiting for assertions you've added to pass.
 
 ## Command Log
 
@@ -112,12 +116,18 @@ cy.get('input[name="name"]').clear().type('Jane Lane')
 
 The commands above will display in the Command Log as:
 
-<DocsImage src="/img/api/clear/clear-input-in-cypress.png" alt="Command log for clear" ></DocsImage>
+<DocsImage
+  src="/img/api/clear/clear-input-in-cypress.png"
+  alt="Command log for clear"
+></DocsImage>
 
 When clicking on `clear` within the command log, the console outputs the
 following:
 
-<DocsImage src="/img/api/clear/one-input-cleared-in-tests.png" alt="console.log for clear" ></DocsImage>
+<DocsImage
+  src="/img/api/clear/one-input-cleared-in-tests.png"
+  alt="console.log for clear"
+></DocsImage>
 
 ## See also
 

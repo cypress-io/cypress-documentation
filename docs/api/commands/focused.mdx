@@ -32,7 +32,8 @@ Pass in an options object to change the default behavior of `cy.focused()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-- `cy.focused()` yields the DOM element(s) it found.
+- `cy.focused()` yields the DOM element it found.
+- `cy.focused()` is a query, and it is _safe_ to chain further commands.
 
 ## Examples
 
@@ -63,21 +64,21 @@ cy.focused().should('have.attr', 'name', 'username')
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
 - `cy.focused()` requires being chained off a command that yields DOM
-element(s).
+  element(s).
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-- `cy.focused()` will automatically
-[retry](/guides/core-concepts/retry-ability) until the element(s)
-[exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`cy.focused()`
-will automatically [retry](/guides/core-concepts/retry-ability) until all
-chained assertions have passed
+- `cy.focused()` will automatically [retry](/guides/core-concepts/retry-ability)
+  until the element(s)
+  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`cy.focused()`
+  will automatically [retry](/guides/core-concepts/retry-ability) until all
+  chained assertions have passed
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
 - `cy.focused()` can time out waiting for the element(s) to
-[exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).</li><li>`cy.focused()`
-can time out waiting for assertions you've added to pass.
+  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).</li><li>`cy.focused()`
+  can time out waiting for assertions you've added to pass.
 
 ## Command Log
 
@@ -89,12 +90,18 @@ cy.focused().should('have.attr', 'name').and('eq', 'num')
 
 The commands above will display in the Command Log as:
 
-<DocsImage src="/img/api/focused/make-assertion-about-focused-element.png" alt="Command Log focused" ></DocsImage>
+<DocsImage
+  src="/img/api/focused/make-assertion-about-focused-element.png"
+  alt="Command Log focused"
+></DocsImage>
 
 When clicking on the `focused` command within the command log, the console
 outputs the following:
 
-<DocsImage src="/img/api/focused/currently-focused-element-in-an-input.png" alt="console focused" ></DocsImage>
+<DocsImage
+  src="/img/api/focused/currently-focused-element-in-an-input.png"
+  alt="console focused"
+></DocsImage>
 
 ## See also
 

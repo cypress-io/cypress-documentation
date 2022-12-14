@@ -64,6 +64,7 @@ Pass in an options object to change the default behavior of `.parentsUntil()`.
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 - `.parentsUntil()` yields the new DOM element(s) it found.
+- `.parentsUntil()` is a query, and it is _safe_ to chain further commands.
 
 ## Examples
 
@@ -97,21 +98,21 @@ cy.get('.active').parentsUntil('.nav')
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
 - `.parentsUntil()` requires being chained off a command that yields DOM
-element(s).
+  element(s).
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
 - `.parentsUntil()` will automatically
-[retry](/guides/core-concepts/retry-ability) until the element(s)
-[exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.parentsUntil()`
-will automatically [retry](/guides/core-concepts/retry-ability) until all
-chained assertions have passed
+  [retry](/guides/core-concepts/retry-ability) until the element(s)
+  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.parentsUntil()`
+  will automatically [retry](/guides/core-concepts/retry-ability) until all
+  chained assertions have passed
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
 - `.parentsUntil()` can time out waiting for the element(s) to
-[exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).</li><li>`.parentsUntil()`
-can time out waiting for assertions you've added to pass.
+  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).</li><li>`.parentsUntil()`
+  can time out waiting for assertions you've added to pass.
 
 ## Command Log
 
@@ -123,12 +124,18 @@ cy.get('.active').parentsUntil('.nav')
 
 The commands above will display in the Command Log as:
 
-<DocsImage src="/img/api/parentsuntil/get-all-parents-until-nav-selector.png" alt="Command Log parentsUntil" ></DocsImage>
+<DocsImage
+  src="/img/api/parentsuntil/get-all-parents-until-nav-selector.png"
+  alt="Command Log parentsUntil"
+></DocsImage>
 
 When clicking on `parentsUntil` within the command log, the console outputs the
 following:
 
-<DocsImage src="/img/api/parentsuntil/show-parents-until-nav-in-console.png" alt="Console Log parentsUntil" ></DocsImage>
+<DocsImage
+  src="/img/api/parentsuntil/show-parents-until-nav-in-console.png"
+  alt="Console Log parentsUntil"
+></DocsImage>
 
 ## See also
 

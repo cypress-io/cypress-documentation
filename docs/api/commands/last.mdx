@@ -46,7 +46,8 @@ Pass in an options object to change the default behavior of `.last()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-- `.last()` yields the new DOM element(s) it found.
+- `.last()` yields the new DOM element it found.
+- `.last()` is a query, and it is _safe_ to chain further commands.
 
 ## Examples
 
@@ -72,22 +73,21 @@ cy.get('li').last()
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-- `.last()` requires being chained off a command that yields DOM
-element(s).
+- `.last()` requires being chained off a command that yields DOM element(s).
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-- `.last()` will automatically
-[retry](/guides/core-concepts/retry-ability) until the element(s)
-[exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.last()`
-will automatically [retry](/guides/core-concepts/retry-ability) until all
-chained assertions have passed
+- `.last()` will automatically [retry](/guides/core-concepts/retry-ability)
+  until the element(s)
+  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.last()`
+  will automatically [retry](/guides/core-concepts/retry-ability) until all
+  chained assertions have passed
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
 - `.last()` can time out waiting for the element(s) to
-[exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).</li><li>`.last()`
-can time out waiting for assertions you've added to pass.
+  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).</li><li>`.last()`
+  can time out waiting for assertions you've added to pass.
 
 ## Command Log
 
@@ -99,12 +99,18 @@ cy.get('form').find('button').last()
 
 The commands above will display in the Command Log as:
 
-<DocsImage src="/img/api/last/find-the-last-button-in-a-form.png" alt="Command Log for last" ></DocsImage>
+<DocsImage
+  src="/img/api/last/find-the-last-button-in-a-form.png"
+  alt="Command Log for last"
+></DocsImage>
 
 When clicking on `last` within the command log, the console outputs the
 following:
 
-<DocsImage src="/img/api/last/inspect-last-element-in-console.png" alt="Console Log for last" ></DocsImage>
+<DocsImage
+  src="/img/api/last/inspect-last-element-in-console.png"
+  alt="Console Log for last"
+></DocsImage>
 
 ## See also
 

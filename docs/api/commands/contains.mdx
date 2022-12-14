@@ -65,6 +65,7 @@ Pass in an options object to change the default behavior of `.contains()`.
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 - `.contains()` yields the new DOM element it found.
+- `.contains()` is a query, and it is _safe_ to chain further commands.
 
 ## Examples
 
@@ -278,7 +279,10 @@ whitespaces as shown below:
 
 Rendered result:
 
-<DocsImage src="/img/api/contains/contains-pre-exception.png" alt="The result of pre tag" ></DocsImage>
+<DocsImage
+  src="/img/api/contains/contains-pre-exception.png"
+  alt="The result of pre tag"
+></DocsImage>
 
 To reflect this behavior, Cypress also doesn't ignore them.
 
@@ -447,22 +451,22 @@ cy.contains('Age').find('input').type('29')
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-- `.contains()` can be chained off of `cy` or off a command that yields
-DOM element(s).
+- `.contains()` can be chained off of `cy` or off a command that yields DOM
+  element(s).
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-- `.contains()` will automatically
-[retry](/guides/core-concepts/retry-ability) until the element(s)
-[exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.contains()`
-will automatically [retry](/guides/core-concepts/retry-ability) until all
-chained assertions have passed
+- `.contains()` will automatically [retry](/guides/core-concepts/retry-ability)
+  until the element(s)
+  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.contains()`
+  will automatically [retry](/guides/core-concepts/retry-ability) until all
+  chained assertions have passed
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
 - `.contains()` can time out waiting for the element(s) to
-[exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).</li><li>`.contains()`
-can time out waiting for assertions you've added to pass.
+  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).</li><li>`.contains()`
+  can time out waiting for assertions you've added to pass.
 
 ## Command Log
 
@@ -474,12 +478,18 @@ cy.get('h1').contains('New User')
 
 The commands above will display in the Command Log as:
 
-<DocsImage src="/img/api/contains/find-el-that-contains-text.png" alt="Command Log contains" ></DocsImage>
+<DocsImage
+  src="/img/api/contains/find-el-that-contains-text.png"
+  alt="Command Log contains"
+></DocsImage>
 
 When clicking on the `contains` command within the command log, the console
 outputs the following:
 
-<DocsImage src="/img/api/contains/see-elements-found-from-contains-in-console.png" alt="console.log contains" ></DocsImage>
+<DocsImage
+  src="/img/api/contains/see-elements-found-from-contains-in-console.png"
+  alt="console.log contains"
+></DocsImage>
 
 ## History
 

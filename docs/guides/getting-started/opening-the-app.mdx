@@ -105,7 +105,7 @@ just choose **E2E** for now - you can always change this later!
 
 ### Quick Configuration
 
-<DocsImage src="/img/guides/getting-started/opening-the-app/scaffolded-files.jpg" alt="The Launchpad scaffolded files list"></DocsImage>
+<DocsImage src="/img/guides/getting-started/opening-the-app/scaffolded-files.png" alt="The Launchpad scaffolded files list"></DocsImage>
 
 On the next step, the Launchpad will scaffold out a set of configuration files
 appropriate to your chosen testing type, and the changes will be listed for you

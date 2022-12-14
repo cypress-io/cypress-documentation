@@ -35,14 +35,13 @@ Pass in an options object to change the default behavior of `cy.clearCookies()`.
 
 | Option    | Default                                                        | Description                                                                              |
 | --------- | -------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| `domain`  | Superdomain of the current URL                                 | Clears the cookies from the specified domain                                             |
+| `domain`  | Hostname of the current URL                                    | Clears the cookies from the specified domain                                             |
 | `log`     | `true`                                                         | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 | `timeout` | [`responseTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.clearCookies()` to resolve before [timing out](#Timeouts)           |
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-- `cy.clearCookies()` yields `null`.</li><li>`cy.clearCookies()` cannot
-be chained further.
+- `cy.clearCookies()` yields `null`.
 
 ## Examples
 
@@ -97,12 +96,18 @@ cy.getCookies().should('be.empty')
 
 The commands above will display in the Command Log as:
 
-<DocsImage src="/img/api/clearcookies/clear-all-cookies-in-cypress-tests.png" alt="Command Log" ></DocsImage>
+<DocsImage
+  src="/img/api/clearcookies/clear-all-cookies-in-cypress-tests.png"
+  alt="Command Log"
+></DocsImage>
 
 When clicking on `clearCookies` within the command log, the console outputs the
 following:
 
-<DocsImage src="/img/api/clearcookies/inspect-cleared-cookies-in-console.png" alt="Console Log" ></DocsImage>
+<DocsImage
+  src="/img/api/clearcookies/inspect-cleared-cookies-in-console.png"
+  alt="Console Log"
+></DocsImage>
 
 ## See also
 

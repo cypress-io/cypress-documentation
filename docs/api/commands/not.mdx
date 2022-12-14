@@ -57,6 +57,7 @@ Pass in an options object to change the default behavior of `.not()`.
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 - `.not()` yields the new DOM element(s) it found.
+- `.not()` is a query, and it is _safe_ to chain further commands.
 
 ## Examples
 
@@ -82,22 +83,21 @@ cy.get('ul>li').not('.active').should('have.length', 4) // true
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-- `.not()` requires being chained off a command that yields DOM
-element(s).
+- `.not()` requires being chained off a command that yields DOM element(s).
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-- `.not()` will automatically
-[retry](/guides/core-concepts/retry-ability) until the element(s)
-[exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.not()`
-will automatically [retry](/guides/core-concepts/retry-ability) until all
-chained assertions have passed
+- `.not()` will automatically [retry](/guides/core-concepts/retry-ability) until
+  the element(s)
+  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.not()`
+  will automatically [retry](/guides/core-concepts/retry-ability) until all
+  chained assertions have passed
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
 - `.not()` can time out waiting for the element(s) to
-[exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).</li><li>`.not()`
-can time out waiting for assertions you've added to pass.
+  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).</li><li>`.not()`
+  can time out waiting for assertions you've added to pass.
 
 ## Command Log
 
@@ -109,12 +109,18 @@ cy.get('form').find('button').not('[type="submit"]')
 
 The commands above will display in the Command Log as:
 
-<DocsImage src="/img/api/not/filter-elements-with-not-and-optional-selector.png" alt="Command Log not" ></DocsImage>
+<DocsImage
+  src="/img/api/not/filter-elements-with-not-and-optional-selector.png"
+  alt="Command Log not"
+></DocsImage>
 
 When clicking on `not` within the command log, the console outputs the
 following:
 
-<DocsImage src="/img/api/not/log-elements-found-when-using-cy-not.png" alt="Console Log not" ></DocsImage>
+<DocsImage
+  src="/img/api/not/log-elements-found-when-using-cy-not.png"
+  alt="Console Log not"
+></DocsImage>
 
 ## See also
 

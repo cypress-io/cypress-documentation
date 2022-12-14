@@ -4,6 +4,9 @@ title: scrollTo
 
 Scroll to a specific position.
 
+It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried) to
+chain further commands that rely on the subject after `.scrollTo()`.
+
 ## Syntax
 
 ```javascript
@@ -43,7 +46,10 @@ A specified position to scroll the window or element to. Valid positions are
 `topLeft`, `top`, `topRight`, `left`, `center`, `right`, `bottomLeft`, `bottom`,
 and `bottomRight`.
 
-<DocsImage src="/img/api/coordinates-diagram.jpg" alt="cypress-command-positions-diagram" ></DocsImage>
+<DocsImage
+  src="/img/api/coordinates-diagram.jpg"
+  alt="cypress-command-positions-diagram"
+></DocsImage>
 
 **<Icon name="angle-right" /> x** **_(Number, String)_**
 
@@ -69,8 +75,9 @@ Pass in an options object to change the default behavior of `cy.scrollTo()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-- `cy.scrollTo()` yields the same subject it was given from the previous
-command.
+- `.scrollTo()` yields the same subject it was given.
+- It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried)
+  to chain further commands that rely on the subject after `.scrollTo()`.
 
 ## Examples
 
@@ -178,13 +185,11 @@ or
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
 - `.scrollTo()` requires being chained off a command that yields DOM
-element(s).</li><li>`.scrollTo()` requires the element to be
-scrollable.
+  element(s).</li><li>`.scrollTo()` requires the element to be scrollable.
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-- `.scrollTo()` can time out waiting for assertions you've added to
-pass.
+- `.scrollTo()` can time out waiting for assertions you've added to pass.
 
 ## Command Log
 
@@ -197,12 +202,18 @@ cy.get('#scrollable-horizontal').scrollTo('right')
 
 The commands above will display in the Command Log as:
 
-<DocsImage src="/img/api/scrollto/command-log-scrollto.png" alt="command log for scrollTo" ></DocsImage>
+<DocsImage
+  src="/img/api/scrollto/command-log-scrollto.png"
+  alt="command log for scrollTo"
+></DocsImage>
 
 When clicking on `scrollTo` within the command log, the console outputs the
 following:
 
-<DocsImage src="/img/api/scrollto/console-log-scrollto.png" alt="console.log for scrollTo" ></DocsImage>
+<DocsImage
+  src="/img/api/scrollto/console-log-scrollto.png"
+  alt="console.log for scrollTo"
+></DocsImage>
 
 ## History
 

@@ -53,6 +53,7 @@ Pass in an options object to change the default behavior of `.prevAll()`.
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 - `.prevAll()` yields the new DOM element(s) it found.
+- `.prevAll()` is a query, and it is _safe_ to chain further commands.
 
 ## Examples
 
@@ -98,22 +99,21 @@ cy.get('li').prevAll('.selected')
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-- `.prevAll()` requires being chained off a command that yields DOM
-element(s).
+- `.prevAll()` requires being chained off a command that yields DOM element(s).
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-- `.prevAll()` will automatically
-[retry](/guides/core-concepts/retry-ability) until the element(s)
-[exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.prevAll()`
-will automatically [retry](/guides/core-concepts/retry-ability) until all
-chained assertions have passed
+- `.prevAll()` will automatically [retry](/guides/core-concepts/retry-ability)
+  until the element(s)
+  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.prevAll()`
+  will automatically [retry](/guides/core-concepts/retry-ability) until all
+  chained assertions have passed
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
 - `.prevAll()` can time out waiting for the element(s) to
-[exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).</li><li>`.prevAll()`
-can time out waiting for assertions you've added to pass.
+  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).</li><li>`.prevAll()`
+  can time out waiting for assertions you've added to pass.
 
 ## Command Log
 
@@ -125,12 +125,18 @@ cy.get('.left-nav').find('li.active').prevAll()
 
 The commands above will display in the Command Log as:
 
-<DocsImage src="/img/api/prevall/find-all-previous-elements-with-optional-selector.png" alt="Command Log prevAll" ></DocsImage>
+<DocsImage
+  src="/img/api/prevall/find-all-previous-elements-with-optional-selector.png"
+  alt="Command Log prevAll"
+></DocsImage>
 
 When clicking on `prevAll` within the command log, the console outputs the
 following:
 
-<DocsImage src="/img/api/prevall/console-log-all-previous-elements-traversed.png" alt="Console Log prevAll" ></DocsImage>
+<DocsImage
+  src="/img/api/prevall/console-log-all-previous-elements-traversed.png"
+  alt="Console Log prevAll"
+></DocsImage>
 
 ## See also
 

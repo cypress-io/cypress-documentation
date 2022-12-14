@@ -388,6 +388,11 @@ class. Then we can use the [.type()](/api/commands/type) command to enter text
 into the selected input. Finally, we can verify that the value of the input
 reflects the text that was typed with another [.should()](/api/commands/should).
 
+In general, the structure of your test should flow query -> query -> command or
+assertion(s). It's best practice not to chain anything after an action command;
+for more details on why this is, see our guide on
+[retry-ability](/guides/core-concepts/retry-ability).
+
 ```js
 describe('My First Test', () => {
   it('Gets, types and asserts', () => {
@@ -399,11 +404,11 @@ describe('My First Test', () => {
     // includes '/commands/actions'
     cy.url().should('include', '/commands/actions')
 
-    // Get an input, type into it and verify
-    // that the value has been updated
-    cy.get('.action-email')
-      .type('fake@email.com')
-      .should('have.value', 'fake@email.com')
+    // Get an input, type into it
+    cy.get('.action-email').type('fake@email.com')
+
+    //  Verify that the value has been updated
+    cy.get('.action-email').should('have.value', 'fake@email.com')
   })
 })
 ```
@@ -422,8 +427,6 @@ on it [here](/guides/references/best-practices#Selecting-Elements).
 And there you have it: a short test in Cypress that visits a page, finds and
 clicks a link, verifies the URL and then verifies the behavior of an element on
 the new page. If we read it out loud, it might sound like:
-
-:::note
 
 1. _Visit: `https://example.cypress.io`_
 2. _Find the element with content: `type`_
@@ -501,12 +504,20 @@ interactions and generate tests. Visit our
 
 ## Next steps
 
-- Take our free [Testing your first application](https://learn.cypress.io/testing-your-first-application) course.
+- Take our free
+  [Testing your first application](https://learn.cypress.io/testing-your-first-application)
+  course.
 - Learn more about the [Cypress App](/guides/core-concepts/cypress-app) UI.
-- Start [testing your app](/guides/end-to-end-testing/introduction/testing-your-app).
-- Set up [intelligent code completion](/guides/tooling/IDE-integration#Intelligent-Code-Completion) for Cypress commands and assertions.
-- Record your test results to [the Dashboard](/guides/dashboard/introduction) for advanced features like parallelization, flake detection, and more.
-- Check out the <Icon name="github" inline="true" contentType="rwa" /> for practical demonstrations of Cypress testing practices, configuration, and strategies in a real-world project.
+- Start [testing your app](/guides/end-to-end-testing/testing-your-app).
+- Set up
+  [intelligent code completion](/guides/tooling/IDE-integration#Intelligent-Code-Completion)
+  for Cypress commands and assertions.
+- Record your test results to [Cypress Cloud](/guides/cloud/introduction) for
+  advanced features like parallelization, flake detection, and more.
+- Check out the <Icon name="github"></Icon>
+  [Cypress Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app)
+  for practical demonstrations of Cypress testing practices, configuration, and
+  strategies in a real-world project.
 - Search Cypress's documentation to quickly find what you need.
 
 <DocsImage

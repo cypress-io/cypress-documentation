@@ -57,6 +57,7 @@ Pass in an options object to change the default behavior of `.parents()`.
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 - `.parents()` yields the new DOM element(s) it found.
+- `.parents()` is a query, and it is _safe_ to chain further commands.
 
 ## Examples
 
@@ -96,22 +97,21 @@ cy.get('li.active').parents('.main-nav')
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-- `.parents()` requires being chained off a command that yields DOM
-element(s).
+- `.parents()` requires being chained off a command that yields DOM element(s).
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-- `.parents()` will automatically
-[retry](/guides/core-concepts/retry-ability) until the element(s)
-[exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.parents()`
-will automatically [retry](/guides/core-concepts/retry-ability) until all
-chained assertions have passed
+- `.parents()` will automatically [retry](/guides/core-concepts/retry-ability)
+  until the element(s)
+  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.parents()`
+  will automatically [retry](/guides/core-concepts/retry-ability) until all
+  chained assertions have passed
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
 - `.parents()` can time out waiting for the element(s) to
-[exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).</li><li>`.parents()`
-can time out waiting for assertions you've added to pass.
+  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).</li><li>`.parents()`
+  can time out waiting for assertions you've added to pass.
 
 ## Command Log
 
@@ -121,12 +121,18 @@ can time out waiting for assertions you've added to pass.
 cy.get('li.active').parents()
 ```
 
-<DocsImage src="/img/api/parents/get-all-parents-of-a-dom-element.png" alt="Command Log parents" ></DocsImage>
+<DocsImage
+  src="/img/api/parents/get-all-parents-of-a-dom-element.png"
+  alt="Command Log parents"
+></DocsImage>
 
 When clicking on the `parents` command within the command log, the console
 outputs the following:
 
-<DocsImage src="/img/api/parents/parents-elements-displayed-in-devtools-console.png" alt="Console Log parents" ></DocsImage>
+<DocsImage
+  src="/img/api/parents/parents-elements-displayed-in-devtools-console.png"
+  alt="Console Log parents"
+></DocsImage>
 
 ## See also
 

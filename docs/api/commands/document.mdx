@@ -32,7 +32,8 @@ Pass in an options object to change the default behavior of `cy.document()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-- `cy.document()` 'yields the `window.document` object' 
+- `cy.document()` 'yields the `window.document` object.
+- `cy.document()` is a query, and it is _safe_ to chain further commands.
 
 ## Examples
 
@@ -61,13 +62,12 @@ cy.document().its('contentType').should('eq', 'text/html')
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
 - `cy.document()` will automatically
-[retry](/guides/core-concepts/retry-ability) until all chained assertions have
-passed
+  [retry](/guides/core-concepts/retry-ability) until all chained assertions have
+  passed
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-- `cy.document()` can time out waiting for assertions you've added to
-pass.
+- `cy.document()` can time out waiting for assertions you've added to pass.
 
 ## Command Log
 
@@ -79,12 +79,18 @@ cy.document()
 
 The command above will display in the Command Log as:
 
-<DocsImage src="/img/api/document/get-document-of-application-in-command-log.png" alt="Command log document" ></DocsImage>
+<DocsImage
+  src="/img/api/document/get-document-of-application-in-command-log.png"
+  alt="Command log document"
+></DocsImage>
 
 When clicking on `document` within the command log, the console outputs the
 following:
 
-<DocsImage src="/img/api/document/console-yields-the-document-of-aut.png" alt="console.log document" ></DocsImage>
+<DocsImage
+  src="/img/api/document/console-yields-the-document-of-aut.png"
+  alt="console.log document"
+></DocsImage>
 
 ## See also
 

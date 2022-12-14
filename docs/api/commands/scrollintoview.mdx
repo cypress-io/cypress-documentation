@@ -4,6 +4,9 @@ title: scrollIntoView
 
 Scroll an element into view.
 
+It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried) to
+chain further commands that rely on the subject after `.scrollIntoView()`.
+
 ## Syntax
 
 ```javascript
@@ -42,8 +45,9 @@ Pass in an options object to change the default behavior of `.scrollIntoView()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-- `.scrollIntoView()` yields the same subject it was given from the
-previous command.
+- `.scrollIntoView()` yields the same subject it was given.
+- It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried)
+  to chain further commands that rely on the subject after `.scrollIntoView()`.
 
 ## Examples
 
@@ -89,18 +93,17 @@ or
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-- `.scrollIntoView()` requires being chained off a command that yields
-DOM element(s).
+- `.scrollIntoView()` requires being chained off a command that yields DOM
+  element(s).
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-- `.scrollIntoView()` will automatically wait for assertions you have
-chained to pass
+- `.scrollIntoView()` will automatically wait for assertions you have chained to
+  pass
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-- `.scrollIntoView()` can time out waiting for assertions you've added
-to pass.
+- `.scrollIntoView()` can time out waiting for assertions you've added to pass.
 
 ## Command Log
 
@@ -112,12 +115,18 @@ cy.get('#scroll-horizontal button').scrollIntoView().should('be.visible')
 
 The commands above will display in the Command Log as:
 
-<DocsImage src="/img/api/scrollintoview/command-log-for-scrollintoview.png" alt="command log scrollintoview" ></DocsImage>
+<DocsImage
+  src="/img/api/scrollintoview/command-log-for-scrollintoview.png"
+  alt="command log scrollintoview"
+></DocsImage>
 
 When clicking on the `scrollintoview` command within the command log, the
 console outputs the following:
 
-<DocsImage src="/img/api/scrollintoview/console-log-for-scrollintoview.png" alt="console.log scrollintoview" ></DocsImage>
+<DocsImage
+  src="/img/api/scrollintoview/console-log-for-scrollintoview.png"
+  alt="console.log scrollintoview"
+></DocsImage>
 
 ## See also
 

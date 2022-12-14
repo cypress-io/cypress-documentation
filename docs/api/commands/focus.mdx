@@ -4,6 +4,9 @@ title: focus
 
 Focus on a DOM element.
 
+It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried) to
+chain further commands that rely on the subject after `.focus()`.
+
 ## Syntax
 
 ```javascript
@@ -39,8 +42,9 @@ Pass in an options object to change the default behavior of `.focus()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-- `.focus()` yields the same subject it was given from the previous
-command.
+- `.focus()` yields the same subject it was given.
+- It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried)
+  to chain further commands that rely on the subject after `.focus()`.
 
 ## Examples
 
@@ -111,18 +115,16 @@ events. Your best bet here is to keep Cypress focused when working on a test.
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
 - `.focus()` requires being chained off a command that yields DOM
-element(s).</li><li>`.focus()` requires the element to be able to receive
-focus.
+  element(s).</li><li>`.focus()` requires the element to be able to receive
+  focus.
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-- `.focus()` will automatically wait for assertions you have chained to
-pass
+- `.focus()` will automatically wait for assertions you have chained to pass
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-- `.focus()` can time out waiting for assertions you've added to
-pass.
+- `.focus()` can time out waiting for assertions you've added to pass.
 
 ## Command Log
 
@@ -134,12 +136,18 @@ cy.get('[name="comment"]').focus()
 
 The commands above will display in the Command Log as:
 
-<DocsImage src="/img/api/focus/get-input-then-focus.png" alt="Command Log focus" ></DocsImage>
+<DocsImage
+  src="/img/api/focus/get-input-then-focus.png"
+  alt="Command Log focus"
+></DocsImage>
 
 When clicking on the `focus` command within the command log, the console outputs
 the following:
 
-<DocsImage src="/img/api/focus/console-log-textarea-that-was-focused-on.png" alt="console.log focus" ></DocsImage>
+<DocsImage
+  src="/img/api/focus/console-log-textarea-that-was-focused-on.png"
+  alt="console.log focus"
+></DocsImage>
 
 ## See also
 
