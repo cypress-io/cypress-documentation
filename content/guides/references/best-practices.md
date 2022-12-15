@@ -999,7 +999,7 @@ One solution to this problem is
 Using a combination of [parallelization](/guides/guides/parallelization),
 [load balancing](/guides/guides/parallelization#Balance-strategy),
 [Auto Cancellation](/guides/cloud/smart-orchestration#Auto-Cancellation), and
-[Spec Prioritization](/guides/cloud/smart-orchestration#Spec Prioritization),
+[Spec Prioritization](/guides/cloud/smart-orchestration#Spec-Prioritization),
 Smart Orchestration maximizes your available compute resources & minimizes
 waste.
 
