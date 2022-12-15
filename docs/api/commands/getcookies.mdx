@@ -2,7 +2,7 @@
 title: getCookies
 ---
 
-Get all of the browser cookies.
+Get browser cookies for the current domain or the specified domain.
 
 ## Syntax
 
@@ -16,7 +16,7 @@ cy.getCookies(options)
 **<Icon name="check-circle" color="green" /> Correct Usage**
 
 ```javascript
-cy.getCookies() // Get all cookies
+cy.getCookies() // Get cookies for the currrent domain
 ```
 
 ### Arguments
@@ -36,14 +36,14 @@ Pass in an options object to change the default behavior of `cy.getCookies()`.
 `cy.getCookies()` yields an array of cookie objects. Each cookie object has the
 following properties:
 
-- `domain`
-- `expiry` _(if specified)_
-- `httpOnly`
-- `name`
-- `path`
-- `sameSite` _(if specified)_
-- `secure`
-- `value`
+- `domain`: _(String)_
+- `expiry`: _(Number)_ _(if specified)_
+- `httpOnly`: _(Boolean)_
+- `name`: _(String)_
+- `path`: _(String)_
+- `sameSite`: _(String)_ _(if specified)_
+- `secure`: _(Boolean)_
+- `value`: _(String)_
 
 `cy.getCookies()` is not a query. It will not update the returned list if
 further cookies are added after it initially executes.
@@ -127,4 +127,4 @@ following:
 - [`cy.clearCookies()`](/api/commands/clearcookies)
 - [`cy.getCookie()`](/api/commands/getcookie)
 - [`cy.setCookie()`](/api/commands/setcookie)
-- [Cypress Cookies API](/api/cypress-api/cookies)
+- [`Cypress.Cookies.debug()`](/api/cypress-api/cookies)
