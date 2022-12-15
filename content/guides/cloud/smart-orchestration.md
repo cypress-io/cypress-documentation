@@ -141,7 +141,7 @@ To enable or disable this feature:
 3. Scroll to the Smart Orchestration section within Project Settings page.
 4. Toggle "Auto Cancellation".
 5. Set the "failures before auto canceling" threshold (or just leave it at the
-   recommended value).
+   default value of 1).
 
 <DocsImage src="/img/guides/cloud/smart-orchestration/auto-cancellation-active.png" alt="Enable Auto Cancellation"></DocsImage>
 
