@@ -13,8 +13,8 @@ to speed up test runs, accelerate debugging workflows, and reduce costs:
 - [Spec Prioritization](#Spec-Prioritization): Quickly verify that your latest
   changes fixed a build by prioritizing the specs that failed in the previous
   Cypress run.
-- [Auto Cancellation](#Cancel-test-run-when-a-test-fails): Save on CI resources
-  by automatically canceling a Cypress run upon the first test failure.
+- [Auto Cancellation](#Auto-Cancellation): Save on CI resources by automatically
+  canceling a Cypress run upon the first test failure.
 
 ## Spec Prioritization
 
@@ -119,7 +119,8 @@ to see how much time we predict these features would save you.
 </Alert>
 
 Auto Cancellation is a _Smart Orchestration_ feature that is managed within a
-project's settings.
+project's settings. Coming soon, you will also have the option to enable the
+feature on a per-run basis with the Cypress CLI.
 
 <Alert type="info">
 
