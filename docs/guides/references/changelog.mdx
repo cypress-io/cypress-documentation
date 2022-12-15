@@ -1,3 +1,7 @@
+---
+title: Changelog
+---
+
 ## 12.1.0
 
 _Released 12/12/2022_
@@ -1844,7 +1848,7 @@ _Released 4/11/2022_
   [#19985](https://github.com/cypress-io/cypress/issues/19985).
 - Updates were made to decrease the length of the Cypress cache path for Windows
   to ensure
-  [installing pre-release versions](/guides/getting-started/installing-cypress#Install-pre-release-version)
+  [installing pre-release versions](/guides/references/advanced-installation#Install-pre-release-version)
   of the Cypress binary are within the maximum path length of 260 characters.
   Fixed in [#20961](https://github.com/cypress-io/cypress/pull/20961).
 - Fixed a regression in [8.6.0](/guides/references/changelog#8-6-0) which
@@ -1941,7 +1945,7 @@ _Released 3/14/2022_
   browser. Fixes [#20496](https://github.com/cypress-io/cypress/issues/20496).
 - Updates were made to the pre-release build setup such that Cypress will use a
   unique cache folder for each
-  [pre-release installation](/guides/getting-started/installing-cypress.md#Install-pre-release-version)
+  [pre-release installation](/guides/getting-started/installing-cypress#Install-pre-release-version)
   on a machine. This removes the need to run `cypress clear cache` before
   installing a new pre-release version of Cypress or before installing a new
   released version of Cypress after a pre-release version had been installed.
@@ -2191,7 +2195,7 @@ _Released 12/20/2021_
   [#3350](https://github.com/cypress-io/cypress/issues/3350).
 - The default `maxHttpBufferSize` for the internal socket server has been
   increased to
-  [Node's maximum Buffer size](https://nodejs.org/api/buffer.html#bufferconstantsmax_length)
+  [Node's maximum Buffer size](https://nodejs.org/api/buffer#bufferconstantsmax_length)
   (size varies by OS) to allow large file writes with `cy.writeFile()`.
   Addresses [#19140](https://github.com/cypress-io/cypress/issues/19140).
 - Add `CYPRESS_VERIFY_TIMEOUT` environment variable to override the timeout
@@ -2786,7 +2790,7 @@ in more detail and how to change your code to migrate to Cypress 8.0.**
 **Bugfixes:**
 
 - `console.log` and `console.error` called within the
-  [plugins file](/guides/core-concepts/writing-and-organizing-tests.html#Plugin-files)
+  [plugins file](/guides/core-concepts/writing-and-organizing-tests#Plugins-file)
   will now be captured in the `stdout` sent to the Cypress Dashboard, making it
   visible in Output logs in the Dashboard. Fixes
   [#7434](https://github.com/cypress-io/cypress/issues/7434).
@@ -4115,7 +4119,7 @@ _Released 11/09/2020_
 **Features:**
 
 - You can now dynamically add aliases for requests intercepted via
-  [`cy.route2()`](http). [See an example](http#Aliasing-individual-requests).
+  `cy.route2()`. See an example.
   Addresses [#387](https://github.com/cypress-io/cypress/issues/387).
 - You can now run all integration specs or all component specs separately (or a
   filtered list of specs) by clicking the appropriate button in the Test Runner
@@ -4141,12 +4145,12 @@ _Released 11/09/2020_
   longer throw an error about visiting a site with an invalid content-type.
   Fixes [#8506](https://github.com/cypress-io/cypress/issues/8506)
 - The `Cannot access 'continueSent' before initialization` error will no longer
-  throw when using [`cy.route2()`](http). Fixes
+  throw when using `cy.route2()`. Fixes
   [#8926](https://github.com/cypress-io/cypress/issues/8926).
 - Awaiting a request body when providing a static response stub in
-  [`cy.route2()`](http) should now work properly. Addressed in
+  `cy.route2()` should now work properly. Addressed in
   [#9059](https://github.com/cypress-io/cypress/issues/9059).
-- The way that intercepted [`cy.route2()`](http) requests are displayed in the
+- The way that intercepted `cy.route2()` requests are displayed in the
   Command Log has been improved, including showing the progress bar correctly.
   Addresses [#9053](https://github.com/cypress-io/cypress/issues/9053).
 - The `Cannot read property 'replace' of undefined` error will no longer throw
@@ -4202,18 +4206,18 @@ _Released 10/26/2020_
 
 - Updated the Cypress proxy layer to proxy HTTPS traffic from non-AUT origins.
   Addressed in [#8827](https://github.com/cypress-io/cypress/pull/8827).
-  - This fixed an issue with [`cy.route2()`](http) where HTTPS requests to a
+  - This fixed an issue with `cy.route2()` where HTTPS requests to a
     non-AUT origin would not be intercepted as expected.
-- [`cy.route2()`](http) now properly handles passing a method as its first
+- `cy.route2()` now properly handles passing a method as its first
   argument. Fixes [#8729](https://github.com/cypress-io/cypress/issues/8729).
-- Fixed an issue with [`cy.route2()`](http) where a "Cannot set property
+- Fixed an issue with `cy.route2()` where a "Cannot set property
   response of undefined" error would occasionally occur. Fixes
   [#8858](https://github.com/cypress-io/cypress/issues/8858).
-- Headers field names passed to [`cy.route2()`](http) now case-insensitively
+- Headers field names passed to `cy.route2()` now case-insensitively
   match against the field names of incoming HTTP requests. Fixes
   [#8921](https://github.com/cypress-io/cypress/issues/8921).
 - Routes that stub fixtures for binary resources (including images) made with
-  [`cy.route2()`](http) now serve the correct mime-type and content. Fixes
+  `cy.route2()` now serve the correct mime-type and content. Fixes
   [#8623](https://github.com/cypress-io/cypress/issues/8623).
 - When [experimentalNetworkStubbing](/guides/references/experiments) is enabled,
   using [cy.visit()](/api/commands/visit) to URLs that redirect and set
@@ -4302,11 +4306,11 @@ _Released 10/14/2020_
   [#4921](https://github.com/cypress-io/cypress/issues/4921).
 - `/` is no longer added to the URL when `baseUrl` has param(s). Fixes
   [#2101](https://github.com/cypress-io/cypress/issues/2101).
-- When using [`cy.route2()`](http) the route handler timeouts will no longer
+- When using `cy.route2()` the route handler timeouts will no longer
   leak into other tests and cause random failures. Addressed in
   [#8727](https://github.com/cypress-io/cypress/issues/8727).
 - The `request.body` is now available when using [cy.wait()](/api/commands/wait)
-  on an aliased [`cy.route2()`](http) route which had not been intercepted.
+  on an aliased `cy.route2()` route which had not been intercepted.
   Fixes [#8695](https://github.com/cypress-io/cypress/issues/8695).
 - Re-running failed build steps in Bitbucket will no longer create a new run on
   the Cypress Dashboard. Fixes
@@ -4323,7 +4327,7 @@ _Released 10/14/2020_
 
 **Misc:**
 
-- Improved type definitions for [`cy.route2()`](http). Addresses
+- Improved type definitions for `cy.route2()`. Addresses
   [#8694](https://github.com/cypress-io/cypress/issues/8694) and
   [#8782](https://github.com/cypress-io/cypress/issues/8782).
 - The Test Runner now shows an indicator in the footer and a toast notification
@@ -4360,13 +4364,13 @@ _Released 9/28/2020_
 
 **Bugfixes:**
 
-- Fixed a bug where [`cy.route2()`](http) would not automatically JSONify an
+- Fixed a bug where `cy.route2()`  would not automatically JSONify an
   empty array handler. Addresses
   [#8532](https://github.com/cypress-io/cypress/issues/8532).
 - Fixed a bug where objects yielded by using `cy.wait` on a
-  [`cy.route2()`](http) alias would not always have a `response` property.
+  `cy.route2()`  alias would not always have a `response` property.
   Addresses [#8536](https://github.com/cypress-io/cypress/issues/8536).
-- Fixed an issue where [`cy.route2()`](http) routes would not be able to
+- Fixed an issue where `cy.route2()`  routes would not be able to
   intercept requests to HTTPS destinations on a different origin. Addresses
   [#8487](https://github.com/cypress-io/cypress/issues/8487).
 - Fixed an issue where subjects became `undefined` after certain assertion
@@ -4413,11 +4417,11 @@ _Released 9/15/2020_
   querying globally, per-suite, per-test, or programmatically. Addresses
   [#8442](https://github.com/cypress-io/cypress/issues/8442).
 - Added a `followRedirect` option to request interception with
-  [`cy.route2()`](http), allowing redirects to be followed before continuing to
+  `cy.route2()` , allowing redirects to be followed before continuing to
   response interception. Addresses
   [#7967](https://github.com/cypress-io/cypress/issues/7967).
 - Added the capability to specify `delayMs` and `throttleKbps` when stubbing
-  static responses with [`cy.route2()`](http). Addresses
+  static responses with `cy.route2()` . Addresses
   [#7661](https://github.com/cypress-io/cypress/issues/7661).
 - Installing Cypress pre-releases no longer requires setting the
   `CYPRESS_BINARY_INSTALL` environment variable. Addresses
@@ -4465,9 +4469,9 @@ _Released 9/15/2020_
 **Documentation Changes:**
 
 - Fixed examples of delaying and throttling responses with
-  [`cy.route2()`](http). Addresses
+  `cy.route2()` . Addresses
   [#8489](https://github.com/cypress-io/cypress/issues/8489).
-- Added examples of using a response function with [`cy.route2()`](http).
+- Added examples of using a response function with `cy.route2()` .
   Addresses [#8468](https://github.com/cypress-io/cypress/issues/8468).
 - Removed unmaintained languages. English docs is the only supported language by
   the Cypress team. We greatly appreciate the contributions from the community
@@ -4485,7 +4489,7 @@ _Released 9/15/2020_
 - Improved the error message when the Cypress binary is not executable. It now
   recommends trying to clear the cache and re-install. Addresses
   [#8397](https://github.com/cypress-io/cypress/issues/8397).
-- Added missing type declarations for the [`cy.route2()`](http) command.
+- Added missing type declarations for the `cy.route2()`  command.
 - Updated the type declaration for `Cypress.Commands.add()`, adding `Promise` to
   the list of allowed return types. Addresses
   [#7807](https://github.com/cypress-io/cypress/issues/7807).
@@ -4500,14 +4504,14 @@ _Released 9/1/2020_
   - With `experimentalNetworkStubbing` enabled, the `cy.route2` command is
     available. Addressed in
     [#4176](https://github.com/cypress-io/cypress/issues/4176).
-  - By using [`cy.route2()`](http), your tests can intercept, modify, and wait
+  - By using `cy.route2()` , your tests can intercept, modify, and wait
     on any type of HTTP request originating from your app, including
     `XMLHttpRequest`s, `fetch` requests, beacons, and subresources (like iframes
     and scripts).
   - Outgoing HTTP requests can be modified before reaching the destination
     server, and the HTTP response can be intercepted as well before it reaches
     the browser.
-  - See the [`cy.route2()`](http) docs for more information on how to enable
+  - See the `cy.route2()`  docs for more information on how to enable
     this experiment.
 - `cy.trigger()` now accepts an `eventConstructor` option for specifying the
   constructor with which to create the event to trigger. Addresses
@@ -6987,7 +6991,7 @@ _Released 7/9/2019_
 - New error message added about policy settings to our
   [Error Messages](/guides/references/error-messages) doc. Addressed in
   [#1567](https://github.com/cypress-io/cypress-documentation/pull/1754).
-- [Real World](/examples/examples/applications#Realworld) example tests were
+- [Real World](/examples/applications#Realworld) example tests were
   added to Example Applications doc. Addressed in
   [#1567](https://github.com/cypress-io/cypress-documentation/pull/1836).
 - More content was added to our [Code Coverage](/guides/tooling/code-coverage)
@@ -9235,7 +9239,7 @@ _Released 12/14/2017_
   option in `cypress.json` that allows you to block requests made to those
   hosts. Blocked requests will respond with a `503` status code. This is useful
   for blocking 3rd party domains like Google Analytics. We have added a
-  [new 'Stubbing Google Analytics' recipe](/examples/examples/recipes#Stubbing-and-spying)
+  [new 'Stubbing Google Analytics' recipe](/examples/recipes#Stubbing-and-spying)
   demonstrating this. Fixes
   [#442](https://github.com/cypress-io/cypress/issues/442).
 - Added chai assertions in TypeScript to generate autocompletion. Fixes
@@ -9264,7 +9268,7 @@ _Released 12/14/2017_
 **Documentation Changes:**
 
 - [Added `Configuration API`](/api/plugins/configuration-api)
-- [Added `Recipes`](/examples/examples/recipes)
+- [Added `Recipes`](/examples/recipes)
 - [Updated `Configuration`](/guides/references/configuration)
 - [Updated `Environment Variables`](/guides/guides/environment-variables)
 - [Updated `Using Cypress FAQ`](/faq/questions/using-cypress-faq)
@@ -9371,13 +9375,13 @@ _Released 11/26/2017_
 
 **Documentation Changes:**
 
-- [Added ESLint, Docker, and TypeScript to Plugins](/plugins/directory)
-- [Added recipe for TypeScript with Browserify](/examples/examples/recipes)
-- [Added recipe for TypeScript with webpack](/examples/examples/recipes)
-- [Added recipe for Direct Controlling AngularJS](/examples/examples/recipes)
-- [Added recipe for E2E API Testing](/examples/examples/recipes)
-- [Added more video tutorials](/examples/examples/tutorials)
-- [Improved displaying list of Tutorials, Recipes, Applications, and Docker examples](/examples/examples/recipes)
+- [Added ESLint, Docker, and TypeScript to Plugins](/plugins)
+- [Added recipe for TypeScript with Browserify](/examples/recipes)
+- [Added recipe for TypeScript with webpack](/examples/recipes)
+- [Added recipe for Direct Controlling AngularJS](/examples/recipes)
+- [Added recipe for E2E API Testing](/examples/recipes)
+- [Added more video tutorials](/examples/tutorials)
+- [Improved displaying list of Tutorials, Recipes, Applications, and Docker examples](/examples/recipes)
 
 ## 1.1.1
 
@@ -9461,11 +9465,11 @@ _Released 11/19/2017_
 
 **Documentation Changes:**
 
-- [Created "Testing React TodoMVC" tutorials](/examples/examples/tutorials)
+- [Created "Testing React TodoMVC" tutorials](/examples/tutorials)
 - [Created "Variables and Aliases" core concept](/guides/core-concepts/variables-and-aliases)
 - [Created "Conditional Testing" core concept](/guides/core-concepts/conditional-testing)
 - [Created "Plugins" guide](/guides/tooling/plugins-guide)
-- [Created "List of Plugins"](/plugins/directory)
+- [Created "List of Plugins"](/plugins)
 - [Created "Writing a Plugin" API](/api/plugins/writing-a-plugin)
 - [Created "Preprocessors API"](/api/plugins/preprocessors-api)
 - [Updated "Using Cypress FAQ"](/faq/questions/using-cypress-faq)
@@ -9834,11 +9838,11 @@ _Released 09/10/2017_
   [#519](https://github.com/cypress-io/cypress/issues/519).
 - Input ranges are now more easily testable using the new
   [.trigger()](/api/commands/trigger) command. See our
-  [new recipe](/examples/examples/recipes#Form-Interactions) for details on how.
+  [new recipe](/examples/recipes#Form-Interactions) for details on how.
   Fixes [#287](https://github.com/cypress-io/cypress/issues/287).
 - Testing drag and drop is now possible using the new
   [.trigger()](/api/commands/trigger) command. See our
-  [new recipe](/examples/examples/recipes#Form-Interactions) for details on how.
+  [new recipe](/examples/recipes#Form-Interactions) for details on how.
   Fixes [#386](https://github.com/cypress-io/cypress/issues/386).
 - Updated [.click()](/api/commands/click) command to accept more position
   arguments. Fixes [#499](https://github.com/cypress-io/cypress/issues/499).
@@ -9855,7 +9859,7 @@ _Released 09/10/2017_
   detached process by default. Instead `cypress open` now accepts a new flag
   `--detached`, which replicates this behavior. Fixes
   [#531](https://github.com/cypress-io/cypress/issues/531).
-- We have all new [docker examples](/examples/examples/docker) you can check
+- We have all new [docker examples](/examples/docker) you can check
   out.
 - The [`cypress` npm package](https://www.npmjs.com/package/cypress) now checks
   the currently installed version on `install` and
@@ -13414,7 +13418,7 @@ _Released 06/26/2015_
 
 - [`.type()`](/api/commands/type) now implements all DOM events to simulate
   every aspect of typing on a real keyboard.
-- All of the [type docs have been updated](/api/commands/type.html) to reflect
+- All of the [type docs have been updated](/api/commands/type) to reflect
   these changes.
 
 **Features:**

@@ -30,14 +30,26 @@
   force = true
 
 [[redirects]]
-  from = "/plugins"
-  to = "/plugins/directory"
+  from = "/plugins/directory"
+  to = "/plugins"
   status = 301
   force = true
 
 [[redirects]]
   from = "/examples"
-  to = "/examples/examples/recipes/"
+  to = "/examples/recipes/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/examples/examples"
+  to = "/examples/recipes/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/examples/examples/recipes"
+  to = "/examples/recipes/"
   status = 301
   force = true
 

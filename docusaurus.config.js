@@ -197,8 +197,8 @@ const config = {
                 href: 'https://www.cypress.io/features',
               },
               {
-                label: 'Cypress Dashboard',
-                href: 'https://www.cypress.io/dashboard',
+                label: 'Cypress Cloud',
+                href: 'https://www.cypress.io/cloud',
               },
               {
                 label: 'Cypress Migrator',

@@ -58,7 +58,7 @@ Pass in an options object to change the default behavior of
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-<List><li>`cy.clearAllLocalStorage()` cannot time out.</li></List>
+- `cy.clearAllLocalStorage()` cannot time out.
 
 ## See also
 

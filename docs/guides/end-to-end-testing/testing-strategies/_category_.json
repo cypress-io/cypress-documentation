@@ -1,6 +1,6 @@
 {
   "label": "Testing Strategies",
   "position": 20,
-  "collapsible": false,
-  "collapsed": false
+  "collapsible": true,
+  "collapsed": true
 }
