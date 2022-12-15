@@ -49,7 +49,11 @@ time.**
 Feature</strong>
 
 **Spec Prioritization** is a _Smart Orchestration_ feature available to users
-with a [Business Cypress Cloud plan](https://cypress.io/pricing).
+with a
+[Business or Enterprise tier Cypress Cloud plan](https://cypress.io/pricing).
+Wondering if upgrading your Team tier subscription is worth it? Check out the
+[recommendations](/guides/cloud/runs#Recommendations) on the run overview page
+to see how much time we predict these features would save you.
 
 </Alert>
 
@@ -63,14 +67,17 @@ To enable or disable this feature:
 3. Scroll to the Smart Orchestration section within Project Settings page.
 4. Toggle "Spec Prioritization".
 
-<DocsImage src="/img/guides/smart-orchestration/enable-run-failed-specs-first.png" alt="Enable running of failed specs first"></DocsImage>
+<DocsImage src="/img/guides/cloud/smart-orchestration/spec-prioritization-active.png" alt="Enable Spec Prioritization"></DocsImage>
 
 <Alert type="bolt">
 
 <strong class="alert-header">CI Tip: Reduce Costs</strong>
 
-In addition to saving time with Spec Prioritization, also consider
-[Auto Cancellation](#Auto-Cancellation) to further save on CI costs.
+Note that Spec Prioritization **alone** will not save time as it purely alters
+the order in which specs are run. However, when used in tandem with
+[Auto Cancellation](#Auto-Cancellation) it can result in shorter test runs due
+to cancellation being triggered earlier, leading to significantly reduced CI
+costs.
 
 </Alert>
 
@@ -89,11 +96,10 @@ changes.
 Canceling an **entire** test run, even if parallelized, upon the first test
 failure will:
 
-1. **Reduce CI costs**. These cost savings can be significant for large test
+1. **Save time**. Resolve test outcomes faster.
+2. **Reduce CI costs**. These cost savings can be significant for large test
    suites.
-2. **Quickly free-up CI resources** for use by other members of a team.
-3. **Ensure availability of CI resources** for quick validation of the failure's
-   fix.
+3. **Free-up CI resources** for validating fixes, and helping other users.
 
 </Alert>
 
@@ -105,7 +111,10 @@ failure will:
 Feature</strong>
 
 **Auto Cancellation** is a _Smart Orchestration_ feature available to users with
-a [Business Cypress Cloud plan](https://cypress.io/pricing).
+a [Business or Enterprise tier Cypress Cloud plan](https://cypress.io/pricing).
+Wondering if upgrading your Team tier subscription is worth it? Check out the
+[recommendations](/guides/cloud/runs#Recommendations) on the run overview page
+to see how much time we predict these features would save you.
 
 </Alert>
 
@@ -118,8 +127,9 @@ project's settings.
 
 If your development, testing, or QA teams operate in a highly collaborative
 workflow where multiple people are working on various test failures at the same
-time, it may be helpful to disable Auto Cancellation, so **all failing tests can
-be surfaced for each test run**.
+time, it may be helpful to increase the failures threshold or even disable Auto
+Cancellation altogether, so multiple failing tests can be surfaced for each test
+run.
 
 </Alert>
 
@@ -129,15 +139,17 @@ To enable or disable this feature:
 2. Click "Project Settings" with the right-hand sidebar.
 3. Scroll to the Smart Orchestration section within Project Settings page.
 4. Toggle "Auto Cancellation".
+5. Set the "failures before auto canceling" threshold (or just leave it at the
+   recommended value).
 
-<DocsImage src="/img/guides/smart-orchestration/enable-cancel-run.png" alt="Enable cancellation of test runs upon first failure"></DocsImage>
+<DocsImage src="/img/guides/cloud/smart-orchestration/auto-cancellation-active.png" alt="Enable Auto Cancellation"></DocsImage>
 
 <Alert type="bolt">
 
 <strong class="alert-header">CI Tip: Save Time</strong>
 
-In addition to reducing CI costs with Auto Cancellation, also consider
-[Spec Prioritization](#Spec-Prioritization) to reduce the time it takes to fix
-issues and deploy changes.
+In addition to Auto Cancellation, consider reducing CI costs further by enabling
+[Spec Prioritization](#Spec-Prioritization) to surface test failures earlier in
+the run, and reduce the time it takes to fix issues and deploy changes.
 
 </Alert>
