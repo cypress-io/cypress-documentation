@@ -167,10 +167,8 @@ spec" screen, click "Create from component".
 A modal will pop up listing all the component files that are found in your app.
 Expand the row for **Stepper.jsx** and select the **Stepper** component:
 
-<!-- TODO: REPLACE THIS WITH CREATE FROM REACT SCREENSHOT -->
-
 <DocsImage 
-  src="/img/guides/component-testing/create-from-component-vue.jpg">
+  src="/img/guides/component-testing/create-from-component-react.jpg">
 </DocsImage>
 
 A spec file was created at **src/component/Stepper.cy.jsx**:
