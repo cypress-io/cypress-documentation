@@ -430,9 +430,9 @@ cy.then(function () {
 })
 
 cy.get('@favoriteColor').then(function (aliasValue) {
-  expect(aliasColor).to.eql('red')
+  expect(aliasValue).to.eql('red')
 
-  expect(this.color).to.eql('blue')
+  expect(this.favoriteColor).to.eql('blue')
 })
 ```
 
