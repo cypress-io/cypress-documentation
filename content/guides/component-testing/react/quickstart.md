@@ -164,8 +164,10 @@ mount without any issues.
 To get started, go back to the Cypress test app and, in the "Create your first
 spec" screen, click "Create from component".
 
-A modal will pop up listing all the component files that are found in your app.
-Expand the row for **Stepper.jsx** and select the **Stepper** component:
+A modal will pop up listing all the component files that are found in your app
+(Cypress will exclude **\*.config.{js,ts}** and **\*.{cy,spec}.{js,ts,jsx,tsx}**
+files from this list). Expand the row for **Stepper.jsx** and select the
+**Stepper** component:
 
 <DocsImage 
   src="/img/guides/component-testing/create-from-component-react.jpg">
