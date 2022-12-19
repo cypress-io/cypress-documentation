@@ -60,7 +60,7 @@ to see how much time we predict these features would save you.
 Spec Prioritization is a _Smart Orchestration_ feature that is managed within a
 project's settings.
 
-To enable or disable this feature:
+To enable or disable this feature at the Project level (must be an admin user):
 
 1. Select the desired project within Projects view to visit Cypress Cloud.
 2. Click "Project Settings" with the right-hand sidebar.
