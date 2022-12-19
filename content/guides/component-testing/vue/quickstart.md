@@ -97,7 +97,7 @@ any yet. However, we don't currently have a component, either. Let's change
 that!
 
 <DocsImage 
-  src="/img/guides/component-testing/create-your-first-spec-vue.jpg">
+  src="/img/guides/component-testing/create-your-first-spec-cfc.jpg">
 </DocsImage>
 
 ### Creating a Component

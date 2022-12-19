@@ -96,10 +96,9 @@ When the test runner appears, it won't find any specs because we haven't created
 any yet. However, we don't currently have a component, either. Let's change
 that!
 
-<!-- TODO: REPLACE THIS WITH SCREENSHOT THAT SHOWS CREATE FROM COMPONENT CARD -->
-
 <DocsImage 
-  src="/img/guides/component-testing/create-your-first-spec.jpg"> </DocsImage>
+  src="/img/guides/component-testing/create-your-first-spec-cfc.jpg">
+</DocsImage>
 
 ### Creating a Component
 
