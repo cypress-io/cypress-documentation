@@ -169,6 +169,6 @@ following:
 
 - [`cy.clearCookie()`](/api/commands/clearcookie)
 - [`cy.clearCookies()`](/api/commands/clearcookies)
-- [Cypress Cookies API](/api/cypress-api/cookies)
 - [`cy.getCookies()`](/api/commands/getcookies)
 - [`cy.setCookie()`](/api/commands/setcookie)
+- [`Cypress.Cookies.debug()`](/api/cypress-api/cookies)

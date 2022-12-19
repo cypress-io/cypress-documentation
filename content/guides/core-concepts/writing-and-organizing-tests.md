@@ -140,7 +140,7 @@ Check out our recipe using
 </Alert>
 
 To see an example of every command used in Cypress, open the
-[`2-advanced-examples` folder](https://github.com/cypress-io/cypress-example-kitchensink/tree/master/cypress/integration/2-advanced-examples)
+[`2-advanced-examples` folder](https://github.com/cypress-io/cypress-example-kitchensink/tree/master/cypress/e2e/2-advanced-examples)
 within your `cypress/e2e` folder.
 
 ### Fixture Files

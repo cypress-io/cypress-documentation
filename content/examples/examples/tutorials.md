@@ -46,9 +46,9 @@ us write our tests and guide feature implementation.
 
 By the end of this tutorial, you will have a feel for what it is like to test
 your application with Cypress while implementing features. You will gain
-experience with many of the Cypress [commands](/api/api/table-of-contents) and
-see how Cypress can help you build your application while creating a great
-safety net of tests along the way.
+experience with many of the Cypress [commands](/api/table-of-contents) and see
+how Cypress can help you build your application while creating a great safety
+net of tests along the way.
 
 We have a lot of ground to cover, so let's get started!
 
