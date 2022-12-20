@@ -356,6 +356,13 @@
           "link": "https://github.com/ExpediaGroup/cypress-codegen",
           "keywords": ["commands", "development", "codegen"],
           "badge": "community"
+        },
+        {
+          "name": "cypress-fail-on-network-request",
+          "description": "Fail cypress test on network request.",
+          "link": "https://github.com/nils-hoyer/cypress-fail-on-network-request",
+          "keywords": ["network-request", "request", "fail"],
+          "badge": "community"
         }
       ]
     },
