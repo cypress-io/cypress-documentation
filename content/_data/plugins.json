@@ -626,6 +626,12 @@
           "badge": "community"
         },
         {
+          "name": "cypress-window-helper",
+          "description": "cypress-window-helper aims to switch and interact with pop-up and tabs windows opened by the main cypress frame",
+          "link": "https://github.com/mathias-vandaele/cypress-window-helper",
+          "keywords": ["window", "tab", "switch", "popup"],
+        },
+        {
           "name": "cypress-forced-colors",
           "description": "Cypress commands to enable and disable browser forced colors mode",
           "link": "https://github.com/ling1726/cypress-forced-colors",
