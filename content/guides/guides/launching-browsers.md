@@ -192,7 +192,7 @@ GitHub repository.
 
 #### Linux Dependencies
 
-WebKit requires additional dependencies to run on Linux. To install the required
+WebKit requires additional dependencies to run on Linux (This will only work on Ubuntu/Debian based machines. For other linux distribution this command will not work). To install the required
 dependencies, run this:
 
 ```shell
