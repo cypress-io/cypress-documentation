@@ -158,6 +158,8 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v5.x.x # use the explicit version number
         with:
+          build: npm run build
+          start: npm start
           # Specify Browser since container image is compile with Firefox
           browser: firefox
 ```
