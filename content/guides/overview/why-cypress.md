@@ -133,6 +133,8 @@ do that no other testing framework can:
 - **Flake Detection:** Discover and diagnose unreliable tests with Cypress
   Cloud's [Flaky test management](/guides/cloud/flaky-test-management).
 
+## Cypress' quick start
+
 ### <Icon name="cog"></Icon> Setting up tests
 
 There are no servers, drivers, or any other dependencies to install or
