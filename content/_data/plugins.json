@@ -86,6 +86,13 @@
           "link": "https://github.com/mammadataei/cypress-vite",
           "keywords": ["vite"],
           "badge": "community"
+        },
+        {
+          "name": "cypress-thenify",
+          "description": "Transfile the code for adding `then` callbacks automatically",
+          "link": "https://github.com/mbolotov/cypress-thenify",
+          "keywords": ["await-ing chains"],
+          "badge": "community"
         }
       ]
     },
@@ -223,6 +230,20 @@
           "description": "Visual Studio Code extension for cypress and cucumber preprocessor",
           "link": "https://marketplace.visualstudio.com/items?itemName=Shelex.vscode-cy-helper",
           "keywords": ["vscode", "extension", "intellisense"],
+          "badge": "community"
+        },
+        {
+          "name": "Cypress Support",
+          "description": "IntelliJ Platform plugin for Cypress",
+          "link": "https://plugins.jetbrains.com/plugin/13819-cypress-support",
+          "keywords": ["intellij", "webstorm", "extension", "intellisense"],
+          "badge": "community"
+        },
+        {
+          "name": "Cypress Support Pro",
+          "description": "IntelliJ Platform plugin for Cypress",
+          "link": "https://plugins.jetbrains.com/plugin/13987-cypress-support-pro",
+          "keywords": ["intellij", "webstorm", "extension", "intellisense", "debug", "action recording"],
           "badge": "community"
         },
         {
