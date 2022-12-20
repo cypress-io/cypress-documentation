@@ -1011,7 +1011,19 @@
           "link": "https://github.com/cypress-io/cypress-chrome-recorder",
           "keywords": ["visual testing", "recorder"],
           "badge": "experimental"
-        }
+        },
+        {
+          "name": "Cypress ODiff",
+          "description": "Visual Regression Tests using ODiff. Up to 60% faster than using pixelmatch.",
+          "link": "https://github.com/odai-alali/cypress-odiff",
+          "keywords": [
+            "screenshots",
+            "visual regression",
+            "visual testing",
+            "odiff"
+          ],
+          "badge": "community"
+        },
       ]
     },
     {
