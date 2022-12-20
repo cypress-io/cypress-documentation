@@ -311,7 +311,7 @@
         {
           "name": "cypress-tags",
           "description": "Use custom tags to slice up Cypress test runs",
-          "link": "https://github.com/annaet/cypress-tags",
+          "link": "https://github.com/infosum/cypress-tags",
           "keywords": ["test", "tag", "browserify"],
           "badge": "community"
         },
