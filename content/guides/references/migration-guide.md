@@ -211,7 +211,7 @@ cy.findByTestId('popover').findAllByRole('button').first().as('button')
 
 #### `Cypress.Cookies.defaults` and `Cypress.Cookies.preserveOnce`
 
-The `Cypress.Cookies.defaults` and `CypressCookies.preserveOnce` APIs been
+The `Cypress.Cookies.defaults` and `Cypress.Cookies.preserveOnce` APIs been
 removed. Use the [`cy.session()`](/api/commands/session) command to preserve
 cookies (and local and session storage) between tests.
 
