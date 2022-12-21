@@ -1,0 +1,55 @@
+div.markdown {
+  font-size: 1.125rem;
+  word-spacing: 1px;
+
+  /* have to override this for specificity */
+  h1:first-child {
+    --ifm-h1-font-size: 2.5rem;
+    margin-bottom: 0;
+  }
+
+  a {
+    text-decoration: none;
+    font-weight: var(--ifm-font-weight-semibold);
+
+    &:hover {
+      border-bottom: 1px dotted var(--ifm-link-color);
+    }
+  }
+
+  h2,
+  h3,
+  h4 {
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--ifm-toc-border-color);
+
+    // hide hash link borders in headers when hovered
+    a {
+      border-bottom: none;
+      margin-bottom: 6px;
+      &:hover {
+        border-bottom: none;
+      }
+    }
+  }
+
+  /* lists w/ headers as bullets */
+  ul li > h2,
+  h3,
+  h4 {
+    border-bottom: none;
+  }
+
+  ul li {
+    margin: 0.7rem 0;
+  }
+}
+
+/* override the background in the toc on mobile */
+[data-theme='light'] .theme-doc-toc-mobile {
+  --ifm-menu-color-background-active: #0000000d;
+}
+[data-theme='dark'] .theme-doc-toc-mobile {
+  --ifm-menu-color-background-active: #ffffff0d;
+}

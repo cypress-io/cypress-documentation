@@ -22,7 +22,7 @@ export default function CoursesList() {
                   {course.title}
                 </a>
 
-                <p className={s.content}>
+                <p className={s.course_list_item}>
                   Published on{" "}
                   <a href={`${course.sourceUrl}`}>{course.sourceName}</a> by{" "}
                   {course.authorTwitter && (
