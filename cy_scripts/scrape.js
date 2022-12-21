@@ -8,7 +8,8 @@ const {
 } = require('@cypress/env-or-json-file')
 const { stripIndent } = require('common-tags')
 
-const tap = (func) => {
+// eslint-disable-next-line no-unused-vars
+const tapOld = (func) => {
   return (arg) => {
     func(arg)
 
@@ -16,7 +17,8 @@ const tap = (func) => {
   }
 }
 
-function checkToken(token) {
+// eslint-disable-next-line no-unused-vars
+function checkTokenOld(token) {
   if (!token) {
     const example = JSON.stringify({
       token: 'foobarbaz',
@@ -38,6 +40,21 @@ function checkToken(token) {
 }
 
 function getCircleCredentials() {
+  const token = process.env['DOCSEARCH_API_TOKEN']
+
+  if (!token) {
+    console.error('⛔️  Cannot find CircleCI credentials')
+    console.error('Using env var DOCSEARCH_API_TOKEN')
+    throw new Error(
+      'Cannot load CircleCI credentials using DOCSEARCH_API_TOKEN env var'
+    )
+  }
+
+  return token;
+}
+
+// eslint-disable-next-line no-unused-vars
+function getCircleCredentialsOld() {
   // the JSON file should have an object like
   // { "token": "abc123..." }
   // where the token is your personal API token from CircleCI
@@ -63,14 +80,13 @@ function getCircleCredentials() {
 function scrape() {
   return Promise.resolve()
     .then(getCircleCredentials)
-    .then(tap(checkToken))
+    // .then(tap(checkToken))
     .then((token) => {
       // hmm, how do we trigger workflow?
       // seems this is not supported yet as of July 10th 2017
       // https://discuss.circleci.com/t/trigger-workflow-through-rest-api/13931
       return axios({
-        url:
-          'https://circleci.com/api/v1.1/project/github/cypress-io/docsearch-scraper/',
+        url: 'https://circleci.com/api/v1.1/project/github/cypress-io/docsearch-scraper/',
         method: 'post',
         json: true,
         headers: {
