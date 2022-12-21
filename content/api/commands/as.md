@@ -17,6 +17,7 @@ command with an `@` prefix.
 
 ```javascript
 .as(aliasName)
+.as(aliasName, options)
 ```
 
 ### Usage
@@ -25,6 +26,7 @@ command with an `@` prefix.
 
 ```javascript
 cy.get('.main-nav').find('li').first().as('firstNav') // Alias element as @firstNav
+cy.get('input.username').invoke('val').as('username', { type: 'value' }) // Alias a static (not re-queried) value
 cy.intercept('PUT', '/users').as('putUser') // Alias route as @putUser
 cy.stub(api, 'onUnauth').as('unauth') // Alias stub as @unauth
 cy.spy(win, 'fetch').as('winFetch') // Alias spy as @winFetch
@@ -43,6 +45,14 @@ cy.as('foo') // Errors, cannot be chained off 'cy'
 The name of the alias to be referenced later within a
 [`cy.get()`](/api/commands/get) or [`cy.wait()`](/api/commands/wait) command
 using an `@` prefix.
+
+**<Icon name="angle-right"></Icon> options** **_(Object)_**
+
+Pass in an options object to change the default behavior of `.as`.
+
+| Option | Default | Description                                                                                                                                                                                                                          |
+| ------ | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `type` | `query` | Valid values are `query` and `value`. A query alias re-runs all queries leading up to it each time the value is requested, providing a live value. A value alias is frozen as soon as the alias is stored, providing a static value. |
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
@@ -200,6 +210,13 @@ cy.intercept('PUT', /^\/users\/\d+/).as('userPut')
 Aliases of routes display in the routes instrument panel:
 
 <DocsImage src="/img/api/as/routes-table-in-command-log.png" alt="Command log for route" ></DocsImage>
+
+## History
+
+| Version                                       | Changes                                                       |
+| --------------------------------------------- | ------------------------------------------------------------- |
+| [12.3.0](/guides/references/changelog#12-3-0) | Added option `type` to opt into the pre-12.0.0 behavior.      |
+| [12.0.0](/guides/references/changelog#12-0-0) | All aliases now re-run queries leading up to them by default. |
 
 ## See also
 

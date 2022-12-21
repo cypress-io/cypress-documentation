@@ -207,6 +207,16 @@ alias to be the first button rather than the unexpanded button.
 cy.findByTestId('popover').findAllByRole('button').first().as('button')
 ```
 
+If you want to alias a static value, such that it is never re-queried, you will
+need Cypress 12.3.0 or later, which introduced the `type` option for `.as()` to
+opt into the old behavior.
+
+```
+cy.get('.username').invoke('val').as('username', { type: 'value' })
+```
+
+See [`.as()`](/api/commands/as) for more details.
+
 ### Command / Cypress API Changes
 
 #### `Cypress.Cookies.defaults` and `Cypress.Cookies.preserveOnce`
