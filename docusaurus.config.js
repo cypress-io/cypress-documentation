@@ -15,7 +15,8 @@ const prettierConfig = JSON.parse(fs.readFileSync('./.prettierrc', 'utf-8'))
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'Cypress Documentation',
-  tagline: 'Fast, easy and reliable testing for anything that runs in a browser.',
+  tagline:
+    'Fast, easy and reliable testing for anything that runs in a browser.',
   url: 'https://docs.cypress.io',
   baseUrl: '/',
   onBrokenLinks: 'warn', // TODO: update this to throw when we go live to production
@@ -54,10 +55,10 @@ const config = {
         },
         blog: false,
         theme: {
-          customCss: require.resolve('./src/css/custom.css'),
+          customCss: require.resolve('./src/css/custom.scss'),
         },
         // un-comment for launch
-        // googleAnalytics: { 
+        // googleAnalytics: {
         //   trackingID: 'UA-59606812-1',
         // },
         // gtag: {
@@ -69,7 +70,8 @@ const config = {
 
   plugins: [
     './plugins/fav-icon',
-    require.resolve('docusaurus-plugin-image-zoom')
+    require.resolve('docusaurus-plugin-image-zoom'),
+    'docusaurus-plugin-sass',
   ],
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
@@ -203,7 +205,7 @@ const config = {
               {
                 label: 'Cypress Migrator',
                 href: 'https://migrator.cypress.io',
-              }
+              },
             ],
           },
           {
@@ -227,7 +229,7 @@ const config = {
         appId: 'R9KDA5FMJB',
 
         // Public API key: it is safe to commit it
-        apiKey: '6c33afcbecc2ae25e0ad096a113f7562',
+        apiKey: 'b4af59e23bc2fa05281af7dcf13fcae5',
 
         indexName: 'docs',
 
@@ -253,11 +255,11 @@ const config = {
         selector: ':not(.mediaImage, .navbar__logo img)', // don't zoom these images
         background: {
           light: 'rgb(50, 50, 50)',
-          dark: 'rgb(50, 50, 50)'
+          dark: 'rgb(50, 50, 50)',
         },
         // options you can specify via https://github.com/francoischalifour/medium-zoom#usage
-        config: {}
-      }
+        config: {},
+      },
     },
 }
 
