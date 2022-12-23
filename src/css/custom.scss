@@ -145,6 +145,14 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* add a small gap to the main content area when the width
+  starts to approach the sidebar */
+@media screen and (min-width: 997px) and (max-width: 1660px) {
+  [class^='docPage'] { //dynamic class name, so using the prefix
+    gap: 18px;
+  }
+}
+
 [data-theme='dark'] .alert.alert--info h2,
 h3,
 h4 {
@@ -193,7 +201,6 @@ div[class^='announcementBar'] .close {
   width: 1em;
 }
 
-
 /* open external page icon */
 .footer__link-item svg {
   display: none;
@@ -202,7 +209,6 @@ div[class^='announcementBar'] .close {
 .footer__links {
   margin-bottom: 2rem;
 }
-
 
 .mediaGridContainer {
   display: grid;
