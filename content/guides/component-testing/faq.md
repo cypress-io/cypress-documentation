@@ -143,7 +143,7 @@ typings defined in the **cypress/support/component.ts** file.
 
 Alternatively, you can move your typings to an external file and include that
 file in your **tsconfig.json** file. See our
-[TypeScript Configuration](guides/tooling/typescript-support#Using-an-External-Typings-File)
+[TypeScript Configuration](/guides/tooling/typescript-support#Using-an-External-Typings-File)
 guide for more info on doing this.
 
 ### How do I get TypeScript to recognize Cypress types and not Jest types?
