@@ -371,7 +371,7 @@ the yielded subject up-to-date as a page rerenders.
 
 With the introduction of query commands, the following commands have been
 re-categorized and can no longer be overwritten with
-[`Cypress.Commands.overwrite()`](api/cypress-api/custom-commands#Overwrite-Existing-Commands):
+[`Cypress.Commands.overwrite()`](/api/cypress-api/custom-commands#Overwrite-Existing-Commands):
 
 - [`.as()`](/api/commands/as)
 - [`.children()`](/api/commands/children)
@@ -406,7 +406,7 @@ re-categorized and can no longer be overwritten with
 
 If you were previously overwriting one of the above commands, try adding your
 version as a new command using
-[`Cypress.Commands.add()`](api/cypress-api/custom-commands) under a different
+[`Cypress.Commands.add()`](/api/cypress-api/custom-commands) under a different
 name.
 
 ## Migrating to Cypress 11.0

@@ -75,8 +75,8 @@ modified from the plugins file.**
 
 - `configFile`: The absolute path to the
   [Cypress configuration file](/guides/references/configuration). See the
-  [--config-file](guides/guides/command-line#cypress-open) and
-  [configFile](guides/guides/module-api) docs for more information on this
+  [--config-file](/guides/guides/command-line#cypress-open) and
+  [configFile](/guides/guides/module-api) docs for more information on this
   value.
 - `projectRoot`: The absolute path to the root of the project (e.g.
   `/Users/me/dev/my-project`)
