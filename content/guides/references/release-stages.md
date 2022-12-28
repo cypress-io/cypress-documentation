@@ -96,7 +96,7 @@ type of features require you to opt-in to via a configuration value prefixed
 with `experimental`. These types of features may be unstable and contain issues.
 You should expect to see frequent changes and improvements during the feature’s
 experimental lifetime. The current experimental features can be found
-[here](guides/references/experiments).
+[here](/guides/references/experiments).
 
 **Strategies for releasing and communicating changes to experimental features**
 

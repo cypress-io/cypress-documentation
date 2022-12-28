@@ -422,7 +422,7 @@ to write a custom `cy.login()` [command](/api/cypress-api/custom-commands).
 Custom commands allow you to easily encapsulate and reuse Cypress test logic.
 They let you add your own functionality to your test suite and then use it with
 the same
-[chainable and asynchronous API](guides/core-concepts/introduction-to-cypress#The-Cypress-Command-Queue)
+[chainable and asynchronous API](/guides/core-concepts/introduction-to-cypress#The-Cypress-Command-Queue)
 as the built-in Cypress commands. Lets make the above login example a custom
 command and add it to `cypress/support/commands.js` so it can be leveraged in
 any spec file:
