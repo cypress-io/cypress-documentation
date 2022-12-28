@@ -442,6 +442,19 @@ the commit information is unavailable.
 DEBUG=commit-info,cypress:server:record
 ```
 
+#### CI Build Information
+
+In some newer CI providers, cypress can't map the environment variables required
+to link back to builds or pull requests. In this case we provided users some
+environment variables to help pass that information along.
+
+- Pull Request Id: `CYPRESS_PULL_REQUEST_ID`
+- Pull Request URL: `CYPRESS_PULL_REQUEST_URL`
+- Build URL: `CYPRESS_CI_BUILD_URL`
+
+Setting these will allow links within the dashboard to take you to the
+appropriate place.
+
 #### Custom Environment Variables
 
 You can also set custom environment variables for use in your tests. These
