@@ -79,7 +79,7 @@ it('debug session', () => {
     })
     .then(async () => {
         const sessionData = await Cypress.session.getCurrentSessionData()
-        cy.debug()s
+        cy.debug()
     })
 })
 ```
