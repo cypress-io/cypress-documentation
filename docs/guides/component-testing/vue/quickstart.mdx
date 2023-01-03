@@ -364,20 +364,26 @@ Let's set up the spies and bind them to the component:
 it('clicking + fires a change event with the incremented value', () => {
   const onChangeSpy = cy.spy().as('onChangeSpy')
   cy.mount(Stepper, { props: { onChange: onChangeSpy } })
-  cy.get('[data-cy=increment]').click()
-  cy.get('@onChangeSpy').should('have.been.calledWith', 1)
+  cy.get('[data-cy=increment]')
+    .click()
+    .then(() => {
+      cy.get('@onChangeSpy').should('have.been.calledWith', 1)
+    })
 })
 ```
 
 First, we create a new spy by calling the `cy.spy()` method. We pass in a string
 that gives the spy an [alias](/guides/core-concepts/variables-and-aliases),
 which assigns the spy a name by which we can reference it later. In
-`cy.mount()`, we initialize the component and pass the spy into it. After that,
-we click the increment button.
+`cy.mount()`, we initialize the component and pass the spy into it (note that
+while the event is defined as `change`, the spy is passed for the prop
+`onChange`; this is due to the fact that Vue compiles `emit('change')` to
+`props.onChange()`). After that, we click the increment button.
 
 The next line is a bit different. We've seen how we can use the `cy.get()`
 method to select elements, but we can also use it to grab any aliases we've set
-up previously. We use `cy.get()` to grab the alias to the spy (by prepending an
+up previously. We chain `then()` off of `cy.get()` to make sure the event has
+fired and registered as such, then grab the alias to the spy (by prepending an
 ampersand to the alias name). We assert that the method was called with the
 expected value.
 
