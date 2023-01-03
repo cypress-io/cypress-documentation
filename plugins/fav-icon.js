@@ -2,6 +2,7 @@ module.exports = async function favIcon(context) {
   return {
     injectHtmlTags({ content }) {
       return {
+        name: 'docusaurus-plugin-favicon',
         headTags: [
           {
             tagName: 'link',
@@ -21,7 +22,7 @@ module.exports = async function favIcon(context) {
             },
           },
         ],
-      };
+      }
     },
   };
 };

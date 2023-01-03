@@ -56,19 +56,19 @@ const config = {
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
         },
-        // un-comment for launch
-        // googleAnalytics: { 
-        //   trackingID: 'UA-59606812-1',
-        // },
-        // gtag: {
-        //   trackingID: 'GTM-KNKBWLD',
-        // }
+        googleAnalytics: { 
+          trackingID: 'UA-59606812-1',
+        },
+        gtag: {
+          trackingID: 'GTM-KNKBWLD',
+        }
       },
     ],
   ],
 
   plugins: [
     './plugins/fav-icon',
+    './plugins/fullstory',
     require.resolve('docusaurus-plugin-image-zoom')
   ],
   themeConfig:
