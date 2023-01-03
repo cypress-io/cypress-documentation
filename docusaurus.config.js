@@ -38,7 +38,7 @@ const config = {
       {
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
-          editUrl: 'https://github.com/cypress-io/cypress-docs/tree/master/',
+          editUrl: 'https://github.com/cypress-io/cypress-documentation/tree/master/',
           routeBasePath: '/',
           // versions: {
           //   current: {
@@ -121,7 +121,7 @@ const config = {
           //   position: 'right',
           // },
           {
-            href: 'https://github.com/cypress-io/cypress-docs',
+            href: 'https://github.com/cypress-io/cypress-documentation',
             position: 'right',
             className: 'github-logo',
             'aria-label': 'Cypress GitHub repository',

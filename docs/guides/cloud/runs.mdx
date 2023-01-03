@@ -12,25 +12,136 @@ If you haven't set up your project to record
 
 :::
 
-## Run details
+## Run Details
 
-Details of each run are displayed including:
+On navigating to a specific run, you are presented with the Run Details page.
+This page consists of a common header and four tabbed sub-pages,
+[Overview](#Overview-tab), [Test Results](#Test-Results-tab),
+[Specs](#Specs-tab), and [Errors](#Errors-tab).
 
-- The number of skipped, pending, passing, and failing tests.
-- The GitHub branch, pull request, author, commit sha and commit message
-  associated with the run (if any)
-- The times the run, each spec file, and test started and ended.
-- What Continuous Integration the run ran in (if any) and its CI id and url.
-- The operating system and version
-- The browser and version
-- The Cypress version
+<DocsImage
+  src="/img/guides/cloud/runs/run-details-page.png"
+  alt="Run Details page"
+></DocsImage>
 
-<DocsImage src="/img/dashboard/run-details.png" alt="run-details"></DocsImage>
+### Run header
 
-## <Icon name="file-code" /> Spec files
+At the left side of the header is important metadata about the run, including
+git author and branch
+[if available](/guides/continuous-integration/introduction#Git-information), run
+time and duration, CI data and more. Clicking on the three dots to the right of
+this section displays additional metadata, including browsers and operating
+systems used, the Cypress version, and what
+[Smart Orchestration](/guides/cloud/smart-orchestration) settings were active.
 
-You can see the result of each spec file that ran within **Specs**. There is
-also the option to switch between **Timeline View** and **Bar Chart View**.
+At the right of the header are a set of indicators showing the number of
+[flaky](/guides/cloud/flaky-test-management), skipped, pending, passed, and
+failed tests in this run. Clicking any of these takes you to the
+[Test Results](#Test-Results-tab) tab with results filtered by the clicked
+status.
+
+<DocsImage
+  src="/img/guides/cloud/runs/run-details-header.png"
+  alt="Run details header"
+></DocsImage>
+
+### Run in progress panel
+
+If the selected run is currently in progress, an additional panel will be shown
+under the Run Header with a progress indicator and an action link to
+[cancel the run](#Run-cancellation).
+
+<DocsImage
+  src="/img/guides/cloud/runs/run-in-progress-panel.png"
+  alt="Run in progress panel"
+></DocsImage>
+
+## Overview tab
+
+By default the Run Details page will be open to the Overview tab. Here you can
+see the run metrics we consider most critical.
+
+### Run duration
+
+This graph visualizes how long your tests took to run compared to previous runs,
+with the currently selected run highlighted. Run status is indicated by the
+color of the bars, which may be filtered by status with the dropdown to the top
+right of that graph. Hovering over a run displays a popover with more
+information.
+
+At the bottom of the run duration graph you may see one or more blue boxes.
+These represent points in time when configuration settings were changed,
+possibly impacting test performance. Hovering over them reveals the specific
+changes made.
+
+<DocsImage
+  src="/img/guides/cloud/runs/run-duration.png"
+  alt="Run duration panel"
+></DocsImage>
+
+### Recommendations
+
+To the right of the run duration graph you may see a box with our
+recommendations for improving the performance of your test suite. Our
+[Smart Orchestration](/guides/cloud/smart-orchestration) features can help you
+run fewer, more relevant, and faster tests, depending on the details of your
+test suite.
+
+The algorithm we use to calculate the details of these recommendations is a
+sophisticated and quite detailed model of your test suite, but fundamentally we
+look at up to 100 of your most recent tests and simulate what those test runs
+would have looked like with different Smart Orchestration configurations. From
+there we calculate a figure totalling the differences in duration between the
+simulated tests and the actual tests as they happened.
+
+<DocsImage
+  src="/img/guides/cloud/runs/recommendations.png"
+  alt="Recommendations"
+></DocsImage>
+
+### Tests for Review
+
+The Tests for Review panel consolidates disparate test results into a single
+view, focusing attention on the specs producing the most relevant results. It
+shows Failed, Flaky and Modified tests broken down by spec, with easy access to
+run artefacts, and a badge clearly indicating the reason the result was
+considered notable.
+
+Clicking on a specific test opens the
+[test detail sidebar](#Test-detail-sidebar).
+
+<DocsImage
+  src="/img/guides/cloud/runs/tests-for-review.png"
+  alt="Tests for Review"
+></DocsImage>
+
+## Test Results tab
+
+On the Test Results tab, detailed results for the entire test run can be browsed
+and examined. At the top of the page are dropdowns for you to sort and filter
+results by a wide range of metrics.
+
+<DocsImage
+  src="/img/guides/cloud/runs/test-results.png"
+  alt="Test Results tab"
+></DocsImage>
+
+## Specs tab
+
+Another way to look at your run is by "zooming out" to the spec file level,
+which is the purpose of the Specs tab. This tab lets you view spec results
+collected into [run groups](/guides/guides/parallelization#Grouping-test-runs),
+focusing either on run order, spec duration or
+[parallelization](/guides/guides/parallelization). You can switch between these
+views using the Views button bar in the top right.
+
+In all of these views, spec results may be clicked to open those tests in the
+Test Results tab.
+
+<DocsImage
+  src="/img/guides/cloud/runs/specs-view-switcher.png"
+  alt="Specs view switcher"
+></DocsImage>
 
 ### Timeline View
 
@@ -39,93 +150,117 @@ This is especially helpful when you want to visualize how your tests ran in
 [parallel](/guides/guides/parallelization).
 
 <DocsImage
-  src="/img/dashboard/specs-timeline-view.png"
-  alt="Specs tab with timeline view"
+  src="/img/guides/cloud/runs/specs-timeline.png"
+  alt="Specs Timeline View"
 ></DocsImage>
 
 ### Bar Chart View
 
 The Bar Chart View charts the lengths of each spec file. This view is helpful to
-determine which spec files or tests are running longer than others.
+determine which spec files are using up a lot of run time and could be split up
+or simplified.
 
 <DocsImage
-  src="/img/dashboard/specs-barchart-view.png"
-  alt="Specs tab with bar chart view"
+  src="/img/guides/cloud/runs/specs-bar-chart.png"
+  alt="Specs Bar Chart View"
 ></DocsImage>
 
-### Jump to failed tests
+### Machines View
 
-If you had any failed tests, you can hover over the spec chart and click on the
-link to the failed test to go directly to its error message and stack trace.
+If your tests are parallelized, the Machines View shows which and how many specs
+were run on each parallel process. This view lets you see how work is being
+distributed, and provides hard data for decisions about increasing or decreasing
+your CI [parallelization](/guides/guides/parallelization) capacity.
 
 <DocsImage
-  src="/img/dashboard/specs-failures-popup.png"
-  alt="Failures popup on spec hover"
+  src="/img/guides/cloud/runs/specs-machines.png"
+  alt="Specs Machines View"
 ></DocsImage>
 
-### <Icon name="code" /> CI logs
+## Errors tab
+
+The Errors tab simply aggregates any errors thrown during tests in this run.
+Expanding specific errors gives more information and a link through to the
+[test detail sidebar](#Test-detail-sidebar).
+
+<DocsImage src="/img/guides/cloud/runs/errors.png" alt="Errors tab"></DocsImage>
+
+## Test detail sidebar
+
+Every test in the run has all its details surfaced in a special sidebar. This
+sidebar may contain all or fewer of the sections detailed below. In addition it
+may also contain details of runtime environment, failure and flake rates over
+time, performance breakdowns, listings of the test code itself, and more.
+
+### Header
+
+Contains the title of the failed test, and the spec it's located in. May also
+have labels indicating test status or other pertinent information, and shortcuts
+to raise tickets on integrated PM systems or view artifacts.
+
+<DocsImage
+  src="/img/guides/cloud/runs/sidebar-header.png"
+  alt="Test sidebar header"
+></DocsImage>
+
+### Attempts and errors
+
+Stack traces, error message, and point-of-failure code frames for each attempt
+of a test.
+
+<DocsImage
+  src="/img/guides/cloud/runs/sidebar-errors.png"
+  alt="Test sidebar attempts and errors"
+></DocsImage>
+
+### Previous runs
+
+A graphical history of previous runs of this test, indicating failures and
+successes on the current branch.
+
+<DocsImage
+  src="/img/guides/cloud/runs/sidebar-previous-runs.png"
+  alt="Test sidebar previous Runs"
+></DocsImage>
+
+### Artifacts
+
+[Screenshots](/guides/guides/screenshots-and-videos#Screenshots),
+[videos](/guides/guides/screenshots-and-videos#Videos) and CI logs generated by
+this test. Both screenshots taken during failures and screenshots taken using
+the [`cy.screenshot()`](/api/commands/screenshot) command will show up here.
+Video can be downloaded.
+
+<DocsImage
+  src="/img/guides/cloud/runs/sidebar-artifacts.png"
+  alt="Test sidebar artifacts"
+></DocsImage>
 
 CI logs from the Cypress standard output include details and summaries of your
 tests for each spec file based on the [reporter](/guides/tooling/reporters) you
 have set. By default it is the `spec` reporter.
-
-You will also see a summary at the bottom indicating the screenshots, or videos
-that were uploaded during the recording.
 
 <DocsImage
   src="/img/dashboard/standard-output-of-recorded-test-run.png"
   alt="standard output"
 ></DocsImage>
 
-### <Icon name="camera" /> Screenshots
+### Test Code History
 
-All screenshots taken during the test run can be found in the **Screenshots** of
-the spec. Both screenshots taken during failures and screenshots taken using the
-[`cy.screenshot()`](/api/commands/screenshot) command will show up here.
+Shows git commits that included changes to the current test, providing insights
+into the development of this test, helping to diagnose test failures, and track
+down regressions. Expanding a specific commit shows the diff at that point in
+time.
 
-### <Icon name="video" /> Videos
-
-The video recorded during the test run can be found under the **Video** of the
-spec. You can also download the video.
+Note that the diff is based on the state of the code **after** transpilation,
+since we are not currently collecting source maps.
 
 <DocsImage
-  src="/img/dashboard/videos-of-recorded-test-run.png"
-  alt="Video of test runs"
+  src="/img/guides/cloud/runs/sidebar-test-code-history.png"
+  alt="Test sidebar code history"
 ></DocsImage>
 
-### Cypress App
-
-For even more visibility into your test results, information about recent runs
-is surfaced in the [Cypress app](/guides/core-concepts/cypress-app). Aggregate
-results of your latest runs are shown in
-[The Spec Explorer](/guides/core-concepts/cypress-app#The-Spec-Explorer) while
-more detailed information about specific runs can be found on the
-[Project Runs](/guides/core-concepts/cypress-app#Project-Runs) screen.
-
-<DocsImage
-  src="/img/guides/core-concepts/cypress-app/spec-explorer.png"
-  alt="The Spec Explorer"
-/>
-
-## <Icon name="exclamation-triangle" className="fa-fw" /> Test failures
-
-Any tests that fail during a test run can be found under the **Test Results**
-tab. Each failure is listed under its test title.
-
-### Each failure displays:
-
-- **Test title:** The title of the failed test.
-- **Error:** The stack trace, error message, and point-of-failure code frame for
-  each attempt of a test..
-- **Screenshot:** Any screenshots taken during the test.
-- **Video:** The recorded video scrubbed to the point of failure in the test.
-
-<DocsImage
-  src="/img/dashboard/runs/test-attempts-and-errors.png"
-  alt="failure tab"
-></DocsImage>
-
-## Cancel run
+## Run cancellation
 
 You can cancel a run currently in progress from Cypress Cloud. Runs can only be
 canceled by members of the project.
@@ -201,21 +336,16 @@ Cypress Cloud.
     alt="restore-from-archive"
   ></DocsImage>
 
-## Test Code History
+## Cypress App
+
+For even more visibility into your test results, information about recent runs
+is surfaced in the [Cypress app](/guides/core-concepts/cypress-app). Aggregate
+results of your latest runs are shown in
+[The Spec Explorer](/guides/core-concepts/cypress-app#The-Spec-Explorer) while
+more detailed information about specific runs can be found on the
+[Project Runs](/guides/core-concepts/cypress-app#Project-Runs) screen.
 
 <DocsImage
-  src="/img/dashboard/runs/test-code-history.png"
-  alt="Screenshot of the Test Code History panel"
+  src="/img/guides/core-concepts/cypress-app/spec-explorer.png"
+  alt="The Spec Explorer"
 ></DocsImage>
-
-When looking further into a test runs information, there is a new Test Case
-History panel. It matches test cases by spec and title and combines it with
-commit information to provide users insight to:
-
-1. See the history of a test over its lifespan
-1. View the diff of a single test case\*
-1. Jump directly to the commit
-1. See the time span between each point in its history
-
-\*_Note: This currently shows the diff of the transpiled code since we are not
-collecting source maps._

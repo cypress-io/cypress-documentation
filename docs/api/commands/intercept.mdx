@@ -114,20 +114,21 @@ glob-matched against the request using
 [`Cypress.minimatch`](/api/utilities/minimatch) with the `{ matchBase: true }`
 minimatch option applied.
 
-| Option     | Description                                                                                     |
-| ---------- | ----------------------------------------------------------------------------------------------- |
-| auth       | HTTP Basic Authentication (`object` with keys `username` and `password`)                        |
-| headers    | HTTP request headers (`object`)                                                                 |
-| hostname   | HTTP request hostname                                                                           |
-| https      | `true`: only secure (https://) requests, `false`: only insecure (http://) requests              |
-| method     | HTTP request method (matches any method by default)                                             |
-| middleware | `true`: match route first and in defined order, `false`: match route in reverse order (default) |
-| path       | HTTP request path after the hostname, including query parameters                                |
-| pathname   | Like `path`, but without query parameters                                                       |
-| port       | HTTP request port(s) (`number` or `Array`)                                                      |
-| query      | Parsed query string (`object`)                                                                  |
-| times      | Maximum number of times to match (`number`)                                                     |
-| url        | Full HTTP request URL                                                                           |
+| Option       | Description                                                                                                                                       |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| auth         | HTTP Basic Authentication (`object` with keys `username` and `password`)                                                                          |
+| headers      | HTTP request headers (`object`)                                                                                                                   |
+| hostname     | HTTP request hostname                                                                                                                             |
+| https        | `true`: only secure (https://) requests, `false`: only insecure (http://) requests                                                                |
+| method       | HTTP request method (matches any method by default)                                                                                               |
+| middleware   | `true`: match route first and in defined order, `false`: match route in reverse order (default)                                                   |
+| path         | HTTP request path after the hostname, including query parameters                                                                                  |
+| pathname     | Like `path`, but without query parameters                                                                                                         |
+| port         | HTTP request port(s) (`number` or `Array`)                                                                                                        |
+| query        | Parsed query string (`object`)                                                                                                                    |
+| resourceType | The resource type of the request. See ["Request object properties"](#Request-object-properties) for a list of possible values for `resourceType`. |
+| times        | Maximum number of times to match (`number`)                                                                                                       |
+| url          | Full HTTP request URL                                                                                                                             |
 
 See [examples](#With-RouteMatcher) below.
 
@@ -964,9 +965,7 @@ From here, you can do several things with the intercepted request:
 
 ### Request object properties
 
-The request object (`req`) has several properties from the HTTP request itself.
-All of the following properties on `req` can be modified except for
-`httpVersion`:
+The request object (`req`) has several properties from the HTTP request itself:
 
 ```ts
 {
@@ -997,6 +996,12 @@ All of the following properties on `req` can be modified except for
    * The HTTP version used in the request. Read only.
    */
   httpVersion: string
+  /**
+   * The resource type of the request. Read only.
+   */
+  resourceType: 'document' | 'fetch' | 'xhr' | 'websocket' | 'stylesheet'
+              | 'script' | 'image' | 'font' | 'cspviolationreport' | 'ping'
+              | 'manifest' | 'other'
 }
 ```
 
@@ -1562,15 +1567,16 @@ information about the request and response to the console:
 
 ## History
 
-| Version                                     | Changes                                                                                                                                                                                                                                                                                              |
-| ------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [7.6.0](/guides/references/changelog#7-0-0) | Added `query` option to `req` (The incoming request object yielded to request handler functions).                                                                                                                                                                                                    |
-| [7.0.0](/guides/references/changelog#7-0-0) | Removed `matchUrlAgainstPath` option from `RouteMatcher`, reversed handler ordering, added request events, removed substring URL matching, removed `cy.route2` alias, added `middleware` RouteMatcher option, renamed `res.delay()` to `res.setDelay()` and `res.throttle()` to `res.setThrottle()`. |
-| [6.4.0](/guides/references/changelog#6-4-0) | Renamed `delayMs` property to `delay` (backwards-compatible).                                                                                                                                                                                                                                        |
-| [6.2.0](/guides/references/changelog#6-2-0) | Added `matchUrlAgainstPath` option to `RouteMatcher`.                                                                                                                                                                                                                                                |
-| [6.0.0](/guides/references/changelog#6-0-0) | Renamed `cy.route2()` to `cy.intercept()`.                                                                                                                                                                                                                                                           |
-| [6.0.0](/guides/references/changelog#6-0-0) | Removed `experimentalNetworkStubbing` option and made it the default behavior.                                                                                                                                                                                                                       |
-| [5.1.0](/guides/references/changelog#5-1-0) | Added experimental `cy.route2()` command under `experimentalNetworkStubbing` option.                                                                                                                                                                                                                 |
+| Version                                       | Changes                                                                                                                                                                                                                                                                                              |
+| --------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [12.2.0](/guides/references/changelog#12-2-0) | Added `resourceType` property to `req` and `RouteMatcher`.                                                                                                                                                                                                                                           |
+| [7.6.0](/guides/references/changelog#7-0-0)   | Added `query` option to `req` (The incoming request object yielded to request handler functions).                                                                                                                                                                                                    |
+| [7.0.0](/guides/references/changelog#7-0-0)   | Removed `matchUrlAgainstPath` option from `RouteMatcher`, reversed handler ordering, added request events, removed substring URL matching, removed `cy.route2` alias, added `middleware` RouteMatcher option, renamed `res.delay()` to `res.setDelay()` and `res.throttle()` to `res.setThrottle()`. |
+| [6.4.0](/guides/references/changelog#6-4-0)   | Renamed `delayMs` property to `delay` (backwards-compatible).                                                                                                                                                                                                                                        |
+| [6.2.0](/guides/references/changelog#6-2-0)   | Added `matchUrlAgainstPath` option to `RouteMatcher`.                                                                                                                                                                                                                                                |
+| [6.0.0](/guides/references/changelog#6-0-0)   | Renamed `cy.route2()` to `cy.intercept()`.                                                                                                                                                                                                                                                           |
+| [6.0.0](/guides/references/changelog#6-0-0)   | Removed `experimentalNetworkStubbing` option and made it the default behavior.                                                                                                                                                                                                                       |
+| [5.1.0](/guides/references/changelog#5-1-0)   | Added experimental `cy.route2()` command under `experimentalNetworkStubbing` option.                                                                                                                                                                                                                 |
 
 ## See also
 
