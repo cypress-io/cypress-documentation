@@ -16,8 +16,8 @@ For more info on upgrading configuration to Cypress 10, see the
 
 ## Configuration File
 
-Launching the Cypress App for the first time, you will be guided through a
-wizard that will create a Cypress configuration file for you. This file will be
+Launching Cypress for the first time, you will be guided through a wizard that
+will create a Cypress configuration file for you. This file will be
 `cypress.config.js` for JavaScript apps or `cypress.config.ts` for
 [TypeScript](/guides/tooling/typescript-support) apps. This file is used to
 store any configuration specific to Cypress.
@@ -32,9 +32,9 @@ A '.cjs' file uses the [CommonJS](https://nodejs.org/api/modules.html) module
 syntax, which is the default for JavaScript files. All JavaScript config
 examples in our docs use the CommonJS format.
 
-If you [configure your tests to record](/guides/dashboard/projects#Setup) the
-results to the [Cypress Dashboard](https://on.cypress.io/dashboard-introduction)
-the `projectId` will be stored in the config file as well.
+If you [configure your tests to record](/guides/cloud/projects#Setup) the
+results to [Cypress Cloud](https://on.cypress.io/cloud-introduction) the
+`projectId` will be stored in the config file as well.
 
 ## Intelligent Code Completion
 
@@ -127,7 +127,7 @@ For more options regarding screenshots, view the
 | `videoCompression`      | `32`             | The quality setting for the video compression, in Constant Rate Factor (CRF). The value can be `false` to disable compression or a value between `0` and `51`, where a lower value results in better quality (at the expense of a higher file size).                                                                     |
 | `videosFolder`          | `cypress/videos` | Where Cypress will automatically save the video of the test run when tests run with `cypress run`.                                                                                                                                                                                                                       |
 | `video`                 | `true`           | Whether Cypress will capture a video of the tests run with `cypress run`.                                                                                                                                                                                                                                                |
-| `videoUploadOnPasses`   | `true`           | Whether Cypress will process, compress, and upload videos to the [Dashboard](/guides/dashboard/introduction) even when all tests in a spec file are passing. This only applies when recording your runs to the Dashboard. Turn this off if you'd like to only upload the spec file's video when there are failing tests. |
+| `videoUploadOnPasses`   | `true`           | Whether Cypress will process, compress, and upload videos to [Cypress Cloud](/guides/cloud/introduction) even when all tests in a spec file are passing. This only applies when recording your runs to Cypress Cloud. Turn this off if you'd like to only upload the spec file's video when there are failing tests. |
 
 ### Downloads
 
@@ -140,9 +140,8 @@ For more options regarding screenshots, view the
 
 | Option                  | Default                              | Description                                                                                                                                                                                                                                                                                                                                                        |
 | ----------------------- | ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `chromeWebSecurity`     | `true`                               | Whether to enable Chromium-based browser's Web Security for same-origin policy and insecure mixed content. [Read more about Web Security](/guides/guides/web-security).                                                                                                                                                                                            |
+| `chromeWebSecurity`     | `true`                               | Whether to enable Chromium-based browser's Web Security for same-origin policy and insecure mixed content.                                                                                                                                                            |
 | `blockHosts`            | `null`                               | A String or Array of hosts that you wish to block traffic for. [Please read the notes for examples on using this.](#blockHosts)                                                                                                                                                                                                                                    |
-| `firefoxGcInterval`     | `{ "runMode": 1, "openMode": null }` | (Firefox 79 and below only) Controls whether Cypress forces Firefox to run garbage collection (GC) cleanup and how frequently. During [cypress run](/guides/guides/command-line#cypress-run), the default value is `1`. During [cypress open](/guides/guides/command-line#cypress-open), the default value is `null`. See full details [here](#firefoxGcInterval). |
 | `modifyObstructiveCode` | `true`                               | Whether Cypress will search for and replace obstructive JS code in `.js` or `.html` files. [Please read the notes for more information on this setting.](#modifyObstructiveCode)                                                                                                                                                                                   |
 | `userAgent`             | `null`                               | Enables you to override the default user agent the browser sends in all request headers. User agent values are typically used by servers to help identify the operating system, browser, and browser version. See [User-Agent MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent) for example user agent values.              |
 
@@ -184,7 +183,7 @@ The Node version is used in Cypress to:
   [supportFile](#Folders-Files).
 - Execute code in the config file.
 
-<DocsImage src="/img/guides/configuration/test-runner-settings-nodejs-version.jpg" alt="Node version in Settings in Cypress App"></DocsImage>
+<DocsImage src="/img/guides/configuration/test-runner-settings-nodejs-version.jpg" alt="Node version in Settings in Cypress"></DocsImage>
 
 ### Experiments
 
@@ -209,6 +208,9 @@ object:
 | `specPattern`        | `cypress/e2e/**/*.cy.{js,jsx,ts,tsx}` | A String or Array of glob patterns of the test files to load.                                                                                                                                         |
 | `excludeSpecPattern` | `*.hot-update.js`                     | A String or Array of glob patterns used to ignore test files that would otherwise be shown in your list of tests. [Please read the notes on using this.](#excludeSpecPattern)                         |
 | `slowTestThreshold`  | `10000`                               | Time, in milliseconds, to consider a test "slow" during `cypress run`. A slow test will display in orange text in the default reporter.                                                               |
+| `testIsolation`        | `true`                      | Whether or not  [test isolation](/guides/core-concepts/writing-and-organizing-tests#Test-Isolation) is enabled to ensure a clean browser context between tests. |
+| Option                         | Default                               | Description                                    |
+| `experimentalRunAllSpecs`      | `false`                               | Enables the "Run All Specs" UI feature, allowing the execution of multiple specs sequentially.                                                                                                                                                                            |
 
 :::cypress-config-example{noJson}
 
@@ -234,6 +236,7 @@ object:
 | `supportFile`        | `cypress/support/component.js`           | Path to file to load before spec files load. This file is compiled and bundled. (Pass `false` to disable)                                                                                        |
 | `specPattern`        | `**/*.cy.{js,jsx,ts,tsx}`                | A glob pattern String or Array of glob pattern Strings of the spec files to load. <br><br>Note that any files found matching the `e2e.specPattern` value will be automatically **excluded.** |
 | `excludeSpecPattern` | `['/snapshots/*', '/image_snapshots/*']` | A String or Array of glob patterns used to ignore spec files that would otherwise be shown in your list of specs. [Please read the notes on using this.](#excludeSpecPattern)                    |
+`experimentalSingleTabRunMode`                | `false` | Run all specs in a single tab, instead of creating a new tab per spec. This can improve run mode performance, but can impact spec isolation and reliability on large test suites. This experiment currently only applies to Component Testing.     
 | `slowTestThreshold`  | `250`                                    | Time, in milliseconds, to consider a test "slow" during `cypress run`. A slow test will display in orange text in the default reporter.                                                          |
 
 :::cypress-config-example{noJson}
@@ -361,6 +364,8 @@ at run time.
 - `screenshotOnRunFailure`
 - `scrollBehavior`
 - `slowTestThreshold`
+- `testIsolation` - this option can only be overridden at the suite-specific
+  override level
 - `viewportHeight`
 - `viewportWidth`
 - `waitForAnimations`
@@ -631,7 +636,7 @@ We've disabled running GC during
 interact with the browser.
 
 Because GC adds additional time to the overall run, we've added the amount of
-time this routine has taken to the bottom of the Command Log in the Cypress App.
+time this routine has taken to the bottom of the Cypress Command Log.
 
 <DocsImage src="/img/guides/configuration/firefox-gc-interval-in-command-log.jpg" alt="GC duration shown"></DocsImage>
 
@@ -754,6 +759,9 @@ not** implement these security measures. Additionally it's possible that the
 patterns we search for may accidentally rewrite valid JS code. If that's the
 case, please disable this option.
 
+Details for `experimentalModifyObstructiveThirdPartyCode` can be found
+[here](/guides/guides/web-security#Modifying-Obstructive-Third-Party-Code).
+
 ### setupNodeEvents
 
 The `setupNodeEvents` function allows you to tap into, modify, or extend the
@@ -837,7 +845,7 @@ You can also find a few tips on setting the `baseUrl` in this
 When using the `--spec <path or mask>` argument, make it relative to the
 project's folder. If the specs are still missing, run Cypress with
 [DEBUG logs](/guides/references/troubleshooting#Print-DEBUG-logs) with the
-following setting to see how the Cypress App is looking for spec files:
+following setting to see how Cypress is looking for spec files:
 
 ```shell
 DEBUG=cypress:cli,cypress:server:specs
@@ -845,20 +853,22 @@ DEBUG=cypress:cli,cypress:server:specs
 
 ## History
 
-| Version                                       | Changes                                                                              |
-| --------------------------------------------- | ------------------------------------------------------------------------------------ |
-| [10.0.0](/guides/references/changelog#10-0-0) | Reworked page to support new `cypress.config.js` and deprecated `cypress.json` files |
-| [8.7.0](/guides/references/changelog#8-7-0)   | Added `slowTestThreshold` option                                                     |
-| [8.0.0](/guides/references/changelog#8-0-0)   | Added `clientCertificates` option                                                    |
-| [7.0.0](/guides/references/changelog#7-0-0)   | Added `e2e` and `component` options.                                                 |
-| [7.0.0](/guides/references/changelog#7-0-0)   | Added `redirectionLimit` option.                                                     |
-| [6.1.0](/guides/references/changelog#6-1-0)   | Added `scrollBehavior` option.                                                       |
-| [5.2.0](/guides/references/changelog#5-2-0)   | Added `includeShadowDom` option.                                                     |
-| [5.0.0](/guides/references/changelog#5-0-0)   | Added `retries` configuration.                                                       |
-| [5.0.0](/guides/references/changelog#5-0-0)   | Renamed `blacklistHosts` configuration to `blockHosts`.                              |
-| [4.1.0](/guides/references/changelog#4-12-0)  | Added `screenshotOnRunFailure` configuration.                                        |
-| [4.0.0](/guides/references/changelog#4-0-0)   | Added `firefoxGcInterval` configuration.                                             |
-| [3.5.0](/guides/references/changelog#3-5-0)   | Added `nodeVersion` configuration.                                                   |
+| Version                                       | Changes                                                                               |
+| --------------------------------------------- | ------------------------------------------------------------------------------------- |
+| [11.0.0](/guides/references/changelog#11-0-0) | Removed `e2e.experimentalSessionAndOrigin` option.                                    |
+| [10.4.0](/guides/references/changelog#10-4-0) | Added `e2e.testIsolation` option.                                                     |
+| [10.0.0](/guides/references/changelog#10-0-0) | Reworked page to support new `cypress.config.js` and deprecated `cypress.json` files. |
+| [8.7.0](/guides/references/changelog#8-7-0)   | Added `slowTestThreshold` option.                                                     |
+| [8.0.0](/guides/references/changelog#8-0-0)   | Added `clientCertificates` option.                                                    |
+| [7.0.0](/guides/references/changelog#7-0-0)   | Added `e2e` and `component` options.                                                  |
+| [7.0.0](/guides/references/changelog#7-0-0)   | Added `redirectionLimit` option.                                                      |
+| [6.1.0](/guides/references/changelog#6-1-0)   | Added `scrollBehavior` option.                                                        |
+| [5.2.0](/guides/references/changelog#5-2-0)   | Added `includeShadowDom` option.                                                      |
+| [5.0.0](/guides/references/changelog#5-0-0)   | Added `retries` configuration.                                                        |
+| [5.0.0](/guides/references/changelog#5-0-0)   | Renamed `blacklistHosts` configuration to `blockHosts`.                               |
+| [4.1.0](/guides/references/changelog#4-12-0)  | Added `screenshotOnRunFailure` configuration.                                         |
+| [4.0.0](/guides/references/changelog#4-0-0)   | Added `firefoxGcInterval` configuration.                                              |
+| [3.5.0](/guides/references/changelog#3-5-0)   | Added `nodeVersion` configuration.                                                    |
 
 ## See also
 

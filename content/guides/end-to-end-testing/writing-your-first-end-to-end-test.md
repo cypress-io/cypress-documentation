@@ -12,17 +12,15 @@ title: Writing Your First E2E Test
 
 </Alert>
 
-<DocsVideo src="https://vimeo.com/237115455"></DocsVideo>
-
 ## Add a test file
 
 Assuming you've successfully
-[installed the Cypress App](/guides/getting-started/installing-cypress) and
-[opened the Cypress app](/guides/getting-started/opening-the-app), now it's time
-to add your first test. We're going to do this with the <strong>Create new empty
-spec</strong> button in the Cypress App.
+[installed Cypress](/guides/getting-started/installing-cypress) and
+[opened Cypress](/guides/getting-started/opening-the-app), now it's time to add
+your first test. We're going to do this with the <strong>Create new empty
+spec</strong> button.
 
-<DocsImage src="/img/guides/end-to-end-testing/writing-your-first-end-to-end-test/create-new-empty-spec.png" alt="The Cypress App with the Create new empty spec button highlighted"></DocsImage>
+<DocsImage src="/img/guides/end-to-end-testing/writing-your-first-end-to-end-test/create-new-empty-spec.png" alt="Cypress with the Create new empty spec button highlighted"></DocsImage>
 
 On clicking it, you should see a dialog where you can enter the name of your new
 spec. Just accept the default name for now.
@@ -34,11 +32,11 @@ and close it with the ✕ button.
 
 <DocsImage src="/img/guides/end-to-end-testing/writing-your-first-end-to-end-test/new-spec-added-confirmation.png" alt="The new spec confirmation dialog"></DocsImage>
 
-Once we've created that file, you should see the Cypress App immediately display
-it in the list of end-to-end specs. Cypress monitors your spec files for any
-changes and automatically displays any changes.
+Once we've created that file, you should see it immediately displayed in the
+list of end-to-end specs. Cypress monitors your spec files for any changes and
+automatically displays any changes.
 
-<DocsImage src="/img/guides/end-to-end-testing/writing-your-first-end-to-end-test/spec-list-with-new-spec.png" alt="The Cypress App showing the spec list with the newly created spec"></DocsImage>
+<DocsImage src="/img/guides/end-to-end-testing/writing-your-first-end-to-end-test/spec-list-with-new-spec.png" alt="Cypress showing the spec list with the newly created spec"></DocsImage>
 
 Even though we haven't written any code yet - that's okay - let's click on your
 new spec and watch Cypress launch it. Spoiler alert: it's probably going to
@@ -72,7 +70,7 @@ Over in the [Command Log](/guides/core-concepts/cypress-app#Command-Log) you'll
 see Cypress display the suite, the test and your first assertion (which should
 be passing in green).
 
-<DocsImage src="/img/guides/getting-started/e2e/v10/first-test.png" alt="My first test shown passing in the Cypress App"></DocsImage>
+<DocsImage src="/img/guides/getting-started/e2e/v10/first-test.png" alt="My first test shown passing in Cypress"></DocsImage>
 
 <Alert type="info">
 
@@ -114,9 +112,9 @@ describe('My First Test', () => {
 
 <DocsImage src="/img/guides/getting-started/e2e/v10/first-test-failing.png" alt="Failing test"></DocsImage>
 
-The [Cypress App](/guides/core-concepts/cypress-app) gives you a visual
-structure of suites, tests, and assertions. Soon you'll also see commands, page
-events, network requests, and more.
+[Cypress](/guides/core-concepts/cypress-app) gives you a visual structure of
+suites, tests, and assertions. Soon you'll also see commands, page events,
+network requests, and more.
 
 <Alert type="info">
 
@@ -181,8 +179,8 @@ describe('My First Test', () => {
 })
 ```
 
-Save the file and switch back over to the Cypress App. You might notice a few
-things:
+Save the file and switch back over to the Cypress Test Runner. You might notice
+a few things:
 
 1. The [Command Log](/guides/core-concepts/cypress-app#Command-Log) now shows
    the new `VISIT` action.
@@ -198,24 +196,32 @@ have failed.
 
 <DocsVideo src="/img/snippets/first-test-visit-30fps.mp4" title="First test with cy.visit()"></DocsVideo>
 
-<Alert type="danger">
+<Alert type="info">
 
-<strong class="alert-header">Only Test Apps You Control</strong>
+<strong class="alert-header">Testing Apps You Don't Control</strong>
 
-Although in this guide we are testing our example application:
-[`https://example.cypress.io`](https://example.cypress.io) - you **shouldn't**
-test applications you **don't control**. Why?
+In this guide we are testing our example application:
+[`https://example.cypress.io`](https://example.cypress.io). However you should
+think carefully about testing applications you **don't control**. Why?
 
-- They are liable to change at any moment which will break tests.
+- They have the potential to change at any moment which will break tests.
 - They may do A/B testing which makes it impossible to get consistent results.
-- They may detect you are a script and block your access (Google does this).
+- They may detect you are a script and block your access.
 - They may have security features enabled which prevent Cypress from working.
 
-The point of Cypress is to be a tool you use every day to build and test **your
-own applications**.
+Generally speaking, the point of Cypress is to be a tool you use every day to
+build and test your own applications, not a general purpose web automation tool.
+However, this is a guideline rather than a hard-and-fast rule and there are a
+number of good reasons to make exceptions for certain kinds of application:
 
-Cypress is not a **general purpose** web automation tool. It is poorly suited
-for scripting live, production websites not under your control.
+- They are specifically designed to integrate with third parties, e.g. SSO
+  providers.
+- They provide you with a complementary service, e.g. SaaS control panels or
+  analytics.
+- They reuse your content or provide plugins for an app you control.
+
+The key here is to carefully weigh the benefits of the tests in question against
+the possible disruption and flake these sorts of tests can introduce.
 
 </Alert>
 
@@ -351,6 +357,11 @@ class. Then we can use the [.type()](/api/commands/type) command to enter text
 into the selected input. Finally, we can verify that the value of the input
 reflects the text that was typed with another [.should()](/api/commands/should).
 
+In general, the structure of your test should flow query -> query -> command or
+assertion(s). It's best practice not to chain anything after an action command;
+for more details on why this is, see our guide on
+[retry-ability](/guides/core-concepts/retry-ability).
+
 ```js
 describe('My First Test', () => {
   it('Gets, types and asserts', () => {
@@ -362,11 +373,11 @@ describe('My First Test', () => {
     // includes '/commands/actions'
     cy.url().should('include', '/commands/actions')
 
-    // Get an input, type into it and verify
-    // that the value has been updated
-    cy.get('.action-email')
-      .type('fake@email.com')
-      .should('have.value', 'fake@email.com')
+    // Get an input, type into it
+    cy.get('.action-email').type('fake@email.com')
+
+    //  Verify that the value has been updated
+    cy.get('.action-email').should('have.value', 'fake@email.com')
   })
 })
 ```
@@ -393,7 +404,7 @@ the new page. If we read it out loud, it might sound like:
 > 5. Assert it includes: `/commands/actions`
 > 6. Get the input with the `action-email` class
 > 7. Type `fake@email.com` into the input
-> 8. Assert the input reflects the new value
+> 8. Get the input again and assert that it reflects the new value
 
 Or in the Given, When, Then syntax:
 
@@ -442,13 +453,25 @@ These various timeouts are defined in the
 
 </Alert>
 
+## Record Tests with Cypress Studio
+
+If you want a minimal code approach to creating tests, you can use
+[Cypress Studio](/guides/references/cypress-studio) to record your browser
+interactions and generate tests. Visit our
+[guide](/guides/references/cypress-studio) for more information.
+
 ## Next steps
 
+- Take our free
+  [Testing your first application](https://learn.cypress.io/testing-your-first-application)
+  course.
 - Learn more about the [Cypress App](/guides/core-concepts/cypress-app) UI.
 - Start [testing your app](/guides/end-to-end-testing/testing-your-app).
 - Set up
   [intelligent code completion](/guides/tooling/IDE-integration#Intelligent-Code-Completion)
   for Cypress commands and assertions.
+- Record your test results to [Cypress Cloud](/guides/cloud/introduction) for
+  advanced features like parallelization, flake detection, and more.
 - Check out the <Icon name="github"></Icon>
   [Cypress Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app)
   for practical demonstrations of Cypress testing practices, configuration, and

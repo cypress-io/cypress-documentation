@@ -46,9 +46,9 @@ us write our tests and guide feature implementation.
 
 By the end of this tutorial, you will have a feel for what it is like to test
 your application with Cypress while implementing features. You will gain
-experience with many of the Cypress [commands](/api/api/table-of-contents) and
-see how Cypress can help you build your application while creating a great
-safety net of tests along the way.
+experience with many of the Cypress [commands](/api/table-of-contents) and see
+how Cypress can help you build your application while creating a great safety
+net of tests along the way.
 
 We have a lot of ground to cover, so let's get started!
 
@@ -94,12 +94,11 @@ some best practices like using `beforeEach` and defining our application's
 
 ### 3. Form submission and XHRs
 
-We will implement form submission for our todo app, leveraging
-[`cy.server()`](/api/commands/server) and [`cy.route()`](/api/commands/route) to
-stub calls to our API. We will iterate on our test and implementation, focusing
-on the application's "happy path" first. Once our form is working, we'll use
-another stubbed XHR call to setup a failure scenario and implement the code to
-properly display an error message.
+We will implement form submission for our todo app, leveraging `cy.server()` and
+`cy.route()` to stub calls to our API. We will iterate on our test and
+implementation, focusing on the application's "happy path" first. Once our form
+is working, we'll use another stubbed XHR call to setup a failure scenario and
+implement the code to properly display an error message.
 
 <Icon name="github"></Icon>
 [Get the completed code for this lesson on GitHub](https://github.com/cypress-io/cypress-tutorial-build-todo/tree/03_form_sub)
@@ -109,10 +108,9 @@ properly display an error message.
 ### 4. Loading data with fixtures
 
 We will implement the initial data load for our todo app, leveraging
-[`cy.server()`](/api/commands/server) and [`cy.route()`](/api/commands/route) to
-stub the API call to load our data. We will use
-[fixture data](/api/commands/fixture#Shortcuts) to seed our application state.
-As we iterate on our test and app code, we will create and use a
+`cy.server()` and `cy.route()` to stub the API call to load our data. We will
+use [fixture data](/api/commands/fixture#Shortcuts) to seed our application
+state. As we iterate on our test and app code, we will create and use a
 [custom command](/api/cypress-api/custom-commands) to avoid unnecessary code
 duplication and keep our tests clean and readable.
 
@@ -171,7 +169,7 @@ feature, we will encounter a problem with our code and look at how Cypress can
 help us debug our code. We will use the
 [Cypress Command Log](/guides/core-concepts/cypress-app#Command-Log) to narrow
 down our problem. Then, we can use the
-[Developer Tools right in the Cypress App](/guides/guides/debugging#Using-the-Developer-Tools)
+[Developer Tools right in Cypress](/guides/guides/debugging#Using-the-Developer-Tools)
 to step through the code to dig into the issue. We'll even see how we can update
 application state while debugging and let our test confirm our theory about the
 cause of the bug. Once the debugging is complete, we will refactor our code to

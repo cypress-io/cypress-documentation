@@ -36,7 +36,7 @@ Pass in an options object to change the default behavior of `cy.setCookie()`.
 | Option     | Default                                                        | Description                                                                                                                                                                                                           |
 | ---------- | -------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `log`      | `true`                                                         | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log)                                                                                                                              |
-| `domain`   | `window.location.hostname`                                     | The domain the cookie is visible to                                                                                                                                                                                   |
+| `domain`   | Hostname of the current URL                                    | The domain the cookie is visible to                                                                                                                                                                                   |
 | `expiry`   | 20 years into the future                                       | When the cookie expires, specified in seconds since [Unix Epoch](https://en.wikipedia.org/wiki/Unix_time).                                                                                                            |
 | `httpOnly` | `false`                                                        | Whether the cookie is an HTTP only cookie                                                                                                                                                                             |
 | `path`     | `/`                                                            | The cookie path                                                                                                                                                                                                       |
@@ -125,6 +125,6 @@ following:
 
 - [`cy.clearCookie()`](/api/commands/clearcookie)
 - [`cy.clearCookies()`](/api/commands/clearcookies)
-- [Cypress Cookies API](/api/cypress-api/cookies)
 - [`cy.getCookie()`](/api/commands/getcookie)
 - [`cy.getCookies()`](/api/commands/getcookies)
+- [`Cypress.Cookies.debug()`](/api/cypress-api/cookies)

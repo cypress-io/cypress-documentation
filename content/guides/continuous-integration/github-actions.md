@@ -49,6 +49,31 @@ running Cypress tests. This action provides npm installation, custom caching,
 additional configuration options and simplifies setup of advanced workflows with
 Cypress in the GitHub Actions platform.
 
+### Explicit Version Number
+
+<Alert type="info">
+
+<strong class="alert-header">GitHub Action Version Number</strong>
+
+We recommend using the explicit version number of the Cypress GitHub Action to
+prevent accidentally running tests with a new version of the action that may
+have breaking changes.
+
+Read the
+[GitHub Action documentation](https://github.com/cypress-io/github-action#explicit-version)
+for more information
+
+</Alert>
+
+For Example:
+
+```yaml
+jobs:
+  cypress-run:
+    steps:
+      uses: cypress-io/github-action@v5.2.0
+```
+
 ## Basic Setup
 
 <DocsVideo src="https://youtube.com/embed/vVr7DXDdUks"></DocsVideo>
@@ -68,11 +93,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       # Install NPM dependencies, cache them correctly
       # and run all Cypress tests
       - name: Cypress run
-        uses: cypress-io/github-action@v4
+        uses: cypress-io/github-action@v5.x.x # use the explicit version number
         with:
           build: npm run build
           start: npm start
@@ -126,12 +151,12 @@ jobs:
     container: cypress/browsers:node12.18.3-chrome87-ff82
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       # Install NPM dependencies, cache them correctly
       # and run all Cypress tests
       - name: Cypress run
-        uses: cypress-io/github-action@v4
+        uses: cypress-io/github-action@v5.x.x # use the explicit version number
         with:
           # Specify Browser since container image is compile with Firefox
           browser: firefox
@@ -168,17 +193,17 @@ jobs:
     container: cypress/browsers:node12.18.3-chrome87-ff82
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Save build folder
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: build
           if-no-files-found: error
           path: build
 
       - name: Cypress install
-        uses: cypress-io/github-action@v4
+        uses: cypress-io/github-action@v5.x.x # use the explicit version number
         with:
           # Disable running of tests within install job
           runTests: false
@@ -203,10 +228,10 @@ jobs:
     container: cypress/browsers:node12.18.3-chrome87-ff82
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Download the build folders
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: build
           path: build
@@ -214,7 +239,7 @@ jobs:
       # Install NPM dependencies, cache them correctly
       # and run all Cypress tests
       - name: Cypress run
-        uses: cypress-io/github-action@v4
+        uses: cypress-io/github-action@v5.x.x # use the explicit version number
         with:
           # Specify Browser since container image is compile with Firefox
           browser: firefox
@@ -225,10 +250,9 @@ jobs:
 
 <DocsVideo src="https://youtube.com/embed/96Yn_IiQUJI"></DocsVideo>
 
-The [Cypress Dashboard](/guides/dashboard/introduction) offers the ability to
+[Cypress Cloud](/guides/cloud/introduction) offers the ability to
 [parallelize and group test runs](/guides/guides/parallelization) along with
-additional insights and [analytics](/guides/dashboard/analytics) for Cypress
-tests.
+additional insights and [analytics](/guides/cloud/analytics) for Cypress tests.
 
 GitHub Actions offers a
 [matrix strategy](https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idstrategymatrix)
@@ -272,17 +296,17 @@ jobs:
     container: cypress/browsers:node12.18.3-chrome87-ff82
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Cypress install
-        uses: cypress-io/github-action@v4
+        uses: cypress-io/github-action@v5.x.x # use the explicit version number
         with:
           # Disable running of tests within install job
           runTests: false
           build: yarn build
 
       - name: Save build folder
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: build
           if-no-files-found: error
@@ -329,16 +353,16 @@ jobs:
         containers: [1, 2, 3, 4, 5]
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Download the build folders
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: build
           path: build
 
       - name: 'UI Tests - Chrome'
-        uses: cypress-io/github-action@v4
+        uses: cypress-io/github-action@v5.x.x # use the explicit version number
         with:
           # we have already installed all dependencies above
           install: false
@@ -361,8 +385,7 @@ jobs:
 
 The above configuration using the `parallel` and `record` options of the
 [Cypress GitHub Action](https://github.com/marketplace/actions/cypress-io)
-requires setting up recording to the
-[Cypress Dashboard](https://on.cypress.io/dashboard).
+requires setting up recording to [Cypress Cloud](https://on.cypress.io/cloud).
 
 </Alert>
 
@@ -404,29 +427,28 @@ ui-chrome-tests:
       containers: [1, 2, 3, 4, 5]
 ```
 
-## Using the Cypress Dashboard with GitHub Actions
+## Using Cypress Cloud with GitHub Actions
 
 <DocsVideo src="https://youtube.com/embed/Oqq-_QZWzhg"></DocsVideo>
 
 In the GitHub Actions configuration we have defined in the previous section, we
-are leveraging three useful features of the
-[Cypress Dashboard](https://on.cypress.io/dashboard):
+are leveraging three useful features of
+[Cypress Cloud](https://on.cypress.io/cloud):
 
 1. [Recording test results with the `record: true` option](https://on.cypress.io/how-do-i-record-runs)
-   to the [Cypress Dashboard](https://on.cypress.io/dashboard):
+   to [Cypress Cloud](https://on.cypress.io/cloud):
 
-   - In-depth and shareable [test reports](/guides/dashboard/runs).
+   - In-depth and shareable [test reports](/guides/cloud/runs).
    - Visibility into test failures via quick access to error messages, stack
      traces, screenshots, videos, and contextual details.
-   - [Integrating testing with the pull-request (PR) process](/guides/dashboard/github-integration)
+   - [Integrating testing with the pull-request (PR) process](/guides/cloud/github-integration)
      via
-     [commit status check guards](/guides/dashboard/github-integration#Status-checks)
+     [commit status check guards](/guides/cloud/github-integration#Status-checks)
      and convenient
-     [test report comments](/guides/dashboard/github-integration#Pull-request-comments).
-   - [Detecting flaky tests](/guides/dashboard/flaky-test-management) and
-     surfacing them via
-     [Slack alerts](/guides/dashboard/flaky-test-management#Slack) or
-     [GitHub PR status checks](/guides/dashboard/flaky-test-management#GitHub).
+     [test report comments](/guides/cloud/github-integration#Pull-request-comments).
+   - [Detecting flaky tests](/guides/cloud/flaky-test-management) and surfacing
+     them via [Slack alerts](/guides/cloud/flaky-test-management#Slack) or
+     [GitHub PR status checks](/guides/cloud/flaky-test-management#GitHub).
 
 2. [Parallelizing test runs](/guides/guides/parallelization) and optimizing
    their execution via
@@ -434,11 +456,10 @@ are leveraging three useful features of the
    of test specs across CI machines with the `parallel: true` option.
 
 3. Organizing and consolidating multiple `cypress run` calls by labeled groups
-   into a single report within the.
-   [Cypress Dashboard](https://on.cypress.io/dashboard). In the example above we
-   use the `group: "UI - Chrome"` option to organize all UI tests for the Chrome
-   browser into a group labeled "UI - Chrome" in the
-   [Cypress Dashboard](https://on.cypress.io/dashboard) report.
+   into a single report within [Cypress Cloud](https://on.cypress.io/cloud). In
+   the example above we use the `group: "UI - Chrome"` option to organize all UI
+   tests for the Chrome browser into a group labeled "UI - Chrome" in the
+   [Cypress Cloud](https://on.cypress.io/cloud) report.
 
 ## Cypress Real World Example with GitHub Actions
 
@@ -471,10 +492,10 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Cypress run
-        uses: cypress-io/github-action@v4
+        uses: cypress-io/github-action@v5.x.x # use the explicit version number
         with:
           record: true
         env:
@@ -484,7 +505,7 @@ jobs:
 
 ### Pull requests commit message is `merge SHA into SHA`
 
-You can overwrite the commit message sent to the Dashboard by setting an
+You can overwrite the commit message sent to Cypress Cloud by setting an
 environment variable. See
 [Issue #124](https://github.com/cypress-io/github-action/issues/124) for more
 details.
@@ -498,14 +519,14 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Cypress run
-        uses: cypress-io/github-action@v4
+        uses: cypress-io/github-action@v5.x.x # use the explicit version number
         with:
           record: true
         env:
-          # overwrite commit message sent to Dashboard
+          # overwrite commit message sent to Cypress Cloud
           COMMIT_INFO_MESSAGE: ${{github.event.pull_request.title}}
           # re-enable PR comment bot
           COMMIT_INFO_SHA: ${{github.event.pull_request.head.sha}}

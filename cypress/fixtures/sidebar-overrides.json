@@ -1,12 +1,18 @@
 {
   "SIDEBAR_TEXT": {
-    "/guides/references/assertions": "Assertions"
+    "/guides/references/assertions": "Assertions",
+    "/guides/core-concepts/retry-ability": "Retry-ability",
+    "/guides/core-concepts/interacting-with-elements": "Interacting with Elements"
   },
   "CATEGORY_SLUG": {
-    "/guides/references/assertions": "references"
+    "/guides/references/assertions": "references",
+    "/guides/core-concepts/retry-ability": "core-concepts",
+    "/guides/core-concepts/interacting-with-elements": "core-concepts"
   },
   "PAGE_TITLE": {
-    "/guides/dashboard/introduction": "Dashboard",
+    "/guides/cloud/introduction": "Cypress Cloud",
+    "/guides/core-concepts/retry-ability": "Retry-ability",
+    "/guides/core-concepts/interacting-with-elements": "Interacting with Elements",
     "/guides/end-to-end-testing/protractor-to-cypress": "Migrating from Protractor to Cypress",
     "/guides/end-to-end-testing/writing-your-first-end-to-end-test": "Writing Your First E2E Test",
     "/guides/references/assertions": "Assertions",
@@ -23,7 +29,6 @@
     "/api/cypress-api/screenshot-api": "Cypress.Screenshot",
     "/api/cypress-api/keyboard-api": "Cypress.Keyboard",
     "/api/cypress-api/selector-playground-api": "Cypress.SelectorPlayground",
-    "/api/cypress-api/cypress-server": "Cypress.Server",
     "/api/cypress-api/arch": "Cypress.arch",
     "/api/cypress-api/browser": "Cypress.browser",
     "/api/cypress-api/config": "Cypress.config",
@@ -48,16 +53,12 @@
     "/api/plugins/after-screenshot-api": "After Screenshot API",
     "/examples/examples/tutorials": "Tutorial Videos",
     "/guides/component-testing/devs-vs-users": "Who Are You Testing For?",
-    "/guides/component-testing/component-framework-configuration": "Framework Configuration",
-    "/guides/component-testing/component-test-troubleshooting": "Component Troubleshooting",
-    "/guides/component-testing/quickstart-vue": "Quickstart: Vue",
-    "/guides/component-testing/props-vue": "Vue Components with Props",
-    "/guides/component-testing/events-vue": "Testing Vue Components with Emitted Events",
-    "/guides/component-testing/slots-vue": "Testing Vue Components with Slots",
-    "/guides/component-testing/custom-mount-vue": "Custom Mount Commands and Styles",
-    "/guides/component-testing/quickstart-react": "Quickstart: React",
-    "/guides/component-testing/testing-react": "Testing React Components",
-    "/guides/component-testing/events-react": "Testing React Components with Events",
-    "/guides/component-testing/custom-mount-react": "Custom Mount Commands for React"
+    "/guides/component-testing/overview": "Cypress Component Testing",
+    "/guides/component-testing/faq": "Component Testing FAQ",
+    "/guides/component-testing/component-framework-configuration": "Component Testing Config",
+    "/guides/component-testing/react/overview": "React Component Testing",
+    "/guides/component-testing/angular/overview": "Angular Component Testing",
+    "/guides/component-testing/vue/overview": "Vue Component Testing",
+    "/guides/component-testing/svelte/overview": "Svelte Component Testing"
   }
 }

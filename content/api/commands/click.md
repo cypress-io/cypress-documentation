@@ -4,6 +4,9 @@ title: click
 
 Click a DOM element.
 
+It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried) to
+chain further commands that rely on the subject after `.click()`.
+
 ## Syntax
 
 ```javascript
@@ -70,8 +73,9 @@ Pass in an options object to change the default behavior of `.click()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`.click()` yields the same subject it was given from the previous
-command.</li></List>
+- `.click()` yields the same subject it was given.
+- It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried)
+  to chain further commands that rely on the subject after `.click()`.
 
 ## Examples
 
@@ -246,7 +250,7 @@ following:
 ## See also
 
 - [`.check()`](/api/commands/check)
-- [`.click()` examples in kitchensink app](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/cypress/integration/2-advanced-examples/actions.spec.js#L67)
+- [`.click()` examples in kitchensink app](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/cypress/e2e/2-advanced-examples/actions.cy.js#L67)
 - [`.dblclick()`](/api/commands/dblclick)
 - [`.rightclick()`](/api/commands/rightclick)
 - [`.select()`](/api/commands/select)

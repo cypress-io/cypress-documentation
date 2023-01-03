@@ -8,9 +8,18 @@ defined below.
 
 <Alert type="info">
 
-A great place to define or overwrite commands is in your
-`cypress/support/commands.js` file, since it is loaded before any test files are
-evaluated via an import statement in the
+If you want your method to have builtin
+[retry-ability](/guides/core-concepts/retry-ability), and especially if you
+return a DOM element for further commands to act on, consider writing a
+[custom query](/api/cypress-api/custom-queries) instead.
+
+</Alert>
+
+<Alert type="info">
+
+We recommend defining queries is in your `cypress/support/commands.js` file,
+since it is loaded before any test files are evaluated via an import statement
+in the
 [supportFile](/guides/core-concepts/writing-and-organizing-tests#Support-file).
 
 </Alert>
@@ -91,7 +100,6 @@ ignore previously yielded subjects.
 Examples of parent commands:
 
 - [`cy.visit()`](/api/commands/visit)
-- [`cy.get()`](/api/commands/get)
 - [`cy.request()`](/api/commands/request)
 - [`cy.exec()`](/api/commands/exec)
 - [`cy.intercept()`](/api/commands/intercept)
@@ -165,21 +173,33 @@ cy.getSessionStorage('token').should('eq', 'abc123')
 #### Log in command using UI
 
 ```js
-Cypress.Commands.add('typeLogin', (user) => {
-  cy.get('input[name=email]').type(user.email)
-
-  cy.get('input[name=password]').type(user.password)
+Cypress.Commands.add('loginViaUi', (user) => {
+  cy.session(
+    user,
+    () => {
+      cy.visit('/login')
+      cy.get('input[name=email]').type(user.email)
+      cy.get('input[name=password]').type(user.password)
+      cy.click('button#login')
+      cy.get('h1').contains(`Welcome back ${user.name}!`)
+    },
+    {
+      validate: () => {
+        cy.getCookie('auth_key').should('exist')
+      },
+    }
+  )
 })
 ```
 
 ```js
-cy.typeLogin({ email: 'fake@email.com', password: 'Secret1' })
+cy.loginViaUi({ email: 'fake@email.com', password: '$ecret1', name: 'johndoe' })
 ```
 
 #### Log in command using request
 
 ```javascript
-Cypress.Commands.add('login', (userType, options = {}) => {
+Cypress.Commands.add('loginViaApi', (userType, options = {}) => {
   // this is an example of skipping your UI and logging in programmatically
 
   // setup some basic types
@@ -224,10 +244,10 @@ Cypress.Commands.add('login', (userType, options = {}) => {
 
 ```javascript
 // can start a chain off of cy
-cy.login('admin')
+cy.loginViaApi('admin')
 
 // can be chained but will not receive the previous subject
-cy.get('button').login('user')
+cy.get('button').loginViaApi('user')
 ```
 
 #### Log out command using UI
@@ -237,6 +257,8 @@ Cypress.Commands.add('logout', () => {
   cy.contains('Login').should('not.exist')
   cy.get('.avatar').click()
   cy.contains('Logout').click()
+  cy.get('h1').contains('Login')
+  cy.getCookie('auth_key').should('not.exist')
 })
 ```
 
@@ -302,10 +324,8 @@ The previous subject will automatically be yielded to the callback function.
 Examples of child commands:
 
 - [`.click()`](/api/commands/click)
+- [`.submit()`](/api/commands/submit)
 - [`.trigger()`](/api/commands/trigger)
-- [`.find()`](/api/commands/find)
-- [`.should()`](/api/commands/should)
-- [`.as()`](/api/commands/as)
 
 #### Custom `console` command
 
@@ -374,7 +394,6 @@ with an existing subject or without one.
 
 Examples of dual commands:
 
-- [`cy.contains()`](/api/commands/contains)
 - [`cy.screenshot()`](/api/commands/screenshot)
 - [`cy.scrollTo()`](/api/commands/scrollto)
 - [`cy.wait()`](/api/commands/wait)
@@ -410,6 +429,15 @@ cy.get('#dialog').dismiss() // with subject
 You can also modify the behavior of existing Cypress commands. This is useful to
 always set some defaults to avoid creating another command that ends up using
 the original.
+
+<Alert type="warning">
+
+`Cypress.Commands.overwrite` can only overwrite commands, not queries. If you
+want to modify the behavior of a query, you'll need to add your updated version
+under a new name using
+[`Cypress.Commands.addQuery`](/api/cypress-api/custom-queries) instead.
+
+</Alert>
 
 #### Overwrite `visit` command
 
@@ -453,7 +481,7 @@ For more complex use cases feel free to overwrite existing commands.
 
 If you are typing into a password field, the password input is masked
 automatically within your application. But [.type()](/api/commands/type)
-automatically logs any typed content into the Cypress App's Command Log.
+automatically logs any typed content into the Cypress Command Log.
 
 ```js
 cy.get('#username').type('username@email.com')
@@ -465,7 +493,7 @@ cy.get('#password').type('superSecret123')
 You may want to mask some values passed to the [.type()](/api/commands/type)
 command so that sensitive data does not display in screenshots or videos of your
 test run. This example overwrites the [.type()](/api/commands/type) command to
-allow you to mask sensitive data in the Cypress App's Command Log.
+allow you to mask sensitive data in the Cypress Command Log.
 
 ```js
 Cypress.Commands.overwrite('type', (originalFn, element, text, options) => {
@@ -489,7 +517,7 @@ cy.get('#username').type('username@email.com')
 cy.get('#password').type('superSecret123', { sensitive: true })
 ```
 
-Now our sensitive password is not printed to the Cypress App's Command Log when
+Now our sensitive password is not printed to the Cypress Command Log when
 `sensitive: true` is passed as an option to [.type()](/api/commands/type).
 
 <DocsImage src="/img/api/custom-commands/custom-command-type-masked-password.png"></DocsImage>
@@ -527,25 +555,17 @@ Cypress.Commands.overwrite(
 )
 ```
 
-#### Overwrite `contains` command
+#### Overwrite `click` command
 
-This example overwrites [.contains()](/api/commands/contains) to always have the
-`matchCase` option set to `false`.
+This example overwrites [.click()](/api/commands/click) to always have the
+`waitForAnimations` option set to `false`.
 
 ```js
 Cypress.Commands.overwrite(
-  'contains',
-  (originalFn, subject, filter, text, options = {}) => {
-    // determine if a filter argument was passed
-    if (typeof text === 'object') {
-      options = text
-      text = filter
-      filter = undefined
-    }
-
-    options.matchCase = false
-
-    return originalFn(subject, filter, text, options)
+  'click',
+  (originalFn, subject, positionOrX, y, options = {}) => {
+    options.waitForAnimations = false
+    return originalFn(subject, positionOrX, y, options)
   }
 )
 ```
@@ -642,20 +662,19 @@ Validations always work as "or" not "and".
 You can also mix optional commands **with** validations.
 
 ```javascript
-// this is how .contains() is implemented
+// this is how .scrollTo() is implemented
 Cypress.Commands.add(
-  'contains',
+  'scrollTo',
   {
-    prevSubject: ['optional', 'window', 'document', 'element'],
+    prevSubject: ['optional', 'element', 'window'],
   },
-  (subject, options) => {
+  (subject, ...args) => {
     // subject could be undefined
     // since it's optional.
     //
-    // if it's present
-    // then it's window, document, or element.
-    // - when window or document we'll query the entire DOM.
-    // - when element we'll query only inside of its children.
+    // if it's present then it's and element or window.
+    // - when window, we'll scroll to a position on the page.
+    // - when element, we'll scroll to a position related to the element.
     if (subject) {
       // ...
     } else {
@@ -668,17 +687,16 @@ Cypress.Commands.add(
 **<Icon name="check-circle" color="green"></Icon> Valid Usage**
 
 ```javascript
-cy.contains() // no subject, but valid because it's optional
-cy.get('#main').contains() // has subject, and is `element`
-cy.window().contains() // has subject, and is `window`
-cy.document().contains() // has subject, and is `document`
-cy.visit().contains() // has subject, and since visit yields `window` it's ok
+cy.scrollTo() // no subject, but valid because it's optional
+cy.get('#main').scrollTo() // has subject, and is `element`
+cy.visit().scrollTo() // has subject, and since visit yields `window` it's ok
 ```
 
 **<Icon name="exclamation-triangle" color="red"></Icon> Invalid Usage**
 
 ```javascript
-cy.wrap(null).contains() // has subject, but not `element`, will error
+cy.document().scrollTo() // has subject, but it's a `document`, will error
+cy.wrap(null).scrollTo() // has subject, but it's `null`, will error
 ```
 
 ## Notes
@@ -811,9 +829,9 @@ it('paginates many search results', () => {
 
 #### 2. Don't overcomplicate things
 
-Every custom command you write is generally an abstraction over a series of
-internal commands. That means you and your team members exert much more mental
-effort to understand what your custom command does.
+Custom commands you write are generally an abstraction over a series of internal
+commands. That means you and your team members exert much more mental effort to
+understand what your custom command does.
 
 There's no reason to add this level of complexity when you're only wrapping a
 couple commands.

@@ -22,7 +22,10 @@ to have. In a sense they prevent you from writing bad, slow, or flaky tests.
 - There will never be support for [multiple browser tabs](#Multiple-tabs).
 - You cannot use Cypress to drive
   [two browsers at the same time](#Multiple-browsers-open-at-the-same-time).
-- Each test is bound to a [single origin](#Same-origin).
+- Each test is bound to a single superdomain. Cross-origin navigation inside
+  tests can be enabled by using the [`cy.origin`](/api/commands/origin) command.
+  Please read our
+  [Cross Origin Testing Guide](/guides/guides/cross-origin-testing).
 
 #### Temporary trade-offs:
 
@@ -37,7 +40,6 @@ Many of these issues are currently being worked on or are on our
 - [Workarounds for the lack of a `cy.hover()` command.](/api/commands/hover)
 - [`cy.tab()` command.](https://github.com/cypress-io/cypress/issues/299)
 - [There is not any native or mobile events support.](https://github.com/cypress-io/cypress/issues/311#issuecomment-339824191)
-- [Testing file uploads is application specific.](https://github.com/cypress-io/cypress/issues/170#issuecomment-340012621)
 - [iframe support is somewhat limited, but does work.](https://github.com/cypress-io/cypress/issues/136)
 
 ## Permanent trade-offs
@@ -268,91 +270,3 @@ app.listen(8081, () => {})
 This avoids ever needing a second open browser, but still gives you an
 end-to-end test that provides 100% confidence that the two clients can
 communicate with each other.
-
-### Same-origin
-
-::include{file=partials/single-domain-workaround.md}
-
-Each test is limited to only visiting the domains that are determined to be of
-the same-origin rule.
-
-What is same-origin? Two URLs have the same origin if the protocol, port (if
-specified), and host are the same for both. Cypress automatically handles hosts
-of the same superdomain by injecting the
-[`document.domain`](https://developer.mozilla.org/en-US/docs/Web/API/Document/domain)
-property into the visited `text/html` pages, so a host of the same superdomain
-is considered fine.
-
-Given the URLs below, all have the same-origin compared to
-`https://www.cypress.io`.
-
-- `https://cypress.io`
-- `https://docs.cypress.io`
-- `https://example.cypress.io/commands/querying`
-
-The URLs below, however, will have different origins compared to
-`https://www.cypress.io`.
-
-- `http://www.cypress.io` (Different protocol)
-- `https://docs.cypress.io:81` (Different port)
-- `https://www.auth0.com/` (Different host of different superdomain)
-
-The `http://localhost` URLs differ if their ports are different. For example,
-the `http://localhost:3000` URL is considered to be a different origin from the
-`http://localhost:8080` URL.
-
-The rules are:
-
-- <Icon name="exclamation-triangle" color="red"></Icon> You **cannot**
-  [visit](/api/commands/visit) two domains of different origin in the same test.
-- <Icon name="check-circle" color="green"></Icon> You **can**
-  [visit](/api/commands/visit) two or more domains of different origin in
-  **different** tests.
-
-```javascript
-it('navigates', () => {
-  cy.visit('https://www.cypress.io')
-  cy.visit('https://docs.cypress.io') // yup all good
-})
-```
-
-```javascript
-it('navigates', () => {
-  cy.visit('https://apple.com')
-  cy.visit('https://google.com') // this will error
-})
-```
-
-```javascript
-it('navigates', () => {
-  cy.visit('https://apple.com')
-})
-
-// split visiting different origin in another test
-it('navigates to new origin', () => {
-  cy.visit('https://google.com') // yup all good
-})
-```
-
-This limitation exists because Cypress switches to the domain under each
-specific test when it runs.
-
-#### Other workarounds
-
-There are other ways of testing the interaction between 2 superdomains. Because
-the browser has a natural security barrier called `origin policy` this means
-that state like `localStorage`, `cookies`, `service workers` and many other APIs
-are not shared between them anyways.
-
-So what you do on one site does not directly affect another.
-
-As a best practice, you should not visit or interact with a 3rd party service
-not under your control. However, there are exceptions! If your organization uses
-Single Sign On (SSO) or OAuth then you might involve a 3rd party service other
-than your superdomain.
-
-We've written several other guides specifically about handling this situation.
-
-- [Best Practices: Visiting external sites](/guides/references/best-practices#Visiting-external-sites)
-- [Web Security: Common Workarounds](/guides/guides/web-security#Common-Workarounds)
-- [Recipes: Logging In - Single Sign On](/examples/examples/recipes#Logging-In)

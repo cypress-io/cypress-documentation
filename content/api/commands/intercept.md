@@ -11,13 +11,6 @@ Spy and stub network requests and responses.
 
 </Alert>
 
-<Alert type="bolt">
-
-`cy.intercept()` is the successor to `cy.route()` as of Cypress 6.0.0. See
-[Comparison to `cy.route`](#Comparison-to-cy-route).
-
-</Alert>
-
 <Alert type="warning">
 
 All intercepts are automatically cleared before every test.
@@ -121,20 +114,21 @@ glob-matched against the request using
 [`Cypress.minimatch`](/api/utilities/minimatch) with the `{ matchBase: true }`
 minimatch option applied.
 
-| Option     | Description                                                                                     |
-| ---------- | ----------------------------------------------------------------------------------------------- |
-| auth       | HTTP Basic Authentication (`object` with keys `username` and `password`)                        |
-| headers    | HTTP request headers (`object`)                                                                 |
-| hostname   | HTTP request hostname                                                                           |
-| https      | `true`: only secure (https://) requests, `false`: only insecure (http://) requests              |
-| method     | HTTP request method (matches any method by default)                                             |
-| middleware | `true`: match route first and in defined order, `false`: match route in reverse order (default) |
-| path       | HTTP request path after the hostname, including query parameters                                |
-| pathname   | Like `path`, but without query parameters                                                       |
-| port       | HTTP request port(s) (`number` or `Array`)                                                      |
-| query      | Parsed query string (`object`)                                                                  |
-| times      | Maximum number of times to match (`number`)                                                     |
-| url        | Full HTTP request URL                                                                           |
+| Option       | Description                                                                                                                                       |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| auth         | HTTP Basic Authentication (`object` with keys `username` and `password`)                                                                          |
+| headers      | HTTP request headers (`object`)                                                                                                                   |
+| hostname     | HTTP request hostname                                                                                                                             |
+| https        | `true`: only secure (https://) requests, `false`: only insecure (http://) requests                                                                |
+| method       | HTTP request method (matches any method by default)                                                                                               |
+| middleware   | `true`: match route first and in defined order, `false`: match route in reverse order (default)                                                   |
+| path         | HTTP request path after the hostname, including query parameters                                                                                  |
+| pathname     | Like `path`, but without query parameters                                                                                                         |
+| port         | HTTP request port(s) (`number` or `Array`)                                                                                                        |
+| query        | Parsed query string (`object`)                                                                                                                    |
+| resourceType | The resource type of the request. See ["Request object properties"](#Request-object-properties) for a list of possible values for `resourceType`. |
+| times        | Maximum number of times to match (`number`)                                                                                                       |
+| url          | Full HTTP request URL                                                                                                                             |
 
 See [examples](#With-RouteMatcher) below.
 
@@ -161,8 +155,7 @@ See ["Intercepted requests"][req] and
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-- `cy.intercept()` yields `null`.
-- `cy.intercept()` can be aliased, but otherwise cannot be chained further.
+- `cy.intercept()` yields `null`, but can be aliased.
 - Waiting on an aliased `cy.intercept()` route using
   [cy.wait()](/api/commands/wait) will yield an object that contains information
   about the matching request/response cycle. See
@@ -230,7 +223,7 @@ cy.intercept('GET', '**/users')
 
 ```js
 // Match any type of request with the pathname `/search`
-// and the query paramater 'q=some+terms'
+// and the query parameter 'q=some+terms'
 cy.intercept({
   pathname: '/search',
   query: {
@@ -972,9 +965,7 @@ From here, you can do several things with the intercepted request:
 
 ### Request object properties
 
-The request object (`req`) has several properties from the HTTP request itself.
-All of the following properties on `req` can be modified except for
-`httpVersion`:
+The request object (`req`) has several properties from the HTTP request itself:
 
 ```ts
 {
@@ -1005,6 +996,12 @@ All of the following properties on `req` can be modified except for
    * The HTTP version used in the request. Read only.
    */
   httpVersion: string
+  /**
+   * The resource type of the request. Read only.
+   */
+  resourceType: 'document' | 'fetch' | 'xhr' | 'websocket' | 'stylesheet'
+              | 'script' | 'image' | 'font' | 'cspviolationreport' | 'ping'
+              | 'manifest' | 'other'
 }
 ```
 
@@ -1453,7 +1450,7 @@ cy.intercept('/users?_limit=+(3|5)')
 Under the hood, `cy.intercept` uses the [minimatch](/api/utilities/minimatch)
 library with the `{ matchBase: true }` option applied for glob matching and
 provides access to it via the `Cypress` global. This enables you to test your
-pattern in your spec or in the Cypress App browser console.
+pattern in your spec or in the Cypress browser console.
 
 You can invoke the `Cypress.minimatch` with just two arguments - the URL
 (`string`) and the pattern (`string`), respectively - and if it yields `true`,
@@ -1485,16 +1482,6 @@ Cypress.minimatch('http://localhost/users?_limit=3', '**/users?_limit=+(3|5)', {
 })
 // true (plus debug messages)
 ```
-
-## Comparison to `cy.route()`
-
-Unlike [cy.route()](/api/commands/route), `cy.intercept()`:
-
-- can intercept all types of network requests including Fetch API, page loads,
-  XMLHttpRequests, resource loads, etc.
-- does not require calling [cy.server()](/api/commands/server) before use - in
-  fact, `cy.server()` does not influence `cy.intercept()` at all.
-- does not have method set to `GET` by default, but intercepts `*` methods.
 
 ## `cy.intercept()` and request caching
 
@@ -1580,15 +1567,16 @@ information about the request and response to the console:
 
 ## History
 
-| Version                                     | Changes                                                                                                                                                                                                                                                                                              |
-| ------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [7.6.0](/guides/references/changelog#7-0-0) | Added `query` option to `req` (The incoming request object yielded to request handler functions).                                                                                                                                                                                                    |
-| [7.0.0](/guides/references/changelog#7-0-0) | Removed `matchUrlAgainstPath` option from `RouteMatcher`, reversed handler ordering, added request events, removed substring URL matching, removed `cy.route2` alias, added `middleware` RouteMatcher option, renamed `res.delay()` to `res.setDelay()` and `res.throttle()` to `res.setThrottle()`. |
-| [6.4.0](/guides/references/changelog#6-4-0) | Renamed `delayMs` property to `delay` (backwards-compatible).                                                                                                                                                                                                                                        |
-| [6.2.0](/guides/references/changelog#6-2-0) | Added `matchUrlAgainstPath` option to `RouteMatcher`.                                                                                                                                                                                                                                                |
-| [6.0.0](/guides/references/changelog#6-0-0) | Renamed `cy.route2()` to `cy.intercept()`.                                                                                                                                                                                                                                                           |
-| [6.0.0](/guides/references/changelog#6-0-0) | Removed `experimentalNetworkStubbing` option and made it the default behavior.                                                                                                                                                                                                                       |
-| [5.1.0](/guides/references/changelog#5-1-0) | Added experimental `cy.route2()` command under `experimentalNetworkStubbing` option.                                                                                                                                                                                                                 |
+| Version                                       | Changes                                                                                                                                                                                                                                                                                              |
+| --------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [12.2.0](/guides/references/changelog#12-2-0) | Added `resourceType` property to `req` and `RouteMatcher`.                                                                                                                                                                                                                                           |
+| [7.6.0](/guides/references/changelog#7-0-0)   | Added `query` option to `req` (The incoming request object yielded to request handler functions).                                                                                                                                                                                                    |
+| [7.0.0](/guides/references/changelog#7-0-0)   | Removed `matchUrlAgainstPath` option from `RouteMatcher`, reversed handler ordering, added request events, removed substring URL matching, removed `cy.route2` alias, added `middleware` RouteMatcher option, renamed `res.delay()` to `res.setDelay()` and `res.throttle()` to `res.setThrottle()`. |
+| [6.4.0](/guides/references/changelog#6-4-0)   | Renamed `delayMs` property to `delay` (backwards-compatible).                                                                                                                                                                                                                                        |
+| [6.2.0](/guides/references/changelog#6-2-0)   | Added `matchUrlAgainstPath` option to `RouteMatcher`.                                                                                                                                                                                                                                                |
+| [6.0.0](/guides/references/changelog#6-0-0)   | Renamed `cy.route2()` to `cy.intercept()`.                                                                                                                                                                                                                                                           |
+| [6.0.0](/guides/references/changelog#6-0-0)   | Removed `experimentalNetworkStubbing` option and made it the default behavior.                                                                                                                                                                                                                       |
+| [5.1.0](/guides/references/changelog#5-1-0)   | Added experimental `cy.route2()` command under `experimentalNetworkStubbing` option.                                                                                                                                                                                                                 |
 
 ## See also
 
@@ -1596,8 +1584,7 @@ information about the request and response to the console:
 - [`cy.wait()`](/api/commands/wait)
 - [Network Requests Guide](/guides/guides/network-requests)
 - [Cypress Example Recipes](https://github.com/cypress-io/cypress-example-recipes#stubbing-and-spying)
-- [Kitchen Sink Examples](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/cypress/integration/2-advanced-examples/network_requests.spec.js)
-- [Migrating `cy.route()` to `cy.intercept()`](/guides/references/migration-guide#Migrating-cy-route-to-cy-intercept)
+- [Kitchen Sink Examples](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/cypress/e2e/2-advanced-examples/network_requests.cy.js)
 <!-- TODO add examples from the resources below to `cypress-example-recipes` repo -->
 - [Smart GraphQL Stubbing in Cypress](https://glebbahmutov.com/blog/smart-graphql-stubbing/)
   blog post

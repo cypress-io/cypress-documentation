@@ -6,9 +6,9 @@ title: Cypress App
 
 ## <Icon name="graduation-cap"></Icon> What you'll learn
 
-- The names and purposes of the visual parts of the Cypress app
+- The names and purposes of the visual parts of Cypress
 - How to use the Selector Playground for targeting your page elements
-- How to debug tests using the built-in features of the Cypress app
+- How to debug tests using the built-in features of Cypress
 
 </Alert>
 
@@ -21,17 +21,17 @@ Cypress testing experience.
 
 <Alert type="info">
 
-<strong class="alert-header">Dashboard Integration</strong>
+<strong class="alert-header">Cypress Cloud integration</strong>
 
-When you configure Cypress to record tests to the
-[Dashboard](/guides/dashboard/introduction), you'll see data from your latest
-recorded runs in the Cypress app. This increased visibility into your test
-history allows you to debug your tests faster and more effectively, all within
-your local workflow.
+When you configure the open-source Cypress app to record tests to
+[Cypress Cloud](/guides/cloud/introduction), you'll see data from your latest
+recorded runs directly in the Cypress app. This increased visibility into your
+test history allows you to debug your tests faster and more effectively, all
+within your local workflow.
 
-The data used by these features is pulled from the Dashboard, so they will only
+The data used by these features is pulled from Cypress Cloud, so they will only
 reflect test results that were
-[recorded](/guides/dashboard/projects#Set-up-a-project-to-record).
+[recorded](/guides/cloud/projects#Set-up-a-project-to-record).
 
 If you're not sure whether you're logged in, you can always check using the
 profile control in the top right of the window.
@@ -78,11 +78,11 @@ statuses. Results are scoped to your current git branch if available, falling
 back to the default branch if not, then finally all branches.
 
 With this intelligence you can monitor, run, and fix tests locally within CI
-workflows, and then further dig into your results by clicking through to the
-Dashboard.
+workflows, and then further dig into your results by clicking through to Cypress
+Cloud.
 
-The runs data is sourced from the Dashboard (see [note above](#Overview)) so
-should be the same everywhere.
+The runs data is sourced from Cypress Cloud (see [note above](#Overview)) so it
+will be the same everywhere.
 
 #### Average duration
 
@@ -90,21 +90,74 @@ This column indicates the time taken to run the entire spec file, averaged over
 the last four runs, so that you can quickly identify and take action to improve
 the performance of your long-running tests.
 
-Again, this analysis comes from the Dashboard.
+Again, this analysis comes from Cypress Cloud.
+
+#### Flake annotation
+
+<Alert type="info">
+
+<strong class="alert-header">What is a flaky test?</strong>
+
+A test is considered to be [flaky](/guides/cloud/flaky-test-management) when it
+can pass and fail across multiple retry attempts without any code changes.
+
+</Alert>
+
+Specs with flaky tests are flagged with an indicator beside the spec name. This
+means you can easily discern which areas of your application might result in an
+unreliable user experience.
+
+The flake indicator will display if any tests in the given spec have been flaky
+in your latest runs (limited to 4). Hovering over the indicator will show a
+tooltip with the following analytics, based off the last 50 runs:
+
+- Rate (flaky runs divided by total runs)
+- Severity (flaky rate at a glance)
+- Last flaky (how many runs ago)
+
+Clicking on the flake indicator will take you to the spec’s
+[Flaky Test Analytics in Cypress Cloud](https://cloud.cypress.io/projects/7s5okt/analytics/flaky-tests).
+
+#### Running Specs
+
+<DocsImage src="/img/guides/core-concepts/cypress-app/spec-page.png" alt="Spec Explorer"></DocsImage>
+
+To run a spec, simply click the row with the spec you would like to run. You
+will be taken to the [Test Runner](#The-Test-Runner) and the spec will execute.
+You can narrow down the list of specs by typing into the search bar (1).
+
+It is also possible to run multiple specs sequentially using the
+[`experimentalRunAllSpecs`](/guides/references/experiments#End-to-End-Testing)
+(2).
+
+<Alert type="warning">
+
+<strong class="alert-header">Experimental Run All Specs</strong>
+
+`experimentalRunAllSpecs` currently works with End to End Testing.
+
+Running multiple specs sequentially is currently an
+[experimental feature](/guides/references/configuration#Experiments) and it may
+change in the future. There are some known limitations outlined in this
+[GitHub Discussion](https://github.com/cypress-io/cypress/discussions/21628).
+
+Running a large number of specs sequentially can consume more resources.
+
+</Alert>
 
 ### Project Runs
 
 <DocsImage src="/img/guides/core-concepts/cypress-app/recorded-runs.png" alt="Recorded Runs"></DocsImage>
 
 This screen shows detailed information about the most recently recorded
-[test runs](/guides/dashboard/runs) across all git branches, latest first. This
-data comes from the Dashboard (see [note above](#Overview)) so should be the
-same everywhere.
+[test runs](/guides/cloud/runs) across all git branches, latest first. This data
+comes from Cypress Cloud (see [note above](#Overview)) so should be the same
+everywhere.
 
 The title of each run is taken from the
 [git commit message](https://www.educative.io/edpresso/git-commit-message-simply-explained)
 for that change, and clicking on it will take you to the corresponding run page
-in the Dashboard.
+in Cypress Cloud.
 
 ## The Test Runner
 
@@ -116,11 +169,10 @@ the Application or Component Under Test, and exploring its DOM.
 
 ## Command Log
 
-The lefthand side of the Cypress app is a visual representation of your test
+The left-hand side of the Test Runner is a visual representation of your test
 suite. Each test block is properly nested and each test, when clicked, displays
-every Cypress command and assertion executed within the test's block as well as
-any command or assertion executed in relevant `before`, `beforeEach`,
-`afterEach`, and `after` hooks.
+every Cypress command executed within the test's block as well as any commands
+executed in relevant `before`, `beforeEach`, `afterEach`, and `after` hooks.
 
 <DocsImage src="/img/guides/core-concepts/cypress-app/command-log.png" alt="Cypress app" width-600></DocsImage>
 
@@ -132,12 +184,11 @@ file where the code is located. Clicking on this link will open the file in your
 
 <DocsImage src="/img/guides/core-concepts/cypress-app/open-file-in-IDE.gif" alt="Open file in your IDE"></DocsImage>
 
-### Time Traveling
+### Time traveling
 
-Each command and assertion, when hovered over, restores the Application or
-Component Under Test (righthand side) to the state it was in when that command
-executed. This allows you to **time travel** back to previous states when
-testing.
+Each command, when hovered over, restores the Application or Component Under
+Test (right-hand side) to the state it was in when that command executed. This
+allows you to **time travel** back to previous states when testing.
 
 <Alert type="info">
 
@@ -149,7 +200,7 @@ you may want to lower the `numTestsKeptInMemory` in your
 </Alert>
 
 In the following example, hovering over the `CONTAINS` command in the Command
-Log changes the state of the Cypress app:
+Log changes the state of the [AUT](#Application-Under-Test) preview:
 
 <DocsImage src="/img/guides/core-concepts/cypress-app/first-test-hover-contains.png" alt="Hovering over the contains tab highlights the dom element in the App in the Cypress app"></DocsImage>
 
@@ -163,12 +214,12 @@ the URL that was present when the snapshot was taken.
 
 <DocsImage src="/img/guides/core-concepts/cypress-app/first-test-url-revert.png" alt="The url address bar shows https://example.cypress.io/"></DocsImage>
 
-### Pinning Snapshots
+### Pinning snapshots
 
-Each command, assertion, or error, when clicked on, displays extra information
-in the dev tools console. Clicking also **pins** the Application or Component
-Under Test (righthand side) to its previous state, or **snapshot**, when the
-command executed.
+Each command, when clicked on, displays extra information in the dev tools
+console. Clicking also **pins** the Application or Component Under Test
+(right-hand side) to its previous state, or **snapshot**, when the command
+executed.
 
 In the following example, clicking on the `CLICK` command highlights it in
 purple, and does three other things worth noting:
@@ -219,7 +270,7 @@ Notice these look different (they are gray and without a number).
 - Page Loads
 - Form Submissions
 
-### Instrument Panel
+### Instrument panel
 
 For certain commands like [`cy.intercept()`](/api/commands/intercept),
 [`cy.stub()`](/api/commands/stub), and [`cy.spy()`](/api/commands/spy), an extra
@@ -250,16 +301,16 @@ it('intercept command log', () => {
 
 <DocsImage src="/img/guides/core-concepts/cypress-app/instrument-panel-spies.png" alt="Spies Instrument Panel"></DocsImage>
 
-## Preview Pane
+## Preview pane
 
-The righthand side of the Cypress app is where the Application or Component
+The right-hand side of the Test Runner is where the Application or Component
 Under Test is rendered.
 
 ### Application Under Test <E2EOnlyBadge />
 
 In
 [E2E Testing](/guides/core-concepts/testing-types#What-is-End-to-end-Testing),
-the righthand side of the Cypress app is used to display the Application Under
+the right-hand side of the Test Runner is used to display the Application Under
 Test (AUT): the application that was navigated to using a
 [`cy.visit()`](/api/commands/visit) or any subsequent routing calls made from
 the visited application.
@@ -272,9 +323,9 @@ cy.visit('https://example.cypress.io')
 cy.title().should('include', 'Kitchen Sink')
 ```
 
-In the corresponding Application Preview below, you can see
-`https://example.cypress.io` is being displayed in the righthand side. Not only
-is the application visible, but it is fully interactable. You can open your
+In the corresponding application preview below, you can see
+`https://example.cypress.io` is being displayed in the right-hand side. Not only
+is the application visible, but it is fully interactive. You can open your
 developer tools to inspect elements as you would in your normal application. The
 DOM is completely available for debugging.
 
@@ -295,8 +346,8 @@ The image below shows that our application is displaying at `1000px` width,
 
 <DocsImage src="/img/guides/core-concepts/cypress-app/viewport-scaling.png" alt="Viewport Scaling"></DocsImage>
 
-_Note: The righthand side may also be used to display syntax errors in your test
-file that prevent the tests from running._
+_Note: The right-hand side may also be used to display syntax errors in your
+test file that prevent the tests from running._
 
 <DocsImage src="/img/guides/core-concepts/cypress-app/aut-error-e2e.png" alt="Errors"></DocsImage>
 
@@ -308,7 +359,7 @@ unexpected behaviors
 
 In
 [Component testing](/guides/core-concepts/testing-types#What-is-Component-Testing),
-the righthand side of the Cypress app is used to display the Component Under
+the right-hand side of the Test Runner is used to display the Component Under
 Test (CUT): the component that was mounted using the
 [`cy.mount()`](/api/commands/mount) command.
 
@@ -338,7 +389,7 @@ it('should have password input of type password', () => {
 </code-group-react-vue>
 
 In the corresponding Component Preview below, you can see the the `LoginForm`
-component is being displayed in the righthand side. Not only is the component
+component is being displayed in the right-hand side. Not only is the component
 visible, but it is fully interactable. You can open your developer tools to
 inspect elements as you would in your normal application. The DOM is completely
 available for debugging.
@@ -360,8 +411,8 @@ The image below shows that our application is displaying at `500px` width,
 
 <DocsImage src="/img/guides/core-concepts/cypress-app/viewport-scaling-ct.png" alt="Cypress app showing mounted component test viewport scale"></DocsImage>
 
-_Note: The righthand side may also be used to display syntax errors in your spec
-file that prevent the tests from running._
+_Note: The right-hand side may also be used to display syntax errors in your
+spec file that prevent the tests from running._
 
 <DocsImage src="/img/guides/core-concepts/cypress-app/aut-error-ct.png" alt="Cypress app showing error as application under test"></DocsImage>
 
@@ -378,6 +429,14 @@ The Selector Playground is an interactive feature that helps you:
 - See what element matches a string of text.
 
 <DocsVideo src="/img/snippets/selector-playground.mp4" title="Selector Playground demo"></DocsVideo>
+
+<Alert type="info">
+
+Needing a low code approach to create tests? Use
+[Cypress Studio](/guides/references/cypress-studio) to record your browser
+interactions.
+
+</Alert>
 
 ### Uniqueness
 
@@ -397,7 +456,7 @@ API to control the selectors you want returned.
 
 </Alert>
 
-### Best Practices
+### Best practices
 
 You may find yourself struggling to write good selectors because:
 
@@ -412,10 +471,10 @@ Please read our
 helping you target elements and prevent tests from breaking on CSS or JS
 changes.
 
-### Finding Selectors
+### Finding selectors
 
 To open the Selector Playground, click the <Icon name="crosshairs"></Icon>
-button next to the URL at the top of the Cypress app. Hover over elements in
+button next to the URL at the top of the Test Runner. Hover over elements in
 your app to preview a unique selector for that element in the tooltip.
 
 <DocsImage src="/img/guides/core-concepts/cypress-app/open-selector-playground.gif" alt="Opening selector playground and hovering over elements"></DocsImage>
@@ -426,18 +485,18 @@ console ( <Icon name="terminal"></Icon> ).
 
 <DocsImage src="/img/guides/core-concepts/cypress-app/copy-selector-in-selector-playground.gif" alt="Clicking an element, copying its selector to clipboard, printing it to the console"></DocsImage>
 
-### Running Experiments
+### Running experiments
 
 The box at the top that displays the selector is also a text input.
 
-#### Editing a Selector
+#### Editing a selector
 
 When you edit the selector, it will show you how many elements match and
 highlight those elements in your app.
 
 <DocsImage src="/img/guides/core-concepts/cypress-app/typing-a-selector-to-find-in-playground.gif" alt="Type a selector to see what elements it matches"></DocsImage>
 
-#### Switching to Contains
+#### Switching to contains
 
 You can also experiment with what [`cy.contains()`](/api/commands/contains)
 would yield given a string of text. Click on `cy.get` and switch to
@@ -449,7 +508,7 @@ matches the text, even if multiple elements on the page contain the text.
 
 <DocsImage src="/img/guides/core-concepts/cypress-app/cy-contains-in-selector-playground.gif" alt="Experiment with cy.contains"></DocsImage>
 
-#### Disabling Highlights
+#### Disabling highlights
 
 If you would like to interact with your app while the Selector Playground is
 open, the element highlighting might get in the way. Toggling the highlighting
@@ -457,10 +516,10 @@ off will allow you to interact with your app more easily.
 
 <DocsImage src="/img/guides/core-concepts/cypress-app/turn-off-highlight-in-selector-playground.gif" alt="Turn off highlighting"></DocsImage>
 
-## Keyboard Shortcuts
+## Keyboard shortcuts
 
-There are keyboard shortcuts to quickly perform common actions from within the
-Cypress app.
+There are keyboard shortcuts to quickly perform common actions from within
+Cypress.
 
 | Key | Action                        |
 | --- | ----------------------------- |
@@ -486,7 +545,7 @@ debugging tools to help you understand a test. You can:
 
 ### Console output
 
-Besides Commands being interactive, they also output additional debugging
+Besides commands being interactive, they also output additional debugging
 information to your console.
 
 Open up your Dev Tools and click on the `GET` for the `.action-email` class
@@ -546,7 +605,7 @@ In action:
 
 ## History
 
-| Version                                     | Changes                                 |
-| ------------------------------------------- | --------------------------------------- |
-| [3.5.0](/guides/references/changelog#3-5-0) | Added keyboard shortcuts to Cypress app |
-| [1.3.0](/guides/references/changelog#1-3-0) | Added Selector Playground               |
+| Version                                     | Changes                             |
+| ------------------------------------------- | ----------------------------------- |
+| [3.5.0](/guides/references/changelog#3-5-0) | Added keyboard shortcuts to Cypress |
+| [1.3.0](/guides/references/changelog#1-3-0) | Added Selector Playground           |

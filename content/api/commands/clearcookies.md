@@ -2,13 +2,15 @@
 title: clearCookies
 ---
 
-Clear all browser cookies for current domain and subdomain.
+Clear browser cookies for a domain.
 
 <Alert type="warning">
 
 Cypress automatically clears all cookies _before_ each test to prevent state
-from being shared across tests. You shouldn't need to use this command unless
-you're using it to clear a specific cookie inside a single test.
+from being shared across tests when
+[test isolation](/guides/core-concepts/writing-and-organizing-tests#Test-Isolation)
+is enabled. You shouldn't need to use this command unless you're using it to
+clear specific cookies inside a single test or test isolation is disabled.
 
 </Alert>
 
@@ -24,7 +26,7 @@ cy.clearCookies(options)
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.clearCookies() // clear all cookies
+cy.clearCookies() // Clear cookies for the currrent domain
 ```
 
 ### Arguments
@@ -35,19 +37,19 @@ Pass in an options object to change the default behavior of `cy.clearCookies()`.
 
 | Option    | Default                                                        | Description                                                                              |
 | --------- | -------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `domain`  | Hostname of the current URL                                    | Clears the cookies from the specified domain                                             |
 | `log`     | `true`                                                         | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 | `timeout` | [`responseTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.clearCookies()` to resolve before [timing out](#Timeouts)           |
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`cy.clearCookies()` yields `null`.</li><li>`cy.clearCookies()` cannot
-be chained further.</li></List>
+- `cy.clearCookies()` yields `null`.
 
 ## Examples
 
 ### No Args
 
-#### Clear all cookies after logging in <E2EOnlyBadge />
+#### Clear cookies after logging in <E2EOnlyBadge />
 
 In this example, on first login our server sends us back a session cookie. After
 invoking `cy.clearCookies()` this clears the session cookie, and upon navigating
@@ -106,7 +108,7 @@ following:
 ## See also
 
 - [`cy.clearCookie()`](/api/commands/clearcookie)
-- [Cypress Cookies API](/api/cypress-api/cookies)
 - [`cy.getCookie()`](/api/commands/getcookie)
 - [`cy.getCookies()`](/api/commands/getcookies)
 - [`cy.setCookie()`](/api/commands/setcookie)
+- [`Cypress.Cookies.debug()`](/api/cypress-api/cookies)

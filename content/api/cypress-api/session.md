@@ -2,50 +2,108 @@
 title: Cypress.session
 ---
 
-`Cypress.session` is a collection of session-related helper methods intended to
-be used alongside the [`cy.session()`](/api/commands/session) command.
-
-<Alert type="warning">
-
-<strong class="alert-header"><Icon name="exclamation-triangle"></Icon>
-Experimental</strong>
-
-The `session` API is currently experimental, and can be enabled by setting the
-[`experimentalSessionSupport`](/guides/references/experiments) flag to `true` in
-the Cypress config or by using [`Cypress.config()`](/api/cypress-api/config) at
-the top of a spec file.
-
-Enabling this flag does the following:
-
-- It adds the [`cy.session()`](/api/commands/session) command for use in tests.
-- It adds the [`Cypress.session`](/api/cypress-api/session) API.
-- It adds the following new behaviors (that will be the default in a future
-  major update of Cypress) at the beginning of each test:
-  - The page is cleared (by setting it to `about:blank`).
-  - All active session data (cookies, `localStorage` and `sessionStorage`)
-    across all domains are cleared.
-- It overrides the
-  [`Cypress.Cookies.preserveOnce()`](/api/cypress-api/cookies#Preserve-Once) and
-  [`Cypress.Cookies.defaults()`](/api/cypress-api/cookies#Defaults) methods.
-
-Because the page is cleared before each test,
-[`cy.visit()`](/api/commands/visit) must be explicitly called in each test to
-visit a page in your application.
-
-</Alert>
+`Cypress.session` is a collection of async session-related helper methods
+intended to be used alongside the [`cy.session()`](/api/commands/session)
+command.
 
 ## Syntax
 
-Clear all saved sessions and re-run the current spec file.
-
 ```javascript
+// Clear all sessions saved on the backend, including cached global sessions.
 Cypress.session.clearAllSavedSessions()
+// Clear all storage and cookie date across all origins associated with the current session.
+Cypress.session.clearCurrentSessionData()
+// Get all storage and cookie data across all origins associated with the current session.
+Cypress.session.getCurrentSessionData()
+// Get all storage and cookie data saved on the backend associated with the provided session id.
+Cypress.session.getSession(id)
 ```
 
-This can also be done by clicking the "Clear All Sessions" button in the
+Clearing all session and automatically re-running the spec
+`Cypress.session.clearAllSavedSessions()` can also be done by clicking the
+"Clear All Sessions" button in the
 [Sessions Instrument Panel](/api/commands/session#The-Instrument-Panel).
 
 <DocsImage src="/img/api/session/sessions-panel.png" alt="Sessions Instrument Panel" ></DocsImage>
+
+### Arguments
+
+**<Icon name="angle-right"></Icon> id** **_(String)_**
+
+The name of the session used to retrieve data storage and cookie data.
+
+## Examples
+
+### Clearing the all session data
+
+By default, Cypress will clear the current session data **before** each test
+when `testIsolation` is enabled. You can also remove all cached session data
+with `Cypress.session.clearAllSavedSessions()`.
+
+```js
+Cypress.session.clearAllSavedSessions()
+```
+
+### Clearing the current session data when testIsolation is disabled
+
+By default, Cypress will clear the current session data **before** each test
+when `testIsolation` is enabled. If you have disabled `testIsolation` for a
+suite, it can be helpful to clear the current session data in a `before()` block
+to ensure the suite started in a clean test slate.
+
+```js
+describe('Dashboard', { testIsolation: false }, () => {
+  before(() => {
+    // ensure clean test slate for these tests
+    cy.then(Cypress.session.clearCurrentSessionData)
+  })
+})
+```
+
+### Verified the Applied Session Data
+
+To check all cookies, localStorage and sessionStorage that was applied after
+`cy.session()` completes, you can use `Cypress.session.getCurrentSessionData()`.
+This can be helpful for quickly analyzing the current browser context while
+writing your `cy.session()` command.
+
+Since this is an all-in-one helper of the `cy.getAllCookies()`,
+`cy.getAllLocalStorage()` and `cy.getAllSessionStorage()` commands, we generally
+recommend leveraging these commands for asserting the correct session data has
+been applied in the session validation block.
+
+```js
+it('debug session', () => {
+    cy.session('id', () => {
+        ...
+    })
+    .then(async () => {
+        const sessionData = await Cypress.session.getCurrentSessionData()
+        cy.debug()s
+    })
+})
+```
+
+### Debugging Cached Session Data
+
+If your session seems to be recreated more than expected, or doesn't seem to be
+applying the cookies, `localStorage` or `sessionStorage` data that you'd expect,
+you can use `Cypress.session.getSession(id)` to view what session data has been
+cached by `cy.session()`. If you are missing any data, your setup and/or
+validate function may not be waiting long enough for all attributes to be
+applied to there page before the `cy.session()` command saves and finishes.
+
+```js
+it('debug session', () => {
+    cy.session('id', () => {
+        ...
+    })
+    .then(async () => {
+        const sessionData = await Cypress.session.getSession('id')
+        cy.debug()
+    })
+})
+```
 
 ## See also
 

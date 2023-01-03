@@ -8,7 +8,7 @@ Cypress itself. In this situation, we recommend checking these support resources
 
 ## Support channels
 
-- Connect with our community in [Discord](https://discord.gg/ncdA3Jz63n)
+- Connect with our community in [Discord](https://discord.gg/cypress)
 - Search existing [GitHub issues](https://github.com/cypress-io/cypress/issues)
 - Search this documentation (search is in the top right) 😉
 - Search [Stack Overflow](https://stackoverflow.com/questions/tagged/cypress)
@@ -112,7 +112,7 @@ from a known filesystem path to bypass browser auto detection.
 
 You can see the full list of found browsers and their properties within the
 [resolved configuration](/guides/references/configuration#Resolved-Configuration)
-in the **Settings** tab of the Cypress App.
+in the **Settings** tab of Cypress.
 
 Another way to log what is found by Cypress is to run Cypress with the
 [DEBUG environment variable](#Print-DEBUG-logs) set to `cypress:launcher`. This
@@ -191,10 +191,10 @@ cypress open --browser C:/User/Application/browser.exe:chrome
 
 ## Allow the Cypress Chrome extension
 
-Cypress utilizes a Chrome extension within the Cypress App in order to run
-properly. If you or your company block specific Chrome extensions, this may
-cause problems with running Cypress. You will want to ask your administrator to
-allow the Cypress extension ID below:
+Cypress utilizes a Chrome extension in order to run properly. If you or your
+company block specific Chrome extensions, this may cause problems with running
+Cypress. You will want to ask your administrator to allow the Cypress extension
+ID below:
 
 ```sh
 caljajdfkjjjdehjdoimjkkakekklcck
@@ -202,13 +202,13 @@ caljajdfkjjjdehjdoimjkkakekklcck
 
 ## Allow Cypress URLs on VPNs
 
-To send the data and results of your tests to the
-[Dashboard](https://on.cypress.io/dashboard-introduction), Cypress needs free
+To send the data and results of your tests to
+[Cypress Cloud](https://on.cypress.io/cloud-introduction), Cypress needs free
 access to some URLs.
 
 If you are running the tests from within a restrictive VPN you will need to
-allow some URLs so that Cypress can have effective communication with the
-Dashboard.
+allow some URLs so that Cypress can have effective communication with Cypress
+Cloud.
 
 **The URLs are the following:**
 
@@ -216,7 +216,7 @@ Dashboard.
 - `https://assets.cypress.io` - **Asset CDN** (Org logos, icons, videos,
   screenshots, etc.)
 - `https://authenticate.cypress.io` - **Authentication API**
-- `https://dashboard.cypress.io` - **Dashboard app**
+- `https://cloud.cypress.io` - **Cypress Cloud**
 - `https://docs.cypress.io` - **Cypress documentation**
 - `https://download.cypress.io` - **CDN download of Cypress binary**
 - `https://on.cypress.io` - **URL shortener for link redirects**
@@ -230,7 +230,7 @@ an issue you have by clearing this app data.
 ### To clear App Data
 
 1. Open Cypress via `cypress open`
-2. Go to `File` -> `View App Data`
+2. Go to `Developer Tools` -> `View App Data`
 3. This will take you to the directory in your file system where your App Data
    is stored. If you cannot open Cypress, search your file system for a
    directory named `cy` whose content should look something like this:
@@ -302,25 +302,25 @@ server, reporter, driver, command line, etc. Each package writes debug logs
 under a different source. Here are a few common log sources and when you might
 want to enable them
 
-| Set `DEBUG` to value            | To enable debugging                                                   |
-| ------------------------------- | --------------------------------------------------------------------- |
-| `cypress:cli`                   | The top-level command line parsing problems                           |
-| `cypress:server:args`           | Incorrect parsed command line arguments                               |
-| `cypress:server:specs`          | Not finding the expected specs                                        |
-| `cypress:server:project`        | Opening the project                                                   |
-| `cypress:server:browsers`       | Finding installed browsers                                            |
-| `cypress:launcher`              | Launching the found browser                                           |
-| `cypress:server:video`          | Video recording                                                       |
-| `cypress:network:*`             | Adding network interceptors                                           |
-| `cypress:net-stubbing*`         | Network interception in the proxy layer                               |
-| `cypress:server:reporter`       | Problems with test reporters                                          |
-| `cypress:server:preprocessor`   | Processing specs                                                      |
-| `cypress:server:socket-e2e`     | Watching spec files                                                   |
-| `cypress:server:task`           | Invoking the `cy.task()` command                                      |
-| `cypress:server:socket-base`    | Debugging `cy.request()` command                                      |
-| `cypress:webpack`               | Bundling specs using webpack                                          |
-| `cypress:server:fixture`        | Loading fixture files                                                 |
-| `cypress:server:record:ci-info` | Git commit and CI information when recording to the Cypress Dashboard |
+| Set `DEBUG` to value            | To enable debugging                                           |
+| ------------------------------- | ------------------------------------------------------------- |
+| `cypress:cli`                   | The top-level command line parsing problems                   |
+| `cypress:server:args`           | Incorrect parsed command line arguments                       |
+| `cypress:server:specs`          | Not finding the expected specs                                |
+| `cypress:server:project`        | Opening the project                                           |
+| `cypress:server:browsers`       | Finding installed browsers                                    |
+| `cypress:launcher`              | Launching the found browser                                   |
+| `cypress:server:video`          | Video recording                                               |
+| `cypress:network:*`             | Adding network interceptors                                   |
+| `cypress:net-stubbing*`         | Network interception in the proxy layer                       |
+| `cypress:server:reporter`       | Problems with test reporters                                  |
+| `cypress:server:preprocessor`   | Processing specs                                              |
+| `cypress:server:socket-e2e`     | Watching spec files                                           |
+| `cypress:server:task`           | Invoking the `cy.task()` command                              |
+| `cypress:server:socket-base`    | Debugging `cy.request()` command                              |
+| `cypress:webpack`               | Bundling specs using webpack                                  |
+| `cypress:server:fixture`        | Loading fixture files                                         |
+| `cypress:server:record:ci-info` | Git commit and CI information when recording to Cypress Cloud |
 
 You can combine several areas together using the comma character. For example,
 to debug specs not being found, use:
@@ -433,8 +433,8 @@ verbose `cypress-verbose:server:util:process_profiler` debug stream.
 
 In some cases the [Command Log](/guides/core-concepts/cypress-app#Command-Log),
 responsible for displaying test commands, assertions, and statuses in the
-Cypress App, may cause performance issues resulting in slower tests or the
-browser crashing.
+Cypress Test Runner, may cause performance issues resulting in slower tests or
+the browser crashing.
 
 In order to isolate these issues, you can hide the Command Log by passing the
 environment variable below during `cypress open` or `cypress run`.
@@ -442,6 +442,13 @@ environment variable below during `cypress open` or `cypress run`.
 ```shell
 CYPRESS_NO_COMMAND_LOG=1 cypress run
 ```
+
+With this variable set, Cypress will skip rendering the Command Log entirely,
+and perform none of the usual DOM updates to display information about commands
+and statuses as the test runs.
+
+**Note:** With this variable set, screenshots and videos will not include the
+Command Log.
 
 ## Additional information
 
@@ -468,21 +475,19 @@ help! Please check out our
 [contributing guide](https://github.com/cypress-io/cypress/blob/develop/CONTRIBUTING.md)
 to learn about the many ways you can contribute.
 
-### Run the Cypress app by itself
+### Run Cypress by itself
 
 Cypress comes with an npm CLI module that parses the arguments, starts the Xvfb
-server (if necessary), and then opens the Cypress App built on top of
-[Electron](https://electronjs.org/).
+server (if necessary), and then opens Cypress.
 
-Some common situations on why you would want to run the Cypress app by itself
-are to:
+Some common situations on why you would want to run Cypress by itself are to:
 
 - debug Cypress not starting or hanging
 - debug problems related to the way CLI arguments are parsed by the npm CLI
   module
 
-Here is how you can launch Cypress application directly without the npm CLI
-module. First, find where the binary is installed using the
+Here is how you can launch Cypress directly without the npm CLI module. First,
+find where the binary is installed using the
 [cypress cache path](/guides/guides/command-line#cypress-cache-path) command.
 
 For example, on a Linux machine:
@@ -528,8 +533,8 @@ ldd /home/person/.cache/Cypress/3.3.1/Cypress/Cypress
 dependencies by copying them from one of our official Docker images.
 
 **Note:** verbose Electron logging might show warnings that still allow Cypress
-to work normally. For example, the Cypress App opens normally despite the scary
-output below:
+to work normally. For example, Cypress opens normally despite the scary output
+below:
 
 ```shell
 ELECTRON_ENABLE_LOGGING=true DISPLAY=10.130.4.201:0 /root/.cache/Cypress/3.3.1/Cypress/Cypress
@@ -540,7 +545,7 @@ ELECTRON_ENABLE_LOGGING=true DISPLAY=10.130.4.201:0 /root/.cache/Cypress/3.3.1/C
 You might need to use a local HTTP server (instead of file://): https://fb.me/react-devtools-faq", source: file:///root/.cache/Cypress/3.3.1/Cypress/resources/app/packages/desktop-gui/dist/app.js (73292)
 ```
 
-You can also see verbose Cypress logs when running the Cypress App binary
+You can also see verbose Cypress logs when running the Cypress binary
 
 ```shell
 DEBUG=cypress* DISPLAY=10.130.4.201:0 /root/.cache/Cypress/3.3.1/Cypress/Cypress --smoke-test --ping=101
@@ -577,8 +582,7 @@ Calling _exit(1). Core file will not be generated.
 ### Patch Cypress
 
 Cypress comes with an npm CLI module that parses the arguments, starts the Xvfb
-server (if necessary), and then opens the Cypress App built on top of
-[Electron](https://electronjs.org/).
+server (if necessary), and then opens Cypress.
 
 If you're encountering a bug in the current version of Cypress, you can
 implementing a temporary fix by patching Cypress in your own project. Here is an
@@ -626,43 +630,3 @@ workaround to the relevant Cypress GitHub issue. It will help us release an
 official fix faster.
 
 </Alert>
-
-### Edit the installed Cypress code
-
-The installed application comes with the fully transpiled, unobfuscated
-JavaScript source code that you can hack on. You might want to directly modify
-the installed app code to:
-
-- investigate a hard to recreate bug that happens on your machine
-- change the run-time behavior of Cypress before opening a pull request
-- have fun 🎉
-
-First, print where the binary is installed using the
-[cypress cache path](/guides/guides/command-line#cypress-cache-path) command.
-
-For example, on a Mac:
-
-```shell
-npx cypress cache path
-/Users/jane/Library/Caches/Cypress
-```
-
-Second, open the source code at the following path in any code editor. Make sure
-to substitute `3.3.1` for the desired version of the Cypress App you want to
-edit.
-
-```text
-/Users/jane/Library/Caches/Cypress/3.3.1/Cypress.app/Contents/Resources/app/packages/
-```
-
-You can change anything in the JavaScript code:
-
-<DocsImage src="/img/guides/troubleshooting/source-code.png" alt="Source code of the Cypress App in a text editor" ></DocsImage>
-
-When finished, if necessary, remove the edited Cypress App version and reinstall
-the Cypress official version to get back to the official released code.
-
-```shell
-rm -rf /Users/jane/Library/Caches/Cypress/3.3.1
-npm install cypress@3.3.1
-```

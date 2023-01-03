@@ -2,8 +2,6 @@
 title: Component Troubleshooting
 ---
 
-<CtBetaAlert></CtBetaAlert>
-
 This guide covers some common issues specific to Cypress Component Testing.
 
 For more general troubleshooting of Cypress, visit the main
@@ -13,7 +11,7 @@ migrating to Cypress v10.0, visit the
 
 ## Common Issues
 
-### Spec File Doesn't Appear in the Cypress App
+### Spec File Doesn't Appear in the Spec Explorer
 
 If something appears missing from the spec list, make sure the files have the
 [proper extension and the `specPattern` is correctly defined](/guides/component-testing/component-framework-configuration#Spec-Pattern-for-Component-Tests).
@@ -49,7 +47,7 @@ typings defined in the _cypress/support/component.ts_ file.
 
 Alternatively, you can move your typings to an external file and include that
 file in your _tsconfig.json_ file. See our
-[TypeScript Configuration](guides/tooling/typescript-support#Using-an-External-Typings-File)
+[TypeScript Configuration](/guides/tooling/typescript-support#Using-an-External-Typings-File)
 guide for more info on doing this.
 
 ### Cypress Types Conflict with Jest
@@ -96,21 +94,3 @@ files inside that folder should use.
 Don't forget to update your
 [`specPattern`](https://docs.cypress.io/guides/references/configuration#component)
 to include the new file location.
-
-### Next.js Global Style Error
-
-If you import the Next `styles/globals.css` in `cypress/support/component.js` to
-style your components, you'll get an error from Next about not allowing
-importing global css from files other than your main app file.
-
-To solve this, install the
-[`next-global-css`](https://www.npmjs.com/package/next-global-css) package and
-update the Next Webpack configuration.
-
-<Alert type="info">
-
-See our <Icon name="github"></Icon>
-[example Next.js application](https://github.com/cypress-io/cypress-component-testing-apps/blob/v10-complete/react-next12-ts/next.config.js)
-for a demonstration of this configuration.
-
-</Alert>

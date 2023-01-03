@@ -14,38 +14,6 @@ limitation determined by standard web security features of the browser. The
 <Alert type="warning">
 
 <strong class="alert-header"><Icon name="exclamation-triangle"></Icon>
-Experimental</strong>
-
-The `cy.origin()` command is currently experimental and can be enabled by
-setting
-the [`experimentalSessionAndOrigin`](/guides/references/experiments) flag
-to `true` in the Cypress config.
-
-Enabling this flag does the following:
-
-- It adds the [`cy.session()`](/api/commands/session) and `cy.origin()`
-  commands, and [`Cypress.session`](/api/cypress-api/session) API.
-- It adds the following new behaviors (that will be the default in a future
-  major version release of Cypress) at the beginning of each test:
-  - The page is cleared (by setting it to `about:blank`).
-  - All active session data (cookies, `localStorage` and `sessionStorage`)
-    across all domains are cleared.
-- It supersedes
-  the [`Cypress.Cookies.preserveOnce()`](/api/cypress-api/cookies#Preserve-Once) and
-  [`Cypress.Cookies.defaults()`](/api/cypress-api/cookies#Defaults) methods.
-- Cross-origin requests will no longer fail immediately, but instead, time out
-  based on [`pageLoadTimeout`](/guides/references/configuration#Timeouts).
-- Tests will no longer wait on page loads before moving on to the next test.
-
-Because the page is cleared before each
-test, [`cy.visit()`](/api/commands/visit) must be explicitly called in each test
-to visit a page in your application.
-
-</Alert>
-
-<Alert type="warning">
-
-<strong class="alert-header"><Icon name="exclamation-triangle"></Icon>
 Obstructive Third Party Code</strong>
 
 By default Cypress will search through the response streams coming from your
@@ -54,7 +22,10 @@ patterns commonly found in framebusting. When using the `cy.origin()` command,
 the third party code may also need to be modified for framebusting techniques.
 This can be enabled by setting the
 [`experimentalModifyObstructiveThirdPartyCode`](/guides/references/experiments)
-flag to `true` in the Cypress configuration.
+flag to `true` in the Cypress configuration. More information about this
+experimental flag can be found on our
+[Web Security](/guides/guides/web-security#Modifying-Obstructive-Third-Party-Code)
+page.
 
 </Alert>
 
@@ -91,10 +62,12 @@ cy.get('h1').contains('My cool site under test')
 
 ```js
 const hits = getHits()
-// cy.visit() should be inside cy.origin() callback
 cy.visit('https://www.acme.com/history/founder')
-cy.origin('https://www.acme.com', () => {
-  // Fails because origin was visited before cy.origin() block
+// To interact with cross-origin content, move this inside cy.origin() callback
+cy.get('h1').contains('About our Founder, Marvin Acme')
+// Domain must be a precise match including subdomain, i.e. www.acme.com
+cy.origin('acme.com', () => {
+  cy.visit('/history/founder')
   cy.get('h1').contains('About our Founder, Marvin Acme')
   // Fails because hits is not passed in via args
   cy.get('#hitcounter').contains(hits)
@@ -109,7 +82,8 @@ cy.get('h1').contains('My cool site under test')
 
 A URL specifying the secondary origin in which the callback is to be executed.
 This should at the very least contain a hostname, and may also include the
-protocol, port number & path. Query params are not supported.
+protocol, port number & path. The hostname must precisely match that of the
+secondary origin, including all subdomains. Query params are not supported.
 
 This argument will be used in two ways:
 
@@ -214,9 +188,10 @@ cy.origin('https://www.acme.com', () => {
 
 ### Navigating to secondary origin with cy.visit
 
-When navigating to a secondary origin using `cy.visit()`, it is essential to
-trigger the navigation **after** entering the origin callback, otherwise a
-cross-origin error will be thrown.
+When navigating to a secondary origin using `cy.visit()`, you can either
+navigate prior to or after the `cy.origin` block. Errors are no longer thrown on
+cross-origin navigation, but instead when commands interact with a cross-origin
+page.
 
 ```js
 // Do things in primary origin...
@@ -233,11 +208,42 @@ and the protocol defaults to `https`. When `cy.visit()` is called with the path
 `/history/founder`, the three are concatenated to make
 `https://www.acme.com/history/founder`.
 
+#### Alternative navigation
+
+```js
+// Do things in primary origin...
+
+cy.visit('https://www.acme.com/history/founder')
+
+// The cy.origin block is required to interact with the cross-origin page.
+cy.origin('www.acme.com', () => {
+  cy.get('h1').contains('About our Founder, Marvin Acme')
+})
+```
+
+Here the cross-origin page is visited prior to the `cy.origin` block, but any
+interactions with the window are performed within the block which can
+communicate with the cross-origin page
+
+#### <Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage
+
+```js
+// Do things in primary origin...
+
+cy.visit('https://www.acme.com/history/founder')
+
+// This command will fail, it's executed on localhost but the application is at acme.com
+cy.get('h1').contains('About our Founder, Marvin Acme')
+```
+
+Here `cy.get('h1')` fails because we are trying to interact with a cross-origin
+page outside of the cy.origin block, due to 'same-origin' restrictions, the
+'localhost' javascript context can't communicate with 'acme.com'.
+
 ### Navigating to secondary origin with UI
 
-When navigating to a secondary origin by clicking a link or button in the
-primary origin, it is essential to trigger the navigation _before_ entering the
-origin callback, otherwise a cross-origin error will be thrown.
+Navigating to a secondary origin by clicking a link or button in the primary
+origin is supported.
 
 ```js
 // Button in primary origin goes to https://www.acme.com
@@ -290,7 +296,7 @@ do this with `cy.origin()`.
 
 ```js
 Cypress.Commands.add('login', (username, password) => {
-  // Remember to pass in dependencies via `args`
+  // Remember to pass in arguments via `args`
   const args = { username, password }
   cy.origin('my-auth.com', { args }, ({ username, password }) => {
     // Go to https://auth-provider.com/login
@@ -309,9 +315,8 @@ performant. Up until now you could get around this problem by putting login code
 in the first test of your file, then performing subsequent tests reusing the
 same session.
 
-However, once the `experimentalSessionAndOrigin` flag is activated, this is no
-longer possible, since all session state is now cleared between tests. So to
-avoid this overhead we recommend you leverage the
+However, this is no longer possible, since all session state is now cleared
+between tests. So to avoid this overhead we recommend you leverage the
 [`cy.session()`](/api/commands/session) command, which allows you to easily
 cache session information and reuse it across tests. So now let's enhance our
 custom login command with `cy.session()` for a complete syndicated login flow
@@ -353,81 +358,6 @@ also look at how to use the `cy.session()` command to cache session information
 and reuse it across tests.
 
 ## Notes
-
-### Migrating existing tests
-
-Enabling the `experimentalSessionAndOrigin` flag makes the test-runner work
-slightly differently, and some test suites that rely on the existing behaviour
-may have to be updated. The most important of these changes is **test
-isolation**. This means that after every test, the current page is reset to
-`about:blank` and all active session data
-(cookies, `localStorage` and `sessionStorage`) across all domains are cleared.
-This change is opt-in for now, but will be standardized in a future major
-release of Cypress, so eventually all tests will need to be isolated.
-
-Before this change, it was possible to write tests such that you could, for
-example, log in to a CMS in the first test, change some content in the second
-test, verify the new version is displayed on a different URL in the third, and
-log out in the fourth. Here's a simplified example of such a test strategy.
-
-<Badge type="danger">Before</Badge> Multiple small tests against different
-origins
-
-```js
-it('logs in', () => {
-  cy.visit('https://supersecurelogons.com')
-  cy.get('input#password').type('Password123!')
-  cy.get('button#submit').click()
-})
-
-it('updates the content', () => {
-  cy.get('#current-user').contains('logged in')
-  cy.get('button#edit-1').click()
-  cy.get('input#title').type('Updated title')
-  cy.get('button#submit').click()
-  cy.get('.toast').type('Changes saved!')
-})
-
-it('validates the change', () => {
-  cy.visit('/items/1')
-  cy.get('h1').contains('Updated title')
-})
-```
-
-After switching on `experimentalSessionAndOrigin`, this flow would need to be
-contained within a single test. While this practice has always been
-[discouraged](/guides/references/best-practices#Having-tests-rely-on-the-state-of-previous-tests)
-we know some users have historically written tests this way, often to get around
-the same-origin restrictions. But with `cy.origin()` you no longer need these
-kind of brittle hacks, as your multi-origin logic can all reside in a single
-test, like the following.
-
-<Badge type="success">After</Badge> One big test using `cy.origin()`
-
-```js
-it('securely edits content', () => {
-  cy.origin('supersecurelogons.com', () => {
-    cy.visit('https://supersecurelogons.com')
-    cy.get('input#password').type('Password123!')
-    cy.get('button#submit').click()
-  })
-
-  cy.origin('mycms.com', () => {
-    cy.url().should('contain', 'cms')
-    cy.get('#current-user').contains('logged in')
-    cy.get('button#edit-1').click()
-    cy.get('input#title').type('Updated title')
-    cy.get('button#submit').click()
-    cy.get('.toast').type('Changes saved!')
-  })
-
-  cy.visit('/items/1')
-  cy.get('h1').contains('Updated title')
-})
-```
-
-Always remember,
-[Cypress tests are not unit tests](https://docs.cypress.io/guides/references/best-practices#Creating-tiny-tests-with-a-single-assertion).
 
 ### Serialization
 
@@ -473,6 +403,145 @@ of
 [restrictions on the data which may be passed](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm#things_that_dont_work_with_structured_clone)
 into the callback.
 
+### Dependencies / Sharing Code
+
+[ES module dynamic `import()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import#dynamic_imports)
+and/or
+[CommonJS `require()`](https://nodejs.org/en/knowledge/getting-started/what-is-require/)
+can be used within the callback to include [npm](https://www.npmjs.com/)
+packages and other files.
+
+<Alert type="warning">
+
+Using `import()` and `require()` within the callback requires enabling the
+[`experimentalOriginDependencies`](/guides/references/experiments) flag in the
+Cypress configuration and using version `5.15.0` or greater of the
+[`@cypress/webpack-preprocessor`](https://github.com/cypress-io/cypress/tree/master/npm/webpack-preprocessor).
+The `@cypress/webpack-preprocessor` is included in Cypress by default, but if
+your project installs its own version in the Cypress configuration, make sure it
+is version `5.15.0` or greater.
+
+If using an older version of the webpack or a different preprocessor, you'll see
+an error that includes the following text:
+
+_Using `require()` or `import()` to include dependencies requires enabling the
+`experimentalOriginDependencies` flag and using the latest version of
+`@cypress/webpack-preprocessor`._
+
+</Alert>
+
+<Alert type="warning">
+
+Using `require()` or `import()` within the callback from a `node_modules` plugin
+is not currently supported. We anticipate adding support with issue
+[#24976](https://github.com/cypress-io/cypress/issues/24976).
+
+</Alert>
+
+#### Example
+
+```js
+// ES modules
+cy.origin('somesite.com', async () => {
+  const _ = await import('lodash')
+  const utils = await import('../support/utils')
+
+  // ... use lodash and utils ...
+})
+
+// CommonJS
+cy.origin('somesite.com', () => {
+  const _ = require('lodash')
+  const utils = require('../support/utils')
+
+  // ... use lodash and utils ...
+})
+```
+
+#### Custom commands
+
+This makes it possible to share custom commands between tests run in primary and
+secondary origins. We recommend this pattern for setting up your
+[support file](/guides/core-concepts/writing-and-organizing-tests#Support-file)
+and setting up custom commands to run within the `cy.origin()` callback:
+
+`cypress/support/commands.js`:
+
+```js
+Cypress.Commands.add('clickLink', (label) => {
+  cy.get('a').contains(label).click()
+})
+```
+
+`cypress/support/e2e.js`:
+
+```js
+// makes custom commands available to all Cypress tests in this spec,
+// outside of cy.origin() callbacks
+import './commands'
+
+// code we only want run per test, so it shouldn't be run as part of
+// the execution of cy.origin() as well
+beforeEach(() => {
+  // ... code to run before each test ...
+})
+```
+
+`cypress/e2e/spec.cy.js`:
+
+```js
+before(() => {
+  // makes custom commands available to all subsequent cy.origin('somesite.com')
+  // calls in this spec. put it in your support file to make them available to
+  // all specs
+  cy.origin('somesite.com', () => {
+    require('../support/commands')
+  })
+})
+
+it('tests somesite.com', () => {
+  cy.origin('somesite.com', () => {
+    cy.visit('/page')
+    cy.clickLink('Click Me')
+  })
+})
+```
+
+#### Shared execution context
+
+The JavaScript execution context is persisted between `cy.origin()` callbacks
+that share the same origin. This can be utilized to share code between
+successive `cy.origin()` calls.
+
+```js
+before(() => {
+  cy.origin('somesite.com', () => {
+    // makes commands defined in this file available to all callbacks
+    // for somesite.com
+    require('../support/commands')
+  })
+})
+
+it('uses cy.origin() + custom command', () => {
+  cy.origin('somesite.com', () => {
+    cy.visit('/page')
+    cy.clickLink('Click Me')
+  })
+})
+
+it('also uses cy.origin() + custom command', () => {
+  cy.origin('somesite.com', () => {
+    cy.visit('/page')
+    cy.clickLink('Click Me')
+  })
+
+  cy.origin('differentsite.com', () => {
+    // WARNING: cy.clickLink() will not be available because it is a
+    // different origin
+  })
+})
+```
+
 ### Callback restrictions
 
 Because of the way in which the callback is transmitted and executed, there are
@@ -482,39 +551,6 @@ following Cypress commands will throw errors if used in the callback:
 - `cy.origin()`
 - [`cy.intercept()`](/api/commands/intercept)
 - [`cy.session()`](/api/commands/session)
-- [`cy.server()`](/api/commands/server)
-- [`cy.route()`](/api/commands/route)
-- [`Cypress.Cookies.preserveOnce()`](/api/cypress-api/cookies)
-
-It is also currently not possible to use
-[`require()`](https://nodejs.org/en/knowledge/getting-started/what-is-require/)
-or
-[dynamic `import()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import#dynamic_imports)
-within the callback. Because of this limitation, it cannot use
-[npm](https://www.npmjs.com/) packages or other third-party libraries inside the
-callback, as there is no mechanism to reference them. This functionality will be
-provided in a future version of Cypress.
-
-While third-party packages are strictly unavailable, it is possible to reuse
-your **own** code between `cy.origin()` callbacks. The workaround is to create a
-custom Cypress command within the secondary origin in a `before` block:
-
-```js
-before(() => {
-  cy.origin('somesite.com', () => {
-    Cypress.Commands.add('clickLink', (label) => {
-      cy.get('a').contains(label).click()
-    })
-  })
-})
-
-it('clicks the secondary origin link', () => {
-  cy.origin('somesite.com', () => {
-    cy.visit('/page')
-    cy.clickLink('Click Me')
-  })
-})
-```
 
 ### Other limitations
 

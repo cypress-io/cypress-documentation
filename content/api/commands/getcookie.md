@@ -31,6 +31,7 @@ Pass in an options object to change the default behavior of `cy.getCookie()`.
 
 | Option    | Default                                                        | Description                                                                              |
 | --------- | -------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `domain`  | Hostname of the current URL                                    | Retrieves the cookie from the specified domain                                           |
 | `log`     | `true`                                                         | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 | `timeout` | [`responseTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.getCookie()` to resolve before [timing out](#Timeouts)              |
 
@@ -46,6 +47,9 @@ Pass in an options object to change the default behavior of `cy.getCookie()`.
 - `sameSite` _(if specified)_
 - `secure`
 - `value`
+
+`cy.getCookie()` is not a query. It will not retry, or wait for the requested
+cookie to exist.
 
 #### When a cookie matching the name could not be found:
 
@@ -165,6 +169,6 @@ following:
 
 - [`cy.clearCookie()`](/api/commands/clearcookie)
 - [`cy.clearCookies()`](/api/commands/clearcookies)
-- [Cypress Cookies API](/api/cypress-api/cookies)
 - [`cy.getCookies()`](/api/commands/getcookies)
 - [`cy.setCookie()`](/api/commands/setcookie)
+- [`Cypress.Cookies.debug()`](/api/cypress-api/cookies)

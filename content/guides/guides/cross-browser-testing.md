@@ -5,7 +5,9 @@ title: Cross Browser Testing
 Cypress has the capability to run tests across multiple browsers. Currently,
 Cypress has support for
 [Chrome-family browsers](/guides/guides/launching-browsers#Chrome-Browsers)
-(including Electron and Chromium-based Microsoft Edge), and Firefox.
+(including Electron and Chromium-based Microsoft Edge),
+[WebKit](/guides/guides/launching-browsers#WebKit-Experimental) (Safari's
+browser engine), and Firefox.
 
 <Alert type="warning">
 
@@ -20,10 +22,9 @@ may experience issues in non-Chromium based browsers.
 Excluding [Electron](/guides/guides/launching-browsers#Electron-Browser), any
 browser you want to run Cypress tests in needs to be installed on your local
 system or CI environment. A full list of detected browsers is displayed within
-the browser selection menu of the
-[Cypress App](/guides/core-concepts/cypress-app).
+the browser selection menu of [Cypress](/guides/core-concepts/cypress-app).
 
-<DocsImage src="/img/guides/cross-browser-testing/v10/browser-select-FF.png" alt="Cypress App with Firefox selected as the browser"></DocsImage>
+<DocsImage src="/img/guides/cross-browser-testing/v10/browser-select-FF.png" alt="Cypress with Firefox selected as the browser"></DocsImage>
 
 The desired browser can also specified via the
 [`--browser`](/guides/guides/command-line#Options) flag when using
@@ -96,7 +97,7 @@ The following example demonstrates a nightly CI schedule against production
 ```yaml
 version: 2.1
 orbs:
-  cypress: cypress-io/cypress@1
+  cypress: cypress-io/cypress@2
 workflows:
   nightly:
     triggers:
@@ -127,7 +128,7 @@ Firefox issues can be caught before a production release:
 ```yaml
 version: 2.1
 orbs:
-  cypress: cypress-io/cypress@1
+  cypress: cypress-io/cypress@2
 workflows:
   test_develop:
     jobs:
@@ -150,13 +151,12 @@ directory of specific "smoke" test files. It is not always necessary to have
 both browsers always running _all_ tests.
 
 In the example below, the Chrome `cypress/run` job runs _all_ tests against
-Chrome and reports results to the
-[Cypress Dashboard](https://on.cypress.io/dashboard) using a
-([group](/guides/guides/parallelization#Grouping-test-runs)) named `chrome`.
+Chrome and reports results to [Cypress Cloud](https://on.cypress.io/cloud) using
+a ([group](/guides/guides/parallelization#Grouping-test-runs)) named `chrome`.
 
 The Firefox `cypress/run` job runs a subset of tests, defined in the `spec`
-parameter, against the Firefox browser, and reports the results to the
-[Cypress Dashboard](https://on.cypress.io/dashboard) under the group
+parameter, against the Firefox browser, and reports the results to
+[Cypress Cloud](https://on.cypress.io/cloud) under the group
 `firefox-critical-path`.
 
 <Alert type="info">
@@ -169,7 +169,7 @@ Circle CI workflow UI to distinguish the jobs.
 ```yaml
 version: 2.1
 orbs:
-  cypress: cypress-io/cypress@1
+  cypress: cypress-io/cypress@2
 workflows:
   build:
     jobs:
@@ -207,18 +207,17 @@ either improve test duration or to minimize CI costs.
 
 **You do not have to run all browsers at the same parallelization level.** In
 the example below, the Chrome dedicated `cypress/run` job runs _all_ tests in
-parallel, across **4 machines**, against Chrome and reports results to the
-[Cypress Dashboard](https://on.cypress.io/dashboard) under the group name
-`chrome`. The Firefox dedicated `cypress/run` job runs a _subset_ of tests in
-parallel, across **2 machines**, defined by the `spec` parameter, against the
-Firefox browser and reports results to the
-[Cypress Dashboard](https://on.cypress.io/dashboard) under the group named
-`firefox`.
+parallel, across **4 machines**, against Chrome and reports results to
+[Cypress Cloud](https://on.cypress.io/cloud) under the group name `chrome`. The
+Firefox dedicated `cypress/run` job runs a _subset_ of tests in parallel, across
+**2 machines**, defined by the `spec` parameter, against the Firefox browser and
+reports results to [Cypress Cloud](https://on.cypress.io/cloud) under the group
+named `firefox`.
 
 ```yaml
 version: 2.1
 orbs:
-  cypress: cypress-io/cypress@1
+  cypress: cypress-io/cypress@2
 workflows:
   build:
     jobs:
@@ -294,7 +293,7 @@ describe('happy path suite', { browser: 'firefox' }, () => {
 })
 
 // Ignore test if Cypress is running via Chrome
-// This test is not recorded to the Cypress Dashboard
+// This test is not recorded to Cypress Cloud
 it('Show warning outside Chrome', { browser: '!chrome' }, () => {
   cy.get('.browser-warning').should(
     'contain',

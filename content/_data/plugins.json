@@ -79,6 +79,13 @@
           "link": "https://github.com/sod/cypress-esbuild-preprocessor",
           "keywords": ["esbuild"],
           "badge": "community"
+        },
+        {
+          "name": "cypress-vite",
+          "description": "Cypress preproccessor for running specs using vite",
+          "link": "https://github.com/mammadataei/cypress-vite",
+          "keywords": ["vite"],
+          "badge": "community"
         }
       ]
     },
@@ -122,7 +129,7 @@
         },
         {
           "name": "Knapsack Pro Cypress",
-          "description": "Dynamic tests split across parallel CI nodes with Knapsack Pro Queue Mode to get faster CI builds. Note - this is 3rd party implementation, different from the Cypress Dashboard parallelization.",
+          "description": "Dynamic tests split across parallel CI nodes with Knapsack Pro Queue Mode to get faster CI builds. Note - this is 3rd party implementation, different from Cypress Cloud parallelization.",
           "link": "https://github.com/KnapsackPro/knapsack-pro-cypress",
           "keywords": ["CI parallelisation", "continuous-integration"],
           "badge": "community"
@@ -335,12 +342,33 @@
           "link": "https://github.com/nils-hoyer/cypress-fail-on-console-error",
           "keywords": ["console", "error", "fail"],
           "badge": "community"
+        },
+        {
+          "name": "Cypress Chrome Recorder Extension",
+          "description": "Official Cypress extension for Chrome DevTools that allows you to export Cypress tests directly from the Recorder panel.",
+          "link": "https://chrome.google.com/webstore/detail/cypress-chrome-recorder/fellcphjglholofndfmmjmheedhomgin",
+          "keywords": ["recording", "chrome", "extension", "devtools"],
+          "badge": "official"
+        },
+        {
+          "name": "cypress-codegen",
+          "description": "A Cypress plugin which automatically adds and enables IntelliSense for custom commands",
+          "link": "https://github.com/ExpediaGroup/cypress-codegen",
+          "keywords": ["commands", "development", "codegen"],
+          "badge": "community"
         }
       ]
     },
     {
       "name": "Custom Commands",
       "plugins": [
+         {
+          "name": "cypress-plugin-api",
+          "description": "Cypress plugin for effective API testing. Imagine Postman, but in Cypress.",
+          "link": "https://github.com/filiphric/cypress-plugin-api",
+          "keywords": ["api"],
+          "badge": "community"
+        },
         {
           "name": "cy-view",
           "description": "Run tests on multiple URLs at various viewport sizes.",
@@ -608,7 +636,13 @@
           "name": "cypress-forced-colors",
           "description": "Cypress commands to enable and disable browser forced colors mode",
           "link": "https://github.com/ling1726/cypress-forced-colors",
-          "keywords": ["forced colors", "high contrast", "high contrast mode", "contrast", "testing"],
+          "keywords": [
+            "forced colors",
+            "high contrast",
+            "high contrast mode",
+            "contrast",
+            "testing"
+          ],
           "badge": "community"
         },
         {
@@ -616,6 +650,20 @@
           "description": "Cypress custom command to wait and verify that file was downloaded",
           "link": "https://github.com/elaichenkov/cy-verify-downloads",
           "keywords": ["commands", "assertions", "wait", "verify", "download"],
+          "badge": "community"
+        },
+        {
+          "name": "cypress-if",
+          "description": "Easy conditional if-else logic for your Cypress tests",
+          "link": "https://github.com/bahmutov/cypress-if",
+          "keywords": ["commands"],
+          "badge": "community"
+        },
+        {
+          "name": "cypress-mongodb",
+          "description": "Plugin that allows interaction with MongoDB server using Cypress commands.",
+          "link": "https://github.com/Zaista/cypress-mongodb",
+          "keywords": ["testing", "commands", "mongodb", "mongo", "database", "db"],
           "badge": "community"
         }
       ]
@@ -655,7 +703,7 @@
           "name": "Pact Cypress Adapter",
           "description": "Simple commands to generate Pact contracts from your existing Cypress tests, maintained by the Pactflow team",
           "link": "https://github.com/pactflow/pact-cypress-adapter",
-          "keywords": ["pact","pactflow", "contract testing", "commands"],
+          "keywords": ["pact", "pactflow", "contract testing", "commands"],
           "badge": "community"
         }
       ]
@@ -869,6 +917,13 @@
       "description": "Visual testing is a great complement to functional testing",
       "plugins": [
         {
+          "name": "Argos",
+          "description": "Automate visual testing in your CI",
+          "link": "https://docs.argos-ci.com/cypress",
+          "keywords": ["devX", "screenshots"],
+          "badge": "verified"
+        },
+        {
           "name": "Applitools",
           "description": "Fast, easy and reliable visual UI testing with Cypress",
           "link": "https://applitools.com/tutorials/cypress.html",
@@ -898,7 +953,7 @@
         },
         {
           "name": "Cypress Image Snapshot",
-          "description": "Catch visual regressions and compare image diffs locally and in Cypress Dashboard.",
+          "description": "Catch visual regressions and compare image diffs locally and in Cypress Cloud.",
           "link": "https://github.com/palmerhq/cypress-image-snapshot",
           "keywords": ["image-diff", "snapshot"],
           "badge": "community"
@@ -944,13 +999,24 @@
           "badge": "community"
         },
         {
+          "name": "Visual Regression Diff",
+          "description": "Perform visual regression test with a nice GUI as help. 💅 Supports both E2E and Component Testing",
+          "link": "https://github.com/FRSOURCE/cypress-plugin-visual-regression-diff",
+          "keywords": [
+            "screenshots",
+            "visual regression",
+            "visual testing",
+            "image-diff",
+            "image comparison",
+            "image snapshot"
+          ],
+          "badge": "community"
+        },
+        {
           "name": "Cypress Chrome Recorder",
           "description": "Tool for exporting Cypress Tests from Google Chrome DevTools' Recordings",
           "link": "https://github.com/cypress-io/cypress-chrome-recorder",
-          "keywords": [
-            "visual testing",
-            "recorder"
-          ],
+          "keywords": ["visual testing", "recorder"],
           "badge": "experimental"
         }
       ]

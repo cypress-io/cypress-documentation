@@ -39,7 +39,7 @@ Cypress.
 [https://github.com/cypress-io/cypress-example-todomvc](https://github.com/cypress-io/cypress-example-todomvc)
 
 This repo compares
-[Cypress Tests](https://github.com/cypress-io/cypress-example-todomvc/blob/master/cypress/integration/app_spec.js)
+[Cypress Tests](https://github.com/cypress-io/cypress-example-todomvc/blob/master/cypress/e2e/app.cy.js)
 to
 [official TodoMVC Tests](https://github.com/tastejs/todomvc/blob/master/tests/test.js).
 This gives you a good comparison of writing and running tests in Cypress versus
@@ -102,7 +102,7 @@ activities, best practices and information sharing.
 - Combined coverage with Jest and Cypress via
   [Cypress code coverage plugin](https://github.com/cypress-io/code-coverage)
 - linters and pre-commit hooks: Eslint, Prettier, Js-beautify, Husky
-- recording test results on Cypress Dashboard
+- recording test results on Cypress Cloud
 
 ## More examples
 

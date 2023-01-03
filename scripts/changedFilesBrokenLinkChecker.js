@@ -108,8 +108,8 @@ const getGitDiffList = () => {
   // M\tcontent/api/plugins/configuration-api.md
   // M\tcontent/guides/continuous-integration/aws-codebuild.md
   // M\tcontent/guides/continuous-integration/bitbucket-pipelines.md
-  // M\tcontent/guides/dashboard/jira-integration.md
-  // M\tcontent/guides/dashboard/smart-orchestration.md
+  // M\tcontent/guides/cloud/jira-integration.md
+  // M\tcontent/guides/cloud/smart-orchestration.md
   // M\tcontent/guides/testing-strategies/google-authentication.md
   // M\tcontent/guides/tooling/plugins-guide.md`.split('\n')
 
