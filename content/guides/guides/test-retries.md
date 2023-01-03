@@ -333,8 +333,9 @@ Billing & Usage page within [Cypress Cloud](https://on.cypress.io/cloud).
 ### Can I access the current attempt counter from the test?
 
 Yes, although ordinarily you would not have to, since this is a low-level
-detail. But if you want to use the current attempt number and the total allowed
-attempts you can use [`Cypress.currentRetry`](/api/api/currentretry).
+detail. But if you want to use the current attempt number, you can use
+[`Cypress.currentRetry`](/api/api/currentretry). If you want to determine the
+total allowed attempts you can do the following:
 
 ```javascript
 it('does something differently on retry', { retries: 3 }, () => {
