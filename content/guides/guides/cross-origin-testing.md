@@ -17,6 +17,8 @@ a navigation occurs that does not meet the same superdomain rule, the
 [`cy.origin()`](/api/commands/origin) command must be used to execute Cypress
 commands inside the newly navigated origin.
 
+::include{file=partials/document-domain-workaround.md}
+
 But what is same superdomain? It is actually very similar to that of same
 origin! Two URLs have the same origin if the protocol, port (if specified), and
 host match. Cypress automatically handles hosts of the same superdomain by
