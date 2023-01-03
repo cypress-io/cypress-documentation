@@ -2,7 +2,8 @@
 title: Cypress.currentRetry
 ---
 
-`Cypress.currentRetry` is an number representing the current test retry count.
+`Cypress.currentRetry` is a number representing the current
+[test retry](/guides/guides/test-retries) count.
 
 <Alert type="warning">
 
@@ -32,4 +33,4 @@ it('example', () => {
 
 | Version                                       | Changes                      |
 | --------------------------------------------- | ---------------------------- |
-| [12.3.0](/guides/references/changelog#12-3-0) | `Cypress.currentRetry` added |
+| [12.3.0](/guides/references/changelog#12-3-0) | Added `Cypress.currentRetry` |

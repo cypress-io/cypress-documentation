@@ -334,14 +334,14 @@ Billing & Usage page within [Cypress Cloud](https://on.cypress.io/cloud).
 
 Yes, although ordinarily you would not have to, since this is a low-level
 detail. But if you want to use the current attempt number and the total allowed
-attempts you could do the following:
+attempts you can use [`Cypress.currentRetry`](/api/api/currentretry).
 
 ```javascript
 it('does something differently on retry', { retries: 3 }, () => {
+  // Cypress.currentRetry returns the current test retry count
+  const attempt = Cypress.currentRetry
   // cy.state('runnable') returns the current test object
-  // we can grab the current attempt and
-  // the total allowed attempts from its properties
-  const attempt = cy.state('runnable')._currentRetry
+  // we can grab the total allowed attempts from its properties
   const retries = cy.state('runnable')._retries
   // use the "attempt" and "retries" values somehow
 })
@@ -358,7 +358,7 @@ supports different Cypress versions by falling back to the default values.
 ```javascript
 it('does something differently on retry', { retries: 3 }, () => {
   // _.get: if the object or property is missing use the provided default value
-  const attempt = Cypress._.get(cy.state('runnable'), '_currentRetry', 0)
+  const attempt = Cypress.currentRetry
   const retries = Cypress._.get(cy.state('runnable'), '_retries', 0)
   // use the "attempt" and "retries" values somehow
 })
