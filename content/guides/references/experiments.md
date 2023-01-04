@@ -39,12 +39,50 @@ creating `e2e` and `component` objects inside your Cypress configuration.
 These experiments are available to be specified inside the `e2e` configuration
 object:
 
-| Option                                 | Default | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
-| -------------------------------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `experimentalStudio`                   | `false` | Generate and save commands directly to your test suite by interacting with your app as an end user would.                                                                                                                                                                                                                                                                                                                                                              |
-| `experimentalRunAllSpecs`              | `false` | Enables the "Run All Specs" UI feature, allowing the execution of multiple specs sequentially.                                                                                                                                                                                                                                                                                                                                                                         |
-| `experimentalOriginDependencies`       | `false` | Enables support for `require`/`import` within `cy.origin`.                                                                                                                                                                                                                                                                                                                                                                                                             |
-| `experimentalUseDefaultDocumentDomain` | `null`  | Disables injecting `document.domain` into `text/html` pages. The `document.domain` configuration has been known to cause issues with certain sites, including Google and Salesforce. Enabling this option no longer allows for default sub domain navigations, and will require the use of `cy.origin()`. This option takes an array of strings/minimatch globs. Our recommended configuration is `['*.salesforce.com', '*.force.com', '*.google.com', 'google.com']`. |
+| Option                            | Default | Description                                                                                               |
+| --------------------------------- | ------- | --------------------------------------------------------------------------------------------------------- |
+| `experimentalStudio`              | `false` | Generate and save commands directly to your test suite by interacting with your app as an end user would. |
+| `experimentalRunAllSpecs`         | `false` | Enables the "Run All Specs" UI feature, allowing the execution of multiple specs sequentially.            |
+| `experimentalOriginDependencies`  | `false` | Enables support for `require`/`import` within `cy.origin`.                                                |
+| `experimentalSkipDomainInjection` | `null`  | Disables injecting `document.domain` into `text/html` pages.                                              |
+
+#### Experimental Skip Domain Injection
+
+Under the hood, Cypress
+[injects document.domain](/guides/guides/web-security#Examples-of-what-Cypress-does-under-the-hood)
+into your test application. In some known cases, this causes issues with certain
+sites. For example, Salesforce executes code in isolated window contexts. When
+Cypress injects `document.domain`, these window contexts become cross-origin and
+fail to communicate. To work around this, the `experimentalSkipDomainInjection`
+flag was introduced.
+
+This flag disables injecting `document.domain` inside Cypress, allowing Cypress
+to test these exception cases. Only enable this flag if you are testing against
+Salesforce or suspect you may have `document.domain` issues. When enabled, this
+option will require the use of `cy.origin()` for all cross-origin navigations,
+including subdomains. Please see our
+[Cross Origin Testing](/guides/guides/cross-origin-testing) guide for more
+details.
+
+This flag can be enabled by passing an array of origin URLs or minimatch glob
+patterns. For example, here is how to enable this option for Salesforce and
+Google.
+
+:::cypress-config-example
+
+```js
+{
+  e2e: {
+    experimentalSkipDomainInjection: [
+      '*.salesforce.com',
+      '*.force.com',
+      '*.google.com',
+    ]
+  }
+}
+```
+
+:::
 
 ### Component Testing
 

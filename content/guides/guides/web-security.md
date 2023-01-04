@@ -73,8 +73,6 @@ exception of `cy.origin`, Cypress requires that the URLs navigated to have the
 [same superdomain](/guides/guides/cross-origin-testing#Parts-of-a-URL) for the
 entirety of a single test.
 
-::include{file=partials/document-domain-workaround.md}
-
 If you attempt to visit two different superdomains, the `cy.origin` command must
 be used to wrap Cypress commands of the second visited domain. Otherwise,
 Cypress commands will timeout after the navigation and will eventually error.
