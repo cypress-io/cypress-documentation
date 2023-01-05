@@ -419,6 +419,13 @@
           "badge": "community"
         },
         {
+          "name": "cypress-graphql",
+          "description": "Custom commands to stub, spy, or test GraphQL operations.",
+          "link": "https://github.com/Shopify/cypress-graphql",
+          "keywords": ["graphql", "mocking", "networking", "commands"],
+          "badge": "community"
+        },
+        {
           "name": "cypress-graphql-mock-network",
           "description": "Custom commands to mock your GraphQL API at the network level. Using service-workers for complete isolation of the mock server.",
           "link": "https://github.com/warrenday/cypress-graphql-mock-network",
@@ -650,6 +657,13 @@
           "description": "Easy conditional if-else logic for your Cypress tests",
           "link": "https://github.com/bahmutov/cypress-if",
           "keywords": ["commands"],
+          "badge": "community"
+        },
+        {
+          "name": "cypress-mongodb",
+          "description": "Plugin that allows interaction with MongoDB server using Cypress commands.",
+          "link": "https://github.com/Zaista/cypress-mongodb",
+          "keywords": ["testing", "commands", "mongodb", "mongo", "database", "db"],
           "badge": "community"
         }
       ]

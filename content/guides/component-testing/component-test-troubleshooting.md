@@ -47,7 +47,7 @@ typings defined in the _cypress/support/component.ts_ file.
 
 Alternatively, you can move your typings to an external file and include that
 file in your _tsconfig.json_ file. See our
-[TypeScript Configuration](guides/tooling/typescript-support#Using-an-External-Typings-File)
+[TypeScript Configuration](/guides/tooling/typescript-support#Using-an-External-Typings-File)
 guide for more info on doing this.
 
 ### Cypress Types Conflict with Jest

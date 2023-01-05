@@ -176,7 +176,7 @@ GitHub repository.
 
 #### Known Issues with `experimentalWebKitSupport`
 
-- `cy.origin()` and `cy.session()` are not yet supported.
+- `cy.origin()` is not yet supported.
 - `cy.intercept()`'s `forceNetworkError` option is disabled.
 - When using `experimentalSingleTabRunMode` with video recording in WebKit, only
   the video for the first spec is recorded.

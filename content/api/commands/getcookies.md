@@ -2,7 +2,7 @@
 title: getCookies
 ---
 
-Get all of the browser cookies.
+Get browser cookies for the current domain or the specified domain.
 
 ## Syntax
 
@@ -16,7 +16,7 @@ cy.getCookies(options)
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.getCookies() // Get all cookies
+cy.getCookies() // Get cookies for the currrent domain
 ```
 
 ### Arguments
@@ -27,7 +27,7 @@ Pass in an options object to change the default behavior of `cy.getCookies()`.
 
 | Option    | Default                                                        | Description                                                                              |
 | --------- | -------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| `domain`  | Superdomain of the current URL                                 | Retrieves the cookies from the specified domain                                          |
+| `domain`  | Hostname of the current URL                                    | Retrieves the cookies from the specified domain                                          |
 | `log`     | `true`                                                         | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 | `timeout` | [`responseTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.getCookies()` to resolve before [timing out](#Timeouts)             |
 
@@ -36,14 +36,17 @@ Pass in an options object to change the default behavior of `cy.getCookies()`.
 `cy.getCookies()` yields an array of cookie objects. Each cookie object has the
 following properties:
 
-- `domain`
-- `expiry` _(if specified)_
-- `httpOnly`
-- `name`
-- `path`
-- `sameSite` _(if specified)_
-- `secure`
-- `value`
+- `domain`: _(String)_
+- `expiry`: _(Number)_ _(if specified)_
+- `httpOnly`: _(Boolean)_
+- `name`: _(String)_
+- `path`: _(String)_
+- `sameSite`: _(String)_ _(if specified)_
+- `secure`: _(Boolean)_
+- `value`: _(String)_
+
+`cy.getCookies()` is not a query. It will not update the returned list if
+further cookies are added after it initially executes.
 
 ## Examples
 
@@ -122,6 +125,6 @@ following:
 
 - [`cy.clearCookie()`](/api/commands/clearcookie)
 - [`cy.clearCookies()`](/api/commands/clearcookies)
-- [Cypress Cookies API](/api/cypress-api/cookies)
 - [`cy.getCookie()`](/api/commands/getcookie)
 - [`cy.setCookie()`](/api/commands/setcookie)
+- [`Cypress.Cookies.debug()`](/api/cypress-api/cookies)

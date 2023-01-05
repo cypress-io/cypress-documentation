@@ -6,9 +6,11 @@ Clear data in localStorage for current domain and subdomain.
 
 <Alert type="warning">
 
-Cypress automatically runs this command _before_ each test to prevent state from
-being shared across tests. You shouldn't need to use this command unless you're
-using it to clear localStorage inside a single test.
+Cypress automatically clears all local storage _before_ each test to prevent
+state from being shared across tests when
+[test isolation](/guides/core-concepts/writing-and-organizing-tests#Test-Isolation)
+is enabled. You shouldn't need to use this command unless you're using it to
+clear localStorage inside a single test or test isolation is disabled.
 
 </Alert>
 
@@ -46,8 +48,7 @@ Pass in an options object to change the default behavior of
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`cy.clearLocalStorage()` yields
-`null`.</li><li>`cy.clearLocalStorage()` cannot be chained further.</li></List>
+- `cy.clearLocalStorage()` yields `null`.
 
 ## Examples
 

@@ -541,7 +541,7 @@ test in the Command Log. Here is an example of what this looks like:
 The circular indicator on the left side indicates if the request went to the
 destination server or not. If the circle is solid, the request went to the
 destination server; if it is outlined, the response was stubbed by
-`cy.intercept()` or `cy.route()` and not sent outbound.
+`cy.intercept()` and not sent outbound.
 
 If we re-run our previous test to make the same requests, but this time, add a
 `cy.intercept()` to stub the response to `/users`, we can see that the indicator
@@ -611,13 +611,10 @@ following:
 ## See also
 
 - [`cy.intercept()` docs](/api/commands/intercept)
-- [Network requests in Kitchen Sink example](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/cypress/integration/2-advanced-examples/network_requests.spec.js)
+- [Network requests in Kitchen Sink example](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/cypress/e2e/2-advanced-examples/network_requests.cy.js)
 - [See how to make a request with `cy.request()`](/api/commands/request)
 - [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app)
   test suites to see Cypress network handling in action.
-- Read
-  [Difference between cy.route and cy.route2](https://glebbahmutov.com/blog/cy-route-vs-route2/)
-  blog post
 - Read the blog post
   [Asserting Network Calls from Cypress Tests](https://www.cypress.io/blog/2019/12/23/asserting-network-calls-from-cypress-tests/)
 - If you want to test the application in offline mode, read

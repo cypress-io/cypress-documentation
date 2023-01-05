@@ -293,7 +293,8 @@ cy.getCookie('showWizard')
       cy.get('#wizard').contains('Close').click()
     }
   })
-  .get(...)    // more commands here
+
+cy.get(...)    // more commands here
   .should(...) // more commands here
   .click()     // more commands here
 ```
@@ -314,7 +315,8 @@ cy.request('https://app.com/me')
       cy.get('#wizard').contains('Close').click()
     }
   })
-  .get(...)    // more commands here
+
+cy.get(...)    // more commands here
   .should(...) // more commands here
   .click()     // more commands here
 ```
@@ -337,9 +339,10 @@ cy.get('html').should('have.attr', 'data-wizard').then((wizard) => {
     cy.get('#wizard').contains('Close').click()
   }
 })
-.get(...)    // more commands here
-.should(...) // more commands here
-.click()     // more commands here
+
+cy.get(...)    // more commands here
+  .should(...) // more commands here
+  .click()     // more commands here
 ```
 
 ### Element existence

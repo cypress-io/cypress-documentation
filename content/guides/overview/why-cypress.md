@@ -124,9 +124,12 @@ do that no other testing framework can:
   (including Edge and Electron) locally and
   [optimally in a Continuous Integration pipeline](/guides/guides/cross-browser-testing).
 - **Smart Orchestration:** Once you're set up to record to Cypress Cloud, easily
-  [parallelize](/guides/guides/parallelization) your test suite and
-  [rerun failed specs first](/guides/cloud/smart-orchestration#Run-failed-specs-first)
-  for tight feedback loops.
+  [parallelize](/guides/guides/parallelization) your test suite, rerun failed
+  specs first with
+  [Spec Prioritization](/guides/cloud/smart-orchestration#Spec-Prioritization),
+  and cancel test runs on failures with
+  [Auto Cancellation](/guides/cloud/smart-orchestration#Auto-Cancellation) for
+  tight feedback loops.
 - **Flake Detection:** Discover and diagnose unreliable tests with Cypress
   Cloud's [Flaky test management](/guides/cloud/flaky-test-management).
 

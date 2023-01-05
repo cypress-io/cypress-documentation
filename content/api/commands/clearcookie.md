@@ -7,8 +7,10 @@ Clear a specific browser cookie.
 <Alert type="warning">
 
 Cypress automatically clears all cookies _before_ each test to prevent state
-from being shared across tests. You shouldn't need to use this command unless
-you're using it to clear all cookies inside a single test.
+from being shared across tests when
+[test isolation](/guides/core-concepts/writing-and-organizing-tests#Test-Isolation)
+is enabled. You shouldn't need to use this command unless you're using it to
+clear a specific cookie inside a single test or test isolation is disabled.
 
 </Alert>
 
@@ -39,14 +41,13 @@ Pass in an options object to change the default behavior of `cy.clearCookie()`.
 
 | Option    | Default                                                        | Description                                                                              |
 | --------- | -------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| `domain`  | Superdomain of the current URL                                 | Clears the cookie from the specified domain                                              |
+| `domain`  | Hostname of the current URL                                    | Clears the cookie from the specified domain                                              |
 | `log`     | `true`                                                         | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 | `timeout` | [`responseTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.clearCookie()` to resolve before [timing out](#Timeouts)            |
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`cy.clearCookie()` yields `null`.</li><li>`cy.clearCookie()` cannot be
-chained further.</li></List>
+- `cy.clearCookie()` yields `null`.
 
 ## Examples
 
@@ -113,7 +114,7 @@ following:
 
 - [`cy.clearCookies()`](/api/commands/clearcookies)
 - [`cy.clearLocalStorage()`](/api/commands/clearlocalstorage)
-- [Cypress Cookies API](/api/cypress-api/cookies)
-- [`cy.getCookie()`](/api/commands/getcookie)
 - [`cy.getCookies()`](/api/commands/getcookies)
+- [`cy.getCookie()`](/api/commands/getcookie)
 - [`cy.setCookie()`](/api/commands/setcookie)
+- [`Cypress.Cookies.debug()`](/api/cypress-api/cookies)

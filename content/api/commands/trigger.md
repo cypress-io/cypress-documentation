@@ -4,6 +4,9 @@ title: trigger
 
 Trigger an event on a DOM element.
 
+It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried) to
+chain further commands that rely on the subject after `.trigger()`.
+
 ## Syntax
 
 ```javascript
@@ -74,8 +77,9 @@ they will be attached to the event. Passing in coordinate arguments (`clientX`,
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`.trigger()` yields the same subject it was given from the previous
-command.</li></List>
+- `.trigger()` yields the same subject it was given.
+- It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried)
+  to chain further commands that rely on the subject after `.trigger()`.
 
 ## Examples
 
