@@ -346,12 +346,12 @@ const login = (name = 'user1') => {
 
 // profile.cy.js
 it('can view profile', () => {
-  cy.login()
+  login()
 })
 
 // add_blog.cy.js
 it('can create a blog post', () => {
-  cy.login()
+  login()
 })
 
 ```
