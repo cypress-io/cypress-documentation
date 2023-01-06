@@ -206,7 +206,7 @@ export default defineConfig({
 
 #### Vue Vite Sample Apps
 
-- [Vue 3 Vite with TypeScript](https://github.com/cypress-io/cypress-component-testing-apps/tree/main/vue2-nuxt2-js)
+- [Vue 3 Vite with TypeScript](https://github.com/cypress-io/cypress-component-testing-apps/tree/main/vue3-vite-ts))
 
 ### Vue with Webpack
 
