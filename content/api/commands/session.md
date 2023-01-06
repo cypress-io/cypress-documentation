@@ -339,7 +339,7 @@ const login = (name = 'user1') => {
     validate() {
         cy.visit('/user_profile')
         cy.contains(`Hello ${name}`)
-    }
+    },
     cacheAcrossSpecs: true,
   })
 }
