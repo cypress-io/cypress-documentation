@@ -88,7 +88,7 @@ demand significant compute time. **When a test failure occurs in CI, it often
 does not make sense to continue running the remainder of a test suite** since
 the process has to start again upon merging of subsequent fixes and other code
 changes. When Auto Cancellation is enabled, once the number of failed tests goes
-over a preset threshold, the entire test run is cancelled. Note that any
+over a preset threshold, the entire test run is canceled. Note that any
 in-progress specs will continue to run to completion.
 
 <Alert type="success">
