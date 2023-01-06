@@ -56,11 +56,12 @@ Cypress injects `document.domain`, these window contexts become cross-origin and
 fail to communicate. To work around this, the `experimentalSkipDomainInjection`
 flag was introduced.
 
-This flag disables injecting `document.domain` inside Cypress, allowing Cypress
-to test these exception cases. Only enable this flag if you are testing against
-Salesforce or suspect you may have `document.domain` issues. When enabled, this
-option will require the use of `cy.origin()` for all cross-origin navigations,
-including subdomains. Please see our
+This flag disables injecting `document.domain` inside Cypress, allowing users to
+test sites which don't work when `document.domain` is set. Only enable this flag
+if you are testing against Salesforce or suspect you may have `document.domain`
+issues. When enabled, this option will require the use of
+[`cy.origin()`](/api/commands/origin) for all sub-domain and cross origin
+navigations. Please see our
 [Cross Origin Testing](/guides/guides/cross-origin-testing) guide for more
 details.
 
