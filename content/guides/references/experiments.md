@@ -50,24 +50,30 @@ object:
 
 Under the hood, Cypress
 [injects document.domain](/guides/guides/web-security#Examples-of-what-Cypress-does-under-the-hood)
-into your test application. In some known cases, this causes issues with certain
-sites. For example, Salesforce executes code in isolated window contexts. When
-Cypress injects `document.domain`, these window contexts become cross-origin and
-fail to communicate. To work around this, the `experimentalSkipDomainInjection`
-flag was introduced.
+into your test application to lessen the burden of navigation. This is well
+described in our [Cross Origin Testing](guides/guides/cross-origin-testing)
+guide. However, some sites have compatibility issues with this feature.
 
-This flag disables injecting `document.domain` inside Cypress, allowing users to
-test sites which don't work when `document.domain` is set. Only enable this flag
-if you are testing against Salesforce or suspect you may have `document.domain`
-issues. When enabled, this option will require the use of
-[`cy.origin()`](/api/commands/origin) for all sub-domain and cross origin
-navigations. Please see our
-[Cross Origin Testing](/guides/guides/cross-origin-testing) guide for more
-details.
+The `experimentalSkipDomainInjection` option disables injecting
+`document.domain` inside Cypress. When enabled, all cross-origin/subdomain
+navigation must use `cy.origin()`, which may make tests a bit more verbose. We
+only recommend including your site pattern if you are having issues running
+Cypress out of the box and suspect setting `document.domain` is interfering with
+your site's ability to render properly.
+
+Before enabling, verify your application is not implementing frame busting
+techniques, which you can mitigate with the
+[`experimentalModifyObstructiveThirdPartyCode`](/guides/guides/web-security#Modifying-Obstructive-Third-Party-Code)
+flag.
+
+At this point in time, we are aware of the following sites that require this
+option to be set to be tested properly:
+
+- Google
+- Salesforce
 
 This flag can be enabled by passing an array of origin URLs or minimatch glob
-patterns. For example, here is how to enable this option for Salesforce and
-Google.
+patterns:
 
 :::cypress-config-example
 
@@ -84,6 +90,10 @@ Google.
 ```
 
 :::
+
+If using other Salesforce domains, such as
+[enhanced domains](https://help.salesforce.com/s/articleView?id=sf.domain_name_enhanced.htm&type=5),
+you will need to add the correct matching glob pattern.
 
 ### Component Testing
 
