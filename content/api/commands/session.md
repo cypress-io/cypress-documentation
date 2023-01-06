@@ -327,21 +327,25 @@ leverage the session through the run.
 
 ```js
 const login = (name = 'user1') => {
-  cy.session(name, () => {
-    cy.request({
-      method: 'POST',
-      url: '/login',
-      body: { name, password: 's3cr3t' },
-    }).then(({ body }) => {
-      window.localStorage.setItem('authToken', body.token)
-    })
-  }, {
-    validate() {
+  cy.session(
+    name,
+    () => {
+      cy.request({
+        method: 'POST',
+        url: '/login',
+        body: { name, password: 's3cr3t' },
+      }).then(({ body }) => {
+        window.localStorage.setItem('authToken', body.token)
+      })
+    },
+    {
+      validate() {
         cy.visit('/user_profile')
         cy.contains(`Hello ${name}`)
-    },
-    cacheAcrossSpecs: true,
-  })
+      },
+      cacheAcrossSpecs: true,
+    }
+  )
 }
 
 // profile.cy.js
@@ -353,7 +357,6 @@ it('can view profile', () => {
 it('can create a blog post', () => {
   login()
 })
-
 ```
 
 ### Multiple login commands
