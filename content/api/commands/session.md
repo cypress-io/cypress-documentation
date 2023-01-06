@@ -339,19 +339,19 @@ const login = (name = 'user1') => {
     validate() {
         cy.visit('/user_profile')
         cy.contains(`Hello ${name}`)
-    }
+    },
     cacheAcrossSpecs: true,
   })
 }
 
 // profile.cy.js
 it('can view profile', () => {
-  cy.login()
+  login()
 })
 
 // add_blog.cy.js
 it('can create a blog post', () => {
-  cy.login()
+  login()
 })
 
 ```
