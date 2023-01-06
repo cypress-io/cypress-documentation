@@ -26,6 +26,8 @@ property into the visited `text/html` pages. This is why navigations without the
 use of the [`cy.origin()`](/api/commands/origin) command are solely scope to the
 same superdomain.
 
+::include{file=partials/document-domain-workaround.md}
+
 We understand this is a bit complicated to understand, so we have built a nifty
 chart to help clarify the differences!
 
@@ -128,8 +130,6 @@ This limitation exists because Cypress switches to the domain under each
 specific test when it runs. For more information on this, please see our Web
 Security page regarding
 [Different superdomain per test requires cy.origin command](/guides/guides/web-security#Different-superdomain-per-test-requires-cy-origin-command).
-
-::include{file=partials/document-domain-workaround.md}
 
 #### Other workarounds
 
