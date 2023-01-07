@@ -159,6 +159,22 @@ The title of each run is taken from the
 for that change, and clicking on it will take you to the corresponding run page
 in Cypress Cloud.
 
+### The Debug Page
+
+<DocsImage src="/img/guides/core-concepts/cypress-app/debug-page.png" alt="The Debug Page"></DocsImage>
+
+Like the Project Runs page above, the Debug Page surfaces data from Cypress
+Cloud (see [note above](#Overview)) directly inside Cypress App. However, this
+page focuses specifically on highlighting test failures in your
+[last run](/guides/cloud/runs#Run-Details), giving you immediate visibility into
+bugs, regressions and invalid tests.
+
+This table lists up to 100 failed tests from your most recent recorded test run,
+for your currently-active local git branch (or its ancestors), broken down by
+spec file and test. Each result includes actions to review more details on
+Cypress Cloud, rerun those specific tests inside Cypress App, or
+[open test code for debugging in your IDE](#Open-files-in-your-IDE).
+
 ## The Test Runner
 
 At the core of the app is the Test Runner itself. Cypress runs tests
