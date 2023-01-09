@@ -39,11 +39,63 @@ creating `e2e` and `component` objects inside your Cypress configuration.
 These experiments are available to be specified inside the `e2e` configuration
 object:
 
-| Option                           | Default | Description                                                                                               |
-| -------------------------------- | ------- | --------------------------------------------------------------------------------------------------------- |
-| `experimentalStudio`             | `false` | Generate and save commands directly to your test suite by interacting with your app as an end user would. |
-| `experimentalRunAllSpecs`        | `false` | Enables the "Run All Specs" UI feature, allowing the execution of multiple specs sequentially.            |
-| `experimentalOriginDependencies` | `false` | Enables support for `require`/`import` within `cy.origin`.                                                |
+| Option                            | Default | Description                                                                                                |
+| --------------------------------- | ------- | ---------------------------------------------------------------------------------------------------------- |
+| `experimentalStudio`              | `false` | Generate and save commands directly to your test suite by interacting with your app as an end user would.  |
+| `experimentalRunAllSpecs`         | `false` | Enables the "Run All Specs" UI feature, allowing the execution of multiple specs sequentially.             |
+| `experimentalOriginDependencies`  | `false` | Enables support for `require`/`import` within `cy.origin`.                                                 |
+| `experimentalSkipDomainInjection` | `null`  | Removes injecting `document.domain` into `text/html` pages for any sites that match the provided patterns. |
+
+#### Experimental Skip Domain Injection
+
+Under the hood, Cypress
+[injects document.domain](/guides/guides/web-security#Examples-of-what-Cypress-does-under-the-hood)
+into your test application to lessen the burden of navigation. This is well
+described in our [Cross Origin Testing](guides/guides/cross-origin-testing)
+guide. However, some sites have compatibility issues with this feature.
+
+The `experimentalSkipDomainInjection` option disables injecting
+`document.domain` inside Cypress. When enabled, all cross-origin/subdomain
+navigation must use `cy.origin()`, which may make tests a bit more verbose. We
+only recommend including your site pattern if you are having issues running
+Cypress out of the box and suspect setting `document.domain` is interfering with
+your site's ability to render properly.
+
+Before enabling, verify your application is not implementing frame busting
+techniques, which you can mitigate with the
+[`modifyObstructiveCode`](/guides/references/configuration#modifyObstructiveCode)
+and
+[`experimentalModifyObstructiveThirdPartyCode`](/guides/guides/web-security#Modifying-Obstructive-Third-Party-Code)
+flags.
+
+At this point in time, we are aware of the following sites that require the
+`experimentalSkipDomainInjection` option to be set to be tested properly:
+
+- Google
+- Salesforce
+
+This flag can be enabled by passing an array of origin URLs or
+[minimatch](https://github.com/isaacs/minimatch) glob patterns:
+
+:::cypress-config-example
+
+```js
+{
+  e2e: {
+    experimentalSkipDomainInjection: [
+      '*.salesforce.com',
+      '*.force.com',
+      '*.google.com',
+    ]
+  }
+}
+```
+
+:::
+
+If using other Salesforce domains, such as
+[enhanced domains](https://help.salesforce.com/s/articleView?id=sf.domain_name_enhanced.htm&type=5),
+you will need to add the correct matching glob pattern.
 
 ### Component Testing
 

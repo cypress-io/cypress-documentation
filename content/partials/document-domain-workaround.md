@@ -1,0 +1,13 @@
+<Alert type="warning">
+
+<strong class="alert-header"><Icon name="exclamation-triangle"></Icon> Disabling
+`document.domain` Injection</strong>
+
+In some cases, `document.domain` injection may cause issues. As of Cypress
+[v12.4.0](https://on.cypress.io/changelog#12-4-0), disabling `document.domain`
+injection is available with the `experimentalSkipDomainInjection` option. Please
+read about this
+[experiment](/guides/references/experiments#Experimental-Skip-Domain-Injection)
+for more information
+
+</Alert>
