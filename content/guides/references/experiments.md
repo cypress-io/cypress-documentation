@@ -39,12 +39,12 @@ creating `e2e` and `component` objects inside your Cypress configuration.
 These experiments are available to be specified inside the `e2e` configuration
 object:
 
-| Option                            | Default | Description                                                                                               |
-| --------------------------------- | ------- | --------------------------------------------------------------------------------------------------------- |
-| `experimentalStudio`              | `false` | Generate and save commands directly to your test suite by interacting with your app as an end user would. |
-| `experimentalRunAllSpecs`         | `false` | Enables the "Run All Specs" UI feature, allowing the execution of multiple specs sequentially.            |
-| `experimentalOriginDependencies`  | `false` | Enables support for `require`/`import` within `cy.origin`.                                                |
-| `experimentalSkipDomainInjection` | `null`  | Disables injecting `document.domain` into `text/html` pages.                                              |
+| Option                            | Default | Description                                                                                                |
+| --------------------------------- | ------- | ---------------------------------------------------------------------------------------------------------- |
+| `experimentalStudio`              | `false` | Generate and save commands directly to your test suite by interacting with your app as an end user would.  |
+| `experimentalRunAllSpecs`         | `false` | Enables the "Run All Specs" UI feature, allowing the execution of multiple specs sequentially.             |
+| `experimentalOriginDependencies`  | `false` | Enables support for `require`/`import` within `cy.origin`.                                                 |
+| `experimentalSkipDomainInjection` | `null`  | Removes injecting `document.domain` into `text/html` pages for any sites that match the provided patterns. |
 
 #### Experimental Skip Domain Injection
 
@@ -63,17 +63,19 @@ your site's ability to render properly.
 
 Before enabling, verify your application is not implementing frame busting
 techniques, which you can mitigate with the
+[`modifyObstructiveCode`](/guides/references/configuration#modifyObstructiveCode)
+and
 [`experimentalModifyObstructiveThirdPartyCode`](/guides/guides/web-security#Modifying-Obstructive-Third-Party-Code)
-flag.
+flags.
 
-At this point in time, we are aware of the following sites that require this
-option to be set to be tested properly:
+At this point in time, we are aware of the following sites that require the
+`experimentalSkipDomainInjection` option to be set to be tested properly:
 
 - Google
 - Salesforce
 
-This flag can be enabled by passing an array of origin URLs or minimatch glob
-patterns:
+This flag can be enabled by passing an array of origin URLs or
+[minimatch](https://github.com/isaacs/minimatch) glob patterns:
 
 :::cypress-config-example
 
