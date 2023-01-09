@@ -302,3 +302,8 @@ div[class^='codeBlockTitle'] {
   border-bottom: 1px solid var(--ifm-toc-border-color);
   margin-bottom: 20px;
 }
+
+/* add some more spacing for main doc container */
+[class^='docItemContainer'] {
+  margin: 0 8px;
+}
