@@ -57,13 +57,12 @@ const config = {
         theme: {
           customCss: require.resolve('./src/css/custom.scss'),
         },
-        // un-comment for launch
-        // googleAnalytics: {
-        //   trackingID: 'UA-59606812-1',
-        // },
-        // gtag: {
-        //   trackingID: 'GTM-KNKBWLD',
-        // }
+        googleAnalytics: { 
+          trackingID: 'UA-59606812-1',
+        },
+        gtag: {
+          trackingID: 'GTM-KNKBWLD',
+        }
       },
     ],
   ],
@@ -72,6 +71,8 @@ const config = {
     './plugins/fav-icon',
     require.resolve('docusaurus-plugin-image-zoom'),
     'docusaurus-plugin-sass',
+    './plugins/fullstory',
+    require.resolve('docusaurus-plugin-image-zoom')
   ],
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
