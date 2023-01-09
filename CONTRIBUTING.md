@@ -45,6 +45,10 @@ git clone git@github.com:<your username>/cypress-documentation.git
 cd cypress-documentation
 ```
 
+### VSCode MDX Extension
+
+If you are using VS Code, download the [MDX extension](https://marketplace.visualstudio.com/items?itemName=unifiedjs.vscode-mdx) to get full editor support for MDX files.
+
 #### Admonitions
 
 Use [Admonitions](https://docusaurus.io/docs/markdown-features/admonitions) to
