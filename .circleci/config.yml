@@ -18,24 +18,24 @@ commands:
       - checkout
       - restore_cache:
           keys:
-            - yarn-cache-{{ checksum "yarn.lock" }}            
+            - npm-cache-{{ checksum "package-lock.json" }}            
       - run:
           name: Install Dependencies
-          command: yarn --frozen-lockfile
+          command: npm ci
       - save_cache:
-          key: yarn-cache-{{ checksum "yarn.lock" }}
+          key: npm-cache-{{ checksum "package-lock.json" }}
           paths:
             - node_modules
       - run:
           name: Docs Build
-          command: yarn build
+          command: npm run build
 
   # Disabling until we know if we need this
   # link-check-changed-files:
   #   steps:
   #     - run:
   #         name: Broken link checker for changed files
-  #         command: yarn changed-files-broken-link-checker:ci
+  #         command: npm run changed-files-broken-link-checker:ci
 
 job-defaults: &job-defaults
   executor: node-executor
@@ -68,7 +68,7 @@ jobs:
   #     - checkout
   #     - attach_workspace:
   #         at: ~/repo
-  #     - run: yarn lint
+  #     - run: npm run lint
 
   # Disabling until we know if we need this
   # broken-link-check-prod:
@@ -77,13 +77,13 @@ jobs:
   #     - checkout
   #     - restore_cache:
   #         keys:
-  #           - yarn-cache-{{ checksum "yarn.lock" }}-{{ checksum "patches/github-slugger+1.3.0.patch" }}-{{ checksum "patches/@docsearch+js+1.0.0-alpha.28.patch" }}
+  #           - npm-cache-{{ checksum "package-lock.json" }}-{{ checksum "patches/github-slugger+1.3.0.patch" }}-{{ checksum "patches/@docsearch+js+1.0.0-alpha.28.patch" }}
   #     - run:
   #         name: Install Dependencies
-  #         command: yarn --frozen-lockfile
+  #         command: npm ci
   #     - run:
   #         name: Broken link checker
-  #         command: yarn broken-link-checker:prod
+  #         command: npm run broken-link-checker:prod
 
   # Disabling until we know if we need this
   # release:
@@ -101,10 +101,10 @@ jobs:
   #     - checkout
   #     - restore_cache:
   #         keys:
-  #           - yarn-cache-{{ checksum "yarn.lock" }}-{{ checksum "patches/github-slugger+1.3.0.patch" }}-{{ checksum "patches/@docsearch+js+1.0.0-alpha.28.patch" }}
+  #           - npm-cache-{{ checksum "package-lock.json" }}-{{ checksum "patches/github-slugger+1.3.0.patch" }}-{{ checksum "patches/@docsearch+js+1.0.0-alpha.28.patch" }}
   #     - run:
   #         name: Install Dependencies
-  #         command: yarn --frozen-lockfile
+  #         command: npm run install
   #     - run:
   #         name: Check for scheduled sanity.io content to publish and invoke Netlify build hook if necessary
   #         command: node ./scripts/sanity/publishContent.js
@@ -116,13 +116,12 @@ workflows:
       # Disabling until we know if we need this
       # - cypress/install:
       #     name: 'Setup Linux'
-      #     yarn: true
-      #     install-command: yarn --frozen-lockfile
+      #     install-command: npm ci
       #     executor: with-chrome-and-firefox
       #     post-steps:
       #       - run:
       #           name: 'Unit tests'
-      #           command: yarn test:unit --ci --runInBand
+      #           command: npm run test:unit --ci --runInBand
 
       # Disabling until we know if we need this
       # - link-check-changed-files:
@@ -144,8 +143,7 @@ workflows:
       #     executor: with-chrome-and-firefox
       #     wait-on: 'http://localhost:3000'
       #     command-prefix: npx percy exec --
-      #     yarn: true
-      #     start: yarn start:ci
+      #     start: npm run start:ci
       #     parallel: true
       #     parallelism: 4
       #     ci-build-id: ${CIRCLE_SHA1:0:8}
@@ -155,9 +153,9 @@ workflows:
       #       - Setup Linux
       #     command: |
             # if [ -n "$DOCS_RECORD_KEY" ]; then
-            #   yarn cypress run --record --key $DOCS_RECORD_KEY --parallel
+            #   npx cypress run --record --key $DOCS_RECORD_KEY --parallel
             # else
-            #   yarn cypress run
+            #   npx cypress run
             # fi
 
       - build:

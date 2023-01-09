@@ -17,13 +17,13 @@ Our docs are built using [Docusaurus 2](https://docusaurus.io/).
 ### Installation
 
 ```
-$ yarn
+$ npm i
 ```
 
 ### Local Development
 
 ```
-$ yarn start
+$ npm run start
 ```
 
 This command starts a local development server and opens up a browser window.
@@ -32,7 +32,7 @@ Most changes are reflected live without having to restart the server.
 ### Build
 
 ```
-$ yarn build
+$ npm run build
 ```
 
 This command generates static content into the `dist` directory and can be
