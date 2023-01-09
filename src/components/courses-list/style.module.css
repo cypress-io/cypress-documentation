@@ -1,3 +1,8 @@
 .title {
-    font-weight: bold;
+  font-weight: bold;
+}
+
+/* courses list */
+p.course_list_item {
+  margin-top: 0;
 }

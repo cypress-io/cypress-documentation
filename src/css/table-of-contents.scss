@@ -1,0 +1,25 @@
+/* format right-side TOC */
+/* give list breathing room */
+.table-of-contents {
+  line-height: 2;
+  font-size: 1rem;
+}
+/* but not as much on the children */
+.table-of-contents li ul li {
+  line-height: 1.2;
+}
+/* only target top level section titles in right side TOC */
+.table-of-contents > li > .table-of-contents__link {
+  font-weight: bold;
+  opacity: 0.9;
+}
+
+/* selected state in right side TOC */
+.table-of-contents .table-of-contents__link--active {
+  border-left: 0.25rem solid var(--toc-highlight);
+  margin-left: -1rem;
+  padding-left: 0.75rem;
+}
+.table-of-contents__link--active {
+  color: var(--ifm-toc-link-color);
+}
