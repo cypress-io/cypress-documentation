@@ -38,7 +38,8 @@ const config = {
       {
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
-          editUrl: 'https://github.com/cypress-io/cypress-documentation/tree/master/',
+          editUrl:
+            'https://github.com/cypress-io/cypress-documentation/tree/master/',
           routeBasePath: '/',
           // versions: {
           //   current: {
@@ -57,22 +58,21 @@ const config = {
         theme: {
           customCss: require.resolve('./src/css/custom.scss'),
         },
-        googleAnalytics: { 
+        googleAnalytics: {
           trackingID: 'UA-59606812-1',
         },
         gtag: {
           trackingID: 'GTM-KNKBWLD',
-        }
+        },
       },
     ],
   ],
 
   plugins: [
     './plugins/fav-icon',
-    require.resolve('docusaurus-plugin-image-zoom'),
-    'docusaurus-plugin-sass',
     './plugins/fullstory',
-    require.resolve('docusaurus-plugin-image-zoom')
+    'docusaurus-plugin-sass',
+    require.resolve('docusaurus-plugin-image-zoom'),
   ],
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
