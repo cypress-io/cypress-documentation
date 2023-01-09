@@ -2,6 +2,142 @@
 title: Changelog
 ---
 
+## 12.3.0
+
+_Released 1/03/2023_
+
+**Features:**
+
+- Added support for mapping the `CYPRESS_PULL_REQUEST_ID`,
+  `CYPRESS_PULL_REQUEST_URL`, and/or `CYPRESS_CI_BUILD_URL` environment
+  variables to the the corresponding Cloud run. This provides workarounds when
+  supported CI provider mappings are incorrect or unsupported CI providers are
+  used. Addressed in [#25036](https://github.com/cypress-io/cypress/pull/25036).
+- Added new Cypress API,
+  [`Cypress.currentRetry`](/api/cypress-api/currentretry), to easily access the
+  current test retry count. Addresses
+  [#25239](https://github.com/cypress-io/cypress/pull/25239).
+
+**Performance:**
+
+- Increased the pre-request proxy cleanup interval. The previous cleanup
+  interval was too aggressive for projects loading a large number of JS modules,
+  causing applications to load very slowly and in chunks. Fixed in
+  [#25209](https://github.com/cypress-io/cypress/pull/25209).
+- Fixed an issue where browsers distributed as universal binaries (Chrome,
+  Firefox) on M1 Macs could be launched in the wrong architecture, resulting in
+  poor performance in-browser. Fixed in
+  [#25014](https://github.com/cypress-io/cypress/pull/25014).
+- Resolved a delay that could occur on startup when using a custom Cypress
+  configuration file location in projects with a transitive `typescript`
+  dependency. Fixes
+  [#24781](https://github.com/cypress-io/cypress/issues/24781).
+
+**Bugfixes:**
+
+- Fixes an issue where component test files that contained characters, such as
+  brackets (`[]`), would be ignored when running tests. This is a common pattern
+  in Next.js and Gatsby.js projects. Fixes
+  [#24588](https://github.com/cypress-io/cypress/issues/24588).
+- Updated the Jenkins environment variable mappings so pull request data is
+  correctly linked to the corresponding Cloud run. Fixed in
+  [#25036](https://github.com/cypress-io/cypress/pull/25036).
+- Fixed a regression in [`10.11.0`](#10-11-0) where the mocha test results no
+  longer sent the pending boolean to reporters. This caused the
+  [`mochaawesome`](https://www.npmjs.com/package/mochawesome) reporter to
+  incorrectly report pending tests as pending and skipped. Fixes
+  [#24477](https://github.com/cypress-io/cypress/issues/24477).
+- Fix for regression introduced in [`12.1.0`](#12-1-0), where
+  [`.contains()`](/api/commands/contains) could return multiple elements instead
+  of one element when it was matching directly on the subject, rather than on
+  the subject's children. Fixes
+  [#25225](https://github.com/cypress-io/cypress/issues/25225).
+- Fixed a small visual bug in the Test Runner such that Chrome users will no
+  longer see a white border on the nav bar at the specific zoom levels. Fixes
+  [#25284](https://github.com/cypress-io/cypress/issues/25284).
+
+**Misc**
+
+- Remove the redundant `Need help` link from the migration information modal
+  because the modal provides in-depth details for users already. Addresses
+  [#21923](https://github.com/cypress-io/cypress/issues/21923).
+- Minor UI updates were make to truncate the browser's name when it exceeds the
+  allocated space and to only show the browsers's major version in the UI.
+  Addresses [#21730](https://github.com/cypress-io/cypress/issues/21730) and
+  [#21755](https://github.com/cypress-io/cypress/issues/21755).
+- Removed the line break that was displayed on the Settings page when a
+  configuration value was an empty object. Addresses
+  [#21790](https://github.com/cypress-io/cypress/issues/21790).
+
+**Dependency Updates:**
+
+- Upgraded [`engine.io`](https://www.npmjs.com/package/engine.io) from `5.2.1`
+  to `6.2.1` to address this
+  [security vulnerability](https://github.com/socketio/engine.io/security/advisories/GHSA-r7qp-cfhv-p84w)
+  where a specially crafted HTTP request can trigger an uncaught exception on
+  the Engine.IO server, thus killing the Node.js process. Addressed in
+  [#23843](https://github.com/cypress-io/cypress/issues/23843).
+- Upgraded [`express`](https://www.npmjs.com/package/express) from `4.17.1` to
+  `4.17.3` to address this
+  [NVD security vulnerability](https://nvd.nist.gov/vuln/detail/CVE-2022-24999).
+  Addressed in [#23843](https://github.com/cypress-io/cypress/issues/23843).
+- Upgraded [`simple-git`](https://www.npmjs.com/package/simple-git) from `3.4.0`
+  to `3.15.0` to address this
+  [NVD security vulnerability](https://nvd.nist.gov/vuln/detail/CVE-2022-25912).
+  Addressed in [#23843](https://github.com/cypress-io/cypress/issues/23843).
+
+## 12.2.0
+
+_Released 12/20/2022_
+
+**Features:**
+
+- Added the ability to match on `resourceType` with
+  [`cy.intercept()`](https://docs.cypress.io/api/commands/intercept), and to see
+  the resource type of an intercepted request as `req.resourceType`. Addresses
+  [#14525](https://github.com/cypress-io/cypress/issues/14525).
+- Users working in React Component Testing projects can now generate a basic
+  spec file from the components that exist in their project. Addresses
+  [#24008](https://github.com/cypress-io/cypress/issues/24008).
+
+**Performance:**
+
+- Fixed a regression introduced in the Electron browser in
+  [Cypress 10.8.0](#10-8-0) where the `CYPRESS_EVERY_NTH_FRAME` environment
+  variable was not being set appropriately causing all frames to be captured
+  which slowed down tests. Fixes
+  [#23830](https://github.com/cypress-io/cypress/issues/23830).
+
+**Bugfixes:**
+
+- Fixed an issue where the `query` object was not available on requests from
+  [`cy.intercept()`](/api/commands/intercept) once they were yielded. Fixes
+  [#25088](https://github.com/cypress-io/cypress/issues/25088).
+- Fixed an issue with Angular Component Testing where urls within SASS/SCSS
+  files were not being correctly resolved which could result in incomplete
+  styling. Fixes [#24272](https://github.com/cypress-io/cypress/issues/24272).
+- Fixed a regression introduced in [Cypress 12](#12-0-0) where
+  [`cy.get()`](/api/commands/get) would ignore a `null` value for the
+  `withinSubject` option. Fixes
+  [#25104](https://github.com/cypress-io/cypress/issues/25104).
+- Fixed an issue where an unhandled promise rejection would display an
+  incomplete error message in the command log. Fixes
+  [#24915](https://github.com/cypress-io/cypress/issues/24915).
+- Fixed an issue where the incorrect Cypress version could be shown in the
+  migration wizard. Fixes
+  [#25138](https://github.com/cypress-io/cypress/issues/25138).
+- Fixed an issue where the Cypress migration wizard would fail to run in
+  [global mode](/guides/guides/command-line#cypress-open-global) on newer
+  versions of Cypress. Addressed in
+  [#25138](https://github.com/cypress-io/cypress/issues/25138).
+- Fixed an issue with Angular Component Testing where a custom
+  [`sourceRoot`](https://angular.io/guide/workspace-config#project-configuration-options)
+  configuration would not be respected. Fixes
+  [#24827](https://github.com/cypress-io/cypress/issues/24827).
+- Fixed Typescript typings for [`cy.nextUntil()`](/api/commands/nextuntil) to
+  include the `filter` parameter. Fixes
+  [#24772](https://github.com/cypress-io/cypress/issues/24772).
+
 ## 12.1.0
 
 _Released 12/12/2022_
