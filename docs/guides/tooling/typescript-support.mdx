@@ -87,14 +87,10 @@ Cypress.Commands.add('dataCy', (value) => {
 ```
 
 Then you can add the `dataCy` command to the global Cypress Chainable interface
-(so called because commands are chained together) to your
-`cypress/support/index.ts` file.
+(so called because commands are chained together).
 
 ```typescript
-// in cypress/support/index.ts
-// load type definitions that come with Cypress module
-/// <reference types="cypress" />
-
+// cypress/support/index.ts
 declare global {
   namespace Cypress {
     interface Chainable {
@@ -102,7 +98,7 @@ declare global {
        * Custom command to select DOM element by data-cy attribute.
        * @example cy.dataCy('greeting')
        */
-      dataCy(value: string): Chainable<Element>
+      dataCy(value: string): Chainable<JQuery<HTMLElement>>
     }
   }
 }
@@ -146,10 +142,7 @@ When you add a custom command with `prevSubject`, Cypress will infer the subject
 type automatically based on the specified `prevSubject`.
 
 ```typescript
-// in cypress/support/index.ts
-// load type definitions that come with Cypress module
-/// <reference types="cypress" />
-
+// cypress/support/index.ts
 declare global {
   namespace Cypress {
     interface Chainable {
@@ -161,7 +154,7 @@ declare global {
       typeRandomWords(
         count?: number,
         options?: Partial<TypeOptions>
-      ): Chainable<Element>
+      ): Chainable<JQuery<HTMLElement>>
     }
   }
 }
@@ -249,8 +242,6 @@ following:
 
 ```javascript
 // cypress/plugins/index.ts
-
-/// <reference types="cypress" />
 
 /**
  * @type {Cypress.PluginConfig}
