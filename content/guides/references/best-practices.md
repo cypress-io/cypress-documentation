@@ -312,6 +312,8 @@ are common for:
 - CMS instances, such as a Contentful or Wordpress instance.
 - Other types of services under a domain in which you control.
 
+#### Challenges with Social Connection Authentication
+
 Other services, such as social logins through popular media providers, are not
 recommended. Social logins will likely work, especially if run locally. However,
 we consider this a bad practice and do not recommend it because:
