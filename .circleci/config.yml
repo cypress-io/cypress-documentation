@@ -53,12 +53,14 @@ jobs:
       - attach_workspace:
           at: ~/repo
       - run: npm run lint
-
   
   # TODO: set the branch to master when released
   release:
     <<: *job-defaults
     steps:
+      - checkout
+      - attach_workspace:
+          at: ~/repo
       - setup_remote_docker
       - run:
           name: Algolia Scraper
