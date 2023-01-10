@@ -67,7 +67,7 @@ jobs:
           command: |
             echo "Scraping..."
             ls
-            node ./scripts/search/scrape-and-compare-algolia-index.js 
+            node ./scripts/search/scrape-and-compare-algolia-index.mjs 
 
 workflows:
   version: 2
