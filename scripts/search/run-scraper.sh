@@ -23,7 +23,7 @@
 # fi
 
 echo "Reading config.json"
-CONFIG=`cat config.json`
+CONFIG=`cat ./scripts/search/config.json`
 export CONFIG
 
 docker run -e APPLICATION_ID \

@@ -1,5 +1,5 @@
 {
-  "index_name": "test_docs",
+  "index_name": "cypress_docs",
   "start_urls": ["https://deploy-preview-4590--cypress-docs.netlify.app/"],
   "sitemap_urls": [
     "https://deploy-preview-4590--cypress-docs.netlify.app/sitemap.xml"

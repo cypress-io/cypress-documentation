@@ -1,6 +1,6 @@
-const fetch = require('node-fetch')
+import fetch from 'node-fetch'
 
-class AlgoliaClient {
+export class AlgoliaClient {
   constructor(algoliaIndex, apiKey, applicationId) {
     if (!algoliaIndex) {
       throw new Error('Missing Algolia index name!')
@@ -26,8 +26,8 @@ class AlgoliaClient {
       headers: {
         'Content-Type': 'application/json',
         'X-Algolia-API-Key': this._API_KEY,
-        'X-Algolia-Application-Id': this._APPLICATION_ID 
-      }
+        'X-Algolia-Application-Id': this._APPLICATION_ID,
+      },
     })
     const data = await response.json()
     return data.items
@@ -42,12 +42,10 @@ class AlgoliaClient {
       throw new Error('indexName is required when calling getEntriesForIndex')
     }
     const indices = await this._getIndices()
-    const index = indices.find(index => index.name === indexName)
+    const index = indices.find((index) => index.name === indexName)
     if (!index) {
       throw new Error(`Algolia index not found with name: ${index}`)
     }
     return index.entries
   }
 }
-
-module.exports.AlgoliaClient = AlgoliaClient
