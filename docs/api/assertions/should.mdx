@@ -239,9 +239,9 @@ cy.get('p').should(($p) => {
 })
 ```
 
-**<Icon name="exclamation-triangle" color="red" /> Warning** Any value
-returned from a `.should()` callback function will be ignored. The original
-subject will be yielded to the next command.
+**<Icon name="exclamation-triangle" color="red" /> Warning** Any value returned
+from a `.should()` callback function will be ignored. The original subject will
+be yielded to the next command.
 
 ```js
 cy.get('p')
@@ -345,7 +345,10 @@ cy.get('.connectors-list > li').should(($lis) => {
 These string messages will be shown in the Command Log giving each assertion
 more context.
 
-<DocsImage src="/img/api/should/expect-with-message.png" alt="Expect assertions with messages" ></DocsImage>
+<DocsImage
+  src="/img/api/should/expect-with-message.png"
+  alt="Expect assertions with messages"
+></DocsImage>
 
 #### Compare text values of two elements
 
@@ -461,9 +464,8 @@ cy.get('button')
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-- `.should()` will continue to
-[retry](/guides/core-concepts/retry-ability) its specified assertions until it
-times out.
+- `.should()` will continue to [retry](/guides/core-concepts/retry-ability) its
+  specified assertions until it times out.
 
 ```javascript
 cy.get('input', { timeout: 10000 }).should('have.value', '10')
@@ -492,12 +494,18 @@ cy.get('.left-nav>.nav').children().should('have.length', 8)
 
 The commands above will display in the Command Log as:
 
-<DocsImage src="/img/api/should/should-command-shows-up-as-assert-for-each-assertion.png" alt="Command Log should" ></DocsImage>
+<DocsImage
+  src="/img/api/should/should-command-shows-up-as-assert-for-each-assertion.png"
+  alt="Command Log should"
+></DocsImage>
 
 When clicking on `assert` within the command log, the console outputs the
 following:
 
-<DocsImage src="/img/api/should/assertion-in-console-log-shows-actual-versus-expected-data.png" alt="Console Log should" ></DocsImage>
+<DocsImage
+  src="/img/api/should/assertion-in-console-log-shows-actual-versus-expected-data.png"
+  alt="Console Log should"
+></DocsImage>
 
 ## History
 

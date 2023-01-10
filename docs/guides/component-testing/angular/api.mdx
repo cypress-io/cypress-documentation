@@ -14,13 +14,14 @@ import { mount } from 'cypress/angular'
 <table class="api-table">
   <tr>
     <td>Description</td>
-    <td>
-      Mounts an Angular component inside Cypress browser
-    </td>  
+    <td>Mounts an Angular component inside Cypress browser</td>
   </tr>
   <tr>
     <td>Signature</td>
-    <td>mount&lt;T&gt;(component: Type&lt;T&gt; | string, config?: MountConfig&lt;T&gt;): Cypress.Chainable&lt;MountResponse&lt;T&gt;&gt;</td>
+    <td>
+      mount&lt;T&gt;(component: Type&lt;T&gt; | string, config?:
+      MountConfig&lt;T&gt;): Cypress.Chainable&lt;MountResponse&lt;T&gt;&gt;
+    </td>
   </tr>
   <tr>
     <td>Returns</td>
@@ -30,7 +31,7 @@ import { mount } from 'cypress/angular'
 
 <table class="api-table">
   <caption>mount Parameters</caption>
-    <thead>
+  <thead>
     <td>Name</td>
     <td>Type</td>
     <td>Description</td>
@@ -81,9 +82,7 @@ import { createOutputSpy } from 'cypress/angular'
 <table class="api-table">
   <tr>
     <td>Description</td>
-    <td>
-      Creates a new Event Emitter and then spies on it's `emit` method
-    </td>  
+    <td>Creates a new Event Emitter and then spies on it's `emit` method</td>
   </tr>
   <tr>
     <td>Signature</td>
@@ -97,7 +96,7 @@ import { createOutputSpy } from 'cypress/angular'
 
 <table class="api-table">
   <caption>createOutputSpy parameters</caption>
-    <thead>
+  <thead>
     <td>Name</td>
     <td>Type</td>
     <td>Description</td>
@@ -131,7 +130,7 @@ providers, declarations, imports and even component @Inputs()
 
 <table class="api-table">
   <caption>members</caption>
-    <thead>
+  <thead>
     <td>Name</td>
     <td>Type</td>
     <td>Description</td>
@@ -139,12 +138,17 @@ providers, declarations, imports and even component @Inputs()
   <tr>
     <td>autoSpyOutputs</td>
     <td>boolean (optional)</td>
-    <td>flag to automatically create a cy.spy() for every component @Output() property</td>
+    <td>
+      flag to automatically create a cy.spy() for every component @Output()
+      property
+    </td>
   </tr>
   <tr>
     <td>autoDetectChanges</td>
     <td>boolean (optional)</td>
-    <td>flag defaulted to true to automatically detect changes in your components</td>
+    <td>
+      flag defaulted to true to automatically detect changes in your components
+    </td>
   </tr>
   <tr>
     <td>componentProperties</td>
@@ -159,7 +163,7 @@ Type that the `mount` function yields
 
 <table class="api-table">
   <caption>members</caption>
-    <thead>
+  <thead>
     <td>Name</td>
     <td>Type</td>
     <td>Description</td>

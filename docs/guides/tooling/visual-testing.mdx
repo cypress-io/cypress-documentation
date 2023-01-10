@@ -34,13 +34,19 @@ it('completes todo', () => {
 
 :::
 
-<DocsImage src="/img/guides/visual-testing/completed-test.gif" alt="Passing Cypress functional test" ></DocsImage>
+<DocsImage
+  src="/img/guides/visual-testing/completed-test.gif"
+  alt="Passing Cypress functional test"
+></DocsImage>
 
 Cypress does NOT see how the page actually looks though. For example, Cypress
 will not see if the CSS class `completed` grays out the label element and adds a
 strike-through line.
 
-<DocsImage src="/img/guides/visual-testing/completed-item.png" alt="Completed item style" ></DocsImage>
+<DocsImage
+  src="/img/guides/visual-testing/completed-item.png"
+  alt="Completed item style"
+></DocsImage>
 
 You could technically write a functional test asserting the CSS properties using
 the [`have.css` assertion](/guides/references/assertions#CSS), but these may
@@ -101,12 +107,18 @@ side if pixel difference is above the threshold; notice how the baseline image
 (_Expected result_) has the label text with the line through, while the new
 image (_Actual result_) does not have it.
 
-<DocsImage src="/img/guides/visual-testing/diff.png" alt="Baseline vs current image" ></DocsImage>
+<DocsImage
+  src="/img/guides/visual-testing/diff.png"
+  alt="Baseline vs current image"
+></DocsImage>
 
 Like most image comparison tools, the plugin also shows a difference view on
 mouse hover:
 
-<DocsImage src="/img/guides/visual-testing/diff-2.png" alt="Highlighted changes" ></DocsImage>
+<DocsImage
+  src="/img/guides/visual-testing/diff-2.png"
+  alt="Highlighted changes"
+></DocsImage>
 
 ## Tooling
 
@@ -117,8 +129,7 @@ listed below.
 
 ### Open source
 
-Listed in the [Visual Testing plugins](/plugins#Visual%20Testing)
-section.
+Listed in the [Visual Testing plugins](/plugins#Visual%20Testing) section.
 
 ### Applitools
 
@@ -139,10 +150,7 @@ Second joint webinar with Applitools with a focus on
 
 <!-- textlint-enable -->
 
-<Icon
-  name="external-link-alt"
-  url="https://applitools.com/"
-/>
+<Icon name="external-link-alt" url="https://applitools.com/" />
 
 | Resource                                                                     | Description                                                                                                                                                   |
 | ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -159,17 +167,14 @@ Second joint webinar with Applitools with a focus on
 
 <!-- textlint-enable -->
 
-<Icon
-  name="external-link-alt"
-  url="https://percy.io/"
-/>
+<Icon name="external-link-alt" url="https://percy.io/" />
 
 :::info
 
 ### <Icon name="graduation-cap" /> Real World Example <Badge type="success">New</Badge>
 
-The Cypress <Icon name="github" inline="true" contentType="rwa" /> uses
-the `cy.percySnapshot()` command provided by the
+The Cypress <Icon name="github" inline="true" contentType="rwa" /> uses the
+`cy.percySnapshot()` command provided by the
 [Cypress Percy plugin](https://github.com/percy/percy-cypress) to take visual
 snapshots throughout the user journey end-to-end tests
 
@@ -196,10 +201,7 @@ to see these Percy and Cypress in action.
 
 <!-- textlint-enable -->
 
-<Icon
-  name="external-link-alt"
-  url="https://happo.io/"
-/>
+<Icon name="external-link-alt" url="https://happo.io/" />
 
 | Resource                                                                             | Description                                                                                                                                 |
 | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -234,8 +236,8 @@ As a general rule there are some best practices when visual testing.
 
 ### Recognize the need for visual testing
 
-**<Icon name="exclamation-triangle" color="red" /> Assertions that verify
-style properties**
+**<Icon name="exclamation-triangle" color="red" /> Assertions that verify style
+properties**
 
 ```js
 cy.get('.completed').should('have.css', 'text-decoration', 'line-through')
@@ -252,7 +254,8 @@ verify the page appearance.
 
 :::tip
 
-&nbsp;<Icon name="check-circle" color="green" /> **Best Practice:** Take a snapshot after you confirm the page is done changing.
+&nbsp;<Icon name="check-circle" color="green" /> **Best Practice:** Take a
+snapshot after you confirm the page is done changing.
 
 :::
 
@@ -304,7 +307,9 @@ cy.mySnapshotCommand()
 
 :::tip
 
-&nbsp;<Icon name="check-circle" color="green" /> **Best Practice:** Use <a href="/api/commands/fixture">cy.fixture()</a> and network mocking to set the application
+&nbsp;<Icon name="check-circle" color="green" /> **Best Practice:** Use
+
+<a href="/api/commands/fixture">cy.fixture()</a> and network mocking to set the application
 state.
 
 :::
@@ -336,7 +341,10 @@ breaking tests in other unrelated components.
 
 :::tip
 
-&nbsp;<Icon name="check-circle" color="green" /> **Best Practice:** Use <a href="/plugins"> Component Testing plugins</a> to test the individual components functionality in addition to end-to-end and visual tests.
+&nbsp;<Icon name="check-circle" color="green" /> **Best Practice:** Use
+
+<a href="/plugins"> Component Testing plugins</a> to test the individual components
+functionality in addition to end-to-end and visual tests.
 
 :::
 
@@ -354,7 +362,9 @@ the
 - [Plugins](/guides/tooling/plugins-guide)
 - [Visual Testing Plugins](/plugins#Visual%20Testing)
 - [Writing a Plugin](/api/plugins/writing-a-plugin)
-- &nbsp;<Icon name="github" contentType="rwa" /> is a full stack example application that demonstrates **best practices and scalable strategies with Cypress in practical and realistic scenarios**.
+- &nbsp;<Icon name="github" contentType="rwa" /> is a full stack example
+  application that demonstrates **best practices and scalable strategies with
+  Cypress in practical and realistic scenarios**.
 - Read the blog post
   [Debug a Flaky Visual Regression Test](https://www.cypress.io/blog/2020/10/02/debug-a-flaky-visual-regression-test/)
 - Read the blog post

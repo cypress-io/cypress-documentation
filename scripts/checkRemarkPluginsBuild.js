@@ -1,5 +1,5 @@
 /**
- * Check is the 'dist' directory for the Cypress Remark plugins exists, 
+ * Check if the 'dist' directory for the Cypress Remark plugins exists, 
  * and builds the package if not. Used in the 'prestart' npm script to 
  * verify plugins are there before 'npm run start' is called.
  */

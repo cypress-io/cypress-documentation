@@ -22,9 +22,8 @@ using Component-scoped CSS (e.g. Styled Components or Vue's Scoped Styles) you
 will need to follow this guide in order to get your component looking **and
 behaving** like it will in production.
 
-:::tip
-Ensure that whatever you're doing in production is happening within either the Component HTML file or the Component Support File.
-:::
+:::tip Ensure that whatever you're doing in production is happening within
+either the Component HTML file or the Component Support File. :::
 
 ## Component Support File
 
@@ -231,19 +230,18 @@ test environment or else your components won't look right.
 
 ```html
 <style>
-/* In certain scaffolds, the App.vue file does not have a separate styles file */
+  /* In certain scaffolds, the App.vue file does not have a separate styles file */
 
-#app {
-  font-family: Sans-serif;
-}
+  #app {
+    font-family: Sans-serif;
+  }
 </style>
 ```
 
 Should become
 
 ```html
-/* App.vue */
-<style src="./app.css" />
+/* App.vue */ <style src="./app.css" />
 ```
 
 and

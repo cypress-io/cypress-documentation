@@ -30,12 +30,6 @@ commands:
           name: Docs Build
           command: npm run build
 
-  # Disabling until we know if we need this
-  # link-check-changed-files:
-  #   steps:
-  #     - run:
-  #         name: Broken link checker for changed files
-  #         command: npm run changed-files-broken-link-checker:ci
 
 job-defaults: &job-defaults
   executor: node-executor
@@ -49,138 +43,54 @@ jobs:
       - persist_to_workspace:
           root: ~/repo
           paths:
-            - build/*
+            - dist/*
             - node_modules/*
 
+  lint:
+    <<: *job-defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/repo
+      - run: npm run lint
   
-  # link-check-changed-files:
-  #   <<: *job-defaults
-  #   steps:
-  #     - checkout
-  #     - attach_workspace:
-  #         at: ~/repo
-  #     - link-check-changed-files
-
-  # Disabling until linting is back in place
-  # lint:
-  #   <<: *job-defaults
-  #   steps:
-  #     - checkout
-  #     - attach_workspace:
-  #         at: ~/repo
-  #     - run: npm run lint
-
-  # Disabling until we know if we need this
-  # broken-link-check-prod:
-  #   <<: *job-defaults
-  #   steps:
-  #     - checkout
-  #     - restore_cache:
-  #         keys:
-  #           - npm-cache-{{ checksum "package-lock.json" }}-{{ checksum "patches/github-slugger+1.3.0.patch" }}-{{ checksum "patches/@docsearch+js+1.0.0-alpha.28.patch" }}
-  #     - run:
-  #         name: Install Dependencies
-  #         command: npm ci
-  #     - run:
-  #         name: Broken link checker
-  #         command: npm run broken-link-checker:prod
-
-  # Disabling until we know if we need this
-  # release:
-  #   <<: *job-defaults
-  #   steps:
-  #     - nuxt-build
-  #     - run:
-  #         name: Docsearch Scraper
-  #         command: node ./cy_scripts/scrape.js
-
-  # Disabling until we know if we need this
-  # publish-scheduled-sanity-content:
-  #   <<: *job-defaults
-  #   steps:
-  #     - checkout
-  #     - restore_cache:
-  #         keys:
-  #           - npm-cache-{{ checksum "package-lock.json" }}-{{ checksum "patches/github-slugger+1.3.0.patch" }}-{{ checksum "patches/@docsearch+js+1.0.0-alpha.28.patch" }}
-  #     - run:
-  #         name: Install Dependencies
-  #         command: npm run install
-  #     - run:
-  #         name: Check for scheduled sanity.io content to publish and invoke Netlify build hook if necessary
-  #         command: node ./scripts/sanity/publishContent.js
+  # TODO: set the branch to master when released
+  release:
+    <<: *job-defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/repo
+      - setup_remote_docker
+      - run:
+          name: Algolia Scraper
+          command: |
+            echo "Scraping..."
+            ls
+            node ./scripts/search/scrape-and-compare-algolia-index.mjs 
 
 workflows:
   version: 2
   build-and-test:
     jobs:
-      # Disabling until we know if we need this
-      # - cypress/install:
-      #     name: 'Setup Linux'
-      #     install-command: npm ci
-      #     executor: with-chrome-and-firefox
-      #     post-steps:
-      #       - run:
-      #           name: 'Unit tests'
-      #           command: npm run test:unit --ci --runInBand
-
-      # Disabling until we know if we need this
-      # - link-check-changed-files:
-      #     name: 'Broken link checker'
-      #     requires:
-      #       - build
-
-      # Disabling until linting is back in place
-      # - lint:
-      #     name: "Lint JS/CSS/Markdown"
-      #     requires:
-      #       - build
-
-      # Disabling until we know if we need this
-      # Run E2E tests in Chrome
-      # - cypress/run:
-      #     name: 'UI Tests - Chrome'
-      #     browser: chrome
-      #     executor: with-chrome-and-firefox
-      #     wait-on: 'http://localhost:3000'
-      #     command-prefix: npx percy exec --
-      #     start: npm run start:ci
-      #     parallel: true
-      #     parallelism: 4
-      #     ci-build-id: ${CIRCLE_SHA1:0:8}
-      #     group: 'UI - Chrome'
-      #     requires:
-      #       - build
-      #       - Setup Linux
-      #     command: |
-            # if [ -n "$DOCS_RECORD_KEY" ]; then
-            #   npx cypress run --record --key $DOCS_RECORD_KEY --parallel
-            # else
-            #   npx cypress run
-            # fi
-
+      - lint:
+          name: "Lint JS/CSS/Markdown"
+          requires:
+            - build
       - build:
           filters:
             branches:
               ignore:
                 - master
 
-      # Disabling until we know if we need this
-      # Run docsearch-scraper only on master.
-      # - release:
-      #     name: 'Run docsearch scraper'
-      #     filters:
-      #       branches:
-      #         only:
-      #           - master
+      # TODO, replace branch with master on release
+      # Run Algolia scraper only on master.
+      - release:
+          name: 'Run Algolia scraper'
+          requires:
+            - build
+          filters:
+            branches:
+              only:
+                - new-docs-site
   
-  # Disabling until we know if we need this
-  # nightly:
-  #   triggers:
-  #     - schedule:
-  #         cron: "0 0 * * *"
-  #         filters:
-  #           branches:
-  #             only:
-  #               - master
-  #   jobs:
-  #     - broken-link-check-prod

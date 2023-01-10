@@ -38,25 +38,25 @@ queries and mutations.
 
 // Utility to match GraphQL mutation based on the operation name
 export const hasOperationName = (req, operationName) => {
-  const { body } = req;
+  const { body } = req
   return (
-    body.hasOwnProperty("operationName") && body.operationName === operationName
-  );
-};
+    body.hasOwnProperty('operationName') && body.operationName === operationName
+  )
+}
 
 // Alias query if operationName matches
 export const aliasQuery = (req, operationName) => {
   if (hasOperationName(req, operationName)) {
-    req.alias = `gql${operationName}Query`;
+    req.alias = `gql${operationName}Query`
   }
-};
+}
 
 // Alias mutation if operationName matches
 export const aliasMutation = (req, operationName) => {
   if (hasOperationName(req, operationName)) {
-    req.alias = `gql${operationName}Mutation`;
+    req.alias = `gql${operationName}Mutation`
   }
-};
+}
 ```
 
 In our test file, we can import these utilities and use them to alias the
@@ -64,23 +64,23 @@ queries and mutations for our tests in a `beforeEach`.
 
 ```js
 // app.cy.js
-import { aliasQuery, aliasMutation } from "../utils/graphql-test-utils";
+import { aliasQuery, aliasMutation } from '../utils/graphql-test-utils'
 
-context("Tests", () => {
+context('Tests', () => {
   beforeEach(() => {
-    cy.intercept("POST", "http://localhost:3000/graphql", (req) => {
+    cy.intercept('POST', 'http://localhost:3000/graphql', (req) => {
       // Queries
-      aliasQuery(req, "GetLaunchList");
-      aliasQuery(req, "LaunchDetails");
-      aliasQuery(req, "GetMyTrips");
+      aliasQuery(req, 'GetLaunchList')
+      aliasQuery(req, 'LaunchDetails')
+      aliasQuery(req, 'GetMyTrips')
 
       // Mutations
-      aliasMutation(req, "Login");
-      aliasMutation(req, "BookTrips");
-    });
-  });
+      aliasMutation(req, 'Login')
+      aliasMutation(req, 'BookTrips')
+    })
+  })
   // ...
-});
+})
 ```
 
 ## Expectations for Query or Mutation Results
@@ -90,25 +90,25 @@ mutation using [cy.wait()](/api/commands/wait).
 
 ```js
 // app.cy.js
-import { aliasQuery } from "../utils/graphql-test-utils";
+import { aliasQuery } from '../utils/graphql-test-utils'
 
-context("Tests", () => {
+context('Tests', () => {
   beforeEach(() => {
-    cy.intercept("POST", "http://localhost:3000/graphql", (req) => {
+    cy.intercept('POST', 'http://localhost:3000/graphql', (req) => {
       // Queries
-      aliasQuery(req, "Login");
+      aliasQuery(req, 'Login')
 
       // ...
-    });
-  });
+    })
+  })
 
-  it("should verify login data", () => {
-    cy.wait("@gqlLoginQuery")
-      .its("response.body.data.login")
-      .should("have.property", "id")
-      .and("have.property", "token");
-  });
-});
+  it('should verify login data', () => {
+    cy.wait('@gqlLoginQuery')
+      .its('response.body.data.login')
+      .should('have.property', 'id')
+      .and('have.property', 'token')
+  })
+})
 ```
 
 ## Modifying a Query or Mutation Response
@@ -118,47 +118,47 @@ results.
 
 ```js
 // app.cy.js
-import { hasOperationName, aliasQuery } from "../utils/graphql-test-utils";
+import { hasOperationName, aliasQuery } from '../utils/graphql-test-utils'
 
-context("Tests", () => {
+context('Tests', () => {
   beforeEach(() => {
-    cy.intercept("POST", "http://localhost:3000/graphql", (req) => {
+    cy.intercept('POST', 'http://localhost:3000/graphql', (req) => {
       // Queries
-      aliasQuery(req, "GetLaunchList");
+      aliasQuery(req, 'GetLaunchList')
 
       // ...
-    });
-  });
+    })
+  })
 
-  it("should not display the load more button on the launches page", () => {
-    cy.intercept("POST", "http://localhost:3000/graphql", (req) => {
-      const { body } = req;
-      if (hasOperationName(req, "GetLaunchList")) {
+  it('should not display the load more button on the launches page', () => {
+    cy.intercept('POST', 'http://localhost:3000/graphql', (req) => {
+      const { body } = req
+      if (hasOperationName(req, 'GetLaunchList')) {
         // Declare the alias from the initial intercept in the beforeEach
-        req.alias = "gqlGetLaunchListQuery";
+        req.alias = 'gqlGetLaunchListQuery'
 
         // Set req.fixture or use req.reply to modify portions of the response
         req.reply((res) => {
           // Modify the response body directly
-          res.body.data.launches.hasMore = false;
+          res.body.data.launches.hasMore = false
           res.body.data.launches.launches =
-            res.body.data.launches.launches.slice(5);
-        });
+            res.body.data.launches.launches.slice(5)
+        })
       }
-    });
+    })
 
     // Must visit after cy.intercept
-    cy.visit("/");
+    cy.visit('/')
 
-    cy.wait("@gqlGetLaunchListQuery")
-      .its("response.body.data.launches")
+    cy.wait('@gqlGetLaunchListQuery')
+      .its('response.body.data.launches')
       .should((launches) => {
-        expect(launches.hasMore).to.be.false;
-        expect(launches.length).to.be.lte(20);
-      });
+        expect(launches.hasMore).to.be.false
+        expect(launches.length).to.be.lte(20)
+      })
 
-    cy.get("#launch-list").its("length").should("be.gte", 1).and("be.lt", 20);
-    cy.contains("button", "Load More").should("not.exist");
-  });
-});
+    cy.get('#launch-list').its('length').should('be.gte', 1).and('be.lt', 20)
+    cy.contains('button', 'Load More').should('not.exist')
+  })
+})
 ```

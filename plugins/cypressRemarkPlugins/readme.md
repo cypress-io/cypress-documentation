@@ -1,4 +1,4 @@
-# Cypress Remark Plugins for  Docs
+# Cypress Remark Plugins for Docs
 
 This "package" contains a few remark plugins for creating Tabs/code-blocks for
 Cypress config samples.
@@ -9,7 +9,5 @@ tests/builds outside of the main docs.
 To build run `yarn build`
 
 To test run `yarn test`
-
-
 
 Visit each plugins readme for docs on each individual plugin.

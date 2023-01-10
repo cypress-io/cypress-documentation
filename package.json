@@ -10,6 +10,10 @@
     "prebuild": "rm -rf dist && npm run build:plugins",
     "build": "docusaurus build --out-dir dist",
     "build:plugins": "npm --prefix ./plugins/cypressRemarkPlugins run build",
+    "lint": "npm run lint:markdown",
+    "lint:fix": "npm run lint:markdown:fix",
+    "lint:markdown": "prettier --check '**/*.{md,mdx}'",
+    "lint:markdown:fix": "prettier --write '**/*.{md,mdx}'",
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",
     "clear": "docusaurus clear",
@@ -34,7 +38,6 @@
     "docusaurus-plugin-image-zoom": "^0.1.1",
     "docusaurus-plugin-sass": "^0.2.2",
     "get-all-files": "^4.1.0",
-    "node-fetch": "^2.6.7",
     "postcss": "^8.4.14",
     "prism-react-renderer": "^1.3.3",
     "react": "^17.0.2",
@@ -45,6 +48,7 @@
   "devDependencies": {
     "@docusaurus/module-type-aliases": "^2.0.1",
     "@tsconfig/docusaurus": "^1.0.5",
+    "node-fetch": "^3.3.0",
     "patch-package": "^6.4.7",
     "prettier": "^2.7.1",
     "typescript": "^4.6.4"

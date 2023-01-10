@@ -28,8 +28,7 @@ cy.writeFile('menu.json')
 A path to a file within the project root (the directory that contains the
 [Cypress configuration file](/guides/references/configuration))
 
-**<Icon name="angle-right" /> contents** **_(String, Array, Object or
-Buffer)_**
+**<Icon name="angle-right" /> contents** **_(String, Array, Object or Buffer)_**
 
 The contents to be written to the file.
 
@@ -232,12 +231,18 @@ cy.writeFile('info.log', ['foo', 'bar', 'baz'])
 
 The command above will display in the Command Log as:
 
-<DocsImage src="/img/api/writefile/write-data-to-system-file-for-testing.png" alt="Command Log writeFile" ></DocsImage>
+<DocsImage
+  src="/img/api/writefile/write-data-to-system-file-for-testing.png"
+  alt="Command Log writeFile"
+></DocsImage>
 
 When clicking on the `writeFile` command within the command log, the console
 outputs the following:
 
-<DocsImage src="/img/api/writefile/console-log-shows-contents-written-to-file.png" alt="Console Log writeFile" ></DocsImage>
+<DocsImage
+  src="/img/api/writefile/console-log-shows-contents-written-to-file.png"
+  alt="Console Log writeFile"
+></DocsImage>
 
 ## History
 
