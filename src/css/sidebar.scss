@@ -5,22 +5,26 @@
 .theme-doc-sidebar-menu {
   padding: 0.75rem;
   font-family: 'Roboto';
-  font-weight: var(--ifm-font-weight-bold);
-  font-size: 1.2rem;
+  font-weight: var(--ifm-font-weight-semibold);
+  font-size: 1.1rem;
 }
 
 /* sidebar subcategories */
 .theme-doc-sidebar-item-category.theme-doc-sidebar-item-category-level-2
   > .menu__list-item-collapsible
   a {
-  font-size: 1.02rem;
+  font-size: 1rem;
 }
 
 /* sidebar children */
-.theme-doc-sidebar-item-link-level-2,
+.theme-doc-sidebar-item-link-level-2 > .menu__link {
+  font-weight: var(--ifm-font-weight-normal);
+  font-size: 1rem;
+}
+
 .theme-doc-sidebar-item-link-level-3 > .menu__link {
-  font-weight: var(--ifm-font-weight-semibold);
-  font-size: 1.02rem;
+  font-weight: var(--ifm-font-weight-normal);
+  font-size: .95rem;
 }
 
 .theme-doc-sidebar-item-category {
