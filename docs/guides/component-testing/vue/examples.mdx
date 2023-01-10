@@ -56,11 +56,8 @@ prop and validate it was called:
 it('clicking + fires a change event with the incremented value', () => {
   const onChangeSpy = cy.spy().as('onChangeSpy')
   cy.mount(Stepper, { props: { onChange: onChangeSpy } })
-  cy.get('[data-cy=increment]')
-    .click()
-    .then(() => {
-      cy.get('@onChangeSpy').should('have.been.calledWith', 1)
-    })
+  cy.get('[data-cy=increment]').click()
+  cy.get('@onChangeSpy').should('have.been.calledWith', 1)
 })
 ```
 
@@ -76,11 +73,8 @@ Sample with JSX:
 it('clicking + fires a change event with the incremented value', () => {
   const onChangeSpy = cy.spy().as('onChangeSpy')
   cy.mount(<Stepper initial={100} onChange={onChangeSpy} />)
-  cy.get('[data-cy=increment]')
-    .click()
-    .then(() => {
-      cy.get('@onChangeSpy').should('have.been.calledWith', 101)
-    })
+  cy.get('[data-cy=increment]').click()
+  cy.get('@onChangeSpy').should('have.been.calledWith', 101)
 })
 ```
 
