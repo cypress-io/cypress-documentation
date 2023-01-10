@@ -44,7 +44,7 @@ const scrape = async () => {
     )
     console.time('scraper')
     const { stdout, stderr } = await exec(
-      `API_KEY=${API_KEY} APPLICATION_ID=${APPLICATION_ID} sh run-scraper.sh`
+      `API_KEY=${API_KEY} APPLICATION_ID=${APPLICATION_ID} sh ./scripts/search/run-scraper.sh`
     )
     if (stdout) {
       console.log(stdout)
