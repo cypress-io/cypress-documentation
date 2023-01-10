@@ -42,12 +42,6 @@
   --ifm-navbar-background-color: var(--ifm-color-gray-1000);
 }
 
-/* have to override this for specificity */
-[data-theme='dark'] button.DocSearch {
-  --docsearch-muted-color: var(--ifm-color-gray-100);
-  color: var(--docsearch-muted-color);
-}
-
 /* main nav icons - applied in docusaurus.config.js */
 .github-logo::before {
   content: '';

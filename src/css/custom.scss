@@ -12,6 +12,7 @@
 @import './inline-toc.scss';
 @import './embeds.scss';
 @import './table-of-contents.scss';
+@import './docsearch.scss';
 
 /* You can override the default Infima variables here. */
 :root {
@@ -101,6 +102,7 @@ html[data-theme='light'] {
   --ifm-breadcrumb-item-background-active: var(--ifm-color-gray-50);
 
   --docsearch-muted-color: var(--ifm-color-gray-700);
+  --docsearch-highlight-color: var(--ifm-color-primary-dark);
 
   --ifm-tabs-color-active: var(--ifm-color-primary);
   --ifm-tabs-color: var(--ifm-color-gray-300);
@@ -125,6 +127,7 @@ html[data-theme='dark'] {
   --ifm-breadcrumb-item-background-active: var(--ifm-color-gray-900);
 
   --docsearch-muted-color-override: var(--ifm-color-gray-100);
+  --docsearch-highlight-color: var(--ifm-color-primary-darker);
 
   --ifm-tabs-color-active: var(--ifm-color-primary);
   --ifm-tabs-color: var(--ifm-color-gray-300);
@@ -148,7 +151,8 @@ body {
 /* add a small gap to the main content area when the width
   starts to approach the sidebar */
 @media screen and (min-width: 997px) and (max-width: 1660px) {
-  [class^='docPage'] { //dynamic class name, so using the prefix
+  [class^='docPage'] {
+    //dynamic class name, so using the prefix
     gap: 18px;
   }
 }
