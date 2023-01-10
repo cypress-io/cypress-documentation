@@ -101,16 +101,19 @@ const config = {
             to: '/plugins',
             label: 'Plugins',
             position: 'left',
+            activeBaseRegex: 'plugins',
           },
           {
             to: '/examples/recipes',
             label: 'Examples',
             position: 'left',
+            activeBaseRegex: 'examples',
           },
           {
             to: '/faq/questions/using-cypress-faq',
             label: 'FAQ',
             position: 'left',
+            activeBaseRegex: 'faq',
           },
           {
             to: 'https://learn.cypress.io',
