@@ -1,6 +1,6 @@
 import fetch from 'node-fetch'
 
-class AlgoliaClient {
+export class AlgoliaClient {
   constructor(algoliaIndex, apiKey, applicationId) {
     if (!algoliaIndex) {
       throw new Error('Missing Algolia index name!')
@@ -49,5 +49,3 @@ class AlgoliaClient {
     return index.entries
   }
 }
-
-module.exports.AlgoliaClient = AlgoliaClient
