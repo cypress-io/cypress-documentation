@@ -217,8 +217,12 @@ div[class^='announcementBar'] .close {
   gap: 30px 40px;
 }
 
+.mediaListContainer {
+  margin-bottom: 50px;
+}
+
 .mediaColumn {
-  max-width: 300px;
+  max-width: 350px;
 }
 
 .mediaTitleContainer {
@@ -228,6 +232,8 @@ div[class^='announcementBar'] .close {
 .mediaImage {
   width: 100%;
   height: auto;
+  border: 1px solid #ddd;
+  box-shadow: 0 1px 2px #ddd;
 }
 
 /* remove extra vertical space from tabs when it contains a code block */

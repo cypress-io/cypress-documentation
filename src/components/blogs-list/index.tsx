@@ -9,7 +9,7 @@ export default function blogsList(): BlogsProps {
       <div>
         <article>
           {blogsJSON.small &&
-          <div>
+          <div className="mediaListContainer">
             <ul>
               {blogsJSON.small.map((blog, index) => (
                 <li key={index}>
