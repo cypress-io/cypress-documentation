@@ -59,7 +59,7 @@ jobs:
   release:
     <<: *job-defaults
     steps:
-      - docs-build
+      # - docs-build
       - setup_remote_docker
       - run:
           name: Algolia Scraper
