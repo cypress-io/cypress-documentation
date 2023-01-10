@@ -92,5 +92,5 @@ workflows:
           filters:
             branches:
               only:
-                - new-docs-site-algolia-ci
+                - new-docs-site-algolia
   
