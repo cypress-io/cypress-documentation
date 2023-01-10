@@ -235,7 +235,7 @@ const config = {
         // Public API key: it is safe to commit it
         apiKey: 'b4af59e23bc2fa05281af7dcf13fcae5',
 
-        indexName: 'docs',
+        indexName: 'cypress_docs',
 
         // Optional: see doc section below
         contextualSearch: false,
