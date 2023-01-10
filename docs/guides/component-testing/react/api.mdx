@@ -18,13 +18,14 @@ import { mount } from 'cypress/react'
 <table class="api-table table-list">
   <tr>
     <td>Description</td>
-    <td>
-      Mounts a React component into the DOM.
-    </td>  
+    <td>Mounts a React component into the DOM.</td>
   </tr>
   <tr>
     <td>Signature</td>
-    <td>mount(jsx: React.ReactNode, options?: MountOptions, rerenderKey?: string): Cypress.Chainable&lt;MountReturn&gt;</td>
+    <td>
+      mount(jsx: React.ReactNode, options?: MountOptions, rerenderKey?: string):
+      Cypress.Chainable&lt;MountReturn&gt;
+    </td>
   </tr>
   <tr>
     <td>Returns</td>
@@ -34,7 +35,7 @@ import { mount } from 'cypress/react'
 
 <table class="api-table">
   <caption>mount Parameters</caption>
-    <thead>
+  <thead>
     <td>Name</td>
     <td>Type</td>
     <td>Description</td>
@@ -74,9 +75,7 @@ it('mounts', () => {
 <table class="api-table">
   <tr>
     <td>Description</td>
-    <td>
-      Gets the root element used to mount the component.
-    </td>  
+    <td>Gets the root element used to mount the component.</td>
   </tr>
   <tr>
     <td>Signature</td>
@@ -117,8 +116,11 @@ it('mounts', () => {
   <tr>
     <td>strict</td>
     <td>boolean (optional)</td>
-    <td>Render component in React <a href="https://reactjs.org/docs/strict-mode.html">strict mode</a>
-    It activates additional checks and warnings for child components.</td>
+    <td>
+      Render component in React{' '}
+      <a href="https://reactjs.org/docs/strict-mode.html">strict mode</a>
+      It activates additional checks and warnings for child components.
+    </td>
   </tr>
 </table>
 
@@ -136,12 +138,18 @@ Type that the `mount` function yields
   <tr>
     <td>component</td>
     <td>React.ReactNode</td>
-    <td>Render component in React <a href="https://reactjs.org/docs/strict-mode.html">strict mode</a>
-    It activates additional checks and warnings for child components.</td>
+    <td>
+      Render component in React{' '}
+      <a href="https://reactjs.org/docs/strict-mode.html">strict mode</a>
+      It activates additional checks and warnings for child components.
+    </td>
   </tr>
   <tr>
     <td>rerender</td>
-    <td>(component: React.ReactNode) => globalThis.Cypress.Chainable&lt;MountReturn&gt;</td>
+    <td>
+      (component: React.ReactNode) =>
+      globalThis.Cypress.Chainable&lt;MountReturn&gt;
+    </td>
     <td>The component that was rendered.</td>
   </tr>
 </table>

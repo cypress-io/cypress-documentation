@@ -151,30 +151,34 @@ You can use the `task` event to do things like:
 
 ### <Icon name="graduation-cap" /> Real World Example
 
-The <Icon name="github" inline="true" contentType="rwa" />
-uses [tasks](/api/commands/task) to re-seed its database, and to filter/find
-test data for various testing scenarios.
+The <Icon name="github" inline="true" contentType="rwa" /> uses
+[tasks](/api/commands/task) to re-seed its database, and to filter/find test
+data for various testing scenarios.
 
 <WarningSetupNodeEvents />
 
 :::cypress-config-plugin-example
 
 ```ts
-  on("task", {
-    async "db:seed"() {
-      // seed database with test data
-      const { data } = await axios.post(`${testDataApiEndpoint}/seed`);
-      return data;
-    },
+on('task', {
+  async 'db:seed'() {
+    // seed database with test data
+    const { data } = await axios.post(`${testDataApiEndpoint}/seed`)
+    return data
+  },
 
-    // fetch test data from a database (MySQL, PostgreSQL, etc...)
-    "filter:database"(queryPayload) {
-      return queryDatabase(queryPayload, (data, attrs) => _.filter(data.results, attrs));
-    },
-    "find:database"(queryPayload) {
-      return queryDatabase(queryPayload, (data, attrs) => _.find(data.results, attrs));
-    },
-  });
+  // fetch test data from a database (MySQL, PostgreSQL, etc...)
+  'filter:database'(queryPayload) {
+    return queryDatabase(queryPayload, (data, attrs) =>
+      _.filter(data.results, attrs)
+    )
+  },
+  'find:database'(queryPayload) {
+    return queryDatabase(queryPayload, (data, attrs) =>
+      _.find(data.results, attrs)
+    )
+  },
+})
 ```
 
 :::
@@ -199,9 +203,8 @@ can `npm install` any of the plugins listed below:
 
 ## Installing plugins
 
-Plugins from our [official list](/plugins) are npm modules. This
-enables them to be versioned and updated separately without needing to update
-Cypress itself.
+Plugins from our [official list](/plugins) are npm modules. This enables them to
+be versioned and updated separately without needing to update Cypress itself.
 
 You can install any published plugin using NPM:
 

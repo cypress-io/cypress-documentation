@@ -47,7 +47,9 @@ cd cypress-documentation
 
 ### VSCode MDX Extension
 
-If you are using VS Code, download the [MDX extension](https://marketplace.visualstudio.com/items?itemName=unifiedjs.vscode-mdx) to get full editor support for MDX files.
+If you are using VS Code, download the
+[MDX extension](https://marketplace.visualstudio.com/items?itemName=unifiedjs.vscode-mdx)
+to get full editor support for MDX files.
 
 #### Admonitions
 
@@ -76,11 +78,10 @@ more information about the image.
 #### Videos
 
 You can embed videos within the markdown with the
-[`<DocsVideo />`](src/components/docs-video) component. Currently, it
-supports local files, YouTube, and Vimeo embeds. Set the `src` prop to a
-relative path for a local video file or the embed link for YouTube or Vimeo
-videos. You should also set a `title` prop describing the video for
-accessibility reasons.
+[`<DocsVideo />`](src/components/docs-video) component. Currently, it supports
+local files, YouTube, and Vimeo embeds. Set the `src` prop to a relative path
+for a local video file or the embed link for YouTube or Vimeo videos. You should
+also set a `title` prop describing the video for accessibility reasons.
 
 ```jsx
 <DocsVideo
@@ -92,10 +93,10 @@ accessibility reasons.
 #### Icons
 
 [Font Awesome](https://fontawesome.com/) icons can be used within markdown by
-using the [`<Icon />`](src/components/icon) component. Set the `name` prop
-to the name of the Font Awesome icon you want to use. Make sure that the icon
-appears in the list of imported icons within the [MDXComponents.js](src/theme/MDXComponents.js) file under the
-`fontawesome` key.
+using the [`<Icon />`](src/components/icon) component. Set the `name` prop to
+the name of the Font Awesome icon you want to use. Make sure that the icon
+appears in the list of imported icons within the
+[MDXComponents.js](src/theme/MDXComponents.js) file under the `fontawesome` key.
 
 ```jsx
 <Icon name="question-circle" />
@@ -113,9 +114,9 @@ You can learn about how to import markdown & partials
 ### Adding Plugins
 
 To add a plugin, submit a [pull request](#Pull-Requests) with the corresponding
-data added to the [`plugins.json`](/src/data/plugins.json) file. Your
-plugin should have a name, description, link to the plugin's code, as well as
-any keywords.
+data added to the [`plugins.json`](/src/data/plugins.json) file. Your plugin
+should have a name, description, link to the plugin's code, as well as any
+keywords.
 
 We want to showcase plugins that work and have a good developer experience. This
 means that a good plugin generally has:
@@ -161,9 +162,9 @@ go away.
 ### Writing the Changelog
 
 When adding to the Changelog, create a new file in
-[`/_changelogs`](/docs/guides/references/_changelogs) named as the version number. Be
-sure to follow the category structure defined below (in this order). Each bullet
-point in the list should _always_ be associated to an issue on the
+[`/_changelogs`](/docs/guides/references/_changelogs) named as the version
+number. Be sure to follow the category structure defined below (in this order).
+Each bullet point in the list should _always_ be associated to an issue on the
 [`cypress`](https://github.com/cypress-io/cypress) repo and link to that issue
 (except for Documentation changes).
 

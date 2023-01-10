@@ -58,49 +58,59 @@ Whenever you run Cypress for the first time, the app will prompt you to set up
 either E2E Testing or Component Testing. Click on "Component Testing" to start
 the configuration wizard.
 
-<DocsImage 
-  src="/img/guides/component-testing/select-test-type.jpg" 
-  caption="Choose Component Testing"> </DocsImage>
+<DocsImage
+  src="/img/guides/component-testing/select-test-type.jpg"
+  caption="Choose Component Testing"
+>
+  {' '}
+</DocsImage>
 
 The Project Setup screen automatically detects your framework and bundler,
 which, in our case, is Vue and Vite. Click "Next Step" to continue.
 
-<DocsImage 
-  src="/img/guides/component-testing/project-setup-vue.jpg" 
-  caption="Vue and Vite are automatically detected"> </DocsImage>
+<DocsImage
+  src="/img/guides/component-testing/project-setup-vue.jpg"
+  caption="Vue and Vite are automatically detected"
+>
+  {' '}
+</DocsImage>
 
 The next screen checks that all the required dependencies are installed. All the
 items should have green checkboxes on them, indicating everything is good, so
 click "Continue".
 
-<DocsImage 
-  src="/img/guides/component-testing/dependency-detection-vue.jpg" 
-  caption="All necessary dependencies are installed"> </DocsImage>
+<DocsImage
+  src="/img/guides/component-testing/dependency-detection-vue.jpg"
+  caption="All necessary dependencies are installed"
+>
+  {' '}
+</DocsImage>
 
 Next, Cypress generates all the necessary configuration files and gives you a
 list of all the changes it made to your project. Click "Continue".
 
-<DocsImage 
-  src="/img/guides/component-testing/scaffolded-files.jpg" 
-  caption="The Cypress launchpad will scaffold all of these files for you">
-</DocsImage>
+<DocsImage
+  src="/img/guides/component-testing/scaffolded-files.jpg"
+  caption="The Cypress launchpad will scaffold all of these files for you"
+></DocsImage>
 
 After setting up component testing, you will be at the browser selection screen.
 
 Pick the browser of your choice and click the "Start Component Testing" button
 to open the Cypress test runner.
 
-<DocsImage 
-  src="/img/guides/component-testing/select-browser.jpg" 
-  caption="Choose your browser"> </DocsImage>
+<DocsImage
+  src="/img/guides/component-testing/select-browser.jpg"
+  caption="Choose your browser"
+>
+  {' '}
+</DocsImage>
 
 When the test runner appears, it won't find any specs because we haven't created
 any yet. However, we don't currently have a component, either. Let's change
 that!
 
-<DocsImage 
-  src="/img/guides/component-testing/create-your-first-spec-cfc.jpg">
-</DocsImage>
+<DocsImage src="/img/guides/component-testing/create-your-first-spec-cfc.jpg"></DocsImage>
 
 ### Creating a Component
 
@@ -142,7 +152,6 @@ Open the project with your favorite code editor and create a file at
 </script>
 ```
 
-
 Our component consists of two buttons, one used to decrement the counter and one
 to increment it. A `span` tag sits in the middle of the buttons to show the
 current value of the counter.
@@ -160,9 +169,7 @@ spec" screen, click "Create from component".
 A modal will pop up listing all the components that are found in your app.
 Select the **Stepper.vue** component:
 
-<DocsImage 
-  src="/img/guides/component-testing/create-from-component-vue.jpg">
-</DocsImage>
+<DocsImage src="/img/guides/component-testing/create-from-component-vue.jpg"></DocsImage>
 
 A spec file was created at **src/component/Stepper.cy.js**:
 
@@ -206,8 +213,9 @@ Now it's time to see the test in action.
 Switch back to the browser you opened for testing, on click on the "Okay, run
 the spec" button to execute it.
 
-<DocsImage 
-  src="/img/guides/component-testing/first-test-run-vue.jpg"> </DocsImage>
+<DocsImage src="/img/guides/component-testing/first-test-run-vue.jpg">
+  {' '}
+</DocsImage>
 
 Our first test verifies the component can mount in it's default state without
 any errors. If there is a runtime error during test execution, the test will

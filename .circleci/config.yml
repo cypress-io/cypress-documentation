@@ -30,12 +30,6 @@ commands:
           name: Docs Build
           command: npm run build
 
-  # Disabling until we know if we need this
-  # link-check-changed-files:
-  #   steps:
-  #     - run:
-  #         name: Broken link checker for changed files
-  #         command: npm run changed-files-broken-link-checker:ci
 
 job-defaults: &job-defaults
   executor: node-executor
@@ -49,17 +43,8 @@ jobs:
       - persist_to_workspace:
           root: ~/repo
           paths:
-            - build/*
+            - dist/*
             - node_modules/*
-
-  
-  # link-check-changed-files:
-  #   <<: *job-defaults
-  #   steps:
-  #     - checkout
-  #     - attach_workspace:
-  #         at: ~/repo
-  #     - link-check-changed-files
 
   # Disabling until linting is back in place
   # lint:

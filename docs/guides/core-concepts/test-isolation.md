@@ -12,6 +12,7 @@ sidebar_position: 35
 - Test isolation trade-offs
 
 :::
+
 ## What is Test Isolation?
 
 :::tip
@@ -88,10 +89,10 @@ current page is not cleared.
 
 ### Quick Comparison
 
-| testIsolation | beforeEach test                                                                                                                                  | cy.session()                                                                                                                                     |
-| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| testIsolation | beforeEach test                                                                                                                                     | cy.session()                                                                                                                                        |
+| ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `true`        | - clears page by visiting `about:blank`<br/>- clears cookies in all domains<br/>- local storage in all domains<br/>- session storage in all domains | - clears page by visiting `about:blank`<br/>- clears cookies in all domains<br/>- local storage in all domains<br/>- session storage in all domains |
-| `false`       | does not alter the current browser context                                                                                                       | <br/>- clears cookies in all domains<br/>- local storage in all domains<br/>- session storage in all domains                                        |
+| `false`       | does not alter the current browser context                                                                                                          | <br/>- clears cookies in all domains<br/>- local storage in all domains<br/>- session storage in all domains                                        |
 
 ## Test Isolation in Component Testing
 

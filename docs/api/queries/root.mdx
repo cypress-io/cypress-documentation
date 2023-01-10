@@ -74,14 +74,12 @@ cy.get('form').within(($form) => {
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-- `cy.root()` will automatically
-[retry](/guides/core-concepts/retry-ability) until all chained assertions have
-passed
+- `cy.root()` will automatically [retry](/guides/core-concepts/retry-ability)
+  until all chained assertions have passed
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-- `cy.root()` can time out waiting for assertions you've added to
-pass.
+- `cy.root()` can time out waiting for assertions you've added to pass.
 
 ## Command Log
 
@@ -97,12 +95,18 @@ cy.get('.query-ul').within(() => {
 
 The commands above will display in the Command Log as:
 
-<DocsImage src="/img/api/root/find-root-element-and-assert.png" alt="Command Log root" ></DocsImage>
+<DocsImage
+  src="/img/api/root/find-root-element-and-assert.png"
+  alt="Command Log root"
+></DocsImage>
 
 When clicking on the `root` command within the command log, the console outputs
 the following:
 
-<DocsImage src="/img/api/root/console-log-root-which-is-usually-the-main-document.png" alt="Console Log root" ></DocsImage>
+<DocsImage
+  src="/img/api/root/console-log-root-which-is-usually-the-main-document.png"
+  alt="Console Log root"
+></DocsImage>
 
 ## See also
 
