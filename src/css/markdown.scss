@@ -8,6 +8,22 @@ div.markdown {
     margin-bottom: 0;
   }
 
+  h2 {
+    --ifm-h2-font-size: 2rem;
+  }
+
+  h3 {
+    --ifm-h3-font-size: 1.5rem;
+  }
+
+  h4 {
+    --ifm-h4-font-size: 1.3rem;
+  }
+
+  h5 {
+    --ifm-h5-font-size: 1.2rem;
+  }
+
   a {
     text-decoration: none;
     font-weight: var(--ifm-font-weight-semibold);
