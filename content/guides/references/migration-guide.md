@@ -177,7 +177,7 @@ test and verify it can run successfully without the test before it.
 
 Test isolation did most truly exist pre-12. Pre-Cypress 12, the behavior was a
 hybrid of both `testIsolation` enabled and disabled. All local storage and
-cookies on the current domain were cleared, however, we did not clear session
+cookies on the current domain were cleared, but Cypress did not clear session
 storage and the page always persisted.
 
 Now when `testIsolation` is enabled, local storage, session storage and cookies
