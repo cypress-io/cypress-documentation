@@ -823,12 +823,13 @@ data, including cookies, `localStorage` and `sessionStorage`.
 
 ## History
 
-| Version                                       | Changes                                                                                           |
-| --------------------------------------------- | ------------------------------------------------------------------------------------------------- |
-| [12.0.0](/guides/references/changelog#12-0-0) | Removed `experimentalSessionAndOrigin` which allowed the use of the command available by default. |
-| [11.0.0](/guides/references/changelog#11-0-0) | The `setup` option is now required.                                                               |
-| [10.9.0](/guides/references/changelog#10-9-0) | Added `cacheAcrossSpecs` property.                                                                |
-| [8.2.0](/guides/references/changelog#8-2-0)   | `cy.session()` command added.                                                                     |
+| Version                                       | Changes                                                                                    |
+| --------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| [12.0.0](/guides/references/changelog#12-0-0) | Removed `experimentalSessionAndOrigin` and made the command available by default.          |
+| [11.0.0](/guides/references/changelog#11-0-0) | The `setup` option is now required.                                                        |
+| [10.9.0](/guides/references/changelog#10-9-0) | Added `cacheAcrossSpecs` property.                                                         |
+| [9.6.0](/guides/references/changelog#9-6-0)   | Added support for `experimentalSessionAndOrigin` and removed `experimentalSessionSupport`. |
+| [8.2.0](/guides/references/changelog#8-2-0)   | `cy.session()` command added and can be used when `experimentalSessionSupport` is enabled. |
 
 ## See also
 
