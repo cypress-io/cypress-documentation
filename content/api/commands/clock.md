@@ -289,6 +289,18 @@ overridden on window load, before any of your app code runs. So even if
 via [`cy.tick()`](/api/commands/tick). This also applies if, during the course
 of a test, the page under test is reloaded or changed.
 
+#### browser timezones
+
+When running time sensitive tests, the result might differ depending
+on which timezone the test was run on. Your CI environment might have a
+different timezone than yours.
+You need to set the node env TZ to the timezone you want before running
+the cypress command.
+
+```json
+ "cypress:open": "TZ=America/New_York cypress run"
+```
+
 ## Rules
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
