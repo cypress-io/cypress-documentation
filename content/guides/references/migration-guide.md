@@ -180,10 +180,10 @@ hybrid of both `testIsolation` enabled and disabled. All local storage and
 cookies on the current domain were cleared, but Cypress did not clear session
 storage and the page always persisted.
 
-In Cypress 12+ when `testIsolation` is enabled, local storage, session storage and cookies
-in **all** domains are cleared and the page is cleared. When `testIsolation` is
-disabled, nothing is cleared before the next test so all local storage, session
-storage and cookies & the page persists.
+In Cypress 12+ when `testIsolation` is enabled, local storage, session storage
+and cookies in **all** domains are cleared and the page is cleared. When
+`testIsolation` is disabled, nothing is cleared before the next test so all
+local storage, session storage and cookies & the page persists.
 
 If you wanted to match pre-Cypress 12 behavior, you need to disable
 `testIsolation`, then run `cy.clearLocalStorage()` and `cy.clearCookies()` in a
@@ -203,8 +203,8 @@ Many of the issues test isolation solved were around cookie management with
 tests trying to save and persist cookies because the page was still available,
 but the cookies on the domain were unexpectedly cleared which broke interactions
 with the application. It wasn’t obvious Cypress was doing a partial browser
-clean up. Explicitly setting test isolation to enabled or disabled
-allows you to choose what is right for your tests.
+clean up. Explicitly setting test isolation to enabled or disabled allows you to
+choose what is right for your tests.
 
 ### Behavior Changes in Alias Resolution
 
