@@ -132,7 +132,7 @@ cypress run [options]
 | `--spec`, `-s`             | [Specify the spec files to run](#cypress-run-spec-lt-spec-gt)                                                                                                                              |
 | `--tag`, `-t`              | [Identify a run with a tag or tags](#cypress-run-tag-lt-tag-gt)                                                                                                                            |
 
-#### `cypress run --browser <browser-name-or-path>`
+#### `cypress run --browser <browser-name-or-path>` {#cypress-run-browser-lt-browser-name-or-path-gt}
 
 ```shell
 cypress run --browser chrome
@@ -153,7 +153,7 @@ cypress run --browser /usr/bin/chromium
 
 [Having trouble with browser detection? Check out our troubleshooting guide](/guides/references/troubleshooting#Launching-browsers)
 
-#### `cypress run --ci-build-id <id>`
+#### `cypress run --ci-build-id <id>` {#cypress-run-ci-build-id-lt-id-gt}
 
 This value should be automatically detected for most CI providers and is
 unnecessary to define unless Cypress is unable to determine it.
@@ -168,7 +168,7 @@ cypress run --ci-build-id BUILD_NUMBER
 Only valid when providing a `--group` or `--parallel` flag. Read our
 [parallelization](/guides/guides/parallelization) documentation to learn more.
 
-#### `cypress run --config <config>`
+#### `cypress run --config <config>` {#cypress-run-config-lt-config-gt}
 
 Set [configuration](/guides/references/configuration) values. Separate multiple
 values with commas. The values set here override any values set in your
@@ -215,7 +215,7 @@ Examples:
 
 :::
 
-#### `cypress run --config-file <configuration-file>`
+#### `cypress run --config-file <configuration-file>` {#cypress-run-config-file-lt-configuration-file-gt}
 
 You can specify a path to a file where
 [Cypress configuration](/guides/references/configuration) values are set.
@@ -224,7 +224,7 @@ You can specify a path to a file where
 cypress run --config-file tests/cypress.config.js
 ```
 
-#### `cypress run --env <env>`
+#### `cypress run --env <env>` {#cypress-run-config-file-lt-configuration-file-gt}
 
 Set Cypress [environment variables](/guides/guides/environment-variables).
 
@@ -245,7 +245,7 @@ Pass an object as a JSON in a string.
 cypress run --env flags='{"feature-a":true,"feature-b":false}'
 ```
 
-#### `cypress run --group <name>`
+#### `cypress run --group <name>` {#cypress-run-group-lt-name-gt}
 
 Group recorded tests together under a single run.
 
@@ -268,7 +268,7 @@ Specifying the `--ci-build-id` may also be necessary.
 
 [Read more about grouping.](/guides/guides/parallelization#Grouping-test-runs)
 
-#### `cypress run --headed`
+#### `cypress run --headed` {#cypress-run-headed}
 
 By default, Cypress will run tests headlessly during `cypress run`.
 
@@ -279,7 +279,7 @@ any browser via `cypress open`.
 cypress run --headed
 ```
 
-#### `cypress run --no-exit`
+#### `cypress run --no-exit` {#cypress-run-no-exit}
 
 To prevent Cypress from exiting after running tests in a spec file, use
 `--no-exit`.
@@ -291,7 +291,7 @@ access to **developer tools** after a `spec` has run.
 cypress run --headed --no-exit
 ```
 
-#### `cypress run --parallel`
+#### `cypress run --parallel` {#cypress-run-parallel}
 
 Run recorded specs in [parallel](/guides/guides/parallelization) across multiple
 machines.
@@ -310,13 +310,13 @@ cypress run --record --parallel --group e2e-staging-specs
 Read our [parallelization](/guides/guides/parallelization) documentation to
 learn more.
 
-#### `cypress run --port <port>`
+#### `cypress run --port <port>` {#cypress-run-port-lt-port-gt}
 
 ```shell
 cypress run --port 8080
 ```
 
-#### `cypress run --project <project-path>`
+#### `cypress run --project <project-path>` {#cypress-run-project-lt-project-path-gt}
 
 To see this in action we've set up an
 [example repo to demonstrate this here](https://github.com/cypress-io/cypress-test-nested-projects).
@@ -325,7 +325,7 @@ To see this in action we've set up an
 cypress run --project ./some/nested/folder
 ```
 
-#### `cypress run --record --key <record-key>`
+#### `cypress run --record --key <record-key>` {#cypress-run-record-key-lt-record-key-gt}
 
 Record your test results to [Cypress Cloud](/guides/cloud/introduction). For
 this option to work you must first
@@ -359,7 +359,7 @@ in-depth explanation of how Cypress uses your record key and `projectId` to save
 your test results to Cypress Cloud, see the
 [Identification section](/guides/cloud/projects#Identification).
 
-#### `cypress run --reporter <reporter>`
+#### `cypress run --reporter <reporter>` {#cypress-run-reporter-lt-reporter-gt}
 
 You can tests specifying a specific [Mocha reporter](/guides/tooling/reporters).
 
@@ -374,7 +374,7 @@ You can specify reporter options using the
 cypress run --reporter junit --reporter-options mochaFile=result.xml,toConsole=true
 ```
 
-#### `cypress run --spec <spec>`
+#### `cypress run --spec <spec>` {#cypress-run-spec-lt-spec-gt}
 
 Run tests specifying a single test file to run instead of all tests. The spec
 path should be an absolute path or can relative to the current working
@@ -419,7 +419,7 @@ If we are in the `app` folder, we can run the specs using the following command
 cypress run --project tests/e2e --spec ./tests/e2e/cypress/e2e/spec.js
 ```
 
-#### `cypress run --tag <tag>`
+#### `cypress run --tag <tag>` {#cypress-run-tag-lt-tag-gt}
 
 Add a tag or tags to the recorded run. This can be used to help identify
 separate runs when displayed in Cypress Cloud.
@@ -523,7 +523,7 @@ will be guided through selecting a browser, project, and/or testing type.
 | `--port`, `-p`        | [Override default port](#cypress-open-port-lt-port-gt)                                                                        |
 | `--project`, `-P`     | [Path to a specific project](#cypress-open-project-lt-project-path-gt)                                                        |
 
-#### `cypress open --browser <browser-path>`
+#### `cypress open --browser <browser-path>` {#cypress-open-browser-lt-browser-path-gt}
 
 By default, Cypress will automatically find and allow you to use the browsers
 installed on your system.
@@ -542,7 +542,7 @@ Microsoft Edge and Brave) and Firefox are supported.
 
 [Having trouble launching a browser? Check out our troubleshooting guide](/guides/references/troubleshooting#Launching-browsers)
 
-#### `cypress open --config <config>`
+#### `cypress open --config <config>` {#cypress-open-config-lt-config-gt}
 
 Set [configuration](/guides/references/configuration) values. Separate multiple
 values with a comma. The values set here override any values set in your
@@ -562,7 +562,7 @@ Here, we're passing in the configuration for component spec files.
 cypress open --config "{\"watchForFileChanges\":false,\"specPattern\":[\"**/*.cy.js\",\"**/*.cy.ts\"]}"
 ```
 
-#### `cypress open --config-file <configuration-file>`
+#### `cypress open --config-file <configuration-file>` {#cypress-open-config-file-lt-configuration-file-gt}
 
 You can specify a path to a file where
 [Cypress configuration](/guides/references/configuration) values are set.
@@ -571,7 +571,7 @@ You can specify a path to a file where
 cypress open --config-file tests/cypress.config.js
 ```
 
-#### `cypress open --env <env>`
+#### `cypress open --env <env>` {#cypress-open-env-lt-env-gt}
 
 Set Cypress [environment variables](/guides/guides/environment-variables).
 
@@ -592,7 +592,7 @@ Pass an object as a JSON in a string.
 cypress open --env flags='{"feature-a":true,"feature-b":false}'
 ```
 
-#### `cypress open --global`
+#### `cypress open --global` {#cypress-open-global}
 
 Opening Cypress in global mode is useful if you have multiple nested projects
 but want to share a single global installation of Cypress. In this case you can
@@ -603,13 +603,13 @@ to switch between them.
 cypress open --global
 ```
 
-#### `cypress open --port <port>`
+#### `cypress open --port <port>` {#cypress-open-port-lt-port-gt}
 
 ```shell
 cypress open --port 8080
 ```
 
-#### `cypress open --project <project-path>`
+#### `cypress open --project <project-path>` {#cypress-open-project-lt-project-path-gt}
 
 To see this in action we've set up an
 [example repo to demonstrate this here](https://github.com/cypress-io/cypress-test-nested-projects).
