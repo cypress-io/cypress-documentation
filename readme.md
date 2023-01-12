@@ -7,8 +7,8 @@ Cloud & FAQ found at https://docs.cypress.io.
 
 ## CI status
 
-[![CircleCI](https://circleci.com/gh/cypress-io/cypress-documentation/tree/master.svg?style=svg)](https://circleci.com/gh/cypress-io/cypress-documentation/tree/master)
-`master` branch
+[![CircleCI](https://circleci.com/gh/cypress-io/cypress-documentation/tree/main.svg?style=svg)](https://circleci.com/gh/cypress-io/cypress-documentation/tree/main)
+`main` branch
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/dbf22ada-b50c-49b0-a933-bf02e87d25d1/deploy-status)](https://app.netlify.com/sites/cypress-docs/deploys)
 

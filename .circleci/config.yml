@@ -80,9 +80,9 @@ workflows:
           filters:
             branches:
               ignore:
-                - master
+                - main
 
-      # Run Algolia scraper only on master.
+      # Run Algolia scraper only on main.
       - release:
           name: 'Run Algolia scraper'
           requires:
@@ -90,4 +90,4 @@ workflows:
           filters:
             branches:
               only:
-                - master  
+                - main  

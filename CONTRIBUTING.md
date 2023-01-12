@@ -194,10 +194,10 @@ open a pull request (PR) from your repo to the
 - The PR should be from your repository to the appropriate branch in the
   `cypress-io/cypress-documentation` repository.
   - For documentation changes that are not tied to a feature release, open a PRs
-    against the `master` branch.
+    against the `main` branch.
   - For documentation additions for unreleased features, open a PR against the
     corresponding `X.Y.Z-release` branch. Once the release is performed, this
-    branch will be merged into master by the releaser.
+    branch will be merged into `main` by the releaser.
 - When opening a PR for a specific issue already open, please use the
   `closes #issueNumber` syntax in the pull request description&mdash;for
   example, `closes #138`&mdash;so that the issue will be
@@ -207,7 +207,7 @@ open a pull request (PR) from your repo to the
   PR. This will make it easier for the maintainers to make minor adjustments, to
   help with tests or any other changes we may need.
   ![Allow edits from maintainers checkbox](https://user-images.githubusercontent.com/1271181/31393427-b3105d44-ada9-11e7-80f2-0dac51e3919e.png)
-- All PRs against `master` will automatically create a deploy preview URL with
+- All PRs against `main` will automatically create a deploy preview URL with
   Netlify. The deploy preview can be accessed via the PR's
   `netlify-cypress-docs/deploy-preview` status check:
 
@@ -250,5 +250,5 @@ as a dev dependency and set it as `make-empty-commit` NPM script in the
 To trigger production rebuild and redeploy, use personal GitHub token and run:
 
 ```shell
-GITHUB_TOKEN=<your token> npm run make-empty-commit -- --message "trigger deploy" --branch master
+GITHUB_TOKEN=<your token> npm run make-empty-commit -- --message "trigger deploy" --branch main
 ```

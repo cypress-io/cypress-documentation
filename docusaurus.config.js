@@ -39,7 +39,7 @@ const config = {
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
           editUrl:
-            'https://github.com/cypress-io/cypress-documentation/tree/master/',
+            'https://github.com/cypress-io/cypress-documentation/tree/main/',
           routeBasePath: '/',
           // versions: {
           //   current: {
