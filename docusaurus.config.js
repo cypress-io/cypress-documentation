@@ -139,13 +139,13 @@ const config = {
         ],
       },
       // optional, can be commented out
-      announcementBar: {
-        content:
-          '🚀 &nbsp;Looking to move to Cypress v10? Check out the <a target="_blank" rel="noopener noreferrer" href="/guides/references/migration-guide#Migrating-to-Cypress-100">migration guide!</a>',
-        backgroundColor: '#fff3b9',
-        textColor: '#091E42',
-        isCloseable: true,
-      },
+      // announcementBar: {
+      //   content:
+      //     '🚀 &nbsp;Looking to move to Cypress v10? Check out the <a target="_blank" rel="noopener noreferrer" href="/guides/references/migration-guide#Migrating-to-Cypress-100">migration guide!</a>',
+      //   backgroundColor: '#fff3b9',
+      //   textColor: '#091E42',
+      //   isCloseable: true,
+      // },
       footer: {
         style: 'dark',
         links: [
