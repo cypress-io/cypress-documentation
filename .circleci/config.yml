@@ -54,7 +54,6 @@ jobs:
           at: ~/repo
       - run: npm run lint
   
-  # TODO: set the branch to master when released
   release:
     <<: *job-defaults
     steps:
@@ -83,7 +82,6 @@ workflows:
               ignore:
                 - master
 
-      # TODO, replace branch with master on release
       # Run Algolia scraper only on master.
       - release:
           name: 'Run Algolia scraper'
@@ -92,5 +90,4 @@ workflows:
           filters:
             branches:
               only:
-                - new-docs-site
-  
+                - master  
