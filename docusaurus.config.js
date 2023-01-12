@@ -220,8 +220,8 @@ const config = {
                 href: 'https://www.cypress.io/about',
               },
               {
-                label: 'Jobs',
-                href: 'https://www.cypress.io/jobs',
+                label: 'Careers',
+                href: 'https://www.cypress.io/careers',
               },
             ],
           },
