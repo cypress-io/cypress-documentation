@@ -1,0 +1,35 @@
+diff --git a/node_modules/@docusaurus/mdx-loader/lib/remark/headings/index.js b/node_modules/@docusaurus/mdx-loader/lib/remark/headings/index.js
+index 53ad336..f2045f7 100644
+--- a/node_modules/@docusaurus/mdx-loader/lib/remark/headings/index.js
++++ b/node_modules/@docusaurus/mdx-loader/lib/remark/headings/index.js
+@@ -23,10 +23,11 @@ function plugin() {
+             }
+             else {
+                 const headingTextNodes = headingNode.children.filter(({ type }) => !['html', 'jsx'].includes(type));
+-                const heading = (0, mdast_util_to_string_1.default)(headingTextNodes.length > 0 ? headingTextNodes : headingNode);
++                let heading = (0, mdast_util_to_string_1.default)(headingTextNodes.length > 0 ? headingTextNodes : headingNode);
+                 // Support explicit heading IDs
+-                const parsedHeading = (0, utils_1.parseMarkdownHeadingId)(heading);
+-                id = parsedHeading.id ?? slugs.slug(heading);
++              const parsedHeading = (0, utils_1.parseMarkdownHeadingId)(heading);
++              heading = parseVersionHeading(heading);
++                id = parsedHeading.id ?? slugs.slug(heading, { maintainCase: true });
+                 if (parsedHeading.id) {
+                     // When there's an id, it is always in the last child node
+                     // Sometimes heading is in multiple "parts" (** syntax creates a child
+@@ -54,5 +55,14 @@ function plugin() {
+         });
+     };
+ }
++
++function parseVersionHeading(heading) {
++  const isSemVer = /^[\d]*.?[\d]*.?[\d]*$/g;
++  if (heading.match(isSemVer)) {
++    return heading.replaceAll('.', '-')
++  }
++  return heading
++}
++
+ exports.default = plugin;
+ //# sourceMappingURL=index.js.map
+\ No newline at end of file
