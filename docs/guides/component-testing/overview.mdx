@@ -1,0 +1,139 @@
+---
+title: Cypress Component Testing
+sidebar_position: 10
+sidebar_label: Overview
+---
+
+Cypress Component Testing provides a component workbench for you to quickly
+build and test components from multiple front-end UI libraries — no matter how
+simple or complex.
+
+## Quick Example
+
+Below is a minimal test to assert that a button component has the correct text:
+
+<Tabs>
+<TabItem value="React">
+
+```ts
+import Button from './Button'
+
+it('uses custom text for the button label', () => {
+  cy.mount(<Button>Click me!</Button>)
+  cy.get('button').should('contains.text', 'Click me!')
+})
+```
+
+</TabItem>
+<TabItem value="Angular">
+
+```ts
+import ButtonComponent from './button.component'
+
+it('uses custom text for the button label', () => {
+  cy.mount('<app-button>Click me!</app-button>', {
+    declarations: [ButtonComponent],
+  })
+  cy.get('button').should('contains.text', 'Click me!')
+})
+```
+
+</TabItem>
+<TabItem value="Vue">
+
+```ts
+import Button from './Button.vue'
+
+it('uses custom text for the button label', () => {
+  cy.mount(Button, {
+    slots: {
+      default: 'Click me!',
+    },
+  })
+  cy.get('button').should('contains.text', 'Click me!')
+})
+```
+
+</TabItem>
+<TabItem value="Svelte">
+
+```ts
+import Button from './Button.svelte'
+
+it('uses custom text for the button label', () => {
+  cy.mount(Button, { props: { msg: 'Click me!' } })
+  cy.get('button').should('contains.text', 'Click me!')
+})
+```
+
+</TabItem>
+</Tabs>
+
+Learn more about how to test components for
+[React](/guides/component-testing/react/overview),
+[Angular](/guides/component-testing/angular/overview),
+[Vue](/guides/component-testing/vue/overview), and
+[Svelte](/guides/component-testing/svelte/overview).
+
+## Why Cypress Component Testing?
+
+Our Test Runner is browser-based, allowing you to test not only your component's
+functionality but also styles and appearance. You can visually see your
+component in action and interact with it in the test runner:
+
+<DocsVideo
+  src="/img/vuetify-color-picker-example.webm"
+  caption="Vuetify's</a> VColorPicker tests, after being moved to Cypress from Jest."
+></DocsVideo>
+
+You can use the browser developer tools to inspect the DOM, play around with
+styles, and use the debugger to step through your code.
+
+And since this is Cypress, you get the same APIs, plugins, and ecosystem you are
+used to with end-to-end testing to create component tests.
+
+## Supported Frameworks
+
+Cypress currently has official mounting libraries for
+[React](/guides/component-testing/react/overview),
+[Angular](/guides/component-testing/angular/overview),
+[Vue](/guides/component-testing/vue/overview), and
+[Svelte](/guides/component-testing/svelte/overview) and support for the
+following development servers and frameworks:
+
+| Framework                                                                                                             | UI Library  | Bundler    |
+| --------------------------------------------------------------------------------------------------------------------- | ----------- | ---------- |
+| [Create React App 4+](/guides/component-testing/react/overview#Create-React-App-CRA)                                  | React 16+   | Webpack 4+ |
+| [Next.js 11+](/guides/component-testing/react/overview#Next-js)                                                       | React 16+   | Webpack 5  |
+| [React with Vite](/guides/component-testing/react/overview#React-with-Vite)                                           | React 16+   | Vite 2+    |
+| [React with Webpack](/guides/component-testing/react/overview#React-with-Webpack)                                     | React 16+   | Webpack 4+ |
+| [Vue CLI](/guides/component-testing/vue/overview#Vue-CLI)                                                             | Vue 2+      | Webpack 4+ |
+| [Nuxt 2](/guides/component-testing/vue/overview#Nuxt) <Badge type="info">Alpha</Badge>                                | Vue 2+      | Webpack 4+ |
+| [Vue with Vite](/guides/component-testing/vue/overview#Vue-with-Vite)                                                 | Vue 2+      | Vite 2+    |
+| [Vue with Webpack](/guides/component-testing/vue/overview#Vue-with-Webpack)                                           | Vue 2+      | Webpack 4+ |
+| [Angular](/guides/component-testing/angular/overview#Framework-Configuration)                                         | Angular 13+ | Webpack 5  |
+| [Svelte with Vite](/guides/component-testing/svelte/overview#Svelte-with-Vite) <Badge type="info">Alpha</Badge>       | Svelte 3+   | Vite 2+    |
+| [Svelte with Webpack](/guides/component-testing/svelte/overview#Svelte-with-Webpack) <Badge type="info">Alpha</Badge> | Svelte 3+   | Webpack 4+ |
+
+## Component Testing vs. End-to-End Testing
+
+We cover the differences between component and end-to-end testing in-depth in
+the [Choosing a Testing Type](/guides/core-concepts/testing-types) guide.
+
+But in short, Cypress Component Testing uses the same test runner, commands, and
+API to test components instead of pages.
+
+The primary difference is that Cypress Component Testing builds your components
+using a development server instead of rendering within a complete website, which
+results in faster tests and fewer dependencies on infrastructure than end-to-end
+tests covering the same code paths.
+
+Cypress's API is user-centric and built for testing anything that renders on the
+web. Therefore, many of your tests will appear framework-agnostic and
+**approachable for developers coming from any background**.
+
+For additional reading, we encourage folks to check out the
+[Component Driven](https://componentdriven.org) organization, which talks about
+the pros of component-driven development and may aid you when trying to figure
+out if you should be taking a page-based or component-based approach to building
+and testing a given feature.
