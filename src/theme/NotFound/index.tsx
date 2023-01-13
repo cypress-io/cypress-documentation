@@ -37,13 +37,13 @@ export default function NotFound() {
                       <a href="/guides/core-concepts/introduction-to-cypress">Introduction to Cypress</a>
                     </li>
                     <li>
-                      <a href="/guides/core-concepts/introduction-to-cypress">The API Docs</a>
+                      <a href="/api/commands/and">The API Docs</a>
                     </li>
                     <li>
-                      <a href="/guides/core-concepts/introduction-to-cypress">Tutorials</a>
+                      <a href="/examples/tutorials">Tutorials</a>
                     </li>
                     <li>
-                      <a href="/guides/core-concepts/introduction-to-cypress">The Cypress Dashboard</a>
+                      <a href="/guides/cloud/introduction">Cypress Cloud</a>
                     </li>
                   </ul>
               </div>
