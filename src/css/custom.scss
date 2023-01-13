@@ -318,10 +318,3 @@ div[class^='codeBlockTitle'] {
 [class^='docItemContainer'] {
   margin: 0 8px;
 }
-
-/* mobile navigation is always in dark mode,
-   so keep active state consistent, regardles
-   of site color mode state */
-.navbar-sidebar .menu__link--active {
-  color: var(--ifm-color-primary);
-}
