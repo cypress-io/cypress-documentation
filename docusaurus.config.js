@@ -217,7 +217,7 @@ const config = {
             items: [
               {
                 label: 'About',
-                href: 'https://www.cypress.io/about',
+                href: 'https://www.cypress.io/about-us',
               },
               {
                 label: 'Careers',
