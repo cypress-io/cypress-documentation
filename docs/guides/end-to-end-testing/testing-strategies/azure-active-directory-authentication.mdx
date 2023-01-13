@@ -1,0 +1,242 @@
+---
+title: Azure Active Directory Authentication
+slug: /guides/end-to-end-testing/azure-active-directory-authentication
+---
+
+:::info
+
+## <Icon name="graduation-cap"></Icon> What you'll learn
+
+- Log in to
+  [Azure Active Directory](https://learn.microsoft.com/en-us/azure/active-directory/fundamentals/active-directory-whatis)
+  through the UI with [`cy.origin()`](/api/commands/origin)
+
+:::
+
+:::caution
+
+This guide is designed for testing against a Single Page Application (SPA) that
+uses
+[Azure Active Directory](https://learn.microsoft.com/en-us/azure/active-directory/fundamentals/active-directory-whatis)
+to authenticate users. For this guide, the Microsoft Authentication Library
+[`@azure/msal-browser`](https://www.npmjs.com/package/@azure/msal-browser)
+package is used by the webapp to broker this authentication.
+
+This guide can also serve as a foundation for testing other webapps with Cypress
+that use Azure Active Directory services with other frameworks, such as React,
+Angular, or Vue.
+
+:::
+
+## Microsoft AAD Application Setup
+
+For this guide, we are mainly going to focus on setting up Cypress to test
+against an Azure Active Directory (AAD) Webapp. Please clone the
+[Microsoft Identity Javascript Tutorial](https://github.com/Azure-Samples/ms-identity-javascript-tutorial/tree/c1956b658efa331bb5df11a0038ad32d12dad3ce/1-Authentication/1-sign-in)
+and follow the steps to set up your application.
+
+Once set up, you will need to do a few things to the `index.html` file:
+
+- Remove any integrity attributes inside `<script>` tags. This is to prevent any
+  SRI attribute mismatches, which can happen since Cypress must rewrite any
+  [framebusting code](/guides/references/configuration#modifyObstructiveCode).
+  This is recommended only when an application is under test.
+- Uncomment the `authRedirect.js` `<script>` tag and comment out the
+  `authPopup.js` `<script>` tag. Authentication
+  [Pop ups](/guides/references/trade-offs#Permanent-trade-offs) will not work
+  inside of Cypress.
+
+Inside `server.js`, you will see a reference to `express-rate-limit`, which
+limits each window to 100 requests per 15 minutes. Under test, your application
+will likely exceed this as you will be reloading your application and making
+requests to broker/verify authentication. For this demo, you can either
+
+- remove the rate limiting code (recommended for demo purposes only).
+- Implement a strategy to increase the rate limit under test.
+
+When finished, your SPA should be running on `http://localhost:3000` and be
+properly configured to run with Azure Active Directory.
+
+## Configuring Cypress to use Microsoft AAD
+
+To have access to test user credentials within our tests, we need to configure
+Cypress to use the
+[Azure Active Directory](https://learn.microsoft.com/en-us/azure/active-directory/fundamentals/active-directory-whatis)
+user credentials for a given user in your tenant. These user credentials should
+be set in the `cypress.env.json` file inside the root directory of your project.
+
+```json
+// cypress.env.json
+{
+  "aad_username": "AAD_USERNAME",
+  "aad_password": "AAD_PASSWORD",
+  "aad_name": "AAD_NAME"
+}
+```
+
+Also, to authenticate with Microsoft or Azure Active Directory, you will need to
+enable the
+[`experimentalModifyObstructiveThirdPartyCode`](/guides/guides/web-security#Modifying-Obstructive-Third-Party-Code)
+configuration option. If not enabled, your authentication workflow will enter an
+infinite redirect loop.
+
+:::cypress-config-example
+
+```js
+{
+  e2e: {
+    experimentalModifyObstructiveThirdPartyCode: true
+  }
+}
+```
+
+:::
+
+## Login with [`cy.origin()`](/api/commands/origin)
+
+Next, we'll write a custom command called `loginToAAD` to perform a login to
+[Azure Active Directory](https://learn.microsoft.com/en-us/azure/active-directory/fundamentals/active-directory-whatis).
+This command will use [`cy.origin()`](/api/commands/origin) to
+
+1. Navigate to the Azure Active Directory login page on
+   `login.microsoftonline.com`
+2. Input user credentials
+3. Sign in and redirect back to the demo application
+4. Cache the results with [`cy.session()`](/api/commands/session)
+
+```js
+// cypress/support/e2e.ts
+
+function loginViaAAD(username: string, password: string) {
+  cy.visit('http://localhost:3000/')
+  cy.get('button#signIn').click()
+
+  // Login to your AAD tenant.
+  cy.origin(
+    'login.microsoftonline.com',
+    {
+      args: {
+        username,
+      },
+    },
+    ({ username }) => {
+      cy.get('input[type="email"]').type(username, {
+        log: false,
+      })
+      cy.get('input[type="submit"]').click()
+    }
+  )
+
+  // depending on the user and how they are registered with Microsoft, the origin may go to live.com
+  cy.origin(
+    'login.live.com',
+    {
+      args: {
+        password,
+      },
+    },
+    ({ password }) => {
+      cy.get('input[type="password"]').type(password, {
+        log: false,
+      })
+      cy.get('input[type="submit"]').click()
+      cy.get('#idBtn_Back').click()
+    }
+  )
+
+  // Ensure Microsoft has redirected us back to the sample app with our logged in user.
+  cy.url().should('equal', 'http://localhost:3000/')
+  cy.get('#welcome-div').should(
+    'contain',
+    `Welcome ${Cypress.env('aad_username')}!`
+  )
+}
+
+Cypress.Commands.add('loginToAAD', (username: string, password: string) => {
+  const log = Cypress.log({
+    displayName: 'Azure Active Directory Login',
+    message: [`🔐 Authenticating | ${username}`],
+    // @ts-ignore
+    autoEnd: false,
+  })
+  log.snapshot('before')
+
+  loginViaAAD(username, password)
+
+  log.snapshot('after')
+  log.end()
+})
+```
+
+Now, we can use our `loginToAAD` command in the test. Below is our test to login
+as a user via Azure Active Directory and run a basic sanity check.
+
+```js
+describe('Azure Active Directory Authentication', () => {
+  beforeEach(() => {
+    // log into Azure Active Directory through our sample SPA using our custom command
+    cy.loginToAAD(Cypress.env('aad_username'), Cypress.env('aad_password'))
+    cy.visit('http://localhost:3000')
+  })
+
+  it('verifies the user logged in has the correct name', () => {
+    cy.get('#table-body-div td:contains("name") + td').should(
+      'contain',
+      `${Cypress.env('aad_name')}`
+    )
+  })
+
+  it('verifies the user logged in has the correct preferred name', () => {
+    cy.get('#table-body-div td:contains("preferred_username") + td').should(
+      'contain',
+      `${Cypress.env('aad_username')}`
+    )
+  })
+})
+```
+
+<DocsVideo src="/img/examples/aad-origin.mp4"></DocsVideo>
+
+We now have working authentication and tests! But we are logging in before every
+test, which is not only time consuming, but also can lead to API rate limiting
+due to the number of requests.
+
+For this, we can refactor our login command to take advantage of
+[`cy.session()`](/api/commands/session) to store our logged in user so we don't
+have to reauthenticate before every test.
+
+```js
+Cypress.Commands.add('loginToAAD', (username: string, password: string) => {
+  cy.session(
+    `aad-${username}`,
+    () => {
+      const log = Cypress.log({
+        displayName: 'Azure Active Directory Login',
+        message: [`🔐 Authenticating | ${username}`],
+        // @ts-ignore
+        autoEnd: false,
+      })
+
+      log.snapshot('before')
+
+      loginViaAAD(username, password)
+
+      log.snapshot('after')
+      log.end()
+    },
+    {
+      validate: () => {
+        // this is a very basic form of session validation for this demo.
+        // depending on your needs, something more verbose might be needed
+        cy.visit('http://localhost:3000')
+        cy.get('#welcome-div').should(
+          'contain',
+          `Welcome ${Cypress.env('aad_username')}!`
+        )
+      },
+    }
+  )
+})
+```
+
+<DocsVideo src="/img/examples/aad-session-restore.mp4"></DocsVideo>

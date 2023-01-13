@@ -1,1 +1,0 @@
-export { fetchBanner } from './fetchBanner'
