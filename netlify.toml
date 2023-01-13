@@ -19,7 +19,13 @@
 
 [[redirects]]
   from = "/api/table-of-contents/"
-  to = "/api/"
+  to = "/api/commands/and"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/api/"
+  to = "/api/commands/and"
   status = 301
   force = true
 
