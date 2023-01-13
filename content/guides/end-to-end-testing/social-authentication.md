@@ -130,7 +130,7 @@ in the `cypress.env.json` file or by one of our
 
 Next, we'll write a custom command called `loginToAuth0ViaSocial` to perform a
 login to either Facebook, Google, or Microsoft. This command will use
-[`cy.origin()`](/api/commands/origin) to
+[`cy.origin()`](/api/commands/origin) to:
 
 1. Navigate to the Auth0 login
 2. Select the `Continue with ...` button and sign in with social credentials
