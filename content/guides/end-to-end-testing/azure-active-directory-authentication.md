@@ -31,7 +31,7 @@ Angular, or Vue.
 ## Microsoft AAD Application Setup
 
 For this guide, we are mainly going to focus on setting up Cypress to test
-against an Azure Active Directory (AAD) Webapp. For this guide, please clone the
+against an Azure Active Directory (AAD) Webapp. Please clone the
 [Microsoft Identity Javascript Tutorial](https://github.com/Azure-Samples/ms-identity-javascript-tutorial/tree/c1956b658efa331bb5df11a0038ad32d12dad3ce/1-Authentication/1-sign-in)
 and follow the steps to set up your application.
 
