@@ -1,4 +1,4 @@
-name: Create PR - develop -> master
+name: Create PR - develop -> main
 
 # run this workflow only
 # when a pull request to "develop" branch is closed
@@ -19,7 +19,7 @@ jobs:
 
       # https://github.com/repo-sync/pull-request
       # if the pull request has been successfully merged, then create
-      # a PR to "master" branch
+      # a PR to "main" branch
       - name: pull-request
         uses: repo-sync/pull-request@v2
         if: github.event.pull_request.merged == true
@@ -27,7 +27,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           # be explicit about branches
           source_branch: "develop"
-          destination_branch: "master"
-          pr_title: "develop to master auto PR"
-          pr_body: ":robot: Automated PR from **develop** to **master**"
+          destination_branch: "main"
+          pr_title: "develop to main auto PR"
+          pr_body: ":robot: Automated PR from **develop** to **main**"
           pr_label: "auto-pr"
