@@ -9,7 +9,7 @@ export default function WebinarsList(): WebinarProps {
       <div>
         <article>
           {webinarsJSON.small &&
-          <div>
+          <div className="mediaListContainer">
             <ul>
               {webinarsJSON.small.map((webinar, index) => (
                 <li key={index}>
