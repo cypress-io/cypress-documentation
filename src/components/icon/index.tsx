@@ -9,7 +9,7 @@ Exact issue here is noted here https://docusaurus.io/docs/markdown-features/reac
 This should be fixed when DS moves to MDX v2 https://github.com/facebook/docusaurus/issues/4029
 
 For now, we we wrap the anchor in this component for reusability. Other in-line workarounds are add &nbsp; before the <Icon />
-or replace markdwon syntax with equivalient html tags. */
+or replace markdown syntax with equivalient html tags. */
 
 // TODO: refactor this component after DS moves to MDX v2.
 

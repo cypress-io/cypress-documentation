@@ -10,6 +10,7 @@
 
 .navbar__toggle {
   margin-right: 1rem;
+  margin-left: -1rem;
 }
 
 .navbar__item {
@@ -40,6 +41,13 @@
 /* have to override this for specificity */
 .navbar--dark {
   --ifm-navbar-background-color: var(--ifm-color-gray-1000);
+}
+
+/* mobile navigation is always in dark mode,
+   so keep active state consistent, regardles
+   of site color mode state */
+.navbar-sidebar .menu__link--active {
+  color: var(--ifm-color-primary);
 }
 
 /* main nav icons - applied in docusaurus.config.js */
