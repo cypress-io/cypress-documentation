@@ -334,7 +334,6 @@ describe('Social Logins Demo', () => {
 
 Here is a sample of what all 3 should look like in order.
 
-TODO: remove watermark
 <DocsVideo src="/img/examples/social_combined.mp4"></DocsVideo>
 
 Lastly, we can refactor our login command to take advantage of
