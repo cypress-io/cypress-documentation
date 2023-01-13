@@ -18,8 +18,8 @@
   force = true
 
 [[redirects]]
-  from = "/api"
-  to = "/api/table-of-contents/"
+  from = "/api/table-of-contents/"
+  to = "/api/"
   status = 301
   force = true
 
