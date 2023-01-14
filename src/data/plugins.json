@@ -966,6 +966,13 @@
           "badge": "community"
         },
         {
+          "name": "Cypress Visual Regression with Resemble.JS",
+          "description": "A module for adding visual regression testing to Cypress, based on Cypress Visual Regression plugin and Resemble.JS library. The main difference between "Cypress Visual Regression" plugin and this one is that the present plugin mitigates the anti-aliasing problem. The problem appears when comparing the base and actual screenshots generated on different environments (e.g. Windows vs Linux).",
+          "link": "https://github.com/Andremoniy/cypress-visual-regression-resemble-js",
+          "keywords": ["image-diff", "snapshot"],
+          "badge": "community"
+        },
+        {
           "name": "cypress-blink-test",
           "description": "Module for adding visual regression testing to Cypress.",
           "link": "https://github.com/PatrickWalker/cypress-visual-regression",
