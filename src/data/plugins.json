@@ -481,7 +481,7 @@
         {
           "name": "cypress-xpath",
           "description": "Adds XPath command. This repo is also a good example of using custom commands to do retries, provide TypeScript definitions, etc.",
-          "link": "https://github.com/cypress-io/cypress-xpath",
+          "link": "https://github.com/cypress-io/cypress/tree/develop/npm/xpath",
           "keywords": ["xpath", "commands"],
           "badge": "official"
         },
