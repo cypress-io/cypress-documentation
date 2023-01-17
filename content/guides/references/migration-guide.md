@@ -208,8 +208,9 @@ cy.findByTestId('popover').findAllByRole('button').first().as('button')
 ```
 
 If you want to alias a static value, such that it is never re-queried, you will
-need Cypress 12.3.0 or later, which introduced the `type` option for `.as()` to
-opt into the old behavior.
+need Cypress [12.3.0](/guides/references/changelog#12-3-0) or later, which
+introduced the `type` option for [`.as()`](/api/commands/as) to opt into the old
+behavior.
 
 ```
 cy.get('.username').invoke('val').as('username', { type: 'value' })
