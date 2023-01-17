@@ -48,11 +48,11 @@ using an `@` prefix.
 
 **<Icon name="angle-right"></Icon> options** **_(Object)_**
 
-Pass in an options object to change the default behavior of `.as`.
+Pass in an options object to change the default behavior of `.as()`.
 
 | Option | Default | Description                                                                                                                                                                                                                          |
 | ------ | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `type` | `query` | Valid values are `query` and `value`. A query alias re-runs all queries leading up to it each time the value is requested, providing a live value. A value alias is frozen as soon as the alias is stored, providing a static value. |
+| `type` | `query` | The type of alias to store, which impacts how the value is referenced later in the test. Valid values are `query` and `value`. A `query` alias re-runs all queries leading up to the resulting value each time the alias is requested. A `value` alias is static as soon as the alias is stored. |
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
