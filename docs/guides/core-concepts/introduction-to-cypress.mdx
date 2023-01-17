@@ -411,9 +411,9 @@ Each command specifies what value it yields. For example,
 
 #### Some commands require a previous subject.
 
-- [.click()](/api/commands/click) requires a DOM element from the previous
+- [`.click()`](/api/commands/click) requires a DOM element from the previous
   command.
-- [.its()](/api/commands/its) requires a subject, but it can be of any type.
+- [`.its()`](/api/commands/its) requires a subject, but it can be of any type.
 - [`cy.contains()`](/api/commands/contains) behaves differently depending on the
   previous subject. If chained directly off of `cy`, or if the previous command
   yielded `null`, it will look at the entire document. But if the subject is a

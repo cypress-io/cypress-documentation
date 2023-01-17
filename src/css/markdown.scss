@@ -60,6 +60,18 @@ div.markdown {
   ul li {
     margin: 0.7rem 0;
   }
+
+  /* add dotted underline to links on tablet and smaller mobile devices */
+  @media screen and (max-width: 1024px) and (orientation: landscape) {
+    a {
+      border-bottom: 1px dotted var(--ifm-link-color);
+    }
+  }
+  @media screen and (max-width: 1024px) and (orientation: portrait) {
+    a {
+      border-bottom: 1px dotted var(--ifm-link-color);
+    }
+  }
 }
 
 /* override the background in the toc on mobile */
