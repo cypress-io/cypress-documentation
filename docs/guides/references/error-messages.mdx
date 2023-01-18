@@ -920,8 +920,14 @@ This can happen for a number of reasons, including:
 - There is a bug in the browser involving memory management
 - There is a memory leak in Cypress
 
-If the browser running Cypress tests crashes, currently, Cypress will abort any
-remaining tests and print out this error.
+For Chromium-based browsers, you can try enabling
+[experimentalMemoryManagement](/guides/references/experiments).
+
+If you are running in `open` mode, you can also try lowering
+[numTestsKeptInMemory](/guides/references/configuration#Global).
+
+If the browser running Cypress tests crashes, Cypress will abort any remaining
+tests and print out this error.
 
 There is an [open issue](https://github.com/cypress-io/cypress/issues/349) to
 recover from browser crashes automatically, so tests can continue to run.
