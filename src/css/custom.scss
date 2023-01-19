@@ -226,7 +226,7 @@ div[class^='announcementBar'] .close {
 }
 
 .mediaTitleContainer {
-  height: 80px;
+  height: 75px;
 
   h3 {
     font-size: 1.25rem;
@@ -316,5 +316,5 @@ div[class^='codeBlockTitle'] {
 
 /* add some more spacing for main doc container */
 [class^='docItemContainer'] {
-  margin: 0 8px;
+  margin: 0 10px;
 }

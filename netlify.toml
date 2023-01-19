@@ -6,12 +6,6 @@
   publish = "dist/"
 
 [[redirects]]
-  from = "/"
-  to = "/guides/overview/why-cypress/"
-  status = 200
-  force = true
-
-[[redirects]]
   from = "/guides"
   to = "/guides/overview/why-cypress/"
   status = 301
