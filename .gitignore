@@ -1,24 +1,27 @@
-node_modules/
-db.json
-public/
-*.log
-.history
-.vscode
+# Dependencies
+node_modules
+
+# Production
+build
+dist
+
+# Generated files
+.docusaurus
+.cache-loader
+
+# Misc
 .DS_Store
-.deploy*/
-support
-!cypress/support
-.idea/
-.nuxt/
-dist/
-static/sw.js
-.eslintcache
-.circle-credentials.json
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 
-themes/cypress/source/css/vendor/
-themes/cypress/source/js/vendor/
-themes/cypress/source/fonts/vendor/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
+.vscode
 cypress/screenshots
 cypress/videos
 
