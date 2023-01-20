@@ -50,16 +50,16 @@ Launchpad any more. In this case
 [you can run `cypress open` with the `--browser` and `--component` or `--e2e` options](/guides/guides/command-line#cypress-open)
 to go straight to the Spec Explorer.
 
-### The Spec Explorer
+### Specs
 
-<DocsImage src="/img/guides/core-concepts/cypress-app/spec-explorer.png" alt="The Spec Explorer"></DocsImage>
+<DocsImage src="/img/guides/core-concepts/cypress-app/spec-explorer.png" alt="Specs"></DocsImage>
 
 On choosing your browser in the Launchpad, you'll be presented with a list of
 your specs, their names, locations, and information about your latest recorded
 runs. Here you can launch specs by clicking them, create new blank or example
 specs, or search specs by name (handy for large test suites).
 
-We've made the following spec data available directly in the Spec Explorer:
+We've made the following spec data available directly in the Specs page:
 
 #### Last updated
 
@@ -145,9 +145,9 @@ Running a large number of specs sequentially can consume more resources.
 
 </Alert>
 
-### Project Runs
+### Runs
 
-<DocsImage src="/img/guides/core-concepts/cypress-app/recorded-runs.png" alt="Recorded Runs"></DocsImage>
+<DocsImage src="/img/guides/core-concepts/cypress-app/recorded-runs.png" alt="Runs"></DocsImage>
 
 This screen shows detailed information about the most recently recorded
 [test runs](/guides/cloud/runs) across all git branches, latest first. This data
@@ -159,21 +159,32 @@ The title of each run is taken from the
 for that change, and clicking on it will take you to the corresponding run page
 in Cypress Cloud.
 
-### The Debug Page
+### Debug
 
-<DocsImage src="/img/guides/core-concepts/cypress-app/debug-page.png" alt="The Debug Page"></DocsImage>
+<DocsImage src="/img/guides/core-concepts/cypress-app/debug-page.png" alt="Debug"></DocsImage>
 
-Like the Project Runs page above, the Debug Page surfaces data from Cypress
-Cloud (see [note above](#Overview)) directly inside the Cypress app. However,
-this page focuses specifically on highlighting test failures in your
-[last run](/guides/cloud/runs#Run-Details), giving you immediate visibility into
-bugs, regressions and invalid tests.
+The Debug page allows users to easily debug failed CI test runs from within the
+Cypress app. From this page, you can review, rerun, and debug failed CI test
+runs that are recorded to Cypress Cloud (see [note above](#Overview)) – all
+without leaving Cypress.
 
-This table lists up to 100 failed tests from your most recent recorded test run,
-for your currently-active local git branch (or its ancestors), broken down by
-spec file and test. Each result includes actions to review more details on
-Cypress Cloud, rerun those specific tests inside the Cypress app, or
-[open test code for debugging in your IDE](#Open-files-in-your-IDE).
+This feature eliminates the tedious process of switching between Cypress, your
+local editor, and CI output, in order to fix failed tests. It does this by
+enabling you to use the [Test Runner](#The-Test-Runner) to run only the tests
+that failed in your last recorded test run, as well as review screenshots,
+videos, and logs from your tests.
+
+The Debug page shows the latest completed [test run](/guides/cloud/runs) that
+matches your current locally checked out git commit. If no run is found for your
+current commit, then Cypress crawls your git tree to find the most recent run in
+your branch's history, including parent branches. The first 100 failed tests are
+listed, with a link to Cypress Cloud to review the full run.
+
+To use this feature, you must ensure that your version control is properly
+configured and that you are sending git information to Cypress Cloud. Under some
+environment setups (e.g. `docker`/`docker-compose`), you may have to pass git
+information using
+[custom environment variables](/guides/continuous-integration/introduction#Git-information).
 
 ## The Test Runner
 

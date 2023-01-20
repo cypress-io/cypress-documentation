@@ -275,9 +275,11 @@ Cypress Cloud.
 
 For even more visibility into your test results, information about recent runs
 is surfaced in the [Cypress app](/guides/core-concepts/cypress-app). Aggregate
-results of your latest runs are shown in
-[The Spec Explorer](/guides/core-concepts/cypress-app#The-Spec-Explorer) while
-more detailed information about specific runs can be found on the
-[Project Runs](/guides/core-concepts/cypress-app#Project-Runs) screen.
+results of your latest runs are shown on the
+[Specs](/guides/core-concepts/cypress-app#Specs) page while more detailed
+information about specific runs can be found on the
+[Runs](/guides/core-concepts/cypress-app#Runs) page.
 
 <DocsImage src="/img/guides/core-concepts/cypress-app/spec-explorer.png" alt="The Spec Explorer"></DocsImage>
+
+TODO: mention Debug
