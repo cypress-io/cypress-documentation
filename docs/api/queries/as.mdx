@@ -27,7 +27,7 @@ command with an `@` prefix.
 
 ```javascript
 cy.get('.main-nav').find('li').first().as('firstNav') // Alias element as @firstNav
-cy.get('input.username').invoke('val').as('username', { type: 'value' }) // Alias a static (not re-queried) value
+cy.get('input.username').invoke('val').as('username', { type: 'static' }) // Alias a static (not re-queried) value
 cy.intercept('PUT', '/users').as('putUser') // Alias route as @putUser
 cy.stub(api, 'onUnauth').as('unauth') // Alias stub as @unauth
 cy.spy(win, 'fetch').as('winFetch') // Alias spy as @winFetch
@@ -51,9 +51,9 @@ using an `@` prefix.
 
 Pass in an options object to change the default behavior of `.as()`.
 
-| Option | Default | Description                                                                                                                                                                                                                                                                                      |
-| ------ | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `type` | `query` | The type of alias to store, which impacts how the value is referenced later in the test. Valid values are `query` and `value`. A `query` alias re-runs all queries leading up to the resulting value each time the alias is requested. A `value` alias is static as soon as the alias is stored. |
+| Option | Default | Description                                                                                                                                                                                                                                                                                                                                                                               |
+| ------ | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `type` | `query` | The type of alias to store, which impacts how the value is retrieved later in the test. Valid values are `query` and `static`. A `query` alias re-runs all queries leading up to the resulting value each time the alias is requested. A `static` alias is retrived once when the alias is stored, and will never change. `type` has no effect when aliasing intercepts, spies and stubs. |
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
