@@ -10,8 +10,7 @@ slug: /guides/end-to-end-testing/social-authentication
 - Log into your application via Google, Facebook, or Microsoft through the UI
   with [`cy.origin()`](/api/commands/origin) using Auth0 social connections. The
   same patterns will work with Github, LinkedIn, and others.
-- Understanding
-  [challenges](http://localhost:3000/guides/references/best-practices#When-logging-in)
+- Understanding [challenges](/guides/references/best-practices#When-logging-in)
   with social connections
 
 :::
@@ -42,11 +41,10 @@ to violating the provider's Terms of Service.
 ## Application Setup
 
 For this guide, we are going to set up an application that uses Auth0 for
-authentication. Our Auth0 Tenant will have social connections set up for Google,
-Facebook, and Microsoft which with authenticate users on our behalf to our
-application.
+tTenant will have social connections set up for Google, Facebook, and Microsoft
+which will authenticate users on our behalf to our application.
 
-### Setting up the Tenant
+### Setting up the Auth0 tenant
 
 - To get started, first create your free [Auth0](https://auth0.com/signup)
   account and select the `"I am a new Auth0 User"` flow. This will have 4 steps:
@@ -59,10 +57,10 @@ application.
     button or clone it
     [here](https://github.com/auth0-samples/auth0-react-samples/tree/d5848ed710db85d6ef060731b296603c0eca744b/Sample-01).
     We will need this application in the next step. Select
-    `"I am Ready to Use Auth0"`. Your social connections on your Auth0 Tenant
+    `"I am Ready to Use Auth0"`. Your social connections on your Auth0 tenant
     should now be configured correctly
 
-### Setting up the Application
+### Setting up the application
 
 On your Auth0 dashboard, visit the `Applications Dropdown` in the left menu.
 Select the dropdown and go to `Applications`
@@ -86,7 +84,7 @@ Select the dropdown and go to `Applications`
 - [install](https://github.com/auth0-samples/auth0-react-samples/tree/d5848ed710db85d6ef060731b296603c0eca744b/Sample-01#project-setup)
   the application dependencies and
   [start the dev server](https://github.com/auth0-samples/auth0-react-samples/tree/d5848ed710db85d6ef060731b296603c0eca744b/Sample-01#compile-and-hot-reload-for-development)
-- Verify the application is stood up correctly by visiting
+- Verify the application is running correctly by visiting
   `http://localhost:3000` and clicking the blue `Log in` button in the top right
   corner. Select one of our social connections and log in and make sure to
   complete the `Authorize App` prompt. This only needs to be done once. This
@@ -269,7 +267,7 @@ function logIntoMicrosoft(username: string, password: string, name: string) {
 }
 ```
 
-We can wire together these functions in a single command, like so:
+We can wire these functions together in a single command, like so:
 
 ```js
 // cypress/support/commands.ts
@@ -318,7 +316,7 @@ Cypress.Commands.add(
 ```
 
 Now, we can use our `loginToAuth0ViaSocial` command in the test. Below is our
-test to login as a user via Auth0 and run a basic sanity check.
+test to login as a user via Auth0 and run a basic check.
 
 ```js
 describe('Social Logins Demo', () => {
