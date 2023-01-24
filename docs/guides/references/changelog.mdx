@@ -8,7 +8,7 @@ _Released 1/24/2023_
 
 **Features:**
 
-- Added official support for Vite 4 projects for component testing. Addresses
+- Added official support for Vite 4 in component testing. Addresses
   [#24969](https://github.com/cypress-io/cypress/issues/24969).
 - Added new
   [`experimentalMemoryManagement`](/guides/references/experiments#Configuration)
@@ -18,12 +18,12 @@ _Released 1/24/2023_
   [#23391](https://github.com/cypress-io/cypress/issues/23391).
 - Added new
   [`experimentalSkipDomainInjection`](/guides/references/experiments#Experimental-Skip-Domain-Injection)
-  flag to disable Cypress from setting `document.domain` on injection, allowing
-  users to test Salesforce domains. If you believe you are having
-  `document.domain` issues, please see the
+  configuration option to disable Cypress from setting `document.domain` on
+  injection, allowing users to test Salesforce domains. If you believe you are
+  having `document.domain` issues, please see the
   [`experimentalSkipDomainInjection`](/guides/references/experiments#Experimental-Skip-Domain-Injection)
-  flag to enable for your domain. This config option is end-to-end only.
-  Addresses [#2367](https://github.com/cypress-io/cypress/issues/2367),
+  guide. This config option is end-to-end only. Addresses
+  [#2367](https://github.com/cypress-io/cypress/issues/2367),
   [#23958](https://github.com/cypress-io/cypress/issues/23958),
   [#24290](https://github.com/cypress-io/cypress/issues/24290), and
   [#24418](https://github.com/cypress-io/cypress/issues/24418).
@@ -40,7 +40,6 @@ _Released 1/24/2023_
   component testing and is skipped if
   [`component.specPattern`](/guides/references/configuration#component) has been
   configured to exclude files with those extensions. Addresses
-  [#24495](https://github.com/cypress-io/cypress/issues/24495)
   [#24495](https://github.com/cypress-io/cypress/issues/24495).
 - Added support for the `data-qa` selector in the
   [Selector Playground](guides/core-concepts/cypress-app#Selector-Playground) in
@@ -52,9 +51,10 @@ _Released 1/24/2023_
 - Fixed an issue where component tests could incorrectly treat new major
   versions of certain dependencies as supported. Fixes
   [#25379](https://github.com/cypress-io/cypress/issues/25379).
-- Fixed an issue where spaces on new lines in the Command Log were not
-  maintained. Fixes
-  [#23679](https://github.com/cypress-io/cypress/issues/23679).
+- Fixed an issue where new lines or spaces on new lines in the Command Log were
+  not maintained. Fixes
+  [#23679](https://github.com/cypress-io/cypress/issues/23679) and
+  [#24964](https://github.com/cypress-io/cypress/issues/24964).
 - Fixed an issue where Angular component testing projects would fail to
   initialize if an unsupported browserslist entry was specified in the project
   configuration. Fixes
