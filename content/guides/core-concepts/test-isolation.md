@@ -72,7 +72,7 @@ Because the test starts in a fresh browser context, you must re-visit your
 application and perform the series of interactions needed to build the dom and
 browser state for each test.
 
-Additionally, the [`cy.session()`](/api/commands/session) command will inherent
+Additionally, the [`cy.session()`](/api/commands/session) command will inherit
 this configuration and will clear the page and current browser context when
 establishing a browser session. This is so tests can reliably pass when run
 standalone or in a randomized order.
