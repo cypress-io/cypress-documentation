@@ -39,7 +39,7 @@ profile control in the top right of the window.
 
 :::
 
-### The Launchpad
+### Launchpad
 
 <DocsImage
   src="/img/guides/core-concepts/cypress-app/the-launchpad.png"
@@ -133,8 +133,8 @@ Clicking on the flake indicator will take you to the spec’s
 ></DocsImage>
 
 To run a spec, simply click the row with the spec you would like to run. You
-will be taken to the [Test Runner](#The-Test-Runner) and the spec will execute.
-You can narrow down the list of specs by typing into the search bar (1).
+will be taken to the [Test Runner](#Test-Runner) and the spec will execute. You
+can narrow down the list of specs by typing into the search bar (1).
 
 It is also possible to run multiple specs sequentially using the
 [`experimentalRunAllSpecs`](/guides/references/experiments#End-to-End-Testing)
@@ -182,19 +182,19 @@ in Cypress Cloud.
 The Debug page allows you to easily debug failed CI test runs from within the
 Cypress app. From this page, you can review, rerun, and debug failed CI test
 runs that are recorded to Cypress Cloud (see [note above](#Overview)) – all
-without leaving Cypress.
+without leaving the Cypress app.
 
 This feature eliminates the tedious process of switching between Cypress, your
 local editor, and CI output, in order to fix failed tests. It does this by
-enabling you to use the [Test Runner](#The-Test-Runner) to run only the tests
-that failed in your last recorded test run, as well as review screenshots,
-videos, and logs from your tests.
+enabling you to use the [Test Runner](#Test-Runner) to run only the tests that
+failed in your last recorded test run, as well as review screenshots, videos,
+and logs from your tests.
 
 The Debug page shows the latest completed [test run](/guides/cloud/runs) that
-matches your current locally checked out git commit. If no run is found for your
-current commit, then Cypress crawls your git tree to find the most recent run in
-your branch's history, including parent branches. The first 100 failed tests are
-listed, with a link to Cypress Cloud to review the full run.
+matches the HEAD commit of your local project. If no run is found for your
+current commit, then Cypress shows the most recent run in your branch's history
+up until the current commit. The first 100 failed tests are listed, with a link
+to Cypress Cloud to review the full run.
 
 To use this feature, you must ensure that your version control is properly
 configured and that you are sending git information to Cypress Cloud. Under some
@@ -202,7 +202,7 @@ environment setups (e.g. `docker`/`docker-compose`), you may have to pass git
 information using
 [custom environment variables](/guides/continuous-integration/introduction#Git-information).
 
-## The Test Runner
+## Test Runner
 
 At the core of the app is the Test Runner itself. Cypress runs tests
 interactively, allowing you to see commands as they execute while also viewing
