@@ -48,7 +48,7 @@ Cypress.config(object)
 
 The name of the configuration to get or set.
 
-**<Icon name="angle-right" /> value** **_(String)_**
+**<Icon name="angle-right" /> value** **_(Any)_**
 
 The value of the configuration to set.
 
@@ -187,7 +187,7 @@ your configuration mid-test, be sure to chain the
 it('using cy.then', () => {
   cy.visit('/my-test_page')
   cy.click('#download-html').then(() => {
-    Cypress.config('baseUrl', 'null')
+    Cypress.config('baseUrl', null)
   })
   cy.visit('/downloads/contents.html')
 })
