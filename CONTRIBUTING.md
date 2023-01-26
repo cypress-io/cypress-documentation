@@ -161,10 +161,10 @@ go away.
 
 ### Writing the Changelog
 
-When adding to the Changelog, create a new file in
-[`/_changelogs`](/docs/guides/references/_changelogs) named as the version
-number. Be sure to follow the category structure defined below (in this order).
-Each bullet point in the list should _always_ be associated to an issue on the
+When adding to the [Changelog](/docs/guides/references/changelog.mdx), create a
+new section with the title as the version number on top of the previous section.
+Be sure to follow the category structure defined below (in this order). Each
+bullet point in the list should _always_ be associated to an issue on the
 [`cypress`](https://github.com/cypress-io/cypress) repo and link to that issue
 (except for Documentation changes).
 
