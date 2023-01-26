@@ -120,13 +120,13 @@ cy.clock().invoke('restore')
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-- `cy.tick()` requires being chained off of `cy`.</li><li>`cy.tick()` requires
-  that `cy.clock()` be called before it.
+- `cy.tick()` requires being chained off of `cy`.
+- `cy.tick()` requires that `cy.clock()` be called before it.
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-- `cy.tick()` is a utility command.</li><li>`cy.tick()` will not run assertions.
-  Assertions will pass through as if this command did not exist.
+- `cy.tick()` is a utility command.
+- `cy.tick()` will not run assertions. Assertions will pass through as if this command did not exist.
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 

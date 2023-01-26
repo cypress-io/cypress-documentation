@@ -69,21 +69,19 @@ cy.reload(true)
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-- `cy.reload()` requires being chained off of `cy`.</li><li>`cy.reload()`
-  requires the response to be `content-type: text/html`.</li><li>`cy.reload()`
-  requires the response code to be `2xx` after following
-  redirects.</li><li>`cy.reload()` requires the load `load` event to eventually
-  fire.
+- `cy.reload()` requires being chained off of `cy`.
+- `cy.reload()` requires the response to be `content-type: text/html`.
+- `cy.reload()` requires the response code to be `2xx` after following redirects.
+- `cy.reload()` requires the load `load` event to eventually fire.
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-- `cy.reload()` will automatically wait for assertions you have chained to pass
+- `cy.reload()` will automatically wait for assertions you have chained to pass.
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-- `cy.reload()` can time out waiting for the page to fire its `load`
-  event.</li><li>`cy.reload()` can time out waiting for assertions you've added
-  to pass.
+- `cy.reload()` can time out waiting for the page to fire its `load` event.
+- `cy.reload()` can time out waiting for assertions you've added to pass.
 
 ## Command Log
 

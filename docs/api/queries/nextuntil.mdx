@@ -99,22 +99,22 @@ cy.get('#veggies').nextUntil('#nuts')
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-- `.nextUntil()` requires being chained off a command that yields DOM
-  element(s).
+- `.nextUntil()` requires being chained off a command that yields DOM element(s).
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
 - `.nextUntil()` will automatically [retry](/guides/core-concepts/retry-ability)
   until the element(s)
-  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.nextUntil()`
+  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).
+- `.nextUntil()`
   will automatically [retry](/guides/core-concepts/retry-ability) until all
-  chained assertions have passed
+  chained assertions have passed.
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
 - `.nextUntil()` can time out waiting for the element(s) to
-  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).</li><li>`.nextUntil()`
-  can time out waiting for assertions you've added to pass.
+  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).
+- `.nextUntil()` can time out waiting for assertions you've added to pass.
 
 ## Command Log
 
