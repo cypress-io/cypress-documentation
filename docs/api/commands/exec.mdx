@@ -193,9 +193,10 @@ describe('has data available from database', { execTimeout: 90000 }, () => {
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-- `cy.exec()` requires being chained off of `cy`.</li><li>`cy.exec()` requires
-  the executed system command to eventually exit.</li><li>`cy.exec()` requires
-  that the exit code be `0` when `failOnNonZeroExit` is `true`.
+- `cy.exec()` requires being chained off of `cy`.
+- `cy.exec()` requires the executed system command to eventually exit.
+- `cy.exec()` requires that the exit code be `0` when `failOnNonZeroExit` is
+  `true`.
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
