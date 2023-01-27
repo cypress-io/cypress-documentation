@@ -9,6 +9,7 @@ import CypressConfigFileTabs from "@site/src/components/cypress-config-file-tabs
 import DefaultSelectorPriority from "@site/docs/partials/_default-selector-priority.mdx";
 import DocsImage from "@site/src/components/docs-image";
 import DocsVideo from "@site/src/components/docs-video";
+import DocumentDomainWorkaround from "@site/docs/partials/_document-domain-workaround.mdx";
 import E2EOnlyBadge from "@site/src/components/e2e-only-badge";
 import E2EOrCtTabs from "@site/src/components/e2e-or-ct-tabs";
 import VueSyntaxTabs from "@site/src/components/vue-syntax-tabs";
@@ -119,6 +120,7 @@ export default {
   DefaultSelectorPriority,
   DocsImage,
   DocsVideo,
+  DocumentDomainWorkaround,
   E2EOnlyBadge,
   E2EOrCtTabs,
   VueSyntaxTabs,

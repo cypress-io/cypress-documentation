@@ -25,6 +25,7 @@ configuration to Cypress.
 | --------------------------------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `experimentalFetchPolyfill`                   | `false` | Automatically replaces `window.fetch` with a polyfill that Cypress can spy on and stub. Note: `experimentalFetchPolyfill` has been deprecated in Cypress 6.0.0 and will be removed in a future release. Consider using [cy.intercept()](/api/commands/intercept) to intercept `fetch` requests instead.                        |
 | `experimentalInteractiveRunEvents`            | `false` | Allows listening to the [`before:run`](/api/plugins/before-run-api), [`after:run`](/api/plugins/after-run-api), [`before:spec`](/api/plugins/before-spec-api), and [`after:spec`](/api/plugins/after-spec-api) events in the [setupNodeEvents](/guides/tooling/plugins-guide#Using-a-plugin) function during interactive mode. |
+| `experimentalMemoryManagement`                | `false` | Enables support for improved memory management within Chromium-based browsers.                                                                                                                                                                                                                                                 |
 | `experimentalModifyObstructiveThirdPartyCode` | `false` | Whether Cypress will search for and replace obstructive code in third party `.js` or `.html` files. NOTE: Setting this flag removes [Subresource Integrity (SRI)](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity).                                                                                |
 | `experimentalSourceRewriting`                 | `false` | Enables AST-based JS/HTML rewriting. This may fix issues caused by the existing regex-based JS/HTML replacement algorithm. See [#5273](https://github.com/cypress-io/cypress/issues/5273) for details.                                                                                                                         |
 | `experimentalWebKitSupport`                   | `false` | Enable experimental support for running tests in WebKit. When set, installs of `playwright-webkit` will be detected and available in Cypress. See [Launching Browsers](/guides/guides/launching-browsers#WebKit-Experimental) for more information.                                                                            |
@@ -39,11 +40,63 @@ creating `e2e` and `component` objects inside your Cypress configuration.
 These experiments are available to be specified inside the `e2e` configuration
 object:
 
-| Option                           | Default | Description                                                                                               |
-| -------------------------------- | ------- | --------------------------------------------------------------------------------------------------------- |
-| `experimentalStudio`             | `false` | Generate and save commands directly to your test suite by interacting with your app as an end user would. |
-| `experimentalRunAllSpecs`        | `false` | Enables the "Run All Specs" UI feature, allowing the execution of multiple specs sequentially.            |
-| `experimentalOriginDependencies` | `false` | Enables support for `require`/`import` within `cy.origin`.                                                |
+| Option                            | Default | Description                                                                                                |
+| --------------------------------- | ------- | ---------------------------------------------------------------------------------------------------------- |
+| `experimentalStudio`              | `false` | Generate and save commands directly to your test suite by interacting with your app as an end user would.  |
+| `experimentalRunAllSpecs`         | `false` | Enables the "Run All Specs" UI feature, allowing the execution of multiple specs sequentially.             |
+| `experimentalOriginDependencies`  | `false` | Enables support for `require`/`import` within `cy.origin`.                                                 |
+| `experimentalSkipDomainInjection` | `null`  | Removes injecting `document.domain` into `text/html` pages for any sites that match the provided patterns. |
+
+#### Experimental Skip Domain Injection
+
+Under the hood, Cypress
+[injects document.domain](/guides/guides/web-security#Examples-of-what-Cypress-does-under-the-hood)
+into your test application to lessen the burden of navigation. This is well
+described in our [Cross Origin Testing](/guides/guides/cross-origin-testing)
+guide. However, some sites have compatibility issues with this feature.
+
+The `experimentalSkipDomainInjection` option disables injecting
+`document.domain` inside Cypress. When enabled, all cross-origin/subdomain
+navigation must use `cy.origin()`, which may make tests a bit more verbose. We
+only recommend including your site pattern if you are having issues running
+Cypress out of the box and suspect setting `document.domain` is interfering with
+your site's ability to render properly.
+
+Before enabling, verify your application is not implementing frame busting
+techniques, which you can mitigate with the
+[`modifyObstructiveCode`](/guides/references/configuration#modifyObstructiveCode)
+and
+[`experimentalModifyObstructiveThirdPartyCode`](/guides/guides/web-security#Modifying-Obstructive-Third-Party-Code)
+flags.
+
+At this point in time, we are aware of the following sites that require the
+`experimentalSkipDomainInjection` option to be set to be tested properly:
+
+- Google
+- Salesforce
+
+This flag can be enabled by passing an array of origin URLs or
+[minimatch](https://github.com/isaacs/minimatch) glob patterns:
+
+:::cypress-config-example
+
+```js
+{
+  e2e: {
+    experimentalSkipDomainInjection: [
+      '*.salesforce.com',
+      '*.force.com',
+      '*.google.com',
+    ]
+  }
+}
+```
+
+:::
+
+If using other Salesforce domains, such as
+[enhanced domains](https://help.salesforce.com/s/articleView?id=sf.domain_name_enhanced.htm&type=5),
+you will need to add the correct matching glob pattern.
 
 ### Component Testing
 
@@ -58,6 +111,7 @@ configuration object:
 
 | Version                                       | Changes                                                                                                                      |
 | --------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| [12.4.0](/guides/references/changelog#12-4-0) | Added `experimentalSkipDomainInjection` and `experimentalMemoryManagement`.                                                  |
 | [12.0.0](/guides/references/changelog#12-0-0) | Removed `experimentalSessionAndOrigin` and made it the default behavior. Added `experimentalOriginDependencies`.             |
 | [11.2.0](/guides/references/changelog#11-2-0) | Added `experimentalRunAllSpecs`.                                                                                             |
 | [10.8.0](/guides/references/changelog#10-8-0) | Added `experimentalWebKitSupport`.                                                                                           |
