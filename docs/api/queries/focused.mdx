@@ -64,20 +64,21 @@ cy.focused().should('have.attr', 'name', 'username')
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-- `cy.focused()` requires being chained off a command that yields DOM element(s).
+- `cy.focused()` requires being chained off a command that yields DOM
+  element(s).
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
 - `cy.focused()` will automatically [retry](/guides/core-concepts/retry-ability)
   until the element(s)
   [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).
-- `cy.focused()` will automatically [retry](/guides/core-concepts/retry-ability) until all
-  chained assertions have passed.
+- `cy.focused()` will automatically [retry](/guides/core-concepts/retry-ability)
+  until all chained assertions have passed.
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
 - `cy.focused()` can time out waiting for the element(s) to
-  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions). 
+  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).
 - `cy.focused()` can time out waiting for assertions you've added to pass.
 
 ## Command Log

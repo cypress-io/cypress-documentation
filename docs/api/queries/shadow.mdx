@@ -61,19 +61,16 @@ cy.get('.shadow-host').shadow().find('.my-button').click()
 - `.shadow()` will automatically [retry](/guides/core-concepts/retry-ability)
   until the element(s)
   [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).
-- `.shadow()`
-  will automatically [retry](/guides/core-concepts/retry-ability) until the
-  element(s) host(s) a shadow root.
-- `.shadow()` will automatically
-  [retry](/guides/core-concepts/retry-ability) until all chained assertions have
-  passed.
+- `.shadow()` will automatically [retry](/guides/core-concepts/retry-ability)
+  until the element(s) host(s) a shadow root.
+- `.shadow()` will automatically [retry](/guides/core-concepts/retry-ability)
+  until all chained assertions have passed.
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
 - `.shadow()` can time out waiting for the element(s) to
-  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions). 
-- `.shadow()`
-  can time out waiting for the element(s) to host a shadow root. 
+  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).
+- `.shadow()` can time out waiting for the element(s) to host a shadow root.
 - `.shadow()` can time out waiting for assertions you've added to pass.
 
 ## Known Issue

@@ -252,10 +252,12 @@ cy.wrap(english).invoke('greeting').should('equal', 'bye')
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-- `.invoke()` will wait for the `function` to exist on the subject before running.
-- `.invoke()` will wait for the promise to resolve if the invoked `function` returns a promise.
-- `.invoke()` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have
-  passed.
+- `.invoke()` will wait for the `function` to exist on the subject before
+  running.
+- `.invoke()` will wait for the promise to resolve if the invoked `function`
+  returns a promise.
+- `.invoke()` will automatically [retry](/guides/core-concepts/retry-ability)
+  until all chained assertions have passed.
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 

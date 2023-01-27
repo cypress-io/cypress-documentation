@@ -108,15 +108,15 @@ cy.get('[type="checkbox"]').uncheck(['ga', 'ca'])
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-- `.uncheck()` requires being chained off a command that yields DOM element(s). 
+- `.uncheck()` requires being chained off a command that yields DOM element(s).
 - `.uncheck()` requires the element to have type `checkbox`.
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
 - `.uncheck()` will automatically wait for the element to reach an
   [actionable state](/guides/core-concepts/interacting-with-elements).
-- `.uncheck()` will automatically [retry](/guides/core-concepts/retry-ability) until all
-  chained assertions have passed.
+- `.uncheck()` will automatically [retry](/guides/core-concepts/retry-ability)
+  until all chained assertions have passed.
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
