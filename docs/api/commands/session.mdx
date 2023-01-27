@@ -579,27 +579,27 @@ it('t3', () => {
 
 The page is cleared and cookies, local storage and session storage (session
 data) in all domains are cleared automatically when `cy.session()` runs and test
-isolation is enabled with `testIsolation=true`, This guarantees consistent
-behavior whether a session is being created or restored and allows you to switch
-sessions without first having to explicitly log out.
+isolation is enabled with `testIsolation=true` (default in Cypress 12), This
+guarantees consistent behavior whether a session is being created or restored
+and allows you to switch sessions without first having to explicitly log out.
 
-|                                                 | Page cleared (test)                             | Session data cleared |                                                  | --------------------------                      |
-| :---------------------------------------------: | ----------------------------------------------- | -------------------- | ------------------------------------------------ | ----------------------------------------------- | --- | --------------------- |
-| :---------------------------------------------: |                                                 | Before `setup`       | <Icon name="check-circle" color="green"> </Icon> | <Icon name="check-circle" color="green"></Icon> |     | Before `cy.session()` |
-|                      ends                       | <Icon name="check-circle" color="green"></Icon> |                      |
+|                            |               Page cleared (test)               |              Session data cleared               |
+| -------------------------- | :---------------------------------------------: | :---------------------------------------------: |
+| Before `setup`             | <Icon name="check-circle" color="green"></Icon> | <Icon name="check-circle" color="green"></Icon> |
+| Before `cy.session()` ends | <Icon name="check-circle" color="green"></Icon> |                                                 |
 
-[`cy.visit()`](/api/commands/visit) must be explicitly called afterwards to
-ensure the page to test is loaded.
+Note: [`cy.visit()`](/api/commands/visit) must be explicitly called afterwards
+to ensure the page to test is loaded.
 
 ### Test Isolation Disabled
 
 When test isolation is disabled with `testIsolation=false`, the page will not
 clear, however, the session data will clear when `cy.session()` runs.
 
-| | Page cleared (test) | Session data cleared | | -------------------------- |
-:-----------------: | :---------------------------------------------: | | Before
-`setup` | |<Icon name="check-circle" color="green"></Icon> | | Before
-`cy.session()` ends | | |
+|                            | Page cleared (test) |              Session data cleared               |
+| -------------------------- | :-----------------: | :---------------------------------------------: |
+| Before `setup`             |                     | <Icon name="check-circle" color="green"></Icon> |
+| Before `cy.session()` ends |                     |                                                 |
 
 [`cy.visit()`](/api/commands/visit) does not need to be called afterwards to
 ensure the page to test is loaded.
