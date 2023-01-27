@@ -71,6 +71,10 @@
               "slug": "google-authentication"
             },
             {
+              "title": "Social Authentication",
+              "slug": "social-authentication"
+            },
+            {
               "title": "Working with GraphQL",
               "slug": "working-with-graphql"
             },
