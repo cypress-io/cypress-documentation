@@ -6,6 +6,7 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500;700&display=swap');
+@import './announcement-bar.scss';
 @import './markdown.scss';
 @import './sidebar.scss';
 @import './navbar.scss';
@@ -30,6 +31,8 @@
   --cypress-color-gray-900: #2e3247;
   --cypress-color-gray-1000: #1b1e2e;
   --cypress-color-gray-1100: #131521;
+  --cypress-color-indigo-50: #f0f1ff;
+  --cypress-color-indigo-100: #daddfe;
   --cypress-color-indigo-200: #c5c9fd;
   --cypress-color-indigo-300: #9aa2fc;
   --cypress-color-indigo-400: #6470f3;
