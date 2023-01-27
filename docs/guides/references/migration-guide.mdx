@@ -72,7 +72,7 @@ it('updates the content', () => {
   cy.get('button#edit-1').click()
   cy.get('input#title').type('Updated title')
   cy.get('button#submit').click()
-  cy.get('.toast').type('Changes saved!')
+  cy.get('.toast').contains('Changes saved!')
 })
 
 it('validates the change', () => {
@@ -105,7 +105,7 @@ it('securely edits content', () => {
     cy.get('button#edit-1').click()
     cy.get('input#title').type('Updated title')
     cy.get('button#submit').click()
-    cy.get('.toast').type('Changes saved!')
+    cy.get('.toast').contains('Changes saved!')
   })
 
   cy.visit('/items/1')
