@@ -1,0 +1,14 @@
+/* announcement bar overrides */
+
+/* using attribute selector for these dynamic classes */
+div [class^='announcementBar'] {
+  font-family: 'Poppins';
+  height: unset;
+  background-color: var(--cypress-color-indigo-50);
+  color: var(--ifm-color-gray-1000);
+  padding: 0.8rem 0;
+
+  a {
+    color: var(--cypress-color-indigo-500);
+  }
+}
