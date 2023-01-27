@@ -59,12 +59,20 @@
               "slug": "amazon-cognito-authentication"
             },
             {
+              "title": "Azure Active Directory Authentication",
+              "slug": "azure-active-directory-authentication"
+            },
+            {
               "title": "Okta Authentication",
               "slug": "okta-authentication"
             },
             {
               "title": "Google Authentication",
               "slug": "google-authentication"
+            },
+            {
+              "title": "Social Authentication",
+              "slug": "social-authentication"
             },
             {
               "title": "Working with GraphQL",
