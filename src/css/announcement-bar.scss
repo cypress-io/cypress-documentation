@@ -10,5 +10,21 @@ div [class^='announcementBar'] {
 
   a {
     color: var(--cypress-color-indigo-500);
+    text-decoration: none;
+
+    &:hover {
+      border-bottom: 1px dotted var(--cypress-color-indigo-500);
+    }
+  }
+
+  button[aria-label='Close'] {
+    opacity: 1;
+    color: var(--cypress-color-indigo-400);
+    transition: color 0.2s ease-out, transform 0.2s ease-out;
+
+    &:hover {
+      color: var(--cypress-color-indigo-500);
+      transform: scale(1.1);
+    }
   }
 }
