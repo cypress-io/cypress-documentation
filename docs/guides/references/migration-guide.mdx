@@ -12,6 +12,18 @@ version 13.0.
 
 In Cypress 13, the [`.readFile()`](/api/commands/as) command is now a query. Tests written using it should continue to operate exactly as before; no changes are necessary.
 
+This means that `readFile()` will re-read the file from disk if any upcoming command in the same chain fails. Assertions no longer have to be directly attached.
+
+```js
+cy.readFile(`users.json`).its('users.123.fullName').should('eq', 'John Doe')
+```
+
+Beginning with Cypress 13, the above test will re-read the file until the file exists, it has the requested property, and it passes the assertion.
+
+In previous versions of Cypress, the above command would retry until the file existed, but would *not* re-read it from disk if the file didn't have the requested property or the contents didn't match.
+
+#### `.readFile()` can no longer be overwritten with `Cypress.Commands.overwrite()`
+
 However, queries cannot be overwritten using `Cypress.Commands.overwrite()`. If you were previously overwriting `cy.readFile()`, you will need to put your custom version under a new name, and update your tests to use it. For example, you might update this test:
 
 ```js
