@@ -2,6 +2,46 @@
 title: Migration Guide
 ---
 
+## Migrating to Cypress 13.0
+
+This guide details the changes and how to change your code to migrate to Cypress
+version 13.0.
+[See the full changelog for version 12.0](/guides/references/changelog#12-0-0).
+
+### `cy.readFile()` is now a query command
+
+In Cypress 13, the [`.readFile()`](/api/commands/as) command is now a query. Tests written using it should continue to operate exactly as before; no changes are necessary.
+
+However, queries cannot be overwritten using `Cypress.Commands.overwrite()`. If you were previously overwriting `cy.readFile()`, you will need to put your custom version under a new name, and update your tests to use it. For example, you might update this test:
+
+```js
+Cypress.Commands.override('readFile', (originalFn, fileName, options) => {
+  originalFn(fileName, options).then((file) => {
+    // Do some processing
+    return updatedFile
+  })
+})
+
+it('reads a file', () => {
+  cy.readFile('foo.json')
+})
+```
+
+to something like this:
+
+```js
+Cypress.Commands.create('readFileWithExtras', (fileName, options) => {
+  cy.readFile(fileName, options).then((file) => {
+    // Do some processing
+    return updatedFile
+  })
+})
+
+it('reads a file', () => {
+  cy.readFileWithExtras('foo.json')
+})
+```
+
 ## Migrating to Cypress 12.0
 
 This guide details the changes and how to change your code to migrate to Cypress
