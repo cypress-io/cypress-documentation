@@ -57,7 +57,7 @@ commands regardless of types, with passing assertions showing in green.
 <DocsImage
   src="/img/guides/retry-ability/command-assertions.png"
   alt="Cypress tests showing commands and assertions"
-></DocsImage>
+/>
 
 Let's look at the last chain of commands:
 
@@ -121,7 +121,7 @@ the spinning indicators, meaning Cypress is requerying for them.
 <DocsImage
   src="/img/guides/retry-ability/retry-assertion.gif"
   alt="Retrying assertion"
-></DocsImage>
+/>
 
 Within a few milliseconds after the DOM updates, `cy.find()` finds an element
 and the `should('have.length', 1)` assertion passes
@@ -166,7 +166,7 @@ itself failed.
 <DocsImage
   src="/img/guides/retry-ability/second-assertion-fails.gif"
   alt="Retrying multiple assertions"
-></DocsImage>
+/>
 
 ## Built-in assertions
 
@@ -184,7 +184,7 @@ cy.get('.todo-list li') // query
 <DocsImage
   src="/img/guides/retry-ability/eq.gif"
   alt="Retrying built-in assertion"
-></DocsImage>
+/>
 
 Only queries can be retried, but most other commands still have built-in
 _waiting_. For example, as described in the "Assertions" section of
@@ -360,7 +360,7 @@ const Clicker = ({ click }) => (
 <DocsImage
   src="/img/guides/retry-ability/delay-click.png"
   alt="Expect fails the test without waiting for the delayed stub"
-></DocsImage>
+/>
 
 The test finishes before the component calls the `click` prop twice, and without
 retrying the assertion `expect(onClick).to.be.calledTwice`.
@@ -389,7 +389,7 @@ it('calls the click prop', () => {
 <DocsImage
   src="/img/guides/retry-ability/click-twice.gif"
   alt="Retrying the assertions using a stub alias"
-></DocsImage>
+/>
 
 ### Use `.should()` with a callback
 
@@ -414,7 +414,7 @@ Below is an example where the number value is set after a delay:
 <DocsImage
   src="/img/guides/retry-ability/random-number.gif"
   alt="Random number"
-></DocsImage>
+/>
 
 ### <Icon name="exclamation-triangle" color="red"></Icon> Incorrectly waiting for values
 
@@ -437,7 +437,7 @@ the test only runs the entire chain once before failing.
 <DocsImage
   src="/img/guides/retry-ability/random-number-first-attempt.png"
   alt="First attempt at writing the test"
-></DocsImage>
+/>
 
 #### <Icon name="check-circle" color="green" /> Correctly waiting for values
 
@@ -462,7 +462,7 @@ to get the number. When the number is finally set in the application, then the
 <DocsImage
   src="/img/guides/retry-ability/random-number-callback.gif"
   alt="Random number using callback"
-></DocsImage>
+/>
 
 ## See also
 

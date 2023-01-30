@@ -244,7 +244,7 @@ module API option, if specified)
 <DocsImage
   src="/img/dashboard/videos-of-recorded-test-run.png"
   alt="Video of test runs"
-></DocsImage>
+/>
 
 Instead of administering assets yourself, you can
 [save them to the cloud with Cypress Cloud](/guides/cloud/runs#Run-details).
@@ -349,7 +349,7 @@ beforeEach(() => {
 <DocsImage
   src="/img/guides/core-concepts/v10/global-hooks.png"
   alt="Global hooks for tests"
-></DocsImage>
+/>
 
 :::info
 
@@ -790,7 +790,7 @@ file by clicking on it.
 <DocsImage
   src="/img/guides/core-concepts/v10/run-single-spec.gif"
   alt="Running a single spec"
-></DocsImage>
+/>
 
 ## Test statuses
 
@@ -805,7 +805,7 @@ assertions. The test screenshot below shows a passed test:
 <DocsImage
   src="/img/guides/core-concepts/v10/todo-mvc-passing-test.png"
   alt="Cypress with a single passed test"
-></DocsImage>
+/>
 
 Note that a test can pass after several
 [test retries](/guides/guides/test-retries). In that case the Command Log shows
@@ -819,7 +819,7 @@ be a user hitting this bug!
 <DocsImage
   src="/img/guides/core-concepts/v10/todo-mvc-failing-test.png"
   alt="Cypress with a single failed test"
-></DocsImage>
+/>
 
 After a test fails, the screenshots and videos can help find the problem so it
 can be fixed.
@@ -854,7 +854,7 @@ file.
 <DocsImage
   src="/img/guides/core-concepts/v10/todo-mvc-pending-tests.png"
   alt="Cypress with three pending test"
-></DocsImage>
+/>
 
 So remember - if you (the test writer) knowingly skip a test using one of the
 above three ways, Cypress counts it as a _pending_ test.
@@ -893,7 +893,7 @@ If the `beforeEach` hook completes and both tests finish, two tests are passing.
 <DocsImage
   src="/img/guides/core-concepts/v10/todo-mvc-2-tests-passing.png"
   alt="Cypress showing two passing tests"
-></DocsImage>
+/>
 
 But what happens if a command inside the `beforeEach` hook fails? For example,
 let's pretend we want to visit a non-existent page `/does-not-exist` instead of
@@ -914,7 +914,7 @@ would also fail due to the `beforeEach` hook failure.
 <DocsImage
   src="/img/guides/core-concepts/v10/todo-mvc-failed-and-skipped-tests.png"
   alt="Cypress showing one failed and one skipped test"
-></DocsImage>
+/>
 
 If we collapse the test commands, we can see the empty box marking the skipped
 test "adds 2 todos".
@@ -922,7 +922,7 @@ test "adds 2 todos".
 <DocsImage
   src="/img/guides/core-concepts/v10/todo-mvc-skipped-test.png"
   alt="Cypress showing one skipped test"
-></DocsImage>
+/>
 
 The tests that were meant to be executed but were skipped due to some run-time
 problem are marked "skipped" by Cypress.

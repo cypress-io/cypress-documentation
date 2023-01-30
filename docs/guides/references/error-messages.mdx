@@ -164,7 +164,7 @@ describe('detachment example', () => {
 <DocsImage
   src="/img/guides/references/cypress-method-failed-page-updated.png"
   alt="cy.method() failed because the page updated"
-></DocsImage>
+/>
 
 Cypress errors because after a command, the subject becomes 'fixed' to a
 specific element - since it can't retry commands, if the element becomes
@@ -517,7 +517,7 @@ And will result in the following error:
 <DocsImage
   src="/img/guides/references/cy-visit-subsequent-commands-timed-out.png"
   alt="cy.visit() subsequent commands timed out"
-></DocsImage>
+/>
 
 In order to fix this, our `cy.get()` command **must** be wrapped with the
 [`cy.origin()`](/api/commands/origin) command, like so:
