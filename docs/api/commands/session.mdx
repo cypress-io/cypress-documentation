@@ -585,8 +585,8 @@ and allows you to switch sessions without first having to explicitly log out.
 
 |                            |               Page cleared (test)               |              Session data cleared               |
 | -------------------------- | :---------------------------------------------: | :---------------------------------------------: |
-| Before `setup`             | <Icon name="check-circle" color="green"></Icon> | <Icon name="check-circle" color="green"></Icon> |
-| Before `cy.session()` ends | <Icon name="check-circle" color="green"></Icon> |                                                 |
+| Before `setup`             | <Icon name="check-circle" color="green" /> | <Icon name="check-circle" color="green" /> |
+| Before `cy.session()` ends | <Icon name="check-circle" color="green" /> |                                                 |
 
 Note: [`cy.visit()`](/api/commands/visit) must be explicitly called afterwards
 to ensure the page to test is loaded.
@@ -598,7 +598,7 @@ clear, however, the session data will clear when `cy.session()` runs.
 
 |                            | Page cleared (test) |              Session data cleared               |
 | -------------------------- | :-----------------: | :---------------------------------------------: |
-| Before `setup`             |                     | <Icon name="check-circle" color="green"></Icon> |
+| Before `setup`             |                     | <Icon name="check-circle" color="green" /> |
 | Before `cy.session()` ends |                     |                                                 |
 
 [`cy.visit()`](/api/commands/visit) does not need to be called afterwards to
