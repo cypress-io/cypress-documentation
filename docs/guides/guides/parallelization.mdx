@@ -286,10 +286,7 @@ as the browser being tested:
   cypress run --record --group Linux/Electron
   ```
 
-<DocsImage
-  src="/img/guides/parallelization/browser.png"
-  alt="browser"
-/>
+<DocsImage src="/img/guides/parallelization/browser.png" alt="browser" />
 
 ### Grouping to label parallelization
 
@@ -352,10 +349,7 @@ cypress run --record --group package/customer --spec 'cypress/e2e/packages/custo
 cypress run --record --group package/guest --spec 'cypress/e2e/packages/guest/**/*'
 ```
 
-<DocsImage
-  src="/img/guides/parallelization/monorepo.png"
-  alt="monorepo"
-/>
+<DocsImage src="/img/guides/parallelization/monorepo.png" alt="monorepo" />
 
 This pattern is especially useful for projects in a monorepo. Each segment of
 the monorepo can be assigned its own group, and larger segments can be
