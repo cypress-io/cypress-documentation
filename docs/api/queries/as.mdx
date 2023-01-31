@@ -47,7 +47,7 @@ The name of the alias to be referenced later within a
 [`cy.get()`](/api/commands/get) or [`cy.wait()`](/api/commands/wait) command
 using an `@` prefix.
 
-**<Icon name="angle-right"></Icon> options** **_(Object)_**
+**<Icon name="angle-right" /> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `.as()`.
 
@@ -189,8 +189,9 @@ describe('A fixture', () => {
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-- `.as()` is a utility command.</li><li>`.as()` will not run assertions.
-  Assertions will pass through as if this command did not exist.
+- `.as()` is a utility command.
+- `.as()` will not run assertions. Assertions will pass through as if this
+  command did not exist.
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
@@ -213,7 +214,7 @@ Aliases of routes display in the routes instrument panel:
 <DocsImage
   src="/img/api/as/routes-table-in-command-log.png"
   alt="Command log for route"
-></DocsImage>
+/>
 
 ## History
 

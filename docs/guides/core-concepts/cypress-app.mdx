@@ -22,7 +22,7 @@ Cypress testing experience.
 
 :::info
 
-<strong class="alert-header">Cypress Cloud integration</strong>
+<strong>Cypress Cloud integration</strong>
 
 When you configure the open-source Cypress app to record tests to
 [Cypress Cloud](/guides/cloud/introduction), you'll see data from your latest
@@ -44,7 +44,7 @@ profile control in the top right of the window.
 <DocsImage
   src="/img/guides/core-concepts/cypress-app/the-launchpad.png"
   alt="The Launchpad"
-></DocsImage>
+/>
 
 The Launchpad is your portal to Cypress, helping with onboarding, choosing a
 testing type and launching a browser.
@@ -59,7 +59,7 @@ to go straight to the Specs page.
 <DocsImage
   src="/img/guides/core-concepts/cypress-app/spec-explorer.png"
   alt="Specs"
-></DocsImage>
+/>
 
 On choosing your browser in the Launchpad, you'll be presented with a list of
 your specs, their names, locations, and information about your latest recorded
@@ -103,7 +103,7 @@ Again, this analysis comes from Cypress Cloud.
 
 :::info
 
-<strong class="alert-header">What is a flaky test?</strong>
+<strong>What is a flaky test?</strong>
 
 A test is considered to be [flaky](/guides/cloud/flaky-test-management) when it
 can pass and fail across multiple retry attempts without any code changes.
@@ -142,7 +142,7 @@ It is also possible to run multiple specs sequentially using the
 
 :::caution
 
-<strong class="alert-header">Experimental Run All Specs</strong>
+<strong>Experimental Run All Specs</strong>
 
 `experimentalRunAllSpecs` currently works with End to End Testing.
 
@@ -160,7 +160,7 @@ Running a large number of specs sequentially can consume more resources.
 <DocsImage
   src="/img/guides/core-concepts/cypress-app/recorded-runs.png"
   alt="Recorded Runs"
-></DocsImage>
+/>
 
 This screen shows detailed information about the most recently recorded
 [test runs](/guides/cloud/runs) across all git branches, latest first. This data
@@ -211,7 +211,7 @@ the Application or Component Under Test, and exploring its DOM.
 <DocsImage
   src="/img/guides/core-concepts/cypress-app/test-runner.png"
   alt="The Test Runner"
-></DocsImage>
+/>
 
 ## Command Log
 
@@ -224,7 +224,7 @@ executed in relevant `before`, `beforeEach`, `afterEach`, and `after` hooks.
   src="/img/guides/core-concepts/cypress-app/command-log.png"
   alt="Cypress app"
   width-600
-></DocsImage>
+/>
 
 ### Open files in your IDE
 
@@ -235,7 +235,7 @@ file where the code is located. Clicking on this link will open the file in your
 <DocsImage
   src="/img/guides/core-concepts/cypress-app/open-file-in-IDE.gif"
   alt="Open file in your IDE"
-></DocsImage>
+/>
 
 ### Time traveling
 
@@ -258,7 +258,7 @@ Log changes the state of the [AUT](#Application-Under-Test) preview:
 <DocsImage
   src="/img/guides/core-concepts/cypress-app/first-test-hover-contains.png"
   alt="Hovering over the contains tab highlights the dom element in the App in the Cypress app"
-></DocsImage>
+/>
 
 Cypress automatically travels back in time to a snapshot of when a hovered-over
 command resolved. Additionally, since [`cy.contains()`](/api/commands/contains)
@@ -271,7 +271,7 @@ the URL that was present when the snapshot was taken.
 <DocsImage
   src="/img/guides/core-concepts/cypress-app/first-test-url-revert.png"
   alt="The url address bar shows https://example.cypress.io/"
-></DocsImage>
+/>
 
 ### Pinning snapshots
 
@@ -286,7 +286,7 @@ purple, and does three other things worth noting:
 <DocsImage
   src="/img/guides/core-concepts/cypress-app/first-test-click-revert.png"
   alt="A click on the click command in the Command Log with Cypress app labeled as 1, 2, 3"
-></DocsImage>
+/>
 
 #### 1. Pinned snapshots
 
@@ -326,7 +326,7 @@ Notice these look different (they are gray and without a number).
 <DocsImage
   src="/img/guides/core-concepts/cypress-app/first-test-page-load.png"
   alt="Command log shows 'Page load --page loaded--' and 'New url https://example.cypress.io/'"
-></DocsImage>
+/>
 
 **Cypress logs out page events for:**
 
@@ -359,21 +359,21 @@ it('intercept command log', () => {
 <DocsImage
   src="/img/guides/core-concepts/cypress-app/instrument-panel-routes.png"
   alt="Routes Instrument Panel"
-></DocsImage>
+/>
 
 #### Stubs
 
 <DocsImage
   src="/img/guides/core-concepts/cypress-app/instrument-panel-stubs.png"
   alt="Stubs Instrument Panel"
-></DocsImage>
+/>
 
 #### Spies
 
 <DocsImage
   src="/img/guides/core-concepts/cypress-app/instrument-panel-spies.png"
   alt="Spies Instrument Panel"
-></DocsImage>
+/>
 
 ## Preview pane
 
@@ -406,7 +406,7 @@ DOM is completely available for debugging.
 <DocsImage
   src="/img/guides/core-concepts/cypress-app/application-under-test.png"
   alt="Application Under Test"
-></DocsImage>
+/>
 
 The AUT also displays in the size and orientation specified in your tests. You
 can change the size or orientation with the
@@ -424,7 +424,7 @@ The image below shows that our application is displaying at `1000px` width,
 <DocsImage
   src="/img/guides/core-concepts/cypress-app/viewport-scaling.png"
   alt="Viewport Scaling"
-></DocsImage>
+/>
 
 _Note: The right-hand side may also be used to display syntax errors in your
 test file that prevent the tests from running._
@@ -432,7 +432,7 @@ test file that prevent the tests from running._
 <DocsImage
   src="/img/guides/core-concepts/cypress-app/aut-error-e2e.png"
   alt="Errors"
-></DocsImage>
+/>
 
 _Note: Internally, the AUT renders within an iframe. This can sometimes cause
 unexpected behaviors
@@ -480,7 +480,7 @@ available for debugging.
 <DocsImage
   src="/img/guides/core-concepts/v10/component-under-test.png"
   alt="Cypress app showing mounted component and password assertion"
-></DocsImage>
+/>
 
 The CUT also displays in the size and orientation specified in your tests. You
 can change the size or orientation with the
@@ -498,7 +498,7 @@ The image below shows that our application is displaying at `500px` width,
 <DocsImage
   src="/img/guides/core-concepts/cypress-app/viewport-scaling-ct.png"
   alt="Cypress app showing mounted component test viewport scale"
-></DocsImage>
+/>
 
 _Note: The right-hand side may also be used to display syntax errors in your
 spec file that prevent the tests from running._
@@ -506,7 +506,7 @@ spec file that prevent the tests from running._
 <DocsImage
   src="/img/guides/core-concepts/cypress-app/aut-error-ct.png"
   alt="Cypress app showing error as application under test"
-></DocsImage>
+/>
 
 _Note: Internally, the CUT renders within an iframe. This can sometimes cause
 unexpected behaviors
@@ -523,7 +523,7 @@ The Selector Playground is an interactive feature that helps you:
 <DocsVideo
   src="/img/snippets/selector-playground.mp4"
   title="Selector Playground demo"
-></DocsVideo>
+/>
 
 :::info
 
@@ -575,7 +575,7 @@ to preview a unique selector for that element in the tooltip.
 <DocsImage
   src="/img/guides/core-concepts/cypress-app/open-selector-playground.gif"
   alt="Opening selector playground and hovering over elements"
-></DocsImage>
+/>
 
 Click on the element and its selector will appear at the top. From there, you
 can copy it to your clipboard ( <Icon name="copy" /> ) or print it to the
@@ -584,7 +584,7 @@ console ( <Icon name="terminal" /> ).
 <DocsImage
   src="/img/guides/core-concepts/cypress-app/copy-selector-in-selector-playground.gif"
   alt="Clicking an element, copying its selector to clipboard, printing it to the console"
-></DocsImage>
+/>
 
 ### Running experiments
 
@@ -598,7 +598,7 @@ highlight those elements in your app.
 <DocsImage
   src="/img/guides/core-concepts/cypress-app/typing-a-selector-to-find-in-playground.gif"
   alt="Type a selector to see what elements it matches"
-></DocsImage>
+/>
 
 #### Switching to contains
 
@@ -613,7 +613,7 @@ matches the text, even if multiple elements on the page contain the text.
 <DocsImage
   src="/img/guides/core-concepts/cypress-app/cy-contains-in-selector-playground.gif"
   alt="Experiment with cy.contains"
-></DocsImage>
+/>
 
 #### Disabling highlights
 
@@ -624,7 +624,7 @@ off will allow you to interact with your app more easily.
 <DocsImage
   src="/img/guides/core-concepts/cypress-app/turn-off-highlight-in-selector-playground.gif"
   alt="Turn off highlighting"
-></DocsImage>
+/>
 
 ## Keyboard shortcuts
 
@@ -640,7 +640,7 @@ Cypress.
 <DocsImage
   src="/img/guides/core-concepts/cypress-app/keyboard-shortcuts.png"
   alt="Tooltips show keyboard shortcuts"
-></DocsImage>
+/>
 
 ## Debugging
 
@@ -667,7 +667,7 @@ selector.
 <DocsImage
   src="/img/guides/core-concepts/cypress-app/first-test-console-output.png"
   alt="Cypress app with get command pinned and console log open showing the yielded element"
-></DocsImage>
+/>
 
 **We can see Cypress output additional information in the console:**
 
@@ -716,14 +716,14 @@ forward through each command in the test.
 <DocsImage
   src="/img/guides/core-concepts/cypress-app/first-test-paused.png"
   alt="Cypress app shows label saying 'Paused' with Command Log showing 'Pause'"
-></DocsImage>
+/>
 
 In action:
 
 <DocsVideo
   src="/img/snippets/first-test-debugging-30fps.mp4"
   title="Pause test runner demo"
-></DocsVideo>
+/>
 
 ## History
 

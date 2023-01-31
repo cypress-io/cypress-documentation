@@ -137,7 +137,7 @@ better way to accomplish what you're trying to do. Read through the
 [chat with someone in Discord](https://discord.gg/ncdA3Jz63n), or
 [open an issue](https://github.com/cypress-io/cypress/issues/new/choose).
 
-### <Icon name="exclamation-triangle" color="red"></Icon> `cy...()` failed because the page updated
+### <Icon name="exclamation-triangle" color="red" /> `cy...()` failed because the page updated
 
 Getting this error means you've tried to interact with a "dead" DOM element -
 meaning the current subject has been removed from the DOM.
@@ -164,7 +164,7 @@ describe('detachment example', () => {
 <DocsImage
   src="/img/guides/references/cypress-method-failed-page-updated.png"
   alt="cy.method() failed because the page updated"
-></DocsImage>
+/>
 
 Cypress errors because after a command, the subject becomes 'fixed' to a
 specific element - since it can't retry commands, if the element becomes
@@ -452,7 +452,7 @@ it('does not forget to return a promise', () => {
 
 :::caution
 
-<strong class="alert-header">Note</strong>
+<strong>Note</strong>
 
 This error only pertains to Cypress version `v11.0.0` and under. As of Cypress
 [v12.0.0](https://on.cypress.io/changelog#12-0-0), users can navigate to
@@ -466,7 +466,7 @@ See our [Web Security](/guides/guides/web-security#Limitations) documentation.
 
 :::caution
 
-<strong class="alert-header">Note</strong>
+<strong>Note</strong>
 
 This error only pertains to Cypress version `v11.0.0` and under. As of Cypress
 [v12.0.0](https://on.cypress.io/changelog#12-0-0), users can navigate to
@@ -487,7 +487,7 @@ separate tests.
 See our [Web Security](/guides/guides/web-security#Limitations) documentation
 for more information and workarounds.
 
-### <Icon name="exclamation-triangle" color="red"></Icon> `cy.visit()` succeeded, but commands are timing out
+### <Icon name="exclamation-triangle" color="red" /> `cy.visit()` succeeded, but commands are timing out
 
 As of Cypress [v12.0.0](https://on.cypress.io/changelog#12-0-0), users can
 navigate to multiple domains in a single test. The following test will succeed
@@ -517,7 +517,7 @@ And will result in the following error:
 <DocsImage
   src="/img/guides/references/cy-visit-subsequent-commands-timed-out.png"
   alt="cy.visit() subsequent commands timed out"
-></DocsImage>
+/>
 
 In order to fix this, our `cy.get()` command **must** be wrapped with the
 [`cy.origin()`](/api/commands/origin) command, like so:
@@ -535,7 +535,7 @@ it('navigates to docs.cypress.io and runs additional commands', () => {
 See our [Web Security](/guides/guides/web-security#Limitations) documentation
 for more information and workarounds.
 
-### <Icon name="exclamation-triangle" color="red"></Icon> `Cypress.addParentCommand()` / `Cypress.addDualCommand()` / `Cypress.addChildCommand()` has been removed and replaced by `Cypress.Commands.add()`
+### <Icon name="exclamation-triangle" color="red" /> `Cypress.addParentCommand()` / `Cypress.addDualCommand()` / `Cypress.addChildCommand()` has been removed and replaced by `Cypress.Commands.add()`
 
 In version [0.20.0](/guides/references/changelog), we removed the commands for
 adding custom commands and replaced them with, what we believe to be, a simpler
@@ -597,7 +597,7 @@ The version of Mocha was upgraded with Cypress 4.0. Mocha 3+ no longer allows
 returning a promise and invoking a done callback. Read more about it in the
 [4.0 migration guide](/guides/references/migration-guide#Mocha-upgrade).
 
-### <Icon name="exclamation-triangle" color="red"></Icon> CypressError: Timed out retrying: Expected to find element: ‘…’, but never found it. Queried from element: <…>
+### <Icon name="exclamation-triangle" color="red" /> CypressError: Timed out retrying: Expected to find element: ‘…’, but never found it. Queried from element: <…>
 
 If you get this error in a case where the element is definitely visible in the
 DOM, your document might contain malformed HTML. In such cases,

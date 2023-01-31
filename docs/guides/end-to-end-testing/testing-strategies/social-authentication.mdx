@@ -5,7 +5,7 @@ slug: /guides/end-to-end-testing/social-authentication
 
 :::info
 
-## <Icon name="graduation-cap"></Icon> What you'll learn
+## <Icon name="graduation-cap" /> What you'll learn
 
 - Log into your application via Google, Facebook, or Microsoft through the UI
   with [`cy.origin()`](/api/commands/origin) using Auth0 social connections. The
@@ -17,14 +17,15 @@ slug: /guides/end-to-end-testing/social-authentication
 
 :::caution
 
-<strong class="alert-header">
-  <Icon name="exclamation-triangle"></Icon> Not recommended in CI
+<strong>
+  <Icon name="exclamation-triangle" /> Not recommended in CI
 </strong>
 
 Cypress does **not** recommend testing social connection authentication as a
 primary means of application authentication testing. This is due to the
 [challenges](/guides/references/best-practices#Challenges-with-Social-Connection-Authentication)
-mentioned in our [Best Practices Guide](/guides/references/best-practice).
+mentioned in our
+[Best Practices Guide](/guides/references/best-practices#Potential-Challenges-Authenticating-with-Social-Platforms).
 
 If testing user based authentication flows via social connections is a **must**
 for your application, we recommend testing this in
@@ -94,7 +95,7 @@ Select the dropdown and go to `Applications`
 
 Here is what this process should look like for Facebook setup:
 
-<DocsVideo src="https://vimeo.com/789093604"></DocsVideo>
+<DocsVideo src="https://vimeo.com/789093604" />
 
 ## Testing with Cypress
 
@@ -334,7 +335,7 @@ describe('Social Logins Demo', () => {
 
 Here is a sample of what all 3 should look like in order.
 
-<DocsVideo src="https://vimeo.com/789093473"></DocsVideo>
+<DocsVideo src="https://vimeo.com/789093473" />
 
 Lastly, we can refactor our login command to take advantage of
 [`cy.session()`](/api/commands/session) to store our logged in user so we don't
@@ -418,7 +419,7 @@ Cypress.Commands.add(
 )
 ```
 
-<DocsVideo src="https://vimeo.com/789093516"></DocsVideo>
+<DocsVideo src="https://vimeo.com/789093516" />
 
 With the use of [`cy.session()`](/api/commands/session), our tests should now
 run quicker!

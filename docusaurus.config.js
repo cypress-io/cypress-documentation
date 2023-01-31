@@ -19,8 +19,8 @@ const config = {
     'Fast, easy and reliable testing for anything that runs in a browser.',
   url: 'https://docs.cypress.io',
   baseUrl: '/',
-  onBrokenLinks: 'warn', // TODO: update this to throw when we go live to production
-  onBrokenMarkdownLinks: 'warn',
+  onBrokenLinks: 'throw', // TODO: update this to throw when we go live to production
+  onBrokenMarkdownLinks: 'throw',
   favicon: undefined,
 
   // Even if you don't use internalization, you can use this field to set useful
@@ -139,13 +139,14 @@ const config = {
         ],
       },
       // optional, can be commented out
-      // announcementBar: {
-      //   content:
-      //     '🚀 &nbsp;Looking to move to Cypress v10? Check out the <a target="_blank" rel="noopener noreferrer" href="/guides/references/migration-guide#Migrating-to-Cypress-100">migration guide!</a>',
-      //   backgroundColor: '#fff3b9',
-      //   textColor: '#091E42',
-      //   isCloseable: true,
-      // },
+      // Styles for this are controlled in src/css/announcement-bar.scss
+      announcementBar: {
+        //give id a unique value to get a new announcement bar to appear
+        id: 'new-auth-guides',
+        content:
+          '🚀 &nbsp; Check out our new auth guides for <a href="/guides/end-to-end-testing/azure-active-directory-authentication">Azure Active Directory</a> and <a href="/guides/end-to-end-testing/social-authentication">Social Logins</a>!',
+        isCloseable: true,
+      },
       footer: {
         style: 'dark',
         links: [

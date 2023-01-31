@@ -75,15 +75,15 @@ cy.get('p.error').closest('.banner')
 
 - `.closest()` will automatically [retry](/guides/core-concepts/retry-ability)
   until the element(s)
-  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.closest()`
-  will automatically [retry](/guides/core-concepts/retry-ability) until all
-  chained assertions have passed
+  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).
+- `.closest()` will automatically [retry](/guides/core-concepts/retry-ability)
+  until all chained assertions have passed.
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
 - `.closest()` can time out waiting for the element(s) to
-  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).</li><li>`.closest()`
-  can time out waiting for assertions you've added to pass.
+  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).
+- `.closest()` can time out waiting for assertions you've added to pass.
 
 ## Command Log
 
@@ -98,7 +98,7 @@ The commands above will display in the Command Log as:
 <DocsImage
   src="/img/api/closest/find-closest-nav-element-in-test.png"
   alt="Command Log closest"
-></DocsImage>
+/>
 
 When clicking on the `closest` command within the command log, the console
 outputs the following:
@@ -106,7 +106,7 @@ outputs the following:
 <DocsImage
   src="/img/api/closest/closest-console-logs-elements-found.png"
   alt="console.log closest"
-></DocsImage>
+/>
 
 ## See also
 

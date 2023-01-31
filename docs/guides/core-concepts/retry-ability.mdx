@@ -57,7 +57,7 @@ commands regardless of types, with passing assertions showing in green.
 <DocsImage
   src="/img/guides/retry-ability/command-assertions.png"
   alt="Cypress tests showing commands and assertions"
-></DocsImage>
+/>
 
 Let's look at the last chain of commands:
 
@@ -121,7 +121,7 @@ the spinning indicators, meaning Cypress is requerying for them.
 <DocsImage
   src="/img/guides/retry-ability/retry-assertion.gif"
   alt="Retrying assertion"
-></DocsImage>
+/>
 
 Within a few milliseconds after the DOM updates, `cy.find()` finds an element
 and the `should('have.length', 1)` assertion passes
@@ -166,7 +166,7 @@ itself failed.
 <DocsImage
   src="/img/guides/retry-ability/second-assertion-fails.gif"
   alt="Retrying multiple assertions"
-></DocsImage>
+/>
 
 ## Built-in assertions
 
@@ -184,7 +184,7 @@ cy.get('.todo-list li') // query
 <DocsImage
   src="/img/guides/retry-ability/eq.gif"
   alt="Retrying built-in assertion"
-></DocsImage>
+/>
 
 Only queries can be retried, but most other commands still have built-in
 _waiting_. For example, as described in the "Assertions" section of
@@ -270,7 +270,7 @@ The following test might have problems if:
 - Your JS framework re-rendered asynchronously
 - Your app code reacted to an event firing and removed the element
 
-#### <Icon name="exclamation-triangle" color="red"></Icon> Incorrectly chaining commands
+#### <Icon name="exclamation-triangle" color="red" /> Incorrectly chaining commands
 
 ```javascript
 cy.get('.new-todo')
@@ -279,7 +279,7 @@ cy.get('.new-todo')
   .should('have.class', 'active') // assertion after an action - bad
 ```
 
-#### <Icon name="check-circle" color="green"></Icon> Correctly ending chains after an action
+#### <Icon name="check-circle" color="green" /> Correctly ending chains after an action
 
 To avoid these issues entirely, it is better to split up the above chain of
 commands.
@@ -323,7 +323,7 @@ As another example, when confirming that the button component invokes the
 [cypress/react](https://github.com/cypress-io/cypress/tree/master/npm/react)
 mounting library, the following test might or might not work:
 
-#### <Icon name="exclamation-triangle" color="red"></Icon> Incorrectly checking if the stub was called
+#### <Icon name="exclamation-triangle" color="red" /> Incorrectly checking if the stub was called
 
 ```js
 const Clicker = ({ click }) => (
@@ -360,14 +360,14 @@ const Clicker = ({ click }) => (
 <DocsImage
   src="/img/guides/retry-ability/delay-click.png"
   alt="Expect fails the test without waiting for the delayed stub"
-></DocsImage>
+/>
 
 The test finishes before the component calls the `click` prop twice, and without
 retrying the assertion `expect(onClick).to.be.calledTwice`.
 
 It could also fail if React decides to rerender the DOM between clicks.
 
-#### <Icon name="check-circle" color="green"></Icon> Correctly waiting for the stub to be called
+#### <Icon name="check-circle" color="green" /> Correctly waiting for the stub to be called
 
 We recommend aliasing the stub using the [`.as`](/api/commands/as) command and
 using `cy.get('@alias').should(...)` assertions.
@@ -389,7 +389,7 @@ it('calls the click prop', () => {
 <DocsImage
   src="/img/guides/retry-ability/click-twice.gif"
   alt="Retrying the assertions using a stub alias"
-></DocsImage>
+/>
 
 ### Use `.should()` with a callback
 
@@ -414,9 +414,9 @@ Below is an example where the number value is set after a delay:
 <DocsImage
   src="/img/guides/retry-ability/random-number.gif"
   alt="Random number"
-></DocsImage>
+/>
 
-### <Icon name="exclamation-triangle" color="red"></Icon> Incorrectly waiting for values
+### <Icon name="exclamation-triangle" color="red" /> Incorrectly waiting for values
 
 You may want to write a test like below, to test that the number is between 1
 and 10, although **this will not work as intended**. The test yields the
@@ -437,7 +437,7 @@ the test only runs the entire chain once before failing.
 <DocsImage
   src="/img/guides/retry-ability/random-number-first-attempt.png"
   alt="First attempt at writing the test"
-></DocsImage>
+/>
 
 #### <Icon name="check-circle" color="green" /> Correctly waiting for values
 
@@ -462,7 +462,7 @@ to get the number. When the number is finally set in the application, then the
 <DocsImage
   src="/img/guides/retry-ability/random-number-callback.gif"
   alt="Random number using callback"
-></DocsImage>
+/>
 
 ## See also
 

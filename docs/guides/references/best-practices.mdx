@@ -37,15 +37,16 @@ and start testing.
 
 :::danger
 
-‼️ **Anti-Pattern:** Sharing page objects, using your UI to log in, and not
-taking shortcuts.
+&#8239;<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:**
+Sharing page objects, using your UI to log in, and not taking shortcuts.
 
 :::
 
 :::tip
 
-✅ **Best Practice:** Test specs in isolation, programmatically log into your
-application, and take control of your application's state.
+&#8239;<Icon name="check-circle" color="green" /> **Best Practice:** Test specs
+in isolation, programmatically log into your application, and take control of
+your application's state.
 
 :::
 
@@ -71,14 +72,16 @@ in our examples.
 
 :::danger
 
-‼️ **Anti-Pattern:** Using highly brittle selectors that are subject to change.
+&#8239;<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Using
+highly brittle selectors that are subject to change.
 
 :::
 
 :::tip
 
-✅ **Best Practice:** Use `data-*` attributes to provide context to your
-selectors and isolate them from CSS or JS changes.
+&#8239;<Icon name="check-circle" color="green" /> **Best Practice:** Use
+`data-*` attributes to provide context to your selectors and isolate them from
+CSS or JS changes.
 
 :::
 
@@ -232,16 +235,16 @@ recommend you approach testing your components, look to:
 
 :::danger
 
-‼️ **Anti-Pattern:** Trying to assign the return value of Commands with `const`,
-`let`, or `var`.
+&#8239;<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Trying
+to assign the return value of Commands with `const`, `let`, or `var`.
 
 :::
 
 :::tip
 
-<Icon name="check-circle" color="green"></Icon> **Best Practice:** Use [aliases and
-closures to access and store](/guides/core-concepts/variables-and-aliases) what Commands
-yield you.
+&#8239;<Icon name="check-circle" color="green" /> **Best Practice:** Use
+[aliases and closures to access and store](/guides/core-concepts/variables-and-aliases)
+what Commands yield you.
 
 :::
 
@@ -291,17 +294,18 @@ For working with either of these patterns, please read our
 
 :::danger
 
-‼️ **Anti-Pattern:** Trying to visit or interact with sites or servers you do
-not control.
+&#8239;<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Trying
+to visit or interact with sites or servers you do not control.
 
 :::
 
 :::tip
 
-<Icon name="check-circle" color="green"></Icon> **Best Practice:** Only test what
-you control. Try to avoid requiring a 3rd party server. When necessary, use [`cy.request()`](/api/commands/request)
-to talk to 3rd party servers via their APIs. If possible, cache results via [`cy.session()`](/api/commands/session)
-to avoid repeat visits.
+&#8239;<Icon name="check-circle" color="green" /> **Best Practice:** Only test
+what you control. Try to avoid requiring a 3rd party server. When necessary, use
+[`cy.request()`](/api/commands/request) to talk to 3rd party servers via their
+APIs. If possible, cache results via [`cy.session()`](/api/commands/session) to
+avoid repeat visits.
 
 :::
 
@@ -431,7 +435,7 @@ email's functionality and visual style:
   src="/img/guides/references/email-test.png"
   title="The HTML email loaded during the test"
   alt="The test finds and clicks the Confirm registration button"
-></DocsImage>
+/>
 
 3. In other cases, you should try using [`cy.request()`](/api/commands/request)
    command to query the endpoint on your server that tells you what email has
@@ -447,14 +451,16 @@ email's functionality and visual style:
 
 :::danger
 
-‼️ **Anti-Pattern:** Coupling multiple tests together.
+&#8239;<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:**
+Coupling multiple tests together.
 
 :::
 
 :::tip
 
-✅ **Best Practice:** Tests should always be able to be run independently from
-one another **and still pass**.
+&#8239;<Icon name="check-circle" color="green" /> **Best Practice:** Tests
+should always be able to be run independently from one another **and still
+pass**.
 
 :::
 
@@ -576,13 +582,15 @@ can be run independently and pass.
 
 :::danger
 
-‼️ **Anti-Pattern:** Acting like you're writing unit tests.
+&#8239;<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Acting
+like you're writing unit tests.
 
 :::
 
 :::tip
 
-✅ **Best Practice:** Add multiple assertions and don't worry about it
+&#8239;<Icon name="check-circle" color="green" /> **Best Practice:** Add
+multiple assertions and don't worry about it
 
 :::
 
@@ -660,13 +668,15 @@ describe('my form', () => {
 
 :::danger
 
-‼️ **Anti-Pattern:** Using `after` or `afterEach` hooks to clean up state.
+&#8239;<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Using
+`after` or `afterEach` hooks to clean up state.
 
 :::
 
 :::tip
 
-✅ **Best Practice:** Clean up state **before** tests run.
+&#8239;<Icon name="check-circle" color="green" /> **Best Practice:** Clean up
+state **before** tests run.
 
 :::
 
@@ -860,15 +870,17 @@ script.
 
 :::danger
 
-‼️ **Anti-Pattern:** Waiting for arbitrary time periods using
+&#8239;<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:**
+Waiting for arbitrary time periods using
 [`cy.wait(Number)`](/api/commands/wait#Time).
 
 :::
 
 :::tip
 
-✅ **Best Practice:** Use route aliases or assertions to guard Cypress from
-proceeding until an explicit condition is met.
+&#8239;<Icon name="check-circle" color="green" /> **Best Practice:** Use route
+aliases or assertions to guard Cypress from proceeding until an explicit
+condition is met.
 
 :::
 
@@ -953,14 +965,16 @@ waste.
 
 :::danger
 
-‼️ **Anti-Pattern:** Trying to start a web server from within Cypress scripts
-with [`cy.exec()`](/api/commands/exec) or [`cy.task()`](/api/commands/task).
+&#8239;<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Trying
+to start a web server from within Cypress scripts with
+[`cy.exec()`](/api/commands/exec) or [`cy.task()`](/api/commands/task).
 
 :::
 
 :::tip
 
-✅ **Best Practice:** Start a web server prior to running Cypress.
+&#8239;<Icon name="check-circle" color="green" /> **Best Practice:** Start a web
+server prior to running Cypress.
 
 :::
 
@@ -1001,15 +1015,15 @@ We have
 
 :::danger
 
-‼️ **Anti-Pattern:** Using [cy.visit()](/api/commands/visit) without setting a
-`baseUrl`.
+&#8239;<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Using
+[cy.visit()](/api/commands/visit) without setting a `baseUrl`.
 
 :::
 
 :::tip
 
-✅ **Best Practice:** Set a `baseUrl` in your
-[Cypress configuration](/guides/references/configuration).
+&#8239;<Icon name="check-circle" color="green" /> **Best Practice:** Set a
+`baseUrl` in your [Cypress configuration](/guides/references/configuration).
 
 :::
 
@@ -1046,7 +1060,7 @@ port.
 <DocsImage
   src="/img/guides/references/cypress-loads-in-localhost-and-random-port.png"
   alt="Url address shows localhost:53927/__/#tests/integration/organizations/list_spec.coffee"
-></DocsImage>
+/>
 
 As soon as it encounters a [cy.visit()](/api/commands/visit), Cypress then
 switches to the url of the main window to the url specified in your visit. This
@@ -1074,7 +1088,7 @@ load the main window in the `baseUrl` you specified as soon as your tests start.
 <DocsImage
   src="/img/guides/references/cypress-loads-window-in-base-url-localhost.png"
   alt="Url address bar shows localhost:8484/__tests/integration/organizations/list_spec.coffee"
-></DocsImage>
+/>
 
 Having a `baseUrl` set gives you the added bonus of seeing an error if your
 server is not running during `cypress open` at the specified `baseUrl`.
@@ -1082,7 +1096,7 @@ server is not running during `cypress open` at the specified `baseUrl`.
 <DocsImage
   src="/img/guides/references/cypress-ensures-baseUrl-server-is-running.png"
   alt="Cypress Launchpad with warning about how Cypress could not verify server set as the baseUrl is running"
-></DocsImage>
+/>
 
 We also display an error if your server is not running at the specified
 `baseUrl` during `cypress run` after several retries.
@@ -1090,7 +1104,7 @@ We also display an error if your server is not running at the specified
 <DocsImage
   src="/img/guides/references/cypress-verifies-server-is-running-during-cypress-run.png"
   alt="The terminal warns and retries when the url at your baseUrl is not running"
-></DocsImage>
+/>
 
 ### Usage of `baseUrl` in depth
 

@@ -106,15 +106,15 @@ cy.get('#nuts').prevUntil('#veggies')
 
 - `.prevUntil()` will automatically [retry](/guides/core-concepts/retry-ability)
   until the element(s)
-  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.prevUntil()`
-  will automatically [retry](/guides/core-concepts/retry-ability) until all
-  chained assertions have passed
+  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).
+- `.prevUntil()` will automatically [retry](/guides/core-concepts/retry-ability)
+  until all chained assertions have passed.
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
 - `.prevUntil()` can time out waiting for the element(s) to
-  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).</li><li>`.prevUntil()`
-  can time out waiting for assertions you've added to pass.
+  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).
+- `.prevUntil()` can time out waiting for assertions you've added to pass.
 
 ## Command Log
 
@@ -129,7 +129,7 @@ The commands above will display in the Command Log as:
 <DocsImage
   src="/img/api/prevuntil/prev-until-finding-elements-in-command-log.png"
   alt="Command Log prevUntil"
-></DocsImage>
+/>
 
 When clicking on `prevUntil` within the command log, the console outputs the
 following:
@@ -137,7 +137,7 @@ following:
 <DocsImage
   src="/img/api/prevuntil/console-log-previous-elements-until-defined-el.png"
   alt="Console Log prevUntil"
-></DocsImage>
+/>
 
 ## See also
 

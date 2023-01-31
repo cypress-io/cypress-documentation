@@ -49,7 +49,7 @@ Cypress.Commands.addQuery(name, callbackFn)
 
 ### Usage
 
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+**<Icon name="check-circle" color="green" /> Correct Usage**
 
 ```javascript
 Cypress.Commands.addQuery('getById', function (id) {
@@ -59,11 +59,11 @@ Cypress.Commands.addQuery('getById', function (id) {
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> name** **_(String)_**
+**<Icon name="angle-right" /> name** **_(String)_**
 
 The name of the query you're adding.
 
-**<Icon name="angle-right"></Icon> callbackFn** **_(Function)_**
+**<Icon name="angle-right" /> callbackFn** **_(Function)_**
 
 Pass a function that receives the arguments passed to the query.
 
@@ -361,9 +361,8 @@ already quite expressive and powerful.
 
 Don't do things like:
 
-- **<Icon name="exclamation-triangle" color="red"></Icon>** `cy.getButton()`
-- **<Icon name="exclamation-triangle" color="red"></Icon>**
-  `.getFirstTableRow()`
+- **<Icon name="exclamation-triangle" color="red" />** `cy.getButton()`
+- **<Icon name="exclamation-triangle" color="red" />** `.getFirstTableRow()`
 
 Both of these are wrapping `cy.get(selector)`. It's completely unnecessary. Just
 call `.get('button')` or `.get('tr:first')`.

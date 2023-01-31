@@ -120,13 +120,14 @@ cy.clock().invoke('restore')
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-- `cy.tick()` requires being chained off of `cy`.</li><li>`cy.tick()` requires
-  that `cy.clock()` be called before it.
+- `cy.tick()` requires being chained off of `cy`.
+- `cy.tick()` requires that `cy.clock()` be called before it.
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-- `cy.tick()` is a utility command.</li><li>`cy.tick()` will not run assertions.
-  Assertions will pass through as if this command did not exist.
+- `cy.tick()` is a utility command.
+- `cy.tick()` will not run assertions. Assertions will pass through as if this
+  command did not exist.
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
@@ -146,7 +147,7 @@ The command above will display in the Command Log as:
 <DocsImage
   src="/img/api/tick/tick-machine-clock-1-second-in-time.png"
   alt="Console Log tick"
-></DocsImage>
+/>
 
 When clicking on the `tick` command within the command log, the console outputs
 the following:
@@ -154,7 +155,7 @@ the following:
 <DocsImage
   src="/img/api/tick/console-shows-same-clock-object-as-clock-command.png"
   alt="Console Log tick"
-></DocsImage>
+/>
 
 ## History
 

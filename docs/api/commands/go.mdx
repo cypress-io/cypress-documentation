@@ -89,20 +89,19 @@ as hash routing) and will resolve immediately.
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-- `cy.go()` requires being chained off of `cy`.</li><li>`cy.go()` requires the
-  response to be `content-type: text/html`.</li><li>`cy.go()` requires the
-  response code to be `2xx` after following redirects.</li><li>`cy.go()`
-  requires the load `load` event to eventually fire.
+- `cy.go()` requires being chained off of `cy`.
+- `cy.go()` requires the response to be `content-type: text/html`.
+- `cy.go()` requires the response code to be `2xx` after following redirects.
+- `cy.go()` requires the load `load` event to eventually fire.
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-- `cy.go()` will automatically wait for assertions you have chained to pass
+- `cy.go()` will automatically wait for assertions you have chained to pass.
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-- `cy.go()` can time out waiting for the page to fire its `load`
-  event.</li><li>`cy.go()` can time out waiting for assertions you've added to
-  pass.
+- `cy.go()` can time out waiting for the page to fire its `load` event.
+- `cy.go()` can time out waiting for assertions you've added to pass.
 
 ## Command Log
 
@@ -117,7 +116,7 @@ The commands above will display in the Command Log as:
 <DocsImage
   src="/img/api/go/test-showing-go-back-browser-button.png"
   alt="Command Log go"
-></DocsImage>
+/>
 
 When clicking on the `go` command within the command log, the console outputs
 the following:
@@ -125,7 +124,7 @@ the following:
 <DocsImage
   src="/img/api/go/window-is-logged-when-go-back-in-browser-history.png"
   alt="console Log go"
-></DocsImage>
+/>
 
 ## See also
 
