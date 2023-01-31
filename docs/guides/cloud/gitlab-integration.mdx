@@ -6,17 +6,17 @@ sidebar_position: 80
 [Cypress Cloud](https://on.cypress.io/cloud) can integrate your Cypress tests
 with your GitLab workflow via [commit statuses](#Commit-statuses) and
 [merge request comments](#Merge-Request-comments). A project first needs to be
-[setup to record](/guides/cloud/projects) to Cypress Cloud to use GitLab
+[set up to record](/guides/cloud/projects) to Cypress Cloud to use GitLab
 integration.
 
 :::caution
 
-GitLab Integration is dependent on your CI environment reliably providing commit
-SHA data (typically via an environment variable). This is not a problem for most
+GitLab Integration depends on your CI environment reliably providing a commit
+SHA (typically via an environment variable). This is not a problem for most
 users, but if you are facing GitLab integration issues with your CI setup,
 please make sure the git information is being sent properly by following
 [these guidelines](/guides/continuous-integration/introduction#Git-information).
-If you are still facing issues after this, please
+If you still face issues after this, please
 [contact us](mailto:hello@cypress.io).
 
 :::
@@ -27,8 +27,8 @@ If you are still facing issues after this, please
   <Icon name="exclamation-triangle" /> GitLab Self-managed
 </strong>
 
-GitLab Self-managed Integration is dependent on your GitLab instance being able
-to reach our Cypress Cloud API on the open internet. If your instance is running
+GitLab Self-managed Integration depends on your GitLab instance being able to
+reach our Cypress Cloud API on the open internet. If your instance is running
 behind a firewall, you may need to reconfigure your security infrastructure to
 allow communication with our servers.
 
@@ -39,10 +39,10 @@ allow communication with our servers.
 :::caution
 
 GitLab OAuth2 applications will allow Cypress Cloud to authenticate as the user
-that registered the application. That means that Cypress will have visibility
-into every GitLab repo the registered user can access. If you want tighter
-control of the repos that Cypress will see, consider creating a service account
-in GitLab with more limited access permissions.
+that registered the application. That means Cypress will have visibility into
+every GitLab repo the registered user can access. If you want tighter control of
+the repos that Cypress will see, consider creating a service account in GitLab
+with more limited access permissions.
 
 :::
 
@@ -73,15 +73,15 @@ Additionally, Cypress can post a **cypress/flake** commit status indicating
 whether the Cypress run contained any flaky tests. This will prevent your team
 from merging any MRs with flaky tests.
 
-You can manage this behavior in your project's **Project Settings** page.
+You can manage this behavior on your project's **Project Settings** page.
 
 ### Merge Request comments
 
-By default, Cypress will post a MR comment summarizing the run when the run
+By default, Cypress will post an MR comment summarizing the run when the run
 completes. It will include test counts, run info, and a summary of tests that
 failed or were flaky.
 
-You can manage this behavior in your project's **Project Settings** page.
+You can manage this behavior on your project's **Project Settings** page.
 
 ## Uninstalling the GitLab integration
 

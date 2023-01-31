@@ -6,7 +6,7 @@ sidebar_position: 70
 [Cypress Cloud](https://on.cypress.io/cloud) can integrate your Cypress tests
 with your GitHub workflow via commit [status checks](#Status-checks) and
 [pull request comments](#Pull-request-comments). A project first needs to be
-[setup to record](/guides/cloud/projects) to Cypress Cloud to use GitHub
+[set up to record](/guides/cloud/projects) to Cypress Cloud to use GitHub
 integration.
 
 <DocsImage
@@ -16,12 +16,12 @@ integration.
 
 :::caution
 
-GitHub Integration is dependent on your CI environment reliably providing commit
-SHA data (typically via an environment variable). This is not a problem for most
-users, but if you are facing GitHub integration issues with your CI setup,
+GitHub Integration depends on your CI environment reliably providing a
+commit SHA (typically via an environment variable). This is not a problem for
+most users, but if you are facing GitHub integration issues with your CI setup,
 please make sure the git information is being sent properly by following
 [these guidelines](/guides/continuous-integration/introduction#Git-information).
-If you are still facing issues after this, please
+If you still face issues after this, please
 [contact us](mailto:hello@cypress.io).
 
 :::
@@ -45,12 +45,12 @@ follow the instructions to
 below, then skip to
 [Cypress GitHub Enterprise app installation](#Cypress-GitHub-Enterprise-app-installation-process),
 and finally
-[enable integration for a project](#Enabling-GitHub-integration-for-a-project).
+[enable the integration for a project](#Enabling-GitHub-integration-for-a-project).
 
 ## Install the Cypress GitHub app
 
-Before you can enable GitHub integration for your Cypress projects, you must
-first install the Cypress GitHub App. You can start the GitHub App installation
+Before enabling GitHub integration for your Cypress projects, you must first
+install the Cypress GitHub App. You can start the GitHub App installation
 process via your organization's settings page or a project's settings page in
 [Cypress Cloud](https://on.cypress.io/cloud).
 
@@ -79,7 +79,7 @@ process via your organization's settings page or a project's settings page in
 
 :::caution
 
-This installation method is not applicable to GitHub Enterprise.
+This installation method does not apply to GitHub Enterprise.
 
 :::
 
@@ -161,7 +161,7 @@ them into Cypress Cloud, and complete the activation process.
 />
 
 2. Complete the **Register new GitHub app** section.
-   - Enter a **GitHub App name**. Name may contain only dashes, letters and
+   - Enter a **GitHub App name**. Name may contain only dashes, letters, and
      numbers, **no spaces**.
    - Enter Cypress Cloud **Homepage URL**, https://cloud.cypress.io
    - Enter the **Callback URL** and **Setup URL**,
@@ -232,9 +232,9 @@ them into Cypress Cloud, and complete the activation process.
   id="cypress-github-enterprise-app-installation-process-7"
 />
 
-7. In Cypress Cloud, click the **Next Step** button and you will be taken to the
-   GitHub Enterprise app authorization page. Click the **Authorize \[your app
-   name\]** button.
+7. In Cypress Cloud, click the **Next Step** button, and you will be taken to
+   the GitHub Enterprise app authorization page. Click the **Authorize \[your
+   app name\]** button.
 
 <DocsImage
   src="/img/dashboard/github-integration/ghe/ghe-08.png"
@@ -260,13 +260,13 @@ them into Cypress Cloud, and complete the activation process.
   id="cypress-github-enterprise-app-installation-process-10"
 />
 
-10. Finally you will be returned to Cypress Cloud. Congratulations, you have
+10. Finally, you will be returned to Cypress Cloud. Congratulations, you have
     installed Cypress Cloud GitHub Enterprise integration! You are now ready to
     configure a GitHub Integration for a project.
 
 ## Enabling GitHub integration for a project
 
-After completing the Cypress GitHub App installation for your organization you
+After completing the Cypress GitHub App installation for your organization, you
 can now enable GitHub Integration for _any_ Cypress project.
 
 1. Go to the project's settings page.
@@ -281,7 +281,7 @@ can now enable GitHub Integration for _any_ Cypress project.
 
 :::info
 
-You can quickly get to a project's GitHub Integrations settings, by clicking on
+You can quickly get to a project's GitHub Integrations settings by clicking on
 the <strong>Configure</strong> link of the desired project within an
 organization's Integrations page:
 
@@ -307,7 +307,7 @@ integration will be immediately enabled:
   alt="GitHub integration enabled for Cypress project"
 />
 
-You can also see all GitHub Integration enabled Cypress projects within your
+You can also see all GitHub Integration-enabled Cypress projects within your
 organizations **Integrations** page:
 
 <DocsImage
@@ -320,7 +320,7 @@ organizations **Integrations** page:
 If status checks are enabled within a project's GitHub integration settings,
 Cypress Cloud will report Cypress test statuses to GitHub for related commits.
 [Status checks](https://help.github.com/en/articles/about-status-checks) help
-prevent merging a commit or pull-request into the rest of your codebase until
+prevent merging a commit or pull request into the rest of your codebase until
 all your Cypress tests have passed.
 
 The Cypress GitHub App reports commit status checks in two separate styles:
@@ -351,7 +351,7 @@ traces, screenshots, and video recordings:
 
 ### Disable status checks
 
-GitHub status checks are optional, and can be disabled within a project's GitHub
+GitHub status checks are optional and can be disabled within a project's GitHub
 integration settings:
 
 <DocsImage
@@ -361,18 +361,18 @@ integration settings:
 
 ## Pull request comments
 
-The Cypress GitHub App can provide detailed test information within pull
+The Cypress GitHub App can provide detailed test information within the pull
 requests via comments that include:
 
 - **Run statistics, such as tests passed, failed, skipped, and over-limit.**
 - **Run context details:**
   - The associated Cypress project
-  - Final run status (passed, failed, etc)
+  - Final run status (passed, failed, etc.)
   - Commit SHA linking to the GitHub commit
-  - The time the run started and finished as well as the duration.
+  - The time the run started and finished, as well as the duration.
   - Operating system version and browser version.
 - **Run failures:**
-  - The first 10 failures are displayed with a link to more.
+  - The first ten failures are displayed with a link to more.
   - Each failed test links back to the associated failure within Cypress Cloud.
   - Screenshot thumbnails are also provided with each failure to conveniently
     provide context.
@@ -386,7 +386,7 @@ An example of a Cypress pull-request comment can be seen below:
 
 ### Disable PR comments
 
-PR comments and failure screenshot thumbnails are optional, and can be disabled
+PR comments and failure screenshot thumbnails are optional and can be disabled
 if not needed within a project's GitHub Integration settings:
 
 <DocsImage
