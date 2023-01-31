@@ -63,7 +63,8 @@ Pass in an options object to change the default behavior of `cy.readFile()`.
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 - `cy.readFile()` yields the contents of the file.
-- The file will be read from disk again if any upcoming command (such as an assertion) in the chain fails.
+- The file will be read from disk again if any upcoming command (such as an
+  assertion) in the chain fails.
 
 ## Examples
 
@@ -264,6 +265,7 @@ outputs the following:
 ## See also
 
 - [`cy.exec()`](/api/commands/exec)
-- [`cy.fixture()`](/api/commands/fixture) for a similar command with caching that does not retry
+- [`cy.fixture()`](/api/commands/fixture) for a similar command with caching
+  that does not retry
 - [`cy.task()`](/api/commands/task)
 - [`cy.writeFile()`](/api/commands/writefile)
