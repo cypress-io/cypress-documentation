@@ -515,9 +515,9 @@ _Usually_, replaying previous commands will return what you expect, but not
 always. It is recommended that you **alias elements before running commands**.
 
 - `cy.get('nav').find('header').find('[data-testid="user"]').as('user').click()`
-  <Icon name="check-circle" color="green"></Icon> (good)
+  <Icon name="check-circle" color="green" /> (good)
 - `cy.get('nav').find('header').find('[data-testid="user"]').click().as('user')`
-  <Icon name="exclamation-triangle" color="red"></Icon> (bad)
+  <Icon name="exclamation-triangle" color="red" /> (bad)
 
 :::
 
@@ -533,7 +533,7 @@ Aliasing your intercepted routes enables you to:
 <DocsImage
   src="/img/guides/core-concepts/v10/aliasing-routes.png"
   alt="Alias commands"
-></DocsImage>
+/>
 
 Here's an example of aliasing an intercepted route and waiting on it to
 complete.
