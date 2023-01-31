@@ -1,0 +1,125 @@
+---
+title: Cypress.require
+e2eSpecific: true
+---
+
+`Cypress.require` enables utilizing dependencies within the
+[`cy.origin()`](/api/commands/origin) callback function. It is used to require
+modules such as [npm](https://www.npmjs.com/) packages and other local files.
+
+It is functionally the same as using
+[CommonJS `require()`](https://nodejs.org/en/knowledge/getting-started/what-is-require/)
+in browser-targeted code.
+
+## Syntax
+
+```js
+Cypress.require(moduleId)
+```
+
+## Usage
+
+**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+
+```js
+cy.origin('example.com', () => {
+  const _ = Cypress.require('lodash')
+  const utils = Cypress.require('./utils')
+
+  // ... use lodash and utils ...
+})
+```
+
+**<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
+
+```js
+// `Cypress.require()` cannot be used outside the `cy.origin()` callback.
+// Use `require()` instead
+const _ = Cypress.require('lodash')
+
+cy.origin('example.com', async () => {
+  // `require()` and `import()` cannot be used inside the `cy.origin()` callback.
+  // Use `Cypress.require()` instead
+  const _ = require('lodash')
+  const utils = await import('./utils')
+})
+```
+
+## Example
+
+```js
+cy.origin('example.com', () => {
+  const _ = Cypress.require('lodash')
+  const utils = Cypress.require('../support/utils')
+
+  // ... use lodash and utils ...
+})
+```
+
+See
+[`cy.origin()` Dependencies / Sharing Code](/api/commands/origin#Dependencies-Sharing-Code)
+for more examples.
+
+## TypeScript
+
+Casting can be utilized to have types inferred for the dependency required.
+
+```js
+cy.origin('example.com', async () => {
+  const _ = Cypress.require('lodash') as typeof import('lodash')
+
+  // lodash methods are properly typed now
+  _.map([1, 2, 3], (num: number) => {
+    // ...
+  })
+})
+```
+
+## Limitations / Requirements
+
+- `Cypress.require` only works when called within the
+  [`cy.origin()`](/api/commands/origin) callback function. It will error if used
+  elsewhere.
+- Only the folowing file extensions are supported for dependencies required
+  (either directly or indirectly):
+    - `.js`
+    - `.jsx`
+    - `.ts`
+    - `.tsx`
+    - `.mjs`
+    - `.json`
+    - `.coffee`
+- `Cypress.require('dependency-name')` must on one line as a continuous string:
+
+```js
+// ✅ GOOD
+Cypress.require('lodash')
+
+// ❌ BAD
+const { require } = Cypress
+require('lodash')
+
+// ❌ BAD
+Cypress
+.require('lodash')
+
+// ❌ BAD
+Cypress . require('lodash')
+
+// ❌ BAD
+Cypress.require(
+  'lodash'
+)
+```
+
+## History
+
+| Version                                        | Changes                   |
+| ---------------------------------------------- | ------------------------- |
+| [12.6.0](/guides/references/changelog#10-7-0)  | `Cypress.require` added   |
+| [10.11.0](/guides/references/changelog#10-7-0) | `Cypress.require` removed |
+| [10.7.0](/guides/references/changelog#10-7-0)  | `Cypress.require` added   |
+
+## See also
+
+- [`cy.origin()`](/api/commands/origin)
