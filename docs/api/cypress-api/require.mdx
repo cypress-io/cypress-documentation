@@ -82,15 +82,16 @@ cy.origin('example.com', async () => {
   elsewhere.
 - Only the folowing file extensions are supported for dependencies required
   (either directly or indirectly):
-    - `.js`
-    - `.jsx`
-    - `.ts`
-    - `.tsx`
-    - `.mjs`
-    - `.json`
-    - `.coffee`
+  - `.js`
+  - `.jsx`
+  - `.ts`
+  - `.tsx`
+  - `.mjs`
+  - `.json`
+  - `.coffee`
 - `Cypress.require('dependency-name')` must on one line as a continuous string:
 
+<!-- prettier-ignore-start -->
 ```js
 // ✅ GOOD
 Cypress.require('lodash')
@@ -111,6 +112,7 @@ Cypress.require(
   'lodash'
 )
 ```
+<!-- prettier-ignore-end -->
 
 ## History
 
