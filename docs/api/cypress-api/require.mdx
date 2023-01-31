@@ -117,12 +117,12 @@ Cypress.require(
 ## Why not `require` or `import`?
 
 Cypress runs test code in the browser, so any dependencies have to be bundled
-with the test code before it is run. This is accomplished for the majority
-of test code via a [preprocessor](/api/plugins/preprocessors-api). However,
-due to the way that [`cy.origin()`](/api/commands/origin) works, the callback
-passed to it is extracted from the test code where it is defined and run in a
-different context. This also separates it from any dependencies that are
-included in the test code bundle.
+with the test code before it is run. This is accomplished for the majority of
+test code via a [preprocessor](/api/plugins/preprocessors-api). However, due to
+the way that [`cy.origin()`](/api/commands/origin) works, the callback passed to
+it is extracted from the test code where it is defined and run in a different
+context. This also separates it from any dependencies that are included in the
+test code bundle.
 
 To solve this, we replace all instances of `Cypress.require` with `require` at
 runtime and bundle just the callback with any dependencies required within it.
