@@ -62,13 +62,30 @@ for more examples.
 
 ## TypeScript
 
-Casting can be utilized to have types inferred for the dependency required.
+There are couple ways to have types inferred for the dependency required.
+
+### Casting
 
 ```js
 cy.origin('example.com', async () => {
   const _ = Cypress.require('lodash') as typeof import('lodash')
 
-  // lodash methods are properly typed now
+  // lodash methods are properly typed
+  _.map([1, 2, 3], (num: number) => {
+    // ...
+  })
+})
+```
+
+### Generic
+
+```js
+import type { LoDashStatic } from 'lodash'
+
+cy.origin('example.com', async () => {
+  const _ = Cypress.require < LoDashStatic > 'lodash'
+
+  // lodash methods are properly typed
   _.map([1, 2, 3], (num: number) => {
     // ...
   })
