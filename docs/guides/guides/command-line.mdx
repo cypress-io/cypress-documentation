@@ -141,14 +141,14 @@ The "autoCancelAfterFailures" argument is the number of times tests can fail
 before the run is canceled
 
 ```bash
-npx cypress run --record --key <<your_record_key>> --auto-cancel-after-failure 1
+npx cypress run --record --key <<your_record_key>> --auto-cancel-after-failures 1
 ```
 
 You can also specify `false` for the value to disable Auto Cancellation for the
 run:
 
 ```bash
-npx cypress run --record --key <<your_record_key>> --auto-cancel-after-failure false
+npx cypress run --record --key <<your_record_key>> --auto-cancel-after-failures false
 ```
 
 #### `cypress run --browser <browser-name-or-path>` {#cypress-run-browser-lt-browser-name-or-path-gt}
