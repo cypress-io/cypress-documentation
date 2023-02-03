@@ -39,7 +39,7 @@ profile control in the top right of the window.
 
 :::
 
-### The Launchpad
+### Launchpad
 
 <DocsImage
   src="/img/guides/core-concepts/cypress-app/the-launchpad.png"
@@ -52,13 +52,13 @@ testing type and launching a browser.
 Once you get comfortable with Cypress you might find you don't need the
 Launchpad any more. In this case
 [you can run `cypress open` with the `--browser` and `--component` or `--e2e` options](/guides/guides/command-line#cypress-open)
-to go straight to the Spec Explorer.
+to go straight to the Specs page.
 
-### The Spec Explorer
+### Specs
 
 <DocsImage
   src="/img/guides/core-concepts/cypress-app/spec-explorer.png"
-  alt="The Spec Explorer"
+  alt="Specs"
 />
 
 On choosing your browser in the Launchpad, you'll be presented with a list of
@@ -66,7 +66,7 @@ your specs, their names, locations, and information about your latest recorded
 runs. Here you can launch specs by clicking them, create new blank or example
 specs, or search specs by name (handy for large test suites).
 
-We've made the following spec data available directly in the Spec Explorer:
+We've made the following spec data available directly on the Specs page:
 
 #### Last updated
 
@@ -129,12 +129,12 @@ Clicking on the flake indicator will take you to the spec’s
 
 <DocsImage
   src="/img/guides/core-concepts/cypress-app/spec-page.png"
-  alt="Spec Explorer"
+  alt="Specs"
 />
 
 To run a spec, simply click the row with the spec you would like to run. You
-will be taken to the [Test Runner](#The-Test-Runner) and the spec will execute.
-You can narrow down the list of specs by typing into the search bar (1).
+will be taken to the [Test Runner](#Test-Runner) and the spec will execute. You
+can narrow down the list of specs by typing into the search bar (1).
 
 It is also possible to run multiple specs sequentially using the
 [`experimentalRunAllSpecs`](/guides/references/experiments#End-to-End-Testing)
@@ -155,7 +155,7 @@ Running a large number of specs sequentially can consume more resources.
 
 :::
 
-### Project Runs
+### Runs
 
 <DocsImage
   src="/img/guides/core-concepts/cypress-app/recorded-runs.png"
@@ -172,7 +172,37 @@ The title of each run is taken from the
 for that change, and clicking on it will take you to the corresponding run page
 in Cypress Cloud.
 
-## The Test Runner
+### Debug
+
+<DocsImage
+  src="/img/guides/core-concepts/cypress-app/debug-page.png"
+  alt="Debug"
+/>
+
+The Debug page allows you to easily debug failed CI test runs from within the
+Cypress app. From this page, you can review, rerun, and debug failed CI test
+runs that are recorded to Cypress Cloud (see [note above](#Overview)) – all
+without leaving the Cypress app.
+
+This feature eliminates the tedious process of switching between Cypress, your
+local editor, and CI output, in order to fix failed tests. It does this by
+enabling you to use the [Test Runner](#Test-Runner) to run only the tests that
+failed in your last recorded test run, as well as review screenshots, videos,
+and logs from your tests.
+
+The Debug page shows the latest completed [test run](/guides/cloud/runs) that
+matches the HEAD commit of your local project. If no run is found for your
+current commit, then Cypress shows the most recent run in your branch's history
+up until the current commit. The first 100 failed tests are listed, with a link
+to Cypress Cloud to review the full run.
+
+To use this feature, you must ensure that git is properly configured for your
+project and that you are sending git information to Cypress Cloud. Under some
+environment setups (e.g. `docker`/`docker-compose`), you may have to pass git
+information using
+[custom environment variables](/guides/continuous-integration/introduction#Git-information).
+
+## Test Runner
 
 At the core of the app is the Test Runner itself. Cypress runs tests
 interactively, allowing you to see commands as they execute while also viewing
