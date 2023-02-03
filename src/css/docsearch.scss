@@ -1,5 +1,10 @@
 /* DocSearch overrides */
 
+button.DocSearch {
+  width: 16rem;
+  height: 2.4rem;
+}
+
 /* controls the color of the search cmd+k buttons */
 /* have to override this for specificity */
 [data-theme='dark'] button.DocSearch {
