@@ -2,6 +2,59 @@
 title: Changelog
 ---
 
+## 12.5.1
+
+_Released 02/2/2023_
+
+**Bugfixes:**
+
+- Fixed a regression introduced in Cypress [12.5.0](#12-5-0) where the
+  `runnable` was not included in the
+  [`test:after:run`](/api/events/catalog-of-events) event. Fixes
+  [#25663](https://github.com/cypress-io/cypress/issues/25663).
+
+**Dependency Updates:**
+
+- Upgraded [`simple-git`](https://github.com/steveukx/git-js) from `3.15.0` to
+  `3.16.0` to address this
+  [security vulnerability](https://github.com/advisories/GHSA-9p95-fxvg-qgq2)
+  where Remote Code Execution (RCE) via the clone(), pull(), push() and
+  listRemote() methods due to improper input sanitization was possible.
+  Addressed in [#25603](https://github.com/cypress-io/cypress/pull/25603).
+
+## 12.5.0
+
+_Released 01/31/2023_
+
+**Features:**
+
+- Easily debug failed CI test runs recorded to the Cypress Cloud from your local
+  Cypress app with the new Debug page. Please leave any feedback
+  [here](https://github.com/cypress-io/cypress/discussions/25649). Your feedback
+  will help us make decisions to improve the Debug experience. For more details,
+  see [our blog post](https://on.cypress.io/debug-page-release). Addressed in
+  [#25488](https://github.com/cypress-io/cypress/pull/25488).
+
+**Performance:**
+
+- Improved memory consumption in `run` mode by removing reporter logs for
+  successful tests. Fixes
+  [#25230](https://github.com/cypress-io/cypress/issues/25230).
+
+**Bugfixes:**
+
+- Fixed an issue where alternative Microsoft Edge Beta, Canary, and Dev binary
+  versions were not being discovered by Cypress. Fixes
+  [#25455](https://github.com/cypress-io/cypress/issues/25455).
+
+**Dependency Updates:**
+
+- Upgraded
+  [`underscore.string`](https://github.com/esamattis/underscore.string/blob/HEAD/CHANGELOG.markdown)
+  from `3.3.5` to `3.3.6` to reference rebuilt assets after security patch to
+  fix regular expression DDOS exploit. Addressed in
+  [#25574](https://github.com/cypress-io/cypress/pull/25574).
+
 ## 12.4.1
 
 _Released 01/27/2023_
@@ -1593,9 +1646,9 @@ into your overall development experience. Read more about 10.0 in
 
 **Breaking Changes:**
 
-**<Icon name="exclamation-triangle" color="red"></Icon> Please run
-`cypress open` to go through our interactive migration which will guide you in
-updating your files and configuration options. Read our
+**<Icon name="exclamation-triangle" color="red" /> Please run `cypress open` to
+go through our interactive migration which will guide you in updating your files
+and configuration options. Read our
 [Migration Guide](/guides/references/migration-guide) which explains some
 breaking changes in more detail.**
 
@@ -2970,7 +3023,7 @@ of 1, and a screen size of 1280x720 by default.
 
 **Breaking Changes:**
 
-**<Icon name="exclamation-triangle" color="red"></Icon> Please read our
+**<Icon name="exclamation-triangle" color="red" /> Please read our
 [Migration Guide](/guides/references/migration-guide) which explains the changes
 in more detail and how to change your code to migrate to Cypress 8.0.**
 
@@ -3469,7 +3522,7 @@ components using your favorite developer tools. Read our
 
 **Breaking Changes:**
 
-**<Icon name="exclamation-triangle" color="red"></Icon> Please read our
+**<Icon name="exclamation-triangle" color="red" /> Please read our
 [Migration Guide](/guides/references/migration-guide) which explains the changes
 in more detail and how to change your code to migrate to Cypress 7.0.**
 
@@ -4216,7 +4269,7 @@ and wait on any type of HTTP request originating from your app. See our guide on
 
 **Breaking Changes:**
 
-**<Icon name="exclamation-triangle" color="red"></Icon> Please read our
+**<Icon name="exclamation-triangle" color="red" /> Please read our
 [Migration Guide](/guides/references/migration-guide) which explains the changes
 in more detail and how to change your code to migrate to Cypress 6.0.**
 
@@ -4799,7 +4852,7 @@ failed test prior to marking it as failed. Read our new guide on
 
 **Breaking Changes:**
 
-**<Icon name="exclamation-triangle" color="red"></Icon> Please read our
+**<Icon name="exclamation-triangle" color="red" /> Please read our
 [Migration Guide](/guides/references/migration-guide) which explains the changes
 in more detail and how to change your code to migrate to Cypress 5.0.**
 
@@ -6049,7 +6102,7 @@ bring new powerful features.
 
 **Breaking Changes:**
 
-**<Icon name="exclamation-triangle" color="red"></Icon> Please read our
+**<Icon name="exclamation-triangle" color="red" /> Please read our
 [Migration Guide](/guides/references/migration-guide) which explains the changes
 in more detail and how to change your code to migrate to Cypress 4.0.**
 
