@@ -73,7 +73,6 @@ workflows:
   build-and-test:
     jobs:
       - build:
-          name: 'Build'
       - lint:
           name: "Lint JS/CSS/Markdown"
           requires:
