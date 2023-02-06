@@ -198,6 +198,29 @@ describe('<NamedSlot />', () => {
 For more info on testing Vue components with slots, refer to the
 [Vue Test Utils Slots guide](https://test-utils.vuejs.org/guide/advanced/slots.html).
 
+### Component in a Slot
+
+To import component in a slot, you can pass a string to call you're component with props and add component option with your component.
+
+```js
+import DefaultSlot from './DefaultSlot.vue'
+import AnotherSlot from './AnotherSlot.vue'
+
+describe('<DefaultSlot />', () => {
+  it('renders', () => {
+    cy.mount(DefaultSlot, {
+      component: {
+        AnotherSlot
+      },
+      slots: {
+        default: '<AnotherSlot label="Hello" />',
+      },
+    })
+    cy.get('div.content').should('have.text', 'Hello there!')
+  })
+})
+```
+
 ## Using Vue Test Utils
 
 In order to encourage interoperability between your existing component tests and
