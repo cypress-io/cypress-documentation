@@ -319,9 +319,8 @@ extend the functionality of builtin commands.
 :::caution
 
 `Cypress.Commands.overwriteQuery` can only overwrite queries, not other
-commands. If you want to modify the behavior of a non-query command, you'll
-need to use [`Cypress.Commands.overwrite`](/api/cypress-api/custom-commands)
-instead.
+commands. If you want to modify the behavior of a non-query command, you'll need
+to use [`Cypress.Commands.overwrite`](/api/cypress-api/custom-commands) instead.
 
 :::
 
@@ -339,28 +338,36 @@ Cypress.Commands.overwriteQuery('get', function (originalFn, ...args) {
 })
 ```
 
-The `originalFn` is exactly the function originally passed to `Cypress.Commands.addQuery` - it is a **function that returns a function.** This gives you access to both the outer arguments (before you call `originalFn`) and the inner function (the return value of `originalFn`), giving you a great deal of control over how the query executes.
+The `originalFn` is exactly the function originally passed to
+`Cypress.Commands.addQuery` - it is a **function that returns a function.** This
+gives you access to both the outer arguments (before you call `originalFn`) and
+the inner function (the return value of `originalFn`), giving you a great deal
+of control over how the query executes.
 
-Remember that query functions rely on `this` - when you invoke `originalFn`, be sure to use `.call` or `.apply`.
+Remember that query functions rely on `this` - when you invoke `originalFn`, be
+sure to use `.call` or `.apply`.
 
 #### Adding alias support to `.contains()`
 
 ```js
-Cypress.Commands.overwriteQuery('contains', function (originalFn, filter, text, userOptions) {
-  if (_.isString(filter) && filter[0] === '@') {
-    let alias = cy.state('aliases')[filter.slice(1)]
-    let subject = cy.getSubjectFromChain(alias?.subjectChain)
-    filter = subject
-  }
+Cypress.Commands.overwriteQuery(
+  'contains',
+  function (originalFn, filter, text, userOptions) {
+    if (_.isString(filter) && filter[0] === '@') {
+      let alias = cy.state('aliases')[filter.slice(1)]
+      let subject = cy.getSubjectFromChain(alias?.subjectChain)
+      filter = subject
+    }
 
-  if (_.isString(text) && text[0] === '@') {
-    let alias = cy.state('aliases')[text.slice(1)]
-    let subject = cy.getSubjectFromChain(alias?.subjectChain)
-    text = subject
-  }
+    if (_.isString(text) && text[0] === '@') {
+      let alias = cy.state('aliases')[text.slice(1)]
+      let subject = cy.getSubjectFromChain(alias?.subjectChain)
+      text = subject
+    }
 
-  return originalFn.call(this, filter, text, userOptions)
-})
+    return originalFn.call(this, filter, text, userOptions)
+  }
+)
 
 cy.wrap('li').as('element')
 cy.wrap('asdf 1').as('content')
