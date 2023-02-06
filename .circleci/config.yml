@@ -72,7 +72,7 @@ workflows:
   version: 2
   build-and-test:
     jobs:
-      - build:
+      - build
       - lint:
           name: "Lint JS/CSS/Markdown"
           requires:
@@ -86,4 +86,4 @@ workflows:
           filters:
             branches:
               only:
-                - main  
+                - config-fix  
