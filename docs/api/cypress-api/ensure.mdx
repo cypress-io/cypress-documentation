@@ -1,0 +1,70 @@
+---
+title: Cypress.ensure
+---
+
+`Cypress.ensure.method()` is a collection of helper methods for verifying conditions while executing Cypress commands. They are mostly useful when writing [custom queries](/api/cypress-api/custom-queries) or [commands](/api/cypress-api/custom-commands).
+
+Most functions on `Cypress.ensure` accept `subject` argument, and assert something about it, throwing an error if it doesn't match. They have no return value; their only purpose is to ensure the state of the application and throw an error if it doesn't match.
+
+## Syntax
+
+```javascript
+// Command chain
+Cypress.ensure.isChildCommand(command, args, cy)​
+
+// Type of argument
+Cypress.ensure.isType(subject, type, name, cy)​
+Cypress.ensure.isElement(subject, name, cy)​
+Cypress.ensure.isWindow(subject, name, cy)
+Cypress.ensure.isDocument(subject, name, cy)​
+
+// State of DOM element
+Cypress.ensure.isAttached(subject, name, cy)​
+Cypress.ensure.isNotDisabled(subject, name)​
+Cypress.ensure.isNotHiddenByAncestors(subject, name)​
+Cypress.ensure.isNotReadonly(subject, name)​
+Cypress.ensure.isScrollable($el, name)​
+Cypress.ensure.isStrictlyVisible(subject, name)​
+Cypress.ensure.isVisible(subject, name)​
+```
+
+:::caution
+
+Many of these functions accept an optional `onFail` argument. This is a legacy feature used to customize the thrown error, and may be removed in a future release; we recommend against relying on it. If you need more control over the error thrown, write your own `ensure` function instead.
+
+:::
+
+### Usage
+
+**<Icon name="check-circle" color="green" /> Correct Usage**
+
+```javascript
+Cypress.Commands.addQuery('getChildById', function (id) {
+  return (subject) => {
+    // Verify that the subject is an element, document, or window object
+    Cypress.ensure.isType(subject, ['element', 'document', 'window'], 'getChildById', cy)
+
+    return $$(`#${id}`, subject)
+  }
+})
+
+Cypress.Commands.addQuery('verifyElementActionable', function (id) {
+  // Throws an early error if this query is chained directly off `cy`, eg.
+  // `cy.verifyElementActionable('foo')` would throw an error
+  Cypress.ensure.isChildCommand(command, args, cy)​
+
+  return (subject) => {
+    // Verify that the subject fulfills a variety of conditions
+    Cypress.ensure.isElement(subject, 'verifyElementActionable', cy)
+    Cypress.ensure.isVisible(subject, 'verifyElementActionable', cy)
+    Cypress.ensure.isNotDisabled(subject, 'verifyElementActionable', cy)
+    Cypress.ensure.isNotReadonly(subject, 'verifyElementActionable', cy)
+
+    return subject
+  }
+})
+```
+
+## See also
+
+- Writing [custom queries](/api/cypress-api/custom-queries) contains more information about writing custom queries, which is the main use-case for the `ensure` functions.
