@@ -72,15 +72,12 @@ workflows:
   version: 2
   build-and-test:
     jobs:
+      - build
+          name: 'Build'
       - lint:
           name: "Lint JS/CSS/Markdown"
           requires:
-            - build
-      - build:
-          filters:
-            branches:
-              ignore:
-                - main
+            - build     
 
       # Run Algolia scraper only on main.
       - release:
