@@ -73,7 +73,7 @@ Pass in an options object to change the default behavior of `cy.fixture()`.
 
 - `cy.fixture()` yields the contents of the file. Formatting is determined by
   its file extension.
-- The yielded subject is **not** updated if the contents change on disk.
+- `cy.fixture()` is not a query. It [only reads the data once](/guides/core-concepts/retry-ability#Only-queries-are-retried).
 
 ## Examples
 
@@ -323,8 +323,8 @@ cy.fixture('todo.json').then((todo) => {
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-- `cy.fixture()` will only run assertions you have chained once, and will not
-  [retry](/guides/core-concepts/retry-ability).
+- `cy.fixture()`  will automatically [retry](/guides/core-concepts/retry-ability)
+  until the file [exists on disk](/guides/core-concepts/introduction-to-cypress#Default-Assertions).
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 

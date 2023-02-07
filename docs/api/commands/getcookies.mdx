@@ -33,20 +33,17 @@ Pass in an options object to change the default behavior of `cy.getCookies()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-`cy.getCookies()` yields an array of cookie objects. Each cookie object has the
+- `cy.getCookies()` yields an array of cookie objects. Each cookie object has the
 following properties:
-
-- `domain`: _(String)_
-- `expiry`: _(Number)_ _(if specified)_
-- `httpOnly`: _(Boolean)_
-- `name`: _(String)_
-- `path`: _(String)_
-- `sameSite`: _(String)_ _(if specified)_
-- `secure`: _(Boolean)_
-- `value`: _(String)_
-
-`cy.getCookies()` is not a query. It will not update the returned list if
-further cookies are added after it initially executes.
+  - `domain`: _(String)_
+  - `expiry`: _(Number)_ _(if specified)_
+  - `httpOnly`: _(Boolean)_
+  - `name`: _(String)_
+  - `path`: _(String)_
+  - `sameSite`: _(String)_ _(if specified)_
+  - `secure`: _(Boolean)_
+  - `value`: _(String)_
+- `cy.getCookies()` is not a query. It [only reads the cookies once](/guides/core-concepts/retry-ability#Only-queries-are-retried).
 
 ## Examples
 
@@ -75,8 +72,7 @@ cy.getCookies()
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-- `cy.getCookies()` will only run assertions you have chained once, and will not
-  [retry](/guides/core-concepts/retry-ability).
+- `cy.getCookies()` has no implicit assertions.
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 

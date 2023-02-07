@@ -215,9 +215,8 @@ cy.readFile('users.json').its('users.123.name').should('eq', 'John Doe')
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-- `cy.readFile()` will automatically
-  [retry](/guides/core-concepts/retry-ability) until all chained assertions have
-  passed.
+- `cy.readFile()` will automatically [retry](/guides/core-concepts/retry-ability)
+  until the file [exists on disk](/guides/core-concepts/introduction-to-cypress#Default-Assertions).
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 

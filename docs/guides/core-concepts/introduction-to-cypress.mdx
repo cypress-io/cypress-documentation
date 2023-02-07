@@ -992,25 +992,7 @@ Assertions describe the **desired** state of your **elements**, your
 
 :::
 
-What makes Cypress unique from other testing tools is that commands
-**automatically retry** their assertions. In fact, they will look "downstream"
-at what you're expressing and modify their behavior to make your assertions
-pass.
-
-You should think of assertions as **guards**.
-
-Use your **guards** to describe what your application should look like, and
-Cypress will automatically **block, wait, and retry** until it reaches that
-state.
-
-:::tip
-
-<strong>Core Concept</strong>
-
-Each command documents its behavior with assertions - such as how it retries or
-waits for assertions to pass.
-
-:::
+What makes Cypress unique from other testing tools is that assertions **automatically retry**. Think of them as **guards** - assertions describe what your application should look like, and Cypress will automatically **block, wait, and retry** until it reaches that state.
 
 ### Asserting in English
 
@@ -1018,7 +1000,7 @@ Let's look at how you'd describe an assertion in English:
 
 :::note
 
-After clicking on this `<button>`, I expect its class to eventually be `active`.
+After clicking on this `<button>`, I expect its class to be `active`.
 
 :::
 
@@ -1105,7 +1087,7 @@ working properly across the client and server!
 
 This is because many commands have a built in
 [Default Assertion](#Default-Assertions) which offer you a high level of
-guarantee.
+confidence that your application is working as expected.
 
 :::
 

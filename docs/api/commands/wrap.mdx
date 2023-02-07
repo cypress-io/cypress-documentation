@@ -196,14 +196,12 @@ cy.get('some-submit-button')
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-- `cy.wrap()`, when its argument is a promise, will automatically wait until the
+- If the argument is a promise, `cy.wrap()` will automatically wait until the
   promise resolves. If the promise is rejected, `cy.wrap()` will fail the test.
-- `cy.wrap()` will automatically [retry](/guides/core-concepts/retry-ability)
-  until all chained assertions have passed.
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-- `cy.wrap()` can time out waiting for assertions you've added to pass.
+- `cy.wrap()` will never time out.
 
 ## Command Log
 

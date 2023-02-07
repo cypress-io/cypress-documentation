@@ -51,6 +51,8 @@ Pass a function that takes the previously yielded subject as its first argument.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
+- `cy.then()` is not a query. It [only calls the function once](/guides/core-concepts/retry-ability#Only-queries-are-retried).
+
 Whatever is returned from the callback function becomes the new subject and will
 flow into the next command (with the exception of `undefined` or `null`).
 
@@ -230,8 +232,7 @@ cy.get('button')
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-- `.then()` will only run assertions you have chained once, and will not
-  [retry](/guides/core-concepts/retry-ability).
+- `.then()` has no implicit assertions.
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 

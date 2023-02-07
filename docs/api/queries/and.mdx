@@ -1,11 +1,10 @@
 ---
 title: and
-sidebar_position: 20
 slug: /api/commands/and
 ---
 
-Create an assertion. Assertions are automatically retried as part of the
-previous command until they pass or time out.
+Assert on the current subject, retrying until it passes or the command times
+out.
 
 :::info
 
@@ -75,14 +74,21 @@ Whatever was passed to the function is what is yielded.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
+- `.and()` is a query, and it is _safe_ to chain further commands.
 - In most cases, `.and()` yields the same subject it was given.
-- `.and()` is an assertion, and it is _safe_ to chain further commands that use
-  the subject.
 
 ```javascript
 cy.get('nav') // yields <nav>
   .should('be.visible') // yields <nav>
   .and('have.class', 'open') // yields <nav>
+```
+
+A callback function never changes the subject. The return value is ignored.
+
+```javascript
+  cy.wrap([1, 2, 3])
+    .and(array => array[1]) // Return value is ignored
+    .and('have.length', 3) // The array is still the subject
 ```
 
 However, some chainers change the subject. In the example below, `.and()` yields
@@ -95,6 +101,10 @@ cy.get('nav') // yields <nav>
   .and('have.css', 'font-family') // yields 'sans-serif'
   .and('match', /serif/) // yields 'sans-serif'
 ```
+
+The chainers that come from [Chai](/guides/references/bundled-libraries#Chai) or
+[Chai-jQuery](/guides/references/bundled-libraries#Chai-jQuery) will always
+document what they return.
 
 ## Examples
 
@@ -185,7 +195,7 @@ cy.get('p')
 
 :::info
 
-Using a callback function [will not change the subject](#Subjects)
+Using a callback function [will not change the subject](#Yields)
 
 :::
 
@@ -196,7 +206,7 @@ Using a callback function [will not change the subject](#Subjects)
 #### Similarities to Chai
 
 If you've worked in [Chai](http://chaijs.com/) before, you will recognize that
-`.and()` matches the same fluent assertion syntax.
+`.and()` uses the same fluent assertion syntax.
 
 Take this _explicit_ assertion for example:
 
@@ -205,33 +215,6 @@ expect({ foo: 'bar' }).to.have.property('foo').and.eq('bar')
 ```
 
 `.and()` reproduces this same assertion behavior.
-
-### Subjects
-
-#### How do I know which assertions change the subject and which keep it the same?
-
-The chainers that come from [Chai](/guides/references/bundled-libraries#Chai) or
-[Chai-jQuery](/guides/references/bundled-libraries#Chai-jQuery) will always
-document what they return.
-
-#### Using a callback function will not change what is yielded
-
-Whenever you use a callback function, its return value is always ignored.
-Cypress always forces the command to yield the value from the previous cy
-command's yield (which in the example below is `<button>`)
-
-```javascript
-cy.get('button')
-  .should('be.active')
-  .and(($button) => {
-    expect({ foo: 'bar' }).to.deep.eq({ foo: 'bar' })
-
-    return { foo: 'bar' } // return is ignored, .and() yields <button>
-  })
-  .then(($button) => {
-    // do anything we want with <button>
-  })
-```
 
 ### Differences
 

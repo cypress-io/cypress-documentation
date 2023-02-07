@@ -309,12 +309,11 @@ cy.get('.sticky-header').invoke('css', 'position', null)
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-- `cy.screenshot()` will only run assertions you have chained once, and will not
-  [retry](/guides/core-concepts/retry-ability).
+- `cy.screenshot()` has no implicit assertions.
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-- `cy.screenshot()` should never time out.
+- `cy.screenshot()` will never time out.
 
 :::caution
 

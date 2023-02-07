@@ -396,7 +396,6 @@ pass when the application behaves in multiple unexpected ways:
   Todo
 - The app deletes a Todo instead of adding a new Todo
 - The app adds a blank Todo
-- An infinite variety of possible application mistakes
 
 ```javascript
 cy.get('[data-testid="todos"]').should('have.length', 2)
@@ -405,27 +404,6 @@ cy.get('[data-testid="new-todo"]').type('Write tests{enter}')
 // using negative assertion to check it's
 // not a number of items
 cy.get('[data-testid="todos"]').should('not.have.length', 2)
-```
-
-**Recommendation**
-
-We recommend using negative assertions to verify that a specific condition is no
-longer present after the application performs an action. For example, when a
-previously completed item is unchecked, we might verify that a CSS class is
-removed.
-
-```javascript
-// at first the item is marked completed
-cy.contains('[data-testid="todos"]', 'Write tests')
-  .should('have.class', 'completed')
-  .find('[data-testid="toggle"]')
-  .click()
-
-// the CSS class has been removed
-cy.contains('[data-testid="todos"]', 'Write tests').should(
-  'not.have.class',
-  'completed'
-)
 ```
 
 :::info

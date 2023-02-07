@@ -37,19 +37,16 @@ Pass in an options object to change the default behavior of `cy.getCookie()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-`cy.getCookie()` yields a cookie object with the following properties:
-
-- `domain`
-- `expiry` _(if specified)_
-- `httpOnly`
-- `name`
-- `path`
-- `sameSite` _(if specified)_
-- `secure`
-- `value`
-
-`cy.getCookie()` is not a query. It will not retry, or wait for the requested
-cookie to exist.
+- `cy.getCookie()` yields a cookie object with the following properties:
+  - `domain`
+  - `expiry` _(if specified)_
+  - `httpOnly`
+  - `name`
+  - `path`
+  - `sameSite` _(if specified)_
+  - `secure`
+  - `value`
+- `cy.getCookie()` is not a query. It [only reads the cookie once](/guides/core-concepts/retry-ability#Only-queries-are-retried).
 
 #### When a cookie matching the name could not be found:
 
@@ -128,8 +125,7 @@ Check out our example recipes using `cy.getCookie()` to test
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-- `cy.getCookie()` will only run assertions you have chained once, and will not
-  [retry](/guides/core-concepts/retry-ability).
+- `cy.getCookie()` has no implicit assertions.
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 

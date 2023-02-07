@@ -1,11 +1,10 @@
 ---
 title: should
-sidebar_position: 30
 slug: /api/commands/should
 ---
 
-Create an assertion. Assertions are automatically retried until they pass or
-time out.
+Assert on the current subject, retrying until it passes or the command times
+out.
 
 :::info
 
@@ -68,27 +67,36 @@ Whatever was passed to the function is what is yielded.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-In most cases, `.should()` yields the same subject it was given from the
-previous command.
+- `.should()` is a query, and it is _safe_ to chain further commands.
+- In most cases, `.should()` yields the same subject it was given.
 
 ```javascript
 cy.get('nav') // yields <nav>
   .should('be.visible') // yields <nav>
+  .and('have.class', 'open') // yields <nav>
 ```
 
-However, some chainers change the subject. In the example below, the second
-`.should()` yields the string `sans-serif` because the chainer
-`have.css, 'font-family'` changes the subject.
+A callback function never changes the subject. The return value is ignored.
+
+```javascript
+  cy.wrap([1, 2, 3])
+    .should(array => array[1]) // Return value is ignored
+    .and('have.length', 3) // The array is still the subject
+```
+
+However, some chainers change the subject. In the example below, `.should()` yields
+the string `sans-serif` because the chainer `have.css, 'font-family'` changes
+the subject.
 
 ```javascript
 cy.get('nav') // yields <nav>
-  .should('be.visible') // yields <nav>
   .should('have.css', 'font-family') // yields 'sans-serif'
   .and('match', /serif/) // yields 'sans-serif'
 ```
 
-`.should()` is an assertion, and it is _safe_ to chain further commands that use
-the subject.
+The chainers that come from [Chai](/guides/references/bundled-libraries#Chai) or
+[Chai-jQuery](/guides/references/bundled-libraries#Chai-jQuery) will always
+document what they return.
 
 ## Examples
 
@@ -239,21 +247,11 @@ cy.get('p').should(($p) => {
 })
 ```
 
-**<Icon name="exclamation-triangle" color="red" /> Warning** Any value returned
-from a `.should()` callback function will be ignored. The original subject will
-be yielded to the next command.
+:::info
 
-```js
-cy.get('p')
-  .should(($p) => {
-    expect($p).to.have.length(3)
+Using a callback function [will not change the subject](#Yields)
 
-    return 'foo'
-  })
-  .then(($p) => {
-    // the argument $p will be the 3 elements, not "foo"
-  })
-```
+:::
 
 #### Assert class name contains `heading-`
 
@@ -425,32 +423,6 @@ cy.get('button')
 ```
 
 ## Notes
-
-### Subjects
-
-#### How do I know which assertions change the subject and which keep it the same?
-
-The chainers that come from [Chai](/guides/references/bundled-libraries#Chai) or
-[Chai-jQuery](/guides/references/bundled-libraries#Chai-jQuery) will always
-document what they return.
-
-#### Using a callback function will not change what is yielded
-
-Whatever is returned in the function is ignored. Cypress always forces the
-command to yield the value from the previous cy command's yield (which in the
-example below is `<button>`)
-
-```javascript
-cy.get('button')
-  .should(($button) => {
-    expect({ foo: 'bar' }).to.deep.eq({ foo: 'bar' })
-
-    return { foo: 'bar' } // return is ignored, .should() yields <button>
-  })
-  .then(($button) => {
-    // do anything we want with <button>
-  })
-```
 
 ### Differences
 
