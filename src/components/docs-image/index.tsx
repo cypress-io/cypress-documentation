@@ -15,9 +15,13 @@ export default function DocsImage({
         src={src}
         alt={alt || title || caption}
         title={title}
-        style={width && {width}}
+        style={width && { width }}
       />
-      {caption && <p className={s.caption}>{caption}</p>}
+      {caption && (
+        <p className={s.caption} style={width && { width, maxWidth: '100%' }}>
+          {caption}
+        </p>
+      )}
     </div>
   )
 }
