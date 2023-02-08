@@ -79,14 +79,14 @@ cy.get('nav') // yields <nav>
 A callback function never changes the subject. The return value is ignored.
 
 ```javascript
-  cy.wrap([1, 2, 3])
-    .should(array => array[1]) // Return value is ignored
-    .and('have.length', 3) // The array is still the subject
+cy.wrap([1, 2, 3])
+  .should((array) => array[1]) // Return value is ignored
+  .and('have.length', 3) // The array is still the subject
 ```
 
-However, some chainers change the subject. In the example below, `.should()` yields
-the string `sans-serif` because the chainer `have.css, 'font-family'` changes
-the subject.
+However, some chainers change the subject. In the example below, `.should()`
+yields the string `sans-serif` because the chainer `have.css, 'font-family'`
+changes the subject.
 
 ```javascript
 cy.get('nav') // yields <nav>

@@ -34,8 +34,10 @@ Pass in an options object to change the default behavior of
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-- `cy.getAllLocalStorage()` yields an object where the keys are origins and the values are key-value pairs of `localStorage` data.
-- `cy.getAllLocalStorage()` is not a query. It [only reads the data once](/guides/core-concepts/retry-ability#Only-queries-are-retried).
+- `cy.getAllLocalStorage()` yields an object where the keys are origins and the
+  values are key-value pairs of `localStorage` data.
+- `cy.getAllLocalStorage()` is not a query. It
+  [only reads the data once](/guides/core-concepts/retry-ability#Only-queries-are-retried).
 
 For example, if `key1` is set to `value1` on `https://example.com` and `key2` is
 set to `value2` on `https://other.com`, `cy.getAllLocalStorage()` will yield:

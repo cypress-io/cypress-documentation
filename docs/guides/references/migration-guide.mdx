@@ -16,9 +16,15 @@ previous behavior to be aware of.
 
 #### Why Cypress made this change
 
-Assertions being queries allows for extremely flexible and fluent chaining of Cypress commands. See [#25134](https://github.com/cypress-io/cypress/issues/25134) for an example. This change also lays the groundwork for (freely chaining Cypress commands)[https://github.com/cypress-io/cypress/issues/25655] and eventually native [`async / await`](https://github.com/cypress-io/cypress/issues/1417) support.
+Assertions being queries allows for extremely flexible and fluent chaining of
+Cypress commands. See
+[#25134](https://github.com/cypress-io/cypress/issues/25134) for an example.
+This change also lays the groundwork for (freely chaining Cypress
+commands)[https://github.com/cypress-io/cypress/issues/25655] and eventually
+native [`async / await`](https://github.com/cypress-io/cypress/issues/1417)
+support.
 
-#### Assertions now retry after *all* commands.
+#### Assertions now retry after _all_ commands.
 
 Previously, many commands would only execute their assertions once, failing
 immediately if the assertion did not match. However, assertions now execute
@@ -27,21 +33,23 @@ independently of the previous command, meaning they always retry.
 ```js
 cy.then(() => {
   const a = {}
-  setTimeout(() => { a.foo = true }, 1000)
+  setTimeout(() => {
+    a.foo = true
+  }, 1000)
 
   return a
 }).should('have.property', 'foo')
 ```
 
-The callback provided to `.then()` is still only executed once, but
-beginning in Cypress 13, `.should()` will wait for the property to exist
-even after non-query commands.
+The callback provided to `.then()` is still only executed once, but beginning in
+Cypress 13, `.should()` will wait for the property to exist even after non-query
+commands.
 
 #### Assertions are now included in aliases
 
-Previously, assertions were non-query commands, meaning that if `.as()`
-was used after them, they did not rerun, and the alias was vulnerable to
-the element becoming detached from the DOM if the page updated.
+Previously, assertions were non-query commands, meaning that if `.as()` was used
+after them, they did not rerun, and the alias was vulnerable to the element
+becoming detached from the DOM if the page updated.
 
 ```js
 cy.get('.modal').should('be.visible').as('myModal')
@@ -51,12 +59,12 @@ cy.get('@myModal').should('not.be.visible')
 ```
 
 Beginning in Cypress 13, the above test will always fail. `.as()` is aliasing
-`.get('.modal').should('be.visible')`, which re-runs whenever the alias is
-read. This makes the last line impossible, since an element can never be both
-visible and not visible at the same time.
+`.get('.modal').should('be.visible')`, which re-runs whenever the alias is read.
+This makes the last line impossible, since an element can never be both visible
+and not visible at the same time.
 
-You can resolve this by moving any assertions you don't want to re-run
-after `.as()`:
+You can resolve this by moving any assertions you don't want to re-run after
+`.as()`:
 
 ```diff
 - cy.get('.modal').should('be.visible').as('myModal')
@@ -71,9 +79,8 @@ are necessary.
 
 #### Why Cypress made this change
 
-`readFile()` will re-read the file from disk if any upcoming
-command in the same chain fails. Assertions no longer have to be directly
-attached.
+`readFile()` will re-read the file from disk if any upcoming command in the same
+chain fails. Assertions no longer have to be directly attached.
 
 ```js
 cy.readFile(`users.json`).its('users.123.fullName').should('eq', 'John Doe')
@@ -86,7 +93,10 @@ In previous versions of Cypress, the above command would retry until the file
 existed, but would _not_ re-read it from disk if the file didn't have the
 requested property or the contents didn't match.
 
-This change also lays the groundwork for (freely chaining Cypress commands)[https://github.com/cypress-io/cypress/issues/25655] and eventually native [`async / await`](https://github.com/cypress-io/cypress/issues/1417) support.
+This change also lays the groundwork for (freely chaining Cypress
+commands)[https://github.com/cypress-io/cypress/issues/25655] and eventually
+native [`async / await`](https://github.com/cypress-io/cypress/issues/1417)
+support.
 
 #### `.readFile()` can no longer be overwritten with `Cypress.Commands.overwrite()`
 

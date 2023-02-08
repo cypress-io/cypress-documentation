@@ -86,9 +86,9 @@ cy.get('nav') // yields <nav>
 A callback function never changes the subject. The return value is ignored.
 
 ```javascript
-  cy.wrap([1, 2, 3])
-    .and(array => array[1]) // Return value is ignored
-    .and('have.length', 3) // The array is still the subject
+cy.wrap([1, 2, 3])
+  .and((array) => array[1]) // Return value is ignored
+  .and('have.length', 3) // The array is still the subject
 ```
 
 However, some chainers change the subject. In the example below, `.and()` yields

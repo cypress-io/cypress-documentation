@@ -33,8 +33,8 @@ Pass in an options object to change the default behavior of
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-`cy.getAllCookies()` yields an array of cookie objects. Each cookie object has
-the following properties:
+- `cy.getAllCookies()` yields an array of cookie objects. Each cookie object has
+  the following properties:
   - `domain`: _(String)_
   - `expiry`: _(Number)_ _(if specified)_
   - `httpOnly`: _(Boolean)_
@@ -43,7 +43,8 @@ the following properties:
   - `sameSite`: _(String)_ _(if specified)_
   - `secure`: _(Boolean)_
   - `value`: _(String)_
-- `cy.getAllLocalStorage()` is not a query. It [only reads the data once](/guides/core-concepts/retry-ability#Only-queries-are-retried).
+- `cy.getAllLocalStorage()` is not a query. It
+  [only reads the data once](/guides/core-concepts/retry-ability#Only-queries-are-retried).
 
 ## Examples
 
