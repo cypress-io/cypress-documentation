@@ -57,7 +57,7 @@ Cypress.Commands.addQuery('getById', function (id) {
   return (subject) => newSubject
 })
 
-Cypress.Commands.addQuery('get', function (originalFn, ...args) {
+Cypress.Commands.overwriteQuery('get', function (originalFn, ...args) {
   return originalFn.apply(this, args)
 })
 ```
@@ -338,7 +338,7 @@ Cypress.Commands.overwriteQuery('get', function (originalFn, ...args) {
 })
 ```
 
-The `originalFn` is exactly the function originally passed to
+The `originalFn` is the function originally passed to
 `Cypress.Commands.addQuery` - it is a **function that returns a function.** This
 gives you access to both the outer arguments (before you call `originalFn`) and
 the inner function (the return value of `originalFn`), giving you a great deal
@@ -348,6 +348,8 @@ Remember that query functions rely on `this` - when you invoke `originalFn`, be
 sure to use `.call` or `.apply`.
 
 #### Adding alias support to `.contains()`
+
+In this example, `cy.contains()` is extended to support querying for aliased subjects, like `cy.contains('@foo')`.
 
 ```js
 Cypress.Commands.overwriteQuery(
