@@ -12,17 +12,17 @@ Bitbucket integration is currently in beta.
 [Cypress Cloud](https://on.cypress.io/cloud) can integrate your Cypress tests
 with your Bitbucket workflow via [status checks](#Status-checks) and
 [pull request comments](#Pull-Request-comments). A project first needs to be
-[setup to record](/guides/cloud/projects) to Cypress Cloud to use Bitbucket
+[set up to record](/guides/cloud/projects) to Cypress Cloud to use Bitbucket
 integration.
 
 :::caution
 
-Bitbucket Integration is dependent on your CI environment reliably providing
-commit SHA data (typically via an environment variable). This is not a problem
-for most users, but if you are facing Bitbucket integration issues with your CI
-setup, please make sure the git information is being sent properly by following
+Bitbucket Integration depends on your CI environment reliably providing a commit
+SHA (typically via an environment variable). This is not a problem for most
+users, but if you are facing Bitbucket integration issues with your CI setup,
+please make sure the git information is being sent properly by following
 [these guidelines](/guides/continuous-integration/introduction#Git-information).
-If you are still facing issues after this, please
+If you still face issues after this, please
 [contact us](mailto:hello@cypress.io).
 
 :::
@@ -32,10 +32,10 @@ If you are still facing issues after this, please
 :::caution
 
 Bitbucket OAuth2 applications will allow Cypress Cloud to authenticate as the
-user that registered the application. That means the Cypress will have
-visibility to every Bitbucket repo you can access. If you want tighter control
-on the repos that the Cypress will see, consider creating a service account with
-more limited access in Bitbucket.
+user that registered the application. That means Cypress will have visibility to
+every Bitbucket repo you can access. If you want tighter control over the repos
+that Cypress will see, consider creating a service account with more limited
+access in Bitbucket.
 
 :::
 
@@ -60,7 +60,7 @@ Additionally, Cypress can post a **cypress/flake** commit status indicating
 whether the Cypress run contained any flaky tests. This will prevent your team
 from merging any PRs with flaky tests.
 
-You can manage this behavior in your project's **Project Settings** page.
+You can manage this behavior on your project's **Project Settings** page.
 
 ### Pull Request comments
 
@@ -68,7 +68,7 @@ By default, Cypress will post a PR comment summarizing the run when the run
 completes. It will include test counts, run info, and a summary of tests that
 failed or were flaky.
 
-You can manage this behavior in your project's **Project Settings** page.
+You can manage this behavior on your project's **Project Settings** page.
 
 ## Uninstalling the Bitbucket integration
 
