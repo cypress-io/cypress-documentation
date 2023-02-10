@@ -61,17 +61,22 @@ process via your organization's settings page or a project's settings page in
    organization switcher.
 2. Select the organization you wish to integrate with a GitHub account or GitHub
    organization.
+
    <DocsImage
-     src="/img/dashboard/select-cypress-organization.png"
+     src="/img/dashboard/select-cypress-organization.jpg"
      alt="Select an organization"
-     width-600
+     width={600}
    />
+
 3. Visit the selected organization's **Integrations** page via the side
    navigation.
+
    <DocsImage
-     src="/img/dashboard/navigate-to-organization-integrations.png"
+     src="/img/dashboard/navigate-to-organization-integrations.jpg"
      alt="Install Cypress GitHub from Integrations"
+     width={600}
    />
+
 4. Click the **Install GitHub Integration** or **Install GitHub Enterprise
    Integration** button.
 
@@ -84,26 +89,34 @@ This installation method does not apply to GitHub Enterprise.
 :::
 
 1. Select your organization in the organization switcher.
+
    <DocsImage
-     src="/img/dashboard/select-cypress-organization.png"
+     src="/img/dashboard/select-cypress-organization.jpg"
      alt="Select an organization"
-     width-600
+     width={600}
    />
+
 2. Select the project you wish to integrate with a GitHub repository.
+
    <DocsImage
-     src="/img/dashboard/select-cypress-project.png"
+     src="/img/dashboard/select-cypress-project.jpg"
      alt="Select a project"
    />
+
 3. Go to the project's settings page.
+
    <DocsImage
-     src="/img/dashboard/visit-project-settings.png"
+     src="/img/dashboard/select-project-settings.jpg"
      alt="Visit project settings"
+     width={600}
    />
+
 4. Scroll down to the **GitHub Integration** section.
-5. Click the **Install the Cypress GitHub App** button.
+5. Click the **Enable GitHub** button.
+
    <DocsImage
-     src="/img/dashboard/github-integration/install-github-cypress-app-project-settings.png"
-     alt="Install GitHub Cypress App"
+     src="/img/dashboard/github-integration/enable-github.jpg"
+     alt="Enable GitHub"
    />
 
 ### Cypress GitHub app installation process
@@ -121,11 +134,13 @@ to GitHub.com to complete the installation:
      alt="Select a GitHub organization"
    />
 
-2. Choose to associate **All repositories** or only select GitHub repositories
-   with your Cypress GitHub App installation.
+2. Choose which repositories to associate with the Cypress GitHub App. You can
+   choose **All repositories** or **Only select repositories**. with your
+   Cypress GitHub App installation.
    <DocsImage
-     src="/img/dashboard/github-integration/select-all-gh-repos.jpg"
-     alt="Select All GitHub repositories"
+     src="/img/dashboard/github-integration/select-gh-repos.jpg"
+     alt="Select GitHub repositories"
+     width={600}
    />
 
 :::info
@@ -134,11 +149,6 @@ All current and <em>future</em> repositories will be included with this
 installation if you choose <strong>All repositories</strong>.
 
 :::
-
-<DocsImage
-  src="/img/dashboard/github-integration/select-gh-repos.jpg"
-  alt="Select specific GitHub repositories"
-/>
 
 3. Click the **Install** button to complete the installation.
 
@@ -155,9 +165,8 @@ them into Cypress Cloud, and complete the activation process.
    App** button.
 
 <DocsImage
-  src="/img/dashboard/github-integration/ghe/ghe-01.png"
+  src="/img/dashboard/github-integration/ghe/ghe-01.jpg"
   alt="Create new GitHub App"
-  id="cypress-github-enterprise-app-installation-process-1"
 />
 
 2. Complete the **Register new GitHub app** section.
@@ -168,9 +177,9 @@ them into Cypress Cloud, and complete the activation process.
      https://cloud.cypress.io/apps/github/callback
 
 <DocsImage
-  src="/img/dashboard/github-integration/ghe/ghe-02.png"
+  src="/img/dashboard/github-integration/ghe/ghe-02.jpg"
   alt="Configure new GitHub App"
-  id="cypress-github-enterprise-app-installation-process-2"
+  width={650}
 />
 
 3. Complete the **Webhook** section.
@@ -179,9 +188,9 @@ them into Cypress Cloud, and complete the activation process.
      **Webhook secret (optional)**.
 
 <DocsImage
-  src="/img/dashboard/github-integration/ghe/ghe-03.png"
+  src="/img/dashboard/github-integration/ghe/ghe-03.jpg"
   alt="Configure app webhook"
-  id="cypress-github-enterprise-app-installation-process-3"
+  width={650}
 />
 
 4. Set the **Repository Permissions**. Below are the minimum permissions
@@ -190,9 +199,14 @@ them into Cypress Cloud, and complete the activation process.
    - **Commit statuses**: read & write
 
 <DocsImage
-  src="/img/dashboard/github-integration/ghe/ghe-04.png"
+  src="/img/dashboard/github-integration/ghe/ghe-04-commit.jpg"
   alt="Configure app permissions"
-  id="cypress-github-enterprise-app-installation-process-4"
+  width={650}
+/>
+<DocsImage
+  src="/img/dashboard/github-integration/ghe/ghe-04-pr.jpg"
+  alt="Configure app permissions"
+  width={650}
 />
 
 5. Skip to the bottom of the form and click the **Create GitHub App** button.
@@ -215,21 +229,21 @@ them into Cypress Cloud, and complete the activation process.
      into the Cypress **GitHub Enterprise Private key** field.
 
 <DocsImage
-  src="/img/dashboard/github-integration/ghe/ghe-05.png"
+  src="/img/dashboard/github-integration/ghe/ghe-05.jpg"
   alt="Collect new app info"
-  id="cypress-github-enterprise-app-installation-process-5"
+  width={700}
 />
 
 <DocsImage
-  src="/img/dashboard/github-integration/ghe/ghe-06.png"
+  src="/img/dashboard/github-integration/ghe/ghe-06.jpg"
   alt="Generate client secret"
-  id="cypress-github-enterprise-app-installation-process-6"
+  width={680}
 />
 
 <DocsImage
-  src="/img/dashboard/github-integration/ghe/ghe-07.png"
+  src="/img/dashboard/github-integration/ghe/ghe-07.jpg"
+  width={645}
   alt="Generate private key"
-  id="cypress-github-enterprise-app-installation-process-7"
 />
 
 7. In Cypress Cloud, click the **Next Step** button, and you will be taken to
@@ -237,17 +251,17 @@ them into Cypress Cloud, and complete the activation process.
    app name\]** button.
 
 <DocsImage
-  src="/img/dashboard/github-integration/ghe/ghe-08.png"
+  src="/img/dashboard/github-integration/ghe/ghe-08.jpg"
+  width={700}
   alt="Authorize GitHub App"
-  id="cypress-github-enterprise-app-installation-process-8"
 />
 
 8. On your newly-authorized GitHub App, click the **Install** button.
 
 <DocsImage
-  src="/img/dashboard/github-integration/ghe/ghe-09.png"
+  src="/img/dashboard/github-integration/ghe/ghe-09.jpg"
+  width={700}
   alt="Install GitHub App"
-  id="cypress-github-enterprise-app-installation-process-9"
 />
 
 9. Nearly there! On the GitHub App installation page, choose whether you want to
@@ -255,9 +269,9 @@ them into Cypress Cloud, and complete the activation process.
    **Install** button.
 
 <DocsImage
-  src="/img/dashboard/github-integration/ghe/ghe-10.png"
+  src="/img/dashboard/github-integration/ghe/ghe-10.jpg"
   alt="Confirm installation of GitHub App"
-  id="cypress-github-enterprise-app-installation-process-10"
+  width={535}
 />
 
 10. Finally, you will be returned to Cypress Cloud. Congratulations, you have
@@ -269,12 +283,13 @@ them into Cypress Cloud, and complete the activation process.
 After completing the Cypress GitHub App installation for your organization, you
 can now enable GitHub Integration for _any_ Cypress project.
 
-1. Go to the project's settings page.
+1. Go to the organization's Integrations page.
 
-   <DocsImage
-     src="/img/dashboard/visit-project-settings.png"
-     alt="Visit project settings"
-   />
+<DocsImage
+  src="/img/dashboard/navigate-to-organization-integrations.jpg"
+  alt="Visit Organization's Integrations"
+  width={600}
+/>
 
 2. Scroll down to the GitHub Integration or GitHub Enterprise Integration
    section.
@@ -288,14 +303,14 @@ organization's Integrations page:
 :::
 
 <DocsImage
-  src="/img/dashboard/github-integration/org-settings-with-no-enabled-projects.png"
+  src="/img/dashboard/github-integration/org-settings-with-no-enabled-projects.jpg"
   alt="Org GitHub Integration settings"
 />
 
 3. Select a GitHub repository to associate with the project.
 
 <DocsImage
-  src="/img/dashboard/github-integration/project-settings-repo-selection.png"
+  src="/img/dashboard/github-integration/project-settings-repo-selection.jpg"
   alt="Associate GitHub repo with Cypress project"
 />
 
@@ -303,15 +318,16 @@ Once a GitHub repository is associated with a Cypress project, the GitHub
 integration will be immediately enabled:
 
 <DocsImage
-  src="/img/dashboard/github-integration/project-settings-selected-repo.png"
+  src="/img/dashboard/github-integration/project-settings-selected-repo.jpg"
   alt="GitHub integration enabled for Cypress project"
+  width={800}
 />
 
 You can also see all GitHub Integration-enabled Cypress projects within your
 organizations **Integrations** page:
 
 <DocsImage
-  src="/img/dashboard/github-integration/org-settings-with-projects.png"
+  src="/img/dashboard/github-integration/org-settings-with-projects.jpg"
   alt="Integrations page"
 />
 
@@ -323,19 +339,19 @@ Cypress Cloud will report Cypress test statuses to GitHub for related commits.
 prevent merging a commit or pull request into the rest of your codebase until
 all your Cypress tests have passed.
 
-The Cypress GitHub App reports commit status checks in two separate styles:
+The Cypress GitHub App reports commit status checks in two distinct styles:
 
 - **One check per
   [run group](/guides/guides/parallelization#Grouping-test-runs).**
 
   <DocsImage
-    src="/img/dashboard/github-integration/status-checks-per-group-failed.png"
+    src="/img/dashboard/github-integration/status-checks-per-group.jpg"
     alt="Status checks per group"
   />
 
 - **Or one check per spec file.**
   <DocsImage
-    src="/img/dashboard/github-integration/status-checks-per-spec.png"
+    src="/img/dashboard/github-integration/status-checks-per-spec.jpg"
     alt="Status checks per spec"
   />
 
@@ -345,8 +361,8 @@ Cypress Cloud to help you dig deeper into the problem via error messages, stack
 traces, screenshots, and video recordings:
 
 <DocsImage
-  src="/img/dashboard/dashboard-fail-tab.png"
-  alt="Cypress Cloud failure tab"
+  src="/img/dashboard/github-integration/cloud-details-specs-tab.jpg"
+  alt="Cypress Cloud specs tab"
 />
 
 ### Disable status checks
@@ -355,7 +371,7 @@ GitHub status checks are optional and can be disabled within a project's GitHub
 integration settings:
 
 <DocsImage
-  src="/img/dashboard/github-integration/status-check-settings.png"
+  src="/img/dashboard/github-integration/status-check-settings.jpg"
   alt="Status checks settings"
 />
 
@@ -386,11 +402,11 @@ An example of a Cypress pull-request comment can be seen below:
 
 ### Disable PR comments
 
-PR comments and failure screenshot thumbnails are optional and can be disabled
-if not needed within a project's GitHub Integration settings:
+PR comments are optional and can be disabled if not needed within a project's
+GitHub Integration settings:
 
 <DocsImage
-  src="/img/dashboard/github-integration/pr-comments-settings.png"
+  src="/img/dashboard/github-integration/pr-comments-settings.jpg"
   alt="Status checks settings"
 />
 
@@ -400,9 +416,9 @@ You can uninstall the Cypress GitHub app from GitHub by performing the following
 steps:
 
 1. Go into your organization's **Settings** from within GitHub.
-2. Click on **Installed GitHub Apps**.
+2. Click on **GitHub Apps**.
 3. Click **Configure** beside the Cypress app.
-4. Click **Uninstall** below the "Uninstall Cypress" section.
+4. Click **Uninstall** in the "Danger Zone" section.
 
 ## Troubleshooting
 
