@@ -406,6 +406,7 @@ into the callback.
 
 ### Dependencies / Sharing Code
 
+Within the `cy.origin()` callback,
 [`Cypress.require()`](/api/cypress-api/require) can be utilized to include
 [npm](https://www.npmjs.com/) packages and other files. It is functionally the
 same as using
@@ -421,10 +422,12 @@ within the callback.
 :::caution
 
 Using `Cypress.require()` within the callback requires enabling the
-[`experimentalOriginDependencies`](/guides/references/experiments) flag in the
+[`experimentalOriginDependencies`](/guides/references/experiments) option in the
 Cypress configuration.
 
 :::
+
+Read more in the [`Cypress.require()` doc](/api/cypress-api/require) itself.
 
 #### Example
 
@@ -545,6 +548,14 @@ There are other testing scenarios which are not currently covered by
 
 However, `<iframe>` support is on [our roadmap](/guides/references/roadmap) for
 inclusion in a future version of Cypress.
+
+## History
+
+| Version                                        | Changes                                                                                                     |
+| ---------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| [12.6.0](/guides/references/changelog#10-7-0)  | Support for `Cypress.require()` added and support for CommonJS `require()` and ES module `import()` removed |
+| [10.11.0](/guides/references/changelog#10-7-0) | Support for CommonJS `require()` and ES module `import()` added and support for `Cypress.require()` removed |
+| [10.7.0](/guides/references/changelog#10-7-0)  | Support for `Cypress.require()` added                                                                       |
 
 ## See also
 
