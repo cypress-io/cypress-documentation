@@ -41,12 +41,6 @@ const config = {
           editUrl:
             'https://github.com/cypress-io/cypress-documentation/tree/main/',
           routeBasePath: '/',
-          // versions: {
-          //   current: {
-          //     label: 'Latest Docs',
-          //   },
-          // },
-          // lastVersion: 'current',
           remarkPlugins: [
             cypressConfigExample,
             cypressConfigPluginExample,
@@ -120,10 +114,6 @@ const config = {
             label: 'Learn',
             position: 'left',
           },
-          // {
-          //   type: 'docsVersionDropdown',
-          //   position: 'right',
-          // },
           {
             href: 'https://github.com/cypress-io/cypress-documentation',
             position: 'right',
