@@ -15,19 +15,19 @@ Most functions on `Cypress.ensure` accept a `subject` argument, check an asserti
 Cypress.ensure.isChildCommand(command, args, cy)​
 
 // Type of argument
-Cypress.ensure.isType(subject, type, name, cy)​
-Cypress.ensure.isElement(subject, name, cy)​
-Cypress.ensure.isWindow(subject, name, cy)
-Cypress.ensure.isDocument(subject, name, cy)​
+Cypress.ensure.isType(subject, type, commandName, cy)​
+Cypress.ensure.isElement(subject, commandName, cy)​
+Cypress.ensure.isWindow(subject, commandName, cy)
+Cypress.ensure.isDocument(subject, commandName, cy)​
 
 // State of DOM element
-Cypress.ensure.isAttached(subject, name, cy)​
-Cypress.ensure.isNotDisabled(subject, name)​
-Cypress.ensure.isNotHiddenByAncestors(subject, name)​
-Cypress.ensure.isNotReadonly(subject, name)​
-Cypress.ensure.isScrollable($el, name)​
-Cypress.ensure.isStrictlyVisible(subject, name)​
-Cypress.ensure.isVisible(subject, name)​
+Cypress.ensure.isAttached(subject, commandName, cy)​
+Cypress.ensure.isNotDisabled(subject, commandName)​
+Cypress.ensure.isNotHiddenByAncestors(subject, commandName)​
+Cypress.ensure.isNotReadonly(subject, commandName)​
+Cypress.ensure.isScrollable(subject, commandName)​
+Cypress.ensure.isStrictlyVisible(subject, commandName)​
+Cypress.ensure.isVisible(subject, commandName)​
 ```
 
 :::caution
@@ -53,17 +53,19 @@ Cypress.Commands.addQuery('getChildById', function (id) {
   }
 })
 
-Cypress.Commands.addQuery('verifyElementActionable', function (id) {
+const queryName = 'verifyElementActionable'
+
+Cypress.Commands.addQuery(queryName, function (...args) {
   // Throws an early error if this query is chained directly off `cy`, eg.
   // `cy.verifyElementActionable('foo')` would throw an error
-  Cypress.ensure.isChildCommand(command, args, cy)​
+  Cypress.ensure.isChildCommand(this, args, cy)​
 
   return (subject) => {
     // Verify that the subject fulfills a variety of conditions
-    Cypress.ensure.isElement(subject, 'verifyElementActionable', cy)
-    Cypress.ensure.isVisible(subject, 'verifyElementActionable', cy)
-    Cypress.ensure.isNotDisabled(subject, 'verifyElementActionable', cy)
-    Cypress.ensure.isNotReadonly(subject, 'verifyElementActionable', cy)
+    Cypress.ensure.isElement(subject, queryName, cy)
+    Cypress.ensure.isVisible(subject, queryName, cy)
+    Cypress.ensure.isNotDisabled(subject, queryName, cy)
+    Cypress.ensure.isNotReadonly(subject, queryName, cy)
 
     return subject
   }
