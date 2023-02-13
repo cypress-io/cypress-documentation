@@ -3,5 +3,6 @@ export interface DocsImageProps {
   caption: string
   src: string
   title: string
+  width: number;
   noBorder: boolean
 }

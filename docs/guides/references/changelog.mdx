@@ -2,6 +2,16 @@
 title: Changelog
 ---
 
+## 12.6.0
+
+_Released 02/14/2023_
+
+**Features:**
+
+- Added `Cypress.require()` for including dependencies within the `cy.origin()`
+  callback. Removed support for `require()` and `import()` within the callback.
+  Addresses [#24976](https://github.com/cypress-io/cypress/issues/24976).
+
 ## 12.5.1
 
 _Released 02/2/2023_
@@ -1238,7 +1248,7 @@ _Released 8/15/2022_
 - In the 'Create Blank Spec' dialog, pressing enter or return when the focus is
   on the spec path input field will create the blank spec. Fixes
   [#21815](https://github.com/cypress-io/cypress/issues/21815).
-- Fixes React 18 unmount component handling to resolve the  
+- Fixes React 18 unmount component handling to resolve the
   `lastMountedReactDom.unmountComponentAtNode is not a function` error. Fixes
   [#23081](https://github.com/cypress-io/cypress/issues/23081).
 - Fixes a regression introduced in Cypress 10.0 where Cypress no longer
