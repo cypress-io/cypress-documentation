@@ -2,15 +2,11 @@
 title: Cypress.ensure
 ---
 
-`Cypress.ensure.method()` is a collection of helper methods for verifying
-conditions while executing Cypress commands. They are mostly useful when writing
+`Cypress.ensure` is a collection of helper methods for making assertions. They are mostly useful when writing
 [custom queries](/api/cypress-api/custom-queries) or
 [commands](/api/cypress-api/custom-commands).
 
-Most functions on `Cypress.ensure` accept `subject` argument, and assert
-something about it, throwing an error if it doesn't match. They have no return
-value; their only purpose is to ensure the state of the application and throw an
-error if it doesn't match.
+Most functions on `Cypress.ensure` accept a `subject` argument, check an assertion, and throw an error if the assertion fails. These functions have no return value.
 
 ## Syntax
 
@@ -76,6 +72,6 @@ Cypress.Commands.addQuery('verifyElementActionable', function (id) {
 
 ## See also
 
-- Writing [custom queries](/api/cypress-api/custom-queries) contains more
+- ["Custom Queries"](/api/cypress-api/custom-queries) contains more
   information about writing custom queries, which is the main use-case for the
   `ensure` functions.
