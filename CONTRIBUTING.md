@@ -138,6 +138,7 @@ Each plugin submitted to the plugins list should have the following:
 3. Compatibility with at least the latest major version of Cypress
 
 Plugins are listed in in the following order to for users:
+
 - official
 - verified
 - community
