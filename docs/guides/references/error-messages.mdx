@@ -678,12 +678,14 @@ when to use the
 [--ci-build-id](/guides/guides/command-line#cypress-run-ci-build-id-lt-id-gt)
 option.
 
-### <Icon name="exclamation-triangle" color="red" /> The `--ci-build-id`, `--group`, or `--parallel` flags can only be used when recording
+### <Icon name="exclamation-triangle" color="red" /> The `--ci-build-id`, `--group`, `--tag`, `--parallel`, or `--auto-cancel-after-failures` flags can only be used when recording {#record-params-without-recording}
 
 You passed the `--ci-build-id`,
-[--group](/guides/guides/command-line#cypress-run-group-lt-name-gt), or
-[--parallel](/guides/guides/command-line#cypress-run-parallel) flag without also
-passing the `--record` flag.
+[--group](/guides/guides/command-line#cypress-run-group-lt-name-gt),
+[--tag](/guides/guides/command-line#cypress-run-tag-lt-tag-gt),
+[--parallel](/guides/guides/command-line#cypress-run-parallel), or
+[--auto-cancel-after-failures](/guides/guides/command-line/#auto-cancel-after-runs)
+flag without also passing the `--record` flag.
 
 These flags can only be used when recording to
 [Cypress Cloud](/guides/cloud/introduction).
@@ -835,6 +837,32 @@ This should get rid of the error. If you are still receiving this error, please
 If you do not have Powershell available, you can also make this change via
 regedit or gpedit.
 [See Microsoft's documentation for details.](https://docs.microsoft.com/en-us/windows/win32/fileio/maximum-file-path-limitation)
+
+### <Icon name="exclamation-triangle" color="red" /> error: unknown option: --auto-cancel-after-failures
+
+The `--auto-cancel-after-failures` flag is only available in Cypress 12.x and
+later, and must be used with the `cypress run` command.
+
+### <Icon name="exclamation-triangle" color="red" /> --auto-cancel-after-failures must be a integer or false
+
+You passed in an invalid value for the `--auto-cancel-after-failures` flag. It
+must be an integer or false.
+
+### <Icon name="exclamation-triangle" color="red" /> --auto-cancel-after-failures passed without a Business or Enterprise Cloud account
+
+Auto Cancellation is not included in your current billing plan. To enable this
+service, please visit your billing and upgrade to another plan with Auto
+Cancellation.
+
+[https://www.cypress.io/pricing/](https://www.cypress.io/pricing/)
+
+### <Icon name="exclamation-triangle" color="red" /> You passed the --auto-cancel-after-failures flag for a run that is already in progress
+
+You passed the `--auto-cancel-after-failures` flag, but this run originally
+started with a different value on this `--auto-cancel-after-failures` flag.
+
+The first setting of `--auto-cancel-after-failures` for any given run takes
+precedent.
 
 ## Page Load Errors
 
