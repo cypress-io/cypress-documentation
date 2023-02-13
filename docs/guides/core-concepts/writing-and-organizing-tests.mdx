@@ -794,13 +794,15 @@ file by clicking on it.
 
 ## Test statuses
 
-After the Cypress spec completes every test has one of four statuses: **passed**,
-**failed**, **pending**, or **skipped**. The behavior of these statuses are inherited from the Mocha, since this is the test runner leveraged by Cypress.
+After the Cypress spec completes every test has one of four statuses:
+**passed**, **failed**, **pending**, or **skipped**. The behavior of these
+statuses are inherited from the Mocha, since this is the test runner leveraged
+by Cypress.
 
 ### Passed
 
-Passed tests have successfully completed all their hooks and commands without failing any
-assertions. The test screenshot below shows a passed test:
+Passed tests have successfully completed all their hooks and commands without
+failing any assertions. The test screenshot below shows a passed test:
 
 <DocsImage
   src="/img/guides/core-concepts/todo-mvc-passing-test.png"
@@ -813,8 +815,8 @@ some failed attempts, but ultimately the entire test finishes successfully.
 
 ### Failed
 
-Good news - the failed hook or test has found a problem. Could be much worse - it could
-be a user hitting this bug!
+Good news - the failed hook or test has found a problem. Could be much worse -
+it could be a user hitting this bug!
 
 <DocsImage
   src="/img/guides/core-concepts/todo-mvc-failing-test.png"
@@ -827,7 +829,9 @@ can be fixed.
 ### Pending
 
 You can write _placeholder_ tests in several ways as shown below, and Cypress
-knows NOT to run them. Additionally, you can conditionally specify which browser(s) a tests should run for and if the test should not run for the browser currently being tested, it is marked as _pending_.
+knows NOT to run them. Additionally, you can conditionally specify which
+browser(s) a tests should run for and if the test should not run for the browser
+currently being tested, it is marked as _pending_.
 
 Cypress marks all the tests below as _pending_.
 
@@ -932,7 +936,8 @@ test "adds 2 todos".
 />
 
 The tests that were meant to be executed but were skipped due to some run-time
-problem are marked "skipped" by Cypress. This is typically observed when a `before`, `beforeEach` or `afterEach` hook fails.
+problem are marked "skipped" by Cypress. This is typically observed when a
+`before`, `beforeEach` or `afterEach` hook fails.
 
 **Tip:** read the blog post
 [Writing Test Progress](https://glebbahmutov.com/blog/writing-tests-progress/)
