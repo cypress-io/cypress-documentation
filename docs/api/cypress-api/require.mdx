@@ -1,0 +1,159 @@
+---
+title: Cypress.require
+e2eSpecific: true
+---
+
+`Cypress.require` enables utilizing dependencies within the
+[`cy.origin()`](/api/commands/origin) callback function. It is used to require
+modules such as [npm](https://www.npmjs.com/) packages and other local files.
+
+It is functionally the same as using
+[CommonJS `require()`](https://nodejs.org/en/knowledge/getting-started/what-is-require/)
+in browser-targeted code.
+
+## Syntax
+
+```js
+Cypress.require(moduleNameOrPath)
+```
+
+## Usage
+
+**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+
+```js
+cy.origin('example.com', () => {
+  const _ = Cypress.require('lodash')
+  const utils = Cypress.require('./utils')
+
+  // ... use lodash and utils ...
+})
+```
+
+**<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
+
+```js
+// `Cypress.require()` cannot be used outside the `cy.origin()` callback.
+// Use CommonJS `require()` instead
+const _ = Cypress.require('lodash')
+
+cy.origin('example.com', async () => {
+  // `require()` and `import()` cannot be used inside the `cy.origin()` callback.
+  // Use `Cypress.require()` instead
+  const _ = require('lodash')
+  const utils = await import('./utils')
+})
+```
+
+See
+[`cy.origin()` Dependencies / Sharing Code](/api/commands/origin#Dependencies-Sharing-Code)
+for more example usage.
+
+## TypeScript
+
+There are couple ways to have types inferred for the dependency required.
+
+### Casting
+
+```js
+cy.origin('example.com', async () => {
+  const _ = Cypress.require('lodash') as typeof import('lodash')
+
+  // lodash methods are properly typed
+  _.map([1, 2, 3], (num: number) => {
+    // ...
+  })
+})
+```
+
+### Generic
+
+```js
+import type { LoDashStatic } from 'lodash'
+
+cy.origin('example.com', async () => {
+  const _ = Cypress.require < LoDashStatic > 'lodash'
+
+  // lodash methods are properly typed
+  _.map([1, 2, 3], (num: number) => {
+    // ...
+  })
+})
+```
+
+## Limitations / Requirements
+
+- `Cypress.require` only works when called within the
+  [`cy.origin()`](/api/commands/origin) callback function. It will error if used
+  elsewhere.
+- Only the folowing file extensions are supported for dependencies required
+  (either directly or indirectly):
+  - `.js`
+  - `.jsx`
+  - `.ts`
+  - `.tsx`
+  - `.mjs`
+  - `.json`
+  - `.coffee`
+- `Cypress.require('dependency-name')` must on one line as a continuous string:
+
+<!-- prettier-ignore-start -->
+```js
+// ✅ GOOD
+Cypress.require('lodash')
+
+// ❌ BAD
+const { require } = Cypress
+require('lodash')
+
+// ❌ BAD
+Cypress
+.require('lodash')
+
+// ❌ BAD
+Cypress . require('lodash')
+
+// ❌ BAD
+Cypress.require(
+  'lodash'
+)
+```
+<!-- prettier-ignore-end -->
+
+## Why not `require` or `import`?
+
+Cypress runs test code in the browser, so any dependencies have to be bundled
+with the test code before it is run. This is accomplished for the majority of
+test code via a [preprocessor](/api/plugins/preprocessors-api). However, due to
+the way that [`cy.origin()`](/api/commands/origin) works, the callback passed to
+it is extracted from the test code where it is defined and run in a different
+context. This also separates it from any dependencies that are included in the
+test code bundle.
+
+To solve this, we replace all instances of `Cypress.require` with `require` at
+runtime and bundle just the callback with any dependencies required within it.
+
+Using `Cypress.require` in the test code instead of `require` or `import` keeps
+the dependencies required within the callback from being bundled with the rest
+of the test code. We cannot bring them along with the callback to where it is
+run, so it would waste execution time and memory to bundle its dependencies in
+the original preprocessing. The dependencies are only bundled with the code that
+needs them when we preprocess the callback itself.
+
+Additionally, we tried a solution previously that allowed use of `require` and
+`import`, but found that it hurt performance not only for spec files using them
+within the `cy.origin()` callback, but even for spec files that did not use
+them. That solution was also preprocessor-dependent and only worked for the
+webpack preprocessor. Using `Cypress.require` is preprocessor-agnostic.
+
+## History
+
+| Version                                        | Changes                                                                                             |
+| ---------------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| [12.6.0](/guides/references/changelog#10-7-0)  | `Cypress.require` added and support for using CommonJS `require()` and ES module `import()` removed |
+| [10.11.0](/guides/references/changelog#10-7-0) | `Cypress.require` removed in favor of CommonJS `require()` and ES module `import()`                 |
+| [10.7.0](/guides/references/changelog#10-7-0)  | `Cypress.require` added                                                                             |
+
+## See also
+
+- [`cy.origin()`](/api/commands/origin)
