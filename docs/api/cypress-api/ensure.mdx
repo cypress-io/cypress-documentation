@@ -13,9 +13,6 @@ return value.
 ## Syntax
 
 ```javascript
-// Command chain
-Cypress.ensure.isChildCommand(command, args, cy)​
-
 // Type of argument
 Cypress.ensure.isType(subject, type, commandName, cy)​
 Cypress.ensure.isElement(subject, commandName, cy)​
@@ -58,10 +55,6 @@ Cypress.Commands.addQuery('getChildById', function (id) {
 const queryName = 'verifyElementActionable'
 
 Cypress.Commands.addQuery(queryName, function (...args) {
-  // Throws an early error if this query is chained directly off `cy`, eg.
-  // `cy.verifyElementActionable('foo')` would throw an error
-  Cypress.ensure.isChildCommand(this, args, cy)​
-
   return (subject) => {
     // Verify that the subject fulfills a variety of conditions
     Cypress.ensure.isElement(subject, queryName, cy)
