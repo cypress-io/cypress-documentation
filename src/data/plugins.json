@@ -376,7 +376,7 @@
     },
     {
       "name": "Custom Commands",
-      "description": " Read the <a target=\"_blank\" href=\"https://docs.cypress.io/api/plugins/preprocessors-api\">Custom Commands</a> and <a target=\"_blank\" href=\"https://docs.cypress.io/api/plugins/preprocessors-api\">Custom Query</a> documentation to learn more.",
+      "description": " Read the <a target=\"_blank\" href=\"/api/plugins/preprocessors-api\">Custom Commands</a> and <a target=\"_blank\" href=\"/api/plugins/preprocessors-api\">Custom Query</a> documentation to learn more.",
       "plugins": [
         {
           "name": "cypress-xpath",
