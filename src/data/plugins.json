@@ -727,7 +727,7 @@
     },
     {
       "name": "Authentication",
-      "description": "Take a look our auth guides for <a href=\"https://github.com/cypress-io/guides/end-to-end-testing/amazon-cognito-authentication\">Amazon Cognito</a>, <a href=\"https://github.com/cypress-io/guides/end-to-end-testing/amazon-cognito-authentication\">Amazon Cognito</a>, <a href=\"https://github.com/cypress-io/guides/end-to-end-testing/auth0-authentication\">Auth0</a>, <a href=\"https://github.com/cypress-io/guides/end-to-end-testing/amazon-cognito-authentication\">Amazon Cognito</a>, <a href=\"https://github.com/cypress-io/guides/end-to-end-testing/google-authentication\">Google</a>, <a href=\"https://github.com/cypress-io/guides/end-to-end-testing/okta-authentication\">Okta Cognito</a>, and <a href=\"https://github.com/cypress-io/guides/end-to-end-testing/social-authentication\">Social Logins</a>. Also checkout our <a target=\"_blank\" href=\"https://github.com/cypress-io/cypress-example-recipes#logging-in-recipes\">Logging in</a> recipes.",
+      "description": "Take a look at our auth guides for <a href=\"/guides/end-to-end-testing/amazon-cognito-authentication\">Amazon Cognito</a>, <a href=\"/guides/end-to-end-testing/amazon-cognito-authentication\">Amazon Cognito</a>, <a href=\"/guides/end-to-end-testing/auth0-authentication\">Auth0</a>, <a href=\"/guides/end-to-end-testing/amazon-cognito-authentication\">Amazon Cognito</a>, <a href=\"/guides/end-to-end-testing/google-authentication\">Google</a>, <a href=\"/guides/end-to-end-testing/okta-authentication\">Okta Cognito</a>, and <a href=\"/guides/end-to-end-testing/social-authentication\">Social Logins</a>. Also checkout our <a target=\"_blank\" href=\"https://github.com/cypress-io/cypress-example-recipes#logging-in-recipes\">Logging in</a> recipes.",
       "plugins": [
         {
           "name": "cypress-keycloak-commands",
@@ -873,35 +873,35 @@
       "plugins": [
         {
           "name": "Cypress Angular",
-          "description": "Test Angular components using Cypress Test Runner. Note: This package is bundled with the cypress package and does not need to be installed separately, unless a specific version is desired. See the <a target=\"_blank\" href=\"https://docs.cypress.io/guides/component-testing/angular/overview\">Angular Component Testing Docs</a> for mounting Angular components.",
+          "description": "Test Angular components using Cypress Test Runner. This package is bundled with the cypress package and does not need to be installed separately, unless a specific version is desired. See the <a target=\"_blank\" href=\"/guides/component-testing/angular/overview\">Angular Component Testing Docs</a> for mounting Angular components.",
           "link": "https://github.com/cypress-io/cypress/tree/master/npm/angular",
           "keywords": ["component", "angular"],
           "badge": "official"
         },
         {
           "name": "Cypress React",
-          "description": "Test React components using Cypress Test Runner. Note: This package is bundled with the cypress package and does not need to be installed separately, unless a specific version is desired. See the <a target=\"_blank\" href=\"https://docs.cypress.io/guides/component-testing/react/overview\">React Component Testing Docs</a> for mounting React components.",
+          "description": "Test React components using Cypress Test Runner. This package is bundled with the cypress package and does not need to be installed separately, unless a specific version is desired. See the <a target=\"_blank\" href=\"/guides/component-testing/react/overview\">React Component Testing Docs</a> for mounting React components.",
           "link": "https://github.com/cypress-io/cypress/tree/master/npm/react",
           "keywords": ["component", "react"],
           "badge": "official"
         },
         {
           "name": "Cypress Svelte",
-          "description": "Test Svelte components using Cypress Test Runner. This package is bundled with the cypress package and should not need to be installed separately. See the <a target=\"_blank\" href=\"https://docs.cypress.io/guides/component-testing/svelte/overview\">Svelte Component Testing Docs</a> for mounting Svelte components.",
+          "description": "Test Svelte components using Cypress Test Runner. This package is bundled with the cypress package and should not need to be installed separately. See the <a target=\"_blank\" href=\"/guides/component-testing/svelte/overview\">Svelte Component Testing Docs</a> for mounting Svelte components.",
           "link": "https://github.com/cypress-io/cypress/tree/master/npm/svelte",
           "keywords": ["component", "svelte"],
           "badge": "official"
         },
         {
           "name": "Cypress Vue",
-          "description": "Test Vue 3 components using Cypress Test Runner. Note: This package is bundled with the cypress package and should not need to be installed separately. See the <a target=\"_blank\" href=\"https://docs.cypress.io/guides/component-testing/vue/overview\">Vue Component Testing Docs</a> for mounting Vue components.",
+          "description": "Test Vue 3 components using Cypress Test Runner. This package is bundled with the cypress package and should not need to be installed separately. See the <a target=\"_blank\" href=\"/guides/component-testing/vue/overview\">Vue Component Testing Docs</a> for mounting Vue components.",
           "link": "https://github.com/cypress-io/cypress/tree/master/npm/vue",
           "keywords": ["component", "vue", "vue.js"],
           "badge": "official"
         },
         {
           "name": "Cypress Vue2",
-          "description": "Test Vue 2 components using Cypress Test Runner. Note: This package is bundled with the cypress package and should not need to be installed separately. See the <a target=\"_blank\" href=\"https://docs.cypress.io/guides/component-testing/vue/overview\">Vue Component Testing Docs</a> for mounting Vue components.",
+          "description": "Test Vue 2 components using Cypress Test Runner. This package is bundled with the cypress package and should not need to be installed separately. See the <a target=\"_blank\" href=\"/guides/component-testing/vue/overview\">Vue Component Testing Docs</a> for mounting Vue components.",
           "link": "https://github.com/cypress-io/cypress/tree/master/npm/vue2",
           "keywords": ["component", "vue", "vue.js"],
           "badge": "official"
@@ -945,7 +945,7 @@
     },
     {
       "name": "Visual Testing",
-      "description": "<a target=\"_blank\" href=\"https://docs.cypress.io/guides/tooling/visual-testing\">Visual testing</a> is a great complement to functional testing.",
+      "description": "<a target=\"_blank\" href=\"/guides/tooling/visual-testing\">Visual testing</a> is a great complement to functional testing.",
       "plugins": [
         {
           "name": "Argos",
