@@ -6,9 +6,10 @@ title: Cypress.ensure
 are mostly useful when writing [custom queries](/api/cypress-api/custom-queries)
 or [custom commands](/api/cypress-api/custom-commands).
 
-Most functions on `Cypress.ensure` accept a `subject` argument, check an
-assertion, and throw an error if the assertion fails. These functions have no
-return value.
+Most functions on `Cypress.ensure` accept a
+[`subject`](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+argument, check an assertion, and throw an error if the assertion fails. These
+functions have no return value.
 
 ## Syntax
 
@@ -46,7 +47,12 @@ error thrown, write your own `ensure` function instead.
 Cypress.Commands.addQuery('getChildById', function (id) {
   return (subject) => {
     // Verify that the subject is an element, document, or window object
-    Cypress.ensure.isType(subject, ['element', 'document', 'window'], 'getChildById', cy)
+    Cypress.ensure.isType(
+      subject,
+      ['element', 'document', 'window'],
+      'getChildById',
+      cy
+    )
 
     return $$(`#${id}`, subject)
   }
