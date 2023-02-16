@@ -76,6 +76,13 @@ This outer function is invoked once. It should return a function that takes a
 subject and returns a new subject; this inner function might be called multiple
 times.
 
+:::info
+
+The query API relies on `this` to set timeouts, which means that `callbackFn`
+should always use `function () {}` and not be an arrow function (`() => {}`).
+
+:::
+
 ## Examples
 
 ### `.focused()`
@@ -324,6 +331,13 @@ to use [`Cypress.Commands.overwrite`](/api/cypress-api/custom-commands) instead.
 
 :::
 
+:::info
+
+Remember that query functions rely on `this` - when you invoke `originalFn`, be
+sure to use `.call` or `.apply`.
+
+:::
+
 ```js
 Cypress.Commands.overwriteQuery('get', function (originalFn, ...args) {
   console.log('get called with args:', args)
@@ -343,9 +357,6 @@ The `originalFn` is the function originally passed to
 gives you access to both the outer arguments (before you call `originalFn`) and
 the inner function (the return value of `originalFn`), giving you a great deal
 of control over how the query executes.
-
-Remember that query functions rely on `this` - when you invoke `originalFn`, be
-sure to use `.call` or `.apply`.
 
 #### Adding alias support to `.contains()`
 
