@@ -433,9 +433,8 @@ the original.
 :::caution
 
 `Cypress.Commands.overwrite` can only overwrite commands, not queries. If you
-want to modify the behavior of a query, you'll need to add your updated version
-under a new name using
-[`Cypress.Commands.addQuery`](/api/cypress-api/custom-queries) instead.
+want to modify the behavior of a query, you'll need to use
+[`Cypress.Commands.overwriteQuery`](/api/cypress-api/custom-queries) instead.
 
 :::
 
