@@ -102,10 +102,18 @@ simulated tests and the actual tests as they happened.
 ### Tests for Review
 
 The Tests for Review panel consolidates disparate test results into a single
-view, focusing attention on the specs producing the most relevant results. It
-shows Failed, Flaky and Modified tests broken down by spec, with easy access to
-run artefacts, and a badge clearly indicating the reason the result was
-considered notable.
+view, focusing attention on the specs producing the most relevant results.
+
+It orders results by:
+
+- Failed - when a failure occurred in the test or a hook associated with the
+  test
+- Flaky - when a test failed one or more attempts before finally passing
+- Modified - when the test body has changed from a previously recorded tests
+
+The panel shows these tests broken down by spec, with easy access to run
+artifacts, and a badge clearly indicating the reason the result was considered
+notable.
 
 Clicking on a specific test opens the
 [test detail sidebar](#Test-detail-sidebar).
@@ -119,7 +127,11 @@ Clicking on a specific test opens the
 
 On the Test Results tab, detailed results for the entire test run can be browsed
 and examined. At the top of the page are dropdowns for you to sort and filter
-results by a wide range of metrics.
+results by a wide range of metrics, like
+[test statuses](/guides/core-concepts/writing-and-organizing-tests#Test-statuses)
+or [flaky tests](/guides/cloud/flaky-test-management).
+
+The
 
 <DocsImage
   src="/img/guides/cloud/runs/test-results.png"
