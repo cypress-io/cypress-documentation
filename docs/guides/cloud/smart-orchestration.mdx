@@ -130,8 +130,7 @@ to see how much time we predict these features would save you.
 :::
 
 Auto Cancellation is a _Smart Orchestration_ feature that is managed within a
-project's settings. Coming soon, you will also have the option to enable the
-feature on a per-run basis with the Cypress CLI.
+project's settings.
 
 :::info
 
@@ -168,3 +167,44 @@ In addition to Auto Cancellation, consider reducing CI costs further by enabling
 the run, and reduce the time it takes to fix issues and deploy changes.
 
 :::
+
+### Specifying failures before auto canceling in the CLI
+
+:::info
+
+The `auto-cancel-after-failures` flag in the CLI is only available in Cypress
+12.6.0 and later. Including the flag in an older version will throw an error.
+
+:::
+
+With the Cypress CLI, you can specify the number of test failures to execute
+before canceling the run via a command flag. This allows more granular control
+of Auto Cancellation on a per-run basis.
+
+Some common use cases for doing so might be:
+
+- Setting a lower-than-normal value on dev environments to fail a test suite
+  early for faster feedback
+- Disabling Auto Cancellation on important branches that need the full test
+  suite to run every time
+- Overriding the project value on a case-by-case basis
+
+Specifying the flag will override the project setting in Cypress Cloud, and not
+specifying it will default to the value in the project settings.
+
+To set it, pass the `--auto-cancel-after-failures` flag to the `cypress run`
+command, and give it a numeric value:
+
+```bash
+npx cypress run --record --key <<your_record_key>> --auto-cancel-after-failures 1
+```
+
+You can also specify `false` for the value to disable Auto Cancellation for the
+run:
+
+```bash
+npx cypress run --record --key <<your_record_key>> --auto-cancel-after-failures false
+```
+
+For more info on passing CLI flags, see our guide on the
+[Cypress Command Line](/guides/guides/command-line).

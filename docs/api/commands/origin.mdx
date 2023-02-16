@@ -406,54 +406,35 @@ into the callback.
 
 ### Dependencies / Sharing Code
 
-[ES module dynamic `import()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import#dynamic_imports)
-and/or
+Within the `cy.origin()` callback,
+[`Cypress.require()`](/api/cypress-api/require) can be utilized to include
+[npm](https://www.npmjs.com/) packages and other files. It is functionally the
+same as using
 [CommonJS `require()`](https://nodejs.org/en/knowledge/getting-started/what-is-require/)
-can be used within the callback to include [npm](https://www.npmjs.com/)
-packages and other files.
+in browser-targeted code.
+
+Note that it is not possible to use
+[CommonJS `require()`](https://nodejs.org/en/knowledge/getting-started/what-is-require/)
+or
+[ES module `import()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import#dynamic_imports)
+within the callback.
 
 :::caution
 
-Using `import()` and `require()` within the callback requires enabling the
-[`experimentalOriginDependencies`](/guides/references/experiments) flag in the
-Cypress configuration and using version `5.15.0` or greater of the
-[`@cypress/webpack-preprocessor`](https://github.com/cypress-io/cypress/tree/master/npm/webpack-preprocessor).
-The `@cypress/webpack-preprocessor` is included in Cypress by default, but if
-your project installs its own version in the Cypress configuration, make sure it
-is version `5.15.0` or greater.
-
-If using an older version of the webpack or a different preprocessor, you'll see
-an error that includes the following text:
-
-_Using `require()` or `import()` to include dependencies requires enabling the
-`experimentalOriginDependencies` flag and using the latest version of
-`@cypress/webpack-preprocessor`._
+Using `Cypress.require()` within the callback requires enabling the
+[`experimentalOriginDependencies`](/guides/references/experiments) option in the
+Cypress configuration.
 
 :::
 
-:::caution
-
-Using `require()` or `import()` within the callback from a `node_modules` plugin
-is not currently supported. We anticipate adding support with issue
-[#24976](https://github.com/cypress-io/cypress/issues/24976).
-
-:::
+Read more in the [`Cypress.require()` doc](/api/cypress-api/require) itself.
 
 #### Example
 
 ```js
-// ES modules
-cy.origin('somesite.com', async () => {
-  const _ = await import('lodash')
-  const utils = await import('../support/utils')
-
-  // ... use lodash and utils ...
-})
-
-// CommonJS
 cy.origin('somesite.com', () => {
-  const _ = require('lodash')
-  const utils = require('../support/utils')
+  const _ = Cypress.require('lodash')
+  const utils = Cypress.require('../support/utils')
 
   // ... use lodash and utils ...
 })
@@ -496,7 +477,7 @@ before(() => {
   // calls in this spec. put it in your support file to make them available to
   // all specs
   cy.origin('somesite.com', () => {
-    require('../support/commands')
+    Cypress.require('../support/commands')
   })
 })
 
@@ -519,7 +500,7 @@ before(() => {
   cy.origin('somesite.com', () => {
     // makes commands defined in this file available to all callbacks
     // for somesite.com
-    require('../support/commands')
+    Cypress.require('../support/commands')
   })
 })
 
@@ -568,9 +549,18 @@ There are other testing scenarios which are not currently covered by
 However, `<iframe>` support is on [our roadmap](/guides/references/roadmap) for
 inclusion in a future version of Cypress.
 
+## History
+
+| Version                                        | Changes                                                                                                     |
+| ---------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| [12.6.0](/guides/references/changelog#10-7-0)  | Support for `Cypress.require()` added and support for CommonJS `require()` and ES module `import()` removed |
+| [10.11.0](/guides/references/changelog#10-7-0) | Support for CommonJS `require()` and ES module `import()` added and support for `Cypress.require()` removed |
+| [10.7.0](/guides/references/changelog#10-7-0)  | Support for `Cypress.require()` added                                                                       |
+
 ## See also
 
 - [Easily test multi-domain workflows with cy.origin](https://cypress.io/blog/2022/04/25/cypress-9-6-0-easily-test-multi-domain-workflows-with-cy-origin/)
 - [Custom Commands](/api/cypress-api/custom-commands)
+- [`Cypress.require()`](/api/cypress-api/require)
 - [`cy.session()`](/api/commands/session)
 - [`cy.visit()`](/api/commands/visit)
