@@ -15,10 +15,11 @@ In this guide, you'll learn how to author a Framework Definition, which will enj
 
 ## Concepts
 
-There are two requirements for authoring a Framework Definition.
+There are a few requirements for authoring a Framework Definition.
 
-1. Definition File (we recommending naming this `definition.cjs`)
-2. Mount adapter (we recommending naming this `index.mjs`)
+- [Definition File](#Framework-Definition) (we recommending naming this `definition.cjs`)
+- [Mount Adapter](#Mount-Adapter) (we recommending naming this `index.mjs`)
+- A [`package.json`](#packagejson) with the correct conventions
 
 The Definition is required when users configure Component Testing for the first time. The Mount adapter is used to render components when writing tests.
 
@@ -207,13 +208,13 @@ Cypress.Commands.add('mount', mount)
 
 The final thing you need is a correctly configured `package.json`. This example was created using [our official template](https://github.com/cypress-io/cypress-ct-definition-template).
 
-The main thing to notice is the `exports` property. The `node` entry points to the Framework Definition, and the `default` entry points to the Mount Adapter:
+The main things to note is the `name` property, which follows the `@org/cypress-ct-*` convention, and is the `exports` property. The `node` entry points to the Framework Definition, and the `default` entry points to the Mount Adapter:
 
-```json {5-8}
+```json {2,5-8}
 {
   "name": "@lmiller1990/cypress-ct-solid-js",
   "version": "0.0.4",
-  "description": "Example mounting adapter for Cypress and Solid.js",
+  "description": "Example Framework Definition for Cypress and Solid.js",
   "exports": {
     "node": "./definition.cjs",
     "default": "./index.mjs"
@@ -239,3 +240,6 @@ The main thing to notice is the `exports` property. The `node` entry points to t
 
 That's it! Publish your Framework Definition on npm and start using it.
 
+## List of Framework Definitions
+
+If you want to share your Framework Definition with us, please send a Pull Request - we would be happy to feature a link to your package!
