@@ -13,15 +13,11 @@ title: CircleCI
 
 <!-- textlint-disable -->
 
-<DocsVideo src="#" />
+<DocsVideo src="https://youtube.com/embed/J-xbNtKgXfY" />
+
+<DocsVideo src="/img/snippets/running-in-ci.mp4" title="Cypress in CircleCI" />
 
 <!-- textlint-enable -->
-
-## Jobs
-
-### run
-
-A single, complete job to run Cypress tests in your application
 
 ## Basic Setup
 
@@ -50,87 +46,6 @@ workflows:
       - cypress/run # "run" job comes from "cypress" orb
 ```
 
-By using the `run` job definitions that Cypress provides inside the orb, it
-brings simplicity and static checks of parameters to your CircleCI
-configuration.
-
-You can find multiple examples at
-[our official orb page](https://circleci.com/developer/orbs/orb/cypress-io/cypress)
-
-## Arguments
-
-#### **<Icon name="angle-right" /> install-command** **_(String)_**
-
-Overrides the default NPM command (npm ci)
-
-#### **<Icon name="angle-right" /> post-install** **_(String)_**
-
-Additional command(s) to run after running install but before verifying CYpress
-and saving cache.
-
-#### **<Icon name="angle-right" /> cypress-cache-key** **_(String)_**
-
-Cache key used to cache the Cypress binary.
-
-:::note
-
-The default value is `cypress-cache-{{ arch }}-{{ checksum: "package.json" }}`
-
-:::
-
-#### **<Icon name="angle-right" /> cypress-cache-path** **_(String)_**
-
-By, default, this will cache the `~/.cache/Cypress` directory so that the
-Cypress binary is cached. You can override this by providing your own cache path
-
-#### **<Icon name="angle-right" /> node-cache-version** **_(String)_**
-
-Used to change the default node cache version (v1) if you need to clear the
-cache for any reason.
-
-#### **<Icon name="angle-right" /> include-branch-in-node-cache-key** **_(String)_**
-
-If true, the node cache will only apply to jobs within the same branch. Turned
-off by default
-
-#### **<Icon name="angle-right" /> working-directory** **_(String)_**
-
-Directory containing the `package.json` file. Used primarily for those using
-monorepos.
-
-#### **<Icon name="angle-right" /> package-manager** **_(Enum)_**
-
-Select the default node package manager to use. NPM v5+ required.
-
-:::note
-
-Available values include: `npm` (default), `yarn`, or `yarn-berry`
-
-:::
-
-#### **<Icon name="angle-right" /> start-command** **_(String)_**
-
-Command used to start your local dev server for Cypress to test against
-
-#### **<Icon name="angle-right" /> cypress-commandy** **_(String)_**
-
-Command used to run your Cypress tests including any flags you want to use
-
-#### **<Icon name="angle-right" /> parallelism** **_(Integer)_**
-
-Number of Circle machines to use for load balancing, min 1 (requires `parallel`
-and `record` flags in your `cypress-command`). Defaults to 1
-
-#### **<Icon name="angle-right" /> install-browsers** **_(Boolean)_**
-
-Flag used to install additional browsers to run your tests. This is only needed
-if you are passing the `--browser` flag in your `cypress-command`. This will
-install the Chrome and Firefox binaries at runtime. If you need additional
-browser support (example: `edge`), you can leave this flag as false and make
-sure you use an executor with a docker image that includes the browsers of your
-choosing. See
-[https://hub.docker.com/r/cypress/browsers/tags](https://hub.docker.com/r/cypress/browsers/tags).
-
 ## Parallelization
 
 A more complex project that needs to install dependencies, build an application
@@ -145,93 +60,74 @@ workflows:
   build:
     jobs:
       - cypress/run:
-          cypress-command:
-            'npx cypress run --record --parallel --group all tests'
           start-command: 'npm start'
+          cypress-command:
+            'npx cypress run --parallel --record --group all tests'
+          parallelism: 4
 ```
 
-### Consumption
+Using the orb brings simplicity and static checks of parameters to CircleCI
+configuration.
 
-There are 2 key metrics to understand when running a CI job across multiple
-machines, consumption time and the actual time it takes. Consumption time is
-essentually the amount of CircleCI resources that a job requires to execute. For
-example you may have a job that runs on 5 machines and takes 1 minute for all to
-complete. In this example it would only take 1 minute of time to execute all the
-jobs but would consume 5 minutes of CircleCI resources. The Cypress CircleCI Orb
-was designed to be as simple and fast as possible for the majority of use cases.
-This means that if you are running your tests in parallel across more than 5
-machines then you may not want to use the `cypress/run` job as it will consume
-more CircleCI resources than are necessary.
+You can find additional examples at
+[our orb examples page](https://github.com/cypress-io/circleci-orb/blob/master/src/examples).
 
 :::info
 
-#### <Icon name="info" /> Parallelization Across More Than 5 Machines
+### <Icon name="graduation-cap" /> Real World Example <Badge type="success">New</Badge>
 
-To lower your consumption in when running in parallel on more than 5 machines,
-please checkout [this example](#) using the `cypress/install` and
-`cypress/run-tests` commands
+The Cypress <Icon name="github" inline="true" contentType="rwa" /> uses the
+Circle CI [Cypress Orb](https://github.com/cypress-io/circleci-orb), Codecov
+Orb, and Windows Orb to test over 300 test cases in parallel across 25 machines,
+multiple browsers, multiple device sizes, and multiple operating systems with
+full code-coverage reporting and
+[Cypress Cloud recording](https://cloud.cypress.io/projects/7s5okt).
 
 <!-- prettier-ignore -->
-Check out the Cypress CircleCI <Icon name="github" inline="true" callout="Example Using Multiple Jobs" url="#" />.
+Check out the full <Icon name="github" inline="true" callout="RWA Circle CI configuration" url="https://github.com/cypress-io/cypress-realworld-app/blob/develop/.circleci/config.yml" />.
 
 :::
 
-## Commands
-
-### install
-
-Command that installs your application's node modules and Cypress dependencies
-
-### run-tests
-
-Command that runs Cypress tests (assuming your machine has already installed
-necessary dependencies)
-
 ## Additional Examples
 
-#### Example using `cypress/install` and `cypress/run-tests` commands:
+#### Component Testing Example
 
 ```yaml
 version: 2.1
 orbs:
   cypress: cypress-io/cypress@3
-jobs:
-  install:
-    executor: cypress/default
-    steps:
-      - cypress/install:
-          install-browsers: true
-      - persist_to_workspace:
-          root: ~/
-          paths:
-            - .cache/Cypress
-            - project
-  run-tests:
-    executor: cypress/default
-    parallelism: 10
-    steps:
-      - run:
-          echo "This step assumes dependencies were isntalled using the
-          cypress/install job"
-      - attach_workspace:
-          at: ~/
-      - cypress/run-tests:
-          cypress-command:
-            'npx cypress run --parallel --record --group Chrome --browser chrome'
-          start-command: 'npm run start'
-      - cypress/run-tests:
-          cypress-command:
-            'npx cypress run --parallel --record --group Firefox --browser
-            firefox'
-          start-command: 'npm run start'
+workflows:
+  test:
+    jobs:
+      - cypress/run:
+          cypress-command: 'npx cypress run --component'
 ```
 
-Find the complete CircleCI v2 example with caching and artifact upload in the
-[cypress-example-docker-circle](https://github.com/cypress-io/cypress-example-docker-circle)
-repo.
+#### Yarn Example
 
-#### RAM Disk
+```yaml
+version: 2.1
+orbs:
+  cypress: cypress-io/cypress@3
+workflows:
+  test:
+    jobs:
+      - cypress/run:
+          package-manager: 'yarn'
+          start-command: 'yarn start'
+```
 
-You can speed up Cypress test jobs by using CircleCI RAM disk, read
-[Start CircleCI Machines Faster by Using RAM Disk](https://glebbahmutov.com/blog/circle-ram-disk/)
-blog post.
+#### Chrome Example
+
+```yaml
+version: 2.1
+orbs:
+  cypress: cypress-io/cypress@3
+workflows:
+  test:
+    jobs:
+      - cypress/run:
+          install-browsers: true
+          start-command: 'npm run start'
+          cypress-command: 'npx cypress run --browser=chrome'
+```
