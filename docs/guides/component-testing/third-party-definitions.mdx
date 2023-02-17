@@ -1,6 +1,11 @@
 # Integrating with Cypress Component Testing
 
-Cypress ships official support for many popular libraries and frameworks, such as [React](/guides/component-testing/react/overview) and [Angular](/guides/component-testing/angular/overview). We constantly monitor what libraries developers are favoring and are always exploring adding new ones to Cypress.
+:::info
+This feature is only available from Cypress 12.7.
+:::
+
+
+Cypress ships official support for many popular libraries and frameworks, such as [React](/guides/component-testing/react/overview) and [Angular](/guides/component-testing/angular/overview). We constantly monitor what libraries developers are interested in and are always open to adding new ones to Cypress.
 
 All officially supported libraries feature a first class onboarding experience, where we detect and scaffold the correct files, and a framework-specific `mount` adapter, to render your components. We call this collection of features a *Framework Definition*, since it defines the requirements for a library or framework to work in Cypress.
 
@@ -17,11 +22,18 @@ There are two requirements for authoring a Framework Definition.
 
 The Definition is required when users configure Component Testing for the first time. The Mount adapter is used to render components when writing tests.
 
+To simplify this process, we recommend starting development using [our official template](https://github.com/cypress-io/cypress-ct-definition-template).
+
 ## Framework Definition
 
 Below is a minimal Framework Definition. Note that `defineFrameworkDefinition` is purely for type safety, similar to `defineConfig` in `cypress.config`.
 
-There is one important convention; the `type` key in `defineFrameworkDefinition` should match the name of your package on npm, and should be named `cypress-ct-*` or `@organization/cypress-ct-*`. Some examples of valid names include:
+There is one important convention; the `type` key in `defineFrameworkDefinition` should match the name of your package on npm, and should be named using one of the following conventions:
+
+- `cypress-ct-*` 
+- `@organization/cypress-ct-*` 
+
+Some examples of valid names include:
 
 - `cypress-ct-react-js`
 - `cypress-ct-svelte-testing`
@@ -89,17 +101,6 @@ module.exports = defineFrameworkDefinition({
    * `@org/cypress-ct-*` for organization level packages.
    */
   type: "@lmiller1990/cypress-ct-solid-js",
-
-  /**
-   * The category. Only "library" is supported right now.
-   * "library" refers to a JavaScript library that runs in the browser,
-   * without requiring an obfuscated configuration file,
-   * such as Create React App or Next.js
-   *
-   * In the future, this will be expanded to include "framework", and
-   * injecting a custom dev server configuration will be supported.
-   */
-  category: "library",
 
   /**
    * The label that shows up when configuring Component Testing
@@ -192,7 +193,15 @@ export function mount(component, options = {}) {
 setupHooks(cleanup);
 ```
 
-This is different for each library.
+This is different for each library, but the concept is the same - identify how to mount or render a component in your library, and implement it in a function named `mount` in `index.mjs`.
+
+When a user configures Component Testing with your Framework Definition, their `supportFile` will contain the correct `mount` function:
+
+```js
+import { mount } from '@lmiller1990/cypress-ct-solid-js'
+
+Cypress.Commands.add('mount', mount)
+```
 
 ## package.json
 
@@ -225,3 +234,8 @@ The main thing to notice is the `exports` property. The `node` entry points to t
   }
 }
 ```
+
+## Publishing on npm
+
+That's it! Publish your Framework Definition on npm and start using it.
+
