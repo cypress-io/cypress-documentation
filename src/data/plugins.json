@@ -345,6 +345,13 @@
           "badge": "community"
         },
         {
+          "name": "cypress-duration-metrics",
+          "description": "Measure duration of commands and different stages of cypress lifecycle. Log to terminal.",
+          "link": "https://github.com/archfz/cypress-duration-metrics",
+          "keywords": ["duration", "timings", "commands", "performance", "measurement", "metrics", "total"],
+          "badge": "community"
+        },
+        {
           "name": "cypress-timings",
           "description": "A Cypress plugin for reporting individual command timings.",
           "link": "https://github.com/bahmutov/cypress-timings",
