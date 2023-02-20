@@ -171,9 +171,12 @@ function cleanup() {
  * @param {() => JSX.Element} - component to render
  */
 export function mount(component, options = {}) {
+  // Retrieve root DOM element that Cypress has prepared for this test
   const root = getContainerEl();
+
   dispose = render(() => component, root);
 
+  // Wait until next microtick to ensure any async render logic has executed
   return cy.wait(0, { log: false }).then(() => {
     if (options.log) {
       Cypress.log({
@@ -184,7 +187,7 @@ export function mount(component, options = {}) {
   });
 }
 
-// Cleanup after each test
+// Cleanup between each test
 setupHooks(cleanup);
 ```
 
@@ -228,6 +231,7 @@ There are two fields of note:
   },
   "peerDependencies": {
     "solid-js": "^1.6.0"
+    "cypress": "^12.7.0"
   }
 }
 ```
