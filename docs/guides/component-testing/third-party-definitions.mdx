@@ -1,15 +1,13 @@
 # Integrating with Cypress Component Testing
 
 :::info
-This feature is only available from Cypress 12.7.
+This feature is only available in Cypress 12.7 and later.
 :::
 
 
-Cypress ships official support for many popular libraries and frameworks, such as [React](/guides/component-testing/react/overview) and [Angular](/guides/component-testing/angular/overview). We constantly monitor what libraries developers are interested in and are always open to adding new ones to Cypress.
+Cypress Component Testing includes [official support](/guides/component-testing/overview#Supported-Frameworks) for many popular libraries and frameworks such as [React](/guides/component-testing/react/overview), [Angular](/guides/component-testing/angular/overview), and [Vue](/guides/component-testing/vue/overview). All officially supported libraries feature a first class onboarding experience, where we detect and scaffold the correct files, and a framework-specific `mount` adapter to render your components. We call this collection of features a *Framework Definition* since it defines the requirements for a library or framework to work in Cypress.
 
-All officially supported libraries feature a first class onboarding experience, where we detect and scaffold the correct files, and a framework-specific `mount` adapter, to render your components. We call this collection of features a *Framework Definition*, since it defines the requirements for a library or framework to work in Cypress.
-
-If your favorite library isn't featured, don't worry - we expose the same API we use internally for third parties to define their own Framework Definitions.
+If your favorite library isn't featured, don't worry - we expose the same API we use internally for the Cypress community to define their own Framework Definitions.
 
 In this guide, you'll learn how to author a Framework Definition, which will enjoy the same polished onboarding experience as our officially supported frameworks.
 
@@ -41,7 +39,7 @@ Some examples of valid names include:
 - `@cypress/cypress-ct-react`
 - `@angular/cypress-ct-angular`
 
-Cypress will look at `node_modules` when it starts up, and load all the Framework Definitions found based on this naming convention.
+When configuring a project to use Component Testing, Cypress will load any dependencies following this naming convention from the project's `node_modules` and present them as framework options.
 
 A simple example of a Framework Defintion for the [Solid.js](https://www.solidjs.com/) library might look like this:
 
@@ -111,7 +109,7 @@ module.exports = defineFrameworkDefinition({
 
   /**
    * Supported bundlers. Can be "webpack" and/or "vite".
-   * In this example, I'm only adding support for Solid.js with Vite.
+   * In this example we only support Solid.js with Vite.
    */
   supportedBundlers: ["vite"],
 
@@ -125,8 +123,8 @@ module.exports = defineFrameworkDefinition({
   detectors: [solidDep],
 
   /**
-   * Optionally, some conditional logic, based on whether
-   * the user selected Vite or webpack.
+    * Supply a set of dependencies a project should have to use this Framework Definition. The user will be prompted to install them if they are not found.
+   * Optionally, supply different dependencies based on the chosen bundler.
    */
   dependencies: (bundler) => {
     return [solidDep, solidVitePlugin];
@@ -196,7 +194,7 @@ setupHooks(cleanup);
 
 This is different for each library, but the concept is the same - identify how to mount or render a component in your library, and implement it in a function named `mount` in `index.mjs`.
 
-When a user configures Component Testing with your Framework Definition, their `supportFile` will contain the correct `mount` function:
+When a user configures Component Testing with your Framework Definition we automatically configure a `cy.mount` command using your `mount` function in the Component Testing `supportFile`:
 
 ```js
 import { mount } from '@lmiller1990/cypress-ct-solid-js'
@@ -208,7 +206,9 @@ Cypress.Commands.add('mount', mount)
 
 The final thing you need is a correctly configured `package.json`. This example was created using [our official template](https://github.com/cypress-io/cypress-ct-definition-template).
 
-The main things to note is the `name` property, which follows the `@org/cypress-ct-*` convention, and is the `exports` property. The `node` entry points to the Framework Definition, and the `default` entry points to the Mount Adapter:
+There are two fields of note:
+* `name`: Your package name which must follow the `cypress-ct-*`/`@org/cypress-ct-*` convention
+* `exports`: Object referencing the two files we created to comprise the Framework Definition. The `node` entry points to the Definition file, and the `default` entry points to the Mount Adapter:
 
 ```json {2,5-8}
 {
@@ -242,4 +242,4 @@ That's it! Publish your Framework Definition on npm and start using it.
 
 ## List of Framework Definitions
 
-If you want to share your Framework Definition with us, please send a Pull Request - we would be happy to feature a link to your package!
+Once your Framework Definition is published and ready for use we would be delighted to mention it in our documentation so other Cypress users on the same framework can find it. [Submit a Pull Request](https://github.com/cypress-io/cypress-documentation/blob/main/CONTRIBUTING.md)!
