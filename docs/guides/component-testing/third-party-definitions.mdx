@@ -236,6 +236,12 @@ There are two fields of note:
 }
 ```
 
+## Testing
+
+If you develop the Framework Definition file using TypeScript, for example by using [our official template](https://github.com/cypress-io/cypress-ct-definition-template), as long as you don't have any compile time errors, everything should work as expected. If you do run into unexpected behavior, please [file an issue](https://github.com/cypress-io/cypress/issues).
+
+Mount Adapters can be more complex to test. In general, we recommend testing them in the same way users consume them - using Cypress Component Testing. A minimal test suite for a simple Solid.js Mount Adapter can be found [here](https://github.com/lmiller1990/cypress-ct-solid-js/tree/main/example-project). Alternatively, take a look at our official [React](https://github.com/cypress-io/cypress/tree/develop/npm/react) and [Angular](https://github.com/cypress-io/cypress/tree/develop/npm/angular) Mount Adapters, both of which have extensive test suites.
+
 ## Publishing on npm
 
 That's it! Publish your Framework Definition on npm and start using it.
