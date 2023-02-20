@@ -41,15 +41,11 @@ Some examples of valid names include:
 
 When configuring a project to use Component Testing, Cypress will load any dependencies following this naming convention from the project's `node_modules` and present them as framework options.
 
-A simple example of a Framework Defintion for the [Solid.js](https://www.solidjs.com/) library might look like this:
+A simple example of a Framework Defintion for the [Solid.js](https://www.solidjs.com/) library is shown below. We generally recommend naming this `definition.cjs`. In our [official template](https://github.com/cypress-io/cypress-ct-definition-template), this file is at the root level of the package.
 
 ```js
 const { defineFrameworkDefinition } = require("cypress");
 
-/**
- * The minimum version of the library this Framework Definition supports.
- * @type {Cypress.CypressComponentDependency}
- */
 const solidDep = {
   // Unique, semantic identifier.
   type: "solid-js",
