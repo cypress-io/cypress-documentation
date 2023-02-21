@@ -147,7 +147,7 @@ by test code.
 The [Selector Playground](/guides/core-concepts/cypress-app#Selector-Playground)
 automatically follows these best practices.
 
-When determining an unique selector it will automatically prefer elements with:
+When determining a unique selector, it will automatically prefer elements with:
 
 - `data-cy`
 - `data-test`
@@ -435,7 +435,7 @@ email's functionality and visual style:
   src="/img/guides/references/email-test.png"
   title="The HTML email loaded during the test"
   alt="The test finds and clicks the Confirm registration button"
-></DocsImage>
+/>
 
 3. In other cases, you should try using [`cy.request()`](/api/commands/request)
    command to query the endpoint on your server that tells you what email has
@@ -1060,7 +1060,7 @@ port.
 <DocsImage
   src="/img/guides/references/cypress-loads-in-localhost-and-random-port.png"
   alt="Url address shows localhost:53927/__/#tests/integration/organizations/list_spec.coffee"
-></DocsImage>
+/>
 
 As soon as it encounters a [cy.visit()](/api/commands/visit), Cypress then
 switches to the url of the main window to the url specified in your visit. This
@@ -1088,7 +1088,7 @@ load the main window in the `baseUrl` you specified as soon as your tests start.
 <DocsImage
   src="/img/guides/references/cypress-loads-window-in-base-url-localhost.png"
   alt="Url address bar shows localhost:8484/__tests/integration/organizations/list_spec.coffee"
-></DocsImage>
+/>
 
 Having a `baseUrl` set gives you the added bonus of seeing an error if your
 server is not running during `cypress open` at the specified `baseUrl`.
@@ -1096,7 +1096,7 @@ server is not running during `cypress open` at the specified `baseUrl`.
 <DocsImage
   src="/img/guides/references/cypress-ensures-baseUrl-server-is-running.png"
   alt="Cypress Launchpad with warning about how Cypress could not verify server set as the baseUrl is running"
-></DocsImage>
+/>
 
 We also display an error if your server is not running at the specified
 `baseUrl` during `cypress run` after several retries.
@@ -1104,7 +1104,7 @@ We also display an error if your server is not running at the specified
 <DocsImage
   src="/img/guides/references/cypress-verifies-server-is-running-during-cypress-run.png"
   alt="The terminal warns and retries when the url at your baseUrl is not running"
-></DocsImage>
+/>
 
 ### Usage of `baseUrl` in depth
 

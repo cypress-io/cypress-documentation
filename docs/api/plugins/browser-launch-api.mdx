@@ -126,7 +126,9 @@ on('before:browser:launch', (browser, launchOptions) => {
 :::caution
 
 <Icon name="exclamation-triangle" /> This option is not supported when targeting
-Electron. :::
+Electron.
+
+:::
 
 :::cypress-plugin-example
 
@@ -216,10 +218,7 @@ If you are running Cypress tests using a Chromium-based browser, you can see ALL
 currently set command line switches and the browser version information by
 opening a new tab and typing `chrome://version` url.
 
-<DocsImage
-  src="/img/api/chrome-switches.png"
-  alt="See all Chrome switches"
-></DocsImage>
+<DocsImage src="/img/api/chrome-switches.png" alt="See all Chrome switches" />
 
 ## Examples
 
@@ -326,7 +325,7 @@ without having to have the necessary hardware to test.
 <DocsImage
   src="/img/api/browser-launch-fake-video.gif"
   alt="Enable fake video for testing"
-></DocsImage>
+/>
 
 You can however send your own video file for testing by passing a Chrome command
 line switch pointing to a video file.
