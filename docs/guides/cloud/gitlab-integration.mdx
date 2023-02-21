@@ -9,6 +9,11 @@ with your GitLab workflow via [commit statuses](#Commit-statuses) and
 [set up to record](/guides/cloud/projects) to Cypress Cloud to use GitLab
 integration.
 
+<DocsImage
+  src="/img/dashboard/gitlab-integration/gitlab-merge-request-comment.jpg"
+  width={800}
+/>
+
 :::caution
 
 GitLab Integration depends on your CI environment reliably providing a commit
@@ -21,18 +26,23 @@ If you still face issues after this, please
 
 :::
 
-:::caution
+## GitLab for Enterprise (Self-managed)
+
+:::tip
 
 <strong>
-  <Icon name="exclamation-triangle" /> GitLab Self-managed
+  <Icon name="star" /> Premium Cypress Cloud Feature
 </strong>
 
-GitLab Self-managed Integration depends on your GitLab instance being able to
-reach our Cypress Cloud API on the open internet. If your instance is running
-behind a firewall, you may need to reconfigure your security infrastructure to
-allow communication with our servers.
+GitLab for Enterprise (Self-managed) is included in our
+[Business and Enterprise paid pricing plans](https://www.cypress.io/pricing).
 
 :::
+
+GitLab for Enterprise (Self-managed) Integration depends on your GitLab instance
+being able to reach our Cypress Cloud API on the open internet. If your instance
+is running behind a firewall, you may need to reconfigure your security
+infrastructure to allow communication with our servers.
 
 ## Installing the GitLab integration
 
@@ -46,24 +56,41 @@ with more limited access permissions.
 
 :::
 
-1. In your organization, visit **Integrations → GitLab** (if you are using
-   [GitLab SaaS](https://docs.gitlab.com/ee/subscriptions/gitlab_com/)) or
-   **GitLab Self-managed** (if you are running
-   [your own GitLab instance](https://docs.gitlab.com/ee/subscriptions/self_managed/))
-   in Cypress Cloud.
-2. Follow the instructions to create a new OAuth2 application in GitLab. See the
+1. Go to Cypress Cloud
+   [Organizations page](https://cloud.cypress.io/organizations) or open the
+   organization switcher.
+2. Select the organization you wish to integrate with a GitLab.
+
+   <DocsImage
+     src="/img/dashboard/select-cypress-organization.jpg"
+     alt="Select an organization"
+     width={600}
+   />
+
+3. Visit the selected organization's **Integrations** page via the side
+   navigation.
+
+   <DocsImage
+     src="/img/dashboard/navigate-to-organization-integrations.jpg"
+     alt="Install Cypress GitLab from Integrations"
+     width={600}
+   />
+
+4. Click the enable button under **GitLab** or **GitLab for Enterprise
+   (Self-managed)**.
+5. Follow the instructions to create a new OAuth2 application in GitLab. See the
    [GitLab docs](https://docs.gitlab.com/ee/integration/oauth_provider.html#adding-an-application-through-the-profile)
    for more details.
-3. Copy the Application ID and Secret back to Cypress Cloud.
-4. (GitLab Self-managed only) Copy the base URL of your GitLab instance to the
+6. Copy the Application ID and Secret back to Cypress Cloud.
+7. (GitLab Self-managed only) Copy the base URL of your GitLab instance to the
    GitLab URL field in Cypress Cloud.
-5. Connect your projects to a GitLab repo in **Project Settings → GitLab
-   Integration** or **GitLab Self-managed**.
-6. (Optional) Configure the behavior for each project.
+8. Connect your projects to a GitLab repo in **Project Settings → GitLab
+   Integration** or **GitLab for Enterprise Integration**.
+9. (Optional) Configure the behavior for each project.
 
 ## Configuring the GitLab integration
 
-### Commit statuses
+### Status checks
 
 By default, Cypress will post a **cypress/run** commit status containing the
 results of the Cypress run. This will prevent your team from merging any MRs
@@ -75,6 +102,22 @@ from merging any MRs with flaky tests.
 
 You can manage this behavior on your project's **Project Settings** page.
 
+<DocsImage
+  src="/img/dashboard/gitlab-integration/gitlab-status-checks.jpg"
+  width={800}
+/>
+
+:::tip
+
+<strong>
+  <Icon name="star" /> Premium Cypress Cloud Feature
+</strong>
+
+Reporting on flakey status checks is included in our
+[Team, Business and Enterprise paid pricing plans](https://www.cypress.io/pricing).
+
+:::
+
 ### Merge Request comments
 
 By default, Cypress will post an MR comment summarizing the run when the run
@@ -83,8 +126,13 @@ failed or were flaky.
 
 You can manage this behavior on your project's **Project Settings** page.
 
+<DocsImage
+  src="/img/dashboard/gitlab-integration/gitlab-merge-requests.jpg"
+  width={800}
+/>
+
 ## Uninstalling the GitLab integration
 
 You can remove this integration by visiting the **Integrations → GitLab** or
-**GitLab Self-managed** page of your organization. This will stop all commit
-checks and MR comments from Cypress.
+**GitLab for Enterprise Integration** page of your organization. This will stop
+all commit checks and MR comments from Cypress.
