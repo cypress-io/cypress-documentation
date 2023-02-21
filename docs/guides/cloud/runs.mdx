@@ -102,10 +102,18 @@ simulated tests and the actual tests as they happened.
 ### Tests for Review
 
 The Tests for Review panel consolidates disparate test results into a single
-view, focusing attention on the specs producing the most relevant results. It
-shows Failed, Flaky and Modified tests broken down by spec, with easy access to
-run artefacts, and a badge clearly indicating the reason the result was
-considered notable.
+view, focusing attention on the specs producing the most relevant results.
+
+It orders results by:
+
+- Failed - when a failure occurred in the test or a hook associated with the
+  test
+- Flaky - when a test failed one or more attempts before finally passing
+- Modified - when the test body has changed from a previously recorded tests
+
+The panel shows these tests broken down by spec, with easy access to run
+artifacts, and a badge clearly indicating the reason the result was considered
+notable.
 
 Clicking on a specific test opens the
 [test detail sidebar](#Test-detail-sidebar).
@@ -119,7 +127,11 @@ Clicking on a specific test opens the
 
 On the Test Results tab, detailed results for the entire test run can be browsed
 and examined. At the top of the page are dropdowns for you to sort and filter
-results by a wide range of metrics.
+results by a wide range of metrics, like
+[test statuses](/guides/core-concepts/writing-and-organizing-tests#Test-statuses)
+or [flaky tests](/guides/cloud/flaky-test-management).
+
+The
 
 <DocsImage
   src="/img/guides/cloud/runs/test-results.png"
@@ -272,10 +284,7 @@ canceled by members of the project.
   run details page
 - Click **Yes, cancel this run** to confirm. **Note: this cannot be undone**
 
-<DocsVideo
-  src="/img/snippets/cancelling-run.mp4"
-  title="Cloud cancel runs"
-></DocsVideo>
+<DocsVideo src="/img/snippets/cancelling-run.mp4" title="Cloud cancel runs" />
 
 ### What happens when a run is canceled?
 
@@ -330,7 +339,7 @@ Cypress Cloud.
 - Visit the archived run. The archived run can be accessed by the URL of the
   run. The format is:
   `https://cloud.cypress.io/projects/{project ID}/runs/{run number}`
-- Click **<Icon name="history"></Icon> Restore from archive**
+- Click **<Icon name="history" /> Restore from archive**
   <DocsImage
     src="/img/dashboard/restore-from-archive.png"
     alt="restore-from-archive"
@@ -340,12 +349,22 @@ Cypress Cloud.
 
 For even more visibility into your test results, information about recent runs
 is surfaced in the [Cypress app](/guides/core-concepts/cypress-app). Aggregate
-results of your latest runs are shown in
-[The Spec Explorer](/guides/core-concepts/cypress-app#The-Spec-Explorer) while
-more detailed information about specific runs can be found on the
-[Project Runs](/guides/core-concepts/cypress-app#Project-Runs) screen.
+results of your latest runs are shown on the
+[Specs](/guides/core-concepts/cypress-app#Specs) page while more detailed
+information about specific runs can be found on the
+[Runs](/guides/core-concepts/cypress-app#Runs) page.
 
 <DocsImage
   src="/img/guides/core-concepts/cypress-app/spec-explorer.png"
-  alt="The Spec Explorer"
+  alt="Specs"
+/>
+
+The [Debug](/guides/core-concepts/cypress-app#Debug) page allows you to easily
+debug failed CI test runs from within the Cypress app. From this page, you can
+review, rerun, and debug failed CI test runs that are recorded to Cypress Cloud
+– all without leaving the Cypress app.
+
+<DocsImage
+  src="/img/guides/core-concepts/cypress-app/debug-page.png"
+  alt="Debug"
 />

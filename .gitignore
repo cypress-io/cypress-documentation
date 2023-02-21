@@ -28,3 +28,9 @@ cypress/videos
 # Generated files
 .docusaurus
 .cache-loader
+
+.nuxt
+.husky
+themes
+.eslintcache
+db.json

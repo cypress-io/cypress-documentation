@@ -26,8 +26,9 @@ without any change to the code, but this time it passes.
 Cypress has the ability to automatically retry failed tests to mitigate flaky
 tests from failing entire test runs or CI builds.
 
-Test retries is **disabled by default**, and you can
-[enable it within the Cypress configuration](/guides/guides/test-retries#Configure-Test-Retries).
+Test retries is **enabled by default** and will retry up to two times in run
+mode. You can
+[alter this behavior within the Cypress configuration](/guides/guides/test-retries#Configure-Test-Retries).
 
 :::
 
@@ -35,8 +36,8 @@ Test retries is **disabled by default**, and you can
 
 :::tip
 
-<strong class="alert-header">
-  <Icon name="star"></Icon> Premium Cypress Cloud Feature
+<strong>
+  <Icon name="star" /> Premium Cypress Cloud Feature
 </strong>
 
 **Test flake detection** is available to users with a
@@ -68,7 +69,7 @@ in and out via the "Flaky" filter within this page.
 <DocsImage
   src="/img/dashboard/flaky-test-management/flaky-runs-view.png"
   alt="Flagging flaky tests runs in Cypress Cloud"
-></DocsImage>
+/>
 
 Any failure across multiple test run attempts triggered by test retrying will
 result in a given test case to be flagged as flaky.
@@ -77,8 +78,8 @@ result in a given test case to be flagged as flaky.
 
 :::tip
 
-<strong class="alert-header">
-  <Icon name="star"></Icon> Premium Cypress Cloud Feature
+<strong>
+  <Icon name="star" /> Premium Cypress Cloud Feature
 </strong>
 
 **Test flake analytics** are available to users with a
@@ -107,7 +108,7 @@ needed to resolve flake issues.
 <DocsImage
   src="/img/dashboard/flaky-test-management/flake-analytics.png"
   alt="Flaky tests analytics"
-></DocsImage>
+/>
 
 Selecting any of the flaky test cases in the analytics page will reveal a test
 case details panel that shows:
@@ -123,7 +124,7 @@ of flake over time to assist with debugging the root cause.
 <DocsImage
   src="/img/dashboard/flaky-test-management/flake-panel.png"
   alt="Flaky tests analytics details panel"
-></DocsImage>
+/>
 
 ### Failure Rate vs Flake Rate
 
@@ -134,7 +135,7 @@ each flaky test case within the flaky tests analytics page:
 <DocsImage
   src="/img/dashboard/flaky-test-management/flake-v-fail-2.png"
   alt="flake rate vs fail rate"
-></DocsImage>
+/>
 
 A test case flagged as flaky could have still passed after multiple test retry
 attempts. The test result status of individual test retry attempts is separate
@@ -150,14 +151,14 @@ while exhibiting flake as demonstrated below:
 <DocsImage
   src="/img/dashboard/flaky-test-management/flake-v-fail-1.png"
   alt="flake rate vs fail rate"
-></DocsImage>
+/>
 
 ## Flake Alerting
 
 :::tip
 
-<strong class="alert-header">
-  <Icon name="star"></Icon> Premium Cypress Cloud Feature
+<strong>
+  <Icon name="star" /> Premium Cypress Cloud Feature
 </strong>
 
 **Test flake alerting** is available to users with a
@@ -177,7 +178,7 @@ project's GitHub integration settings:
 <DocsImage
   src="/img/dashboard/flaky-test-management/gh-flake.png"
   alt="GitHub flake alert settings"
-></DocsImage>
+/>
 
 After enabling GitHub flake alerting, GitHub PR comments will show the number of
 flaky tests associated with the PR within the test summary, and include a
@@ -186,7 +187,7 @@ flaky tests associated with the PR within the test summary, and include a
 <DocsImage
   src="/img/dashboard/flaky-test-management/flake-pr-comment.png"
   alt="GitHub flake alert pr comment"
-></DocsImage>
+/>
 
 ### Slack
 
@@ -195,7 +196,7 @@ Flake alerting via Slack can be enabled within Slack integration settings:
 <DocsImage
   src="/img/dashboard/flaky-test-management/slack-flake.png"
   alt="Slack flake alert settings"
-></DocsImage>
+/>
 
 After enabling Slack alerts, Cypress Cloud will send Slack messages whenever
 flaky tests are detected:
@@ -203,7 +204,7 @@ flaky tests are detected:
 <DocsImage
   src="/img/dashboard/flaky-test-management/flake-slack-alert.png"
   alt="Slack flake alert"
-></DocsImage>
+/>
 
 ## See Also
 

@@ -17,7 +17,7 @@ slug: /guides/end-to-end-testing/testing-your-app
 
 <!-- textlint-disable terminology -->
 
-<DocsVideo src="https://youtube.com/embed/5XQOK0v_YRE"></DocsVideo>
+<DocsVideo src="https://youtube.com/embed/5XQOK0v_YRE" />
 
 <!-- textlint-enable -->
 
@@ -109,7 +109,7 @@ Once that file is created, you should see it in the list of spec files.
 <DocsImage
   src="/img/guides/getting-started/e2e/v10/testing-your-app-home-page-spec.png"
   alt="List of files including home_page.cy.js"
-></DocsImage>
+/>
 
 Now you'll need to add in the following code in your test file to visit your
 server:
@@ -136,7 +136,7 @@ it('successfully loads', () => {
 <DocsImage
   src="/img/guides/getting-started/e2e/v10/testing-your-app-visit-fail.png"
   alt="Error in Cypress showing cy.visit failed"
-></DocsImage>
+/>
 
 If you've started your server, then you should see your application loaded and
 working.
@@ -501,7 +501,7 @@ Cypress.Commands.add('login', (username, password) => {
 
 :::info
 
-<strong class="alert-header">Third-Party Login</strong>
+<strong>Third-Party Login</strong>
 
 If your app implements login via a third-party authentication provider such as
 [Auth0](https://auth0.com/) or [Okta](https://www.okta.com/), you can use the

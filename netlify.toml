@@ -46,6 +46,12 @@
   to = "/examples/recipes/"
   status = 301
   force = true
+  
+[[redirects]]
+  from = "/examples/examples/docker"
+  to = "/examples/docker"
+  status = 301
+  force = true
 
 [[redirects]]
   from = "/faq"

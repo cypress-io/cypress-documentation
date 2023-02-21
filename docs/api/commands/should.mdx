@@ -201,7 +201,7 @@ assertions within it throw.
 You cannot invoke Cypress commands inside of a `.should()` callback function.
 Use Cypress commands before or after `.should()` instead.
 
-**<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
+**<Icon name="exclamation-triangle" color="red" /> Incorrect Usage**
 
 ```javascript
 cy.get('p').should(($p) => {
@@ -210,7 +210,7 @@ cy.get('p').should(($p) => {
 })
 ```
 
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+**<Icon name="check-circle" color="green" /> Correct Usage**
 
 ```javascript
 cy.get('p')
@@ -359,7 +359,7 @@ more context.
 <DocsImage
   src="/img/api/should/expect-with-message.png"
   alt="Expect assertions with messages"
-></DocsImage>
+/>
 
 #### Compare text values of two elements
 
@@ -454,7 +454,7 @@ The commands above will display in the Command Log as:
 <DocsImage
   src="/img/api/should/should-command-shows-up-as-assert-for-each-assertion.png"
   alt="Command Log should"
-></DocsImage>
+/>
 
 When clicking on `assert` within the command log, the console outputs the
 following:
@@ -462,7 +462,7 @@ following:
 <DocsImage
   src="/img/api/should/assertion-in-console-log-shows-actual-versus-expected-data.png"
   alt="Console Log should"
-></DocsImage>
+/>
 
 ## History
 
