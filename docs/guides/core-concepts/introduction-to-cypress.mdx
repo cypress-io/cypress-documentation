@@ -303,7 +303,7 @@ just in case".
 :::
 
 Later in this guide we'll go into much more detail about
-[Default Assertions](#Default-Assertions) and [Timeouts](#Timeouts).
+[Implicit Assertions](#Implicit-Assertions) and [Timeouts](#Timeouts).
 
 ## Chains of Commands
 
@@ -914,9 +914,9 @@ randomly fail. This would lead to flaky, inconsistent results.
 :::info
 
 While Cypress is built using Promises that come from
-[Bluebird](http://bluebirdjs.com/), these are not what we expose as commands and
-assertions on `cy`. If you'd like to learn more about handling asynchronous
-Cypress Commands please read our
+[Bluebird](http://bluebirdjs.com/), these are not what we expose as commands on
+`cy`. If you'd like to learn more about handling asynchronous Cypress Commands
+please read our
 [Core Concept Guide](/guides/core-concepts/variables-and-aliases).
 
 :::
@@ -959,24 +959,22 @@ model after a real user working step by step.
 #### You cannot add a `.catch` error handler to a failed command
 
 In Cypress there is no built in error recovery from a failed command. A command
-and its assertions all _eventually_ pass, or if one fails, all remaining
-commands are not executed, and the test fails.
+_eventually_ passes, or if it fails, all remaining commands are not executed,
+and the test as a whole fails.
 
 You might be wondering:
 
 > How do I create conditional control flow, using if/else? So that if an element
 > does (or doesn't) exist, I choose what to do?
 
-The problem with this question is that this type of conditional control flow
-ends up being non-deterministic. This means different test runs may behave
-differently, which makes them less deterministic and consistent. In general,
-there are only a handful of very specific situations where you _can_ create
-control flow using Cypress commands.
+Cypress does not support this type of conditional control flow because it leads
+to non-deterministic tests - different runs may behave differently, which makes
+them less consistent and useful for verifying your application's correctness. In
+general, there are only a handful of very specific situations where you can
+create control flow using Cypress commands.
 
 With that said, as long as you are aware of the potential pitfalls with control
-flow, it is possible to do this in Cypress!
-
-You can read all about how to do
+flow, it is possible to do this in Cypress! You can read all about how to do
 [conditional testing](/guides/core-concepts/conditional-testing) here.
 
 ## Assertions
@@ -990,25 +988,10 @@ Assertions describe the **desired** state of your **elements**, your
 
 :::
 
-What makes Cypress unique from other testing tools is that commands
-**automatically retry** their assertions. In fact, they will look "downstream"
-at what you're expressing and modify their behavior to make your assertions
-pass.
-
-You should think of assertions as **guards**.
-
-Use your **guards** to describe what your application should look like, and
-Cypress will automatically **block, wait, and retry** until it reaches that
-state.
-
-:::tip
-
-<strong>Core Concept</strong>
-
-Each command documents its behavior with assertions - such as how it retries or
-waits for assertions to pass.
-
-:::
+What makes Cypress unique from other testing tools is that assertions
+**automatically retry**. Think of them as **guards** - assertions describe what
+your application should look like, and Cypress will automatically **block, wait,
+and retry** until it reaches that state.
 
 ### Asserting in English
 
@@ -1016,7 +999,7 @@ Let's look at how you'd describe an assertion in English:
 
 :::note
 
-After clicking on this `<button>`, I expect its class to eventually be `active`.
+After clicking on this `<button>`, I expect its class to be `active`.
 
 :::
 
@@ -1079,7 +1062,7 @@ cy.get('form').submit()
 :::
 
 Without a single explicit assertion, there are dozens of ways this test can
-fail! Here's a few:
+fail. Here's a few:
 
 - The initial [`cy.mount()`](/api/commands/mount) or
   [`cy.visit()`](/api/commands/visit) could respond with something other than
@@ -1099,15 +1082,15 @@ fail! Here's a few:
 
 With Cypress, you don't have to assert to have a useful test. Even without
 assertions, a few lines of Cypress can ensure thousands of lines of code are
-working properly across the client and server!
+working properly across the client and server.
 
 This is because many commands have a built in
-[Default Assertion](#Default-Assertions) which offer you a high level of
-guarantee.
+[Implicit Assertions](#Implicit-Assertions) which offer you a high level of
+confidence that your application is working as expected.
 
 :::
 
-### Default Assertions
+### Implicit Assertions
 
 Many commands have default, built-in assertions, or rather have requirements
 that may cause it to fail without needing an explicit assertion you've added.
@@ -1160,7 +1143,7 @@ they can fail, typically by passing a `{force: true}` option.
 
 ```js
 cy
-  // there is a default assertion that this
+  // there is an implicit assertion that this
   // button must exist in the DOM before proceeding
   .get('button')
 
@@ -1169,16 +1152,16 @@ cy
   .click()
 ```
 
-Cypress will automatically _wait_ for elements to pass their default assertions.
-Like with the explicit assertions you've added, all of these assertions share
-the _same_ timeout values.
+Cypress will automatically _wait_ for elements to pass their implicit
+assertions. Like with the explicit assertions you've added, all of these
+assertions share the _same_ timeout values.
 
-#### Example #2: Reversing the Default Assertion
+#### Example #2: Reversing the Implicit Assertion
 
 Most of the time, when querying for elements, you expect them to eventually
 exist. But sometimes you wish to wait until they _don't_ exist.
 
-All you have to do is add that assertion and Cypress will **reverse** its rules
+All you have to do is add that assertion and Cypress will **skip** implicitly
 waiting for elements to exist.
 
 ```js
@@ -1197,15 +1180,14 @@ cy.get('#modal').should('not.exist')
 
 <strong>Core Concept</strong>
 
-By adding [`.should('not.exist')`](/api/commands/should) to any DOM command,
-Cypress will reverse its default assertion and automatically wait until the
-element does not exist.
+If you add [`.should('not.exist')`](/api/commands/should) to any DOM command,
+Cypress will skip its default existence assertion.
 
 :::
 
-#### Example #3: Other Default Assertions
+#### Example #3: Other Implicit Assertions
 
-Other commands have other default assertions not related to the DOM.
+Other commands have other implicit assertions not related to the DOM.
 
 For instance, [`.its()`](/api/commands/its) requires that the property you're
 asking about exists on the object.
@@ -1385,10 +1367,10 @@ Remember because assertions are used to describe a condition of the previous
 commands - the `timeout` modification goes on the previous commands _not the
 assertions_.
 
-#### Example #1: Default Assertion
+#### Example #1: Implicit Assertion
 
 ```js
-// because .get() has a default assertion
+// because .get() has a implicit assertion
 // that this element exists, it can time out and fail
 cy.get('.mobile-nav')
 ```
@@ -1417,14 +1399,14 @@ The _total_ amount of time Cypress will wait for _all_ of the assertions to pass
 is for the duration of the [cy.get()](/api/commands/get) `timeout` (which is 4
 seconds).
 
-Timeouts can be modified per command and this will affect all default assertions
-and any assertions chained after that command.
+Timeouts can be modified per command and this will affect all implicit
+assertions and any assertions chained after that command.
 
 #### Example #3: Modifying Timeouts
 
 ```js
-// we've modified the timeout which affects default
-// plus all added assertions
+// we've modified the timeout which affects the implicit
+// assertions as well as all explicit ones.
 cy.get('.mobile-nav', { timeout: 10000 })
   .should('be.visible')
   .and('contain', 'Home')
