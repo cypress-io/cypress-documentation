@@ -914,8 +914,9 @@ randomly fail. This would lead to flaky, inconsistent results.
 :::info
 
 While Cypress is built using Promises that come from
-[Bluebird](http://bluebirdjs.com/), these are not what we expose as commands on `cy`. If you'd like to learn more about handling asynchronous
-Cypress Commands please read our
+[Bluebird](http://bluebirdjs.com/), these are not what we expose as commands on
+`cy`. If you'd like to learn more about handling asynchronous Cypress Commands
+please read our
 [Core Concept Guide](/guides/core-concepts/variables-and-aliases).
 
 :::
@@ -958,19 +959,19 @@ model after a real user working step by step.
 #### You cannot add a `.catch` error handler to a failed command
 
 In Cypress there is no built in error recovery from a failed command. A command
-_eventually_ passes, or if it fails, all remaining
-commands are not executed, and the test as a whole fails.
+_eventually_ passes, or if it fails, all remaining commands are not executed,
+and the test as a whole fails.
 
 You might be wondering:
 
 > How do I create conditional control flow, using if/else? So that if an element
 > does (or doesn't) exist, I choose what to do?
 
-Cypress does not support this type of conditional control flow
-because it leads to non-deterministic tests - different runs may behave
-differently, which makes them less consistent and useful for verifying your application's correctness. In general,
-there are only a handful of very specific situations where you can create
-control flow using Cypress commands.
+Cypress does not support this type of conditional control flow because it leads
+to non-deterministic tests - different runs may behave differently, which makes
+them less consistent and useful for verifying your application's correctness. In
+general, there are only a handful of very specific situations where you can
+create control flow using Cypress commands.
 
 With that said, as long as you are aware of the potential pitfalls with control
 flow, it is possible to do this in Cypress! You can read all about how to do
