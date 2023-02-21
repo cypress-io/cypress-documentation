@@ -914,8 +914,7 @@ randomly fail. This would lead to flaky, inconsistent results.
 :::info
 
 While Cypress is built using Promises that come from
-[Bluebird](http://bluebirdjs.com/), these are not what we expose as commands and
-assertions on `cy`. If you'd like to learn more about handling asynchronous
+[Bluebird](http://bluebirdjs.com/), these are not what we expose as commands on `cy`. If you'd like to learn more about handling asynchronous
 Cypress Commands please read our
 [Core Concept Guide](/guides/core-concepts/variables-and-aliases).
 
@@ -959,24 +958,22 @@ model after a real user working step by step.
 #### You cannot add a `.catch` error handler to a failed command
 
 In Cypress there is no built in error recovery from a failed command. A command
-and its assertions all _eventually_ pass, or if one fails, all remaining
-commands are not executed, and the test fails.
+_eventually_ passes, or if it fails, all remaining
+commands are not executed, and the test as a whole fails.
 
 You might be wondering:
 
 > How do I create conditional control flow, using if/else? So that if an element
 > does (or doesn't) exist, I choose what to do?
 
-The problem with this question is that this type of conditional control flow
-ends up being non-deterministic. This means different test runs may behave
-differently, which makes them less deterministic and consistent. In general,
-there are only a handful of very specific situations where you _can_ create
+Cypress does not support this type of conditional control flow
+because it leads to non-deterministic tests - different runs may behave
+differently, which makes them less consistent and useful for verifying your application's correctness. In general,
+there are only a handful of very specific situations where you can create
 control flow using Cypress commands.
 
 With that said, as long as you are aware of the potential pitfalls with control
-flow, it is possible to do this in Cypress!
-
-You can read all about how to do
+flow, it is possible to do this in Cypress! You can read all about how to do
 [conditional testing](/guides/core-concepts/conditional-testing) here.
 
 ## Assertions
@@ -1064,7 +1061,7 @@ cy.get('form').submit()
 :::
 
 Without a single explicit assertion, there are dozens of ways this test can
-fail! Here's a few:
+fail. Here's a few:
 
 - The initial [`cy.mount()`](/api/commands/mount) or
   [`cy.visit()`](/api/commands/visit) could respond with something other than
@@ -1084,10 +1081,10 @@ fail! Here's a few:
 
 With Cypress, you don't have to assert to have a useful test. Even without
 assertions, a few lines of Cypress can ensure thousands of lines of code are
-working properly across the client and server!
+working properly across the client and server.
 
 This is because many commands have a built in
-[Implicit Assertion](#Implicit-Assertions) which offer you a high level of
+[Implicit Assertions](#Implicit-Assertions) which offer you a high level of
 confidence that your application is working as expected.
 
 :::
