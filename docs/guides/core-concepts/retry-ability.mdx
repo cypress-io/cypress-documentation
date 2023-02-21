@@ -29,30 +29,25 @@ fails, check out our guide on [Test Retries](/guides/guides/test-retries).
 
 ## Commands, Queries and Assertions
 
-While all methods you chain off of `cy` in your Cypress tests are commands, it's
-important to understand the different rules by which they operate. **Queries**
-link up, retrying the entire chain together, while **non-queries** only execute
-once. Assertions are a type of query that's specially displayed in the command
-log. For example, there are 7 queries (2 of them assertions) and 2 non-queries
-in the test below.
+While all methods you chain off of `cy` in your Cypress tests are commands,
+there are some different types of commands it's important to understand:
+**queries**, **assertions** and **actions** have special rules about
+retryability. For example, there are 4 queries, an action, and 2 assertions in
+the test below.
 
 ```javascript
 it('creates an item', () => {
-  // Non-query commands only execute once.
   cy.visit('/')
 
-  // The queries .focused() and .should() link together,
-  // rerunning until the currently focused element has
-  // the 'new-todo' class
-  cy.focused().should('have.class', 'new-todo')
+  cy.focused() // query
+    .should('have.class', 'new-todo') // assertion
 
-  // The queries .get() and .find()
-  // link together, forming the subject for
-  // the non-query `.type()`.
-  cy.get('.header').find('.new-todo').type('todo A{enter}')
+  cy.get('.new-todo') // query
+    .type('todo A{enter}') // action
 
-  // Three queries chained together
-  cy.get('.todoapp').find('.todo-list li').should('have.length', 1)
+  cy.get('.todoapp') // query
+    .find('.todo-list li') // query
+    .should('have.length', 1) // assertion
 })
 ```
 
@@ -87,17 +82,18 @@ Thus [`cy.get`](/api/commands/get) and [`cy.find()`](/api/commands/find) have to
 be smarter and expect the application to potentially update. `cy.get()` queries
 the application's DOM, finds the elements that match the selector, and then
 passes them to `.find('.todo-list li')`. `.find()` locates a new set of
-elements, and passes them to `.should()`. `.should()` then asserts on the list
-of found elements (in our case, that it has a length of 1).
+elements, and tries the assertion that follows (in our case
+`should('have.length', 1)`) against the list of found elements.
 
-- ✅ If the assertion passes, then `.should()` finishes successfully.
-- 🚨 If the assertion fails, then Cypress will requery the application's DOM
-  again - starting from the top of the chain of linked queries. It will look for
-  elements that match `.get().find()` again, and re-run the assertion. If the
-  assertion still fails, Cypress continues retrying until the timeout is
-  reached.
+- ✅ If the assertion that follows `cy.find()` passes, then the query finishes
+  successfully.
+- 🚨 If the assertion that follows `cy.find()` fails, then Cypress will requery
+  the application's DOM again - starting from the top of the list of chain. Then
+  Cypress will try the assertion against the elements yielded from
+  `cy.get().find()`. If the assertion still fails, Cypress continues retrying
+  until the `cy.find()` timeout is reached.
 
-Retry-ability allows the test to complete each command as soon as the assertion
+Retry-ability allows the test to complete each query as soon as the assertion
 passes, without hard-coding waits. If your application takes a few milliseconds
 or even seconds to render each DOM element - no big deal, the test does not have
 to change at all. For example, let's introduce an artificial delay of 3 seconds
@@ -119,25 +115,29 @@ app.TodoModel.prototype.addTodo = function (title) {
 ```
 
 The test still passes! `cy.get('.todo-list')` passes immediately - the
-`todo-list` exists - but `.should('have.length', 1)` shows the spinning
-indicator, meaning Cypress is still .
+`todo-list` exists - but `.find('.todo-list li').should('have.length', 1)` show
+the spinning indicators, meaning Cypress is requerying for them.
 
 <DocsImage
   src="/img/guides/retry-ability/retry-assertion.gif"
   alt="Retrying assertion"
 />
 
-Within a few milliseconds after the DOM updates, the linked queries
-`.get().find()` locate an element and `.should('have.length', 1)` passes.
+Within a few milliseconds after the DOM updates, `cy.find()` finds an element
+and the `should('have.length', 1)` assertion passes
 
 ## Multiple assertions
 
-Chains of commands are always executed in order, with all previous queries
-forming the subject of each following command.
+Queries and assertions are always executed in order, and always retry 'from the
+top'. If you have multiple assertions, Cypress will retry until each passes
+before moving on to the next one.
 
-For example, the following test has the [.get()](/api/commands/get),
-[`.should()`](/api/commands/should) and [`.and()`](/api/commands/and) commands
-chained together. All three of these are queries.
+For example, the following test has [`.should()`](/api/commands/should) and
+[`.and()`](/api/commands/and) assertions. `.and()` is an alias of the
+`.should()` command, so the second assertion is really a custom callback
+assertion in the form of the [`.should(cb)`](/api/commands/should#Function)
+function with 2 [`expect`](/guides/references/assertions#BDD-Assertions)
+assertions inside of it.
 
 ```javascript
 it('creates two items', () => {
@@ -146,21 +146,22 @@ it('creates two items', () => {
   cy.get('.new-todo').type('todo A{enter}')
   cy.get('.new-todo').type('todo B{enter}')
 
-  cy.get('.todo-list li') // query
-    .should('have.length', 2) // query
+  cy.get('.todo-list li') // command
+    .should('have.length', 2) // assertion
     .and(($li) => {
-      // 2 expect() statements inside of the .and() query
+      // 2 more assertions
       expect($li.get(0).textContent, 'first item').to.equal('todo a')
       expect($li.get(1).textContent, 'second item').to.equal('todo B')
     })
 })
 ```
 
-Because the first expect statement
-(`expect($li.get(0).textContent, 'first item').to.equal('todo a')`) fails, the
-second statement is never reached. The command fails after timing out, and the
-Command Log correctly shows that `.get()` and `.should()` passed, but the "first
-item" assertion failed.
+Because the second assertion
+`expect($li.get(0).textContent, 'first item').to.equal('todo a')` fails, the
+third assertion is never reached. The command fails after timing out, and the
+Command Log correctly shows that the first encountered assertion
+`should('have.length', 2)` passed, but the second assertion and the command
+itself failed.
 
 <DocsImage
   src="/img/guides/retry-ability/second-assertion-fails.gif"
@@ -169,13 +170,15 @@ item" assertion failed.
 
 ## Built-in assertions
 
-Often a Cypress command has built-in assertions that will cause the command to
-be retried until they pass. For example, the [`.eq()`](/api/commands/eq) query
-will be retried even without any attached assertions until it finds an element
-with the given index.
+Often a Cypress command has built-in assertions that will cause the previous
+queries to be retried. For example, the [`.eq()`](/api/commands/eq) query will
+be retried even without any attached assertions until it finds an element with
+the given index.
 
 ```javascript
-cy.get('.todo-list li').should('have.length', 2).eq(3)
+cy.get('.todo-list li') // query
+  .should('have.length', 2) // assertion
+  .eq(3) // query
 ```
 
 <DocsImage
@@ -184,7 +187,7 @@ cy.get('.todo-list li').should('have.length', 2).eq(3)
 />
 
 Only queries can be retried, but most other commands still have built-in
-assertions. For example, as described in the "Assertions" section of
+_waiting_. For example, as described in the "Assertions" section of
 [.click()](/api/commands/click), the `click()` action command waits to click
 until the element becomes
 [actionable](/guides/core-concepts/interacting-with-elements#Actionability),
@@ -198,9 +201,8 @@ Cypress tries to act like a human user would using the browser.
 - Is the element behind another element?
 - Does the element have the `disabled` attribute?
 
-Action commands - such as `.click()` - automatically wait until multiple
-built-in assertions like these pass, and then it will attempt to click just
-once.
+Actions - such as `.click()` - automatically wait until multiple built-in
+assertions like these pass, and then it will attempt to click just once.
 
 ## Timeouts
 
@@ -231,17 +233,16 @@ cy.get('[data-testid="mobile-nav"]', { timeout: 10000 })
   .and('contain', 'Home')
 ```
 
-Cypress will retry for up to 10 seconds to find an element with `data-testid`
-attribute `mobile-nav`. It will then retry for up to 10 seconds waiting for it
-to be visible; once it's visible, it will wait up to 10s for it to contain
-"Home". For more examples, read the
+Cypress will retry for up to 10 seconds to find a visible element with
+`data-testid` attribute `mobile-nav` with text containing "Home". For more
+examples, read the
 [Timeouts](/guides/core-concepts/introduction-to-cypress#Timeouts) section in
 the "Introduction to Cypress" guide.
 
 ### Disable retry
 
-Overriding the timeout to `0` will essentially disable retrying the query, since
-it will spend 0 milliseconds retrying.
+Overriding the timeout to `0` will essentially disable retrying the query or
+waiting on an other, since it will spend 0 milliseconds retrying.
 
 ```javascript
 // check synchronously that the element does not exist (no retry)
@@ -251,11 +252,10 @@ cy.get('[data-testid="ssr-error"]', { timeout: 0 }).should('not.exist')
 
 ## Only queries are retried
 
-Any command that isn't a query, such as `.click()`, will not "chain together" to
-form the subject for later commands the way queries do. Cypress will retry any
-queries _leading up to_ a command, and retry any assertions _after_ a command,
-but commands themselves only execute once. After they've executed, nothing
-leading up to them will retry.
+Any command that isn't a query, such as `.click()`, follows different rules than
+queries do. Cypress will retry any queries _leading up to_ a command, and retry
+any assertions _after_ a command, but commands themselves never retry - nor does
+anything leading up to them after they've resolved.
 
 Most commands are not retried because they could potentially change the state of
 the application under test. For example, Cypress will not retry the
@@ -313,8 +313,8 @@ registers, and the dialog disappears. Read about it in the
 [When Can the Test Click?](https://www.cypress.io/blog/2019/01/22/when-can-the-test-click/)
 blog post.
 
-Because of the default assertions built into every command, and action commands
-in particular, you should rarely need this pattern.
+Because of the assertions built into every command, and action commands in
+particular, you should rarely need this pattern.
 
 :::
 
@@ -365,13 +365,12 @@ const Clicker = ({ click }) => (
 The test finishes before the component calls the `click` prop twice, and without
 retrying the assertion `expect(onClick).to.be.calledTwice`.
 
-It could also fail if React or another javascript library decided to rerender
-the DOM between clicks.
+It could also fail if React decides to rerender the DOM between clicks.
 
 #### <Icon name="check-circle" color="green" /> Correctly waiting for the stub to be called
 
 We recommend aliasing the stub using the [`.as`](/api/commands/as) command and
-using `cy.get('@alias')` to run assertions.
+using `cy.get('@alias').should(...)` assertions.
 
 ```js
 it('calls the click prop', () => {
@@ -432,8 +431,8 @@ cy.get('[data-testid="random-number"]') // <div>🎁</div>
   .and('be.lte', 10) // never evaluates
 ```
 
-Unfortunately, the [.then()](/api/commands/then) command breaks the chain of
-queries - nothing before it (such as fetching the text of the element) re-runs.
+Unfortunately, the [.then()](/api/commands/then) command is not retried. Thus
+the test only runs the entire chain once before failing.
 
 <DocsImage
   src="/img/guides/retry-ability/random-number-first-attempt.png"
