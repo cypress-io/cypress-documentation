@@ -90,6 +90,39 @@ You can resolve this by moving any assertions you don't want to re-run after
 + cy.get('.modal').as('myModal').should('be.visible')
 ```
 
+#### Chains that include assertions now retry "all the way through"
+
+Previously, assertions were non-query commands, meaning that they served as
+"breakpoints" in a chain of queries, and queries before them did not re-run.
+
+```js
+cy.get('button')
+  .should('have.class', 'animating')
+  .get('button')
+  .should('have.class', 'done-animating')
+```
+
+In Cypress 12, this test would probably pass; because `.should()` was not a
+query, it broke the chain, and the above test could be thought of as having two
+parts:
+
+1. `.get(.button').should('have.class', 'animating')`
+2. `.get('button').should('have.class', 'done-animating')`
+
+However, in Cypress 13, the chain is composed entirely of queries, meaning the
+entire chain of all four commands must pass at the same time.
+
+You can resolve this by breaking up chains of commands that you don't want to
+execute together with `cy`.
+
+```diff
+-   .get('button')
++ cy.get('button')
+```
+
+See the [Retry-Ability Guide](/guides/core-concepts/retry-ability) for more
+details on how queries chain together and retry.
+
 ### `cy.readFile()` is now a query command
 
 In Cypress 13, the [`.readFile()`](/api/commands/as) command is now a query.
