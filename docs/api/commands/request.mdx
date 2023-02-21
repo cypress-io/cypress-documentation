@@ -128,16 +128,36 @@ globally in [configuration](/guides/references/configuration).
 You can also set options for `cy.request()`'s `baseUrl` and `responseTimeout`
 globally in the [Cypress configuration](/guides/references/configuration).
 
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+
+- `cy.request()` ignores the subject it is given.
+
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+
+- `cy.request()` will automatically [retry](/guides/core-concepts/retry-ability)
+  until there is no network error unless [`retryOnNetworkFailure`](#Options) is
+  `false`.
+- `cy.request()` will automatically [retry](/guides/core-concepts/retry-ability)
+  until there the response status code is a success if
+  [`retryOnStatusCodeFailure`](#Options) is `true`.
+
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+
+- `cy.request()` can time out waiting retrying if there are network errors.
+- `cy.request()` can time out waiting for the server to respond.
+- `cy.request()` can time out waiting for a successful status code.
+
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
+- `cy.request()` is not a query. Once a request has succeeded, it
+  [will not make further requests](/guides/core-concepts/retry-ability#Only-queries-are-retried)
+  even if chained assertions fail.
 - `cy.request()` yields the `response` as an object literal containing
   properties such as:
   - `status`
   - `body`
   - `headers`
   - `duration`
-- `cy.request()` is not a query. It
-  [only makes the request once](/guides/core-concepts/retry-ability#Only-queries-are-retried).
 
 ## Examples
 
@@ -364,28 +384,6 @@ functions as if it came from the browser.
 
 The intention of `cy.request()` is to be used for checking endpoints on an
 actual, running server without having to start the front end application.
-
-## Rules
-
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
-
-- `cy.request()` requires being chained off of `cy`.
-- `cy.request()` requires that the server sends a response.
-- `cy.request()` requires that the response status code be `2xx` or `3xx` when
-  `failOnStatusCode` is `true`.
-
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
-
-- `cy.request()` will automatically [retry](/guides/core-concepts/retry-ability)
-  until there is no network error unless [`retryOnNetworkFailure`](#Options) is
-  `false`.
-- `cy.request()` will automatically [retry](/guides/core-concepts/retry-ability)
-  until there the response status code is a success if
-  [`retryOnStatusCodeFailure`](#Options) is `true`.
-
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
-
-- `cy.request()` can time out waiting for the server to respond.
 
 ## Command Log
 

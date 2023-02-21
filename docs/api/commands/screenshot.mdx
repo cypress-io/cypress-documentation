@@ -62,11 +62,25 @@ For more details on these options and to set some as defaults across all uses of
 `.screenshot()`, see the
 [Cypress.Screenshot API doc](/api/cypress-api/screenshot-api).
 
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+
+- `cy.screenshot()` can be chained off of `cy` or off a command that yields a
+  single DOM element.
+
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+
+- `cy.screenshot()` has no implicit assertions.
+
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+
+- `cy.screenshot()` cannot time out.
+
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
+- `.screenshot()` is not a query. It is
+  [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried) to
+  chain further commands that rely on the subject after `.screenshot()`.
 - `.screenshot()` yields the same subject it was given.
-- It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried)
-  to chain further commands that rely on the subject after `.screenshot()`.
 
 ## Examples
 
@@ -299,21 +313,6 @@ cy.get('.sticky-header').invoke('css', 'position', 'absolute')
 cy.screenshot()
 cy.get('.sticky-header').invoke('css', 'position', null)
 ```
-
-## Rules
-
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
-
-- `cy.screenshot()` can be chained off of `cy` or off a command that yields a
-  single DOM element.
-
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
-
-- `cy.screenshot()` has no implicit assertions.
-
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
-
-- `cy.screenshot()` will never time out.
 
 :::caution
 

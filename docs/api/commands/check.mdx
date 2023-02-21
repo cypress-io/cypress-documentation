@@ -64,11 +64,28 @@ Pass in an options object to change the default behavior of `.check()`.
 | `timeout`                    | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts)           | Time to wait for `.check()` to resolve before [timing out](#Timeouts)                                                                              |
 | `waitForAnimations`          | [`waitForAnimations`](/guides/references/configuration#Actionability)          | Whether to wait for elements to [finish animating](/guides/core-concepts/interacting-with-elements#Animations) before executing the command.       |
 
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+
+- `.check()` requires being chained off a command that yields DOM element(s).
+- `.check()` requires the element to have type `checkbox` or `radio`.
+
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+
+- Before executing, `.check()` will wait for the element to reach an
+  [actionable state](/guides/core-concepts/interacting-with-elements).
+- After executing, `.check()` implicitly asserts that the element(s) still
+  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).
+
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+
+- `.check()` can time out waiting for the element to reach an
+  [actionable state](/guides/core-concepts/interacting-with-elements).
+
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-- `.check()` yields the same subject it was given.
 - It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried)
   to chain further commands that rely on the subject after `.check()`.
+- `.check()` yields the same subject it was given.
 
 ## Examples
 
@@ -165,24 +182,6 @@ cy.get('#pick-fruit :checked').should('be.checked').and('have.value', 'apple')
 
 `.check()` is an "action command" that follows all the rules of
 [Actionability](/guides/core-concepts/interacting-with-elements).
-
-## Rules
-
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
-
-- `.check()` requires being chained off a command that yields DOM element(s).
-- `.check()` requires the element to have type `checkbox` or `radio`.
-
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
-
-- `.check()` will automatically wait for the element to reach an
-  [actionable state](/guides/core-concepts/interacting-with-elements).
-
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
-
-- `.check()` can time out waiting for the element to reach an
-  [actionable state](/guides/core-concepts/interacting-with-elements).
-- `.check()` can time out waiting for assertions you've added to pass.
 
 ## Command Log
 

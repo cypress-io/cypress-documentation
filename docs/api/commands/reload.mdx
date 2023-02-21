@@ -36,6 +36,21 @@ reload without cache.
 | `log`     | `true`                                                         | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log)                                                                                                           |
 | `timeout` | [`pageLoadTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.reload()` to resolve before [timing out](#Timeouts) Note: Network requests are limited by the underlying operating system, and may still time out if this value is increased. |
 
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+
+- `cy.reload()` ignores the subject it is given.
+
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+
+- `cy.reload()` asserts that response has `content-type: text/html`.
+- `cy.reload()` asserts that the response code is `2xx` after following
+  redirects.
+- `cy.reload()` waits for the `load` event fire.
+
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+
+- `cy.reload()` can time out waiting for the page to fire its `load` event.
+
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 - `cy.reload()` yields the `window` object after the page finishes loading.
@@ -64,25 +79,6 @@ cy.get('#undo-btn').click().should('not.be.visible')
 cy.visit('http://localhost:3000/admin')
 cy.reload(true)
 ```
-
-## Rules
-
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
-
-- `cy.reload()` requires being chained off of `cy`.
-- `cy.reload()` requires the response to be `content-type: text/html`.
-- `cy.reload()` requires the response code to be `2xx` after following
-  redirects.
-- `cy.reload()` requires the load `load` event to eventually fire.
-
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
-
-- `cy.reload()` will automatically wait for assertions you have chained to pass.
-
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
-
-- `cy.reload()` can time out waiting for the page to fire its `load` event.
-- `cy.reload()` can time out waiting for assertions you've added to pass.
 
 ## Command Log
 

@@ -28,10 +28,31 @@ cy.exec('npm start').shadow() // Errors, 'exec' does not yield DOM element
 cy.get('.not-a-shadow-host').shadow() // Errors, subject must host a shadow root
 ```
 
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+
+- `.shadow()` requires being chained off a command that yields a DOM element
+  that is a shadow host (i.e. has a shadow root directly attached to it).
+
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+
+- `.shadow()` will automatically [retry](/guides/core-concepts/retry-ability)
+  until the element(s)
+  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).
+- `.shadow()` will automatically [retry](/guides/core-concepts/retry-ability)
+  until the element(s) host(s) a shadow root.
+
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+
+- `.shadow()` can
+  [time out waiting](/guides/core-concepts/introduction-to-cypress#Default-Assertions)
+  for at least one subject element to host a shadow root.
+
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-- `.shadow()` yields the new DOM element(s) it found.
-- `.shadow()` is a query, and it is _safe_ to chain further commands.
+- `.shadow()` is a query command, and will not break a chain of
+  [retry-ability](/guides/core-concepts/retry-ability#Commands-Queries-and-Assertions).
+  It is _safe_ to chain further commands that use the subject after `.shadow()`.
+- `.shadow()` yields the shadow roots of all subject elements that have one.
 
 ## Examples
 
@@ -48,28 +69,6 @@ cy.get('.not-a-shadow-host').shadow() // Errors, subject must host a shadow root
 // yields [#shadow-root (open)]
 cy.get('.shadow-host').shadow().find('.my-button').click()
 ```
-
-## Rules
-
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
-
-- `.shadow()` requires being chained off a command that yields a DOM element
-  that is a shadow host (i.e. has a shadow root directly attached to it).
-
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
-
-- `.shadow()` will automatically [retry](/guides/core-concepts/retry-ability)
-  until the element(s)
-  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).
-- `.shadow()` will automatically [retry](/guides/core-concepts/retry-ability)
-  until the element(s) host(s) a shadow root.
-
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
-
-- `.shadow()` can time out waiting for the element(s) to
-  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).
-- `.shadow()` can time out waiting for the element(s) to host a shadow root.
-- `.shadow()` can time out waiting for assertions you've added to pass.
 
 ## Known Issue
 

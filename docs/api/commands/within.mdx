@@ -47,11 +47,24 @@ Pass in an options object to change the default behavior of `.within()`.
 | ------ | ------- | ---------------------------------------------------------------------------------------- |
 | `log`  | `true`  | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+
+- `.within()` requires being chained off a previous command that yields exactly
+  one DOM element.
+
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+
+- `.within()` has no implicit assertions.
+
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+
+- `.within()` cannot time out.
+
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-- `.within()` yields the same subject it was given.
 - It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried)
   to chain further commands that rely on the subject after `.within()`.
+- `.within()` yields the same subject it was given.
 
 Trying to return a different element the `.within` callback have no effect:
 
@@ -177,21 +190,6 @@ cy.get('form').within(($form) => {
   cy.root().submit()
 })
 ```
-
-## Rules
-
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
-
-- `.within()` requires being chained off a previous command that yields exactly
-  one DOM element.
-
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
-
-- `.within()` has no implicit assertions.
-
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
-
-- `.within()` cannot time out.
 
 ## Command Log
 

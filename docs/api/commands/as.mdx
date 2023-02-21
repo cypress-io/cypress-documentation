@@ -55,10 +55,24 @@ Pass in an options object to change the default behavior of `.as()`.
 | ------ | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `type` | `query` | The type of alias to store, which impacts how the value is retrieved later in the test. Valid values are `query` and `static`. A `query` alias re-runs all queries leading up to the resulting value each time the alias is requested. A `static` alias is retrieved once when the alias is stored, and will never change. `type` has no effect when aliasing intercepts, spies, and stubs. |
 
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+
+- `.as()` requires being chained off a previous command.
+
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+
+- `.as()` has no implicit assertions.
+
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+
+- `.as()` cannot time out.
+
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 - `.as()` yields the same subject it was given.
-- It is _safe_ to chain further commands after `.as()`.
+- `.as()` is a query command, and will not break a chain of
+  [retry-ability](/guides/core-concepts/retry-ability#Commands-Queries-and-Assertions).
+  It is _safe_ to chain further commands that use the subject after `.as()`.
 
 ## Examples
 
@@ -180,20 +194,6 @@ describe('A fixture', () => {
   })
 })
 ```
-
-## Rules
-
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
-
-- `.as()` requires being chained off a previous command.
-
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
-
-- `.as()` has no implicit assertions.
-
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
-
-- `.as()` cannot time out.
 
 ## Command Log
 

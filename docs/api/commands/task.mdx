@@ -98,10 +98,24 @@ Pass in an options object to change the default behavior of `cy.task()`.
 | `log`     | `true`                                                     | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 | `timeout` | [`taskTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.task()` to resolve before [timing out](#Timeouts)                   |
 
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+
+- `cy.exec()` ignores the subject it is given.
+
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+
+- `cy.task()` waits for the task to end.
+
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+
+- `cy.task()` can time out waiting for the task to end.
+
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-`cy.task()` yields the value returned or resolved by the `task` event in
-[setupNodeEvents](/guides/tooling/plugins-guide#Using-a-plugin).
+- `cy.exec()` is not a query. It
+  [only executes the talk once](/guides/core-concepts/retry-ability#Only-queries-are-retried).
+- `cy.task()` yields the value returned or resolved by the `task` event in
+  [setupNodeEvents](/guides/tooling/plugins-guide#Using-a-plugin).
 
 ## Examples
 
@@ -500,21 +514,6 @@ on('task', {
 ```
 
 :::
-
-## Rules
-
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
-
-- `cy.task()` requires being chained off of `cy`.
-- `cy.task()` requires the task to eventually end.
-
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
-
-- `cy.task()` has no implicit assertions.
-
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
-
-- `cy.task()` can time out waiting for the task to end.
 
 ## Command Log
 

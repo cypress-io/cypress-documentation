@@ -31,8 +31,30 @@ Pass in an options object to change the default behavior of
 | `log`     | `true`                                                         | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 | `timeout` | [`responseTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.getAllCookies()` to resolve before [timing out](#Timeouts)          |
 
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+
+- `cy.getAllCookies()` ignores the subject it is given.
+
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+
+- `cy.getAllCookies()` has no implicit assertions.
+
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+
+- `cy.getAllCookies()` should never time out.
+
+:::caution
+
+Because `cy.getAllCookies()` is asynchronous it is technically possible for
+there to be a timeout while talking to the internal Cypress automation APIs. But
+for practical purposes it should never happen.
+
+:::
+
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
+- `cy.getAllCookies()` is not a query. It
+  [only reads the data once](/guides/core-concepts/retry-ability#Only-queries-are-retried).
 - `cy.getAllCookies()` yields an array of cookie objects. Each cookie object has
   the following properties:
   - `domain`: _(String)_
@@ -43,8 +65,6 @@ Pass in an options object to change the default behavior of
   - `sameSite`: _(String)_ _(if specified)_
   - `secure`: _(Boolean)_
   - `value`: _(String)_
-- `cy.getAllLocalStorage()` is not a query. It
-  [only reads the data once](/guides/core-concepts/retry-ability#Only-queries-are-retried).
 
 ## Examples
 
@@ -69,32 +89,6 @@ cy.getAllCookies()
     expect(cookies[1]).to.have.property('name', 'session_id')
   })
 ```
-
-## Rules
-
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
-
-- `cy.getAllCookies()` requires being chained off of `cy`.
-
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
-
-- `cy.getAllCookies()` has no implicit assertions.
-- `cy.getAllCookies()`
-  [only reads the data once](/guides/core-concepts/retry-ability#Only-queries-are-retried),
-  so any assertions chaining the command will not retry because the yielded
-  value is static.
-
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
-
-- `cy.getAllCookies()` should never time out.
-
-:::caution
-
-Because `cy.getAllCookies()` is asynchronous it is technically possible for
-there to be a timeout while talking to the internal Cypress automation APIs. But
-for practical purposes it should never happen.
-
-:::
 
 ## See also
 

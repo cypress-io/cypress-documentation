@@ -95,11 +95,28 @@ Pass in an options object to change the default behavior of `.type()`.
 | `timeout`                    | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts)           | Time to wait for `.type()` to resolve before [timing out](#Timeouts)                                                                               |
 | `waitForAnimations`          | [`waitForAnimations`](/guides/references/configuration#Actionability)          | Whether to wait for elements to [finish animating](/guides/core-concepts/interacting-with-elements#Animations) before executing the command.       |
 
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+
+- `.type()` requires being chained off a command that yields DOM element(s).
+- `.type()` requires the element to be an `input` or `textarea`.
+
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+
+- `.type()` will automatically wait for the element to reach an
+  [actionable state](/guides/core-concepts/interacting-with-elements).
+- After executing, `.type()` implicitly asserts that the element(s) still
+  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).
+
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+
+- `.type()` can time out waiting for the element to reach an
+  [actionable state](/guides/core-concepts/interacting-with-elements).
+
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-- `.type()` yields the same subject it was given.
 - It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried)
   to chain further commands that rely on the subject after `.type()`.
+- `.type()` yields the same subject it was given.
 
 ## Examples
 
@@ -573,23 +590,6 @@ Additionally Cypress handles these 4 other situations as defined in the spec:
 
 If the form's `submit` event is `preventedDefault` the form will not actually be
 submitted.
-
-## Rules
-
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
-
-- `.type()` requires being chained off a command that yields DOM element(s).
-
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
-
-- `.type()` will automatically wait for the element to reach an
-  [actionable state](/guides/core-concepts/interacting-with-elements).
-
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
-
-- `.type()` can time out waiting for the element to reach an
-  [actionable state](/guides/core-concepts/interacting-with-elements).
-- `.type()` can time out waiting for assertions you've added to pass.
 
 ## Command Log
 

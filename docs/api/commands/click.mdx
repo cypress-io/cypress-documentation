@@ -75,11 +75,27 @@ Pass in an options object to change the default behavior of `.click()`.
 | `timeout`                    | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts)           | Time to wait for `.click()` to resolve before [timing out](#Timeouts)                                                                              |
 | `waitForAnimations`          | [`waitForAnimations`](/guides/references/configuration#Actionability)          | Whether to wait for elements to [finish animating](/guides/core-concepts/interacting-with-elements#Animations) before executing the command.       |
 
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+
+- `.click()` requires being chained off a command that yields DOM element(s).
+
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+
+- `.click()` will automatically wait for the element to reach an
+  [actionable state](/guides/core-concepts/interacting-with-elements).
+- After executing, `.click()` implicitly asserts that the element(s) still
+  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).
+
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+
+- `.click()` can time out waiting for the element to reach an
+  [actionable state](/guides/core-concepts/interacting-with-elements).
+
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-- `.click()` yields the same subject it was given.
 - It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried)
   to chain further commands that rely on the subject after `.click()`.
+- `.click()` yields the same subject it was given.
 
 ## Examples
 
@@ -206,23 +222,6 @@ found the window is given focus instead (which matches real browser behavior).
 
 If the mousedown event has its default action prevented (`e.preventDefault()`)
 then the element will not receive focus as per the spec.
-
-## Rules
-
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
-
-- `.click()` requires being chained off a command that yields DOM element(s).
-
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
-
-- `.click()` will automatically wait for the element to reach an
-  [actionable state](/guides/core-concepts/interacting-with-elements).
-
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
-
-- `.click()` can time out waiting for the element to reach an
-  [actionable state](/guides/core-concepts/interacting-with-elements).
-- `.click()` can time out waiting for assertions you've added to pass.
 
 ## Command Log
 

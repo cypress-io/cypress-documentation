@@ -70,12 +70,33 @@ Pass in an options object to change the default behavior of `.invoke()`.
 Additional arguments to be given to the function call. There is no limit to the
 number of arguments.
 
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+
+- `.invoke()` requires being chained off a previous command that yields an a
+  value with `functionName` as a property.
+- The called function must not return a promise.
+
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+
+- `.invoke()` will automatically [retry](/guides/core-concepts/retry-ability)
+  until `functionName` exists on the subject, is a function and does not throw
+  an error when called.
+
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+
+- `.invoke()` can
+  [time out waiting](/guides/core-concepts/introduction-to-cypress#Default-Assertions)
+  for `functionName` to exist on the subject, be a function, and not throw an
+  error.
+
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
+- `.invoke()` is a query command, and is
+  [retry-able](/guides/core-concepts/retry-ability#Commands-Queries-and-Assertions).
+  It is _safe_ to chain further commands that use the subject after `.invoke()`.
 - `.invoke()` yields the return value of the method.
-- `.invoke()` is a query, and it is _safe_ to chain further commands.
 - If you chain additional commands off of `.invoke()`, the function will be
-  called multiple times!
+  called multiple times.
 
 ## Examples
 
@@ -243,22 +264,6 @@ cy.wrap(english).invoke('greeting').should('equal', 'bye')
   alt="Invoke retries example"
   width-600
 ></DocsImage>
-
-## Rules
-
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
-
-- `.invoke()` requires being chained off a previous command.
-
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
-
-- `.invoke()` will wait for the `function` to exist on the subject before
-  running.
-
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
-
-- `.invoke()` can time out waiting for assertions you've added to pass.
-- `.invoke()` can time out waiting for a promise you've returned to resolve.
 
 ## Command Log
 

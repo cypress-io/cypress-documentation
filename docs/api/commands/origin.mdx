@@ -128,8 +128,22 @@ There are a number of limitations placed on commands run inside the callback,
 please see [Callback restrictions](#Callback-restrictions) section below for a
 full list.
 
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+
+- `cy.origin()` ignores the subject it is given.
+
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+
+- `cy.exec()` has no implicit assertions.
+
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+
+- `cy.origin()` cannot time out.
+
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
+- `cy.origin()` is not a query. It
+  [only executes the callback function once](/guides/core-concepts/retry-ability#Only-queries-are-retried).
 - `cy.origin()` yields the value yielded by the last Cypress command in the
   callback function.
 - If the callback contains no Cypress commands, `cy.origin()` yields the return

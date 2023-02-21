@@ -62,10 +62,31 @@ Pass in an options object to change the default behavior of `.parentsUntil()`.
 | `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.parentsUntil()` to resolve before [timing out](#Timeouts)             |
 
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+
+- `.parentsUntil()` requires being chained off a command that yields DOM
+  element(s).
+
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+
+- `.parentsUntil()` will automatically
+  [retry](/guides/core-concepts/retry-ability) until it
+  [finds elements](/guides/core-concepts/introduction-to-cypress#Default-Assertions).
+
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+
+- `.parentsUntil()` can
+  [time out waiting](/guides/core-concepts/introduction-to-cypress#Default-Assertions)
+  to match at least one element.
+
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-- `.parentsUntil()` yields the new DOM element(s) it found.
-- `.parentsUntil()` is a query, and it is _safe_ to chain further commands.
+- `.parentsUntil()` is a query command, and will not break a chain of
+  [retry-ability](/guides/core-concepts/retry-ability#Commands-Queries-and-Assertions).
+  It is _safe_ to chain further commands that use the subject after
+  `.parentsUntil()`.
+- `.parentsUntil()` yields the parents of each DOM element in the subject up to,
+  but not including, the provided selector.
 
 ## Examples
 
@@ -93,25 +114,6 @@ Pass in an options object to change the default behavior of `.parentsUntil()`.
 // yields [ul.menu, li]
 cy.get('.active').parentsUntil('.nav')
 ```
-
-## Rules
-
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
-
-- `.parentsUntil()` requires being chained off a command that yields DOM
-  element(s).
-
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
-
-- `.parentsUntil()` will automatically
-  [retry](/guides/core-concepts/retry-ability) until the element(s)
-  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).
-
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
-
-- `.parentsUntil()` can time out waiting for the element(s) to
-  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).
-- `.parentsUntil()` can time out waiting for assertions you've added to pass.
 
 ## Command Log
 

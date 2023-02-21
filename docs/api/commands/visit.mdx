@@ -82,20 +82,31 @@ By default, the `cy.visit()` commands' will use the `pageLoadTimeout` and
 You can also set all `cy.visit()` commands' `pageLoadTimeout` and `baseUrl`
 globally in the [Cypress configuration](/guides/references/configuration).
 
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+
+- `cy.visit()` ignores the subject it is given.
+- After visiting a cross-origin site, you must use a
+  [`cy.origin()`](/api/commands/origin) block to interact with the content. When
+  visiting a cross-origin site, the `onBeforeLoad` and `onLoad` options are not
+  supported.
+
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+
+- `cy.visit()` asserts that response has `content-type: text/html`.
+- `cy.visit()` asserts that the response code is `2xx` after following
+  redirects.
+- `cy.visit()` waits for the `load` event fire.
+
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+
+- `cy.visit()` can time out waiting for the page to fire its `load` event.
+
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-- `cy.visit()` yields the `window` object after the page finishes loading.
 - It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried)
   to chain further commands that rely on the yielded `window` after
   `cy.visit()`.
-
-Let's confirm the `window.navigator.language` after visiting the site:
-
-```javascript
-cy.visit('/') // yields the window object
-  .its('navigator.language') // yields window.navigator.language
-  .should('equal', 'en-US') // asserts the expected value
-```
+- `cy.visit()` yields the `window` object after the page finishes loading.
 
 ## Examples
 
@@ -394,28 +405,10 @@ cy.visit('http://localhost:8000/#/app')
 Cypress will automatically apply the routes to the very next `cy.visit()` and
 does so immediately before any of your application code runs.
 
-## Rules
-
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
-
-- `cy.visit()` requires being chained off of `cy`.
-- `cy.visit()` requires the response to be `content-type: text/html`.
-- `cy.visit()` requires the response code to be `2xx` after following redirects.
-- `cy.visit()` requires the load `load` event to eventually fire.
-
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
-
-- `cy.visit()` will automatically wait for assertions you have chained to pass
-
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
-
-- `cy.visit()` can time out waiting for the page to fire its `load` event.
-- `cy.visit()` can time out waiting for assertions you've added to pass.
-
 ## Visiting cross-origin sites
 
-After visiting a cross-origin site, to interact with the content, you must use a
-[`cy.origin()`](/api/commands/origin) block.
+After visiting a cross-origin site, you must use a
+[`cy.origin()`](/api/commands/origin) block to interact with the content.
 
 When visiting a cross-origin site, the `onBeforeLoad` and `onLoad` options are
 not supported.

@@ -40,13 +40,28 @@ Pass in an options object to change the default behavior of `cy.hash()`.
 | `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.hash()` to resolve before [timing out](#Timeouts)                   |
 
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+
+- `cy.hash()` ignores the subject it is given.
+
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+
+- `cy.hash()` has no implicit assertions.
+
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+
+- `cy.hash()` cannot time out. The `timeout` option is only useful to set the
+  timeout of following assertions.
+
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
+- `cy.hash()` is a query command, and is
+  [retry-able](/guides/core-concepts/retry-ability#Commands-Queries-and-Assertions).
+  It is _safe_ to chain further commands that use the subject after `cy.hash()`.
 - When the current URL contains a hash, `cy.hash()` yields the current URL's
   hash (including the `#` character).
 - When the current URL does not contain a hash, `cy.hash()` yields an empty
   string.
-- `cy.hash()` is a query, and it is _safe_ to chain further commands.
 
 ## Examples
 
@@ -73,20 +88,6 @@ cy.hash().should('eq', '#/users/1') // => true
 cy.get('#users li').find('a').click()
 cy.hash().should('match', /users\/.+$/) // => true
 ```
-
-## Rules
-
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
-
-- `cy.hash()` requires being chained off of `cy`.
-
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
-
-- `cy.hash()` has no implicit assertions.
-
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
-
-- `cy.hash()` can time out waiting for assertions you've added to pass.
 
 ## Command Log
 

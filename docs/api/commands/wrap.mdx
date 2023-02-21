@@ -35,6 +35,19 @@ Pass in an options object to change the default behavior of `cy.wrap()`.
 | `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.wrap()` to resolve before [timing out](#Timeouts)                   |
 
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+
+- `cy.wrap()` ignores the subject it is given.
+
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+
+- If the argument is a promise, `cy.wrap()` will automatically wait until the
+  promise resolves. If the promise is rejected, `cy.wrap()` will fail the test.
+
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+
+- `cy.wrap()` can time out waiting for the value to resolve if it is a promise.
+
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 - `cy.wrap()` yields the object it was called with.
@@ -187,21 +200,6 @@ cy.get('some-submit-button')
     cy.wrap(bar())
   })
 ```
-
-## Rules
-
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
-
-- `cy.wrap()` requires being chained off of `cy`.
-
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
-
-- If the argument is a promise, `cy.wrap()` will automatically wait until the
-  promise resolves. If the promise is rejected, `cy.wrap()` will fail the test.
-
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
-
-- `cy.wrap()` will never time out.
 
 ## Command Log
 

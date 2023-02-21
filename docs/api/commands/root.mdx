@@ -34,15 +34,27 @@ Pass in an options object to change the default behavior of `.root()`.
 | `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.root()` to resolve before [timing out](#Timeouts)                   |
 
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+
+- `cy.root()` ignores the subject it is given.
+
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+
+- `cy.root()` has no implicit assertions.
+
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+
+- `cy.root()` cannot time out. The `timeout` option is only useful to set the
+  timeout of following assertions.
+
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-`cy.root()` yields the root DOM element.
-
-The root element yielded is `<html>` by default. However, when calling `.root()`
-from a [`.within()`](/api/commands/within) command, the root element will point
-to the element you are "within".
-
-`cy.root()` is a query, and it is _safe_ to chain further commands.
+- `cy.root()` is a query command, and is
+  [retry-able](/guides/core-concepts/retry-ability#Commands-Queries-and-Assertions).
+  It is _safe_ to chain further commands that use the subject after `cy.root()`.
+- `cy.root()` yields the root DOM element, `<html>` by default. However, when
+  calling `.root()` from a [`.within()`](/api/commands/within) command, the root
+  element will point to the element you are "within".
 
 ## Examples
 
@@ -65,20 +77,6 @@ cy.get('form').within(($form) => {
   cy.root().submit() // submits the form yielded from 'within'
 })
 ```
-
-## Rules
-
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
-
-- `cy.root()` requires being chained off of `cy`.
-
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
-
-- `cy.root()` has no implicit assertions.
-
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
-
-- `cy.root()` can time out waiting for assertions you've added to pass.
 
 ## Command Log
 

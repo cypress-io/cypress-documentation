@@ -55,11 +55,27 @@ Pass in an options object to change the default behavior of `.blur`.
 | `force`   | `false`                                                              | Forces the action, disables checking if [element is focused](#Requirements)              |
 | `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.blur()` to resolve before [timing out](#Timeouts)                     |
 
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+
+- `.blur()` requires being chained off a command that yields DOM element(s).
+- `.blur()` requires the element to currently have focus.
+- `.blur()` requires the element to be able to receive focus.
+
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+
+- Before executing, `.blur()` will wait for the element to have focus.
+- After executing, `.blur()` implicitly asserts that the element(s) still
+  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).
+
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+
+- `.blur()` can time out waiting for the subject element to have focus.
+
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-- `.blur()` yields the same subject it was given.
 - It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried)
   to chain further commands that rely on the subject after `.blur()`.
+- `.blur()` yields the same subject it was given.
 
 ## Examples
 
@@ -112,22 +128,6 @@ Internally Cypress does account for this, and will polyfill the blur events when
 necessary to replicate what the browser does. Unfortunately the browser will
 still behave differently when not in focus - for instance it may throttle async
 events. Your best bet here is to keep Cypress focused when working on a test.
-
-## Rules
-
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
-
-- `.blur()` requires being chained off a command that yields DOMelement(s).
-- `.blur()` requires the element to currently have focus.
-- `.blur()` requires the element to be able to receive focus.
-
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
-
-- `.blur()` will automatically wait for assertions you have chained to pass.
-
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
-
-- `.blur()` can time out waiting for assertions you've added to pass.
 
 ## Command Log
 

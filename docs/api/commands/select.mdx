@@ -53,11 +53,28 @@ Pass in an options object to change the default behavior of `.select()`.
 | `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.select()` to resolve before [timing out](#Timeouts)                   |
 
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+
+- `.select()` requires being chained off a command that yields DOM element(s).
+- `.select()` requires the element to have type `select`.
+
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+
+- Before executing, `.select()` will wait for the element to reach an
+  [actionable state](/guides/core-concepts/interacting-with-elements).
+- After executing, `.select()` implicitly asserts that the element(s) still
+  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).
+
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+
+- `.select()` can time out waiting for the element to reach an
+  [actionable state](/guides/core-concepts/interacting-with-elements).
+
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-- `.select()` yields the same subject it was given.
 - It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried)
   to chain further commands that rely on the subject after `.select()`.
+- `.select()` yields the same subject it was given.
 
 ## Examples
 
@@ -250,24 +267,6 @@ However, passing `{ force: true }` to `.select()` will not override the
 actionability checks for selecting a disabled `<option>` or an option within a
 disabled `<optgroup>`. See
 [this issue](https://github.com/cypress-io/cypress/issues/107) for more detail.
-
-## Rules
-
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
-
-- `.select()` requires being chained off a command that yields DOM element(s).
-- `.select()` requires the element to be a `select`.
-
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
-
-- `.select()` will automatically wait for the element to reach an
-  [actionable state](/guides/core-concepts/interacting-with-elements).
-
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
-
-- `.select()` can time out waiting for the element to reach an
-  [actionable state](/guides/core-concepts/interacting-with-elements).
-- `.select()` can time out waiting for assertions you've added to pass.
 
 ## Command Log
 

@@ -41,25 +41,19 @@ Pass in an options object to change the default behavior of
 | `log`     | `true`                                                         | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 | `timeout` | [`responseTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.clearAllCookies()` to resolve before [timing out](#Timeouts)        |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
-
-- `cy.clearAllCookies()` yields `null`.
-
-## Rules
-
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-- `cy.clearAllCookies()` requires being chained off of `cy`.
+- `cy.clearAllCookies()` ignores the subject it is given.
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-- `cy.clearAllCookies()` cannot have any assertions chained.
+- `cy.clearAllCookies()` has no implicit assertions.
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
 - `cy.clearAllCookies()` should never time out.
 
-:::caution
+:::info
 
 Because `cy.clearAllCookies()` is asynchronous it is technically possible for
 there to be a timeout while talking to the internal Cypress automation APIs. But
@@ -67,10 +61,13 @@ for practical purposes it should never happen.
 
 :::
 
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+
+- `cy.clearAllCookies()` yields `null`.
+
 ## See also
 
 - [`cy.clearCookie()`](/api/commands/clearcookie)
-- [`cy.getAllCookies()`](/api/commands/getallcookies)
 - [`cy.getCookie()`](/api/commands/getcookie)
 - [`cy.getCookies()`](/api/commands/getcookies)
 - [`cy.setCookie()`](/api/commands/setcookie)

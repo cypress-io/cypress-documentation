@@ -60,18 +60,31 @@ Pass in an options object to change the default behavior of `cy.wait()`.
 | `requestTimeout`  | [`requestTimeout`](/guides/references/configuration#Timeouts)                                                                 | Overrides the global `requestTimeout` for this request. Defaults to `timeout`.           |
 | `responseTimeout` | [`responseTimeout`](/guides/references/configuration#Timeouts)                                                                | Overrides the global `responseTimeout` for this request. Defaults to `timeout`.          |
 
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+
+- `cy.wait()` ignores the subject it was given, except to pass it through if
+  given a `time` argument.
+
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+
+- `cy.wait()` has no implicit assertions.
+
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+
+- When given a `time` argument, `cy.wait()` cannot time out.
+- When given an alias algument, `cy.wait()` can time out waiting for the request
+  to go out.
+- When given an alias algument, `cy.wait()` can time out waiting for the
+  response to return.
+
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-#### When given a `time` argument:
-
-- `cy.wait()` yields the same subject it was given.
 - It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried)
   to chain further commands that rely on the subject after `.wait()`.
-
-#### When given an `alias` argument:
-
-- `cy.wait()` 'yields an object containing the HTTP request and response
-  properties of the request.
+- When given a `time` argument, `cy.wait()` yields the same subject it was
+  given.
+- When given an alias argument, `cy.wait()` yields an object containing the HTTP
+  request and response properties of the request.
 
 ## Examples
 
@@ -260,24 +273,6 @@ response.
 
 When passing an array of aliases to `cy.wait()`, Cypress will wait for all
 requests to complete within the given `requestTimeout` and `responseTimeout`.
-
-## Rules
-
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
-
-- When passed a `time` argument `cy.wait()` can be chained off of `cy` or off
-  another command.
-- When passed an `alias` argument `cy.wait()` requires being chained off of
-  `cy`.
-
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
-
-- `cy.wait()` has no implicit assertions.
-
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
-
-- `cy.wait()` can time out waiting for the request to go out.
-- `cy.wait()` can time out waiting for the response to return.
 
 ## Command Log
 

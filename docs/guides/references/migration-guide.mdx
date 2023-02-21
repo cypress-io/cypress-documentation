@@ -28,7 +28,11 @@ support.
 
 Previously, many commands would only execute their assertions once, failing
 immediately if the assertion did not match. However, assertions now execute
-independently of the previous command, meaning they always retry.
+independently of the previous command, meaning they always retry. Remember that
+_only chains of queries are rerun_ - non-query commands still only execute once.
+
+In this example, `.then()` is a non-query command. It returns a specific
+subject, which updates after 1s.
 
 ```js
 cy.then(() => {
@@ -41,9 +45,24 @@ cy.then(() => {
 }).should('have.property', 'foo')
 ```
 
-The callback provided to `.then()` is still only executed once, but beginning in
-Cypress 13, `.should()` will wait for the property to exist even after non-query
-commands.
+The callback provided to `.then()` is only executed once. In Cypress 12, this
+command would fail immediately, because `.then()` only checked assertions once,
+but beginning in Cypress 13, `.should()` retries, waiting for the property to
+exist.
+
+#### It is safe to chain further queries after assertions
+
+```js
+cy.get('form').should('have.class', 'ready').find('button').click()
+```
+
+This test waits for a form to exist and have the "ready" class before clicking
+on a button inside of it. In Cypress 12, this test was vulnerable to detached
+DOM errors, where if React or another javascript library replaced elements on
+the page, Cypress could 'lose track' of them. In Cypress 13, this operation is
+reliable - because `.get().should().find()` is composed entirely of query
+commands, the whole chain will be retried while while trying to find and click
+on a button.
 
 #### Assertions are now included in aliases
 
@@ -100,38 +119,12 @@ and eventually native
 
 #### `.readFile()` can no longer be overwritten with `Cypress.Commands.overwrite()`
 
-However, queries cannot be overwritten using `Cypress.Commands.overwrite()`. If
-you were previously overwriting `cy.readFile()`, you will need to put your
-custom version under a new name, and update your tests to use it. For example,
-you might update this test:
-
-```js
-Cypress.Commands.override('readFile', (originalFn, fileName, options) => {
-  originalFn(fileName, options).then((file) => {
-    // Do some processing
-    return updatedFile
-  })
-})
-
-it('reads a file', () => {
-  cy.readFile('foo.json')
-})
-```
-
-to something like this:
-
-```js
-Cypress.Commands.create('readFileWithExtras', (fileName, options) => {
-  cy.readFile(fileName, options).then((file) => {
-    // Do some processing
-    return updatedFile
-  })
-})
-
-it('reads a file', () => {
-  cy.readFileWithExtras('foo.json')
-})
-```
+Queries must be overwritten using `Cypress.Commands.overwriteQuery()`. If you
+were previously overwriting `cy.readFile()`, you will need to update your code
+to use `Cypress.Commands.overwriteQuery('readFile', function() { ... })` rather
+than `Cypress.Commands.overwrite('readFile', () => { ... })`. For more details
+on overwriting queries, see the
+[Overwriting Existing Queries](/api/cypress-api/custom-queries#Overwriting-Existing-Queries).
 
 ## Migrating to Cypress 12.0
 

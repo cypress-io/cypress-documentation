@@ -47,11 +47,27 @@ Pass in an options object to change the default behavior of `.submit()`.
 | `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.submit()` to resolve before [timing out](#Timeouts)                   |
 
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+
+- `.submit()` requires being chained off a command that yields a DOM element.
+- `.submit()` requires the element to have type `form`.
+
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+
+- After executing, `.submit()` implicitly asserts that the element(s) still
+  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).
+
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+
+- `.submit()` can time out if the form element is removed from the page after
+  submitting. The `timeout` argument is mostly useful to set the timeout for
+  following assertions.
+
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-- `.submit()` yields the same subject it was given.
 - It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried)
   to chain further commands that rely on the subject after `.submit()`.
+- `.submit()` yields the same subject it was given.
 
 ## Example
 
@@ -95,21 +111,6 @@ If the form being submitted includes inputs with
 [client-side validation](https://developer.mozilla.org/en-US/docs/Learn/Forms/Form_validation)
 and that validation fails, `.submit()` will fail and list the validation
 failures.
-
-## Rules
-
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
-
-- `.submit()` requires being chained off a command that yields DOM element(s).
-- `.submit()` requires the element to be a `form`.
-
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
-
-- `.submit()` will automatically wait for assertions you have chained to pass.
-
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
-
-- `.submit()` can time out waiting for assertions you've added to pass.
 
 ## Command Log
 

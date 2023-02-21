@@ -43,6 +43,23 @@ Pass in an options object to change the default behavior of `.scrollIntoView()`.
 | `offset`   | `{top: 0, left: 0}`                                                  | Amount to scroll after the element has been scrolled into view                           |
 | `timeout`  | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.scrollIntoView()` to resolve before [timing out](#Timeouts)           |
 
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+
+- `.scrollIntoView()` requires being chained off a command that yields DOM
+  element(s).
+
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+
+- After executing, `.scrollIntoView()` implicitly asserts that the element(s)
+  still
+  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).
+
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+
+- `.scrollIntoView()` can only time out if the element disappears while
+  scrolling. The `timeout` option is mainly useful to set the timeout of
+  following assertions.
+
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 - `.scrollIntoView()` yields the same subject it was given.
@@ -88,22 +105,6 @@ snapshots._ If you want to see the actual scrolling behavior in action, we
 recommend using [`.pause()`](/api/commands/pause) to walk through each command
 or
 [watching the video of the test run](/guides/guides/screenshots-and-videos#Videos).
-
-## Rules
-
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
-
-- `.scrollIntoView()` requires being chained off a command that yields DOM
-  element(s).
-
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
-
-- `.scrollIntoView()` will automatically wait for assertions you have chained to
-  pass
-
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
-
-- `.scrollIntoView()` can time out waiting for assertions you've added to pass.
 
 ## Command Log
 

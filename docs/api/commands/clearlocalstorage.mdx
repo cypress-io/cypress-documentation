@@ -46,6 +46,18 @@ Pass in an options object to change the default behavior of
 | ------ | ------- | ---------------------------------------------------------------------------------------- |
 | `log`  | `true`  | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+
+- `cy.clearLocalStorage()` ignores the subject it is given.
+
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+
+- `cy.clearLocalStorage()` has no implicit assertions.
+
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+
+- `cy.clearLocalStorage()` cannot time out.
+
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 - `cy.clearLocalStorage()` yields `null`.
@@ -74,20 +86,6 @@ cy.clearLocalStorage('appName')
 cy.clearLocalStorage(/app-/)
 ```
 
-## Rules
-
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
-
-- `cy.clearLocalStorage()` requires being chained off of `cy`.
-
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
-
-- `cy.clearLocalStorage()` cannot have any assertions chained.
-
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
-
-- `cy.clearLocalStorage()` cannot time out.
-
 ## Command Log
 
 ```javascript
@@ -115,4 +113,9 @@ the following:
 
 ## See also
 
+- [`cy.clearAllSessionStorage()`](/api/commands/clearallsessionstorage)
+- [`cy.clearAllCookies()`](/api/commands/clearallcookies)
 - [`cy.clearCookies()`](/api/commands/clearcookies)
+- [`cy.clearAllLocalStorage()`](/api/commands/clearalllocalstorage)
+- [`cy.getAllLocalStorage()`](/api/commands/getalllocalstorage)
+- [`cy.getAllSessionStorage()`](/api/commands/getallsessionstorage)

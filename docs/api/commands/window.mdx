@@ -31,10 +31,26 @@ Pass in an options object to change the default behavior of `cy.window()`.
 | `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.window()` to resolve before [timing out](#Timeouts)                 |
 
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+
+- `cy.window()` ignores the subject it is given.
+
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+
+- `cy.window()` has no implicit assertions.
+
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+
+- `cy.window()` cannot time out. The `timeout` option is only useful to set the
+  timeout of following assertions.
+
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
+- `cy.window()` is a query command, and is
+  [retry-able](/guides/core-concepts/retry-ability#Commands-Queries-and-Assertions).
+  It is _safe_ to chain further commands that use the subject after
+  `cy.window()`.
 - `cy.window()` yields the `window` object.
-- `cy.window()` is a query, and it is _safe_ to chain further commands.
 
 ## Examples
 
@@ -200,20 +216,6 @@ it('should trigger KeyboardEvent with .type inside Cypress event listener', (don
   cy.get('#test-input').type('A')
 })
 ```
-
-## Rules
-
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
-
-- `cy.window()` requires being chained off of `cy`.
-
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
-
-- `cy.window()` has no implicit assertions.
-
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
-
-- `cy.window()` can time out waiting for assertions you've added to pass.
 
 ## Command Log
 

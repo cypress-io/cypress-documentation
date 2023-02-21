@@ -46,12 +46,24 @@ Pass in an options object to change the default behavior of `.pause()`.
 | ------ | ------- | ---------------------------------------------------------------------------------------- |
 | `log`  | `true`  | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+
+- `cy.pause()` passes through whatever subject it is given.
+
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+
+- `cy.pause()` has no implicit assertions.
+
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+
+- `cy.pause()` cannot time out.
+
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
+- `.pause()` is not a query. It is
+  [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried) to
+  chain further commands that rely on the subject after `.pause()`.
 - `.pause()` yields the same subject it was given.
-- It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried)
-  to chain further commands that rely on a DOM element as the subject after
-  `.pause()`.
 
 ## Examples
 
@@ -66,20 +78,6 @@ cy.get('a')
   .pause()
 cy.get('button').should('not.be.disabled')
 ```
-
-## Rules
-
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
-
-- `.pause()` can be chained off of `cy` or off another command.
-
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
-
-- `.pause()` has no implicit assertions.
-
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
-
-- `.pause()` cannot time out.
 
 ## Command Log
 

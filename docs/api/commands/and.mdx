@@ -45,7 +45,7 @@ cy.wrap({ foo: 'bar' })
 **<Icon name="exclamation-triangle" color="red" /> Incorrect Usage**
 
 ```javascript
-cy.and('eq', '42') // Can not be chained off 'cy'
+cy.and('eq', '42') // Cannot be chained off 'cy'
 
 cy.get('button').click().and('be.focused') // Should not be chained off
 // action commands that may update the DOM
@@ -72,9 +72,22 @@ A method to be called on the chainer.
 Pass a function that can have any number of explicit assertions within it.
 Whatever was passed to the function is what is yielded.
 
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+
+- `.and()` will assert on the subject it receives. If chained directly off `cy`,
+  the subject will be `undefined`, which is usually not useful.
+
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+
+- `.and()` uses the timeout value of the previous command. If none exists, it
+  will use the default command timeout.
+- `.and()` can time out waiting for the assertion to pass.
+
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-- `.and()` is a query, and it is _safe_ to chain further commands.
+- `.and()` is a query command, and will not break a chain of
+  [retry-ability](/guides/core-concepts/retry-ability#Commands-Queries-and-Assertions).
+  It is _safe_ to chain further commands that use the subject after `.and()`.
 - In most cases, `.and()` yields the same subject it was given.
 
 ```javascript
@@ -219,35 +232,6 @@ expect({ foo: 'bar' }).to.have.property('foo').and.eq('bar')
 ### Differences
 
 <ThenShouldAndDifference />
-
-## Rules
-
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
-
-- `.and()` requires being chained off a previous command.
-
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
-
-- `.and()` will continue to [retry](/guides/core-concepts/retry-ability) its
-  specified assertions until it times out.
-
-```javascript
-cy.get('input', {timeout: 10000}).should('have.value', '10').and('have.class', 'error')
-                         ↲
-  // timeout here will be passed down to the '.and()'
-  // and it will retry for up to 10 secs
-```
-
-```javascript
-cy.get('input', {timeout: 10000}).should('have.value', 'US').and(($input) => {
-                         ↲
-  // timeout here will be passed down to the '.and()'
-  // unless an assertion throws earlier,
-  // ALL of the assertions will retry for up to 10 secs
-  expect($input).to.not.be('disabled')
-  expect($input).to.not.have.class('error')
-})
-```
 
 ## Command Log
 

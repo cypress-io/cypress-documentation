@@ -60,11 +60,30 @@ Pass in an options object to change the default behavior of `cy.readFile()`.
 | `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.readFile()` to resolve before [timing out](#Timeouts)               |
 
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+
+- `cy.readFile()` ignores the subject it is given.
+
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+
+- `cy.readFile()` will automatically
+  [retry](/guides/core-concepts/retry-ability) until the file
+  [exists on disk](/guides/core-concepts/introduction-to-cypress#Default-Assertions)
+  and is read successfully.
+
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+
+- `cy.readFile()` can time out waiting for the file to exist.
+- `cy.readFile()` can time out when reading the file into memory or sending it
+  to the browser takes a significant amount of time.
+
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
+- `cy.readFile()` is a query command, and is
+  [retry-able](/guides/core-concepts/retry-ability#Commands-Queries-and-Assertions).
+  It will read the file from disk until all following commands in the chain
+  (such as assertions) pass.
 - `cy.readFile()` yields the contents of the file.
-- The file will be read from disk again if any upcoming command (such as an
-  assertion) in the chain fails.
 
 ## Examples
 
@@ -187,8 +206,7 @@ cy.readFile('does-not-exist.yaml').should('not.exist')
 
 #### Automatic retries
 
-`cy.readFile()` will continue to read the file until it passes all of its
-assertions.
+`cy.readFile()` will continue to read the file until all chained commands pass.
 
 ```javascript
 // if this assertion fails cy.readFile will poll the file
@@ -204,26 +222,6 @@ the file until all chained commands of any type pass, not just assertions.
 // the assertion passes
 cy.readFile('users.json').its('users.123.name').should('eq', 'John Doe')
 ```
-
-## Rules
-
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
-
-- `cy.readFile()` requires being chained off of `cy`.
-- `cy.readFile()` requires the file must exist.
-- `cy.readFile()` requires the file be successfully read from disk.
-
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
-
-- `cy.readFile()` will automatically
-  [retry](/guides/core-concepts/retry-ability) until the file
-  [exists on disk](/guides/core-concepts/introduction-to-cypress#Default-Assertions).
-
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
-
-- `cy.readFile()` can time out waiting for assertions you've added to pass.
-- `cy.readFile()` can time out when the content being read takes a significant
-  amount of time to encode.
 
 ## Command Log
 

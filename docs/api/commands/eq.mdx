@@ -58,10 +58,28 @@ Pass in an options object to change the default behavior of `.eq()`.
 | `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.eq()` to resolve before [timing out](#Timeouts)                       |
 
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+
+- `.eq()` requires being chained off a command that yields DOM element(s).
+
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+
+- `.eq()` will automatically [retry](/guides/core-concepts/retry-ability) until
+  it
+  [finds an element](/guides/core-concepts/introduction-to-cypress#Default-Assertions).
+
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+
+- `.eq()` can
+  [time out waiting](/guides/core-concepts/introduction-to-cypress#Default-Assertions)
+  for the subject to have an element at `index`.
+
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-- `.eq()` yields the new DOM element it found.
-- `.eq()` is a query, and it is _safe_ to chain further commands.
+- `.eq()` is a query command, and will not break a chain of
+  [retry-ability](/guides/core-concepts/retry-ability#Commands-Queries-and-Assertions).
+  It is _safe_ to chain further commands that use the subject after `.eq()`.
+- `.eq()` yields the element from the subject at `index`.
 
 ## Examples
 
@@ -127,24 +145,6 @@ cy.get('tr').eq(2).should('contain', 'Canada') //true
 ```javascript
 cy.get('li').eq(-2).should('contain', 'sphynx') // true
 ```
-
-## Rules
-
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
-
-- `.eq()` requires being chained off a command that yields DOM element(s).
-
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
-
-- `.eq()` will automatically [retry](/guides/core-concepts/retry-ability) until
-  the element(s)
-  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).
-
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
-
-- `.eq()` can time out waiting for the element(s) to
-  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).
-- `.eq()` can time out waiting for assertions you've added to pass.
 
 ## Command Log
 

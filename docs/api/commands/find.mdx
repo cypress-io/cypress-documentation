@@ -50,10 +50,29 @@ Pass in an options object to change the default behavior of `.find()`.
 | `timeout`          | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts)              | Time to wait for `.find()` to resolve before [timing out](#Timeouts)                                         |
 | `includeShadowDom` | [`includeShadowDom` config option value](/guides/references/configuration#Global) | Whether to traverse shadow DOM boundaries and include elements within the shadow DOM in the yielded results. |
 
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+
+- `.find()` requires being chained off a command that yields DOM element(s).
+
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+
+- `.find()` will automatically [retry](/guides/core-concepts/retry-ability)
+  until it
+  [finds elements](/guides/core-concepts/introduction-to-cypress#Default-Assertions).
+
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+
+- `.find()` can
+  [time out waiting](/guides/core-concepts/introduction-to-cypress#Default-Assertions)
+  to match at least one element.
+
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-- `.find()` yields the new DOM element(s) it found.
-- `.find()` is a query, and it is _safe_ to chain further commands.
+- `.find()` is a query command, and will not break a chain of
+  [retry-ability](/guides/core-concepts/retry-ability#Commands-Queries-and-Assertions).
+  It is _safe_ to chain further commands that use the subject after `.find()`.
+- `.find()` yields the descendents of all subject elements that match the
+  selector.
 
 ## Examples
 
@@ -72,24 +91,6 @@ Pass in an options object to change the default behavior of `.find()`.
 // yields [<li class="first"></li>, <li class="second"></li>]
 cy.get('#parent').find('li')
 ```
-
-## Rules
-
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
-
-- `.find()` requires being chained off a command that yields DOM element(s).
-
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
-
-- `.find()` will automatically [retry](/guides/core-concepts/retry-ability)
-  until the element(s)
-  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).
-
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
-
-- `.find()` can time out waiting for the element(s) to
-  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).
-- `.find()` can time out waiting for assertions you've added to pass.
 
 ## Command Log
 

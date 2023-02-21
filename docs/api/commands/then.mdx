@@ -49,10 +49,26 @@ Pass in an options object to change the default behavior of `.then()`.
 
 Pass a function that takes the previously yielded subject as its first argument.
 
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+
+- `.then()` will receive the subject yielded by the previous command. If chained
+  directly off `cy`, the subject is `undefined`.
+
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+
+- `.then()` has no implicit assertions.
+
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+
+- `.then()` can time out waiting for a promise you've returned to resolve.
+
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-- `cy.then()` is not a query. It
-  [only calls the function once](/guides/core-concepts/retry-ability#Only-queries-are-retried).
+- `.then()` is not a query. It
+  [only executes the callback once](/guides/core-concepts/retry-ability#Only-queries-are-retried).
+- If the returned values are DOM elements, it is
+  [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried) to
+  chain further commands that rely on the subject after `.then()`.
 
 Whatever is returned from the callback function becomes the new subject and will
 flow into the next command (with the exception of `undefined` or `null`).
@@ -224,20 +240,6 @@ cy.get('button')
 ### Differences
 
 <ThenShouldAndDifference />
-
-## Rules
-
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
-
-- `.then()` requires being chained off a previous command.
-
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
-
-- `.then()` has no implicit assertions.
-
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
-
-- `.then()` can time out waiting for a promise you've returned to resolve.
 
 ## Command Log
 

@@ -39,6 +39,20 @@ Pass in an options object to change the default behavior of `cy.go()`.
 | `log`     | `true`                                                         | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 | `timeout` | [`pageLoadTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.go()` to resolve before [timing out](#Timeouts)                     |
 
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+
+- `cy.go()` ignores the subject it is given.
+
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+
+- `cy.go()` asserts that response has `content-type: text/html`.
+- `cy.go()` asserts that the response code is `2xx` after following redirects.
+- `cy.go()` waits for the `load` event fire.
+
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+
+- `cy.go()` can time out waiting for the page to fire its `load` event.
+
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 - `cy.go()` yields the `window` object after the page finishes loading.
@@ -84,24 +98,6 @@ new page to load before moving on to new commands.
 
 Cypress additionally handles situations where a page load was not caused (such
 as hash routing) and will resolve immediately.
-
-## Rules
-
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
-
-- `cy.go()` requires being chained off of `cy`.
-- `cy.go()` requires the response to be `content-type: text/html`.
-- `cy.go()` requires the response code to be `2xx` after following redirects.
-- `cy.go()` requires the load `load` event to eventually fire.
-
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
-
-- `cy.go()` will automatically wait for assertions you have chained to pass.
-
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
-
-- `cy.go()` can time out waiting for the page to fire its `load` event.
-- `cy.go()` can time out waiting for assertions you've added to pass.
 
 ## Command Log
 

@@ -31,10 +31,26 @@ Pass in an options object to change the default behavior of `cy.title()`.
 | `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.title()` to resolve before [timing out](#Timeouts)                  |
 
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+
+- `cy.title()` ignores the subject it is given.
+
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+
+- `cy.title()` has no implicit assertions.
+
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+
+- `cy.title()` cannot time out. The `timeout` option is only useful to set the
+  timeout of following assertions.
+
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-- `cy.title()` 'yields the `document.title` property of the current page.
-- `cy.title()` is a query, and it is _safe_ to chain further commands.
+- `cy.title()` is a query command, and is
+  [retry-able](/guides/core-concepts/retry-ability#Commands-Queries-and-Assertions).
+  It is _safe_ to chain further commands that use the subject after
+  `cy.title()`.
+- `cy.title()` yields the `document.title` property of the current page.
 
 ## Examples
 
@@ -45,20 +61,6 @@ Pass in an options object to change the default behavior of `cy.title()`.
 ```javascript
 cy.title().should('eq', 'My Awesome Application')
 ```
-
-## Rules
-
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
-
-- `cy.title()` requires being chained off of `cy`.
-
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
-
-- `cy.title()` has no implicit assertions.
-
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
-
-- `cy.title()` can time out waiting for assertions you've added to pass.
 
 ## Command Log
 

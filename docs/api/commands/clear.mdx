@@ -54,11 +54,28 @@ Pass in an options object to change the default behavior of `.clear()`.
 | `timeout`                    | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts)           | Time to wait for `.clear()` to resolve before [timing out](#Timeouts)                                                                              |
 | `waitForAnimations`          | [`waitForAnimations`](/guides/references/configuration#Actionability)          | Whether to wait for elements to [finish animating](/guides/core-concepts/interacting-with-elements#Animations) before executing the command.       |
 
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+
+- `.clear()` requires being chained off a command that yields DOM element(s).
+- `.clear()` requires the element to be an `input` or `textarea`.
+
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+
+- `.clear()` will automatically wait for the element to reach an
+  [actionable state](/guides/core-concepts/interacting-with-elements).
+- After executing, `.clear()` implicitly asserts that the element(s) still
+  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).
+
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+
+- `.clear()` can time out waiting for the element to reach an
+  [actionable state](/guides/core-concepts/interacting-with-elements).
+
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-- `.clear()` yields the same subject it was given.
 - It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried)
   to chain further commands that rely on the subject after `.clear()`.
+- `.clear()` yields the same subject it was given.
 
 ## Examples
 
@@ -67,7 +84,8 @@ Pass in an options object to change the default behavior of `.clear()`.
 #### Clear the input and type a new value
 
 ```javascript
-cy.get('textarea').clear().type('Hello, World')
+cy.get('textarea').clear()
+cy.get('textarea').type('Hello, World')
 ```
 
 ## Notes
@@ -85,24 +103,6 @@ cy.get('textarea').clear().type('Hello, World')
 [`.type({selectall}{backspace})`](/api/commands/type).
 
 Please read the [`.type()`](/api/commands/type) documentation for more details.
-
-## Rules
-
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
-
-- `.clear()` requires being chained off a command that yields DOM element(s).
-- `.clear()` requires the element to be an `input` or `textarea`.
-
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
-
-- `.clear()` will automatically wait for the element to reach an
-  [actionable state](/guides/core-concepts/interacting-with-elements)
-
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
-
-- `.clear()` can time out waiting for the element to reach an
-  [actionable state](/guides/core-concepts/interacting-with-elements).
-- `.clear()` can time out waiting for assertions you've added to pass.
 
 ## Command Log
 

@@ -63,10 +63,31 @@ Pass in an options object to change the default behavior of `.contains()`.
 | `timeout`          | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts)              | Time to wait for `.contains()` to resolve before [timing out](#Timeouts)                                     |
 | `includeShadowDom` | [`includeShadowDom` config option value](/guides/references/configuration#Global) | Whether to traverse shadow DOM boundaries and include elements within the shadow DOM in the yielded results. |
 
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+
+- `.contains()` can be chained off of `cy` or off a command that yields DOM
+  element(s).
+
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+
+- `.contains()` will automatically [retry](/guides/core-concepts/retry-ability)
+  until it
+  [finds an element](/guides/core-concepts/introduction-to-cypress#Default-Assertions).
+
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+
+- `.contains()` can
+  [time out waiting](/guides/core-concepts/introduction-to-cypress#Default-Assertions)
+  to match an element.
+
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-- `.contains()` yields the new DOM element it found.
-- `.contains()` is a query, and it is _safe_ to chain further commands.
+- `.contains()` is a query command, and will not break a chain of
+  [retry-ability](/guides/core-concepts/retry-ability#Commands-Queries-and-Assertions).
+  It is _safe_ to chain further commands that use the subject after
+  `.contains()`.
+- `.contains()` yields a DOM element containing the given text. Cypress
+  [prefers some DOM elements](#Notes) over the deepest element found.
 
 ## Examples
 
@@ -447,25 +468,6 @@ yields `<label>` elements over `<span>`.
 // yields label
 cy.contains('Age').find('input').type('29')
 ```
-
-## Rules
-
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
-
-- `.contains()` can be chained off of `cy` or off a command that yields DOM
-  element(s).
-
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
-
-- `.contains()` will automatically [retry](/guides/core-concepts/retry-ability)
-  until the element(s)
-  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).
-
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
-
-- `.contains()` can time out waiting for the element(s) to
-  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).
-- `.contains()` can time out waiting for assertions you've added to pass.
 
 ## Command Log
 

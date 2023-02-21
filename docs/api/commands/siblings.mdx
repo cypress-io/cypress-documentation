@@ -45,10 +45,29 @@ Pass in an options object to change the default behavior of `.siblings()`.
 | `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.siblings()` to resolve before [timing out](#Timeouts)                 |
 
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+
+- `.siblings()` requires being chained off a command that yields DOM element(s).
+
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+
+- `.siblings()` will automatically [retry](/guides/core-concepts/retry-ability)
+  until it
+  [finds elements](/guides/core-concepts/introduction-to-cypress#Default-Assertions).
+
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+
+- `.siblings()` can
+  [time out waiting](/guides/core-concepts/introduction-to-cypress#Default-Assertions)
+  to match at least one element.
+
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-- `.siblings()` yields the new DOM element(s) it found.
-- `.siblings()` is a query, and it is _safe_ to chain further commands.
+- `.siblings()` is a query command, and will not break a chain of
+  [retry-ability](/guides/core-concepts/retry-ability#Commands-Queries-and-Assertions).
+  It is _safe_ to chain further commands that use the subject after
+  `.siblings()`.
+- `.siblings()` yields all siblings of each element in the subject.
 
 ## Examples
 
@@ -78,24 +97,6 @@ cy.get('.active').siblings()
 // yields <li class="active">Services</li>
 cy.get('li').siblings('.active')
 ```
-
-## Rules
-
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
-
-- `.siblings()` requires being chained off a command that yields DOM element(s).
-
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
-
-- `.siblings()` will automatically [retry](/guides/core-concepts/retry-ability)
-  until the element(s)
-  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).
-
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
-
-- `.siblings()` can time out waiting for the element(s) to
-  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).
-- `.siblings()` can time out waiting for assertions you've added to pass.
 
 ## Command Log
 

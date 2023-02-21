@@ -41,11 +41,28 @@ Pass a function that is invoked with the following arguments:
 - `index`
 - `collection`
 
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+
+- `.each()` requires being chained off a command that yields a collection of DOM
+  elements or other an array-like object (with a `length` property).
+
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+
+- `.each()` has no implicit assertions.
+
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+
+- `.each()` can time out waiting for a promise you've returned to resolve. See
+  [Promises](#Promises) below.
+
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-- `.each()` yields the same subject it was given.
+- `.each()` is not a query. It
+  [only executes the callback once](/guides/core-concepts/retry-ability#Only-queries-are-retried)
+  for each item in the collection.
 - It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried)
   to chain further commands that rely on the subject after `.each()`.
+- `.each()` yields the same subject it was given.
 
 ## Examples
 
@@ -107,20 +124,6 @@ cy.wrap([1, 2, 3]).each((num, i, array) => {
 
 You can stop the `.each()` loop early by returning `false` in the callback
 function.
-
-## Rules
-
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
-
-- `.each()` requires being chained off a previous command.
-
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
-
-- `.each()` has no implicit assertions.
-
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
-
-- `.each()` can time out waiting for a promise you've returned to resolve.
 
 ## Command Log
 

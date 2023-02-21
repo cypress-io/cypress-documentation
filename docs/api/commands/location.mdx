@@ -41,28 +41,40 @@ Pass in an options object to change the default behavior of `cy.location()`.
 | `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.location()` to resolve before [timing out](#Timeouts)               |
 
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+
+- `cy.location()` ignores the subject it is given.
+
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+
+- `cy.location()` has no implicit assertions.
+
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+
+- `cy.location()` cannot time out. The `timeout` option is only useful to set
+  the timeout of following assertions.
+
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-`cy.location()` is a query, and it is _safe_ to chain further commands.
+- `cy.location()` is a query command, and is
+  [retry-able](/guides/core-concepts/retry-ability#Commands-Queries-and-Assertions).
+  It is _safe_ to chain further commands that use the subject after
+  `cy.location()`.
 
-#### When not given a `key` argument:
-
-`cy.location()` yields the location object with the following properties:
-
-- `hash`
-- `host`
-- `hostname`
-- `href`
-- `origin`
-- `pathname`
-- `port`
-- `protocol`
-- `search`
-- `toString`
-
-#### When given a `key` argument:
-
-- `cy.location()` yields the value of the location property as a string
+- When given a `key` argument, `cy.location()` yields the value of the location
+  property as a string
+- When not given a `key` argument, `cy.location()` yields the location object
+  with the following properties:
+  - `hash`
+  - `host`
+  - `hostname`
+  - `href`
+  - `origin`
+  - `pathname`
+  - `port`
+  - `protocol`
+  - `search`
+  - `toString`
 
 ## Examples
 
@@ -155,20 +167,6 @@ cy.location().then((loc) => {
   src="/img/api/location/special-cypress-location-object-logged-in-console-output.png"
   alt="Console Log of Cypress location command"
 ></DocsImage>
-
-## Rules
-
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
-
-- `cy.location()` requires being chained off of `cy`.
-
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
-
-- `cy.location()` has no implicit assertions.
-
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
-
-- `cy.location()` can time out waiting for assertions you've added to pass.
 
 ## Command Log
 

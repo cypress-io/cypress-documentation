@@ -73,11 +73,27 @@ Pass in an options object to change the default behavior of `cy.scrollTo()`.
 | `log`              | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 | `timeout`          | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.scrollTo()` to resolve before [timing out](#Timeouts)                 |
 
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+
+- If `.scrollTo()` is not given a subject, it will scroll the current `window`.
+- If `.scrollTo()` is given a subject, it must be a DOM element.
+
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+
+- `.scrollIntoView()` will automatically wait for the window or element to
+  become scrollable.
+- After executing, `.scrollTo()` implicitly asserts that the element(s) still
+  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).
+
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+
+- `.scrollTo()` can time out waiting for the element or window to be scrollable.
+
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-- `.scrollTo()` yields the same subject it was given.
 - It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried)
   to chain further commands that rely on the subject after `.scrollTo()`.
+- `.scrollTo()` yields either the element it was given or the current `window`.
 
 ## Examples
 
@@ -179,17 +195,6 @@ snapshots._ If you want to see the actual scrolling behavior in action, we
 recommend using [`.pause()`](/api/commands/pause) to walk through each command
 or
 [watching the video of the test run](/guides/guides/screenshots-and-videos#Videos).
-
-## Rules
-
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
-
-- `.scrollTo()` requires being chained off a command that yields DOM element(s).
-- `.scrollTo()` requires the element to be scrollable.
-
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
-
-- `.scrollTo()` can time out waiting for assertions you've added to pass.
 
 ## Command Log
 

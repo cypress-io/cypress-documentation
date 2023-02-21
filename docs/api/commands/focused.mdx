@@ -31,10 +31,29 @@ Pass in an options object to change the default behavior of `cy.focused()`.
 | `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.focused()` to resolve before [timing out](#Timeouts)                |
 
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+
+- `cy.focused()` ignores the subject it is given.
+
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+
+- `cy.focused()` will automatically [retry](/guides/core-concepts/retry-ability)
+  until it
+  [finds an element](/guides/core-concepts/introduction-to-cypress#Default-Assertions).
+
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+
+- `cy.focused()` can
+  [time out waiting](/guides/core-concepts/introduction-to-cypress#Default-Assertions)
+  for an element to have focus.
+
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-- `cy.focused()` yields the DOM element it found.
-- `cy.focused()` is a query, and it is _safe_ to chain further commands.
+- `cy.focused()` is a query command, and is
+  [retry-able](/guides/core-concepts/retry-ability#Commands-Queries-and-Assertions).
+  It is _safe_ to chain further commands that use the subject after
+  `cy.focused()`.
+- `cy.focused()` yields the currently focused dom element.
 
 ## Examples
 
@@ -59,25 +78,6 @@ cy.focused().blur()
 ```javascript
 cy.focused().should('have.attr', 'name', 'username')
 ```
-
-## Rules
-
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
-
-- `cy.focused()` requires being chained off a command that yields DOM
-  element(s).
-
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
-
-- `cy.focused()` will automatically [retry](/guides/core-concepts/retry-ability)
-  until the element(s)
-  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).
-
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
-
-- `cy.focused()` can time out waiting for the element(s) to
-  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).
-- `cy.focused()` can time out waiting for assertions you've added to pass.
 
 ## Command Log
 

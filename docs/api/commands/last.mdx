@@ -45,10 +45,28 @@ Pass in an options object to change the default behavior of `.last()`.
 | `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.last()` to resolve before [timing out](#Timeouts)                     |
 
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+
+- `.last()` requires being chained off a command that yields DOM element(s).
+
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+
+- `.last()` will automatically [retry](/guides/core-concepts/retry-ability)
+  until it
+  [finds an element](/guides/core-concepts/introduction-to-cypress#Default-Assertions).
+
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+
+- `.last()` can
+  [time out waiting](/guides/core-concepts/introduction-to-cypress#Default-Assertions)
+  for the subject to contain at least one element.
+
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-- `.last()` yields the new DOM element it found.
-- `.last()` is a query, and it is _safe_ to chain further commands.
+- `.last()` is a query command, and will not break a chain of
+  [retry-ability](/guides/core-concepts/retry-ability#Commands-Queries-and-Assertions).
+  It is _safe_ to chain further commands that use the subject after `.eq()`.
+- `.last()` yields the last element in the subject.
 
 ## Examples
 
@@ -69,24 +87,6 @@ Pass in an options object to change the default behavior of `.last()`.
 // yields <li class="four">Knick knack on my door</li>
 cy.get('li').last()
 ```
-
-## Rules
-
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
-
-- `.last()` requires being chained off a command that yields DOM element(s).
-
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
-
-- `.last()` will automatically [retry](/guides/core-concepts/retry-ability)
-  until the element(s)
-  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).
-
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
-
-- `.last()` can time out waiting for the element(s) to
-  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).
-- `.last()` can time out waiting for assertions you've added to pass.
 
 ## Command Log
 

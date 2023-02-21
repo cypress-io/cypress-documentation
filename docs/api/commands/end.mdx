@@ -24,6 +24,18 @@ cy.contains('ul').end() // Yield 'null' instead of 'ul' element
 cy.end()
 ```
 
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+
+- `.end()` ignores the subject it is given.
+
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+
+- `.end()` has no implicit assertions.
+
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+
+- `.end()` cannot time out.
+
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 - `.end()` yields `null`.
@@ -47,20 +59,6 @@ Alternatively, you can always start a new chain of commands off of `cy`.
 cy.contains('User: Cheryl').click()
 cy.contains('User: Charles').click() // contains looks for content in document now
 ```
-
-## Rules
-
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
-
-- `.end()` requires being chained off a previous command.
-
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
-
-- `.end()` cannot have any assertions chained.
-
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
-
-- `.end()` cannot time out.
 
 ## Command Log
 

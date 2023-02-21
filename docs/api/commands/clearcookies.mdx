@@ -41,6 +41,26 @@ Pass in an options object to change the default behavior of `cy.clearCookies()`.
 | `log`     | `true`                                                         | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 | `timeout` | [`responseTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.clearCookies()` to resolve before [timing out](#Timeouts)           |
 
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+
+- `cy.clearCookies()` ignores the subject it is given.
+
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+
+- `cy.clearCookies()` has no implicit assertions.
+
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+
+- `cy.clearCookies()` cannot time out.
+
+:::caution
+
+Because `cy.clearCookies()` is asynchronous it is technically possible for there
+to be a timeout while talking to the internal Cypress automation APIs. But for
+practical purposes it should never happen.
+
+:::
+
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 - `cy.clearCookies()` yields `null`.
@@ -63,28 +83,6 @@ cy.clearCookies()
 cy.visit('/dashboard') // we should be redirected back to login
 cy.url().should('include', 'login')
 ```
-
-## Rules
-
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
-
-- `cy.clearCookies()` requires being chained off of `cy`.
-
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
-
-- `cy.clearCookies()` cannot have any assertions chained.
-
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
-
-- `cy.clearCookies()` should never time out.
-
-:::caution
-
-Because `cy.clearCookies()` is asynchronous it is technically possible for there
-to be a timeout while talking to the internal Cypress automation APIs. But for
-practical purposes it should never happen.
-
-:::
 
 ## Command Log
 

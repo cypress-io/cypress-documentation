@@ -65,9 +65,22 @@ A method to be called on the chainer.
 Pass a function that can have any number of explicit assertions within it.
 Whatever was passed to the function is what is yielded.
 
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+
+- `.should()` will assert on the subject it receives. If chained directly off
+  `cy`, the subject will be `undefined`, which is usually not useful.
+
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+
+- `.should()` uses the timeout value of the previous command. If none exists, it
+  will use the default command timeout.
+- `.should()` can time out waiting for the assertion to pass.
+
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-- `.should()` is a query, and it is _safe_ to chain further commands.
+- `.should()` is a query command, and will not break a chain of
+  [retry-ability](/guides/core-concepts/retry-ability#Commands-Queries-and-Assertions).
+  It is _safe_ to chain further commands that use the subject after `.should()`.
 - In most cases, `.should()` yields the same subject it was given.
 
 ```javascript
@@ -427,34 +440,6 @@ cy.get('button')
 ### Differences
 
 <ThenShouldAndDifference />
-
-## Rules
-
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
-
-- `.should()` requires being chained off a previous command.
-
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
-
-- `.should()` will continue to [retry](/guides/core-concepts/retry-ability) its
-  specified assertions until it times out.
-
-```javascript
-cy.get('input', { timeout: 10000 }).should('have.value', '10')
-// timeout here will be passed down to the '.should()'
-// and it will retry for up to 10 secs
-```
-
-```javascript
-cy.get('input', { timeout: 10000 }).should(($input) => {
-  // timeout here will be passed down to the '.should()'
-  // unless an assertion throws earlier,
-  // ALL of the assertions will retry for up to 10 secs
-  expect($input).to.not.be('disabled')
-  expect($input).to.not.have.class('error')
-  expect($input).to.have.value('US')
-})
-```
 
 ## Command Log
 

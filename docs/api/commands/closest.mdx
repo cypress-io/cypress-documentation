@@ -3,8 +3,8 @@ title: closest
 slug: /api/commands/closest
 ---
 
-Get the first DOM element that matches the selector (whether it be itself or one
-of its ancestors).
+Get the first DOM element that matches the selector, whether it be itself or one
+of its ancestors.
 
 :::info
 
@@ -50,10 +50,30 @@ Pass in an options object to change the default behavior of `.closest()`.
 | `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.closest()` to resolve before [timing out](#Timeouts)                  |
 
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+
+- `.closest()` requires being chained off a command that yields DOM element(s).
+
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+
+- `.closest()` will automatically [retry](/guides/core-concepts/retry-ability)
+  until it
+  [finds an element](/guides/core-concepts/introduction-to-cypress#Default-Assertions).
+
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+
+- `.closest()` can
+  [time out waiting](/guides/core-concepts/introduction-to-cypress#Default-Assertions)
+  to match an element.
+
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-- `.closest()` yields the new DOM element(s) it found.
-- `.closest()` is a query, and it is _safe_ to chain further commands.
+- `.closest()` is a query command, and will not break a chain of
+  [retry-ability](/guides/core-concepts/retry-ability#Commands-Queries-and-Assertions).
+  It is _safe_ to chain further commands that use the subject after
+  `.closest()`.
+- `.closest()` yields the first DOM element that matches the selector, whether
+  it be the subject or one of its ancestors.
 
 ## Examples
 
@@ -64,24 +84,6 @@ Pass in an options object to change the default behavior of `.closest()`.
 ```javascript
 cy.get('p.error').closest('.banner')
 ```
-
-## Rules
-
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
-
-- `.closest()` requires being chained off a command that yields DOM element(s).
-
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
-
-- `.closest()` will automatically [retry](/guides/core-concepts/retry-ability)
-  until the element(s)
-  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).
-
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
-
-- `.closest()` can time out waiting for the element(s) to
-  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).
-- `.closest()` can time out waiting for assertions you've added to pass.
 
 ## Command Log
 

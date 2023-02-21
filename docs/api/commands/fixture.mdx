@@ -69,6 +69,28 @@ Pass in an options object to change the default behavior of `cy.fixture()`.
 | --------- | -------------------------------------------------------------- | ------------------------------------------------------------------------- |
 | `timeout` | [`responseTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.fixture()` to resolve before [timing out](#Timeouts) |
 
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+
+- `cy.fixture()` ignores the subject it is given.
+
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+
+- `cy.fixture()` will automatically [retry](/guides/core-concepts/retry-ability)
+  until the file
+  [exists on disk](/guides/core-concepts/introduction-to-cypress#Default-Assertions).
+
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+
+- `cy.fixture()` can time out while reading the file from disk.
+
+:::caution
+
+Because `cy.fixture()` is asynchronous it is technically possible for there to
+be a timeout while talking to the internal Cypress automation APIs. But for
+practical purposes it should never happen.
+
+:::
+
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 - `cy.fixture()` yields the contents of the file. Formatting is determined by
@@ -315,30 +337,6 @@ cy.fixture('todo.json').then((todo) => {
   })
 })
 ```
-
-## Rules
-
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
-
-- `cy.fixture()` requires being chained off of `cy`.
-
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
-
-- `cy.fixture()` will automatically [retry](/guides/core-concepts/retry-ability)
-  until the file
-  [exists on disk](/guides/core-concepts/introduction-to-cypress#Default-Assertions).
-
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
-
-- `cy.fixture()` should never time out.
-
-:::caution
-
-Because `cy.fixture()` is asynchronous it is technically possible for there to
-be a timeout while talking to the internal Cypress automation APIs. But for
-practical purposes it should never happen.
-
-:::
 
 ## Command Log
 

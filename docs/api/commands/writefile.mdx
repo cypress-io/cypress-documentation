@@ -72,6 +72,21 @@ parameter and include encoding there. This is the same behavior as
 
 :::
 
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+
+- `cy.writeFile()` ignores the subject it is given.
+- `cy.writeFile()` requires the file be successfully written to disk. Anything
+  preventing this such as OS permission issues will cause it to fail.
+
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+
+- `cy.writeFile()` has no implicit assertions.
+
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+
+- `cy.writeFile()` can time out when encoding or writing the file to disk takes
+  a significant amount of time.
+
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 - `cy.writeFile()` yields `null`.
@@ -202,23 +217,6 @@ cy.readFile(filename, null).then((obj) => {
   cy.writeFile(filename, obj, null)
 })
 ```
-
-## Rules
-
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
-
-- `cy.writeFile()` requires being chained off of `cy`.
-- `cy.writeFile()` requires the file be successfully written to disk. Anything
-  preventing this such as OS permission issues will cause it to fail.
-
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
-
-- `cy.writeFile()` has no implicit assertions.
-
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
-
-- `cy.writeFile()` can time out when the content being written takes a
-  significant amount of time to encode.
 
 ## Command Log
 
