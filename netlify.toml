@@ -24,6 +24,12 @@
   force = true
 
 [[redirects]]
+  from = "/api/events/catalog-of-events"
+  to = "/api/cypress-api/catalog-of-events"
+  status = 301
+  force = true
+
+[[redirects]]
   from = "/plugins/directory"
   to = "/plugins"
   status = 301
