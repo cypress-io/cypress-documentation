@@ -208,7 +208,7 @@ export function mount(component, options = {}) {
 
   // Wait until next microtick to ensure any async render logic has executed
   return cy.wait(0, { log: false }).then(() => {
-    if (options.log) {
+    if (options.log !== false) {
       Cypress.log({
         name: 'mount',
         message: 'Mounted component',
