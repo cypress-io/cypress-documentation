@@ -15,11 +15,11 @@ title: CircleCI
 
 The
 [Cypress CircleCI Orb](https://circleci.com/developer/orbs/orb/cypress-io/cypress)
-is the _official_ CircleCI Orb of [Cypress.io](https://cypress.io). Although you
-do not need to use the orb to run your tests in CircleCI, the benefit of using
-the orb is that it allows you to easily install, cache and run Cypress tests in
-CircleCI with less effort. The orb abstracts common steps necessary for running
-your tests in CircleCI without an orb to make your life as a developer better!
+is the _official_ CircleCI Orb of Cypress. Although you do not need to use the
+orb to run your tests in CircleCI, the benefit of using the orb is that it
+allows you to easily install, cache and run Cypress tests in CircleCI with less
+effort. The orb abstracts common steps necessary for running your tests in
+CircleCI in order to make your life as a developer better!
 
 ## Basic Setup
 
@@ -27,8 +27,6 @@ The [Cypress CircleCI Orb](https://github.com/cypress-io/circleci-orb) is a
 piece of configuration set in your `.circleci/config.yml` file to correctly
 install, cache and run Cypress with very little effort.
 
-Full documentation can be found at the
-[`cypress-io/circleci-orb`](https://github.com/cypress-io/circleci-orb) repo.
 For the Orb Quick Start Guide and usage cases, view the CircleCI
 [Cypress orb documentation](https://circleci.com/developer/orbs/orb/cypress-io/cypress).
 
@@ -46,7 +44,11 @@ workflows:
   build:
     jobs:
       - cypress/run # "run" job comes from "cypress" orb
+          start-command: "npm run start"
 ```
+
+That's it! Your repo's dependencies will be installed and cached and your
+Cypress tests will run in CircleCI
 
 ## Parallelization
 
@@ -120,6 +122,10 @@ workflows:
 ```
 
 #### Chrome Example
+
+Cypress uses Electron by default to run your tests. The `install-browsers` flag
+is used to install Firefox and Chrome to run your tests. This is only needed if
+you are passing the `--browser` flag in your `cypress-command`
 
 ```yaml
 version: 2.1
