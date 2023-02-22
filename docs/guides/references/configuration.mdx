@@ -76,7 +76,6 @@ default values.
 | `reporter`             | `spec`                            | The [reporter](/guides/tooling/reporters) used during `cypress run`.                                                                                                                         |
 | `reporterOptions`      | `null`                            | The [reporter options](/guides/tooling/reporters#Reporter-Options) used. Supported options depend on the reporter.                                                                           |
 | `retries`              | `{ "runMode": 0, "openMode": 0 }` | The number of times to retry a failing test. Can be configured to apply to `cypress run` or `cypress open` separately. See [Test Retries](/guides/guides/test-retries) for more information. |
-| `watchForFileChanges`  | `true`                            | Whether Cypress will watch and restart tests on test file changes.                                                                                                                           |
 
 ### Timeouts
 
@@ -210,6 +209,8 @@ object:
 | `experimentalRunAllSpecs`      | `false`                               | Enables the "Run All Specs" UI feature, allowing the execution of multiple specs sequentially. |
 | `slowTestThreshold`  | `10000`                               | Time, in milliseconds, to consider a test "slow" during `cypress run`. A slow test will display in orange text in the default reporter.                                                               |
 | `testIsolation`        | `true`                      | Whether or not  [test isolation](/guides/core-concepts/writing-and-organizing-tests#Test-Isolation) is enabled to ensure a clean browser context between tests. |
+| `watchForFileChanges`  | `true`                                      | Whether Cypress will watch and restart tests on test file changes.    |
+
 
 :::cypress-config-example
 
