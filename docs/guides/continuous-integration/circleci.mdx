@@ -15,14 +15,14 @@ title: CircleCI
 
 The
 [Cypress CircleCI Orb](https://circleci.com/developer/orbs/orb/cypress-io/cypress)
-is the _official_ CircleCI Orb of Cypress. 
+is the _official_ CircleCI Orb of Cypress.
 
-An orb is a
-piece of configuration set in your `.circleci/config.yml` file to correctly
-install, cache and run Cypress with very little effort. Using the orb brings simplicity and static checks of parameters to the CircleCI
-configuration.
+An orb is a piece of configuration set in your `.circleci/config.yml` file to
+correctly install, cache and run Cypress with very little effort. Using the orb
+brings simplicity and static checks of parameters to the CircleCI configuration.
 
-Although you do not need to use the orb to run your tests in CircleCI, the benefit is that it abstracts common steps necessary for running your tests in
+Although you do not need to use the orb to run your tests in CircleCI, the
+benefit is that it abstracts common steps necessary for running your tests in
 CircleCI in order to make your life as a developer better!
 
 ## Basic Setup
@@ -52,8 +52,8 @@ Cypress tests will run in CircleCI.
 
 ## Parallelization
 
-A more complex project that needs to install dependencies and run tests across 4 CI machines [in parallel](/guides/guides/parallelization)
-may have:
+A more complex project that needs to install dependencies and run tests across 4
+CI machines [in parallel](/guides/guides/parallelization) may have:
 
 ```yaml
 version: 2.1
@@ -106,9 +106,10 @@ workflows:
 
 #### Chrome Example
 
-Cypress uses Electron by default to run your tests. The [`install-browsers`](https://circleci.com/developer/orbs/orb/circleci/browser-tools#usage-install_browsers) flag
-is used to install Firefox and Chrome to run your tests. This is only needed if
-you are passing the `--browser` flag in your `cypress-command`
+Cypress uses Electron by default to run your tests. The
+[`install-browsers`](https://circleci.com/developer/orbs/orb/circleci/browser-tools#usage-install_browsers)
+flag is used to install Firefox and Chrome to run your tests. This is only
+needed if you are passing the `--browser` flag in your `cypress-command`
 
 ```yaml
 version: 2.1
