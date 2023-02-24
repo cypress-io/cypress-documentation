@@ -35,25 +35,25 @@ command's documentation.
 To run a command, you'll need to prefix each command in order to properly locate
 the cypress executable.
 
-```shell
+```
 $(npm bin)/cypress run
 ```
 
 ...or...
 
-```shell
+```
 ./node_modules/.bin/cypress run
 ```
 
 ...or... (requires npm@5.2.0 or greater)
 
-```shell
+```
 npx cypress run
 ```
 
 ...or by using Yarn...
 
-```shell
+```
 yarn cypress run
 ```
 
@@ -652,7 +652,8 @@ Prints information about Cypress and the current environment such as:
 - Operating system information.
 - System memory including free space.
 
-```shell
+<!-- hack: using css language label to respect decimals in syntax highlightng -->
+```css
 cypress info
 Displaying Cypress info...
 
@@ -727,7 +728,8 @@ In most cases the binary and the package versions will be the same, but they
 could be different if you have installed a different version of the package and
 for some reason failed to install the matching binary version.
 
-```shell
+<!-- hack: using css language label to respect decimals in syntax highlightng -->
+```css
 cypress version
 Cypress package version: 12.0.0
 Cypress binary version: 12.0.0
@@ -737,7 +739,8 @@ Bundled Node version: 16.16.0
 
 You can print each individual component's version number also.
 
-```shell
+<!-- hack: using css language label to respect decimals in syntax highlightng -->
+```css
 cypress version --component package
 12.0.0
 cypress version --component binary
@@ -770,7 +773,8 @@ Print all existing installed versions of Cypress. The output will be a table
 with cached versions and the last time the binary was used by the user,
 determined from the file's access time.
 
-```shell
+<!-- hack: using css language label to respect decimals in syntax highlightng -->
+```css
 cypress cache list
 ┌─────────┬──────────────┐
 │ version │ last used    │
@@ -785,7 +789,8 @@ You can calculate the size of every Cypress version folder by adding the
 `--size` argument to the command. Note that calculating the disk size can be
 slow.
 
-```shell
+<!-- hack: using css language label to respect decimals in syntax highlightng -->
+```css
 cypress cache list --size
 ┌─────────┬──────────────┬─────────┐
 │ version │ last used    │ size    │
