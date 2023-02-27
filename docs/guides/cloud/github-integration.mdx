@@ -394,15 +394,13 @@ requests via comments that include:
 - **Run statistics, such as tests passed, failed, skipped, and over-limit.**
 - **Run context details:**
   - The associated Cypress project
-  - Final run status (passed, failed, etc.)
-  - Commit SHA linking to the GitHub commit
-  - The time the run started and finished, as well as the duration.
-  - Operating system version and browser version.
+  - Run status (passed, failed, etc.)
+  - Commit message
+  - Commit SHA
+  - The time the run started and finished, as well as the duration
 - **Run failures:**
-  - The first ten failures are displayed with a link to more.
-  - Each failed test links back to the associated failure within Cypress Cloud.
-  - Screenshot thumbnails are also provided with each failure to conveniently
-    provide context.
+  - A summary of the tests that failed
+  - A link back to the associated failure within Cypress Cloud
 
 An example of a Cypress pull-request comment can be seen below:
 
