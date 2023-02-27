@@ -913,11 +913,10 @@ randomly fail. This would lead to flaky, inconsistent results.
 
 :::info
 
-While Cypress is built using Promises that come from
-[Bluebird](http://bluebirdjs.com/), these are not what we expose as commands on
-`cy`. If you'd like to learn more about handling asynchronous Cypress Commands
-please read our
-[Core Concept Guide](/guides/core-concepts/variables-and-aliases).
+While Cypress does have a [`.then()`](/api/commands/then) command, Cypress
+commands are not promises and cannot be `await`ed. If you'd like to learn more
+about handling asynchronous Cypress Commands please read our
+[Variables and Aliases Guide](/guides/core-concepts/variables-and-aliases).
 
 :::
 
@@ -1080,9 +1079,9 @@ fail. Here's a few:
 
 <strong>Core Concept</strong>
 
-With Cypress, you don't have to assert to have a useful test. Even without
-assertions, a few lines of Cypress can ensure thousands of lines of code are
-working properly across the client and server.
+With Cypress, you don't have to write explicit assertions to have a useful test.
+Without a single `expect()` or `.should()`, a few lines of Cypress can ensure
+thousands of lines of code are working properly across the client and server.
 
 This is because many commands have a built in
 [Implicit Assertions](#Implicit-Assertions) which offer you a high level of
@@ -1153,8 +1152,8 @@ cy
 ```
 
 Cypress will automatically _wait_ for elements to pass their implicit
-assertions. Like with the explicit assertions you've added, all of these
-assertions share the _same_ timeout values.
+assertions. See [Timeouts](#Timeouts) below for more on how timeouts are
+determined.
 
 #### Example #2: Reversing the Implicit Assertion
 
@@ -1180,8 +1179,8 @@ cy.get('#modal').should('not.exist')
 
 <strong>Core Concept</strong>
 
-If you add [`.should('not.exist')`](/api/commands/should) to any DOM command,
-Cypress will skip its default existence assertion.
+If you want to disable the default existence assertion, you can add
+[`.should('not.exist')`](/api/commands/should) to any DOM command.
 
 :::
 
