@@ -176,13 +176,13 @@ workflows:
     jobs:
       - cypress/run:
           name: Chrome
-          start: 'npm start'
+          start-command: 'npm start'
           install-browsers: true
           cypress-command:
             'npx cypress run --browser chrome --record --group chrome'
       - cypress/run:
           name: Firefox
-          start: 'npm start'
+          start-command: 'npm start'
           cypress-command:
             'npx cypress run --browser firefox --record --group
             firefox-critical-path --spec
