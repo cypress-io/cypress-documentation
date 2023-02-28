@@ -4,7 +4,7 @@ import { PluginProps } from "./types";
 // @ts-ignore
 import projectsJSON from "@site/src/data/projects.json";
 
-export default function PluginsList() {
+export default function ProjectsList() {
   return (
     <>
       <article className="main-content-article">

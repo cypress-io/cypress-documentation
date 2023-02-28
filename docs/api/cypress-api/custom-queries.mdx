@@ -29,7 +29,7 @@ probably want to write a [custom command](/api/cypress-api/custom-commands)
 instead.
 
 You'll also want to write a command instead of a query if your method needs to
-be asynchronous, or it shouldn't be called more than once.
+be asynchronous, or if it can be called only once.
 
 :::
 
@@ -45,6 +45,7 @@ it is loaded before any test files are evaluated via an import statement in the
 
 ```javascript
 Cypress.Commands.addQuery(name, callbackFn)
+Cypress.Commands.overwriteQuery(name, callbackFn)
 ```
 
 ### Usage
@@ -54,6 +55,10 @@ Cypress.Commands.addQuery(name, callbackFn)
 ```javascript
 Cypress.Commands.addQuery('getById', function (id) {
   return (subject) => newSubject
+})
+
+Cypress.Commands.overwriteQuery('get', function (originalFn, ...args) {
+  return originalFn.apply(this, args)
 })
 ```
 
@@ -70,6 +75,13 @@ Pass a function that receives the arguments passed to the query.
 This outer function is invoked once. It should return a function that takes a
 subject and returns a new subject; this inner function might be called multiple
 times.
+
+:::info
+
+The query API relies on `this` to set timeouts, which means that `callbackFn`
+should always use `function () {}` and not be an arrow function (`() => {}`).
+
+:::
 
 ## Examples
 
@@ -306,6 +318,77 @@ be executed later (which is not idempotent!). `cy.now()` lets us directly call
 the original `get` query function, without Cypress' chaining and command queue
 logic wrapped around it.
 
+### Overwriting Existing Queries
+
+You can also modify the behavior of existing Cypress queries. This is useful to
+extend the functionality of builtin commands.
+
+:::caution
+
+`Cypress.Commands.overwriteQuery` can only overwrite queries, not other
+commands. If you want to modify the behavior of a non-query command, you'll need
+to use [`Cypress.Commands.overwrite`](/api/cypress-api/custom-commands) instead.
+
+:::
+
+:::info
+
+Remember that query functions rely on `this` - when you invoke `originalFn`, be
+sure to use `.call` or `.apply`.
+
+:::
+
+```js
+Cypress.Commands.overwriteQuery('get', function (originalFn, ...args) {
+  console.log('get called with args:', args)
+
+  const innerFn = originalFn.apply(this, args)
+
+  return (subject) => {
+    console.log('get inner function called with subject:', subject)
+
+    return innerFn(subject)
+  }
+})
+```
+
+The `originalFn` is the function originally passed to
+`Cypress.Commands.addQuery` - it is a **function that returns a function.** This
+gives you access to both the outer arguments (before you call `originalFn`) and
+the inner function (the return value of `originalFn`), giving you a great deal
+of control over how the query executes.
+
+#### Adding alias support to `.contains()`
+
+In this example, `cy.contains()` is extended to support querying for aliased
+subjects, like `cy.contains('@foo')`.
+
+```js
+Cypress.Commands.overwriteQuery(
+  'contains',
+  function (originalFn, filter, text, userOptions) {
+    if (_.isString(filter) && filter[0] === '@') {
+      let alias = cy.state('aliases')[filter.slice(1)]
+      let subject = cy.getSubjectFromChain(alias?.subjectChain)
+      filter = subject
+    }
+
+    if (_.isString(text) && text[0] === '@') {
+      let alias = cy.state('aliases')[text.slice(1)]
+      let subject = cy.getSubjectFromChain(alias?.subjectChain)
+      text = subject
+    }
+
+    return originalFn.call(this, filter, text, userOptions)
+  }
+)
+
+cy.wrap('li').as('element')
+cy.wrap('asdf 1').as('content')
+
+cy.contains('@element', '@content')
+```
+
 ## Validation
 
 As noted in the examples above, Cypress performs very little validation around
@@ -377,9 +460,10 @@ Try not to overcomplicate things and create too many abstractions.
 
 ## History
 
-| Version                                       | Changes              |
-| --------------------------------------------- | -------------------- |
-| [12.0.0](/guides/references/changelog#12-0-0) | `addQuery` API added |
+| Version                                       | Changes                   |
+| --------------------------------------------- | ------------------------- |
+| [12.6.0](/guides/references/changelog#12-6-0) | `overrideQuery` API added |
+| [12.0.0](/guides/references/changelog#12-0-0) | `addQuery` API added      |
 
 ## See also
 

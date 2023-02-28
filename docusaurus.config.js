@@ -130,13 +130,14 @@ const config = {
       },
       // optional, can be commented out
       // Styles for this are controlled in src/css/announcement-bar.scss
-      announcementBar: {
-        //give id a unique value to get a new announcement bar to appear
-        id: 'new-auth-guides',
-        content:
-          '🚀 &nbsp; Check out our new auth guides for <a href="/guides/end-to-end-testing/azure-active-directory-authentication">Azure Active Directory</a> and <a href="/guides/end-to-end-testing/social-authentication">Social Logins</a>!',
-        isCloseable: true,
-      },
+      // announcementBar: {
+      //   //give id a unique value to get a new announcement bar to appear
+      //   id: 'event-apis-with-cypress-2-23',
+      //   content:
+      //     '📢 &nbsp; Save your seat for the Testing APIs with Cypress event Feb 23! <a target="_blank" href="https://community.cypress.io/events/details/cypress-cypress-hq-presents-testing-apis-with-cypress?utm_source=docs&utm_medium=promo_banner&utm_campaign=testing_apis_with_cypress">Register now</a>',
+      //   isCloseable: true,
+
+      // },
       footer: {
         style: 'dark',
         links: [

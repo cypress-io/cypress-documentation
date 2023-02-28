@@ -33,25 +33,7 @@ chart to help clarify the differences!
 
 ### Parts of a URL
 
-```
-┌───────────────────────────────────────────────────────────────────────────────────────┐
-│                                         href                                          │
-├──────────┬──┬─────────────────────────────────────┬───────────────────────────┬───────┤
-│ protocol │  │               host                  │           path            │ hash  │
-│          │  ├──────────────────────────────┬──────┼──────────┬────────────────┤       │
-│          │  │           hostname           │ port │ pathname │     search     │       │
-|          |  ├───────────┬──────────────────┤      │          │                │       │
-│          │  │ subdomain │ superdomain (sd) │      │          │                │       │
-|          |  ├───────────┼─────────┬────────┤      │          ├─┬──────────────┤       │
-│          │  │           │  domain │  TLD   │      │          │ │    query     │       │
-│          │  │           │         │        │      │          │ │              │       │
-"  https:   //     sub    . example .  com   : 8080   /p/a/t/h  ?  query=string   #hash "
-│                                                   │          │                │       │
-│                      origin                       │          |                │       │
-├─────────────┬───────────┬─────────────────────────┤          │                │       │
-│ (sd) origin │           │   (sd) origin           │          │                │       │
-└─────────────┴───────────┴─────────────────────────┴──────────┴────────────────┴───────┘
-```
+<DocsImage src="/img/guides/cross-origin-testing/parts_of_a_url.jpg" />
 
 Given the URLs below, all have the same superdomain compared to
 `https://www.cypress.io`.
@@ -73,12 +55,13 @@ the `http://localhost:3000` URL is considered to be a different origin from the
 
 The rules are:
 
-- <Icon name="exclamation-triangle" color="red" /> You **cannot** [visit](/api/commands/visit)
-  two domains of different superdomains in the same test and continue to interact
-  with the page without the use of the [`cy.origin()`](/api/commands/origin) command.
-- <Icon name="check-circle" color="green" /> You **can** [visit](/api/commands/visit)
-  two or more domains of different origin in **different** tests without needing
-  [`cy.origin()`](/api/commands/origin).
+- &#8239;<Icon name="exclamation-triangle" color="red" /> You **cannot**
+  &nbsp;[visit](/api/commands/visit) two domains of different superdomains in
+  the same test and continue to interact with the page without the use of the
+  [`cy.origin()`](/api/commands/origin) command.
+- &#8239;<Icon name="check-circle" color="green" /> You **can**
+  &nbsp;[visit](/api/commands/visit) two or more domains of different origin in
+  **different** tests without needing [`cy.origin()`](/api/commands/origin).
 
 For practical purposes, this means the following:
 

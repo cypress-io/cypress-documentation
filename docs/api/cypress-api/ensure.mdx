@@ -1,0 +1,80 @@
+---
+title: Cypress.ensure
+---
+
+`Cypress.ensure` is a collection of helper methods for making assertions. They
+are mostly useful when writing [custom queries](/api/cypress-api/custom-queries)
+or [custom commands](/api/cypress-api/custom-commands).
+
+Most functions on `Cypress.ensure` accept a
+[`subject`](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+argument, check an assertion, and throw an error if the assertion fails. These
+functions have no return value.
+
+## Syntax
+
+```javascript
+// Type of argument
+Cypress.ensure.isType(subject, type, commandName, cy)​
+Cypress.ensure.isElement(subject, commandName, cy)​
+Cypress.ensure.isWindow(subject, commandName, cy)
+Cypress.ensure.isDocument(subject, commandName, cy)​
+
+// State of DOM element
+Cypress.ensure.isAttached(subject, commandName, cy)​
+Cypress.ensure.isNotDisabled(subject, commandName)​
+Cypress.ensure.isNotHiddenByAncestors(subject, commandName)​
+Cypress.ensure.isNotReadonly(subject, commandName)​
+Cypress.ensure.isScrollable(subject, commandName)​
+Cypress.ensure.isStrictlyVisible(subject, commandName)​
+Cypress.ensure.isVisible(subject, commandName)​
+```
+
+:::caution
+
+Many of these functions accept an optional `onFail` argument. This is a legacy
+feature used to customize the thrown error, and may be removed in a future
+release; we recommend against relying on it. If you need more control over the
+error thrown, write your own `ensure` function instead.
+
+:::
+
+### Usage
+
+**<Icon name="check-circle" color="green" /> Correct Usage**
+
+```javascript
+Cypress.Commands.addQuery('getChildById', function (id) {
+  return (subject) => {
+    // Verify that the subject is an element, document, or window object
+    Cypress.ensure.isType(
+      subject,
+      ['element', 'document', 'window'],
+      'getChildById',
+      cy
+    )
+
+    return $$(`#${id}`, subject)
+  }
+})
+
+const queryName = 'verifyElementActionable'
+
+Cypress.Commands.addQuery(queryName, function (...args) {
+  return (subject) => {
+    // Verify that the subject fulfills a variety of conditions
+    Cypress.ensure.isElement(subject, queryName, cy)
+    Cypress.ensure.isVisible(subject, queryName, cy)
+    Cypress.ensure.isNotDisabled(subject, queryName, cy)
+    Cypress.ensure.isNotReadonly(subject, queryName, cy)
+
+    return subject
+  }
+})
+```
+
+## See also
+
+- ["Custom Queries"](/api/cypress-api/custom-queries) contains more information
+  about writing custom queries, which is the main use-case for the `ensure`
+  functions.
