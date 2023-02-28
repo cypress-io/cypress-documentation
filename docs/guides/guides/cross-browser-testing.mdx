@@ -100,7 +100,7 @@ The following example demonstrates a nightly CI schedule against production
 ```yaml
 version: 2.1
 orbs:
-  cypress: cypress-io/cypress@2
+  cypress: cypress-io/cypress@3
 workflows:
   nightly:
     triggers:
@@ -112,10 +112,9 @@ workflows:
                 - master
     jobs:
       - cypress/run:
-          executor: cypress/browsers-chrome73-ff68
-          browser: firefox
-          start: npm start
-          wait-on: http://localhost:3000
+          install-browsers: true
+          cypress-command: 'npx cypress run --browser firefox'
+          start-command: 'npm start'
 ```
 
 ### Production Deployment
@@ -131,7 +130,7 @@ Firefox issues can be caught before a production release:
 ```yaml
 version: 2.1
 orbs:
-  cypress: cypress-io/cypress@2
+  cypress: cypress-io/cypress@3
 workflows:
   test_develop:
     jobs:
@@ -140,10 +139,9 @@ workflows:
           only:
             - develop
       - cypress/run:
-          executor: cypress/browsers-chrome73-ff68
-          browser: firefox
-          start: npm start
-          wait-on: http://localhost:3000
+          install-browsers: true
+          cypress-command: 'npx cypress run --browser firefox'
+          start-command: 'npm start'
 ```
 
 ### Subset of Tests
@@ -172,32 +170,23 @@ Circle CI workflow UI to distinguish the jobs.
 ```yaml
 version: 2.1
 orbs:
-  cypress: cypress-io/cypress@2
+  cypress: cypress-io/cypress@3
 workflows:
   build:
     jobs:
-      - cypress/install
       - cypress/run:
           name: Chrome
-          requires:
-            - cypress/install
-          executor: cypress/browsers-chrome73-ff68
-          start: npm start
-          wait-on: http://localhost:3000
-          record: true
-          group: chrome
-          browser: chrome
+          start: 'npm start'
+          install-browsers: true
+          cypress-command:
+            'npx cypress run --browser chrome --record --group chrome'
       - cypress/run:
           name: Firefox
-          requires:
-            - cypress/install
-          executor: cypress/browsers-chrome73-ff68
-          start: npm start
-          wait-on: http://localhost:3000
-          record: true
-          group: firefox-critical-path
-          browser: firefox
-          spec: 'cypress/e2e/signup.cy.js,cypress/e2e/login.cy.js'
+          start: 'npm start'
+          cypress-command:
+            'npx cypress run --browser firefox --record --group
+            firefox-critical-path --spec
+            cypress/e2e/signup.cy.js,cypress/e2e/login.cy.js'
 ```
 
 ### Parallelize per browser
@@ -220,36 +209,26 @@ named `firefox`.
 ```yaml
 version: 2.1
 orbs:
-  cypress: cypress-io/cypress@2
+  cypress: cypress-io/cypress@3
 workflows:
   build:
     jobs:
-      - cypress/install
       - cypress/run:
           name: Chrome
-          requires:
-            - cypress/install
-          executor: cypress/browsers-chrome73-ff68
-          record: true
-          start: npm start
-          wait-on: http://localhost:3000
-          parallel: true
+          cypress-command:
+            'npx cypress run --record --parallel --group chrome --browser chrome'
+          start-command: 'npm start'
           parallelism: 4
-          group: chrome
-          browser: chrome
+          install-browsers: true
       - cypress/run:
           name: Firefox
-          requires:
-            - cypress/install
-          executor: cypress/browsers-chrome73-ff68
-          record: true
-          start: npm start
-          wait-on: http://localhost:3000
-          parallel: true
+          cypress-command:
+            'npx cypress run --record --parallel --group firefox --browser
+            firefox --spec
+            cypress/e2e/app.cy.js,cypress/e2e/login.cy.js,cypress/e2e/about.cy.js'
+          start-command: 'npm start'
           parallelism: 2
-          group: firefox
-          browser: firefox
-          spec: 'cypress/e2e/app.cy.js,cypress/e2e/login.cy.js,cypress/e2e/about.cy.js'
+          install-browsers: true
 ```
 
 ### Running Specific Tests by Browser
