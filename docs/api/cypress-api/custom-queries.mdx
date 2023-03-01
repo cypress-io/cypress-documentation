@@ -92,11 +92,11 @@ function_, which is invoked once, where you perform setup and state management,
 and the _query function_, which might be called repeatedly.
 
 Let's look at an example. This is actual Cypress code - how `.focused()` is
-implemented internally. The only thing omitted here for simplicity is the
-TypeScript definitions.
+implemented internally, with some small adjustments to make it work from a
+support file. The only thing omitted here for simplicity is the TypeScript
+definitions.
 
 ```javascript
-// Reimplementation of the .focused() query under the name "focused2"
 Cypress.Commands.addQuery('focused2', function focused2(options = {}) {
   const log = options.log !== false && Cypress.log({ timeout: options.timeout })
 
