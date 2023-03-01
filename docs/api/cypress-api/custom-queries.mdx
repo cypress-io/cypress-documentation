@@ -92,11 +92,12 @@ function_, which is invoked once, where you perform setup and state management,
 and the _query function_, which might be called repeatedly.
 
 Let's look at an example. This is actual Cypress code - how `.focused()` is
-implemented internally. The only thing omitted here for simplicity is the
-TypeScript definitions.
+implemented internally, with some small adjustments to make it work from a
+support file. The only thing omitted here for simplicity is the TypeScript
+definitions.
 
 ```javascript
-Commands.addQuery('focused', function focused(options = {}) {
+Cypress.Commands.addQuery('focused2', function focused2(options = {}) {
   const log = options.log !== false && Cypress.log({ timeout: options.timeout })
 
   this.set('timeout', options.timeout)
@@ -110,14 +111,14 @@ Commands.addQuery('focused', function focused(options = {}) {
         $el,
         consoleProps: () => {
           return {
-            Yielded: $el?.length ? $dom.getElements($el) : '--nothing--',
+            Yielded: $el?.length ? $el[0] : '--nothing--',
             Elements: $el != null ? $el.length : 0,
           }
         },
       })
 
     if (!$el) {
-      $el = $dom.wrap(null)
+      $el = cy.$$(null)
       $el.selector = 'focused'
     }
 
@@ -132,7 +133,7 @@ The outer function is called once each time test uses the query. It performs
 setup and state management:
 
 ```javascript
-function focused(options = {}) {
+function focused2(options = {}) {
   const log = options.log !== false && Cypress.log({ timeout: options.timeout })
 
   this.set('timeout', options.timeout)
@@ -144,12 +145,12 @@ function focused(options = {}) {
 Let's look at this piece by piece.
 
 ```javascript
-function focused(options = {}) { ... }
+function focused2(options = {}) { ... }
 ```
 
 Cypress passes the outer function whatever arguments the user calls it with; no
 processing or validation is done on the user's arguments. In our case,
-`.focused()` accepts one optional argument, `options`.
+`.focused2()` accepts one optional argument, `options`.
 
 If you wanted to validate the incoming arguments, you might add something like:
 
@@ -180,7 +181,7 @@ additional details when the inner function executes.
 this.set('timeout', options.timeout)
 ```
 
-When defining `focused()`, it's important to note that we used `function`,
+When defining `focused2()`, it's important to note that we used `function`,
 rather than an arrow function. This gives us access to `this`, where we can set
 the `timeout`. If you don't call `this.set('timeout')`, or call it with `null`
 or `undefined`, your query will use the
@@ -202,7 +203,7 @@ The inner function is called with one argument: the previous subject. Cypress
 performs no validation on this - it could be any type, including `null` or
 `undefined`.
 
-`.focused()` ignores any previous subject, but many queries do not - for
+`.focused2()` ignores any previous subject, but many queries do not - for
 example, `.contains()` accepts only certain types of subjects. You can use
 Cypress' builtin `ensures` functions, as `.contains()` does:
 `cy.ensureSubjectByType(subject, ['optional', 'element', 'window', 'document'], this)`
@@ -215,7 +216,7 @@ until it either passes or the query times out. This is the core of Cypress'
 retry-ability, and the guarantees it provides that your tests interact with the
 page as a user would.
 
-Looking back to our `.focused()` example:
+Looking back to our `.focused2()` example:
 
 ```javascript
 return () => {
@@ -227,14 +228,14 @@ return () => {
       $el,
       consoleProps: () => {
         return {
-          Yielded: $el?.length ? $dom.getElements($el) : '--nothing--',
+          Yielded: $el?.length ? $el[0] : '--nothing--',
           Elements: $el != null ? $el.length : 0,
         }
       },
     })
 
   if (!$el) {
-    $el = $dom.wrap(null)
+    $el = cy.$$(null)
     $el.selector = 'focused'
   }
 
@@ -248,7 +249,7 @@ Piece by piece again:
 let $el = cy.getFocused()
 ```
 
-This is the 'business end' of `.focused()` - finding the element on the page
+This is the 'business end' of `.focused2()` - finding the element on the page
 that's currently focused.
 
 ```javascript
@@ -264,7 +265,7 @@ the user.
 
 ```javascript
 if (!$el) {
-  $el = $dom.wrap(null)
+  $el = cy.$$(null)
   $el.selector = 'focused'
 }
 ```
