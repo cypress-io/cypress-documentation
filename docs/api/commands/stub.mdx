@@ -117,7 +117,7 @@ stub functions before mounting your component.
 :::visit-mount-example
 
 ```js
-cy.visit('http://localhost:3000', {
+-{cy.visit('http://localhost:3000', {
   onBeforeLoad(win) {
     // Stub your functions here
     cy.stub(win, 'prompt').returns('my custom message')
@@ -125,6 +125,11 @@ cy.visit('http://localhost:3000', {
 })
 
 App.start()
+::cy.mount(// Stub your functions here
+cy.stub(window, 'prompt').returns('my custom message')
+
+// After that, mount your component
+cy.mount(<MyComponent />)}-
 
 cy.window().its('prompt').should('be.called')
 cy.get('.name').should('have.value', 'my custom message')
