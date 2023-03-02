@@ -124,7 +124,8 @@ stub functions before mounting your component.
   },
 })
 
-App.start()::cy.mount(// Stub your functions here
+App.start()::// Stub your functions here
+cy.mount()
 cy.stub(window, 'prompt').returns('my custom message')
 
 // After that, mount your component
