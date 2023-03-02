@@ -114,28 +114,22 @@ command `onBeforeLoad` function.
 In Component tests, because the page isn't being reloaded, all you need to do is
 stub functions before mounting your component.
 
-:::e2e-component-example
+:::visit-mount-example
 
 ```js
-cy.visit('http://localhost:3000', {
+-{cy.visit('http://localhost:3000', {
   onBeforeLoad(win) {
     // Stub your functions here
     cy.stub(win, 'prompt').returns('my custom message')
   },
 })
 
-App.start()
-
-cy.window().its('prompt').should('be.called')
-cy.get('.name').should('have.value', 'my custom message')
-```
-
-```js
-// Stub your functions here
+App.start()::// Stub your functions here
+cy.mount()
 cy.stub(window, 'prompt').returns('my custom message')
 
 // After that, mount your component
-cy.mount(<MyComponent />)
+cy.mount(<MyComponent />)}-
 
 cy.window().its('prompt').should('be.called')
 cy.get('.name').should('have.value', 'my custom message')

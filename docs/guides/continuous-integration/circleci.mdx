@@ -11,13 +11,15 @@ title: CircleCI
 
 :::
 
-<!-- textlint-disable -->
-
-<DocsVideo src="https://youtube.com/embed/J-xbNtKgXfY" />
-
-<DocsVideo src="/img/snippets/running-in-ci.mp4" title="Cypress in CircleCI" />
-
 <!-- textlint-enable -->
+
+The
+[Cypress CircleCI Orb](https://circleci.com/developer/orbs/orb/cypress-io/cypress)
+is the _official_ CircleCI Orb of Cypress. Although you do not need to use the
+orb to run your tests in CircleCI, the benefit of using the orb is that it
+allows you to easily install, cache and run Cypress tests in CircleCI with less
+effort. The orb abstracts common steps necessary for running your tests in
+CircleCI in order to make your life as a developer better!
 
 ## Basic Setup
 
@@ -25,8 +27,6 @@ The [Cypress CircleCI Orb](https://github.com/cypress-io/circleci-orb) is a
 piece of configuration set in your `.circleci/config.yml` file to correctly
 install, cache and run Cypress with very little effort.
 
-Full documentation can be found at the
-[`cypress-io/circleci-orb`](https://github.com/cypress-io/circleci-orb) repo.
 For the Orb Quick Start Guide and usage cases, view the CircleCI
 [Cypress orb documentation](https://circleci.com/developer/orbs/orb/cypress-io/cypress).
 
@@ -35,16 +35,20 @@ A typical project can have:
 ```yaml
 version: 2.1
 orbs:
-  # "cypress-io/cypress@2" installs the latest published
+  # "cypress-io/cypress@3" installs the latest published
   # version "s.x.y" of the orb. We recommend you then use
-  # the strict explicit version "cypress-io/cypress@2.x.y"
+  # the strict explicit version "cypress-io/cypress@3.x.y"
   # to lock the version and prevent unexpected CI changes
-  cypress: cypress-io/cypress@2
+  cypress: cypress-io/cypress@3
 workflows:
   build:
     jobs:
       - cypress/run # "run" job comes from "cypress" orb
+          start-command: "npm run start"
 ```
+
+That's it! Your repo's dependencies will be installed and cached and your
+Cypress tests will run in CircleCI
 
 ## Parallelization
 
@@ -55,31 +59,22 @@ may have:
 ```yaml
 version: 2.1
 orbs:
-  cypress: cypress-io/cypress@2
+  cypress: cypress-io/cypress@3
 workflows:
   build:
     jobs:
-      - cypress/install:
-          build: 'npm run build' # run a custom app build step
       - cypress/run:
-          requires:
-            - cypress/install
-          record: true # record results with Cypress Cloud
-          parallel: true # split all specs across machines
-          parallelism: 4 # use 4 CircleCI machines to finish quickly
-          group: 'all tests' # name this group "all tests" on the dashboard
-          start: 'npm start' # start server before running tests
+          start-command: 'npm run start'
+          cypress-command:
+            'npx cypress run --parallel --record --group all tests'
+          parallelism: 4
 ```
 
-In all cases, you are using `run` and `install` job definitions that Cypress
-provides inside the orb. Using the orb brings simplicity and static checks of
-parameters to CircleCI configuration.
+Using the orb brings simplicity and static checks of parameters to CircleCI
+configuration.
 
-You can find multiple examples at
-[our orb examples page](https://github.com/cypress-io/circleci-orb/blob/master/docs/examples.md)
-and in the
-[cypress-example-circleci-orb](https://github.com/cypress-io/cypress-example-circleci-orb)
-project.
+You can find additional examples at
+[our orb examples page](https://github.com/cypress-io/circleci-orb/blob/master/src/examples).
 
 :::info
 
@@ -99,72 +94,48 @@ Check out the full <Icon name="github" inline="true" callout="RWA Circle CI conf
 
 ## Additional Examples
 
-#### Example `.circleci/config.yml` v2 config file
+#### Component Testing Example
 
 ```yaml
-version: 2
-jobs:
-  build:
-    docker:
-      - image: cypress/base:14.16.0
-        environment:
-          ## this enables colors in the output
-          TERM: xterm
-    working_directory: ~/app
-    steps:
-      - checkout
-      - restore_cache:
-          keys:
-            - v1-deps-{{ .Branch }}-{{ checksum "package.json" }}
-            - v1-deps-{{ .Branch }}
-            - v1-deps
-      - run:
-          name: Install Dependencies
-          command: npm ci
-      - save_cache:
-          key: v1-deps-{{ .Branch }}-{{ checksum "package.json" }}
-          # cache NPM modules and the folder with the Cypress binary
-          paths:
-            - ~/.npm
-            - ~/.cache
-      - run: $(npm bin)/cypress run --record --key <record_key>
+version: 2.1
+orbs:
+  cypress: cypress-io/cypress@3
+workflows:
+  test:
+    jobs:
+      - cypress/run:
+          cypress-command: 'npx cypress run --component'
 ```
 
-#### Example `.circleci/config.yml` v2 config file with `yarn`
+#### Yarn Example
 
 ```yaml
-version: 2
-jobs:
-  build:
-    docker:
-      - image: cypress/base:14.16.0
-        environment:
-          ## this enables colors in the output
-          TERM: xterm
-    working_directory: ~/app
-    steps:
-      - checkout
-      - restore_cache:
-          keys:
-            - v1-deps-{{ .Branch }}-{{ checksum "package.json" }}
-            - v1-deps-{{ .Branch }}
-            - v1-deps
-      - run:
-          name: Install Dependencies
-          command: yarn install --frozen-lockfile
-      - save_cache:
-          key: v1-deps-{{ .Branch }}-{{ checksum "package.json" }}
-          paths:
-            - ~/.cache ## cache both yarn and Cypress!
-      - run: $(yarn bin)/cypress run --record --key <record_key>
+version: 2.1
+orbs:
+  cypress: cypress-io/cypress@3
+workflows:
+  test:
+    jobs:
+      - cypress/run:
+          package-manager: 'yarn'
+          start-command: 'yarn start'
 ```
 
-Find the complete CircleCI v2 example with caching and artifact upload in the
-[cypress-example-docker-circle](https://github.com/cypress-io/cypress-example-docker-circle)
-repo.
+#### Chrome Example
 
-#### RAM Disk
+Cypress uses Electron by default to run your tests. The `install-browsers` flag
+is used to install Firefox and Chrome to run your tests. This is only needed if
+you are passing the `--browser` flag in your `cypress-command`
 
-You can speed up Cypress test jobs by using CircleCI RAM disk, read
-[Start CircleCI Machines Faster by Using RAM Disk](https://glebbahmutov.com/blog/circle-ram-disk/)
-blog post.
+```yaml
+version: 2.1
+orbs:
+  cypress: cypress-io/cypress@3
+workflows:
+  test:
+    jobs:
+      - cypress/run:
+          install-browsers: true
+          start-command: 'npm run start'
+          cypress-command: 'npx cypress run --browser chrome'
+```
