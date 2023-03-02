@@ -44,7 +44,7 @@ workflows:
   build:
     jobs:
       - cypress/run # "run" job comes from "cypress" orb
-          start-command: "npm run start"
+          start-command: 'npm run start'
 ```
 
 That's it! Your repo's dependencies will be installed and cached and your
@@ -52,9 +52,9 @@ Cypress tests will run in CircleCI
 
 ## Parallelization
 
-A more complex project that needs to install dependencies, build an application
-and run tests across 4 CI machines [in parallel](/guides/guides/parallelization)
-may have:
+A more complex project that needs to install dependencies, start a server, and
+run tests across 4 CI machines [in parallel](/guides/guides/parallelization) may
+have:
 
 ```yaml
 version: 2.1
