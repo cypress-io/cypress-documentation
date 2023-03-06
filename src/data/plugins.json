@@ -426,6 +426,20 @@
           "badge": "verified"
         },
         {
+          "name": "cypress-plugin-steps",
+          "description": "Helper utility for annotating your tests with steps. Adds cy.step() and cy.section() commands",
+          "link": "https://github.com/filiphric/cypress-plugin-steps",
+          "keywords": ["step", "section", "readability"],
+          "badge": "community"
+        },
+        {
+          "name": "cypress-plugin-xhr-toggle",
+          "description": "Hides and reveals XHR events in Cypress GUI",
+          "link": "https://github.com/filiphric/cypress-plugin-xhr-toggle",
+          "keywords": ["utility", "UI", "api", "xhr"],
+          "badge": "community"
+        },
+        {
           "name": "cypress-plugin-api",
           "description": "Cypress plugin for effective API testing. Imagine Postman, but in Cypress.",
           "link": "https://github.com/filiphric/cypress-plugin-api",
