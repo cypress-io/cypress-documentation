@@ -836,7 +836,7 @@ commands that were enqueued using the `cy.*` command chains.
 it('hides the thing when it is clicked', () => {
   -{cy.visit('/my/resource/path')::cy.mount(<MyComponent />)}- // 1.
 
-    cy.get('.hides-when-clicked') // 2
+  cy.get('.hides-when-clicked') // 2
     .should('be.visible') // 3
     .click() // 4
 
