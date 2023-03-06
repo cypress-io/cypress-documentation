@@ -193,8 +193,8 @@ and logs from your tests.
 The Debug page shows the latest completed [test run](/guides/cloud/runs) that
 matches the HEAD commit of your local project. If no run is found for your
 current commit, then Cypress shows the most recent run in your branch's history
-up until the current commit. The first **100** failed tests are listed, with a link
-to Cypress Cloud to review the full run.
+up until the current commit. The first **100** failed tests are listed, with a
+link to Cypress Cloud to review the full run.
 
 To use this feature, you must ensure that git is properly configured for your
 project and that you are sending git information to Cypress Cloud. Under some
@@ -245,15 +245,16 @@ allows you to **time travel** back to previous states when testing.
 
 :::info
 
-By default, Cypress keeps **50** tests worth of snapshots and command data for time
-traveling. If you are seeing extremely high memory consumption in your browser,
-you may want to lower the `numTestsKeptInMemory` in your
+By default, Cypress keeps **50** tests worth of snapshots and command data for
+time traveling. If you are seeing extremely high memory consumption in your
+browser, you may want to lower the `numTestsKeptInMemory` in your
 [Cypress configuration](/guides/references/configuration#Global).
 
 :::
 
-In the following example, hovering over the [`contains`](/api/commands/contains) command in the Command
-Log changes the state of the [AUT](#Application-Under-Test) preview:
+In the following example, hovering over the [`contains`](/api/commands/contains)
+command in the Command Log changes the state of the
+[AUT](#Application-Under-Test) preview:
 
 <DocsImage
   src="/img/guides/core-concepts/cypress-app/first-test-hover-contains.png"
@@ -265,8 +266,9 @@ command resolved. Additionally, since [`cy.contains()`](/api/commands/contains)
 finds DOM elements on the page, Cypress also highlights the element and scrolls
 it into view (to the top of the page).
 
-Also note that as we hover over the [`contains`](/api/commands/contains) command, Cypress reverts back to
-the URL that was present when the snapshot was taken.
+Also note that as we hover over the [`contains`](/api/commands/contains)
+command, Cypress reverts back to the URL that was present when the snapshot was
+taken.
 
 <DocsImage
   src="/img/guides/core-concepts/cypress-app/first-test-url-revert.png"
