@@ -4,7 +4,7 @@ sidebar_position: 110
 ---
 
 Cypress Cloud's Slack integration allows you to see your Cypress test results
-directly in your teams' Slack channels.
+directly in your team's Slack channels.
 
 <DocsImage
   src="/img/dashboard/slack-integration/cypress-slack-integration-channel-feed.jpg"
@@ -88,8 +88,9 @@ only for failing runs. If you'd like to change these preferences:
 1. Within the Slack integration, click **Configure**.
 1. Under **Notifications**, select your preference for each Slack channel:
 
-- **All runs**: will notify on all runs (including passed)
-- **Failed runs only**: will only notify on runs with a fail status.
+- **Failed runs**: will notify on runs with a failed status.
+- **Passed runs**: will notify on runs with a passed status.
+- **Flaky tests**: will notify on runs that have an identified flaky test.
 
 ### Mute a channel
 
@@ -152,16 +153,45 @@ additional channel.
 ### Set notification preferences
 
 By default, Cypress Cloud will post a Slack message to each configured channel
-only for failing runs. You cannot override the notification preferences for the
-global organization channels. If you'd like to change these preferences:
+only for failing runs.
+
+If you'd like to change these preferences:
 
 1. Navigate to the **Integrations** page for the project with the installed
    integration.
 1. Scroll down to the **Slack Integration** section.
 1. Under **Notifications**, select your preference for each Slack channel:
 
-- **All runs**: will notify on all runs (including passed)
-- **Failed runs only**: will only notify on runs with a fail status.
+- **Failed runs**: will notify on runs with a failed status.
+- **Passed runs**: will notify on runs with a passed status.
+- **Flaky tests**: will notify on runs that have an identified flaky test.
+
+:::info
+
+You cannot override the notification preferences for globally configured Slack
+integrations.
+
+:::
+
+### Filter notifications by tag
+
+You can filter notifications posted to Slack based on a
+[tag](/guides/guides/command-line#cypress-run-tag-lt-tag-gt) the run was
+recorded with. This can be helpful to only post notifications on certain runs,
+like those to a staging or release environment.
+
+1. Navigate to the **Integrations** page for the project with the installed
+   integration.
+1. Scroll down to the **Slack Integration** section.
+1. Under **Tags**, select the **Tag** dropdown for the desired integration and
+   select which tag to filter.
+
+:::info
+
+Filtering by tags is only available on integrations configured at the project
+level.
+
+:::
 
 ### Mute a channel
 
