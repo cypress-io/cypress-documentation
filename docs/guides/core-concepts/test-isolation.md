@@ -17,7 +17,7 @@ sidebar_position: 35
 
 :::tip
 
-<Icon name="check-circle" color="green"></Icon> **Best Practice:** Tests should
+&#8239;<Icon name="check-circle" color="green"></Icon> **Best Practice:** Tests should
 always be able to be run independently from one another **and still pass**.
 
 :::
