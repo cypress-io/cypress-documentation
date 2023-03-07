@@ -48,7 +48,7 @@ consistently when ran. This behavior is described as `testIsolation`.
 
 The test isolation is a global configuration and can be overridden for
 end-to-end testing at the `describe` level with the
-[`testIsolation`](/guides/references/configuration#Global) option.
+[`testIsolation`](/guides/references/configuration#e2e) option.
 
 ## Test Isolation in End-to-End Testing
 
