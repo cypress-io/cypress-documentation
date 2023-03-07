@@ -969,6 +969,13 @@
       "description": "<a target=\"_blank\" href=\"/guides/tooling/visual-testing\">Visual testing</a> is a great complement to functional testing.",
       "plugins": [
         {
+          "name": "SmartBear VisualTest",
+          "description": "Visual regression testing for Cypress tests with SmartBear VisualTest.",
+          "link": "https://support.smartbear.com/visualtest/docs/sdks/cypress.html",
+          "keywords": ["visual-ai", "fullpage", "screenshots", "visual regression", "screenshots comparison"],
+          "badge": "verified"
+        },
+        {
           "name": "Argos",
           "description": "Automate visual testing in your CI.",
           "link": "https://docs.argos-ci.com/cypress",
