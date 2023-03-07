@@ -727,11 +727,14 @@ expand the APIs to support "switching into" an iframe and then back out of them.
 ## <Icon name="angle-right" /> How do I preserve cookies / localStorage in between my tests?
 
 By default, Cypress automatically
-[clears all cookies **before** each test](/api/commands/clearcookies) to prevent
-state from building up.
+[clears all cookies, local storage and session **before** each test](/guides/core-concepts/test-isolation)
+to prevent state from leaking between tests.
 
 You can preserve session details across tests using the
 [`cy.session()`](/api/commands/session) command.
+
+Alternatively, you can disabled [`testIsolation`](/guides/references/configuration#e2e)
+at the suite or e2e configuration-level to prevent the clearing of browser state.
 
 ## <Icon name="angle-right" /> Some of my elements animate in; how do I work around that?
 
