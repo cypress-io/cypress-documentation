@@ -243,7 +243,7 @@ Each command, when hovered over, restores the Application or Component Under
 Test (right-hand side) to the state it was in when that command executed. This
 allows you to **time travel** back to previous states when testing.
 
-:::info
+:::tip
 
 By default, Cypress keeps **50** tests worth of snapshots and command data for
 time traveling. If you are seeing extremely high memory consumption in your
@@ -428,10 +428,10 @@ The image below shows that our application is displaying at `1000px` width,
   alt="Viewport Scaling"
 />
 
-:::note
+:::info
 
 The right-hand side may also be used to display syntax errors in your
-test file that prevent the tests from running.
+spec file that prevent the tests from running.
 
 :::
 
@@ -440,7 +440,7 @@ test file that prevent the tests from running.
   alt="Errors"
 />
 
-:::note
+:::caution
 
 Internally, the AUT renders within an iframe. This can sometimes cause
 unexpected behaviors
@@ -510,15 +510,19 @@ The image below shows that our application is displaying at `500px` width,
   alt="Cypress app showing mounted component test viewport scale"
 />
 
-_Note: The right-hand side may also be used to display syntax errors in your
-spec file that prevent the tests from running._
+:::info
+
+The right-hand side may also be used to display syntax errors in your
+spec file that prevent the tests from running.
+
+:::
 
 <DocsImage
   src="/img/guides/core-concepts/cypress-app/aut-error-ct.png"
   alt="Cypress app showing error as application under test"
 />
 
-:::note
+:::caution
 
 Internally, the AUT renders within an iframe. This can sometimes cause
 unexpected behaviors
@@ -554,7 +558,7 @@ element by running through a series of selector strategies.
 
 <DefaultSelectorPriority />
 
-:::info
+:::tip
 
 <strong>This is configurable</strong>
 
