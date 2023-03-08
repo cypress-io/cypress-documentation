@@ -8,7 +8,7 @@ sidebar_position: 80
 ## <Icon name="graduation-cap" /> What you'll learn
 
 - The names and purposes of the visual parts of Cypress
-- How to use the Selector Playground for targeting your page elements
+- How to use the Selector Playground for targeting elements
 - How to debug tests using the built-in features of Cypress
 
 :::
@@ -24,7 +24,7 @@ Cypress testing experience.
 
 <strong>Cypress Cloud integration</strong>
 
-When you configure the open-source Cypress app to record tests to
+When you configure the open source Cypress app to record tests to
 [Cypress Cloud](/guides/cloud/introduction), you'll see data from your latest
 recorded runs directly in the Cypress app. This increased visibility into your
 test history allows you to debug your tests faster and more effectively, all
@@ -116,7 +116,7 @@ unreliable user experience.
 
 The flake indicator will display if any tests in the given spec have been flaky
 in your latest runs (limited to 4). Hovering over the indicator will show a
-tooltip with the following analytics, based off the last 50 runs:
+tooltip with the following analytics, based off the last **50** runs:
 
 - Rate (flaky runs divided by total runs)
 - Severity (flaky rate at a glance)
@@ -193,8 +193,8 @@ and logs from your tests.
 The Debug page shows the latest completed [test run](/guides/cloud/runs) that
 matches the HEAD commit of your local project. If no run is found for your
 current commit, then Cypress shows the most recent run in your branch's history
-up until the current commit. The first 100 failed tests are listed, with a link
-to Cypress Cloud to review the full run.
+up until the current commit. The first **100** failed tests are listed, with a
+link to Cypress Cloud to review the full run.
 
 To use this feature, you must ensure that git is properly configured for your
 project and that you are sending git information to Cypress Cloud. Under some
@@ -243,17 +243,18 @@ Each command, when hovered over, restores the Application or Component Under
 Test (right-hand side) to the state it was in when that command executed. This
 allows you to **time travel** back to previous states when testing.
 
-:::info
+:::tip
 
-By default, Cypress keeps 50 tests worth of snapshots and command data for time
-traveling. If you are seeing extremely high memory consumption in your browser,
-you may want to lower the `numTestsKeptInMemory` in your
+By default, Cypress keeps **50** tests worth of snapshots and command data for
+time traveling. If you are seeing extremely high memory consumption in your
+browser, you may want to lower the `numTestsKeptInMemory` in your
 [Cypress configuration](/guides/references/configuration#Global).
 
 :::
 
-In the following example, hovering over the `CONTAINS` command in the Command
-Log changes the state of the [AUT](#Application-Under-Test) preview:
+In the following example, hovering over the [`contains`](/api/commands/contains)
+command in the Command Log changes the state of the
+[AUT](#Application-Under-Test) preview:
 
 <DocsImage
   src="/img/guides/core-concepts/cypress-app/first-test-hover-contains.png"
@@ -265,8 +266,9 @@ command resolved. Additionally, since [`cy.contains()`](/api/commands/contains)
 finds DOM elements on the page, Cypress also highlights the element and scrolls
 it into view (to the top of the page).
 
-Also note that as we hover over the `CONTAINS` command, Cypress reverts back to
-the URL that was present when the snapshot was taken.
+Also note that as we hover over the [`contains`](/api/commands/contains)
+command, Cypress reverts back to the URL that was present when the snapshot was
+taken.
 
 <DocsImage
   src="/img/guides/core-concepts/cypress-app/first-test-url-revert.png"
@@ -426,17 +428,25 @@ The image below shows that our application is displaying at `1000px` width,
   alt="Viewport Scaling"
 />
 
-_Note: The right-hand side may also be used to display syntax errors in your
-test file that prevent the tests from running._
+:::info
+
+The right-hand side may also be used to display syntax errors in your spec file
+that prevent the tests from running.
+
+:::
 
 <DocsImage
   src="/img/guides/core-concepts/cypress-app/aut-error-e2e.png"
   alt="Errors"
 />
 
-_Note: Internally, the AUT renders within an iframe. This can sometimes cause
+:::caution
+
+Internally, the AUT renders within an iframe. This can sometimes cause
 unexpected behaviors
-[explained here.](/api/commands/window#Cypress-uses-2-different-windows)_
+[explained here.](/api/commands/window#Cypress-uses-2-different-windows)
+
+:::
 
 ### Component Under Test <ComponentOnlyBadge />
 
@@ -500,17 +510,25 @@ The image below shows that our application is displaying at `500px` width,
   alt="Cypress app showing mounted component test viewport scale"
 />
 
-_Note: The right-hand side may also be used to display syntax errors in your
-spec file that prevent the tests from running._
+:::info
+
+The right-hand side may also be used to display syntax errors in your spec file
+that prevent the tests from running.
+
+:::
 
 <DocsImage
   src="/img/guides/core-concepts/cypress-app/aut-error-ct.png"
   alt="Cypress app showing error as application under test"
 />
 
-_Note: Internally, the CUT renders within an iframe. This can sometimes cause
+:::caution
+
+Internally, the AUT renders within an iframe. This can sometimes cause
 unexpected behaviors
-[explained here.](/api/commands/window#Cypress-uses-2-different-windows)_
+[explained here.](/api/commands/window#Cypress-uses-2-different-windows)
+
+:::
 
 ## Selector Playground
 
@@ -540,7 +558,7 @@ element by running through a series of selector strategies.
 
 <DefaultSelectorPriority />
 
-:::info
+:::tip
 
 <strong>This is configurable</strong>
 
