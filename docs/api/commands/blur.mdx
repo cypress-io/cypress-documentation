@@ -7,27 +7,12 @@ Blur a focused element.
 It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried) to
 chain further commands that rely on the subject after `.blur()`.
 
-:::caution
-
-This element must currently be in focus. If you want to ensure an element is
-focused before blurring, try using [`.focus()`](/api/commands/focus) before
-`.blur()`.
-
-```javascript
-cy.get('button').as('btn').focus()
-cy.get('@btn').blur()
-```
-
-:::
-
-## Syntax
-
 ```javascript
 .blur()
 .blur(options)
 ```
 
-### Usage
+## Usage
 
 **<Icon name="check-circle" color="green" /> Correct Usage**
 
@@ -42,6 +27,19 @@ cy.get('[tabindex="1"]').blur() // Blur el with tabindex
 cy.blur('input') // Errors, cannot be chained off 'cy'
 cy.window().blur() // Errors, 'window' does not yield DOM element
 ```
+
+:::caution
+
+This element must currently be in focus. If you want to ensure an element is
+focused before blurring, try using [`.focus()`](/api/commands/focus) before
+`.blur()`.
+
+```javascript
+cy.get('button').as('btn').focus()
+cy.get('@btn').blur()
+```
+
+:::
 
 ### Arguments
 
@@ -64,7 +62,7 @@ Pass in an options object to change the default behavior of `.blur`.
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
 - Before executing, `.blur()` will wait for the element to have focus.
-- After executing, `.blur()` implicitly asserts that the element(s) still
+- After executing, `.blur()` [implicitly asserts](/guides/core-concepts/introduction-to-cypress#Implicit-Assertions) that the element(s) still
   [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)

@@ -19,8 +19,6 @@ An alias of [`.should()`](/api/commands/should)
 
 :::
 
-## Syntax
-
 ```javascript
 .and(chainers)
 .and(chainers, value)
@@ -28,7 +26,7 @@ An alias of [`.should()`](/api/commands/should)
 .and(callbackFn)
 ```
 
-### Usage
+## Usage
 
 **<Icon name="check-circle" color="green" /> Correct Usage**
 
@@ -85,9 +83,6 @@ Whatever was passed to the function is what is yielded.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-- `.and()` is a query command, and will not break a chain of
-  [retry-ability](/guides/core-concepts/retry-ability#Commands-Queries-and-Assertions).
-  It is _safe_ to chain further commands that use the subject after `.and()`.
 - In most cases, `.and()` yields the same subject it was given.
 
 ```javascript
@@ -118,6 +113,10 @@ cy.get('nav') // yields <nav>
 The chainers that come from [Chai](/guides/references/bundled-libraries#Chai) or
 [Chai-jQuery](/guides/references/bundled-libraries#Chai-jQuery) will always
 document what they return.
+
+- `.and()` is a query command, and will not break a chain of
+  [retry-ability](/guides/core-concepts/retry-ability#Commands-Queries-and-Assertions).
+  It is _safe_ to chain further commands that use the subject after `.and()`.
 
 ## Examples
 
