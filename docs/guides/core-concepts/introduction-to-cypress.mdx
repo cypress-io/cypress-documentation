@@ -914,7 +914,7 @@ randomly fail. This would lead to flaky, inconsistent results.
 :::info
 
 While Cypress does have a [`.then()`](/api/commands/then) command, Cypress
-commands are not promises and cannot be `await`ed. If you'd like to learn more
+commands are not Promises and cannot be `await`ed. If you'd like to learn more
 about handling asynchronous Cypress Commands please read our
 [Variables and Aliases Guide](/guides/core-concepts/variables-and-aliases).
 
@@ -969,7 +969,7 @@ You might be wondering:
 Cypress does not support this type of conditional control flow because it leads
 to non-deterministic tests - different runs may behave differently, which makes
 them less consistent and useful for verifying your application's correctness. In
-general, there are only a handful of very specific situations where you can
+general, there are only a handful of very specific situations where you can or should
 create control flow using Cypress commands.
 
 With that said, as long as you are aware of the potential pitfalls with control
