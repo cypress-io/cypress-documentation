@@ -703,6 +703,13 @@
           "link": "https://github.com/Bkucera/cypress-plugin-tab",
           "keywords": ["commands"],
           "badge": "experimental"
+        },
+        {
+          "name": "cypress-plugin-multiple-click",
+          "description": "Click multiple times in Cypress.",
+          "link": "https://github.com/MohamadKh75/cypress-plugin-multiple-click",
+          "keywords": ["testing", "commands", "click"],
+          "badge": "verified"
         }
       ]
     },
