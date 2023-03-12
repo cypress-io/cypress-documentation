@@ -861,12 +861,11 @@ import Button from '../../src/components/Button.vue'
 
 Cypress.Commands.add('mount', (component, options = {}) => {
   // Setup options object
-  options.extensions = options.extensions || {}
-  options.extensions.plugins = options.extensions.plugins || []
-  options.extensions.components = options.extensions.components || {}
+  options.global = options.global || {}
+  options.global.components = options.global.components || {}
 
   // Register global components
-  options.extensions.components['Button'] = Button
+  options.global.components['Button'] = Button
 
   return mount(component, options)
 })
@@ -881,11 +880,11 @@ import Button from '../../src/components/Button.vue'
 
 Cypress.Commands.add('mount', (component, options = {}) => {
   // Setup options object
-  options.global = options.global || {}
-  options.global.components = options.global.components || {}
+  options.extensions = options.extensions || {}
+  options.extensions.components = options.extensions.components || {}
 
   // Register global components
-  options.global.components['Button'] = Button
+  options.extensions.components['Button'] = Button
 
   return mount(component, options)
 })
