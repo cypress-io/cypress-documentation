@@ -71,6 +71,7 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     {
+      image: 'img/logo/cypress-logo-circle-dark.png',
       navbar: {
         style: 'dark',
         logo: {
