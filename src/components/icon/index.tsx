@@ -1,14 +1,13 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-/* Note: Docusaurus/MDX v1 has parsing issues where some markdown renders statically and can cuse sibsequent links when beside a component or
-HTML tag while NOT in a section header or table, etc. https://github.com/mdx-js/mdx/issues/1571#issuecomment-853384939
+/* Note: Docusaurus/MDX v1 has parsing issues where some markdown renders statically when beside a component or HTML tag while NOT in a section header or table, etc. https://github.com/mdx-js/mdx/issues/1571#issuecomment-853384939
 
 Exact issue here is noted here https://docusaurus.io/docs/markdown-features/react#markdown-and-jsx-interoperability. 
 
 This should be fixed when DS moves to MDX v2 https://github.com/facebook/docusaurus/issues/4029
 
-For now, we we wrap the anchor in this component for reusability. Other in-line workarounds are add a narrow no-break space (#8239; or &nnbsp;) before the <Icon /> or replace markdown syntax with equivalient html tags. */
+For now, we we wrap the anchor in this component for reusability. Other in-line workarounds are add a narrow no-break space (&#8239; or &nnbsp; or &nbsp; respectively) before the <Icon /> or replace markdown syntax with equivalent html tags. */
 
 // TODO: refactor this component after DS moves to MDX v2.
 
