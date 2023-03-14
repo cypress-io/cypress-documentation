@@ -709,7 +709,7 @@
           "description": "Click multiple times in Cypress.",
           "link": "https://github.com/MohamadKh75/cypress-plugin-multiple-click",
           "keywords": ["testing", "commands", "click"],
-          "badge": "verified"
+          "badge": "community"
         }
       ]
     },
