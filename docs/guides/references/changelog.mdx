@@ -8,12 +8,12 @@ _Released 03/14/2023_
 
 **Features:**
 
-- The [Debug page](/guides/cloud/runs#Debug) is now able
-  to show real-time results from in-progress runs. Addresses
+- The [Debug page](/guides/cloud/runs#Debug) is now able to show real-time
+  results from in-progress runs. Addresses
   [#25759](https://github.com/cypress-io/cypress/issues/25759).
 - Added the ability to control whether a request is logged to the command log
-  via [`cy.intercept()`](/api/commands/intercept) by
-  passing `log: false` or `log: true`. Addresses
+  via [`cy.intercept()`](/api/commands/intercept) by passing `log: false` or
+  `log: true`. Addresses
   [#7362](https://github.com/cypress-io/cypress/issues/7362).
   - This can be used to override Cypress's default behavior of logging all XHRs
     and fetches, see the
@@ -28,8 +28,8 @@ _Released 03/14/2023_
 - Fixed an issue where using `Cypress.require()` would throw the error
   `Cannot find module 'typescript'`. Fixes
   [#25885](https://github.com/cypress-io/cypress/issues/25885).
-- The [`before:spec`](/api/plugins/before-spec-api) API
-  was updated to correctly support async event handlers in `run` mode. Fixes
+- The [`before:spec`](/api/plugins/before-spec-api) API was updated to correctly
+  support async event handlers in `run` mode. Fixes
   [#24403](https://github.com/cypress-io/cypress/issues/24403).
 - Updated the Component Testing
   [community framework](/guides/component-testing/third-party-definitions)
