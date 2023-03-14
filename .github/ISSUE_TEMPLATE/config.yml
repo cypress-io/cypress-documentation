@@ -5,5 +5,5 @@ contact_links:
     url: https://on.cypress.io/discord
     about: Want to discuss Cypress with others? Check out our chat.
   - name: Cypress App or Cloud Issue
-    url: https://github.com/cypress-io/cypress-documentation/issues/new
+    url: https://github.com/cypress-io/cypress/issues/new
     about: This issue tracker is not for App or Cloud issues. Please open issues related to the App or Cloud here.
