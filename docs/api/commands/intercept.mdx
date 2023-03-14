@@ -139,8 +139,8 @@ By passing in a `StaticResponse` as the last argument, you can
 requests. See [`StaticResponse` object](#StaticResponse-objects) for the list of
 properties.
 
-Additionally, you can pass `{ log: false }` with your `StaticResponse` to disable
-command logs for this intercept. See
+Additionally, you can pass `{ log: false }` with your `StaticResponse` to
+disable command logs for this intercept. See
 ["Disabling logs for a request"](#Disabling-logs-for-a-request).
 
 See
@@ -613,14 +613,18 @@ cy.intercept('POST', 'http://api.company.com/widgets', (req) => {
 
 ### Disabling logs for a request
 
-By default, Cypress logs all requests that match any `cy.intercept()`, as well as all `XMLHttpRequest`s and `fetch` requests. You can use `cy.intercept()` to disable these logs by passing `{ log: false }` in the second parameter:
+By default, Cypress logs all requests that match any `cy.intercept()`, as well
+as all `XMLHttpRequest`s and `fetch` requests. You can use `cy.intercept()` to
+disable these logs by passing `{ log: false }` in the second parameter:
 
 ```js
 // disable Cypress's default behavior of logging all XMLHttpRequests and fetches
 cy.intercept({ resourceType: /xhr|fetch/ }, { log: false })
 ```
 
-Note: Currently, you can only enable/disable a request's logs when defining the `cy.intercept()`, not inside of an `intercept` callback. See [#26069](https://github.com/cypress-io/cypress/issues/26069).
+Note: Currently, you can only enable/disable a request's logs when defining the
+`cy.intercept()`, not inside of an `intercept` callback. See
+[#26069](https://github.com/cypress-io/cypress/issues/26069).
 
 ### Intercepting a response
 
