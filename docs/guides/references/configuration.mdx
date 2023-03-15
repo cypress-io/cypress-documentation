@@ -205,7 +205,7 @@ object:
 | `baseUrl`            | `null`                                | URL used as prefix for [`cy.visit()`](/api/commands/visit) or [`cy.request()`](/api/commands/request) command's URL.                                                                                  |
 | `setupNodeEvents`    | `null`                                | Function in which node events can be registered and config can be modified. Takes the place of the (removed) pluginFile option. [Please read the notes for examples on using this.](#setupNodeEvents) |
 | `supportFile`        | `cypress/support/e2e.{js,jsx,ts,tsx}` | Path to file to load before spec files load. This file is compiled and bundled. (Pass `false` to disable)                                                                                             |
-| `specPattern`        | `cypress/e2e/**/*.cy.{js,jsx,ts,tsx}` | A String or Array of glob patterns of the test files to load.                                                                                                                                         |
+| `specPattern`        | <code>cypress/e2e/\*\*/*.cy.{js,jsx,ts,tsx}</code> | A String or Array of glob patterns of the test files to load.                                                                                                                                         |
 | `excludeSpecPattern` | `*.hot-update.js`                     | A String or Array of glob patterns used to ignore test files that would otherwise be shown in your list of tests. [Please read the notes on using this.](#excludeSpecPattern)                         |
 | `experimentalRunAllSpecs`      | `false`                               | Enables the "Run All Specs" UI feature, allowing the execution of multiple specs sequentially. |
 | `slowTestThreshold`  | `10000`                               | Time, in milliseconds, to consider a test "slow" during `cypress run`. A slow test will display in orange text in the default reporter.                                                               |
@@ -233,7 +233,7 @@ object:
 | `devServer`          | `null`                                   | Required option used to configure the component testing dev server. [Please read the notes for examples on using this.](#devServer)                                              |
 | `setupNodeEvents`    | `null`                                   | Function in which node events can be registered and config can be modified. Takes the place of the (removed) plugins file. [Please read the notes for examples on using this.](#setupNodeEvents) |
 | `supportFile`        | `cypress/support/component.js`           | Path to file to load before spec files load. This file is compiled and bundled. (Pass `false` to disable)                                                                                        |
-| `specPattern`        | `**/*.cy.{js,jsx,ts,tsx}`                | A glob pattern String or Array of glob pattern Strings of the spec files to load. <br /><br />Note that any files found matching the `e2e.specPattern` value will be automatically **excluded.** |
+| `specPattern`        | <code>\*\*/*.cy.{js,jsx,ts,tsx}</code>                | A glob pattern String or Array of glob pattern Strings of the spec files to load. <br /><br />Note that any files found matching the `e2e.specPattern` value will be automatically **excluded.** |
 | `excludeSpecPattern` | `['/snapshots/*', '/image_snapshots/*']` | A String or Array of glob patterns used to ignore spec files that would otherwise be shown in your list of specs. [Please read the notes on using this.](#excludeSpecPattern)                    |
 `experimentalSingleTabRunMode`                | `false` | Run all specs in a single tab, instead of creating a new tab per spec. This can improve run mode performance, but can impact spec isolation and reliability on large test suites. This experiment currently only applies to Component Testing.     
 | `slowTestThreshold`  | `250`                                    | Time, in milliseconds, to consider a test "slow" during `cypress run`. A slow test will display in orange text in the default reporter.                                                          |
@@ -607,126 +607,6 @@ The `**/node_modules/**` pattern is automatically added to `excludeSpecPattern`
 and does not need to be specified (and can't be overridden). See [`e2e`](#e2e)
 or [`component`](#component) testing-specific options.
 
-### firefoxGcInterval
-
-:::caution
-
-The following section only applies if you are using a version of Firefox older
-than Firefox 80. `firefoxGcInterval` has no effect if you are using Firefox 80
-or newer, since the garbage collection bug was fixed in Firefox 80. It is
-recommended to upgrade your version of Firefox to avoid this workaround.
-
-:::
-
-Firefox versions 79 and earlier have a
-[bug](https://bugzilla.mozilla.org/show_bug.cgi?id=1608501) where it does not
-run its internal garbage collection (GC) fast enough, which can lead to
-consuming all available system memory and crashing.
-
-Cypress prevents Firefox from crashing by forcing Firefox to run its GC cleanup
-routines between tests.
-
-Running GC is an expensive and **blocking** routine. It adds significant time to
-the overall run, and causes Firefox to "freeze" for the duration of GC cleanup.
-This causes the browser not to respond to any user input.
-
-Cypress runs GC cleanup during
-[cypress run](/guides/guides/command-line#cypress-run) only because we don't
-expect users to interact with the browser - since this is typically run in CI.
-We've disabled running GC during
-[cypress open](/guides/guides/command-line#cypress-open) because users typically
-interact with the browser.
-
-Because GC adds additional time to the overall run, we've added the amount of
-time this routine has taken to the bottom of the Cypress Command Log.
-
-<DocsImage
-  src="/img/guides/configuration/firefox-gc-interval-in-command-log.jpg"
-  alt="GC duration shown"
-/>
-
-#### Configuration
-
-You can control how often GC cleanup runs via the `firefoxGcInterval`
-configuration value.
-
-`firefoxGcInterval` controls whether Cypress forces Firefox to run GC cleanup
-and how frequently.
-
-By default, we force GC cleanup between every test during
-[cypress run](/guides/guides/command-line#cypress-run), but do not run any GC
-cleanup during [cypress open](/guides/guides/command-line#cypress-open) using
-the configuration below:
-
-:::cypress-config-example
-
-```ts
-{
-  firefoxGcInterval: {
-    runMode: 1,
-    openMode: null,
-  },
-}
-```
-
-:::
-
-You can override how often Cypress runs GC cleanup by setting the
-`firefoxGcInterval` config value to:
-
-- `null`, to disable it for both
-  [cypress run](/guides/guides/command-line#cypress-run) and
-  [cypress open](/guides/guides/command-line#cypress-open)
-- a `number`, which sets the interval for both
-  [cypress run](/guides/guides/command-line#cypress-run) and
-  [cypress open](/guides/guides/command-line#cypress-open)
-- an `object` to set different intervals for each mode
-
-**Examples**
-
-Turn off GC cleanup all modes
-
-:::cypress-config-example
-
-```ts
-{
-  firefoxGcInterval: null,
-}
-```
-
-:::
-
-Run GC cleanup before every other test during
-[cypress run](/guides/guides/command-line#cypress-run) and
-[cypress open](/guides/guides/command-line#cypress-open)
-
-:::cypress-config-example
-
-```ts
-{
-  firefoxGcInterval: 2,
-}
-```
-
-:::
-
-Run GC cleanup before every 3rd test during
-[cypress run](/guides/guides/command-line#cypress-run) and disable running GC
-cleanup during [cypress open](/guides/guides/command-line#cypress-open).
-
-:::cypress-config-example
-
-```ts
-{
-  firefoxGcInterval: {
-    runMode: 3,
-    openMode: null,
-  },
-}
-```
-
-:::
-
 ### isInteractive
 
 You can open Cypress in the interactive mode via the `cypress open` command, and
@@ -864,7 +744,7 @@ DEBUG=cypress:cli,cypress:server:specs
 | [10.4.0](/guides/references/changelog#10-4-0) | Added `e2e.testIsolation` option.                                                     |
 | [10.0.0](/guides/references/changelog#10-0-0) | Reworked page to support new `cypress.config.js` and deprecated `cypress.json` files. |
 | [8.7.0](/guides/references/changelog#8-7-0)   | Added `slowTestThreshold` option.                                                     |
-| [8.0.0](/guides/references/changelog#8-0-0)   | Added `clientCertificates` option.                                                    |
+| [8.0.0](/guides/references/changelog#8-0-0)   | Added `clientCertificates` option and removed `firefoxGcInterval` configuration.      |
 | [7.0.0](/guides/references/changelog#7-0-0)   | Added `e2e` and `component` options.                                                  |
 | [7.0.0](/guides/references/changelog#7-0-0)   | Added `redirectionLimit` option.                                                      |
 | [6.1.0](/guides/references/changelog#6-1-0)   | Added `scrollBehavior` option.                                                        |

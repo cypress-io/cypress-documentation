@@ -426,6 +426,20 @@
           "badge": "verified"
         },
         {
+          "name": "cypress-plugin-steps",
+          "description": "Helper utility for annotating your tests with steps. Adds cy.step() and cy.section() commands",
+          "link": "https://github.com/filiphric/cypress-plugin-steps",
+          "keywords": ["step", "section", "readability"],
+          "badge": "community"
+        },
+        {
+          "name": "cypress-plugin-xhr-toggle",
+          "description": "Hides and reveals XHR events in Cypress GUI",
+          "link": "https://github.com/filiphric/cypress-plugin-xhr-toggle",
+          "keywords": ["utility", "UI", "api", "xhr"],
+          "badge": "community"
+        },
+        {
           "name": "cypress-plugin-api",
           "description": "Cypress plugin for effective API testing. Imagine Postman, but in Cypress.",
           "link": "https://github.com/filiphric/cypress-plugin-api",
@@ -689,6 +703,13 @@
           "link": "https://github.com/Bkucera/cypress-plugin-tab",
           "keywords": ["commands"],
           "badge": "experimental"
+        },
+        {
+          "name": "cypress-plugin-multiple-click",
+          "description": "Click multiple times in Cypress.",
+          "link": "https://github.com/MohamadKh75/cypress-plugin-multiple-click",
+          "keywords": ["testing", "commands", "click"],
+          "badge": "community"
         }
       ]
     },
@@ -954,6 +975,13 @@
       "name": "Visual Testing",
       "description": "<a target=\"_blank\" href=\"/guides/tooling/visual-testing\">Visual testing</a> is a great complement to functional testing.",
       "plugins": [
+        {
+          "name": "SmartBear VisualTest",
+          "description": "Visual regression testing for Cypress tests with SmartBear VisualTest.",
+          "link": "https://support.smartbear.com/visualtest/docs/sdks/cypress.html",
+          "keywords": ["visual-ai", "fullpage", "screenshots", "visual regression", "screenshots comparison"],
+          "badge": "verified"
+        },
         {
           "name": "Argos",
           "description": "Automate visual testing in your CI.",
