@@ -1010,7 +1010,7 @@ cy.get('button').should('have.class', 'active')
 ```
 
 This above test will pass even if the `.active` class is applied to the button
-asynchronously - or after an indeterminate period of time.
+asynchronously, after an indeterminate period of time or even if the button is removed from the DOM entirely for a while (replaced with a waiting spinner, for example).
 
 ```javascript
 // even though we are adding the class
@@ -1084,7 +1084,7 @@ Without a single `expect()` or `.should()`, a few lines of Cypress can ensure
 thousands of lines of code are working properly across the client and server.
 
 This is because many commands have a built in
-[Implicit Assertions](#Implicit-Assertions) which offer you a high level of
+Implicit Assertions which offer you a high level of
 confidence that your application is working as expected.
 
 :::
@@ -1218,11 +1218,11 @@ use them in Cypress.
 
 There are two ways to write assertions in Cypress:
 
-1. **Implicit Subjects:** Using [`.should()`](/api/commands/should) or
+1. **As Cypress Commands:** Using [`.should()`](/api/commands/should) or
    [`.and()`](/api/commands/and).
-2. **Explicit Subjects:** Using `expect`.
+2. **As Mocha Assertions:** Using `expect`.
 
-### Implicit Subjects
+### Command Assertions
 
 Using [`.should()`](/api/commands/should) or [`.and()`](/api/commands/and)
 commands is the preferred way of making assertions in Cypress. These are typical
@@ -1230,8 +1230,8 @@ Cypress commands, which means they apply to the currently yielded subject in the
 command chain.
 
 ```javascript
-// the implicit subject here is the first <tr>
-// this asserts that the <tr> has an .active class
+// The subject here is the first <tr>.
+// This asserts that the <tr> has an .active class
 cy.get('tbody tr:first').should('have.class', 'active')
 ```
 
@@ -1250,28 +1250,9 @@ subject, [`.and('have.attr')`](/api/commands/and) is executed against the same
 element. This is handy when you need to assert multiple things against a single
 subject quickly.
 
-If we wrote this assertion in the explicit form "the long way", it would look
-like this:
+### Mocha Assertions
 
-```js
-cy.get('tbody tr:first').should(($tr) => {
-  expect($tr).to.have.class('active')
-  expect($tr).to.have.attr('href', '/users')
-})
-```
-
-The implicit form is much shorter! So when would you want to use the explicit
-form?
-
-Typically when you want to:
-
-- Assert multiple things about the same subject
-- Massage the subject in some way prior to making the assertion
-
-### Explicit Subjects
-
-Using `expect` allows you to pass in a specific subject and make an assertion
-about it. This is probably how you're used to seeing assertions written in unit
+Using `expect` allows you to assert on any javascript object, not just the current subject. This is probably how you're used to seeing assertions written in unit
 tests:
 
 ```js
@@ -1288,7 +1269,7 @@ Check out our example recipes for [unit testing](/examples/recipes) and
 
 :::
 
-Explicit assertions are great when you want to:
+Mocha assertions are great when you want to:
 
 - Perform custom logic prior to making the assertion.
 - Make multiple assertions against the same subject.
@@ -1343,7 +1324,7 @@ cy.get('p').should(($p) => {
 
 When using a callback function with [`.should()`](/api/commands/should), be sure
 that the entire function can be executed multiple times without side effects.
-Cypress applies its [retry](/guides/core-concepts/retry-ability) logic to these
+Cypress applies its [retry logic](/guides/core-concepts/retry-ability) to these
 functions: if there's a failure, it will repeatedly rerun the assertions until
 the timeout is reached. That means your code should be retry-safe. The technical
 term for this means your code must be **idempotent**.
