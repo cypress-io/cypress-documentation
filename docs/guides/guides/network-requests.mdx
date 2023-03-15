@@ -544,8 +544,8 @@ like:
 
 :::info
 
-**Note:** Logging can be disabled by passing `{ log: false }` with the
-static response.
+**Note:** Logging can be disabled by passing `{ log: false }` with the static
+response.
 
 ```js
 cy.intercept('/users*', { body: ['user1', 'user2'], log: false }).as('getUsers')
