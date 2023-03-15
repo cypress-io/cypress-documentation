@@ -551,6 +551,10 @@ static response.
 cy.intercept('/users*', { body: ['user1', 'user2'], log: false }).as('getUsers')
 ```
 
+To disable logs for all xhr/fetch requests, checkout our
+[example](/api/commands/intercept#Disabling-logs-for-a-request) on the intercept
+api page.
+
 :::
 
 The circular indicator on the left side indicates if the request went to the
