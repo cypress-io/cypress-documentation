@@ -587,6 +587,13 @@
           "badge": "community"
         },
         {
+          "name": "cypress-mock-websocket-plugin",
+          "description": "Mock websocket requests and responses in a Cypress intercept style.",
+          "link": "https://github.com/coco1979ka/cypress-websocket-plugin",
+          "keywords": ["commands", "websocket", "mock"],
+          "badge": "community"
+        },
+        {
           "name": "@bahmutov/cy-api",
           "description": "Cypress custom command \"cy.api\" for HTTP API testing with server logs.",
           "link": "https://github.com/bahmutov/cy-api",
