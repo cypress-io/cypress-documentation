@@ -479,8 +479,6 @@ arguments, JSON files and other means.
 Yes.
 [You can override this with `userAgent` in your Cypress configuration](/guides/references/configuration#Browser).
 
-_Note_
-
 ## <Icon name="angle-right" /> Can I block traffic going to specific domains? I want to block Google Analytics or other providers.
 
 Yes.
@@ -1103,23 +1101,23 @@ more information, please check
 
 ## <Icon name="angle-right" /> Can I use Cucumber to write tests?
 
-Yes, you can. You can write feature files containing Cucumber scenarios and then
-use Cypress to write your step definitions in your spec files. A special
-preprocessor then converts the scenarios and step definitions into "regular"
-JavaScript Cypress tests.
+Yes, you can.
 
-- try using the
-  [Cucumber preprocessor](https://github.com/badeball/cypress-cucumber-preprocessor)
-  and search our [Plugins](/plugins) page for additional helper plugins
-
-## <Icon name="angle-right" /> Should I use Cucumber to write tests?
-
-Cypress does not currently have an official stance on Cucumber as each use case
-is unique and based on the needs of the user.
+While Cypress does not provide official support for Cucumber, you can use
+Cucumber through a
+[community plugin](https://github.com/badeball/cypress-cucumber-preprocessor).
+Using the plugin adds additional complexity to your testing workflow, so ensure
+your team understands the benefits and drawbacks before adopting Cucumber.
 
 - read
   [Cypress Super-patterns: How to elevate the quality of your test suite](https://dev.to/wescopeland/cypress-super-patterns-how-to-elevate-the-quality-of-your-test-suite-1lcf)
-  for best practices when writing Cucumber tests
+  for best practices when writing Cucumber tests and getting started with this
+  [step-by-step blog post](https://testersdock.com/cypress-cucumber-bdd/) that
+  includes instructions for v9 and v10.
+
+If your team is looking to do behavior-driven development, you might be
+interested in these articles that discuss using BDD's given/when/then syntax
+directly in Cypress instead of using Cucumber's scenarios:
 
 - read
   [Using the keywords Given/When/Then with Cypress but without Cucumber](https://dev.to/walmyrlimaesilv/using-the-keywords-given-when-then-with-cypress-but-without-cucumber-118p)
