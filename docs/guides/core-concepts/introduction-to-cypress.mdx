@@ -969,8 +969,8 @@ You might be wondering:
 Cypress does not support this type of conditional control flow because it leads
 to non-deterministic tests - different runs may behave differently, which makes
 them less consistent and useful for verifying your application's correctness. In
-general, there are only a handful of very specific situations where you can or should
-create control flow using Cypress commands.
+general, there are only a handful of very specific situations where you can or
+should create control flow using Cypress commands.
 
 With that said, as long as you are aware of the potential pitfalls with control
 flow, it is possible to do this in Cypress! You can read all about how to do
@@ -1010,7 +1010,9 @@ cy.get('button').should('have.class', 'active')
 ```
 
 This above test will pass even if the `.active` class is applied to the button
-asynchronously, after an indeterminate period of time or even if the button is removed from the DOM entirely for a while (replaced with a waiting spinner, for example).
+asynchronously, after an indeterminate period of time or even if the button is
+removed from the DOM entirely for a while (replaced with a waiting spinner, for
+example).
 
 ```javascript
 // even though we are adding the class
@@ -1083,9 +1085,8 @@ With Cypress, you don't have to write explicit assertions to have a useful test.
 Without a single `expect()` or `.should()`, a few lines of Cypress can ensure
 thousands of lines of code are working properly across the client and server.
 
-This is because many commands have a built in
-Implicit Assertions which offer you a high level of
-confidence that your application is working as expected.
+This is because many commands have a built in Implicit Assertions which offer
+you a high level of confidence that your application is working as expected.
 
 :::
 
@@ -1252,8 +1253,9 @@ subject quickly.
 
 ### Mocha Assertions
 
-Using `expect` allows you to assert on any javascript object, not just the current subject. This is probably how you're used to seeing assertions written in unit
-tests:
+Using `expect` allows you to assert on any javascript object, not just the
+current subject. This is probably how you're used to seeing assertions written
+in unit tests:
 
 ```js
 // the explicit subject here is the boolean: true

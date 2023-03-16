@@ -33,10 +33,12 @@ While all methods you chain off of `cy` in your Cypress tests are commands, it's
 important to understand the different rules by which they operate.
 
 - **Queries** link up, retrying the entire chain together.
-- ** Assertions** are a type of query that's specially displayed in the command log.
+- ** Assertions** are a type of query that's specially displayed in the command
+  log.
 - **Non-queries** only execute once.
 
-For example, there are 7 queries (2 of them assertions) and 2 non-queries in the test below.
+For example, there are 7 queries (2 of them assertions) and 2 non-queries in the
+test below.
 
 ```javascript
 it('creates an item', () => {
@@ -160,9 +162,9 @@ it('creates two items', () => {
 
 Because the first expect statement
 (`expect($li.get(0).textContent, 'first item').to.equal('todo a')`) fails, the
-second statement is never reached. The `.and()` command fails after timing out, and the
-Command Log correctly shows that `.get()` and `.should()` passed, but the "first
-item" assertion failed.
+second statement is never reached. The `.and()` command fails after timing out,
+and the Command Log correctly shows that `.get()` and `.should()` passed, but
+the "first item" assertion failed.
 
 <DocsImage
   src="/img/guides/retry-ability/second-assertion-fails.gif"
@@ -186,8 +188,8 @@ cy.get('.todo-list li').should('have.length', 2).eq(3)
 />
 
 Only queries can be retried, but most other commands still have built-in
-_waiting_ and assertions. For example, as described in the "Assertions" section of
-[.click()](/api/commands/click), the `click()` action command waits to click
+_waiting_ and assertions. For example, as described in the "Assertions" section
+of [.click()](/api/commands/click), the `click()` action command waits to click
 until the element becomes
 [actionable](/guides/core-concepts/interacting-with-elements#Actionability),
 including re-running the query chain leading up to it in case the page updates
@@ -200,8 +202,9 @@ Cypress tries to act like a human user would using the browser.
 - Is the element behind another element?
 - Does the element have the `disabled` attribute?
 
-[Action commands](/guides/core-concepts/interacting-with-elements) - such as `.click()` - automatically wait until multiple
-built-in assertions like these pass, and then it will attempt the action once.
+[Action commands](/guides/core-concepts/interacting-with-elements) - such as
+`.click()` - automatically wait until multiple built-in assertions like these
+pass, and then it will attempt the action once.
 
 ## Timeouts
 
