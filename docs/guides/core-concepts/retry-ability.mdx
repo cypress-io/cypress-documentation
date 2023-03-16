@@ -169,7 +169,7 @@ item" assertion failed.
   alt="Retrying multiple assertions"
 />
 
-## Built-in assertions
+## Implicit Assertions
 
 Often a Cypress command has built-in assertions that will cause the command to
 be retried until they pass. For example, the [`.eq()`](/api/commands/eq) query
@@ -186,7 +186,7 @@ cy.get('.todo-list li').should('have.length', 2).eq(3)
 />
 
 Only queries can be retried, but most other commands still have built-in
-assertions. For example, as described in the "Assertions" section of
+_waiting_ and assertions. For example, as described in the "Assertions" section of
 [.click()](/api/commands/click), the `click()` action command waits to click
 until the element becomes
 [actionable](/guides/core-concepts/interacting-with-elements#Actionability),
@@ -200,9 +200,8 @@ Cypress tries to act like a human user would using the browser.
 - Is the element behind another element?
 - Does the element have the `disabled` attribute?
 
-Action commands - such as `.click()` - automatically wait until multiple
-built-in assertions like these pass, and then it will attempt to click just
-once.
+[Action commands](/guides/core-concepts/interacting-with-elements) - such as `.click()` - automatically wait until multiple
+built-in assertions like these pass, and then it will attempt the action once.
 
 ## Timeouts
 
