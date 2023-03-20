@@ -35,17 +35,7 @@ command's documentation.
 To run a command, you'll need to prefix each command in order to properly locate
 the cypress executable.
 
-```
-$(npm bin)/cypress run
-```
-
-...or...
-
-```
-./node_modules/.bin/cypress run
-```
-
-...or... (requires npm@5.2.0 or greater)
+(requires npm@5.2.0 or greater)
 
 ```
 npx cypress run
@@ -55,6 +45,18 @@ npx cypress run
 
 ```
 yarn cypress run
+```
+
+...or...
+
+```
+$(npm bin)/cypress run
+```
+
+...or...
+
+```
+./node_modules/.bin/cypress run
 ```
 
 You may find it easier to add the cypress command to the `scripts` object in
