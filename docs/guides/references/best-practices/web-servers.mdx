@@ -1,0 +1,51 @@
+---
+title: Web Servers
+---
+
+:::danger
+
+&#8239;<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Trying
+to start a web server from within Cypress scripts with
+[`cy.exec()`](/api/commands/exec) or [`cy.task()`](/api/commands/task).
+
+:::
+
+:::tip
+
+&#8239;<Icon name="check-circle" color="green" /> **Best Practice:** Start a web
+server prior to running Cypress.
+
+:::
+
+We do NOT recommend trying to start your back end web server from within
+Cypress.
+
+Any command run by [cy.exec()](/api/commands/exec) or
+[cy.task()](/api/commands/task) has to exit eventually. Otherwise, Cypress will
+not continue running any other commands.
+
+Trying to start a web server from [cy.exec()](/api/commands/exec) or
+[cy.task()](/api/commands/task) causes all kinds of problems because:
+
+- You have to background the process
+- You lose access to it via terminal
+- You don't have access to its `stdout` or logs
+- Every time your tests run, you'd have to work out the complexity around
+  starting an already running web server.
+- You would likely encounter constant port conflicts
+
+**Why can't I shut down the process in an `after` hook?**
+
+Because there is no guarantee that code running in an `after` will always run.
+
+While working in the Cypress Test Runner you can always restart / refresh while
+in the middle of a test. When that happens, code in an `after` won't execute.
+
+**What should I do then?**
+
+Start your web server before running Cypress and kill it after it completes.
+
+Are you trying to run in CI?
+
+We have
+[examples showing you how to start and stop your web server](/guides/continuous-integration/introduction#Boot-your-server).
