@@ -17,8 +17,9 @@ sidebar_position: 35
 
 :::tip
 
-<Icon name="check-circle" color="green"></Icon> **Best Practice:** Tests should
-always be able to be run independently from one another **and still pass**.
+&#8239;<Icon name="check-circle" color="green"></Icon> **Best Practice:** Tests
+should always be able to be run independently from one another **and still
+pass**.
 
 :::
 
@@ -48,7 +49,7 @@ consistently when ran. This behavior is described as `testIsolation`.
 
 The test isolation is a global configuration and can be overridden for
 end-to-end testing at the `describe` level with the
-[`testIsolation`](/guides/references/configuration#Global) option.
+[`testIsolation`](/guides/references/configuration#e2e) option.
 
 ## Test Isolation in End-to-End Testing
 
