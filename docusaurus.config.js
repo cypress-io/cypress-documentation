@@ -86,7 +86,7 @@ const config = {
             activeBasePath: 'guides',
           },
           {
-            to: '/api/commands/and',
+            to: '/api/table-of-contents',
             label: 'API',
             position: 'left',
             activeBasePath: 'api',
