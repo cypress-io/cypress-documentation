@@ -33,6 +33,20 @@ cd my-awesome-app
 npm install
 ```
 
+:::caution
+
+We are currently investigating an issue with Vite 4.2 and Cypress. We recommend
+manually installing Vite 4.1 in the project until the issue is resolved.
+
+```bash
+npm i vite@4.1
+```
+
+View the status of
+[issue 26138 here](https://github.com/cypress-io/cypress/issues/26138)
+
+:::
+
 > You can also download a Git repo with a fully working copy of this tutorial
 > [here](https://github.com/cypress-io/component-testing-quickstart-apps/tree/main/react).
 
@@ -61,9 +75,7 @@ the configuration wizard.
 <DocsImage
   src="/img/guides/component-testing/select-test-type.jpg"
   caption="Choose Component Testing"
->
-  {' '}
-</DocsImage>
+/>
 
 The Project Setup screen automatically detects your framework and bundler,
 which, in our case, is React and Vite. Click "Next Step" to continue.
@@ -71,9 +83,7 @@ which, in our case, is React and Vite. Click "Next Step" to continue.
 <DocsImage
   src="/img/guides/component-testing/project-setup-react.jpg"
   caption="React and Vite are automatically detected"
->
-  {' '}
-</DocsImage>
+/>
 
 The next screen checks that all the required dependencies are installed. All the
 items should have green checkboxes on them, indicating everything is good, so
@@ -82,9 +92,7 @@ click "Continue".
 <DocsImage
   src="/img/guides/component-testing/dependency-detection-react.jpg"
   caption="All necessary dependencies are installed"
->
-  {' '}
-</DocsImage>
+/>
 
 Next, Cypress generates all the necessary configuration files and gives you a
 list of all the changes it made to your project. Click "Continue".
@@ -92,7 +100,7 @@ list of all the changes it made to your project. Click "Continue".
 <DocsImage
   src="/img/guides/component-testing/scaffolded-files.jpg"
   caption="The Cypress launchpad will scaffold all of these files for you"
-></DocsImage>
+/>
 
 After setting up component testing, you will be at the browser selection screen.
 
@@ -102,15 +110,13 @@ to open the Cypress test runner.
 <DocsImage
   src="/img/guides/component-testing/select-browser.jpg"
   caption="Choose your browser"
->
-  {' '}
-</DocsImage>
+/>
 
 When the test runner appears, it won't find any specs because we haven't created
 any yet. However, we don't currently have a component, either. Let's change
 that!
 
-<DocsImage src="/img/guides/component-testing/create-your-first-spec-cfc.jpg"></DocsImage>
+<DocsImage src="/img/guides/component-testing/create-your-first-spec-cfc.jpg" />
 
 ### Creating a Component
 
@@ -174,7 +180,7 @@ A modal will pop up listing all the component files that are found in your app
 files from this list). Expand the row for **Stepper.jsx** and select the
 **Stepper** component:
 
-<DocsImage src="/img/guides/component-testing/create-from-component-react.jpg"></DocsImage>
+<DocsImage src="/img/guides/component-testing/create-from-component-react.jpg" />
 
 A spec file was created at **src/component/Stepper.cy.jsx**:
 
@@ -216,9 +222,7 @@ Now it's time to see the test in action.
 Switch back to the browser you opened for testing, and you should now see the
 **Stepper.cy.jsx** file in the spec list. Click it to see the spec execute.
 
-<DocsImage src="/img/guides/component-testing/first-test-run-react.jpg">
-  {' '}
-</DocsImage>
+<DocsImage src="/img/guides/component-testing/first-test-run-react.jpg" />
 
 Our first test verifies the component can mount in it's default state without
 any errors. If there is a runtime error during test execution, the test will

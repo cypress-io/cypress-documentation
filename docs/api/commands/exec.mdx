@@ -193,9 +193,10 @@ describe('has data available from database', { execTimeout: 90000 }, () => {
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-- `cy.exec()` requires being chained off of `cy`.</li><li>`cy.exec()` requires
-  the executed system command to eventually exit.</li><li>`cy.exec()` requires
-  that the exit code be `0` when `failOnNonZeroExit` is `true`.
+- `cy.exec()` requires being chained off of `cy`.
+- `cy.exec()` requires the executed system command to eventually exit.
+- `cy.exec()` requires that the exit code be `0` when `failOnNonZeroExit` is
+  `true`.
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
@@ -220,10 +221,7 @@ if (Cypress.platform === 'win32') {
 
 The command above will display in the Command Log as:
 
-<DocsImage
-  src="/img/api/exec/exec-cat-in-shell.png"
-  alt="Command Log exec"
-></DocsImage>
+<DocsImage src="/img/api/exec/exec-cat-in-shell.png" alt="Command Log exec" />
 
 When clicking on the `exec` command within the command log, the console outputs
 the following:
@@ -231,7 +229,7 @@ the following:
 <DocsImage
   src="/img/api/exec/console-shows-code-shell-stderr-and-stdout-for-exec.png"
   alt="console.log exec"
-></DocsImage>
+/>
 
 ## See also
 

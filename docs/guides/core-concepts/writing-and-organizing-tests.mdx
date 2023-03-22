@@ -244,7 +244,7 @@ module API option, if specified)
 <DocsImage
   src="/img/dashboard/videos-of-recorded-test-run.png"
   alt="Video of test runs"
-></DocsImage>
+/>
 
 Instead of administering assets yourself, you can
 [save them to the cloud with Cypress Cloud](/guides/cloud/runs#Run-details).
@@ -306,7 +306,7 @@ matching `supportFile` files will result in an error when Cypress loads.
 :::info
 
 <strong>
-  <Icon name="cogs"></Icon> supportFile per testing type
+  <Icon name="cogs" /> supportFile per testing type
 </strong>
 
 Depending on which [testing type](/guides/core-concepts/testing-types) you are
@@ -347,9 +347,9 @@ beforeEach(() => {
 ```
 
 <DocsImage
-  src="/img/guides/core-concepts/v10/global-hooks.png"
+  src="/img/guides/core-concepts/global-hooks.png"
   alt="Global hooks for tests"
-></DocsImage>
+/>
 
 :::info
 
@@ -788,24 +788,26 @@ has multiple test files, but below we run the "new-transaction.spec.ts" test
 file by clicking on it.
 
 <DocsImage
-  src="/img/guides/core-concepts/v10/run-single-spec.gif"
+  src="/img/guides/core-concepts/run-single-spec.gif"
   alt="Running a single spec"
-></DocsImage>
+/>
 
 ## Test statuses
 
-After the Cypress spec completes every test has one of 4 statuses: **passed**,
-**failed**, **pending**, or **skipped**.
+After the Cypress spec completes every test has one of four statuses:
+**passed**, **failed**, **pending**, or **skipped**. The behavior of these
+statuses are inherited from the Mocha, since this is the test runner leveraged
+by Cypress.
 
 ### Passed
 
-Passed tests have successfully completed all their commands without failing any
-assertions. The test screenshot below shows a passed test:
+Passed tests have successfully completed all their hooks and commands without
+failing any assertions. The test screenshot below shows a passed test:
 
 <DocsImage
-  src="/img/guides/core-concepts/v10/todo-mvc-passing-test.png"
+  src="/img/guides/core-concepts/todo-mvc-passing-test.png"
   alt="Cypress with a single passed test"
-></DocsImage>
+/>
 
 Note that a test can pass after several
 [test retries](/guides/guides/test-retries). In that case the Command Log shows
@@ -813,13 +815,13 @@ some failed attempts, but ultimately the entire test finishes successfully.
 
 ### Failed
 
-Good news - the failed test has found a problem. Could be much worse - it could
-be a user hitting this bug!
+Good news - the failed hook or test has found a problem. Could be much worse -
+it could be a user hitting this bug!
 
 <DocsImage
-  src="/img/guides/core-concepts/v10/todo-mvc-failing-test.png"
+  src="/img/guides/core-concepts/todo-mvc-failing-test.png"
   alt="Cypress with a single failed test"
-></DocsImage>
+/>
 
 After a test fails, the screenshots and videos can help find the problem so it
 can be fixed.
@@ -827,7 +829,11 @@ can be fixed.
 ### Pending
 
 You can write _placeholder_ tests in several ways as shown below, and Cypress
-knows NOT to run them. Cypress marks all the tests below as _pending_.
+knows NOT to run them. Additionally, you can conditionally specify which
+browser(s) and tests should run, including if the test should not run for the
+browser currently being tested, it is marked as _pending_.
+
+Cypress marks all the tests below as _pending_.
 
 ```js
 describe('TodoMVC', () => {
@@ -845,16 +851,21 @@ describe('TodoMVC', () => {
   xit('another test', () => {
     expect(false).to.true
   })
+
+  it('only test chrome', { browser: 'chrome' }, () => {
+    cy.visit('/')
+    cy.contains('To Do')
+  })
 })
 ```
 
-All 3 tests above are marked _pending_ when Cypress finishes running the spec
+All four tests above are marked _pending_ when Cypress finishes running the spec
 file.
 
 <DocsImage
-  src="/img/guides/core-concepts/v10/todo-mvc-pending-tests.png"
-  alt="Cypress with three pending test"
-></DocsImage>
+  src="/img/guides/core-concepts/todo-mvc-pending-tests.png"
+  alt="Cypress with four pending test"
+/>
 
 So remember - if you (the test writer) knowingly skip a test using one of the
 above three ways, Cypress counts it as a _pending_ test.
@@ -891,9 +902,9 @@ describe('TodoMVC', () => {
 If the `beforeEach` hook completes and both tests finish, two tests are passing.
 
 <DocsImage
-  src="/img/guides/core-concepts/v10/todo-mvc-2-tests-passing.png"
+  src="/img/guides/core-concepts/todo-mvc-2-tests-passing.png"
   alt="Cypress showing two passing tests"
-></DocsImage>
+/>
 
 But what happens if a command inside the `beforeEach` hook fails? For example,
 let's pretend we want to visit a non-existent page `/does-not-exist` instead of
@@ -912,25 +923,23 @@ the same way! So Cypress _skips_ the remaining tests in that block, because they
 would also fail due to the `beforeEach` hook failure.
 
 <DocsImage
-  src="/img/guides/core-concepts/v10/todo-mvc-failed-and-skipped-tests.png"
+  src="/img/guides/core-concepts/todo-mvc-failed-and-skipped-tests.png"
   alt="Cypress showing one failed and one skipped test"
-></DocsImage>
+/>
 
 If we collapse the test commands, we can see the empty box marking the skipped
 test "adds 2 todos".
 
 <DocsImage
-  src="/img/guides/core-concepts/v10/todo-mvc-skipped-test.png"
+  src="/img/guides/core-concepts/todo-mvc-skipped-test.png"
   alt="Cypress showing one skipped test"
-></DocsImage>
+/>
 
 The tests that were meant to be executed but were skipped due to some run-time
-problem are marked "skipped" by Cypress.
+problem are marked "skipped" by Cypress. This is typically observed when a
+`before`, `beforeEach` or `afterEach` hook fails.
 
 **Tip:** read the blog post
-[Cypress Test Statuses](https://glebbahmutov.com/blog/cypress-test-statuses/)
-for more examples explaining the reasoning behind these test statuses. Read the
-blog post
 [Writing Test Progress](https://glebbahmutov.com/blog/writing-tests-progress/)
 to learn how to use the pending tests to tracking the test strategy
 implementation.

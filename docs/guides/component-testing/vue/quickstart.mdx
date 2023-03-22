@@ -33,6 +33,20 @@ cd my-awesome-app
 npm install
 ```
 
+:::caution
+
+We are currently investigating an issue with Vite 4.2 and Cypress. We recommend
+manually installing Vite 4.1 in the project until the issue is resolved.
+
+```bash
+npm i vite@4.1
+```
+
+View the status of
+[issue 26138 here](https://github.com/cypress-io/cypress/issues/26138)
+
+:::
+
 > You can also download a Git repo with a fully working copy of this tutorial
 > [here](https://github.com/cypress-io/component-testing-quickstart-apps/tree/main/vue).
 
@@ -61,9 +75,7 @@ the configuration wizard.
 <DocsImage
   src="/img/guides/component-testing/select-test-type.jpg"
   caption="Choose Component Testing"
->
-  {' '}
-</DocsImage>
+/>
 
 The Project Setup screen automatically detects your framework and bundler,
 which, in our case, is Vue and Vite. Click "Next Step" to continue.
@@ -71,9 +83,7 @@ which, in our case, is Vue and Vite. Click "Next Step" to continue.
 <DocsImage
   src="/img/guides/component-testing/project-setup-vue.jpg"
   caption="Vue and Vite are automatically detected"
->
-  {' '}
-</DocsImage>
+/>
 
 The next screen checks that all the required dependencies are installed. All the
 items should have green checkboxes on them, indicating everything is good, so
@@ -82,9 +92,7 @@ click "Continue".
 <DocsImage
   src="/img/guides/component-testing/dependency-detection-vue.jpg"
   caption="All necessary dependencies are installed"
->
-  {' '}
-</DocsImage>
+/>
 
 Next, Cypress generates all the necessary configuration files and gives you a
 list of all the changes it made to your project. Click "Continue".
@@ -92,7 +100,7 @@ list of all the changes it made to your project. Click "Continue".
 <DocsImage
   src="/img/guides/component-testing/scaffolded-files.jpg"
   caption="The Cypress launchpad will scaffold all of these files for you"
-></DocsImage>
+/>
 
 After setting up component testing, you will be at the browser selection screen.
 
@@ -102,15 +110,13 @@ to open the Cypress test runner.
 <DocsImage
   src="/img/guides/component-testing/select-browser.jpg"
   caption="Choose your browser"
->
-  {' '}
-</DocsImage>
+/>
 
 When the test runner appears, it won't find any specs because we haven't created
 any yet. However, we don't currently have a component, either. Let's change
 that!
 
-<DocsImage src="/img/guides/component-testing/create-your-first-spec-cfc.jpg"></DocsImage>
+<DocsImage src="/img/guides/component-testing/create-your-first-spec-cfc.jpg" />
 
 ### Creating a Component
 
@@ -169,7 +175,7 @@ spec" screen, click "Create from component".
 A modal will pop up listing all the components that are found in your app.
 Select the **Stepper.vue** component:
 
-<DocsImage src="/img/guides/component-testing/create-from-component-vue.jpg"></DocsImage>
+<DocsImage src="/img/guides/component-testing/create-from-component-vue.jpg" />
 
 A spec file was created at **src/component/Stepper.cy.js**:
 
@@ -213,9 +219,7 @@ Now it's time to see the test in action.
 Switch back to the browser you opened for testing, on click on the "Okay, run
 the spec" button to execute it.
 
-<DocsImage src="/img/guides/component-testing/first-test-run-vue.jpg">
-  {' '}
-</DocsImage>
+<DocsImage src="/img/guides/component-testing/first-test-run-vue.jpg" />
 
 Our first test verifies the component can mount in it's default state without
 any errors. If there is a runtime error during test execution, the test will
@@ -380,7 +384,7 @@ while the event is defined as `change`, the spy is passed for the prop
 The next line is a bit different. We've seen how we can use the `cy.get()`
 method to select elements, but we can also use it to grab any aliases we've set
 up previously. We use `cy.get()` to grab the alias to the spy (by prepending an
-ampersand to the alias name). We assert that the method was called with the
+at sign to the alias name). We assert that the method was called with the
 expected value.
 
 With that, the `Stepper` component is well tested. Nice job!

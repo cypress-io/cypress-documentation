@@ -6,6 +6,7 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500;700&display=swap');
+@import './announcement-bar.scss';
 @import './markdown.scss';
 @import './sidebar.scss';
 @import './navbar.scss';
@@ -30,6 +31,8 @@
   --cypress-color-gray-900: #2e3247;
   --cypress-color-gray-1000: #1b1e2e;
   --cypress-color-gray-1100: #131521;
+  --cypress-color-indigo-50: #f0f1ff;
+  --cypress-color-indigo-100: #daddfe;
   --cypress-color-indigo-200: #c5c9fd;
   --cypress-color-indigo-300: #9aa2fc;
   --cypress-color-indigo-400: #6470f3;
@@ -192,7 +195,7 @@ div[class^='announcementBar'] div[class^='content'] {
 }
 
 div[class^='announcementBar'] .close {
-  margin-right: 0.5rem;
+  margin-right: 1rem;
 }
 
 /* Font Awesome Icons */
@@ -226,7 +229,7 @@ div[class^='announcementBar'] .close {
 }
 
 .mediaTitleContainer {
-  height: 80px;
+  height: 75px;
 
   h3 {
     font-size: 1.25rem;
@@ -308,7 +311,7 @@ div[class^='codeBlockTitle'] {
 
 /* adding this back after original Docusaurus
    rules overwritten by .embedContainer
-   TODO: fix what casues this */
+   TODO: fix what causes this */
 [class^='mainContentHeader'] {
   border-bottom: 1px solid var(--ifm-toc-border-color);
   margin-bottom: 20px;
@@ -316,5 +319,5 @@ div[class^='codeBlockTitle'] {
 
 /* add some more spacing for main doc container */
 [class^='docItemContainer'] {
-  margin: 0 8px;
+  margin: 0 10px;
 }

@@ -16,21 +16,20 @@ sidebar_position: 10
 
 :::tip
 
+<!-- // prettier-ignore -->
+
 <strong>Important!</strong>
 
 **This is the single most important guide** for understanding how to test with
 Cypress. Read it. Understand it. Ask questions about it so that we can improve
 it.
 
-After you're done, we suggest watching some of our
-
-<Icon
+After you're done, we suggest watching some of our <Icon
   name="video"
   inline="true"
   url="/examples/tutorials"
   callout="Tutorial Videos"
-/>
-.
+/>.
 
 :::
 
@@ -449,9 +448,7 @@ is in order.
 
 :::info
 
-<strong class="alert-header">
-  Don't continue a chain after acting on the DOM
-</strong>
+<strong>Don't continue a chain after acting on the DOM</strong>
 
 While it's possible in Cypress to act on the DOM and then continue chaining,
 this is usually unsafe, and can lead to stale elements. See the
@@ -739,9 +736,9 @@ Using JavaScript loop commands like `while` can have unexpected effects. Let's
 say our application shows a random number on load.
 
 <DocsImage
-  src="/img/guides/core-concepts/v10/reload-page.gif"
+  src="/img/guides/core-concepts/reload-page.gif"
   alt="Manually reloading the browser page until the number 7 appears"
-></DocsImage>
+/>
 
 We want the test to stop when it finds the number 7. If any other number is
 displayed the test reloads the page and checks again.
@@ -817,9 +814,9 @@ checkAndReload()
 The test runs and correctly finishes.
 
 <DocsImage
-  src="/img/guides/core-concepts/v10/lucky-7.gif"
+  src="/img/guides/core-concepts/lucky-7.gif"
   alt="Test reloads the page until the number 7 appears"
-></DocsImage>
+/>
 
 You can see a short video going through this example at
 
@@ -838,7 +835,7 @@ commands that were enqueued using the `cy.*` command chains.
 it('hides the thing when it is clicked', () => {
   -{cy.visit('/my/resource/path')::cy.mount(<MyComponent />)}- // 1.
 
-    cy.get('.hides-when-clicked') // 2
+  cy.get('.hides-when-clicked') // 2
     .should('be.visible') // 3
     .click() // 4
 

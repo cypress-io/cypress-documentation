@@ -16,11 +16,7 @@ export default function PluginsList() {
           key={plugin.name}
           data-cy={`plugin-${plugin.name}`}
         >
-          <h2 id={plugin.name}>
-            <a href={`#${plugin.name}`}>
-              {plugin.name}
-            </a>
-          </h2>
+          <h2 id={plugin.name}>{plugin.name}</h2>
 
           {plugin.description && (
             <p
@@ -59,7 +55,9 @@ export default function PluginsList() {
                   )}
                 </div>
 
-                <p>{plugin.description}</p>
+                <p
+                  dangerouslySetInnerHTML={createMarkup(plugin.description)}
+                ></p>
                 <div>
                   {plugin.keywords?.map((keyword, index) => (
                     <span key={index} className={`${s.keyword}`}>

@@ -137,6 +137,13 @@ Each plugin submitted to the plugins list should have the following:
 2. CI pipeline
 3. Compatibility with at least the latest major version of Cypress
 
+Plugins are listed in in the following order to for users:
+
+- official
+- verified
+- community
+- experimental
+
 ### Adding Pages
 
 To add a page, such as a new guide or API documentation check out how to do so
@@ -161,10 +168,10 @@ go away.
 
 ### Writing the Changelog
 
-When adding to the Changelog, create a new file in
-[`/_changelogs`](/docs/guides/references/_changelogs) named as the version
-number. Be sure to follow the category structure defined below (in this order).
-Each bullet point in the list should _always_ be associated to an issue on the
+When adding to the [Changelog](/docs/guides/references/changelog.mdx), create a
+new section with the title as the version number on top of the previous section.
+Be sure to follow the category structure defined below (in this order). Each
+bullet point in the list should _always_ be associated to an issue on the
 [`cypress`](https://github.com/cypress-io/cypress) repo and link to that issue
 (except for Documentation changes).
 

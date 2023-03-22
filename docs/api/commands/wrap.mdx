@@ -109,7 +109,7 @@ it('should wait for promises to resolve', () => {
 <DocsImage
   src="/img/api/wrap/cypress-wrapped-promise-waits-to-resolve.gif"
   alt="Wrap of promises"
-></DocsImage>
+/>
 
 #### Application example <E2EOnlyBadge />
 
@@ -197,10 +197,9 @@ cy.get('some-submit-button')
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
 - `cy.wrap()`, when its argument is a promise, will automatically wait until the
-  promise resolves. If the promise is rejected, `cy.wrap()` will fail the
-  test.</li><li>`cy.wrap()` will automatically
-  [retry](/guides/core-concepts/retry-ability) until all chained assertions have
-  passed
+  promise resolves. If the promise is rejected, `cy.wrap()` will fail the test.
+- `cy.wrap()` will automatically [retry](/guides/core-concepts/retry-ability)
+  until all chained assertions have passed.
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
@@ -219,7 +218,7 @@ The commands above will display in the Command Log as:
 <DocsImage
   src="/img/api/wrap/wrapped-object-in-cypress-tests.png"
   alt="Command Log wrap"
-></DocsImage>
+/>
 
 When clicking on the `wrap` command within the command log, the console outputs
 the following:
@@ -227,7 +226,7 @@ the following:
 <DocsImage
   src="/img/api/wrap/console-log-only-shows-yield-of-wrap.png"
   alt="Console Log wrap"
-></DocsImage>
+/>
 
 ## History
 

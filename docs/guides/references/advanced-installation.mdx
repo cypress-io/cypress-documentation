@@ -4,16 +4,17 @@ title: Advanced Installation
 
 ## Environment variables
 
-| Name                             | Description                                                                                   |
-| -------------------------------- | --------------------------------------------------------------------------------------------- |
-| `CYPRESS_INSTALL_BINARY`         | [Destination of Cypress binary that's downloaded and installed](#Install-binary)              |
-| `CYPRESS_DOWNLOAD_MIRROR`        | [Downloads the Cypress binary through a mirror server](#Mirroring)                            |
-| `CYPRESS_DOWNLOAD_PATH_TEMPLATE` | [Allows generating a custom URL to download the Cypress binary from](#Download-path-template) |
-| `CYPRESS_CACHE_FOLDER`           | [Changes the Cypress binary cache location](#Binary-cache)                                    |
-| `CYPRESS_RUN_BINARY`             | [Location of Cypress binary at run-time](#Run-binary)                                         |
-| `CYPRESS_VERIFY_TIMEOUT`         | Overrides the timeout duration for the `verify` command. The default value is 30000.          |
-| ~~CYPRESS_SKIP_BINARY_INSTALL~~  | <Badge type="danger">removed</Badge> use `CYPRESS_INSTALL_BINARY=0` instead                   |
-| ~~CYPRESS_BINARY_VERSION~~       | <Badge type="danger">removed</Badge> use `CYPRESS_INSTALL_BINARY` instead                     |
+| Name                              | Description                                                                                    |
+| --------------------------------- | ---------------------------------------------------------------------------------------------- |
+| `CYPRESS_INSTALL_BINARY`          | [Destination of Cypress binary that's downloaded and installed](#Install-binary)               |
+| `CYPRESS_CONNECT_RETRY_THRESHOLD` | Overrides the maximum number of retries when connecting to a browser. The default value is 62. |
+| `CYPRESS_DOWNLOAD_MIRROR`         | [Downloads the Cypress binary through a mirror server](#Mirroring)                             |
+| `CYPRESS_DOWNLOAD_PATH_TEMPLATE`  | [Allows generating a custom URL to download the Cypress binary from](#Download-path-template)  |
+| `CYPRESS_CACHE_FOLDER`            | [Changes the Cypress binary cache location](#Binary-cache)                                     |
+| `CYPRESS_RUN_BINARY`              | [Location of Cypress binary at run-time](#Run-binary)                                          |
+| `CYPRESS_VERIFY_TIMEOUT`          | Overrides the timeout duration for the `verify` command. The default value is 30000.           |
+| ~~CYPRESS_SKIP_BINARY_INSTALL~~   | <Badge type="danger">removed</Badge> use `CYPRESS_INSTALL_BINARY=0` instead                    |
+| ~~CYPRESS_BINARY_VERSION~~        | <Badge type="danger">removed</Badge> use `CYPRESS_INSTALL_BINARY` instead                      |
 
 ## Install binary
 
@@ -299,7 +300,7 @@ functionality that has not yet been released, here is how:
    <DocsImage
      src="/img/guides/install/develop-commit-comment-link.png"
      alt="Example of a commit for which pre-releases are available. Comment link highlighted in red."
-   ></DocsImage>
+   />
 3. You should see several comments from the `cypress-bot` user with instructions
    for installing Cypress pre-releases. Pick the one that corresponds to your
    operating system and CPU architecture, and follow the instructions there to
@@ -327,7 +328,7 @@ address, which changes often.
 <DocsImage
   src="/img/guides/install/vcxsrv-extra-settings.png"
   alt="Disable access control in vcxsrv"
-></DocsImage>
+/>
 
 In your `.bashrc` (or equivalent such as `.zshrc`) set the `DISPLAY` environment
 variable.
@@ -374,7 +375,7 @@ Rules > New Rule.
 <DocsImage
   src="/img/guides/install/windows-firewall-disable-vcxsrv.png"
   alt="Add rule to allow connections for vcxsrv"
-></DocsImage>
+/>
 
 Select Program and click on next. On the This program path, browse and select
 path to VcxSrv. On the next page select allow the connection and click next. On
@@ -383,7 +384,7 @@ the next page, select all three options (Domain, Private, Public).
 <DocsImage
   src="/img/guides/install/rule-application-selection.png"
   alt="Select inbound rule application cases for vcxsrv"
-></DocsImage>
+/>
 
 Give the rule a suitable name and description and click finish. WSL2 should now
 be able to open a GUI from shell.

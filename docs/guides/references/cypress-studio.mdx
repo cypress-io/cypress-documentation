@@ -6,7 +6,7 @@ e2eSpecific: true
 :::caution
 
 <strong>
-  <Icon name="exclamation-triangle"></Icon>
+  <Icon name="exclamation-triangle" />
   Experimental
 </strong>
 
@@ -52,7 +52,7 @@ generate test code when interacting with the DOM inside of the Cypress Studio.
 You can also generate assertions by right clicking on an element that you would
 like to assert on.
 
-The Cypress <Icon name="github"></Icon>
+The Cypress <Icon name="github" />
 [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) is
 an open source project implementing a payment application to demonstrate
 real-world usage of Cypress testing methods, patterns, and workflows. It will be
@@ -102,7 +102,7 @@ in.
 <DocsImage
   src="/img/guides/cypress-studio/run-spec-1.png"
   alt="Cypress Studio"
-></DocsImage>
+/>
 
 Once the browser is open, run the spec created in the previous step.
 
@@ -123,7 +123,7 @@ Cypress Studio is directly integrated with the
 <DocsImage
   src="/img/guides/cypress-studio/extend-activate-studio.png"
   alt="Activate Cypress Studio"
-></DocsImage>
+/>
 
 :::tip
 
@@ -139,7 +139,7 @@ command in the test.
 <DocsImage
   src="/img/guides/cypress-studio/extend-ready.png"
   alt="Cypress Studio Ready"
-></DocsImage>
+/>
 
 Now, we can begin updating the test to create a new transaction between users.
 
@@ -152,14 +152,14 @@ click recorded in the Command Log.
 <DocsImage
   src="/img/guides/cypress-studio/extend-click-new-transaction.png"
   alt="Cypress Studio Recording Click"
-></DocsImage>
+/>
 
 Next, we can start typing in the name of a user that we want to pay.
 
 <DocsImage
   src="/img/guides/cypress-studio/extend-type-user-name.png"
   alt="Cypress Studio Recording Type"
-></DocsImage>
+/>
 
 Once we see the name come up in the results, we want to add an assertion to
 ensure that our search function works correctly. Right clicking on the user's
@@ -169,7 +169,7 @@ element contains the correct text (the user's name).
 <DocsImage
   src="/img/guides/cypress-studio/extend-assert-user-name.png"
   alt="Cypress Studio Add Assertion"
-></DocsImage>
+/>
 
 We can then click on that user in order to progress to the next screen. We will
 complete the transaction form by clicking on and typing in the amount and
@@ -178,7 +178,7 @@ description inputs.
 <DocsImage
   src="/img/guides/cypress-studio/extend-type-transaction-form.png"
   alt="Cypress Studio Recording Type"
-></DocsImage>
+/>
 
 :::tip
 
@@ -194,7 +194,7 @@ is enabled.
 <DocsImage
   src="/img/guides/cypress-studio/extend-assert-button-enabled.png"
   alt="Cypress Studio Add Assertion"
-></DocsImage>
+/>
 
 Finally, we will click the "Pay" button and get presented with a confirmation
 page of our new transaction.
@@ -202,7 +202,7 @@ page of our new transaction.
 <DocsImage
   src="/img/guides/cypress-studio/extend-save-test.png"
   alt="Cypress Studio Save Commands"
-></DocsImage>
+/>
 
 To discard the interactions, click the "Cancel" button to exit Cypress Studio.
 If satisfied with the interactions with the application, click "Save Commands"
@@ -247,6 +247,9 @@ describe('Cypress Studio Demo', () => {
 })
 ```
 
+The selectors are generated according to the
+[`Cypress.SelectorPlayground` selector priority](/api/cypress-api/selector-playground-api#Default-Selector-Priority).
+
 ### Adding a New Test
 
 You can add a new test to any existing `describe` or `context` block, by
@@ -255,7 +258,7 @@ clicking "Add New Test" on our defined `describe` block.
 <DocsImage
   src="/img/guides/cypress-studio/add-test-1.png"
   alt="Cypress Studio Add Test"
-></DocsImage>
+/>
 
 We are launched into Cypress Studio and can begin interacting with our
 application to generate the test.
@@ -266,22 +269,22 @@ For this test, we will add a new bank account. Our interactions are as follows:
    <DocsImage
      src="/img/guides/cypress-studio/add-test-2.png"
      alt="Cypress Studio Begin Add Test"
-   ></DocsImage>
+   />
 2. Click the "Create" button on Bank Accounts page
    <DocsImage
      src="/img/guides/cypress-studio/add-test-create.png"
      alt="Cypress Studio Add Test Create Bank Account"
-   ></DocsImage>
+   />
 3. Fill out the bank account information
    <DocsImage
      src="/img/guides/cypress-studio/add-test-form-complete.png"
      alt="Cypress Studio Add Test Complete Bank Account Form"
-   ></DocsImage>
+   />
 4. Click the "Save" button {' '}
    <DocsImage
      src="/img/guides/cypress-studio/add-test-form-save.png"
      alt="Cypress Studio Add Test Save Bank Account"
-   ></DocsImage>
+   />
 
 To discard the interactions, click the "Cancel" button to exit Cypress Studio.
 
@@ -292,14 +295,14 @@ will be saved to the file.
 <DocsImage
   src="/img/guides/cypress-studio/add-test-save-test.png"
   alt="Cypress Studio Add Test Completed Run"
-></DocsImage>
+/>
 
 Once saved, the file will be run again in Cypress.
 
 <DocsImage
   src="/img/guides/cypress-studio/add-test-final.png"
   alt="Cypress Studio Add Test Completed Run"
-></DocsImage>
+/>
 
 Finally, viewing our test code, we can see that the test is updated after
 clicking "Save Commands" with the actions we recorded in Cypress Studio.

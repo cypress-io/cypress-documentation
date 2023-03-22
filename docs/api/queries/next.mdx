@@ -125,15 +125,15 @@ cy.get('li').next('.selected')
 
 - `.next()` will automatically [retry](/guides/core-concepts/retry-ability)
   until the element(s)
-  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.next()`
-  will automatically [retry](/guides/core-concepts/retry-ability) until all
-  chained assertions have passed
+  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).
+- `.next()` will automatically [retry](/guides/core-concepts/retry-ability)
+  until all chained assertions have passed.
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
 - `.next()` can time out waiting for the element(s) to
-  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).</li><li>`.next()`
-  can time out waiting for assertions you've added to pass.
+  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).
+- `.next()` can time out waiting for assertions you've added to pass.
 
 ## Command Log
 
@@ -148,7 +148,7 @@ The commands above will display in the Command Log as:
 <DocsImage
   src="/img/api/next/find-next-element-when-testing-dom.png"
   alt="Command Log next"
-></DocsImage>
+/>
 
 When clicking on `next` within the command log, the console outputs the
 following:
@@ -156,7 +156,7 @@ following:
 <DocsImage
   src="/img/api/next/elements-next-command-applied-to.png"
   alt="Console Log next"
-></DocsImage>
+/>
 
 ## See also
 

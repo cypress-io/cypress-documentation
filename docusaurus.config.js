@@ -19,8 +19,8 @@ const config = {
     'Fast, easy and reliable testing for anything that runs in a browser.',
   url: 'https://docs.cypress.io',
   baseUrl: '/',
-  onBrokenLinks: 'warn', // TODO: update this to throw when we go live to production
-  onBrokenMarkdownLinks: 'warn',
+  onBrokenLinks: 'throw', // TODO: update this to throw when we go live to production
+  onBrokenMarkdownLinks: 'throw',
   favicon: undefined,
 
   // Even if you don't use internalization, you can use this field to set useful
@@ -41,12 +41,6 @@ const config = {
           editUrl:
             'https://github.com/cypress-io/cypress-documentation/tree/main/',
           routeBasePath: '/',
-          // versions: {
-          //   current: {
-          //     label: 'Latest Docs',
-          //   },
-          // },
-          // lastVersion: 'current',
           remarkPlugins: [
             cypressConfigExample,
             cypressConfigPluginExample,
@@ -120,10 +114,6 @@ const config = {
             label: 'Learn',
             position: 'left',
           },
-          // {
-          //   type: 'docsVersionDropdown',
-          //   position: 'right',
-          // },
           {
             href: 'https://github.com/cypress-io/cypress-documentation',
             position: 'right',
@@ -139,12 +129,14 @@ const config = {
         ],
       },
       // optional, can be commented out
+      // Styles for this are controlled in src/css/announcement-bar.scss
       // announcementBar: {
+      //   //give id a unique value to get a new announcement bar to appear
+      //   id: 'event-apis-with-cypress-2-23',
       //   content:
-      //     '🚀 &nbsp;Looking to move to Cypress v10? Check out the <a target="_blank" rel="noopener noreferrer" href="/guides/references/migration-guide#Migrating-to-Cypress-100">migration guide!</a>',
-      //   backgroundColor: '#fff3b9',
-      //   textColor: '#091E42',
+      //     '📢 &nbsp; Save your seat for the Testing APIs with Cypress event Feb 23! <a target="_blank" href="https://community.cypress.io/events/details/cypress-cypress-hq-presents-testing-apis-with-cypress?utm_source=docs&utm_medium=promo_banner&utm_campaign=testing_apis_with_cypress">Register now</a>',
       //   isCloseable: true,
+
       // },
       footer: {
         style: 'dark',
