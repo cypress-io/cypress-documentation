@@ -1,0 +1,113 @@
+---
+title: reload
+e2eSpecific: true
+---
+
+Reload the page.
+
+## Syntax
+
+```javascript
+cy.reload()
+cy.reload(forceReload)
+cy.reload(options)
+cy.reload(forceReload, options)
+```
+
+### Usage
+
+**<Icon name="check-circle" color="green" /> Correct Usage**
+
+```javascript
+cy.reload()
+```
+
+### Arguments
+
+**<Icon name="angle-right" /> forceReload** **_(Boolean)_**
+
+Whether to reload the current page without using the cache. `true` forces the
+reload without cache.
+
+**<Icon name="angle-right" /> options** **_(Object)_**
+
+| Option    | Default                                                        | Description                                                                                                                                                                                        |
+| --------- | -------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `log`     | `true`                                                         | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log)                                                                                                           |
+| `timeout` | [`pageLoadTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.reload()` to resolve before [timing out](#Timeouts) Note: Network requests are limited by the underlying operating system, and may still time out if this value is increased. |
+
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+
+- `cy.reload()` yields the `window` object after the page finishes loading.
+- It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried)
+  to chain further commands that rely on the yielded `window` after
+  `cy.reload()`.
+
+## Examples
+
+### No Args
+
+#### Reload the page as if the user clicked 'Refresh'
+
+```javascript
+cy.visit('http://localhost:3000/admin')
+cy.get('#undo-btn').click().should('not.be.visible')
+cy.reload()
+cy.get('#undo-btn').click().should('not.be.visible')
+```
+
+### Force Reload
+
+#### Reload the page without using the cache
+
+```javascript
+cy.visit('http://localhost:3000/admin')
+cy.reload(true)
+```
+
+## Rules
+
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+
+- `cy.reload()` requires being chained off of `cy`.
+- `cy.reload()` requires the response to be `content-type: text/html`.
+- `cy.reload()` requires the response code to be `2xx` after following
+  redirects.
+- `cy.reload()` requires the load `load` event to eventually fire.
+
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+
+- `cy.reload()` will automatically wait for assertions you have chained to pass.
+
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+
+- `cy.reload()` can time out waiting for the page to fire its `load` event.
+- `cy.reload()` can time out waiting for assertions you've added to pass.
+
+## Command Log
+
+**_Reload the page_**
+
+```javascript
+cy.reload()
+```
+
+The commands above will display in the Command Log as:
+
+<DocsImage
+  src="/img/api/reload/test-page-after-reload-button.png"
+  alt="Command Log reload"
+/>
+
+When clicking on `reload` within the command log, the console outputs the
+following:
+
+<DocsImage
+  src="/img/api/reload/command-log-for-reload-cypress.png"
+  alt="Console Log reload"
+/>
+
+## See also
+
+- [`cy.go()`](/api/commands/go)
+- [`cy.visit()`](/api/commands/visit)

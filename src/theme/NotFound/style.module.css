@@ -1,0 +1,29 @@
+.content {
+  font-size: 1.1rem;
+}
+
+.listWrapper a {
+  font-size: 1.2rem;
+  color: #1079c3;
+  text-decoration: none;
+  border-bottom: 1px dotted #1079c3;
+}
+
+.listWrapper a:hover {
+  border-bottom-style: solid;
+}
+
+[data-theme="dark"] .listWrapper a {
+  color: #29a7ff;
+  text-decoration: none;
+  border-bottom: 1px dotted #29a7ff;
+}
+
+[data-theme="dark"] .listWrapper a:hover {
+  border-bottom-style: solid;
+}
+
+.ital {
+  font-style: italic;
+  font-size: 1.1rem;
+}

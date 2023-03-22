@@ -1,0 +1,14 @@
+.docsVideo {
+  margin-bottom: 1.4rem;
+}
+
+.docsVideo video {
+  width: 100%;
+}
+
+/* stylelint-disable-next-line at-rule-no-unknown */
+@screen xl {
+  .docsVideo {
+    min-height: 380px;
+  }
+}

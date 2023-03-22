@@ -1,0 +1,69 @@
+Different frameworks render their components differently, so we provide
+framework-specific `mount()` functions, which can be imported like so:
+
+<Tabs>
+<TabItem value='React'>
+
+:::info
+
+<strong>A note for React users</strong>
+
+The `mount()` command exported from the
+[cypress/react](https://github.com/cypress-io/cypress/tree/develop/npm/react)
+module supports standard JSX syntax for mounting components.
+
+:::
+
+```js
+// React 18
+import { mount } from 'cypress/react18'
+
+// React 16, 17
+import { mount } from 'cypress/react'
+```
+
+</TabItem>
+
+<TabItem value='Vue'>
+
+:::info
+
+<strong>A note for Vue users</strong>
+
+The `mount()` command exported from the
+[cypress/vue](https://github.com/cypress-io/cypress/tree/develop/npm/vue)
+library uses [Vue Test Utils](https://vue-test-utils.vuejs.org/) internally, but
+instead of mounting your components in a virtual browser in node, it mounts them
+in your actual browser.
+
+:::
+
+```js
+// For Vue 3
+import { mount } from 'cypress/vue'
+
+// For Vue 2
+import { mount } from 'cypress/vue2'
+```
+
+</TabItem>
+<TabItem value='Angular'>
+
+:::info
+
+<strong>A note for Angular users</strong>
+
+The `mount()` command exported from the
+[cypress/angular](https://github.com/cypress-io/cypress/tree/develop/npm/angular)
+library uses [Angular TestBed](https://angular.io/api/core/testing/TestBed)
+internally, but instead of mounting your components in a virtual browser in
+node, it mounts them in your actual browser.
+
+:::
+
+```ts
+import { mount } from 'cypress/angular'
+```
+
+</TabItem>
+</Tabs>

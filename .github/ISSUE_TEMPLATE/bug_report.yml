@@ -1,0 +1,68 @@
+name: "Bug Report"
+description: "File a bug report"
+labels: ["type: bug"]
+body:
+  - type: "markdown"
+    attributes:
+      value: |
+        Thanks for creating an issue 😄!
+
+        Please search open/closed issues before submitting. Someone
+        might have asked the same thing before 😉!
+
+        We're all volunteers here, so help us help you by taking the time to
+        accurately fill out this template. ❤️
+  - type: "input"
+    id: "description"
+    attributes:
+      label: "Description"
+      description: "A brief description of the issue(s)."
+      placeholder: |
+        When I ____, I expected ____ to happen but ____ happened instead.
+    validations:
+      required: true
+  - type: "input"
+    id: "link"
+    attributes:
+      label: "URL of Issue(s)"
+      description: |
+        A link to the production environment which demonstrates the bug.
+      placeholder: "https://docs.cypress.io/"
+    validations:
+      required: true
+  - type: "textarea"
+    id: "steps"
+    attributes:
+      label: "Steps to replicate"
+      description: |
+        Explain how to cause the issue in the provided reproduction.
+      value: |
+        1. Go to '...'
+        2. Click on '...'
+        3. Scroll down to '...'
+        4. See error
+  - type: "input"
+    id: "browser"
+    attributes:
+      label: "Browser"
+      description: "The browser(s) this issue occurred with."
+      placeholder: "Google Chrome 95"
+  - type: "checkboxes"
+    id: "device"
+    attributes:
+      label: "Device"
+      description: "The devices(s) this issue occurred with."
+      options:
+        - label: "PC"
+        - label: "Mac"
+        - label: "iPhone"
+        - label: "iPad"
+        - label: "Android Phone"
+        - label: "Android Tablet"
+  - type: "textarea"
+    id: "additional-information"
+    attributes:
+      label: "Additional Information"
+      description: |
+        Use this section to provide any additional information you might have
+        like screenshots, notes, or links to ideas.
