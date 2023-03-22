@@ -1101,17 +1101,32 @@ more information, please check
 
 ## <Icon name="angle-right" /> Can I use Cucumber to write tests?
 
-Yes, you can. You can write feature files containing Cucumber scenarios and then
-use Cypress to write your step definitions in your spec files. A special
-preprocessor then converts the scenarios and step definitions into "regular"
-JavaScript Cypress tests.
+Yes, you can.
 
-- try using the
-  [Cucumber preprocessor](https://github.com/badeball/cypress-cucumber-preprocessor)
-  and search our [Plugins](/plugins) page for additional helper plugins
+While Cypress does not provide official support for Cucumber, you can use
+Cucumber through a
+[community plugin](https://github.com/badeball/cypress-cucumber-preprocessor).
+Using the plugin adds additional complexity to your testing workflow, so ensure
+your team understands the benefits and drawbacks before adopting Cucumber.
+
 - read
   [Cypress Super-patterns: How to elevate the quality of your test suite](https://dev.to/wescopeland/cypress-super-patterns-how-to-elevate-the-quality-of-your-test-suite-1lcf)
-  for best practices when writing Cucumber tests
+  for best practices when writing Cucumber tests.
+- To get started, read
+  [How to use Cypress with Cucumber BDD](https://testersdock.com/cypress-cucumber-bdd/)
+  for step-by-step instructions for v9 and v10, or for instructions in v10 with
+  typescript read
+  [Cucumber in Cypress: A step by step guide](https://filiphric.com/cucumber-in-cypress-a-step-by-step-guide).
+
+If your team is looking to do behavior-driven development using BDD's
+given/when/then syntax directly in Cypress instead of using Cucumber's
+scenarios, you might be interested in these articles:
+
+- read
+  [Using the keywords Given/When/Then with Cypress but without Cucumber](https://dev.to/walmyrlimaesilv/using-the-keywords-given-when-then-with-cypress-but-without-cucumber-118p)
+  and
+  [BDD without Cucumber](https://filiphric.com/how-to-structure-a-big-project-in-cypress#bdd-without-cucumber)
+  for recommendations for writing tests without using Cucumber
 
 ## <Icon name="angle-right" /> Can I test Next.js sites using Cypress?
 

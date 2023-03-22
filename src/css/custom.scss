@@ -311,7 +311,7 @@ div[class^='codeBlockTitle'] {
 
 /* adding this back after original Docusaurus
    rules overwritten by .embedContainer
-   TODO: fix what casues this */
+   TODO: fix what causes this */
 [class^='mainContentHeader'] {
   border-bottom: 1px solid var(--ifm-toc-border-color);
   margin-bottom: 20px;

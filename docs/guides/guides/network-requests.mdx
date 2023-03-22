@@ -525,8 +525,9 @@ cy.wait('@new-user').then(console.log)
 
 ## Command Log
 
-Cypress logs all `XMLHttpRequest`s and `fetch`es made by the application under
-test in the Command Log. Here is an example of what this looks like:
+By default, Cypress logs all `XMLHttpRequest`s and `fetch`es made by the
+application under test in the Command Log. Here is an example of what this looks
+like:
 
 <!-- Code to reproduce screenshot:
     cy.visit('https://jsonplaceholder.cypress.io')
@@ -540,6 +541,21 @@ test in the Command Log. Here is an example of what this looks like:
   src="/img/guides/network-requests/command-log-requests.png"
   alt="Screenshot of fetch and XHR requests"
 />
+
+:::info
+
+**Note:** Logging can be disabled by passing `{ log: false }` with the static
+response.
+
+```js
+cy.intercept('/users*', { body: ['user1', 'user2'], log: false }).as('getUsers')
+```
+
+To disable logs for all xhr/fetch requests, checkout our
+[example](/api/commands/intercept#Disabling-logs-for-a-request) on the intercept
+api page.
+
+:::
 
 The circular indicator on the left side indicates if the request went to the
 destination server or not. If the circle is solid, the request went to the
