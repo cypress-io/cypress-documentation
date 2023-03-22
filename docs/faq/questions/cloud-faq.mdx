@@ -32,7 +32,7 @@ Please see our [Pricing Page](https://www.cypress.io/pricing) for more details.
 ## <Icon name="angle-right" /> What counts as a test result?
 
 Which [pricing tier](https://www.cypress.io/pricing) is best for you depends on
-the number of test you record each month in your organization.
+the number of tests you record each month in your organization.
 
 Tests are recorded when [cypress run](/guides/guides/command-line#cypress-run)
 is called with the `--record` flag while supplying the record `--key`. This
@@ -57,9 +57,9 @@ been invited to see and review the test results of your organization.
 ## <Icon name="angle-right" /> What is the difference between public and private projects?
 
 **A public project** means that anyone can see the recorded runs for it. It's
-similar to how public projects on Github, Travis, or Circle are handled. Anyone
-who knows your `projectId` will be able to see the recorded runs, screenshots,
-and videos for public projects.
+similar to how public projects on Github, Travis, or CircleCI are handled.
+Anyone who knows your `projectId` will be able to see the recorded runs,
+screenshots, and videos for public projects.
 
 **A private project** means that only [users](/guides/cloud/users) you
 explicitly invite to your [organization](/guides/cloud/organizations) can see
@@ -72,8 +72,8 @@ Cypress is **complementary** to your
 [CI provider](/guides/continuous-integration/introduction), and plays a
 completely different role.
 
-It doesn't replace or change anything related to CI. You will run Cypress tests
-in your CI provider.
+It doesn't replace or change anything related to CI. You will still run Cypress
+tests in your CI provider.
 
 The difference between [Cypress Cloud](/guides/cloud/introduction) and your CI
 provider is that your CI provider has no idea what is going on inside of the
@@ -160,8 +160,8 @@ Find a variable across your containers that is the same for all of them, but is
 different from run to run. For example it could be an environment variable
 called `CI_RUN_ID` that you set when creating the containers to run Cypress. You
 can pass this variable via CLI argument
-[`--ci-build-id`](/guides/guides/command-line#cypress-run-ci-build-id-lt-id-gt)when
-starting Cypress in each container:
+[`--ci-build-id`](/guides/guides/command-line#cypress-run-ci-build-id-lt-id-gt)
+when starting Cypress in each container:
 
 ```shell
 cypress run --record --parallel --ci-build-id $CI_RUN_ID
@@ -215,13 +215,7 @@ by:
 4. Review your organization's usage
 5. Scroll down and select **Upgrade** under your plan of choice
 
-## <Icon name="angle-right" /> I'm working at a restrictive VPN. Which subdomains do I have to allow on
-
-my VPN for Cypress Cloud to work properly?
-
-To send the data and results of your tests to
-[Cypress Cloud](https://on.cypress.io/cloud-introduction), Cypress needs free
-access to some URLs.
+## <Icon name="angle-right" /> I'm working at a restrictive VPN. Which subdomains do I have to allow on my VPN for Cypress Cloud to work properly?
 
 If you are running the tests from within a restrictive VPN you will need to
 allow some URLs so that Cypress can have effective communication with Cypress
