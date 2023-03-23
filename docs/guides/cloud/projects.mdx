@@ -3,23 +3,33 @@ title: Projects
 sidebar_position: 20
 ---
 
-With Cypress, you have the ability to record your project's tests.
+:::info
+
+## <Icon name="graduation-cap" /> What you'll learn
+
+- How to set up your project to record in Cypress Cloud
+- `projectId` and Record Key identification and usage
+- Project settings and integrations
+
+:::
+
+When you configure the open source Cypress app to record tests to Cypress Cloud,
+you'll see data from your project's latest recorded runs.
 
 You typically want to record when running tests in
 [Continuous Integration](/guides/continuous-integration/introduction), but you
 can also record your tests when running locally.
 
-## Setup
+:::tip
 
-:::info
-
-To set up your project to record, you must use
-[Cypress](/guides/core-concepts/cypress-app).
-
-Make sure you [install](/guides/getting-started/installing-cypress) and
-[open](/guides/getting-started/opening-the-app) it first!
+&#8239<Icon name="check-circle" color="green" /> Make sure to
+[install](/guides/getting-started/installing-cypress) and
+[open](/guides/getting-started/opening-the-app) the Cypress app to get started
+recording!
 
 :::
+
+## Setup
 
 ### Set up a project to record
 
@@ -34,7 +44,7 @@ Make sure you [install](/guides/getting-started/installing-cypress) and
    />
 4. Choose who owns the project. You can personally own it or select an
    organization you're a member of. If you don't have any organizations, click
-   **Create organization**. Organizations work just like they do in GitHub and
+   **Manage organizations**. Organizations work just like they do in GitHub and
    enable you to separate your personal and work projects.
    [Read more about organizations](/guides/cloud/organizations).
    <DocsImage
@@ -43,20 +53,18 @@ Make sure you [install](/guides/getting-started/installing-cypress) and
    />
 5. If you don't have any existing projects, you'll have the opportunity to
    create a new one here. If you have existing projects and want to create a new
-   one, you can click "Create a new project" to make a new one.
+   one, you can click **Create new** to make a new one.
 
-- Fill in the name of your project (this is only for display purposes and can be
-  changed later).
-- Choose whether this project is Public or Private.
-  - **A public project** can have its recordings and runs seen by _anyone_.
-    Typically these are open source projects.
-  - **A private project** restricts its access to
-    _[only users you invite](/guides/cloud/users)_.
+   - Fill in the name of your project (this is only for display purposes and can
+     be changed later).
+   - Choose whether this project is Public or Private.
 
-  <DocsImage
-    src="/img/guides/cloud/projects/setup-a-project-3.png"
-    alt="Create a New Project"
-  />
+See more about [Public-vs-Private project settings](projects#Public-vs-Private).
+
+<DocsImage
+  src="/img/guides/cloud/projects/setup-a-project-3.png"
+  alt="Create a New Project"
+/>
 
 6. Alternatively, if you've already created a project in Cypress Cloud, you can
    link your project by selecting it from the dropdown. Make sure to select a
@@ -81,22 +89,24 @@ Make sure you [install](/guides/getting-started/installing-cypress) and
     [Record Key](#Identification) while running the
     [cypress run](/guides/guides/command-line#cypress-run) command.
 
-- Provide record key directly:
+Provide record key directly:
 
-  ```shell
-  cypress run --record --key <record key>
-  ```
+```shell
+cypress run --record --key <record key>
+```
 
-- Or set record key as environment variable
-  ```shell
-  export CYPRESS_RECORD_KEY=<record key>
-  ```
-  ```shell
-  cypress run --record
-  ```
+Or set record key as environment variable
+
+```shell
+export CYPRESS_RECORD_KEY=<record key>
+```
+
+```shell
+cypress run --record
+```
 
 🎉 Your tests are now recording! As soon as tests finish running, you will see
-them in [Cypress Cloud](https://on.cypress.io/cloud) and in the Runs tab of
+them in [Cypress Cloud](https://on.cypress.io/cloud) and in the _Runs_ tab of
 [Cypress](/guides/core-concepts/cypress-app).
 
 <DocsImage
@@ -104,7 +114,10 @@ them in [Cypress Cloud](https://on.cypress.io/cloud) and in the Runs tab of
   alt="Cloud Screenshot"
 />
 
-<DocsImage src="/img/guides/cloud/projects/runs-list-in-desktop-gui.png" alt="Runs List" />
+<DocsImage
+  src="/img/guides/cloud/projects/runs-list-in-desktop-gui.png"
+  alt="Runs List"
+/>
 
 ## Identification
 
@@ -145,7 +158,7 @@ export CYPRESS_PROJECT_ID={projectId}
 ### Record key
 
 The record key is used to authenticate that your project is _allowed_ to record
-tests to Cypress Cloud. As long as your record key stays _private_, nobody will
+tests to Cypress Cloud. As long as your record key stays _private_, no one will
 be able to record test runs for your project - even if they have your
 `projectId`.
 
@@ -245,7 +258,7 @@ Visit your project settings to see who has access to your project's runs.
 2. Select the project you want to change access to.
 3. Go to the project's **Settings** page.
 4. Here you will see a section displaying **Access to Runs**. Choose the
-   appropriate access you'd like to assign for the project here.
+   appropriate access you'd like to assign for the project.
    <DocsImage src="/img/dashboard/access-to-runs.png" alt="access-to-runs" />
 
 ### Parallelization run completion delay
@@ -338,7 +351,7 @@ test count to other developers viewing your project's README file.
 1. On the Project Settings page, scroll down to the README Badges section and
    click “Configure Badge”.
 
-- **Note**: README badges are currently only available for public projects.
+   **Note**: README badges are currently only available for public projects.
 
 1. A configuration modal will appear. The Project ID will be pre-filled with the
    ID associated with the project you selected. You can choose to designate a
@@ -367,18 +380,22 @@ announcement.
 
 ## Third party integrations
 
-You can integrate your project with many third party tools and edit those settings from within the project settings page.
+You can integrate your project with many third party tools and edit those
+settings from within the project settings page.
 
 See our integration guides to learn more:
 
 ### CI/CD
+
 - [GitHub integration guide](/guides/cloud/github-integration)
 - [GitLab integration guide](/guides/cloud/gitlab-integration)
 - [Bitbucket integration guide](/guides/cloud/bitbucket-integration)
 
 ### Project Management
+
 - [Jira integration guide](/guides/cloud/jira-integration)
 
 ### Messaging
+
 - [Cypress Integration for Slack guide](/guides/cloud/slack-integration)
 - Cypress Integration for **Microsoft Teams** guide (coming soon)
