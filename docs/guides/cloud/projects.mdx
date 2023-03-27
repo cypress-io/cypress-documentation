@@ -228,6 +228,31 @@ used.
 
 ## Project settings
 
+### Access to Runs
+
+Visit your project settings to see who has access to your project's runs.
+
+#### Public vs Private
+
+- **Public** means that anyone can see the recorded test runs for the project.
+  It is similar to how public projects on GitHub, Travis CI, or CircleCI are
+  handled. Anyone who knows your `projectId` will be able to see the recorded
+  runs for public projects.
+
+- **Private** means that only [users](/guides/cloud/users) you invite to your
+  [organization](/guides/cloud/organizations) can see its recorded runs. Even if
+  someone knows your `projectId`, they will not have access to your runs unless
+  you have invited them.
+
+#### Change project access
+
+1. Go to your organization's projects page.
+2. Select the project you want to change access to.
+3. Go to the project's **Settings** page.
+4. Here you will see a section displaying **Access to Runs**. Choose the
+   appropriate access you'd like to assign for the project here.
+   <DocsImage src="/img/dashboard/access-to-runs.png" alt="access-to-runs" />
+
 ### Parallelization run completion delay
 
 You can edit the number of seconds that a run will wait for new groups to join
@@ -240,30 +265,79 @@ learn more.
   alt="Run completion delay settings"
 />
 
-## Third party integrations
+### Transfer ownership
 
-You can integrate your project with many third party tools and edit those settings from within the project settings page.
+#### Transfer project to other user or organization
 
-See our integration guides to learn more:
+You can transfer projects that you own to another
+[organization](/guides/cloud/organizations) you are a part of or to another user
+in the organization. Projects can only be transferred from
+[Cypress Cloud](https://on.cypress.io/cloud).
 
-### CI/CD
-- [GitHub integration guide](/guides/cloud/github-integration)
-- [GitLab integration guide](/guides/cloud/gitlab-integration)
-- [Bitbucket integration guide](/guides/cloud/bitbucket-integration)
+1. Select your organization in the organization switcher.
+2. Select the project you wish to transfer.
+3. Go to the project's **Settings** page.
+4. Scroll down to the **Transfer Ownership** section and click **Transfer
+   Ownership**.
+   <DocsImage
+     src="/img/dashboard/transfer-ownership-button.png"
+     alt="Transfer ownership button"
+   />
+5. Select the user or organization, then click **Transfer**.
+   <DocsImage
+     src="/img/dashboard/transfer-ownership-of-project-dialog.png"
+     alt="Transfer Project dialog"
+   />
 
-### Project Management
-- [Jira integration guide](/guides/cloud/jira-integration)
+#### Cancel project transfer
 
-### Messaging
-- [Cypress Integration for Slack guide](/guides/cloud/slack-integration)
-- Cypress Integration for **Microsoft Teams** guide (coming soon)
+Upon transferring, you can cancel the transfer at any time by visiting the
+organization's projects and clicking **Cancel Transfer**.
 
-## README Badges
+<DocsImage
+  src="/img/dashboard/cancel-transfer-of-project.png"
+  alt="Cancel pending transfer of project"
+/>
+
+#### Accept or reject transferred project
+
+When a project is transferred to you, you will receive an email notifying you.
+You will be able to accept or reject the transferred project by clicking the
+notification in the sidebar and clicking 'Accept' or 'Reject'.
+
+<DocsImage
+  src="/img/dashboard/see-pending-transfer.png"
+  alt="See pending transfer"
+/>
+
+<DocsImage
+  src="/img/dashboard/accept-or-reject-transfer-of-project.png"
+  alt="Accept or reject a transferred project"
+/>
+
+### Delete Project
+
+You can delete projects you own. This will also delete all of their recorded
+test runs. Deleting projects can only be done from
+[Cypress Cloud](https://on.cypress.io/cloud).
+
+1. Select your organization in the organization switcher.
+2. Select the project you want to remove.
+3. Go to the project's **Settings** page.
+4. At the very bottom of the Settings page click the **Remove Project** button.
+   <DocsImage
+     src="/img/dashboard/remove-project-dialog.png"
+     alt="Delete project dialog"
+   />
+5. Confirm that you want to delete the project by clicking **Yes, Remove
+   Project**.
+
+### README Badges
 
 README badges allow you to increase visibility of your project's test status and
 test count to other developers viewing your project's README file.
 
-### Create a README badge
+#### Create a README badge
 
 1. In your Cypress Cloud account, select the project for which you’d like to
 1. On the Project Settings page, scroll down to the README Badges section and
@@ -296,94 +370,20 @@ See also
 [Highlight your project's test status with Cypress README badges](https://www.cypress.io/blog/2020/09/02/highlight-your-projects-test-status-with-cypress-readme-badges/)
 announcement.
 
-## Access to Runs
+## Third party integrations
 
-Visit your project settings to see who has access to your project's runs.
+You can integrate your project with many third party tools and edit those settings from within the project settings page.
 
-### Public vs Private
+See our integration guides to learn more:
 
-- **Public** means that anyone can see the recorded test runs for the project.
-  It is similar to how public projects on GitHub, Travis CI, or CircleCI are
-  handled. Anyone who knows your `projectId` will be able to see the recorded
-  runs for public projects.
+### CI/CD
+- [GitHub integration guide](/guides/cloud/github-integration)
+- [GitLab integration guide](/guides/cloud/gitlab-integration)
+- [Bitbucket integration guide](/guides/cloud/bitbucket-integration)
 
-- **Private** means that only [users](/guides/cloud/users) you invite to your
-  [organization](/guides/cloud/organizations) can see its recorded runs. Even if
-  someone knows your `projectId`, they will not have access to your runs unless
-  you have invited them.
+### Project Management
+- [Jira integration guide](/guides/cloud/jira-integration)
 
-### Change project access
-
-1. Go to your organization's projects page.
-2. Select the project you want to change access to.
-3. Go to the project's **Settings** page.
-4. Here you will see a section displaying **Access to Runs**. Choose the
-   appropriate access you'd like to assign for the project here.
-   <DocsImage src="/img/dashboard/access-to-runs.png" alt="access-to-runs" />
-
-## Transfer ownership
-
-### Transfer project to other user or organization
-
-You can transfer projects that you own to another
-[organization](/guides/cloud/organizations) you are a part of or to another user
-in the organization. Projects can only be transferred from
-[Cypress Cloud](https://on.cypress.io/cloud).
-
-1. Select your organization in the organization switcher.
-2. Select the project you wish to transfer.
-3. Go to the project's **Settings** page.
-4. Scroll down to the **Transfer Ownership** section and click **Transfer
-   Ownership**.
-   <DocsImage
-     src="/img/dashboard/transfer-ownership-button.png"
-     alt="Transfer ownership button"
-   />
-5. Select the user or organization, then click **Transfer**.
-   <DocsImage
-     src="/img/dashboard/transfer-ownership-of-project-dialog.png"
-     alt="Transfer Project dialog"
-   />
-
-### Cancel project transfer
-
-Upon transferring, you can cancel the transfer at any time by visiting the
-organization's projects and clicking **Cancel Transfer**.
-
-<DocsImage
-  src="/img/dashboard/cancel-transfer-of-project.png"
-  alt="Cancel pending transfer of project"
-/>
-
-### Accept or reject transferred project
-
-When a project is transferred to you, you will receive an email notifying you.
-You will be able to accept or reject the transferred project by clicking the
-notification in the sidebar and clicking 'Accept' or 'Reject'.
-
-<DocsImage
-  src="/img/dashboard/see-pending-transfer.png"
-  alt="See pending transfer"
-/>
-
-<DocsImage
-  src="/img/dashboard/accept-or-reject-transfer-of-project.png"
-  alt="Accept or reject a transferred project"
-/>
-
-## Delete Project
-
-You can delete projects you own. This will also delete all of their recorded
-test runs. Deleting projects can only be done from
-[Cypress Cloud](https://on.cypress.io/cloud).
-
-1. Select your organization in the organization switcher.
-2. Select the project you want to remove.
-3. Go to the project's **Settings** page.
-4. At the very bottom of the Settings page click the **Remove Project** button.
-   <DocsImage
-     src="/img/dashboard/remove-project-dialog.png"
-     alt="Delete project dialog"
-   />
-5. Confirm that you want to delete the project by clicking **Yes, Remove
-   Project**.
+### Messaging
+- [Cypress Integration for Slack guide](/guides/cloud/slack-integration)
+- Cypress Integration for **Microsoft Teams** guide (coming soon)
