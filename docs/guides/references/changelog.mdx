@@ -259,7 +259,7 @@ _Released 02/2/2023_
 
 - Fixed a regression introduced in Cypress [12.5.0](#12-5-0) where the
   `runnable` was not included in the
-  [`test:after:run`](/api/events/catalog-of-events) event. Fixes
+  [`test:after:run`](/api/cypress-api/catalog-of-events) event. Fixes
   [#25663](https://github.com/cypress-io/cypress/issues/25663).
 
 **Dependency Updates:**
@@ -5638,7 +5638,7 @@ _Released 6/8/2020_
 - utf-8 characters now properly display within error code frames. Fixes
   [#7507](https://github.com/cypress-io/cypress/issues/7507).
 - Errors thrown in a
-  [`cy.on('fail', fn)`](/api/events/catalog-of-events#Cypress-Events) fail
+  [`cy.on('fail', fn)`](/api/cypress-api/catalog-of-events#Cypress-Events) fail
   handler now display a stack trace and code frame pointing to the origin of the
   error. Fixes [#7512](https://github.com/cypress-io/cypress/issues/7512).
 - [.click()](/api/commands/click) now properly clicks on wrapped inline elements
@@ -6584,7 +6584,8 @@ _Released 01/10/2020_
   [#5625](https://github.com/cypress-io/cypress/issues/5625).
 - We now capture GitLab CI's `CI_JOB_NAME` environment variable. Addressed in
   [#6111](https://github.com/cypress-io/cypress/pull/6111).
-- Types for [event emitters](/api/events/catalog-of-events#Binding-to-Events)
+- Types for
+  [event emitters](/api/cypress-api/catalog-of-events#Binding-to-Events)
   `removeListener` and `removeAllListeners` have been added to `Cypress` and
   `cy`. Addresses [#5228](https://github.com/cypress-io/cypress/issues/5228).
 - Types for the `runUrl` property returned from `cypress.run()` has been added.
@@ -6941,7 +6942,7 @@ _Released 10/31/2019_
   [#5431](https://github.com/cypress-io/cypress/issues/5431).
 - We fixed a bug where certain types of uncaught errors originating from the
   application under test would not route through the
-  [uncaught:exception](/api/events/catalog-of-events#Uncaught-Exceptions)
+  [uncaught:exception](/api/cypress-api/catalog-of-events#Uncaught-Exceptions)
   handler, and thus could not caught and ignored. These errors will also now
   correctly indicate that they came from application code. Fixes
   [#987](https://github.com/cypress-io/cypress/issues/987).
@@ -10070,7 +10071,7 @@ _Released 10/13/2017_
 
 **Documentation Changes:**
 
-- [Added examples for "Catalog of Events"](/api/events/catalog-of-events)
+- [Added examples for "Catalog of Events"](/api/cypress-api/catalog-of-events)
 - [Added](/ Updated FAQ for "Using Cypress"' using-cypress-faq)
 
 ## 1.0.1
@@ -10394,8 +10395,8 @@ _Released 09/10/2017_
 - We removed an artificial delay that was being set in between commands. This
   means test commands now run faster.
 - You can now
-  [disable Cypress global exception handlers](/api/events/catalog-of-events) for
-  your application. Fixes
+  [disable Cypress global exception handlers](/api/cypress-api/catalog-of-events)
+  for your application. Fixes
   [#254](https://github.com/cypress-io/cypress/issues/254)
 - Uncaught errors appearing in your spec files or support files are now properly
   caught, have the right exit code, and display correctly. Fixes
@@ -10420,10 +10421,11 @@ _Released 09/10/2017_
   automatic screenshot errors.
 - Using mocha's async `done` callback now works properly.
 - You can now programmatically
-  [intercept and potentially turn off uncaught application errors](/api/events/catalog-of-events)
+  [intercept and potentially turn off uncaught application errors](/api/cypress-api/catalog-of-events)
   from failing your tests.
 - You can now programmatically control whether you accept or cancel
-  [window.confirm()](/api/events/catalog-of-events) calls from your application.
+  [window.confirm()](/api/cypress-api/catalog-of-events) calls from your
+  application.
 
 **Dependencies:**
 
@@ -10626,7 +10628,7 @@ _Released 09/10/2017_
 
 Note: we are still updating all of the docs to reflect all the 0.20.0 changes.
 
-- [New "Catalog of Events"](/api/events/catalog-of-events)
+- [New "Catalog of Events"](/api/cypress-api/catalog-of-events)
 - [New "Cypress.Commands"](/api/cypress-api/custom-commands)
 - [New "Cypress.log"](/api/cypress-api/cypress-log)
 - [New ".trigger()"](/api/commands/trigger)
