@@ -47,18 +47,15 @@ awaited before Cypress proceeds running the spec.
 :::cypress-config-plugin-example
 
 ```ts
-module.exports = (on, config) => {
-  on('before:spec', (spec) => {
-    // spec will look something like this:
-    // {
-    //   name: 'login.cy.js',
-    //   relative: 'cypress/e2e/login.cy.js',
-    //   absolute: '/Users/janelane/app/cypress/e2e/login.cy.js',
-    // }
-
-    console.log('Running', spec.relative)
-  })
-}
+on('before:spec', (spec) => {
+  // spec will look something like this:
+  // {
+  //   name: 'login.cy.js',
+  //   relative: 'cypress/e2e/login.cy.js',
+  //   absolute: '/Users/janelane/app/cypress/e2e/login.cy.js',
+  // }
+  console.log('Running', spec.relative)
+})
 ```
 
 :::
