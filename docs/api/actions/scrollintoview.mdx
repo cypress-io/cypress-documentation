@@ -55,7 +55,8 @@ Pass in an options object to change the default behavior of `.scrollIntoView()`.
 ### Scrolling
 
 ```javascript
-cy.get('button#checkout').scrollIntoView().should('be.visible')
+cy.get('button#checkout').scrollIntoView()
+cy.get('button#checkout').should('be.visible')
 ```
 
 ### Options
