@@ -112,7 +112,8 @@ or
 #### Assert element is visible after scrolling it into view
 
 ```javascript
-cy.get('#scroll-horizontal button').scrollIntoView().should('be.visible')
+cy.get('#scroll-horizontal button').scrollIntoView()
+cy.get('#scroll-horizontal button').should('be.visible')
 ```
 
 The commands above will display in the Command Log as:
