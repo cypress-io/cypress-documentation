@@ -255,7 +255,10 @@ const config = {
           dark: 'rgb(50, 50, 50)',
         },
         // options you can specify via https://github.com/francoischalifour/medium-zoom#usage
-        config: {},
+        config: {
+          scrollOffset: 60,
+          margin: 100,
+        },
       },
     },
 }
