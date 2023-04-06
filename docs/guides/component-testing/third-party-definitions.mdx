@@ -63,7 +63,7 @@ When configuring a project to use Component Testing, Cypress will load any
 dependencies following this naming convention from the project's `node_modules`
 and present them as framework options.
 
-A simple example of a Framework Defintion for the
+A simple example of a Framework Definition for the
 [Solid.js](https://www.solidjs.com/) library is shown below. We generally
 recommend naming this `definition.cjs`. In our
 [official template](https://github.com/cypress-io/cypress-ct-definition-template),
@@ -167,7 +167,8 @@ indicating it's a third party definition.
 
 <DocsImage
   src="/img/guides/component-testing/framework-definition-1.png"
-  alt="custom framework definition"
+  alt="Project setup screen. Custom framework definition for Solid.js 
+  appears in the dropdown with a community label"
 />
 
 We defined the `dependencies`, which are also correctly handled - we haven't
@@ -175,8 +176,28 @@ installed them all, so Cypress is prompting us to do so:
 
 <DocsImage
   src="/img/guides/component-testing/framework-definition-2.png"
-  alt="required dependencies"
+  alt="Development dependencies screen."
 />
+
+From Cypress version 12.10.0, if there is a problem loading or 
+parsing a framework definition, Cypress will display a warning:
+
+<DocsImage
+  src="/img/guides/component-testing/framework-definition-errors.png"
+  alt="Project setup screen: an error states that this project 
+  has some community framework definitions installed 
+  that could not be parsed. They are located at the following paths. 
+  See the framework definition documentation for more information 
+  about creating, installing, and troubleshooting third party definitions."
+/>
+
+To see more detailed error information, use the 
+`scaffold-config:ct-detect-third-party` namespace for 
+[logging](/guides/references/troubleshooting#Print-DEBUG-logs), like this: 
+
+```bash
+DEBUG=cypress:scaffold-config:ct-detect-third-party npx cypress open
+```
 
 ## Mount Adapter
 
