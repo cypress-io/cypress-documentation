@@ -12,20 +12,20 @@
   force = true
 
 [[redirects]]
-  from = "/api/table-of-contents/"
-  to = "/api/commands/and"
-  status = 301
-  force = true
-
-[[redirects]]
   from = "/api/"
-  to = "/api/commands/and"
+  to = "/api/table-of-contents/"
   status = 301
   force = true
 
 [[redirects]]
   from = "/api/api/table-of-contents"
   to = "/api/table-of-contents/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/api/events/catalog-of-events"
+  to = "/api/cypress-api/catalog-of-events"
   status = 301
   force = true
 
