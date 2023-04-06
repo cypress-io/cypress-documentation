@@ -356,7 +356,8 @@ cy.visit('index.html').then((contentWindow) => {
 
 Trying to change the `User-Agent`? You can set the `userAgent` as a
 [configuration value](/guides/references/configuration#Browser) in your
-configuration file.
+configuration file or for a **single** `cy.visit()` by setting the User-Agent
+header in the options
 
 ### Routing
 

@@ -470,8 +470,12 @@ it('fails on unhandled rejection', () => {
 
 ## <Icon name="angle-right" /> Can I override environment variables or create configuration for different environments?
 
-Yes, you can pass configuration to Cypress via environment variables, CLI
-arguments, JSON files and other means.
+Yes.
+
+- You can pass configuration to Cypress via environment variables, CLI
+  arguments, JSON files and other means.
+- You can override the config value for a **single** `cy.visit()` by setting the
+  User-Agent header in the options to `cy.visit()`
 
 [Read the Environment Variables guide.](/guides/guides/environment-variables)
 
