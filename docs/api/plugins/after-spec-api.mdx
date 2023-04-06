@@ -56,43 +56,40 @@ further specs if there are any.
 :::cypress-config-plugin-example
 
 ```javascript
-module.exports = (on, config) => {
-  on('after:spec', (spec, results) => {
-    // spec will look something like this:
-    // {
-    //   name: 'login.cy.js',
-    //   relative: 'cypress/e2e/login.cy.js',
-    //   absolute: '/Users/janelane/my-app/cypress/e2e/login.cy.js',
-    // }
-
-    // results will look something like this:
-    // {
-    //   stats: {
-    //     suites: 0,
-    //     tests: 1,
-    //     passes: 1,
-    //     pending: 0,
-    //     skipped: 0,
-    //     failures: 0,
-    //     // ...more properties
-    //   }
-    //   reporter: 'spec',
-    //   tests: [
-    //     {
-    //       title: ['login', 'logs user in'],
-    //       state: 'passed',
-    //       body: 'function () {}',
-    //       // ...more properties...
-    //     }
-    //   ],
-    //   error: null,
-    //   video: '/Users/janelane/my-app/cypress/videos/login.cy.js.mp4',
-    //   screenshots: [],
-    //   // ...more properties...
-    // }
-    console.log('Finished running', spec.relative)
-  })
-}
+on('after:spec', (spec, results) => {
+  // spec will look something like this:
+  // {
+  //   name: 'login.cy.js',
+  //   relative: 'cypress/e2e/login.cy.js',
+  //   absolute: '/Users/janelane/my-app/cypress/e2e/login.cy.js',
+  // }
+  // results will look something like this:
+  // {
+  //   stats: {
+  //     suites: 0,
+  //     tests: 1,
+  //     passes: 1,
+  //     pending: 0,
+  //     skipped: 0,
+  //     failures: 0,
+  //     // ...more properties
+  //   }
+  //   reporter: 'spec',
+  //   tests: [
+  //     {
+  //       title: ['login', 'logs user in'],
+  //       state: 'passed',
+  //       body: 'function () {}',
+  //       // ...more properties...
+  //     }
+  //   ],
+  //   error: null,
+  //   video: '/Users/janelane/my-app/cypress/videos/login.cy.js.mp4',
+  //   screenshots: [],
+  //   // ...more properties...
+  // }
+  console.log('Finished running', spec.relative)
+})
 ```
 
 :::
