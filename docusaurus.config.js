@@ -180,7 +180,7 @@ const config = {
               // },
               {
                 label: 'Discord',
-                href: 'https://discord.gg/cMjUZg7',
+                href: 'https://discord.com/invite/cypress',
               },
               {
                 label: 'Twitter',
