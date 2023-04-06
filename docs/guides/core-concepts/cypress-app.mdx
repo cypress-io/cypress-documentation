@@ -181,7 +181,7 @@ in Cypress Cloud.
 
 The Debug page allows you to easily debug failed CI test runs from within the
 Cypress app. From this page, you can review, rerun, and debug failed CI test
-runs that are recorded to Cypress Cloud (see [note above](#Overview)) – all
+runs that are recorded to Cypress Cloud (see [note above](#Overview)) - all
 without leaving the Cypress app.
 
 This feature eliminates the tedious process of switching between Cypress, your
@@ -191,10 +191,12 @@ failed in your last recorded test run, as well as review screenshots, videos,
 and logs from your tests.
 
 The Debug page shows the latest completed [test run](/guides/cloud/runs) that
-matches the HEAD commit of your local project. If no run is found for your
-current commit, then Cypress shows the most recent run in your branch's history
-up until the current commit. The first **100** failed tests are listed, with a
-link to Cypress Cloud to review the full run.
+matches the HEAD commit (the commit currently checked out in the working
+directory) of your local project. Users can see and switch to relevant runs
+within the Debug page. If no run is found for your current commit, then Cypress
+shows the most recent run in your branch's history up until the current commit.
+The first **100** failed tests are listed, with a link to Cypress Cloud to
+review the full run.
 
 To use this feature, you must ensure that git is properly configured for your
 project and that you are sending git information to Cypress Cloud. Under some

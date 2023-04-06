@@ -71,6 +71,7 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     {
+      image: 'img/logo/cypress-logo-circle-dark.png',
       navbar: {
         style: 'dark',
         logo: {
@@ -86,7 +87,7 @@ const config = {
             activeBasePath: 'guides',
           },
           {
-            to: '/api/commands/and',
+            to: '/api/table-of-contents',
             label: 'API',
             position: 'left',
             activeBasePath: 'api',
