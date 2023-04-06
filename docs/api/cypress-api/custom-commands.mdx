@@ -25,6 +25,15 @@ in the
 
 :::
 
+:::caution
+
+There are two API available for adding custom commands:
+
+- [`Cypress.Commands.add()`](#Syntax) - use to add a custom command to use when writing tests
+- [`Cypress.Command.overwrite()`](#Overwrite-Existing-Commands) - use to override an existing built-in Cypress command or reserved internal function. **Caution:** this overrides it for Cypress as well and could impact how Cypress behaves.
+
+:::
+
 ## Syntax
 
 ```javascript
@@ -312,17 +321,6 @@ cy.createUser({
 
 Did you know that you can control how your custom commands appear in the Command
 Log? Read more about [Command Logging](#Command-Logging).
-
-:::
-
-:::caution
-
-Note that `Cypress.Commands.add()` will throw an error when trying to add a
-custom command with the same name as an existing built-in Cypress command or
-reserved internal function. In order to override the behavior of an existing
-command, `Cypress.Commands.overwrite()` should be used instead. For more
-information, read the section
-[Overwrite Existing Commands](#Overwrite-Existing-Commands).
 
 :::
 
@@ -849,8 +847,7 @@ couple commands.
 
 Don't do things like:
 
-- **<Icon name="exclamation-triangle" color="red" />**
-  `cy.clickButton(selector)`
+- **<Icon name="exclamation-triangle" color="red" />** `cy.clickButton(selector)`
 - **<Icon name="exclamation-triangle" color="red" />** `.shouldBeVisible()`
 
 This first custom command is wrapping `cy.get(selector).click()`. Going down
