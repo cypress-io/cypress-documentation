@@ -1,0 +1,91 @@
+---
+title: Cypress.Cookies
+---
+
+`Cookies.debug()` enables you to generate logs to the console whenever any
+cookies are modified.
+
+## Syntax
+
+```javascript
+Cypress.Cookies.debug(enable, options)
+```
+
+### Arguments
+
+**<Icon name="angle-right" /> enable** **_(Boolean)_**
+
+Whether cookie debugging should be enabled.
+
+**<Icon name="angle-right" /> options** **_(Object)_**
+
+Pass in an options object to control the behavior of `Cookies.debug()`.
+
+| option  | description                                         | default |
+| ------- | --------------------------------------------------- | ------- |
+| verbose | Whether or not to display the entire cookie object. | true    |
+
+## Examples
+
+### Debug
+
+#### Log when cookie values are created, modified or deleted
+
+By turning on debugging, Cypress will automatically generate logs to the console
+when it _sets_ or _clears_ cookie values. This is useful to help you understand
+how Cypress clears cookies before each test, and is useful to visualize how to
+handle preserving cookies in between tests.
+
+```javascript
+Cypress.Cookies.debug(true) // now Cypress will log when it alters cookies
+
+cy.clearCookie('foo')
+cy.setCookie('foo', 'bar')
+```
+
+<DocsImage
+  src="/img/api/cookies/cookies-in-console-log.png"
+  alt="Console log when debugging cookies"
+/>
+
+#### Turn off verbose debugging output
+
+By default Cypress will log the cookie object which allows you to inspect all of
+its properties. However you may not need that level of detail and you can turn
+this off.
+
+```javascript
+Cypress.Cookies.debug(true, { verbose: false })
+```
+
+Now when Cypress logs cookies they will only include the `name` and `value`.
+
+<DocsImage
+  src="/img/api/cookies/debugger-console-log-of-cookies.png"
+  alt="Console log cookies with debug"
+/>
+
+Debugging will be turned on until you explicitly turn it off.
+
+```javascript
+Cypress.Cookies.debug(false) // now debugging is turned off
+```
+
+## History
+
+| Version                                       | Changes                                                                                       |
+| --------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| [11.0.0](/guides/references/changelog#11-0-0) | Removed `preserveOnce` and `defaults`                                                         |
+| [9.7.0](/guides/references/changelog#9-7-0)   | Deprecated `preserveOnce` and `defaults`                                                      |
+| [5.0.0](/guides/references/changelog#5-0-0)   | Renamed `whitelist` option to `preserve`                                                      |
+| [0.16.1](/guides/references/changelog#0-16-1) | `{verbose: false}` option added                                                               |
+| [0.16.0](/guides/references/changelog#0-16-0) | Removed support for `Cypress.Cookies.get`, `Cypress.Cookies.set` and `Cypress.Cookies.remove` |
+| [0.12.4](/guides/references/changelog#0-12-4) | `Cypress.Cookies` API added                                                                   |
+
+## See also
+
+- [`cy.clearCookie()`](/api/commands/clearcookie)
+- [`cy.clearCookies()`](/api/commands/clearcookies)
+- [`cy.getCookie()`](/api/commands/getcookie)
+- [`cy.getCookies()`](/api/commands/getcookies)
+- [`cy.setCookie()`](/api/commands/setcookie)

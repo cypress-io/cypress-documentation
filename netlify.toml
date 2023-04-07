@@ -1,15 +1,9 @@
 [build]
   publish = "dist/"
-  command = "yarn build"
+  command = "npm run build"
 
 [context.deploy-preview]
   publish = "dist/"
-
-[[redirects]]
-  from = "/"
-  to = "/guides/overview/why-cypress/"
-  status = 200
-  force = true
 
 [[redirects]]
   from = "/guides"
@@ -18,7 +12,7 @@
   force = true
 
 [[redirects]]
-  from = "/api"
+  from = "/api/"
   to = "/api/table-of-contents/"
   status = 301
   force = true
@@ -30,14 +24,38 @@
   force = true
 
 [[redirects]]
-  from = "/plugins"
-  to = "/plugins/directory"
+  from = "/api/events/catalog-of-events"
+  to = "/api/cypress-api/catalog-of-events"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/plugins/directory"
+  to = "/plugins"
   status = 301
   force = true
 
 [[redirects]]
   from = "/examples"
-  to = "/examples/examples/recipes/"
+  to = "/examples/recipes/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/examples/examples"
+  to = "/examples/recipes/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/examples/examples/recipes"
+  to = "/examples/recipes/"
+  status = 301
+  force = true
+  
+[[redirects]]
+  from = "/examples/examples/docker"
+  to = "/examples/docker"
   status = 301
   force = true
 
@@ -48,8 +66,344 @@
   force = true
 
 [[redirects]]
+  from = "/guides/overview/choosing-testing-type"
+  to = "/guides/core-concepts/testing-types/"
+  status = 301
+  force = true
+
+[[redirects]]
   from = "/guides/dashboard/dashboard-introduction"
   to = "/guides/dashboard/introduction/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/component-testing"
+  to = "/guides/component-testing/overview"
+  status = 301
+  force = true
+	
+[[redirects]]
+  from = "/guides/component-testing/introduction"
+  to = "/guides/component-testing/overview"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/component-testing/writing-your-first-component-test"
+  to = "/guides/component-testing/overview"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/component-testing/framework-configuration"
+  to = "/guides/component-testing/component-framework-configuration/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/core-concepts/test-runner"
+  to = "/guides/core-concepts/cypress-app"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/core-concepts/cypress-studio"
+  to = "/guides/references/cypress-studio"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/getting-started/writing-your-first-test"
+  to = "/guides/end-to-end-testing/writing-your-first-end-to-end-test"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/getting-started/testing-your-app"
+  to = "/guides/end-to-end-testing/testing-your-app"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/getting-started/component-testing"
+  to = "/guides/component-testing/overview"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/testing-strategies/auth0-authentication"
+  to = "/guides/end-to-end-testing/auth0-authentication"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/testing-strategies/amazon-cognito-authentication"
+  to = "/guides/end-to-end-testing/amazon-cognito-authentication"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/testing-strategies/okta-authentication"
+  to = "/guides/end-to-end-testing/okta-authentication"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/testing-strategies/google-authentication"
+  to = "/guides/end-to-end-testing/google-authentication"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/testing-strategies/working-with-graphql"
+  to = "/guides/end-to-end-testing/working-with-graphql"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/migrating-to-cypress/protractor"
+  to = "/guides/end-to-end-testing/protractor-to-cypress"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/references/bundled-tools"
+  to = "/guides/references/bundled-libraries"
+  status = 301
+  force = true
+  
+[[redirects]]
+  from = "/guides/references/bundled-tools.html"
+  to = "/guides/references/bundled-libraries"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/component-testing/quickstart-react"
+  to = "/guides/component-testing/react/quickstart"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/component-testing/mounting-react"
+  to = "/guides/component-testing/react/quickstart"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/component-testing/testing-react"
+  to = "/guides/component-testing/react/quickstart"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/component-testing/events-react"
+  to = "/guides/component-testing/react/quickstart"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/component-testing/custom-mount-react"
+  to = "/guides/component-testing/react/examples"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/component-testing/quickstart-angular"
+  to = "/guides/component-testing/angular/quickstart"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/component-testing/mounting-angular"
+  to = "/guides/component-testing/angular/quickstart"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/component-testing/testing-angular"
+  to = "/guides/component-testing/angular/quickstart"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/component-testing/events-angular"
+  to = "/guides/component-testing/angular/quickstart"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/component-testing/custom-mount-angular"
+  to = "/guides/component-testing/angular/examples"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/component-testing/slots-angular"
+  to = "/guides/component-testing/angular/overview"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/component-testing/quickstart-vue"
+  to = "/guides/component-testing/vue/quickstart"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/component-testing/mounting-vue"
+  to = "/guides/component-testing/vue/quickstart"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/component-testing/testing-vue"
+  to = "/guides/component-testing/vue/quickstart"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/component-testing/events-vue"
+  to = "/guides/component-testing/vue/quickstart"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/component-testing/custom-mount-vue"
+  to = "/guides/component-testing/vue/examples"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/component-testing/slots-vue"
+  to = "/guides/component-testing/vue/overview"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/component-testing/quickstart-svelte"
+  to = "/guides/component-testing/svelte/quickstart"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/component-testing/mounting-svelte"
+  to = "/guides/component-testing/svelte/quickstart"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/component-testing/testing-svelte"
+  to = "/guides/component-testing/svelte/quickstart"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/component-testing/events-svelte"
+  to = "/guides/component-testing/svelte/quickstart"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/component-testing/custom-mount-svelte"
+  to = "/guides/component-testing/svelte/examples"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/component-testing/component-test-troubleshooting"
+  to = "/guides/component-testing/faq"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/dashboard/analytics"
+  to = "/guides/cloud/analytics"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/dashboard/bitbucket-integration"
+  to = "/guides/cloud/bitbucket-integration"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/dashboard/flaky-test-management"
+  to = "/guides/cloud/flaky-test-management"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/dashboard/flaky-test-management"
+  to = "/guides/cloud/flaky-test-management"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/dashboard/github-integration"
+  to = "/guides/cloud/github-integration"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/dashboard/gitlab-integration"
+  to = "/guides/cloud/gitlab-integration"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/dashboard/introduction"
+  to = "/guides/cloud/introduction"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/dashboard/jira-integration"
+  to = "/guides/cloud/jira-integration"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/dashboard/organizations"
+  to = "/guides/cloud/organizations"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/dashboard/projects"
+  to = "/guides/cloud/projects"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/dashboard/runs"
+  to = "/guides/cloud/runs"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/dashboard/slack-integration"
+  to = "/guides/cloud/slack-integration"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/dashboard/smart-orchestration"
+  to = "/guides/cloud/smart-orchestration"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/dashboard/users"
+  to = "/guides/cloud/users"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/faq/questions/dashboard-faq"
+  to = "/faq/questions/cloud-faq"
   status = 301
   force = true
 
