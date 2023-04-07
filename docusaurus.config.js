@@ -63,8 +63,24 @@ const config = {
   ],
 
   plugins: [
-    './plugins/fav-icon',
-    './plugins/fullstory',
+    [
+      './plugins/osano',
+      {
+        id: 'docs-osano',
+      },
+    ],
+    [
+      './plugins/fav-icon',
+      {
+        id: 'docs-fav-icon',
+      },
+    ],
+    [
+      './plugins/fullstory',
+      {
+        id: 'docs-fullstory',
+      },
+    ],
     'docusaurus-plugin-sass',
     require.resolve('docusaurus-plugin-image-zoom'),
   ],
