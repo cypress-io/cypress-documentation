@@ -183,10 +183,6 @@ const config = {
                 href: 'https://github.com/cypress-io/cypress/discussions',
               },
               // {
-              //   label: 'Cypress Blog',
-              //   href: 'https://www.cypress.io/blog',
-              // },
-              // {
               //   label: 'Cypress Ambassadors',
               //   href: 'https://www.cypress.io/ambassadors',
               // },
@@ -227,6 +223,10 @@ const config = {
               {
                 label: 'About',
                 href: 'https://www.cypress.io/about-us',
+              },
+              {
+                label: 'Cypress Blog',
+                href: 'https://www.cypress.io/blog',
               },
               {
                 label: 'Careers',
@@ -271,7 +271,10 @@ const config = {
           dark: 'rgb(50, 50, 50)',
         },
         // options you can specify via https://github.com/francoischalifour/medium-zoom#usage
-        config: {},
+        config: {
+          scrollOffset: 60,
+          margin: 100,
+        },
       },
     },
 }
