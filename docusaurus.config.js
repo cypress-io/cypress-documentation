@@ -63,8 +63,24 @@ const config = {
   ],
 
   plugins: [
-    './plugins/fav-icon',
-    './plugins/fullstory',
+    [
+      './plugins/osano',
+      {
+        id: 'docs-osano',
+      },
+    ],
+    [
+      './plugins/fav-icon',
+      {
+        id: 'docs-fav-icon',
+      },
+    ],
+    [
+      './plugins/fullstory',
+      {
+        id: 'docs-fullstory',
+      },
+    ],
     'docusaurus-plugin-sass',
     require.resolve('docusaurus-plugin-image-zoom'),
   ],
@@ -176,7 +192,7 @@ const config = {
               // },
               {
                 label: 'Discord',
-                href: 'https://discord.gg/cMjUZg7',
+                href: 'https://discord.com/invite/cypress',
               },
               {
                 label: 'Twitter',
