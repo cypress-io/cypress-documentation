@@ -265,7 +265,7 @@ const config = {
         darkTheme: darkCodeTheme,
       },
       zoom: {
-        selector: ':not(.mediaImage, .navbar__logo img)', // don't zoom these images
+        selector: ':not(.mediaImage, .navbar__logo img, .logo)', // don't zoom these images
         background: {
           light: 'rgb(50, 50, 50)',
           dark: 'rgb(50, 50, 50)',
