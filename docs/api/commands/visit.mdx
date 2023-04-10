@@ -354,10 +354,33 @@ cy.visit('index.html').then((contentWindow) => {
 
 ### User agent
 
-Trying to change the `User-Agent`? You can set the `userAgent` as a
+Trying to change the `User-Agent`?
+
+You can set the `userAgent` as a
 [configuration value](/guides/references/configuration#Browser) in your
 configuration file or for a **single** `cy.visit()` by setting the User-Agent
-header in the options
+header in the options.
+
+In this example, Cypress will use the "In the visit" user-agent header and the
+network tab and log will show "In the config" since the setting of the headers
+happens in the proxy layer.
+
+```javascript
+// cypress.config
+{
+  userAgent: 'In the config'
+}
+```
+
+```javascript
+// cypress/e2e/spec.cy.js
+cy.visit('https://www.whatismybrowser.com/detect/what-is-my-user-agent', {
+  headers: { 'user-agent': 'In the visit' },
+})
+cy.log(`UserAgent: ${navigator.userAgent}`)
+```
+
+Using a third-party tool, you can
 
 ### Routing
 
