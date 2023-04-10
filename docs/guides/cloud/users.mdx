@@ -7,22 +7,24 @@ A user is anyone who logs in to Cypress Cloud.
 
 ## Invite users
 
-You can invite users from [Cypress Cloud](https://on.cypress.io/cloud). Invited
-users will see all projects and tests run for the organization.
+Organization [owner or admin](#User-roles) roles can invite users from
+[Cypress Cloud](https://on.cypress.io/cloud). Those invited will see all
+projects and tests run for the organization.
+
+_Note: only owners can give other users 'owner' access._
 
 ### Invite a user to an organization:
 
-1. Go the [Organizations page](https://on.cypress.io/cloud/organizations) to
-   select the organization you want to invite a user to.
-2. Click **Users**, then **Invite User**. _Note: you must have the
-   [role of 'owner' or 'admin'](#User-roles) to invite users._
-3. Fill in their email and select their [role](#User-roles) then click **Invite
-   User** _Note: only owners can give other users 'owner' access._
+1. Select the [organization](/guides/cloud/organizations) you want to invite a
+   user to.
+2. Click **Users**, then **Invite User**.
+3. Fill in their email and select their [role](#User-roles), then click **Invite
+   User**.
 4. The user will receive an invitation email with a link to accept the
    invitation.
 
 <DocsImage
-  src="/img/dashboard/invite-user-dialog.png"
+  src="/img/guides/cloud/users/invite-user-dialog.jpg"
   alt="Invite User dialog"
 />
 
@@ -51,20 +53,19 @@ Cypress Cloud. From there, you will have the choice of authenitication type:
 
 #### **Sign Up with Single Sign On (SSO) Authentication**
 
-Refer to our
-[Enterprise SSO Guide](https://on.cypress.io/organizations#Slack-Integration)
+Refer to our [Enterprise SSO Guide](/guides/cloud/organizations#Enterprise-SSO).
 
 ## User roles
 
 Users can be assigned roles that affect their access to certain features of
 [Cypress Cloud](https://on.cypress.io/cloud).
 
-- **Member:** Can see the projects, runs, and keys.
+- **Member:** Can see projects, runs, and keys.
 - **Admin:** Can also invite, edit and delete users.
 - **Owner:** Can also transfer or delete projects. Can delete and edit the
   organization.
 
-The permissions for each user role for Cypress Cloud.
+The permissions for each user role for Cypress Cloud:
 
 | Permission                                      |               |              |              |
 | ----------------------------------------------- | ------------- | ------------ | ------------ |
