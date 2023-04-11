@@ -321,3 +321,14 @@ div[class^='codeBlockTitle'] {
 [class^='docItemContainer'] {
   margin: 0 10px;
 }
+
+/* hides the osano widget */
+.osano-cm-widget {
+  display: none;
+}
+
+.logo {
+  width: 20px;
+  display: inline-block;
+  vertical-align: text-top;
+}
