@@ -361,23 +361,14 @@ You can set the `userAgent` as a
 configuration file or for a **single** `cy.visit()` by setting the User-Agent
 header in the options.
 
-In this example, Cypress will use the "In the visit" user-agent header and the
-network tab and log will show "In the config" since the setting of the headers
-happens in the proxy layer.
-
 ```javascript
-// cypress.config
-{
-  userAgent: 'In the config'
-}
-```
-
-```javascript
-// cypress/e2e/spec.cy.js
-cy.visit('https://www.whatismybrowser.com/detect/what-is-my-user-agent', {
-  headers: { 'user-agent': 'In the visit' },
+// You can check your user-agent using a third-party tool
+cy.visit('https://www.whatsmyua.info/', {
+  headers: {
+    // override user-agent string
+    'user-agent': 'MyBrowser/1.0 (CoolOS; v2)',
+  },
 })
-cy.log(`UserAgent: ${navigator.userAgent}`)
 ```
 
 Using a third-party tool, you can
