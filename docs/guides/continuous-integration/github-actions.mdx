@@ -92,7 +92,7 @@ on: push
 
 jobs:
   cypress-run:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -129,6 +129,31 @@ example project and place the above GitHub Action configuration in
   - Start the project web server (`npm start`)
   - Run the Cypress tests within our GitHub repository within Electron.
 
+## Testing on GitHub with Installed Browsers
+
+[GitHub-hosted runners](https://github.com/actions/runner-images) offer images
+with pre-installed browsers to use for testing. The `ubuntu` and `windows`
+runners each include Google Chrome, Mozilla Firefox and Microsoft Edge
+pre-installed. The `macos` runners additionally include Apple Safari. Refer to
+[GitHub Actions Runner Images](https://github.com/actions/runner-images/blob/main/README.md)
+for current details.
+
+Use the action's `browser` parameter to select the desired browser. To change
+the above example to select Chrome instead of the default browser Electron, add
+`browser: chrome` as follows.
+
+```yaml
+- name: Cypress run
+  uses: cypress-io/github-action@v5
+  with:
+    build: npm run build
+    start: npm start
+    browser: chrome
+```
+
+For more examples, see the action's
+[Browser](https://github.com/cypress-io/github-action#browser) section.
+
 ## Testing in Chrome and Firefox with Cypress Docker Images
 
 GitHub Actions provides the option to specify a container image for the job.
@@ -149,7 +174,7 @@ on: push
 
 jobs:
   cypress-run:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     container: cypress/browsers:node12.18.3-chrome87-ff82
     steps:
       - name: Checkout
@@ -191,7 +216,7 @@ on: push
 
 jobs:
   install:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     container: cypress/browsers:node12.18.3-chrome87-ff82
     steps:
       - name: Checkout
@@ -226,7 +251,7 @@ jobs:
   # install:
   # ....
   cypress-run:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     container: cypress/browsers:node12.18.3-chrome87-ff82
     steps:
       - name: Checkout
@@ -294,7 +319,7 @@ on: push
 
 jobs:
   install:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     container: cypress/browsers:node12.18.3-chrome87-ff82
     steps:
       - name: Checkout
@@ -345,7 +370,7 @@ jobs:
   # ...
 
   ui-chrome-tests:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     container: cypress/browsers:node12.18.3-chrome87-ff82
     needs: install
     strategy:
@@ -419,7 +444,7 @@ the configuration that was used in the install job.
 ```yaml
 #...
 ui-chrome-tests:
-  runs-on: ubuntu-latest
+  runs-on: ubuntu-22.04
   container: cypress/browsers:node12.18.3-chrome87-ff82
   needs: install
   strategy:
@@ -492,7 +517,7 @@ on: push
 jobs:
   cypress-run:
     name: Cypress run
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -519,7 +544,7 @@ on: push
 jobs:
   cypress-run:
     name: Cypress run
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout
         uses: actions/checkout@v3
