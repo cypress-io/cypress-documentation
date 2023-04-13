@@ -25,7 +25,7 @@
     "run-all-scripts": "./scripts/boom-shakalaka.sh"
   },
   "dependencies": {
-    "@docusaurus/core": "file:latest@docusaurus/plugin-google-gtag@latest@docusaurus/plugin-google-tag-manager@latest@docusaurus/preset-classic@latest@docusaurus/module-type-aliases@latest",
+    "@docusaurus/core": "^2.4.0",
     "@docusaurus/plugin-google-gtag": "^2.4.0",
     "@docusaurus/plugin-google-tag-manager": "^2.4.0",
     "@docusaurus/preset-classic": "^2.4.0",
