@@ -55,20 +55,14 @@ const config = {
         googleAnalytics: {
           trackingID: 'UA-59606812-1',
         },
-        gtag: {
-          trackingID: 'GTM-KNKBWLD',
+        googleTagManager: {
+          containerId: 'GTM-KNKBWLD',
         },
       },
     ],
   ],
 
   plugins: [
-    [
-      './plugins/osano',
-      {
-        id: 'docs-osano',
-      },
-    ],
     [
       './plugins/fav-icon',
       {
