@@ -64,6 +64,12 @@ const config = {
 
   plugins: [
     [
+      './plugins/osano',
+      {
+        id: 'docs-osano',
+      },
+    ],
+    [
       './plugins/fav-icon',
       {
         id: 'docs-fav-icon',
