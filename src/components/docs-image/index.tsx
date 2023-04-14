@@ -2,11 +2,15 @@ import React from 'react'
 import s from './style.module.css'
 import { DocsImageProps } from './types'
 
+// The current full width of the main content area on the largest screen
+const FULL_WIDTH = 938;
+
 export default function DocsImage({
   alt,
   caption,
   src,
   title,
+  fullWidth,
   width,
   height,
 }: DocsImageProps) {
@@ -16,6 +20,9 @@ export default function DocsImage({
   }
   if (height) {
     style.height = height
+  }
+  if (fullWidth) {
+    style.width = FULL_WIDTH;
   }
 
   return (

@@ -6,4 +6,5 @@ export interface DocsImageProps {
   width: number;
   height: number;
   noBorder: boolean
+  fullWidth?: boolean;
 }
