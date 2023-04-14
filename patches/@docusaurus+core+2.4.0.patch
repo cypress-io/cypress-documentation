@@ -1,0 +1,61 @@
+diff --git a/node_modules/@docusaurus/core/lib/client/ClientLifecyclesDispatcher.js b/node_modules/@docusaurus/core/lib/client/ClientLifecyclesDispatcher.js
+index 062d7c1..ebb4a89 100644
+--- a/node_modules/@docusaurus/core/lib/client/ClientLifecyclesDispatcher.js
++++ b/node_modules/@docusaurus/core/lib/client/ClientLifecyclesDispatcher.js
+@@ -16,7 +16,19 @@ export function dispatchLifecycleAction(lifecycleAction, ...args) {
+ }
+ function scrollAfterNavigation({ location, previousLocation, }) {
+     if (!previousLocation) {
+-        return; // no-op: use native browser feature
++      // if there is a hash and the element is not in view after some time, scroll to it
++      const { hash } = location;
++      if (!hash) {        
++        return; // no hash, noop out of function
++      }
++      setTimeout(() => {       
++        const id = decodeURIComponent(hash.substring(1));
++        const element = document.getElementById(id);
++        if(!isElementInView(element)) {
++          element?.scrollIntoView({ behavior: 'instant'});
++        }
++      }, 1000)
++      return; // no previous location so don't continue
+     }
+     const samePathname = location.pathname === previousLocation.pathname;
+     const sameHash = location.hash === previousLocation.hash;
+@@ -27,12 +39,17 @@ function scrollAfterNavigation({ location, previousLocation, }) {
+     }
+     const { hash } = location;
+     if (!hash) {
+-        window.scrollTo(0, 0);
++      window.scrollTo(0, 0);
+     }
+     else {
+-        const id = decodeURIComponent(hash.substring(1));
+-        const element = document.getElementById(id);
+-        element?.scrollIntoView();
++      const id = decodeURIComponent(hash.substring(1));
++      const element = document.getElementById(id);
++      element?.scrollIntoView();
++      setTimeout(() => {
++        if(!isElementInView(element)) {
++          element?.scrollIntoView({ behavior: 'instant'});
++        }         
++      }, 1000)
+     }
+ }
+ function ClientLifecyclesDispatcher({ children, location, previousLocation, }) {
+@@ -44,4 +61,13 @@ function ClientLifecyclesDispatcher({ children, location, previousLocation, }) {
+     }, [previousLocation, location]);
+     return children;
+ }
++function isElementInView(el) {
++  const rect = el.getBoundingClientRect();
++  return (
++    rect.top >= 0 &&
++    rect.left >= 0 &&
++    rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
++    rect.right <= (window.innerWidth || document.documentElement.clientWidth)
++  )
++}
+ export default ClientLifecyclesDispatcher;
