@@ -4,5 +4,6 @@ export interface DocsImageProps {
   src: string
   title: string
   width: number;
+  height: number;
   noBorder: boolean
 }

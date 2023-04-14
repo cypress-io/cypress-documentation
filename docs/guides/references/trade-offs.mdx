@@ -3,6 +3,12 @@ title: Trade-offs
 e2eSpecific: true
 ---
 
+<DocsImage
+  src={'/img/guides/getting-started/e2e/v10/testing-your-app-visit-fail.png'}
+  alt="Error in Cypress showing cy.visit failed"
+  height={1147}
+/>
+
 Cypress automates the browser with its own unique architecture. While this
 unlocks the power to do things you will not find anywhere else, there are
 specific trade-offs that are made. There is no free lunch!
@@ -177,6 +183,12 @@ server ← browser
   ↓
 server → browser
 ```
+
+<DocsImage
+  src={'/img/guides/getting-started/e2e/v10/testing-your-app-visit-fail.png'}
+  alt="Error in Cypress showing cy.visit failed"
+  height={1147}
+/>
 
 Use your server to receive messages from the browser, and simulate "the other
 participant" by sending messages as that participant. This is certainly

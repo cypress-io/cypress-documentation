@@ -7,15 +7,24 @@ export default function DocsImage({
   caption,
   src,
   title,
-  width
+  width,
+  height,
 }: DocsImageProps) {
+  let style: Record<string, number | string> = { maxWidth: '100%' }
+  if (width) {
+    style.width = width
+  }
+  if (height) {
+    style.height = height
+  }
+
   return (
     <div className={s.docsImage}>
       <img
         src={src}
         alt={alt || title || caption}
         title={title}
-        style={width && { width }}
+        style={style}
       />
       {caption && (
         <p className={s.caption} style={width && { width, maxWidth: '100%' }}>
