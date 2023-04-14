@@ -76,6 +76,7 @@ default values.
 | `reporter`             | `spec`                            | The [reporter](/guides/tooling/reporters) used during `cypress run`.                                                                                                                         |
 | `reporterOptions`      | `null`                            | The [reporter options](/guides/tooling/reporters#Reporter-Options) used. Supported options depend on the reporter.                                                                           |
 | `retries`              | `{ "runMode": 0, "openMode": 0 }` | The number of times to retry a failing test. Can be configured to apply to `cypress run` or `cypress open` separately. See [Test Retries](/guides/guides/test-retries) for more information. |
+| `stripCspDirectives`   | `all`                             | Indicates the Content-Security-Policy directives to be stripped during a test run. See [Content-Security-Policy](/guides/guides/content-security-policy) for more information.               |
 | `watchForFileChanges`  | `true`                            | Whether Cypress will watch and restart tests on test file changes.                                                                                                                           |
 
 ### Timeouts
@@ -363,6 +364,7 @@ readonly and cannot be changed at run time.
 - `screenshotOnRunFailure`
 - `scrollBehavior`
 - `slowTestThreshold`
+- `stripCspDirectives`
 - `testIsolation` - this option can only be overridden at the suite-specific
   override level
 - `viewportHeight`
@@ -681,6 +683,47 @@ This function was added in Cypress version `10.0.0` to replace the deprecated
 :::
 
 See the [plugins guide](/guides/tooling/plugins-guide) for more information.
+
+### stripCspDirectives
+
+Cypress will (by default) strip all CSP headers from the response before it is
+sent to the browser. This option allows for more granular control over which CSP
+directives are stripped from the CSP response headers, allowing you to test your
+application with CSP enabled.
+
+#### Strip All CSP Headers
+
+The default value of `stripCspDirectives` is `"all"`. This will remove all CSP
+headers from the response before it is sent to the browser. This option should
+be used if you do not depend on CSP for any tests in your application.
+
+#### Strip Minimum CSP Directives
+
+If you need to test your application with CSP enabled, you can set the
+`stripCspDirectives` option to `"minimum"`. This will allow all CSP headers to
+be sent to the browser _*except*_ those that would prevent Cypress from
+functioning Normally. The following CSP directives are automatically stripped
+from the CSP headers when `stripCspDirectives` is set to `"minimum"`:
+
+| Stripped Directive | Reason                                                                          |
+| ------------------ | ------------------------------------------------------------------------------- |
+| `frame-ancestors`  | This directive prevents Cypress from loading a test application into an iframe. |
+
+#### Strip Specific CSP Directives
+
+If you need to test your application with CSP enabled, but need to strip
+specific CSP directives, you can set the `stripCspDirectives` option to an array
+of directive names. This will allow all CSP directives to be sent to the browser
+_except_ those that are defined in the `stripCspDirectives` array.
+
+:::caution
+
+Defining `stripCspDirectives` _*without*_ including the directives listed in the
+[minimum directives table](#Strip-Minimum-CSP-Directives) will potentially cause
+Cypress to be unable to run tests against your application. This may be desired
+if you are testing against specific CSP directives.
+
+:::
 
 ## Common problems
 
