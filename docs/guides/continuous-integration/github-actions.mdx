@@ -92,7 +92,7 @@ on: push
 
 jobs:
   cypress-run:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -129,18 +129,43 @@ example project and place the above GitHub Action configuration in
   - Start the project web server (`npm start`)
   - Run the Cypress tests within our GitHub repository within Electron.
 
-## Testing in Chrome and Firefox with Cypress Docker Images
+## Testing on GitHub with Installed Browsers
+
+[GitHub-hosted runners](https://github.com/actions/runner-images) offer images
+with pre-installed browsers to use for testing. The `ubuntu` and `windows`
+runners each include Google Chrome, Mozilla Firefox and Microsoft Edge
+pre-installed. The `macos` runners additionally include Apple Safari. Refer to
+[GitHub Actions Runner Images](https://github.com/actions/runner-images/blob/main/README.md)
+for current details.
+
+Use the action's `browser` parameter to select the desired browser. To change
+the above example to select Chrome instead of the default browser Electron, add
+`browser: chrome` as follows.
+
+```yaml
+- name: Cypress run
+  uses: cypress-io/github-action@v5
+  with:
+    build: npm run build
+    start: npm start
+    browser: chrome
+```
+
+For more examples, see the action's
+[Browser](https://github.com/cypress-io/github-action#browser) section.
+
+## Testing with Cypress Docker Images
 
 GitHub Actions provides the option to specify a container image for the job.
 Cypress offers various
 [Docker Images](https://github.com/cypress-io/cypress-docker-images) for running
 Cypress locally and in CI.
 
-Below we add the `container` attribute using a
+Below we extend the previous example by adding the `container` attribute using a
 [Cypress Docker Image](https://github.com/cypress-io/cypress-docker-images)
-built with Google Chrome and Firefox. For example, this allows us to run the
-tests in Firefox by passing the `browser: firefox` attribute to the
-[Cypress GitHub Action](https://github.com/marketplace/actions/cypress-io).
+built with Google Chrome `107`. This allows us to fix our test to a specific
+browser version without any influence due to browser version changes in the
+GitHub runner image.
 
 ```yaml
 name: Cypress Tests using Cypress Docker Image
@@ -149,53 +174,59 @@ on: push
 
 jobs:
   cypress-run:
-    runs-on: ubuntu-latest
-    container: cypress/browsers:node12.18.3-chrome87-ff82
+    runs-on: ubuntu-22.04
+    container: cypress/browsers:node18.12.0-chrome107
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-
-      # Install NPM dependencies, cache them correctly
-      # and run all Cypress tests
       - name: Cypress run
         uses: cypress-io/github-action@v5
         with:
-          # Specify Browser since container image is compiled with Firefox
-          browser: firefox
+          build: npm run build
+          start: npm start
+          browser: chrome
 ```
 
 ## Caching Dependencies and Build Artifacts
 
-The Cypress team maintains the official
-[Cypress GitHub Action](https://github.com/marketplace/actions/cypress-io) for
-running Cypress tests. This action provides npm installation, custom caching,
-additional configuration options and simplifies setting up advanced workflows
-with Cypress in the GitHub Actions platform.
-
 :::info
 
 Caching of dependencies and build artifacts between installation and worker jobs
-can be accomplished with the
+can be accomplished by combining the
+[Cypress GitHub Action](https://github.com/marketplace/actions/cypress-io) with
+the GitHub
 [Upload/Download Artifact Actions](https://docs.github.com/en/actions/guides/storing-workflow-data-as-artifacts).
 
 :::
 
 The `install` job below uses the
 [upload-artifact](https://github.com/marketplace/actions/upload-a-build-artifact)
-action and will save the state of the `build` directory for the worker jobs.
+action and saves the state of the `build` directory for the `cypress-run` worker
+job.
+
+The
+[download-artifact](https://github.com/marketplace/actions/download-a-build-artifact)
+action retrieves the `build` directory saved in the `install` job, as seen below
+in the `cypress-run` worker job.
 
 ```yaml
-name: Cypress Tests with installation job
+name: Cypress Tests with Dependency and Artifact Caching
 
 on: push
 
 jobs:
   install:
-    runs-on: ubuntu-latest
-    container: cypress/browsers:node12.18.3-chrome87-ff82
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
+      - name: Cypress install
+        uses: cypress-io/github-action@v5
+        with:
+          # Disable running of tests within install job
+          runTests: false
+          build: npm run build
 
       - name: Save build folder
         uses: actions/upload-artifact@v3
@@ -204,48 +235,24 @@ jobs:
           if-no-files-found: error
           path: build
 
-      - name: Cypress install
-        uses: cypress-io/github-action@v5
-        with:
-          # Disable running of tests within install job
-          runTests: false
-          build: yarn build
-```
-
-The
-[download-artifact](https://github.com/marketplace/actions/download-a-build-artifact)
-action will retrieve the `build` directory saved in the install job, as seen
-below in a worker job.
-
-```yaml
-name: Cypress Tests with Dependency and Artifact Caching
-
-on: push
-
-jobs:
-  # install:
-  # ....
   cypress-run:
-    runs-on: ubuntu-latest
-    container: cypress/browsers:node12.18.3-chrome87-ff82
+    runs-on: ubuntu-22.04
+    needs: install
     steps:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Download the build folders
+      - name: Download the build folder
         uses: actions/download-artifact@v3
         with:
           name: build
           path: build
 
-      # Install NPM dependencies, cache them correctly
-      # and run all Cypress tests
       - name: Cypress run
         uses: cypress-io/github-action@v5
         with:
-          # Specify Browser since container image is compiled with Firefox
-          browser: firefox
-          build: yarn build
+          start: npm start
+          browser: chrome
 ```
 
 ## Parallelization
@@ -294,7 +301,7 @@ on: push
 
 jobs:
   install:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     container: cypress/browsers:node12.18.3-chrome87-ff82
     steps:
       - name: Checkout
@@ -345,7 +352,7 @@ jobs:
   # ...
 
   ui-chrome-tests:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     container: cypress/browsers:node12.18.3-chrome87-ff82
     needs: install
     strategy:
@@ -419,7 +426,7 @@ the configuration that was used in the install job.
 ```yaml
 #...
 ui-chrome-tests:
-  runs-on: ubuntu-latest
+  runs-on: ubuntu-22.04
   container: cypress/browsers:node12.18.3-chrome87-ff82
   needs: install
   strategy:
@@ -492,7 +499,7 @@ on: push
 jobs:
   cypress-run:
     name: Cypress run
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -519,7 +526,7 @@ on: push
 jobs:
   cypress-run:
     name: Cypress run
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout
         uses: actions/checkout@v3
