@@ -226,7 +226,7 @@ cy.get('selector').should('exist') // Cypress errors
 
 We do not recommend visiting a superdomain that you don't control in your tests
 which you can read more about
-[here](/guides/references/best-practices#Visiting-external-sites)
+[here](/guides/references/best-practices#Visiting-External-Sites)
 
 However, if you control this superdomain, either by owning the hosted instance
 or by other means, we recommend testing this superdomain with `cy.origin`.
@@ -395,7 +395,7 @@ cy.origin('http://some.superdomain.com', () => {
 Sometimes, when using `cy.origin` and especially with websites that are not
 under your immediate test control, cross-origin errors may still tend to creep
 up. We don't recommend visiting or interacting with sites you
-[do not control](/guides/references/best-practices#Visiting-external-sites).
+[do not control](/guides/references/best-practices#Visiting-External-Sites).
 However, if this is necessary, most of these issues can usually be remedied by
 applying` the
 [modify obstructive third-party code](/guides/references/experiments#Configuration)
