@@ -175,7 +175,7 @@ on: push
 jobs:
   cypress-run:
     runs-on: ubuntu-22.04
-    container: cypress/browsers:node16.16.0-chrome105-ff104-edge
+    container: cypress/browsers:node18.12.0-chrome107
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -238,7 +238,7 @@ jobs:
 
   cypress-run:
     runs-on: ubuntu-22.04
-    container: cypress/browsers:node16.16.0-chrome105-ff104-edge
+    needs: install
     steps:
       - name: Checkout
         uses: actions/checkout@v3
