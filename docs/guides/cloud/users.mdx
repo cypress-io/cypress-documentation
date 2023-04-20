@@ -7,22 +7,24 @@ A user is anyone who logs in to Cypress Cloud.
 
 ## Invite users
 
-You can invite users from [Cypress Cloud](https://on.cypress.io/cloud). Invited
-users will see all projects and tests run for the organization.
+Organization [owner or admin](#User-roles) roles can invite
+[Cypress Cloud](https://on.cypress.io/cloud) users. Those invited will see all
+projects and tests run for the organization.
+
+_Note: only owners can give other users 'owner' access._
 
 ### Invite a user to an organization:
 
-1. Go the [Organizations page](https://on.cypress.io/cloud/organizations) to
-   select the organization you want to invite a user to.
-2. Click **Users**, then **Invite User**. _Note: you must have the
-   [role of 'owner' or 'admin'](#User-roles) to invite users._
-3. Fill in their email and select their [role](#User-roles) then click **Invite
-   User** _Note: only owners can give other users 'owner' access._
+1. Select the [organization](/guides/cloud/organizations) you want to invite a
+   user to.
+2. Click **Users**, then **Invite User**.
+3. Fill in their email and select their [role](#User-roles), then click **Invite
+   User**.
 4. The user will receive an invitation email with a link to accept the
    invitation.
 
 <DocsImage
-  src="/img/dashboard/invite-user-dialog.png"
+  src="/img/guides/cloud/users/invite-user-dialog.jpg"
   alt="Invite User dialog"
 />
 
@@ -51,20 +53,19 @@ Cypress Cloud. From there, you will have the choice of authenitication type:
 
 #### **Sign Up with Single Sign On (SSO) Authentication**
 
-Refer to our
-[Enterprise SSO Guide](https://on.cypress.io/organizations#Slack-Integration)
+Refer to our [Enterprise SSO Guide](/guides/cloud/organizations#Enterprise-SSO).
 
 ## User roles
 
 Users can be assigned roles that affect their access to certain features of
 [Cypress Cloud](https://on.cypress.io/cloud).
 
-- **Member:** Can see the projects, runs, and keys.
+- **Member:** Can see projects, runs, and keys.
 - **Admin:** Can also invite, edit and delete users.
 - **Owner:** Can also transfer or delete projects. Can delete and edit the
   organization.
 
-The permissions for each user role for Cypress Cloud.
+The permissions for each user role for Cypress Cloud:
 
 | Permission                                      |               |              |              |
 | ----------------------------------------------- | ------------- | ------------ | ------------ |
@@ -83,7 +84,7 @@ The permissions for each user role for Cypress Cloud.
 | Edit 'member' in organization                   |               | ✅ **Admin** | ✅ **Owner** |
 | Edit 'admin' in organization                    |               | ✅ **Admin** | ✅ **Owner** |
 | Edit project name                               |               | ✅ **Admin** | ✅ **Owner** |
-| Edit project status (private/public}            |               | ✅ **Admin** | ✅ **Owner** |
+| Edit project status (private/public)            |               | ✅ **Admin** | ✅ **Owner** |
 | Add or delete record keys                       |               | ✅ **Admin** | ✅ **Owner** |
 | Set up GitHub Integration                       |               | ✅ **Admin** | ✅ **Owner** |
 | Set up Slack Integration                        |               | ✅ **Admin** | ✅ **Owner** |
@@ -112,14 +113,9 @@ deny them access.
 
 ## User updates
 
-Changes can be made to both the primary email address associated with your
-Cypress Cloud account and the email address for billing notifications.
+To change a user email, an **Owner** or **Admin** can invite the new user/email
+address and delete the previous user/email address.
 
-For updating the primary email address associated with Cypress Cloud, click your
-Profile picture in the upper left corner of the Organizations page. Select
-**Manage Profile**. Go to the **Email** field and select your preferred email
-address. _Note: The email list is limited to emails provided by login provider._
-
-If you would like to update the billing email address, that can be done via the
-**Billing & Usage** page within [Cypress Cloud](https://on.cypress.io/cloud) or
-you contact them directly at [billing@cypress.io](mailto:billing@cypress.io).
+Update the billing email address via the **Billing & Usage** page within
+[Cypress Cloud](https://on.cypress.io/cloud) or by contacting
+[billing@cypress.io](mailto:billing@cypress.io) directly.
