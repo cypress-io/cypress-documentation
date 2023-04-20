@@ -7,6 +7,15 @@ Cypress comes with its own API for creating custom commands and overwriting
 existing commands. The built in Cypress commands use the very same API that's
 defined below.
 
+There are two API available for adding custom commands:
+
+- [`Cypress.Commands.add()`](#Syntax) - use to add a custom command to use when
+  writing tests
+- [`Cypress.Command.overwrite()`](#Overwrite-Existing-Commands) - use to
+  override an existing built-in Cypress command or reserved internal function.
+  **Caution:** this overrides it for Cypress as well and could impact how
+  Cypress behaves.
+
 :::info
 
 If you want your method to have builtin
