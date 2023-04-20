@@ -217,7 +217,6 @@ on: push
 jobs:
   install:
     runs-on: ubuntu-22.04
-    container: cypress/browsers:node18.12.0-chrome107
     steps:
       - name: Checkout
         uses: actions/checkout@v3
