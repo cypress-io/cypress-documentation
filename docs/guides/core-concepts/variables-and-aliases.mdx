@@ -438,7 +438,7 @@ cy.get('@favoriteColor').then(function (aliasValue) {
 ```
 
 In the second `.then()` block, `cy.get('@favoriteColor')` runs
-`cy.wrap(favorites).its('color')` fresh each time, but `this.color` was set when
+`cy.wrap(favorites).its('color')` fresh each time, but `this.favoriteColor` was set when
 the alias was first stored, back when our favorite color was blue.
 
 ### Elements
