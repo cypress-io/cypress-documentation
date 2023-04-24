@@ -442,10 +442,10 @@ under custom environment variables.
 - Remote: `COMMIT_INFO_REMOTE`
 
 If the commit information is missing in the Cypress Cloud run then
-[GitHub Integration](/guides/cloud/integrations/github-integration) or other tasks might not
-work correctly. To see the relevant Cypress debug logs, set the environment
-variable `DEBUG` on your CI machine and inspect the terminal output to see why
-the commit information is unavailable.
+[GitHub Integration](/guides/cloud/integrations/github-integration) or other
+tasks might not work correctly. To see the relevant Cypress debug logs, set the
+environment variable `DEBUG` on your CI machine and inspect the terminal output
+to see why the commit information is unavailable.
 
 ```shell
 DEBUG=commit-info,cypress:server:record
