@@ -14,37 +14,6 @@ guide for a list of supported development servers and how they are configured.
 Below are more advanced configuration options you can customize to fit your
 project.
 
-## Custom Dev Server
-
-A custom function can be passed into the `devServer` option, which allows the
-use of other dev servers not provided by Cypress out of the box. These can be
-from the Cypress community, preview builds not included with the app, or a
-custom one you create.
-
-The function's signature takes in a
-[Cypress Configuration](/guides/references/configuration) object as its only
-parameter and returns either an instance of a `devServer` or a promise that
-resolves to a `devServer` instance.
-
-:::cypress-config-example
-
-```ts
-{
-  component: {
-    devServer(cypressConfig: CypressConfiguration) {
-      // return devServer instance or a promise that resolves to
-      // a dev server here
-      return {
-        port: 1234,
-        close: () => {},
-      }
-    },
-  },
-}
-```
-
-:::
-
 ## Custom Index File
 
 By default, Cypress renders your components into an HTML file located at
@@ -64,6 +33,69 @@ in the [component config](/guides/references/configuration#component) options:
   }
 }
 ```
+
+## Custom Dev Server
+
+A custom function can be passed into the `devServer` option, which allows the
+use of build systems not provided by Cypress out of the box. These can be
+from the Cypress community, preview builds not included with the app, or a
+custom one you create.
+
+The function's signature takes in a object with the following properties as its only
+parameter and needs to resolve an object containing the port of your dev server.
+
+```ts
+interface DevServerOptions {
+  specs: Cypress.Spec[]
+  cypressConfig: Cypress.PluginConfigOptions
+  devServerEvents: NodeJS.EventEmitter
+}
+```
+
+:::cypress-config-example
+
+```ts
+{
+  component: {
+    async devServer({specs, cypressConfig, devServerEvents}: DevServerOptions) {
+      const port = await startDevServer(specs, cypressConfig, devServerEvents)
+      return {
+        port: port
+      }
+    },
+  },
+}
+```
+
+:::
+
+Any requests triggered during a test using the `devServerPublicPathRoute` as defined
+in the `cypressConfig` will be forwarded to your server. The cypress-runner will
+trigger a request for an index.html when a test is started. Your server needs to send
+the custom index.html file after injecting a script to load the actual test.
+If you do not bundle your support file along with the tests, you need to add a separate
+import statement for the support file.
+
+```ts
+const CypressInstance = (window.Cypress = parent.Cypress)
+const { absolute, relative } = CypressInstance.spec
+const relativeUrl = `${CypressInstance.config('devServerPublicPathRoute')}/${relative}`
+
+// load the testfile - you can extend the load function to also load css
+CypressInstance.onSpecWindow(
+  window,
+  [{ absolute, relative, relativeUrl, load: () => import(relativeUrl) }]
+)
+
+// then start the test process
+CypressInstance.action('app:window:before:load', window)
+```
+
+The `devServerEvents` event emitter should be used to notify cypress about 
+finished builds by emitting the `dev-server:compile:success`-event and to
+listen for the `dev-server:specs:changed`-event that will notify you about
+changed entry points.
+
 
 ## Spec Pattern for Component Tests
 
