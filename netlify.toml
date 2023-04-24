@@ -325,7 +325,7 @@
 
 [[redirects]]
   from = "/guides/dashboard/bitbucket-integration"
-  to = "/guides/cloud/bitbucket-integration"
+  to = "/guides/cloud/integrations/bitbucket-integration"
   status = 301
   force = true
 
@@ -343,13 +343,13 @@
 
 [[redirects]]
   from = "/guides/dashboard/github-integration"
-  to = "/guides/cloud/github-integration"
+  to = "/guides/cloud/integrations/github-integration"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/dashboard/gitlab-integration"
-  to = "/guides/cloud/gitlab-integration"
+  to = "/guides/cloud/integrations/gitlab-integration"
   status = 301
   force = true
 
@@ -361,7 +361,7 @@
 
 [[redirects]]
   from = "/guides/dashboard/jira-integration"
-  to = "/guides/cloud/jira-integration"
+  to = "/guides/cloud/integrations/jira-integration"
   status = 301
   force = true
 
@@ -385,7 +385,7 @@
 
 [[redirects]]
   from = "/guides/dashboard/slack-integration"
-  to = "/guides/cloud/slack-integration"
+  to = "/guides/cloud/integrations/slack-integration"
   status = 301
   force = true
 
