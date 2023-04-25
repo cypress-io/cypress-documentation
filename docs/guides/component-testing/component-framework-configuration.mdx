@@ -128,34 +128,29 @@ const devServerPublicPathRoute = CypressInstance.config(
   'devServerPublicPathRoute'
 )
 
-const imports = []
+let importPromise = Promise.resolve()
 
 // If you do not bundle your support file along with the tests,
 // you need to add a separate import statement for the support file.
-if (CypressInstance.config('supportFile')) {
-  const absolute = CypressInstance.config('supportFile')
-  const relative = absolute.replace(CypressInstance.config('projectRoot'), '')
-  const relativeUrl = `${devServerPublicPathRoute}${relative}`
-  imports.push({
-    absolute,
-    relative,
-    relativeUrl,
-    load: () => import(relativeUrl),
-  })
+const supportFilePath = CypressInstance.config('supportFile')
+if (supportFilePath) {
+  const relative = supportFilePath.replace(
+    CypressInstance.config('projectRoot'),
+    ''
+  )
+  importPromise = importPromise.then(
+    () => import(`${devServerPublicPathRoute}${relative}`)
+  )
 }
 
 // load the testfile - you can extend the load function to also load css
-const { absolute, relative } = CypressInstance.spec
-const relativeUrl = `${devServerPublicPathRoute}/${relative}`
-imports.push({
-  absolute,
-  relative,
-  relativeUrl,
-  load: () => import(relativeUrl),
-})
+const { relative } = CypressInstance.spec
+importPromise = importPromise.then(
+  () => import(`${devServerPublicPathRoute}/${relative}`)
+)
 
 // trigger loading the imports
-CypressInstance.onSpecWindow(window, imports)
+CypressInstance.onSpecWindow(window, importPromise)
 
 // then start the test process
 CypressInstance.action('app:window:before:load', window)
