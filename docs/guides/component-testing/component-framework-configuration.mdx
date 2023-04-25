@@ -72,25 +72,90 @@ interface DevServerOptions {
 
 Any requests triggered during a test using the `devServerPublicPathRoute` as
 defined in the `cypressConfig` will be forwarded to your server. Cypress will
-trigger a request for `component-index.html` when a test is started. Your server
-needs to reply with a custom `index.html` file as specified via
-`cypressConfig.indexHtmlFile` after injecting a script to load the actual test.
-An example of this can bee seen in
+trigger a request for `[devServerPublicPathRoute]/index.html` when a test is
+started. Your server needs to reply with the html-file referenced in
+`cypressConfig.indexHtmlFile` and inject a script to load the support files and
+the actual test.
+
+```ts
+function createServer(cypressConfig, bundleDir, port = 1234) {
+  const app = express()
+
+  // read kickstart script - see below for an example
+  const clientScript = readFileSync(
+    path.join(__dirname, './client-script.js'),
+    'utf8'
+  )
+
+  app.get(
+    cypressConfig.devServerPublicPathRoute + '/index.html',
+    async (_req, res) => {
+      // read custom index.html file
+      const html = await fs.readFile(
+        path.join(cypressConfig.repoRoot, cypressConfig.indexHtmlFile),
+        { encoding: 'utf8' }
+      )
+
+      // inject kickstart-script
+      const output = html.replace(
+        '</head>',
+        `<script type="module">${clientScript}</script></head>`
+      )
+      res.send(output)
+    }
+  )
+
+  // you need to establish some url-to-path-mapping, if your bundler outputs
+  // the full directory structure you can map this one to one
+  app.use(cypressConfig.devServerPublicPathRoute, express.static(bundleDir))
+
+  app.listen(port)
+}
+```
+
+For a real-world example, you can refer to
 [this loader](https://github.com/cypress-io/cypress/blob/466155c2125476374d9f9549530f67d0c6354a41/npm/vite-dev-server/src/plugins/cypress.ts#L82-L92)
-used by the vite-devserver. If you do not bundle your support file along with
-the tests, you need to add a separate import statement for the support file.
+used by the vite-devserver.
+
+The client script must retrieve information on the currently active test from
+the Cypress instance of the parent frame and load the corresponding bundle. If a
+support file is defined, it should be injected at the top of your test bundle or
+loaded before the test script.
 
 ```ts
 const CypressInstance = (window.Cypress = parent.Cypress)
-const { absolute, relative } = CypressInstance.spec
-const relativeUrl = `${CypressInstance.config(
+const devServerPublicPathRoute = CypressInstance.config(
   'devServerPublicPathRoute'
-)}/${relative}`
+)
+
+const imports = []
+
+// If you do not bundle your support file along with the tests,
+// you need to add a separate import statement for the support file.
+if (CypressInstance.config('supportFile')) {
+  const absolute = CypressInstance.config('supportFile')
+  const relative = absolute.replace(CypressInstance.config('projectRoot'), '')
+  const relativeUrl = `${devServerPublicPathRoute}${relative}`
+  imports.push({
+    absolute,
+    relative,
+    relativeUrl,
+    load: () => import(relativeUrl),
+  })
+}
 
 // load the testfile - you can extend the load function to also load css
-CypressInstance.onSpecWindow(window, [
-  { absolute, relative, relativeUrl, load: () => import(relativeUrl) },
-])
+const { absolute, relative } = CypressInstance.spec
+const relativeUrl = `${devServerPublicPathRoute}/${relative}`
+imports.push({
+  absolute,
+  relative,
+  relativeUrl,
+  load: () => import(relativeUrl),
+})
+
+// trigger loading the imports
+CypressInstance.onSpecWindow(window, imports)
 
 // then start the test process
 CypressInstance.action('app:window:before:load', window)
