@@ -43,7 +43,7 @@ you create.
 
 The function's signature takes in a object with the following properties as its
 only parameter and needs to resolve an object containing the port of your dev
-server.
+server and a callback to shut it down.
 
 ```ts
 interface DevServerOptions {
@@ -59,9 +59,11 @@ interface DevServerOptions {
 {
   component: {
     async devServer({specs, cypressConfig, devServerEvents}: DevServerOptions) {
-      const port = await startDevServer(specs, cypressConfig, devServerEvents)
+      const {port, close} = await startDevServer(specs, cypressConfig, devServerEvents)
+
       return {
-        port: port
+        port,
+        close 
       }
     },
   },
