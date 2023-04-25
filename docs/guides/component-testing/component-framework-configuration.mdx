@@ -71,11 +71,14 @@ interface DevServerOptions {
 :::
 
 Any requests triggered during a test using the `devServerPublicPathRoute` as
-defined in the `cypressConfig` will be forwarded to your server. The
-cypress-runner will trigger a request for an index.html when a test is started.
-Your server needs to send the custom index.html file after injecting a script to
-load the actual test. If you do not bundle your support file along with the
-tests, you need to add a separate import statement for the support file.
+defined in the `cypressConfig` will be forwarded to your server. Cypress will
+trigger a request for `component-index.html` when a test is started. Your server
+needs to reply with a custom `index.html` file as specified via
+`cypressConfig.indexHtmlFile` after injecting a script to load the actual test.
+An example of this can bee seen in
+[this loader](https://github.com/cypress-io/cypress/blob/466155c2125476374d9f9549530f67d0c6354a41/npm/vite-dev-server/src/plugins/cypress.ts#L82-L92)
+used by the vite-devserver. If you do not bundle your support file along with
+the tests, you need to add a separate import statement for the support file.
 
 ```ts
 const CypressInstance = (window.Cypress = parent.Cypress)
@@ -93,9 +96,12 @@ CypressInstance.onSpecWindow(window, [
 CypressInstance.action('app:window:before:load', window)
 ```
 
+For a more complete example you can check out the
+[kickstart script used in the vite-devserver.](https://github.com/cypress-io/cypress/blob/develop/npm/vite-dev-server/client/initCypressTests.js)
+
 The `devServerEvents` event emitter should be used to notify cypress about
-finished builds by emitting the `dev-server:compile:success`-event and to listen
-for the `dev-server:specs:changed`-event that will notify you about changed
+finished builds by emitting a `dev-server:compile:success` event and to listen
+for the `dev-server:specs:changed` event that will notify you about changed
 entry points.
 
 ## Spec Pattern for Component Tests
