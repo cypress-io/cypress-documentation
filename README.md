@@ -5,7 +5,7 @@ Cloud & FAQ found at https://docs.cypress.io.
 
 ![Cypress Documentation Preview](/static/img/cypress-docs.png)
 
-## CI status
+## CI status test
 
 [![CircleCI](https://circleci.com/gh/cypress-io/cypress-documentation/tree/main.svg?style=svg)](https://circleci.com/gh/cypress-io/cypress-documentation/tree/main)
 `main` branch
