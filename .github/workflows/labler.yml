@@ -1,0 +1,17 @@
+name: Labler
+
+on:
+  pull_request:
+    types: [opened, unlabeled, labeled]
+
+jobs:
+  add_labels:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions-ecosystem/action-add-labels@v1
+        if: ${{ startsWith(github.event.pull_request.title, 'plugin') }}
+        with:
+          github_token: ${{ secrets.GH_PAT }}
+          labels: 
+            plugin
