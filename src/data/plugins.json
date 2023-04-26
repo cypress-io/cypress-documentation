@@ -975,6 +975,20 @@
           "link": "https://github.com/bahmutov/cypress-svelte-unit-test",
           "keywords": ["component", "svelte"],
           "badge": "experimental"
+        },
+        {
+          "name": "cypress-ct-custom-devserver",
+          "description": "Simplified API for creating custom dev servers for Cypress.",
+          "link": "https://github.com/fochlac/cypress-ct-custom-devserver",
+          "keywords": ["component", "buildtool", "devserver"],
+          "badge": "community"
+        },
+        {
+          "name": "cypress-devserver-esbuild",
+          "description": "Build Cypress Component Tests using esbuild.",
+          "link": "https://github.com/fochlac/cypress-devserver-esbuild",
+          "keywords": ["component", "esbuild", "devserver"],
+          "badge": "community"
         }
       ]
     },
