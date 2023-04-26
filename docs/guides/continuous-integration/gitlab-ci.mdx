@@ -78,7 +78,7 @@ stages:
   - test
 
 test:
-  image: cypress/browsers:node12.14.1-chrome85-ff81
+  image: cypress/browsers:latest
   stage: test
   script:
     # install dependencies
@@ -109,7 +109,7 @@ cache:
     - .npm/
 
 test:
-  image: cypress/browsers:node12.14.1-chrome85-ff81
+  image: cypress/browsers:latest
   stage: test
   script:
     # install dependencies
@@ -174,7 +174,7 @@ cache:
 
 ## Install NPM dependencies and Cypress
 install:
-  image: cypress/browsers:node12.14.1-chrome85-ff81
+  image: cypress/browsers:latest
   stage: build
   script:
     - npm ci
@@ -210,13 +210,13 @@ cache:
 
 ## Install NPM dependencies and Cypress
 install:
-  image: cypress/browsers:node12.14.1-chrome85-ff81
+  image: cypress/browsers:latest
   stage: build
   script:
     - npm ci
 
 ui-chrome-tests:
-  image: cypress/browsers:node12.14.1-chrome85-ff81
+  image: cypress/browsers:latest
   stage: test
   parallel: 5
   script:

@@ -175,7 +175,7 @@ on: push
 jobs:
   cypress-run:
     runs-on: ubuntu-22.04
-    container: cypress/browsers:node18.12.0-chrome107
+    container: cypress/browsers:latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -302,7 +302,7 @@ on: push
 jobs:
   install:
     runs-on: ubuntu-22.04
-    container: cypress/browsers:node18.12.0-chrome107
+    container: cypress/browsers:latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -353,7 +353,7 @@ jobs:
 
   ui-chrome-tests:
     runs-on: ubuntu-22.04
-    container: cypress/browsers:node18.12.0-chrome107
+    container: cypress/browsers:latest
     needs: install
     strategy:
       fail-fast: false
@@ -427,7 +427,7 @@ the configuration that was used in the install job.
 #...
 ui-chrome-tests:
   runs-on: ubuntu-22.04
-  container: cypress/browsers:node18.12.0-chrome107
+  container: cypress/browsers:latest
   needs: install
   strategy:
     fail-fast: false
