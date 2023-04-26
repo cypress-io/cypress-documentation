@@ -142,7 +142,7 @@ application.
 
 ```javascript
 // Test code
-cy.visit('https://app.corp.com')
+cy.visit('https://example.cypress.io')
 ```
 
 In your application code, you set `cookies` and store a session on the browser.
@@ -152,7 +152,7 @@ your application code.
 ```html
 <!-- Application code -->
 <html>
-  <a href="http://app.corp.com/page2">Page 2</a>
+  <a href="http://example.cypress.io/page2">Page 2</a>
 </html>
 ```
 
@@ -160,13 +160,13 @@ Cypress will immediately fail with the following test code:
 
 ```javascript
 // Test code
-cy.visit('https://app.corp.com')
+cy.visit('https://example.cypress.io')
 cy.get('a').click() // will fail
 ```
 
 Browsers refuse to display insecure content on a secure page. Because Cypress
-initially changed its URL to match `https://app.corp.com` when the browser
-followed the `href` to `http://app.corp.com/page2`, the browser will refuse to
+initially changed its URL to match `https://example.cypress.io` when the browser
+followed the `href` to `http://example.cypress.io/page2`, the browser will refuse to
 display the contents.
 
 Now you may be thinking, _This sounds like a problem with Cypress because when I

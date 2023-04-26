@@ -75,10 +75,10 @@ it('navigates', () => {
 ```
 
 ```javascript
-// this will error because stackoverflow.com doesn't match the cypress.io superdomain
+// this will error because anotherwebsite.com doesn't match the cypress.io superdomain
 it('navigates', () => {
   cy.visit('https://www.cypress.io')
-  cy.visit('https://stackoverflow.com')
+  cy.visit('https://anotherwebsite.com')
   cy.get('selector')
 })
 ```
@@ -89,8 +89,8 @@ the sequential command should run against:
 ```javascript
 it('navigates', () => {
   cy.visit('https://www.cypress.io')
-  cy.visit('https://stackoverflow.com')
-  cy.origin('https://stackoverflow.com', () => {
+  cy.visit('https://anotherwebsite.com')
+  cy.origin('https://anotherwebsite.com', () => {
     cy.get('selector') // yup all good
   })
 })
@@ -103,7 +103,7 @@ it('navigates', () => {
 
 // split visiting different origin in another test
 it('navigates to new origin', () => {
-  cy.visit('https://stackoverflow.com')
+  cy.visit('https://anotherwebsite.com')
   cy.get('selector') // yup all good
 })
 ```

@@ -37,15 +37,15 @@ Pass in an options object to change the default behavior of
 `cy.getAllLocalStorage()` yields an object where the keys are origins and the
 values are key-value pairs of `localStorage` data.
 
-For example, if `key1` is set to `value1` on `https://example.com` and `key2` is
-set to `value2` on `https://other.com`, `cy.getAllLocalStorage()` will yield:
+For example, if `key1` is set to `value1` on `https://origin1.com` and `key2` is
+set to `value2` on `https://origin2.com`, `cy.getAllLocalStorage()` will yield:
 
 ```js
 {
-  'https://example.com': {
+  'https://origin1.com': {
     key1: 'value1',
   },
-  'https://other.com': {
+  'https://origin2.com': {
     key2: 'value2',
   },
 }
@@ -56,7 +56,7 @@ set to `value2` on `https://other.com`, `cy.getAllLocalStorage()` will yield:
 ### Get all localStorage
 
 ```javascript
-cy.visit('https://example.com', {
+cy.visit('/users', {
   onBeforeLoad(win) {
     win.localStorage.setItem('key', 'value')
   },
@@ -64,7 +64,7 @@ cy.visit('https://example.com', {
 
 cy.getAllLocalStorage().then((result) => {
   expect(result).to.deep.equal({
-    'https://example.com': {
+    '/users': {
       key: 'value',
     },
   })

@@ -539,8 +539,8 @@ explicitly visit the domain in your login command before calling `cy.session()`.
 
 ```jsx
 const login = (name) => {
-  if (location.hostname !== 'example.com') {
-    cy.visit('example.com')
+  if (location.hostname !== 'cypress.io') {
+    cy.visit('cypress.io')
   }
   cy.session(name, () => {
     cy.visit('/login')
@@ -557,7 +557,7 @@ const login = (name) => {
 
 it('t1', () => {
   login('bob')
-  // do things on example.com
+  // do things on cypress.io
 })
 
 it('t2', () => {
@@ -567,7 +567,7 @@ it('t2', () => {
 
 it('t3', () => {
   login('bob')
-  // do things on example.com
+  // do things on cypress.io
 })
 ```
 
