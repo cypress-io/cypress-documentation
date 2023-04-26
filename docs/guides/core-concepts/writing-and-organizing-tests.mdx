@@ -559,9 +559,11 @@ describe('Unit Test FizzBuzz', () => {
     })
   }
 
+  // highlight-start
   it.only('returns "fizz" when number is multiple of 3', () => {
     numsExpectedToEq([9, 12, 18], 'fizz')
   })
+  // highlight-end
 
   it('returns "buzz" when number is multiple of 5', () => {
     numsExpectedToEq([10, 20, 25], 'buzz')
