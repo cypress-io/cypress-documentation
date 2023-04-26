@@ -3,19 +3,7 @@ name: Labler
 on:
   pull_request:
     types: [opened, unlabeled, labeled]
-
-  workflow_dispatch:
-    # Inputs the workflow accepts.
-    inputs:
-      name:
-        # Friendly description to be shown in the UI instead of 'name'
-        description: 'Person to greet'
-        # Default value if no value is explicitly provided
-        default: 'World'
-        # Input has to be provided for the workflow to run
-        required: true
-        # The data type of the input
-        type: string
+    
 jobs:
   add_labels:
     runs-on: ubuntu-latest
