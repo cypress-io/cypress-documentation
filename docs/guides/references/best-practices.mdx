@@ -302,7 +302,7 @@ to visit or interact with sites or servers you do not control.
 :::tip
 
 &#8239;<Icon name="check-circle" color="green" /> **Best Practice:** Only test
-what you control. Try to avoid requiring a 3rd party server. When necessary, use
+websites that you control. Try to avoid visiting or requiring a 3rd party server. If you choose, you may use
 [`cy.request()`](/api/commands/request) to talk to 3rd party servers via their
 APIs. If possible, cache results via [`cy.session()`](/api/commands/session) to
 avoid repeat visits.
@@ -318,7 +318,7 @@ You may want to access 3rd party services in several situations:
 2. Verifying your server updates a 3rd party server.
 3. Checking your email to see if your server sent a "forgot password" email.
 
-Most of the time, these situations can be safely tested with
+If you choose, these situations can be tested with
 [`cy.visit()`](/api/commands/visit) and [`cy.origin()`](/api/commands/origin).
 However, you will only want to utilize these commands for resources in your
 control, either by controlling the domain or hosted instance. These use cases
@@ -334,10 +334,10 @@ are common for:
 #### Potential Challenges Authenticating with Social Platforms
 
 Other services, such as social logins through popular media providers, are not
-recommended. Social logins will likely work, especially if run locally. However,
+recommended. Testing social logins may work, especially if run locally. However,
 we consider this a bad practice and do not recommend it because:
 
-- It is incredibly time consuming and slows down your tests (unless using
+- It's incredibly time consuming and slows down your tests (unless using
   [`cy.session()`](/api/commands/session)).
 - The 3rd party site may have changed or updated its content.
 - The 3rd party site may be having issues outside of your control.
@@ -366,7 +366,7 @@ Additionally, testing through an OAuth provider is mutable - you will first need
 a real user on their service and then modifying anything on that user might
 affect other tests downstream.
 
-**Here are potential solutions to alleviate these problems:**
+**Here are solutions you may choose to use to alleviate these problems:**
 
 1. Use another platform that you control to log in with username and password
    via [`cy.origin()`](/api/commands/origin). This likely guarantees that you
