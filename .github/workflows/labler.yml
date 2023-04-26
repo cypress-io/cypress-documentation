@@ -4,6 +4,7 @@ on:
   pull_request:
     types: [opened, unlabeled, labeled]
 
+workflow_dispatch:
 jobs:
   add_labels:
     runs-on: ubuntu-latest
