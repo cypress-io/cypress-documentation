@@ -117,7 +117,7 @@ function createServer(cypressConfig, bundleDir, port = 1234) {
 
 For a real-world example, you can refer to
 [this loader](https://github.com/cypress-io/cypress/blob/466155c2125476374d9f9549530f67d0c6354a41/npm/vite-dev-server/src/plugins/cypress.ts#L82-L92)
-used by the vite-devserver.
+used by the Vite Dev Server.
 
 The client script must retrieve information on the currently active test from
 the Cypress instance of the parent frame and load the corresponding bundle. If a
@@ -145,7 +145,7 @@ if (supportFilePath) {
   )
 }
 
-// load the testfile - you can extend the load function to also load css
+// load the spec - you can extend the load function to also load css
 const { relative } = CypressInstance.spec
 importPromise = importPromise.then(
   () => import(`${devServerPublicPathRoute}/${relative}`)
