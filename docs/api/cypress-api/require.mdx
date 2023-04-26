@@ -56,7 +56,7 @@ There are couple ways to have types inferred for the dependency required.
 ### Casting
 
 ```js
-cy.origin('example.com', async () => {
+cy.origin('cypress.io', async () => {
   const _ = Cypress.require('lodash') as typeof import('lodash')
 
   // lodash methods are properly typed
@@ -71,7 +71,7 @@ cy.origin('example.com', async () => {
 ```js
 import type { LoDashStatic } from 'lodash'
 
-cy.origin('example.com', async () => {
+cy.origin('cypress.io', async () => {
   const _ = Cypress.require < LoDashStatic > 'lodash'
 
   // lodash methods are properly typed

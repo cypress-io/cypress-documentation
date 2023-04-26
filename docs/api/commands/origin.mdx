@@ -262,19 +262,19 @@ Callbacks may **not** themselves contain `cy.origin()` calls, so when visiting
 multiple origins, do so at the top level of the test.
 
 ```js
-cy.origin('foo.com', () => {
+cy.origin('origin1.com', () => {
   cy.visit('/')
-  cy.url().should('contain', 'foo.com')
+  cy.url().should('contain', 'origin1.com')
 })
 
-cy.origin('bar.com', () => {
+cy.origin('origin2.com', () => {
   cy.visit('/')
-  cy.url().should('contain', 'bar.com')
+  cy.url().should('contain', 'origin2.com')
 })
 
-cy.origin('baz.com', () => {
+cy.origin('origin3.com', () => {
   cy.visit('/')
-  cy.url().should('contain', 'baz.com')
+  cy.url().should('contain', 'origin3.com')
 })
 ```
 
@@ -299,7 +299,7 @@ do this with `cy.origin()`.
 Cypress.Commands.add('login', (username, password) => {
   // Remember to pass in arguments via `args`
   const args = { username, password }
-  cy.origin('my-auth.com', { args }, ({ username, password }) => {
+  cy.origin('cypress.io', { args }, ({ username, password }) => {
     // Go to https://auth-provider.com/login
     cy.visit('/login')
     cy.contains('Username').find('input').type(username)
@@ -331,7 +331,7 @@ Cypress.Commands.add('login', (username, password) => {
     // Username & password can be used as the cache key too
     args,
     () => {
-      cy.origin('my-auth.com', { args }, ({ username, password }) => {
+      cy.origin('cypress.io', { args }, ({ username, password }) => {
         cy.visit('/login')
         cy.contains('Username').find('input').type(username)
         cy.contains('Password').find('input').type(password)
@@ -375,7 +375,7 @@ this will not work:
 
 ```js
 const foo = 1
-cy.origin('somesite.com', () => {
+cy.origin('cypress.io', () => {
   cy.visit('/')
   // This line will throw a ReferenceError because
   // `foo` is not defined in the scope of the callback
@@ -390,7 +390,7 @@ Instead, the variable must be explicitly passed into the callback using the
 
 ```js
 const foo = 1
-cy.origin('somesite.com', { args: { foo } }, ({ foo }) => {
+cy.origin('cypress.io', { args: { foo } }, ({ foo }) => {
   cy.visit('/')
   // Now it will pass
   cy.get('input').type(foo)
@@ -432,7 +432,7 @@ Read more in the [`Cypress.require()` doc](/api/cypress-api/require) itself.
 #### Example
 
 ```js
-cy.origin('somesite.com', () => {
+cy.origin('cypress.io', () => {
   const _ = Cypress.require('lodash')
   const utils = Cypress.require('../support/utils')
 
@@ -473,16 +473,16 @@ beforeEach(() => {
 
 ```js
 before(() => {
-  // makes custom commands available to all subsequent cy.origin('somesite.com')
+  // makes custom commands available to all subsequent cy.origin('cypress.io)
   // calls in this spec. put it in your support file to make them available to
   // all specs
-  cy.origin('somesite.com', () => {
+  cy.origin('cypress.io, () => {
     Cypress.require('../support/commands')
   })
 })
 
-it('tests somesite.com', () => {
-  cy.origin('somesite.com', () => {
+it('tests cypress.io, () => {
+  cy.origin('cypress.io, () => {
     cy.visit('/page')
     cy.clickLink('Click Me')
   })
@@ -497,27 +497,27 @@ successive `cy.origin()` calls.
 
 ```js
 before(() => {
-  cy.origin('somesite.com', () => {
+  cy.origin('cypress.io', () => {
     // makes commands defined in this file available to all callbacks
-    // for somesite.com
+    // for cypress.io
     Cypress.require('../support/commands')
   })
 })
 
 it('uses cy.origin() + custom command', () => {
-  cy.origin('somesite.com', () => {
+  cy.origin('cypress.io', () => {
     cy.visit('/page')
     cy.clickLink('Click Me')
   })
 })
 
 it('also uses cy.origin() + custom command', () => {
-  cy.origin('somesite.com', () => {
+  cy.origin('cypress.io', () => {
     cy.visit('/page')
     cy.clickLink('Click Me')
   })
 
-  cy.origin('differentsite.com', () => {
+  cy.origin('anotherwebsite.com', () => {
     // WARNING: cy.clickLink() will not be available because it is a
     // different origin
   })
