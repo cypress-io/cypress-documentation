@@ -939,11 +939,9 @@ This can happen for a number of reasons, including:
 
 - The browser was exited manually, by clicking the "Quit" button or otherwise
 - Your test suite or application under test is starving the browser of
-  resources, such as running an infinite loop
+  resources.
 - Cypress is running in a memory-starved environment
 - The browser is testing a memory-heavy application
-- Cypress is running within Docker (there is an easy fix for this: see
-  [this thread](https://github.com/cypress-io/cypress/issues/350))
 - There are problems with the GPU / GPU drivers
 - There is a bug in the browser involving memory management
 - There is a memory leak in Cypress
@@ -956,9 +954,6 @@ If you are running in `open` mode, you can also try lowering
 
 If the browser running Cypress tests crashes, Cypress will abort any remaining
 tests and print out this error.
-
-There is an [open issue](https://github.com/cypress-io/cypress/issues/349) to
-recover from browser crashes automatically, so tests can continue to run.
 
 ## Cypress App errors
 
