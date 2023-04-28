@@ -172,22 +172,26 @@ setting the suite's configuration.
 
 ```jsx
 // Customizing retry attempts for a suite of tests
-describe('User bank accounts', {
-  retries: {
-    runMode: 2,
-    openMode: 1,
-  }
-}, () => {
-  // The per-suite configuration is applied to each test
-  // If a test fails, it will be retried
-  it('allows a user to view their transactions', () => {
-    // ...
-  }
+describe(
+  'User bank accounts',
+  {
+    retries: {
+      runMode: 2,
+      openMode: 1,
+    },
+  },
+  () => {
+    // The per-suite configuration is applied to each test
+    // If a test fails, it will be retried
+    it('allows a user to view their transactions', () => {
+      // ...
+    })
 
-  it('allows a user to edit their transactions', () => {
-    // ...
+    it('allows a user to edit their transactions', () => {
+      // ...
+    })
   }
-})
+)
 ```
 
 You can find more information about custom configurations here:

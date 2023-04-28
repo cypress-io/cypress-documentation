@@ -233,7 +233,7 @@ by:
 4. Review your organization's usage
 5. Scroll down and select **Upgrade** under your plan of choice
 
-## <Icon name="angle-right" /> I'm working at a restrictive VPN. Which subdomains do I have to allow on my VPN for Cypress Cloud to work properly?
+## <Icon name="angle-right" /> I'm working with a restrictive VPN. Which subdomains do I have to allow on my VPN for Cypress Cloud to work properly?
 
 If you are running the tests from within a restrictive VPN you will need to
 allow some URLs so that Cypress can have effective communication with Cypress
@@ -249,3 +249,10 @@ Cloud.
 - `https://docs.cypress.io` - **Cypress documentation**
 - `https://download.cypress.io` - **CDN download of Cypress binary**
 - `https://on.cypress.io` - **URL shortener for link redirects**
+
+**If you are using GitHub Enterprise or GitLab for Enterprise (Self-managed),
+you may also need to add both the following to the version control IP allow
+list:**
+
+- `3.211.102.119` - **Dedicated IP**
+- `18.213.72.78` - **Dedicated IP**
