@@ -6,7 +6,7 @@ title: GitHub Actions
 
 ## <Icon name="graduation-cap" /> What you'll learn
 
-- How to run Cypress tests with GitHub Actions as part of CI/CD pipeline
+- How to run Cypress tests with GitHub Actions as part of a CI/CD pipeline
 - How to parallelize Cypress test runs within GitHub Actions
 - How to cache build artifacts between installation jobs and worker jobs
 
@@ -43,11 +43,12 @@ such as the [checkout](https://github.com/marketplace/actions/checkout) and
 [Upload/Download Artifact Actions](https://docs.github.com/en/actions/guides/storing-workflow-data-as-artifacts)
 actions used below.
 
-The Cypress team maintains the official
-[Cypress GitHub Action](https://github.com/marketplace/actions/cypress-io) for
-running Cypress tests. This action provides npm, pnpm or yarn installation,
-custom caching, additional configuration options and simplifies setup of
-advanced workflows with Cypress in the GitHub Actions platform.
+The official
+[Cypress GitHub Action](https://github.com/marketplace/actions/cypress-io) is
+maintained by Cypress and our community to help ease the setup of Cypress in a
+GitHub Action. The action provides dependency installation (via npm, yarn, or
+pnpm), built-in caching of Node dependencies, and additional configuration
+options for advanced workflows.
 
 ### Version Number Selection
 
@@ -133,7 +134,7 @@ created `main.yml` file within `.github/workflows/`.
 
 [GitHub-hosted runners](https://github.com/actions/runner-images) offer images
 with pre-installed browsers to use for testing. The `ubuntu` and `windows`
-runners each include Google Chrome, Mozilla Firefox and Microsoft Edge
+runners each include Google Chrome, Mozilla Firefox, and Microsoft Edge
 pre-installed. The `macos` runners additionally include Apple Safari. Refer to
 [GitHub Actions Runner Images](https://github.com/actions/runner-images/blob/main/README.md)
 for current details.
@@ -154,6 +155,15 @@ the above example to select Chrome instead of the default browser Electron, add
 For more examples, see the action's
 [Browser](https://github.com/cypress-io/github-action#browser) section.
 
+:::caution
+
+If you are specifying a browser in a parallel job, see
+[Specifying Browsers in Parallel Builds](#Specifying-Browsers-in-Parallel-Builds)
+for more info on how to avoid errors during runs due to GitHub runner images
+being updated with the latest browsers.
+
+:::
+
 ## Testing with Cypress Docker Images
 
 GitHub Actions provides the option to specify a container image for the job.
@@ -163,9 +173,9 @@ Cypress locally and in CI.
 
 Below we extend the previous example by adding the `container` attribute using a
 [Cypress Docker Image](https://github.com/cypress-io/cypress-docker-images)
-built with Google Chrome `107`. This allows us to fix our test to a specific
-browser version without any influence due to browser version changes in the
-GitHub runner image.
+built with Google Chrome `107`. Specifying a browser version allows our tests to
+execute without any influence from browser version changes in the GitHub runner
+image.
 
 ```yaml
 name: Cypress Tests using Cypress Docker Image
@@ -189,15 +199,14 @@ jobs:
 
 ## Caching Dependencies and Build Artifacts
 
-:::info
+When working with actions that have multiple jobs, it is recommended to have an
+initial "install" job that will download any dependencies and build your app,
+and then cache these assets for use later by subsequent jobs.
 
-Caching of dependencies and build artifacts between installation and worker jobs
-can be accomplished by combining the
-[Cypress GitHub Action](https://github.com/marketplace/actions/cypress-io) with
-the GitHub
-[Upload/Download Artifact Actions](https://docs.github.com/en/actions/guides/storing-workflow-data-as-artifacts).
+The Cypress GitHub Action will automatically cache and restore your Node
+dependencies for you.
 
-:::
+For build assets, you will need to cache and restore them manually.
 
 The `install` job below uses the
 [upload-artifact](https://github.com/marketplace/actions/upload-a-build-artifact)
@@ -255,6 +264,10 @@ jobs:
           browser: chrome
 ```
 
+View GitHub's guide on
+[Storing workflow data as artifacts](https://docs.github.com/en/actions/guides/storing-workflow-data-as-artifacts)
+for more info.
+
 ## Parallelization
 
 <DocsVideo src="https://youtube.com/embed/96Yn_IiQUJI" />
@@ -263,11 +276,14 @@ jobs:
 [parallelize and group test runs](/guides/guides/parallelization) along with
 additional insights and [analytics](/guides/cloud/analytics) for Cypress tests.
 
+Using parallelization with the Cypress GitHub Action requires setting up
+recording to [Cypress Cloud](https://on.cypress.io/cloud).
+
 GitHub Actions offers a
 [matrix strategy](https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idstrategymatrix)
 for declaring different job configurations for a single job definition. Jobs
-declared within a matrix strategy can run in parallel which enables us run
-multiples instances of Cypress at same time as we will see later in this
+declared within a matrix strategy can run in parallel, which enables us to run
+multiples instances of Cypress at the same time, as we will see later in this
 section.
 
 Before diving into an example of a parallelization setup, it is important to
@@ -275,19 +291,19 @@ understand the two different types of GitHub Action jobs that we will declare:
 
 - **Install Job**: A job that installs and caches dependencies that will be used
   by subsequent jobs later in the GitHub Action workflow.
-- **Worker Job**: A job that handles execution of Cypress tests and depends on
-  the _install job_.
+- **Worker Job**: A job that handles the execution of Cypress tests and depends
+  on the _install job_.
 
 ### Install Job
 
 The separation of installation from test running is necessary when running
-parallel jobs. It allows for reuse of various build steps aided by caching.
+parallel jobs. It allows for the reuse of various build steps aided by caching.
 
 First, we'll define the `install` step that will be used by the worker jobs
 defined in the matrix strategy.
 
 For the `steps`, notice that we pass `runTests: false` to the Cypress GitHub
-Action to instruct it to only install and cache Cypress and npm dependencies
+Action to instruct it only to install and cache Cypress and npm dependencies
 _without running the tests_.
 
 The
@@ -295,14 +311,13 @@ The
 action will save the state of the `build` directory for the worker jobs.
 
 ```yaml
-name: Cypress Tests with installation job
+name: Cypress Tests
 
 on: push
 
 jobs:
   install:
     runs-on: ubuntu-22.04
-    container: cypress/browsers:node16.16.0-chrome107-ff107-edge
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -312,50 +327,38 @@ jobs:
         with:
           # Disable running of tests within install job
           runTests: false
-          build: yarn build
+          build: npm run build
 
       - name: Save build folder
         uses: actions/upload-artifact@v3
         with:
           name: build
           if-no-files-found: error
-          path: build
+          path: dist
 ```
 
 ### Worker Jobs
 
-Next, we define the worker job named `ui-chrome-tests` that will run Cypress
-tests with Chrome as part of a parallelized matrix strategy.
+Next, we define the worker job named "cypress-run" that will run Cypress tests
+as part of a parallelized matrix strategy.
 
-:::info
-
-<strong>Note</strong>
-
-Using our
-[Cypress GitHub Action](https://github.com/marketplace/actions/cypress-io) we
-specify `install: false` since our dependencies and build were cached in our
-`install` job.
-
-The
-[download-artifact](https://github.com/marketplace/actions/download-a-build-artifact)
-action will retrieve the `build` directory saved in the install job.
-
-:::
+The `download-artifact` action will retrieve the **dist** directory saved in the
+install job.
 
 ```yaml
-name: Cypress Tests with Install Job and UI Chrome Job x 5
+name: Cypress Tests
 
 on: push
 
 jobs:
   install:
-  # ...
+  # ... omitted install job from above
 
-  ui-chrome-tests:
+  cypress-run:
     runs-on: ubuntu-22.04
-    container: cypress/browsers:node16.16.0-chrome107-ff107-edge
     needs: install
     strategy:
+      # don't fail the entire matrix on failure
       fail-fast: false
       matrix:
         # run copies of the current job in parallel
@@ -364,83 +367,56 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Download the build folders
+      - name: Download the build folder
         uses: actions/download-artifact@v3
         with:
           name: build
-          path: build
 
-      - name: 'UI Tests - Chrome'
+      - name: Cypress run
         uses: cypress-io/github-action@v5
         with:
-          # we have already installed all dependencies above
-          install: false
-          start: yarn start:ci
-          wait-on: 'http://localhost:3000'
-          wait-on-timeout: 120
-          browser: chrome
+          build: npm run build
           record: true
           parallel: true
-          group: 'UI - Chrome'
-          spec: cypress/tests/ui/*
-        env:
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-          # Recommended: pass the GitHub token lets this action correctly
-          # determine the unique run id necessary to re-run the checks
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          start: npm start
 ```
-
-:::note
-
-The above configuration using the `parallel` and `record` options of the
-[Cypress GitHub Action](https://github.com/marketplace/actions/cypress-io)
-requires setting up recording to [Cypress Cloud](https://on.cypress.io/cloud).
-
-:::
-
-#### Setting up Parallelization
-
-To setup multiple containers to run in parallel, the `matrix` option of the
-`strategy` configuration can be set to `containers: [1, 2, 3, 4, 5]`, which will
-start 5 instances of the defined `container` image.
-
-:::info
-
-<strong>Note</strong>
-
-The `containers` array is filled with filler (or _dummy_) items to provision the
-desired number of CI machine instances within GitHub Actions.
-
-:::
 
 :::caution
 
 <strong>Ensure Correct Container</strong>
 
-The `container` attribute must be specified using the
-[Cypress Docker Image](https://github.com/cypress-io/cypress-docker-images) in
-the configuration that was used in the install job.
+If a docker container was used in the install job, the same docker container
+must also be used in the worker jobs.
 
 :::
 
-```yaml
-#...
-ui-chrome-tests:
-  runs-on: ubuntu-22.04
-  container: cypress/browsers:node16.16.0-chrome107-ff107-edge
-  needs: install
-  strategy:
-    fail-fast: false
-    matrix:
-      # run copies of the current job in parallel
-      containers: [1, 2, 3, 4, 5]
-```
+#### Setting up Parallelization
+
+To set up multiple containers to run in parallel, the matrix option of the
+strategy configuration can be set to containers: [1, 2, 3, 4, 5], where the
+number of items defined in the containers array will be how many instances of
+the job will start up.
+
+For instance, `containers: [1, 2, 3, 4, 5]` will provision five worker instances
+to run in parallel. For our purposes, the array's values are arbitrary and
+aren't used in the steps.
+
+### Specifying Browsers in Parallel Builds
+
+If you specify a browser in parallel mode, we recommend using a
+[Cypress Docker image](#Testing-with-Cypress-Docker-Images) to pin the browser
+version used.
+
+When GitHub updates the browsers in their runner images, not all runners get the
+new version simultaneously. Your test run might fail if Cypress Cloud detects
+differences in the runners between parallel jobs. The Docker image helps ensure
+the browser is consistent during an image upgrade.
 
 ## Using Cypress Cloud with GitHub Actions
 
 <DocsVideo src="https://youtube.com/embed/Oqq-_QZWzhg" />
 
-In the GitHub Actions configuration we have defined in the previous section, we
+In the GitHub Actions configuration, we have defined in the previous section, we
 are leveraging three useful features of
 [Cypress Cloud](https://on.cypress.io/cloud):
 
@@ -466,13 +442,13 @@ are leveraging three useful features of
 
 3. Organizing and consolidating multiple `cypress run` calls by labeled groups
    into a single report within [Cypress Cloud](https://on.cypress.io/cloud). In
-   the example above we use the `group: "UI - Chrome"` option to organize all UI
-   tests for the Chrome browser into a group labeled "UI - Chrome" in the
+   the example above, we use the `group: "UI - Chrome"` option to organize all
+   UI tests for the Chrome browser into a group labeled "UI - Chrome" in the
    [Cypress Cloud](https://on.cypress.io/cloud) report.
 
 ## Cypress Real World Example with GitHub Actions
 
-A complete CI workflow against multiple browsers, viewports and operating
+A complete CI workflow against multiple browsers, viewports, and operating
 systems is available in the **Cypress Real World App**.
 
 Clone the <Icon name="github" inline="true" contentType="rwa" /> and refer to
@@ -500,7 +476,7 @@ We recommend passing the `GITHUB_TOKEN` secret (created by the GH Action
 automatically) as an environment variable. This will allow the accurate
 identification of each build to avoid confusion when re-running a build.
 
-```
+```yml
 name: Cypress tests
 on: push
 jobs:
@@ -527,7 +503,7 @@ environment variable. See
 [Issue #124](https://github.com/cypress-io/github-action/issues/124) for more
 details.
 
-```
+```yml
 name: Cypress tests
 on: push
 jobs:

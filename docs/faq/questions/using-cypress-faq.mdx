@@ -478,7 +478,15 @@ arguments, JSON files and other means.
 ## <Icon name="angle-right" /> Can I override or change the default user agent the browser uses?
 
 Yes.
-[You can override this with `userAgent` in your Cypress configuration](/guides/references/configuration#Browser).
+
+- Cypress recommends setting the `userAgent` as a
+  [configuration value](/guides/references/configuration#Browser) in your
+  configuration file.
+- It is possible to fake the `userAgent` for a **single**
+  [`cy.visit()`](/api/commands/visit) or
+  [`cy.request()`](/api/commands/intercept) by setting the `user-agent` header
+  in the options, but this will not propagate the `userAgent` in the browser and
+  can lead to application rendering unexpectedly.
 
 ## <Icon name="angle-right" /> Can I block traffic going to specific domains? I want to block Google Analytics or other providers.
 
