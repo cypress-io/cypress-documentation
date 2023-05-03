@@ -112,8 +112,8 @@ jobs:
 
 To try out the example above yourself, fork the
 [Cypress Kitchen Sink](https://github.com/cypress-io/cypress-example-kitchensink)
-example project and place the above GitHub Action configuration in
-`.github/workflows/main.yml`.
+example project and place the above GitHub Action configuration in a newly
+created `main.yml` file within `.github/workflows/`.
 
 :::
 
@@ -185,7 +185,7 @@ on: push
 jobs:
   cypress-run:
     runs-on: ubuntu-22.04
-    container: cypress/browsers:node18.12.0-chrome107
+    container: cypress/browsers:node16.16.0-chrome107-ff107-edge
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -461,6 +461,13 @@ file.
   alt="Cypress Real World App GitHub Actions Matrix"
 />
 
+:::info
+
+To see additional how-to examples, you can also refer to our
+[Cypress GitHub Action repo](https://github.com/cypress-io/github-action).
+
+:::
+
 ## Common Problems and Solutions
 
 ### Re-run jobs passing with empty tests
@@ -469,7 +476,7 @@ We recommend passing the `GITHUB_TOKEN` secret (created by the GH Action
 automatically) as an environment variable. This will allow the accurate
 identification of each build to avoid confusion when re-running a build.
 
-```
+```yml
 name: Cypress tests
 on: push
 jobs:
@@ -496,7 +503,7 @@ environment variable. See
 [Issue #124](https://github.com/cypress-io/github-action/issues/124) for more
 details.
 
-```
+```yml
 name: Cypress tests
 on: push
 jobs:
