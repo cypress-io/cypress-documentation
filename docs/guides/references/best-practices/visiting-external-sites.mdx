@@ -1,0 +1,158 @@
+---
+title: Visiting External Sites
+---
+
+:::danger
+
+&#8239;<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Trying
+to visit or interact with sites or servers you do not control.
+
+:::
+
+:::tip
+
+&#8239;<Icon name="check-circle" color="green" /> **Best Practice:** Only test
+what you control. Try to avoid requiring a 3rd party server. When necessary, use
+[`cy.request()`](/api/commands/request) to talk to 3rd party servers via their
+APIs. If possible, cache results via [`cy.session()`](/api/commands/session) to
+avoid repeat visits.
+
+:::
+
+One of the first things many of our users attempt to do is involve 3rd party
+servers or services in their tests.
+
+You may want to access 3rd party services in several situations:
+
+1. Testing log in when your app uses another provider via OAuth.
+2. Verifying your server updates a 3rd party server.
+3. Checking your email to see if your server sent a "forgot password" email.
+
+Most of the time, these situations can be safely tested with
+[`cy.visit()`](/api/commands/visit) and [`cy.origin()`](/api/commands/origin).
+However, you will only want to utilize these commands for resources in your
+control, either by controlling the domain or hosted instance. These use cases
+are common for:
+
+- Authentication as a service platforms, such as Auth0, Okta, Microsoft, AWS
+  Cognito, and others via username/password authentication. These domains and
+  service instances are usually owned and controlled by you or your
+  organization.
+- CMS instances, such as a Contentful or Wordpress instance.
+- Other types of services under a domain in which you control.
+
+#### Potential Challenges Authenticating with Social Platforms
+
+Other services, such as social logins through popular media providers, are not
+recommended. Social logins will likely work, especially if run locally. However,
+we consider this a bad practice and do not recommend it because:
+
+- It is incredibly time consuming and slows down your tests (unless using
+  [`cy.session()`](/api/commands/session)).
+- The 3rd party site may have changed or updated its content.
+- The 3rd party site may be having issues outside of your control.
+- The 3rd party site may detect you are testing via a script and block you.
+- The 3rd party site might have policies against automated login, leading to
+  banning of accounts.
+- The 3rd party site might detect you are a bot, and provide mechanisms such as
+  two-factor authentication, captchas, and other means to prevent automation.
+  This is common with continuous integration platforms and general automation.
+- The 3rd party site may be running A/B campaigns.
+
+Let's look at a few strategies for dealing with these situations.
+
+### When logging in:
+
+Many OAuth providers, especially social logins, run A/B experiments, which means
+that their login screen is dynamically changing. This makes automated testing
+difficult.
+
+Many OAuth providers also throttle the number of web requests you can make to
+them. For instance, if you try to test Google, Google will **automatically**
+detect that you are not a human and instead of giving you an OAuth login screen,
+they will make you fill out a captcha.
+
+Additionally, testing through an OAuth provider is mutable - you will first need
+a real user on their service and then modifying anything on that user might
+affect other tests downstream.
+
+**Here are potential solutions to alleviate these problems:**
+
+1. Use another platform that you control to log in with username and password
+   via [`cy.origin()`](/api/commands/origin). This likely guarantees that you
+   will not run into the problems listed above, while still being able to
+   automate your login flow. You can reduce the amount of authentication
+   requests by utilizing [`cy.session()`](/api/commands/session).
+2. [Stub](/api/commands/stub) out the OAuth provider and bypass it using their
+   UI altogether if [`cy.origin()`](/api/commands/origin) is not an option. You
+   could trick your application into believing the OAuth provider has passed its
+   token to your application.
+3. If you **must** get a real token and [`cy.origin()`](/api/commands/origin) is
+   not an option, you can use [`cy.request()`](/api/commands/request) and use
+   the **programmatic** API that your OAuth provider provides. These APIs likely
+   change **more** infrequently and you avoid problems like throttling and A/B
+   campaigns.
+4. Instead of having your test code bypass OAuth, you could also ask your server
+   for help. Perhaps all an OAuth token does is generate a user in your
+   database. Oftentimes OAuth is only useful initially and your server
+   establishes its own session with the client. If that is the case, use
+   [`cy.request()`](/api/commands/request) to get the session directly from your
+   server and bypass the provider altogether if
+   [`cy.origin()`](/api/commands/origin) is not an option.
+
+:::info
+
+<strong>Recipes</strong>
+
+[We have several examples of doing this in our logging in recipes.](/examples/recipes)
+
+:::
+
+### 3rd party servers:
+
+Sometimes actions that you take in your application **may** affect another 3rd
+party application. These situations are not that common, but it is possible.
+Imagine your application integrates with GitHub and by using your application
+you can change data inside of GitHub.
+
+After running your test, instead of trying to
+[`cy.visit()`](/api/commands/visit) GitHub, you can use
+[`cy.request()`](/api/commands/request) to programmatically interact with
+GitHub's APIs directly.
+
+This avoids ever needing to touch the UI of another application.
+
+### Verifying sent emails:
+
+Typically, when going through scenarios like user registration or forgotten
+passwords, your server schedules an email to be delivered.
+
+1. If your application is running locally and is sending the emails directly
+   through an SMTP server, you can use a temporary local test SMTP server
+   running inside Cypress. Read the blog post
+   ["Testing HTML Emails using Cypress"](https://www.cypress.io/blog/2021/05/11/testing-html-emails-using-cypress/)
+   for details.
+2. If your application is using a 3rd party email service, or you cannot stub
+   the SMTP requests, you can use a test email inbox with an API access. Read
+   the blog post
+   ["Full Testing of HTML Emails using SendGrid and Ethereal Accounts"](https://www.cypress.io/blog/2021/05/24/full-testing-of-html-emails-using-ethereal-accounts/)
+   for details.
+
+Cypress can even load the received HTML email in its browser to verify the
+email's functionality and visual style:
+
+<DocsImage
+  src="/img/guides/references/email-test.png"
+  title="The HTML email loaded during the test"
+  alt="The test finds and clicks the Confirm registration button"
+/>
+
+3. In other cases, you should try using [`cy.request()`](/api/commands/request)
+   command to query the endpoint on your server that tells you what email has
+   been queued or delivered. That would give you a programmatic way to know
+   without involving the UI. Your server would have to expose this endpoint.
+4. You could also use `cy.request()` to a 3rd party email recipient server that
+   exposes an API to read off emails. You will then need the proper
+   authentication credentials, which your server could provide, or you could use
+   environment variables. Some email services already provide
+   [Cypress plugins](/plugins#Email) to access emails.
