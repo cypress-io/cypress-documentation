@@ -324,12 +324,6 @@
   force = true
 
 [[redirects]]
-  from = "/guides/dashboard/bitbucket-integration"
-  to = "/guides/cloud/integrations/bitbucket-integration"
-  status = 301
-  force = true
-
-[[redirects]]
   from = "/guides/dashboard/flaky-test-management"
   to = "/guides/cloud/flaky-test-management"
   status = 301
@@ -338,6 +332,12 @@
 [[redirects]]
   from = "/guides/dashboard/flaky-test-management"
   to = "/guides/cloud/flaky-test-management"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/dashboard/introduction"
+  to = "/guides/cloud/introduction"
   status = 301
   force = true
 
@@ -354,14 +354,50 @@
   force = true
 
 [[redirects]]
-  from = "/guides/dashboard/introduction"
-  to = "/guides/cloud/introduction"
+  from = "/guides/dashboard/jira-integration"
+  to = "/guides/cloud/integrations/jira-integration"
   status = 301
   force = true
 
 [[redirects]]
-  from = "/guides/dashboard/jira-integration"
-  to = "/guides/cloud/integrations/jira-integration"
+  from = "/guides/dashboard/slack-integration"
+  to = "/guides/cloud/integrations/slack-integration"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/dashboard/bitbucket-integration"
+  to = "/guides/cloud/integrations/bitbucket-integration"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/integrations/github-integration"
+  to = "/guides/cloud/integrations/github"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/integrations/gitlab-integration"
+  to = "/guides/cloud/integrations/gitlab"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/integrations/jira-integration"
+  to = "/guides/cloud/integrations/jira"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/integrations/slack-integration"
+  to = "/guides/cloud/integrations/slack"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/integrations/bitbucket-integration"
+  to = "/guides/cloud/integrations/bitbucket"
   status = 301
   force = true
 
@@ -380,12 +416,6 @@
 [[redirects]]
   from = "/guides/dashboard/runs"
   to = "/guides/cloud/runs"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/guides/dashboard/slack-integration"
-  to = "/guides/cloud/integrations/slack-integration"
   status = 301
   force = true
 
