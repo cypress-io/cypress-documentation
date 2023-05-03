@@ -137,20 +137,28 @@ to GitHub.com to complete the installation:
 2. Choose which repositories to associate with the Cypress GitHub App. You can
    choose **All repositories** or **Only select repositories**. with your
    Cypress GitHub App installation.
-   <DocsImage
-     src="/img/dashboard/github-integration/select-gh-repos.jpg"
-     alt="Select GitHub repositories"
-     width={600}
-   />
 
 :::info
 
-All current and <em>future</em> repositories will be included with this
-installation if you choose <strong>All repositories</strong>.
+All current and _future_ repositories will be included with this installation if
+you choose **All repositories**.
 
 :::
 
+<DocsImage
+  src="/img/dashboard/github-integration/select-gh-repos.jpg"
+  alt="Select GitHub repositories"
+  width={600}
+/>
+
 3. Click the **Install** button to complete the installation.
+
+:::warning
+
+If you are running the tests from within a restrictive VPN, see
+[which subdomains to add to your allowlist for Cypress Cloud and your GitHub integration to work properly](/faq/questions/cloud-faq#Im-working-at-a-restrictive-VPN-Which-subdomains-do-I-have-to-allow-on-my-VPN-for-Cypress-Cloud-to-work-properly)
+
+:::
 
 ### Cypress GitHub Enterprise app installation process
 
@@ -268,6 +276,13 @@ them into Cypress Cloud, and complete the activation process.
    install the app against all repos or select specific ones, then click the
    **Install** button.
 
+:::info
+
+All current and <em>future</em> repositories will be included with this
+installation if you choose <strong>All repositories</strong>.
+
+:::
+
 <DocsImage
   src="/img/dashboard/github-integration/ghe/ghe-10.jpg"
   alt="Confirm installation of GitHub App"
@@ -277,6 +292,13 @@ them into Cypress Cloud, and complete the activation process.
 10. Finally, you will be returned to Cypress Cloud. Congratulations, you have
     installed Cypress Cloud GitHub Enterprise integration! You are now ready to
     configure a GitHub Integration for a project.
+
+:::info
+
+If you are running the tests from within a restrictive VPN, see
+[which subdomains to add to your allowlist for Cypress Cloud and your GitHub Enterprise integration to work properly](/faq/questions/cloud-faq#Im-working-at-a-restrictive-VPN-Which-subdomains-do-I-have-to-allow-on-my-VPN-for-Cypress-Cloud-to-work-properly).
+
+:::
 
 ## Enabling GitHub integration for a project
 
