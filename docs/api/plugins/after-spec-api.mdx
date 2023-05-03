@@ -108,19 +108,20 @@ failing tests.
 :::cypress-config-plugin-example
 
 ```ts
-// need to install the "del" module as a dependency
-// npm i del --save-dev
-import del from 'del'
+import fs from 'fs'
 ```
 
 ```ts
-on('after:spec', (spec, results) => {
-  if (results && results.stats.failures === 0 && results.video) {
-    // `del()` returns a promise, so it's important to return it to ensure
-    // deleting the video is finished before moving on
-    del(results.video)
+on(
+  'after:spec',
+  (spec: Cypress.Spec, results: CypressCommandLine.RunResult) => {
+    // Do we have failures?
+    if (results && results.video && results.stats.failures === 0) {
+      // delete the video if the spec passed
+      fs.unlinkSync(results.video)
+    }
   }
-})
+)
 ```
 
 :::
@@ -137,25 +138,25 @@ retry attempts when using Cypress [test retries](/guides/guides/test-retries).
 :::cypress-config-plugin-example
 
 ```ts
-// need to install these dependencies
-// npm i lodash del --save-dev
-import _ from 'lodash'
-import del from 'del'
+import fs from 'fs'
 ```
 
 ```ts
-on('after:spec', (spec, results) => {
-  if (results && results.video) {
-    // Do we have failures for any retry attempts?
-    const failures = _.some(results.tests, (test) => {
-      return _.some(test.attempts, { state: 'failed' })
-    })
-    if (!failures) {
-      // delete the video if the spec passed and no tests retried
-      del(results.video)
+on(
+  'after:spec',
+  (spec: Cypress.Spec, results: CypressCommandLine.RunResult) => {
+    if (results && results.video) {
+      // Do we have failures for any retry attempts?
+      const failures = results.tests.some((test) =>
+        test.attempts.some((attempt) => attempt.state === 'failed')
+      )
+      if (!failures) {
+        // delete the video if the spec passed and no tests retried
+        fs.unlinkSync(results.video)
+      }
     }
   }
-})
+)
 ```
 
 :::
