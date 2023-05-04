@@ -1230,7 +1230,7 @@
         },
         {
           "name": "cypress-mailhog",
-          "description": "A collection of usefull Cypress commands for testing Emails utilizing the MailHog RestAPI. Comes with TypeScript support.",
+          "description": "A collection of useful Cypress commands for testing Emails utilizing the MailHog RestAPI. Comes with TypeScript support.",
           "link": "https://github.com/SMenigat/cypress-mailhog",
           "keywords": ["email", "mailhog", "test", "commands"],
           "badge": "community"
