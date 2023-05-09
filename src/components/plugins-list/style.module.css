@@ -43,6 +43,7 @@ ul.pluginsList li {
   padding: 20px;
   border: 1px solid #e8e8e8;
   box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.15);
+  margin: 0 !important;
 }
 
 /* stylelint-disable-next-line at-rule-no-unknown */
