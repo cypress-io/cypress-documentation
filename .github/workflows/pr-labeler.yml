@@ -13,6 +13,6 @@ jobs:
 
       - name: add label
         uses: actions-ecosystem/action-add-labels@v1
-        if: ${{ startsWith(github.event.pull_request.title, 'plugin') }}
+        if: ${{ contains(github.event.pull_request.title, 'plugin') }}
         with:
           labels: "section: plugins"
