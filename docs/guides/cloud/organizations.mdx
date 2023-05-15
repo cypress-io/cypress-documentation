@@ -13,7 +13,9 @@ sidebar_position: 70
 
 :::
 
-Organizations are used to group and manage projects. Here you can create projects, manage users, access billing and usage information, leverage third party integrations,  and apply org-level settings.
+Organizations are used to group and manage projects. Here you can create
+projects, manage users, access billing and usage information, leverage third
+party integrations, and apply org-level settings.
 
 ## Organization ID
 
@@ -47,11 +49,13 @@ switcher and clicking **<Icon name="plus" /> Create new organization**.
 ### Delete Org
 
 You can delete organizations that you own as long as they do not have any
-projects in the organization. You must first delete or transfer ownership of your projects to another organization before you can delete the organization.
+projects in the organization. You must first delete or transfer ownership of
+your projects to another organization before you can delete the organization.
 
 <DocsImage
   src="/img/guides/cloud/organizations/remove-organization-dialog.jpg"
   alt="Delete Organization"
+  width="80%"
 />
 
 ## Billing & Usage
@@ -73,25 +77,30 @@ your Organization must meet the following criteria:
 
 ### Requesting OSS plan for an Org
 
+:::info
+
+<Icon name="exclamation-triangle" /> Personal organizations cannot be used with an
+OSS plan.
+
+:::
+
 1. [Login](https://on.cypress.io/dashboard) to the Cypress Dashboard, or
    [create an account](https://on.cypress.io/dashboard) if you are a new user.
 
 2. Go the [Organizations page](https://on.cypress.io/dashboard/organizations) to
-   select the Organization you want to associate with an OSS plan. If you have no Organizations, you can create one by clicking the **+ Create New Organization** button.
+   select the Organization you want to associate with an OSS plan. If you have
+   no Organizations, you can create one by clicking the **+ Create New
+   Organization** button.
 
-  :::info
+   <DocsImage
+     src="/img/guides/cloud/organizations/oss-plan-2-select-org.jpg"
+     alt="Select or add organization"
+     width="80%"
+   />
 
-  <Icon name="exclamation-triangle" /> Personal organizations cannot be used with an OSS plan.
-
-  :::
-
-  <DocsImage
-    src="/img/guides/cloud/organizations/oss-plan-2-select-org.jpg"
-    alt="Select or add organization"
-    width="80%"
-  />
-
-3. Go to the **Billing & Usage** page, click **Upgrade** and then click on the **Apply for an open source plan** link at the bottom of the page. _Note: Access to all Projects must be set to **public** to enable this link._
+3. Go to the **Billing & Usage** page, click **Upgrade** and then click on the
+   **Apply for an open source plan** link at the bottom of the page. _Note:
+   Access to all Projects must be set to **public** to enable this link._
 
    <DocsImage
      src="/img/guides/cloud/organizations/oss-plan-3-billing.jpg"
@@ -118,7 +127,9 @@ If you have any questions regarding the OSS plan, please feel free
 
 ## Integrations
 
-Owner and admin roles can integrate Cypress Cloud with many third party tools under **Organization > Integrations** and edit those settings from within the **Project settings** page.
+Owner and admin roles can integrate Cypress Cloud with many third party tools
+under **Organization > Integrations** and edit those settings from within the
+**Project settings** page.
 
 See our integration guides to learn more:
 
@@ -293,7 +304,7 @@ addition to the documentation below, refer to the Microsoft Guides for
 #### Save Configuration
 
 Return to Cypress Cloud and click **Save Configuration**. Cypress Cloud will
-   attempt to authenticate.
+attempt to authenticate.
 
 🎉 Your integration is now complete! You can invite all of the users in your
 organization to sign in through your SSO provider.
