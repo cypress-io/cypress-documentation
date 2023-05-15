@@ -378,6 +378,13 @@
           "link": "https://github.com/ExpediaGroup/cypress-codegen",
           "keywords": ["commands", "development", "codegen"],
           "badge": "community"
+        },
+        {
+          "name": "cypress-backoff",
+          "description": "A Cypress plugin to apply different timeout strategies to retried tests",
+          "link": "https://github.com/joostvanwollingen/cypress-backoff",
+          "keywords": ["retries", "backoff"],
+          "badge": "community"
         }
       ]
     },
