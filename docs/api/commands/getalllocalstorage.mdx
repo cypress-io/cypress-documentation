@@ -37,15 +37,15 @@ Pass in an options object to change the default behavior of
 `cy.getAllLocalStorage()` yields an object where the keys are origins and the
 values are key-value pairs of `localStorage` data.
 
-For example, if `key1` is set to `value1` on `https://origin1.com` and `key2` is
-set to `value2` on `https://origin2.com`, `cy.getAllLocalStorage()` will yield:
+For example, if `key1` is set to `value1` on `https://example.cypress.io` and `key2` is
+set to `value2` on `https://www.cypress-dx.com`, `cy.getAllLocalStorage()` will yield:
 
 ```js
 {
-  'https://origin1.com': {
+  'https://example.cypress.io': {
     key1: 'value1',
   },
-  'https://origin2.com': {
+  'https://www.cypress-dx.com': {
     key2: 'value2',
   },
 }
