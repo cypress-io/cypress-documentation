@@ -62,15 +62,54 @@ workspace.
      width={1000}
    />
 
-5. You'll navigate to a window that manages webhooks as a way for Cypress Cloud
-   to communicate with Microsoft Teams.
+5. You'll naviagte to a window that manages webhooks as a way for Cypress Cloud
+   to communicate with Microsoft Teams. First, you must configure an _Incoming
+   Webhook_ to a Teams channel.
 
-   First, you must configure an Incoming Webhook to a Teams channel. For more
-   information on that, see
-   [Microsoft Teams - Create Incoming Webhooks](https://learn.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/add-incoming-webhook?tabs=dotnet#create-incoming-webhooks-1).
+   In Microsoft Teams:
 
-   Then, add the Teams webhook to your Cypress Cloud Organization, choosing the
-   types of notifications your team should receive.
+   - Open the channel in which you want to add the webhook and select **•••**
+     from the upper-right corner.
+
+   - Select Connectors from the dropdown menu.
+
+     <DocsImage
+       src="/img/guides/cloud/integrations/teams-connectors_1.png"
+       alt="Visit project settings"
+       width={300}
+     />
+
+   - Search for Incoming Webhook and select Add.
+
+   - Select Configure, provide a name, and upload an image for your webhook if
+     necessary.
+
+     <DocsImage
+       src="/img/guides/cloud/integrations/teams-configure_1.png"
+       alt="Visit project settings"
+       width={500}
+     />
+
+   - Copy and save the unique webhook URL present in the dialog. The URL maps to
+     the channel and you can use it to send information to Teams.
+
+   - Select **Done**.
+
+     <DocsImage
+       src="/img/guides/cloud/integrations/teams-url_1.png"
+       alt="Visit project settings"
+       width={500}
+     />
+
+     The webhook is now available in the Teams channel. For more information,
+     see
+     [Microsoft Teams - Create Incoming Webhooks](https://learn.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/add-incoming-webhook?tabs=dotnet#create-incoming-webhooks-1).
+
+6. Then, add the Teams webhook to your Cypress Cloud Organization.
+
+   In Cypress Cloud: 
+   
+   - Paste in the Teams webhook URL, choosing the types of notifications your team should receive.
 
    <DocsImage
      src="/img/guides/cloud/integrations/add-org-webhook.jpg"
@@ -119,14 +158,53 @@ needs. You can have Cypress Cloud post run results for a specific project.
 4. Scroll down and click **Add Teams webhook** in the **Microsoft Teams**
    section.
 5. You'll naviagte to a window that manages webhooks as a way for Cypress Cloud
-   to communicate with Microsoft Teams.
+   to communicate with Microsoft Teams. First, you must configure an _Incoming
+   Webhook_ to a Teams channel.
 
-   First, you must configure an Incoming Webhook to a Teams channel. For more
-   information on that, see
-   [Microsoft Teams - Create Incoming Webhooks](https://learn.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/add-incoming-webhook?tabs=dotnet#create-incoming-webhooks-1).
+   In Microsoft Teams:
 
-   Then, add the Teams webhook to your Cypress Cloud Project, choosing the types
-   of notifications your team should receive.
+   - Open the channel in which you want to add the webhook and select **•••**
+     from the upper-right corner.
+
+   - Select Connectors from the dropdown menu.
+
+     <DocsImage
+       src="/img/guides/cloud/integrations/teams-connectors_1.png"
+       alt="Visit project settings"
+       width={300}
+     />
+
+   - Search for Incoming Webhook and select Add.
+
+   - Select Configure, provide a name, and upload an image for your webhook if
+     necessary.
+
+     <DocsImage
+       src="/img/guides/cloud/integrations/teams-configure_1.png"
+       alt="Visit project settings"
+       width={500}
+     />
+
+   - Copy and save the unique webhook URL present in the dialog. The URL maps to
+     the channel and you can use it to send information to Teams.
+
+   - Select **Done**.
+
+     <DocsImage
+       src="/img/guides/cloud/integrations/teams-url_1.png"
+       alt="Visit project settings"
+       width={500}
+     />
+
+     The webhook is now available in the Teams channel. For more information,
+     see
+     [Microsoft Teams - Create Incoming Webhooks](https://learn.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/add-incoming-webhook?tabs=dotnet#create-incoming-webhooks-1).
+
+6. Then, add the Teams webhook to your Cypress Cloud Project.
+
+   In Cypress Cloud: 
+   
+   - Paste in the Teams webhook URL, choosing the types of notifications your team should receive.
 
    <DocsImage
      src="/img/guides/cloud/integrations/my-project-webhook.jpg"
