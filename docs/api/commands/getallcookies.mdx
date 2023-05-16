@@ -60,7 +60,7 @@ redirects back to our site, which sets a session cookie.
 
 ```javascript
 cy.contains('Log in').click()
-cy.origin('https://cypress.io', () => {
+cy.origin('https://example.cypress.io', () => {
   cy.get('[type=password]').type('*****')
   cy.contains('Log in').click()
 })

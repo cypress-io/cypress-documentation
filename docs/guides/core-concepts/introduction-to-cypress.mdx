@@ -644,7 +644,7 @@ immediately, before the `cy.visit()` has executed, so will always evaluate to
 it('test', () => {
   let username = undefined // evaluates immediately as undefined
 
-  cy.visit('https://cypress.io') // Nothing happens yet
+  cy.visit('https://example.cypress.io') // Nothing happens yet
   cy.get('.user-name') // Still, nothing happens yet
     .then(($el) => {
       // Nothing happens yet
@@ -679,7 +679,7 @@ commands run as expected.
 it('test', () => {
   let username = undefined // evaluates immediately as undefined
 
-  cy.visit('https://cypress.io') // Nothing happens yet
+  cy.visit('https://example.cypress.io') // Nothing happens yet
   cy.get('.user-name') // Still, nothing happens yet
     .then(($el) => {
       // Nothing happens yet

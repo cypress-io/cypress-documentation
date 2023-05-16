@@ -22,7 +22,7 @@ Cypress.require(moduleNameOrPath)
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```js
-cy.origin('example.com', () => {
+cy.origin('cypress.io', () => {
   const _ = Cypress.require('lodash')
   const utils = Cypress.require('./utils')
 
@@ -37,7 +37,7 @@ cy.origin('example.com', () => {
 // Use CommonJS `require()` instead
 const _ = Cypress.require('lodash')
 
-cy.origin('example.com', async () => {
+cy.origin('cypress.io', async () => {
   // `require()` and `import()` cannot be used inside the `cy.origin()` callback.
   // Use `Cypress.require()` instead
   const _ = require('lodash')

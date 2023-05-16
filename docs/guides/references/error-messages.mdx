@@ -523,10 +523,10 @@ In order to fix this, our `cy.get()` command **must** be wrapped with the
 [`cy.origin()`](/api/commands/origin) command, like so:
 
 ```javascript
-it('navigates to docs.cypress.io and runs additional commands', () => {
+it('navigates to example.cypress.io and runs additional commands', () => {
   cy.visit('http://localhost:3000')
-  cy.visit('https://docs.cypress.io') // visit a different superdomain
-  cy.origin('https://docs.cypress.io', () => {
+  cy.visit('https://example.cypress.io') // visit a different superdomain
+  cy.origin('https://example.cypress.io', () => {
     cy.get('h1').should('contain', 'Why Cypress?') // now succeeds!
   })
 })

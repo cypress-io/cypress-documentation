@@ -190,15 +190,15 @@ it is.
 ```js
 // tell your back end server which campaign you want sent
 // so you can deterministically know what it is ahead of time
-cy.visit('https://cypress.io?campaign=A')
+cy.visit('https://example.cypress.io?campaign=A')
 
 ...
 
-cy.visit('https://cypress.io?campaign=B')
+cy.visit('https://example.cypress.io?campaign=B')
 
 ...
 
-cy.visit('https://cypress.io?campaign=C')
+cy.visit('https://example.cypress.io?campaign=C')
 ```
 
 Now there is not even a need to do conditional testing since you are able to
@@ -212,11 +212,11 @@ your server to tell you which campaign you are on.
 
 ```js
 // this sends us the session cookies
-cy.visit('https://cypress.io')
+cy.visit('https://example.cypress.io')
 
 // assuming this sends us back
 // the campaign information
-cy.request('https://cypress.io/me')
+cy.request('https://example.cypress.io/me')
   .its('body.campaign')
   .then((campaign) => {
     // runs different cypress test code
@@ -231,7 +231,7 @@ Another way to test this is if your server sent the campaign in a session cookie
 that you could read off.
 
 ```js
-cy.visit('https://cypress.io')
+cy.visit('https://example.cypress.io')
 cy.getCookie('campaign').then((campaign) => {
   return campaigns.test(campaign)
 })
@@ -271,12 +271,12 @@ These patterns are pretty much the same as before:
 
 ```js
 // dont show the wizard
-cy.visit('https://cypress.io?wizard=0')
+cy.visit('https://example.cypress.io?wizard=0')
 ```
 
 ```js
 // show the wizard
-cy.visit('https://cypress.io?wizard=1')
+cy.visit('https://example.cypress.io?wizard=1')
 ```
 
 We would likely need to update our client side code to check whether this query
@@ -289,7 +289,7 @@ In the case where you cannot control it, you can still conditionally dismiss it
 **if** you know whether it is going to be shown.
 
 ```js
-cy.visit('https://cypress.io')
+cy.visit('https://example.cypress.io')
 cy.getCookie('showWizard')
   .then((val) => {
     if (val) {
@@ -310,8 +310,8 @@ If you store and/or persist whether to show the wizard on the server, then ask
 it.
 
 ```js
-cy.visit('https://cypress.io')
-cy.request('https://cypress.io/me')
+cy.visit('https://example.cypress.io')
+cy.request('https://example.cypress.io/me')
   .its('body.showWizard')
   .then((val) => {
     if (val) {

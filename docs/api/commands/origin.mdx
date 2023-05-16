@@ -44,8 +44,8 @@ cy.origin(url, options, callbackFn)
 ```js
 const hits = getHits() // Defined elsewhere
 // Run commands in secondary origin, passing in serializable values
-cy.origin('https://www.cypress.io', { args: { hits } }, ({ hits }) => {
-  // Inside callback baseUrl is https://www.cypress.io
+cy.origin('https://example.cypress.io', { args: { hits } }, ({ hits }) => {
+  // Inside callback baseUrl is https://example.cypress.io
   cy.visit('/history/founder')
   // Commands are executed in secondary origin
   cy.get('h1').contains('About our Founder')
@@ -63,10 +63,10 @@ cy.get('h1').contains('My cool site under test')
 
 ```js
 const hits = getHits()
-cy.visit('https://www.cypress.io/history/founder')
+cy.visit('https://example.cypress.io/history/founder')
 // To interact with cross-origin content, move this inside cy.origin() callback
 cy.get('h1').contains('About our Founder')
-// Domain must be a precise match including subdomain, i.e. www.cypress.io
+// Domain must be a precise match including subdomain, i.e. example.cypress.io
 cy.origin('cypress.io', () => {
   cy.visit('/history/founder')
   cy.get('h1').contains('About our Founder')
@@ -170,7 +170,7 @@ will not work:
 **<Icon name="exclamation-triangle" color="red" /> Incorrect Usage**
 
 ```js
-cy.origin('https://www.cypress.io', () => {
+cy.origin('https://example.cypress.io', () => {
   cy.visit('/')
   cy.get('h1') // Yields an element, which can't be serialized...
 }).contains('CYPRESS') // ...so this will fail
@@ -181,7 +181,7 @@ Instead, you must explicitly yield a serializable value:
 **<Icon name="check-circle" color="green" /> Correct Usage**
 
 ```js
-cy.origin('https://www.cypress.io', () => {
+cy.origin('https://example.cypress.io', () => {
   cy.visit('/')
   cy.get('h1').invoke('textContent') // Yields a string...
 }).should('equal', 'CYPRESS') // 👍
@@ -197,8 +197,8 @@ page.
 ```js
 // Do things in primary origin...
 
-cy.origin('www.cypress.io', () => {
-  // Visit https://www.cypress.io/history/founder
+cy.origin('example.cypress.io', () => {
+  // Visit https://example.cypress.io/history/founder
   cy.visit('/history/founder')
   cy.get('h1').contains('About our Founder')
 })
@@ -214,10 +214,10 @@ and the protocol defaults to `https`. When `cy.visit()` is called with the path
 ```js
 // Do things in primary origin...
 
-cy.visit('https://www.cypress.io/history/founder')
+cy.visit('https://example.cypress.io/history/founder')
 
 // The cy.origin block is required to interact with the cross-origin page.
-cy.origin('www.cypress.io', () => {
+cy.origin('example.cypress.io', () => {
   cy.get('h1').contains('About our Founder')
 })
 ```
@@ -247,10 +247,10 @@ Navigating to a secondary origin by clicking a link or button in the primary
 origin is supported.
 
 ```js
-// Button in primary origin goes to https://www.cypress.io
+// Button in primary origin goes to https://example.cypress.io
 cy.contains('button', 'Go').click()
 
-cy.origin('www.cypress.io', () => {
+cy.origin('example.cypress.io', () => {
   // No cy.visit is needed as the button brought us here
   cy.get('h1').contains('CYPRESS')
 })
@@ -262,27 +262,16 @@ Callbacks may **not** themselves contain `cy.origin()` calls, so when visiting
 multiple origins, do so at the top level of the test.
 
 ```js
-cy.origin('origin1.com', () => {
+cy.origin('example.cypress.com', () => {
   cy.visit('/')
-  cy.url().should('contain', 'origin1.com')
+  cy.url().should('contain', 'example.cypress.com')
 })
 
-cy.origin('origin2.com', () => {
+cy.origin('cypress-dx.com', () => {
   cy.visit('/')
-  cy.url().should('contain', 'origin2.com')
-})
-
-cy.origin('origin3.com', () => {
-  cy.visit('/')
-  cy.url().should('contain', 'origin3.com')
+  cy.url().should('contain', 'cypress-dx.com')
 })
 ```
-
-:::info
-
-A future version of Cypress will allow the use of nested `cy.origin()` calls.
-
-:::
 
 ### SSO login custom command
 
@@ -300,7 +289,7 @@ Cypress.Commands.add('login', (username, password) => {
   // Remember to pass in arguments via `args`
   const args = { username, password }
   cy.origin('cypress.io', { args }, ({ username, password }) => {
-    // Go to https://auth-provider.com/login
+    // Go to https://example.cypress.com/login
     cy.visit('/login')
     cy.contains('Username').find('input').type(username)
     cy.contains('Password').find('input').type(password)
@@ -476,13 +465,13 @@ before(() => {
   // makes custom commands available to all subsequent cy.origin('cypress.io)
   // calls in this spec. put it in your support file to make them available to
   // all specs
-  cy.origin('cypress.io, () => {
+  cy.origin('cypress.io', () => {
     Cypress.require('../support/commands')
   })
 })
 
-it('tests cypress.io, () => {
-  cy.origin('cypress.io, () => {
+it('tests cypress.io', () => {
+  cy.origin('cypress.io', () => {
     cy.visit('/page')
     cy.clickLink('Click Me')
   })
@@ -517,7 +506,7 @@ it('also uses cy.origin() + custom command', () => {
     cy.clickLink('Click Me')
   })
 
-  cy.origin('anotherwebsite.com', () => {
+  cy.origin('cypress-dx.com', () => {
     // WARNING: cy.clickLink() will not be available because it is a
     // different origin
   })

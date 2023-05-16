@@ -234,8 +234,8 @@ or by other means, we recommend testing this superdomain with `cy.origin`.
 ```javascript
 // Test code
 cy.visit('http://localhost:8080') // where your web server + HTML is hosted
-cy.get('a').click() // browser navigates to https://cypress.io
-cy.origin('https://cypress.io', () => {
+cy.get('a').click() // browser navigates to https://example.cypress.io
+cy.origin('https://example.cypress.io', () => {
   // declare cy.origin command on expected domain
   cy.get('selector').should('exist') // Yup all good
 })
@@ -248,7 +248,7 @@ the navigation. This will help lead to more deterministic tests.
 ```javascript
 // this test verifies the behavior and will run considerably faster
 cy.visit('http://localhost:8080')
-cy.get('a').should('have.attr', 'href', 'https://cypress.io') // no page load!
+cy.get('a').should('have.attr', 'href', 'https://example.cypress.io') // no page load!
 ```
 
 If for any reason the two above methods cannot be leveraged,
@@ -297,7 +297,7 @@ additional Cypress commands after submitting the form.
 
 app.post('/submit', (req, res) => {
   // redirect the browser to cypress.io
-  res.redirect('https://cypress.io')
+  res.redirect('https://example.cypress.io')
 })
 ```
 
@@ -306,7 +306,7 @@ You can test this with `cy.origin`, which may look like the following test case:
 ```javascript
 cy.visit('http://localhost:8080')
 cy.get('form').submit() // submit the form!
-cy.origin('https://cypress.io', () => {
+cy.origin('cypress.io', () => {
   cy.url().should('contain', 'cypress.io')
 })
 ```
@@ -321,7 +321,7 @@ test these with `cy.origin`.
 ```javascript
 cy.visit('http://localhost:8080')
 cy.get('#login').click() // click a login button, which takes us to our authentication page.
-cy.origin('https://cypress.io', () => {
+cy.origin('cypress.io', () => {
   cy.get('#username').type('User1')
   cy.get('#password').type('Password123')
 
@@ -371,10 +371,10 @@ something like this:
 ```html
 <!-- Application code that is served at `localhost:8080` -->
 <html>
-  <button id="nav">Navigate to cypress.io</button>
+  <button id="nav">Navigate to Cypress example</button>
   <script>
     document.querySelector('#nav').addEventListener('click', () => {
-      window.location.href = 'http://cypress.io'
+      window.location.href = 'https://example.cypress.io'
     })
   </script>
 </html>
@@ -385,7 +385,7 @@ You can test this with `cy.origin`, which may look like the following test case:
 ```javascript
 cy.visit('http://localhost:8080')
 cy.get('#nav').submit() // trigger a javascript redirect!
-cy.origin('http://cypress.io', () => {
+cy.origin('https://example.cypress.io', () => {
   cy.url().should('contain', 'cypress.io')
 })
 ```
