@@ -166,8 +166,8 @@ cy.get('a').click() // will fail
 
 Browsers refuse to display insecure content on a secure page. Because Cypress
 initially changed its URL to match `https://example.cypress.io` when the browser
-followed the `href` to `http://example.cypress.io/page2`, the browser will refuse to
-display the contents.
+followed the `href` to `http://example.cypress.io/page2`, the browser will
+refuse to display the contents.
 
 Now you may be thinking, _This sounds like a problem with Cypress because when I
 work with my application outside of Cypress it works just fine._
@@ -241,9 +241,9 @@ cy.origin('https://example.cypress.io', () => {
 })
 ```
 
-If not in control of this superdomain, 
-we recommend you test that the `href` property is correct instead of performing
-the navigation. This will help lead to more deterministic tests.
+If not in control of this superdomain, we recommend you test that the `href`
+property is correct instead of performing the navigation. This will help lead to
+more deterministic tests.
 
 ```javascript
 // this test verifies the behavior and will run considerably faster

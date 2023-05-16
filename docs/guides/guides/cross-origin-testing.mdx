@@ -121,11 +121,12 @@ state like `localStorage`, `cookies`, `service workers` and many other APIs are
 not shared between them anyways. Cypress does offer APIs around `localStorage`,
 `sessionStorage`, and `cookies` that are not limited to this restriction.
 
-As a best practice, you should not visit or interact with any website
-not under your control. 
+As a best practice, you should not visit or interact with any website not under
+your control.
 
-If your organization uses Single Sign On (SSO) or OAuth then you might choose to test a 3rd party service other
-than your superdomain, which can be tested with [`cy.origin()`](/api/commands/origin).
+If your organization uses Single Sign On (SSO) or OAuth then you might choose to
+test a 3rd party service other than your superdomain, which can be tested with
+[`cy.origin()`](/api/commands/origin).
 
 We've written several other guides specifically about handling this situation.
 
