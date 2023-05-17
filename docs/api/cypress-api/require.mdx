@@ -22,7 +22,7 @@ Cypress.require(moduleNameOrPath)
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```js
-cy.origin('example.com', () => {
+cy.origin('cypress.io', () => {
   const _ = Cypress.require('lodash')
   const utils = Cypress.require('./utils')
 
@@ -37,7 +37,7 @@ cy.origin('example.com', () => {
 // Use CommonJS `require()` instead
 const _ = Cypress.require('lodash')
 
-cy.origin('example.com', async () => {
+cy.origin('cypress.io', async () => {
   // `require()` and `import()` cannot be used inside the `cy.origin()` callback.
   // Use `Cypress.require()` instead
   const _ = require('lodash')
@@ -56,7 +56,7 @@ There are couple ways to have types inferred for the dependency required.
 ### Casting
 
 ```js
-cy.origin('example.com', async () => {
+cy.origin('cypress.io', async () => {
   const _ = Cypress.require('lodash') as typeof import('lodash')
 
   // lodash methods are properly typed
@@ -71,7 +71,7 @@ cy.origin('example.com', async () => {
 ```js
 import type { LoDashStatic } from 'lodash'
 
-cy.origin('example.com', async () => {
+cy.origin('cypress.io', async () => {
   const _ = Cypress.require < LoDashStatic > 'lodash'
 
   // lodash methods are properly typed
