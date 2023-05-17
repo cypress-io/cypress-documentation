@@ -65,7 +65,7 @@ cy.visit('https://example.cypress.io', {
 
 cy.getAllLocalStorage().then((result) => {
   expect(result).to.deep.equal({
-    'http://localhost:8080': {
+    'https://example.cypress.io': {
       key: 'value',
     },
   })
