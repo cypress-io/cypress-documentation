@@ -57,7 +57,7 @@ For example, if `key1` is set to `value1` on `https://example.cypress.io` and
 ### Get all localStorage
 
 ```javascript
-cy.visit('/users', {
+cy.visit('https://example.cypress.io', {
   onBeforeLoad(win) {
     win.localStorage.setItem('key', 'value')
   },
