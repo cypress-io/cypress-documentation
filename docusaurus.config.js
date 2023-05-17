@@ -138,7 +138,7 @@ const config = {
             'aria-label': 'Cypress GitHub repository',
           },
           {
-            href: 'https://discord.gg/cypress',
+            href: 'https://on.cypress.io/discord',
             position: 'right',
             className: 'discord-logo',
             'aria-label': 'Cypress Discord',
