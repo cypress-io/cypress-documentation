@@ -192,7 +192,7 @@ const config = {
               // },
               {
                 label: 'Discord',
-                href: 'https://discord.com/invite/cypress',
+                href: 'https://on.cypress.io/discord',
               },
               {
                 label: 'Twitter',
