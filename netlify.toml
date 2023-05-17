@@ -324,12 +324,6 @@
   force = true
 
 [[redirects]]
-  from = "/guides/dashboard/bitbucket-integration"
-  to = "/guides/cloud/bitbucket-integration"
-  status = 301
-  force = true
-
-[[redirects]]
   from = "/guides/dashboard/flaky-test-management"
   to = "/guides/cloud/flaky-test-management"
   status = 301
@@ -338,18 +332,6 @@
 [[redirects]]
   from = "/guides/dashboard/flaky-test-management"
   to = "/guides/cloud/flaky-test-management"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/guides/dashboard/github-integration"
-  to = "/guides/cloud/github-integration"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/guides/dashboard/gitlab-integration"
-  to = "/guides/cloud/gitlab-integration"
   status = 301
   force = true
 
@@ -360,8 +342,62 @@
   force = true
 
 [[redirects]]
+  from = "/guides/dashboard/github-integration"
+  to = "/guides/cloud/integrations/github"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/github-integration"
+  to = "/guides/cloud/integrations/github"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/dashboard/gitlab-integration"
+  to = "/guides/cloud/integrations/gitlab"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/gitlab-integration"
+  to = "/guides/cloud/integrations/gitlab"
+  status = 301
+  force = true
+
+[[redirects]]
   from = "/guides/dashboard/jira-integration"
-  to = "/guides/cloud/jira-integration"
+  to = "/guides/cloud/integrations/jira"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/jira-integration"
+  to = "/guides/cloud/integrations/jira"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/dashboard/slack-integration"
+  to = "/guides/cloud/integrations/slack"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/slack-integration"
+  to = "/guides/cloud/integrations/slack"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/dashboard/bitbucket-integration"
+  to = "/guides/cloud/integrations/bitbucket"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/bitbucket-integration"
+  to = "/guides/cloud/integrations/bitbucket"
   status = 301
   force = true
 
@@ -380,12 +416,6 @@
 [[redirects]]
   from = "/guides/dashboard/runs"
   to = "/guides/cloud/runs"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/guides/dashboard/slack-integration"
-  to = "/guides/cloud/slack-integration"
   status = 301
   force = true
 

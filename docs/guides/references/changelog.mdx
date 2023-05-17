@@ -2,6 +2,43 @@
 title: Changelog
 ---
 
+## 12.12.0
+
+_Released 05/09/2023_
+
+**Features:**
+
+- Added a new informational banner to help get started with component testing
+  from an existing end-to-end test suite. Addresses
+  [#26511](https://github.com/cypress-io/cypress/issues/26511).
+
+**Bugfixes:**
+
+- Fixed an issue in Electron where devtools gets out of sync with the DOM
+  occasionally. Addresses
+  [#15932](https://github.com/cypress-io/cypress/issues/15932).
+- Updated the Chromium renderer process crash message to be more terse.
+  Addressed in [#26597](https://github.com/cypress-io/cypress/pull/26597).
+- Fixed an issue with `CYPRESS_DOWNLOAD_PATH_TEMPLATE` regex to allow multiple
+  replacements. Addresses
+  [#23670](https://github.com/cypress-io/cypress/issues/23670).
+
+**Dependency Updates:**
+
+- Upgraded [`plist`](https://www.npmjs.com/package/plist) from `3.0.5` to
+  `3.0.6` to address
+  [CVE-2022-26260](https://nvd.nist.gov/vuln/detail/CVE-2022-22912#range-8131646)
+  NVD security vulnerability. Addressed in
+  [#26631](https://github.com/cypress-io/cypress/pull/26631).
+- Upgraded [`engine.io`](https://www.npmjs.com/package/engine.io) from `6.2.1`
+  to `6.4.2` to address
+  [CVE-2023-31125](https://github.com/socketio/engine.io/security/advisories/GHSA-q9mw-68c2-j6m5)
+  NVD security vulnerability. Addressed in
+  [#26664](https://github.com/cypress-io/cypress/pull/26664).
+- Upgraded [`@vue/test-utils`](https://www.npmjs.com/package/@vue/test-utils)
+  from `2.0.2` to `2.3.2`. Addresses
+  [#26575](https://github.com/cypress-io/cypress/issues/26575).
+
 ## 12.11.0
 
 _Released 04/26/2023_
@@ -6885,7 +6922,7 @@ _Released 11/27/2019_
   [#5707](https://github.com/cypress-io/cypress/issues/5707).
 - Cypress now captures the SHA of builds generated through Travis CI during pull
   requests. This should resolve issues with Cypress status checks sometimes not
-  running within [GitHub Integration](/guides/cloud/github-integration). Fixes
+  running within [GitHub Integration](/guides/cloud/integrations/github). Fixes
   [#5728](https://github.com/cypress-io/cypress/issues/5728).
 - Cypress now automatically strips double quotes from
   [--ci-build-id](/guides/guides/command-line#cypress-run-ci-build-id-lt-id-gt)
@@ -7400,7 +7437,7 @@ _Released 7/29/2019_
 **Dashboard Features:**
 
 - We’re excited to announce
-  [GitHub integration](/guides/cloud/github-integration) for the
+  [GitHub integration](/guides/cloud/integrations/github) for the
   [Cypress Dashboard](https://on.cypress.io/dashboard). You can now get timely
   and useful test run information within pull-requests via status checks and
   pull-request comments. Learn all about it on
@@ -7500,7 +7537,7 @@ _Released 7/29/2019_
 **Documentation Changes:**
 
 - We have new instructions on how to set up
-  [GitHub Integration](/guides/cloud/github-integration) with the Cypress
+  [GitHub Integration](/guides/cloud/integrations/github) with the Cypress
   Dashboard.
 - Updated instructions for adding types for custom commands in the
   [TypeScript Support](/guides/tooling/typescript-support#Types-for-custom-commands)
