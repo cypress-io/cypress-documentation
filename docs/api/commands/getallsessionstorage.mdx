@@ -65,7 +65,7 @@ cy.visit('/users', {
 
 cy.getAllSessionStorage().then((result) => {
   expect(result).to.deep.equal({
-    '/users': {
+    'http://localhost:8080': {
       key: 'value',
     },
   })
