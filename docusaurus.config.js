@@ -138,7 +138,7 @@ const config = {
             'aria-label': 'Cypress GitHub repository',
           },
           {
-            href: 'https://discord.gg/cypress',
+            href: 'https://on.cypress.io/discord',
             position: 'right',
             className: 'discord-logo',
             'aria-label': 'Cypress Discord',
@@ -192,7 +192,7 @@ const config = {
               // },
               {
                 label: 'Discord',
-                href: 'https://discord.com/invite/cypress',
+                href: 'https://on.cypress.io/discord',
               },
               {
                 label: 'Twitter',

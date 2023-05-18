@@ -246,19 +246,19 @@ using `cy.task()` as shown below.
 // in test
 describe('Href visit', () => {
   it('captures href', () => {
-    cy.visit('https://www.mywebapp.com')
+    cy.visit('https://example.cypress.io')
     cy.get('a')
       .invoke('attr', 'href')
       .then((href) => {
         // href is not same-origin as current url
-        // like https://www.anotherwebapp.com
+        // like https://www.cypress-dx.com
         cy.task('setHref', href)
       })
   })
 
   it('visit href', () => {
     cy.task('getHref').then((href) => {
-      // visit non same-origin url https://www.anotherwebapp.com
+      // visit non same-origin url https://www.cypress-dx.com
       cy.visit(href)
     })
   })

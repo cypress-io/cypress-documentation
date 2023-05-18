@@ -132,7 +132,7 @@ requests matching the origin you're testing will have these attached at the
 network level.
 
 ```javascript
-cy.visit('https://www.acme.com/', {
+cy.visit('https://example.cypress.io/', {
   auth: {
     username: 'wile',
     password: 'coyote',
@@ -144,7 +144,7 @@ You can also provide the username and password directly in the URL.
 
 ```javascript
 // this is the same thing as providing the auth object
-cy.visit('https://wile:coyote@www.acme.com')
+cy.visit('https://wile:coyote@example.cypress.io')
 ```
 
 :::info
@@ -215,8 +215,8 @@ The parameters passed to `qs` will be merged into existing query parameters on
 the `url`.
 
 ```js
-// visits http://example.com/users?page=1&admin=true
-cy.visit('http://example.com/users?page=1', {
+// visits https://example.cypress.io/users?page=1&admin=true
+cy.visit('https://example.cypress.io/users?page=1', {
   qs: { admin: true },
 })
 ```
@@ -267,7 +267,7 @@ If you would like to visit a different host when the `baseUrl` has been set,
 provide the fully qualified URL you would like to go to.
 
 ```javascript
-cy.visit('http://google.com')
+cy.visit('https://example.cypress.io')
 ```
 
 #### Visit local files
