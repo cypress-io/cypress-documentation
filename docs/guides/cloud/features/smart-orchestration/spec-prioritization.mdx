@@ -3,4 +3,70 @@ title: Spec Prioritization
 sidebar_position: 30
 ---
 
-content to come...
+It is often helpful to be **aware of test failures earlier within a CI test run
+so that debugging and iterations can resume and progress much faster**. Being
+able to catch issues sooner within the CI process can save valuable time in
+troubleshooting failures and deploying fixes.
+
+:::info
+
+<strong>
+  <Icon name="graduation-cap" /> Consider the Scenario
+</strong>
+
+For example, you have a test suite consisting of several spec files that take 30
+minutes to execute, but failures start to occur within one spec at the 20 minute
+marker. A subsequent code change aimed at resolving the issue will have to be
+validated after running the CI build and waiting 20 minutes. This process and
+waiting continues until the issue is fixed.
+
+By running failed specs first, the issues can be surfaced earlier and reduce
+that 20 minute wait to potentially a few minutes. **Considering that a test
+suite has multiple spec files, this orchestration strategy will always save
+time.**
+
+:::
+
+### Activate Spec Prioritization in Cypress Cloud
+
+:::tip
+
+<strong>
+  <Icon name="star" /> Premium Cypress Cloud Feature
+</strong>
+
+**Spec Prioritization** is a _Smart Orchestration_ feature available to users
+with a
+[Business or Enterprise tier Cypress Cloud plan](https://cypress.io/pricing).
+Wondering if upgrading your Team tier subscription is worth it? Check out the
+[recommendations](/guides/cloud/runs#Recommendations) on the run overview page
+to see how much time we predict these features would save you.
+
+:::
+
+Spec Prioritization is a _Smart Orchestration_ feature that is managed within a
+project's settings.
+
+To enable or disable this feature at the Project level (must be an admin user):
+
+1. Select the desired project within Projects view to visit Cypress Cloud.
+2. Click "Project Settings" with the right-hand sidebar.
+3. Scroll to the Smart Orchestration section within Project Settings page.
+4. Toggle "Spec Prioritization".
+
+<DocsImage
+  src="/img/guides/cloud/smart-orchestration/spec-prioritization-active.png"
+  alt="Enable Spec Prioritization"
+/>
+
+:::note
+
+<strong>CI Tip: Reduce Costs</strong>
+
+Note that Spec Prioritization **alone** will not save time as it purely alters
+the order in which specs are run. However, when used in tandem with
+[Auto Cancellation](#Auto-Cancellation) it can result in shorter test runs due
+to cancellation being triggered earlier, leading to significantly reduced CI
+costs.
+
+:::
