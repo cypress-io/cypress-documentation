@@ -10,7 +10,6 @@ sidebar_position: 10
 - How to parallelize test runs
 - How to group test runs
 - Strategies for grouping test runs
-- How load-balancing of tests works
 - What test insights are available on Cypress Cloud
 
 :::
@@ -80,7 +79,7 @@ your project to record, check out our
 
 During parallelization mode, [Cypress Cloud](/guides/cloud/introduction)
 interacts with your CI machines to orchestrate the parallelization of a test run
-via [load-balancing](#Balance-strategy) of specs across available CI machines by
+via [load-balancing](/guides/cloud/features/smart-orchestration/load-balancing) of specs across available CI machines by
 the following process:
 
 1. CI machines contact [Cypress Cloud](/guides/cloud/introduction) to indicate
@@ -89,7 +88,7 @@ the following process:
 3. Upon receiving requests from a CI machine, Cypress calculates the estimated
    duration to test each spec file.
 4. Based on these estimations, Cypress distributes
-   ([load-balances](#Balance-strategy)) spec files one-by-one to each available
+   ([load-balances](/guides/cloud/features/smart-orchestration/load-balancing)) spec files one-by-one to each available
    machine in a way that minimizes overall test run time.
 5. As each CI machine finishes running its assigned spec file, more spec files
    are distributed to it. This process repeats until all spec files are
@@ -108,39 +107,6 @@ which sends back one spec at a time to each application to run.
   src="/img/guides/parallelization/parallelization-overview.png"
   alt="Parallelization Overview"
 />
-
-## Balance strategy
-
-Cypress will automatically balance your spec files across the available machines
-in your CI provider. Cypress calculates which spec file to run based on the data
-collected from previous runs. This ensures that your spec files run as fast as
-possible, with no need for manual configuration.
-
-As more and more tests are recorded to Cypress Cloud, Cypress can better predict
-how long a given spec file will take to run. To prevent irrelevant data from
-affecting the duration prediction, Cypress doesn't use old historical run data
-regarding the spec file.
-
-### Spec duration history analysis
-
-<DocsImage
-  src="/img/guides/parallelization/load-balancing.png"
-  alt="Spec duration forecasting"
-/>
-
-With a duration estimation for each spec file of a test run, Cypress can
-distribute spec files to available CI resources in descending order of spec run
-duration. In this manner, the most time-consuming specs start first which
-minimizes the overall test run duration.
-
-:::info
-
-Duration estimation is done separately for every browser the spec file was
-tested against. This is helpful since performance characteristics vary by
-browser, and therefore it is perfectly acceptable to see different duration
-estimates for each browser a spec file was tested against.
-
-:::
 
 ## Example
 
