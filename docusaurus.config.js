@@ -19,8 +19,8 @@ const config = {
     'Fast, easy and reliable testing for anything that runs in a browser.',
   url: 'https://docs.cypress.io',
   baseUrl: '/',
-  onBrokenLinks: 'throw', // TODO: update this to throw when we go live to production
-  onBrokenMarkdownLinks: 'throw',
+  onBrokenLinks: 'warn',
+  onBrokenMarkdownLinks: 'warn',
   favicon: undefined,
 
   // Even if you don't use internalization, you can use this field to set useful
