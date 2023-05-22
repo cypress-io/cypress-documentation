@@ -186,8 +186,7 @@ batch:
   build-list:
     - identifier: cypress-e2e-tests
       env:
-        variables:
-          IMAGE: public.ecr.aws/cypress-io/cypress/browsers:node12.14.1-chrome85-ff81
+        image: public.ecr.aws/cypress-io/cypress/browsers:node16.14.2-slim-chrome100-ff99-edge
 
 phases:
   install:
