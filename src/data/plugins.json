@@ -116,7 +116,7 @@
         },
         {
           "name": "Cypress Github Actions",
-          "description": "GitHub Action for running Cypress end-to-end and component tests. Includes NPM installation, custom caching and lots of configuration options.",
+          "description": "GitHub Action for running Cypress end-to-end and component tests. Includes npm, pnpm and Yarn installation, custom caching and lots of configuration options.",
           "link": "https://github.com/cypress-io/github-action",
           "keywords": ["continuous-integration", "github-actions"],
           "badge": "official"
