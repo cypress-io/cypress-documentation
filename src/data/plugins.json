@@ -7,7 +7,7 @@
         {
           "name": "Webpack",
           "description": "Watches and bundles your spec files via webpack.",
-          "link": "https://github.com/cypress-io/cypress/tree/master/npm/webpack-preprocessor",
+          "link": "https://github.com/cypress-io/cypress/tree/develop/npm/webpack-preprocessor",
           "keywords": ["webpack"],
           "badge": "official"
         },
@@ -159,7 +159,7 @@
         {
           "name": "TypeScript",
           "description": "Official TypeScript definitions for the Cypress API.",
-          "link": "https://github.com/cypress-io/cypress/tree/master/cli/types",
+          "link": "https://github.com/cypress-io/cypress/tree/develop/cli/types",
           "keywords": ["typescript"],
           "badge": "official"
         },
@@ -819,7 +819,7 @@
         {
           "name": "Cypress Schematic",
           "description": "Adds Cypress to your Angular project via the Angular CLI. Adopted by Cypress; originally released as <a target=\"_blank\" href=\"https://www.npmjs.com/package/@briebug/cypress-schematic\">@briebug/cypress-schematic</a>.",
-          "link": "https://github.com/cypress-io/cypress/tree/master/npm/cypress-schematic",
+          "link": "https://github.com/cypress-io/cypress/tree/develop/npm/cypress-schematic",
           "keywords": ["angular", "cli"],
           "badge": "official"
         },
@@ -916,35 +916,35 @@
         {
           "name": "Cypress Angular",
           "description": "Test Angular components using Cypress Test Runner. This package is bundled with the cypress package and does not need to be installed separately, unless a specific version is desired. See the <a target=\"_blank\" href=\"/guides/component-testing/angular/overview\">Angular Component Testing Docs</a> for mounting Angular components.",
-          "link": "https://github.com/cypress-io/cypress/tree/master/npm/angular",
+          "link": "https://github.com/cypress-io/cypress/tree/develop/npm/angular",
           "keywords": ["component", "angular"],
           "badge": "official"
         },
         {
           "name": "Cypress React",
           "description": "Test React components using Cypress Test Runner. This package is bundled with the cypress package and does not need to be installed separately, unless a specific version is desired. See the <a target=\"_blank\" href=\"/guides/component-testing/react/overview\">React Component Testing Docs</a> for mounting React components.",
-          "link": "https://github.com/cypress-io/cypress/tree/master/npm/react",
+          "link": "https://github.com/cypress-io/cypress/tree/develop/npm/react",
           "keywords": ["component", "react"],
           "badge": "official"
         },
         {
           "name": "Cypress Svelte",
           "description": "Test Svelte components using Cypress Test Runner. This package is bundled with the cypress package and should not need to be installed separately. See the <a target=\"_blank\" href=\"/guides/component-testing/svelte/overview\">Svelte Component Testing Docs</a> for mounting Svelte components.",
-          "link": "https://github.com/cypress-io/cypress/tree/master/npm/svelte",
+          "link": "https://github.com/cypress-io/cypress/tree/develop/npm/svelte",
           "keywords": ["component", "svelte"],
           "badge": "official"
         },
         {
           "name": "Cypress Vue",
           "description": "Test Vue 3 components using Cypress Test Runner. This package is bundled with the cypress package and should not need to be installed separately. See the <a target=\"_blank\" href=\"/guides/component-testing/vue/overview\">Vue Component Testing Docs</a> for mounting Vue components.",
-          "link": "https://github.com/cypress-io/cypress/tree/master/npm/vue",
+          "link": "https://github.com/cypress-io/cypress/tree/develop/npm/vue",
           "keywords": ["component", "vue", "vue.js"],
           "badge": "official"
         },
         {
           "name": "Cypress Vue2",
           "description": "Test Vue 2 components using Cypress Test Runner. This package is bundled with the cypress package and should not need to be installed separately. See the <a target=\"_blank\" href=\"/guides/component-testing/vue/overview\">Vue Component Testing Docs</a> for mounting Vue components.",
-          "link": "https://github.com/cypress-io/cypress/tree/master/npm/vue2",
+          "link": "https://github.com/cypress-io/cypress/tree/develop/npm/vue2",
           "keywords": ["component", "vue", "vue.js"],
           "badge": "official"
         },
