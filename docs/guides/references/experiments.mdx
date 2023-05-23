@@ -25,12 +25,94 @@ configuration to Cypress.
 
 | Option                                        | Default | Description                                                                                                                                                                                                                                                                                                                    |
 | --------------------------------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `experimentalCspAllowList`                    | `false` | Indicates the Content-Security-Policy directives to be permitted during a test run. See [Content-Security-Policy](/guides/guides/content-security-policy) for more information.                                                                                                                                                |
 | `experimentalFetchPolyfill`                   | `false` | Automatically replaces `window.fetch` with a polyfill that Cypress can spy on and stub. Note: `experimentalFetchPolyfill` has been deprecated in Cypress 6.0.0 and will be removed in a future release. Consider using [cy.intercept()](/api/commands/intercept) to intercept `fetch` requests instead.                        |
 | `experimentalInteractiveRunEvents`            | `false` | Allows listening to the [`before:run`](/api/plugins/before-run-api), [`after:run`](/api/plugins/after-run-api), [`before:spec`](/api/plugins/before-spec-api), and [`after:spec`](/api/plugins/after-spec-api) events in the [setupNodeEvents](/guides/tooling/plugins-guide#Using-a-plugin) function during interactive mode. |
 | `experimentalMemoryManagement`                | `false` | Enables support for improved memory management within Chromium-based browsers.                                                                                                                                                                                                                                                 |
 | `experimentalModifyObstructiveThirdPartyCode` | `false` | Whether Cypress will search for and replace obstructive code in third party `.js` or `.html` files. NOTE: Setting this flag removes [Subresource Integrity (SRI)](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity).                                                                                |
 | `experimentalSourceRewriting`                 | `false` | Enables AST-based JS/HTML rewriting. This may fix issues caused by the existing regex-based JS/HTML replacement algorithm. See [#5273](https://github.com/cypress-io/cypress/issues/5273) for details.                                                                                                                         |
 | `experimentalWebKitSupport`                   | `false` | Enable experimental support for running tests in WebKit. When set, installs of `playwright-webkit` will be detected and available in Cypress. See [Launching Browsers](/guides/guides/launching-browsers#WebKit-Experimental) for more information.                                                                            |
+
+### Experimental CSP Allow List
+
+Cypress by default strips all CSP headers (`Content-Security-Policy` and
+`Content-Security-Policy-Report-Only`) from the response before it is sent to
+the browser. The `experimentalCspAllowList` option allows for more granular
+control over which CSP directives are stripped from the CSP response headers,
+allowing you to test your application with CSP enabled. Valid values for this
+option are `false` (the default), `true`, or an array of CSP directive names.
+
+| Value                                                 | Example                                                 |
+| ----------------------------------------------------- | ------------------------------------------------------- |
+| [`false` (default)](#Strip-All-CSP-Headers)           | `experimentalCspAllowList=false`                        |
+| [`true`](#Strip-Minimum-CSP-Directives)               | `experimentalCspAllowList=true`                         |
+| [`<CspDirectives>[]`](#Allow-Specific-CSP-Directives) | `experimentalCspAllowList=["default-src","script-src"]` |
+
+#### Strip All CSP Headers
+
+The value `experimentalCspAllowList=false` (default) will remove all CSP headers
+from the response before it is sent to the browser. This option should be used
+if you do not depend on CSP for any tests in your application.
+
+#### Strip Minimum CSP Directives
+
+If you need to test your application with CSP enabled, setting the
+`experimentalCspAllowList` option will allow all CSP headers to be sent to the
+browser _*except*_ those that could prevent Cypress from functioning normally.
+
+The following CSP directives will always be stripped:
+
+| Stripped Directive          | Allowable | Reason                                                           |
+| --------------------------- | --------- | ---------------------------------------------------------------- |
+| `frame-ancestors`           | No        | Prevents Cypress from loading a test application into an iframe. |
+| `require-trusted-types-for` | No        | Might prevent Cypress from rewriting the DOM.                    |
+| `trusted-types`             | No        | Could cause Cypress injections to be marked as untrusted.        |
+
+When `experimentalCspAllowList=true` the following directives are also stripped
+in addition to the ones listed above, but can be configured to be allowed to be
+sent to the browser:
+
+| Stripped Directive | Allowable | Reason                                                           |
+| ------------------ | --------- | ---------------------------------------------------------------- |
+| `default-src`      | Yes       | Conditionally prevents Cypress from loading scripts and running. |
+| `sandbox`          | Yes       | Can restrict access to script and iframe functionality.          |
+| `form-action`      | Yes       | Can prevent Cypress from monitoring form events.                 |
+| `navigate-to`      | Yes       | Affects Cypress' ability to navigate to different URLs.          |
+| `script-src`       | Yes       | Conditionally prevents Cypress from loading scripts and running. |
+| `script-src-elem`  | Yes       | Conditionally prevents Cypress from loading scripts and running. |
+
+#### Allow Specific CSP Directives
+
+Set the `experimentalCspAllowList` option to an array of directive names marked
+as "Allowable" from the list above. This will allow the specified CSP directives
+to be sent to the browser.
+
+The following configuration would allow the `default-src`, `script-src`, and
+`script-src-elem` directives to be sent to the browser:
+
+:::cypress-config-example
+
+```js
+{
+  experimentalCspAllowList: ['default-src', 'script-src', 'script-src-elem']
+}
+```
+
+:::
+
+:::caution
+
+Defining `experimentalCspAllowList` _*may*_ cause Cypress to be unable to run
+tests against your application. If you experience issues, reduce the directives
+specified in your allow list to identify which directive is causing issues.
+
+There is a known issue when using certain directives containing hash algorithm
+values and the `modifyObstructiveCode` and/or `experimentalSourceRewriting`
+options. Using these options in combination with the `experimentalCspAllowList`
+option can cause a mismatch between the original hashed directive value, and the
+modified HTML or JS value.
+
+:::
 
 ## Testing Type-Specific Experiments
 
