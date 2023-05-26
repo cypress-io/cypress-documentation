@@ -285,7 +285,7 @@
     },
     {
       "title": "Test a React Todo App",
-      "url": "https://on.cypress.io/tutorials",
+      "url": "/examples/tutorials",
       "author": "Andy van Slaars",
       "authorTwitter": "avanslaars",
       "sourceName": "Cypress.io",
