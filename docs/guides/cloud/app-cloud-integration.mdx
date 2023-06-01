@@ -17,7 +17,7 @@ within your local workflow.
 
 The data used by these features is pulled from Cypress Cloud, so they will only
 reflect test results that were
-[recorded](/guides/cloud/projects#Set-up-a-project-to-record).
+[recorded](/guides/cloud/getting-started#Set-up-a-project-to-record).
 
 If you're not sure whether you're logged in, you can always check using the
 profile control in the top right of the window.
@@ -75,7 +75,7 @@ Again, this analysis comes from Cypress Cloud.
 
 <strong>What is a flaky test?</strong>
 
-A test is considered to be [flaky](/guides/cloud/flaky-test-management) when it
+A test is considered to be [flaky](/guides/cloud/test-analytics/flaky-test-management) when it
 can pass and fail across multiple retry attempts without any code changes.
 
 :::
@@ -103,7 +103,7 @@ Clicking on the flake indicator will take you to the spec’s
 />
 
 This screen shows detailed information about the most recently recorded
-[test runs](/guides/cloud/runs) across all git branches, latest first. This data
+[test runs](/guides/cloud/test-analytics/project-health#Latest-Runs) across all git branches, latest first. This data
 comes from Cypress Cloud (see [note above](#Overview)) so should be the same
 everywhere.
 
@@ -130,7 +130,7 @@ enabling you to use the [Test Runner](#Test-Runner) to run only the tests that
 failed in your last recorded test run, as well as review screenshots, videos,
 and logs from your tests.
 
-The Debug page shows the latest completed [test run](/guides/cloud/runs) that
+The Debug page shows the latest completed [test run](/guides/cloud/test-analytics/project-health#Latest-Runs) that
 matches the HEAD commit (the commit currently checked out in the working
 directory) of your local project. Users can see and switch to relevant runs
 within the Debug page. If no run is found for your current commit, then Cypress

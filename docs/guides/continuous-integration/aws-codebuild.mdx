@@ -245,8 +245,8 @@ example for details on how to configure a CodePipeline with an output artifact.
 ## Parallelization
 
 [Cypress Cloud](/guides/cloud/introduction) offers the ability to
-[parallelize and group test runs](/guides/guides/parallelization) along with
-additional insights and [analytics](/guides/cloud/analytics) for Cypress tests.
+[parallelize and group test runs](/guides/cloud/smart-orchestration/parallelization) along with
+additional insights and [analytics](/guides/cloud/test-analytics/analytics) for Cypress tests.
 
 AWS CodeBuild offers a
 [batch build-matrix strategy](https://docs.aws.amazon.com/codebuild/latest/userguide/batch-build-buildspec.html#build-spec.batch.build-matrix)
@@ -434,21 +434,21 @@ are leveraging three useful features of
 1. [Recording test results with the `--record` flag](https://on.cypress.io/how-do-i-record-runs)
    to [Cypress Cloud](https://on.cypress.io/cloud):
 
-   - In-depth and shareable [test reports](/guides/cloud/runs).
+   - In-depth and shareable [test reports](/guides/cloud/test-analytics/project-health#Latest-Runs).
    - Visibility into test failures via quick access to error messages, stack
      traces, screenshots, videos, and contextual details.
-   - [Integrating testing with the pull-request (PR) process](/guides/cloud/integrations/github)
+   - [Integrating testing with the pull-request (PR) process](/guides/cloud/integrations/source-control/github)
      via
-     [commit status check guards](/guides/cloud/integrations/github#Status-checks)
+     [commit status check guards](/guides/cloud/integrations/source-control/github#Status-checks)
      and convenient
-     [test report comments](/guides/cloud/integrations/github#Pull-request-comments).
-   - [Detecting flaky tests](/guides/cloud/flaky-test-management) and surfacing
-     them via [Slack alerts](/guides/cloud/flaky-test-management#Slack) or
-     [GitHub PR status checks](/guides/cloud/flaky-test-management#GitHub).
+     [test report comments](/guides/cloud/integrations/source-control/github#Pull-request-comments).
+   - [Detecting flaky tests](/guides/cloud/test-analytics/flaky-test-management) and surfacing
+     them via [Slack alerts](/guides/cloud/test-analytics/flaky-test-management#Slack) or
+     [GitHub PR status checks](/guides/cloud/test-analytics/flaky-test-management#GitHub).
 
-2. [Parallelizing test runs](/guides/guides/parallelization) and optimizing
+2. [Parallelizing test runs](/guides/cloud/smart-orchestration/parallelization) and optimizing
    their execution via
-   [intelligent load-balancing](/guides/guides/parallelization#Balance-strategy)
+   [intelligent load-balancing](/guides/cloud/smart-orchestration/load-balancing#Balance-strategy)
    of test specs across CI machines with the `--parallel` flag.
 
 3. Organizing and consolidating multiple `cypress run` calls by labeled groups

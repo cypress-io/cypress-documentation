@@ -153,7 +153,7 @@ both browsers always running _all_ tests.
 
 In the example below, the Chrome `cypress/run` job runs _all_ tests against
 Chrome and reports results to [Cypress Cloud](https://on.cypress.io/cloud) using
-a ([group](/guides/guides/parallelization#Grouping-test-runs)) named `chrome`.
+a ([group](/guides/cloud/smart-orchestration/parallelization#Grouping-test-runs)) named `chrome`.
 
 The Firefox `cypress/run` job runs a subset of tests, defined in the `spec`
 parameter, against the Firefox browser, and reports the results to
@@ -192,7 +192,7 @@ workflows:
 ### Parallelize per browser
 
 Execution of test files can be parallelized on a per
-[group](/guides/guides/parallelization#Grouping-test-runs) basis, where test
+[group](/guides/cloud/smart-orchestration/parallelization#Grouping-test-runs) basis, where test
 files can be grouped by the browser under test. This versatility enables the
 ability to allocate the desired amount of CI resources towards a browser to
 either improve test duration or to minimize CI costs.
