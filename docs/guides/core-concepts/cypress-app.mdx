@@ -105,8 +105,9 @@ Again, this analysis comes from Cypress Cloud.
 
 <strong>What is a flaky test?</strong>
 
-A test is considered to be [flaky](/guides/cloud/test-analytics/flaky-test-management) when it
-can pass and fail across multiple retry attempts without any code changes.
+A test is considered to be
+[flaky](/guides/cloud/test-analytics/flaky-test-management) when it can pass and
+fail across multiple retry attempts without any code changes.
 
 :::
 
@@ -163,9 +164,9 @@ Running a large number of specs sequentially can consume more resources.
 />
 
 This screen shows detailed information about the most recently recorded
-[test runs](/guides/cloud/test-analytics/project-health#Latest-Runs) across all git branches, latest first. This data
-comes from Cypress Cloud (see [note above](#Overview)) so should be the same
-everywhere.
+[test runs](/guides/cloud/test-analytics/project-health#Latest-Runs) across all
+git branches, latest first. This data comes from Cypress Cloud (see
+[note above](#Overview)) so should be the same everywhere.
 
 The title of each run is taken from the
 [git commit message](https://www.educative.io/edpresso/git-commit-message-simply-explained)
@@ -190,13 +191,14 @@ enabling you to use the [Test Runner](#Test-Runner) to run only the tests that
 failed in your last recorded test run, as well as review screenshots, videos,
 and logs from your tests.
 
-The Debug page shows the latest completed [test run](/guides/cloud/test-analytics/project-health#Latest-Runs) that
-matches the HEAD commit (the commit currently checked out in the working
-directory) of your local project. Users can see and switch to relevant runs
-within the Debug page. If no run is found for your current commit, then Cypress
-shows the most recent run in your branch's history up until the current commit.
-The first **100** failed tests are listed, with a link to Cypress Cloud to
-review the full run.
+The Debug page shows the latest completed
+[test run](/guides/cloud/test-analytics/project-health#Latest-Runs) that matches
+the HEAD commit (the commit currently checked out in the working directory) of
+your local project. Users can see and switch to relevant runs within the Debug
+page. If no run is found for your current commit, then Cypress shows the most
+recent run in your branch's history up until the current commit. The first
+**100** failed tests are listed, with a link to Cypress Cloud to review the full
+run.
 
 To use this feature, you must ensure that git is properly configured for your
 project and that you are sending git information to Cypress Cloud. Under some
