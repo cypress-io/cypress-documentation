@@ -72,14 +72,16 @@ When `experimentalCspAllowList=true` the following directives are also stripped
 in addition to the ones listed above, but can be configured to be allowed to be
 sent to the browser:
 
-| Stripped Directive | Allowable | Reason                                                           |
-| ------------------ | --------- | ---------------------------------------------------------------- |
-| `default-src`      | Yes       | Conditionally prevents Cypress from loading scripts and running. |
-| `sandbox`          | Yes       | Can restrict access to script and iframe functionality.          |
-| `form-action`      | Yes       | Can prevent Cypress from monitoring form events.                 |
-| `navigate-to`      | Yes       | Affects Cypress' ability to navigate to different URLs.          |
-| `script-src`       | Yes       | Conditionally prevents Cypress from loading scripts and running. |
-| `script-src-elem`  | Yes       | Conditionally prevents Cypress from loading scripts and running. |
+| Stripped Directive | Allowable | Reason                                                                        |
+| ------------------ | --------- | ----------------------------------------------------------------------------- |
+| `child-src`        | Yes       | Could prevent iframes from loading in combination with other Cypress options. |
+| `default-src`      | Yes       | Conditionally prevents Cypress from loading scripts and running.              |
+| `frame-src`        | Yes       | Could prevent iframes from loading in combination with other Cypress options. |
+| `form-action`      | Yes       | Can prevent Cypress from monitoring form events.                              |
+| `navigate-to`      | Yes       | Affects Cypress' ability to navigate to different URLs.                       |
+| `sandbox`          | Yes       | Can restrict access to script and iframe functionality.                       |
+| `script-src`       | Yes       | Conditionally prevents Cypress from loading scripts and running.              |
+| `script-src-elem`  | Yes       | Conditionally prevents Cypress from loading scripts and running.              |
 
 #### Allow Specific CSP Directives
 
