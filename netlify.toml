@@ -437,6 +437,122 @@
   status = 301
   force = true
 
+# New Cloud Sidebar IA
+
+[[redirects]]
+  from = "/guides/cloud/projects"
+  to = "/guides/cloud/account-management/projects"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/projects#Setup"
+  to = "/guides/cloud/getting-started#Setup"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/projects#Set-up-a-project-to-record"
+  to = "/guides/cloud/getting-started#Set-up-a-project-to-record"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/organizations"
+  to = "/guides/cloud/account-management/organizations"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/organizations#Billing-Usage"
+  to = "/guides/cloud/account-management/billing-and-usage"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/organizations#Enterprise-SSO"
+  to = "/guides/cloud/account-management/enterprise-sso"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/users"
+  to = "/guides/cloud/account-management/users"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/guides/parallelization"
+  to = "/guides/cloud/smart-orchestration/parallelization"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/guides/parallelization#Balance-strategy"
+  to = "/guides/cloud/smart-orchestration/load-balancing#Balance-strategy"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/smart-orchestration#Spec-Prioritization"
+  to = "/guides/cloud/smart-orchestration/spec-prioritization"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/smart-orchestration#Auto-Cancellation"
+  to = "/guides/cloud/smart-orchestration/auto-run-cancellation"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/runs"
+  to = "/guides/cloud/test-analytics/runs"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/runs#Test-failures"
+  to = "/guides/cloud/test-analytics/runs#Attempts-and-errors"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/runs#Cancel-run"
+  to = "/guides/cloud/test-analytics/runs#Run-cancellation"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/analytics"
+  to = "/guides/cloud/test-analytics/analytics"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/flaky-test-management"
+  to = "/guides/cloud/test-analytics/flaky-test-management"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/integrations/github"
+  to = "/guides/cloud/integrations/source-control/github"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/integrations/gitlab"
+  to = "/guides/cloud/integrations/source-control/gitlab"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/integrations/bitbucket"
+  to = "/guides/cloud/integrations/source-control/bitbucket"
+  status = 301
+  force = true
+
 [[plugins]]
 package = "@netlify/plugin-sitemap"
 
