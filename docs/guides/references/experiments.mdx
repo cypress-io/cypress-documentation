@@ -65,7 +65,9 @@ The following CSP directives will always be stripped:
 | Stripped Directive          | Allowable | Reason                                                           |
 | --------------------------- | --------- | ---------------------------------------------------------------- |
 | `frame-ancestors`           | No        | Prevents Cypress from loading a test application into an iframe. |
+| `navigate-to`               | No        | Affects Cypress' ability to navigate to different URLs.          |
 | `require-trusted-types-for` | No        | Might prevent Cypress from rewriting the DOM.                    |
+| `sandbox`                   | No        | Can restrict access to script and iframe functionality.          |
 | `trusted-types`             | No        | Could cause Cypress injections to be marked as untrusted.        |
 
 When `experimentalCspAllowList=true` the following directives are also stripped
@@ -78,8 +80,6 @@ sent to the browser:
 | `default-src`      | Yes       | Conditionally prevents Cypress from loading scripts and running.              |
 | `frame-src`        | Yes       | Could prevent iframes from loading in combination with other Cypress options. |
 | `form-action`      | Yes       | Can prevent Cypress from monitoring form events.                              |
-| `navigate-to`      | Yes       | Affects Cypress' ability to navigate to different URLs.                       |
-| `sandbox`          | Yes       | Can restrict access to script and iframe functionality.                       |
 | `script-src`       | Yes       | Conditionally prevents Cypress from loading scripts and running.              |
 | `script-src-elem`  | Yes       | Conditionally prevents Cypress from loading scripts and running.              |
 
