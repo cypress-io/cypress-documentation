@@ -21,6 +21,16 @@ slug: /guides/end-to-end-testing/testing-your-app
 
 <!-- textlint-enable -->
 
+:::caution
+
+<strong>Use e2e folder instead of integration</strong>
+
+In the video you can see the test files are located in the 'intergration'
+folder. In the newest version of cypress you are not allowed to use 'cy.visit'
+on component testing. So the correct folder would be the 'e2e' folder.
+
+:::
+
 ## <Icon name="terminal" /> Step 1: Start your server
 
 Assuming you've successfully
