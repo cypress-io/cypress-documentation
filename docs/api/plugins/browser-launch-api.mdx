@@ -383,6 +383,31 @@ on('before:browser:launch', (browser, options) => {
 
 :::
 
+### Disable `--headless=new` for Chrome
+
+Starting in Chrome version 112, Cypress now will now launch Chrome with the with
+[the new `--headless=new` flag](https://developer.chrome.com/articles/new-headless/).
+
+If this new option causes issues with your tests it can easily be reverted with
+the following example so long as Chrome supports the old version of
+`--headless`.
+
+```ts
+on('before:browser:launch', (browser = {}, launchOptions) => {
+  if (browser.name === 'chrome' && browser.isHeadless) {
+    launchOptions.args = launchOptions.args.map((arg) => {
+      if (arg === '--headless=new') {
+        return '--headless'
+      }
+
+      return arg
+    })
+  }
+
+  return launchOptions
+})
+```
+
 ### Set a Firefox flag
 
 If we need to set a particular Firefox flag, like `browser.send_pings` we can do
