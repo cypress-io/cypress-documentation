@@ -1,10 +1,10 @@
-import React from "react";
 // Import the original mapper
 import MDXComponents from "@theme-original/MDXComponents";
 import AnatomyOfAnError from "@site/docs/partials/_anatomy-of-an-error.mdx";
 import Badge from "@site/src/components/badge";
 import ComponentOnlyBadge from "@site/src/components/component-only-badge";
 import CtBetaAlert from "@site/docs/partials/_CtBetaAlert.mdx";
+import TestReplayInfo from "@site/docs/partials/_test-replay-info.mdx";
 import CypressConfigFileTabs from "@site/src/components/cypress-config-file-tabs";
 import DefaultSelectorPriority from "@site/docs/partials/_default-selector-priority.mdx";
 import DocsImage from "@site/src/components/docs-image";
@@ -131,6 +131,7 @@ export default {
   SupportFileConfiguration,
   Tabs,
   TabItem,
+  TestReplayInfo,
   ThenShouldAndDifference,
   WarningPluginsFile,
   WarningSetupNodeEvents,
