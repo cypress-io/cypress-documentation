@@ -50,7 +50,7 @@ _Released 05/23/2023_
 
 - Adds Git-related messages for the
   [Runs page](/guides/core-concepts/cypress-app#Runs) and
-  [Debug page](/guides/cloud/runs#Debug) when users aren't using Git or there
+  [Debug page](/guides/cloud/recorded-runs#Debug) when users aren't using Git or there
   are no recorded runs for the current branch. Addresses
   [#26680](https://github.com/cypress-io/cypress/issues/26680).
 
@@ -222,7 +222,7 @@ _Released 03/28/2023_
 
 **Features:**
 
-- The [Debug page](/guides/cloud/test-analytics/runs#Debug) now allows for
+- The [Debug page](/guides/cloud/recorded-runs#Debug) now allows for
   navigating between all runs recorded for a commit. Addresses
   [#25899](https://github.com/cypress-io/cypress/issues/25899) and
   [#26018](https://github.com/cypress-io/cypress/issues/26018).
@@ -279,7 +279,7 @@ _Released 03/14/2023_
 
 **Features:**
 
-- The [Debug page](/guides/cloud/test-analytics/runs#Debug) is now able to show
+- The [Debug page](/guides/cloud/recorded-runs#Debug) is now able to show
   real-time results from in-progress runs. Addresses
   [#25759](https://github.com/cypress-io/cypress/issues/25759).
 - Added the ability to control whether a request is logged to the command log
@@ -406,7 +406,7 @@ _Released 02/15/2023_
 - Added a new CLI flag, called
   [`--auto-cancel-after-failures`](/guides/guides/command-line#Options), that
   overrides the project-level
-  ["Auto Cancellation"](/guides/cloud/smart-orchestration/auto-run-cancellation)
+  ["Auto Cancellation"](/guides/cloud/smart-orchestration/run-cancellation)
   value when recording to the Cloud. This gives Cloud users on Business and
   Enterprise plans the flexibility to alter the auto-cancellation value per run.
   Addressed in [#25237](https://github.com/cypress-io/cypress/pull/25237).
