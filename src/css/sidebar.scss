@@ -10,30 +10,21 @@
 .theme-doc-sidebar-menu {
   padding: 0.75rem;
   font-family: 'Roboto';
-  // font-weight: var(--ifm-font-weight-semibold);
   font-size: 1.1rem;
 }
 /* sidebar menu children */
-.theme-doc-sidebar-item-link-level-2.menu__list-item,
-.theme-doc-sidebar-item-link-level-3.menu__list-item,
-.theme-doc-sidebar-item-link-level-4.menu__list-item {
-  // font-weight: var(--ifm-font-weight-normal);
+.theme-doc-sidebar-item-link-level-2,
+.theme-doc-sidebar-item-link-level-3,
+.theme-doc-sidebar-item-link-level-4 {
   font-size: 1.025rem;
 }
 
-/** level 2 & 3 **/
 /* sidebar menu collapsible children */
-.theme-doc-sidebar-item-category-level-2.menu__list-item,
-.theme-doc-sidebar-item-category-level-3.menu__list-item
+.theme-doc-sidebar-item-category-level-2,
+.theme-doc-sidebar-item-category-level-3
   > .menu__list-item-collapsible {
-  // font-weight: var(--ifm-font-weight-normal);
   font-size: 1.025rem;
 }
-// /* sidebar menu collapsible children's children */
-// .theme-doc-sidebar-item-link-level-3.menu__list-item {
-//   // font-weight: var(--ifm-font-weight-normal);
-//   font-size: .95rem;
-// }
 
 /* sidebar chevrons */
 .menu__link--sublist:after {
