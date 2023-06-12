@@ -437,7 +437,7 @@
   status = 301
   force = true
 
-# New Cloud Sidebar IA
+# New Cloud IA (Summer 2023)
 
 [[redirects]]
   from = "/guides/cloud/projects"
@@ -501,37 +501,25 @@
 
 [[redirects]]
   from = "/guides/cloud/smart-orchestration#Auto-Cancellation"
-  to = "/guides/cloud/smart-orchestration/auto-run-cancellation"
+  to = "/guides/cloud/smart-orchestration/run-cancellation"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/cloud/runs"
-  to = "/guides/cloud/test-analytics/runs"
+  to = "/guides/cloud/recorded-runs"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/cloud/runs#Test-failures"
-  to = "/guides/cloud/test-analytics/runs#Attempts-and-errors"
+  to = "/guides/cloud/recorded-runs#Attempts-and-errors"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/cloud/runs#Cancel-run"
-  to = "/guides/cloud/test-analytics/runs#Run-cancellation"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/guides/cloud/analytics"
-  to = "/guides/cloud/test-analytics/analytics"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/guides/cloud/flaky-test-management"
-  to = "/guides/cloud/test-analytics/flaky-test-management"
+  to = "/guides/cloud/recorded-runs#Run-cancellation"
   status = 301
   force = true
 
