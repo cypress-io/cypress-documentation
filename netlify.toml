@@ -482,6 +482,12 @@
   force = true
 
 [[redirects]]
+  from = "/guides/cloud/smart-orchestration"
+  to = "/guides/cloud/smart-orchestration/overview"
+  status = 301
+  force = true
+
+[[redirects]]
   from = "/guides/guides/parallelization"
   to = "/guides/cloud/smart-orchestration/parallelization"
   status = 301
