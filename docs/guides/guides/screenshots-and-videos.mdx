@@ -43,21 +43,28 @@ to clear your screenshots folder before a run, you can set
 
 ## Videos
 
-Cypress records a video for each spec file when running tests during
-`cypress run`. Videos are _not_ automatically recorded during `cypress open`.
+If enabled, Cypress records a video for each spec file when running tests during
+`cypress run`. Videos are _not_ recorded during `cypress open`.
 
-Video recording can be turned off entirely by setting
-[`video`](/guides/references/configuration#Videos) to `false` from within your
+Video recording can be turned on by setting
+[`video`](/guides/references/configuration#Videos) to `true` from within your
 configuration.
+
+:::cypress-config-example
+
+```ts
+{
+  video: true
+}
+```
 
 Videos are stored in the
 [`videosFolder`](/guides/references/configuration#Videos) which is set to
 `cypress/videos` by default.
 
-After `cypress run` completes, Cypress automatically compresses the video in
-order to save on file size. By default it compresses to a `32 CRF`, but this is
-configurable with the
-[`videoCompression`](/guides/references/configuration#Videos) property.
+After `cypress run` completes, Cypress compresses the video in order to save on
+file size. By default it compresses to a `32 CRF`, but this is configurable with
+the [`videoCompression`](/guides/references/configuration#Videos) property.
 
 When using the `--record` flag while running your tests, videos are processed,
 compressed, and uploaded to [Cypress Cloud](/guides/cloud/introduction) after
