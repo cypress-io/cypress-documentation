@@ -165,7 +165,7 @@ the dashboard, requesting the next spec to run.
 ### With parallelization
 
 When we run the same tests with parallelization, Cypress uses its
-[balance strategy](/guides/cloud/smart-orchestration/load-balancing#Balance-strategy)
+[load balance strategy](/guides/cloud/smart-orchestration/load-balancing#Balance-strategy)
 to order to specs to run based on the spec's previous run history. During the
 same CI run as above, we ran _all_ tests again, but this time with
 parallelization across 2 machines. This job was named `2x-electron` in the

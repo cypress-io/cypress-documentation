@@ -13,8 +13,8 @@ in your CI provider. Cypress calculates which spec file to run based on the data
 collected from previous runs. This ensures that your spec files run as fast as
 possible, with no need for manual configuration.
 
-As more and more tests are recorded to Cypress Cloud, Cypress can better predict
-how long a given spec file will take to run. To prevent irrelevant data from
+As more and more tests are recorded to the Cloud, Cypress can better predict how
+long a given spec file will take to run. To prevent irrelevant data from
 affecting the duration prediction, Cypress doesn't use old historical run data
 regarding the spec file.
 
@@ -32,9 +32,9 @@ minimizes the overall test run duration.
 
 :::info
 
-Duration estimation is done separately for every browser the spec file was
-tested against. This is helpful since performance characteristics vary by
-browser, and therefore it is perfectly acceptable to see different duration
-estimates for each browser a spec file was tested against.
+Duration estimation is done separately for every browser the spec file is tested
+against. This is helpful since performance characteristics vary by browser, and
+therefore it is perfectly acceptable to see different duration estimates for
+each browser a spec file was tested against.
 
 :::
