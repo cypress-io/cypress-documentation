@@ -446,32 +446,8 @@
   force = true
 
 [[redirects]]
-  from = "/guides/cloud/projects#Setup"
-  to = "/guides/cloud/getting-started#Setup"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/guides/cloud/projects#Set-up-a-project-to-record"
-  to = "/guides/cloud/getting-started#Set-up-a-project-to-record"
-  status = 301
-  force = true
-
-[[redirects]]
   from = "/guides/cloud/organizations"
   to = "/guides/cloud/account-management/organizations"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/guides/cloud/organizations#Billing-Usage"
-  to = "/guides/cloud/account-management/billing-and-usage"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/guides/cloud/organizations#Enterprise-SSO"
-  to = "/guides/cloud/account-management/enterprise-sso"
   status = 301
   force = true
 
@@ -494,38 +470,8 @@
   force = true
 
 [[redirects]]
-  from = "/guides/guides/parallelization#Balance-strategy"
-  to = "/guides/cloud/smart-orchestration/load-balancing#Balance-strategy"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/guides/cloud/smart-orchestration#Spec-Prioritization"
-  to = "/guides/cloud/smart-orchestration/spec-prioritization"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/guides/cloud/smart-orchestration#Auto-Cancellation"
-  to = "/guides/cloud/smart-orchestration/run-cancellation"
-  status = 301
-  force = true
-
-[[redirects]]
   from = "/guides/cloud/runs"
   to = "/guides/cloud/recorded-runs"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/guides/cloud/runs#Test-failures"
-  to = "/guides/cloud/recorded-runs#Attempts-and-errors"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/guides/cloud/runs#Cancel-run"
-  to = "/guides/cloud/recorded-runs#Run-cancellation"
   status = 301
   force = true
 
