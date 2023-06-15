@@ -1,6 +1,6 @@
 {
-  "label": "Integrations",
-  "position": 80,
+  "label": "Source Control",
+  "position": 20,
   "collapsible": true,
   "collapsed": true
 }

@@ -746,7 +746,7 @@
         },
         {
           "name": "PickleJS",
-          "description": "An addition to the Cucumber plugin, featuring a collection of phrases you can use for common actions (ex: \"I click on an <Element>\", \"I should see an <Element>\").",
+          "description": "An addition to the Cucumber plugin, featuring a collection of phrases you can use for common actions (ex: \"I click on an &lt;Element&gt;\", \"I should see an &lt;Element&gt;\").",
           "link": "https://picklejs.com",
           "keywords": ["cucumber", "collection", "actions", "commands"],
           "badge": "community"
