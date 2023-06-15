@@ -142,7 +142,7 @@ application.
 
 ```javascript
 // Test code
-cy.visit('https://app.corp.com')
+cy.visit('https://example.cypress.io')
 ```
 
 In your application code, you set `cookies` and store a session on the browser.
@@ -152,7 +152,7 @@ your application code.
 ```html
 <!-- Application code -->
 <html>
-  <a href="http://app.corp.com/page2">Page 2</a>
+  <a href="http://example.cypress.io/page2">Page 2</a>
 </html>
 ```
 
@@ -160,14 +160,14 @@ Cypress will immediately fail with the following test code:
 
 ```javascript
 // Test code
-cy.visit('https://app.corp.com')
+cy.visit('https://example.cypress.io')
 cy.get('a').click() // will fail
 ```
 
 Browsers refuse to display insecure content on a secure page. Because Cypress
-initially changed its URL to match `https://app.corp.com` when the browser
-followed the `href` to `http://app.corp.com/page2`, the browser will refuse to
-display the contents.
+initially changed its URL to match `https://example.cypress.io` when the browser
+followed the `href` to `http://example.cypress.io/page2`, the browser will
+refuse to display the contents.
 
 Now you may be thinking, _This sounds like a problem with Cypress because when I
 work with my application outside of Cypress it works just fine._
@@ -213,20 +213,20 @@ on an `<a>` that navigates to another superdomain.
 ```html
 <!-- Application code that is served at `localhost:8080` -->
 <html>
-  <a href="https://stackoverflow.com">Stack Overflow</a>
+  <a href="https://example.cypress.io">Cypress</a>
 </html>
 ```
 
 ```javascript
 // Test code
 cy.visit('http://localhost:8080') // where your web server + HTML is hosted
-cy.get('a').click() // browser navigates to https://stackoverflow.com
+cy.get('a').click() // browser navigates to https://cypress.io
 cy.get('selector').should('exist') // Cypress errors
 ```
 
 We do not recommend visiting a superdomain that you don't control in your tests
 which you can read more about
-[here](/guides/references/best-practices#Visiting-external-sites)
+[here](/guides/references/best-practices#Visiting-External-Sites)
 
 However, if you control this superdomain, either by owning the hosted instance
 or by other means, we recommend testing this superdomain with `cy.origin`.
@@ -234,21 +234,21 @@ or by other means, we recommend testing this superdomain with `cy.origin`.
 ```javascript
 // Test code
 cy.visit('http://localhost:8080') // where your web server + HTML is hosted
-cy.get('a').click() // browser navigates to https://stackoverflow.com
-cy.origin('https://stackoverflow.com', () => {
+cy.get('a').click() // browser navigates to https://example.cypress.io
+cy.origin('https://example.cypress.io', () => {
   // declare cy.origin command on expected domain
   cy.get('selector').should('exist') // Yup all good
 })
 ```
 
-If not in control of this superdomain, like in the case of `stackoverflow.com`,
-we recommend you test that the `href` property is correct instead of performing
-the navigation. This will help lead to more deterministic tests.
+If not in control of this superdomain, we recommend you test that the `href`
+property is correct instead of performing the navigation. This will help lead to
+more deterministic tests.
 
 ```javascript
 // this test verifies the behavior and will run considerably faster
 cy.visit('http://localhost:8080')
-cy.get('a').should('have.attr', 'href', 'https://stackoverflow.com') // no page load!
+cy.get('a').should('have.attr', 'href', 'https://example.cypress.io') // no page load!
 ```
 
 If for any reason the two above methods cannot be leveraged,
@@ -296,8 +296,8 @@ additional Cypress commands after submitting the form.
 // on your localhost:8080 server
 
 app.post('/submit', (req, res) => {
-  // redirect the browser to superduperdomains.com
-  res.redirect('https://superduperdomains.com')
+  // redirect the browser to cypress.io
+  res.redirect('https://example.cypress.io')
 })
 ```
 
@@ -306,8 +306,8 @@ You can test this with `cy.origin`, which may look like the following test case:
 ```javascript
 cy.visit('http://localhost:8080')
 cy.get('form').submit() // submit the form!
-cy.origin('https://superduperdomains.com', () => {
-  cy.url().should('contain', 'superduperdomains.com')
+cy.origin('cypress.io', () => {
+  cy.url().should('contain', 'cypress.io')
 })
 ```
 
@@ -321,7 +321,7 @@ test these with `cy.origin`.
 ```javascript
 cy.visit('http://localhost:8080')
 cy.get('#login').click() // click a login button, which takes us to our authentication page.
-cy.origin('https://my-authentication-instance.com', () => {
+cy.origin('cypress.io', () => {
   cy.get('#username').type('User1')
   cy.get('#password').type('Password123')
 
@@ -371,10 +371,10 @@ something like this:
 ```html
 <!-- Application code that is served at `localhost:8080` -->
 <html>
-  <button id="nav">Navigate to some.superdomain.com</button>
+  <button id="nav">Navigate to Cypress example</button>
   <script>
     document.querySelector('#nav').addEventListener('click', () => {
-      window.location.href = 'http://some.superdomain.com'
+      window.location.href = 'https://example.cypress.io'
     })
   </script>
 </html>
@@ -385,8 +385,8 @@ You can test this with `cy.origin`, which may look like the following test case:
 ```javascript
 cy.visit('http://localhost:8080')
 cy.get('#nav').submit() // trigger a javascript redirect!
-cy.origin('http://some.superdomain.com', () => {
-  cy.url().should('contain', 'some.superdomain.com')
+cy.origin('https://example.cypress.io', () => {
+  cy.url().should('contain', 'cypress.io')
 })
 ```
 
@@ -395,7 +395,7 @@ cy.origin('http://some.superdomain.com', () => {
 Sometimes, when using `cy.origin` and especially with websites that are not
 under your immediate test control, cross-origin errors may still tend to creep
 up. We don't recommend visiting or interacting with sites you
-[do not control](/guides/references/best-practices#Visiting-external-sites).
+[do not control](/guides/references/best-practices#Visiting-External-Sites).
 However, if this is necessary, most of these issues can usually be remedied by
 applying` the
 [modify obstructive third-party code](/guides/references/experiments#Configuration)

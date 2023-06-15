@@ -103,14 +103,6 @@
       "free": true
     },
     {
-      "title": "Testing Automation with Cypress - Advanced",
-      "url": "https://www.udemy.com/course/testing-automation-with-cypress-advanced",
-      "author": "Walmyr Lima e Silva Filho",
-      "authorTwitter": "walmyrlimaesilv",
-      "sourceName": "Udemy",
-      "sourceUrl": "https://udemy.com"
-    },
-    {
       "title": "Testes Automatizados com Cypress - Avançado",
       "url": "https://www.udemy.com/course/testes-automatizados-com-cypress-avancado",
       "author": "Walmyr Lima e Silva Filho",
@@ -293,36 +285,12 @@
     },
     {
       "title": "Test a React Todo App",
-      "url": "https://on.cypress.io/tutorials",
+      "url": "/examples/tutorials",
       "author": "Andy van Slaars",
       "authorTwitter": "avanslaars",
       "sourceName": "Cypress.io",
       "sourceUrl": "https://www.cypress.io",
       "free": true
-    },
-    {
-      "title": "Test Automation with Cypress basic",
-      "url": "https://udemy.com/course/test-automation-with-cypress-basic",
-      "author": "Walmyr Lima e Silva Filho",
-      "authorTwitter": "walmyrlimaesilv",
-      "sourceName": "Udemy",
-      "sourceUrl": "https://www.udemy.com"
-    },
-    {
-      "title": "Test Automation with Cypress intermediate",
-      "url": "https://www.udemy.com/course/test-automation-with-cypress-intermediate",
-      "author": "Walmyr Lima e Silva Filho",
-      "authorTwitter": "walmyrlimaesilv",
-      "sourceName": "Udemy",
-      "sourceUrl": "https://www.udemy.com"
-    },
-    {
-      "title": "Visual regression testing with Cypress and Percy (basic)",
-      "url": "https://www.udemy.com/course/visual-regression-testing-with-cypress-percy-basic/",
-      "author": "Walmyr Lima e Silva Filho",
-      "authorTwitter": "walmyrlimaesilv",
-      "sourceName": "Udemy",
-      "sourceUrl": "http://udemy.com"
     },
     {
       "title": "Testes Automatizados com Cypress (básico)",

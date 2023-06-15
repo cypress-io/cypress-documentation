@@ -16,21 +16,20 @@ sidebar_position: 10
 
 :::tip
 
+<!-- // prettier-ignore -->
+
 <strong>Important!</strong>
 
 **This is the single most important guide** for understanding how to test with
 Cypress. Read it. Understand it. Ask questions about it so that we can improve
 it.
 
-After you're done, we suggest watching some of our
-
-<Icon
+After you're done, we suggest watching some of our <Icon
   name="video"
   inline="true"
   url="/examples/tutorials"
   callout="Tutorial Videos"
-/>
-.
+/>.
 
 :::
 
@@ -645,7 +644,7 @@ immediately, before the `cy.visit()` has executed, so will always evaluate to
 it('test', () => {
   let username = undefined // evaluates immediately as undefined
 
-  cy.visit('https://app.com') // Nothing happens yet
+  cy.visit('https://example.cypress.io') // Nothing happens yet
   cy.get('.user-name') // Still, nothing happens yet
     .then(($el) => {
       // Nothing happens yet
@@ -680,7 +679,7 @@ commands run as expected.
 it('test', () => {
   let username = undefined // evaluates immediately as undefined
 
-  cy.visit('https://app.com') // Nothing happens yet
+  cy.visit('https://example.cypress.io') // Nothing happens yet
   cy.get('.user-name') // Still, nothing happens yet
     .then(($el) => {
       // Nothing happens yet
@@ -836,7 +835,7 @@ commands that were enqueued using the `cy.*` command chains.
 it('hides the thing when it is clicked', () => {
   -{cy.visit('/my/resource/path')::cy.mount(<MyComponent />)}- // 1.
 
-    cy.get('.hides-when-clicked') // 2
+  cy.get('.hides-when-clicked') // 2
     .should('be.visible') // 3
     .click() // 4
 

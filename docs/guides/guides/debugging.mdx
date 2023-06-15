@@ -201,7 +201,7 @@ By default, Cypress will include an inline source map in your spec file, so you
 will get the most out of the error experience. If you
 [modify the preprocessor](/api/plugins/preprocessors-api), ensure that inline
 source maps are enabled to get the same experience. With webpack and the
-[webpack preprocessor](https://github.com/cypress-io/cypress/tree/master/npm/webpack-preprocessor),
+[webpack preprocessor](https://github.com/cypress-io/cypress/tree/develop/npm/webpack-preprocessor),
 for example, set
 [the `devtool` option](https://webpack.js.org/configuration/devtool/) to
 `inline-source-map`.
@@ -246,7 +246,7 @@ by [Cypress Ambassador](https://www.cypress.io/ambassadors/) Josh Justice.
 ## Log Cypress events
 
 Cypress emits multiple events you can listen to as shown below.
-[Read more about logging events in the browser here](/api/events/catalog-of-events#Logging-All-Events).
+[Read more about logging events in the browser here](/api/cypress-api/catalog-of-events#Logging-All-Events).
 
 <DocsImage
   src="/img/api/catalog-of-events/console-log-events-debug.png"
@@ -270,14 +270,6 @@ cy.now('task', 123).then(console.log)
 The `cy.now()` command is an internal command and may change in the future.
 
 :::
-
-## Cypress fiddle
-
-While learning Cypress it may be a good idea to try small tests against some
-HTML. We have written a
-[@cypress/fiddle](https://github.com/cypress-io/cypress-fiddle) plugin for this.
-It can quickly mount any given HTML and run some Cypress test commands against
-it.
 
 ## Troubleshooting Cypress
 

@@ -27,15 +27,9 @@ primary means of application authentication testing. This is due to the
 mentioned in our
 [Best Practices Guide](/guides/references/best-practices#Potential-Challenges-Authenticating-with-Social-Platforms).
 
-If testing user based authentication flows via social connections is a **must**
-for your application, we recommend testing this in
-[open mode](https://docs.cypress.io/guides/guides/command-line#cypress-open) (or
-[run mode](https://docs.cypress.io/guides/guides/command-line#cypress-run)
-locally and
-[headed](https://docs.cypress.io/guides/guides/command-line#cypress-run-headed))
-to avoid A/B tests or alternate login flows. Relying on social authentication in
-CI will likely result in bot detection and in some cases, account suspension due
-to violating the provider's Terms of Service.
+Relying on social authentication in CI will likely result in bot detection and
+in some cases, account suspension due to violating the provider's Terms of
+Service.
 
 :::
 

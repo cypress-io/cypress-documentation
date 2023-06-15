@@ -19,7 +19,7 @@ const config = {
     'Fast, easy and reliable testing for anything that runs in a browser.',
   url: 'https://docs.cypress.io',
   baseUrl: '/',
-  onBrokenLinks: 'throw', // TODO: update this to throw when we go live to production
+  onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'throw',
   favicon: undefined,
 
@@ -55,22 +55,39 @@ const config = {
         googleAnalytics: {
           trackingID: 'UA-59606812-1',
         },
-        gtag: {
-          trackingID: 'GTM-KNKBWLD',
+        googleTagManager: {
+          containerId: 'GTM-KNKBWLD',
         },
       },
     ],
   ],
 
   plugins: [
-    './plugins/fav-icon',
-    './plugins/fullstory',
+    [
+      './plugins/osano',
+      {
+        id: 'docs-osano',
+      },
+    ],
+    [
+      './plugins/fav-icon',
+      {
+        id: 'docs-fav-icon',
+      },
+    ],
+    [
+      './plugins/fullstory',
+      {
+        id: 'docs-fullstory',
+      },
+    ],
     'docusaurus-plugin-sass',
     require.resolve('docusaurus-plugin-image-zoom'),
   ],
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     {
+      image: 'img/logo/cypress-logo-circle-dark.png',
       navbar: {
         style: 'dark',
         logo: {
@@ -86,7 +103,7 @@ const config = {
             activeBasePath: 'guides',
           },
           {
-            to: '/api/commands/and',
+            to: '/api/table-of-contents',
             label: 'API',
             position: 'left',
             activeBasePath: 'api',
@@ -121,7 +138,7 @@ const config = {
             'aria-label': 'Cypress GitHub repository',
           },
           {
-            href: 'https://discord.gg/cypress',
+            href: 'https://on.cypress.io/discord',
             position: 'right',
             className: 'discord-logo',
             'aria-label': 'Cypress Discord',
@@ -130,14 +147,14 @@ const config = {
       },
       // optional, can be commented out
       // Styles for this are controlled in src/css/announcement-bar.scss
-      announcementBar: {
-        //give id a unique value to get a new announcement bar to appear
-        id: 'event-apis-with-cypress-2-23',
-        content:
-          '📢 &nbsp; Save your seat for the Testing APIs with Cypress event Feb 23! <a target="_blank" href="https://community.cypress.io/events/details/cypress-cypress-hq-presents-testing-apis-with-cypress?utm_source=docs&utm_medium=promo_banner&utm_campaign=testing_apis_with_cypress">Register now</a>',
-        isCloseable: true,
+      // announcementBar: {
+      //   //give id a unique value to get a new announcement bar to appear
+      //   id: 'event-apis-with-cypress-2-23',
+      //   content:
+      //     '📢 &nbsp; Save your seat for the Testing APIs with Cypress event Feb 23! <a target="_blank" href="https://community.cypress.io/events/details/cypress-cypress-hq-presents-testing-apis-with-cypress?utm_source=docs&utm_medium=promo_banner&utm_campaign=testing_apis_with_cypress">Register now</a>',
+      //   isCloseable: true,
 
-      },
+      // },
       footer: {
         style: 'dark',
         links: [
@@ -166,10 +183,6 @@ const config = {
                 href: 'https://github.com/cypress-io/cypress/discussions',
               },
               // {
-              //   label: 'Cypress Blog',
-              //   href: 'https://www.cypress.io/blog',
-              // },
-              // {
               //   label: 'Cypress Ambassadors',
               //   href: 'https://www.cypress.io/ambassadors',
               // },
@@ -179,7 +192,7 @@ const config = {
               // },
               {
                 label: 'Discord',
-                href: 'https://discord.gg/cMjUZg7',
+                href: 'https://on.cypress.io/discord',
               },
               {
                 label: 'Twitter',
@@ -210,6 +223,10 @@ const config = {
               {
                 label: 'About',
                 href: 'https://www.cypress.io/about-us',
+              },
+              {
+                label: 'Cypress Blog',
+                href: 'https://www.cypress.io/blog',
               },
               {
                 label: 'Careers',
@@ -248,13 +265,16 @@ const config = {
         darkTheme: darkCodeTheme,
       },
       zoom: {
-        selector: ':not(.mediaImage, .navbar__logo img)', // don't zoom these images
+        selector: ':not(.mediaImage, .navbar__logo img, .logo)', // don't zoom these images
         background: {
           light: 'rgb(50, 50, 50)',
           dark: 'rgb(50, 50, 50)',
         },
         // options you can specify via https://github.com/francoischalifour/medium-zoom#usage
-        config: {},
+        config: {
+          scrollOffset: 60,
+          margin: 100,
+        },
       },
     },
 }

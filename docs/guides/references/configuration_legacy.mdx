@@ -16,9 +16,9 @@ configuration file. For Cypress 10 and above, visit the
 
 The first time you open Cypress, it creates the `cypress.json` configuration
 file. This JSON file is used to store any configuration values you supply. If
-you [configure your tests to record](/guides/cloud/projects#Setup) the results
-to [Cypress Cloud](https://on.cypress.io/cloud-introduction) the `projectId`
-will be written in this file too.
+you [configure your tests to record](/guides/cloud/getting-started#Setup) the
+results to [Cypress Cloud](https://on.cypress.io/cloud-introduction) the
+`projectId` will be written in this file too.
 
 :::caution
 
@@ -85,7 +85,7 @@ you should understand well. The default values listed here are meaningful.
 | `pluginsFile`       | `cypress/plugins/index.js` | Path to plugins file. (Pass `false` to disable)                                                                                                                                                                                                                                            |
 | `screenshotsFolder` | `cypress/screenshots`      | Path to folder where screenshots will be saved from [`cy.screenshot()`](/api/commands/screenshot) command or after a test fails during `cypress run`                                                                                                                                       |
 | `supportFile`       | `cypress/support/index.js` | Path to file to load before test files load. This file is compiled and bundled. (Pass `false` to disable)                                                                                                                                                                                  |
-| `testFiles`         | `**/*.*`                   | A String or Array of glob patterns of the test files to load                                                                                                                                                                                                                               |
+| `testFiles`         | <code>\*\*_/_\*.\*</code>  | A String or Array of glob patterns of the test files to load                                                                                                                                                                                                                               |
 | `videosFolder`      | `cypress/videos`           | Path to folder where videos will be saved during `cypress run`                                                                                                                                                                                                                             |
 
 ### Screenshots

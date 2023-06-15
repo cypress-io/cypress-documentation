@@ -35,26 +35,28 @@ command's documentation.
 To run a command, you'll need to prefix each command in order to properly locate
 the cypress executable.
 
-```shell
-$(npm bin)/cypress run
+(requires npm@5.2.0 or greater)
+
 ```
-
-...or...
-
-```shell
-./node_modules/.bin/cypress run
-```
-
-...or... (requires npm@5.2.0 or greater)
-
-```shell
 npx cypress run
 ```
 
 ...or by using Yarn...
 
-```shell
+```
 yarn cypress run
+```
+
+...or...
+
+```
+$(npm bin)/cypress run
+```
+
+...or...
+
+```
+./node_modules/.bin/cypress run
 ```
 
 You may find it easier to add the cypress command to the `scripts` object in
@@ -185,7 +187,8 @@ cypress run --ci-build-id BUILD_NUMBER
 ```
 
 Only valid when providing a `--group` or `--parallel` flag. Read our
-[parallelization](/guides/guides/parallelization) documentation to learn more.
+[parallelization](/guides/cloud/smart-orchestration/parallelization)
+documentation to learn more.
 
 #### `cypress run --config <config>` {#cypress-run-config-lt-config-gt}
 
@@ -285,7 +288,7 @@ cypress run --group user-tests --spec 'cypress/e2e/user/**/*'
 
 Specifying the `--ci-build-id` may also be necessary.
 
-[Read more about grouping.](/guides/guides/parallelization#Grouping-test-runs)
+[Read more about grouping.](/guides/cloud/smart-orchestration/parallelization#Grouping-test-runs)
 
 #### `cypress run --headed` {#cypress-run-headed}
 
@@ -312,7 +315,8 @@ cypress run --headed --no-exit
 
 #### `cypress run --parallel` {#cypress-run-parallel}
 
-Run recorded specs in [parallel](/guides/guides/parallelization) across multiple
+Run recorded specs in
+[parallel](/guides/cloud/smart-orchestration/parallelization) across multiple
 machines.
 
 ```shell
@@ -320,14 +324,14 @@ cypress run --record --parallel
 ```
 
 You can additionally pass a `--group` flag so this shows up as a named
-[group](/guides/guides/parallelization#Grouping-test-runs).
+[group](/guides/cloud/smart-orchestration/parallelization#Grouping-test-runs).
 
 ```shell
 cypress run --record --parallel --group e2e-staging-specs
 ```
 
-Read our [parallelization](/guides/guides/parallelization) documentation to
-learn more.
+Read our [parallelization](/guides/cloud/smart-orchestration/parallelization)
+documentation to learn more.
 
 #### `cypress run --port <port>` {#cypress-run-port-lt-port-gt}
 
@@ -348,8 +352,8 @@ cypress run --project ./some/nested/folder
 
 Record your test results to [Cypress Cloud](/guides/cloud/introduction). For
 this option to work you must first
-[set up your project to record](/guides/cloud/projects#Setup), make sure your
-`projectId` is set in your
+[set up your project to record](/guides/cloud/getting-started#Setup), make sure
+your `projectId` is set in your
 [Cypress configuration file](/guides/references/configuration#Configuration-File),
 and append your **Record Key** to the command.
 
@@ -373,10 +377,10 @@ cypress run --record
 ```
 
 For more information on recording runs, see the
-[Cypress Cloud setup instructions](/guides/cloud/projects#Setup). For an
+[Cypress Cloud setup instructions](/guides/cloud/getting-started#Setup). For an
 in-depth explanation of how Cypress uses your record key and `projectId` to save
 your test results to Cypress Cloud, see the
-[Identification section](/guides/cloud/projects#Identification).
+[Identification section](/guides/cloud/account-management/projects#Identification).
 
 #### `cypress run --reporter <reporter>` {#cypress-run-reporter-lt-reporter-gt}
 
@@ -645,14 +649,17 @@ Prints information about Cypress and the current environment such as:
 - Any environment variables that control
   [proxy configuration](/guides/references/proxy-configuration).
 - Any environment variables that start with the `CYPRESS` prefix (with sensitive
-  variables like [record key](/guides/cloud/projects#Record-keys) masked for
+  variables like
+  [record key](/guides/cloud/account-management/projects#Record-key) masked for
   security).
 - The location where run-time data is stored.
 - The location where the Cypress binary is cached.
 - Operating system information.
 - System memory including free space.
 
-```shell
+<!-- hack: using css language label to respect decimals in syntax highlightng -->
+
+```css
 cypress info
 Displaying Cypress info...
 
@@ -727,7 +734,9 @@ In most cases the binary and the package versions will be the same, but they
 could be different if you have installed a different version of the package and
 for some reason failed to install the matching binary version.
 
-```shell
+<!-- hack: using css language label to respect decimals in syntax highlightng -->
+
+```css
 cypress version
 Cypress package version: 12.0.0
 Cypress binary version: 12.0.0
@@ -737,7 +746,9 @@ Bundled Node version: 16.16.0
 
 You can print each individual component's version number also.
 
-```shell
+<!-- hack: using css language label to respect decimals in syntax highlightng -->
+
+```css
 cypress version --component package
 12.0.0
 cypress version --component binary
@@ -770,7 +781,9 @@ Print all existing installed versions of Cypress. The output will be a table
 with cached versions and the last time the binary was used by the user,
 determined from the file's access time.
 
-```shell
+<!-- hack: using css language label to respect decimals in syntax highlightng -->
+
+```css
 cypress cache list
 ┌─────────┬──────────────┐
 │ version │ last used    │
@@ -785,7 +798,9 @@ You can calculate the size of every Cypress version folder by adding the
 `--size` argument to the command. Note that calculating the disk size can be
 slow.
 
-```shell
+<!-- hack: using css language label to respect decimals in syntax highlightng -->
+
+```css
 cypress cache list --size
 ┌─────────┬──────────────┬─────────┐
 │ version │ last used    │ size    │

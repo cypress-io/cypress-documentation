@@ -138,10 +138,6 @@ html[data-theme='dark'] {
   --ifm-toc-border-color: var(--ifm-color-gray-900);
 }
 
-html {
-  scroll-behavior: smooth;
-}
-
 /* prevent fonts from looking chunky, esp in Firefox */
 body {
   -webkit-font-smoothing: antialiased;
@@ -311,7 +307,7 @@ div[class^='codeBlockTitle'] {
 
 /* adding this back after original Docusaurus
    rules overwritten by .embedContainer
-   TODO: fix what casues this */
+   TODO: fix what causes this */
 [class^='mainContentHeader'] {
   border-bottom: 1px solid var(--ifm-toc-border-color);
   margin-bottom: 20px;
@@ -320,4 +316,15 @@ div[class^='codeBlockTitle'] {
 /* add some more spacing for main doc container */
 [class^='docItemContainer'] {
   margin: 0 10px;
+}
+
+/* hides the osano widget */
+.osano-cm-widget {
+  display: none;
+}
+
+.logo {
+  width: 20px;
+  display: inline-block;
+  vertical-align: text-top;
 }

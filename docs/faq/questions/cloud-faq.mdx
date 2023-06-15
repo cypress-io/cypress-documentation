@@ -1,13 +1,19 @@
 ---
 title: Cypress Cloud
 hide_table_of_contents: true
+sidebar_position: 30
 ---
+
+import TOCInline from '@theme/TOCInline'
+
+<TOCInline toc={toc} />
 
 ## <Icon name="angle-right" /> What is Cypress Cloud?
 
 <DocsImage
-  src="/img/dashboard/dashboard-runs-list.png"
+  src="/img/guides/cloud/runs/run-details-page.png"
   alt="Cloud Screenshot"
+  width="80%"
 />
 
 [Cypress Cloud](https://on.cypress.io/cloud) gives you access to tests you've
@@ -19,8 +25,8 @@ You can read more [here](/guides/cloud/introduction).
 
 ## <Icon name="angle-right" /> How do I record my tests?
 
-1. First [set up the project to record](/guides/cloud/projects#Setup).
-2. Then [record your runs](/guides/cloud/runs).
+1. First [set up the project to record](/guides/cloud/getting-started#Setup).
+2. Then [record your runs](/guides/cloud/recorded-runs#Latest-Runs).
 
 After recording your tests, you will see them in
 [Cypress Cloud](https://on.cypress.io/cloud) and in the "Runs" tab.
@@ -32,12 +38,12 @@ Please see our [Pricing Page](https://www.cypress.io/pricing) for more details.
 ## <Icon name="angle-right" /> What counts as a test result?
 
 Which [pricing tier](https://www.cypress.io/pricing) is best for you depends on
-the number of test you record each month in your organization.
+the number of tests you record each month in your organization.
 
 Tests are recorded when [cypress run](/guides/guides/command-line#cypress-run)
 is called with the `--record` flag while supplying the record `--key`. This
-means your [test run data](/guides/cloud/runs) is being "recorded" to Cypress
-Cloud.
+means your [test run data](/guides/cloud/recorded-runs#Latest-Runs) is being
+"recorded" to Cypress Cloud.
 
 We consider each time the `it()` function is called to be a single test. So you
 will generally have several tests recorded within each spec file and likely
@@ -46,25 +52,43 @@ several spec files within a single run. Only the
 are counted. The pending and skipped tests are NOT counted.
 
 You can always see how many tests you've recorded from your organization's
-[Billing & Usage](/guides/cloud/organizations#Billing-Usage) page within Cypress
-Cloud.
+[Billing & Usage](/guides/cloud/account-management/billing-and-usage) page
+within Cypress Cloud.
 
 ## <Icon name="angle-right" /> What counts as a user?
 
-A [user](/guides/cloud/users) is anyone with a login to Cypress Cloud who has
-been invited to see and review the test results of your organization.
+A [user](/guides/cloud/account-management/users) is anyone with a login to
+Cypress Cloud who has been invited to see and review the test results of your
+organization.
+
+## <Icon name="angle-right" /> What if I can't access my Cypress Cloud account?
+
+1. If you haven't signed up, see the
+   [Sign Up with an Invitation](/guides/cloud/account-management/users#Sign-Up-with-an-Invitation)
+   instructions.
+
+2. Try resetting your password. If you never received the email, try the
+   following:
+
+   - Try signing in with Google or GitHub
+   - Check the trash and spam folder
+   - Verify it's the correct email address
+
+**If the troubleshooting tips above did not resolve the issue or involves SSO,
+reach out to [support](mailto:support@cypress.io).**
 
 ## <Icon name="angle-right" /> What is the difference between public and private projects?
 
 **A public project** means that anyone can see the recorded runs for it. It's
-similar to how public projects on Github, Travis, or Circle are handled. Anyone
-who knows your `projectId` will be able to see the recorded runs, screenshots,
-and videos for public projects.
+similar to how public projects on Github, Travis, or CircleCI are handled.
+Anyone who knows your `projectId` will be able to see the recorded runs,
+screenshots, and videos for public projects.
 
-**A private project** means that only [users](/guides/cloud/users) you
-explicitly invite to your [organization](/guides/cloud/organizations) can see
-its recorded runs. Even if someone knows your `projectId`, they will not have
-access to your runs unless you have invited them.
+**A private project** means that only
+[users](/guides/cloud/account-management/users) you explicitly invite to your
+[organization](/guides/cloud/account-management/organizations) can see its
+recorded runs. Even if someone knows your `projectId`, they will not have access
+to your runs unless you have invited them.
 
 ## <Icon name="angle-right" /> How is this different than CI?
 
@@ -72,8 +96,8 @@ Cypress is **complementary** to your
 [CI provider](/guides/continuous-integration/introduction), and plays a
 completely different role.
 
-It doesn't replace or change anything related to CI. You will run Cypress tests
-in your CI provider.
+It doesn't replace or change anything related to CI. You will still run Cypress
+tests in your CI provider.
 
 The difference between [Cypress Cloud](/guides/cloud/introduction) and your CI
 provider is that your CI provider has no idea what is going on inside of the
@@ -109,7 +133,7 @@ any test results.
 
 Your Organization ID is a unique identifier that is linked to your organization.
 Instructions on how to find your ID are in the
-[Cypress Cloud Guide.](/guides/cloud/organizations#Organization-ID)
+[Cypress Cloud Guide.](/guides/cloud/account-management/organizations#Organization-ID)
 
 ## <Icon name="angle-right" /> What does Cypress record?
 
@@ -131,11 +155,12 @@ These will be added in subsequent releases.
 
 ## <Icon name="angle-right" /> Why is test parallelization based on spec files and not on the individual functions?
 
-Cypress [test parallelization](/guides/guides/parallelization) is indeed based
-on specs. For each spec Cypress scaffolds the new running context, in a sense
-isolating each spec file from any previous spec files, and ensuring a clean
-slate for the next spec. Doing this for each _individual_ test would be very
-very expensive and would slow down the test runs significantly.
+Cypress
+[test parallelization](/guides/cloud/smart-orchestration/parallelization) is
+indeed based on specs. For each spec Cypress scaffolds the new running context,
+in a sense isolating each spec file from any previous spec files, and ensuring a
+clean slate for the next spec. Doing this for each _individual_ test would be
+very very expensive and would slow down the test runs significantly.
 
 Spec file durations are also more meaningful and consistent than timings of
 individual tests, we can order specs by the moving average of the previously
@@ -160,8 +185,8 @@ Find a variable across your containers that is the same for all of them, but is
 different from run to run. For example it could be an environment variable
 called `CI_RUN_ID` that you set when creating the containers to run Cypress. You
 can pass this variable via CLI argument
-[`--ci-build-id`](/guides/guides/command-line#cypress-run-ci-build-id-lt-id-gt)when
-starting Cypress in each container:
+[`--ci-build-id`](/guides/guides/command-line#cypress-run-ci-build-id-lt-id-gt)
+when starting Cypress in each container:
 
 ```shell
 cypress run --record --parallel --ci-build-id $CI_RUN_ID
@@ -177,8 +202,8 @@ it might be good enough for the job.
 
 ## <Icon name="angle-right" /> Can I delete a run from Cypress Cloud?
 
-You can [archive a run](/guides/cloud/runs#Archive-run) so that it does not
-display in the runs list or in analytics.
+You can [archive a run](/guides/cloud/recorded-runs#Archive-run) so that it does
+not display in the runs list or in analytics.
 
 **Note:** Archiving the recorded runs has no effect on the amount of tests
 recorded and counted as your usage billed for the month.
@@ -195,7 +220,7 @@ in your account will be permanently deleted.
 Downgrading your account will **not** result in loss of access to Cypress Cloud.
 
 However, it will make your Cypress Cloud account subject to the limitations of
-your new plan. For example, downgrading to the _Seed_ plan will limit data
+your new plan. For example, downgrading to the _Free_ plan will limit data
 retention to 30 days and test results to 500 per billing period.
 
 ## <Icon name="angle-right" /> What happens once I reach the test results limit?
@@ -215,13 +240,7 @@ by:
 4. Review your organization's usage
 5. Scroll down and select **Upgrade** under your plan of choice
 
-## <Icon name="angle-right" /> I'm working at a restrictive VPN. Which subdomains do I have to allow on
-
-my VPN for Cypress Cloud to work properly?
-
-To send the data and results of your tests to
-[Cypress Cloud](https://on.cypress.io/cloud-introduction), Cypress needs free
-access to some URLs.
+## <Icon name="angle-right" /> I'm working with a restrictive VPN. Which subdomains do I have to allow on my VPN for Cypress Cloud to work properly?
 
 If you are running the tests from within a restrictive VPN you will need to
 allow some URLs so that Cypress can have effective communication with Cypress
@@ -237,3 +256,10 @@ Cloud.
 - `https://docs.cypress.io` - **Cypress documentation**
 - `https://download.cypress.io` - **CDN download of Cypress binary**
 - `https://on.cypress.io` - **URL shortener for link redirects**
+
+**If you are using GitHub Enterprise or GitLab for Enterprise (Self-managed),
+you may also need to add both the following to the version control IP allow
+list:**
+
+- `3.211.102.119` - **Dedicated IP**
+- `18.213.72.78` - **Dedicated IP**

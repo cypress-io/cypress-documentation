@@ -29,7 +29,7 @@ export default function blogsList(): BlogsProps {
                 <div key={index} className="mediaColumn">
                   <div className="mediaTitleContainer">
                     <a
-                       href={blog.sourceUrl}
+                       href={blog.url}
                        target="_blank"
                        rel="noopener noreferer"
                     >
@@ -37,7 +37,7 @@ export default function blogsList(): BlogsProps {
                     </a>
                   </div>
                   {blog.img && (
-                      <a href={blog.sourceUrl}
+                      <a href={blog.url}
                          target="_blank"
                          rel="noopener noreferer"
                       >

@@ -172,11 +172,11 @@ insight into what happened when your tests ran.
   [`cy.screenshot()`](/api/commands/screenshot).
 - Watch a video of your entire test run or a clip at the point of test failure.
 - See which machines ran each test when
-  [parallelized](/guides/guides/parallelization).
+  [parallelized](/guides/cloud/smart-orchestration/parallelization).
 
 #### To record tests:
 
-1. [Set up your project to record](/guides/cloud/projects#Setup)
+1. [Set up your project to record](/guides/cloud/getting-started#Setup)
 2. [Pass the `--record` flag to `cypress run`](/guides/guides/command-line#cypress-run)
    within CI.
 
@@ -201,7 +201,7 @@ your tests run in parallel.
 cypress run --record --key=abc123 --parallel
 ```
 
-[Read the full guide on parallelization.](/guides/guides/parallelization)
+[Read the full guide on parallelization.](/guides/cloud/smart-orchestration/parallelization)
 
 ### Official Cypress Docker Images
 
@@ -260,7 +260,9 @@ You can see the total available machine memory and the current free memory by
 running the [`cypress info`](https://on.cypress.io/command-line#cypress-info)
 command.
 
-```shell
+<!-- hack: using css language label to respect decimals in syntax highlightng -->
+
+```css
 npx cypress info
 ...
 Cypress Version: 6.3.0
@@ -385,7 +387,8 @@ for more examples.
 **_Record Key_**
 
 If you are [recording your runs](#Record-tests) on a public project, you'll want
-to protect your Record Key. [Learn why.](/guides/cloud/projects#Identification)
+to protect your Record Key.
+[Learn why.](/guides/cloud/account-management/projects#Identification)
 
 Instead of hard coding it into your run command like this:
 
@@ -440,10 +443,10 @@ under custom environment variables.
 - Remote: `COMMIT_INFO_REMOTE`
 
 If the commit information is missing in the Cypress Cloud run then
-[GitHub Integration](/guides/cloud/github-integration) or other tasks might not
-work correctly. To see the relevant Cypress debug logs, set the environment
-variable `DEBUG` on your CI machine and inspect the terminal output to see why
-the commit information is unavailable.
+[GitHub Integration](/guides/cloud/integrations/source-control/github) or other
+tasks might not work correctly. To see the relevant Cypress debug logs, set the
+environment variable `DEBUG` on your CI machine and inspect the terminal output
+to see why the commit information is unavailable.
 
 ```shell
 DEBUG=commit-info,cypress:server:record

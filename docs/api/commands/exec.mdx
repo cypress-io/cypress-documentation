@@ -213,7 +213,7 @@ describe('has data available from database', { execTimeout: 90000 }, () => {
 
 ```javascript
 if (Cypress.platform === 'win32') {
-  cy.exec('print package.json').its('stderr').should('be.empty')
+  cy.exec('type package.json').its('stderr').should('be.empty')
 } else {
   cy.exec('cat package.json').its('stderr').should('be.empty')
 }

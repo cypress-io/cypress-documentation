@@ -38,6 +38,7 @@ the following properties:
 
 - `domain`: _(String)_
 - `expiry`: _(Number)_ _(if specified)_
+- `hostOnly`: _(Boolean)_ _(if specified)_
 - `httpOnly`: _(Boolean)_
 - `name`: _(String)_
 - `path`: _(String)_
@@ -59,7 +60,7 @@ redirects back to our site, which sets a session cookie.
 
 ```javascript
 cy.contains('Log in').click()
-cy.origin('https://login.site.com', () => {
+cy.origin('https://example.cypress.io', () => {
   cy.get('[type=password]').type('*****')
   cy.contains('Log in').click()
 })
