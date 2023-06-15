@@ -125,6 +125,31 @@ cypress.run({
 })
 ```
 
+#### Programmatically control which browser to run
+
+You can pass a browser option to specify which browser to run tests in so that
+you can programmatically control which specs to run in each browser.
+
+```js
+// run 'node cypress-chrome.js'
+const cypress = require('cypress')
+
+cypress.run({
+  spec: './cypress/e2e/**/chrome-test*.js',
+  browser: 'chrome',
+})
+```
+
+```js
+// run 'node cypress-firefox.js'
+const cypress = require('cypress')
+
+cypress.run({
+  spec: './cypress/e2e/**/firefox-test*.js',
+  browser: 'firefox',
+})
+```
+
 #### Use modern syntax
 
 If your Node version allows you can use the modern `async / await` syntax to
