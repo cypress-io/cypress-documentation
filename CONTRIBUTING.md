@@ -259,7 +259,9 @@ To trigger production rebuild and redeploy, use personal GitHub token and run:
 ```shell
 GITHUB_TOKEN=<your token> npm run make-empty-commit -- --message "trigger deploy" --branch main
 ```
+
 ## Get Support
 
-We have a thriving community on discord. If you have any questions related to contributing please reach out, we'd be happy to help!
+We have a thriving community on discord. If you have any questions related to
+contributing please reach out, we'd be happy to help!
 [Join us on discord to start the conversation](https://discord.gg/cypress).
