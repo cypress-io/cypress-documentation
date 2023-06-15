@@ -62,9 +62,10 @@ Videos are stored in the
 [`videosFolder`](/guides/references/configuration#Videos) which is set to
 `cypress/videos` by default.
 
-After `cypress run` completes, Cypress compresses the video in order to save on
-file size. By default videos do not compress, but this is configurable with the
-[`videoCompression`](/guides/references/configuration#Videos) property.
+After `cypress run` completes, videos are not compressed by default. However,
+compression can be enabled and configured with the
+[`videoCompression`](/guides/references/configuration#Videos) property in order
+to save on file size.
 
 When using the `--record` flag while running your tests, videos are processed,
 compressed, and uploaded to [Cypress Cloud](/guides/cloud/introduction) after
