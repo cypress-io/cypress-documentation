@@ -21,6 +21,7 @@ Thanks for taking the time to contribute! :smile:
     - [Contributor License Agreement](#contributor-license-agreement)
   - [Deployment](#deployment)
     - [Trigger workflow build](#trigger-workflow-build)
+  - [Get Support](#get-support)
 
 ## Code of Conduct
 
