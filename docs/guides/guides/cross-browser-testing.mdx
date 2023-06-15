@@ -180,13 +180,11 @@ workflows:
           name: Chrome
           start-command: 'npm start'
           install-browsers: true
-          cypress-command:
-            'npx cypress run --browser chrome --record --group chrome'
+          cypress-command: 'npx cypress run --browser chrome --record --group chrome'
       - cypress/run:
           name: Firefox
           start-command: 'npm start'
-          cypress-command:
-            'npx cypress run --browser firefox --record --group
+          cypress-command: 'npx cypress run --browser firefox --record --group
             firefox-critical-path --spec
             cypress/e2e/signup.cy.js,cypress/e2e/login.cy.js'
 ```
@@ -217,8 +215,7 @@ workflows:
     jobs:
       - cypress/run:
           name: Chrome
-          cypress-command:
-            'npx cypress run --record --parallel --group chrome --browser chrome'
+          cypress-command: 'npx cypress run --record --parallel --group chrome --browser chrome'
           start-command: 'npm start'
           parallelism: 4
           install-browsers: true
