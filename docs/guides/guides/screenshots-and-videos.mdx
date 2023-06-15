@@ -62,11 +62,6 @@ Videos are stored in the
 [`videosFolder`](/guides/references/configuration#Videos) which is set to
 `cypress/videos` by default.
 
-After `cypress run` completes, videos are not compressed by default. However,
-compression can be enabled and configured with the
-[`videoCompression`](/guides/references/configuration#Videos) property in order
-to save on file size.
-
 When using the `--record` flag while running your tests, videos are processed,
 compressed, and uploaded to [Cypress Cloud](/guides/cloud/introduction) after
 every spec file runs, successful or not. To change this behavior to only process
@@ -80,10 +75,33 @@ clear your videos folder before a run, you can set
 
 ### Video encoding
 
-If your spec files have a long run duration, you might notice a time gap between
-a finished spec and a new spec starting during `cypress run`. During this time,
-Cypress is encoding the captured video and possibly uploading it to Cypress
-Cloud.
+After a video is recorded, Cypress encodes the video to a commonly digestable
+format. Part of this encoding process includes video compression.
+
+Compression is disabled by default, meaning this step will be skipped
+completely, so the file size of the video will be larger, but the encoding
+process should be faster. Setting
+[`videoCompression`](/guides/references/configuration#Videos) to `true` will
+coerce the value to 32 CRF, which takes longer to process, but results in a
+smaller video.
+
+**Enabling compression**
+
+:::cypress-config-example
+
+```ts
+{
+  videoCompression: true
+}
+```
+
+:::
+
+If your spec files have a long run duration and
+[`videoCompression`](/guides/references/configuration#Videos) is enabled, you
+might notice a time gap between a finished spec and a new spec starting during
+`cypress run`. During this time, Cypress is encoding the captured video and
+possibly uploading it to Cypress Cloud.
 
 If the machine is encoding the video slowly (which is often the case for virtual
 machines that use less CPU cores), the encoding might take a long time. In this
@@ -105,23 +123,6 @@ make the encoding a little bit faster. Here are some common scenarios:
 
 A lower `videoCompression` value will spend less time compressing and result in
 a bigger video file size.
-
-**Enabling compression**
-
-:::cypress-config-example
-
-```ts
-{
-  videoCompression: true
-}
-```
-
-:::
-
-Compression is disabled by default, meaning this step will be skipped
-completely, so the file size of the video will be larger, but the processing should be faster.
-Setting to `true` will coerce the value to 32 CRF, which takes longer to
-process, but results in a smaller video.
 
 :::info
 
