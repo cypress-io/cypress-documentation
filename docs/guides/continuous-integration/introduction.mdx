@@ -170,7 +170,8 @@ insight into what happened when your tests ran.
 - Get the entire stack trace of failed tests.
 - View screenshots taken when tests fail and when using
   [`cy.screenshot()`](/api/commands/screenshot).
-- Watch a video of your entire test run or a clip at the point of test failure.
+- Watch a video of your entire test run or a clip at the point of test failure
+  when the `video` configuration is enabled.
 - See which machines ran each test when
   [parallelized](/guides/cloud/smart-orchestration/parallelization).
 
@@ -376,6 +377,7 @@ values in the Cypress configuration.
 **_Typical use cases would be modifying things like:_**
 
 - `CYPRESS_BASE_URL`
+- `CYPRESS_VIDEO`
 - `CYPRESS_VIDEO_COMPRESSION`
 - `CYPRESS_REPORTER`
 - `CYPRESS_INSTALL_BINARY`
