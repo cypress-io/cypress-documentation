@@ -157,7 +157,7 @@ the failure.
 
 Cypress assists with debugging in headless mode, by automatically taking a
 screenshot of the app UI and command log at the exact point of test failure. To
-see everything that happened prior to test failure, enabled the `video`
+see everything that happened prior to test failure, enable the `video`
 configuration option to record (as an MP4 file) the full test spec run.
 
 ### Test Retries
@@ -398,15 +398,6 @@ cy.get('.my-class').contains('text')
 // Get the first element containing a specific text (available for any element)
 cy.contains('text')
 ```
-
-:::info
-
-While Protractor also allows for selection by XPath, Cypress doesn't support
-this out of the box. However, you can add the
-[cypress-xpath plugin](https://www.npmjs.com/package/cypress-xpath) to easily
-enable it.
-
-:::
 
 #### Getting multiple elements on a page
 

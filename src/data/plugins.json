@@ -393,13 +393,6 @@
       "description": " Read the <a target=\"_blank\" href=\"/api/plugins/preprocessors-api\">Custom Commands</a> and <a target=\"_blank\" href=\"/api/plugins/preprocessors-api\">Custom Query</a> documentation to learn more.",
       "plugins": [
         {
-          "name": "cypress-xpath",
-          "description": "Adds XPath command. This repo is also a good example of using custom commands to do retries, provide TypeScript definitions, etc.",
-          "link": "https://github.com/cypress-io/cypress/tree/develop/npm/xpath",
-          "keywords": ["xpath", "commands"],
-          "badge": "official"
-        },
-        {
           "name": "cypress-testing-library",
           "description": "🐅 Simple and complete custom Cypress commands and utilities that encourage good testing practices.",
           "link": "https://github.com/kentcdodds/cypress-testing-library",
@@ -1245,6 +1238,13 @@
           "description": "Watches and bundles your spec files via browserify.",
           "link": "https://github.com/cypress-io/cypress-browserify-preprocessor",
           "keywords": ["browserify"],
+          "badge": "official"
+        },
+        {
+          "name": "cypress-xpath",
+          "description": "Adds XPath command. This repo is also a good example of using custom commands to do retries, provide TypeScript definitions, etc.",
+          "link": "https://github.com/cypress-io/cypress/tree/develop/npm/xpath",
+          "keywords": ["xpath", "commands"],
           "badge": "official"
         }
       ]
