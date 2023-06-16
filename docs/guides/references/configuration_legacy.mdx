@@ -144,34 +144,6 @@ For more options regarding screenshots, view the
 For more information, see the docs on
 [actionability](/guides/core-concepts/interacting-with-elements#Actionability).
 
-### Node version
-
-:::caution
-
-The `nodeVersion` configuration option is deprecated and will be removed in a
-future version of Cypress. Please remove this option from your configuration
-file.
-
-:::
-
-| Option        | Default  | Description                                                                                                                                                                                                                                                                                                                                |
-| ------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `nodeVersion` | `system` | Can be `system` or `bundled`. If set to `system`, Cypress will try to use the same Node version that launched Cypress to execute your [plugins](/guides/tooling/plugins-guide). If that can't be determined, Cypress will use the Node version bundled with Cypress. If set to `bundled` Cypress will use the version bundled with Cypress |
-
-The Node version is used in Cypress to:
-
-- Build files in the
-  [integrationFolder](/guides/references/configuration#Folders-Files).
-- Build files in the
-  [supportFile](/guides/references/configuration#Folders-Files).
-- Execute code in the
-  [pluginsFile](/guides/references/configuration#Folders-Files).
-
-<DocsImage
-  src="/img/guides/configuration/test-runner-settings-nodejs-version.jpg"
-  alt="Node version in Settings in Test Runner"
-/>
-
 ### Experiments
 
 Configuration might include experimental options currently being tested. See
