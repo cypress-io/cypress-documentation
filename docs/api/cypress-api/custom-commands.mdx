@@ -547,21 +547,18 @@ This example overwrites [cy.screenshot()](/api/commands/screenshot) to always
 wait until a certain element is visible.
 
 ```javascript
-Cypress.Commands.overwrite(
-  'screenshot',
-  (originalFn, fileName, options) => {
-    // call another command, no need to return as it is managed
-    cy.get('.app')
-      .should('be.visible')
+Cypress.Commands.overwrite('screenshot', (originalFn, fileName, options) => {
+  // call another command, no need to return as it is managed
+  cy.get('.app')
+    .should('be.visible')
 
-      // overwrite the default timeout, because screenshot does that internally
-      // otherwise the `then` is limited to the default command timeout
-      .then({ timeout: Cypress.config('responseTimeout') }, () => {
-        // return the original function so that cypress waits for it
-        return originalFn(fileName, options)
-      })
-  }
-)
+    // overwrite the default timeout, because screenshot does that internally
+    // otherwise the `then` is limited to the default command timeout
+    .then({ timeout: Cypress.config('responseTimeout') }, () => {
+      // return the original function so that cypress waits for it
+      return originalFn(fileName, options)
+    })
+})
 ```
 
 #### Overwrite `click` command
