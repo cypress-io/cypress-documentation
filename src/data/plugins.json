@@ -1234,6 +1234,13 @@
           "link": "https://github.com/SMenigat/cypress-mailhog",
           "keywords": ["email", "mailhog", "test", "commands"],
           "badge": "community"
+        },
+        {
+          "name": "cypress-guerrillamail",
+          "description": "Commands to get random email address, using guerrillamail.com and read its mail box that could be used for automated testing.",
+          "link": "https://github.com/e23thr/cypress-guerrillamail",
+          "keywords": ["email", "guerrillamail", "test", "commands"],
+          "badge": "community"
         }
       ]
     },
