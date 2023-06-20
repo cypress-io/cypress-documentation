@@ -1,0 +1,79 @@
+---
+title: Cypress App Integrations
+sidebar_position: 40
+---
+
+Developers will spend most of their time authoring tests in the [Cypress App](/guides/core-concepts/cypress-app).
+Cypress Cloud and the Cypress App are closely integrated, allowing you to start debugging your tests as soon
+as they fail.
+
+## Runs Page
+
+The Runs page in the Cypress App shows real time information about the current state of your tests running via Cypress
+Cloud. This allows you to quickly see the status of your current branches, and also what other developers are working 
+on.
+
+<DocsImage
+  src="/img/guides/cloud/app-integrations/runs.png"
+  alt="Enable Cypress Notifications"
+/>
+
+Rather than waiting and watching CI, the Cypress App can send you desktop [Notifications](#Notifications) letting you
+know when runs start, stop, pass, or fail.
+
+## Notifications
+
+The Cypress App can send you desktop notifications letting you know when a:
+
+- run starts
+- run begins to fail 
+- run completes with:
+  - Passed
+  - Failed (enabled by default)
+  - Canceled
+  - Errored (only includes errored, and not timed out or no tests)
+
+## Enabling Notifications
+
+Notifications are not enabled by default. You can enable them by opening the Cypress App, clicking "Settings", 
+expanding "Device settings" and clicking "Enable desktop notifications".
+
+<DocsImage
+  src="/img/guides/cloud/app-integrations/enable-notifications.png"
+  alt="Enable notifications"
+/>
+
+You can send a test notification to ensure everything is working as expected:
+
+<DocsImage
+  src="/img/guides/cloud/app-integrations/test-notification.png"
+  alt="Sending a test notification"
+/>
+
+If this is not working as expected, see [Troubleshooting](#Troubleshooting) below.
+
+## Troubleshooting
+
+Notifications and the associated permissions work slightly differently on each operating system.
+
+### MacOS
+
+If notifications are not showing up in MacOS, under "System Preferences" select "Notifications" and choose "Cypress":
+
+<DocsImage
+  src="/img/guides/cloud/app-integrations/macos-1.png"
+  alt="Notification in System Preferences for MacOS"
+/>
+
+Then turn on notifications for Cypress:
+
+<DocsImage
+  src="/img/guides/cloud/app-integrations/macos-2.png"
+  alt="Enable Cypress Notifications"
+/>
+
+### Linux
+
+### Windows
+
+Notifications for Windows is currently not supported. Supported will be added in a later release.
