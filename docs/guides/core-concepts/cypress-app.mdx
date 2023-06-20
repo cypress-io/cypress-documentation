@@ -158,14 +158,18 @@ Running a large number of specs sequentially can consume more resources.
 ### Runs
 
 <DocsImage
-  src="/img/guides/core-concepts/cypress-app/recorded-runs.png"
+  src="/img/guides/core-concepts/cypress-app/recorded-runs.jpg"
   alt="Recorded Runs"
 />
 
 This screen shows detailed information about the most recently recorded
-[test runs](/guides/cloud/recorded-runs#Latest-Runs) across all git branches,
-latest first. This data comes from Cypress Cloud (see [note above](#Overview))
-so should be the same everywhere.
+[test runs](/guides/cloud/recorded-runs#Latest-Runs) to Cypress Cloud, showing
+the latest first.
+
+Cypress uses Git to show runs for your branch. Ensure that version control is
+properly configured and that you are sending Git information to Cypress Cloud.
+If no runs are found for your current branch, all runs for your project are
+shown as a fallback.
 
 The title of each run is taken from the
 [git commit message](https://www.educative.io/edpresso/git-commit-message-simply-explained)
