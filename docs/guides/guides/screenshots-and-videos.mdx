@@ -58,6 +58,8 @@ If enabled, Cypress records a video for each spec file when running tests during
 }
 ```
 
+:::cypress-config-example
+
 Videos are stored in the
 [`videosFolder`](/guides/references/configuration#Videos) which is set to
 `cypress/videos` by default.
@@ -95,19 +97,13 @@ longer to process, but results in a smaller video.
 }
 ```
 
-:::
+:::cypress-config-example
 
 If your spec files have a long run duration and
 [`videoCompression`](/guides/references/configuration#Videos) is enabled, you
 might notice a time gap between a finished spec and a new spec starting during
 `cypress run`. During this time, Cypress is encoding the captured video and
 possibly uploading it to Cypress Cloud.
-
-If the machine is encoding the video slowly (which is often the case for virtual
-machines that use less CPU cores), the encoding might take a long time. In this
-case, you can modify the
-[`videoCompression`](/guides/references/configuration#Videos) configuration to
-make the encoding a little bit faster. Here are some common scenarios:
 
 **Change compression value from 32**
 
@@ -121,8 +117,16 @@ make the encoding a little bit faster. Here are some common scenarios:
 
 :::cypress-config-example
 
+In addition to enabling or disabling video compress, you can specify the CRF
+value used to compress the video. Here is some common scenario:
+
+- If the machine is encoding the video slowly (which is often the case for
+  virtual machines that use less CPU cores), try increasing the CRF value.
+
+- If your videos are extremely low quality, try decreasing the CRF value.
+
 A lower `videoCompression` value will spend less time compressing and result in
-a bigger video file size.
+a bigger video file size and higher quality video.
 
 :::info
 
