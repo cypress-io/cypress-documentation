@@ -19,7 +19,7 @@ const config = {
     'Fast, easy and reliable testing for anything that runs in a browser.',
   url: 'https://docs.cypress.io',
   baseUrl: '/',
-  onBrokenLinks: 'throw', // TODO: update this to throw when we go live to production
+  onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'throw',
   favicon: undefined,
 

@@ -437,6 +437,62 @@
   status = 301
   force = true
 
+# New Cloud IA (Summer 2023)
+
+[[redirects]]
+  from = "/guides/cloud/projects"
+  to = "/guides/cloud/account-management/projects"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/organizations"
+  to = "/guides/cloud/account-management/organizations"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/users"
+  to = "/guides/cloud/account-management/users"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/smart-orchestration"
+  to = "/guides/cloud/smart-orchestration/overview"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/guides/parallelization"
+  to = "/guides/cloud/smart-orchestration/parallelization"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/runs"
+  to = "/guides/cloud/recorded-runs"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/integrations/github"
+  to = "/guides/cloud/integrations/source-control/github"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/integrations/gitlab"
+  to = "/guides/cloud/integrations/source-control/gitlab"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/integrations/bitbucket"
+  to = "/guides/cloud/integrations/source-control/bitbucket"
+  status = 301
+  force = true
+
 [[plugins]]
 package = "@netlify/plugin-sitemap"
 
