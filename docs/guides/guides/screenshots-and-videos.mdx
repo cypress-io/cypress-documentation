@@ -67,9 +67,9 @@ Videos are stored in the
 When using the `--record` flag while running your tests, videos are processed,
 compressed, and uploaded to [Cypress Cloud](/guides/cloud/introduction) after
 every spec file runs, successful or not. To change this behavior to only process
-videos in the case that tests fail, set the
-[`videoUploadOnPasses`](/guides/references/configuration#Videos) configuration
-option to `false`.
+videos in the case that tests fail, see how to
+[delete videos for specs without failing or retried tests](/guides/guides/screenshots-and-videos#Delete-videos-for-specs-without-failing-or-retried-tests).
+Deleting the video will cause the video to not be uploaded to Cypress Cloud.
 
 Cypress clears any existing videos before a `cypress run`. If you do not want to
 clear your videos folder before a run, you can set
@@ -143,9 +143,9 @@ to Cypress Cloud. Deleting videos after the run can save resource space on the
 machine as well as skip the time used to process, compress, and upload the video
 to [Cypress Cloud](/guides/cloud/introduction).
 
-To only process videos in the case that a test fails, you can set the
-[`videoUploadOnPasses`](/guides/references/configuration#Videos) configuration
-option to `false`.
+To only process videos in the case that a test fails, you can
+[delete videos for specs without failing or retried tests](/guides/guides/screenshots-and-videos#Delete-videos-for-specs-without-failing-or-retried-tests),
+which will not upload the video of passed runs to Cypress Cloud.
 
 For more fine grained control, you can use Cypress's
 [`after:spec`](/api/plugins/after-spec-api) event listener that fires after each
