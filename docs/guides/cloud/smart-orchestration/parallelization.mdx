@@ -239,17 +239,20 @@ under a single run within Cypress Cloud. Below, we name our groups the same name
 as the browser being tested:
 
 The first group can be called `Windows/Chrome 69`.
+
 ```shell
 cypress run --record --group Windows/Chrome-69 --browser chrome
 ```
 
 The second group can be called `Mac/Chrome 70`.
+
 ```shell
 cypress run --record --group Mac/Chrome-70 --browser chrome
 ```
 
 The third group can be called `Linux/Electron`. _Electron is the default
 browser used in Cypress runs_.
+
 ```shell
 cypress run --record --group Linux/Electron
 ```
@@ -300,16 +303,19 @@ facing portal_ and an _administration facing portal_. You could organize and
 test these three parts of your application within the same run:
 
 One group can be called `package/admin`:
+
 ```shell
 cypress run --record --group package/admin --spec 'cypress/e2e/packages/admin/**/*'
 ```
 
 Another can be called `package/customer`:
+
 ```shell
 cypress run --record --group package/customer --spec 'cypress/e2e/packages/customer/**/*'
 ```
 
 The last group can be called `package/guest`:
+
 ```shell
 cypress run --record --group package/guest --spec 'cypress/e2e/packages/guest/**/*'
 ```
