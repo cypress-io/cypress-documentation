@@ -58,20 +58,18 @@ If enabled, Cypress records a video for each spec file when running tests during
 }
 ```
 
+:::cypress-config-example
+
 Videos are stored in the
 [`videosFolder`](/guides/references/configuration#Videos) which is set to
 `cypress/videos` by default.
 
-After `cypress run` completes, Cypress compresses the video in order to save on
-file size. By default it compresses to a `32 CRF`, but this is configurable with
-the [`videoCompression`](/guides/references/configuration#Videos) property.
-
 When using the `--record` flag while running your tests, videos are processed,
 compressed, and uploaded to [Cypress Cloud](/guides/cloud/introduction) after
 every spec file runs, successful or not. To change this behavior to only process
-videos in the case that tests fail, set the
-[`videoUploadOnPasses`](/guides/references/configuration#Videos) configuration
-option to `false`.
+videos in the case that tests fail, see how to
+[delete videos for specs without failing or retried tests](/guides/guides/screenshots-and-videos#Delete-videos-for-specs-without-failing-or-retried-tests).
+Deleting the video will cause the video to not be uploaded to Cypress Cloud.
 
 Cypress clears any existing videos before a `cypress run`. If you do not want to
 clear your videos folder before a run, you can set
@@ -79,18 +77,35 @@ clear your videos folder before a run, you can set
 
 ### Video encoding
 
-If your spec files have a long run duration, you might notice a time gap between
-a finished spec and a new spec starting during `cypress run`. During this time,
-Cypress is encoding the captured video and possibly uploading it to Cypress
-Cloud.
+After a video is recorded, Cypress encodes the video to a commonly digestable
+format. Part of this encoding process includes video compression.
 
-If the machine is encoding the video slowly (which is often the case for virtual
-machines that use less CPU cores), the encoding might take a long time. In this
-case, you can modify the
-[`videoCompression`](/guides/references/configuration#Videos) configuration to
-make the encoding a little bit faster. Here are some common scenarios:
+Compression is disabled by default, meaning this step will be skipped
+completely, so the file size of the video will be larger, but the encoding
+process is faster. Setting
+[`videoCompression`](/guides/references/configuration#Videos) to `true` will
+coerce the video compression value to 32 Constant Rate Factor (CRF), which takes
+longer to process, but results in a smaller video.
 
-**Change compression value**
+**Enabling compression**
+
+:::cypress-config-example
+
+```ts
+{
+  videoCompression: true
+}
+```
+
+:::cypress-config-example
+
+If your spec files have a long run duration and
+[`videoCompression`](/guides/references/configuration#Videos) is enabled, you
+might notice a time gap between a finished spec and a new spec starting during
+`cypress run`. During this time, Cypress is encoding the captured video and
+possibly uploading it to Cypress Cloud.
+
+**Change compression value from 32**
 
 :::cypress-config-example
 
@@ -102,23 +117,16 @@ make the encoding a little bit faster. Here are some common scenarios:
 
 :::cypress-config-example
 
+In addition to enabling or disabling video compress, you can specify the CRF
+value used to compress the video. Here is some common scenario:
+
+- If the machine is encoding the video slowly (which is often the case for
+  virtual machines that use less CPU cores), try increasing the CRF value.
+
+- If your videos are extremely low quality, try decreasing the CRF value.
+
 A lower `videoCompression` value will spend less time compressing and result in
-a bigger video file size.
-
-**Disable compression**
-
-:::cypress-config-example
-
-```ts
-{
-  videoCompression: false
-}
-```
-
-:::
-
-The compression step will be skipped completely, so the video will be large, but
-the processing should be faster.
+a bigger video file size and higher quality video.
 
 :::info
 
@@ -135,9 +143,9 @@ to Cypress Cloud. Deleting videos after the run can save resource space on the
 machine as well as skip the time used to process, compress, and upload the video
 to [Cypress Cloud](/guides/cloud/introduction).
 
-To only process videos in the case that a test fails, you can set the
-[`videoUploadOnPasses`](/guides/references/configuration#Videos) configuration
-option to `false`.
+To only process videos in the case that a test fails, you can
+[delete videos for specs without failing or retried tests](/guides/guides/screenshots-and-videos#Delete-videos-for-specs-without-failing-or-retried-tests),
+which will not upload the video of passed runs to Cypress Cloud.
 
 For more fine grained control, you can use Cypress's
 [`after:spec`](/api/plugins/after-spec-api) event listener that fires after each
