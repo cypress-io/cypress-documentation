@@ -3,4 +3,66 @@ title: Test Replay
 sidebar_position: 20
 ---
 
-Test Replay!
+:::info
+
+## <Icon name="graduation-cap" /> What you'll learn
+
+- What Test Replay is and why you should use it
+- How to get started with Test Replay in Cypress Cloud
+- How to debug failed and flaky CI test runs more accurately and efficiently
+
+:::
+
+## What Is Test Replay?
+
+Test Replay in Cypress Cloud allows developers to accurately and efficiently debug failed and flaky CI test runs. It captures every detail of test runs, enabling developers to replay and interact with the DOM, inspect network events, and console events as they happened during CI. This eliminates the need to replicate failed tests locally and enhances the ability to debug complex applications with confidence and speed.
+
+## Why Test Replay?
+
+Cypress test failures in CI are currently captured through screenshots, videos, and stack trace outputs, but these artifacts provide limited information. Developers often need more context to understand the root cause of failures, requiring them to reproduce the issue locally, which may not always be possible due to environmental or network conditions. This knowledge gap between test failures and debugging capabilities leads to increased debugging time and potentially deploying unresolved bugs to production.
+
+### How Does Test Replay Advance Your Workflow?
+
+Test Replay complements the existing visual artifacts provided by Cypress Cloud by allowing developers to directly interact with tests as they occurred in CI. It eliminates the need for local test replication by enabling developers to time-travel to the exact moment of test failure, replaying and interacting with network requests, console logs, JavaScript errors, and element rendering. With Test Replay, developers gain access to previously inaccessible details and feedback loops, enabling faster and more accurate debugging, and instilling confidence in handling test failures in CI. Improve test runtimes by replacing video recordings with Test Replay, which provides a superior debugging experience
+
+## Getting Started
+
+:::tip
+
+Test Replay is available to **all** Cypress Cloud plans at no additional cost, subject to usage limits. Free plans allow up to 500 test results per month, while exceeding this limit requires upgrading the plan.
+
+:::
+
+All you need to do is log into your Cypress Cloud account without requiring any additional software or changes to the existing test run recording process.
+
+Test Replay is automatically enabled when updating to `v13` of Cypress and an opt out is provided through project-level settings.
+
+## Accessing Test Replay
+
+screenshot of: 
+- latest runs -> overview -> tests for review -> hover on line item
+- latest runs -> test results -> sidebar header & over each attempt
+
+### Run header
+The left side of the header diaplys the and git branch 
+- screenshot
+
+### Command Log
+- screenshot of test summary panel
+- screenshot of command log
+
+### Developer Tools
+- screenshot of network panel
+- screenshot of dev tools
+
+### Scrubber
+- screenshot scrubber
+
+## Browser Compatability
+
+Test Replay currently supports Chromium-based browsers only. Additionally, Cypress Cloud allows running Cypress for a single browser per group definer. For example, Firefox tests require video recording, while Chrome tests can utilize Test Replay.
+
+## See also
+
+- [Cypress Default Video Configuration](/guides/references/configuration#Videos)
+- [Cypress Video Artifacts](/guides/guides/screenshots-and-videos#Videos)
