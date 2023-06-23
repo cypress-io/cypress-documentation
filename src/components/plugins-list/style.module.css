@@ -69,6 +69,7 @@ ul.pluginsList li p {
 @media (min-width: 1280px) {
   .pluginTitle {
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
   }
 

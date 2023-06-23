@@ -1,6 +1,6 @@
 ---
 title: Recorded Runs
-sidebar_position: 40
+sidebar_position: 30
 ---
 
 Recorded runs capture the results from your test runs. Each specific area of
@@ -364,6 +364,23 @@ information about specific runs can be found on the
 <DocsImage
   src="/img/guides/core-concepts/cypress-app/spec-explorer.png"
   alt="Specs"
+/>
+
+### Runs
+
+This screen shows detailed information about the most recently recorded
+[test runs](#Latest-Runs) to Cypress Cloud, showing the latest first.
+
+The [Runs](/guides/core-concepts/cypress-app#Runs) page uses Git to show runs
+for your branch. If no runs are found for your current branch, all runs for your
+project are shown as a fallback. The title of each run is taken from the
+[git commit message](https://www.educative.io/edpresso/git-commit-message-simply-explained)
+for that change, and clicking on it will take you to the corresponding run page
+in Cypress Cloud.
+
+<DocsImage
+  src="/img/guides/core-concepts/cypress-app/recorded-runs.jpg"
+  alt="Recorded Runs"
 />
 
 ### Debug

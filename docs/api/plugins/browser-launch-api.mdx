@@ -383,6 +383,27 @@ on('before:browser:launch', (browser, options) => {
 
 :::
 
+### Disable `--headless=new` for Chrome
+
+Starting in Chrome 112, you can change the value of the `--headless` flag to the
+old value before the `--headless=new` flag was introduced.
+
+```ts
+on('before:browser:launch', (browser = {}, launchOptions) => {
+  if (browser.name === 'chrome' && browser.isHeadless) {
+    launchOptions.args = launchOptions.args.map((arg) => {
+      if (arg === '--headless=new') {
+        return '--headless'
+      }
+
+      return arg
+    })
+  }
+
+  return launchOptions
+})
+```
+
 ### Set a Firefox flag
 
 If we need to set a particular Firefox flag, like `browser.send_pings` we can do

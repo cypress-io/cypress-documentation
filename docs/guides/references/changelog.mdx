@@ -2,6 +2,50 @@
 title: Changelog
 ---
 
+## 12.15.0
+
+_Released 06/20/2023_
+
+**Features:**
+
+- Added support for running Cypress tests with
+  [Chrome's new `--headless=new` flag](https://developer.chrome.com/articles/new-headless/).
+  Chrome versions 112 and above will now be run in the `headless` mode that
+  matches the `headed` browser implementation. Addresses
+  [#25972](https://github.com/cypress-io/cypress/issues/25972).
+- Cypress can now test pages with targeted `Content-Security-Policy` and
+  `Content-Security-Policy-Report-Only` header directives by specifying the
+  allow list via the
+  [`experimentalCspAllowList`](/guides/references/experiments#Experimental-CSP-Allow-List)
+  configuration option. Addresses
+  [#1030](https://github.com/cypress-io/cypress/issues/1030). Addressed in
+  [#26483](https://github.com/cypress-io/cypress/pull/26483)
+- The [`videoCompression`](/guides/references/configuration#Videos)
+  configuration option now accepts both a boolean or a Constant Rate Factor
+  (CRF) number between `1` and `51`. The `videoCompression` default value is
+  still `32` CRF and when `videoCompression` is set to `true` the default of
+  `32` CRF will be used. Addresses
+  [#26658](https://github.com/cypress-io/cypress/issues/26658).
+- The Cypress Cloud data shown on the
+  [Specs](/guides/core-concepts/cypress-app#Specs) page and
+  [Runs](/guides/core-concepts/cypress-app#Runs) page will now reflect Cloud
+  Runs that match the current Git tree if Git is being used. Addresses
+  [#26693](https://github.com/cypress-io/cypress/issues/26693).
+
+**Bugfixes:**
+
+- Fixed an issue where video output was not being logged to the console when
+  `videoCompression` was turned off. Videos will now log to the terminal
+  regardless of the compression value. Addresses
+  [#25945](https://github.com/cypress-io/cypress/issues/25945).
+
+**Dependency Updates:**
+
+- Removed
+  [`@cypress/mocha-teamcity-reporter`](https://www.npmjs.com/package/@cypress/mocha-teamcity-reporter)
+  as this package was no longer being referenced. Addressed in
+  [#26938](https://github.com/cypress-io/cypress/pull/26938).
+
 ## 12.14.0
 
 _Released 06/07/2023_
