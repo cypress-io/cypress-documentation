@@ -1,0 +1,46 @@
+---
+title: Branch Review
+sidebar_position: 65
+---
+
+Cypress Branch Review allows you to quickly identify the impact a pull request might have to your test suite. Compare which tests are failing, flaky, pending, added, or modified between the source and base branches.
+
+<DocsImage
+  src="/img/guides/cloud/branch-review/branch-review.jpg"
+  alt="Cypress Branch Review"
+/>
+
+:::info
+
+Cypress Branch Review is currently only available for GitHub integrations. We are working on adding support for GitLab and Bitbucket soon.
+
+:::
+
+## Getting Started
+
+Your project will first need to be connected to a GitHub repository. If you haven't already, follow the steps in [Install the Cypress GitHub app](/guides/cloud/integrations/source-control/github#Install-the-Cypress-GitHub-app) to connect your project to GitHub.
+
+To access Branch Review, navigate to the **Branches** tab in the left sidebar and select the branch you want to review. In order to see a comparison, the branch you select must have an open pull request.
+
+<DocsImage
+  src="/img/guides/cloud/branch-review/get-to-branch-review.jpg"
+  alt="Get to Branch Review"
+/>
+
+When on the review screen, you will see tabs Failures, Flaky, Pending, Added, and Modified. Each tab will show you the tests that fall into that category. You can click on a test to view the test details.
+
+<DocsImage
+  src="/img/guides/cloud/branch-review/branch-review-details.jpg"
+  alt="Branch Review Details"
+  caption="Viewing new failing tests for this PR"
+/>
+
+The arrows next to the numbers in each of the tabs indicate...<TODO: put info on arrow indicators>
+
+If there are multiple pull requests open for the same branch, you can select the pull request you want to review from the dropdown to the right of the commit message:
+
+<DocsImage
+  src="/img/guides/cloud/branch-review/pull-request-dropdown.jpg"
+  alt="Branch Review PR Dropdown"
+  width={443}
+/>
