@@ -27,7 +27,7 @@ Test Replay complements the existing visual artifacts provided by Cypress Cloud 
 
 ## Getting Started
 
-:::tip
+:::info
 
 Test Replay is available to **all** Cypress Cloud plans at no additional cost, subject to usage limits. Free plans allow up to 500 test results per month, while exceeding this limit requires upgrading the plan.
 
@@ -35,17 +35,30 @@ Test Replay is available to **all** Cypress Cloud plans at no additional cost, s
 
 All you need to do is log into your Cypress Cloud account without requiring any additional software or changes to the existing test run recording process.
 
-Test Replay is automatically enabled when updating to `v13` of Cypress and an opt out is provided through project-level settings.
+Test Replay is automatically enabled when updating to `v13` of Cypress and an opt out is provided through project-level settings. Learn about what this means for [capturing video](#See-also) in Cypress Cloud below.
 
 ## Accessing Test Replay
 
-screenshot of: 
-- latest runs -> overview -> tests for review -> hover on line item
-- latest runs -> test results -> sidebar header & over each attempt
+Accessing the replay of your test is as simple as reviewing any other test artifact in Cypress Cloud.
+
+- Hover on a "Test for review" under the Latest Runs Overview
+<DocsImage
+  src="/img/guides/cloud/test-replay/test-overview.jpg"
+  alt="Run overview row"
+/>
+
+- Navigate to the [test detail sidebar](/guides/cloud/debugging/recorded-runs#Test-detail-sidebar) header or above each attempt in the errors panel
+<DocsImage
+  src="/img/guides/cloud/test-replay/sidebar.jpg"
+  alt="Run sidebar"
+/>
 
 ### Run header
-The left side of the header diaplys the and git branch 
-- screenshot
+The left side of the header displays the test run # with the git branch name along with all of the test, platform and browser information
+{/* <DocsImage
+  src="/img/guides/cloud/test-replay/test-replay-header 1.jpg"
+  alt="Test Replay header"
+/> */}
 
 ### Command Log
 - screenshot of test summary panel
