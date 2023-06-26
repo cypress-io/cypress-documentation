@@ -1227,6 +1227,13 @@
           "link": "https://github.com/SMenigat/cypress-mailhog",
           "keywords": ["email", "mailhog", "test", "commands"],
           "badge": "community"
+        },
+        {
+          "name": "cypress-guerrillamail",
+          "description": "Create and use a randomly-generated email address from Guerrilla Mail.",
+          "link": "https://github.com/e23thr/cypress-guerrillamail",
+          "keywords": ["email", "guerrillamail", "test", "commands"],
+          "badge": "community"
         }
       ]
     },
