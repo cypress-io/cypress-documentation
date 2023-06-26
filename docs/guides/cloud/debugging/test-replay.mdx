@@ -40,7 +40,7 @@ Test Replay complements the existing visual artifacts provided by Cypress Cloud 
 
 ## Getting Started
 
-:::tip
+:::info
 
 &#8239<Icon name="check-circle" /> Test Replay is available to **all** Cypress Cloud plans at no additional cost, subject to usage limits. Free plans allow up to 500 test results per month, while exceeding this limit requires upgrading the plan.
 
@@ -52,69 +52,74 @@ All you need to do after recording test runs is log in to your Cypress Cloud acc
 
 ## Accessing Test Replay
 
-Accessing the replay of your CI test run is as simple as reviewing any other test artifact in Cypress Cloud.
+Accessing the replay of your test is as simple as reviewing any other test artifact in Cypress Cloud.
 
-1. Hover on a [test for review](/guides/cloud/debugging/recorded-runs#Tests-for-Review) under the Latest Runs Overview.
+Hover on a "Test for review" under the Latest Runs Overview.
 
    <DocsImage
-     src="/img/guides/cloud/test-replay/test-overview.jpg"
+     src="/img/guides/cloud/test-replay/test-overview_magnified.jpg"
      alt="Run overview row"
    />
 
-2. Or navigate to the [test detail sidebar](/guides/cloud/debugging/recorded-runs#Test-detail-sidebar) header or above each attempt in the errors panel. The header option will replay the first failing test while the option above each attempt will replay the affiliated test.
+Navigate to the [test detail sidebar](/guides/cloud/debugging/recorded-runs#Test-detail-sidebar) header or above each attempt in the errors panel.
 
    <DocsImage
-     src="/img/guides/cloud/test-replay/sidebar.jpg"
+     src="/img/guides/cloud/test-replay/sidebar_magnified.png"
      alt="Run sidebar"
      width="60%"
    />
 
-## Debugging with Test Replay
+## Debugging With Test Replay
 
-Both options above display the Test Replay interface, which we'll unpack from top to bottom in more detail below.
+This displays the Test Replay interface, which we'll unpack from top to bottom in more detail below.
 
 <DocsImage
-  src="/img/guides/cloud/test-replay/demo.gif"
+  src="/img/guides/cloud/test-replay/replay-demo.gif"
   alt="Test Replay Demo"
 />
 
-### Run Header
+### Run header
 
-The left side of the header displays the Cypress Cloud test _run number_ with the Git branch name along with spec, platform and browser information. Hovering on this exposes additional test meta data.
+The left side of the header displays the test run # with the Git branch name along with the spec, platform and browser information. Hovering on this exposes additional test meta data.
 
 <DocsImage
-  src="/img/guides/cloud/test-replay/test-replay-header2.jpg"
+  src="/img/guides/cloud/test-replay/test-replay-header.jpg"
   alt="Test Replay header"
 />
 
 ### Command Log
 
-The left side of the screen displays the familiar command log, where you can review and interact with your test just like you would in the Cypress App.
+The left side of the screen displays the familiar command log, where you can step through your test just like you would in the Cypress app.
 
 <DocsImage
   src="/img/guides/cloud/test-replay/command-log.png"
   alt="Test Replay Developer Tools panel"
-  width="50%"
+  width="60%"
 />
 
 ### Developer Tools
-- screenshot of network panel
-- screenshot of dev tools
 
-Dive into network-level traffic, console events and inspect the application under test just as you can in the browser.
+Dive into network-level traffic, console events and inspect the application under test just as you can in the browser. 
 
 <DocsImage
   src="/img/guides/cloud/test-replay/dev-tools.png"
   alt="Test Replay Developer Tools panel"
-  width="50%"
+  width="60%"
 />
 
 ### Replay Controls
 
-Toggle each test attempt, play back errors at a variety of speeds or scrub through the captured error by dragging the playhead along the timeline.
+Toggle each test attempt, play back the error at four different speeds or scrub through the error by dragging the playhead along the timeline.
 
 <DocsImage
   src="/img/guides/cloud/test-replay/scrubber.png"
+  alt="Test Replay scrubber controls"
+/>
+
+Toggle each test attempt, play back errors at a variety of speeds or scrub through the captured error by dragging the playhead along the timeline.
+
+<DocsImage
+  src="/img/guides/cloud/test-replay/scrubber2.png"
   alt="Test Replay scrubber controls"
 />
 
@@ -139,4 +144,3 @@ If you'd like not to capture test data for replay purposes you can simply "shut 
 - [Test Replay FAQ](/faq/questions/cloud-faq#Test-Replay)
 - [Cypress Default Video Configuration](/guides/references/configuration#Videos)
 - [Cypress Video Artifacts](/guides/guides/screenshots-and-videos#Videos)
-- [FAQ: Whitelisting VPN subdomains for Test Replay](/faq/questions/cloud-faq#Im-working-with-a-restrictive-VPN-Which-subdomains-do-I-have-to-allow-on-my-VPN-for-Cypress-Cloud-to-work-properly)
