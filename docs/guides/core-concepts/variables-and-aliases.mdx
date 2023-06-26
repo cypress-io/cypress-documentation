@@ -433,12 +433,12 @@ cy.then(function () {
 cy.get('@favoriteColor').then(function (aliasValue) {
   expect(aliasValue).to.eql('red')
 
-  expect(this.color).to.eql('blue')
+  expect(this.favoriteColor).to.eql('blue')
 })
 ```
 
 In the second `.then()` block, `cy.get('@favoriteColor')` runs
-`cy.wrap(favorites).its('color')` fresh each time, but `this.color` was set when
+`cy.wrap(favorites).its('color')` fresh each time, but `this.favoriteColor` was set when
 the alias was first stored, back when our favorite color was blue.
 
 ### Elements
