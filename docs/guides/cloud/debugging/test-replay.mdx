@@ -41,35 +41,63 @@ Test Replay is automatically enabled when updating to `v13` of Cypress and an op
 
 Accessing the replay of your test is as simple as reviewing any other test artifact in Cypress Cloud.
 
-- Hover on a "Test for review" under the Latest Runs Overview
+Hover on a "Test for review" under the Latest Runs Overview.
+
 <DocsImage
   src="/img/guides/cloud/test-replay/test-overview.jpg"
   alt="Run overview row"
 />
 
-- Navigate to the [test detail sidebar](/guides/cloud/debugging/recorded-runs#Test-detail-sidebar) header or above each attempt in the errors panel
+Navigate to the [test detail sidebar](/guides/cloud/debugging/recorded-runs#Test-detail-sidebar) header or above each attempt in the errors panel.
+
+<DocsImage src="/img/guides/cloud/test-replay/sidebar.jpg" alt="Run sidebar" />
+
+## Debugging With Test Replay
+
+This displays the Test Replay interface, which we'll unpack from top to bottom in more detail below.
+
 <DocsImage
-  src="/img/guides/cloud/test-replay/sidebar.jpg"
-  alt="Run sidebar"
+  src="/img/guides/cloud/test-replay/replay-demo.gif"
+  alt="Test Replay Demo"
 />
 
 ### Run header
-The left side of the header displays the test run # with the git branch name along with all of the test, platform and browser information
-{/* <DocsImage
-  src="/img/guides/cloud/test-replay/test-replay-header 1.jpg"
+
+The left side of the header displays the test run # with the Git branch name along with the spec, platform and browser information. Hovering on this exposes additional test meta data.
+
+<DocsImage
+  src="/img/guides/cloud/test-replay/test-replay-header2.jpg"
   alt="Test Replay header"
-/> */}
+/>
 
 ### Command Log
-- screenshot of test summary panel
-- screenshot of command log
+
+The left side of the screen displays the familiar command log, where you can step through your test just like you would in the Cypress app.
+
+<DocsImage
+  src="/img/guides/cloud/test-replay/command-log.png"
+  alt="Test Replay Developer Tools panel"
+  width="60%"
+/>
 
 ### Developer Tools
-- screenshot of network panel
-- screenshot of dev tools
 
-### Scrubber
-- screenshot scrubber
+Dig deeper into all network-level traffic, console logs and inspect the application under test just as you can in Chrome.
+
+<DocsImage
+  src="/img/guides/cloud/test-replay/dev-tools.png"
+  alt="Test Replay Developer Tools panel"
+  width="60%"
+/>
+
+### Replay Controls
+
+Toggle each test attempt, play back the error at four different speeds or scrub through the error by dragging the playhead along the timeline.
+
+<DocsImage
+  src="/img/guides/cloud/test-replay/scrubber.png"
+  alt="Test Replay scrubber controls"
+/>
 
 ## Browser Compatability
 
