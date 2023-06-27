@@ -48,16 +48,26 @@ Check out the <Icon name="github" />
 
 ### Analyze and diagnose
 
-Store the full history of your test results, with
-[video clips, screenshots, and full stack traces](/guides/cloud/recorded-runs#Attempts-and-errors).
-Quickly see the current state of your app on the
-[Latest Runs](/guides/cloud/recorded-runs#Latest-Runs) page, identify
-problematic trends with rich [Analytics](/guides/cloud/analytics), and diagnose
-unreliable tests with
-[Flaky Test Management](/guides/cloud/flaky-test-management). Associate related
-tests with
-[grouping](/guides/cloud/smart-orchestration/parallelization#Grouping-by-browser)
-to see results broken down by browser and OS.
+Each test run is stored in Cypress Cloud, where you can see past results and the
+current state of your app on the [Latest Runs](/guides/cloud/debugging/recorded-runs) page. View
+each test's
+[command logs, screenshots, video replays, stack traces, and CI logs](/guides/cloud/debugging/recorded-runs#Test-detail-sidebar).
+Quickly identifying a test failure in CI is just a click away.
+
+<DocsVideo src="https://vimeo.com/806005654" />
+
+### Analyze and diagnose test health
+
+View each [run's overview](/guides/cloud/debugging/recorded-runs#Overview-tab) to see and compare
+past runs and analyze trends over time. You can quickly analyze changes in your
+setup that might introduce problematic trends as well as identify unreliable
+tests with [Flaky Test Management](/guides/cloud/flaky-test-management).
+
+<DocsVideo src="https://vimeo.com/806900039" />
+
+The [analytics](/guides/cloud/analytics) page shows test metrics over time,
+helping determine the overall health of your test suite. Quickly see which tests
+are problematic, getting slower, or growing over time.
 
 <DocsImage
   src="/img/dashboard/dashboard-runs-list.png"
@@ -92,7 +102,13 @@ from Cypress Cloud if you need to.
   alt="Diagram comparing serial and parallel test configurations"
 />
 
-### Integrate with source control providers
+Cypress Cloud's
+[Spec Prioritization](/guides/cloud/smart-orchestration/spec-prioritization)
+lets you prioritize recently failed specs so they run faster on their next run.
+The [Auto Cancellation](/guides/cloud/smart-orchestration/run-cancellation)
+feature will cancel a whole test run on failure, saving time and resource usage.
+You can also [cancel in-progress runs](/guides/cloud/debugging/recorded-runs#Run-cancellation)
+manually from Cypress Cloud if you need to.
 
 Ensure rock-solid reliability by keeping failing code out of your
 [GitHub](https://github.com), [GitLab](https://gitlab.com) and
@@ -129,8 +145,27 @@ directly from specific test failures.
   width={560}
 />
 
-Lastly you can use our flexible adminstrative functions to configure Cypress
-Cloud however you want, grouping
+#### Issue Management
+
+Keep the whole team up-to-date with [Jira](/guides/cloud/integrations/jira)
+integration. You can
+[create bidirectionally linked Jira tickets](/guides/cloud/integrations/jira#Creating-a-Jira-issue-for-a-test-case)
+directly from specific test failures.
+
+### Cypress app integration
+
+The [Cypress app](/guides/cloud/debugging/recorded-runs#Cypress-App) integrates directly with
+Cypress Cloud to provide developers with the latest test results without having
+to switch tools.
+
+<DocsImage
+  src="/img/guides/core-concepts/cypress-app/debug-page.png"
+  alt="Debug"
+/>
+
+### Flexible enterprise configuration and single sign on
+
+You can use our flexible administrative functions to configure Cypress Cloud however you want, grouping
 [projects](/guides/cloud/account-management/projects) into multiple
 [organizations](/guides/cloud/account-management/organizations) if you have a
 lot, checking [usage](/guides/cloud/account-management/billing-and-usage), and

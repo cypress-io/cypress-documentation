@@ -26,7 +26,7 @@ You can read more [here](/guides/cloud/introduction).
 ## <Icon name="angle-right" /> How do I record my tests?
 
 1. First [set up the project to record](/guides/cloud/getting-started#Setup).
-2. Then [record your runs](/guides/cloud/recorded-runs#Latest-Runs).
+2. Then [record your runs](/guides/cloud/debugging/recorded-runs#Latest-Runs).
 
 After recording your tests, you will see them in
 [Cypress Cloud](https://on.cypress.io/cloud) and in the "Runs" tab.
@@ -42,7 +42,7 @@ the number of tests you record each month in your organization.
 
 Tests are recorded when [cypress run](/guides/guides/command-line#cypress-run)
 is called with the `--record` flag while supplying the record `--key`. This
-means your [test run data](/guides/cloud/recorded-runs#Latest-Runs) is being
+means your [test run data](/guides/cloud/debugging/recorded-runs#Latest-Runs) is being
 "recorded" to Cypress Cloud.
 
 We consider each time the `it()` function is called to be a single test. So you
@@ -202,7 +202,7 @@ it might be good enough for the job.
 
 ## <Icon name="angle-right" /> Can I delete a run from Cypress Cloud?
 
-You can [archive a run](/guides/cloud/recorded-runs#Archive-run) so that it does
+You can [archive a run](/guides/cloud/debugging/recorded-runs#Archive-run) so that it does
 not display in the runs list or in analytics.
 
 **Note:** Archiving the recorded runs has no effect on the amount of tests
