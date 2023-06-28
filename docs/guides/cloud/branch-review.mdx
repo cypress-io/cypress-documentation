@@ -27,6 +27,32 @@ To access Branch Review, navigate to the **Branches** tab in the left sidebar an
   alt="Get to Branch Review"
 />
 
+## Branch Details
+
+### View Options
+
+Branch Review is the default view of the **Branches** tab. You can also toggle to see a list of Runs filtered by this branch.
+
+<DocsImage
+  src="/img/guides/cloud/branch-review/branch-review-views.jpg"
+  alt="Displaying different views for branches"
+/>
+
+
+### Review Header
+
+At the left side of the header is the Git commit message, PR selector, PR status and base and target branch indicators. If there are multiple pull requests open for the same branch, you can select the pull request you want to review from the dropdown to the right of the commit message.
+
+The right side of the header includes the Cypress Cloud test run number and test summary. Clicking the test run number will link you directly to the [test overview](/guides/cloud/recorded-runs#Overview-tab).
+
+<DocsImage
+  src="/img/guides/cloud/branch-review/branch-review-header.jpg"
+  alt="Branch Review Header"
+/>
+
+
+### Review Test Status
+
 When on the review screen, you will see tabs Failures, Flaky, Pending, Added, and Modified. Each tab will show you the tests that fall into that category. You can click on a test to view the test details.
 
 <DocsImage
@@ -35,12 +61,13 @@ When on the review screen, you will see tabs Failures, Flaky, Pending, Added, an
   caption="Viewing new failing tests for this PR"
 />
 
-The arrows next to the numbers in each of the tabs indicate...<TODO: put info on arrow indicators>
-
-If there are multiple pull requests open for the same branch, you can select the pull request you want to review from the dropdown to the right of the commit message:
-
-<DocsImage
-  src="/img/guides/cloud/branch-review/pull-request-dropdown.jpg"
-  alt="Branch Review PR Dropdown"
-  width={443}
-/>
+The arrows next to the numbers in each of the tabs indicate:
+- <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 10V4M12 4L6 4M12 4L4 12" stroke="#C62B49" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg> total number increased in your branch
+- <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 6V12M12 12L6 12M12 12L4 4" stroke="#C62B49" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg> total number decreased in your branch
+- <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M9 12L13 8M13 8L9 4M13 8L3 8" stroke="#C62B49" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg> there are new items, but the total count remained the same - for example, <em>1 resolved and 1 added</em>
