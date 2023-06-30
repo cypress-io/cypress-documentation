@@ -394,3 +394,62 @@ Cloud - all without leaving the Cypress app.
   src="/img/guides/core-concepts/cypress-app/debug-page.png"
   alt="Debug"
 />
+
+### Notifications
+
+Cypress Cloud can notify you about recorded test runs on your branch directly in
+the app through system notifications.
+
+<DocsImage
+  src="/img/guides/cloud/runs/app-notification.jpg"
+  alt="App notification on macOS"
+/>
+
+Clicking the notification will take you to the [debug](#Debug) page in the
+Cypress app.
+
+:::info
+
+In-app notifications are available in Cypress v12.15.0 and above and requires
+macOS or Linux. Windows support is coming soon.
+
+:::
+
+#### Configure Notifications
+
+To enable notifications, in the Cypress app, go to Settings, then down to Device
+Settings, and click the **Enable desktop notifications** button. Your system may
+then prompt you to allow notifications.
+
+<DocsImage
+  src="/img/guides/cloud/runs/enable-notifications.jpg"
+  alt="Enable notifications"
+/>
+
+You can receive notifications for the following events:
+
+- When a recorded run starts on your current commit in Cypress Cloud
+- When a recorded run starts to fail on your current commit in Cypress Cloud
+- And when a recorded run completes on your current commit in Cypress Cloud,
+  which you can customize the events to notify you when a run passes, fails, is
+  canceled or has an error.
+
+:::note
+
+Note: You will only receive notifications for runs that are running on the same
+commit that your current branch's head is on locally.
+
+:::
+
+Click the **Send test notification** button to test that notifications are
+working properly on your system.
+
+#### Troubleshooting Notifications
+
+If you are not receiving notifications, please check the following:
+
+- That the recorded run is being recorded to Cypress Cloud.
+- In your system settings, make sure that notifications are enabled for the
+  Cypress app.
+- That your local project is currently on the git commit that the test run being
+  recorded is sending notifications for.
