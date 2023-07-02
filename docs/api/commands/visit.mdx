@@ -82,7 +82,7 @@ By default, the `cy.visit()` commands' will use the `pageLoadTimeout` and
 You can also set all `cy.visit()` commands' `pageLoadTimeout` and `baseUrl`
 globally in the [Cypress configuration](/guides/references/configuration).
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
 
 - `cy.visit()` yields the `window` object after the page finishes loading.
 - It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried)
@@ -397,18 +397,18 @@ does so immediately before any of your application code runs.
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
 
 - `cy.visit()` requires being chained off of `cy`.
 - `cy.visit()` requires the response to be `content-type: text/html`.
 - `cy.visit()` requires the response code to be `2xx` after following redirects.
 - `cy.visit()` requires the load `load` event to eventually fire.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
 
 - `cy.visit()` will automatically wait for assertions you have chained to pass
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
 
 - `cy.visit()` can time out waiting for the page to fire its `load` event.
 - `cy.visit()` can time out waiting for assertions you've added to pass.
