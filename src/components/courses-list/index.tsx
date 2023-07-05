@@ -11,7 +11,7 @@ export default function CoursesList() {
       <div className="main-content-article-wrapper">
         <article className="main-content-article">
           <p>
-            Online courses from that teach end-to-end testing with Cypress over
+            Online courses that teach end-to-end and component testing with Cypress over
             multiple videos. <strong>Note:</strong> Some of the courses require
             payment from their website.
           </p>

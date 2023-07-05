@@ -139,6 +139,10 @@ By passing in a `StaticResponse` as the last argument, you can
 requests. See [`StaticResponse` object](#StaticResponse-objects) for the list of
 properties.
 
+Additionally, you can pass `{ log: false }` with your `StaticResponse` to
+disable command logs for this intercept. See
+["Disabling logs for a request"](#Disabling-logs-for-a-request).
+
 See
 [Stubbing a response with a `StaticResponse` object](#With-a-StaticResponse-object)
 for an example.
@@ -606,6 +610,21 @@ cy.intercept('POST', 'http://api.company.com/widgets', (req) => {
 // sent out with the modified request headers to the
 // real destination
 ```
+
+### Disabling logs for a request
+
+By default, Cypress logs all requests that match any `cy.intercept()`, as well
+as all `XMLHttpRequest`s and `fetch` requests. You can use `cy.intercept()` to
+disable these logs by passing `{ log: false }` in the second parameter:
+
+```js
+// disable Cypress's default behavior of logging all XMLHttpRequests and fetches
+cy.intercept({ resourceType: /xhr|fetch/ }, { log: false })
+```
+
+Note: Currently, you can only enable/disable a request's logs when defining the
+`cy.intercept()`, not inside of an `intercept` callback. See
+[#26069](https://github.com/cypress-io/cypress/issues/26069).
 
 ### Intercepting a response
 
@@ -1617,6 +1636,5 @@ information about the request and response to the console:
 [match-url]: #Matching-url
 [glob-match-url]: #Glob-Pattern-Matching-URLs
 [arg-method]: #method-String
-[arg-routehandler]:
-  #routeHandler-lt-code-gtstring-object-Function-StaticResponselt-code-gt
+[arg-routehandler]: #routeHandler-lt-code-gtstring-object-Function-StaticResponselt-code-gt
 [arg-routematcher]: #routeMatcher-RouteMatcher

@@ -75,10 +75,10 @@ it('navigates', () => {
 ```
 
 ```javascript
-// this will error because stackoverflow.com doesn't match the cypress.io superdomain
+// this will error because cypress-dx.com doesn't match the cypress.io superdomain
 it('navigates', () => {
   cy.visit('https://www.cypress.io')
-  cy.visit('https://stackoverflow.com')
+  cy.visit('https://www.cypress-dx.com')
   cy.get('selector')
 })
 ```
@@ -88,9 +88,9 @@ the sequential command should run against:
 
 ```javascript
 it('navigates', () => {
-  cy.visit('https://www.cypress.io')
-  cy.visit('https://stackoverflow.com')
-  cy.origin('https://stackoverflow.com', () => {
+  cy.visit('https://example.cypress.io')
+  cy.visit('https://www.cypress-dx.com')
+  cy.origin('https://www.cypress-dx.com', () => {
     cy.get('selector') // yup all good
   })
 })
@@ -103,7 +103,7 @@ it('navigates', () => {
 
 // split visiting different origin in another test
 it('navigates to new origin', () => {
-  cy.visit('https://stackoverflow.com')
+  cy.visit('https://cypress-dx.com')
   cy.get('selector') // yup all good
 })
 ```
@@ -121,15 +121,16 @@ state like `localStorage`, `cookies`, `service workers` and many other APIs are
 not shared between them anyways. Cypress does offer APIs around `localStorage`,
 `sessionStorage`, and `cookies` that are not limited to this restriction.
 
-As a best practice, you should not visit or interact with a 3rd party service
-not under your control. However, there are exceptions! If your organization uses
-Single Sign On (SSO) or OAuth then you might involve a 3rd party service other
-than your superdomain, which can be safely tested with
+As a best practice, you should not visit or interact with any website not under
+your control.
+
+If your organization uses Single Sign On (SSO) or OAuth then you might choose to
+test a 3rd party service other than your superdomain, which can be tested with
 [`cy.origin()`](/api/commands/origin).
 
 We've written several other guides specifically about handling this situation.
 
-- [Best Practices: Visiting external sites](/guides/references/best-practices#Visiting-external-sites)
+- [Best Practices: Visiting external sites](/guides/references/best-practices#Visiting-External-Sites)
 - [Web Security: Common Workarounds](/guides/guides/web-security#Common-Workarounds)
 - [Recipes: Logging In - Single Sign On](/examples/recipes#Logging-In)
 - [Guides: Amazon Cognito Authentication](/guides/end-to-end-testing/amazon-cognito-authentication)

@@ -38,7 +38,7 @@ test:
     # install dependencies
     - npm ci
     # start the server in the background
-    - npm run start:ci &
+    - npm start &
     # run Cypress tests
     - npm run e2e
 ```
@@ -78,13 +78,13 @@ stages:
   - test
 
 test:
-  image: cypress/browsers:node12.14.1-chrome85-ff81
+  image: cypress/browsers:node16.16.0-chrome107-ff107-edge
   stage: test
   script:
     # install dependencies
     - npm ci
     # start the server in the background
-    - npm run start:ci &
+    - npm start &
     # run Cypress tests
     - npx cypress run --browser firefox
 ```
@@ -109,13 +109,13 @@ cache:
     - .npm/
 
 test:
-  image: cypress/browsers:node12.14.1-chrome85-ff81
+  image: cypress/browsers:node16.16.0-chrome107-ff107-edge
   stage: test
   script:
     # install dependencies
     - npm ci
     # start the server in the background
-    - npm run start:ci &
+    - npm start &
     # run Cypress tests
     - npx cypress run --browser firefox
   artifacts:
@@ -129,8 +129,9 @@ test:
 ## Parallelization
 
 [Cypress Cloud](/guides/cloud/introduction) offers the ability to
-[parallelize and group test runs](/guides/guides/parallelization) along with
-additional insights and [analytics](/guides/cloud/analytics) for Cypress tests.
+[parallelize and group test runs](/guides/cloud/smart-orchestration/parallelization)
+along with additional insights and [analytics](/guides/cloud/analytics) for
+Cypress tests.
 
 The addition of the
 [`parallel` attribute](https://docs.gitlab.com/ee/ci/yaml/#parallel) to the
@@ -174,7 +175,7 @@ cache:
 
 ## Install NPM dependencies and Cypress
 install:
-  image: cypress/browsers:node12.14.1-chrome85-ff81
+  image: cypress/browsers:node16.16.0-chrome107-ff107-edge
   stage: build
   script:
     - npm ci
@@ -210,20 +211,20 @@ cache:
 
 ## Install NPM dependencies and Cypress
 install:
-  image: cypress/browsers:node12.14.1-chrome85-ff81
+  image: cypress/browsers:node16.16.0-chrome107-ff107-edge
   stage: build
   script:
     - npm ci
 
 ui-chrome-tests:
-  image: cypress/browsers:node12.14.1-chrome85-ff81
+  image: cypress/browsers:node16.16.0-chrome107-ff107-edge
   stage: test
   parallel: 5
   script:
     # install dependencies
     - npm ci
     # start the server in the background
-    - npm run start:ci &
+    - npm start &
     # run Cypress tests in parallel
     - npx cypress run --record --parallel --browser chrome --group "UI - Chrome"
 ```
@@ -245,21 +246,22 @@ leveraging three useful features of
 1. [Recording test results with the `--record` flag](https://on.cypress.io/how-do-i-record-runs)
    to [Cypress Cloud](https://on.cypress.io/cloud):
 
-   - In-depth and shareable [test reports](/guides/cloud/runs).
+   - In-depth and shareable
+     [test reports](/guides/cloud/recorded-runs#Latest-Runs).
    - Visibility into test failures via quick access to error messages, stack
      traces, screenshots, videos, and contextual details.
-   - [Integrating testing with the merge-request process](/guides/cloud/gitlab-integration)
+   - [Integrating testing with the merge-request process](/guides/cloud/integrations/source-control/gitlab)
      via
-     [commit status guards](/guides/cloud/gitlab-integration#Commit-statuses)
+     [commit status guards](/guides/cloud/integrations/source-control/gitlab#Commit-statuses)
      and convenient
-     [test report comments](/guides/cloud/gitlab-integration#Merge-Request-comments).
+     [test report comments](/guides/cloud/integrations/source-control/gitlab#Merge-Request-comments).
    - [Detecting flaky tests](/guides/cloud/flaky-test-management) and surfacing
      them via [Slack alerts](/guides/cloud/flaky-test-management#Slack) or
-     [GitLab PR status checks](/guides/cloud/gitlab-integration).
+     [GitLab PR status checks](/guides/cloud/integrations/source-control/gitlab).
 
-2. [Parallelizing test runs](/guides/guides/parallelization) and optimizing
-   their execution via
-   [intelligent load-balancing](/guides/guides/parallelization#Balance-strategy)
+2. [Parallelizing test runs](/guides/cloud/smart-orchestration/parallelization)
+   and optimizing their execution via
+   [intelligent load-balancing](/guides/cloud/smart-orchestration/load-balancing#Balance-strategy)
    of test specs across CI machines with the `--parallel` flag.
 
 3. Organizing and consolidating multiple `cypress run` calls by labeled groups

@@ -290,7 +290,7 @@ If you're familiar with Cypress commands already, but find yourself using
 For working with either of these patterns, please read our
 [Variables and Aliases guide](/guides/core-concepts/variables-and-aliases).
 
-## Visiting external sites
+## Visiting External Sites
 
 :::danger
 
@@ -302,10 +302,10 @@ to visit or interact with sites or servers you do not control.
 :::tip
 
 &#8239;<Icon name="check-circle" color="green" /> **Best Practice:** Only test
-what you control. Try to avoid requiring a 3rd party server. When necessary, use
-[`cy.request()`](/api/commands/request) to talk to 3rd party servers via their
-APIs. If possible, cache results via [`cy.session()`](/api/commands/session) to
-avoid repeat visits.
+websites that you control. Try to avoid visiting or requiring a 3rd party
+server. If you choose, you may use [`cy.request()`](/api/commands/request) to
+talk to 3rd party servers via their APIs. If possible, cache results via
+[`cy.session()`](/api/commands/session) to avoid repeat visits.
 
 :::
 
@@ -318,7 +318,7 @@ You may want to access 3rd party services in several situations:
 2. Verifying your server updates a 3rd party server.
 3. Checking your email to see if your server sent a "forgot password" email.
 
-Most of the time, these situations can be safely tested with
+If you choose, these situations can be tested with
 [`cy.visit()`](/api/commands/visit) and [`cy.origin()`](/api/commands/origin).
 However, you will only want to utilize these commands for resources in your
 control, either by controlling the domain or hosted instance. These use cases
@@ -334,10 +334,10 @@ are common for:
 #### Potential Challenges Authenticating with Social Platforms
 
 Other services, such as social logins through popular media providers, are not
-recommended. Social logins will likely work, especially if run locally. However,
+recommended. Testing social logins may work, especially if run locally. However,
 we consider this a bad practice and do not recommend it because:
 
-- It is incredibly time consuming and slows down your tests (unless using
+- It's incredibly time consuming and slows down your tests (unless using
   [`cy.session()`](/api/commands/session)).
 - The 3rd party site may have changed or updated its content.
 - The 3rd party site may be having issues outside of your control.
@@ -366,7 +366,7 @@ Additionally, testing through an OAuth provider is mutable - you will first need
 a real user on their service and then modifying anything on that user might
 affect other tests downstream.
 
-**Here are potential solutions to alleviate these problems:**
+**Here are solutions you may choose to use to alleviate these problems:**
 
 1. Use another platform that you control to log in with username and password
    via [`cy.origin()`](/api/commands/origin). This likely guarantees that you
@@ -447,7 +447,7 @@ email's functionality and visual style:
    environment variables. Some email services already provide
    [Cypress plugins](/plugins#Email) to access emails.
 
-## Having tests rely on the state of previous tests
+## Having Tests Rely On The State Of Previous Tests
 
 :::danger
 
@@ -578,7 +578,7 @@ We're also paving the way to make it less complicated to write multiple tests
 against the "default" state of the form. That way each test stays lean but each
 can be run independently and pass.
 
-## Creating "tiny" tests with a single assertion <E2EOnlyBadge />
+## Creating "Tiny" Tests With A Single Assertion <E2EOnlyBadge />
 
 :::danger
 
@@ -664,7 +664,7 @@ describe('my form', () => {
 })
 ```
 
-## Using `after` or `afterEach` hooks
+## Using `after` Or `afterEach` Hooks
 
 :::danger
 
@@ -952,12 +952,12 @@ times slow the velocity at which branches may be merged and features may be
 shipped. This issue is compounded further if you have dependent chains of
 branches waiting to be merged.
 
-One solution to this problem is
-[Smart Orchestration with Cypress Cloud](/guides/cloud/smart-orchestration).
-Using a combination of [parallelization](/guides/guides/parallelization),
-[load balancing](/guides/guides/parallelization#Balance-strategy),
-[Auto Cancellation](/guides/cloud/smart-orchestration#Auto-Cancellation), and
-[Spec Prioritization](/guides/cloud/smart-orchestration#Spec-Prioritization),
+One solution to this problem is **Smart Orchestration** with Cypress Cloud.
+Using a combination of
+[parallelization](/guides/cloud/smart-orchestration/parallelization),
+[load balancing](/guides/cloud/smart-orchestration/load-balancing#Balance-strategy),
+[Auto Cancellation](/guides/cloud/smart-orchestration/run-cancellation), and
+[Spec Prioritization](/guides/cloud/smart-orchestration/spec-prioritization),
 Smart Orchestration maximizes your available compute resources & minimizes
 waste.
 
@@ -1011,7 +1011,7 @@ Are you trying to run in CI?
 We have
 [examples showing you how to start and stop your web server](/guides/continuous-integration/introduction#Boot-your-server).
 
-## Setting a global baseUrl
+## Setting a Global `baseUrl`
 
 :::danger
 

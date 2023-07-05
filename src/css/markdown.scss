@@ -33,8 +33,15 @@ div.markdown {
     }
   }
 
-  h2,
-  h4 {
+  // add border bottom to code tags that are in a link
+  a:has(> code) {
+    border-bottom: 1px dotted var(--ifm-link-color);
+    &:hover {
+      border-bottom: 1px solid var(--ifm-link-color);
+    }
+  }
+
+  h2 {
     margin-bottom: 1.5rem;
     padding-bottom: 0.5rem;
     border-bottom: 2px solid var(--ifm-toc-border-color);

@@ -1,0 +1,310 @@
+---
+title: Integrating with Cypress Component Testing
+sidebar_position: 100
+---
+
+:::info
+
+&#8239;<Icon name="exclamation-triangle" /> This feature is only available in
+Cypress **v12.7** and later.
+
+:::
+
+Cypress Component Testing includes
+[official support](/guides/component-testing/overview#Supported-Frameworks) for
+many popular libraries and frameworks such as
+[React](/guides/component-testing/react/overview),
+[Angular](/guides/component-testing/angular/overview), and
+[Vue](/guides/component-testing/vue/overview). All officially supported
+libraries feature a first class onboarding experience, where we detect and
+scaffold the correct files, and a framework-specific `mount` adapter to render
+your components. We call this collection of features a _Framework Definition_
+since it defines the requirements for a library or framework to work in Cypress.
+
+If your favorite library isn't featured, don't worry - we expose the same API we
+use internally for the Cypress community to define their own Framework
+Definitions.
+
+In this guide, you'll learn how to author a Framework Definition, which will
+enjoy the same polished onboarding experience as our officially supported
+frameworks.
+
+## Concepts
+
+There are a few requirements for authoring a Framework Definition.
+
+- [Definition File](#Framework-Definition) (we recommending naming this
+  `definition.cjs`)
+- [Mount Adapter](#Mount-Adapter) (we recommending naming this `index.mjs`)
+- A [`package.json`](#packagejson) with the correct conventions
+
+The Definition is required when users configure Component Testing for the first
+time. The Mount adapter is used to render components when writing tests.
+
+To simplify this process, we recommend starting development using
+[our official template](https://github.com/cypress-io/cypress-ct-definition-template).
+
+## Framework Definition
+
+Below is a minimal Framework Definition. Note that `defineFrameworkDefinition`
+is purely for type safety, similar to `defineConfig` in `cypress.config`.
+
+There is one important convention; the `type` key in `defineFrameworkDefinition`
+should match the name of your package on npm, and should be named using one of
+the following conventions:
+
+- `cypress-ct-*`
+- `@organization/cypress-ct-*`
+
+Some examples of valid names include:
+
+- `cypress-ct-react-js`
+- `cypress-ct-svelte-testing`
+- `@cypress/cypress-ct-react`
+- `@angular/cypress-ct-angular`
+
+When configuring a project to use Component Testing, Cypress will load any
+dependencies following this naming convention from the project's `node_modules`
+and present them as framework options.
+
+A simple example of a Framework Defintion for the
+[Solid.js](https://www.solidjs.com/) library is shown below. We generally
+recommend naming this `definition.cjs`. In our
+[official template](https://github.com/cypress-io/cypress-ct-definition-template),
+this file is at the root level of the package.
+
+```js
+const { defineFrameworkDefinition } = require('cypress')
+
+const solidDep = {
+  // Unique, semantic identifier.
+  type: 'solid-js',
+
+  // Human readable name.
+  name: 'Solid',
+
+  // Package name install from `npm`.
+  package: 'solid-js',
+
+  /**
+   * Similar to package, but can include a version or tag.
+   * Used during setup to generate an install command for users.
+   * Eg: `solid-js@next`
+   */
+  installer: 'solid-js',
+
+  // Human readable description.
+  description:
+    'A declarative, efficient, and flexible JavaScript library for building user interfaces.',
+
+  // Minimum supported version.
+  minVersion: '^1.6.0',
+}
+
+/**
+ * Similar to above. Create an smooth, seamless setup experience
+ * by ensuring the user has all the necessary dependencies.
+ * @type {Cypress.CypressComponentDependency}
+ */
+const solidVitePlugin = {
+  type: 'solid-js-vite-plugin',
+  name: 'Vite Plugin Solid',
+  package: 'vite-plugin-solid',
+  installer: 'vite-plugin-solid',
+  description: 'A simple integration to run solid-js with vite',
+  minVersion: '^1.6.0 || ^2.0.0',
+}
+
+/**
+ * The actual definition.
+ */
+module.exports = defineFrameworkDefinition({
+  /**
+   * This should match the `npm` package name.
+   * The convention required to ensure your Definition is processed
+   * by Cypress is `cypress-ct-*` for global packages, or
+   * `@org/cypress-ct-*` for organization level packages.
+   */
+  type: '@lmiller1990/cypress-ct-solid-js',
+
+  /**
+   * The label that shows up when configuring Component Testing
+   * for the first time.
+   */
+  name: 'Solid.js',
+
+  /**
+   * Supported bundlers. Can be "webpack" and/or "vite".
+   * In this example we only support Solid.js with Vite.
+   */
+  supportedBundlers: ['vite'],
+
+  /**
+   * Used by Cypress to automatically detect the correct Framework Definition
+   * based on the user's project.
+   * In this example, if a module matching `solidDep`
+   * is found in the user's project,
+   * Solid.js will automatically be selected when configuring Component Testing.
+   */
+  detectors: [solidDep],
+
+  /**
+   * Supply a set of dependencies a project should have to use this Framework Definition. The user will be prompted to install them if they are not found.
+   * Optionally, supply different dependencies based on the chosen bundler.
+   */
+  dependencies: (bundler) => {
+    return [solidDep, solidVitePlugin]
+  },
+
+  /**
+   * An SVG icon. Shown when configuring Component Testing for the first time.
+   * Optional, but good for branding your Framework Definition.
+   */
+  icon: `
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 166 155.3"><path d="M163 35S110-4 69 5l-3 1c-6 2-11 5-14 9l-2 3-15 26 26 5c11 7 25 10 38 7l46 9 18-30z" fill="#76b3e1"/><linearGradient id="a" gradientUnits="userSpaceOnUse" x1="27.5" y1="3" x2="152" y2="63.5"><stop offset=".1" stop-color="#76b3e1"/><stop offset=".3" stop-color="#dcf2fd"/><stop offset="1" stop-color="#76b3e1"/></linearGradient><path d="M163 35S110-4 69 5l-3 1c-6 2-11 5-14 9l-2 3-15 26 26 5c11 7 25 10 38 7l46 9 18-30z" opacity=".3" fill="url(#a)"/><path d="M52 35l-4 1c-17 5-22 21-13 35 10 13 31 20 48 15l62-21S92 26 52 35z" fill="#518ac8"/><linearGradient id="b" gradientUnits="userSpaceOnUse" x1="95.8" y1="32.6" x2="74" y2="105.2"><stop offset="0" stop-color="#76b3e1"/><stop offset=".5" stop-color="#4377bb"/><stop offset="1" stop-color="#1f3b77"/></linearGradient><path d="M52 35l-4 1c-17 5-22 21npm install https://cdn.cypress.io/beta/npm/12.6.0/darwin-arm64/feature/ct-public-api-ab820f062d313fbef51665bdd1d883c69d89b3be/cypress.tgz-13 35 10 13 31 20 48 15l62-21S92 26 52 35z" opacity=".3" fill="url(#b)"/><linearGradient id="c" gradientUnits="userSpaceOnUse" x1="18.4" y1="64.2" x2="144.3" y2="149.8"><stop offset="0" stop-color="#315aa9"/><stop offset=".5" stop-color="#518ac8"/><stop offset="1" stop-color="#315aa9"/></linearGradient><path d="M134 80a45 45 0 00-48-15L24 85 4 120l112 19 20-36c4-7 3-15-2-23z" fill="url(#c)"/><linearGradient id="d" gradientUnits="userSpaceOnUse" x1="75.2" y1="74.5" x2="24.4" y2="260.8"><stop offset="0" stop-color="#4377bb"/><stop offset=".5" stop-color="#1a336b"/><stop offset="1" stop-color="#1a336b"/></linearGradient><path d="M114 115a45 45 0 00-48-15L4 120s53 40 94 30l3-1c17-5 23-21 13-34z" fill="url(#d)"/></svg>
+  `,
+})
+```
+
+Our Framework Definition shows up in Cypress! It has the "community" label,
+indicating it's a third party definition.
+
+<DocsImage
+  src="/img/guides/component-testing/framework-definition-1.png"
+  alt="custom framework definition"
+/>
+
+We defined the `dependencies`, which are also correctly handled - we haven't
+installed them all, so Cypress is prompting us to do so:
+
+<DocsImage
+  src="/img/guides/component-testing/framework-definition-2.png"
+  alt="required dependencies"
+/>
+
+## Mount Adapter
+
+The second part of defining a Framework Definition is the Mount Adapter. This is
+the function that renders the component in your tests using `cy.mount()`.
+
+By default, Cypress will look for this as a `mount` function that is a **named
+export** from the package. This should be written in a `index.mjs` file. This
+example is for a [Solid.js](https://www.solidjs.com/) mount adapter:
+
+```js
+import { getContainerEl, setupHooks } from '@cypress/mount-utils'
+import { render } from 'solid-js/web'
+
+let dispose
+
+function cleanup() {
+  dispose?.()
+}
+
+/**
+ * @param {() => JSX.Element} - component to render
+ */
+export function mount(component, options = {}) {
+  // Retrieve root DOM element that Cypress has prepared for this test
+  const root = getContainerEl()
+
+  dispose = render(() => component, root)
+
+  // Wait until next microtick to ensure any async render logic has executed
+  return cy.wait(0, { log: false }).then(() => {
+    if (options.log !== false) {
+      Cypress.log({
+        name: 'mount',
+        message: 'Mounted component',
+      })
+    }
+  })
+}
+
+// Cleanup between each test
+setupHooks(cleanup)
+```
+
+This is different for each library, but the concept is the same - identify how
+to mount or render a component in your library, and implement it in a function
+named `mount` in `index.mjs`.
+
+When a user configures Component Testing with your Framework Definition we
+automatically configure a `cy.mount` command using your `mount` function in the
+Component Testing `supportFile`:
+
+```js
+import { mount } from '@lmiller1990/cypress-ct-solid-js'
+
+Cypress.Commands.add('mount', mount)
+```
+
+## package.json
+
+The final thing you need is a correctly configured `package.json`. This example
+was created using
+[our official template](https://github.com/cypress-io/cypress-ct-definition-template).
+
+There are two fields of note:
+
+- `name`: Your package name which must follow the
+  `cypress-ct-*`/`@org/cypress-ct-*` convention
+- `exports`: Object referencing the two files we created to comprise the
+  Framework Definition. The `node` entry points to the Definition file, and the
+  `default` entry points to the Mount Adapter:
+
+```json {2,5-8}
+{
+  "name": "@lmiller1990/cypress-ct-solid-js",
+  "version": "0.0.4",
+  "description": "Example Framework Definition for Cypress and Solid.js",
+  "exports": {
+    "node": "./definition.cjs",
+    "default": "./index.mjs"
+  },
+  "files": [
+    "package.json",
+    "definition.cjs",
+    "index.mjs"
+  ],
+  "dependencies": {
+    "@cypress/mount-utils": "^4.0.0"
+  },
+  "devDependencies": {
+    "solid-js": "^1.6.0"
+  },
+  "peerDependencies": {
+    "solid-js": "^1.6.0"
+    "cypress": "^12.7.0"
+  }
+}
+```
+
+## Testing
+
+If you develop the Framework Definition file using TypeScript, for example by
+using
+[our official template](https://github.com/cypress-io/cypress-ct-definition-template),
+as long as you don't have any compile time errors, everything should work as
+expected. If you do run into unexpected behavior, please
+[file an issue](https://github.com/cypress-io/cypress/issues).
+
+Mount Adapters can be more complex to test. In general, we recommend testing
+them in the same way users consume them - using Cypress Component Testing. A
+minimal test suite for a simple Solid.js Mount Adapter can be found
+[here](https://github.com/lmiller1990/cypress-ct-solid-js/tree/main/example-project).
+Alternatively, take a look at our official
+[React](https://github.com/cypress-io/cypress/tree/develop/npm/react) and
+[Angular](https://github.com/cypress-io/cypress/tree/develop/npm/angular) Mount
+Adapters, both of which have extensive test suites.
+
+## Publishing on npm
+
+That's it! Publish your Framework Definition on npm and start using it.
+
+## List of Framework Definitions
+
+Once your Framework Definition is published and ready for use we would be
+delighted to mention it in our documentation so other Cypress users on the same
+framework can find it.
+[Submit a Pull Request](https://github.com/cypress-io/cypress-documentation/blob/main/CONTRIBUTING.md)!
