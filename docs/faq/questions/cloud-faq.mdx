@@ -31,6 +31,37 @@ You can read more [here](/guides/cloud/introduction).
 After recording your tests, you will see them in
 [Cypress Cloud](https://on.cypress.io/cloud) and in the "Runs" tab.
 
+## <Icon name="angle-right" /> What does Cypress record?
+
+We capture the following:
+
+- Standard Output
+- Test Failures
+- Screenshots
+- Video (if configured)
+
+And starting in Cypress `v13` for [Test Replay](/guides/cloud/debugging/test-replay):
+
+- Commands
+- Network Traffic
+- Browser Console Logs
+
+## <Icon name="angle-right" /> What is Test Replay?
+
+[Test Replay](/guides/cloud/debugging/test-replay) enables you and your team to troubleshoot and debug failed tests faster. After updating to Cypress `v13`, the new feature will automatically record all browser events and allow you to “replay” what an application looked like.
+
+Wind back the clock to any point in an application's execution and directly interact with tests as they happen in CI. Debug complex problems as if you were there when they first happened. You can:
+
+- **Interact with the DOM** at the exact time of a test failure to debug tests quickly
+- **View important debugging dimensions** such as network requests, console logs, and more
+- **Save time recreating errors in CI locally** - replay tests as they happened in CI
+
+<DocsImage
+  src="/img/guides/cloud/test-replay/test-replay-ui.png"
+  alt="Test Replay Demo"
+  width="80%"
+/>
+
 ## <Icon name="angle-right" /> How much does it cost?
 
 Please see our [Pricing Page](https://www.cypress.io/pricing) for more details.
@@ -134,24 +165,6 @@ any test results.
 Your Organization ID is a unique identifier that is linked to your organization.
 Instructions on how to find your ID are in the
 [Cypress Cloud Guide.](/guides/cloud/account-management/organizations#Organization-ID)
-
-## <Icon name="angle-right" /> What does Cypress record?
-
-We capture the following:
-
-- Standard Output
-- Test Failures
-- Screenshots
-- Video
-
-We have already begun the implementation for capturing even more things from
-your run such as:
-
-- Commands
-- Network Traffic
-- Browser Console Logs
-
-These will be added in subsequent releases.
 
 ## <Icon name="angle-right" /> Why is test parallelization based on spec files and not on the individual functions?
 
