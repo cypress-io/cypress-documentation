@@ -53,10 +53,10 @@ Accessing the replay of your CI test run is as simple as reviewing any other tes
    <DocsImage
      src="/img/guides/cloud/test-replay/sidebar_magnified.png"
      alt="Run sidebar"
-    width="60%"
+     width="60%"
    />
 
-## Debugging With Test Replay
+## Debugging with Test Replay
 
 Both options above display the Test Replay interface, which we'll unpack from top to bottom in more detail below.
 
@@ -65,7 +65,7 @@ Both options above display the Test Replay interface, which we'll unpack from to
   alt="Test Replay Demo"
 />
 
-### Run header
+### Run Header
 
 The left side of the header displays the Cypress Cloud test _run number_ with the Git branch name along with spec, platform and browser information. Hovering on this exposes additional test meta data.
 
@@ -81,17 +81,17 @@ The left side of the screen displays the familiar command log, where you can rev
 <DocsImage
   src="/img/guides/cloud/test-replay/command-log.png"
   alt="Test Replay Developer Tools panel"
-  width="60%"
+  width="50%"
 />
 
 ### Developer Tools
 
-Dive into network-level traffic, console events and inspect the application under test just as you can in the browser. 
+Dive into network-level traffic, console events and inspect the application under test just as you can in the browser.
 
 <DocsImage
   src="/img/guides/cloud/test-replay/dev-tools.png"
   alt="Test Replay Developer Tools panel"
-  width="60%"
+  width="50%"
 />
 
 ### Replay Controls
@@ -105,7 +105,19 @@ Toggle each test attempt, play back errors at a variety of speeds or scrub throu
 
 ## Opt out of Test Replay
 
-{/* todo: add project kill switch screenshot */}
+:::warning
+
+<Icon name="exclamation-triangle" /> Do not use sensitive data in your tests. This
+will be visible in the test replay.
+
+:::
+
+If you'd like not to capture test data for replay purposes you can simply "shut off" Test Replay in project settings.
+
+<DocsImage
+  src="/img/guides/cloud/test-replay/kill-switch.png"
+  alt="Test Replay opt-out controls"
+/>
 
 ## Browser Compatibility
 
