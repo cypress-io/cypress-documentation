@@ -45,7 +45,7 @@ it('creates an item', () => {
   // Non-query commands only execute once.
   cy.visit('/')
 
-  // The .focused() query and .should() assertion link together, 
+  // The .focused() query and .should() assertion link together,
   // rerunning until the currently focused element has
   // the 'new-todo' class
   cy.focused().should('have.class', 'new-todo')
