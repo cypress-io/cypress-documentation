@@ -37,7 +37,7 @@ important to understand the different rules by which they operate.
   log.
 - **Non-queries** only execute once.
 
-For example, there are 4 queries, an action, and 2 assertions in
+For example, there are 5 queries, an action, and 2 assertions in
 the test below.
 
 ```javascript
@@ -242,10 +242,9 @@ cy.get('[data-testid="mobile-nav"]', { timeout: 10000 })
   .and('contain', 'Home')
 ```
 
-Cypress will retry for up to 10 seconds to find an element with `data-testid`
-attribute `mobile-nav`. It will then retry for up to 10 seconds waiting for it
-to be visible; once it's visible, it will wait up to 10s for it to contain
-"Home". For more examples, read the
+Cypress will retry for up to 10 seconds to find a visible element with
+`data-testid` attribute `mobile-nav` with text containing "Home". For more
+examples, read the
 [Timeouts](/guides/core-concepts/introduction-to-cypress#Timeouts) section in
 the "Introduction to Cypress" guide.
 
