@@ -37,15 +37,15 @@ important to understand the different rules by which they operate.
   log.
 - **Non-queries** only execute once.
 
-For example, there are 7 queries (2 of them assertions) and 2 non-queries in the
-test below.
+For example, there are 4 queries, an action, and 2 assertions in
+the test below.
 
 ```javascript
 it('creates an item', () => {
   // Non-query commands only execute once.
   cy.visit('/')
 
-  // The queries .focused() and .should() link together,
+  // The .focused() query and .should() assertion link together, 
   // rerunning until the currently focused element has
   // the 'new-todo' class
   cy.focused().should('have.class', 'new-todo')
@@ -55,7 +55,7 @@ it('creates an item', () => {
   // the non-query `.type()`.
   cy.get('.header').find('.new-todo').type('todo A{enter}')
 
-  // Three queries chained together
+  // Two queries and an assertion chained together
   cy.get('.todoapp').find('.todo-list li').should('have.length', 1)
 })
 ```
@@ -136,12 +136,16 @@ Within a few milliseconds after the DOM updates, the linked queries
 
 ## Multiple assertions
 
-Chains of commands are always executed in order, with all previous queries
-forming the subject of each following command.
+Queries and assertions are always executed in order, and always retry 'from the
+top'. If you have multiple assertions, Cypress will retry until each passes
+before moving on to the next one.
 
-For example, the following test has the [.get()](/api/commands/get),
-[`.should()`](/api/commands/should) and [`.and()`](/api/commands/and) commands
-chained together. All three of these are queries.
+For example, the following test has [`.should()`](/api/commands/should) and
+[`.and()`](/api/commands/and) assertions. `.and()` is an alias of the
+`.should()` command, so the second assertion is really a custom callback
+assertion in the form of the [`.should(cb)`](/api/commands/should#Function)
+function with 2 [`expect`](/guides/references/assertions#BDD-Assertions)
+assertions inside of it.
 
 ```javascript
 it('creates two items', () => {
@@ -151,9 +155,9 @@ it('creates two items', () => {
   cy.get('.new-todo').type('todo B{enter}')
 
   cy.get('.todo-list li') // query
-    .should('have.length', 2) // query
+    .should('have.length', 2) // assertion
     .and(($li) => {
-      // 2 mocha assertions inside of the .and() query
+      // 2 mocha assertions inside of the .and() assertion
       expect($li.get(0).textContent, 'first item').to.equal('todo a')
       expect($li.get(1).textContent, 'second item').to.equal('todo B')
     })
@@ -163,7 +167,8 @@ it('creates two items', () => {
 Because the first expect statement
 (`expect($li.get(0).textContent, 'first item').to.equal('todo a')`) fails, the
 second statement is never reached. The `.and()` command fails after timing out,
-and the Command Log correctly shows that `.get()` and `.should()` passed, but
+and the Command Log correctly shows that the first encountered assertion
+`should('have.length', 2)` passed, but
 the "first item" assertion failed.
 
 <DocsImage
@@ -179,7 +184,9 @@ will be retried even without any attached assertions until it finds an element
 with the given index.
 
 ```javascript
-cy.get('.todo-list li').should('have.length', 2).eq(3)
+cy.get('.todo-list li') // query
+  .should('have.length', 2) // assertion
+  .eq(3) // query
 ```
 
 <DocsImage

@@ -6,17 +6,16 @@ title: Migration Guide
 
 This guide details the changes and how to change your code to migrate to Cypress
 version 13.0.
-[See the full changelog for version 12.0](/guides/references/changelog#12-0-0).
+[See the full changelog for version 13.0](/guides/references/changelog#13-0-0).
 
 ### `cy.readFile()` is now a query command
 
-In Cypress 13, the [`.readFile()`](/api/commands/as) command is now a query.
+In Cypress 13, the [`.readFile()`](/api/commands/readFile) command is now a query.
 Tests written using it should continue to operate exactly as before; no changes
 are necessary.
 
-This means that `readFile()` will re-read the file from disk if any upcoming
-command in the same chain fails. Assertions no longer have to be directly
-attached.
+`readFile()` will re-read the file from disk if any upcoming command in the same
+chain fails. Assertions no longer have to be directly attached.
 
 ```js
 cy.readFile(`users.json`).its('users.123.fullName').should('eq', 'John Doe')
@@ -31,38 +30,12 @@ requested property or the contents didn't match.
 
 #### `.readFile()` can no longer be overwritten with `Cypress.Commands.overwrite()`
 
-However, queries cannot be overwritten using `Cypress.Commands.overwrite()`. If
-you were previously overwriting `cy.readFile()`, you will need to put your
-custom version under a new name, and update your tests to use it. For example,
-you might update this test:
-
-```js
-Cypress.Commands.override('readFile', (originalFn, fileName, options) => {
-  originalFn(fileName, options).then((file) => {
-    // Do some processing
-    return updatedFile
-  })
-})
-
-it('reads a file', () => {
-  cy.readFile('foo.json')
-})
-```
-
-to something like this:
-
-```js
-Cypress.Commands.create('readFileWithExtras', (fileName, options) => {
-  cy.readFile(fileName, options).then((file) => {
-    // Do some processing
-    return updatedFile
-  })
-})
-
-it('reads a file', () => {
-  cy.readFileWithExtras('foo.json')
-})
-```
+Queries must be overwritten using `Cypress.Commands.overwriteQuery()`. If you
+were previously overwriting `cy.readFile()`, you will need to update your code
+to use `Cypress.Commands.overwriteQuery('readFile', function() { ... })` rather
+than `Cypress.Commands.overwrite('readFile', () => { ... })`. For more details
+on overwriting queries, see the
+[Overwriting Existing Queries](/api/cypress-api/custom-queries#Overwriting-Existing-Queries).
 
 ## Migrating to Cypress 12.0
 
