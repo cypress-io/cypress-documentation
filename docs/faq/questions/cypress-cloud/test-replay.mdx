@@ -1,0 +1,49 @@
+---
+title: Test Replay
+hide_table_of_contents: true
+sidebar_position: 30
+---
+
+import TOCInline from '@theme/TOCInline'
+
+<TOCInline toc={toc} />
+
+## <Icon name="angle-right" /> What is Test Replay?
+
+[Test Replay](/guides/cloud/debugging/test-replay) enables you and your team to troubleshoot and debug failed tests faster. After updating to Cypress `v13`, the new feature will automatically record all browser events and allow you to “replay” what an application looked like.
+
+Wind back the clock to any point in an application's execution and directly interact with tests as they happen in CI. Debug complex problems as if you were there when they first happened. You can:
+
+- **Interact with the DOM** at the exact time of a test failure to debug tests quickly
+- **View important debugging dimensions** such as network requests, console logs, and more
+- **Save time recreating errors in CI locally** - replay tests as they happened in CI
+
+<DocsImage
+  src="/img/guides/cloud/test-replay/test-replay-ui.png"
+  alt="Test Replay Demo"
+  width="80%"
+/>
+
+## <Icon name="angle-right" /> Does the replay reflect the real time it took for the test to run? 
+Yes! The test is captured in Cyress Cloud as it ran in your CI run. That means the replay will show things like [slow typing](/api/cypress-api/keyboard-api#Slow-down-typing-by-increasing-the-keystroke-delay) or any [`cy.wait()`](/api/commands/wait) included in your test.
+
+## <Icon name="angle-right" /> Are there performance implications when using Test Replay?
+Expect an even performance exchange with Test Replay vs. video. There is more activity in the capture and replay steps, but without the overhead of recording, compressing, and storing video assets.
+
+## <Icon name="angle-right" /> Can I replay tests from historical Cypress Cloud runs?
+Test Replay is available for tests recorded using Cypress `v13` and up. Tests recorded prior to this will not have Test Replay enabled in Cypress Cloud. You will still have any artifacts collected during the pre `v13` test runs.
+
+## <Icon name="angle-right" /> How does Test Replay work?
+**todo:** maybe show architecture diagram
+
+## <Icon name="angle-right" /> Will Test Replay write any assets to the filesystem?
+Yes, but it is stored in a temporary directory and deleted after the run. Nothing will need to be `.gitignored`.
+
+## <Icon name="angle-right" /> What if my application loads assets using a CDN?
+**todo:** describe what could be different
+
+## <Icon name="angle-right" /> Are there module API changes for Test Replay?
+**todo:** None for Test Replay specifically, but we are making changes in general as part of 13.0.0 (@Chris Breiding would know more)
+
+## <Icon name="angle-right" /> Can I `console.log()` data in the Developer Tools panel?
+Yes. You may need to use `JSON.stringify(Object)` to render complex objects, like an XHR request.
