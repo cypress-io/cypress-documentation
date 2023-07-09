@@ -10,8 +10,6 @@ slug: /guides/end-to-end-testing/descope-authentication
 - Log in to [Descope](https://descope.com) through the UI
 - Programmatically authenticate with [Descope](https://descope.com) via a custom
   Cypress command
-- Adapt your [Descope](https://descope.com) application for programmatic
-  authentication during testing
 
 :::
 
@@ -168,8 +166,6 @@ describe('Auth0', function () {
 })
 ```
 
-<DocsVideo src="https://vimeo.com/789093942" />
-
 Lastly, we can refactor our login command to take advantage of
 [`cy.session()`](/api/commands/session) to store our logged in user so we don't
 have to reauthenticate before every test.
@@ -203,8 +199,6 @@ Cypress.Commands.add('loginToAuth0', (username: string, password: string) => {
   log.end()
 })
 ```
-
-<DocsVideo src="https://vimeo.com/789093910" />
 
 ### Programmatic Login
 
