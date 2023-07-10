@@ -7,7 +7,7 @@ slug: /guides/end-to-end-testing/descope-authentication
 
 ## <Icon name="graduation-cap" /> What you'll learn
 
-- Log in to [Descope](https://descope.com) through the UI
+- Log in to [Descope](https://descope.com) via the UI
 - Programmatically authenticate with [Descope](https://descope.com) via a custom
   Cypress command
 
@@ -58,7 +58,7 @@ There are two ways you can authenticate to Descope:
 - [Programmatic Login](#Programmatic-Login)
 
 ### Initialize test user & variables
-For both UI and programatic login, you'll need to initialize a test user and get your env variables. 
+For both UI and programatic login, you'll need to initialize a test user, get your env variables, and create a delete users command. 
 We'll do this in the `cypress/support/commands.js` file.
 
 ```js
@@ -90,8 +90,8 @@ const testUser = {
 }
 ```
 
-We’ll also need to clean up the created test users before starting so we don’t go over the limit. 
-This is done with the `deleteAllTestUsers` function.
+To clean up the created test users so we don’t go over the test user limit,
+we'll have a `deleteAllTestUsers` function.
 ```js
 // cypress/support/commands.js
 
@@ -113,7 +113,7 @@ Next, we'll write a custom command called `loginViaDescopeUI` to perform a login
 
 1. Navigate to the Descope login
 2. Use the [Test User Management API](https://docs.descope.com/api/testusermanagement/) to perform the login (create user and generate OTP code).
-3. Enter the user loginId and code that we just generated to log in via the user interface.
+3. Enter the user login ID and code that we just generated to log in via the user interface.
 
 ```js
 // cypress/support/commands.js
@@ -183,7 +183,7 @@ We'll now write a command to programmatically login into
 and set an item in `localStorage` with the authenticated users details, which we
 will use in our application code to verify we are authenticated under test.
 
-The `loginViaDescopeApi` command will execute the following steps:
+The `loginViaDescopeAPI` command will execute the following steps:
 
 1. Use the [Test User Management API](https://docs.descope.com/api/testusermanagement/) to perform the programmatic login (create user, generate OTP code, and verify OTP code).
 2. Set the `refreshToken` and `sessionToken` items in localStorage.
@@ -246,9 +246,9 @@ Cypress.Commands.add('loginViaDescopeAPI', () => {
 
 With our Descope app setup properly in the Descope Developer console, 
 necessary environment variables in place, and our 
-`loginViaDescopeApi` command implemented, we will be able to authenticate
+`loginViaDescopeAPI` command implemented, we will be able to authenticate
  with Descope while our app is under test. Below is 
- a test to login as a user using our loginViaDescopeAPI function and verify the welcome page is showing.
+ a test to login as a user using our `loginViaDescopeAPI` function and verify the welcome page is showing.
 
 ```jsx
 describe('Descope', function () {
