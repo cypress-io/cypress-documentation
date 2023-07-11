@@ -6,6 +6,7 @@ export function isMatchedDirective(
   tagName: string
 ): node is Parent {
   return (
+    //@ts-ignore
     Array.isArray((node as Parent).children) && node.data?.hName === tagName
   )
 }

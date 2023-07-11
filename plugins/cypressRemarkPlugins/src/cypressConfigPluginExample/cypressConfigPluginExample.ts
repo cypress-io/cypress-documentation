@@ -3,12 +3,13 @@ import type { Node } from 'unist'
 import visit from 'unist-util-visit'
 import { createDirective } from '../utils/createDirective'
 import { hydratePluginSample } from './hydratePluginSample'
-import { isCode, isMatchedDirective } from '../utils/matchHelpers';
+import { isCode, isMatchedDirective } from '../utils/matchHelpers'
 
 export function cypressConfigPluginExample(this: any) {
   const tagName = 'cypress-config-plugin-example'
   createDirective(this, tagName)
   return (root: Root) => {
+    //@ts-ignore
     visit(root, 'containerDirective', (node: Node) => {
       if (isMatchedDirective(node, tagName)) {
         let result: Node[] = []
