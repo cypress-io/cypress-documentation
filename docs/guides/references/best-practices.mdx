@@ -642,8 +642,8 @@ Why you shouldn't do this in end-to-end tests:
 - Resetting tests is much slower than adding more assertions
 
 It is common for tests in Cypress to issue 30+ commands. Because nearly every
-command has a default assertion (and can therefore fail), even by limiting your
-assertions you're not saving yourself anything because **any single command
+command has a implicit assertions (and can therefore fail), even by limiting
+your assertions you're not saving yourself anything because **any single command
 could implicitly fail**.
 
 How you should rewrite those tests:
