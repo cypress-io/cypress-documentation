@@ -40,7 +40,7 @@ Pass in an options object to change the default behavior of `.focus()`.
 | `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.focus()` to resolve before [timing out](#Timeouts)                    |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
 
 - `.focus()` yields the same subject it was given.
 - It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried)
@@ -97,7 +97,7 @@ If there is currently a different DOM element with focus, Cypress issues a
 Ensure the element you are trying to call `.focus()` on is a
 [focusable element](https://www.w3.org/TR/html5/editing.html#focusable).
 
-### Timeouts
+### Timeouts {#Notes-Timeouts}
 
 #### Can time out because your browser did not receive any focus events
 
@@ -112,16 +112,16 @@ events. Your best bet here is to keep Cypress focused when working on a test.
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
 
 - `.focus()` requires being chained off a command that yields DOM element(s).
 - `.focus()` requires the element to be able to receive focus.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
 
 - `.focus()` will automatically wait for assertions you have chained to pass.
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
 
 - `.focus()` can time out waiting for assertions you've added to pass.
 

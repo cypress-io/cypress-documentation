@@ -1,7 +1,6 @@
 ---
 title: Error Messages
 hide_table_of_contents: true
-inlineErrorsTable: true
 ---
 
 import TOCInline from '@theme/TOCInline'
@@ -133,9 +132,9 @@ correctly.
 
 If you are purposefully writing commands outside of a test, there is probably a
 better way to accomplish what you're trying to do. Read through the
-[Examples](/examples/recipes),
-[chat with someone in Discord](https://discord.gg/ncdA3Jz63n), or
-[open an issue](https://github.com/cypress-io/cypress/issues/new/choose).
+[Examples](/examples/recipes) or check out our
+[Support channels](/guides/references/troubleshooting#Support-channels) for more
+troubleshooting resources.
 
 ### <Icon name="exclamation-triangle" color="red" /> `cy...()` failed because the page updated
 
@@ -523,10 +522,10 @@ In order to fix this, our `cy.get()` command **must** be wrapped with the
 [`cy.origin()`](/api/commands/origin) command, like so:
 
 ```javascript
-it('navigates to docs.cypress.io and runs additional commands', () => {
+it('navigates to example.cypress.io and runs additional commands', () => {
   cy.visit('http://localhost:3000')
-  cy.visit('https://docs.cypress.io') // visit a different superdomain
-  cy.origin('https://docs.cypress.io', () => {
+  cy.visit('https://example.cypress.io') // visit a different superdomain
+  cy.origin('https://example.cypress.io', () => {
     cy.get('h1').should('contain', 'Why Cypress?') // now succeeds!
   })
 })
@@ -673,8 +672,9 @@ You passed the `--ci-build-id` flag but did not provide either a
 The `--ci-build-id` flag is used to either group or parallelize multiple runs
 together.
 
-Check out our [guide on parallelizing runs](/guides/guides/parallelization) and
-when to use the
+Check out our
+[guide on parallelizing runs](/guides/cloud/smart-orchestration/parallelization)
+and when to use the
 [--ci-build-id](/guides/guides/command-line#cypress-run-ci-build-id-lt-id-gt)
 option.
 
@@ -690,7 +690,8 @@ flag without also passing the `--record` flag.
 These flags can only be used when recording to
 [Cypress Cloud](/guides/cloud/introduction).
 
-Please review our [parallelization](/guides/guides/parallelization)
+Please review our
+[parallelization](/guides/cloud/smart-orchestration/parallelization)
 documentation to learn more.
 
 ### <Icon name="exclamation-triangle" color="red" /> We could not determine a unique CI build ID
@@ -705,14 +706,15 @@ In order to use either of these parameters a `ciBuildId` must be determined.
 The `ciBuildId` is automatically detected if you are running Cypress in most
 [CI providers](/guides/continuous-integration/introduction#Examples). Please
 review the
-[natively recognized environment variables](/guides/guides/parallelization#CI-Build-ID-environment-variables-by-provider)
+[natively recognized environment variables](/guides/cloud/smart-orchestration/parallelization#CI-Build-ID-environment-variables-by-provider)
 for your CI provider.
 
 You can avoid this check in the future by passing an ID to the
 [--ci-build-id](/guides/guides/command-line#cypress-run-ci-build-id-lt-id-gt)
 flag manually.
 
-Please review our [parallelization](/guides/guides/parallelization)
+Please review our
+[parallelization](/guides/cloud/smart-orchestration/parallelization)
 documentation to learn more.
 
 ### <Icon name="exclamation-triangle" color="red" /> Group name has already been used for this run
@@ -726,7 +728,7 @@ If you are trying to parallelize this run, then also pass the
 different group name.
 
 Please review
-[grouping test runs](/guides/guides/parallelization#Grouping-test-runs)
+[grouping test runs](/guides/cloud/smart-orchestration/parallelization#Grouping-test-runs)
 documentation to learn more.
 
 ### <Icon name="exclamation-triangle" color="red" /> Cannot parallelize tests across environments
@@ -746,7 +748,8 @@ parameters such as:
 - Browser name
 - Major browser version
 
-Please review our [parallelization](/guides/guides/parallelization)
+Please review our
+[parallelization](/guides/cloud/smart-orchestration/parallelization)
 documentation to learn more.
 
 ### <Icon name="exclamation-triangle" color="red" /> Cannot parallelize tests in this group
@@ -759,7 +762,7 @@ You cannot use the
 group.
 
 Please review our
-[grouping test runs](/guides/guides/parallelization#Grouping-test-runs)
+[grouping test runs](/guides/cloud/smart-orchestration/parallelization#Grouping-test-runs)
 documentation to learn more.
 
 ### <Icon name="exclamation-triangle" color="red" /> Run must pass `--parallel` flag
@@ -770,7 +773,8 @@ created with the `--parallel` flag.
 You must use the [--parallel](/guides/guides/command-line#cypress-run-parallel)
 flag with this group.
 
-Please review our [parallelization](/guides/guides/parallelization)
+Please review our
+[parallelization](/guides/cloud/smart-orchestration/parallelization)
 documentation to learn more.
 
 ### <Icon name="exclamation-triangle" color="red" /> Cannot parallelize tests on a stale run
@@ -781,7 +785,7 @@ that Cypress detected was completed over 24 hours ago.
 
 In order to uniquely identify each run during `cypress run`, Cypress attempts to
 read a unique identifier from your CI provider as described in our
-[parallelization doc](/guides/guides/parallelization#CI-Build-ID-environment-variables-by-provider).
+[parallelization doc](/guides/cloud/smart-orchestration/parallelization#CI-Build-ID-environment-variables-by-provider).
 
 You may encounter this error if Cypress is detecting the exact same CI Build ID
 matching a previous CI Build ID in a run that was completed over 24 hours ago.
@@ -792,7 +796,8 @@ details section at the top of your run in
 your own unique CI Build ID per run as described
 [here](/guides/guides/command-line#cypress-run-ci-build-id-lt-id-gt).
 
-Please also review our [parallelization](/guides/guides/parallelization)
+Please also review our
+[parallelization](/guides/cloud/smart-orchestration/parallelization)
 documentation to learn more.
 
 ### <Icon name="exclamation-triangle" color="red" /> Run is not accepting any new groups
@@ -803,7 +808,8 @@ groups.
 When a run finishes all of its groups, it waits for a configurable set of time
 before finally completing. You must add more groups during that time period.
 
-Please review our [parallelization](/guides/guides/parallelization)
+Please review our
+[parallelization](/guides/cloud/smart-orchestration/parallelization)
 documentation to learn more.
 
 <a name="win-max-path-length"></a>

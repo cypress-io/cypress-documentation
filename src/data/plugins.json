@@ -7,7 +7,7 @@
         {
           "name": "Webpack",
           "description": "Watches and bundles your spec files via webpack.",
-          "link": "https://github.com/cypress-io/cypress/tree/master/npm/webpack-preprocessor",
+          "link": "https://github.com/cypress-io/cypress/tree/develop/npm/webpack-preprocessor",
           "keywords": ["webpack"],
           "badge": "official"
         },
@@ -116,7 +116,7 @@
         },
         {
           "name": "Cypress Github Actions",
-          "description": "GitHub Action for running Cypress end-to-end and component tests. Includes NPM installation, custom caching and lots of configuration options.",
+          "description": "GitHub Action for running Cypress end-to-end and component tests. Includes npm, pnpm and Yarn installation, custom caching and lots of configuration options.",
           "link": "https://github.com/cypress-io/github-action",
           "keywords": ["continuous-integration", "github-actions"],
           "badge": "official"
@@ -159,7 +159,7 @@
         {
           "name": "TypeScript",
           "description": "Official TypeScript definitions for the Cypress API.",
-          "link": "https://github.com/cypress-io/cypress/tree/master/cli/types",
+          "link": "https://github.com/cypress-io/cypress/tree/develop/cli/types",
           "keywords": ["typescript"],
           "badge": "official"
         },
@@ -392,13 +392,6 @@
       "name": "Custom Commands",
       "description": " Read the <a target=\"_blank\" href=\"/api/plugins/preprocessors-api\">Custom Commands</a> and <a target=\"_blank\" href=\"/api/plugins/preprocessors-api\">Custom Query</a> documentation to learn more.",
       "plugins": [
-        {
-          "name": "cypress-xpath",
-          "description": "Adds XPath command. This repo is also a good example of using custom commands to do retries, provide TypeScript definitions, etc.",
-          "link": "https://github.com/cypress-io/cypress/tree/develop/npm/xpath",
-          "keywords": ["xpath", "commands"],
-          "badge": "official"
-        },
         {
           "name": "cypress-testing-library",
           "description": "🐅 Simple and complete custom Cypress commands and utilities that encourage good testing practices.",
@@ -753,7 +746,7 @@
         },
         {
           "name": "PickleJS",
-          "description": "An addition to the Cucumber plugin, featuring a collection of phrases you can use for common actions (ex: \"I click on an <Element>\", \"I should see an <Element>\").",
+          "description": "An addition to the Cucumber plugin, featuring a collection of phrases you can use for common actions (ex: \"I click on an &lt;Element&gt;\", \"I should see an &lt;Element&gt;\").",
           "link": "https://picklejs.com",
           "keywords": ["cucumber", "collection", "actions", "commands"],
           "badge": "community"
@@ -819,7 +812,7 @@
         {
           "name": "Cypress Schematic",
           "description": "Adds Cypress to your Angular project via the Angular CLI. Adopted by Cypress; originally released as <a target=\"_blank\" href=\"https://www.npmjs.com/package/@briebug/cypress-schematic\">@briebug/cypress-schematic</a>.",
-          "link": "https://github.com/cypress-io/cypress/tree/master/npm/cypress-schematic",
+          "link": "https://github.com/cypress-io/cypress/tree/develop/npm/cypress-schematic",
           "keywords": ["angular", "cli"],
           "badge": "official"
         },
@@ -916,35 +909,35 @@
         {
           "name": "Cypress Angular",
           "description": "Test Angular components using Cypress Test Runner. This package is bundled with the cypress package and does not need to be installed separately, unless a specific version is desired. See the <a target=\"_blank\" href=\"/guides/component-testing/angular/overview\">Angular Component Testing Docs</a> for mounting Angular components.",
-          "link": "https://github.com/cypress-io/cypress/tree/master/npm/angular",
+          "link": "https://github.com/cypress-io/cypress/tree/develop/npm/angular",
           "keywords": ["component", "angular"],
           "badge": "official"
         },
         {
           "name": "Cypress React",
           "description": "Test React components using Cypress Test Runner. This package is bundled with the cypress package and does not need to be installed separately, unless a specific version is desired. See the <a target=\"_blank\" href=\"/guides/component-testing/react/overview\">React Component Testing Docs</a> for mounting React components.",
-          "link": "https://github.com/cypress-io/cypress/tree/master/npm/react",
+          "link": "https://github.com/cypress-io/cypress/tree/develop/npm/react",
           "keywords": ["component", "react"],
           "badge": "official"
         },
         {
           "name": "Cypress Svelte",
           "description": "Test Svelte components using Cypress Test Runner. This package is bundled with the cypress package and should not need to be installed separately. See the <a target=\"_blank\" href=\"/guides/component-testing/svelte/overview\">Svelte Component Testing Docs</a> for mounting Svelte components.",
-          "link": "https://github.com/cypress-io/cypress/tree/master/npm/svelte",
+          "link": "https://github.com/cypress-io/cypress/tree/develop/npm/svelte",
           "keywords": ["component", "svelte"],
           "badge": "official"
         },
         {
           "name": "Cypress Vue",
           "description": "Test Vue 3 components using Cypress Test Runner. This package is bundled with the cypress package and should not need to be installed separately. See the <a target=\"_blank\" href=\"/guides/component-testing/vue/overview\">Vue Component Testing Docs</a> for mounting Vue components.",
-          "link": "https://github.com/cypress-io/cypress/tree/master/npm/vue",
+          "link": "https://github.com/cypress-io/cypress/tree/develop/npm/vue",
           "keywords": ["component", "vue", "vue.js"],
           "badge": "official"
         },
         {
           "name": "Cypress Vue2",
           "description": "Test Vue 2 components using Cypress Test Runner. This package is bundled with the cypress package and should not need to be installed separately. See the <a target=\"_blank\" href=\"/guides/component-testing/vue/overview\">Vue Component Testing Docs</a> for mounting Vue components.",
-          "link": "https://github.com/cypress-io/cypress/tree/master/npm/vue2",
+          "link": "https://github.com/cypress-io/cypress/tree/develop/npm/vue2",
           "keywords": ["component", "vue", "vue.js"],
           "badge": "official"
         },
@@ -1227,6 +1220,20 @@
           "link": "https://github.com/mailslurp/cypress-mailslurp",
           "keywords": ["email", "mailslurp", "test", "commands"],
           "badge": "community"
+        },
+        {
+          "name": "cypress-mailhog",
+          "description": "A collection of useful Cypress commands for testing Emails utilizing the MailHog RestAPI. Comes with TypeScript support.",
+          "link": "https://github.com/SMenigat/cypress-mailhog",
+          "keywords": ["email", "mailhog", "test", "commands"],
+          "badge": "community"
+        },
+        {
+          "name": "cypress-guerrillamail",
+          "description": "Create and use a randomly-generated email address from Guerrilla Mail.",
+          "link": "https://github.com/e23thr/cypress-guerrillamail",
+          "keywords": ["email", "guerrillamail", "test", "commands"],
+          "badge": "community"
         }
       ]
     },
@@ -1238,6 +1245,13 @@
           "description": "Watches and bundles your spec files via browserify.",
           "link": "https://github.com/cypress-io/cypress-browserify-preprocessor",
           "keywords": ["browserify"],
+          "badge": "official"
+        },
+        {
+          "name": "cypress-xpath",
+          "description": "Adds XPath command. This repo is also a good example of using custom commands to do retries, provide TypeScript definitions, etc.",
+          "link": "https://github.com/cypress-io/cypress/tree/develop/npm/xpath",
+          "keywords": ["xpath", "commands"],
           "badge": "official"
         }
       ]

@@ -1,0 +1,324 @@
+---
+title: Projects
+sidebar_position: 10
+---
+
+:::info
+
+## <Icon name="graduation-cap" /> What you'll learn
+
+- `projectId` and Record Key identification and usage
+- Project settings and integrations
+
+:::
+
+## Identification
+
+Cypress uses your [projectId](#Project-ID) and [Record Key](#Record-key)
+together to uniquely identify projects.
+
+### Project ID
+
+Once you set up your project to record, we generate a unique `projectId` for
+your project and automatically insert it into your Cypress configuration file.
+
+#### The `projectId` is a 6 character string in your Cypress configuration
+
+:::cypress-config-example
+
+```ts
+{
+  projectId: 'a7bq2k',
+}
+```
+
+:::
+
+This helps us uniquely identify your project. If you manually alter this,
+**Cypress will no longer be able to identify your project or find the recorded
+builds for it**.
+
+If you're using source control, we recommend that you check your Cypress
+configuration file, including the `projectId`, into source control. If you don't
+want your `projectId` visible in your source code you can set it as an
+environment variable using the name `CYPRESS_PROJECT_ID`. The exact mechanism
+for doing so depends on your system but could be something like:
+
+```shell
+export CYPRESS_PROJECT_ID={projectId}
+```
+
+### Record key
+
+The record key is used to authenticate that your project is _allowed_ to record
+tests to Cypress Cloud. As long as your record key stays _private_, no one will
+be able to record test runs for your project - even if they have your
+`projectId`.
+
+Think of your record key as the key that enables you to _write and create_ runs.
+However, it has nothing to do with being able to _read or see_ runs once they
+are recorded.
+
+:::caution
+
+<strong>Exposing a record key</strong>
+
+Anyone that has access to both the `projectId` and the record key of a project
+can record runs to that organization's project in Cypress Cloud.
+
+**You would not want people outside of your team running tests because:**
+
+1. **This could drive up the number of tests you've run.** Since Cypress bills
+   based on the number of recorded tests - this means they can use up all
+   allotted tests and there would be consequences to that.
+2. **They can write any data they want to your Cypress Cloud.** They could edit
+   the test suite so that recorded tests record different things than the
+   project's original intent. This could including visiting different websites
+   and generating videos of visiting those websites, for example.
+
+If a record key is exposed you should [delete it](#Delete-record-key) and
+[create a new record key](#Create-new-record-key). Deleted keys will be invalid;
+If a project is run with a deleted key it will not be able to record.
+
+You can set your record key as an environment variable to help protect it. Learn
+more [here](/guides/continuous-integration/introduction#Environment-variables).
+
+:::
+
+Once you're set up to record test runs, we automatically generate a _Record Key_
+for the project.
+
+#### A record key is a GUID that looks like this
+
+```text
+f4466038-70c2-4688-9ed9-106bf013cd73
+```
+
+You can create multiple Record Keys for a project, or delete existing ones from
+[Cypress Cloud](https://on.cypress.io/cloud).
+
+<DocsImage
+  src="/img/guides/cloud/projects/record-keys-in-project-settings-dashboard.jpg"
+  alt="Record key in project settings"
+/>
+
+You can also find your Record Key inside of the _Settings_ tab in the Cypress
+App.
+
+<DocsImage
+  src="/img/guides/cloud/projects/record-key-desktop-gui.jpg"
+  alt="Record Key in Configuration Tab"
+/>
+
+#### Create new record key
+
+1. Go to your organization's projects page.
+2. Select the project you want to change access to.
+3. Go to the project's **Settings** page.
+4. Here you will see a **Record Keys** section
+5. Click **Create New Key**. A new key will be automatically generated for your
+   project.
+
+#### Delete record key
+
+1. Go to your organization's projects page.
+2. Select the project you want to change access to.
+3. Go to the project's **Settings** page.
+4. Here you will see a **Record Keys** section
+5. Click **Delete** beside the record key you want to delete.
+
+## Project settings
+
+### Access to Runs
+
+Visit your project settings to see who has access to your project's runs.
+
+#### Public vs Private
+
+- **Public** means that anyone can see the recorded test runs for the project.
+  It is similar to how public projects on GitHub, Travis CI, or CircleCI are
+  handled. Anyone who knows your `projectId` will be able to see the recorded
+  runs for public projects.
+
+- **Private** means that only [users](/guides/cloud/account-management/users)
+  you invite to your
+  [organization](/guides/cloud/account-management/organizations) can see its
+  recorded runs. Even if someone knows your `projectId`, they will not have
+  access to your runs unless you have invited them.
+
+#### Change project access
+
+1. Go to your organization's projects page.
+2. Select the project you want to change access to.
+3. Go to the project's **Settings** page.
+4. Here you will see a section displaying **Access**. Choose the appropriate
+   access you'd like to assign.
+   <DocsImage
+     src="/img/guides/cloud/projects/access-to-runs.jpg"
+     alt="access-to-runs"
+   />
+
+### Smart Orchestration
+
+#### Spec Prioritization & Auto Cancellation
+
+Toggle Spec Prioritization and/or adjust the number of test failures before auto
+canceling a run.
+
+See our
+[Spec Prioritization](/guides/cloud/smart-orchestration/spec-prioritization)
+guide to learn more.
+
+<DocsImage
+  src="/img/guides/cloud/smart-orchestration/spec-prioritization-active.png"
+  alt="Run completion delay settings"
+/>
+
+### Parallelization
+
+#### Run completion delay
+
+You can edit the number of seconds that a run will wait for new groups to join
+before transitioning to 'completed'. See our
+[parallelization guide](/guides/cloud/smart-orchestration/parallelization#Run-completion-delay)
+to learn more.
+
+<DocsImage
+  src="/img/guides/cloud/projects/run-completion-delay.jpg"
+  alt="Run completion delay settings"
+/>
+
+### Transfer ownership
+
+#### Transfer project to other user or organization
+
+You can transfer projects that you own to another
+[organization](/guides/cloud/account-management/organizations) you are a part of
+or to another user in the organization. Projects can only be transferred from
+[Cypress Cloud](https://on.cypress.io/cloud).
+
+1. Select your organization in the organization switcher.
+2. Select the project you wish to transfer.
+3. Go to the project's **Settings** page.
+4. Scroll down to the **Transfer Ownership** section and click **Transfer
+   Ownership**.
+   <DocsImage
+     src="/img/guides/cloud/projects/transfer-ownership-button.jpg"
+     alt="Transfer ownership button"
+   />
+5. Select the user or organization, then click **Transfer**.
+   <DocsImage
+     src="/img/guides/cloud/projects/transfer-ownership-of-project-dialog.jpg"
+     alt="Transfer Project dialog"
+     width="80%"
+   />
+
+#### Cancel project transfer
+
+Upon transferring, you can cancel the transfer at any time by visiting the
+organization's projects and clicking **Cancel Transfer**.
+
+<DocsImage
+  src="/img/guides/cloud/projects/cancel-transfer-of-project.jpg"
+  alt="Cancel pending transfer of project"
+/>
+
+#### Accept or reject transferred project
+
+When a project is transferred to you, you will receive an email notifying you.
+You will be able to accept or reject the transferred project by clicking the
+notification in the sidebar and clicking 'Accept' or 'Reject'.
+
+<DocsImage
+  src="/img/guides/cloud/projects/accept-or-reject-transfer-of-project.jpg"
+  alt="Accept or reject a transferred project"
+/>
+
+### Delete Project
+
+You can delete projects you own. This will also delete all of their recorded
+test runs. Deleting projects can only be done from
+[Cypress Cloud](https://on.cypress.io/cloud).
+
+1. Select your organization in the organization switcher.
+2. Select the project you want to remove.
+3. Go to the project's **Settings** page.
+4. At the very bottom of the Settings page click the **Remove Project** button.
+   <DocsImage
+     src="/img/dashboard/remove-project-dialog.png"
+     alt="Delete project dialog"
+     width="80%"
+   />
+5. Confirm that you want to delete the project by clicking **Yes, Remove
+   Project**.
+
+### README Badges
+
+README badges allow you to increase visibility of your project's test status and
+test count to other developers viewing your project's README file.
+
+#### Create a README badge
+
+1. In your Cypress Cloud account, select the project for which you'd like to add
+   a badge.
+2. On the Project Settings page, scroll down to the README Badges section and
+   click “Configure Badge”.
+
+:::caution
+
+**Note**: README badges are currently only available for public projects.
+
+:::
+
+3. A configuration modal will appear. The Project ID will be pre-filled with the
+   ID associated with the project you selected. You can choose to designate a
+   specific branch, or leave this field blank to always use the latest build in
+   the project.
+4. Next, style your badge. Flat is the default styling and is most commonly
+   used, but 5 style options are available.
+5. Select the badge type to change the amount and type of information that's
+   displayed. Simple status will show only whether tests are passing or failing.
+   Detailed status will show the number of tests that were passed, failed, or
+   skipped. Test count will show how many tests are included in your project.
+6. Once you've selected all your settings, check out the preview and make sure
+   everything looks just the way you like it.
+7. 🎉 Your badge is ready to be embedded. Copy the markdown at the bottom of the
+   Configure Badge modal, and embed it in your project's README file for
+   everyone to see!
+
+   <!-- prettier-ignore -->
+    <DocsImage
+      src="/img/guides/cloud/projects/cloud-badge-configuration.jpg"
+      alt="README Badge configuration form"
+      width="80%"
+    />
+
+See also
+[Highlight your project's test status with Cypress README badges](https://www.cypress.io/blog/2020/09/02/highlight-your-projects-test-status-with-cypress-readme-badges/)
+announcement.
+
+## Third party integrations
+
+You can integrate your project with many third party tools and edit those
+settings from within the project settings page.
+
+See our integration guides to learn more:
+
+### CI/CD
+
+<!-- prettier-ignore-start -->
+
+- &#8239;<Logo src="/img/logo/github.svg" /> [GitHub integration guide](/guides/cloud/integrations/source-control/github)
+- &#8239;<Logo src="/img/logo/gitlab.svg" /> [GitLab integration guide](/guides/cloud/integrations/source-control/gitlab)
+- &#8239;<Logo src="/img/logo/bitbucket.svg" /> [Bitbucket integration guide](/guides/cloud/integrations/source-control/bitbucket)
+
+### Project Management
+
+- &#8239;<Logo src="/img/logo/jira.svg" /> [Jira integration guide](/guides/cloud/integrations/jira)
+
+### Messaging
+
+- &#8239;<Logo src="/img/logo/slack.svg" /> [Cypress integration for Slack guide](/guides/cloud/integrations/slack)
+- &#8239;<Logo src="/img/logo/ms-teams.svg" /> [Cypress integration for Microsoft Teams guide](/guides/cloud/integrations/teams)
+
+<!-- prettier-ignore-end -->

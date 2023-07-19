@@ -61,7 +61,7 @@ Here's a simplified example of such a test strategy.
 
 ```js
 it('logs in', () => {
-  cy.visit('https://supersecurelogons.com')
+  cy.visit('https://example.cypress.io')
   cy.get('input#password').type('Password123!')
   cy.get('button#submit').click()
 })
@@ -93,13 +93,13 @@ all reside in a single test, like the following.
 
 ```js
 it('securely edits content', () => {
-  cy.origin('supersecurelogons.com', () => {
-    cy.visit('https://supersecurelogons.com')
+  cy.origin('cypress.io', () => {
+    cy.visit('https://example.cypress.io')
     cy.get('input#password').type('Password123!')
     cy.get('button#submit').click()
   })
 
-  cy.origin('mycms.com', () => {
+  cy.origin('cypress-dx.com', () => {
     cy.url().should('contain', 'cms')
     cy.get('#current-user').contains('logged in')
     cy.get('button#edit-1').click()
@@ -144,7 +144,7 @@ nor deterministic:
 ```js
 describe('workflow', { testIsolation: false }, () => {
   it('logs in', () => {
-    cy.visit('my-app.com/log-in)
+    cy.visit('https://example.cypress.io/log-in')
     cy.get('username').type('User1')
     cy.get('password').type(Cypress.env('User1_password'))
     cy.get('button#login').click()
@@ -152,7 +152,7 @@ describe('workflow', { testIsolation: false }, () => {
   })
 
   it('clicks user profile', () => {
-    cy.get('User1').find('#profile_avatar).click()
+    cy.get('User1').find('#profile_avatar').click()
     cy.contains('Email Preferences')
   })
 
@@ -3616,8 +3616,7 @@ module.exports = (on) => {
 ```
 
 [intercept]: /api/commands/intercept
-[npmcypresswebpackdevserver]:
-  https://www.npmjs.org/package/@cypress/webpack-dev-server
+[npmcypresswebpackdevserver]: https://www.npmjs.org/package/@cypress/webpack-dev-server
 [npmcypressreact]: https://www.npmjs.org/package/@cypress/react
 [npmcypressvue]: https://www.npmjs.org/package/@cypress/vue
 [npmreact]: https://www.npmjs.org/package/react

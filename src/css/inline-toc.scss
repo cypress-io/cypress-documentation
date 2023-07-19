@@ -34,7 +34,7 @@
 }
 /* inline TOC errors page */
 /* section headers */
-.errorsInlineTOC div > ul > li > a {
+.inlineTOC div > ul > li > a {
   font-size: 1.25rem;
   color: var(--ifm-color-gray-700);
   /* !important for specificity to keep hoizontal rule under section titles from acting janky on hover */
@@ -45,6 +45,6 @@
   padding-left: 0rem;
 }
 /* remove chevron on section header */
-.errorsInlineTOC div > ul > li:before {
+.inlineTOC div > ul > li:before {
   all: unset;
 }

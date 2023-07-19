@@ -16,7 +16,7 @@ export default function PluginsList() {
           key={plugin.name}
           data-cy={`plugin-${plugin.name}`}
         >
-          <h2 id={plugin.name}>{plugin.name}</h2>
+          <h2 id={plugin.name.replaceAll(' ', '-').toLowerCase()}>{plugin.name}</h2>
 
           {plugin.description && (
             <p

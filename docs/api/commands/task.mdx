@@ -98,7 +98,7 @@ Pass in an options object to change the default behavior of `cy.task()`.
 | `log`     | `true`                                                     | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 | `timeout` | [`taskTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.task()` to resolve before [timing out](#Timeouts)                   |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
 
 `cy.task()` yields the value returned or resolved by the `task` event in
 [setupNodeEvents](/guides/tooling/plugins-guide#Using-a-plugin).
@@ -246,19 +246,19 @@ using `cy.task()` as shown below.
 // in test
 describe('Href visit', () => {
   it('captures href', () => {
-    cy.visit('https://www.mywebapp.com')
+    cy.visit('https://example.cypress.io')
     cy.get('a')
       .invoke('attr', 'href')
       .then((href) => {
         // href is not same-origin as current url
-        // like https://www.anotherwebapp.com
+        // like https://www.cypress-dx.com
         cy.task('setHref', href)
       })
   })
 
   it('visit href', () => {
     cy.task('getHref').then((href) => {
-      // visit non same-origin url https://www.anotherwebapp.com
+      // visit non same-origin url https://www.cypress-dx.com
       cy.visit(href)
     })
   })
@@ -503,17 +503,17 @@ on('task', {
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
 
 - `cy.task()` requires being chained off of `cy`.
 - `cy.task()` requires the task to eventually end.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
 
 - `cy.task()` will only run assertions you have chained once, and will not
   [retry](/guides/core-concepts/retry-ability).
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
 
 - `cy.task()` can time out waiting for the task to end.
 

@@ -19,7 +19,7 @@ const config = {
     'Fast, easy and reliable testing for anything that runs in a browser.',
   url: 'https://docs.cypress.io',
   baseUrl: '/',
-  onBrokenLinks: 'throw', // TODO: update this to throw when we go live to production
+  onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'throw',
   favicon: undefined,
 
@@ -138,7 +138,7 @@ const config = {
             'aria-label': 'Cypress GitHub repository',
           },
           {
-            href: 'https://discord.gg/cypress',
+            href: 'https://on.cypress.io/discord',
             position: 'right',
             className: 'discord-logo',
             'aria-label': 'Cypress Discord',
@@ -192,7 +192,7 @@ const config = {
               // },
               {
                 label: 'Discord',
-                href: 'https://discord.com/invite/cypress',
+                href: 'https://on.cypress.io/discord',
               },
               {
                 label: 'Twitter',
@@ -231,6 +231,10 @@ const config = {
               {
                 label: 'Careers',
                 href: 'https://www.cypress.io/careers',
+              },
+              {
+                label: 'Support',
+                href: 'https://www.cypress.io/support',
               },
             ],
           },
