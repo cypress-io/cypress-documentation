@@ -8,6 +8,49 @@ This guide details the changes and how to change your code to migrate to Cypress
 version 13.0.
 [See the full changelog for version 13.0](/guides/references/changelog#13-0-0).
 
+### Video updates
+
+#### `video` is set to false by default
+
+Whether Cypress will capture a video of the tests run with `cypress run`.
+
+You can continue recording video, by passing `video: true`, if you want video locally or you want video for some other reason, like in non-Chromium browsers where [Test Replay](https://docs.cypress.io/guides/overview/why-cypress) is not available.
+
+:::cypress-config-example
+
+```ts
+{
+  video: true
+}
+```
+
+:::
+
+#### `videoUploadOnPasses` configuration option has been removed
+
+Whether Cypress will process, compress, and upload videos to Cypress Cloud even when all tests in a spec file are passing.
+
+See our [Control which videos to keep and upload to Cypress Cloud](/guides/guides/screenshots-and-videos#Control-which-videos-to-keep-and-upload-to-Cypress-Cloud) guide with code examples to discard captured video of passing tests.
+
+#### `videoCompression` is set to false by default
+
+The quality setting for the video compression.
+
+Cypress has the capability to compress recorded videos after a run to reduce the video file size. By default, compression is turned off, which results in a larger file size and better video quality.
+
+You can enable this with the `videoCompression` [configuration](/guides/references/configuration#Videos) option to reduce the file size. This will also reduce the video quality and take slightly longer to process and complete the run.
+
+:::cypress-config-example
+
+```ts
+{
+  // value can be true/false -or- an integer between 0 and 51
+  videoCompression: true,
+}
+```
+
+:::
+
 ### `cy.readFile()` is now a query command
 
 In Cypress 13, the [`.readFile()`](/api/commands/readFile) command is now a query.
