@@ -28,8 +28,6 @@ opt out- /guides/cloud/debugging/test-replay#Opt-out-of-Test-Replay
 
 #### `video` is set to false by default
 
-Whether Cypress will capture a video of the tests run with `cypress run`.
-
 You can continue recording video, by passing `video: true`, if you want video locally or you want video for some other reason, like in non-Chromium browsers where [Test Replay](https://docs.cypress.io/guides/overview/why-cypress) is not available.
 
 :::cypress-config-example
@@ -44,15 +42,11 @@ You can continue recording video, by passing `video: true`, if you want video lo
 
 #### `videoUploadOnPasses` configuration option has been removed
 
-Whether Cypress will process, compress, and upload videos to Cypress Cloud even when all tests in a spec file are passing.
-
 Most users used `videoUploadOnPasses` as a way to skip the time to compress and upload videos to the Cloud. Since we're turning off `videoCompression` by default, this configuration option does not offer the time saving value that it once would.
 
 If you want to prevent a passing test from uploading to the Cloud, we recommend deleting the video using our [guide with code examples to discard captured video of passing tests](/guides/guides/screenshots-and-videos#Control-which-videos-to-keep-and-upload-to-Cypress-Cloud).
 
 #### `videoCompression` is set to false by default
-
-The quality setting for the video compression.
 
 Cypress has the capability to compress recorded videos after a run to reduce the video file size. By default, compression is turned off, which results in a larger file size and better video quality.
 
