@@ -324,6 +324,13 @@
           "badge": "community"
         },
         {
+          "name": "cypress-log-filter",
+          "description": "Easily filter Cypress command logs based on different log levels",
+          "link": "https://github.com/Brugui7/cypress-log-filter",
+          "keywords": ["log", "command", "filter"],
+          "badge": "community"
+        },
+        {
           "name": "cy-search",
           "description": "Search Cypress documentation from the terminal.",
           "link": "https://github.com/bahmutov/cy-search",
