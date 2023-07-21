@@ -805,8 +805,13 @@ documentation to learn more.
 The run you are attempting access to is already complete and will not accept new
 groups.
 
-When a run finishes all of its groups, it waits for a configurable set of time
-before finally completing. You must add more groups during that time period.
+When a run finishes all of its groups, it waits for a configurable set of time, [a run completion delay](/guides/cloud/smart-orchestration/parallelization#Run-completion-delay),
+before completing. You must run all `cypress run` calls with those more groups during that time period.
+
+#### Troubleshooting
+
+- If you are passing [`--ci-build-id`](/guides/guides/command-line#cypress-run-ci-build-id-lt-id-gt), make sure it is generating a unique value for the run. If it is not unique and matches a previous run, you may see this error.
+- If you are running `cypress run` calls in parallel and they are not completing within the default 60 second run completion delay, you can increase this delay. [See instructions](/guides/cloud/account-management/projects#Run-completion-delay).
 
 Please review our
 [parallelization](/guides/cloud/smart-orchestration/parallelization)
