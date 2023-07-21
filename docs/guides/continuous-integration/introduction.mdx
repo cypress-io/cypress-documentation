@@ -215,7 +215,7 @@ Dockerfile would look like this:
 ```text
 FROM cypress/base
 RUN npm install
-RUN $(npm bin)/cypress run
+RUN npx cypress run
 ```
 
 :::caution
