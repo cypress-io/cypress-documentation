@@ -1,14 +1,6 @@
 ---
 title: Best Practices
-hide_table_of_contents: true
 ---
-
-import TOCInline from '@theme/TOCInline'
-
-<TOCInline
-  // Only show h2 headings
-  toc={toc.filter((node) => node.level === 2)}
-/>
 
 :::info
 
@@ -33,7 +25,7 @@ and start testing.
 
 :::
 
-## Organizing Tests, Logging In, Controlling State
+## <Icon name="angle-right" /> Organizing Tests, Logging In, Controlling State
 
 :::danger
 
@@ -68,7 +60,7 @@ We have several
 [Logging in recipes](https://github.com/cypress-io/cypress-example-recipes#logging-in-recipes)
 in our examples.
 
-## Selecting Elements
+## <Icon name="angle-right" /> Selecting Elements
 
 :::danger
 
@@ -99,7 +91,7 @@ Luckily, it is possible to avoid both of these problems.
 2. Don't target elements that may change their `textContent`
 3. Add `data-*` attributes to make it easier to target elements
 
-### How It Works:
+### How It Works
 
 Given a button that we want to interact with:
 
@@ -184,7 +176,7 @@ _<Icon name="github" /> Source:
 
 :::
 
-### Text Content:
+### Text Content
 
 After reading the above rules you may be wondering:
 
@@ -231,7 +223,7 @@ package to use the familiar testing library methods (like `findByRole`,
 In particular, if you're looking for more resources to understand how we
 recommend you approach testing your components, look to:
 
-## Assigning Return Values
+## <Icon name="angle-right" /> Assigning Return Values
 
 :::danger
 
@@ -290,7 +282,7 @@ If you're familiar with Cypress commands already, but find yourself using
 For working with either of these patterns, please read our
 [Variables and Aliases guide](/guides/core-concepts/variables-and-aliases).
 
-## Visiting External Sites
+## <Icon name="angle-right" /> Visiting External Sites
 
 :::danger
 
@@ -351,7 +343,7 @@ we consider this a bad practice and do not recommend it because:
 
 Let's look at a few strategies for dealing with these situations.
 
-### When logging in:
+### When logging in
 
 Many OAuth providers, especially social logins, run A/B experiments, which means
 that their login screen is dynamically changing. This makes automated testing
@@ -398,7 +390,7 @@ affect other tests downstream.
 
 :::
 
-### 3rd party servers:
+### 3rd party servers
 
 Sometimes actions that you take in your application **may** affect another 3rd
 party application. These situations are not that common, but it is possible.
@@ -412,7 +404,7 @@ GitHub's APIs directly.
 
 This avoids ever needing to touch the UI of another application.
 
-### Verifying sent emails:
+### Verifying sent emails
 
 Typically, when going through scenarios like user registration or forgotten
 passwords, your server schedules an email to be delivered.
@@ -445,9 +437,9 @@ email's functionality and visual style:
    exposes an API to read off emails. You will then need the proper
    authentication credentials, which your server could provide, or you could use
    environment variables. Some email services already provide
-   [Cypress plugins](/plugins#Email) to access emails.
+   [Cypress plugins](/plugins#email) to access emails.
 
-## Having Tests Rely On The State Of Previous Tests
+## <Icon name="angle-right" /> Having Tests Rely On The State Of Previous Tests
 
 :::danger
 
@@ -578,7 +570,7 @@ We're also paving the way to make it less complicated to write multiple tests
 against the "default" state of the form. That way each test stays lean but each
 can be run independently and pass.
 
-## Creating "Tiny" Tests With A Single Assertion <E2EOnlyBadge />
+## <Icon name="angle-right" /> Creating "Tiny" Tests With A Single Assertion <E2EOnlyBadge />
 
 :::danger
 
@@ -664,7 +656,7 @@ describe('my form', () => {
 })
 ```
 
-## Using `after` Or `afterEach` Hooks
+## <Icon name="angle-right" /> Using `after` Or `afterEach` Hooks
 
 :::danger
 
@@ -703,7 +695,7 @@ describe('logged in user', () => {
 
 Let's look at why this is not really necessary.
 
-### Dangling state is your friend:
+### Dangling state is your friend
 
 One of the **best** parts of Cypress is its emphasis on debuggability. Unlike
 other testing tools - when your tests end - you are left with your working
@@ -728,7 +720,7 @@ always leave you with the same login page at the end of the test. In order to
 debug your application or write a partial test, you would always be left
 commenting out your custom `cy.logout()` command.
 
-### It's all downside with no upside:
+### It's all downside with no upside
 
 For the moment, let's assume that for some reason your application desperately
 **needs** that last bit of `after` or `afterEach` code to run. Let's assume that
@@ -766,7 +758,7 @@ If this state cleanup is **truly** required, then the next test will instantly
 fail. Why? Because resetting the state never happened when you refreshed
 Cypress.
 
-### State reset should go before each test:
+### State reset should go before each test
 
 The simplest solution here is to move your reset code to **before** the test
 runs.
@@ -866,7 +858,7 @@ interacting with your database, you can use [`cy.exec`](/api/commands/exec),
 instead of [`cy.task`](/api/commands/task), to execute any system command or
 script.
 
-## Unnecessary Waiting
+## <Icon name="angle-right" /> Unnecessary Waiting
 
 :::danger
 
@@ -942,7 +934,7 @@ cy.wait('@getUsers') // <--- wait explicitly for this route to finish
 cy.get('table tr').should('have.length', 2)
 ```
 
-## Running Tests Intelligently
+## <Icon name="angle-right" /> Running Tests Intelligently
 
 As your test suite grows and takes longer to run, you may find yourself hitting
 performance bottlenecks on your CI system. We recommend integrating your source
@@ -952,16 +944,16 @@ times slow the velocity at which branches may be merged and features may be
 shipped. This issue is compounded further if you have dependent chains of
 branches waiting to be merged.
 
-One solution to this problem is
-[Smart Orchestration with Cypress Cloud](/guides/cloud/smart-orchestration).
-Using a combination of [parallelization](/guides/guides/parallelization),
-[load balancing](/guides/guides/parallelization#Balance-strategy),
-[Auto Cancellation](/guides/cloud/smart-orchestration#Auto-Cancellation), and
-[Spec Prioritization](/guides/cloud/smart-orchestration#Spec-Prioritization),
+One solution to this problem is **Smart Orchestration** with Cypress Cloud.
+Using a combination of
+[parallelization](/guides/cloud/smart-orchestration/parallelization),
+[load balancing](/guides/cloud/smart-orchestration/load-balancing#Balance-strategy),
+[Auto Cancellation](/guides/cloud/smart-orchestration/run-cancellation), and
+[Spec Prioritization](/guides/cloud/smart-orchestration/spec-prioritization),
 Smart Orchestration maximizes your available compute resources & minimizes
 waste.
 
-## Web Servers
+## <Icon name="angle-right" /> Web Servers
 
 :::danger
 
@@ -1011,7 +1003,7 @@ Are you trying to run in CI?
 We have
 [examples showing you how to start and stop your web server](/guides/continuous-integration/introduction#Boot-your-server).
 
-## Setting a Global `baseUrl`
+## <Icon name="angle-right" /> Setting a Global `baseUrl`
 
 :::danger
 
