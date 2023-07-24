@@ -587,6 +587,13 @@
           "badge": "community"
         },
         {
+          "name": "Cypress-SignalR-Mock",
+          "description": "Easy way to publish messages from and to your SignalR hubs in Cypress E2E tests.",
+          "link": "https://github.com/JasonLandbridge/Cypress-SignalR-Mock",
+          "keywords": ["commands", "signalr", "mock", "websocket"],
+          "badge": "community"
+        },
+        {
           "name": "cypress-websocket-testing",
           "description": "Test WebSocket connections with Cypress",
           "link": "https://github.com/lensesio/cypress-websocket-testing",
