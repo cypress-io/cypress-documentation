@@ -35,8 +35,6 @@ command's documentation.
 To run a command, you'll need to prefix each command in order to properly locate
 the cypress executable.
 
-(requires npm@5.2.0 or greater)
-
 ```
 npx cypress run
 ```
@@ -45,18 +43,6 @@ npx cypress run
 
 ```
 yarn cypress run
-```
-
-...or...
-
-```
-$(npm bin)/cypress run
-```
-
-...or...
-
-```
-./node_modules/.bin/cypress run
 ```
 
 You may find it easier to add the cypress command to the `scripts` object in
@@ -82,7 +68,7 @@ Cypress Cloud, the command should be:
 npm run cy:run -- --record --spec "cypress/e2e/my-spec.cy.js"
 ```
 
-If you are using the [npx](https://github.com/zkat/npx) tool, you can invoke the
+You can also invoke the
 locally installed Cypress tool directly:
 
 ```shell

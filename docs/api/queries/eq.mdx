@@ -58,7 +58,7 @@ Pass in an options object to change the default behavior of `.eq()`.
 | `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.eq()` to resolve before [timing out](#Timeouts)                       |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
 
 - `.eq()` yields the new DOM element it found.
 - `.eq()` is a query, and it is _safe_ to chain further commands.
@@ -130,11 +130,11 @@ cy.get('li').eq(-2).should('contain', 'sphynx') // true
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
 
 - `.eq()` requires being chained off a command that yields DOM element(s).
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
 
 - `.eq()` will automatically [retry](/guides/core-concepts/retry-ability) until
   the element(s)
@@ -142,7 +142,7 @@ cy.get('li').eq(-2).should('contain', 'sphynx') // true
 - `.eq()` will automatically [retry](/guides/core-concepts/retry-ability) until
   all chained assertions have passed.
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
 
 - `.eq()` can time out waiting for the element(s) to
   [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).

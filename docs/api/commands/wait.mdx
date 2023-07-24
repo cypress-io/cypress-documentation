@@ -60,7 +60,7 @@ Pass in an options object to change the default behavior of `cy.wait()`.
 | `requestTimeout`  | [`requestTimeout`](/guides/references/configuration#Timeouts)                                                                 | Overrides the global `requestTimeout` for this request. Defaults to `timeout`.           |
 | `responseTimeout` | [`responseTimeout`](/guides/references/configuration#Timeouts)                                                                | Overrides the global `responseTimeout` for this request. Defaults to `timeout`.          |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
 
 #### When given a `time` argument:
 
@@ -217,7 +217,7 @@ cy.get(...)
 Read
 [Guide: Introduction to Cypress](/guides/core-concepts/introduction-to-cypress#Commands-Run-Serially)
 
-### Timeouts
+### Timeouts {#Notes-Timeouts}
 
 #### `requestTimeout` and `responseTimeout`
 
@@ -263,19 +263,19 @@ requests to complete within the given `requestTimeout` and `responseTimeout`.
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
 
 - When passed a `time` argument `cy.wait()` can be chained off of `cy` or off
   another command.
 - When passed an `alias` argument `cy.wait()` requires being chained off of
   `cy`.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
 
 - `cy.wait()` will only run assertions you have chained once, and will not
   [retry](/guides/core-concepts/retry-ability).
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
 
 - `cy.wait()` can time out waiting for the request to go out.
 - `cy.wait()` can time out waiting for the response to return.

@@ -90,7 +90,7 @@ Pass in an options object to change the default behavior of `.selectFile()`.
 | `timeout`                    | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts)           | Time to wait for `.selectFile()` to resolve before [timing out](#Timeouts).                                                                       |
 | `waitForAnimations`          | [`waitForAnimations`](/guides/references/configuration#Actionability)          | Whether to wait for elements to [finish animating](/guides/core-concepts/interacting-with-elements#Animations) before executing the command.      |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
 
 - `.selectFile()` yields the same subject it was given.
 - It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried)
@@ -262,7 +262,7 @@ cy.get('input[type=file]').selectFile('does-not-exist.yaml')
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
 
 - `.selectFile()` requires being chained off a command that yields DOM
   element(s). With the `input` action (default), it further requires a single
@@ -271,12 +271,12 @@ cy.get('input[type=file]').selectFile('does-not-exist.yaml')
 - If given an alias, `.selectFile()` requires that the subject of the alias must
   not be `null` or `undefined`.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
 
 - `.selectFile()` will automatically wait for the element to reach an
   [actionable state](/guides/core-concepts/interacting-with-elements).
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
 
 - `.selectFile()` can time out waiting for the element to reach an
   [actionable state](/guides/core-concepts/interacting-with-elements).
