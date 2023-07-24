@@ -48,7 +48,7 @@ If you want to prevent a passing test from uploading to the Cloud, we recommend 
 
 #### `videoCompression` is set to `false` by default
 
-Cypress has the capability to compress recorded videos after a run to reduce the video file size. By default, compression is turned off, which results in a larger file size and better video quality.
+Cypress has the capability to compress recorded videos after a run to reduce the video file size. By default, compression is now turned off. This results in a reduced run time by removing the time to compress the video, a larger video file size and better video quality.
 
 You can enable this with the `videoCompression` [configuration](/guides/references/configuration#Videos) option if you'd like to reduce the video file size for any reason. This will also reduce the video quality and take slightly longer to process and complete the run.
 
