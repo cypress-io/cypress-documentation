@@ -201,7 +201,7 @@ By default, Cypress will include an inline source map in your spec file, so you
 will get the most out of the error experience. If you
 [modify the preprocessor](/api/plugins/preprocessors-api), ensure that inline
 source maps are enabled to get the same experience. With webpack and the
-[webpack preprocessor](https://github.com/cypress-io/cypress/tree/master/npm/webpack-preprocessor),
+[webpack preprocessor](https://github.com/cypress-io/cypress/tree/develop/npm/webpack-preprocessor),
 for example, set
 [the `devtool` option](https://webpack.js.org/configuration/devtool/) to
 `inline-source-map`.
@@ -261,8 +261,8 @@ example, to run the equivalent of `cy.task('database', 123)` outside the normal
 execution command chain:
 
 ```javascript
-cy.now('task', 123).then(console.log)
-// runs cy.task(123) and prints the resolved value
+cy.now('task', 'database', 123).then(console.log)
+// runs cy.task('database', 123) and prints the resolved value
 ```
 
 :::caution

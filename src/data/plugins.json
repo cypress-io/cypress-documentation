@@ -324,6 +324,13 @@
           "badge": "community"
         },
         {
+          "name": "cypress-log-filter",
+          "description": "Easily filter Cypress command logs based on different log levels",
+          "link": "https://github.com/Brugui7/cypress-log-filter",
+          "keywords": ["log", "command", "filter"],
+          "badge": "community"
+        },
+        {
           "name": "cy-search",
           "description": "Search Cypress documentation from the terminal.",
           "link": "https://github.com/bahmutov/cy-search",
@@ -392,13 +399,6 @@
       "name": "Custom Commands",
       "description": " Read the <a target=\"_blank\" href=\"/api/plugins/preprocessors-api\">Custom Commands</a> and <a target=\"_blank\" href=\"/api/plugins/preprocessors-api\">Custom Query</a> documentation to learn more.",
       "plugins": [
-        {
-          "name": "cypress-xpath",
-          "description": "Adds XPath command. This repo is also a good example of using custom commands to do retries, provide TypeScript definitions, etc.",
-          "link": "https://github.com/cypress-io/cypress/tree/develop/npm/xpath",
-          "keywords": ["xpath", "commands"],
-          "badge": "official"
-        },
         {
           "name": "cypress-testing-library",
           "description": "🐅 Simple and complete custom Cypress commands and utilities that encourage good testing practices.",
@@ -587,6 +587,13 @@
           "badge": "community"
         },
         {
+          "name": "Cypress-SignalR-Mock",
+          "description": "Easy way to publish messages from and to your SignalR hubs in Cypress E2E tests.",
+          "link": "https://github.com/JasonLandbridge/Cypress-SignalR-Mock",
+          "keywords": ["commands", "signalr", "mock", "websocket"],
+          "badge": "community"
+        },
+        {
           "name": "cypress-websocket-testing",
           "description": "Test WebSocket connections with Cypress",
           "link": "https://github.com/lensesio/cypress-websocket-testing",
@@ -753,7 +760,7 @@
         },
         {
           "name": "PickleJS",
-          "description": "An addition to the Cucumber plugin, featuring a collection of phrases you can use for common actions (ex: \"I click on an <Element>\", \"I should see an <Element>\").",
+          "description": "An addition to the Cucumber plugin, featuring a collection of phrases you can use for common actions (ex: \"I click on an &lt;Element&gt;\", \"I should see an &lt;Element&gt;\").",
           "link": "https://picklejs.com",
           "keywords": ["cucumber", "collection", "actions", "commands"],
           "badge": "community"
@@ -1227,6 +1234,20 @@
           "link": "https://github.com/mailslurp/cypress-mailslurp",
           "keywords": ["email", "mailslurp", "test", "commands"],
           "badge": "community"
+        },
+        {
+          "name": "cypress-mailhog",
+          "description": "A collection of useful Cypress commands for testing Emails utilizing the MailHog RestAPI. Comes with TypeScript support.",
+          "link": "https://github.com/SMenigat/cypress-mailhog",
+          "keywords": ["email", "mailhog", "test", "commands"],
+          "badge": "community"
+        },
+        {
+          "name": "cypress-guerrillamail",
+          "description": "Create and use a randomly-generated email address from Guerrilla Mail.",
+          "link": "https://github.com/e23thr/cypress-guerrillamail",
+          "keywords": ["email", "guerrillamail", "test", "commands"],
+          "badge": "community"
         }
       ]
     },
@@ -1238,6 +1259,13 @@
           "description": "Watches and bundles your spec files via browserify.",
           "link": "https://github.com/cypress-io/cypress-browserify-preprocessor",
           "keywords": ["browserify"],
+          "badge": "official"
+        },
+        {
+          "name": "cypress-xpath",
+          "description": "Adds XPath command. This repo is also a good example of using custom commands to do retries, provide TypeScript definitions, etc.",
+          "link": "https://github.com/cypress-io/cypress/tree/develop/npm/xpath",
+          "keywords": ["xpath", "commands"],
           "badge": "official"
         }
       ]

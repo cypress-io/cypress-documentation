@@ -66,7 +66,7 @@ Pass in an options object to change the default behavior of `cy.get()`.
 | `withinSubject`    | null                                                                              | Element to search for children in. If null, search begins from root-level DOM element                        |
 | `includeShadowDom` | [`includeShadowDom` config option value](/guides/references/configuration#Global) | Whether to traverse shadow DOM boundaries and include elements within the shadow DOM in the yielded results. |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
 
 - `cy.get()` yields the DOM element(s) it found, or the results of the alias
   lookup.
@@ -221,11 +221,11 @@ it('disables on click', () => {
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
 
 - `cy.get()` requires being chained off a command that yields DOM element(s).
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
 
 - `cy.get()` will automatically [retry](/guides/core-concepts/retry-ability)
   until the element(s)
@@ -233,7 +233,7 @@ it('disables on click', () => {
 - `cy.get()` will automatically [retry](/guides/core-concepts/retry-ability)
   until all chained assertions have passed.
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
 
 - `cy.get()` can time out waiting for the element(s) to
   [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).

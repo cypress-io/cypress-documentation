@@ -14,7 +14,7 @@ export default function blogsList(): BlogsProps {
               {blogsJSON.small.map((blog, index) => (
                 <li key={index}>
                   <a
-                    href={`${blog.url}`}
+                    href={`${blog.sourceUrl}`}
                     target="_blank"
                     rel="noopener noreferer"
                   >
