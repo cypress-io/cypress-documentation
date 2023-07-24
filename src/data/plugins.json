@@ -1055,7 +1055,7 @@
         {
           "name": "Cypress Image Snapshot",
           "description": "Catch visual regressions and compare image diffs locally and in Cypress Cloud.",
-          "link": "https://github.com/palmerhq/cypress-image-snapshot",
+          "link": "https://github.com/simonsmith/cypress-image-snapshot",
           "keywords": ["image-diff", "snapshot"],
           "badge": "community"
         },
