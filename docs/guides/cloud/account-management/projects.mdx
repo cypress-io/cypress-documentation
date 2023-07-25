@@ -162,12 +162,12 @@ Visit your project settings to see who has access to your project's runs.
 
 #### Spec Prioritization & Auto Cancellation
 
-Toggle Spec Prioritization and/or adjust the number of test failures before auto
-canceling a run.
+Toggle Spec Prioritization to reduce feedback time by running previously failed test specs first. Enabling Auto Cancellation to reduce run duration by canceling the run when tests fail. Adjust the number of test failures before auto
+canceling.
 
-See our
+These settings can significantly improve developer resolution time, reduce your monthly CI bill and free-up CI resources. See our
 [Spec Prioritization](/guides/cloud/smart-orchestration/spec-prioritization)
-guide to learn more.
+and [Run Cancellation](/guides/cloud/smart-orchestration/run-cancellation) guides to learn more.
 
 <DocsImage
   src="/img/guides/cloud/smart-orchestration/spec-prioritization-active.png"
@@ -179,8 +179,10 @@ guide to learn more.
 #### Run completion delay
 
 You can edit the number of seconds that a run will wait for new groups to join
-before transitioning to 'completed'. See our
-[parallelization guide](/guides/cloud/smart-orchestration/parallelization#Run-completion-delay)
+before transitioning to 'completed'.
+
+See our
+[Parallelization guide](/guides/cloud/smart-orchestration/parallelization#Run-completion-delay)
 to learn more.
 
 <DocsImage
