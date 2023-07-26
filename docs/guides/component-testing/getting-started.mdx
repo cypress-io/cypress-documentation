@@ -125,7 +125,7 @@ Let's assume the Stepper Component consists of two `buttons`, one used to **decr
 to **increment** it as well as a `span` tag that sits in the middle of the buttons to show the
 current value of the counter.
 
-<Tabs>
+<Tabs groupId="frameworks">
 <TabItem value="React" active>
 
 ```jsx
@@ -252,7 +252,7 @@ method to verify it has the correct text value.
 
 Add the following test inside the `describe` block, right below the first test:
 
-<Tabs>
+<Tabs groupId="frameworks">
 <TabItem value="React" active>
 
 ```jsx
@@ -305,7 +305,7 @@ be less brittle to future changes.
 
 In the `Stepper` component, the `span` tag has a `data-cy` attribute on it:
 
-<Tabs>
+<Tabs groupId="frameworks">
 <TabItem value="React" active>
 
 ```jsx
@@ -339,7 +339,7 @@ In the `Stepper` component, the `span` tag has a `data-cy` attribute on it:
 We assign a unique id to the `data-cy` attribute that we can use for testing
 purposes. Update the test to use a CSS attribute selector to `cy.get()`:
 
-<Tabs>
+<Tabs groupId="frameworks">
 <TabItem value="React" active>
 
 ```jsx
@@ -392,7 +392,7 @@ We should also have a test to ensure the `initial` prop sets the count to
 something else besides its default value of "0". We can pass in props to the
 `Stepper` component like so:
 
-<Tabs>
+<Tabs groupId="frameworks">
 <TabItem value="React" active>
 
 ```jsx
@@ -451,7 +451,7 @@ real user would.
 
 Add the following tests:
 
-<Tabs>
+<Tabs groupId="frameworks">
 <TabItem value="React" active>
 
 ```jsx
@@ -546,7 +546,7 @@ we expect.
 
 Let's set up the spies and bind them to the component:
 
-<Tabs>
+<Tabs groupId="frameworks">
 <TabItem value="React" active>
 
 ```jsx
