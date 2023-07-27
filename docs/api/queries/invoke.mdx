@@ -254,15 +254,14 @@ cy.wrap(english).invoke('greeting').should('equal', 'bye')
 
 - `.invoke()` will wait for the `function` to exist on the subject before
   running.
-- `.invoke()` will wait for the promise to resolve if the invoked `function`
-  returns a promise.
+- `.invoke()` will throw an error if the invoked `function` returns a promise.
+  If you want to invoke a function that returns a promise, use `.then()` instead.
 - `.invoke()` will automatically [retry](/guides/core-concepts/retry-ability)
   until all chained assertions have passed.
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
 
 - `.invoke()` can time out waiting for assertions you've added to pass.
-- `.invoke()` can time out waiting for a promise you've returned to resolve.
 
 ## Command Log
 
