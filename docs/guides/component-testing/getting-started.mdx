@@ -125,6 +125,11 @@ Let's assume the Stepper Component consists of two `buttons`, one used to **decr
 to **increment** it as well as a `span` tag that sits in the middle of the buttons to show the
 current value of the counter.
 
+:::info
+To see example's of the Stepper Component and it's tests in each Framework, visit our [Component Testing Quick Start Apps Repo](https://github.com/cypress-io/component-testing-quickstart-apps)
+
+:::
+
 <Tabs groupId="frameworks">
 <TabItem value="React" active>
 
@@ -388,7 +393,7 @@ more info on writing good selectors, see our guide
 
 ### Passing Props to Components
 
-We should also have a test to ensure the `initial` prop sets the count to
+We should also have a test to ensure the `count` prop sets the count to
 something else besides its default value of "0". We can pass in props to the
 `Stepper` component like so:
 
