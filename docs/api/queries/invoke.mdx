@@ -255,7 +255,7 @@ cy.wrap(english).invoke('greeting').should('equal', 'bye')
 - `.invoke()` will wait for the `function` to exist on the subject before
   running.
 - `.invoke()` will throw an error if the invoked `function` returns a promise.
-  If you want to invoke a function that returns a promise, use `.then()` instead.
+  If you want to invoke a function that returns a promise, use [`.then()`](/api/commands/then) instead.
 - `.invoke()` will automatically [retry](/guides/core-concepts/retry-ability)
   until all chained assertions have passed.
 
