@@ -6,7 +6,7 @@ title: Installing Cypress
 
 ## <Icon name="graduation-cap" /> What you'll learn
 
-- How to install Cypress via `npm` or `yarn`
+- How to install Cypress via `npm`, `yarn` or `pnpm`
 - How to install Cypress via direct download
 - How to version and run Cypress via `package.json`
 
@@ -77,6 +77,25 @@ yarn add cypress --dev
 
 System proxy properties `http_proxy`, `https_proxy` and `no_proxy` are respected
 for the download of the Cypress binary.
+
+### <Icon name="terminal" /> `pnpm add`
+
+Installing Cypress via [`pnpm`](https://pnpm.io/):
+
+```shell
+cd /your/project/path
+```
+
+```shell
+pnpm add cypress -D
+```
+
+:::info
+
+You need to make sure that you have the `pnpm` environment installed locally.
+If not you need to install it: `npm install pnpm@latest -g`.
+
+:::
 
 ### <Icon name="download" /> Direct download
 
