@@ -78,27 +78,17 @@ yarn add cypress --dev
 System proxy properties `http_proxy`, `https_proxy` and `no_proxy` are respected
 for the download of the Cypress binary.
 
-### <Icon name="terminal" /> `pnpm install`
+### <Icon name="terminal" /> `pnpm add`
 
 Installing Cypress via [`pnpm`](https://pnpm.io/):
 
 ```shell
-git clone https://github.com/cypress-io/github-action
+cd /your/project/path
 ```
-
-Clone Cypress's GitHub Action repository to the current directory. This will create a folder called "github-action" and copy the contents of the repository into it.
 
 ```shell
-cd github-action/examples/basic-pnpm
+pnpm add cypress -D
 ```
-
-`/basic-pnpm` will be the location of the later example code.
-
-```shell
-pnpm install --frozen-lockfile && pnpm run test
-```
-
-Install the dependencies and run the test cases in the project
 
 :::info
 
