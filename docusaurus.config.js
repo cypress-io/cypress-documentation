@@ -81,6 +81,12 @@ const config = {
         id: 'docs-fullstory',
       },
     ],
+    [
+      './plugins/qualified',
+      {
+        id: 'docs-qualified',
+      },
+    ],
     'docusaurus-plugin-sass',
     require.resolve('docusaurus-plugin-image-zoom'),
   ],
