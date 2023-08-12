@@ -731,6 +731,13 @@
           "link": "https://github.com/datashard/snapshot",
           "keywords": ["snapshot", "comparison", "commands"],
           "badge": "community"
+        },
+        {
+          "name": "cypress-plugin-dotenv",
+          "description": "Load .env variables in Cypress.",
+          "link": "https://github.com/MohamadKh75/cypress-plugin-dotenv",
+          "keywords": ["testing", "commands", ".env", "environment variables"],
+          "badge": "community"
         }
       ]
     },
