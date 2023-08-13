@@ -324,6 +324,13 @@
           "badge": "community"
         },
         {
+          "name": "cypress-log-filter",
+          "description": "Easily filter Cypress command logs based on different log levels",
+          "link": "https://github.com/Brugui7/cypress-log-filter",
+          "keywords": ["log", "command", "filter"],
+          "badge": "community"
+        },
+        {
           "name": "cy-search",
           "description": "Search Cypress documentation from the terminal.",
           "link": "https://github.com/bahmutov/cy-search",
@@ -577,6 +584,13 @@
           "description": "Simple commands to skip a test based on platform, browser or a url.",
           "link": "https://github.com/cypress-io/cypress-skip-test",
           "keywords": ["commands"],
+          "badge": "community"
+        },
+        {
+          "name": "Cypress-SignalR-Mock",
+          "description": "Easy way to publish messages from and to your SignalR hubs in Cypress E2E tests.",
+          "link": "https://github.com/JasonLandbridge/Cypress-SignalR-Mock",
+          "keywords": ["commands", "signalr", "mock", "websocket"],
           "badge": "community"
         },
         {
@@ -1041,7 +1055,7 @@
         {
           "name": "Cypress Image Snapshot",
           "description": "Catch visual regressions and compare image diffs locally and in Cypress Cloud.",
-          "link": "https://github.com/palmerhq/cypress-image-snapshot",
+          "link": "https://github.com/simonsmith/cypress-image-snapshot",
           "keywords": ["image-diff", "snapshot"],
           "badge": "community"
         },
