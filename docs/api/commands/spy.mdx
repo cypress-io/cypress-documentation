@@ -63,7 +63,7 @@ expect(util.addListeners).to.be.called
 
 #### Disable logging to Command Log
 
-You can chain a `.log(bool)` method to disable `cy.stub()` calls from being
+You can chain a `.log(bool)` method to disable `cy.spy()` calls from being
 shown in the Command Log. This may be useful when your stubs are called an
 excessive number of times.
 
@@ -71,7 +71,7 @@ excessive number of times.
 const obj = {
   foo() {},
 }
-const stub = cy.stub(obj, 'foo').log(false)
+const spy = cy.spy(obj, 'foo').log(false)
 ```
 
 #### More `cy.spy()` examples
