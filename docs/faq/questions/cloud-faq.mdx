@@ -29,13 +29,32 @@ You can read more [here](/guides/cloud/introduction).
 
 Cypress captures the following:
 
-- Standard Output
-- Test Failures
+When you run Cypress via `cypress run` passing the `--record` flag the following
+data is sent to the Cloud for every run:
+
+- Standard output in the terminal
+- Test results
+- Test definitions
+- Cypress configuration (minus Cypress environment variables)
 - Screenshots
-- Video
-- Commands
-- Network Traffic
-- Browser Console Logs
+- Videos
+- OS environment variables related to CI and git information
+
+You have the option to
+[delete videos or screenshots](/guides/guides/screenshots-and-videos#Control-which-videos-to-keep-and-upload-to-Cypress-Cloud)
+before being sent to the Cloud so those are not captured.
+
+When [Test Replay](#Test-Replay) capturing is enabled, the additional data outlined
+below will be sent to the Cloud. You can
+[disable capturing](/guides/cloud/debugging/test-replay#Opt-out-of-Test-Replay) this data.
+
+- The rendered DOM and CSS styles for the application under test
+- Cypress commands and events represented in the Command Log
+- Network traffic within your application under test
+- Browser console logs
+
+Cypress Cloud does not capture anything related to the code of your application
+under test or the code within any associated repositories that are associated with your project.
 
 ### <Icon name="angle-right" /> How is this different than CI?
 
@@ -311,9 +330,9 @@ in your account will be permanently deleted.
 
 ### <Icon name="angle-right" /> What is Test Replay?
 
-[Test Replay](/guides/cloud/debugging/test-replay) enables you and your team to troubleshoot and debug failed tests faster. After updating to Cypress `v13`, the new feature will automatically record all browser events and allow you to “replay” what an application looked like.
+[Test Replay](/guides/cloud/debugging/test-replay) enables you and your team to troubleshoot and debug failed tests faster. After updating to Cypress `v13`, the new feature will automatically record all browser events and allow you to “replay” what your application under test looked like.
 
-Wind back the clock to any point in an application's execution and directly interact with tests as they happen in CI. Debug complex problems as if you were there when they first happened. You can:
+Wind back the clock to any point in an application's execution and directly interact with tests as they happened in CI. Debug complex problems as if you were there when they first happened. You can:
 
 - **Inspect the DOM** at the exact time of a test failure to debug tests quickly
 - **View important debugging dimensions** such as network requests, console logs, and more
@@ -327,9 +346,9 @@ Wind back the clock to any point in an application's execution and directly inte
 
 ### <Icon name="angle-right" /> How is Cypress Test Replay different from other "replay" services?
 
-There is an important distinction between _session_ replay services(LogRocket, FullStory, DataDog, etc) and Cypress Test Replay. In session replay user actions are captured as the application is used and delivered back in a replayable format, usually video or stitched DOM snapshots. These are valuable tools for gathering product insight such as user behavior, per session.
+There is an important distinction between _session_ replay services (LogRocket, FullStory, DataDog, etc) and Cypress Test Replay. In session replay user actions are captured as the application is used and delivered back in a replayable format, usually video or stitched DOM snapshots. These are valuable tools for gathering product insight such as user behavior, per session.
 
-Cypress Test Replay captures every detail of your test runs as they happen in CI. Remember, these tests are running in a headless manner on a virtual machine in the cloud with no UI being rendered. Sometimes tests will error or fail indicating an issue in your application. Since Cypress Cloud is monitoring the health of your CI test suite, each Test Replay offers a chance to step back in time to analyze and leverage [time travel debugging](/guides/core-concepts/cypress-app#Time-traveling), network requests, console logs, JavaScript errors, and element rendering to address problems directly. This is incredibly valuable for developer and team productivity. No more hours wasted recreating CI issues on your local machine!
+Cypress Test Replay captures every detail of your test runs as they happen in CI. Remember, these tests are running in a headless manner on a virtual machine with no UI being rendered. Sometimes tests will error or fail indicating an issue in your application. Since Cypress Cloud is monitoring the health of your CI test suite, each Test Replay offers a chance to step back in time to analyze and leverage [time travel debugging](/guides/core-concepts/cypress-app#Time-traveling), network requests, console logs, JavaScript errors, and element rendering to address problems directly. This is incredibly valuable for developer and team productivity. No more hours wasted recreating CI issues on your local machine!
 
 ### <Icon name="angle-right" /> Does the replay reflect the real time it took for the test to run?
 
@@ -337,7 +356,7 @@ Yes! The test is captured in Cypress Cloud as it executed in your CI run. That m
 
 ### <Icon name="angle-right" /> Are there performance implications when using Test Replay?
 
-Expect an even performance exchange with Test Replay vs. video. There is more activity to capture and replay tests but without the overhead of recording, compressing, and storing video assets. `video` capture is set to false by default starting in Cypress `v13`. See the full [v13 changelog](/guides/references/changelog#12-0-0).
+Expect an even performance exchange with Test Replay vs. video. There is more activity to capture and replay tests but without the overhead of recording, compressing, and storing video assets. `video` capture is set to `false` by default starting in Cypress `v13`. See the full [v13 changelog](/guides/references/changelog#12-0-0).
 
 ### <Icon name="angle-right" /> Is every aspect of my stack included in Test Replay?
 
@@ -362,12 +381,16 @@ Test Replay is available for tests recorded using Cypress `v13` and up. Tests re
 
 ### <Icon name="angle-right" /> Can I share my test replays?
 
-Yes! Share among your team or across teams, like QA, marketing, design, etc. Just open the replay, copy the url from the browser address bar and pass it along.
+Yes! You can share Test Replays to any team members who have access to view your Cypress Cloud runs like QA, marketing, design, etc. Open the replay, copy the url from the browser address bar and pass it along.
 
 ### <Icon name="angle-right" /> Will Test Replay write any assets to the file system?
 
 Yes, but it is stored in a temporary directory and deleted after the run. There is nothing to `.gitignore`.
 
-### <Icon name="angle-right" /> Can I `console.log()` data in the Developer Tools panel?
+### <Icon name="angle-right" /> Is the network tab feature available exclusively in Test Replay?
 
-Yes. You may need to use `JSON.stringify(Object)` to display deeply nested data.
+All of the data within Test Replay's Developer Tools in Cypress Cloud (including network events) are already available to you when running tests locally in the Cypress app via your browser's built-in developer tools (e.g. Chrome DevTools). When reviewing a test run that occurred in CI, you can review the network events within Test Reaplay in Cypress Cloud.
+
+### <Icon name="angle-right" /> Can I `console.log()` data in the console view of the Developer Tools panel?
+
+Yes. This displays console logs from within the application under test or your spec files. You may need to use `JSON.stringify(Object)` to display deeply nested data.
