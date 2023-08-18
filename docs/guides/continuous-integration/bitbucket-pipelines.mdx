@@ -41,17 +41,6 @@ pipelines:
           - npm run e2e
 ```
 
-:::info
-
-<strong>Try it out</strong>
-
-To try out the example above yourself, fork the
-[Cypress Kitchen Sink](https://github.com/cypress-io/cypress-example-kitchensink)
-example project and place the above Bitbucket Pipelines configuration in
-`bitbucket-pipelines.yml`.
-
-:::
-
 **How this `bitbucket-pipelines.yml` works:**
 
 - On _push_ to this repository, this job will provision and start Bitbucket
@@ -295,15 +284,3 @@ section, we are leveraging three useful features of
    the example above we use the `--group "UI - Chrome"` flag to organize all UI
    tests for the Chrome browser into a group labeled "UI - Chrome" in the
    [Cypress Cloud](https://on.cypress.io/cloud) report.
-
-## Cypress Real World Example with Bitbucket Pipelines
-
-A complete CI workflow against multiple browsers, viewports and operating
-systems is available in the
-
-<Icon name="github" inline="true" contentType="rwa" />.
-
-Clone the <Icon name="github" inline="true" contentType="rwa" /> and refer to
-the
-[bitbucket-pipelines.yml](https://github.com/cypress-io/cypress-realworld-app/blob/develop/bitbucket-pipelines.yml)
-file.

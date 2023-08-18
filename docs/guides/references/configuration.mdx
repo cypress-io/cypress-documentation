@@ -121,10 +121,12 @@ For more options regarding screenshots, view the
 
 ### Videos
 
+<VideoRecordingSupportedBrowsers />
+
 | Option                  | Default          | Description                                                                                                                                                                                                                                                                                                              |
 | ----------------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `trashAssetsBeforeRuns` | `true`           | Whether Cypress will trash assets within the `downloadsFolder`, `screenshotsFolder`, and `videosFolder` before tests run with `cypress run`.                                                                                                                                                                             |
-| `videoCompression`      | `false`          | The quality setting for the video compression, in Constant Rate Factor (CRF). The value can be `false` to disable compression or a value between `0` and `51`, where a lower value results in better quality (at the expense of a higher file size).                                                                     |
+| `videoCompression`      | `false`          | The quality setting for the video compression, in Constant Rate Factor (CRF). The value can be `false` or `0` to disable compression or a CRF between `1` and `51`, where a lower value results in better quality (at the expense of a higher file size). Setting this option to `true` will result in a default CRF of `32`.                        |
 | `videosFolder`          | `cypress/videos` | Where Cypress will automatically save the video of the test run when tests run with `cypress run`.                                                                                                                                                                                                                       |
 | `video`                 | `false`          | Whether Cypress will capture a video of the tests run with `cypress run`.                                                                                                                                                                                                                                                |
 
@@ -741,9 +743,5 @@ DEBUG=cypress:cli,cypress:server:specs
   [Cypress.env()](/api/cypress-api/env)
 - [Environment variables](/guides/guides/environment-variables)
 - [Environment Variables recipe](/examples/recipes#Fundamentals)
-- [Extending the Cypress Configuration File](https://www.cypress.io/blog/2020/06/18/extending-the-cypress-config-file/)
-  blog post and
-  [@bahmutov/cypress-extends](https://github.com/bahmutov/cypress-extends)
-  package.
 - Blog post
   [Keep passwords secret in E2E tests](https://glebbahmutov.com/blog/keep-passwords-secret-in-e2e-tests/)

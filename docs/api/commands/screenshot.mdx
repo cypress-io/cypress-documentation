@@ -62,7 +62,7 @@ For more details on these options and to set some as defaults across all uses of
 `.screenshot()`, see the
 [Cypress.Screenshot API doc](/api/cypress-api/screenshot-api).
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
 
 - `.screenshot()` yields the same subject it was given.
 - It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried)
@@ -302,17 +302,17 @@ cy.get('.sticky-header').invoke('css', 'position', null)
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
 
 - `cy.screenshot()` can be chained off of `cy` or off a command that yields a
   single DOM element.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
 
 - `cy.screenshot()` will only run assertions you have chained once, and will not
   [retry](/guides/core-concepts/retry-ability).
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
 
 - `cy.screenshot()` should never time out.
 

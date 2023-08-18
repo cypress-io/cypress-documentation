@@ -128,7 +128,7 @@ In the example above, the `cy:run` command will only be executed when the URL
 `http://localhost:3030` responds with an HTTP status code of 200. The server
 will also shut down when the tests complete.
 
-_Gotchas_
+#### Gotchas
 
 When
 [working with `webpack-dev-server`](https://github.com/bahmutov/start-server-and-test#note-for-webpack-dev-server-users)
@@ -216,7 +216,7 @@ Dockerfile would look like this:
 ```text
 FROM cypress/base
 RUN npm install
-RUN $(npm bin)/cypress run
+RUN npx cypress run
 ```
 
 :::caution
