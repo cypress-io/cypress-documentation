@@ -126,10 +126,9 @@ For more options regarding screenshots, view the
 | Option                  | Default          | Description                                                                                                                                                                                                                                                                                                                   |
 | ----------------------- | ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `trashAssetsBeforeRuns` | `true`           | Whether Cypress will trash assets within the `downloadsFolder`, `screenshotsFolder`, and `videosFolder` before tests run with `cypress run`.                                                                                                                                                                                  |
-| `videoCompression`      | `32`             | The quality setting for the video compression, in Constant Rate Factor (CRF). The value can be `false` or `0` to disable compression or a CRF between `1` and `51`, where a lower value results in better quality (at the expense of a higher file size). Setting this option to `true` will result in a default CRF of `32`. |
-| `videosFolder`          | `cypress/videos` | Where Cypress will automatically save the video of the test run when tests run with `cypress run`.                                                                                                                                                                                                                            |
-| `video`                 | `true`           | Whether Cypress will capture a video of the tests run with `cypress run`.                                                                                                                                                                                                                                                     |
-| `videoUploadOnPasses`   | `true`           | Whether Cypress will process, compress, and upload videos to [Cypress Cloud](/guides/cloud/introduction) even when all tests in a spec file are passing. This only applies when recording your runs to Cypress Cloud. Turn this off if you'd like to only upload the spec file's video when there are failing tests.          |
+| `videoCompression`      | `false`          | The quality setting for the video compression, in Constant Rate Factor (CRF). The value can be `false` or `0` to disable compression or a CRF between `1` and `51`, where a lower value results in better quality (at the expense of a higher file size). Setting this option to `true` will result in a default CRF of `32`.             |
+| `videosFolder`          | `cypress/videos` | Where Cypress will automatically save the video of the test run when tests run with `cypress run`.                                                                                                                                                                                                                       |
+| `video`                 | `false`          | Whether Cypress will capture a video of the tests run with `cypress run`.                                                                                                                                                                                                                                                |
 
 ### Downloads
 
@@ -164,28 +163,6 @@ For more options regarding screenshots, view the
 
 For more information, see the docs on
 [actionability](/guides/core-concepts/interacting-with-elements#Actionability).
-
-### Node version
-
-:::caution
-
-<Icon name="exclamation-triangle" /> The <code>nodeVersion</code> configuration option is deprecated and will be removed in a
-future version of Cypress. Please remove this option from your configuration
-file.
-
-:::
-
-| Option        | Default  | Description                                                                                                                                                                                                                                                                                                                                 |
-| ------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `nodeVersion` | `system` | Can be `system` or `bundled`. If set to `system`, Cypress will try to use the same Node version that launched Cypress to execute your [plugins](/guides/tooling/plugins-guide). If that can't be determined, Cypress will use the Node version bundled with Cypress. If set to `bundled` Cypress will use the version bundled with Cypress. |
-
-The Node version is used in Cypress to:
-
-- Build files in the
-  [supportFile](#Folders-Files).
-- Execute code in the config file.
-
-<DocsImage src="/img/guides/configuration/test-runner-settings-nodejs-version.jpg" alt="Node version in Settings in Cypress" />
 
 ### Experiments
 
@@ -238,7 +215,7 @@ object:
 | `supportFile`        | `cypress/support/component.js`           | Path to file to load before spec files load. This file is compiled and bundled. (Pass `false` to disable)                                                                                        |
 | `specPattern`        | <code>\*\*/*.cy.{js,jsx,ts,tsx}</code>                | A glob pattern String or Array of glob pattern Strings of the spec files to load. <br /><br />Note that any files found matching the `e2e.specPattern` value will be automatically **excluded.** |
 | `excludeSpecPattern` | `['/snapshots/*', '/image_snapshots/*']` | A String or Array of glob patterns used to ignore spec files that would otherwise be shown in your list of specs. [Please read the notes on using this.](#excludeSpecPattern)                    |
-`experimentalSingleTabRunMode`                | `false` | Run all specs in a single tab, instead of creating a new tab per spec. This can improve run mode performance, but can impact spec isolation and reliability on large test suites. This experiment currently only applies to Component Testing.     
+`experimentalSingleTabRunMode`                | `false` | Run all specs in a single tab, instead of creating a new tab per spec. This can improve run mode performance, but can impact spec isolation and reliability on large test suites. This experiment currently only applies to Component Testing.
 | `slowTestThreshold`  | `250`                                    | Time, in milliseconds, to consider a test "slow" during `cypress run`. A slow test will display in orange text in the default reporter.                                                          |
 
 
@@ -743,6 +720,8 @@ DEBUG=cypress:cli,cypress:server:specs
 
 | Version                                       | Changes                                                                               |
 | --------------------------------------------- | ------------------------------------------------------------------------------------- |
+| [13.0.0](/guides/references/changelog#13-0-0) | Removed `nodeVersion` option.                                                         |
+| [13.0.0](/guides/references/changelog#13-0-0) | Removed `videoUploadOnPasses` option.                                                 |
 | [11.0.0](/guides/references/changelog#11-0-0) | Removed `e2e.experimentalSessionAndOrigin` option.                                    |
 | [10.4.0](/guides/references/changelog#10-4-0) | Added `e2e.testIsolation` option.                                                     |
 | [10.0.0](/guides/references/changelog#10-0-0) | Reworked page to support new `cypress.config.js` and deprecated `cypress.json` files. |

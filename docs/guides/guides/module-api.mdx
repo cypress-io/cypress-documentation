@@ -181,14 +181,8 @@ tests results. A typical run could return something like this:
   "osVersion": "14.5.0",
   "runs": [{
     "error": null,
-    "hooks": [{
-      "hookName": "before each",
-      "title": [ "before each hook" ],
-      "body": "function () {\n  expect(true).to.be["true"];\n}"
-    }],
     "reporter": "spec",
     "reporterStats": {...},
-    "shouldUploadVideo": true,
     "spec": {...},
     "stats": {
       "suites": 1,
@@ -201,31 +195,21 @@ tests results. A typical run could return something like this:
       "endedAt": "2018-07-11T17:53:35.675Z",
       "duration": 1171
     },
+    "screenshots": [{
+      "name": null,
+      "takenAt": "2020-08-05T08:52:20.432Z",
+      "path": "User/janelane/my-app/cypress/screenshots/cy.js/test (failed).png",
+      "height": 720,
+      "width": 1280
+    }],
     "tests": [{
       "title": [ "test" ],
       "state": "failed",
-      "body": "function () {\n  expect(true).to.be["false"];\n}",
       "displayError": "AssertionError: expected true to be false\n' +
       '    at Context.eval (...cypress/e2e/cy.js:5:21",
       "attempts": [{
         "state": "failed",
-        "error": {
-          "message": "expected true to be false",
-          "name": "AssertionError",
-          "stack": "AssertionError: expected true to be false\n' +
-      '    at Context.eval (...cypress/e2e/cy.js:5:21"
-        },
-        "screenshots": [{
-          "name": null,
-          "takenAt": "2020-08-05T08:52:20.432Z",
-          "path": "User/janelane/my-app/cypress/screenshots/cy.js/test (failed).png",
-          "height": 720,
-          "width": 1280
-        }],
-        "startedAt": "2020-08-05T08:38:37.589Z",
-        "duration": 1171,
-        "videoTimestamp": 4486
-      }]
+      }],
     }],
     "video": "User/janelane/my-app/cypress/videos/abc123.mp4"
   }],

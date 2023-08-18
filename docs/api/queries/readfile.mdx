@@ -1,5 +1,6 @@
 ---
 title: readFile
+slug: /api/commands/readfile
 ---
 
 Read a file and yield its contents.
@@ -62,8 +63,8 @@ Pass in an options object to change the default behavior of `cy.readFile()`.
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
 
 - `cy.readFile()` yields the contents of the file.
-- The file will not be read from disk again if the results are stored in an
-  alias.
+- The file will be read from disk again if any upcoming command (such as an
+  assertion) in the chain fails.
 
 ## Examples
 
@@ -195,6 +196,15 @@ assertions.
 cy.readFile('some/nested/path/story.txt').should('eq', 'Once upon a time...')
 ```
 
+Starting in Cypress 13, `cy.readFile()` is a query, and will continue to read
+the file until all chained commands of any type pass, not just assertions.
+
+```javascript
+// will retry until the json file has a `users[123].name` field, and
+// the assertion passes
+cy.readFile('users.json').its('users.123.name').should('eq', 'John Doe')
+```
+
 ## Rules
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
@@ -247,6 +257,7 @@ outputs the following:
 
 | Version                                       | Changes                                   |
 | --------------------------------------------- | ----------------------------------------- |
+| [13.0.0](/guides/references/changelog#13-0-0) | `cy.readFile()` became a query            |
 | [9.0.0](/guides/references/changelog#9-0-0)   | Changed `null` encoding to read as Buffer |
 | [0.17.2](/guides/references/changelog#0-17-2) | Improved error messaging                  |
 | [0.17.1](/guides/references/changelog#0-17-1) | `cy.readFile()` command added             |
@@ -255,5 +266,6 @@ outputs the following:
 
 - [`cy.exec()`](/api/commands/exec)
 - [`cy.fixture()`](/api/commands/fixture) for a similar command with caching
+  that does not retry
 - [`cy.task()`](/api/commands/task)
 - [`cy.writeFile()`](/api/commands/writefile)

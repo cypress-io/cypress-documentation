@@ -2,6 +2,96 @@
 title: Migration Guide
 ---
 
+## Migrating to Cypress 13.0
+
+This guide details the changes and how to change your code to migrate to Cypress
+version 13.0.
+[See the full changelog for version 13.0](https://docs.cypress.io/guides/overview/why-cypress).
+
+### Cypress Cloud Test Replay
+
+[Test Replay](https://docs.cypress.io/guides/overview/why-cypress) is enabled by default in `v13.0` of the Cypress App.
+
+You may need to allowlist `capture.cypress.io` if you work with a strict VPN. See our FAQ section about [VPN subdomain allowlisting](/faq/questions/cloud-faq#Im-working-with-a-restrictive-VPN-Which-subdomains-do-I-have-to-allow-on-my-VPN-for-Cypress-Cloud-to-work-properly).
+
+You can [opt out](https://docs.cypress.io/guides/overview/why-cypress) of this feature in Cloud project-level settings.
+
+<!---
+TODO: replace urls for merge to v13 branch:
+
+changelog- /guides/references/changelog#13-0-0
+test replay- /guides/cloud/debugging/test-replay
+opt out- /guides/cloud/debugging/test-replay#Opt-out-of-Test-Replay
+--->
+
+### Video updates
+
+#### `video` is set to `false` by default
+
+You can continue recording video, by passing `video: true`, if you want video locally or you want video for some other reason, like in non-Chromium browsers where [Test Replay](https://docs.cypress.io/guides/overview/why-cypress) is not available.
+
+:::cypress-config-example
+
+```ts
+{
+  video: true
+}
+```
+
+:::
+
+#### `videoUploadOnPasses` configuration option has been removed
+
+Most users used `videoUploadOnPasses` as a way to skip the time to compress and upload videos to the Cloud. Since we're turning off `videoCompression` by default, this configuration option does not offer the time saving value that it once would.
+
+If you want to prevent a passing test from uploading to the Cloud, we recommend deleting the video using our [guide with code examples to discard captured video of passing tests](/guides/guides/screenshots-and-videos#Control-which-videos-to-keep-and-upload-to-Cypress-Cloud).
+
+#### `videoCompression` is set to `false` by default
+
+Cypress has the capability to compress recorded videos after a run to reduce the video file size. By default, compression is now turned off. This results in a reduced run time by removing the time to compress the video, a larger video file size and better video quality.
+
+You can enable this with the `videoCompression` [configuration](/guides/references/configuration#Videos) option if you'd like to reduce the video file size for any reason. This will also reduce the video quality and take slightly longer to process and complete the run.
+
+:::cypress-config-example
+
+```ts
+{
+  // value can be true/false -or- an integer between 0 and 51
+  videoCompression: true,
+}
+```
+
+:::
+
+### `cy.readFile()` is now a query command
+
+In Cypress 13, the [`.readFile()`](/api/commands/readFile) command is now a query.
+Tests written using it should continue to operate exactly as before; no changes
+are necessary.
+
+`readFile()` will re-read the file from disk if any upcoming command in the same
+chain fails. Assertions no longer have to be directly attached.
+
+```js
+cy.readFile(`users.json`).its('users.123.fullName').should('eq', 'John Doe')
+```
+
+Beginning with Cypress 13, the above test will re-read the file until the file
+exists, it has the requested property, and it passes the assertion.
+
+In previous versions of Cypress, the above command would retry until the file
+existed, but would _not_ re-read it from disk if the file didn't have the
+requested property or the contents didn't match.
+
+#### `.readFile()` can no longer be overwritten with `Cypress.Commands.overwrite()`
+
+Queries must be overwritten using `Cypress.Commands.overwriteQuery()`. If you
+were previously overwriting `cy.readFile()`, you will need to update your code
+to use `Cypress.Commands.overwriteQuery('readFile', function() { ... })` rather
+than `Cypress.Commands.overwrite('readFile', () => { ... })`. For more details
+on overwriting queries, see the
+[Overwriting Existing Queries](/api/cypress-api/custom-queries#Overwriting-Existing-Queries).
+
 ## Migrating to Cypress 12.0
 
 This guide details the changes and how to change your code to migrate to Cypress
