@@ -9,11 +9,17 @@ sidebar_label: Data Storage and Controls
 ## <Icon name="graduation-cap" /> What you'll learn
 
 - What data does Cypress Cloud store?
-- What controls exist to prevent sending data to Cypress Cloud?
+- What controls exist to control data sent to and viewed in Cypress Cloud?
 
 :::
 
 ## Data Storage
+
+:::caution
+
+Please refer to the [Cypress Cloud Terms of Use](https://cloud.cypress.io/terms-of-use) and our [Security & Compliance](https://www.cypress.io/security/) guide for more specifics around reasonable use of Cypress Cloud, data storage and security at Cypress.
+
+:::
 
 When you run Cypress via `cypress run` passing the `--record` flag the following data is stored in Cypress Cloud for every run:
 
@@ -34,25 +40,21 @@ When [Test Replay](#Test-Replay) capturing is enabled, the additional data outli
 
 Cypress Cloud does not capture anything related to the code of your application under test or the code within any associated repositories that are associated with your project.
 
-:::caution
-
-Please refer to the [Cypress Cloud Terms of Use](https://cloud.cypress.io/terms-of-use) and our [Security & Compliance](https://www.cypress.io/security/) guide for more specifics around reasonable use of Cypress Cloud, data storage and security at Cypress.
-
-:::
-
-## Cypress Cloud Data Controls
+## Cypress Cloud data cntrols
 
 We understand that controlling what data is sent to Cypress Cloud is important to our users. Cypress provides a number of ways to control what data is sent to Cypress Cloud.
 
 If you'd like more granular control over what data is sent to Cypress Cloud, please comment in this discussion: TODO:ADD A LINK TO DISCUSSION or [contact us](https://www.cypress.io/contact/) to discuss your needs.
 
-### Project Access Controls
+### Project access controls
 
 Cypress Cloud offers controls around the visibility of a project. You can set a project to be public or private. [See docs.](/guides/cloud/account-management/projects#Public-vs-Private)
 
 Setting a project to private means that users invited to the organization will have visibility into the project, its runs, and any data captured by Cypress.
 
-### Disable Test Replay
+### Test Replay controls
+
+#### Disable Test Replay
 
 You can disable capturing data in Test Replay per project by following this guide: TODO: Test Replay guide link. This means Test Replay will not be available for viewing for the project. This will prevent Cypress Cloud from capturing the following data:
 
@@ -153,7 +155,7 @@ Users can mask passwords in the Cypress Command Log by using a custom command li
 
 <DocsImage src="/img/api/custom-commands/custom-command-type-masked-password.png" />
 
-### Network Requests
+### Network requests controls
 
 Cypress allows users to block requests from specified hosts. [See docs.](/guides/references/configuration#blockHosts)
 
