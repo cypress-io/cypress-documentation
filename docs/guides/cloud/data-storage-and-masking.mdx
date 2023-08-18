@@ -9,7 +9,6 @@ sidebar_label: Data Storage and Controls
 ## <Icon name="graduation-cap" /> What you'll learn
 
 - What data does Cypress Cloud store?
-- How is data stored?
 - What controls exist to prevent sending data to Cypress Cloud?
 
 :::
@@ -45,7 +44,7 @@ Please refer to the [Cypress Cloud Terms of Use](https://cloud.cypress.io/terms-
 
 We understand that controlling what data is sent to Cypress Cloud is important to our users. Cypress provides a number of ways to control what data is sent to Cypress Cloud.
 
-If you'd like more granular control over what data is sent to Cypress Cloud, please comment in this [discussion](TODO:ADD A LINK TO DISCUSSION) or [contact us](https://www.cypress.io/contact/) to discuss your needs.
+If you'd like more granular control over what data is sent to Cypress Cloud, please comment in this discussion: TODO:ADD A LINK TO DISCUSSION or [contact us](https://www.cypress.io/contact/) to discuss your needs.
 
 ### Project Access Controls
 
@@ -55,7 +54,7 @@ Setting a project to private means that users invited to the organization will h
 
 ### Disable Test Replay
 
-You can disable capturing data in Test Replay per project by following [this guide](/guides/cloud/debugging/test-replay#Opt-out-of-Test-Replay). This means Test Replay will not be available for viewing for the project. This will prevent Cypress Cloud from capturing the following data:
+You can disable capturing data in Test Replay per project by following this guide: TODO: Test Replay guide link. This means Test Replay will not be available for viewing for the project. This will prevent Cypress Cloud from capturing the following data:
 
 - The rendered DOM and CSS styles for the application under test
 - Cypress commands and events represented in the Command Log
@@ -139,7 +138,7 @@ You can pass `log: false` as an option to Cypress specific commands in your test
 
 ##### Disable logging of XHR/Fetch requests
 
-By default, Cypress logs all requests that match any `cy.intercept()` in the Cypress Command Log, as well as all XMLHttpRequests and fetch requests. You can use `cy.intercept()` to disable these logs by passing `{ log: false }` in the second parameter. [See docs.](/api/commands/intercept#Disabling-logs-for-a-request)
+By default, Cypress logs all requests that match any [`cy.intercept()`](/api/commands/intercept) in the Cypress Command Log, as well as all XMLHttpRequests and fetch requests. You can use `cy.intercept()` to disable these logs by passing `{ log: false }` in the second parameter. [See docs.](/api/commands/intercept#Disabling-logs-for-a-request)
 
 ```js 
 before(() => {
@@ -163,4 +162,6 @@ Cypress allows users to block requests from specified hosts. [See docs.](/guides
   alt="Network tab of dev tools with analytics.js request selected and the response header highlighted"
 />
 
+## See Also
 
+- [Cypress Cloud FAQ](/faq/questions/cloud-faq)
