@@ -344,6 +344,10 @@ Wind back the clock to any point in an application's execution and directly inte
   width="80%"
 />
 
+### <Icon name="angle-right" /> What types of testing can I debug with Test Replay?
+
+Anything you can do with Cypress - E2E, Component, API, etc.
+
 ### <Icon name="angle-right" /> How is Cypress Test Replay different from other "replay" services?
 
 There is an important distinction between _session_ replay services (LogRocket, FullStory, DataDog, etc) and Cypress Test Replay. In session replay user actions are captured as the application is used and delivered back in a replayable format, usually video or stitched DOM snapshots. These are valuable tools for gathering product insight such as user behavior, per session.
@@ -378,6 +382,10 @@ Test Replay would be disabled, with a message that it's only available on Chromi
 ### <Icon name="angle-right" /> Can I replay tests from historical Cypress Cloud runs?
 
 Test Replay is available for tests recorded using Cypress `v13` and up. Tests recorded prior to this will not have Test Replay enabled in Cypress Cloud. You will still have any artifacts collected during the pre `v13` test runs.
+
+### <Icon name="angle-right" /> Can I enable or disable Test Replay for specific, individual tests, or is it a global setting? Can I configure my settings so that Test Replay is only enabled for failing test retries?
+
+At this time, users can only opt out of Test Replay via [project-level settings](/guides/cloud/debugging/test-replay#Opt-out-of-Test-Replay) in Cypress Cloud. There is no local option for opting out at this time.
 
 ### <Icon name="angle-right" /> Can I share my test replays?
 
