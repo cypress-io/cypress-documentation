@@ -22,7 +22,7 @@ import TabItem from "@theme/TabItem";
 import ThenShouldAndDifference from "@site/docs/partials/_then-should-and-difference.mdx";
 import WarningPluginsFile from "@site/docs/partials/_warning-plugins-file.mdx";
 import WarningSetupNodeEvents from "@site/docs/partials/_warning-setup-node-events.mdx";
-import VideoRecordingSupportedBrowsers from '@site/docs/partials/_video-recording-supported-browsers.mdx'
+import VideoRecordingSupportedBrowsers from "@site/docs/partials/_video-recording-supported-browsers.mdx"
 import Logo from "@site/src/components/logo";
 
 // Font Awesome
