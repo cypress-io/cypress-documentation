@@ -68,7 +68,7 @@ You can disable capturing data in Test Replay per project by following this guid
 
 Cypress offers an option to black out (mask) an array of elements from screenshots. [See screenshot API docs.](/api/commands/screenshot#Arguments) This allows you to black out specific elements on screenshot so that they will not be visible in the locally saved screenshots or to any users that have access to the run in Cypress Cloud.
 
-Add a control to your `cypress/support/index.js` file to set the default blackout options for all screenshots.
+Add a control to your [support file](/guides/references/configuration#Testing-Type-Specific-Options) to set the default blackout options for all screenshots.
 
 ```js
 before(() => {
