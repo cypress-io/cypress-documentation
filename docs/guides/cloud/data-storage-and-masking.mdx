@@ -92,9 +92,9 @@ it('admin page loads', () => {
 
 #### Remove Cypress Command Log from screenshots
 
-Cypress offers an option to hide the Cypress Command Log from screenshots so that no information from that area will be captured in screenshots. [See docs](/api/commands/screenshot#Arguments).
+Cypress offers an option to hide the Cypress Command Log from screenshots so that no information from that area will be captured in screenshots. [See `cy.screenshot` docs](/api/commands/screenshot#Arguments).
 
-Add a control to your `cypress/support/index.js` file to set the default capture options for all screenshots.
+Add a control to your [support file](/guides/references/configuration#Testing-Type-Specific-Options) to set the default capture options for all screenshots.
 
 ```js
 before(() => {
