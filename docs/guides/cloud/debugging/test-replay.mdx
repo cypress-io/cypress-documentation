@@ -80,7 +80,7 @@ Both options above display the Test Replay interface, which we'll unpack from to
 
 ### Run header
 
-The left side of the header displays the Cypress Cloud test run ID #, with the Git branch name along with the spec, platform and browser information. Hovering on this exposes additional test meta data.
+The left side of the header displays the Cypress Cloud test run ID number (#), with the Git branch name along with the spec, platform and browser information. Hovering on this exposes additional test meta data.
 
 <DocsImage
   src="/img/guides/cloud/test-replay/test-replay-header.jpg"
@@ -116,7 +116,7 @@ Toggle each test attempt, play back errors at a variety of speeds or scrub throu
   alt="Test Replay scrubber controls"
 />
 
-## Opt out of Test Replay
+## Opt-out of Test Replay
 
 :::info
 
@@ -126,7 +126,7 @@ Test Replays, including the test data leveraged within your tests, are visible t
 
 :::
 
-If you do not want to capture test data for replay and debugging purposes simply "shut off" Test Replay in project settings.
+If you do not want to capture test data for replay and debugging purposes, simply "shut off" Test Replay in project settings.
 
 <DocsImage
   src="/img/guides/cloud/test-replay/opt-out.png"
@@ -154,7 +154,7 @@ Rendering the Cypress command log while running tests via `cypress run` often ha
 
 With Test Replay, Cypress regenerates the entire UI within the Cloud for viewing the run and the debugging CI failures. Additionally, displaying the Cypress command log in videos and screenshots is less valuable for users using Test Replay.
 
-Because of this, as of Cypress `v13`, the Cypress command log is no longer rendered during `cypress run` for users using Test Replay, with an option to opt out of this behavior.
+Because of this, as of Cypress `v13`, the Cypress command log is no longer rendered during `cypress run` for users using Test Replay, with an option to opt-out of this behavior.
 
 If you'd like to render the Cypress command log while recording Test Replay, you can turn on this behavior by passing `--runner-ui` as a CLI flag. You may encounter a slower performance when turning this on, especially in lower resourced machines.
 
