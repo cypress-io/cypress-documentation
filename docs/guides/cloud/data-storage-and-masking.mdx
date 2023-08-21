@@ -126,7 +126,7 @@ You can delete videos that are recorded when you are passing `video: true` by fo
 
 #### Turn off Cypress Command Log rendering
 
-You can disable showing the entirety of the Cypress Command Log as well as the AUT controls in your tests to prevent all test content from being shown and recorded in any screenshot or video by passing `--no-runner-ui` via the CLI while running Cypress tests. [See docs.](/guides/guides/command-line#Options). This means that the application under test will be the only thing that is rendered while running tests, so the only thing that is captured in screenshots and videos.
+You can disable showing the entirety of the Cypress Command Log as well as the Application under Test (AUT) controls in your tests to prevent all test content from being shown and recorded in any screenshot or video by passing `--no-runner-ui` via the CLI while running Cypress tests. [See docs.](/guides/guides/command-line#Options). This means that the AUT will be the only thing that is rendered while running tests, so the only thing that is captured in screenshots and videos.
 
 Note that when `--no-runner-ui` is set, data from the Cypress Command Log will still be sent to Cypress Cloud to be generated and displayed in Test Replay if Test Replay is enabled. See [Disable Test Replay](#Disable-Test-Replay) for more information.
 
