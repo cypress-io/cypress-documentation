@@ -65,10 +65,14 @@ describe('Authorization Tests', () => {
 })
 ```
 
+:::info
+
 To see how this conversion would work with some of your own test code, you can
 paste it into the interactive
 [Cypress Migrator tool](https://migrator.cypress.io/), which will generate the
 equivalent Cypress code.
+
+:::
 
 ## Benefits of Using Cypress
 
@@ -155,10 +159,13 @@ too indirect. To understand the reason behind test failures it also helps to see
 the state of the app UI at the point of failure or see the events that led up to
 the failure.
 
-Cypress assists with debugging in headless mode, by automatically taking a
-screenshot of the app UI and command log at the exact point of test failure. To
-see everything that happened prior to test failure, enable the `video`
-configuration option to record (as an MP4 file) the full test spec run.
+Cypress assists with debugging in headless mode, in numerous ways:
+
+- Replay the test as it executed during the recorded run with full debug capability using [Test Replay](/guides/cloud/debugging/test-replay) in Cypress Cloud.
+- By automatically taking a
+  screenshot of the app UI and command log at the exact point of test failure.
+- To see everything that happened prior to test failure, enable the [`video`](/guides/references/configuration#Videos).
+  configuration option to record (as an MP4 file) the full test spec run.
 
 ### Test Retries
 
@@ -1114,6 +1121,8 @@ For more information, check out our
 [docs on parallelization](/guides/cloud/smart-orchestration/parallelization#Overview)!
 
 :::
+
+<TestReplayInfo />
 
 ## Angular Schematic Configuration
 
