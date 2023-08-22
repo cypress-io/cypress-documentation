@@ -95,33 +95,33 @@ cypress run [options]
 
 #### Options
 
-| Option                         | Description                                                                                                                                                                                                             |
-| ------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `--auto-cancel-after-failures` | [Overrides the Cloud project-level configuration to set the failed test threshold for auto cancellation or to disable auto cancellation when recording to the Cloud](#auto-cancel-after-runs)                           |
-| `--browser`, `-b`              | [Run Cypress in the browser with the given name. If a filesystem path is supplied, Cypress will attempt to use the browser at that path.](#cypress-run-browser-lt-browser-name-or-path-gt)                              |
-| `--ci-build-id`                | [Specify a unique identifier for a run to enable grouping or parallelization.](#cypress-run-ci-build-id-lt-id-gt)                                                                                                       |
-| `--component`                  | [Run component tests](/guides/core-concepts/testing-types#What-is-Component-Testing)                                                                                                                                    |
-| `--config`, `-c`               | [Specify configuration](#cypress-run-config-lt-config-gt)                                                                                                                                                               |
-| `--config-file`, `-C`          | [Specify configuration file](#cypress-run-config-file-lt-configuration-file-gt)                                                                                                                                         |
-| `--e2e`                        | Run end to end tests (default)                                                                                                                                                                                          |
-| `--env`, `-e`                  | [Specify environment variables](#cypress-run-env-lt-env-gt)                                                                                                                                                             |
-| `--group`                      | [Group recorded tests together under a single run](#cypress-run-group-lt-name-gt)                                                                                                                                       |
-| `--headed`                     | [Displays the browser instead of running headlessly](#cypress-run-headed)                                                                                                                                               |
-| `--headless`                   | [Hide the browser instead of running headed (default during `cypress run`)](#cypress-run-headless)                                                                                                                      |
-| `--help`, `-h`                 | Output usage information                                                                                                                                                                                                |
-| `--key`, `-k`                  | [Specify your secret record key](#cypress-run-record-key-lt-record-key-gt)                                                                                                                                              |
-| `--no-exit`                    | [Keep Cypress open after tests in a spec file run](#cypress-run-no-exit)                                                                                                                                                |
-| `--no-runner-ui`,              | [Hides the Cypress Runner UI](#cypress-run-no-runner-ui)                                                                                                                                                                |
-| `--parallel`                   | [Run recorded specs in parallel across multiple machines](#cypress-run-parallel)                                                                                                                                        |
-| `--port`,`-p`                  | [Override default port](#cypress-run-port-lt-port-gt)                                                                                                                                                                   |
-| `--project`, `-P`              | [Path to a specific project](#cypress-run-project-lt-project-path-gt)                                                                                                                                                   |
-| `--quiet`, `-q`                | If passed, Cypress output will not be printed to `stdout`. Only output from the configured [Mocha reporter](/guides/tooling/reporters) will print.                                                                      |
-| `--record`                     | [Whether to record the test run](#cypress-run-record-key-lt-record-key-gt)                                                                                                                                              |
-| `--reporter`, `-r`             | [Specify a Mocha reporter](#cypress-run-reporter-lt-reporter-gt)                                                                                                                                                        |
-| `--reporter-options`, `-o`     | [Specify Mocha reporter options](#cypress-run-reporter-lt-reporter-gt)                                                                                                                                                  |
-| `--runner-ui`,                 | [Displays the Cypress Runner UI. Useful for when [Test Replay](TODO: add test replay link) is enabled and you would still like the Cypress Runner UI to be displayed](#cypress-run-runner-ui) for screenshots and video |
-| `--spec`, `-s`                 | [Specify the spec files to run](#cypress-run-spec-lt-spec-gt)                                                                                                                                                           |
-| `--tag`, `-t`                  | [Identify a run with a tag or tags](#cypress-run-tag-lt-tag-gt)                                                                                                                                                         |
+| Option                         | Description                                                                                                                                                                                   |
+| ------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `--auto-cancel-after-failures` | [Overrides the Cloud project-level configuration to set the failed test threshold for auto cancellation or to disable auto cancellation when recording to the Cloud](#auto-cancel-after-runs) |
+| `--browser`, `-b`              | [Run Cypress in the browser with the given name. If a filesystem path is supplied, Cypress will attempt to use the browser at that path.](#cypress-run-browser-lt-browser-name-or-path-gt)    |
+| `--ci-build-id`                | [Specify a unique identifier for a run to enable grouping or parallelization.](#cypress-run-ci-build-id-lt-id-gt)                                                                             |
+| `--component`                  | [Run component tests](/guides/core-concepts/testing-types#What-is-Component-Testing)                                                                                                          |
+| `--config`, `-c`               | [Specify configuration](#cypress-run-config-lt-config-gt)                                                                                                                                     |
+| `--config-file`, `-C`          | [Specify configuration file](#cypress-run-config-file-lt-configuration-file-gt)                                                                                                               |
+| `--e2e`                        | Run end to end tests (default)                                                                                                                                                                |
+| `--env`, `-e`                  | [Specify environment variables](#cypress-run-env-lt-env-gt)                                                                                                                                   |
+| `--group`                      | [Group recorded tests together under a single run](#cypress-run-group-lt-name-gt)                                                                                                             |
+| `--headed`                     | [Displays the browser instead of running headlessly](#cypress-run-headed)                                                                                                                     |
+| `--headless`                   | [Hide the browser instead of running headed (default during `cypress run`)](#cypress-run-headless)                                                                                            |
+| `--help`, `-h`                 | Output usage information                                                                                                                                                                      |
+| `--key`, `-k`                  | [Specify your secret record key](#cypress-run-record-key-lt-record-key-gt)                                                                                                                    |
+| `--no-exit`                    | [Keep Cypress open after tests in a spec file run](#cypress-run-no-exit)                                                                                                                      |
+| `--no-runner-ui`,              | [Hides the Cypress Runner UI](#cypress-run-no-runner-ui)                                                                                                                                      |
+| `--parallel`                   | [Run recorded specs in parallel across multiple machines](#cypress-run-parallel)                                                                                                              |
+| `--port`,`-p`                  | [Override default port](#cypress-run-port-lt-port-gt)                                                                                                                                         |
+| `--project`, `-P`              | [Path to a specific project](#cypress-run-project-lt-project-path-gt)                                                                                                                         |
+| `--quiet`, `-q`                | If passed, Cypress output will not be printed to `stdout`. Only output from the configured [Mocha reporter](/guides/tooling/reporters) will print.                                            |
+| `--record`                     | [Whether to record the test run](#cypress-run-record-key-lt-record-key-gt)                                                                                                                    |
+| `--reporter`, `-r`             | [Specify a Mocha reporter](#cypress-run-reporter-lt-reporter-gt)                                                                                                                              |
+| `--reporter-options`, `-o`     | [Specify Mocha reporter options](#cypress-run-reporter-lt-reporter-gt)                                                                                                                        |
+| `--runner-ui`,                 | [Displays the Cypress Runner UI. Useful for when Test Replay is enabled and you would still like the Cypress Runner UI to be displayed for screenshots and video](#cypress-run-runner-ui)     |
+| `--spec`, `-s`                 | [Specify the spec files to run](#cypress-run-spec-lt-spec-gt)                                                                                                                                 |
+| `--tag`, `-t`                  | [Identify a run with a tag or tags](#cypress-run-tag-lt-tag-gt)                                                                                                                               |
 
 #### `cypress run --auto-cancel-after-failures <autoCancelAfterFailures>` {#auto-cancel-after-runs}
 
@@ -402,7 +402,7 @@ To force Cypress to render the Runner UI, use `--runner-ui`.
 cypress run --runner-ui
 ```
 
-Useful for when [Test Replay](TODO: add link to test replay) is enabled and you would still like the Runner UI to be rendered for screenshots and video.
+Useful for when [Test Replay](/guides/cloud/debugging/test-replay) is enabled and you would still like the Runner UI to be rendered for screenshots and video.
 
 #### `cypress run --spec <spec>` {#cypress-run-spec-lt-spec-gt}
 
