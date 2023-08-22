@@ -1,29 +1,29 @@
-import React from 'react'
 // Import the original mapper
-import MDXComponents from '@theme-original/MDXComponents'
-import AnatomyOfAnError from '@site/docs/partials/_anatomy-of-an-error.mdx'
-import Badge from '@site/src/components/badge'
-import ComponentOnlyBadge from '@site/src/components/component-only-badge'
-import CtBetaAlert from '@site/docs/partials/_CtBetaAlert.mdx'
-import CypressConfigFileTabs from '@site/src/components/cypress-config-file-tabs'
-import DefaultSelectorPriority from '@site/docs/partials/_default-selector-priority.mdx'
-import DocsImage from '@site/src/components/docs-image'
-import DocsVideo from '@site/src/components/docs-video'
-import DocumentDomainWorkaround from '@site/docs/partials/_document-domain-workaround.mdx'
-import E2EOnlyBadge from '@site/src/components/e2e-only-badge'
-import E2EOrCtTabs from '@site/src/components/e2e-or-ct-tabs'
-import VueSyntaxTabs from '@site/src/components/vue-syntax-tabs'
-import Icon from '@site/src/components/icon'
-import ImportMountFunctions from '@site/docs/partials/_import-mount-functions.mdx'
-import IntellisenseCodeCompletion from '@site/docs/partials/_intellisense-code-completion.mdx'
-import SupportFileConfiguration from '@site/docs/partials/_support-file-configuration.mdx'
-import Tabs from '@theme/Tabs'
-import TabItem from '@theme/TabItem'
-import ThenShouldAndDifference from '@site/docs/partials/_then-should-and-difference.mdx'
-import WarningPluginsFile from '@site/docs/partials/_warning-plugins-file.mdx'
-import WarningSetupNodeEvents from '@site/docs/partials/_warning-setup-node-events.mdx'
-import VideoRecordingSupportedBrowsers from '@site/docs/partials/_video-recording-supported-browsers.mdx'
-import Logo from '@site/src/components/logo'
+import MDXComponents from "@theme-original/MDXComponents";
+import AnatomyOfAnError from "@site/docs/partials/_anatomy-of-an-error.mdx";
+import Badge from "@site/src/components/badge";
+import ComponentOnlyBadge from "@site/src/components/component-only-badge";
+import CtBetaAlert from "@site/docs/partials/_CtBetaAlert.mdx";
+import TestReplayInfo from "@site/docs/partials/_test-replay-info.mdx";
+import CypressConfigFileTabs from "@site/src/components/cypress-config-file-tabs";
+import DefaultSelectorPriority from "@site/docs/partials/_default-selector-priority.mdx";
+import DocsImage from "@site/src/components/docs-image";
+import DocsVideo from "@site/src/components/docs-video";
+import DocumentDomainWorkaround from "@site/docs/partials/_document-domain-workaround.mdx";
+import E2EOnlyBadge from "@site/src/components/e2e-only-badge";
+import E2EOrCtTabs from "@site/src/components/e2e-or-ct-tabs";
+import VueSyntaxTabs from "@site/src/components/vue-syntax-tabs";
+import Icon from "@site/src/components/icon";
+import ImportMountFunctions from "@site/docs/partials/_import-mount-functions.mdx";
+import IntellisenseCodeCompletion from "@site/docs/partials/_intellisense-code-completion.mdx";
+import SupportFileConfiguration from "@site/docs/partials/_support-file-configuration.mdx";
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import ThenShouldAndDifference from "@site/docs/partials/_then-should-and-difference.mdx";
+import WarningPluginsFile from "@site/docs/partials/_warning-plugins-file.mdx";
+import WarningSetupNodeEvents from "@site/docs/partials/_warning-setup-node-events.mdx";
+import VideoRecordingSupportedBrowsers from "@site/docs/partials/_video-recording-supported-browsers.mdx"
+import Logo from "@site/src/components/logo";
 
 // Font Awesome
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -132,6 +132,7 @@ export default {
   SupportFileConfiguration,
   Tabs,
   TabItem,
+  TestReplayInfo,
   ThenShouldAndDifference,
   WarningPluginsFile,
   WarningSetupNodeEvents,

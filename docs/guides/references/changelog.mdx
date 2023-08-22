@@ -56,14 +56,14 @@ _Released 07/06/2023_
 
 **Features:**
 
-- Cypress Cloud users can now receive [desktop notifications](/guides/cloud/recorded-runs#Notifications) about their runs, including when one starts, finishes, or fails. Addresses [#26686](https://github.com/cypress-io/cypress/issues/26686).
+- Cypress Cloud users can now receive [desktop notifications](/guides/cloud/debugging/recorded-runs#Notifications) about their runs, including when one starts, finishes, or fails. Addresses [#26686](https://github.com/cypress-io/cypress/issues/26686).
 
 **Bugfixes:**
 
 - Fixed issues where commands would fail with the error `must only be invoked from the spec file or support file`. Fixes [#27149](https://github.com/cypress-io/cypress/issues/27149) and [#27163](https://github.com/cypress-io/cypress/issues/27163).
 - Fixed a regression introduced in Cypress [12.12.0](#12-12-0) where Cypress may fail to reconnect to the Chrome DevTools Protocol in Electron. Fixes [#26900](https://github.com/cypress-io/cypress/issues/26900).
 - Fixed an issue where chrome was not recovering from browser crashes properly. Fixes [#24650](https://github.com/cypress-io/cypress/issues/24650).
-- Fixed a race condition that was causing a GraphQL error to appear on the [Debug page](/guides/cloud/recorded-runs#Debug) when viewing a running Cypress Cloud build. Fixed in [#27134](https://github.com/cypress-io/cypress/pull/27134).
+- Fixed a race condition that was causing a GraphQL error to appear on the [Debug page](/guides/cloud/debugging/recorded-runs#Debug) when viewing a running Cypress Cloud build. Fixed in [#27134](https://github.com/cypress-io/cypress/pull/27134).
 - Fixed a race condition in electron where the test window exiting prematurely during the browser launch process was causing the whole test run to fail. Addressed in [#27167](https://github.com/cypress-io/cypress/pull/27167).
 - Fixed minor issues with Typescript types in the CLI. Fixes [#24110](https://github.com/cypress-io/cypress/issues/24110).
 - Fixed an issue where a value for the Electron debug port would not be respected if defined using the `ELECTRON_EXTRA_LAUNCH_ARGS` environment variable. Fixes [#26711](https://github.com/cypress-io/cypress/issues/26711).
@@ -176,7 +176,7 @@ _Released 05/23/2023_
 
 - Adds Git-related messages for the
   [Runs page](/guides/core-concepts/cypress-app#Runs) and
-  [Debug page](/guides/cloud/recorded-runs#Debug) when users aren't using Git or
+  [Debug page](/guides/cloud/debugging/recorded-runs#Debug) when users aren't using Git or
   there are no recorded runs for the current branch. Addresses
   [#26680](https://github.com/cypress-io/cypress/issues/26680).
 
@@ -348,7 +348,7 @@ _Released 03/28/2023_
 
 **Features:**
 
-- The [Debug page](/guides/cloud/recorded-runs#Debug) now allows for navigating
+- The [Debug page](/guides/cloud/debugging/recorded-runs#Debug) now allows for navigating
   between all runs recorded for a commit. Addresses
   [#25899](https://github.com/cypress-io/cypress/issues/25899) and
   [#26018](https://github.com/cypress-io/cypress/issues/26018).
@@ -405,7 +405,7 @@ _Released 03/14/2023_
 
 **Features:**
 
-- The [Debug page](/guides/cloud/recorded-runs#Debug) is now able to show
+- The [Debug page](/guides/cloud/debugging/recorded-runs#Debug) is now able to show
   real-time results from in-progress runs. Addresses
   [#25759](https://github.com/cypress-io/cypress/issues/25759).
 - Added the ability to control whether a request is logged to the command log
