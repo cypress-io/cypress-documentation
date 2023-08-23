@@ -160,9 +160,12 @@ h4 {
   padding-bottom: 0;
 }
 
-// distribute icons beside search input more evenly
 [class^='toggle_'] button {
   margin-left: 0.15rem;
+}
+
+.alert.alert--info {
+  margin-bottom: 2rem;
 }
 
 /* using attribute selector for these dynamic classes */
@@ -170,22 +173,10 @@ h4 {
   display: none;
 }
 
-.alert.alert--info {
-  margin-bottom: 2rem;
-}
-
 .alert.alert--info h2,
 h3 {
   border-bottom: none;
   padding-bottom: 0;
-}
-
-// ensure text links in admonitions have underline
-.alert.alert--info a {
-  border-bottom: 1px dotted var(--ifm-link-color);
-  &:hover {
-    border-bottom: 1px solid var(--ifm-link-color);
-  }
 }
 
 div[class^='announcementBar'] {
