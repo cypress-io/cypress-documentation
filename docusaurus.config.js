@@ -232,6 +232,10 @@ const config = {
                 label: 'Careers',
                 href: 'https://www.cypress.io/careers',
               },
+              {
+                label: 'Support',
+                href: 'https://www.cypress.io/support',
+              },
             ],
           },
         ],

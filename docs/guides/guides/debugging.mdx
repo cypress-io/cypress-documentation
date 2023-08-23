@@ -261,8 +261,8 @@ example, to run the equivalent of `cy.task('database', 123)` outside the normal
 execution command chain:
 
 ```javascript
-cy.now('task', 123).then(console.log)
-// runs cy.task(123) and prints the resolved value
+cy.now('task', 'database', 123).then(console.log)
+// runs cy.task('database', 123) and prints the resolved value
 ```
 
 :::caution

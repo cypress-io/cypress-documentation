@@ -1,6 +1,6 @@
 ---
 title: Recorded Runs
-sidebar_position: 40
+sidebar_position: 30
 ---
 
 Recorded runs capture the results from your test runs. Each specific area of
@@ -317,6 +317,12 @@ canceled by members of the project.
 
   <DocsImage src="/img/dashboard/cancel-run-error.png" alt="cancel-run-error" />
 
+:::tip
+
+&#8239<Icon name="check-circle" color="green" /> See our [Run Cancellation](/guides/cloud/smart-orchestration/run-cancellation) guide to learn how to improve developer resolution time, reduce your monthly CI bill and free up CI resources with `Auto Cancellation`.
+
+:::
+
 ## Archive run
 
 Runs that have been canceled or are in an errored state can be archived from
@@ -366,6 +372,23 @@ information about specific runs can be found on the
   alt="Specs"
 />
 
+### Runs
+
+This screen shows detailed information about the most recently recorded
+[test runs](#Latest-Runs) to Cypress Cloud, showing the latest first.
+
+The [Runs](/guides/core-concepts/cypress-app#Runs) page uses Git to show runs
+for your branch. If no runs are found for your current branch, all runs for your
+project are shown as a fallback. The title of each run is taken from the
+[git commit message](https://www.educative.io/edpresso/git-commit-message-simply-explained)
+for that change, and clicking on it will take you to the corresponding run page
+in Cypress Cloud.
+
+<DocsImage
+  src="/img/guides/core-concepts/cypress-app/recorded-runs.jpg"
+  alt="Recorded Runs"
+/>
+
 ### Debug
 
 The [Debug](/guides/core-concepts/cypress-app#Debug) page allows you to easily
@@ -377,3 +400,62 @@ Cloud - all without leaving the Cypress app.
   src="/img/guides/core-concepts/cypress-app/debug-page.png"
   alt="Debug"
 />
+
+### Notifications
+
+Cypress Cloud can notify you about recorded test runs on your branch directly in
+the app through system notifications.
+
+<DocsImage
+  src="/img/guides/cloud/runs/app-notification.jpg"
+  alt="App notification on macOS"
+/>
+
+Clicking the notification will take you to the [debug](#Debug) page in the
+Cypress app.
+
+:::info
+
+In-app notifications are available in Cypress `v12.17.0` and above and requires
+macOS or Linux. Windows support is coming soon.
+
+:::
+
+#### Configure Notifications
+
+To enable notifications, in the Cypress app, go to Settings, then down to Device
+Settings, and click the **Enable desktop notifications** button. Your system may
+then prompt you to allow notifications.
+
+<DocsImage
+  src="/img/guides/cloud/runs/enable-notifications.jpg"
+  alt="Enable notifications"
+/>
+
+You can receive notifications for the following events:
+
+- When a recorded run starts on your current commit in Cypress Cloud
+- When a recorded run starts to fail on your current commit in Cypress Cloud
+- And when a recorded run completes on your current commit in Cypress Cloud,
+  which you can customize the events to notify you when a run passes, fails, is
+  canceled or has an error.
+
+:::note
+
+Note: You will only receive notifications for runs that are running on the same
+commit that your current branch's head is on locally.
+
+:::
+
+Click the **Send test notification** button to test that notifications are
+working properly on your system.
+
+#### Troubleshooting Notifications
+
+If you are not receiving notifications, please check the following:
+
+- That the recorded run is being recorded to Cypress Cloud.
+- In your system settings, make sure that notifications are enabled for the
+  Cypress app.
+- That your local project is currently on the git commit that the test run being
+  recorded is sending notifications for.

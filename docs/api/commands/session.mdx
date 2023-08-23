@@ -116,7 +116,7 @@ before `setup` runs, regardless of the `testIsolation` configuration.
 | `validate`         | `undefined` | Validates the newly-created or restored session. Function to run immediately after the session is created and `setup` function runs or after a session is restored and the page is cleared. If it throws an exception, contains any failing Cypress command, returns a Promise which rejects or resolves to `false`, or the last Cypress command yielded `false`, the session is considered invalid.<br/><br/>- If validation fails immediately after `setup`, the test will fail.<br/>- If validation fails after restoring a session, `setup` will re-run. |
 | `cacheAcrossSpecs` | `false`     | When enabled, the newly created session is considered "global" and can be restored in any spec during the test execution in the same Cypress run on the same machine. Use this option for a session that will be used multiple times, across many specs.                                                                                                                                                                                                                                                                                                     |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
 
 - `cy.session()` yields `null`.
 

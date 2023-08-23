@@ -1,6 +1,7 @@
 ---
 title: Flaky Test Management
-sidebar_position: 70
+sidebar_position: 40
+sidebar_label: Flake Management
 ---
 
 By enabling [test retries](/guides/guides/test-retries), Cypress Cloud can
@@ -23,12 +24,9 @@ without any change to the code, but this time it passes.
 
 <strong>What are test retries?</strong>
 
-Cypress has the ability to automatically retry failed tests to mitigate flaky
-tests from failing entire test runs or CI builds.
-
-Test retries is **enabled by default** and will retry up to two times in run
-mode. You can
-[alter this behavior within the Cypress configuration](/guides/guides/test-retries#Configure-Test-Retries).
+Cypress has the ability to automatically
+[retry failed tests](/guides/guides/test-retries#Configure-Test-Retries) to
+mitigate flaky tests from failing entire test runs or CI builds.
 
 :::
 
@@ -166,9 +164,7 @@ while exhibiting flake as demonstrated below:
 
 :::
 
-Cypress Cloud can provide alerts via
-[GitHub](/guides/cloud/integrations/source-control/github) and
-[Slack integrations](/guides/cloud/integrations/slack), to further assist with
+Cypress Cloud can provide alerts via source control ([GitHub](/guides/cloud/integrations/source-control/github), [GitLab](/guides/cloud/integrations/source-control/gitlab), [BitBucket](/guides/cloud/integrations/source-control/bitbucket)), [Slack](/guides/cloud/integrations/slack), and [Microsoft Teams](/guides/cloud/integrations/teams) integrations to further assist with
 staying on top of flake occurrences.
 
 ### GitHub
