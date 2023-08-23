@@ -6,11 +6,11 @@ orbs:
 executors:
   node-executor:
     docker:
-      - image: cimg/node:16.15.1
+      - image: cimg/node:18.15.0
   with-chrome-and-firefox:
     resource_class: medium+
     docker:
-      - image: 'cypress/browsers:node16.13.2-chrome97-ff96'
+      - image: 'cypress/browsers:node18.12.0-chrome106-ff106'
 
 commands:
   docs-build:
