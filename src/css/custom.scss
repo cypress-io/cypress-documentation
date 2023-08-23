@@ -180,14 +180,6 @@ h3 {
   padding-bottom: 0;
 }
 
-// ensure text links in admonitions have underline
-.alert.alert--info a {
-  border-bottom: 1px dotted var(--ifm-link-color);
-  &:hover {
-    border-bottom: 1px solid var(--ifm-link-color);
-  }
-}
-
 div[class^='announcementBar'] {
   font-size: 1rem;
   font-weight: var(--ifm-font-weight-semibold);
