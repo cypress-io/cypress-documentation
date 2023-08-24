@@ -392,6 +392,13 @@
           "link": "https://github.com/joostvanwollingen/cypress-backoff",
           "keywords": ["retries", "backoff"],
           "badge": "community"
+        },
+        {
+          "name": "cypress-fixture-faker",
+          "description": "A Cypress plugin that enables faker functions in json fixture files.",
+          "link": "https://github.com/Zaista/cypress-fixture-faker",
+          "keywords": ["fixture", "faker"],
+          "badge": "community"
         }
       ]
     },
