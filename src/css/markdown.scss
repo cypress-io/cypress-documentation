@@ -81,11 +81,19 @@ div.markdown {
   @media screen and (max-width: 1024px) and (orientation: landscape) {
     a {
       border-bottom: 1px dotted var(--ifm-link-color);
+
+      &:hover {
+        border-bottom: 1px solid var(--ifm-link-color);
+      }
     }
   }
   @media screen and (max-width: 1024px) and (orientation: portrait) {
     a {
       border-bottom: 1px dotted var(--ifm-link-color);
+
+      &:hover {
+        border-bottom: 1px solid var(--ifm-link-color);
+      }
     }
   }
 }
