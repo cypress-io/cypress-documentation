@@ -24,6 +24,7 @@ import WarningPluginsFile from "@site/docs/partials/_warning-plugins-file.mdx";
 import WarningSetupNodeEvents from "@site/docs/partials/_warning-setup-node-events.mdx";
 import VideoRecordingSupportedBrowsers from "@site/docs/partials/_video-recording-supported-browsers.mdx"
 import Logo from "@site/src/components/logo";
+import CloudFreePlan from "@site/docs/partials/_cloud_free_plan.mdx";
 
 // Font Awesome
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -138,4 +139,5 @@ export default {
   WarningSetupNodeEvents,
   VideoRecordingSupportedBrowsers,
   Logo,
+  CloudFreePlan
 }
