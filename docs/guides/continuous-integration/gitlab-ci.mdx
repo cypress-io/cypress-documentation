@@ -78,7 +78,7 @@ stages:
   - test
 
 test:
-  image: cypress/browsers:node16.16.0-chrome107-ff107-edge
+  image: cypress/browsers:node18.12.0-chrome106-ff106
   stage: test
   script:
     # install dependencies
@@ -109,7 +109,7 @@ cache:
     - .npm/
 
 test:
-  image: cypress/browsers:node16.16.0-chrome107-ff107-edge
+  image: cypress/browsers:node18.12.0-chrome106-ff106
   stage: test
   script:
     # install dependencies
@@ -175,7 +175,7 @@ cache:
 
 ## Install NPM dependencies and Cypress
 install:
-  image: cypress/browsers:node16.16.0-chrome107-ff107-edge
+  image: cypress/browsers:node18.12.0-chrome106-ff106
   stage: build
   script:
     - npm ci
@@ -211,13 +211,13 @@ cache:
 
 ## Install NPM dependencies and Cypress
 install:
-  image: cypress/browsers:node16.16.0-chrome107-ff107-edge
+  image: cypress/browsers:node18.12.0-chrome106-ff106
   stage: build
   script:
     - npm ci
 
 ui-chrome-tests:
-  image: cypress/browsers:node16.16.0-chrome107-ff107-edge
+  image: cypress/browsers:node18.12.0-chrome106-ff106
   stage: test
   parallel: 5
   script:
