@@ -196,7 +196,7 @@ assertions.
 cy.readFile('some/nested/path/story.txt').should('eq', 'Once upon a time...')
 ```
 
-Starting in Cypress 13, `cy.readFile()` is a query, and will continue to read
+Starting in Cypress `v13`, `cy.readFile()` is a query, and will continue to read
 the file until all chained commands of any type pass, not just assertions.
 
 ```javascript

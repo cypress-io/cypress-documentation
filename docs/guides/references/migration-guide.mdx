@@ -5,24 +5,24 @@ title: Migration Guide
 ## Migrating to Cypress 13.0
 
 This guide details the changes and how to change your code to migrate to Cypress
-version 13.0.
+version 13.
 [See the full changelog for version v13.0](/guides/references/changelog#13-0-0).
 
 ### Cypress Cloud Test Replay
 
-[Test Replay](/guides/cloud/debugging/test-replay) is enabled by default in `v13.0` of the Cypress App.
+[Test Replay](/guides/cloud/debugging/test-replay) is enabled by default in `v13` of the Cypress App.
 
 You may need to allowlist `capture.cypress.io` if you work with a strict VPN. See our FAQ section about [VPN subdomain allowlisting](/faq/questions/cloud-faq#Im-working-with-a-restrictive-VPN-Which-subdomains-do-I-have-to-allow-on-my-VPN-for-Cypress-Cloud-to-work-properly).
 
 With Test Replay enabled, the Cypress Runner UI is hidden by default when recording a run to the Cloud. If the Runner UI is needed during the run, you can enable it by passing [`--runner-ui`](/guides/guides/command-line#cypress-run-runner-ui) to the [`cypress run`](/guides/guides/command-line#cypress-run) command.
 
-You can [opt out](/guides/cloud/debugging/test-replay#Opt-out-of-Test-Replay) of this feature in Cloud project-level settings.
+You can [opt-out](/guides/cloud/debugging/test-replay#Opt-out-of-Test-Replay) of this feature in Cloud project-level settings.
 
 ### Video updates
 
 #### `video` is set to `false` by default
 
-You can continue recording video, by passing `video: true`, if you want video locally or you want video for some other reason, like in non-Chromium browsers where [Test Replay](/guides/cloud/debugging/test-replay) is not available.
+You can continue recording video by setting `video` to `true` either in your Cypress configuration or via [overriding options](/guides/references/configuration#Overriding-Options). This can be useful if you want video locally or want video for some other reason, like in non-Chromium browsers where [Test Replay](/guides/cloud/debugging/test-replay) is not available.
 
 :::cypress-config-example
 
@@ -59,7 +59,7 @@ You can enable this with the `videoCompression` [configuration](/guides/referenc
 
 ### `cy.readFile()` is now a query command
 
-In Cypress 13, the [`.readFile()`](/api/commands/readFile) command is now a query.
+In Cypress `v13`, the [`.readFile()`](/api/commands/readFile) command is now a query.
 Tests written using it should continue to operate exactly as before; no changes
 are necessary.
 
@@ -70,7 +70,7 @@ chain fails. Assertions no longer have to be directly attached.
 cy.readFile(`users.json`).its('users.123.fullName').should('eq', 'John Doe')
 ```
 
-Beginning with Cypress 13, the above test will re-read the file until the file
+Beginning with Cypress `v13`, the above test will re-read the file until the file
 exists, it has the requested property, and it passes the assertion.
 
 In previous versions of Cypress, the above command would retry until the file

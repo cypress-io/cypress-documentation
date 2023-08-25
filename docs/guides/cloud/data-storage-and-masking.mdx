@@ -94,7 +94,7 @@ it('admin page loads', () => {
 
 #### Remove Cypress Command Log from screenshots
 
-Cypress offers an option to hide the Cypress Command Log from screenshots so that no information from that area will be captured in screenshots. [See `cy.screenshot` docs](/api/commands/screenshot#Arguments).
+Cypress offers an option to hide the Cypress Command Log from screenshots so that no information from that area will be captured in screenshots. See the [`cy.screenshot()`](/api/commands/screenshot#Arguments) command for more information.
 
 Add a control to your [support file](/guides/references/configuration#Testing-Type-Specific-Options) to set the default capture options for all screenshots.
 
@@ -141,7 +141,7 @@ You can pass `log: false` as an option to Cypress-specific commands in your test
 
 ##### Disable logging of XHR/Fetch requests
 
-By default, Cypress logs all requests that match any [`cy.intercept()`](/api/commands/intercept) in the Cypress Command Log, as well as all XMLHttpRequests and fetch requests. You can use `cy.intercept()` to disable these logs by passing `{ log: false }` in the second parameter. [See `cy.intercept()` docs.](/api/commands/intercept#Disabling-logs-for-a-request)
+By default, Cypress logs all requests that match any [`cy.intercept()`](/api/commands/intercept) in the Cypress Command Log, as well as all XMLHttpRequests and fetch requests. You can use `cy.intercept()` to disable these logs by passing `{ log: false }` in the second parameter. See the [`cy.intercept()`](/api/commands/intercept#Disabling-logs-for-a-request) command for more information.
 
 ```js
 before(() => {
