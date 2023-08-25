@@ -515,12 +515,12 @@ For instance given a URL: `https://google.com/search?q=cypress`
 
 When Cypress blocks a request made to a matching host, it will automatically
 send a `503` status code. As a convenience it also sets a
-`x-cypress-matched-blacklisted-host` header so you can see which rule it
+`x-cypress-matched-blocked-host` header so you can see which rule it
 matched.
 
 <DocsImage
   src="/img/guides/references/v10/blocked-host.png"
-  alt="Network tab of dev tools with analytics.js request selected and the response header highlighted"
+  alt="Network tab of dev tools showing blocked host"
 />
 
 ### devServer
