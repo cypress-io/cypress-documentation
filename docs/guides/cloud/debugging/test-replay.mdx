@@ -139,6 +139,10 @@ If you do not want to capture test data for replay and debugging purposes, simpl
 3. Check that Test Replay is enabled in Cypress Cloud project settings.
 4. Review the standard output of the test run to ensure there was not an error capturing Test Replay. If you encounter an error capturing Test Replay, please open an issue so that we can investigate.
 
+**CentOS users may see errors when using Test Replay**
+
+CentOS Linux 7 has an [end of life in 2024](https://blog.centos.org/2023/04/end-dates-are-coming-for-centos-stream-8-and-centos-linux-7/). We have had these users report issues when accessing Test Replay in Cypress Cloud. This could be due to GCC version compatibility with better-sqlite3. We recommend using CentOS 8 rather than 7, or try following the steps noted in this [installing better-sqlite3 on Centos 7 github issue](https://github.com/WiseLibs/better-sqlite3/issues/648#issuecomment-1000361827).
+
 ## Command Log Notes
 
 Cypress uses a powerful [command log](/guides/core-concepts/cypress-app#Command-Log) locally to display every command executed in your spec. The Cypress command log is visible during `cypress open` mode, but is also rendered ([headless](/guides/guides/command-line#Options)-ly) during `cypress run` so that it displays within captured screenshots or videos, to assist in debugging CI failures.
