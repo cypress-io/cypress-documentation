@@ -354,6 +354,12 @@ There is an important distinction between _session_ replay services (LogRocket, 
 
 Cypress Test Replay captures every detail of your test runs as they happen in CI. Remember, these tests are running in a headless manner on a virtual machine with no UI being rendered. Sometimes tests will error or fail indicating an issue in your application. Since Cypress Cloud is monitoring the health of your CI test suite, each Test Replay offers a chance to step back in time to analyze and leverage [time travel debugging](/guides/core-concepts/cypress-app#Time-traveling), network requests, console logs, JavaScript errors, and element rendering to address problems directly. This is incredibly valuable for developer and team productivity. No more hours wasted recreating CI issues on your local machine!
 
+### <Icon name="angle-right" /> How much does Test Replay cost?
+
+Nothing. It's free and included in all Cypress Cloud plans.
+
+<CloudFreePlan />
+
 ### <Icon name="angle-right" /> Does the replay reflect the real time it took for the test to run?
 
 Yes! The test is captured in Cypress Cloud as it executed in your CI run. That means the replay will show things like [slow typing](/api/cypress-api/keyboard-api#Slow-down-typing-by-increasing-the-keystroke-delay) or any [`cy.wait()`](/api/commands/wait) included in your test.
