@@ -76,6 +76,7 @@ Just like the [Command Line options](/guides/guides/command-line) for
 | `record`                  | _boolean_              | Whether to record the test run                                                                                                                                                                           |
 | `reporter`                | _string_               | Specify a [Mocha reporter](/guides/tooling/reporters)                                                                                                                                                    |
 | `reporterOptions`         | _object_               | Specify [Mocha reporter](/guides/tooling/reporters) options                                                                                                                                              |
+| `runnerUi`                | _boolean_              | Whether to display the Cypress Runner UI. Defaults to `false` when [Test Replay](/guides/cloud/debugging/test-replay) is enabled. Otherwise defaults to `true`.                                          |
 | `slowTestThreshold`       | _number_               | Time, in milliseconds, to consider a test "slow" during `cypress run`. A slow test will display in orange text in the default reporter.                                                                  |
 | `spec`                    | _string_               | Specify the specs to run, see examples below                                                                                                                                                             |
 | `tag`                     | _string_               | Identify a run with a tag or tags                                                                                                                                                                        |
@@ -181,14 +182,8 @@ tests results. A typical run could return something like this:
   "osVersion": "14.5.0",
   "runs": [{
     "error": null,
-    "hooks": [{
-      "hookName": "before each",
-      "title": [ "before each hook" ],
-      "body": "function () {\n  expect(true).to.be["true"];\n}"
-    }],
     "reporter": "spec",
     "reporterStats": {...},
-    "shouldUploadVideo": true,
     "spec": {...},
     "stats": {
       "suites": 1,
@@ -201,31 +196,21 @@ tests results. A typical run could return something like this:
       "endedAt": "2018-07-11T17:53:35.675Z",
       "duration": 1171
     },
+    "screenshots": [{
+      "name": null,
+      "takenAt": "2020-08-05T08:52:20.432Z",
+      "path": "User/janelane/my-app/cypress/screenshots/cy.js/test (failed).png",
+      "height": 720,
+      "width": 1280
+    }],
     "tests": [{
       "title": [ "test" ],
       "state": "failed",
-      "body": "function () {\n  expect(true).to.be["false"];\n}",
       "displayError": "AssertionError: expected true to be false\n' +
       '    at Context.eval (...cypress/e2e/cy.js:5:21",
       "attempts": [{
         "state": "failed",
-        "error": {
-          "message": "expected true to be false",
-          "name": "AssertionError",
-          "stack": "AssertionError: expected true to be false\n' +
-      '    at Context.eval (...cypress/e2e/cy.js:5:21"
-        },
-        "screenshots": [{
-          "name": null,
-          "takenAt": "2020-08-05T08:52:20.432Z",
-          "path": "User/janelane/my-app/cypress/screenshots/cy.js/test (failed).png",
-          "height": 720,
-          "width": 1280
-        }],
-        "startedAt": "2020-08-05T08:38:37.589Z",
-        "duration": 1171,
-        "videoTimestamp": 4486
-      }]
+      }],
     }],
     "video": "User/janelane/my-app/cypress/videos/abc123.mp4"
   }],

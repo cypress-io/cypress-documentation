@@ -223,6 +223,7 @@ Cloud.
 - `https://assets.cypress.io` - **Asset CDN** (Org logos, icons, videos,
   screenshots, etc.)
 - `https://authenticate.cypress.io` - **Authentication API**
+- `https://capture.cypress.io` - **Cypress Test Replay**
 - `https://cloud.cypress.io` - **Cypress Cloud**
 - `https://docs.cypress.io` - **Cypress documentation**
 - `https://download.cypress.io` - **CDN download of Cypress binary**
@@ -460,6 +461,12 @@ environment variable below during `cypress open` or `cypress run`.
 
 ```shell
 CYPRESS_NO_COMMAND_LOG=1 cypress run
+```
+
+You can also hide the entire Cypress Runner UI in `cypress run` by passing the [`--no-runner-ui`](/guides/guides/command-line#cypress-run-no-runner-ui) command line flag.
+
+```shell
+cypress run --no-runner-ui
 ```
 
 With this variable set, Cypress will skip rendering the Command Log entirely,
