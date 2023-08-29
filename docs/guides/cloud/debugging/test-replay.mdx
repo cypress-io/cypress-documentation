@@ -25,6 +25,8 @@ Test Replay currently supports Chromium-based browsers (Chrome, Edge, Electron) 
 
 Test Replay in Cypress Cloud allows developers to accurately and efficiently debug failed and flaky [continuous integration](/guides/continuous-integration/introduction) test runs. It captures every test run detail, enabling developers to replay it and inspect the DOM, network requests, console logs, JavaScript errors, and element rendering as they happened during `cypress run`.
 
+<DocsVideo src="https://vimeo.com/859069994" />
+
 ### Test Replay vs Screenshots and Videos
 
 Before Cypress `v13`, test failures in CI have historically been captured through screenshots, videos, and stack trace outputs, but these artifacts provide limited information. Developers often need more context to understand the root cause of failures, requiring them to reproduce the issue locally, which may not always be possible due to environmental or network conditions. This knowledge gap between test failures and debugging capabilities leads to increased debugging time and potentially deploying unresolved bugs to production.
@@ -69,11 +71,6 @@ Accessing the replay of your test is as simple as reviewing any other test artif
 ## Debugging With Test Replay
 
 Both options above display the Test Replay interface, which we'll unpack from top to bottom in more detail below.
-
-<DocsImage
-  src="/img/guides/cloud/test-replay/replay-demo.gif"
-  alt="Test Replay Demo"
-/>
 
 ### Run header
 
