@@ -25,6 +25,8 @@ Test Replay currently supports Chromium-based browsers (Chrome, Edge, Electron) 
 
 Test Replay in Cypress Cloud allows developers to accurately and efficiently debug failed and flaky [continuous integration](/guides/continuous-integration/introduction) test runs. It captures every test run detail, enabling developers to replay it and inspect the DOM, network requests, console logs, JavaScript errors, and element rendering as they happened during `cypress run`.
 
+<DocsVideo src="https://vimeo.com/859069994" />
+
 ### Test Replay vs Screenshots and Videos
 
 Before Cypress `v13`, test failures in CI have historically been captured through screenshots, videos, and stack trace outputs, but these artifacts provide limited information. Developers often need more context to understand the root cause of failures, requiring them to reproduce the issue locally, which may not always be possible due to environmental or network conditions. This knowledge gap between test failures and debugging capabilities leads to increased debugging time and potentially deploying unresolved bugs to production.
@@ -69,11 +71,6 @@ Accessing the replay of your test is as simple as reviewing any other test artif
 ## Debugging With Test Replay
 
 Both options above display the Test Replay interface, which we'll unpack from top to bottom in more detail below.
-
-<DocsImage
-  src="/img/guides/cloud/test-replay/replay-demo.gif"
-  alt="Test Replay Demo"
-/>
 
 ### Run header
 
@@ -139,9 +136,9 @@ If you do not want to capture test data for replay and debugging purposes, simpl
 3. Check that Test Replay is enabled in Cypress Cloud project settings.
 4. Review the standard output of the test run to ensure there was not an error capturing Test Replay. If you encounter an error capturing Test Replay, please open an issue so that we can investigate.
 
-**CentOS users may see errors when using Test Replay**
+**CentOS users may experience errors when using Test Replay**
 
-CentOS Linux 7 has an [end of life in 2024](https://blog.centos.org/2023/04/end-dates-are-coming-for-centos-stream-8-and-centos-linux-7/). We have had these users report issues when accessing Test Replay in Cypress Cloud. This could be due to GCC version compatibility with better-sqlite3. We recommend using CentOS 8 rather than 7, or try following the steps noted in this [installing better-sqlite3 on Centos 7 github issue](https://github.com/WiseLibs/better-sqlite3/issues/648#issuecomment-1000361827).
+CentOS Linux 7 has an [end of life in 2024](https://blog.centos.org/2023/04/end-dates-are-coming-for-centos-stream-8-and-centos-linux-7/). We have had these users report issues when accessing Test Replay in Cypress Cloud. This could be due to GCC version compatibility with better-sqlite3. We recommend using CentOS 8 rather than 7, or try following the steps noted in this [_installing better-sqlite3 on Centos 7_ Github Issue](https://github.com/WiseLibs/better-sqlite3/issues/648#issuecomment-1000361827).
 
 ## Command Log Notes
 
