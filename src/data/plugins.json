@@ -248,13 +248,6 @@
           "badge": "community"
         },
         {
-          "name": "cypress-dotenv",
-          "description": "Cypress plugin that enables compatibility with dotenv.",
-          "link": "https://github.com/morficus/cypress-dotenv",
-          "keywords": ["dotenv", "env", "environment", "env var"],
-          "badge": "community"
-        },
-        {
           "name": "cypress-har-generator",
           "description": "Generate HTTP Archive (HAR) while running tests.",
           "link": "https://github.com/NeuraLegion/cypress-har-generator",
@@ -1281,6 +1274,13 @@
           "link": "https://github.com/cypress-io/cypress/tree/develop/npm/xpath",
           "keywords": ["xpath", "commands"],
           "badge": "official"
+        },
+        {
+          "name": "cypress-dotenv",
+          "description": "Cypress plugin that enables compatibility with dotenv.",
+          "link": "https://github.com/morficus/cypress-dotenv",
+          "keywords": ["dotenv", "env", "environment", "env var"],
+          "badge": "community"
         }
       ]
     }
