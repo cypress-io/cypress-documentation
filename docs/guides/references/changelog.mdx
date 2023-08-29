@@ -8,20 +8,29 @@ _Released 08/29/2023_
 
 **Summary:**
 
-Test data collection for debugging in Cypress Cloud using [Test Replay](/guides/cloud/debugging/test-replay) is enabled by default, with an opt-out available in Cloud [project settings](/guides/cloud/debugging/test-replay#Opt-out-of-Test-Replay).
+When recording to Cypress Cloud, users now receive our newest feature: [Test Replay](/guides/cloud/debugging/test-replay). Test Replay brings the debugging experience you know and love from the Cypress app directly into your recorded tests in Cypress Cloud.
+
+Previously, trying to debug failures and flake in CI was painful and time consuming with only videos & screenshots. Test Replay provides a way to inspect the DOM, network events, and console logs of your application from your tests exactly as they ran in CI.
+
+Test Replay is available in all Cypress Cloud plans. To start using Test Replay, simply record a run to Cypress Cloud. Learn more in the [Test Replay documentation](/guides/cloud/debugging/test-replay).
 
 Test Replay now serves as the primary replacement for debugging via video. Video capture and `videoCompression` of captured video are now set to `false` by default and `videoUploadOnPasses` is removed.
 
-Read more about v13.0.0 in
-[our blog post](https://on.cypress.io/cypress-13-release).
+Read more about v13.0.0 in [our blog post](https://on.cypress.io/cypress-13-release).
 
 **Breaking Changes:**
 
-- The [`cy.readFile()`](/api/commands/readfile) command is now retry-able as a [query command](/guides/core-concepts/retry-ability). This should not affect any tests using it; the functionality is unchanged. However, it can no longer be overwritten using [`Cypress.Commands.overwrite()`](/api/cypress-api/custom-commands#Overwrite-Existing-Commands). Addressed in [#25595](https://github.com/cypress-io/cypress/pull/25595).
+:::info
+
+Refer to the [v13 Migration Guide](/guides/references/migration-guide#Migrating-to-Cypress-130) for help migrating your code.
+
+:::
+
 - The [`video`](/guides/references/configuration#Videos) configuration option now defaults to `false`. Addresses [#26157](https://github.com/cypress-io/cypress/issues/26157).
 - The [`videoCompression`](/guides/references/configuration#Videos) configuration option now defaults to `false`. Addresses [#26160](https://github.com/cypress-io/cypress/issues/26160).
 - The [`videoUploadOnPasses`](/guides/references/configuration#Videos) configuration option has been removed. Please see our [screenshots & videos guide](/guides/guides/screenshots-and-videos#Delete-videos-for-specs-without-failing-or-retried-tests) on how to accomplish similar functionality. Addresses [#26899](https://github.com/cypress-io/cypress/issues/26899).
-- The current spec path is now passed from the AUT iframe using a query parameter rather than a path segment. This allows for requests for assets at relative paths to be correctly forwarded to the dev server. Fixes [#26725](https://github.com/cypress-io/cypress/issues/26725).
+- Requests for assets at relative paths for component testing are now correctly forwarded to the dev server. Fixes [#26725](https://github.com/cypress-io/cypress/issues/26725).
+- The [`cy.readFile()`](/api/commands/readfile) command is now retry-able as a [query command](/guides/core-concepts/retry-ability). This should not affect any tests using it; the functionality is unchanged. However, it can no longer be overwritten using [`Cypress.Commands.overwrite()`](/api/cypress-api/custom-commands#Overwrite-Existing-Commands). Addressed in [#25595](https://github.com/cypress-io/cypress/pull/25595).
 - The deprecated configuration option `nodeVersion` has been removed. Addresses [#27016](https://github.com/cypress-io/cypress/issues/27016).
 - The properties and values returned by the [Module API](/guides/guides/module-api) and included in the arguments of handlers for the [`after:run`](/api/plugins/after-run-api) and [`after:spec`](/api/plugins/after-spec-api) have been changed to be more consistent. Addresses [#23805](https://github.com/cypress-io/cypress/issues/23805).
 - For Cypress Cloud runs with Test Replay enabled, the Cypress Runner UI is now hidden during the run since the Runner will be visible during Test Replay. As such, if video is recorded (which is now defaulted to `false`) during the run, the Runner will not be visible. In addition, if a runner screenshot (`cy.screenshot({ capture: runner })`) is captured, it will no longer contain the Runner.
