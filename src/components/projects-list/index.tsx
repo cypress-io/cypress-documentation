@@ -1,5 +1,4 @@
 import React from "react";
-// import s from "./style.module.css";
 import { PluginProps } from "./types";
 // @ts-ignore
 import projectsJSON from "@site/src/data/projects.json";
@@ -7,6 +6,7 @@ import projectsJSON from "@site/src/data/projects.json";
 export default function ProjectsList() {
   return (
     <>
+      Explore Cypress in the wild with these great projects!
       <article className="main-content-article">
         <ul>
           {projectsJSON.projects.map((project, index) => (
