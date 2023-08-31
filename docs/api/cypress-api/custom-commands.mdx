@@ -897,6 +897,33 @@ IntelliSense to show helpful documentation. See the
 [`cypress-example-todomvc`](https://github.com/cypress-io/cypress-example-todomvc#cypress-intellisense)
 repository for a working example.
 
+#### 6. Create a function that adds the custom command
+
+Cypress [12.17.4](/guides/references/changelog#12-17-4) includes a webpack upgrade (v4 to v5), which [tree shakes out](https://webpack.js.org/blog/2020-10-10-webpack-5-release/#inner-module-tree-shaking) any side-effects or files that only include side-effects.
+
+If you are using TypeScript and have `sideEffects:false` set in your package.json, custom Cypress commands will not be registered by the common pattern of writing the commands in one file and having them be run as a side effect of importing the file. For example:
+
+```typescript title="/cypress/support/commands.ts"
+Cypress.Commands.add("login", (email, password) => { ... })
+```
+
+```typescript title="/cypress/support/e2e.ts"
+import './commands'
+```
+
+To support `sideEffects:false`, you can wrap the Cypress commands in a function that will be imported by the support file.
+
+```typescript title="/cypress/support/commands.ts"
+export function registerCommands(){
+  Cypress.Commands.add("login", (email, password) => { ... })
+}
+```
+
+```typescript title="/cypress/support/e2e.ts"
+import { registerCommands } from './commands'
+registerCommands()
+```
+
 ## History
 
 | Version                                       | Changes                      |
