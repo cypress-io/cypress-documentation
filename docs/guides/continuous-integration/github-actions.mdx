@@ -185,7 +185,7 @@ on: push
 jobs:
   cypress-run:
     runs-on: ubuntu-22.04
-    container: cypress/browsers:node16.16.0-chrome107-ff107-edge
+    container: cypress/browsers:node18.12.0-chrome106-ff106
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -376,7 +376,6 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v5
         with:
-          build: npm run build
           record: true
           parallel: true
           start: npm start
@@ -425,8 +424,8 @@ are leveraging three useful features of
    to [Cypress Cloud](https://on.cypress.io/cloud):
 
    - In-depth and shareable
-     [test reports](/guides/cloud/recorded-runs#Latest-Runs).
-   - Visibility into test failures via quick access to error messages, stack
+     [test reports](/guides/cloud/debugging/recorded-runs#Latest-Runs).
+   - Visibility into test failures via quick access to [Test Replay](/guides/cloud/debugging/test-replay), error messages, stack
      traces, screenshots, videos, and contextual details.
    - [Integrating testing with the pull-request (PR) process](/guides/cloud/integrations/source-control/github)
      via

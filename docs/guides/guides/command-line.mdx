@@ -45,18 +45,6 @@ npx cypress run
 yarn cypress run
 ```
 
-...or...
-
-```
-$(npm bin)/cypress run
-```
-
-...or...
-
-```
-./node_modules/.bin/cypress run
-```
-
 You may find it easier to add the cypress command to the `scripts` object in
 your `package.json` file and call it from an
 [`npm run` script](https://docs.npmjs.com/cli/run-script.html).
@@ -123,6 +111,7 @@ cypress run [options]
 | `--help`, `-h`                 | Output usage information                                                                                                                                                                      |
 | `--key`, `-k`                  | [Specify your secret record key](#cypress-run-record-key-lt-record-key-gt)                                                                                                                    |
 | `--no-exit`                    | [Keep Cypress open after tests in a spec file run](#cypress-run-no-exit)                                                                                                                      |
+| `--no-runner-ui`,              | [Hides the Cypress Runner UI](#cypress-run-no-runner-ui)                                                                                                                                      |
 | `--parallel`                   | [Run recorded specs in parallel across multiple machines](#cypress-run-parallel)                                                                                                              |
 | `--port`,`-p`                  | [Override default port](#cypress-run-port-lt-port-gt)                                                                                                                                         |
 | `--project`, `-P`              | [Path to a specific project](#cypress-run-project-lt-project-path-gt)                                                                                                                         |
@@ -130,6 +119,7 @@ cypress run [options]
 | `--record`                     | [Whether to record the test run](#cypress-run-record-key-lt-record-key-gt)                                                                                                                    |
 | `--reporter`, `-r`             | [Specify a Mocha reporter](#cypress-run-reporter-lt-reporter-gt)                                                                                                                              |
 | `--reporter-options`, `-o`     | [Specify Mocha reporter options](#cypress-run-reporter-lt-reporter-gt)                                                                                                                        |
+| `--runner-ui`,                 | [Displays the Cypress Runner UI. Useful for when Test Replay is enabled and you would still like the Cypress Runner UI to be displayed for screenshots and video](#cypress-run-runner-ui)     |
 | `--spec`, `-s`                 | [Specify the spec files to run](#cypress-run-spec-lt-spec-gt)                                                                                                                                 |
 | `--tag`, `-t`                  | [Identify a run with a tag or tags](#cypress-run-tag-lt-tag-gt)                                                                                                                               |
 
@@ -311,6 +301,15 @@ access to **developer tools** after a `spec` has run.
 cypress run --headed --no-exit
 ```
 
+#### `cypress run --no-runner-ui` {#cypress-run-no-runner-ui}
+
+To prevent Cypress from rendering the Runner UI, use
+`--no-runner-ui`.
+
+```shell
+cypress run --no-runner-ui
+```
+
 #### `cypress run --parallel` {#cypress-run-parallel}
 
 Run recorded specs in
@@ -394,6 +393,16 @@ You can specify reporter options using the
 ```shell
 cypress run --reporter junit --reporter-options mochaFile=result.xml,toConsole=true
 ```
+
+#### `cypress run --runner-ui` {#cypress-run-runner-ui}
+
+To force Cypress to render the Runner UI, use `--runner-ui`.
+
+```shell
+cypress run --runner-ui
+```
+
+Useful for when [Test Replay](/guides/cloud/debugging/test-replay) is enabled and you would still like the Runner UI to be rendered for screenshots and video.
 
 #### `cypress run --spec <spec>` {#cypress-run-spec-lt-spec-gt}
 

@@ -392,6 +392,13 @@
           "link": "https://github.com/joostvanwollingen/cypress-backoff",
           "keywords": ["retries", "backoff"],
           "badge": "community"
+        },
+        {
+          "name": "cypress-fixture-faker",
+          "description": "A Cypress plugin that enables faker functions in json fixture files.",
+          "link": "https://github.com/Zaista/cypress-fixture-faker",
+          "keywords": ["fixture", "faker"],
+          "badge": "community"
         }
       ]
     },
@@ -584,6 +591,13 @@
           "description": "Simple commands to skip a test based on platform, browser or a url.",
           "link": "https://github.com/cypress-io/cypress-skip-test",
           "keywords": ["commands"],
+          "badge": "community"
+        },
+        {
+          "name": "Cypress-SignalR-Mock",
+          "description": "Easy way to publish messages from and to your SignalR hubs in Cypress E2E tests.",
+          "link": "https://github.com/JasonLandbridge/Cypress-SignalR-Mock",
+          "keywords": ["commands", "signalr", "mock", "websocket"],
           "badge": "community"
         },
         {
@@ -1048,7 +1062,7 @@
         {
           "name": "Cypress Image Snapshot",
           "description": "Catch visual regressions and compare image diffs locally and in Cypress Cloud.",
-          "link": "https://github.com/palmerhq/cypress-image-snapshot",
+          "link": "https://github.com/simonsmith/cypress-image-snapshot",
           "keywords": ["image-diff", "snapshot"],
           "badge": "community"
         },

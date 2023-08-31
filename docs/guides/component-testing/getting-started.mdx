@@ -29,6 +29,12 @@ Once Cypress has been installed you can launch Cypress using the following comma
 npx cypress open
 ```
 
+:::info
+
+You can also launch Cypress for a specific [Testing Type](/guides/core-concepts/testing-types) using either `--e2e` or in this case the `--component` [CLI Option](/guides/guides/command-line#Options).
+
+:::
+
 Next, the Cypress Launchpad will guide you through configuring your project.
 
 ## Configuring Component Testing
@@ -39,6 +45,12 @@ Whenever you run Cypress for the first time, the app will prompt you to set up
 either E2E Testing or Component Testing. Click on "Component Testing" to start
 the configuration wizard.
 
+:::info
+
+For more information on how to choose a testing type, we recommend this [Testing Types Guide](/guides/core-concepts/testing-types)
+
+:::
+
 <DocsImage
   src="/img/guides/component-testing/select-test-type.jpg"
   caption="Choose Component Testing"
@@ -46,7 +58,7 @@ the configuration wizard.
 
 ### Project Setup
 
-The Project Setup screen will automatically detect your framework and bundler.
+The Project Setup screen will automatically detect your framework and bundler. In this example we will use [React](https://react.dev/) and [Vite](https://vitejs.dev/).
 Click "Next Step" to continue.
 
 <DocsImage
@@ -80,7 +92,7 @@ list of all the changes it made to your project. Click "Continue".
 After setting up component testing, you will be at the browser selection screen.
 
 Pick the browser of your choice and click the "Start Component Testing" button
-to open the Cypress test runner.
+to open the Cypress App.
 
 <DocsImage
   src="/img/guides/component-testing/select-browser.jpg"
@@ -92,7 +104,7 @@ to open the Cypress test runner.
 At this point, your project is configured to use Cypress Component Testing. However, when the test runner appears, it won't find any specs because we haven't created
 any yet. Now we need write our first Component Test.
 
-<DocsImage src="/img/guides/component-testing/create-your-first-spec-cfc.jpg" />
+<DocsImage src="/img/guides/component-testing/create-your-first-spec-cfc.png" />
 
 ### Frameworks
 
@@ -101,23 +113,24 @@ Cypress currently has official mounting libraries for
 [Angular](/guides/component-testing/angular/overview),
 [Vue](/guides/component-testing/vue/overview), and
 [Svelte](/guides/component-testing/svelte/overview).
-In addition to our official framework support we also have many community plugins such as
+In addition to our official framework support there are many community plugins such as
 [Qwik](https://github.com/qwikifiers/cypress-qwik) and [Lit](https://github.com/redfox-mx/cypress-lit).
 
 ### Your First Component Test
 
-Though every framework is different and have their own unique nuances, in general, writing tests are very similar.
+Though every framework is different and has its own unique nuances, in general, writing tests is very similar.
 Let's look at how a basic test is written for a `StepperComponent`.
 
-:::note
-
 Let's assume the Stepper Component consists of two `buttons`, one used to **decrement** the counter and one
-to **increment** it as well as `span` tag sits in the middle of the buttons to show the
+to **increment** it as well as a `span` tag that sits in the middle of the buttons to show the
 current value of the counter.
+
+:::info
+To see examples of the Stepper Component and its tests in each Framework, visit our [Component Testing Quick Start Apps Repo](https://github.com/cypress-io/component-testing-quickstart-apps)
 
 :::
 
-<Tabs>
+<Tabs groupId="frameworks">
 <TabItem value="React" active>
 
 ```jsx
@@ -180,7 +193,7 @@ describe('Stepper', () => {
 ### Test Explanation
 
 Let's break down the spec. First, we import the `Stepper` component. Then, we
-organize our tests using the functions `describe` and `it`, which we allow us to
+organize our tests using the functions `describe` and `it`, which allows us to
 group tests into sections by using method blocks. These are global functions
 provided by Cypress, which means you don't have to import them directly to use
 them. The top-level `describe` block will be the container for all our tests in
@@ -206,11 +219,11 @@ Now it's time to see the test in action.
 ## Running the Test
 
 Switch back to the browser you opened for testing, and you should now see the
-**Stepper** Component in the spec list. Click it to see the spec execute.
+`Stepper` Component in the spec list. Click it to see the spec execute.
 
-<DocsImage src="/img/guides/component-testing/first-test-run-react.jpg" />
+<DocsVideo src="/img/snippets/specs-list.mp4" title="Specs List" />
 
-Our first test verifies the component can mount in it's default state without
+Our first test verifies the component can mount in its default state without
 any errors. If there is a runtime error during test execution, the test will
 fail, and you will see a stack trace pointing to the source of the problem.
 
@@ -244,7 +257,7 @@ method to verify it has the correct text value.
 
 Add the following test inside the `describe` block, right below the first test:
 
-<Tabs>
+<Tabs groupId="frameworks">
 <TabItem value="React" active>
 
 ```jsx
@@ -297,7 +310,7 @@ be less brittle to future changes.
 
 In the `Stepper` component, the `span` tag has a `data-cy` attribute on it:
 
-<Tabs>
+<Tabs groupId="frameworks">
 <TabItem value="React" active>
 
 ```jsx
@@ -331,7 +344,7 @@ In the `Stepper` component, the `span` tag has a `data-cy` attribute on it:
 We assign a unique id to the `data-cy` attribute that we can use for testing
 purposes. Update the test to use a CSS attribute selector to `cy.get()`:
 
-<Tabs>
+<Tabs groupId="frameworks">
 <TabItem value="React" active>
 
 ```jsx
@@ -380,11 +393,11 @@ more info on writing good selectors, see our guide
 
 ### Passing Props to Components
 
-We should also have a test to ensure the `initial` prop sets the count to
+We should also have a test to ensure the `count` prop sets the count to
 something else besides its default value of "0". We can pass in props to the
 `Stepper` component like so:
 
-<Tabs>
+<Tabs groupId="frameworks">
 <TabItem value="React" active>
 
 ```jsx
@@ -443,7 +456,7 @@ real user would.
 
 Add the following tests:
 
-<Tabs>
+<Tabs groupId="frameworks">
 <TabItem value="React" active>
 
 ```jsx
@@ -525,7 +538,7 @@ component and then consumers are then alerted to changes to the state.
 
 As the developer of the `Stepper` Component, you want to make sure when the
 end-user clicks the **increment** and **decrement** buttons, that the appropriate event is
-trigger with the proper values in the consuming component.
+triggered with the proper values in the consuming component.
 
 ### Using Spies
 
@@ -538,7 +551,7 @@ we expect.
 
 Let's set up the spies and bind them to the component:
 
-<Tabs>
+<Tabs groupId="frameworks">
 <TabItem value="React" active>
 
 ```jsx
@@ -619,4 +632,4 @@ Congratulations, you covered the basics for Component Testing
 with Cypress!
 
 To learn more about testing with Cypress, check out the
-[Introduction to Cypress](/guides/core-concepts/introduction-to-cypress) guide
+[Introduction to Cypress](/guides/core-concepts/introduction-to-cypress) guide.

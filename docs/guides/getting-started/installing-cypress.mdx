@@ -6,7 +6,7 @@ title: Installing Cypress
 
 ## <Icon name="graduation-cap" /> What you'll learn
 
-- How to install Cypress via `npm` or `yarn`
+- How to install Cypress via `npm`, `yarn` or `pnpm`
 - How to install Cypress via direct download
 - How to version and run Cypress via `package.json`
 
@@ -65,7 +65,7 @@ The recommended approach is to install Cypress with `npm` because:
 
 ### <Icon name="terminal" /> `yarn add`
 
-Installing Cypress via [`yarn`](https://yarnpkg.com):
+Installing Cypress via [`Yarn`](https://yarnpkg.com):
 
 ```shell
 cd /your/project/path
@@ -78,9 +78,28 @@ yarn add cypress --dev
 System proxy properties `http_proxy`, `https_proxy` and `no_proxy` are respected
 for the download of the Cypress binary.
 
+### <Icon name="terminal" /> `pnpm add`
+
+Installing Cypress via [`pnpm`](https://pnpm.io/):
+
+```shell
+cd /your/project/path
+```
+
+```shell
+pnpm add cypress -D
+```
+
+:::info
+
+You need to make sure that you have the `pnpm` environment installed locally.
+If not you need to install it: `npm install pnpm@latest -g`.
+
+:::
+
 ### <Icon name="download" /> Direct download
 
-If you're not using Node or `npm` in your project or you want to try Cypress out
+If you're not using Node or a package manager (`npm`, `pnpm` or `Yarn`) in your project or you want to try Cypress out
 quickly, you can always
 [download Cypress directly from our CDN](https://download.cypress.io/desktop).
 
@@ -143,11 +162,10 @@ application supports these operating systems:
 
 ### Node.js
 
-If you're using `npm` to install Cypress, we support:
+If you're using `npm`, `pnpm` or `Yarn` to install Cypress, we support:
 
-- **Node.js** 14.x
-- **Node.js** 16.x
-- **Node.js** 18.x and above
+- **Node.js** 18.x
+- **Node.js** 20.x and above
 
 Cypress generally aligns with
 [Node's release schedule](https://github.com/nodejs/Release).
