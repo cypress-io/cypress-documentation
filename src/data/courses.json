@@ -1,6 +1,22 @@
 {
   "courses": [
      {
+      "title": "Testing The Swag Store",
+      "url": "https://cypress.tips/courses/swag-store",
+      "author": "Gleb Bahmutov",
+      "authorTwitter": "bahmutov",
+      "sourceName": "Cypress.Tips",
+      "sourceUrl": "https://cypress.tips/"
+    },
+     {
+      "title": "Cypress Plugins",
+      "url": "https://cypress.tips/courses/cypress-plugins",
+      "author": "Gleb Bahmutov",
+      "authorTwitter": "bahmutov",
+      "sourceName": "Cypress.Tips",
+      "sourceUrl": "https://cypress.tips/"
+    },
+     {
       "title": "Cypress with TypeScript",
       "url": "https://testautomationu.applitools.com/cypress-with-typescript/",
       "author": "Filip Hric",
@@ -36,7 +52,7 @@
     },
     {
       "title": "Cypress Network Testing Exercises",
-      "url": "https://cypress.tips/courses",
+      "url": "https://cypress.tips/courses/network-testing",
       "author": "Gleb Bahmutov",
       "authorTwitter": "bahmutov",
       "sourceName": "Cypress.Tips",
