@@ -144,6 +144,14 @@ First, we break the pipeline up into reusable chunks of configuration using a
 [YAML anchor](https://support.atlassian.com/bitbucket-cloud/docs/yaml-anchors/),
 `&e2e`. This will be used by the worker jobs.
 
+:::info
+
+The following configuration using the `--parallel` and `--record` flags to
+[cypress run](/guides/guides/command-line#cypress-run) requires setting up
+recording test results to [Cypress Cloud](/guides/cloud/introduction).
+
+:::
+
 ```yaml
 image: cypress/base:18.12.1
 
@@ -155,7 +163,7 @@ e2e: &e2e
     - cypress
   script:
     - npm run start &
-    - npm run e2e:record -- --parallel --ci-build-id $BITBUCKET_BUILD_NUMBER
+    - npm run e2e:record -- --parallel --group UI-Chrome --ci-build-id $BITBUCKET_BUILD_NUMBER
   artifacts:
     # store any generates images and videos as artifacts
     - cypress/screenshots/**
@@ -214,7 +222,7 @@ e2e: &e2e
     - cypress
   script:
     - npm run start &
-    - npm run e2e:record -- --parallel --ci-build-id $BITBUCKET_BUILD_NUMBER
+    - npm run e2e:record -- --parallel --group UI-Chrome --ci-build-id $BITBUCKET_BUILD_NUMBER
   artifacts:
     # store any generates images and videos as artifacts
     - cypress/screenshots/**
@@ -244,43 +252,10 @@ definitions:
     cypress: $HOME/.cache/Cypress
 ```
 
-:::note
-
-The above configuration using the `--parallel` and `--record` flags to
-[cypress run](/guides/guides/command-line#cypress-run) requires setting up
-recording test results to [Cypress Cloud](https://on.cypress.io/cloud).
-
-:::
-
 ## Using Cypress Cloud with Bitbucket Pipelines
 
 In the Bitbucket Pipelines configuration we have defined in the previous
 section, we are leveraging three useful features of
-[Cypress Cloud](https://on.cypress.io/cloud):
+[Cypress Cloud](/guides/cloud/introduction):
 
-1. [Recording test results with the `--record` flag](https://on.cypress.io/how-do-i-record-runs)
-   to [Cypress Cloud](https://on.cypress.io/cloud):
-
-   - In-depth and shareable
-     [test reports](/guides/cloud/debugging/recorded-runs#Latest-Runs).
-   - Visibility into test failures via quick access to [Test Replay](/guides/cloud/debugging/test-replay), error messages, stack
-     traces, screenshots, videos, and contextual details.
-   - [Integrating testing with the pull-request process](/guides/cloud/integrations/source-control/bitbucket)
-     via
-     [commit status check guards](/guides/cloud/integrations/source-control/bitbucket#Status-checks)
-     and convenient
-     [pull request comments](/guides/cloud/integrations/source-control/bitbucket#Pull-Request-comments).
-   - [Detecting flaky tests](/guides/cloud/flaky-test-management) and surfacing
-     them via [Slack alerts](/guides/cloud/flaky-test-management#Slack) or
-     [Bitbucket PR status checks](/guides/cloud/integrations/source-control/bitbucket).
-
-2. [Parallelizing test runs](/guides/cloud/smart-orchestration/parallelization)
-   and optimizing their execution via
-   [intelligent load-balancing](/guides/cloud/smart-orchestration/load-balancing#Balance-strategy)
-   of test specs across CI machines with the `--parallel` flag.
-
-3. Organizing and consolidating multiple `cypress run` calls by labeled groups
-   into a single report within [Cypress Cloud](https://on.cypress.io/cloud). In
-   the example above we use the `--group "UI - Chrome"` flag to organize all UI
-   tests for the Chrome browser into a group labeled "UI - Chrome" in the
-   [Cypress Cloud](https://on.cypress.io/cloud) report.
+<CiProviderCloudSteps />

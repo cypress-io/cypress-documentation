@@ -25,6 +25,7 @@ import WarningSetupNodeEvents from "@site/docs/partials/_warning-setup-node-even
 import VideoRecordingSupportedBrowsers from "@site/docs/partials/_video-recording-supported-browsers.mdx"
 import Logo from "@site/src/components/logo";
 import CloudFreePlan from "@site/docs/partials/_cloud_free_plan.mdx";
+import CiProviderCloudSteps from "@site/docs/partials/_ci_provider_cloud_steps.mdx";
 
 // Font Awesome
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -139,5 +140,6 @@ export default {
   WarningSetupNodeEvents,
   VideoRecordingSupportedBrowsers,
   Logo,
-  CloudFreePlan
+  CloudFreePlan,
+  CiProviderCloudSteps
 }

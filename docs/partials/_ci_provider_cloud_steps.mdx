@@ -1,0 +1,31 @@
+<!---
+Ideally this whole content section would be a dynamic component with the provider as props.
+However a toc/render issue would prevent this from loading/displaying correctly on the page.
+https://github.com/facebook/docusaurus/issues/3915
+TODO: reuse this bulk of text for now until the Docusaurus v3 refactor.
+-->
+
+1. [Recording test results with the `--record` flag](https://on.cypress.io/how-do-i-record-runs)
+   to Cypress Cloud.
+
+   - In-depth and shareable
+     [test reports](/guides/cloud/debugging/recorded-runs#Latest-Runs).
+   - Visibility into test failures via quick access to [Test Replay](/guides/cloud/debugging/test-replay), error messages, stack
+     traces, screenshots, videos, and contextual details.
+   - [Integrating testing with the pull-request (PR) process](/guides/cloud/integrations/source-control/github)
+     via
+     [commit status check guards](/guides/cloud/integrations/source-control/github#Status-checks)
+     and convenient
+     [test report comments](/guides/cloud/integrations/source-control/github#Pull-request-comments).
+   - [Detecting flaky tests](/guides/cloud/flaky-test-management) and surfacing
+     them via [Slack alerts](/guides/cloud/flaky-test-management#Slack) or
+     [GitHub PR status checks](/guides/cloud/flaky-test-management#GitHub).
+
+2. [Parallelizing test runs](/guides/cloud/smart-orchestration/parallelization)
+   and optimizing their execution via
+   [intelligent load-balancing](/guides/cloud/smart-orchestration/load-balancing#Balance-strategy)
+   of test specs across CI machines with the `--parallel` flag.
+
+3. Organizing and consolidating multiple `cypress run` calls by labeled groups
+   into a single report within [Cypress Cloud](https://on.cypress.io/cloud). In
+   the example above we use the `--group UI-Chrome` flag to organize all UI tests for the Chrome browser into a group labeled "UI-Chrome" inside the Cypress Cloud report.
