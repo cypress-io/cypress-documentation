@@ -145,7 +145,7 @@ First, we break the pipeline up into reusable chunks of configuration using a
 `&e2e`. This will be used by the worker jobs.
 
 ```yaml
-image: cypress/base:14.16.0
+image: cypress/base:18.12.1
 
 ## job definition for running E2E tests in parallel
 e2e: &e2e
@@ -204,7 +204,7 @@ definitions:
 The complete `bitbucket-pipelines.yml` is below:
 
 ```yaml
-image: cypress/base:14.16.0
+image: cypress/base:18.12.1
 
 ## job definition for running E2E tests in parallel
 e2e: &e2e
@@ -262,8 +262,8 @@ section, we are leveraging three useful features of
    to [Cypress Cloud](https://on.cypress.io/cloud):
 
    - In-depth and shareable
-     [test reports](/guides/cloud/recorded-runs#Latest-Runs).
-   - Visibility into test failures via quick access to error messages, stack
+     [test reports](/guides/cloud/debugging/recorded-runs#Latest-Runs).
+   - Visibility into test failures via quick access to [Test Replay](/guides/cloud/debugging/test-replay), error messages, stack
      traces, screenshots, videos, and contextual details.
    - [Integrating testing with the pull-request process](/guides/cloud/integrations/source-control/bitbucket)
      via

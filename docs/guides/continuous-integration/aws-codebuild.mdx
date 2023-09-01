@@ -186,7 +186,7 @@ batch:
   build-list:
     - identifier: cypress-e2e-tests
       env:
-        image: public.ecr.aws/cypress-io/cypress/browsers:node16.14.2-slim-chrome100-ff99-edge
+        image: public.ecr.aws/cypress-io/cypress/browsers:node18.12.0-chrome106-ff106
 
 phases:
   install:
@@ -436,8 +436,8 @@ are leveraging three useful features of
    to [Cypress Cloud](https://on.cypress.io/cloud):
 
    - In-depth and shareable
-     [test reports](/guides/cloud/recorded-runs#Latest-Runs).
-   - Visibility into test failures via quick access to error messages, stack
+     [test reports](/guides/cloud/debugging/recorded-runs#Latest-Runs).
+   - Visibility into test failures via quick access to [Test Replay](/guides/cloud/debugging/test-replay), error messages, stack
      traces, screenshots, videos, and contextual details.
    - [Integrating testing with the pull-request (PR) process](/guides/cloud/integrations/source-control/github)
      via
