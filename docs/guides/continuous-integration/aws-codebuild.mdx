@@ -291,10 +291,11 @@ Cypress locally and in CI, which are built with Google Chrome and Firefox. This
 allows us to run the tests in Firefox by passing the `--browser firefox`
 attribute to `cypress run`.
 
-:::note
+:::info
 
-The following configuration with `--parallel` and `--record` options to Cypress
-requires a subscription to [Cypress Cloud](https://on.cypress.io/cloud).
+The following configuration using the `--parallel` and `--record` flags to
+[cypress run](/guides/guides/command-line#cypress-run) requires setting up
+recording test results to [Cypress Cloud](/guides/cloud/introduction).
 
 :::
 
@@ -309,8 +310,7 @@ The fields are delimited by a pipe (`|`) character as follows:
 ```yaml
 ## Group Name | Browser | Specs | Cypress Configuration options (optional)
 
-'UI - Chrome -
-Mobile|chrome|cypress/tests/ui/*|viewportWidth=375,viewportHeight=667'
+'UI-Chrome-Mobile|chrome|cypress/tests/ui/*|viewportWidth=375,viewportHeight=667'
 ```
 
 The `build-matrix` will run all permutations delimited items.
@@ -325,13 +325,11 @@ batch:
         # ...
         variables:
           CY_GROUP_SPEC:
-            - 'UI - Chrome|chrome|cypress/tests/ui/*'
-            - 'UI - Chrome -
-              Mobile|chrome|cypress/tests/ui/*|viewportWidth=375,viewportHeight=667'
+            - 'UI-Chrome|chrome|cypress/tests/ui/*'
+            - 'UI-Chrome-Mobile|chrome|cypress/tests/ui/*|viewportWidth=375,viewportHeight=667'
             - 'API|chrome|cypress/tests/api/*'
-            - 'UI - Firefox|firefox|cypress/tests/ui/*'
-            - 'UI - Firefox -
-              Mobile|firefox|cypress/tests/ui/*|viewportWidth=375,viewportHeight=667'
+            - 'UI-Firefox|firefox|cypress/tests/ui/*'
+            - 'UI-Firefox-Mobile|firefox|cypress/tests/ui/*|viewportWidth=375,viewportHeight=667'
 ```
 
 During the install phase, we utilize shell scripting with the
@@ -430,7 +428,7 @@ are still facing issues after this, please
 
 In the AWS CodeBuild configuration we have defined in the previous section, we
 are leveraging three useful features of
-[Cypress Cloud](https://on.cypress.io/cloud):
+[Cypress Cloud](/guides/cloud/introduction):
 
 <CiProviderCloudSteps />
 

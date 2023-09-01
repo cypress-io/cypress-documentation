@@ -144,6 +144,14 @@ First, we break the pipeline up into reusable chunks of configuration using a
 [YAML anchor](https://support.atlassian.com/bitbucket-cloud/docs/yaml-anchors/),
 `&e2e`. This will be used by the worker jobs.
 
+:::info
+
+The following configuration using the `--parallel` and `--record` flags to
+[cypress run](/guides/guides/command-line#cypress-run) requires setting up
+recording test results to [Cypress Cloud](/guides/cloud/introduction).
+
+:::
+
 ```yaml
 image: cypress/base:18.12.1
 
@@ -155,7 +163,7 @@ e2e: &e2e
     - cypress
   script:
     - npm run start &
-    - npm run e2e:record -- --parallel --ci-build-id $BITBUCKET_BUILD_NUMBER
+    - npm run e2e:record -- --parallel --group UI-Chrome --ci-build-id $BITBUCKET_BUILD_NUMBER
   artifacts:
     # store any generates images and videos as artifacts
     - cypress/screenshots/**
@@ -214,7 +222,7 @@ e2e: &e2e
     - cypress
   script:
     - npm run start &
-    - npm run e2e:record -- --parallel --ci-build-id $BITBUCKET_BUILD_NUMBER
+    - npm run e2e:record -- --parallel --group UI-Chrome --ci-build-id $BITBUCKET_BUILD_NUMBER
   artifacts:
     # store any generates images and videos as artifacts
     - cypress/screenshots/**
@@ -244,18 +252,10 @@ definitions:
     cypress: $HOME/.cache/Cypress
 ```
 
-:::note
-
-The above configuration using the `--parallel` and `--record` flags to
-[cypress run](/guides/guides/command-line#cypress-run) requires setting up
-recording test results to [Cypress Cloud](https://on.cypress.io/cloud).
-
-:::
-
 ## Using Cypress Cloud with Bitbucket Pipelines
 
 In the Bitbucket Pipelines configuration we have defined in the previous
 section, we are leveraging three useful features of
-[Cypress Cloud](https://on.cypress.io/cloud):
+[Cypress Cloud](/guides/cloud/introduction):
 
 <CiProviderCloudSteps />

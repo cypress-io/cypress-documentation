@@ -43,7 +43,7 @@ test:
     - npm run e2e
 ```
 
-:::info
+:::tip
 
 <strong>Try it out</strong>
 
@@ -191,6 +191,14 @@ The addition of the
 configuration of a job will allow us to run multiples instances of Cypress at
 same time.
 
+:::info
+
+The following configuration using the `--parallel` and `--record` flags to
+[cypress run](/guides/guides/command-line#cypress-run) requires setting up
+recording test results to [Cypress Cloud](/guides/cloud/introduction).
+
+:::
+
 ```yaml
 stages:
   - build
@@ -226,21 +234,13 @@ ui-chrome-tests:
     # start the server in the background
     - npm start &
     # run Cypress tests in parallel
-    - npx cypress run --record --parallel --browser chrome --group "UI - Chrome"
+    - npx cypress run --record --parallel --browser chrome --group UI-Chrome
 ```
-
-:::note
-
-The above configuration using the `--parallel` and `--record` flags to
-[cypress run](/guides/guides/command-line#cypress-run) requires setting up
-recording test results to [Cypress Cloud](https://on.cypress.io/cloud).
-
-:::
 
 ## Using Cypress Cloud with GitLab CI/CD
 
 In the GitLab CI configuration we have defined in the previous section, we are
 leveraging three useful features of
-[Cypress Cloud](https://on.cypress.io/cloud):
+[Cypress Cloud](/guides/cloud/introduction):
 
 <CiProviderCloudSteps />
