@@ -56,7 +56,7 @@ options for advanced workflows.
 
 <strong>GitHub Action Version Number</strong>
 
-We recommend binding to the action's latest major version by specifying `v5`
+We recommend binding to the action's latest major version by specifying `v6`
 when using the action.
 
 :::
@@ -67,13 +67,13 @@ For Example:
 jobs:
   cypress-run:
     steps:
-      uses: cypress-io/github-action@v5
+      uses: cypress-io/github-action@v6
 ```
 
 Alternatively, as a mitigation strategy for unforeseen breaks, bind to a
 specific
 [release version tag](https://github.com/cypress-io/github-action/releases), for
-example `cypress-io/github-action@v5.1.0`. Read the
+example `cypress-io/github-action@v6.1.0`. Read the
 [Cypress GitHub Action documentation](https://github.com/cypress-io/github-action#action-version)
 for more information.
 
@@ -100,7 +100,7 @@ jobs:
       # Install NPM dependencies, cache them correctly
       # and run all Cypress tests
       - name: Cypress run
-        uses: cypress-io/github-action@v5
+        uses: cypress-io/github-action@v6
         with:
           build: npm run build
           start: npm start
@@ -145,7 +145,7 @@ the above example to select Chrome instead of the default browser Electron, add
 
 ```yaml
 - name: Cypress run
-  uses: cypress-io/github-action@v5
+  uses: cypress-io/github-action@v6
   with:
     build: npm run build
     start: npm start
@@ -190,7 +190,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Cypress run
-        uses: cypress-io/github-action@v5
+        uses: cypress-io/github-action@v6
         with:
           build: npm run build
           start: npm start
@@ -231,7 +231,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Cypress install
-        uses: cypress-io/github-action@v5
+        uses: cypress-io/github-action@v6
         with:
           # Disable running of tests within install job
           runTests: false
@@ -258,7 +258,7 @@ jobs:
           path: build
 
       - name: Cypress run
-        uses: cypress-io/github-action@v5
+        uses: cypress-io/github-action@v6
         with:
           start: npm start
           browser: chrome
@@ -324,7 +324,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Cypress install
-        uses: cypress-io/github-action@v5
+        uses: cypress-io/github-action@v6
         with:
           # Disable running of tests within install job
           runTests: false
@@ -374,7 +374,7 @@ jobs:
           name: build
 
       - name: Cypress run
-        uses: cypress-io/github-action@v5
+        uses: cypress-io/github-action@v6
         with:
           record: true
           parallel: true
@@ -490,7 +490,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Cypress run
-        uses: cypress-io/github-action@v5
+        uses: cypress-io/github-action@v6
         with:
           record: true
         env:
@@ -517,7 +517,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Cypress run
-        uses: cypress-io/github-action@v5
+        uses: cypress-io/github-action@v6
         with:
           record: true
         env:
