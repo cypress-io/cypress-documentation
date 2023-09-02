@@ -52,7 +52,7 @@ options for advanced workflows.
 
 ### Version Number Selection
 
-:::info
+:::tip
 
 <strong>GitHub Action Version Number</strong>
 
@@ -378,6 +378,7 @@ jobs:
         with:
           record: true
           parallel: true
+          group: 'UI-Chrome'
           start: npm start
 ```
 
@@ -418,7 +419,7 @@ the browser is consistent during an image upgrade.
 
 In the GitHub Actions configuration, we have defined in the previous section, we
 are leveraging three useful features of
-[Cypress Cloud](https://on.cypress.io/cloud):
+[Cypress Cloud](/guides/cloud/introduction):
 
 1. [Recording test results with the `record: true` option](https://on.cypress.io/how-do-i-record-runs)
    to [Cypress Cloud](https://on.cypress.io/cloud):
@@ -443,7 +444,7 @@ are leveraging three useful features of
 
 3. Organizing and consolidating multiple `cypress run` calls by labeled groups
    into a single report within [Cypress Cloud](https://on.cypress.io/cloud). In
-   the example above, we use the `group: "UI - Chrome"` option to organize all
+   the example above, we use the `group: "UI-Chrome"` option to organize all
    UI tests for the Chrome browser into a group labeled "UI - Chrome" in the
    [Cypress Cloud](https://on.cypress.io/cloud) report.
 
@@ -526,7 +527,7 @@ jobs:
           COMMIT_INFO_SHA: ${{github.event.pull_request.head.sha}}
 ```
 
-:::info
+:::tip
 
 We also recommend adding `COMMIT_INFO_SHA` to re-enable
 [Cypress bot PR comments](https://on.cypress.io/github#Pull-request-comments).
