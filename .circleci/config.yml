@@ -5,7 +5,7 @@ orbs:
 
 executors:
   node-executor:
-    resource_class: medium+
+    resource_class: large
     docker:
       - image: cimg/node:18.15.0
   with-chrome-and-firefox:
