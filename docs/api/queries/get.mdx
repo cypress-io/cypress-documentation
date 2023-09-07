@@ -143,6 +143,12 @@ cy.get('form').within(() => {
 })
 ```
 
+#### Find an anchor element by it's label/text, remove some attribute and click it
+
+```javascript
+cy.get("a", { name: "My link text" }).invoke("removeAttr", "target").click();
+```
+
 ### Get vs Find
 
 The `cy.get` command always starts its search from the
