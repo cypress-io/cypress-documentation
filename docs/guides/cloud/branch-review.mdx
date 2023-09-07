@@ -3,9 +3,11 @@ title: Branch Review
 sidebar_position: 35
 ---
 
-Cypress Branch Review is designed to elevate your pull request (PR) review workflow. It allows you to quickly identify the impact a pull request might have on your test suite in a single view. Compare which tests are failing, flaky, pending, added, or modified between the **<u>source</u>** and **<u>base</u>** branches.
+Cypress Cloud users can review which tests in their current branch are failed, flaky, pending, added, or modified compared to their base branch.
 
 Previously, pinpointing changes in your test suite's results required a manual side-by-side comparison between your newly-introduced branch's test runs and your base branch's test runs. This sub-optimal workflow often fails to answer the fundamental questions, _what changed_ and _why?_ You might be left wondering if the same tests are flaky between branches, when new failures were introduced, or if you added sufficient test coverage to your new branch.
+
+Cypress Branch Review is designed to elevate your pull request (PR) review workflow. It allows you to quickly identify the impact a pull request might have on your test suite in a single view. Compare which tests are failing, flaky, pending, added, or modified between the **<u>source</u>** and **<u>base</u>** branches and prevent the merging of low-quality code.
 
 <DocsImage
   src="/img/guides/cloud/branch-review/branch-review3.jpg"
@@ -14,9 +16,41 @@ Previously, pinpointing changes in your test suite's results required a manual s
 
 :::info
 
-Cypress Branch Review is currently only available for GitHub integrations. We are working on adding support for GitLab and Bitbucket soon.
+Cypress Branch Review is currently only available for [GitHub integrations](/guides/cloud/integrations/source-control/github). We are working on adding support for GitLab and Bitbucket soon.
 
 :::
+
+## Public Beta Access
+
+:::tip
+
+To access the Branch Review public beta, an admin can simply enable it under "Cypress Labs" in your Organization Settings in Cypress Cloud.
+
+<DocsImage
+  src="/img/guides/cloud/branch-review/labs_beta.png"
+  alt="Enable Branch Review Beta"
+/>
+
+:::
+
+## How Does Branch Review Work?
+
+Branch Review works by leveraging the Cypress Cloud Github integration and queries the Github API for open pull requests on active branches.
+
+### Note on Available Data
+
+Branch Review is a powerful tool to compare two branches with recorded runs to Cypress Cloud. There are factors that can impact what is available to review between a source and base branch.
+
+Most importanly, unless a PR is open (not closed or merged), the branch review is not guaranteed to show you the latest run recorded for the branch. When a PR transitions into a closed/merged state, it does not consider any subsequent commits pushed to the branch as part of the PR itself.
+
+Additionally, whether or not a branch has a run recorded to Cypress Cloud will affect what is displayed. The table below captures each scenario:
+
+|              Base Branch              |             Source Branch             | What Branch Review Displays                         |
+| :-----------------------------------: | :-----------------------------------: | --------------------------------------------------- |
+| <Badge type="success">has run</Badge> | <Badge type="success">has run</Badge> | Comparison data using both found runs               |
+| <Badge type="success">has run</Badge> |  <Badge type="danger">no run</Badge>  | Comparison data using last run on source branch     |
+|  <Badge type="danger">no run</Badge>  | <Badge type="success">has run</Badge> | Non-comparison data with found source run           |
+|  <Badge type="danger">no run</Badge>  |  <Badge type="danger">no run</Badge>  | Non-comparison data using last run on source branch |
 
 ## Getting Started
 
@@ -33,8 +67,6 @@ To access Branch Review, navigate to the **Branches** tab in the left sidebar an
 
 ### View Options
 
-_todo: add note about setup/run recording which impacts default view_
-
 Branch Review is the default view of the **Branches** tab. You can also toggle to see a list of Runs filtered by this branch.
 
 <DocsImage
@@ -44,11 +76,11 @@ Branch Review is the default view of the **Branches** tab. You can also toggle t
 
 ### Review Header
 
-The header includes the Git commit message, PR selector, PR status and base and target branch indicators with the Cypress Cloud test run ID number (#).
+The header includes the Git commit message, PR selector, PR status and base and target branch labels with the Cypress Cloud test run ID number (#).
 
 If there are multiple pull requests open for the same branch, you can select the pull request you want to review from the dropdown to the right of the commit message.
 
-Clicking the branch indicators will link you directly to the appropriate [test overview](/guides/cloud/recorded-runs#Overview-tab) and hovering on these elements exposes additional test meta data.
+Clicking the branch label will link you directly to the appropriate [run overview](/guides/cloud/debugging/recorded-runs#Overview-tab) and hovering on these elements exposes additional run meta data.
 
 <DocsImage
   src="/img/guides/cloud/branch-review/branch-review-header.jpg"
@@ -57,7 +89,7 @@ Clicking the branch indicators will link you directly to the appropriate [test o
 
 ### Review Test Status
 
-When on the review screen, you will see tabs Failures, Flaky, Pending, Added, and Modified. Each tab will show you the tests that fall into that category. You can click on a test to view the test details.
+When on the review screen, you will see tabs Failures, Flaky, Pending, Added, and Modified. Each tab will show you the specs that fall into that category. You can click on a test to view the test details.
 
 <DocsImage
   src="/img/guides/cloud/branch-review/branch-review-details2.jpg"
@@ -67,8 +99,9 @@ When on the review screen, you will see tabs Failures, Flaky, Pending, Added, an
 
 :::info
 
-The status key in each of the tabs indicates:
+The status key indicates a change in state between the two branches:
 
+<!-- prettier-ignore-start -->
 - <svg
     width="41"
     height="20"
@@ -89,7 +122,7 @@ The status key in each of the tabs indicates:
       fill="#C62B49"
     />
   </svg>
-  total number increased in your branch
+  total number introduced in your branch
 - <svg
     width="41"
     height="20"
@@ -110,20 +143,28 @@ The status key in each of the tabs indicates:
       fill="#00814D"
     />
   </svg>
-  total number decreased in your branch
-- &nbsp;<svg width="34" height="20" viewBox="0 0 34 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M17.9893 15V12.9492H13.0332V11.835L17.3604 5.13574H19.1787V11.8691H20.5732V12.9492H19.1787V15H17.9893ZM14.25 11.8691H17.9893V6.18848H17.9482L14.25 11.8418V11.8691Z" fill="#747994"/>
-<path d="M1 20V0H-1V20H1Z" fill="#E1E3ED" mask="url(#path-1-inside-1_3118_1775)"/>
-</svg>
-there are new items, but the total count remained the same - for example, <em>1 resolved and 1 added</em>
+  total number decreased or resolved in your branch
+- &nbsp;&#8239;<svg width="26" height="20" viewBox="0 0 26 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M13.9893 15V12.9492H9.0332V11.835L13.3604 5.13574H15.1787V11.8691H16.5732V12.9492H15.1787V15H13.9893ZM10.25 11.8691H13.9893V6.18848H13.9482L10.25 11.8418V11.8691Z" fill="#747994"/>
+</svg>&#8239;total count, for example, <em>3 new and 1 existing</em>
+
+<!-- prettier-ignore-end -->
+
+<hr />
+
+The test state (failed, flaky, pending) is also indicated in the spec:
+
+- _new_ = the state was <u>not</u> previously captured, but now <u>is</u> captured (newly pending tests can imply an `it.skip()` was not removed)
+- _existing_ = the state <u>was</u> previously captured and now <u>is still</u> captured
+- _resolved_ = the state <u>was</u> previously captured but now is <u>no longer</u>
 
 :::
 
 ### Review Test Comparison
 
-Navigating into the test detail view reveals a side-by-side comparison of the test results on both branches, as well as, artifacts so you can compare before vs. after your PR. This can help elevate the source of flake within tests throughout different attempts. Review the test definition panel for diff snapshots to help quickly determine changes in test code.
+Navigating into the test detail view reveals a side-by-side comparison of the test results on both branches, as well as, artifacts so you can compare before vs. after your PR. This can help narrow the focus on changes introduced or resolved on either branch and elevate the source of flake within tests throughout different attempts. Review the test definition panel for diff snapshots to help quickly determine changes in test code.
 
 <DocsImage
-  src="/img/guides/cloud/branch-review/test-comparison2.jpg"
+  src="/img/guides/cloud/branch-review/test2.png"
   alt="Test Comparison View"
 />
