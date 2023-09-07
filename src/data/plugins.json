@@ -248,13 +248,6 @@
           "badge": "community"
         },
         {
-          "name": "cypress-dotenv",
-          "description": "Cypress plugin that enables compatibility with dotenv.",
-          "link": "https://github.com/morficus/cypress-dotenv",
-          "keywords": ["dotenv", "env", "environment", "env var"],
-          "badge": "community"
-        },
-        {
           "name": "cypress-har-generator",
           "description": "Generate HTTP Archive (HAR) while running tests.",
           "link": "https://github.com/NeuraLegion/cypress-har-generator",
@@ -737,6 +730,13 @@
           "description": "Adds Snapshot command. Adds value / object / DOM element snapshot testing support to Cypress test runner",
           "link": "https://github.com/datashard/snapshot",
           "keywords": ["snapshot", "comparison", "commands"],
+          "badge": "community"
+        },
+        {
+          "name": "cypress-plugin-dotenv",
+          "description": "Load .env variables in Cypress.",
+          "link": "https://github.com/MohamadKh75/cypress-plugin-dotenv",
+          "keywords": ["testing", "commands", ".env", "environment variables"],
           "badge": "community"
         }
       ]
@@ -1274,6 +1274,13 @@
           "link": "https://github.com/cypress-io/cypress/tree/develop/npm/xpath",
           "keywords": ["xpath", "commands"],
           "badge": "official"
+        },
+        {
+          "name": "cypress-dotenv",
+          "description": "Cypress plugin that enables compatibility with dotenv.",
+          "link": "https://github.com/morficus/cypress-dotenv",
+          "keywords": ["dotenv", "env", "environment", "env var"],
+          "badge": "community"
         }
       ]
     }
