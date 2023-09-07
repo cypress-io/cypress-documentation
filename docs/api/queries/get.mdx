@@ -143,7 +143,7 @@ cy.get('form').within(() => {
 })
 ```
 
-#### Find an anchor element by it's label/text, remove some attribute and click it
+#### Find an anchor element by its label/text, remove some attribute and click it
 
 ```javascript
 cy.get("a", { name: "My link text" }).invoke("removeAttr", "target").click();
