@@ -1,6 +1,14 @@
 {
   "courses": [
      {
+      "title": "Testing JavaScript with Cypress",
+      "url": "https://youtu.be/u8vMu7viCm8?si=xXovHp09w6dJVXEC",
+      "author": "Ryan Solomon",
+      "sourceName": "freeCodeCamp.org",
+      "sourceUrl": "https://www.freecodecamp.org/",
+      "free": true
+     },
+     {
       "title": "Cypress with TypeScript",
       "url": "https://testautomationu.applitools.com/cypress-with-typescript/",
       "author": "Filip Hric",
