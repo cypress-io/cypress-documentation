@@ -737,7 +737,7 @@ You can dynamically generate tests using JavaScript.
 
 ```javascript
 describe('if your app uses jQuery', () => {
-  ;['mouseover', 'mouseout', 'mouseenter', 'mouseleave'].forEach((event) => {
+  ['mouseover', 'mouseout', 'mouseenter', 'mouseleave'].forEach((event) => {
     it('triggers event: ' + event, () => {
       // if your app uses jQuery, then we can trigger a jQuery
       // event that causes the event callback to fire
