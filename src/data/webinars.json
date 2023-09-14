@@ -15,6 +15,30 @@
   ],
   "large": [
     {
+      "title": "Introducing The New Era of Debugging",
+      "date": "September 8, 2023",
+      "author": "Cypress.io",
+      "youtubeId": "ureGq3AsH88"
+    },
+    {
+      "title": "Unlocking the Power of Test Replay!",
+      "date": "Aug 3, 2023",
+      "author": "Cypress.io",
+      "youtubeId": "hX9Br8QSYgc"
+    },
+    {
+      "title": "Component Testing: How we do it at Cypress",
+      "date": "Jun 28, 2023",
+      "author": "Cypress.io",
+      "youtubeId": "At0BcOMOYT0"
+    },
+    {
+      "title": "2022 in Review at Cypress",
+      "date": "Dec 16, 2022",
+      "author": "Cypress.io",
+      "youtubeId": "O1zqoZs6YRY"
+    },
+    {
       "title": "Ship safer code with Cypress and Codecov",
       "date": "January 13, 2021",
       "author": "Cypress & Codecov with Gleb Bahmutov and Tom Hu",
