@@ -4,7 +4,7 @@ sidebar_position: 35
 sidebar_class_name: beta
 ---
 
-:::caution
+:::info
 
 &#8239;<Icon name="exclamation-triangle" /> Branch Review is currently in beta.
 See [how to enable](/guides/cloud/branch-review#Public-Beta-Access) this feature below.
@@ -34,7 +34,7 @@ Cypress Branch Review is designed to elevate your pull request (PR) review workf
 
 :::info
 
-Cypress Branch Review is currently only available for [GitHub integrations](/guides/cloud/integrations/source-control/github). We are working on adding support for GitLab and Bitbucket soon.
+Cypress Branch Review is currently only available for [GitHub integrated projects](/guides/cloud/integrations/source-control/github). We are working on adding support for GitLab and Bitbucket soon.
 
 :::
 
@@ -42,11 +42,12 @@ Cypress Branch Review is currently only available for [GitHub integrations](/gui
 
 :::tip
 
-To access the Branch Review public beta, an admin can simply enable it under "Cypress Labs" in your Organization Settings in Cypress Cloud.
+To access the Branch Review public beta, an admin can simply enable it under "Cypress Labs"<br />in your Organization Settings in Cypress Cloud.
 
 <DocsImage
   src="/img/guides/cloud/branch-review/labs_beta.png"
   alt="Enable Branch Review Beta"
+  width="90%"
 />
 
 :::
@@ -55,9 +56,11 @@ To access the Branch Review public beta, an admin can simply enable it under "Cy
 
 Branch Review works by leveraging the Cypress Cloud GitHub integration to query the GitHub API for **open** pull requests on active branches.
 
-Your project will first need to be connected to a GitHub repository. If you haven't already, follow the steps in [Install the Cypress GitHub app](/guides/cloud/integrations/source-control/github#Install-the-Cypress-GitHub-app) to connect your project to GitHub.
+Your project will first need to be connected to a GitHub repository. If you haven't already, follow the steps in [Install the Cypress GitHub app](/guides/cloud/integrations/source-control/github#Install-the-Cypress-GitHub-app) to connect your project to GitHub. Additionally, you may find [passing PR numbers](/guides/continuous-integration/introduction#CI-Build-Information) to runs as environment variables useful when reviewing branches.
 
 To access Branch Review, navigate to the **Branches** tab in the left sidebar and select the branch you want to review. In order to see a comparison, the branch you select must have an open pull request.
+
+{/* TODO: get screenshot with PR tags on the branches */}
 
 <DocsImage
   src="/img/guides/cloud/branch-review/get-to-branch-review.jpg"
@@ -66,9 +69,19 @@ To access Branch Review, navigate to the **Branches** tab in the left sidebar an
 
 ## Branch Details
 
+### Latest Runs
+
+You can find a callout on the top of the overview tab of the **Latest runs** page that directs to the Branch Review.
+{/* TODO: try different views here */}
+
+<DocsImage
+  src="/img/guides/cloud/branch-review/branch-review-available.png"
+  alt="Branch Review available banner"
+/>
+
 ### View Options
 
-Branch Review is the default view of the **Branches** tab. You can also toggle to see a list of Runs filtered by this branch.
+"Review" is the default view of the **Branches** tab for projects with linked GitHub repositories via our GitHub integration. "Runs" provides a list filtered by the selected branch for projects without linked repositories or those with an _unknown_ branch.
 
 <DocsImage
   src="/img/guides/cloud/branch-review/branch-review-views.jpg"
