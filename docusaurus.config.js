@@ -47,6 +47,8 @@ const config = {
             visitMountExample,
             [copyTsToJs, { prettierOptions: prettierConfig }],
           ],
+          showLastUpdateAuthor: true,
+          showLastUpdateTime: true,
         },
         blog: false,
         theme: {
