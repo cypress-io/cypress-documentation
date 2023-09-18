@@ -119,15 +119,18 @@ When on the review screen, you will see tabs Failures, Flaky, Pending, Added, an
 
 The status key indicates a change in state between the two branches:
 
-- <img src="/img/guides/cloud/branch-review/test-status-up.png" /> total number introduced in your branch
-- <img src="/img/guides/cloud/branch-review/test-status-down.png" /> total number decreased or resolved in your branch
-- <img src="/img/guides/cloud/branch-review/test-status-total.png" /> total count, for example, <em>3 new and 1 existing</em>
+- <img src="/img/guides/cloud/branch-review/test-status-up.png" /> total number introduced
+  in your branch
+- <img src="/img/guides/cloud/branch-review/test-status-down.png" /> total number
+  decreased or resolved in your branch
+- <img src="/img/guides/cloud/branch-review/test-status-total.png" /> total count,
+  for example, <em>3 new and 1 existing</em>
 
 <hr />
 
 The test state (failed, flaky, pending) is also indicated in the spec:
 
-- _new_ = the state was <u>not</u> previously captured, but now <u>is</u> captured (newly pending tests can imply an `it.skip()` was not removed)
+- _new_ = the state was <u>not</u> previously captured, but now <u>is</u> captured<br />(newly pending tests can imply an `it.skip()` was not removed)
 - _existing_ = the state <u>was</u> previously captured and now <u>is still</u> captured
 - _resolved_ = the state <u>was</u> previously captured but now is <u>no longer</u>
 
@@ -155,7 +158,7 @@ The Cypress Cloud GitHub Integration offers detailed test information via [PR co
 
 ### Note on Available Data
 
-Branch Review is a powerful tool to compare two branches with recorded runs to Cypress Cloud. There are factors that can impact what is available to review between a source and base branch. For example, whether or not a branch at a particular commit has a run recorded to Cypress Cloud will affect what is displayed. 
+Branch Review is a powerful tool to compare two branches with recorded runs to Cypress Cloud. There are factors that can impact what is available to review between a source and base branch. For example, whether or not a branch at a particular commit has a run recorded to Cypress Cloud will affect what is displayed.
 
 The following captures this scenario across both branches:
 
