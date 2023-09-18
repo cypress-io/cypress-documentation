@@ -45,7 +45,7 @@ Cypress Branch Review is currently only available for [GitHub integrated project
 To access the Branch Review public beta, an admin can simply enable it under "Cypress Labs"<br />in your Organization Settings in Cypress Cloud.
 
 <DocsImage
-  src="/img/guides/cloud/branch-review/labs_beta.png"
+  src="/img/guides/cloud/branch-review/labs-beta.png"
   alt="Enable Branch Review Beta"
   width="90%"
 />
@@ -54,34 +54,38 @@ To access the Branch Review public beta, an admin can simply enable it under "Cy
 
 ## Getting Started
 
-Branch Review works by leveraging the Cypress Cloud GitHub integration to query the GitHub API for **open** pull requests on active branches.
+Branch Review works by leveraging the Cypress Cloud GitHub integration to query the GitHub API for branches with pull requests.
 
-Your project will first need to be connected to a GitHub repository. If you haven't already, follow the steps in [Install the Cypress GitHub app](/guides/cloud/integrations/source-control/github#Install-the-Cypress-GitHub-app) to connect your project to GitHub. Additionally, you may find [passing PR numbers](/guides/continuous-integration/introduction#CI-Build-Information) to runs as environment variables useful when reviewing branches.
+Your project will first need to be connected to a GitHub repository. If you haven't already, follow the steps in [Install the Cypress GitHub app](/guides/cloud/integrations/source-control/github#Install-the-Cypress-GitHub-app) to connect your project to GitHub.
 
-To access Branch Review, navigate to the **Branches** tab in the left sidebar and select the branch you want to review. In order to see a comparison, the branch you select must have an open pull request.
+### Accessing Branch Review
 
-{/* TODO: get screenshot with PR tags on the branches */}
+To access Branch Review, navigate to the **Branches** tab in the left sidebar and select the branch you want to review. In order to see a comparison, the branch you select must have an **open** pull request.
 
 <DocsImage
   src="/img/guides/cloud/branch-review/get-to-branch-review.jpg"
   alt="Get to Branch Review"
+  caption="Active branches, shown with available PR # tags"
+/>
+
+If you do not see PR # tags associated with a branch, you may need to [pass PR numbers](/guides/continuous-integration/introduction#CI-Build-Information) to runs as environment variables. This helps ensure Cypress Cloud can map PR data correctly.
+
+#### Latest Runs
+
+If the selected branch has a PR associated with it, there is an additional callout on the top of the overview tab of the **Latest runs** page directs to the Branch Review.
+
+<DocsImage
+  src="/img/guides/cloud/branch-review/branch-review-available.jpg"
+  alt="Branch Review available banner"
 />
 
 ## Branch Details
 
-### Latest Runs
-
-You can find a callout on the top of the overview tab of the **Latest runs** page that directs to the Branch Review.
-{/* TODO: try different views here */}
-
-<DocsImage
-  src="/img/guides/cloud/branch-review/branch-review-available.png"
-  alt="Branch Review available banner"
-/>
-
 ### View Options
 
-"Review" is the default view of the **Branches** tab for projects with linked GitHub repositories via our GitHub integration. "Runs" provides a list filtered by the selected branch for projects without linked repositories or those with an _unknown_ branch.
+"Review" is the default view of the **Branches** tab for projects with linked GitHub repositories via our GitHub integration.
+
+"Runs" provides a list filtered by the selected branch for projects without linked repositories or those with an unknown branch. An unkown branch is one in which Cypress does not have access to the local `.git` directory and cannot determine a branch for a run.
 
 <DocsImage
   src="/img/guides/cloud/branch-review/branch-review-views.jpg"
@@ -200,9 +204,11 @@ The Cypress Cloud GitHub Integration offers detailed test information via [PR co
 
 Branch Review is a powerful tool to compare two branches with recorded runs to Cypress Cloud. There are factors that can impact what is available to review between a source and base branch.
 
-Most importanly, unless a PR is open (not closed or merged), the branch review is not guaranteed to show you the latest run recorded for the branch. When a PR transitions into a closed/merged state, it does not consider any subsequent commits pushed to the branch as part of the PR itself. Be sure that the latest CI job has been triggered or you may see the _closest_ commit and not the one that was _just_ merged.
+1. Most importantly, unless a PR is open (not closed or merged), the branch review is not guaranteed to show you the latest run recorded for the branch. When a PR transitions into a closed/merged state, it does not consider any subsequent commits pushed to the branch as part of the PR itself.
 
-Additionally, whether or not a branch at a particular commit has a run recorded to Cypress Cloud will affect what is displayed. The table below captures scenario across both branches:
+2. Be sure that the latest CI job has been triggered after your commit or you may see the _latest_ run on the commit and not the one that was _just_ merged.
+
+3. Additionally, whether or not a branch at a particular commit has a run recorded to Cypress Cloud will affect what is displayed. The table below captures scenario across both branches:
 
 |              Base Branch              |             Source Branch             | What Branch Review Displays                         |
 | :-----------------------------------: | :-----------------------------------: | --------------------------------------------------- |
@@ -213,8 +219,12 @@ Additionally, whether or not a branch at a particular commit has a run recorded 
 
 ## Best Practices
 
+:::tip
+
 ### Grouping Test Runs
 
 Cypress Cloud allows for [grouping recorded tests](/guides/cloud/smart-orchestration/parallelization#Grouping-test-runs) together under a single run. This means multiple `cypress run` calls can be labeled and associated to a single run in Cypress Cloud.
 
-It's important to avoid recording random sets of tests between branches. Recording multiple runs per commit without grouping can cause issues, as Branch Review relies on the _latest_ runs. Therefore, recording one run per commit and utilizing grouping to ensure accurate comparisons during branch reviews is recommended to improve effectiveness.
+Recording multiple test runs per commit without grouping will cause issues, as Branch Review relies on the _latest_ run. Therefore, recording one run per commit and utilizing grouping is essential to improving effectiveness and ensure an accurate comparison between branches.
+
+:::
