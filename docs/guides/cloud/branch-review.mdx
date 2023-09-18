@@ -202,13 +202,9 @@ The Cypress Cloud GitHub Integration offers detailed test information via [PR co
 
 ### Note on Available Data
 
-Branch Review is a powerful tool to compare two branches with recorded runs to Cypress Cloud. There are factors that can impact what is available to review between a source and base branch.
+Branch Review is a powerful tool to compare two branches with recorded runs to Cypress Cloud. There are factors that can impact what is available to review between a source and base branch. For example, whether or not a branch at a particular commit has a run recorded to Cypress Cloud will affect what is displayed.
 
-1. Most importantly, unless a PR is open (not closed or merged), the branch review is not guaranteed to show you the latest run recorded for the branch. When a PR transitions into a closed/merged state, it does not consider any subsequent commits pushed to the branch as part of the PR itself.
-
-2. Be sure that the latest CI job has been triggered after your commit or you may see the _latest_ run on the commit and not the one that was _just_ merged.
-
-3. Additionally, whether or not a branch at a particular commit has a run recorded to Cypress Cloud will affect what is displayed. The table below captures scenario across both branches:
+The following captures this scenario across both branches:
 
 |              Base Branch              |             Source Branch             | What Branch Review Displays                         |
 | :-----------------------------------: | :-----------------------------------: | --------------------------------------------------- |
