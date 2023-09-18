@@ -119,56 +119,9 @@ When on the review screen, you will see tabs Failures, Flaky, Pending, Added, an
 
 The status key indicates a change in state between the two branches:
 
-<!-- prettier-ignore-start -->
-
-- <svg
-    width="41"
-    height="20"
-    viewBox="0 0 41 20"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path
-      d="M15 9L13 11L17 11L15 9Z"
-      fill="#C62B49"
-      stroke="#C62B49"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-    />
-    <path
-      d="M27.1221 15.1641C25.085 15.1641 23.7656 14.0293 23.6357 12.4707L23.6289 12.3887H24.8115L24.8184 12.457C24.9209 13.4277 25.8096 14.0977 27.1221 14.0977C28.4141 14.0977 29.2959 13.373 29.2959 12.3271V12.3135C29.2959 11.1035 28.4277 10.4268 27.0469 10.4268H25.8096V9.3877H26.9922C28.168 9.3877 28.9883 8.66309 28.9883 7.67871V7.66504C28.9883 6.63281 28.3115 6.03809 27.1084 6.03809C25.9463 6.03809 25.1191 6.65332 25.0166 7.65137L25.0098 7.71973H23.8271L23.834 7.65137C23.9912 6.04492 25.2627 4.97168 27.1084 4.97168C28.9883 4.97168 30.2256 6.01758 30.2256 7.51465V7.52832C30.2256 8.74512 29.3643 9.5791 28.1338 9.83887V9.86621C29.5693 9.98926 30.5469 10.8848 30.5469 12.2861V12.2998C30.5469 13.9473 29.0977 15.1641 27.1221 15.1641Z"
-      fill="#C62B49"
-    />
-  </svg>
-  total number introduced in your branch
-- <svg
-    width="41"
-    height="20"
-    viewBox="0 0 41 20"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path
-      d="M15 11L13 9L17 9L15 11Z"
-      fill="#00814D"
-      stroke="#00814D"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-    />
-    <path
-      d="M28.4893 15V12.9492H23.5332V11.835L27.8604 5.13574H29.6787V11.8691H31.0732V12.9492H29.6787V15H28.4893ZM24.75 11.8691H28.4893V6.18848H28.4482L24.75 11.8418V11.8691Z"
-      fill="#00814D"
-    />
-  </svg>
-  total number decreased or resolved in your branch
-- &nbsp;&#8239;<svg width="26" height="20" viewBox="0 0 26 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M13.9893 15V12.9492H9.0332V11.835L13.3604 5.13574H15.1787V11.8691H16.5732V12.9492H15.1787V15H13.9893ZM10.25 11.8691H13.9893V6.18848H13.9482L10.25 11.8418V11.8691Z" fill="#747994"/>
-</svg>
-&#8239;&#8239;&#8239;&#8239;total count, for example, <em>3 new and 1 existing</em>
-
-<!-- prettier-ignore-end -->
+- <img src="/img/guides/cloud/branch-review/test-status-up.png" /> total number introduced in your branch
+- <img src="/img/guides/cloud/branch-review/test-status-down.png" /> total number decreased or resolved in your branch
+- <img src="/img/guides/cloud/branch-review/test-status-total.png" /> total count, for example, <em>3 new and 1 existing</em>
 
 <hr />
 
@@ -202,7 +155,7 @@ The Cypress Cloud GitHub Integration offers detailed test information via [PR co
 
 ### Note on Available Data
 
-Branch Review is a powerful tool to compare two branches with recorded runs to Cypress Cloud. There are factors that can impact what is available to review between a source and base branch. For example, whether or not a branch at a particular commit has a run recorded to Cypress Cloud will affect what is displayed.
+Branch Review is a powerful tool to compare two branches with recorded runs to Cypress Cloud. There are factors that can impact what is available to review between a source and base branch. For example, whether or not a branch at a particular commit has a run recorded to Cypress Cloud will affect what is displayed. 
 
 The following captures this scenario across both branches:
 
