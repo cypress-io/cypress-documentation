@@ -23,7 +23,9 @@ See [how to enable](/guides/cloud/branch-review#Public-Beta-Access) this feature
 
 ## Overview
 
-Cypress Branch Review is designed to elevate your pull request review workflow. It allows you to quickly identify the impact a pull request might have on your test suite in a single view. Compare which tests are failing, flaky, pending, added, or modified between the **<u>source</u>** and **<u>base</u>** branches and prevent the merging of low-quality code.
+Cypress Branch Review is designed to elevate your pull request review workflow. It allows you to quickly identify the impact a pull request might have on your test suite in a single view. Compare which tests are failing, flaky, pending, added, or modified between the source and base branches and prevent the merging of low-quality code.
+
+A common scenario throughout the software development lifecycle (SDLC) is an engineer's **feature** branch that will be merged into the repo's **develop** or **main** branch.
 
 <DocsImage
   src="/img/guides/cloud/branch-review/branch-review.jpg"
@@ -54,13 +56,11 @@ To access the Branch Review public beta, an admin can simply enable it under "Cy
 
 ## Getting Started
 
-Branch Review works by leveraging the Cypress Cloud GitHub integration to query the GitHub API for branches with pull requests.
-
-Your project will first need to be connected to a GitHub repository. If you haven't already, follow the steps in [Install the Cypress GitHub app](/guides/cloud/integrations/source-control/github#Install-the-Cypress-GitHub-app) to connect your project to GitHub.
+Branch Review works by leveraging the Cypress Cloud GitHub integration to query the GitHub API for branches with pull requests. Your project will first need to be connected to a GitHub repository. If you haven't already, follow the steps in [Install the Cypress GitHub app](/guides/cloud/integrations/source-control/github#Install-the-Cypress-GitHub-app) to connect your project to GitHub.
 
 ### Accessing Branch Review
 
-To access Branch Review, navigate to the **Branches** tab in the left sidebar and select the branch you want to review. In order to see a comparison, the branch you select must have an **open** pull request.
+To access Branch Review, navigate to the **Branches** tab in the left sidebar and select the branch you want to review. In order to see a comparison, the branch you select must have a pull request.
 
 <DocsImage
   src="/img/guides/cloud/branch-review/get-to-branch-review.jpg"
@@ -94,7 +94,7 @@ If the selected branch has a PR associated and a PR # passed via CI, there is an
 
 ### Review Header
 
-The header includes the Git commit message, PR selector, PR status, and base and target branch labels with the Cypress Cloud test run ID number (#).
+The header includes the Git commit message, PR selector, PR status, and base and feature branch labels with the Cypress Cloud test run ID number (#).
 
 If there are multiple pull requests open for the same branch, you can select the pull request you want to review from the dropdown to the right of the commit message.
 
@@ -147,7 +147,7 @@ Navigating into the test detail view reveals a side-by-side comparison of the te
 
 ## GitHub Pull Request Comments
 
-The Cypress Cloud GitHub Integration offers detailed test information via [PR comments](/guides/cloud/integrations/source-control/github#Pull-request-comments). Follow the "Review all test suite changes" link to load the Branch Review between the source and base branches.
+The Cypress Cloud GitHub Integration offers detailed test information via [PR comments](/guides/cloud/integrations/source-control/github#Pull-request-comments). Follow the "Review all test suite changes" link to load the Branch Review between the feature and base branches.
 
 <DocsImage
   src="/img/guides/cloud/integrations/github/pr-comment-fail.jpg"
@@ -158,16 +158,16 @@ The Cypress Cloud GitHub Integration offers detailed test information via [PR co
 
 ### Note on Available Data
 
-Branch Review is a powerful tool to compare two branches with recorded runs to Cypress Cloud. There are factors that can impact what is available to review between a source and base branch. For example, whether or not a branch at a particular commit has a run recorded to Cypress Cloud will affect what is displayed.
+Branch Review is a powerful tool to compare two branches with recorded runs to Cypress Cloud. There are factors that can impact what is available to review between a feature and base branch. For example, whether or not a branch at a particular commit has a run recorded to Cypress Cloud will affect what is displayed.
 
 The following captures this scenario across both branches:
 
-|              Base Branch              |             Source Branch             | What Branch Review Displays                         |
-| :-----------------------------------: | :-----------------------------------: | --------------------------------------------------- |
-| <Badge type="success">has run</Badge> | <Badge type="success">has run</Badge> | Comparison data using both found runs               |
-| <Badge type="success">has run</Badge> |  <Badge type="danger">no run</Badge>  | Comparison data using last run on source branch     |
-|  <Badge type="danger">no run</Badge>  | <Badge type="success">has run</Badge> | Non-comparison data with found source run           |
-|  <Badge type="danger">no run</Badge>  |  <Badge type="danger">no run</Badge>  | Non-comparison data using last run on source branch |
+|              Base Branch              |            Feature Branch             | What Branch Review Displays                          |
+| :-----------------------------------: | :-----------------------------------: | ---------------------------------------------------- |
+| <Badge type="success">has run</Badge> | <Badge type="success">has run</Badge> | Comparison data using both found runs                |
+| <Badge type="success">has run</Badge> |  <Badge type="danger">no run</Badge>  | Comparison data using last run on feature branch     |
+|  <Badge type="danger">no run</Badge>  | <Badge type="success">has run</Badge> | Non-comparison data with found feature run           |
+|  <Badge type="danger">no run</Badge>  |  <Badge type="danger">no run</Badge>  | Non-comparison data using last run on feature branch |
 
 ## Best Practices
 
