@@ -118,13 +118,19 @@ When on the review screen, you will see the Failures, Flaky, Pending, Added, and
 
 1. Review your PR information
 2. Get a glance of changes in your branch across key statuses
-3. See what has changed in a specific status
-   - <img src="/img/guides/cloud/branch-review/test-status-up.png" /> total number
-     introduced in your branch
-   - <img src="/img/guides/cloud/branch-review/test-status-down.png" /> total number
-     decreased or resolved in your branch
-   - <img src="/img/guides/cloud/branch-review/test-status-total.png" /> total count,
-     for example, <em>3 new and 1 existing</em>
+3. See what has changed in a specific status, for example:
+   - <img
+       className="br-ui"
+       src="/img/guides/cloud/branch-review/test-status-up.png"
+     /> total number introduced in your branch
+   - <img
+       className="br-ui"
+       src="/img/guides/cloud/branch-review/test-status-down.png"
+     /> total number decreased or resolved in your branch
+   - <img
+       className="br-ui"
+       src="/img/guides/cloud/branch-review/test-status-total.png"
+     /> total count, for example, <em>3 new and 1 existing</em>
 4. The test state (failed, flaky, pending) is also indicated at the spec level
    - _new_ = the state was <u>not</u> previously captured, but now <u>is</u> captured<br />(newly pending tests can imply an `it.skip()` was not removed)
    - _existing_ = the state <u>was</u> previously captured and now <u>is still</u> captured
