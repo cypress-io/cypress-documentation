@@ -1,0 +1,184 @@
+---
+title: Branch Review
+sidebar_position: 35
+sidebar_class_name: new_label
+---
+
+:::info
+
+## <Icon name="graduation-cap" /> What you'll learn
+
+- What Branch Review is and why you should use it
+- What test insights are available to review between branches
+- How Branch Review works and what might impact available data
+
+:::
+
+:::info
+
+&#8239;<Icon name="exclamation-triangle" /> Branch Review is currently in beta.
+See [how to enable](/guides/cloud/branch-review#Public-Beta-Access) this feature below.
+
+:::
+
+## Overview
+
+Cypress Branch Review is designed to elevate your pull request review workflow. It allows you to quickly identify the impact a pull request might have on your test suite in a single view. Compare which tests are failing, flaky, pending, added, or modified between the source and base branches and prevent the merging of low-quality code.
+
+A common scenario throughout the software development lifecycle (SDLC) is an engineer's **feature** branch that will be merged into the repo's **develop** or **main** branch.
+
+<DocsImage
+  src="/img/guides/cloud/branch-review/branch-review.jpg"
+  alt="Cypress Branch Review"
+/>
+
+Previously, pinpointing changes in your test suite's results required a manual side-by-side comparison between your newly-introduced branch's test runs and your base branch's test runs. This sub-optimal workflow often fails to answer the fundamental questions, _what changed_ and _why?_ You might be left wondering if the same tests are flaky between branches, when new failures were introduced, or if you added sufficient test coverage to your new branch.
+
+:::info
+
+Cypress Branch Review is currently only available for [GitHub integrated projects](/guides/cloud/integrations/source-control/github). We are working on adding support for GitLab and Bitbucket soon.
+
+:::
+
+## Public Beta Access
+
+:::tip
+
+To access the Branch Review public beta, an admin can simply enable it under "Cypress Labs" in your Organization Settings in Cypress Cloud.
+
+<DocsImage
+  src="/img/guides/cloud/branch-review/labs-beta.png"
+  alt="Enable Branch Review Beta"
+  width="90%"
+/>
+
+:::
+
+## Getting Started
+
+Branch Review works by leveraging the Cypress Cloud GitHub integration to query the GitHub API for branches with pull requests. Your project will first need to be connected to a GitHub repository. If you haven't already, follow the steps in [Install the Cypress GitHub app](/guides/cloud/integrations/source-control/github#Install-the-Cypress-GitHub-app) to connect your project to GitHub.
+
+### Accessing Branch Review
+
+To access Branch Review, navigate to the **Branches** tab in the left sidebar and select the branch you want to review. In order to see a comparison, the branch you select must have a pull request.
+
+<DocsImage
+  src="/img/guides/cloud/branch-review/get-to-branch-review.jpg"
+  alt="Get to Branch Review"
+  caption="Active branches, shown with available PR # tags"
+/>
+
+If you do not see PR # tags associated with a branch, you may need to [pass PR numbers](/guides/continuous-integration/introduction#CI-Build-Information) to runs as environment variables. This helps ensure Cypress Cloud can map PR data correctly.
+
+#### Latest Runs
+
+If the selected branch has a PR associated and a PR # passed via CI, there is an additional callout on the top of the overview tab of the **Latest runs** page which directs to the Branch Review.
+
+<DocsImage
+  src="/img/guides/cloud/branch-review/branch-review-available.jpg"
+  alt="Branch Review available banner"
+/>
+
+## Branch Details
+
+### View Options
+
+"Review" is the default view of the **Branches** tab for projects with linked GitHub repositories via our GitHub integration.
+
+"Runs" provides a list filtered by the selected branch for projects without linked repositories or those with an unknown branch. An unkown branch is one in which Cypress does not have access to the local `.git` directory and cannot determine a branch for a run.
+
+<DocsImage
+  src="/img/guides/cloud/branch-review/branch-review-views.jpg"
+  alt="Displaying different views for branches"
+/>
+
+### Review Header
+
+The header includes the Git commit message, PR selector, PR status, and base and feature branch labels with the Cypress Cloud test run ID number (#).
+
+If there are multiple pull requests open for the same branch, you can select the pull request you want to review from the dropdown to the right of the commit message.
+
+Clicking the branch label will link you directly to the appropriate [run overview](/guides/cloud/debugging/recorded-runs#Overview-tab) and hovering on these elements exposes additional run meta data.
+
+<DocsImage
+  src="/img/guides/cloud/branch-review/branch-review-header.jpg"
+  alt="Branch Review Header"
+/>
+
+### Review Test Status
+
+When on the review screen, you will see the Failures, Flaky, Pending, Added, and Modified tabs. Each tab will show you the specs that fall into that category. You can click on a test to view the test details.
+
+<DocsImage
+  src="/img/guides/cloud/branch-review/branch-review-details.jpg"
+  alt="Branch Review Details"
+/>
+
+:::note
+
+1. Review your PR information
+2. Get a glance of changes in your branch across key statuses
+3. See what has changed in a specific status, for example:
+   - <img
+       className="br-ui"
+       src="/img/guides/cloud/branch-review/test-status-up.png"
+     /> total number introduced in your branch
+   - <img
+       className="br-ui"
+       src="/img/guides/cloud/branch-review/test-status-down.png"
+     /> total number decreased or resolved in your branch
+   - <img
+       className="br-ui"
+       src="/img/guides/cloud/branch-review/test-status-total.png"
+     /> total count, for example, <em>3 new and 1 existing</em>
+4. The test state (failed, flaky, pending) is also indicated at the spec level
+   - _new_ = the state was <u>not</u> previously captured, but now <u>is</u> captured<br />(newly pending tests can imply an `it.skip()` was not removed)
+   - _existing_ = the state <u>was</u> previously captured and now <u>is still</u> captured
+   - _resolved_ = the state <u>was</u> previously captured but now is <u>no longer</u> captured
+
+:::
+
+### Review Test Comparison
+
+Navigating into the test detail view reveals a side-by-side comparison of the test results on both branches, as well as, artifacts so you can compare before vs. after your PR. This can help narrow the focus on changes introduced or resolved on either branch and elevate the source of flake within tests throughout different attempts. Review the test definition panel for diff snapshots to help quickly determine changes in test code.
+
+<DocsImage
+  src="/img/guides/cloud/branch-review/test-comparison.jpg"
+  alt="Test Comparison View"
+/>
+
+## GitHub Pull Request Comments
+
+The Cypress Cloud GitHub Integration offers detailed test information via [PR comments](/guides/cloud/integrations/source-control/github#Pull-request-comments). Follow the "Review all test suite changes" link to load the Branch Review between the feature and base branches.
+
+<DocsImage
+  src="/img/guides/cloud/integrations/github/pr-comment-fail.jpg"
+  alt="Cypress GitHub App PR"
+/>
+
+## Troubleshooting
+
+### Note on Available Data
+
+Branch Review is a powerful tool to compare two branches with recorded runs to Cypress Cloud. There are factors that can impact what is available to review between a feature and base branch. For example, whether or not a branch at a particular commit has a run recorded to Cypress Cloud will affect what is displayed.
+
+The following captures this scenario across both branches:
+
+|              Base Branch              |            Feature Branch             | What Branch Review Displays                          |
+| :-----------------------------------: | :-----------------------------------: | ---------------------------------------------------- |
+| <Badge type="success">has run</Badge> | <Badge type="success">has run</Badge> | Comparison data using both found runs                |
+| <Badge type="success">has run</Badge> |  <Badge type="danger">no run</Badge>  | Comparison data using last run on feature branch     |
+|  <Badge type="danger">no run</Badge>  | <Badge type="success">has run</Badge> | Non-comparison data with found feature run           |
+|  <Badge type="danger">no run</Badge>  |  <Badge type="danger">no run</Badge>  | Non-comparison data using last run on feature branch |
+
+## Best Practices
+
+:::tip
+
+### Grouping Test Runs
+
+Cypress Cloud allows for [grouping recorded tests](/guides/cloud/smart-orchestration/parallelization#Grouping-test-runs) together under a single run. This means multiple `cypress run` calls can be labeled and associated to a single run in Cypress Cloud.
+
+Recording multiple test runs per commit without grouping will cause issues, as Branch Review relies on the _latest_ run. Therefore, recording one run per commit and utilizing grouping is essential to improving effectiveness and ensure an accurate comparison between branches.
+
+:::
