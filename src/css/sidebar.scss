@@ -37,7 +37,8 @@
 }
 
 // "new" feature label in sidebar
-.theme-doc-sidebar-item-link.theme-doc-sidebar-item-link-level-2.menu__list-item.new_label {
+.theme-doc-sidebar-item-link.theme-doc-sidebar-item-link-level-2.menu__list-item.new_label,
+.theme-doc-sidebar-item-link.theme-doc-sidebar-item-link-level-3.menu__list-item.new_label {
   a::after {
     background-color: var(--cypress-color-indigo-400);
     color: #fff;
