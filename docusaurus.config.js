@@ -170,7 +170,7 @@ const config = {
                 href: 'https://learn.cypress.io',
               },
               {
-                label: 'YouTube',
+                label: 'Cypress.io YouTube',
                 href: 'https://www.youtube.com/channel/UC-EOsTo2l2x39e4JmSaWNRQ',
               },
             ],
