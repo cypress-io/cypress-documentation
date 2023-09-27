@@ -1,6 +1,6 @@
 ---
 title: Test Replay
-sidebar_position: 20
+sidebar_position: 40
 sidebar_class_name: new_label
 ---
 
@@ -57,14 +57,14 @@ All you need to do after [recording test runs](/guides/cloud/getting-started) is
 
 Accessing the replay of your test is as simple as reviewing any other test artifact in Cypress Cloud.
 
-1. Hover on a [test for review](/guides/cloud/debugging/recorded-runs#Tests-for-Review) under the Latest Runs Overview.
+1. Hover on a [test for review](/guides/cloud/recorded-runs#Tests-for-Review) under the Latest Runs Overview.
 
    <DocsImage
      src="/img/guides/cloud/test-replay/replay_row_magnified.jpg"
      alt="Run overview row"
    />
 
-2. Or navigate to the [test detail sidebar](/guides/cloud/debugging/recorded-runs#Test-detail-sidebar) header or above each attempt in the errors panel. The header option will replay the first failing test while the option above each attempt will replay the affiliated test.
+2. Or navigate to the [test detail sidebar](/guides/cloud/recorded-runs#Test-detail-sidebar) header or above each attempt in the errors panel. The header option will replay the first failing test while the option above each attempt will replay the affiliated test.
 
    <DocsImage
      src="/img/guides/cloud/test-replay/replay_sidebar_magnified.jpg"
@@ -148,21 +148,25 @@ CentOS Linux 7 has an [end of life in 2024](https://blog.centos.org/2023/04/end-
 
 Cypress Cloud relies on certain web APIs implemented by specific browsers. Safari versions older than 16.4 may be missing certain APIs required for rendering Test Replay. To view Test Replay in Safari, version 16.4 and above may be used. This does not affect running tests or recording to Cypress Cloud.
 
-## Command Log Notes
+## Runner UI Notes
 
-Cypress uses a powerful [command log](/guides/core-concepts/cypress-app#Command-Log) locally to display every command executed in your spec. The Cypress command log is visible during `cypress open` mode, but is also rendered ([headless](/guides/guides/command-line#Options)-ly) during `cypress run` so that it displays within captured screenshots or videos, to assist in debugging CI failures.
+### Runner UI
+
+The Cypress [Test Runner](/guides/core-concepts/cypress-app#Test-Runner) "Runner UI" is made up of the powerful [command log](/guides/core-concepts/cypress-app#Command-Log) which displays every command executed in your spec. The UI also includes the URL bar, browser selector, and the viewport size control above the application under test.
+
+The Runner UI is visible during `cypress open` mode, but is also rendered ([headless](/guides/guides/command-line#Options)-ly) during `cypress run` so that it displays within captured screenshots or videos, to assist in debugging CI failures.
 
 ### Problem
 
-Rendering the Cypress command log while running tests via `cypress run` often has performance implications, resulting in a slower test runtime, especially on lower resourced machines.
+Rendering the Runner UI while running tests via `cypress run` often has performance implications, resulting in a slower test runtime, especially on lower resourced machines.
 
 ### Solution
 
-With Test Replay, Cypress regenerates the entire UI within the Cloud for viewing the run and the debugging CI failures. Additionally, displaying the Cypress command log in videos and screenshots is less valuable for users using Test Replay.
+With Test Replay, Cypress Cloud regenerates the entire UI for viewing the run and debugging CI failures. Additionally, displaying the Cypress command log in videos and screenshots is less valuable for users using Test Replay.
 
-Therefore, as of Cypress `v13`, the Cypress command log is no longer rendered during `cypress run` for users using Test Replay, with an option to opt-out of this behavior.
+Therefore, as of Cypress `v13`, the Runner UI is no longer rendered during `cypress run` for users using Test Replay, with an option to opt-out of this behavior.
 
-If you'd like to render the Cypress command log while recording Test Replay, you can turn on this behavior by passing `--runner-ui` as a CLI flag. You may encounter a slower performance when turning this on, especially in lower resourced machines.
+If you'd like to render the Runner UI, you can turn on this behavior by passing `--runner-ui` as a CLI flag. You may encounter a slower performance when turning this on, especially in lower resourced machines. Learn more about the `--runner-ui` [command line option](/guides/guides/command-line#cypress-run-runner-ui).
 
 ## See also
 
