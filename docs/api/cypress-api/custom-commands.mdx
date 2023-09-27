@@ -908,9 +908,11 @@ If you are using TypeScript and have Webpack's `sideEffects:false` set in your p
 
 Cypress.Commands.add("login", (email, password) => { ... })
 
-```typescript title="/cypress/support/e2e.ts"
+
+```typescript
+// cypress/support/e2e.ts
+
 import './commands'
-```
 
 To support `sideEffects:false`, you can wrap the Cypress commands in a function that will be imported by the support file.
 
