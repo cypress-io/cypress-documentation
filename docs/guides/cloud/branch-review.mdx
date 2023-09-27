@@ -62,14 +62,24 @@ If the selected branch has a PR associated and a PR # passed via CI, there is an
 
 ### View Options
 
-"Review" is the default view of the **Branches** tab for projects with linked GitHub repositories via our GitHub integration.
+"Overview" is the default view of the **Branches** tab for projects with linked GitHub repositories via our GitHub integration.
 
-"Runs" provides a list filtered by the selected branch for projects without linked repositories or those with an unknown branch. An unkown branch is one in which Cypress does not have access to the local `.git` directory and cannot determine a branch for a run.
+1. Callouts for the latest available Branch Review or a call to action to create a Pull Request in order to compare test run results.
+
+2. Click "Review changes" for the full Branch Review.
+
+3. Click any test status to reveal those changes.
+
+4. Latest runs of the current branch for contextual guidance on the state of its test runs.
 
 <DocsImage
-  src="/img/guides/cloud/branch-review/branch-review-views.jpg"
+  src="/img/guides/cloud/branch-review/views3.png"
   alt="Displaying different views for branches"
 />
+
+"Review" will lead to the latest available Branch Review.
+
+"Runs" provides a list filtered by the selected branch for projects without linked repositories or those with an unknown branch. An unkown branch is one in which Cypress does not have access to the local `.git` directory and cannot determine a branch for a run.
 
 ### Review Header
 
@@ -87,6 +97,12 @@ Clicking the branch label will link you directly to the appropriate [run overvie
 ### Review Test Status
 
 When on the review screen, you will see the Failures, Flaky, Pending, Added, and Modified tabs. Each tab will show you the specs that fall into that category. You can click on a test to view the test details.
+
+:::info
+
+If a branch PR is missing a CI run, you may also find helpful banners indicating the status and how it can be rectified.
+
+:::
 
 <DocsImage
   src="/img/guides/cloud/branch-review/branch-review-details.jpg"
