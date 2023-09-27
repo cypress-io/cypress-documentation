@@ -493,6 +493,12 @@
   status = 301
   force = true
 
+[[redirects]]
+  from = "/guides/cloud/debugging/"
+  to = "/guides/cloud/"
+  status = 301
+  force = true
+
 [[plugins]]
 package = "@netlify/plugin-sitemap"
 
