@@ -5,9 +5,3 @@
 .docsVideo video {
   width: 100%;
 }
-
-@screen xl {
-  .docsVideo {
-    min-height: 380px;
-  }
-}
