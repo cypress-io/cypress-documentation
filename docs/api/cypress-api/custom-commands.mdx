@@ -916,11 +916,12 @@ import './commands'
 
 To support `sideEffects:false`, you can wrap the Cypress commands in a function that will be imported by the support file.
 
-```typescript title="/cypress/support/commands.ts"
-export function registerCommands(){
+```typescript
+// cypress/support/commands.ts
+
+export function registerCommands() {
   Cypress.Commands.add("login", (email, password) => { ... })
 }
-```
 
 ```typescript
 // cypress/support/e2e.ts
