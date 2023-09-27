@@ -104,9 +104,13 @@ When on the review screen, you will see the Failures, Flaky, Pending, Added, and
 
 :::info
 
-If a run is missing on either the merge base or feature commit of the PR, you may also find a helpful banner that will specify which commit is missing the run and link out to it.
+If a run is missing on either the merge base or feature commit of the PR, a banner is displayed specifying which commit is missing the run with a link to it on GitHub.
 
-Recording exactly one run for every commit is the best/only way to ensure complete and accurate comparisons.
+:::
+
+:::info
+
+Recording exactly one run for every commit as the best/only way to ensure complete and accurate comparisons. See our [best practices](/guides/cloud/branch-review#Best-Practices) on grouping multiple `cypress run` calls under one run.
 
 :::
 
