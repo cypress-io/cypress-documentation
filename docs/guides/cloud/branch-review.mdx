@@ -66,7 +66,7 @@ If the selected branch has a PR associated and a PR # passed via CI, there is an
 
 :::note
 
-1. Callouts for the latest available Branch Review or a call to action to create a Pull Request in order to compare test run results.
+1. Callouts for the latest available Branch Review or a reminder to create a pull request in order to compare test run results.
 
 2. Click "Review changes" for the full Branch Review.
 
@@ -104,7 +104,9 @@ When on the review screen, you will see the Failures, Flaky, Pending, Added, and
 
 :::info
 
-If a branch PR is missing a CI run, you may also find helpful banners indicating the status and how it can be rectified.
+If a run is missing on either the merge base or feature commit of the PR, you may also find a helpful banner that will specify which commit is missing the run and link out to it.
+
+Recording exactly one run for every commit is the best/only way to ensure complete and accurate comparisons.
 
 :::
 
