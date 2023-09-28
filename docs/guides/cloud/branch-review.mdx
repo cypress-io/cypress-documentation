@@ -54,7 +54,7 @@ If you do not see PR # tags associated with a branch, you may need to [pass PR n
 If the selected branch has a PR associated and a PR # passed via CI, there is an additional callout on the top of the overview tab of the **Latest runs** page which directs to the Branch Review.
 
 <DocsImage
-  src="/img/guides/cloud/branch-review/branch-review-available.jpg"
+  src="/img/guides/cloud/branch-review/branch-review-available.png"
   alt="Branch Review available banner"
 />
 
@@ -70,6 +70,8 @@ If the selected branch has a PR associated and a PR # passed via CI, there is an
 />
 
 :::note
+
+**Branch Overview**
 
 1. Callouts for the latest available Branch Review or a reminder to create a pull request in order to compare test run results.
 
@@ -121,6 +123,8 @@ Recording exactly one run for every commit as the best/only way to ensure comple
 
 :::note
 
+**Review Test Status**
+
 1. Review your PR information
 2. Get a glance of changes in your branch across key statuses
 3. See what has changed in a specific status, for example:
@@ -148,9 +152,25 @@ Recording exactly one run for every commit as the best/only way to ensure comple
 Navigating into the test detail view reveals a side-by-side comparison of the test results on both branches, as well as, artifacts so you can compare before vs. after your PR. This can help narrow the focus on changes introduced or resolved on either branch and elevate the source of flake within tests throughout different attempts. Review the test definition panel for diff snapshots to help quickly determine changes in test code.
 
 <DocsImage
-  src="/img/guides/cloud/branch-review/test-comparison.jpg"
+  src="/img/guides/cloud/branch-review/test-comparison.png"
   alt="Test Comparison View"
 />
+
+:::note
+
+**Review Test Comparison**
+
+1. Base branch results
+
+2. Feature branch results
+
+3. Test Replay and artifacts
+
+4. Test attempts (decending order)
+
+5. Code change diffs
+
+:::
 
 ## GitHub Pull Request Comments
 
