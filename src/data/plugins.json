@@ -738,6 +738,13 @@
           "link": "https://github.com/MohamadKh75/cypress-plugin-dotenv",
           "keywords": ["testing", "commands", ".env", "environment variables"],
           "badge": "community"
+        },
+        {
+          "name": "cypress-intercept-formdata",
+          "description": "Work with Cypress' Intrecept multipart/form-data requests",
+          "link": "https://github.com/yoavniran/cypress-intercept-formdata",
+          "keywords": ["testing", "commands", "intercept", "form-data", "request"],
+          "badge": "community"
         }
       ]
     },
