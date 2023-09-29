@@ -2,17 +2,65 @@
 title: Changelog
 ---
 
+## 13.3.0
+
+_Released 09/27/2023_
+
+**Features:**
+
+- Introduces new layout for Runs page providing additional run information. Addresses [#27203](https://github.com/cypress-io/cypress/issues/27203).
+
+**Bugfixes:**
+
+- Fixed an issue where actionability checks trigger a flood of font requests. Removing the font requests has the potential to improve performance and removes clutter from Test Replay. Addressed in [#27860](https://github.com/cypress-io/cypress/pull/27860).
+
+## 13.2.0
+
+_Released 09/12/2023_
+
+**Features:**
+
+- Adds support for Nx users who want to run Angular Component Testing in parallel. Addressed in [#27723](https://github.com/cypress-io/cypress/pull/27723).
+
+**Bugfixes:**
+
+- Edge cases where `cy.intercept()` would not properly intercept and asset response bodies would not properly be captured for Test Replay have been addressed. Addressed in [#27771](https://github.com/cypress-io/cypress/pull/27771).
+- Fixed an issue where `enter`, `keyup`, and `space` events were not triggering `click` events properly in some versions of Firefox. Addressed in [#27715](https://github.com/cypress-io/cypress/pull/27715).
+- Fixed a regression in `13.0.0` where tests using Basic Authorization can potentially hang indefinitely on chromium browsers. Addressed in [#27781](https://github.com/cypress-io/cypress/pull/27781).
+
+**Dependency Updates:**
+
+- Upgraded Electron from `21.0.0` to `25.8.0`, which updates bundled Chromium from `106.0.5249.51` to `114.0.5735.289`.
+  Additionally, the Node version binary has been upgraded from `16.16.0` to `18.15.0`. This does **NOT** have an impact on the node version you are using with Cypress and is merely an internal update to the repository & shipped binary.
+  Addressed in [#27715](https://github.com/cypress-io/cypress/pull/27715). Addresses [#27595](https://github.com/cypress-io/cypress/issues/27595).
+
+## 13.1.0
+
+_Released 08/31/2023_
+
+**Features:**
+
+- Introduces a status icon representing the `latest` test run in the Sidebar for the Runs Page. Addresses [#27206](https://github.com/cypress-io/cypress/issues/27206).
+
+**Bugfixes:**
+
+- Fixed a regression introduced in Cypress [13.0.0](#13-0-0) where the [Module API](/guides/guides/module-api), [`after:run`](/api/plugins/after-run-api), and [`after:spec`](/api/plugins/after-spec-api) results did not include the `stats.skipped` field for each run result. Fixes [#27694](https://github.com/cypress-io/cypress/issues/27694). Addressed in [#27695](https://github.com/cypress-io/cypress/pull/27695).
+- Individual CDP errors that occur while capturing data for Test Replay will no longer prevent the entire run from being available. Addressed in [#27709](https://github.com/cypress-io/cypress/pull/27709).
+- Fixed an issue where the release date on the `v13` landing page was a day behind. Fixed in [#27711](https://github.com/cypress-io/cypress/pull/27711).
+- Fixed an issue where fatal protocol errors would leak between specs causing all subsequent specs to fail to upload protocol information. Fixed in [#27720](https://github.com/cypress-io/cypress/pull/27720)
+- Updated `plist` from `3.0.6` to `3.1.0` to address [CVE-2022-37616](https://github.com/advisories/GHSA-9pgh-qqpf-7wqj) and [CVE-2022-39353](https://github.com/advisories/GHSA-crh6-fp67-6883). Fixed in [#27710](https://github.com/cypress-io/cypress/pull/27710).
+
 ## 13.0.0
 
 _Released 08/29/2023_
 
 **Summary:**
 
-When recording to Cypress Cloud, users now receive our newest feature: [Test Replay](/guides/cloud/debugging/test-replay). Test Replay brings the debugging experience you know and love from the Cypress app directly into your recorded tests in Cypress Cloud.
+When recording to Cypress Cloud, users now receive our newest feature: [Test Replay](/guides/cloud/test-replay). Test Replay brings the debugging experience you know and love from the Cypress app directly into your recorded tests in Cypress Cloud.
 
 Previously, trying to debug failures and flake in CI was painful and time consuming with only videos & screenshots. Test Replay provides a way to inspect the DOM, network events, and console logs of your application from your tests exactly as they ran in CI.
 
-Test Replay is available in all Cypress Cloud plans. To start using Test Replay, simply record a run to Cypress Cloud. Learn more in the [Test Replay documentation](/guides/cloud/debugging/test-replay).
+Test Replay is available in all Cypress Cloud plans. To start using Test Replay, simply record a run to Cypress Cloud. Learn more in the [Test Replay documentation](/guides/cloud/test-replay).
 
 Test Replay now serves as the primary replacement for debugging via video. Video capture and `videoCompression` of captured video are now set to `false` by default and `videoUploadOnPasses` is removed.
 
@@ -111,14 +159,14 @@ _Released 07/06/2023_
 
 **Features:**
 
-- Cypress Cloud users can now receive [desktop notifications](/guides/cloud/debugging/recorded-runs#Notifications) about their runs, including when one starts, finishes, or fails. Addresses [#26686](https://github.com/cypress-io/cypress/issues/26686).
+- Cypress Cloud users can now receive [desktop notifications](/guides/cloud/recorded-runs#Notifications) about their runs, including when one starts, finishes, or fails. Addresses [#26686](https://github.com/cypress-io/cypress/issues/26686).
 
 **Bugfixes:**
 
 - Fixed issues where commands would fail with the error `must only be invoked from the spec file or support file`. Fixes [#27149](https://github.com/cypress-io/cypress/issues/27149) and [#27163](https://github.com/cypress-io/cypress/issues/27163).
 - Fixed a regression introduced in Cypress [12.12.0](#12-12-0) where Cypress may fail to reconnect to the Chrome DevTools Protocol in Electron. Fixes [#26900](https://github.com/cypress-io/cypress/issues/26900).
 - Fixed an issue where chrome was not recovering from browser crashes properly. Fixes [#24650](https://github.com/cypress-io/cypress/issues/24650).
-- Fixed a race condition that was causing a GraphQL error to appear on the [Debug page](/guides/cloud/debugging/recorded-runs#Debug) when viewing a running Cypress Cloud build. Fixed in [#27134](https://github.com/cypress-io/cypress/pull/27134).
+- Fixed a race condition that was causing a GraphQL error to appear on the [Debug page](/guides/cloud/recorded-runs#Debug) when viewing a running Cypress Cloud build. Fixed in [#27134](https://github.com/cypress-io/cypress/pull/27134).
 - Fixed a race condition in electron where the test window exiting prematurely during the browser launch process was causing the whole test run to fail. Addressed in [#27167](https://github.com/cypress-io/cypress/pull/27167).
 - Fixed minor issues with Typescript types in the CLI. Fixes [#24110](https://github.com/cypress-io/cypress/issues/24110).
 - Fixed an issue where a value for the Electron debug port would not be respected if defined using the `ELECTRON_EXTRA_LAUNCH_ARGS` environment variable. Fixes [#26711](https://github.com/cypress-io/cypress/issues/26711).
@@ -231,7 +279,7 @@ _Released 05/23/2023_
 
 - Adds Git-related messages for the
   [Runs page](/guides/core-concepts/cypress-app#Runs) and
-  [Debug page](/guides/cloud/debugging/recorded-runs#Debug) when users aren't using Git or
+  [Debug page](/guides/cloud/recorded-runs#Debug) when users aren't using Git or
   there are no recorded runs for the current branch. Addresses
   [#26680](https://github.com/cypress-io/cypress/issues/26680).
 
@@ -403,7 +451,7 @@ _Released 03/28/2023_
 
 **Features:**
 
-- The [Debug page](/guides/cloud/debugging/recorded-runs#Debug) now allows for navigating
+- The [Debug page](/guides/cloud/recorded-runs#Debug) now allows for navigating
   between all runs recorded for a commit. Addresses
   [#25899](https://github.com/cypress-io/cypress/issues/25899) and
   [#26018](https://github.com/cypress-io/cypress/issues/26018).
@@ -460,7 +508,7 @@ _Released 03/14/2023_
 
 **Features:**
 
-- The [Debug page](/guides/cloud/debugging/recorded-runs#Debug) is now able to show
+- The [Debug page](/guides/cloud/recorded-runs#Debug) is now able to show
   real-time results from in-progress runs. Addresses
   [#25759](https://github.com/cypress-io/cypress/issues/25759).
 - Added the ability to control whether a request is logged to the command log
@@ -1595,7 +1643,7 @@ _Released 9/13/2022_
 
 **Features:**
 
-- You can now run tests in Webkit, Safari's browser engine, by enabling the
+- You can now run tests in WebKit, Safari's browser engine, by enabling the
   [`experimentalWebKitSupport`](/guides/references/experiments) experiment and
   installing
   [`playwright-webkit`](https://www.npmjs.com/package/playwright-webkit). For

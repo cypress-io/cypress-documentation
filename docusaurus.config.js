@@ -47,6 +47,7 @@ const config = {
             visitMountExample,
             [copyTsToJs, { prettierOptions: prettierConfig }],
           ],
+          showLastUpdateTime: true,
         },
         blog: false,
         theme: {
@@ -169,7 +170,7 @@ const config = {
                 href: 'https://learn.cypress.io',
               },
               {
-                label: 'YouTube',
+                label: 'Cypress.io YouTube',
                 href: 'https://www.youtube.com/channel/UC-EOsTo2l2x39e4JmSaWNRQ',
               },
             ],
@@ -268,7 +269,7 @@ const config = {
         darkTheme: darkCodeTheme,
       },
       zoom: {
-        selector: ':not(.mediaImage, .navbar__logo img, .logo)', // don't zoom these images
+        selector: ':not(.mediaImage, .navbar__logo img, .logo, .br-ui)', // don't zoom these images
         background: {
           light: 'rgb(50, 50, 50)',
           dark: 'rgb(50, 50, 50)',

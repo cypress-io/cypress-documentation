@@ -43,7 +43,7 @@ test:
     - npm run e2e
 ```
 
-:::info
+:::tip
 
 <strong>Try it out</strong>
 
@@ -191,6 +191,14 @@ The addition of the
 configuration of a job will allow us to run multiples instances of Cypress at
 same time.
 
+:::info
+
+The following configuration using the `--parallel` and `--record` flags to
+[cypress run](/guides/guides/command-line#cypress-run) requires setting up
+recording test results to [Cypress Cloud](/guides/cloud/introduction).
+
+:::
+
 ```yaml
 stages:
   - build
@@ -226,46 +234,13 @@ ui-chrome-tests:
     # start the server in the background
     - npm start &
     # run Cypress tests in parallel
-    - npx cypress run --record --parallel --browser chrome --group "UI - Chrome"
+    - npx cypress run --record --parallel --browser chrome --group UI-Chrome
 ```
-
-:::note
-
-The above configuration using the `--parallel` and `--record` flags to
-[cypress run](/guides/guides/command-line#cypress-run) requires setting up
-recording test results to [Cypress Cloud](https://on.cypress.io/cloud).
-
-:::
 
 ## Using Cypress Cloud with GitLab CI/CD
 
 In the GitLab CI configuration we have defined in the previous section, we are
 leveraging three useful features of
-[Cypress Cloud](https://on.cypress.io/cloud):
+[Cypress Cloud](/guides/cloud/introduction):
 
-1. [Recording test results with the `--record` flag](https://on.cypress.io/how-do-i-record-runs)
-   to [Cypress Cloud](https://on.cypress.io/cloud):
-
-   - In-depth and shareable
-     [test reports](/guides/cloud/debugging/recorded-runs#Latest-Runs).
-   - Visibility into test failures via quick access to [Test Replay](/guides/cloud/debugging/test-replay), error messages, stack
-     traces, screenshots, videos, and contextual details.
-   - [Integrating testing with the merge-request process](/guides/cloud/integrations/source-control/gitlab)
-     via
-     [commit status guards](/guides/cloud/integrations/source-control/gitlab#Commit-statuses)
-     and convenient
-     [test report comments](/guides/cloud/integrations/source-control/gitlab#Merge-Request-comments).
-   - [Detecting flaky tests](/guides/cloud/flaky-test-management) and surfacing
-     them via [Slack alerts](/guides/cloud/flaky-test-management#Slack) or
-     [GitLab PR status checks](/guides/cloud/integrations/source-control/gitlab).
-
-2. [Parallelizing test runs](/guides/cloud/smart-orchestration/parallelization)
-   and optimizing their execution via
-   [intelligent load-balancing](/guides/cloud/smart-orchestration/load-balancing#Balance-strategy)
-   of test specs across CI machines with the `--parallel` flag.
-
-3. Organizing and consolidating multiple `cypress run` calls by labeled groups
-   into a single report within [Cypress Cloud](https://on.cypress.io/cloud). In
-   the example above we use the `--group "UI - Chrome"` flag to organize all UI
-   tests for the Chrome browser into a group labeled "UI - Chrome" in the
-   [Cypress Cloud](https://on.cypress.io/cloud) report.
+<CiProviderCloudSteps />
