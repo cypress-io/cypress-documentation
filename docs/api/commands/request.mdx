@@ -9,8 +9,10 @@ Make an HTTP request.
 ```javascript
 cy.request(url)
 cy.request(url, body)
+cy.request(url, fixture)
 cy.request(method, url)
 cy.request(method, url, body)
+cy.request(method, url, fixture)
 cy.request(options)
 ```
 
@@ -65,6 +67,9 @@ cy.request('seed/admin') // URL is http://localhost:1234/seed/admin
 
 A request `body` to be sent in the request. Cypress sets the `Accepts` request
 header and serializes the response body by the `encoding` option.
+
+**<Icon name="angle-right" /> fixture** **_(String)_**
+A string specifying a fixture. The data in the fixture is used in the request `body`. The string is prefixed with `'fx:'` followed by the name of the fixture.
 
 **<Icon name="angle-right" /> method** **_(String)_**
 
@@ -194,6 +199,25 @@ cy.request('POST', 'http://localhost:8888/users/admin', { name: 'Jane' }).then(
     expect(response.body).to.have.property('name', 'Jane') // true
   }
 )
+```
+
+#### Send a `POST` request with a fixture as the JSON body
+
+```javascript
+cy.request('POST', 'http://localhost:8888/users/admin', 'fx:person').then(
+  (response) => {
+    // response.body is automatically serialized into JSON
+    expect(response.body).to.have.property('name', 'Jane') // true
+  }
+)
+```
+
+`person.json`
+
+```json
+{
+  "name": "Jane"
+}
 ```
 
 ### Options
