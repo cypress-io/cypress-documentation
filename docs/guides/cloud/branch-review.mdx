@@ -14,13 +14,6 @@ sidebar_class_name: new_label
 
 :::
 
-:::info
-
-&#8239;<Icon name="exclamation-triangle" /> Branch Review is currently in beta.
-See [how to enable](/guides/cloud/branch-review#Public-Beta-Access) this feature below.
-
-:::
-
 ## Overview
 
 Cypress Branch Review is designed to elevate your pull request review workflow. It allows you to quickly identify the impact a pull request might have on your test suite in a single view. Compare which tests are failing, flaky, pending, added, or modified between the source and base branches and prevent the merging of low-quality code.
@@ -37,20 +30,6 @@ Previously, pinpointing changes in your test suite's results required a manual s
 :::info
 
 Cypress Branch Review is currently only available for [GitHub integrated projects](/guides/cloud/integrations/source-control/github). We are working on adding support for GitLab and Bitbucket soon.
-
-:::
-
-## Public Beta Access
-
-:::tip
-
-To access the Branch Review public beta, an admin can simply enable it under "Cypress Labs" in your Organization Settings in Cypress Cloud.
-
-<DocsImage
-  src="/img/guides/cloud/branch-review/labs-beta.png"
-  alt="Enable Branch Review Beta"
-  width="90%"
-/>
 
 :::
 
@@ -75,7 +54,7 @@ If you do not see PR # tags associated with a branch, you may need to [pass PR n
 If the selected branch has a PR associated and a PR # passed via CI, there is an additional callout on the top of the overview tab of the **Latest runs** page which directs to the Branch Review.
 
 <DocsImage
-  src="/img/guides/cloud/branch-review/branch-review-available.jpg"
+  src="/img/guides/cloud/branch-review/branch-review-available.png"
   alt="Branch Review available banner"
 />
 
@@ -83,14 +62,30 @@ If the selected branch has a PR associated and a PR # passed via CI, there is an
 
 ### View Options
 
-"Review" is the default view of the **Branches** tab for projects with linked GitHub repositories via our GitHub integration.
-
-"Runs" provides a list filtered by the selected branch for projects without linked repositories or those with an unknown branch. An unkown branch is one in which Cypress does not have access to the local `.git` directory and cannot determine a branch for a run.
+"Overview" is the default view of a branch for all projects.
 
 <DocsImage
-  src="/img/guides/cloud/branch-review/branch-review-views.jpg"
+  src="/img/guides/cloud/branch-review/branch-review-views.png"
   alt="Displaying different views for branches"
 />
+
+:::note
+
+**Branch Overview**
+
+1. Callouts for the latest available Branch Review or a reminder to create a pull request in order to compare test run results.
+
+2. Click "Review changes" for the full Branch Review.
+
+3. Click any test status to reveal those changes.
+
+4. Latest runs of the current branch for contextual guidance on the state of its test runs.
+
+:::
+
+"Review" provides the detailed Branch Review insights for the branch's available pull requests, with the latest pull request selected by default.
+
+"Runs" provides a list of all runs that are attributed to the current branch.
 
 ### Review Header
 
@@ -109,12 +104,26 @@ Clicking the branch label will link you directly to the appropriate [run overvie
 
 When on the review screen, you will see the Failures, Flaky, Pending, Added, and Modified tabs. Each tab will show you the specs that fall into that category. You can click on a test to view the test details.
 
+:::info
+
+If a run is missing on either the merge base or feature commit of the PR, a banner is displayed specifying which commit is missing the run with a link to it on GitHub.
+
+:::
+
+:::info
+
+Recording exactly one run for every commit as the best/only way to ensure complete and accurate comparisons. See our [best practices](/guides/cloud/branch-review#Best-Practices) on grouping multiple `cypress run` calls under one run.
+
+:::
+
 <DocsImage
   src="/img/guides/cloud/branch-review/branch-review-details.jpg"
   alt="Branch Review Details"
 />
 
 :::note
+
+**Review Test Status**
 
 1. Review your PR information
 2. Get a glance of changes in your branch across key statuses
@@ -143,9 +152,25 @@ When on the review screen, you will see the Failures, Flaky, Pending, Added, and
 Navigating into the test detail view reveals a side-by-side comparison of the test results on both branches, as well as, artifacts so you can compare before vs. after your PR. This can help narrow the focus on changes introduced or resolved on either branch and elevate the source of flake within tests throughout different attempts. Review the test definition panel for diff snapshots to help quickly determine changes in test code.
 
 <DocsImage
-  src="/img/guides/cloud/branch-review/test-comparison.jpg"
+  src="/img/guides/cloud/branch-review/test-comparison.png"
   alt="Test Comparison View"
 />
+
+:::note
+
+**Review Test Comparison**
+
+1. Base branch results
+
+2. Feature branch results
+
+3. Test Replay and artifacts
+
+4. Test attempts (decending order)
+
+5. Code change diffs
+
+:::
 
 ## GitHub Pull Request Comments
 
