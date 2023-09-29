@@ -741,7 +741,7 @@
         },
         {
           "name": "cypress-intercept-formdata",
-          "description": "Work with Cypress' Intrecept multipart/form-data requests",
+          "description": "Work with Cypress' Intercept multipart/form-data requests",
           "link": "https://github.com/yoavniran/cypress-intercept-formdata",
           "keywords": ["testing", "commands", "intercept", "form-data", "request"],
           "badge": "community"
