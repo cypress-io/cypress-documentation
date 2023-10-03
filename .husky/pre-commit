@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# --allow-empty flag will consider prettier fixing white space a valid commit
+npx lint-staged --allow-empty
