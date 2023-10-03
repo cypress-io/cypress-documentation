@@ -1501,6 +1501,19 @@ respectively.
 Any previous dev servers or mounting libraries from the `@cypress` namespace
 should be uninstalled in Cypress 10.
 
+### Clashing Types with Jest
+
+You may want to consider configuring your app with separate `tsconfig.json` to solve
+[clashing types with jest](/guides/tooling/typescript-support#Clashing-types-with-Jest).
+You will need to exclude `cypress.config.ts`, `cypress`, `node_modules` in your
+root `tsconfig.json` file.
+
+```json
+{
+  "exclude": ["cypress.config.ts", "cypress", "node_modules"]
+}
+```
+
 ### Code Coverage Plugin
 
 The [Cypress Code Coverage](https://github.com/cypress-io/code-coverage#readme)
