@@ -100,7 +100,12 @@ will perform the action.
 
 ### Disability
 
-Cypress checks whether an element's `disabled` property is `true`.
+Cypress checks whether an element's `disabled` property is `true`. Note that
+this property only affects
+[form controls](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/disabled) 
+such as `button` or `input`. Setting a `disabled` attribute on other elements will 
+have no effect on a user's ability to interact with them, 
+and won't impact Cypress actionability checks. 
 
 ### Detached
 
