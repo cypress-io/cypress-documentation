@@ -81,7 +81,7 @@ Refer to the [v13 Migration Guide](/guides/references/migration-guide#Migrating-
 - The [`cy.readFile()`](/api/commands/readfile) command is now retry-able as a [query command](/guides/core-concepts/retry-ability). This should not affect any tests using it; the functionality is unchanged. However, it can no longer be overwritten using [`Cypress.Commands.overwrite()`](/api/cypress-api/custom-commands#Overwrite-Existing-Commands). Addressed in [#25595](https://github.com/cypress-io/cypress/pull/25595).
 - The deprecated configuration option `nodeVersion` has been removed. Addresses [#27016](https://github.com/cypress-io/cypress/issues/27016).
 - The properties and values returned by the [Module API](/guides/guides/module-api) and included in the arguments of handlers for the [`after:run`](/api/plugins/after-run-api) and [`after:spec`](/api/plugins/after-spec-api) have been changed to be more consistent. Addresses [#23805](https://github.com/cypress-io/cypress/issues/23805).
-- For Cypress Cloud runs with Test Replay enabled, the Cypress Runner UI is now hidden during the run. This change was made to improve performance in situations where the Runner no longer needs to be rendered. If video is recorded during the run, the Runner will not be visible. In addition, if a runner screenshot ()`cy.screenshot({ capture: runner })`) is captured, it will no longer contain the Runner. You can turn off this behavior by passing `--no-runner-ui`. Addressed in [#27482](https://github.com/cypress-io/cypress/pull/27482).
+- For Cypress Cloud runs with Test Replay enabled, the Cypress Runner UI is now hidden during the run. This change was made to improve performance in situations where the Runner no longer needs to be rendered. If video is recorded during the run, the Runner will not be visible. In addition, if a screenshot with `capture: runner` is taken, the screenshot will be taken as if the `capture: viewport` option was passed. You can turn off this behavior by passing [`--runner-ui`](/guides/guides/command-line#cypress-run-runner-ui). Addressed in [#27482](https://github.com/cypress-io/cypress/pull/27482).
 - The browser and browser page unexpectedly closing in the middle of a test run are now gracefully handled. Addressed in [#27592](https://github.com/cypress-io/cypress/issues/27592).
 - Automation performance is now improved by switching away from websockets to direct CDP calls for Chrome and Electron browsers. Addressed in [#27592](https://github.com/cypress-io/cypress/issues/27592).
 - Edge cases where `cy.intercept` would not properly intercept have been addressed. Addressed in [#27592](https://github.com/cypress-io/cypress/issues/27592).
@@ -90,7 +90,7 @@ Refer to the [v13 Migration Guide](/guides/references/migration-guide#Migrating-
 
 **Features:**
 
-- Added `--runner-ui` and `--no-runner-ui` CLI flags to control whether the Cypress Runner UI is visible during a run. Addressed in [#27582](https://github.com/cypress-io/cypress/pull/27582).
+- Added [`--runner-ui`](/guides/guides/command-line#cypress-run-runner-ui) and [`--no-runner-ui`](https://docs.cypress.io/guides/guides/command-line#cypress-run-no-runner-ui) CLI flags to control whether the Cypress Runner UI is visible during a run. Addressed in [#27582](https://github.com/cypress-io/cypress/pull/27582).
 - Consolidates and improves terminal output when uploading test artifacts to Cypress Cloud. Addressed in [#27402](https://github.com/cypress-io/cypress/pull/27402)
 
 **Bugfixes:**
