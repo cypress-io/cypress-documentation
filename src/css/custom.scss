@@ -111,6 +111,9 @@ html[data-theme='light'] {
   --ifm-link-color: var(--cypress-color-indigo-500);
 
   --ifm-toc-border-color: var(--ifm-color-gray-100);
+
+  // adjust hue & transparency of `code` so dotted underline shows through in light mode
+  --ifm-code-background: #dadada33;
 }
 
 html[data-theme='dark'] {

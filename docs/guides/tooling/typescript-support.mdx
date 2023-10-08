@@ -71,6 +71,19 @@ If that does not work, try restarting the IDE.
 
 :::
 
+### Clashing Types with Jest
+
+You may want to consider configuring your app with separate `tsconfig.json` to solve
+[clashing types with jest](/guides/tooling/typescript-support#Clashing-types-with-Jest).
+You will need to exclude `cypress.config.ts`, `cypress`, `node_modules` in your
+root `tsconfig.json` file.
+
+```json
+{
+  "exclude": ["cypress.config.ts", "cypress", "node_modules"]
+}
+```
+
 ### Types for Custom Commands
 
 When adding [custom commands](/api/cypress-api/custom-commands) to the `cy`
@@ -214,8 +227,6 @@ As you can see there are generic parameters `<'type', 'element'>` are used:
 
 #### Examples:
 
-- Find
-  [the standalone example](https://github.com/cypress-io/add-cypress-custom-command-in-typescript).
 - See
   [Adding Custom Commands](https://github.com/cypress-io/cypress-example-recipes#fundamentals)
   example recipe.

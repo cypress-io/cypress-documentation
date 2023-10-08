@@ -128,7 +128,7 @@ In the example above, the `cy:run` command will only be executed when the URL
 `http://localhost:3030` responds with an HTTP status code of 200. The server
 will also shut down when the tests complete.
 
-_Gotchas_
+#### Gotchas
 
 When
 [working with `webpack-dev-server`](https://github.com/bahmutov/start-server-and-test#note-for-webpack-dev-server-users)
@@ -170,13 +170,14 @@ insight into what happened when your tests ran.
 - Get the entire stack trace of failed tests.
 - View screenshots taken when tests fail and when using
   [`cy.screenshot()`](/api/commands/screenshot).
-- Watch a video of your entire test run or a clip at the point of test failure.
+- Watch a video of your entire test run or a clip at the point of test failure
+  when the `video` configuration is enabled.
 - See which machines ran each test when
-  [parallelized](/guides/guides/parallelization).
+  [parallelized](/guides/cloud/smart-orchestration/parallelization).
 
 #### To record tests:
 
-1. [Set up your project to record](/guides/cloud/projects#Setup)
+1. [Set up your project to record](/guides/cloud/getting-started#Setup)
 2. [Pass the `--record` flag to `cypress run`](/guides/guides/command-line#cypress-run)
    within CI.
 
@@ -201,7 +202,7 @@ your tests run in parallel.
 cypress run --record --key=abc123 --parallel
 ```
 
-[Read the full guide on parallelization.](/guides/guides/parallelization)
+[Read the full guide on parallelization.](/guides/cloud/smart-orchestration/parallelization)
 
 ### Official Cypress Docker Images
 
@@ -215,7 +216,7 @@ Dockerfile would look like this:
 ```text
 FROM cypress/base
 RUN npm install
-RUN $(npm bin)/cypress run
+RUN npx cypress run
 ```
 
 :::caution
@@ -224,7 +225,7 @@ Mounting a project directory with an existing `node_modules` into a
 `cypress/base` docker image **will not work**:
 
 ```shell
-docker run -it -v /app:/app cypress/base:14.16.0 bash -c 'cypress run'
+docker run -it -v /app:/app cypress/base:18.12.1 bash -c 'cypress run'
 Error: the cypress binary is not installed
 ```
 
@@ -376,6 +377,7 @@ values in the Cypress configuration.
 **_Typical use cases would be modifying things like:_**
 
 - `CYPRESS_BASE_URL`
+- `CYPRESS_VIDEO`
 - `CYPRESS_VIDEO_COMPRESSION`
 - `CYPRESS_REPORTER`
 - `CYPRESS_INSTALL_BINARY`
@@ -387,7 +389,8 @@ for more examples.
 **_Record Key_**
 
 If you are [recording your runs](#Record-tests) on a public project, you'll want
-to protect your Record Key. [Learn why.](/guides/cloud/projects#Identification)
+to protect your Record Key.
+[Learn why.](/guides/cloud/account-management/projects#Identification)
 
 Instead of hard coding it into your run command like this:
 
@@ -442,10 +445,10 @@ under custom environment variables.
 - Remote: `COMMIT_INFO_REMOTE`
 
 If the commit information is missing in the Cypress Cloud run then
-[GitHub Integration](/guides/cloud/github-integration) or other tasks might not
-work correctly. To see the relevant Cypress debug logs, set the environment
-variable `DEBUG` on your CI machine and inspect the terminal output to see why
-the commit information is unavailable.
+[GitHub Integration](/guides/cloud/integrations/source-control/github) or other
+tasks might not work correctly. To see the relevant Cypress debug logs, set the
+environment variable `DEBUG` on your CI machine and inspect the terminal output
+to see why the commit information is unavailable.
 
 ```shell
 DEBUG=commit-info,cypress:server:record
@@ -657,6 +660,7 @@ CI providers. Find the workshop at
   viewport sizes.
 - [cypress-example-kitchensink](https://github.com/cypress-io/cypress-example-kitchensink#ci-status)
   is set up to run on multiple CI providers.
+- [Test Replay](/guides/cloud/test-replay)
 - [Cross Browser Testing Guide](/guides/guides/cross-browser-testing)
 - [Blog: Setting up Bitbucket Pipelines with proper caching of npm and Cypress](https://www.cypress.io/blog/2018/08/30/setting-up-bitbucket-pipelines-with-proper-caching-of-npm-and-cypress/)
 - [Blog: Record Test Artifacts from any Docker CI](https://www.cypress.io/blog/2018/08/28/record-test-artifacts-from-any-ci/)

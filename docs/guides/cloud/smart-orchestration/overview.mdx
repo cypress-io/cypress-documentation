@@ -1,0 +1,22 @@
+---
+title: Overview
+sidebar_position: 10
+---
+
+Cypress Cloud provides four distinct Smart Orchestration features for use in CI
+to speed up test runs, accelerate debugging workflows, and reduce costs:
+
+- [Parallelization](/guides/cloud/smart-orchestration/parallelization): Reduce
+  test duration by running multiple test spec files simultaneously across
+  available CI machines.
+- [Load Balancing](/guides/cloud/smart-orchestration/load-balancing): Optimize
+  CI resources and minimize test duration by intelligently prioritizing running
+  of test spec files during parallelization.
+- [Spec Prioritization](/guides/cloud/smart-orchestration/spec-prioritization):
+  Quickly verify that your latest changes fixed a build by prioritizing the
+  specs that failed in the previous Cypress run.
+- [Run Cancellation](/guides/cloud/smart-orchestration/run-cancellation):
+  Automatically cancel a Cypress run when tests fail. Canceling tests
+  early reduces the number of “tests recorded” and thus your
+  monthly bill as you won't be billed for tests that aren't valuable once your run
+  has failed. This will also free up CI resources for validating fixes, and helping other users.

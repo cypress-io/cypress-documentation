@@ -180,14 +180,13 @@ version: 0.2
 
 ## AWS CodeBuild Batch configuration
 ## https://docs.aws.amazon.com/codebuild/latest/userguide/batch-build-buildspec.html
-## Define build to run using the "cypress/browsers:node12.14.1-chrome85-ff81" image from the Cypress Amazon ECR Public Gallery
+## Define build to run using the "cypress/browsers:node18.12.0-chrome106-ff106" image from the Cypress Amazon ECR Public Gallery
 batch:
   fast-fail: false
   build-list:
     - identifier: cypress-e2e-tests
       env:
-        variables:
-          IMAGE: public.ecr.aws/cypress-io/cypress/browsers:node12.14.1-chrome85-ff81
+        image: public.ecr.aws/cypress-io/cypress/browsers:node18.12.0-chrome106-ff106
 
 phases:
   install:
@@ -246,8 +245,9 @@ example for details on how to configure a CodePipeline with an output artifact.
 ## Parallelization
 
 [Cypress Cloud](/guides/cloud/introduction) offers the ability to
-[parallelize and group test runs](/guides/guides/parallelization) along with
-additional insights and [analytics](/guides/cloud/analytics) for Cypress tests.
+[parallelize and group test runs](/guides/cloud/smart-orchestration/parallelization)
+along with additional insights and [analytics](/guides/cloud/analytics) for
+Cypress tests.
 
 AWS CodeBuild offers a
 [batch build-matrix strategy](https://docs.aws.amazon.com/codebuild/latest/userguide/batch-build-buildspec.html#build-spec.batch.build-matrix)
@@ -291,10 +291,11 @@ Cypress locally and in CI, which are built with Google Chrome and Firefox. This
 allows us to run the tests in Firefox by passing the `--browser firefox`
 attribute to `cypress run`.
 
-:::note
+:::info
 
-The following configuration with `--parallel` and `--record` options to Cypress
-requires a subscription to [Cypress Cloud](https://on.cypress.io/cloud).
+The following configuration using the `--parallel` and `--record` flags to
+[cypress run](/guides/guides/command-line#cypress-run) requires setting up
+recording test results to [Cypress Cloud](/guides/cloud/introduction).
 
 :::
 
@@ -309,8 +310,7 @@ The fields are delimited by a pipe (`|`) character as follows:
 ```yaml
 ## Group Name | Browser | Specs | Cypress Configuration options (optional)
 
-'UI - Chrome -
-Mobile|chrome|cypress/tests/ui/*|viewportWidth=375,viewportHeight=667'
+'UI-Chrome-Mobile|chrome|cypress/tests/ui/*|viewportWidth=375,viewportHeight=667'
 ```
 
 The `build-matrix` will run all permutations delimited items.
@@ -325,13 +325,11 @@ batch:
         # ...
         variables:
           CY_GROUP_SPEC:
-            - 'UI - Chrome|chrome|cypress/tests/ui/*'
-            - 'UI - Chrome -
-              Mobile|chrome|cypress/tests/ui/*|viewportWidth=375,viewportHeight=667'
+            - 'UI-Chrome|chrome|cypress/tests/ui/*'
+            - 'UI-Chrome-Mobile|chrome|cypress/tests/ui/*|viewportWidth=375,viewportHeight=667'
             - 'API|chrome|cypress/tests/api/*'
-            - 'UI - Firefox|firefox|cypress/tests/ui/*'
-            - 'UI - Firefox -
-              Mobile|firefox|cypress/tests/ui/*|viewportWidth=375,viewportHeight=667'
+            - 'UI-Firefox|firefox|cypress/tests/ui/*'
+            - 'UI-Firefox-Mobile|firefox|cypress/tests/ui/*|viewportWidth=375,viewportHeight=667'
 ```
 
 During the install phase, we utilize shell scripting with the
@@ -430,42 +428,15 @@ are still facing issues after this, please
 
 In the AWS CodeBuild configuration we have defined in the previous section, we
 are leveraging three useful features of
-[Cypress Cloud](https://on.cypress.io/cloud):
+[Cypress Cloud](/guides/cloud/introduction):
 
-1. [Recording test results with the `--record` flag](https://on.cypress.io/how-do-i-record-runs)
-   to [Cypress Cloud](https://on.cypress.io/cloud):
-
-   - In-depth and shareable [test reports](/guides/cloud/runs).
-   - Visibility into test failures via quick access to error messages, stack
-     traces, screenshots, videos, and contextual details.
-   - [Integrating testing with the pull-request (PR) process](/guides/cloud/github-integration)
-     via
-     [commit status check guards](/guides/cloud/github-integration#Status-checks)
-     and convenient
-     [test report comments](/guides/cloud/github-integration#Pull-request-comments).
-   - [Detecting flaky tests](/guides/cloud/flaky-test-management) and surfacing
-     them via [Slack alerts](/guides/cloud/flaky-test-management#Slack) or
-     [GitHub PR status checks](/guides/cloud/flaky-test-management#GitHub).
-
-2. [Parallelizing test runs](/guides/guides/parallelization) and optimizing
-   their execution via
-   [intelligent load-balancing](/guides/guides/parallelization#Balance-strategy)
-   of test specs across CI machines with the `--parallel` flag.
-
-3. Organizing and consolidating multiple `cypress run` calls by labeled groups
-   into a single report within [Cypress Cloud](https://on.cypress.io/cloud). In
-   the example above we use the `--group "UI - Chrome"` flag (for the first
-   group) to organize all UI tests for the Chrome browser into a group labeled
-   "UI - Chrome" inside the [Cypress Cloud](https://on.cypress.io/cloud) report.
+<CiProviderCloudSteps />
 
 ## Cypress Real World Example with AWS CodeBuild
 
 A complete CI workflow against multiple browsers, viewports and operating
-systems is available in the
-
-<Icon name="github" inline="true" contentType="rwa" />.
+systems is available in the Cypress Real World App (RWA).
 
 Clone the <Icon name="github" inline="true" contentType="rwa" /> and refer to
-the
-[buildspec.yml](https://github.com/cypress-io/cypress-realworld-app/blob/develop/buildspec.yml)
+the [buildspec.yml](https://github.com/cypress-io/cypress-realworld-app/blob/develop/buildspec.yml)
 file.

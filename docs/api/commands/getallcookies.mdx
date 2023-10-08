@@ -31,7 +31,7 @@ Pass in an options object to change the default behavior of
 | `log`     | `true`                                                         | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 | `timeout` | [`responseTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.getAllCookies()` to resolve before [timing out](#Timeouts)          |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
 
 `cy.getAllCookies()` yields an array of cookie objects. Each cookie object has
 the following properties:
@@ -60,7 +60,7 @@ redirects back to our site, which sets a session cookie.
 
 ```javascript
 cy.contains('Log in').click()
-cy.origin('https://login.site.com', () => {
+cy.origin('https://example.cypress.io', () => {
   cy.get('[type=password]').type('*****')
   cy.contains('Log in').click()
 })
@@ -75,16 +75,16 @@ cy.getAllCookies()
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
 
 - `cy.getAllCookies()` requires being chained off of `cy`.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
 
 - `cy.getAllCookies()` will only run assertions you have chained once, and will
   not [retry](/guides/core-concepts/retry-ability).
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
 
 - `cy.getAllCookies()` should never time out.
 

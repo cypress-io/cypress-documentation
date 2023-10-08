@@ -70,7 +70,7 @@ Pass in an options object to change the default behavior of `.invoke()`.
 Additional arguments to be given to the function call. There is no limit to the
 number of arguments.
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
 
 - `.invoke()` yields the return value of the method.
 - `.invoke()` is a query, and it is _safe_ to chain further commands.
@@ -246,23 +246,22 @@ cy.wrap(english).invoke('greeting').should('equal', 'bye')
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
 
 - `.invoke()` requires being chained off a previous command.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
 
 - `.invoke()` will wait for the `function` to exist on the subject before
   running.
-- `.invoke()` will wait for the promise to resolve if the invoked `function`
-  returns a promise.
+- `.invoke()` will throw an error if the invoked `function` returns a promise.
+  If you want to invoke a function that returns a promise, use [`.then()`](/api/commands/then) instead.
 - `.invoke()` will automatically [retry](/guides/core-concepts/retry-ability)
   until all chained assertions have passed.
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
 
 - `.invoke()` can time out waiting for assertions you've added to pass.
-- `.invoke()` can time out waiting for a promise you've returned to resolve.
 
 ## Command Log
 

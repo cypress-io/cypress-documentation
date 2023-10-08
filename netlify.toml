@@ -324,12 +324,6 @@
   force = true
 
 [[redirects]]
-  from = "/guides/dashboard/bitbucket-integration"
-  to = "/guides/cloud/bitbucket-integration"
-  status = 301
-  force = true
-
-[[redirects]]
   from = "/guides/dashboard/flaky-test-management"
   to = "/guides/cloud/flaky-test-management"
   status = 301
@@ -338,18 +332,6 @@
 [[redirects]]
   from = "/guides/dashboard/flaky-test-management"
   to = "/guides/cloud/flaky-test-management"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/guides/dashboard/github-integration"
-  to = "/guides/cloud/github-integration"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/guides/dashboard/gitlab-integration"
-  to = "/guides/cloud/gitlab-integration"
   status = 301
   force = true
 
@@ -360,8 +342,62 @@
   force = true
 
 [[redirects]]
+  from = "/guides/dashboard/github-integration"
+  to = "/guides/cloud/integrations/github"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/github-integration"
+  to = "/guides/cloud/integrations/github"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/dashboard/gitlab-integration"
+  to = "/guides/cloud/integrations/gitlab"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/gitlab-integration"
+  to = "/guides/cloud/integrations/gitlab"
+  status = 301
+  force = true
+
+[[redirects]]
   from = "/guides/dashboard/jira-integration"
-  to = "/guides/cloud/jira-integration"
+  to = "/guides/cloud/integrations/jira"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/jira-integration"
+  to = "/guides/cloud/integrations/jira"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/dashboard/slack-integration"
+  to = "/guides/cloud/integrations/slack"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/slack-integration"
+  to = "/guides/cloud/integrations/slack"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/dashboard/bitbucket-integration"
+  to = "/guides/cloud/integrations/bitbucket"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/bitbucket-integration"
+  to = "/guides/cloud/integrations/bitbucket"
   status = 301
   force = true
 
@@ -384,12 +420,6 @@
   force = true
 
 [[redirects]]
-  from = "/guides/dashboard/slack-integration"
-  to = "/guides/cloud/slack-integration"
-  status = 301
-  force = true
-
-[[redirects]]
   from = "/guides/dashboard/smart-orchestration"
   to = "/guides/cloud/smart-orchestration"
   status = 301
@@ -404,6 +434,74 @@
 [[redirects]]
   from = "/faq/questions/dashboard-faq"
   to = "/faq/questions/cloud-faq"
+  status = 301
+  force = true
+
+# New Cloud IA (Summer 2023)
+
+[[redirects]]
+  from = "/guides/cloud/projects"
+  to = "/guides/cloud/account-management/projects"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/organizations"
+  to = "/guides/cloud/account-management/organizations"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/users"
+  to = "/guides/cloud/account-management/users"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/smart-orchestration"
+  to = "/guides/cloud/smart-orchestration/overview"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/guides/parallelization"
+  to = "/guides/cloud/smart-orchestration/parallelization"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/runs"
+  to = "/guides/cloud/recorded-runs"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/integrations/github"
+  to = "/guides/cloud/integrations/source-control/github"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/integrations/gitlab"
+  to = "/guides/cloud/integrations/source-control/gitlab"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/integrations/bitbucket"
+  to = "/guides/cloud/integrations/source-control/bitbucket"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/debugging/test-replay"
+  to = "/guides/cloud/test-replay"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/debugging/recorded-runs"
+  to = "/guides/cloud/recorded-runs"
   status = 301
   force = true
 

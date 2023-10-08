@@ -19,7 +19,7 @@ const config = {
     'Fast, easy and reliable testing for anything that runs in a browser.',
   url: 'https://docs.cypress.io',
   baseUrl: '/',
-  onBrokenLinks: 'throw', // TODO: update this to throw when we go live to production
+  onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'throw',
   favicon: undefined,
 
@@ -47,6 +47,7 @@ const config = {
             visitMountExample,
             [copyTsToJs, { prettierOptions: prettierConfig }],
           ],
+          showLastUpdateTime: true,
         },
         blog: false,
         theme: {
@@ -138,7 +139,7 @@ const config = {
             'aria-label': 'Cypress GitHub repository',
           },
           {
-            href: 'https://discord.gg/cypress',
+            href: 'https://on.cypress.io/discord',
             position: 'right',
             className: 'discord-logo',
             'aria-label': 'Cypress Discord',
@@ -147,14 +148,13 @@ const config = {
       },
       // optional, can be commented out
       // Styles for this are controlled in src/css/announcement-bar.scss
-      // announcementBar: {
-      //   //give id a unique value to get a new announcement bar to appear
-      //   id: 'event-apis-with-cypress-2-23',
-      //   content:
-      //     '📢 &nbsp; Save your seat for the Testing APIs with Cypress event Feb 23! <a target="_blank" href="https://community.cypress.io/events/details/cypress-cypress-hq-presents-testing-apis-with-cypress?utm_source=docs&utm_medium=promo_banner&utm_campaign=testing_apis_with_cypress">Register now</a>',
-      //   isCloseable: true,
-
-      // },
+      announcementBar: {
+        //give id a unique value to get a new announcement bar to appear
+        id: 'cypress-v13',
+        content:
+          `📢 &nbsp; <strong>v13.0.0</strong> - Replay your tests as they occurred in your CI run and debug with confidence using <a href="/guides/cloud/debugging/test-replay">Test Replay</a> in <a href="/guides/cloud/introduction">Cypress Cloud</a>! 🎉`,
+        isCloseable: true,
+      },
       footer: {
         style: 'dark',
         links: [
@@ -170,7 +170,7 @@ const config = {
                 href: 'https://learn.cypress.io',
               },
               {
-                label: 'YouTube',
+                label: 'Cypress.io YouTube',
                 href: 'https://www.youtube.com/channel/UC-EOsTo2l2x39e4JmSaWNRQ',
               },
             ],
@@ -192,7 +192,7 @@ const config = {
               // },
               {
                 label: 'Discord',
-                href: 'https://discord.com/invite/cypress',
+                href: 'https://on.cypress.io/discord',
               },
               {
                 label: 'Twitter',
@@ -232,6 +232,10 @@ const config = {
                 label: 'Careers',
                 href: 'https://www.cypress.io/careers',
               },
+              {
+                label: 'Support',
+                href: 'https://www.cypress.io/support',
+              },
             ],
           },
         ],
@@ -265,7 +269,7 @@ const config = {
         darkTheme: darkCodeTheme,
       },
       zoom: {
-        selector: ':not(.mediaImage, .navbar__logo img, .logo)', // don't zoom these images
+        selector: ':not(.mediaImage, .navbar__logo img, .logo, .br-ui)', // don't zoom these images
         background: {
           light: 'rgb(50, 50, 50)',
           dark: 'rgb(50, 50, 50)',

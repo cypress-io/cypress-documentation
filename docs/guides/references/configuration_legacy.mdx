@@ -16,9 +16,9 @@ configuration file. For Cypress 10 and above, visit the
 
 The first time you open Cypress, it creates the `cypress.json` configuration
 file. This JSON file is used to store any configuration values you supply. If
-you [configure your tests to record](/guides/cloud/projects#Setup) the results
-to [Cypress Cloud](https://on.cypress.io/cloud-introduction) the `projectId`
-will be written in this file too.
+you [configure your tests to record](/guides/cloud/getting-started#Setup) the
+results to [Cypress Cloud](https://on.cypress.io/cloud-introduction) the
+`projectId` will be written in this file too.
 
 :::caution
 
@@ -470,9 +470,6 @@ value has been set via the following ways:
 By passing a string or array of strings you can block requests made to one or
 more hosts.
 
-To see a working example of this please check out our
-[Stubbing Google Analytics Recipe](/examples/recipes#Stubbing-and-spying).
-
 To block a host:
 
 - <Icon name="check-circle" color="green" /> Pass only the host
@@ -533,7 +530,7 @@ send a `503` status code. As a convenience it also sets a
 
 <DocsImage
   src="/img/guides/references/v10/blocked-host.png"
-  alt="Network tab of dev tools with analytics.js request selected and the response header highlighted "
+  alt="Network tab of dev tools showing blocked host"
 />
 
 ### modifyObstructiveCode

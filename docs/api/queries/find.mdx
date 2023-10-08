@@ -50,7 +50,7 @@ Pass in an options object to change the default behavior of `.find()`.
 | `timeout`          | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts)              | Time to wait for `.find()` to resolve before [timing out](#Timeouts)                                         |
 | `includeShadowDom` | [`includeShadowDom` config option value](/guides/references/configuration#Global) | Whether to traverse shadow DOM boundaries and include elements within the shadow DOM in the yielded results. |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
 
 - `.find()` yields the new DOM element(s) it found.
 - `.find()` is a query, and it is _safe_ to chain further commands.
@@ -75,11 +75,11 @@ cy.get('#parent').find('li')
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
 
 - `.find()` requires being chained off a command that yields DOM element(s).
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
 
 - `.find()` will automatically [retry](/guides/core-concepts/retry-ability)
   until the element(s)
@@ -87,7 +87,7 @@ cy.get('#parent').find('li')
 - `.find()` will automatically [retry](/guides/core-concepts/retry-ability)
   until all chained assertions have passed.
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
 
 - `.find()` can time out waiting for the element(s) to
   [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).

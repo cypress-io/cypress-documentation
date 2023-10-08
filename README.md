@@ -1,4 +1,4 @@
-# Cypress Documentation [![Cypress Cloud](https://img.shields.io/badge/cypress-dashboard-brightgreen.svg)](https://cloud.cypress.io/#/projects/ma3dkn/runs) [![first-timers-only](http://img.shields.io/badge/first--timers--only-friendly-blue.svg)](https://github.com/cypress-io/cypress-documentation/labels/first-timers-only)
+# Cypress Documentation [![Discord chat](https://img.shields.io/badge/chat-on%20Discord-brightgreen)](https://on.cypress.io/discord) [![first-timers-only](http://img.shields.io/badge/first--timers--only-friendly-blue.svg)](https://github.com/cypress-io/cypress-documentation/labels/first-timers-only)
 
 The code for Cypress Documentation including Guides, API, Examples, Cypress
 Cloud & FAQ found at https://docs.cypress.io.

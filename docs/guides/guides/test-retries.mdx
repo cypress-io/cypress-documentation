@@ -99,7 +99,7 @@ attempt for review and debugging if desired.
 
 Typically you will want to define different retry attempts for `cypress run`
 versus `cypress open`. You can configure this in the
-[Cypress configuration](/guides/guides/command-line#cypress-open-config-file-lt-configuration-file-gt)
+[Cypress configuration](/guides/references/configuration#Global)
 by passing the `retries` option an object with the following options:
 
 - `runMode` allows you to define the number of test retries when running
@@ -124,7 +124,7 @@ by passing the `retries` option an object with the following options:
 
 If you want to configure the retry attempts for all tests run in both
 `cypress run` and `cypress open`, you can configure this in the
-[Cypress configuration](/guides/guides/command-line#cypress-open-config-file-lt-configuration-file-gt)
+[Cypress configuration](/guides/references/configuration#Global)
 by defining the `retries` property and setting the desired number of retries.
 
 ```jsx
@@ -172,22 +172,26 @@ setting the suite's configuration.
 
 ```jsx
 // Customizing retry attempts for a suite of tests
-describe('User bank accounts', {
-  retries: {
-    runMode: 2,
-    openMode: 1,
-  }
-}, () => {
-  // The per-suite configuration is applied to each test
-  // If a test fails, it will be retried
-  it('allows a user to view their transactions', () => {
-    // ...
-  }
+describe(
+  'User bank accounts',
+  {
+    retries: {
+      runMode: 2,
+      openMode: 1,
+    },
+  },
+  () => {
+    // The per-suite configuration is applied to each test
+    // If a test fails, it will be retried
+    it('allows a user to view their transactions', () => {
+      // ...
+    })
 
-  it('allows a user to edit their transactions', () => {
-    // ...
+    it('allows a user to edit their transactions', () => {
+      // ...
+    })
   }
-})
+)
 ```
 
 You can find more information about custom configurations here:
@@ -305,6 +309,8 @@ can review the
 [Flake Detection](/guides/cloud/flaky-test-management#Flake-Detection) and
 [Flake Alerting](/guides/cloud/flaky-test-management#Flake-Alerting) features
 highlighted in the Test Flake Management Guide.
+
+<TestReplayInfo />
 
 ## Frequently Asked Questions (FAQs)
 

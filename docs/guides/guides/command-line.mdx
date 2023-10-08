@@ -35,8 +35,6 @@ command's documentation.
 To run a command, you'll need to prefix each command in order to properly locate
 the cypress executable.
 
-(requires npm@5.2.0 or greater)
-
 ```
 npx cypress run
 ```
@@ -45,18 +43,6 @@ npx cypress run
 
 ```
 yarn cypress run
-```
-
-...or...
-
-```
-$(npm bin)/cypress run
-```
-
-...or...
-
-```
-./node_modules/.bin/cypress run
 ```
 
 You may find it easier to add the cypress command to the `scripts` object in
@@ -82,7 +68,7 @@ Cypress Cloud, the command should be:
 npm run cy:run -- --record --spec "cypress/e2e/my-spec.cy.js"
 ```
 
-If you are using the [npx](https://github.com/zkat/npx) tool, you can invoke the
+You can also invoke the
 locally installed Cypress tool directly:
 
 ```shell
@@ -125,6 +111,7 @@ cypress run [options]
 | `--help`, `-h`                 | Output usage information                                                                                                                                                                      |
 | `--key`, `-k`                  | [Specify your secret record key](#cypress-run-record-key-lt-record-key-gt)                                                                                                                    |
 | `--no-exit`                    | [Keep Cypress open after tests in a spec file run](#cypress-run-no-exit)                                                                                                                      |
+| `--no-runner-ui`,              | [Hides the Cypress Runner UI](#cypress-run-no-runner-ui)                                                                                                                                      |
 | `--parallel`                   | [Run recorded specs in parallel across multiple machines](#cypress-run-parallel)                                                                                                              |
 | `--port`,`-p`                  | [Override default port](#cypress-run-port-lt-port-gt)                                                                                                                                         |
 | `--project`, `-P`              | [Path to a specific project](#cypress-run-project-lt-project-path-gt)                                                                                                                         |
@@ -132,6 +119,7 @@ cypress run [options]
 | `--record`                     | [Whether to record the test run](#cypress-run-record-key-lt-record-key-gt)                                                                                                                    |
 | `--reporter`, `-r`             | [Specify a Mocha reporter](#cypress-run-reporter-lt-reporter-gt)                                                                                                                              |
 | `--reporter-options`, `-o`     | [Specify Mocha reporter options](#cypress-run-reporter-lt-reporter-gt)                                                                                                                        |
+| `--runner-ui`,                 | [Displays the Cypress Runner UI. Useful for when Test Replay is enabled and you would still like the Cypress Runner UI to be displayed for screenshots and video](#cypress-run-runner-ui)     |
 | `--spec`, `-s`                 | [Specify the spec files to run](#cypress-run-spec-lt-spec-gt)                                                                                                                                 |
 | `--tag`, `-t`                  | [Identify a run with a tag or tags](#cypress-run-tag-lt-tag-gt)                                                                                                                               |
 
@@ -187,7 +175,8 @@ cypress run --ci-build-id BUILD_NUMBER
 ```
 
 Only valid when providing a `--group` or `--parallel` flag. Read our
-[parallelization](/guides/guides/parallelization) documentation to learn more.
+[parallelization](/guides/cloud/smart-orchestration/parallelization)
+documentation to learn more.
 
 #### `cypress run --config <config>` {#cypress-run-config-lt-config-gt}
 
@@ -245,7 +234,7 @@ You can specify a path to a file where
 cypress run --config-file tests/cypress.config.js
 ```
 
-#### `cypress run --env <env>` {#cypress-run-config-file-lt-configuration-file-gt}
+#### `cypress run --env <env>` {#cypress-run-env-lt-env-gt}
 
 Set Cypress [environment variables](/guides/guides/environment-variables).
 
@@ -287,7 +276,7 @@ cypress run --group user-tests --spec 'cypress/e2e/user/**/*'
 
 Specifying the `--ci-build-id` may also be necessary.
 
-[Read more about grouping.](/guides/guides/parallelization#Grouping-test-runs)
+[Read more about grouping.](/guides/cloud/smart-orchestration/parallelization#Grouping-test-runs)
 
 #### `cypress run --headed` {#cypress-run-headed}
 
@@ -312,9 +301,19 @@ access to **developer tools** after a `spec` has run.
 cypress run --headed --no-exit
 ```
 
+#### `cypress run --no-runner-ui` {#cypress-run-no-runner-ui}
+
+To prevent Cypress from rendering the Runner UI, use
+`--no-runner-ui`.
+
+```shell
+cypress run --no-runner-ui
+```
+
 #### `cypress run --parallel` {#cypress-run-parallel}
 
-Run recorded specs in [parallel](/guides/guides/parallelization) across multiple
+Run recorded specs in
+[parallel](/guides/cloud/smart-orchestration/parallelization) across multiple
 machines.
 
 ```shell
@@ -322,14 +321,14 @@ cypress run --record --parallel
 ```
 
 You can additionally pass a `--group` flag so this shows up as a named
-[group](/guides/guides/parallelization#Grouping-test-runs).
+[group](/guides/cloud/smart-orchestration/parallelization#Grouping-test-runs).
 
 ```shell
 cypress run --record --parallel --group e2e-staging-specs
 ```
 
-Read our [parallelization](/guides/guides/parallelization) documentation to
-learn more.
+Read our [parallelization](/guides/cloud/smart-orchestration/parallelization)
+documentation to learn more.
 
 #### `cypress run --port <port>` {#cypress-run-port-lt-port-gt}
 
@@ -350,8 +349,8 @@ cypress run --project ./some/nested/folder
 
 Record your test results to [Cypress Cloud](/guides/cloud/introduction). For
 this option to work you must first
-[set up your project to record](/guides/cloud/projects#Setup), make sure your
-`projectId` is set in your
+[set up your project to record](/guides/cloud/getting-started#Setup), make sure
+your `projectId` is set in your
 [Cypress configuration file](/guides/references/configuration#Configuration-File),
 and append your **Record Key** to the command.
 
@@ -375,10 +374,10 @@ cypress run --record
 ```
 
 For more information on recording runs, see the
-[Cypress Cloud setup instructions](/guides/cloud/projects#Setup). For an
+[Cypress Cloud setup instructions](/guides/cloud/getting-started#Setup). For an
 in-depth explanation of how Cypress uses your record key and `projectId` to save
 your test results to Cypress Cloud, see the
-[Identification section](/guides/cloud/projects#Identification).
+[Identification section](/guides/cloud/account-management/projects#Identification).
 
 #### `cypress run --reporter <reporter>` {#cypress-run-reporter-lt-reporter-gt}
 
@@ -394,6 +393,16 @@ You can specify reporter options using the
 ```shell
 cypress run --reporter junit --reporter-options mochaFile=result.xml,toConsole=true
 ```
+
+#### `cypress run --runner-ui` {#cypress-run-runner-ui}
+
+To force Cypress to render the Runner UI, use `--runner-ui`.
+
+```shell
+cypress run --runner-ui
+```
+
+Useful for when [Test Replay](/guides/cloud/test-replay) is enabled and you would still like the Runner UI to be rendered for screenshots and video.
 
 #### `cypress run --spec <spec>` {#cypress-run-spec-lt-spec-gt}
 
@@ -458,7 +467,7 @@ cypress run --record --tag "production,nightly"
 Cypress Cloud will display any tags sent with the appropriate run.
 
 <DocsImage
-  src="/img/dashboard/dashboard-run-with-tags.png"
+  src="/img/guides/cloud/runs/dashboard-run-with-tags.png"
   alt="Cypress run in Cypress Cloud displaying flags"
 />
 
@@ -647,7 +656,8 @@ Prints information about Cypress and the current environment such as:
 - Any environment variables that control
   [proxy configuration](/guides/references/proxy-configuration).
 - Any environment variables that start with the `CYPRESS` prefix (with sensitive
-  variables like [record key](/guides/cloud/projects#Record-keys) masked for
+  variables like
+  [record key](/guides/cloud/account-management/projects#Record-key) masked for
   security).
 - The location where run-time data is stored.
 - The location where the Cypress binary is cached.
