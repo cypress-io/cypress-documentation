@@ -69,6 +69,16 @@ See
 to set up common options in a custom `cy.mount()` command to avoid having to
 repeat this boilerplate for each test.
 
+### Using Standalone
+
+Not only are [Standalone Components](https://angular.io/guide/standalone-components) supported, they are the simplest components to write tests for.
+Standalone Components provide the Angular compiler with everything it needs to compile through its [`@Component()`](https://angular.io/api/core/Component) decorator.
+This means that in most cases a Standalone Component can be mounted without ever providing any `imports`, `decorators`, or `providers`. Mounting then becomes as simple as:
+
+```ts
+cy.mount(MyStandaloneComponent)
+```
+
 ### Using Angular Template Syntax
 
 The `cy.mount()` method also supports the Angular template syntax when mounting

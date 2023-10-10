@@ -46,13 +46,6 @@ ul.pluginsList li {
   margin: 0 !important;
 }
 
-/* stylelint-disable-next-line at-rule-no-unknown */
-@screen lg {
-  ul.pluginsList li {
-    width: 30%;
-  }
-}
-
 ul.pluginsList li p {
   margin-bottom: 0.5em;
 }
