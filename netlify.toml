@@ -493,6 +493,18 @@
   status = 301
   force = true
 
+[[redirects]]
+  from = "/guides/cloud/debugging/test-replay"
+  to = "/guides/cloud/test-replay"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/debugging/recorded-runs"
+  to = "/guides/cloud/recorded-runs"
+  status = 301
+  force = true
+
 [[plugins]]
 package = "@netlify/plugin-sitemap"
 

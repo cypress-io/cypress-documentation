@@ -1,10 +1,8 @@
 version: 2.1
 
-orbs:
-  cypress: cypress-io/cypress@1.26.0
-
 executors:
   node-executor:
+    resource_class: medium+
     docker:
       - image: cimg/node:18.15.0
   with-chrome-and-firefox:

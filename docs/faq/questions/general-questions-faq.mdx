@@ -274,6 +274,27 @@ shortcuts as much as possible (because you have native access to all objects
 including your app). In other words, we want you to think in unit tests while
 you write integration tests.
 
+### <Icon name="angle-right" /> What's the difference between a Spec, Test, and a Test Suite?
+
+The terms _spec_, _test_, and _test suite_ have specific meanings. Here's how they are differentiated in Cypress:
+
+**<u>Spec</u>** A single test file that contains a set of test cases or individual tests. Each spec file typically focuses on testing a specific feature, functionality, or aspect of the application under test. Specs define the test scenarios, interactions with the application, and assertions to verify expected behavior. Spec files are written in JavaScript or TypeScript and have a `.js` or `.ts` extension.
+
+**<u>Test</u>** An individual test case within a spec file. It represents a specific scenario or behavior that needs to be tested. A test typically consists of a series of actions performed on the application being tested, such as interacting with UI elements, submitting forms, or making assertions to validate the expected outcomes. Cypress provides a rich set of built-in commands and APIs to facilitate writing tests and interacting with the application in a declarative manner.
+
+**<u>Test Suite</u>** A collection of spec files that are grouped together. It allows you to organize your tests based on different criteria, such as functional areas, modules, or specific features. A test suite can include multiple spec files, each containing one or more tests. By grouping related tests together in a test suite, you can organize and manage your tests more effectively. Cypress provides options to run individual spec files, multiple spec files, or the entire test suite during test execution.
+
+Common examples are:
+
+- `Smoke`: Designed to quickly check if the basic functionalities of an application are working as expected. They are not exhaustive but aim to catch major issues early in the development process.
+- `Critical path`: Similar to smoke tests but are specifically focused on the critical paths or workflows within an application. They identify and test the most important user journeys or workflows that users frequently perform.
+- `UI`: Designed to simulate user interactions with the application's user interface. They cover a broad range of user scenarios, including navigating through different pages, interacting with UI elements, and validating the visual aspects of the application.
+- `API`: Focused on testing the backend or server-side of an application by making requests to its APIs (Application Programming Interfaces). These tests validate the functionality, reliability, and performance of the APIs that the application relies on.
+
+### <Icon name="angle-right" /> When should I write a End-to-End tests and when should I write Component Tests?
+
+For more information on how to choose a Cypress testing type, we recommend this [Testing Types Guide](/guides/core-concepts/testing-types).
+
 ### <Icon name="angle-right" /> When should I write a unit test and when should I write an end-to-end test?
 
 We believe unit tests and end-to-end tests have differences that should guide

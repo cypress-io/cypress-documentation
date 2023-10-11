@@ -10,19 +10,19 @@ version 13.
 
 ### Cypress Cloud Test Replay
 
-[Test Replay](/guides/cloud/debugging/test-replay) is enabled by default in `v13` of the Cypress App.
+[Test Replay](/guides/cloud/test-replay) is enabled by default in `v13` of the Cypress App.
 
 You may need to allowlist `capture.cypress.io` if you work with a strict VPN. See our FAQ section about [VPN subdomain allowlisting](/faq/questions/cloud-faq#Im-working-with-a-restrictive-VPN-Which-subdomains-do-I-have-to-allow-on-my-VPN-for-Cypress-Cloud-to-work-properly).
 
 With Test Replay enabled, the Cypress Runner UI is hidden by default when recording a run to the Cloud. If the Runner UI is needed during the run, you can enable it by passing [`--runner-ui`](/guides/guides/command-line#cypress-run-runner-ui) to the [`cypress run`](/guides/guides/command-line#cypress-run) command.
 
-You can [opt-out](/guides/cloud/debugging/test-replay#Opt-out-of-Test-Replay) of this feature in Cloud project-level settings.
+You can [opt-out](/guides/cloud/test-replay#Opt-out-of-Test-Replay) of this feature in Cloud project-level settings.
 
 ### Video updates
 
 #### `video` is set to `false` by default
 
-You can continue recording video by setting `video` to `true` either in your Cypress configuration or via [overriding options](/guides/references/configuration#Overriding-Options). This can be useful if you want video locally or want video for some other reason, like in non-Chromium browsers where [Test Replay](/guides/cloud/debugging/test-replay) is not available.
+You can continue recording video by setting `video` to `true` either in your Cypress configuration or via [overriding options](/guides/references/configuration#Overriding-Options). This can be useful if you want video locally or want video for some other reason, like in non-Chromium browsers where [Test Replay](/guides/cloud/test-replay) is not available.
 
 :::cypress-config-example
 
@@ -1500,6 +1500,19 @@ respectively.
 
 Any previous dev servers or mounting libraries from the `@cypress` namespace
 should be uninstalled in Cypress 10.
+
+### Clashing Types with Jest
+
+You may want to consider configuring your app with a separate `tsconfig.json` to solve
+[clashing types with jest](/guides/tooling/typescript-support#Clashing-types-with-Jest).
+You will need to exclude `cypress.config.ts`, `cypress`, `node_modules` in your
+root `tsconfig.json` file.
+
+```json
+{
+  "exclude": ["cypress.config.ts", "cypress", "node_modules"]
+}
+```
 
 ### Code Coverage Plugin
 

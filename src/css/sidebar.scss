@@ -30,3 +30,22 @@
 .menu__link--sublist:after {
   background: var(--ifm-menu-link-sublist-icon) 50%/1.7rem 1.7rem;
 }
+
+// helps delineate different refs in sidebar, particularly in API section
+.theme-doc-sidebar-item-link.theme-doc-sidebar-item-link-level-2.menu__list-item.sidebar-guide-ref {
+  font-weight: 600;
+}
+
+// "new" feature label in sidebar
+.theme-doc-sidebar-item-link.theme-doc-sidebar-item-link-level-2.menu__list-item.new_label,
+.theme-doc-sidebar-item-link.theme-doc-sidebar-item-link-level-3.menu__list-item.new_label {
+  a::after {
+    background-color: var(--cypress-color-indigo-400);
+    color: #fff;
+    content: "New";
+    font-size: .7rem;
+    border-radius: 5px;
+    margin-left: 5px;
+    padding: 2px 5px;
+  }
+}
