@@ -152,25 +152,25 @@ Setting `experimentalStrategy: 'detect-flake-and-pass-on-threshold'` within retr
 
 Examples of the above configuration's results:
 
-Scenario 1:
-- Attempt 1: Fail
-- Attempt 2: Pass
-- Attempt 3: Fail
+**Scenario 1:**
+- Attempt 1: <Icon name="times" color="red" /> Fail
+- Attempt 2: <Icon name="check-circle" color="green" /> Pass
+- Attempt 3: <Icon name="times" color="red" /> Fail
 
-The retries stop on attempt 3, since `maxRetries: 2` is now met and the test is failing and flaky. Only one attempt passed, but two are needed to pass.
+The retries stop on attempt 3, since `maxRetries: 2` is now met and the test's final result is **failing** <Icon name="times" color="red" /> and **flaky**. Only one attempt passed, but two are needed to pass.
 
-Scenario 2:
-- Attempt 1: Fail
-- Attempt 2: Pass
-- Attempt 3: Pass
+**Scenario 2:**
+- Attempt 1: <Icon name="times" color="red" /> Fail
+- Attempt 2: <Icon name="check-circle" color="green" /> Pass
+- Attempt 3: <Icon name="check-circle" color="green" /> Pass
 
-Retries stop at attempt 3 again, and the test is passing and flaky, since there are now two passing attempts.
+Retries stop at attempt 3 again, and the test is **passing** <Icon name="check-circle" color="green" /> and **flaky**, since there are now two passing attempts.
 
-Scenario 3:
-- Attempt 1: Fail
-- Attempt 2: Fail
+**Scenario 3:**
+- Attempt 1: <Icon name="times" color="red" /> Fail
+- Attempt 2: <Icon name="times" color="red" /> Fail
 
-Retries stop on attempt 2, and the test is failing, because the requisite two passing attempts for a passing result can no longer be achieved once the 1st retry failed. It's also not flaky, since there were no passing attempts.
+Retries stop on attempt 2, and the test is **failing** <Icon name="times" color="red" />, because the requisite two passing attempts for a passing result can no longer be achieved once the 1st retry failed. It's also **not flaky**, since there were no passing attempts.
 
 #### `experimentalStrategy: 'detect-flake-but-always-fail'`
 
@@ -194,18 +194,18 @@ Setting `experimentalStrategy: 'detect-flake-but-always-fail'` within retries en
 
 Examples of the above configuration's results:
 
-Scenario 1:
-- Attempt 1: Fail
-- Attempt 2: Fail
-- Attempt 3: Fail
+**Scenario 1:**
+- Attempt 1: <Icon name="times" color="red" /> Fail
+- Attempt 2: <Icon name="times" color="red" /> Fail
+- Attempt 3: <Icon name="times" color="red" /> Fail
 
-The retries stop on attempt 3, since `maxRetries: 2` is now met and the test is failing, but also not flaky.
+The retries stop on attempt 3, since `maxRetries: 2` is now met and the test is **failing** <Icon name="times" color="red" />, but also **not flaky**.
 
-Scenario 2:
-- Attempt 1: Fail
-- Attempt 2: Pass
+**Scenario 2:**
+- Attempt 1: <Icon name="times" color="red" /> Fail
+- Attempt 2: <Icon name="check-circle" color="green" /> Pass
 
-Retries stop on the first retry, due to the passing attempt. The test is failing and flaky. If `stopIfAnyPassed` was `false`, then the retries would have proceeded once more.
+Retries stop on the first retry, due to the passing attempt. The test is **failing** <Icon name="times" color="red" /> and **flaky**. If `stopIfAnyPassed` was `false`, then the retries would have proceeded once more.
 
 ## Testing Type-Specific Experiments
 
