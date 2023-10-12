@@ -122,7 +122,7 @@ modified HTML or JS value.
 
 ### Experimental Retries
 
-Normally, retries will simply stop on the first passing attempt. And then the final test result will be "passing", irregardless of how many prior attempts failed. Now there are experimental settings for retries to give you more control over the retries process.
+Normally, [test retries](/guides/guides/test-retries) will simply stop on the first passing attempt. And then the final test result will be "passing", irregardless of how many prior attempts failed. The following experimental settings for retries give you more control over the retries process.
 
 There are two strategies for retries:
 - `detect-flake-and-pass-on-threshold`
@@ -137,18 +137,21 @@ Setting `experimentalStrategy: 'detect-flake-and-pass-on-threshold'` within retr
 - `passesRequired` sets the required number of passing attempts for the final test result to be passing. Cannot be greater than `maxRetries`.
   - `passesRequired` also determines how the retries may stop before `maxRetries` is reached; either if the number of passing attempts so far has met the `passesRequired` condition or if the number of failing attempts exceeds the difference between `maxRetries` and `passesRequired` (when it's impossible to achieve the passing result).
 
+:::cypress-config-example
 
-```json
+```js
 {
-  "retries": {
-    "experimentalStrategy": "detect-flake-and-pass-on-threshold",
-    "experimentalOptions": {
-      "maxRetries": 2,
-      "passesRequired": 2
+  retries: {
+    experimentalStrategy: 'detect-flake-and-pass-on-threshold',
+    experimentalOptions: {
+      maxRetries: 2,
+      passesRequired: 2
     }
   }
 }
 ```
+
+:::
 
 Examples of the above configuration's results:
 
@@ -179,18 +182,21 @@ Setting `experimentalStrategy: 'detect-flake-but-always-fail'` within retries en
 - `stopIfAnyPassed` will stop the retries before `maxRetries` is reached when there is any passing attempt.
   - `stopIfAnyPassed` causes retries to exit as soon as any flake is detected (a test that is retrying after a failure only needs to pass once to exhibit flaky behavior). However it may help to see more retry attempts, such as when the failure mode is also non-deterministic and more of these different errors are revealed on more retries, in which case `stopIfAnyPassed: false` may be desirable.
 
+:::cypress-config-example
 
-```json
+```js
 {
-  "retries": {
-    "experimentalStrategy": "detect-flake-but-always-fail",
-    "experimentalOptions": {
-      "maxRetries": 2,
-      "stopIfAnyPassed": true
+  retries: {
+    experimentalStrategy: 'detect-flake-but-always-fail',
+    experimentalOptions: {
+      maxRetries: 2,
+      stopIfAnyPassed: true
     }
   }
 }
 ```
+
+:::
 
 Examples of the above configuration's results:
 
@@ -206,6 +212,14 @@ The retries stop on attempt 3, since `maxRetries: 2` is now met and the test is 
 - Attempt 2: <Icon name="check-circle" color="green" /> Pass
 
 Retries stop on the first retry, due to the passing attempt. The test is **failing** <Icon name="times" color="red" /> and **flaky**. If `stopIfAnyPassed` was `false`, then the retries would have proceeded once more.
+
+:::caution
+
+**Note:** Experimental retries can only be configured at the global level and **not** per individual test, whereas non-experimental `retries` [can be configured per test](/guides/guides/test-retries#Individual-Tests). If you configure retries on a per-test basis while using experimental retries globally, that particular test's `retries` configuration will override the experimental retries and ignore it.
+
+Also, while using experimental retries, you cannot set numeric values for `openMode` or `runMode` [at the global level](/guides/guides/test-retries#Global-Configuration). You can instead set `true` or `false` for each.
+
+:::
 
 ## Testing Type-Specific Experiments
 
