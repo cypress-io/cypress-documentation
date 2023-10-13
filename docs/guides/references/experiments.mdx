@@ -127,6 +127,7 @@ modified HTML or JS value.
 Normally, test retries simply stop on the first passing attempt. And the final test result of any flaky test is always "passing", irregardless of how many prior attempts failed. The following experimental settings for retries give you more control over the retries process.
 
 There are two strategies for retries:
+
 - `detect-flake-and-pass-on-threshold`
 - `detect-flake-but-always-fail`
 
@@ -135,6 +136,7 @@ The `detect-flake-and-pass-on-threshold` strategy is most like the current imple
 #### `experimentalStrategy: 'detect-flake-and-pass-on-threshold'`
 
 Setting `experimentalStrategy: 'detect-flake-and-pass-on-threshold'` within retries will give you ability to set how many passing attempts are required for the test result to be passing. There are two `experimentalOptions` set in this strategy:
+
 - `maxRetries` sets the maximum number of retries that can occur after the first attempt failed
 - `passesRequired` sets the required number of passing attempts for the final test result to be passing. Cannot be greater than `maxRetries`.
   - `passesRequired` also determines how the retries may stop before `maxRetries` is reached; either if the number of passing attempts so far has met the `passesRequired` condition or if the number of failing attempts exceeds the difference between `maxRetries` and `passesRequired` (when it's impossible to achieve the passing result).
@@ -158,6 +160,7 @@ Setting `experimentalStrategy: 'detect-flake-and-pass-on-threshold'` within retr
 Examples of the above configuration's results:
 
 **Scenario 1:**
+
 - Attempt 1: <Icon name="times" color="red" /> Fail
 - Attempt 2: <Icon name="check-circle" color="green" /> Pass
 - Attempt 3: <Icon name="times" color="red" /> Fail
@@ -165,6 +168,7 @@ Examples of the above configuration's results:
 The retries stop on attempt 3, since `maxRetries: 2` is now met and the test's final result is **failing** <Icon name="times" color="red" /> and **flaky**. Only one attempt passed, but two are needed to pass.
 
 **Scenario 2:**
+
 - Attempt 1: <Icon name="times" color="red" /> Fail
 - Attempt 2: <Icon name="check-circle" color="green" /> Pass
 - Attempt 3: <Icon name="check-circle" color="green" /> Pass
@@ -172,6 +176,7 @@ The retries stop on attempt 3, since `maxRetries: 2` is now met and the test's f
 Retries stop at attempt 3 again, and the test is **passing** <Icon name="check-circle" color="green" /> and **flaky**, since there are now two passing attempts.
 
 **Scenario 3:**
+
 - Attempt 1: <Icon name="times" color="red" /> Fail
 - Attempt 2: <Icon name="times" color="red" /> Fail
 
@@ -180,6 +185,7 @@ Retries stop on attempt 2, and the test is **failing** <Icon name="times" color=
 #### `experimentalStrategy: 'detect-flake-but-always-fail'`
 
 Setting `experimentalStrategy: 'detect-flake-but-always-fail'` within retries ensures any test with any failed attempt will always end with a failing final result. There are two `experimentalOptions` set in this strategy:
+
 - `maxRetries` sets the maximum number of retries that can occur after the first attempt failed
 - `stopIfAnyPassed` will stop the retries before `maxRetries` is reached when there is any passing attempt.
   - `stopIfAnyPassed` causes retries to exit as soon as any flake is detected (a test that is retrying after a failure only needs to pass once to exhibit flaky behavior). However it may help to see more retry attempts, such as when the failure mode is also non-deterministic and more of these different errors are revealed on more retries, in which case `stopIfAnyPassed: false` may be desirable.
@@ -203,6 +209,7 @@ Setting `experimentalStrategy: 'detect-flake-but-always-fail'` within retries en
 Examples of the above configuration's results:
 
 **Scenario 1:**
+
 - Attempt 1: <Icon name="times" color="red" /> Fail
 - Attempt 2: <Icon name="times" color="red" /> Fail
 - Attempt 3: <Icon name="times" color="red" /> Fail
@@ -210,6 +217,7 @@ Examples of the above configuration's results:
 The retries stop on attempt 3, since `maxRetries: 2` is now met and the test is **failing** <Icon name="times" color="red" />, but also **not flaky**.
 
 **Scenario 2:**
+
 - Attempt 1: <Icon name="times" color="red" /> Fail
 - Attempt 2: <Icon name="check-circle" color="green" /> Pass
 
