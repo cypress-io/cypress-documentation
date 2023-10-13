@@ -120,9 +120,11 @@ modified HTML or JS value.
 
 ## Experimental Flake Detection Features
 
-### Experimental Retries
+### Experimental Test Retries (available as of Cypress `13.x.x`)
 
-Normally, [test retries](/guides/guides/test-retries) will simply stop on the first passing attempt. And then the final test result will be "passing", irregardless of how many prior attempts failed. The following experimental settings for retries give you more control over the retries process.
+[Test retries](/guides/guides/test-retries) is a Cypress [Flake Detection](/guides/cloud/flaky-test-management#Flake-Detection) feature that enables you to re-attempt any tests that initially fail. The failure may not be a "true" failure, i.e. flaky. The only way to determine this is to retry the test.
+
+Normally, test retries simply stop on the first passing attempt. And the final test result of any flaky test is always "passing", irregardless of how many prior attempts failed. The following experimental settings for retries give you more control over the retries process.
 
 There are two strategies for retries:
 - `detect-flake-and-pass-on-threshold`
