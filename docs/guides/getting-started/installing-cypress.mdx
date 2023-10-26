@@ -6,7 +6,7 @@ title: Installing Cypress
 
 ## <Icon name="graduation-cap" /> What you'll learn
 
-- How to install Cypress via `npm` or `yarn`
+- How to install Cypress via `npm`, `yarn` or `pnpm`
 - How to install Cypress via direct download
 - How to version and run Cypress via `package.json`
 
@@ -65,7 +65,7 @@ The recommended approach is to install Cypress with `npm` because:
 
 ### <Icon name="terminal" /> `yarn add`
 
-Installing Cypress via [`yarn`](https://yarnpkg.com):
+Installing Cypress via [`Yarn`](https://yarnpkg.com):
 
 ```shell
 cd /your/project/path
@@ -78,9 +78,28 @@ yarn add cypress --dev
 System proxy properties `http_proxy`, `https_proxy` and `no_proxy` are respected
 for the download of the Cypress binary.
 
+### <Icon name="terminal" /> `pnpm add`
+
+Installing Cypress via [`pnpm`](https://pnpm.io/):
+
+```shell
+cd /your/project/path
+```
+
+```shell
+pnpm add cypress -D
+```
+
+:::info
+
+You need to make sure that you have the `pnpm` environment installed locally.
+If not you need to install it: `npm install pnpm@latest -g`.
+
+:::
+
 ### <Icon name="download" /> Direct download
 
-If you're not using Node or `npm` in your project or you want to try Cypress out
+If you're not using Node or a package manager (`npm`, `pnpm` or `Yarn`) in your project or you want to try Cypress out
 quickly, you can always
 [download Cypress directly from our CDN](https://download.cypress.io/desktop).
 
@@ -136,18 +155,17 @@ Cypress is a desktop application that is installed on your computer. The desktop
 application supports these operating systems:
 
 - **macOS** 10.9 and above _(Intel or Apple Silicon 64-bit (x64 or arm64))_
-- **Linux** Ubuntu 12.04 and above, Fedora 21 and Debian 8 _(x86_64 or Arm
+- **Linux** Ubuntu 20.04 and above, Fedora 21 and Debian 8 _(x86_64 or Arm
   64-bit (x64 or arm64))_ (see [Linux Prerequisites](#Linux-Prerequisites) down
   below)
-- **Windows** 7 and above _(64-bit only)_
+- **Windows** 10 and above _(64-bit only)_
 
 ### Node.js
 
-If you're using `npm` to install Cypress, we support:
+If you're using `npm`, `pnpm` or `Yarn` to install Cypress, we support:
 
-- **Node.js** 14.x
-- **Node.js** 16.x
-- **Node.js** 18.x and above
+- **Node.js** 18.x
+- **Node.js** 20.x and above
 
 Cypress generally aligns with
 [Node's release schedule](https://github.com/nodejs/Release).
@@ -193,13 +211,25 @@ on your system.
 #### Ubuntu/Debian
 
 ```shell
-apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
+apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libnss3 libxss1 libasound2 libxtst6 xauth xvfb
+```
+
+#### Arch
+
+```shell
+pacman -S gtk2 gtk3 alsa-lib xorg-server-xvfb libxss nss libnotify
 ```
 
 #### CentOS
 
 ```shell
 yum install -y xorg-x11-server-Xvfb gtk2-devel gtk3-devel libnotify-devel GConf2 nss libXScrnSaver alsa-lib
+```
+
+#### Amazon Linux 2023
+
+```shell
+dnf install -y xorg-x11-server-Xvfb gtk3-devel nss alsa-lib
 ```
 
 #### Docker
@@ -214,7 +244,7 @@ container with the Node.js process.
   ui:
     image: cypress/base:latest
     # if targeting a specific node version, use e.g.
-    # image: cypress/base:14
+    # image: cypress/base:18.12.1
 ```
 
 `cypress/base` is a drop-in replacement for

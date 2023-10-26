@@ -1,0 +1,125 @@
+---
+title: Run Cancellation
+sidebar_position: 50
+---
+
+Continuous Integration (CI) pipelines are typically costly processes that can
+demand significant compute time. **When a test failure occurs in CI, it often
+does not make sense to continue running the remainder of a test suite** since
+the process has to start again upon merging of subsequent fixes and other code
+changes. When Auto Cancellation is enabled, once the number of failed tests goes
+over a preset threshold, the entire test run is canceled. Note that any
+in-progress specs will continue to run to completion.
+
+:::tip
+
+<strong>
+  <Icon name="check" /> Benefits
+</strong>
+
+Canceling an **entire** test run, even if parallelized, upon the first test
+failure will:
+
+1. **Save time**. Resolve test outcomes faster.
+2. **Reduce CI costs**. These cost savings can be significant for large test
+   suites.
+3. **Free-up CI resources** for validating fixes, and helping other users.
+
+:::
+
+### Activate Auto Cancellation in Cypress Cloud
+
+:::tip
+
+<strong>
+  <Icon name="star" /> Premium Cypress Cloud Feature
+</strong>
+
+**Auto Cancellation** is a _Smart Orchestration_ feature available to users with
+a [Business or Enterprise tier Cypress Cloud plan](https://cypress.io/pricing).
+Wondering if upgrading your Team tier subscription is worth it? Check out the
+[recommendations](/guides/cloud/recorded-runs#Recommendations) on the run
+overview page to see how much time we predict these features would save you.
+
+:::
+
+Auto Cancellation is a _Smart Orchestration_ feature that is managed within a
+project's settings.
+
+:::info
+
+<strong>Consideration for Teams</strong>
+
+If your development, testing, or QA teams operate in a highly collaborative
+workflow where multiple people are working on various test failures at the same
+time, it may be helpful to increase the failures threshold or even disable Auto
+Cancellation altogether, so multiple failing tests can be surfaced for each test
+run.
+
+:::
+
+To enable or disable this feature at the Project level (must be an admin user):
+
+1. Select the desired project within Projects view to visit Cypress Cloud.
+2. Click "Project Settings" with the right-hand sidebar.
+3. Scroll to the Smart Orchestration section within Project Settings page.
+4. Toggle "Auto Cancellation".
+5. Set the "failures before auto canceling" threshold (or just leave it at the
+   default value of 1).
+
+<DocsImage
+  src="/img/guides/cloud/smart-orchestration/auto-cancellation-active.png"
+  alt="Enable Auto Cancellation"
+/>
+
+:::note
+
+<strong>CI Tip: Save Time</strong>
+
+In addition to Auto Cancellation, consider reducing CI costs further by enabling
+[Spec Prioritization](/guides/cloud/smart-orchestration/spec-prioritization) to
+surface test failures earlier in the run, and reduce the time it takes to fix
+issues and deploy changes.
+
+:::
+
+### Specifying failures before auto canceling in the CLI
+
+:::info
+
+The `auto-cancel-after-failures` flag in the CLI is only available in Cypress
+`12.6.0` and later. Including the flag in an older version will throw an error.
+
+:::
+
+With the Cypress CLI, you can specify the number of test failures to execute
+before canceling the run via a command flag. This allows more granular control
+of Auto Cancellation on a per-run basis.
+
+Some common use cases for doing so might be:
+
+- Setting a lower-than-normal value on dev environments to fail a test suite
+  early for faster feedback
+- Disabling Auto Cancellation on important branches that need the full test
+  suite to run every time
+- Overriding the project value on a case-by-case basis
+
+Specifying the flag will override the project setting in Cypress Cloud, and not
+specifying it will default to the value in the project settings.
+
+To set it, pass the `--auto-cancel-after-failures` flag to the `cypress run`
+command, and give it a numeric value:
+
+```bash
+npx cypress run --record --key <<your_record_key>> --auto-cancel-after-failures 1
+```
+
+You can also specify `false` for the value to disable Auto Cancellation for the
+run:
+
+```bash
+npx cypress run --record --key <<your_record_key>> --auto-cancel-after-failures false
+```
+
+For more info on passing CLI flags, see our guide on the
+[Cypress Command Line](/guides/guides/command-line).

@@ -242,17 +242,18 @@ module API option, if specified)
 #### Assets in Cypress Cloud
 
 <DocsImage
-  src="/img/dashboard/videos-of-recorded-test-run.png"
-  alt="Video of test runs"
+  src="/img/guides/cloud/test-replay/test-replay-ui.png"
+  alt="View of Test Replay"
 />
 
 Instead of administering assets yourself, you can
-[save them to the cloud with Cypress Cloud](/guides/cloud/runs#Run-details).
-Screenshots and videos are stored permanently, attached to their respective test
-results, and easily shared or browsed through our web interface.
+[save them to the cloud with Cypress Cloud](/guides/cloud/recorded-runs#Run-Details).
 
-To learn more about videos and settings available, see
-[Screenshots and Videos](/guides/guides/screenshots-and-videos#Screenshots)
+Replay the test as it executed during the recorded run with full debug capability using [<Logo src="/img/guides/cloud/test-replay/replay-icon.svg" /> Test Replay](/guides/cloud/test-replay).
+
+Screenshots and videos are stored permanently, attached to their respective test
+results, and easily shared or browsed through our web interface. To learn more about videos and settings available, see
+[Screenshots and Videos](/guides/guides/screenshots-and-videos#Screenshots).
 
 ### Plugins file
 
@@ -825,7 +826,7 @@ it could be a user hitting this bug!
   alt="Cypress with a single failed test"
 />
 
-After a test fails, the screenshots and videos can help find the problem so it
+After a test fails, the [Test Replay](/guides/cloud/test-replay) or screenshots and videos with Cypress Cloud can help find the problem so it
 can be fixed.
 
 ### Pending
@@ -1021,7 +1022,7 @@ The `watchForFileChanges` property is only in effect when running Cypress using
 :::
 
 The component responsible for the file-watching behavior in Cypress is the
-[`webpack-preprocessor`](https://github.com/cypress-io/cypress/tree/master/npm/webpack-preprocessor).
+[`webpack-preprocessor`](https://github.com/cypress-io/cypress/tree/develop/npm/webpack-preprocessor).
 This is the default file-watcher packaged with Cypress.
 
 If you need further control of the file-watching behavior you can configure this
@@ -1029,8 +1030,8 @@ preprocessor explicitly: it exposes options that allow you to configure behavior
 such as _what_ is watched and the delay before emitting an "update" event after
 a change.
 
-Cypress also ships other [file-watching preprocessors](/plugins#Preprocessors);
+Cypress also ships other [file-watching preprocessors](/plugins#preprocessors);
 you'll have to configure these explicitly if you want to use them.
 
 - [Cypress Watch Preprocessor](https://github.com/cypress-io/cypress-watch-preprocessor)
-- [Cypress webpack Preprocessor](https://github.com/cypress-io/cypress/tree/master/npm/webpack-preprocessor)
+- [Cypress webpack Preprocessor](https://github.com/cypress-io/cypress/tree/develop/npm/webpack-preprocessor)

@@ -1,10 +1,10 @@
-import React from "react";
 // Import the original mapper
 import MDXComponents from "@theme-original/MDXComponents";
 import AnatomyOfAnError from "@site/docs/partials/_anatomy-of-an-error.mdx";
 import Badge from "@site/src/components/badge";
 import ComponentOnlyBadge from "@site/src/components/component-only-badge";
 import CtBetaAlert from "@site/docs/partials/_CtBetaAlert.mdx";
+import TestReplayInfo from "@site/docs/partials/_test-replay-info.mdx";
 import CypressConfigFileTabs from "@site/src/components/cypress-config-file-tabs";
 import DefaultSelectorPriority from "@site/docs/partials/_default-selector-priority.mdx";
 import DocsImage from "@site/src/components/docs-image";
@@ -22,11 +22,14 @@ import TabItem from "@theme/TabItem";
 import ThenShouldAndDifference from "@site/docs/partials/_then-should-and-difference.mdx";
 import WarningPluginsFile from "@site/docs/partials/_warning-plugins-file.mdx";
 import WarningSetupNodeEvents from "@site/docs/partials/_warning-setup-node-events.mdx";
+import VideoRecordingSupportedBrowsers from "@site/docs/partials/_video-recording-supported-browsers.mdx"
 import Logo from "@site/src/components/logo";
+import CloudFreePlan from "@site/docs/partials/_cloud_free_plan.mdx";
+import CiProviderCloudSteps from "@site/docs/partials/_ci_provider_cloud_steps.mdx";
 
 // Font Awesome
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { fab } from "@fortawesome/free-brands-svg-icons";
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { fab } from '@fortawesome/free-brands-svg-icons'
 import {
   faAngleRight,
   faBan,
@@ -66,7 +69,7 @@ import {
   faTimes,
   faTree,
   faVideo,
-} from "@fortawesome/free-solid-svg-icons";
+} from '@fortawesome/free-solid-svg-icons'
 
 library.add(
   fab,
@@ -108,7 +111,7 @@ library.add(
   faTimes,
   faTree,
   faVideo
-);
+)
 
 export default {
   // Re-use the default mapping
@@ -131,8 +134,12 @@ export default {
   SupportFileConfiguration,
   Tabs,
   TabItem,
+  TestReplayInfo,
   ThenShouldAndDifference,
   WarningPluginsFile,
   WarningSetupNodeEvents,
-  Logo
-};
+  VideoRecordingSupportedBrowsers,
+  Logo,
+  CloudFreePlan,
+  CiProviderCloudSteps
+}

@@ -32,7 +32,7 @@ Pass in an options object to change the default behavior of
 | ------ | ------- | ---------------------------------------------------------------------------------------- |
 | `log`  | `true`  | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
 
 `cy.getAllLocalStorage()` yields an object where the keys are origins and the
 values are key-value pairs of `localStorage` data.
@@ -74,16 +74,16 @@ cy.getAllLocalStorage().then((result) => {
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
 
 - `cy.getAllLocalStorage()` requires being chained off of `cy`.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
 
 - `cy.getAllLocalStorage()` will only run assertions you have chained once, and
   will not [retry](/guides/core-concepts/retry-ability).
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
 
 - `cy.getAllLocalStorage()` cannot time out.
 

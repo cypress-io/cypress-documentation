@@ -549,7 +549,7 @@ wait until a certain element is visible.
 ```javascript
 Cypress.Commands.overwrite(
   'screenshot',
-  (originalFn, subject, name, options) => {
+  (originalFn, subject, fileName, options) => {
     // call another command, no need to return as it is managed
     cy.get('.app')
       .should('be.visible')
@@ -558,7 +558,7 @@ Cypress.Commands.overwrite(
       // otherwise the `then` is limited to the default command timeout
       .then({ timeout: Cypress.config('responseTimeout') }, () => {
         // return the original function so that cypress waits for it
-        return originalFn(subject, name, options)
+        return originalFn(subject, fileName, options)
       })
   }
 )
@@ -847,8 +847,7 @@ couple commands.
 
 Don't do things like:
 
-- **<Icon name="exclamation-triangle" color="red" />**
-  `cy.clickButton(selector)`
+- **<Icon name="exclamation-triangle" color="red" />** `cy.clickButton(selector)`
 - **<Icon name="exclamation-triangle" color="red" />** `.shouldBeVisible()`
 
 This first custom command is wrapping `cy.get(selector).click()`. Going down
@@ -897,6 +896,38 @@ IntelliSense to show helpful documentation. See the
 [`cypress-example-todomvc`](https://github.com/cypress-io/cypress-example-todomvc#cypress-intellisense)
 repository for a working example.
 
+#### 6. Create a function that adds the custom command
+
+Cypress [12.17.4](/guides/references/changelog#12-17-4) includes a Webpack upgrade (v4 to v5), which [tree shakes out](https://webpack.js.org/blog/2020-10-10-webpack-5-release/#inner-module-tree-shaking) any side-effects or files that _only_ include side-effects.
+
+If you are using TypeScript and have Webpack's `sideEffects:false` set in your package.json, custom Cypress commands will not be registered by the common pattern of writing the commands in one file and having them be run as a side effect of importing the file. For example:
+
+```typescript
+// cypress/support/commands.ts
+Cypress.Commands.add("login", (email, password) => { ... })
+```
+
+```typescript
+// cypress/support/e2e.ts
+import './commands'
+```
+
+To support `sideEffects:false`, you can wrap the Cypress commands in a function that will be imported by the support file.
+
+```typescript
+// cypress/support/commands.ts
+export function registerCommands(){
+  Cypress.Commands.add("login", (email, password) => { ... })
+}
+```
+
+```typescript
+// cypress/support/e2e.ts
+import { registerCommands } from './commands'
+
+registerCommands()
+```
+
 ## History
 
 | Version                                       | Changes                      |
@@ -906,14 +937,11 @@ repository for a working example.
 ## See also
 
 - See how to add
-  [TypeScript support for custom commands](/guides/tooling/typescript-support#Types-for-custom-commands)
+  [TypeScript support for custom commands](/guides/tooling/typescript-support#Types-for-Custom-Commands)
 - Blog posts
   [Writing a Custom Cypress Command](https://glebbahmutov.com/blog/writing-custom-cypress-command/)
   and
   [How to Publish Custom Cypress Command on NPM](https://glebbahmutov.com/blog/publishing-cypress-command/).
-- [Plugins using custom commands](/plugins#Custom%20Commands)
-- [`cypress-xpath`](https://github.com/cypress-io/cypress-xpath) adds a
-  `cy.xpath()` command and shows best practices for writing custom commands:
-  retries, logging, and TypeScript definition.
+- [Plugins using custom commands](/plugins#custom-commands)
 - [Cypress.log()](/api/cypress-api/cypress-log)
-- [Recipe: Logging In](/examples/recipes)
+- [Recipe: Logging In](/examples/recipes#Logging-In)

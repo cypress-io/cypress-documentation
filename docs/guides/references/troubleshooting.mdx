@@ -109,7 +109,7 @@ ways to ensure that Cypress can "see" it.
 
 :::info
 
-<strong>Using the `--browser` command line argument</strong>
+&#8239;<strong>Using the `--browser` command line argument</strong>
 
 You can also supply the `--browser` command line argument to launch a browser
 from a known filesystem path to bypass browser auto detection.
@@ -223,10 +223,20 @@ Cloud.
 - `https://assets.cypress.io` - **Asset CDN** (Org logos, icons, videos,
   screenshots, etc.)
 - `https://authenticate.cypress.io` - **Authentication API**
+- `https://capture.cypress.io` - **Cypress Test Replay**
 - `https://cloud.cypress.io` - **Cypress Cloud**
 - `https://docs.cypress.io` - **Cypress documentation**
 - `https://download.cypress.io` - **CDN download of Cypress binary**
 - `https://on.cypress.io` - **URL shortener for link redirects**
+
+**If you are using GitHub Enterprise or GitLab for Enterprise (Self-managed),
+you may also need to add the following to the version control IP allowlist:**
+
+- `3.211.102.119` - **Dedicated IP**
+- `18.213.72.78` - **Dedicated IP**
+- `35.169.145.173` - **Dedicated IP**
+- `44.199.152.70` - **Dedicated IP**
+- `52.70.95.89` - **Dedicated IP**
 
 ## Clear App Data
 
@@ -453,6 +463,12 @@ environment variable below during `cypress open` or `cypress run`.
 CYPRESS_NO_COMMAND_LOG=1 cypress run
 ```
 
+You can also hide the entire Cypress Runner UI in `cypress run` by passing the [`--no-runner-ui`](/guides/guides/command-line#cypress-run-no-runner-ui) command line flag.
+
+```shell
+cypress run --no-runner-ui
+```
+
 With this variable set, Cypress will skip rendering the Command Log entirely,
 and perform none of the usual DOM updates to display information about commands
 and statuses as the test runs.
@@ -625,7 +641,7 @@ Alternatively, you can apply the patch during a post-install phase. In your
 4. Run the `npx patch-package cypress` command. This command will create a new
    file `patches/cypress+3.4.1.patch`.
 
-```shell
+```css
 npx patch-package cypress
 patch-package 6.1.2
 • Creating temporary folder

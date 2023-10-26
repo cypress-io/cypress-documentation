@@ -157,7 +157,7 @@ send a response, access the real response, and more.
 See ["Intercepted requests"][req] and
 [Request/Response Modification with `routeHandler`](#Request-Response-Modification-with-routeHandler).
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
 
 - `cy.intercept()` yields `null`, but can be aliased.
 - Waiting on an aliased `cy.intercept()` route using
@@ -254,7 +254,7 @@ cy.intercept(
 // this example will cause 1 request to `/temporary-error`
 // to receive a network error and subsequent requests will
 // not match this `RouteMatcher`
-cy.intercept('/temporary-error', { times: 1 }, { forceNetworkError: true })
+cy.intercept({ url: '/temporary-error', times: 1 }, { forceNetworkError: true })
 ```
 
 ### Pattern Matching
@@ -1636,6 +1636,5 @@ information about the request and response to the console:
 [match-url]: #Matching-url
 [glob-match-url]: #Glob-Pattern-Matching-URLs
 [arg-method]: #method-String
-[arg-routehandler]:
-  #routeHandler-lt-code-gtstring-object-Function-StaticResponselt-code-gt
+[arg-routehandler]: #routeHandler-lt-code-gtstring-object-Function-StaticResponselt-code-gt
 [arg-routematcher]: #routeMatcher-RouteMatcher

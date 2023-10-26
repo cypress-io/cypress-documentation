@@ -17,7 +17,7 @@ module.exports = async function favIcon(context) {
             tagName: 'link',
             attributes: {
               rel: 'icon',
-              type: 'image/sv+xml',
+              type: 'image/svg+xml',
               href: '/favicon.svg',
             },
           },

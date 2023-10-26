@@ -248,13 +248,6 @@
           "badge": "community"
         },
         {
-          "name": "cypress-dotenv",
-          "description": "Cypress plugin that enables compatibility with dotenv.",
-          "link": "https://github.com/morficus/cypress-dotenv",
-          "keywords": ["dotenv", "env", "environment", "env var"],
-          "badge": "community"
-        },
-        {
           "name": "cypress-har-generator",
           "description": "Generate HTTP Archive (HAR) while running tests.",
           "link": "https://github.com/NeuraLegion/cypress-har-generator",
@@ -324,6 +317,13 @@
           "badge": "community"
         },
         {
+          "name": "cypress-log-filter",
+          "description": "Easily filter Cypress command logs based on different log levels",
+          "link": "https://github.com/Brugui7/cypress-log-filter",
+          "keywords": ["log", "command", "filter"],
+          "badge": "community"
+        },
+        {
           "name": "cy-search",
           "description": "Search Cypress documentation from the terminal.",
           "link": "https://github.com/bahmutov/cy-search",
@@ -385,6 +385,13 @@
           "link": "https://github.com/joostvanwollingen/cypress-backoff",
           "keywords": ["retries", "backoff"],
           "badge": "community"
+        },
+        {
+          "name": "cypress-fixture-faker",
+          "description": "A Cypress plugin that enables faker functions in json fixture files.",
+          "link": "https://github.com/Zaista/cypress-fixture-faker",
+          "keywords": ["fixture", "faker"],
+          "badge": "community"
         }
       ]
     },
@@ -392,13 +399,6 @@
       "name": "Custom Commands",
       "description": " Read the <a target=\"_blank\" href=\"/api/plugins/preprocessors-api\">Custom Commands</a> and <a target=\"_blank\" href=\"/api/plugins/preprocessors-api\">Custom Query</a> documentation to learn more.",
       "plugins": [
-        {
-          "name": "cypress-xpath",
-          "description": "Adds XPath command. This repo is also a good example of using custom commands to do retries, provide TypeScript definitions, etc.",
-          "link": "https://github.com/cypress-io/cypress/tree/develop/npm/xpath",
-          "keywords": ["xpath", "commands"],
-          "badge": "official"
-        },
         {
           "name": "cypress-testing-library",
           "description": "🐅 Simple and complete custom Cypress commands and utilities that encourage good testing practices.",
@@ -587,6 +587,13 @@
           "badge": "community"
         },
         {
+          "name": "Cypress-SignalR-Mock",
+          "description": "Easy way to publish messages from and to your SignalR hubs in Cypress E2E tests.",
+          "link": "https://github.com/JasonLandbridge/Cypress-SignalR-Mock",
+          "keywords": ["commands", "signalr", "mock", "websocket"],
+          "badge": "community"
+        },
+        {
           "name": "cypress-websocket-testing",
           "description": "Test WebSocket connections with Cypress",
           "link": "https://github.com/lensesio/cypress-websocket-testing",
@@ -724,6 +731,20 @@
           "link": "https://github.com/datashard/snapshot",
           "keywords": ["snapshot", "comparison", "commands"],
           "badge": "community"
+        },
+        {
+          "name": "cypress-plugin-dotenv",
+          "description": "Load .env variables in Cypress.",
+          "link": "https://github.com/MohamadKh75/cypress-plugin-dotenv",
+          "keywords": ["testing", "commands", ".env", "environment variables"],
+          "badge": "community"
+        },
+        {
+          "name": "cypress-intercept-formdata",
+          "description": "Work with Cypress' Intercept multipart/form-data requests",
+          "link": "https://github.com/yoavniran/cypress-intercept-formdata",
+          "keywords": ["testing", "commands", "intercept", "form-data", "request"],
+          "badge": "community"
         }
       ]
     },
@@ -753,7 +774,7 @@
         },
         {
           "name": "PickleJS",
-          "description": "An addition to the Cucumber plugin, featuring a collection of phrases you can use for common actions (ex: \"I click on an <Element>\", \"I should see an <Element>\").",
+          "description": "An addition to the Cucumber plugin, featuring a collection of phrases you can use for common actions (ex: \"I click on an &lt;Element&gt;\", \"I should see an &lt;Element&gt;\").",
           "link": "https://picklejs.com",
           "keywords": ["cucumber", "collection", "actions", "commands"],
           "badge": "community"
@@ -1048,7 +1069,7 @@
         {
           "name": "Cypress Image Snapshot",
           "description": "Catch visual regressions and compare image diffs locally and in Cypress Cloud.",
-          "link": "https://github.com/palmerhq/cypress-image-snapshot",
+          "link": "https://github.com/simonsmith/cypress-image-snapshot",
           "keywords": ["image-diff", "snapshot"],
           "badge": "community"
         },
@@ -1234,6 +1255,13 @@
           "link": "https://github.com/SMenigat/cypress-mailhog",
           "keywords": ["email", "mailhog", "test", "commands"],
           "badge": "community"
+        },
+        {
+          "name": "cypress-guerrillamail",
+          "description": "Create and use a randomly-generated email address from Guerrilla Mail.",
+          "link": "https://github.com/e23thr/cypress-guerrillamail",
+          "keywords": ["email", "guerrillamail", "test", "commands"],
+          "badge": "community"
         }
       ]
     },
@@ -1246,6 +1274,20 @@
           "link": "https://github.com/cypress-io/cypress-browserify-preprocessor",
           "keywords": ["browserify"],
           "badge": "official"
+        },
+        {
+          "name": "cypress-xpath",
+          "description": "Adds XPath command. This repo is also a good example of using custom commands to do retries, provide TypeScript definitions, etc.",
+          "link": "https://github.com/cypress-io/cypress/tree/develop/npm/xpath",
+          "keywords": ["xpath", "commands"],
+          "badge": "official"
+        },
+        {
+          "name": "cypress-dotenv",
+          "description": "Cypress plugin that enables compatibility with dotenv.",
+          "link": "https://github.com/morficus/cypress-dotenv",
+          "keywords": ["dotenv", "env", "environment", "env var"],
+          "badge": "community"
         }
       ]
     }

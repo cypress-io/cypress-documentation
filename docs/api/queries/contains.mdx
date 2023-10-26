@@ -63,7 +63,7 @@ Pass in an options object to change the default behavior of `.contains()`.
 | `timeout`          | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts)              | Time to wait for `.contains()` to resolve before [timing out](#Timeouts)                                     |
 | `includeShadowDom` | [`includeShadowDom` config option value](/guides/references/configuration#Global) | Whether to traverse shadow DOM boundaries and include elements within the shadow DOM in the yielded results. |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
 
 - `.contains()` yields the new DOM element it found.
 - `.contains()` is a query, and it is _safe_ to chain further commands.
@@ -450,12 +450,12 @@ cy.contains('Age').find('input').type('29')
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
 
 - `.contains()` can be chained off of `cy` or off a command that yields DOM
   element(s).
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
 
 - `.contains()` will automatically [retry](/guides/core-concepts/retry-ability)
   until the element(s)
@@ -463,7 +463,7 @@ cy.contains('Age').find('input').type('29')
 - `.contains()`will automatically [retry](/guides/core-concepts/retry-ability)
   until all chained assertions have passed.
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
 
 - `.contains()` can time out waiting for the element(s) to
   [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).

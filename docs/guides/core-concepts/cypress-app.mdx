@@ -32,7 +32,7 @@ within your local workflow.
 
 The data used by these features is pulled from Cypress Cloud, so they will only
 reflect test results that were
-[recorded](/guides/cloud/projects#Set-up-a-project-to-record).
+[recorded](/guides/cloud/getting-started#Set-up-a-project-to-record).
 
 If you're not sure whether you're logged in, you can always check using the
 profile control in the top right of the window.
@@ -158,14 +158,18 @@ Running a large number of specs sequentially can consume more resources.
 ### Runs
 
 <DocsImage
-  src="/img/guides/core-concepts/cypress-app/recorded-runs.png"
+  src="/img/guides/core-concepts/cypress-app/recorded-runs.jpg"
   alt="Recorded Runs"
 />
 
 This screen shows detailed information about the most recently recorded
-[test runs](/guides/cloud/runs) across all git branches, latest first. This data
-comes from Cypress Cloud (see [note above](#Overview)) so should be the same
-everywhere.
+[test runs](/guides/cloud/recorded-runs#Latest-Runs) to Cypress Cloud, showing
+the latest first.
+
+Cypress uses Git to show runs for your branch. Ensure that version control is
+properly configured and that you are sending Git information to Cypress Cloud.
+If no runs are found for your current branch, all runs for your project are
+shown as a fallback.
 
 The title of each run is taken from the
 [git commit message](https://www.educative.io/edpresso/git-commit-message-simply-explained)
@@ -187,22 +191,33 @@ without leaving the Cypress app.
 This feature eliminates the tedious process of switching between Cypress, your
 local editor, and CI output, in order to fix failed tests. It does this by
 enabling you to use the [Test Runner](#Test-Runner) to run only the tests that
-failed in your last recorded test run, as well as review screenshots, videos,
-and logs from your tests.
+failed in your last recorded test run, as well as review the
+[Test Replay](/guides/cloud/test-replay) and other artifacts like screenshots,
+videos, and logs from your tests.
 
-The Debug page shows the latest completed [test run](/guides/cloud/runs) that
-matches the HEAD commit (the commit currently checked out in the working
-directory) of your local project. Users can see and switch to relevant runs
-within the Debug page. If no run is found for your current commit, then Cypress
-shows the most recent run in your branch's history up until the current commit.
-The first **100** failed tests are listed, with a link to Cypress Cloud to
-review the full run.
+The Debug page shows the latest completed
+[test run](/guides/cloud/recorded-runs#Latest-Runs) that matches the `HEAD` commit
+(the commit currently checked out in the working directory) of your local
+project. Users can see and switch to relevant runs within the Debug page. If no
+run is found for your current commit, then Cypress shows the most recent run in
+your branch's history up until the current commit. The first **100** failed
+tests are listed, with a link to Cypress Cloud to review the full run.
 
 To use this feature, you must ensure that git is properly configured for your
 project and that you are sending git information to Cypress Cloud. Under some
 environment setups (e.g. `docker`/`docker-compose`), you may have to pass git
 information using
 [custom environment variables](/guides/continuous-integration/introduction#Git-information).
+
+### Cloud Run Notifications
+
+<DocsImage
+  src="/img/guides/cloud/runs/app-notification.jpg"
+  alt="App notification on macOS"
+/>
+
+You can receive notifications in the Cypress app for recorded runs directly from
+Cypress Cloud. Learn more about [Cloud Run Notifications](/guides/cloud/recorded-runs#Notifications).
 
 ## Test Runner
 

@@ -75,7 +75,7 @@ Pass in an options object to change the default behavior of `.dblclick()`.
 | `timeout`                    | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts)           | Time to wait for `.dblclick()` to resolve before [timing out](#Timeouts)                                                                           |
 | `waitForAnimations`          | [`waitForAnimations`](/guides/references/configuration#Actionability)          | Whether to wait for elements to [finish animating](/guides/core-concepts/interacting-with-elements#Animations) before executing the command.       |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
 
 - `.dblclick()` yields the same subject it was given.
 - It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried)
@@ -191,18 +191,18 @@ cy.get('li:first').dblclick({
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
 
 - `.dblclick()` requires being chained off a command that yields DOM element(s).
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
 
 - `.dblclick()` will automatically wait for the element to reach an
   [actionable state](/guides/core-concepts/interacting-with-elements).
 - `.dblclick()` will automatically [retry](/guides/core-concepts/retry-ability)
   until all chained assertions have passed.
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
 
 - `.dblclick()` can time out waiting for the element to reach an
   [actionable state](/guides/core-concepts/interacting-with-elements).
