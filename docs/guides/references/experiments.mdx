@@ -120,7 +120,7 @@ modified HTML or JS value.
 
 ## Experimental Flake Detection Features
 
-### Experimental Test Retries (available as of Cypress `13.4.0`)
+### Experimental Test Retries
 
 [Test retries](/guides/guides/test-retries) is a Cypress [Flake Detection](/guides/cloud/flaky-test-management#Flake-Detection) feature that enables you to re-attempt any tests that initially fail. The failure may not be a "true" failure, i.e. flaky. The only way to determine this is to retry the test.
 
@@ -135,7 +135,7 @@ The `detect-flake-and-pass-on-threshold` strategy is most like the current imple
 
 #### `experimentalStrategy: 'detect-flake-and-pass-on-threshold'`
 
-Setting `experimentalStrategy: 'detect-flake-and-pass-on-threshold'` within retries will give you ability to set how many passing attempts are required for the test result to be passing. There are two `experimentalOptions` set in this strategy:
+Setting `experimentalStrategy: 'detect-flake-and-pass-on-threshold'` within retries will give you ability to set how many passing attempts are required for the test result to be passing. There are two `experimentalOptions` that must be set with this strategy:
 
 - `maxRetries` sets the maximum number of retries that can occur after the first attempt failed
 - `passesRequired` sets the required number of passing attempts for the final test result to be passing. Cannot be greater than `maxRetries`.
@@ -189,7 +189,7 @@ Retries stop on attempt 2, and the test is **failing** <Icon name="times" color=
 
 #### `experimentalStrategy: 'detect-flake-but-always-fail'`
 
-Setting `experimentalStrategy: 'detect-flake-but-always-fail'` within retries ensures any test with any failed attempt will always end with a failing final result. There are two `experimentalOptions` set in this strategy:
+Setting `experimentalStrategy: 'detect-flake-but-always-fail'` within retries ensures any test with any failed attempt will always end with a failing final result. There are two `experimentalOptions` that must be set in this strategy:
 
 - `maxRetries` sets the maximum number of retries that can occur after the first attempt failed
 - `stopIfAnyPassed` will stop the retries before `maxRetries` is reached when there is any passing attempt.
@@ -320,28 +320,29 @@ configuration object:
 
 ## History
 
-| Version                                       | Changes                                                                                                                      |
-| --------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| [12.4.0](/guides/references/changelog#12-4-0) | Added `experimentalSkipDomainInjection` and `experimentalMemoryManagement`.                                                  |
-| [12.0.0](/guides/references/changelog#12-0-0) | Removed `experimentalSessionAndOrigin` and made it the default behavior. Added `experimentalOriginDependencies`.             |
-| [11.2.0](/guides/references/changelog#11-2-0) | Added `experimentalRunAllSpecs`.                                                                                             |
-| [10.8.0](/guides/references/changelog#10-8-0) | Added `experimentalWebKitSupport`.                                                                                           |
-| [10.6.0](/guides/references/changelog#10-6-0) | Added support for `experimentalSingleTabRunMode`.                                                                            |
-| [10.4.0](/guides/references/changelog#10-4-0) | Added support for `experimentalModifyObstructiveThirdPartyCode`.                                                             |
-| [9.6.0](/guides/references/changelog#9-6-0)   | Added support for `experimentalSessionAndOrigin` and removed `experimentalSessionSupport`.                                   |
-| [8.2.0](/guides/references/changelog#8-2-0)   | Added support for `experimentalSessionSupport`.                                                                              |
-| [7.1.0](/guides/references/changelog#7-1-0)   | Added support for `experimentalInteractiveRunEvents`.                                                                        |
-| [7.0.0](/guides/references/changelog#7-0-0)   | Removed `experimentalComponentTesting` and made it the default behavior.                                                     |
-| [6.7.0](/guides/references/changelog#6-7-0)   | Removed `experimentalRunEvents` and made it the default behavior.                                                            |
-| [6.3.0](/guides/references/changelog#6-3-0)   | Added support for `experimentalStudio`.                                                                                      |
-| [6.2.0](/guides/references/changelog#6-2-0)   | Added support for `experimentalRunEvents`.                                                                                   |
-| [6.0.0](/guides/references/changelog#6-0-0)   | Removed `experimentalNetworkStubbing` and made it the default behavior when using [cy.intercept()](/api/commands/intercept). |
-| [6.0.0](/guides/references/changelog#6-0-0)   | Deprecated `experimentalFetchPolyfill`.                                                                                      |
-| [5.2.0](/guides/references/changelog#5-2-0)   | Removed `experimentalShadowDomSupport` and made it the default behavior.                                                     |
-| [5.1.0](/guides/references/changelog#5-1-0)   | Added support for `experimentalNetworkStubbing`.                                                                             |
-| [5.0.0](/guides/references/changelog#5-0-0)   | Removed `experimentalGetCookiesSameSite` and made it the default behavior.                                                   |
-| [4.9.0](/guides/references/changelog#4-9-0)   | Added support for `experimentalFetchPolyfill`.                                                                               |
-| [4.8.0](/guides/references/changelog#4-8-0)   | Added support for `experimentalShadowDomSupport`.                                                                            |
-| [4.6.0](/guides/references/changelog#4-6-0)   | Added support for `experimentalSourceRewriting`.                                                                             |
-| [4.5.0](/guides/references/changelog#4-5-0)   | Added support for `experimentalComponentTesting`.                                                                            |
-| [4.3.0](/guides/references/changelog#4-3-0)   | Added support for `experimentalGetCookiesSameSite`.                                                                          |
+| Version                                       | Changes                                                                                                                                       |
+| --------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| [12.3.0](/guides/references/changelog#13-4-0) | Added support for configuring the Experimental Flake Detection strategy via `retries.experimentalStrategy` and `retries.experimentalOptions`. |
+| [12.4.0](/guides/references/changelog#12-4-0) | Added `experimentalSkipDomainInjection` and `experimentalMemoryManagement`.                                                                   |
+| [12.0.0](/guides/references/changelog#12-0-0) | Removed `experimentalSessionAndOrigin` and made it the default behavior. Added `experimentalOriginDependencies`.                              |
+| [11.2.0](/guides/references/changelog#11-2-0) | Added `experimentalRunAllSpecs`.                                                                                                              |
+| [10.8.0](/guides/references/changelog#10-8-0) | Added `experimentalWebKitSupport`.                                                                                                            |
+| [10.6.0](/guides/references/changelog#10-6-0) | Added support for `experimentalSingleTabRunMode`.                                                                                             |
+| [10.4.0](/guides/references/changelog#10-4-0) | Added support for `experimentalModifyObstructiveThirdPartyCode`.                                                                              |
+| [9.6.0](/guides/references/changelog#9-6-0)   | Added support for `experimentalSessionAndOrigin` and removed `experimentalSessionSupport`.                                                    |
+| [8.2.0](/guides/references/changelog#8-2-0)   | Added support for `experimentalSessionSupport`.                                                                                               |
+| [7.1.0](/guides/references/changelog#7-1-0)   | Added support for `experimentalInteractiveRunEvents`.                                                                                         |
+| [7.0.0](/guides/references/changelog#7-0-0)   | Removed `experimentalComponentTesting` and made it the default behavior.                                                                      |
+| [6.7.0](/guides/references/changelog#6-7-0)   | Removed `experimentalRunEvents` and made it the default behavior.                                                                             |
+| [6.3.0](/guides/references/changelog#6-3-0)   | Added support for `experimentalStudio`.                                                                                                       |
+| [6.2.0](/guides/references/changelog#6-2-0)   | Added support for `experimentalRunEvents`.                                                                                                    |
+| [6.0.0](/guides/references/changelog#6-0-0)   | Removed `experimentalNetworkStubbing` and made it the default behavior when using [cy.intercept()](/api/commands/intercept).                  |
+| [6.0.0](/guides/references/changelog#6-0-0)   | Deprecated `experimentalFetchPolyfill`.                                                                                                       |
+| [5.2.0](/guides/references/changelog#5-2-0)   | Removed `experimentalShadowDomSupport` and made it the default behavior.                                                                      |
+| [5.1.0](/guides/references/changelog#5-1-0)   | Added support for `experimentalNetworkStubbing`.                                                                                              |
+| [5.0.0](/guides/references/changelog#5-0-0)   | Removed `experimentalGetCookiesSameSite` and made it the default behavior.                                                                    |
+| [4.9.0](/guides/references/changelog#4-9-0)   | Added support for `experimentalFetchPolyfill`.                                                                                                |
+| [4.8.0](/guides/references/changelog#4-8-0)   | Added support for `experimentalShadowDomSupport`.                                                                                             |
+| [4.6.0](/guides/references/changelog#4-6-0)   | Added support for `experimentalSourceRewriting`.                                                                                              |
+| [4.5.0](/guides/references/changelog#4-5-0)   | Added support for `experimentalComponentTesting`.                                                                                             |
+| [4.3.0](/guides/references/changelog#4-3-0)   | Added support for `experimentalGetCookiesSameSite`.                                                                                           |
