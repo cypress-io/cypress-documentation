@@ -58,7 +58,7 @@ test:
 
 The Cypress team maintains the official
 [Docker Images](https://github.com/cypress-io/cypress-docker-images) for running
-Cypress tests locally and in CI, which are built with Google Chrome and Firefox.
+Cypress tests locally and in CI, which are built with Google Chrome, Firefox and Microsoft Edge.
 For example, this allows us to run the tests in Firefox by passing the
 `--browser firefox` attribute to `cypress run`.
 
@@ -67,7 +67,7 @@ stages:
   - test
 
 test:
-  image: cypress/browsers:node18.12.0-chrome106-ff106
+  image: cypress/browsers:node-20.9.0-chrome-118.0.5993.88-1-ff-118.0.2-edge-118.0.2088.46-1
   stage: test
   script:
     # install dependencies
@@ -98,7 +98,7 @@ cache:
     - .npm/
 
 test:
-  image: cypress/browsers:node18.12.0-chrome106-ff106
+  image: cypress/browsers:node-20.9.0-chrome-118.0.5993.88-1-ff-118.0.2-edge-118.0.2088.46-1
   stage: test
   script:
     # install dependencies
@@ -150,7 +150,8 @@ assign it to the `build` stage.
 stages:
   - build
 
-## Set environment variables for folders in "cache" job settings for npm modules and Cypress binary
+## Set environment variables for folders in "cache" job settings
+## for npm modules and Cypress binary
 variables:
   npm_config_cache: '$CI_PROJECT_DIR/.npm'
   CYPRESS_CACHE_FOLDER: '$CI_PROJECT_DIR/cache/Cypress'
@@ -162,9 +163,9 @@ cache:
     - node_modules
     - build
 
-## Install NPM dependencies and Cypress
+## Install npm dependencies and Cypress
 install:
-  image: cypress/browsers:node18.12.0-chrome106-ff106
+  image: cypress/browsers:node-20.9.0-chrome-118.0.5993.88-1-ff-118.0.2-edge-118.0.2088.46-1
   stage: build
   script:
     - npm ci
@@ -193,7 +194,8 @@ stages:
   - build
   - test
 
-## Set environment variables for folders in "cache" job settings for npm modules and Cypress binary
+## Set environment variables for folders in "cache" job settings
+## for npm modules and Cypress binary
 variables:
   npm_config_cache: '$CI_PROJECT_DIR/.npm'
   CYPRESS_CACHE_FOLDER: '$CI_PROJECT_DIR/cache/Cypress'
@@ -206,15 +208,15 @@ cache:
     - node_modules
     - build
 
-## Install NPM dependencies and Cypress
+## Install npm dependencies and Cypress
 install:
-  image: cypress/browsers:node18.12.0-chrome106-ff106
+  image: cypress/browsers:node-20.9.0-chrome-118.0.5993.88-1-ff-118.0.2-edge-118.0.2088.46-1
   stage: build
   script:
     - npm ci
 
 ui-chrome-tests:
-  image: cypress/browsers:node18.12.0-chrome106-ff106
+  image: cypress/browsers:node-20.9.0-chrome-118.0.5993.88-1-ff-118.0.2-edge-118.0.2088.46-1
   stage: test
   parallel: 5
   script:
