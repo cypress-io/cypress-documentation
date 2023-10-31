@@ -1,0 +1,79 @@
+---
+title: UI Coverage
+sidebar_position: 50
+sidebar_class_name: new_label
+---
+
+:::info
+
+## <Icon name="graduation-cap" /> What you'll learn
+
+- What UI Coverage is and why you should use it
+- How to get started with UI Coverage in Cypress Cloud
+
+:::
+
+## Overview
+
+:::tip
+
+<strong>
+  <Icon name="star" /> Premium Cypress Cloud Feature
+</strong>
+
+**UI Coverage** is available as an add-on for Cypress Cloud organizations. [Contact us](https://cypress.io/contact) to learn more.
+
+:::
+
+With UI Coverage in Cypress Cloud, you can easily visualize the test coverage of your application, helping you maintain transparency, track progress, and prioritize testing efforts for comprehensive coverage.
+
+UI Coverage is a visual test coverage report for your application. Unlike conventional code coverage reports, it introduces a dynamic visual overlay, simplifying the understanding of your application’s test coverage for interactive components. This invaluable tool is accessible to all involved in the software development lifecycle, from developers and QA engineers, to product managers and engineering leaders.
+
+UI Coverage ensures you won't risk frustrating users or losing revenue due to untested elements, by enhancing your testing processes and bringing testing into the early stages of development. It's your path to a seamless and reliable user experience. Attain a crystal-clear understanding of your testing extent, easily identify untested elements, make testing more data-driven, and confidently deliver high quality applications with Cypress.
+
+## How it works
+
+UI Coverage creates a dynamic visual map of test coverage across every page of your application. This map vividly highlights which interactive elements have been tested and which ones remain untested, providing a clear and actionable overview of your testing progress.
+
+Every page visited by your Cypress tests (and every component mounted in Component Testing), undergoes a comprehensive analysis. UI Coverage captures "Snapshots", representing unique DOM states of the page. For instance, if you have a sign-in page (Snapshot 1) and have a state with a login error (Snapshot 2), each of these variations is accounted for. It's not just about failures; it encompasses the full spectrum of possible interactions and DOM permutations on the page. Examples of interactive elements include sign-in buttons, payment buttons, dropdown menus, form fields, range selectors, and more.
+
+As a result, you receive an "UI Coverage Score" for each of your pages that quantifies your testing efforts, scoring the application based on what percentage of elements were interacted with in your tests. For Snapshots that are missing test coverage, you can easily identify the untested elements and prioritize testing efforts to achieve comprehensive coverage.
+
+## Getting Started
+
+### Enable UI Coverage
+
+UI Coverage is available as an add-on for Cypress Cloud organizations. [Contact us](https://cypress.io/contact) to learn more.
+
+### Accessing UI Coverage
+
+To access UI Coverage, navigate to the **UI Coverage** tab in a run's details page. You can access a run's details page by clicking on a run in the **Runs** tab.
+
+TODO: image here
+
+### Interactive Elements
+
+UI Coverage uses the [W3C definition of interactive elements](https://html.spec.whatwg.org/dev/dom.html#interactive-content) as well as some additional rules defined by Cypress to determine which elements are interactive. These rules are subject to change as we continue to improve this solution. The rules for determining interactive elements are as follows:
+
+- TODO: list rules
+
+### Views
+
+UI Coverage is organized into "Views", which are the unique URLs across all Snapshots from end-to-end tests and the unique mounted components from component tests. Each View includes a summary of its UI Coverage details, including:
+
+- Count of unique Snapshots
+- Count of untested interactive elements
+- Count of total interactive elements
+- Percent of interactive elements covered by tests
+
+Clicking on a View takes you to UI Coverage Report for that View.
+
+### Scoring
+
+The UI Coverage Score for a View is calculated by dividing the number of unique interactive elements that were interacted with in tests by the total number of unique interactive elements on the page. This score is represented as a percentage.
+
+The UI Coverage Score for a Run is calculated by dividing the number of unique interactive elements that were interacted with in tests by the total number of unique interactive elements across all Views. This score is represented as a percentage.
+
+### UI Coverage Report
+
+TODO
