@@ -37,13 +37,13 @@ UI Coverage creates a dynamic visual map of test coverage across every page of y
 
 Every page visited by your Cypress tests (and every component mounted in Component Testing), undergoes a comprehensive analysis. UI Coverage captures "Snapshots", representing unique DOM states of the page. For instance, if you have a sign-in page (Snapshot 1) and have a state with a login error (Snapshot 2), each of these variations is accounted for. It's not just about failures; it encompasses the full spectrum of possible interactions and DOM permutations on the page. Examples of interactive elements include sign-in buttons, payment buttons, dropdown menus, form fields, range selectors, and more.
 
-As a result, you receive an "UI Coverage Score" for each of your pages that quantifies your testing efforts, scoring the application based on what percentage of elements were interacted with in your tests. For Snapshots that are missing test coverage, you can easily identify the untested elements and prioritize testing efforts to achieve comprehensive coverage.
+As a result, you receive a "UI Coverage Score" for each of your pages that quantifies your testing efforts, scoring the application based on what percentage of elements were interacted with in your tests. For Snapshots that are missing test coverage, you can easily identify the untested elements and prioritize testing efforts to achieve comprehensive coverage.
 
 ## Getting Started
 
 ### Enable UI Coverage
 
-UI Coverage is available as an add-on for Cypress Cloud organizations. [Contact us](https://cypress.io/contact) to learn more.
+UI Coverage is available as an add-on for Cypress Cloud organizations. [Contact us](TODO) to learn more.
 
 ### Accessing UI Coverage
 
@@ -70,10 +70,24 @@ Clicking on a View takes you to UI Coverage Report for that View.
 
 ### Scoring
 
-The UI Coverage Score for a View is calculated by dividing the number of unique interactive elements that were interacted with in tests by the total number of unique interactive elements on the page. This score is represented as a percentage.
+Snapshots, Views, and Runs are scored based on the percentage of interactive elements that were interacted with in tests.
 
-The UI Coverage Score for a Run is calculated by dividing the number of unique interactive elements that were interacted with in tests by the total number of unique interactive elements across all Views. This score is represented as a percentage.
+The UI Coverage Score for a Snapshot is calculated by dividing the number of unique interactive elements in the Snapshot that were tested by the total number of unique interactive elements in the Snapshot.
+
+The UI Coverage Score for a View is calculated by dividing the number of unique interactive elements in the View that were tested by the total number of unique interactive elements in the View.
+
+The UI Coverage Score for a Run is calculated by dividing the number of unique interactive elements across all Views that were tested by the total number of unique interactive elements across all Views.
 
 ### UI Coverage Report
 
-TODO
+The UI Coverage Report for a View includes a list of all unique interactive elements across all Snapshots for that View, grouped by whether or not they were tested.
+
+Each Snapshot of the View is shown and has its own UI Coverage Score. The Snapshot has highlights on each visible interactive element. All untested elements are highlighted in red, and all tested elements are highlighted in green. When an element is hovered or clicked in either the Snapshot or the list of elements, it is highlighted in both places.
+
+## Troubleshooting
+
+TODO: troubleshooting section
+
+## See also
+
+- [UI Coverage FAQ](/faq/questions/cloud-faq#UI-Coverage)
