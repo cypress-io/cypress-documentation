@@ -301,11 +301,13 @@ announcement.
 
 ## Best Practices
 
+### Multi-repo Implementation
+
 There is a sceario where you may have Cypress tests in a repo separate from the application code itself. This creates a sub-optimal [Branch Review](guides/cloud/branch-review) experience considering the commit and branch interpretation of each git directory.
 
 :::tip
 
-For any given Cypress project, all commits or branches associated to recorded runs should belong to or relate to a single `.git` repository.
+For any given Cypress project, all commits or branches associated to recorded runs should belong or relate to a single `.git` repository.
 
 :::
 
