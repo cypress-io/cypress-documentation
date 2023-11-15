@@ -137,9 +137,9 @@ Flaky tests can be challenging to identify and resolve, due to their behavior be
 
 ### Experimental Burn-in
 
-[Test retries](/guides/guides/test-retries) is a Cypress [Flake Detection](/guides/cloud/flaky-test-management#Flake-Detection) feature that *reactively* finds flake on tests that initially failed. However, this offers no solution for a flaky test which initially passes.
+[Test retries](/guides/guides/test-retries) is a Cypress [Flake Detection](/guides/cloud/flaky-test-management#Flake-Detection) feature that _reactively_ finds flake on tests that initially failed. However, this offers no solution for a flaky test which initially passes.
 
-Test Burn-in is an experimental feature for *proactively* detecting flake on new, modified, and previously flaky or failing tests. These tests demonstrate the highest risk for flaky behavior, since they either represent code changes or have yet to pass consistently. Burn-in therefore increases your confidence in these test's flake status.
+Test Burn-in is an experimental feature for _proactively_ detecting flake on new, modified, and previously flaky or failing tests. These tests demonstrate the highest risk for flaky behavior, since they either represent code changes or have yet to pass consistently. Burn-in therefore increases your confidence in these test's flake status.
 
 :::tip
 
@@ -174,7 +174,7 @@ When enabled, burn-in will verify all new and modified tests will pass 3 consecu
 
 **Burn-in Scenario 1:**
 
-*New test*
+_New test_
 
 - Attempt 1: <Icon name="check-circle" color="green" /> Pass
 - Attempt 2: <Icon name="check-circle" color="green" /> Pass
@@ -190,7 +190,7 @@ Burn-in will verify all previously failing tests will pass 3 consecutive attempt
 
 **Burn-in Scenario 2:**
 
-*Previously flaky test*
+_Previously flaky test_
 
 - Attempt 1: <Icon name="check-circle" color="green" /> Pass
 - Attempt 2: <Icon name="check-circle" color="green" /> Pass
@@ -202,7 +202,7 @@ The test has passed all 5 burn-in attempts, and therefore is **no longer flaky**
 
 #### What happens when a test fails during the burn-in attempts?
 
-If a test fails on any of the burn-in attempts after the initial passing attempt, then you know the test is flaky. 
+If a test fails on any of the burn-in attempts after the initial passing attempt, then you know the test is flaky.
 
 After that, the test will default to [test retries](/guides/guides/test-retries) to determine the passing or failing result of the test. It's recommended to use [experimental retries](/guides/references/experiments#Experimental-Test-Retries) when using burn-in, which offer more control over flaky test's final results and flake detection behaviors in the case of failing tests.
 
@@ -231,7 +231,7 @@ Configuration on burn-in and retries:
 
 :::
 
-*New test*
+_New test_
 
 - Attempt 1: <Icon name="check-circle" color="green" /> Pass
 - Attempt 2: <Icon name="times" color="red" /> Fail (burn-in stops here; retries now take-over and this 2nd burn-in attempt counted as the 1st retry attempt, so only 1 retry attempt remains due to `maxRetries: 2`)
@@ -276,6 +276,7 @@ You can specify different settings using this configuration:
 :::
 
 These two settings, `default` and `flaky`, correspond to these conditions where burn-in applies:
+
 - `3` attempts (`default`) for new, modified, and previously failing tests
 - `5` attempts (`flaky`) for previously flaky tests
 
@@ -293,17 +294,17 @@ Burn-in is configured at the Cypress project level. It therefore cannot be confi
 
 It can be configured on a per-run basis. For example, you can use the [Cypress API/CLI](/guides/guides/module-api#cypresscli) to specify different burn-in configurations for your feature branch runs versus your main/default branch runs.
 
-If you would like to provide us with feedback about these levels of configuration for burn-in, please let us know. *(Feedback form coming soon)* It's an experimental feature, so we certainly appreciate all the feedback we can get.
+If you would like to provide us with feedback about these levels of configuration for burn-in, please let us know. _(Feedback form coming soon)_ It's an experimental feature, so we certainly appreciate all the feedback we can get.
 
 #### How do you determine the test's history/lineage for the purposes of burn-in?
 
-*Coming soon: FAQ on how Cypress Cloud tracks test history*
+_Coming soon: FAQ on how Cypress Cloud tracks test history_
 
 #### Is there any UI in Cypress Cloud to help understand the burn-in behavior and results?
 
-There are a number of [Flake Management](/guides/cloud/flaky-test-management#Flake-Detection) features currently available to help your team deal with the flaky tests and see how any improvements are doing. As burn-in is still an experimental feature, we're also actively working on further UI updates to Cypress Cloud. 
+There are a number of [Flake Management](/guides/cloud/flaky-test-management#Flake-Detection) features currently available to help your team deal with the flaky tests and see how any improvements are doing. As burn-in is still an experimental feature, we're also actively working on further UI updates to Cypress Cloud.
 
-In the meantime, if you have any suggestions for burn-in features in Cloud, please let us know. *(Feedback form coming soon)*
+In the meantime, if you have any suggestions for burn-in features in Cloud, please let us know. _(Feedback form coming soon)_
 
 ### Experimental Test Retries
 

@@ -24,7 +24,7 @@ without any change to the code, but this time it passes.
 
 <strong>What is test burn-in?</strong>
 
-[Burn-in](/guides/references/experiments#Experimental-burn-in) (an experimental feature) *proactively* checks for flake on new, modified, or previously failing or flaky tests, by retrying these tests that meet these conditions.
+[Burn-in](/guides/references/experiments#Experimental-burn-in) (an experimental feature) _proactively_ checks for flake on new, modified, or previously failing or flaky tests, by retrying these tests that meet these conditions.
 
 If a test passes burn-in, it is considered "not flaky" until it either flakes, fails, or is modified. Otherwise, if it fails any of the burn-in attempts, it is flaky.
 
@@ -34,7 +34,7 @@ If a test passes burn-in, it is considered "not flaky" until it either flakes, f
 
 <strong>What are test retries?</strong>
 
-[Test retries](/guides/guides/test-retries#Configure-Test-Retries) automatically retry failed tests to *reactively* find flaky tests, by retrying any tests that fail on the first attempt.
+[Test retries](/guides/guides/test-retries#Configure-Test-Retries) automatically retry failed tests to _reactively_ find flaky tests, by retrying any tests that fail on the first attempt.
 
 :::
 
@@ -60,7 +60,7 @@ assist with prioritizing their fix.
 <strong>Test Burn-in, Retries, & Flake Detection</strong>
 
 Test burn-in and retries are the _fundamental mechanisms_ enabling detection of flaky
-tests by Cypress Cloud. [Burn-in](/guides/references/experiments#Experimental-burn-in) is primarily for "high risk" tests that might otherwise be mistaken for simply passing results. [Retries](/guides/guides/test-retries) check only tests that initiated failed for flake. 
+tests by Cypress Cloud. [Burn-in](/guides/references/experiments#Experimental-burn-in) is primarily for "high risk" tests that might otherwise be mistaken for simply passing results. [Retries](/guides/guides/test-retries) check only tests that initiated failed for flake.
 
 **Enabling burn-in and/or test retries is required** (preferably both are enabled)
 to take advantage of any flaky test management feature.
