@@ -60,11 +60,12 @@ assist with prioritizing their fix.
 <strong>Test Burn-in, Retries, & Flake Detection</strong>
 
 Test burn-in and retries are the _fundamental mechanisms_ enabling detection of flaky
-tests by Cypress Cloud. [Burn-in](/guides/references/experiments#Experimental-burn-in) is primarily for "high risk" tests that might otherwise be mistaken for simply passing results. [Retries](/guides/guides/test-retries#Configure-Test-Retries) check only tests that initiated failed for flake. **Enabling burn-in and/or
-test retries is required (preferably both are enabled)**
+tests by Cypress Cloud. [Burn-in](/guides/references/experiments#Experimental-burn-in) is primarily for "high risk" tests that might otherwise be mistaken for simply passing results. [Retries](/guides/guides/test-retries) check only tests that initiated failed for flake. 
+
+**Enabling burn-in and/or test retries is required** (preferably both are enabled)
 to take advantage of any flaky test management feature.
 
-If you want more control over the pass/fail result of any test deemed flaky by test retries, you may want to use [experimental test retries](/guides/references/experiments#Experimental-Flake-Detection-Features), which is available as of Cypress `13.4.0`.
+If you want control over the pass or fail result of any test found to be flaky, you want to use [experimental test retries](/guides/references/experiments#Experimental-Test-Retries), which is available as of Cypress `13.4.0`.
 
 :::
 
