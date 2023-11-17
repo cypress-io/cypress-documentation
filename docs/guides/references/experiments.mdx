@@ -218,7 +218,7 @@ Here's an example of how a new test might go through burn-in and experimental re
   retries: {
     experimentalStrategy: `detect-flake-and-pass-on-threshold`,
     experimentalOptions: {
-      maxRetries: 2,
+      maxRetries: 3,
       passesRequired: 2
     },
     openMode: true,
@@ -230,12 +230,12 @@ Here's an example of how a new test might go through burn-in and experimental re
 :::
 
 - Attempt 1: <Icon name="check-circle" color="green" /> Pass
-- Attempt 2: <Icon name="times" color="red" /> Fail (burn-in stops here on a failed attempt, and retries take-over with this 2nd burn-in attempt counting as the 1st retry attempt, so only 1 retry attempt remains due to `maxRetries: 2`)
+- Attempt 2: <Icon name="times" color="red" /> Fail (burn-in stops here on a failed attempt, and retries take-over with this 2nd burn-in attempt counting as the 1st retry attempt, so two retry attempts remains due to `maxRetries: 3`)
 - Attempt 3: <Icon name="check-circle" color="green" /> Pass (retries stop here, since the test has met the `passesRequired: 2` threshold)
 
-The new test did not pass all attempts, so it is **flaky**. However it did meet the `passesRequired: 2` threshold, so it is also **passing**. The test passed its 1st burn-in attempt and its 1st retry after the 2nd burn-in attempt failed. If the 1st retry after the failed attempt had also failed instead of passed, then the test result would fail instead of pass, because that would have counted as the 2nd retry and `maxRetries` is `2`, therefore no more retries would execute, and only the 1st burn-in attempt passed.
+The new test did not pass all attempts, so it is **flaky**. However it did meet the `passesRequired: 2` threshold, so it is also **passing**. The test passed its 1st burn-in attempt and its 1st retry after the 2nd burn-in attempt failed. If the 1st retry after the failed attempt had also failed instead of passed, then there would be another attempt after that, because this 3rd attempt would have counted as the 2nd retry and `maxRetries` is `3`, while only the 1st burn-in attempt passed and `passesRequired` is `2`. A 4th attempt then would determine whether or not the final test result is pass or fail.
 
-It's key to understand that all burn-in attempts _except_ the initial attempt count towards your `retries`, or your `maxRetries` in the case of experimental retries, once any burn-in attempt fails. Whereas any passing attempts _inclusive_ of the initial burn-in attempt count towards `passesRequired` and `stopIfAnyPassed` in experimental retries.
+It's key to understand that all burn-in attempts _except_ the initial attempt count towards `retries`, or `maxRetries` in the case of experimental retries, once any burn-in attempt fails. Whereas any passing attempts _inclusive_ of the initial burn-in attempt count towards `passesRequired` and `stopIfAnyPassed` in experimental retries.
 
 If a test that qualified for burn-in fails on the initial attempt, then test retries will also execute as normally.
 
