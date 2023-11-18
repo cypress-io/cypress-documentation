@@ -9,10 +9,8 @@ Make an HTTP request.
 ```javascript
 cy.request(url)
 cy.request(url, body)
-cy.request(url, fixture)
 cy.request(method, url)
 cy.request(method, url, body)
-cy.request(method, url, fixture)
 cy.request(options)
 ```
 
@@ -68,9 +66,6 @@ cy.request('seed/admin') // URL is http://localhost:1234/seed/admin
 A request `body` to be sent in the request. Cypress sets the `Accepts` request
 header and serializes the response body by the `encoding` option.
 
-**<Icon name="angle-right" /> fixture** **_(String)_**
-A string specifying a fixture. The data in the fixture is used in the request `body`. The string is prefixed with `'fx:'` followed by the name of the fixture.
-
 **<Icon name="angle-right" /> method** **_(String)_**
 
 Make a request using a specific method. If no method is defined, Cypress uses
@@ -119,6 +114,7 @@ globally in [configuration](/guides/references/configuration).
 | `method`                   | `GET`                                                          | The HTTP method to use in the request                                                                                                                                                                    |
 | `auth`                     | `null`                                                         | Adds Authorization headers. [Accepts these options.](https://github.com/request/request#http-authentication)                                                                                             |
 | `body`                     | `null`                                                         | Body to send along with the request                                                                                                                                                                      |
+| `fixture`                  | `null`                                                         | Content of fixture used as body in the request. Cannot be combined with body. Default method is POST if no method is specified                                                                           |
 | `failOnStatusCode`         | `true`                                                         | Whether to fail on response codes other than `2xx` and `3xx`                                                                                                                                             |
 | `followRedirect`           | `true`                                                         | Whether to automatically follow redirects                                                                                                                                                                |
 | `form`                     | `false`                                                        | Whether to convert the `body` values to URL encoded content and set the `x-www-form-urlencoded` header                                                                                                   |
@@ -201,25 +197,6 @@ cy.request('POST', 'http://localhost:8888/users/admin', { name: 'Jane' }).then(
 )
 ```
 
-#### Send a `POST` request with a fixture as the JSON body
-
-```javascript
-cy.request('POST', 'http://localhost:8888/users/admin', 'fx:person').then(
-  (response) => {
-    // response.body is automatically serialized into JSON
-    expect(response.body).to.have.property('name', 'Jane') // true
-  }
-)
-```
-
-`person.json`
-
-```json
-{
-  "name": "Jane"
-}
-```
-
 ### Options
 
 #### Request a page while disabling auto redirect
@@ -298,6 +275,27 @@ cy.request({
 
 // to prove we have a session
 cy.getCookie('cypress-session-cookie').should('exist')
+```
+
+#### Send a `POST` request with fixture content as body
+
+```javascript
+cy.request({
+  method: 'POST',
+  url: 'http://localhost:8888/users/admin',
+  fixture: 'person'
+})
+.then((response) => {
+  expect(response.body).to.have.property('name', 'Jane')
+})
+```
+
+`person.json`
+
+```json
+{
+  "name": "Jane"
+}
 ```
 
 #### Using `cy.request()` for HTML Forms
