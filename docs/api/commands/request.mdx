@@ -283,9 +283,8 @@ cy.getCookie('cypress-session-cookie').should('exist')
 cy.request({
   method: 'POST',
   url: 'http://localhost:8888/users/admin',
-  fixture: 'person'
-})
-.then((response) => {
+  fixture: 'person',
+}).then((response) => {
   expect(response.body).to.have.property('name', 'Jane')
 })
 ```
