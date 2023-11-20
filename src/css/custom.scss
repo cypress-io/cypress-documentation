@@ -266,6 +266,12 @@ div[class^='codeBlockTitle'] {
   box-shadow: inset 0px -6px 0px -4px var(--ifm-code-background-color-light);
 }
 
+@media(min-width: 997px) and (max-width: 1180px) {
+  .tabs-container .tabs {
+    max-width: 36rem;
+  }
+}
+
 .tabs-container .tabs__item {
   margin: 0;
   padding: 0.75rem 1rem;
@@ -319,6 +325,10 @@ div[class^='codeBlockTitle'] {
 /* add some more spacing for main doc container */
 [class^='docItemContainer'] {
   margin: 0 10px;
+}
+
+[class^='docItemContainer'] [class^='codeBlockLines'] {
+  max-width: 0;
 }
 
 /* hides the osano widget */

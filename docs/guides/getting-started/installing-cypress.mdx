@@ -155,10 +155,10 @@ Cypress is a desktop application that is installed on your computer. The desktop
 application supports these operating systems:
 
 - **macOS** 10.9 and above _(Intel or Apple Silicon 64-bit (x64 or arm64))_
-- **Linux** Ubuntu 12.04 and above, Fedora 21 and Debian 8 _(x86_64 or Arm
+- **Linux** Ubuntu 20.04 and above, Fedora 21 and Debian 8 _(x86_64 or Arm
   64-bit (x64 or arm64))_ (see [Linux Prerequisites](#Linux-Prerequisites) down
   below)
-- **Windows** 7 and above _(64-bit only)_
+- **Windows** 10 and above _(64-bit only)_
 
 ### Node.js
 
@@ -211,7 +211,13 @@ on your system.
 #### Ubuntu/Debian
 
 ```shell
-apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
+apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libnss3 libxss1 libasound2 libxtst6 xauth xvfb
+```
+
+#### Arch
+
+```shell
+pacman -S gtk2 gtk3 alsa-lib xorg-server-xvfb libxss nss libnotify
 ```
 
 #### CentOS

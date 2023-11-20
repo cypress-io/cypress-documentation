@@ -21,11 +21,6 @@
       "permanent": true
     },
     {
-      "source": "/examples/examples/workshop",
-      "destination": "/examples/workshop",
-      "permanent": true
-    },
-    {
       "source": "/examples/examples/projects-media",
       "destination": "/examples/projects-media",
       "permanent": true

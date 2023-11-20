@@ -225,7 +225,7 @@ Mounting a project directory with an existing `node_modules` into a
 `cypress/base` docker image **will not work**:
 
 ```shell
-docker run -it -v /app:/app cypress/base:18.12.1 bash -c 'cypress run'
+docker run -it -v /app:/app cypress/base:20.9.0 bash -c 'cypress run'
 Error: the cypress binary is not installed
 ```
 
@@ -319,7 +319,7 @@ has these dependencies installed.
 #### Ubuntu/Debian
 
 ```shell
-apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
+apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libnss3 libxss1 libasound2 libxtst6 xauth xvfb
 ```
 
 #### CentOS
@@ -646,12 +646,6 @@ colors are not properly formatted in your CI.
 ```shell
 NO_COLOR=1 cypress run
 ```
-
-## Workshop
-
-Cypress team has created a full workshop showing how to run Cypress on popular
-CI providers. Find the workshop at
-[github.com/cypress-io/cypress-workshop-ci](https://github.com/cypress-io/cypress-workshop-ci).
 
 ## See also
 

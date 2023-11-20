@@ -111,7 +111,7 @@ cypress run [options]
 | `--help`, `-h`                 | Output usage information                                                                                                                                                                      |
 | `--key`, `-k`                  | [Specify your secret record key](#cypress-run-record-key-lt-record-key-gt)                                                                                                                    |
 | `--no-exit`                    | [Keep Cypress open after tests in a spec file run](#cypress-run-no-exit)                                                                                                                      |
-| `--no-runner-ui`,              | [Hides the Cypress Runner UI](#cypress-run-no-runner-ui)                                                                                                                                      |
+| `--no-runner-ui`               | [Hides the Cypress Runner UI](#cypress-run-no-runner-ui)                                                                                                                                      |
 | `--parallel`                   | [Run recorded specs in parallel across multiple machines](#cypress-run-parallel)                                                                                                              |
 | `--port`,`-p`                  | [Override default port](#cypress-run-port-lt-port-gt)                                                                                                                                         |
 | `--project`, `-P`              | [Path to a specific project](#cypress-run-project-lt-project-path-gt)                                                                                                                         |
@@ -119,7 +119,7 @@ cypress run [options]
 | `--record`                     | [Whether to record the test run](#cypress-run-record-key-lt-record-key-gt)                                                                                                                    |
 | `--reporter`, `-r`             | [Specify a Mocha reporter](#cypress-run-reporter-lt-reporter-gt)                                                                                                                              |
 | `--reporter-options`, `-o`     | [Specify Mocha reporter options](#cypress-run-reporter-lt-reporter-gt)                                                                                                                        |
-| `--runner-ui`,                 | [Displays the Cypress Runner UI. Useful for when Test Replay is enabled and you would still like the Cypress Runner UI to be displayed for screenshots and video](#cypress-run-runner-ui)     |
+| `--runner-ui`                  | [Displays the Cypress Runner UI. Useful for when Test Replay is enabled and you would still like the Cypress Runner UI to be displayed for screenshots and video](#cypress-run-runner-ui)     |
 | `--spec`, `-s`                 | [Specify the spec files to run](#cypress-run-spec-lt-spec-gt)                                                                                                                                 |
 | `--tag`, `-t`                  | [Identify a run with a tag or tags](#cypress-run-tag-lt-tag-gt)                                                                                                                               |
 
@@ -539,19 +539,19 @@ By passing `--browser` and `--e2e` or `--component` when launching a project,
 you can open Cypress and launch the browser at the same time. Otherwise, you
 will be guided through selecting a browser, project, and/or testing type.
 
-| Option                | Description                                                                                                                   |
-| --------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| `--browser`, `-b`     | [Path to a custom browser to be added to the list of available browsers in Cypress](#cypress-open-browser-lt-browser-path-gt) |
-| `--component`         | [Run component tests](/guides/core-concepts/testing-types#What-is-Component-Testing)                                          |
-| `--config`, `-c`      | [Specify configuration](#cypress-open-config-lt-config-gt)                                                                    |
-| `--config-file`, `-C` | [Specify configuration file](#cypress-open-config-file-lt-configuration-file-gt)                                              |
-| `--detached`, `-d`    | Open Cypress in detached mode                                                                                                 |
-| `--e2e`               | Run end to end tests (default)                                                                                                |
-| `--env`, `-e`         | [Specify environment variables](#cypress-open-env-lt-env-gt)                                                                  |
-| `--global`            | [Run in global mode](#cypress-open-global)                                                                                    |
-| `--help`, `-h`        | Output usage information                                                                                                      |
-| `--port`, `-p`        | [Override default port](#cypress-open-port-lt-port-gt)                                                                        |
-| `--project`, `-P`     | [Path to a specific project](#cypress-open-project-lt-project-path-gt)                                                        |
+| Option                | Description                                                                                                                                                                         |
+| --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `--browser`, `-b`     | [Run Cypress in the browser with the given name. If a filesystem path is supplied, Cypress will attempt to use the browser at that path.](#cypress-open-browser-lt-browser-path-gt) |
+| `--component`         | [Open in component testing mode](/guides/core-concepts/testing-types#What-is-Component-Testing)                                                                                     |
+| `--config`, `-c`      | [Specify configuration](#cypress-open-config-lt-config-gt)                                                                                                                          |
+| `--config-file`, `-C` | [Specify configuration file](#cypress-open-config-file-lt-configuration-file-gt)                                                                                                    |
+| `--detached`, `-d`    | Open Cypress in detached mode                                                                                                                                                       |
+| `--e2e`               | Open in end to end testing mode (default)                                                                                                                                           |
+| `--env`, `-e`         | [Specify environment variables](#cypress-open-env-lt-env-gt)                                                                                                                        |
+| `--global`            | [Open in global mode](#cypress-open-global)                                                                                                                                         |
+| `--help`, `-h`        | Output usage information                                                                                                                                                            |
+| `--port`, `-p`        | [Override default port](#cypress-open-port-lt-port-gt)                                                                                                                              |
+| `--project`, `-P`     | [Path to a specific project](#cypress-open-project-lt-project-path-gt)                                                                                                              |
 
 #### `cypress open --browser <browser-path>` {#cypress-open-browser-lt-browser-path-gt}
 
