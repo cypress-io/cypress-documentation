@@ -173,7 +173,9 @@ Cypress locally and in CI.
 
 Below we extend the previous example by adding the `container` attribute using a
 [Cypress Docker Image](https://github.com/cypress-io/cypress-docker-images)
-built with Google Chrome `106`. Specifying a browser version allows our tests to
+built with the version of Google Chrome embedded in the tag name of the Docker image
+shown as `chrome-xxx`.
+Specifying a browser version allows our tests to
 execute without any influence from browser version changes in the GitHub runner
 image.
 
@@ -186,7 +188,7 @@ jobs:
   cypress-run:
     runs-on: ubuntu-22.04
     container:
-      image: cypress/browsers:node18.12.0-chrome106-ff106
+      image: cypress/browsers:node-20.9.0-chrome-118.0.5993.88-1-ff-118.0.2-edge-118.0.2088.46-1
       options: --user 1001
     steps:
       - name: Checkout
