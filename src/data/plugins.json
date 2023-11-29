@@ -397,8 +397,18 @@
     },
     {
       "name": "Custom Commands",
-      "description": " Read the <a target=\"_blank\" href=\"/api/plugins/preprocessors-api\">Custom Commands</a> and <a target=\"_blank\" href=\"/api/plugins/preprocessors-api\">Custom Query</a> documentation to learn more.",
+      "description": "Read the <a target=\"_blank\" href=\"/api/plugins/preprocessors-api\">Custom Commands</a> and <a target=\"_blank\" href=\"/api/plugins/preprocessors-api\">Custom Query</a> documentation to learn more.",
       "plugins": [
+        {
+          "name": "Puppeteer",
+          "description": "Utilize Puppeteer's browser API with one command within Cypress.",
+          "link": "https://github.com/cypress-io/cypress/tree/develop/npm/puppeteer",
+          "keywords": [
+            "puppeteer",
+            "multi-tab"
+          ],
+          "badge": "official"
+        },
         {
           "name": "cypress-testing-library",
           "description": "🐅 Simple and complete custom Cypress commands and utilities that encourage good testing practices.",
