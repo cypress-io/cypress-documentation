@@ -1,3 +1,8 @@
+/* https://dev.to/sajclarke_62/using-tailwindcss-v3-in-docusaurus-in-5-steps-5c26 */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /**
  * Any CSS included here will be global. The classic template
  * bundles Infima by default. Infima is a CSS framework designed to
@@ -266,7 +271,7 @@ div[class^='codeBlockTitle'] {
   box-shadow: inset 0px -6px 0px -4px var(--ifm-code-background-color-light);
 }
 
-@media(min-width: 997px) and (max-width: 1180px) {
+@media (min-width: 997px) and (max-width: 1180px) {
   .tabs-container .tabs {
     max-width: 36rem;
   }
