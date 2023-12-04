@@ -4,9 +4,6 @@ const cypressCSS = require('@cypress-design/css')
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   presets: [cypressCSS.TailwindConfig()],
-  corePlugins: {
-    preflight: false, // disable Tailwind's reset
-  },
   content: {
     files: [
       './src/**/*.{js,ts,jsx,tsx}',
