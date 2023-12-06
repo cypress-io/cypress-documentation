@@ -1,13 +1,11 @@
 import React, { useState } from 'react'
 import clsx from 'clsx'
-import { ThemeClassNames } from '@docusaurus/theme-common'
 import Link from '@docusaurus/Link'
 import {
   useAnnouncementBar,
   useScrollPosition,
 } from '@docusaurus/theme-common/internal'
 import { translate } from '@docusaurus/Translate'
-import DocSidebarItems from '@theme/DocSidebarItems'
 import DocMenu from '@cypress-design/react-docmenu'
 import styles from './styles.module.css'
 
@@ -26,13 +24,18 @@ function useShowAnnouncementBar() {
 }
 
 function setActiveRecursively(sidebarItems, activePath) {
-  sidebarItems?.forEach((item) => {
+  const activeElements = sidebarItems?.filter((item) => {
     if (activePath === item.href) {
-      item.active = true
-      return
+      return true
     }
-    setActiveRecursively(item.items, activePath)
+
+    if (setActiveRecursively(item.items, activePath)) {
+      item.collapsed = false
+      return true
+    }
   })
+
+  return Boolean(activeElements?.length)
 }
 
 export default function DocSidebarDesktopContent({ path, sidebar, className }) {
@@ -53,7 +56,7 @@ export default function DocSidebarDesktopContent({ path, sidebar, className }) {
         className
       )}
     >
-      <DocMenu items={sidebar} LinkComponent={Link} />
+      <DocMenu items={sidebar} LinkComponent={Link} activePath={path} />
     </nav>
   )
 }
