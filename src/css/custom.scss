@@ -24,55 +24,26 @@
 :root {
   --ifm-color-white: #fcfcfc;
   --ifm-color-black: #0a0a0a;
-  --cypress-color-gray-50: #f3f4fa;
-  --cypress-color-gray-100: #e1e3ed;
-  --cypress-color-gray-200: #d0d2e0;
-  --cypress-color-gray-300: #bfc2d4;
-  --cypress-color-gray-400: #afb3c7;
-  --cypress-color-gray-500: #9095ad;
-  --cypress-color-gray-600: #747994;
-  --cypress-color-gray-700: #5a5f7a;
-  --cypress-color-gray-800: #434861;
-  --cypress-color-gray-900: #2e3247;
-  --cypress-color-gray-1000: #1b1e2e;
-  --cypress-color-gray-1100: #131521;
-  --cypress-color-indigo-50: #f0f1ff;
-  --cypress-color-indigo-100: #daddfe;
-  --cypress-color-indigo-200: #c5c9fd;
-  --cypress-color-indigo-300: #9aa2fc;
-  --cypress-color-indigo-400: #6470f3;
-  --cypress-color-indigo-500: #4956e3;
-  --cypress-color-jade-50: #e4fbf2;
-  --cypress-color-jade-100: #c2f1de;
-  --cypress-color-jade-200: #a3e7cb;
-  --cypress-color-jade-300: #69d3a7;
-  --cypress-color-jade-400: #1fa971;
-  --cypress-color-jade-500: #00814d;
-  --cypress-color-jade-600: #005f39;
-  --cypress-color-jade-700: #00442a;
-  --cypress-color-jade-800: #003220;
-  --cypress-color-jade-900: #00291b;
-  --cypress-color-teal-300: #4bbfd2;
 
-  --ifm-color-gray-50: var(--cypress-color-gray-50);
-  --ifm-color-gray-100: var(--cypress-color-gray-100);
-  --ifm-color-gray-200: var(--cypress-color-gray-200);
-  --ifm-color-gray-300: var(--cypress-color-gray-300);
-  --ifm-color-gray-400: var(--cypress-color-gray-400);
-  --ifm-color-gray-500: var(--cypress-color-gray-500);
-  --ifm-color-gray-600: var(--cypress-color-gray-600);
-  --ifm-color-gray-700: var(--cypress-color-gray-700);
-  --ifm-color-gray-800: var(--cypress-color-gray-800);
-  --ifm-color-gray-900: var(--cypress-color-gray-900);
-  --ifm-color-gray-1000: var(--cypress-color-gray-1000);
-  --ifm-color-gray-1100: var(--cypress-color-gray-1100);
-  --ifm-color-primary: var(--cypress-color-jade-300);
-  --ifm-color-primary-dark: var(--cypress-color-jade-400);
-  --ifm-color-primary-darker: var(--cypress-color-jade-500);
-  --ifm-color-primary-darkest: var(--cypress-color-jade-600);
-  --ifm-color-primary-light: var(--cypress-color-jade-200);
-  --ifm-color-primary-lighter: var(--cypress-color-jade-100);
-  --ifm-color-primary-lightest: var(--cypress-color-jade-50);
+  --ifm-color-gray-50: theme(colors.gray.50);
+  --ifm-color-gray-100: theme(colors.gray.100);
+  --ifm-color-gray-200: theme(colors.gray.200);
+  --ifm-color-gray-300: theme(colors.gray.300);
+  --ifm-color-gray-400: theme(colors.gray.400);
+  --ifm-color-gray-500: theme(colors.gray.500);
+  --ifm-color-gray-600: theme(colors.gray.600);
+  --ifm-color-gray-700: theme(colors.gray.700);
+  --ifm-color-gray-800: theme(colors.gray.800);
+  --ifm-color-gray-900: theme(colors.gray.900);
+  --ifm-color-gray-1000: theme(colors.gray.1000);
+  --ifm-color-gray-1100: #131521;
+  --ifm-color-primary: theme(colors.jade.300);
+  --ifm-color-primary-dark: theme(colors.jade.400);
+  --ifm-color-primary-darker: theme(colors.jade.500);
+  --ifm-color-primary-darkest: theme(colors.jade.600);
+  --ifm-color-primary-light: theme(colors.jade.200);
+  --ifm-color-primary-lighter: theme(colors.jade.100);
+  --ifm-color-primary-lightest: theme(colors.jade.50);
 
   --ifm-font-family-base: ui-sans-serif, system-ui, -apple-system, Segoe UI,
     Roboto, Helvetica Neue, Arial;
@@ -113,7 +84,7 @@ html[data-theme='light'] {
   --ifm-tabs-color: var(--ifm-color-gray-300);
   --ifm-tabs-hover-color: rgba(255, 255, 255, 0.08);
 
-  --ifm-link-color: var(--cypress-color-indigo-500);
+  --ifm-link-color: theme(colors.indigo.500);
 
   --ifm-toc-border-color: var(--ifm-color-gray-100);
 
@@ -129,7 +100,7 @@ html[data-theme='dark'] {
   --ifm-menu-color: var(--ifm-color-gray-100);
   --ifm-menu-color-active: var(--ifm-color-primary);
   --ifm-menu-color-background: rgba(255, 255, 255, 0.02);
-  --ifm-menu-color-background-active: var(--cypress-color-jade-900);
+  --ifm-menu-color-background-active: them(colors.jade.900);
 
   --ifm-breadcrumb-color-active: var(--ifm-color-primary);
   --ifm-breadcrumb-item-background-active: var(--ifm-color-gray-900);

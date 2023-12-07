@@ -21,8 +21,7 @@
 
 /* sidebar menu collapsible children */
 .theme-doc-sidebar-item-category-level-2,
-.theme-doc-sidebar-item-category-level-3
-  > .menu__list-item-collapsible {
+.theme-doc-sidebar-item-category-level-3 > .menu__list-item-collapsible {
   font-size: 1.025rem;
 }
 
@@ -40,12 +39,12 @@
 .theme-doc-sidebar-item-link.theme-doc-sidebar-item-link-level-2.menu__list-item.new_label,
 .theme-doc-sidebar-item-link.theme-doc-sidebar-item-link-level-3.menu__list-item.new_label {
   a::after {
-    background-color: var(--cypress-color-indigo-400);
     color: #fff;
-    content: "New";
-    font-size: .7rem;
+    content: 'New';
+    font-size: 0.7rem;
     border-radius: 5px;
     margin-left: 5px;
     padding: 2px 5px;
+    @apply bg-indigo-400;
   }
 }

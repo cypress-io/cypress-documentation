@@ -4,7 +4,7 @@
     flex-direction: column;
     height: 100%;
     padding-top: var(--ifm-navbar-height);
-    width: var(--doc-sidebar-width);
+    width: 320px;
   }
 
   .sidebarWithHideableNavbar {

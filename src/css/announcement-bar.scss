@@ -4,27 +4,28 @@
 div [class^='announcementBar'] {
   font-family: 'Poppins';
   height: unset;
-  background-color: var(--cypress-color-indigo-50);
+  @apply bg-indigo-50;
   color: var(--ifm-color-gray-1000);
   padding: 0.8rem 0;
 
   a {
-    color: var(--cypress-color-indigo-500);
     text-decoration: none;
+    @apply text-indigo-500;
 
     &:hover {
-      border-bottom: 1px dotted var(--cypress-color-indigo-500);
+      border-bottom: 1px dotted var(--ifm-color-gray-500);
+      @apply border-b-indigo-500;
     }
   }
 
   button[aria-label='Close'] {
     opacity: 1;
-    color: var(--cypress-color-indigo-400);
     transition: color 0.2s ease-out, transform 0.2s ease-out;
+    @apply text-indigo-400;
 
     &:hover {
-      color: var(--cypress-color-indigo-500);
       transform: scale(1.1);
+      @apply text-indigo-500;
     }
   }
 }

@@ -56,7 +56,9 @@ export default function DocSidebarDesktopContent({ path, sidebar, className }) {
         className
       )}
     >
-      <DocMenu items={sidebar} LinkComponent={Link} activePath={path} />
+      <div className="p-[24px] text-left">
+        <DocMenu items={sidebar} LinkComponent={Link} activePath={path} />
+      </div>
     </nav>
   )
 }
