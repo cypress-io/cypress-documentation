@@ -317,3 +317,41 @@ div[class^='codeBlockTitle'] {
   display: inline-block;
   vertical-align: text-top;
 }
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--ifm-heading-color);
+  font-family: var(--ifm-heading-font-family);
+  font-weight: var(--ifm-heading-font-weight);
+  line-height: var(--ifm-heading-line-height);
+  margin: var(--ifm-heading-margin-top) 0 var(--ifm-heading-margin-bottom) 0;
+}
+
+h1 {
+  font-size: var(--ifm-h1-font-size);
+}
+
+h2 {
+  font-size: var(--ifm-h2-font-size);
+}
+
+h3 {
+  font-size: var(--ifm-h3-font-size);
+  margin-bottom: 0.75rem;
+}
+
+h4 {
+  font-size: var(--ifm-h4-font-size);
+}
+
+h5 {
+  font-size: var(--ifm-h5-font-size);
+}
+
+h6 {
+  font-size: var(--ifm-h6-font-size);
+}

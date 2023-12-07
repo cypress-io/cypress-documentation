@@ -5,11 +5,14 @@ import {
   useNavbarMobileSidebar,
 } from '@docusaurus/theme-common/internal'
 import NavbarItem from '@theme/NavbarItem'
-import NavbarColorModeToggle from '@theme/Navbar/ColorModeToggle'
 import SearchBar from '@theme/SearchBar'
 import NavbarMobileSidebarToggle from '@theme/Navbar/MobileSidebar/Toggle'
 import NavbarLogo from '@theme/Navbar/Logo'
 import NavbarSearch from '@theme/Navbar/Search'
+import {
+  IconSocialGithubSolid,
+  IconSocialDiscordSolid,
+} from '@cypress-design/react-icon'
 import styles from './styles.module.css'
 function useNavbarItems() {
   // TODO temporary casting until ThemeConfig type is improved
@@ -77,7 +80,22 @@ export default function NavbarContent() {
               <SearchBar />
             </NavbarSearch>
           )}
-          <NavbarItems items={rightItems} />
+          <div className="flex rounded-full divide-x bg-gray-50 p-[6px] !px-[2px]">
+            <a
+              href="https://github.com/cypress-io/cypress-documentation"
+              className="!px-[12px] !py-[4px]"
+            >
+              <span className="sr-only">Cypress GitHub repository</span>
+              <IconSocialGithubSolid strokeColor="indigo-500" />
+            </a>
+            <a
+              href="https://on.cypress.io/discord"
+              className="!px-[12px] !py-[4px]"
+            >
+              <span className="sr-only">Cypress Discord</span>
+              <IconSocialDiscordSolid strokeColor="indigo-500" />
+            </a>
+          </div>
         </>
       }
     />
