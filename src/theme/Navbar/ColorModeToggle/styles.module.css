@@ -1,3 +1,7 @@
-.darkNavbarColorModeToggle:hover {
+[data-theme='dark'] .darkNavbarColorModeToggle:hover {
   background: var(--ifm-color-gray-800);
+}
+
+[data-theme='light'] .darkNavbarColorModeToggle:hover {
+  background: var(--ifm-color-gray-200);
 }

@@ -106,8 +106,8 @@ const config = {
         logo: {
           href: '/guides/overview/why-cypress',
           alt: 'Cypress Logo',
-          src: '/img/logo/cypress-logo-light.png',
-          srcDark: '/img/logo/cypress-logo-dark.png',
+          src: '/img/logo/cypress-logo-light.svg',
+          srcDark: '/img/logo/cypress-logo-dark.svg',
         },
         items: [
           {
