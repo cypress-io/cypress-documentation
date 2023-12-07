@@ -106,43 +106,38 @@ const config = {
         logo: {
           href: '/guides/overview/why-cypress',
           alt: 'Cypress Logo',
-          src: '/img/logo/cypress-logo-dark.png',
+          src: '/img/logo/cypress-logo-light.png',
+          srcDark: '/img/logo/cypress-logo-dark.png',
         },
         items: [
           {
             to: '/guides/overview/why-cypress',
             label: 'Guides',
-            position: 'left',
             activeBasePath: 'guides',
           },
           {
             to: '/api/table-of-contents',
             label: 'API',
-            position: 'left',
             activeBasePath: 'api',
           },
           {
             to: '/plugins',
             label: 'Plugins',
-            position: 'left',
             activeBasePath: 'plugins',
           },
           {
             to: '/examples/recipes',
             label: 'Examples',
-            position: 'left',
             activeBasePath: 'examples',
           },
           {
             to: '/faq/questions/using-cypress-faq',
             label: 'FAQ',
-            position: 'left',
             activeBasePath: 'faq',
           },
           {
             to: 'https://learn.cypress.io',
             label: 'Learn',
-            position: 'left',
           },
           {
             href: 'https://github.com/cypress-io/cypress-documentation',
