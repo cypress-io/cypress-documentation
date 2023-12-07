@@ -294,7 +294,6 @@ div[class^='codeBlockTitle'] {
    rules overwritten by .embedContainer
    TODO: fix what causes this */
 [class^='mainContentHeader'] {
-  border-bottom: 1px solid var(--ifm-toc-border-color);
   margin-bottom: 20px;
 }
 
