@@ -4,9 +4,11 @@ import {
   IconShapeSunLong,
   IconShapeMoonCrescent,
 } from '@cypress-design/react-icon'
+import { useColorMode, useThemeConfig } from '@docusaurus/theme-common'
 
 export default function DarkModeSwitch() {
-  const [isDark, toggle] = React.useState(false)
+  const { colorMode, setColorMode } = useColorMode()
+  const isDark = colorMode === 'dark'
   return (
     <button
       className={clsx(
@@ -18,7 +20,7 @@ export default function DarkModeSwitch() {
             isDark,
         }
       )}
-      onClick={() => toggle(!isDark)}
+      onClick={() => setColorMode(isDark ? 'light' : 'dark')}
     >
       <span
         className={clsx(
