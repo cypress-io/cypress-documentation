@@ -4,7 +4,7 @@ import {
   IconShapeSunLong,
   IconShapeMoonCrescent,
 } from '@cypress-design/react-icon'
-import { useColorMode, useThemeConfig } from '@docusaurus/theme-common'
+import { useColorMode } from '@docusaurus/theme-common'
 
 export default function DarkModeSwitch() {
   const { colorMode, setColorMode } = useColorMode()
