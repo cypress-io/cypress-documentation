@@ -50,6 +50,7 @@
   --ifm-heading-font-family: Poppins;
   --ifm-heading-font-weight: var(--ifm-font-weight-bold);
   --ifm-line-height-base: 1.6;
+  --ifm-heading-color: theme(colors.gray.1000)
 
   --ifm-code-font-size: 95%;
   --ifm-pre-line-height: 1.5em;
@@ -69,7 +70,6 @@ html[data-theme='light'] {
   --ifm-font-color-base: var(--ifm-color-gray-800);
   --ifm-background-color: var(--ifm-color-white);
 
-  --ifm-menu-color: var(--ifm-font-color-base);
   --ifm-menu-color-active: var(--ifm-color-primary-darkest);
   --ifm-menu-color-background: rgba(0, 0, 0, 0.02);
   --ifm-menu-color-background-active: var(--ifm-color-primary-lighter);
@@ -99,7 +99,6 @@ html[data-theme='dark'] {
 
   --ifm-menu-color: var(--ifm-color-gray-100);
   --ifm-menu-color-active: var(--ifm-color-primary);
-  --ifm-menu-color-background: rgba(255, 255, 255, 0.02);
   --ifm-menu-color-background-active: them(colors.jade.900);
 
   --ifm-breadcrumb-color-active: var(--ifm-color-primary);

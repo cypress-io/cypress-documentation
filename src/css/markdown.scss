@@ -52,8 +52,9 @@ div.markdown {
   }
 
   h2 {
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
     padding-bottom: 0.5rem;
+    line-height: 2.25rem;
 
     // hide hash link borders in headers when hovered
     a {
@@ -103,4 +104,8 @@ div.markdown {
 }
 [data-theme='dark'] .theme-doc-toc-mobile {
   --ifm-menu-color-background-active: #ffffff0d;
+}
+
+.markdown {
+  --ifm-alert-border-radius: 5px;
 }
