@@ -3,6 +3,7 @@
 .table-of-contents {
   line-height: 2;
   font-size: 1rem;
+  padding: 0 2rem;
 }
 /* but not as much on the children */
 .table-of-contents li ul li {
@@ -20,6 +21,7 @@
   margin-left: -1rem;
   padding-left: 0.75rem;
 }
+
 .table-of-contents__link--active {
   color: var(--ifm-toc-link-color);
 }
