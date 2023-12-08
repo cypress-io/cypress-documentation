@@ -32,7 +32,7 @@ export default function DarkModeSwitch() {
         )}
       >
         <IconShapeSunLong
-          interactive-colors-on-group
+          interactiveColorsOnGroup
           stroke-color="gray-600"
           fill-color="gray-500"
           hover-stroke-color="indigo-500"
@@ -43,7 +43,7 @@ export default function DarkModeSwitch() {
           })}
         />
         <IconShapeMoonCrescent
-          interactive-colors-on-group
+          interactiveColorsOnGroup
           stroke-color="gray-200"
           fill-color="gray-1000"
           hover-stroke-color="indigo-200"
