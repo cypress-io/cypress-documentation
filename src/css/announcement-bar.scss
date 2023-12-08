@@ -7,6 +7,9 @@ div [class^='announcementBar'] {
   @apply bg-indigo-50;
   color: var(--ifm-color-gray-1000);
   padding: 0.8rem 0;
+  font-size: 1rem;
+  font-weight: var(--ifm-font-weight-semibold);
+  border-bottom: none;
 
   a {
     text-decoration: none;
@@ -26,6 +29,15 @@ div [class^='announcementBar'] {
     &:hover {
       transform: scale(1.1);
       @apply text-indigo-500;
+    }
+  }
+
+  div[class^='content'] {
+    font-size: 16px;
+    border-bottom: none;
+
+    .close {
+      margin-right: 1rem;
     }
   }
 }
