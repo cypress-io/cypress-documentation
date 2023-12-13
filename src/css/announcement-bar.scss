@@ -11,6 +11,17 @@ div [class^='announcementBar'] {
   font-weight: var(--ifm-font-weight-semibold);
   border-bottom: none;
 
+  [data-theme='dark'] & {
+    @apply bg-indigo-1000;
+    color: white;
+    a {
+      @apply text-indigo-300;
+      &:hover {
+        @apply border-b-indigo-300;
+      }
+    }
+  }
+
   a {
     text-decoration: none;
     @apply text-indigo-500;

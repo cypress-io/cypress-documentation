@@ -42,7 +42,7 @@
 }
 
 [data-theme='dark'] .navbar__link {
-  @apply text-gray-300;
+  @apply text-gray-400;
 }
 
 .navbar__link--active {
@@ -53,7 +53,7 @@
 }
 
 [data-theme='dark'] .navbar__link--active {
-  @apply text-gray-100;
+  @apply text-gray-50;
 }
 
 .navbar__link:hover {
