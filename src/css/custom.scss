@@ -36,7 +36,6 @@
   --ifm-color-gray-800: theme(colors.gray.800);
   --ifm-color-gray-900: theme(colors.gray.900);
   --ifm-color-gray-1000: theme(colors.gray.1000);
-  --ifm-color-gray-1100: #131521;
   --ifm-color-primary: theme(colors.jade.300);
   --ifm-color-primary-dark: theme(colors.jade.400);
   --ifm-color-primary-darker: theme(colors.jade.500);
@@ -94,8 +93,7 @@ html[data-theme='light'] {
 
 html[data-theme='dark'] {
   --ifm-font-color-base: var(--ifm-color-gray-50);
-  --ifm-background-color: var(--ifm-color-black);
-  --ifm-background-color: var(--ifm-color-gray-1100);
+  --ifm-background-color: var(--ifm-color-gray-1000);
 
   --ifm-menu-color: var(--ifm-color-gray-100);
   --ifm-menu-color-active: var(--ifm-color-primary);
