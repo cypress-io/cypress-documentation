@@ -572,10 +572,9 @@ like `.click()` or `.type()`.
 
 ### <Icon name="angle-right" /> Can I test anchor links that open in a new tab?
 
-Cypress does not and may never have multi-tab support for various reasons.
+Cypress does not have native multi-tab support, but new tabs can be tested with the [@cypress/puppeteer plugin](https://github.com/cypress-io/cypress/blob/develop/npm/puppeteer/README.md).
 
-Luckily there are lots of clear and safe workarounds that enable you to test
-this behavior in your application.
+If you would like to test anchor links natively, there are lots of workarounds that enable you to test them in your application.
 
 [Read through the recipe on tab handling and links to see how to test anchor links.](/examples/recipes#Testing-the-DOM)
 
