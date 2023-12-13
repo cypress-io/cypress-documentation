@@ -41,11 +41,19 @@
   transition: all 0.3s ease-in-out;
 }
 
+[data-theme='dark'] .navbar__link {
+  @apply text-gray-300;
+}
+
 .navbar__link--active {
   @apply sm:bg-gradient-to-r sm:from-gray-300 sm:to-gray-300 sm:bg-bottom sm:bg-no-repeat;
   @screen sm {
     background-size: 100% 2px;
   }
+}
+
+[data-theme='dark'] .navbar__link--active {
+  @apply text-gray-100;
 }
 
 .navbar__link:hover {
