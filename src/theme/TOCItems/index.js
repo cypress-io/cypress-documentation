@@ -9,7 +9,7 @@ export default function TOCItemsWrapper(props) {
       </h2>
       <TOCItems
         {...props}
-        className="py-[.1rem] table-of-contents table-of-contents__left-border"
+        className="pt-[.1rem] table-of-contents table-of-contents__left-border"
       />
     </>
   )

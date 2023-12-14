@@ -4,6 +4,10 @@
   padding: 0 2rem;
 }
 
+[data-theme='dark'] .navbar {
+  box-shadow: rgba(255, 255, 255, 0.2) 0 1px 2px 0;
+}
+
 .navbar__logo {
   height: 2.3rem;
 }

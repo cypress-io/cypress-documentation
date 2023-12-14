@@ -65,6 +65,10 @@
   --toc-highlight: var(--ifm-color-primary);
 }
 
+html[data-theme] {
+  --ifm-font-size-base: 14px;
+}
+
 html[data-theme='light'] {
   --ifm-font-color-base: var(--ifm-color-gray-800);
   --ifm-background-color: var(--ifm-color-white);
@@ -162,7 +166,7 @@ div[class^='announcementBar'] {
 }
 
 div[class^='announcementBar'] div[class^='content'] {
-  font-size: 16px;
+  font-size: 1rem;
   border-bottom: none;
 }
 
@@ -260,7 +264,7 @@ div[class^='codeBlockTitle'] {
   text-align: left;
   margin: 4px;
   font-weight: bold;
-  font-size: 18px;
+  font-size: 1.25rem;
 }
 
 .api-table thead td {
