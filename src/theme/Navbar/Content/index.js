@@ -82,20 +82,20 @@ export default function NavbarContent() {
               <SearchBar />
             </NavbarSearch>
           )}
-          <div className="flex rounded-full divide-x bg-gray-50 p-[6px] !px-[2px]">
+          <div className="flex rounded-full divide-x dark:divide-gray-700 bg-gray-50 dark:bg-gray-900 p-[6px] !px-[2px] text-indigo-500 dark:text-indigo-300">
             <a
               href="https://github.com/cypress-io/cypress-documentation"
               className="!px-[12px] !py-[4px]"
             >
               <span className="sr-only">Cypress GitHub repository</span>
-              <IconSocialGithubSolid strokeColor="indigo-500" />
+              <IconSocialGithubSolid />
             </a>
             <a
               href="https://on.cypress.io/discord"
               className="!px-[12px] !py-[4px]"
             >
               <span className="sr-only">Cypress Discord</span>
-              <IconSocialDiscordSolid strokeColor="indigo-500" />
+              <IconSocialDiscordSolid />
             </a>
           </div>
         </>
