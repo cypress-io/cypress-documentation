@@ -8,7 +8,13 @@
 }
 /* but not as much on the children */
 .table-of-contents li ul li {
-  line-height: 1.2;
+  line-height: 1.25;
+  a {
+    @apply text-gray-700;
+    html[data-theme='dark'] & {
+      @apply text-gray-300;
+    }
+  }
 }
 /* only target top level section titles in right side TOC */
 .table-of-contents > li > .table-of-contents__link {
