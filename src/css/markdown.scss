@@ -2,6 +2,13 @@ div.markdown {
   font-size: 1rem;
   word-spacing: 1px;
 
+  ul {
+    padding-left: var(--ifm-list-left-padding);
+    li {
+      list-style: disc;
+    }
+  }
+
   /* have to override this for specificity */
   h1:first-child {
     --ifm-h1-font-size: 2.5rem;
@@ -71,10 +78,6 @@ div.markdown {
   h3,
   h4 {
     border-bottom: none;
-  }
-
-  ul li {
-    margin: 0.7rem 0;
   }
 
   /* add dotted underline to links on tablet and smaller mobile devices */
