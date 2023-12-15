@@ -57,7 +57,12 @@ export default function DocSidebarDesktopContent({ path, sidebar, className }) {
       )}
     >
       <div className="p-[24px] text-left">
-        <DocMenu items={sidebar} LinkComponent={Link} activePath={path} />
+        <DocMenu
+          items={sidebar}
+          LinkComponent={Link}
+          activePath={path}
+          collapsible
+        />
       </div>
     </nav>
   )
