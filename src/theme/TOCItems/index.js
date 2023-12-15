@@ -4,7 +4,7 @@ import TOCItems from '@theme-original/TOCItems'
 export default function TOCItemsWrapper(props) {
   return (
     <>
-      <h2 className="border-l border-gray-100 dark:border-gray-900 my-0 pb-[12px] pl-[40px] text-gray-500 font-medium uppercase text-[16px]">
+      <h2 className="border-l  border-gray-100 dark:border-gray-900 my-0 pb-[12px] pl-[2.5rem] text-gray-500 font-medium uppercase text-[16px]">
         Contents
       </h2>
       <TOCItems

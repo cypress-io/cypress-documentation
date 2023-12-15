@@ -5,7 +5,14 @@
   font-size: 1rem;
   padding-left: 2rem;
   padding-right: 2rem;
+  a:hover {
+    @apply text-indigo-500;
+    html[data-theme='dark'] & {
+      @apply text-indigo-400;
+    }
+  }
 }
+
 /* but not as much on the children */
 .table-of-contents li ul li {
   line-height: 1.25;
@@ -22,13 +29,9 @@
   opacity: 0.9;
 }
 
-/* selected state in right side TOC */
 .table-of-contents .table-of-contents__link--active {
-  border-left: 0.25rem solid var(--toc-highlight);
-  margin-left: -1rem;
-  padding-left: 0.75rem;
-}
-
-.table-of-contents__link--active {
-  color: var(--ifm-toc-link-color);
+  @apply text-indigo-500;
+  html[data-theme='dark'] & {
+    @apply text-indigo-400;
+  }
 }

@@ -12,7 +12,7 @@ export default function DarkModeSwitch() {
   return (
     <button
       className={clsx(
-        'border border-solid rounded-full p-[4px] pl-[30px] transition duration-500 group',
+        'border border-solid rounded-full p-[3px] pl-[30px] transition duration-500 group',
         {
           'border-gray-100 bg-gray-50 hover:border-indigo-300 hover:bg-indigo-100 hover:ring-indigo-100 hover:ring-2':
             !isDark,
@@ -26,7 +26,7 @@ export default function DarkModeSwitch() {
         className={clsx(
           'block rounded-full h-[32px] w-[32px] transition duration-500 p-[8px]',
           {
-            'transform translate-x-[-26px] bg-gray-800': isDark,
+            'transform translate-x-[-27px] bg-gray-800': isDark,
             'bg-white': !isDark,
           }
         )}

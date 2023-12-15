@@ -1,6 +1,8 @@
-/* have to override this for specificity */
+:root {
+  --ifm-navbar-height: 72px;
+}
+
 .navbar {
-  height: 4rem;
   padding: 0 2rem;
 }
 
