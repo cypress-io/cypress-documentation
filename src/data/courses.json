@@ -170,14 +170,6 @@
       "sourceUrl": "https://egghead.io"
     },
     {
-      "title": "The Ultimate Cypress Testing Hands-on Guide",
-      "url": "https://coursinator.com/course/the-ultimate-cypress-testing-hands-on-guide",
-      "author": "Bogdan Vazzolla",
-      "authorTwitter": "bogdanvazzolla",
-      "sourceName": "Coursinator",
-      "sourceUrl": "https://coursinator.com/"
-    },
-    {
       "title": "Outside-In Frontend Development",
       "url": "https://outsidein.dev/",
       "author": "Josh Justice",
@@ -242,15 +234,6 @@
       "authorTwitter": "brettcassette",
       "sourceName": "egghead.io",
       "sourceUrl": "https://egghead.io"
-    },
-    {
-      "title": "Curso de End to End Testing con Cypress",
-      "url": "https://platzi.com/cursos/testing-cypress/",
-      "author": "Adrián Estrada",
-      "authorTwitter": "edsadr",
-      "sourceName": "Platzi",
-      "sourceUrl": "https://platzi.com/",
-      "language": "Spanish"
     },
     {
       "title": "ng-conf '19: Effective Automated Testing with Cypress.io",
@@ -326,16 +309,6 @@
       "sourceName": "Coursify.me",
       "sourceUrl": "http://coursify.me",
       "language": "Portuguese"
-    },
-    {
-      "title": "Test end to end con Cypress.io (Webinar básico)",
-      "url": "https://plataforma.keepcoding.io/p/curso-test-end-to-end-cypressio",
-      "author": "Kevin Martínez Escobar",
-      "authorTwitter": "kjmesc",
-      "sourceName": "Keepcoding",
-      "sourceUrl": "https://keepcoding.io",
-      "language": "Spanish",
-      "free": true
     },
     {
       "title": "Cypress V6, Frameworks, CI/CD, two React applications",

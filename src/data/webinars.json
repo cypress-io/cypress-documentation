@@ -42,8 +42,7 @@
       "title": "Ship safer code with Cypress and Codecov",
       "date": "January 13, 2021",
       "author": "Cypress & Codecov with Gleb Bahmutov and Tom Hu",
-      "youtubeId": "-3N4WZRrpv4",
-      "slides": "https://cypress.slides.com/cypress-io/codecov"
+      "youtubeId": "-3N4WZRrpv4"
     },
     {
       "title": "Introduction to Cypress Cloud",
@@ -56,22 +55,19 @@
       "title": "Using Code Smells to Fix Flaky Tests in Cypress",
       "date": "November 18, 2020",
       "author": "Cypress & Big Nerd Ranch with Gleb Bahmutov and Josh Justice",
-      "youtubeId": "JlBCdRlvPWk",
-      "slides": "https://cypress.slides.com/cypress-io/code-smells"
+      "youtubeId": "JlBCdRlvPWk"
     },
     {
       "title": "How Userlane dramatically reduced flaky E2E tests with Cypress",
       "date": "October 28, 2020",
       "author": "Cypress & Userlane with Gleb Bahmutov, Tobias Muelller and Haydeé Muñoz De la Rocha",
-      "youtubeId": "pLC4zr6Yfvo",
-      "slides": "https://cypress.slides.com/cypress-io/userlane"
+      "youtubeId": "pLC4zr6Yfvo"
     },
     {
       "title": "Cypress Patterns and Practices",
       "date": "September 30, 2020",
       "author": "Cypress with Amir Rustamzadeh and Kevin Old",
-      "youtubeId": "V-o8WzlwKmM",
-      "slides": "https://cypress.slides.com/amirrustam/patterns-practices"
+      "youtubeId": "V-o8WzlwKmM"
     },
     {
       "title": "How GoFundMe's QA Engineers and Developers Test 30x Faster with Cypress",
@@ -114,15 +110,13 @@
       "title": "How PlanGrid Achieved Consistency in Automation Across 20 Development Teams",
       "date": "Feb 12, 2020",
       "author": "Cypress & PlanGrid (Autodesk) with Gleb Bahmutov, Graeme Harvey & Brendan Drew",
-      "youtubeId": "aaU41lsdX24",
-      "slides": "https://cypress.slides.com/cypress-io/quality-in-1-million-projects"
+      "youtubeId": "aaU41lsdX24"
     },
     {
       "title": "How Siemens SW Hub increased their test productivity by 38% with Cypress",
       "date": "Dec 11, 2019",
       "author": "Cypress & Siemens with Gleb Bahmutov & Murat Ozcan",
-      "youtubeId": "aMPkaLOpyns",
-      "slides": "https://cypress.slides.com/cypress-io/siemens-case-study"
+      "youtubeId": "aMPkaLOpyns"
     },
     {
       "title": "Cypress + Gatsby: Confidently fast web development",
@@ -161,30 +155,10 @@
       "youtubeId": "8iBna-2gIzM"
     },
     {
-      "title": "Cypress.io + Percy = End-to-end functional and visual testing for the web",
-      "date": "Apr 10, 2019",
-      "author": "Cypress & Percy with Mike Fotinakis & Gleb Bahmutov",
-      "youtubeId": "MXfZeE9RQDw"
-    },
-    {
       "title": "How GoDaddy Created A Culture of Quality Through Test Automation with Cypress",
       "date": "Mar 28, 2019",
       "author": "Cypress & GoDaddy with Pablo Velasquez, Kolya Venturi, Stephen Commisso & Steve Yi",
       "youtubeId": "ZSbNT-Fff9A"
-    },
-    {
-      "title": "CircleCI and Cypress.io: Easily integrate end to end web application testing",
-      "date": "Dec 10, 2018",
-      "author": "Cypress & CircleCI with Gleb Bahmutov & Eddie Webb",
-      "youtubeId": "J-xbNtKgXfY",
-      "slides": "https://slides.com/bahmutov/circleci-cypress-orb"
-    },
-    {
-      "title": "Get the latest updates from Cypress",
-      "date": "Oct 16, 2018",
-      "author": "Cypress with Gleb Bahmutov & Brian Mann",
-      "youtubeId": "FfqD1ExUGlw",
-      "slides": "https://slides.com/bahmutov/cy-parallelization"
     }
   ]
 }
