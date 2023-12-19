@@ -93,15 +93,6 @@
       "slides": "https://docs.google.com/presentation/d/1Qujo8XSH5Fzd0w9kwyHDuM2hXI3szFtJTkHjnXiFn08/"
     },
     {
-      "title": "Using Cypress as a Dev Tool Without Losing Your Mind",
-      "url": "https://www.youtube.com/watch?v=AmW2MaEN9JU",
-      "sourceName": "Youtube",
-      "sourceUrl": "https://www.youtube.com/watch?v=AmW2MaEN9JU",
-      "date": "Aug 20, 2019",
-      "author": "Justin Boyson",
-      "youtubeId": "AmW2MaEN9JU"
-    },
-    {
       "title": "Automated testing made easy - With Cypress.io",
       "url": "https://www.youtube.com/watch?v=jO2ssfqhrSc",
       "sourceName": "Youtube",
@@ -142,14 +133,6 @@
       "date": "Jul 24, 2019",
       "author": "Didier Corrales",
       "youtubeId": "9IVA2HTtlL0"
-    },
-    {
-      "title": "Cypress + Cucumber Automated Browser Testing stream 02",
-      "sourceName": "YouTube",
-      "sourceUrl": "https://www.youtube.com/watch?v=JNYia3gHCc4",
-      "date": "Jul 3, 2019",
-      "author": "Code Mortals",
-      "youtubeId": "JNYia3gHCc4"
     },
     {
       "title": "Preparing Angular Cypress E2E Tests for Continuous Integration",
@@ -242,72 +225,6 @@
       "date": "Jan 31, 2019",
       "author": "Michael Herman",
       "youtubeId": "5sXulBZe25Q"
-    },
-    {
-      "title": "CircleCI + Cypress.io: End to end testing made easy",
-      "sourceName": "CircleCI",
-      "sourceUrl": "https://circleci.com/",
-      "date": "Dec 10, 2018",
-      "author": "Gleb Bahmutov & Eddie Webb",
-      "youtubeId": "J-xbNtKgXfY",
-      "slides": "https://slides.com/bahmutov/circleci-cypress-orb"
-    },
-    {
-      "title": "Get the latest updates from Cypress",
-      "sourceName": "Cypress.io",
-      "sourceUrl": "https://slides.com/bahmutov/cy-parallelization",
-      "date": "Oct 16, 2018",
-      "author": "Brian Mann & Gleb Bahmutov",
-      "youtubeId": "FfqD1ExUGlw",
-      "slides": "https://slides.com/bahmutov/cy-parallelization"
-    },
-    {
-      "title": "Cypress End-to-End Testing",
-      "sourceName": "Angular Firebase",
-      "sourceUrl": "https://angularfirebase.com/lessons/cypress-angular-testing-end-to-end/",
-      "date": "Jun 22, 2018",
-      "author": "Jeff Delaney",
-      "youtubeId": "7N63cMKosIE"
-    },
-    {
-      "title": "Cypress.io React TodoMVC test",
-      "sourceName": "Grafikart",
-      "sourceUrl": "https://twitter.com/winkler1",
-      "date": "Apr 5, 2018",
-      "author": "Jeff Winkler",
-      "youtubeId": "nq_WRILIFTw"
-    },
-    {
-      "title": "Tests fonctionnels avec Cypress",
-      "sourceName": "Grafikart",
-      "sourceUrl": "https://www.grafikart.fr/formations/javascript-unit-test/cypress",
-      "date": "Mar 21, 2018",
-      "author": "Jonathan Boyer",
-      "youtubeId": "CC-1i0bMIoA"
-    },
-    {
-      "title": "Testing hyperapp with Cypress",
-      "sourceName": "Hyperapp Cypress Demo",
-      "sourceUrl": "https://github.com/LearnHyperapp/hyperapp-cypress-demo",
-      "date": "Mar 17, 2018",
-      "author": "Alex Barry",
-      "youtubeId": "w8liCoPsDIU"
-    },
-    {
-      "title": "Using Cypress for end-to-end testing with Gleb Bahmutov",
-      "sourceName": "stefan judis",
-      "sourceUrl": "https://www.youtube.com/channel/UCLpT9xDn3WQ24wfVCkAZU6A",
-      "date": "Feb 11, 2018",
-      "author": "Stefan Judis",
-      "youtubeId": "zTHQqiu_y0Q"
-    },
-    {
-      "title": "Cypress.io - five-minute introduction",
-      "sourceName": "Gorrion",
-      "sourceUrl": "https://gorrion.io/blog/getting-started-with-cypress-io/",
-      "date": "Jan 31, 2018",
-      "author": "Łukasz Wroński",
-      "youtubeId": "AddBNz1T08U"
     }
   ]
 }

@@ -1,15 +1,6 @@
 {
   "large": [
     {
-      "title": "Cypress.io Hot Seat Questions with Gleb Bahmutov",
-      "url": "https://www.joecolantonio.com/testtalks/256-gleb-bahmutov/",
-      "sourceName": "TestTalks",
-      "sourceUrl": "https://joecolantonio.com/testtalks/",
-      "date": "June 9, 2019",
-      "author": "Joe Calantonio and Gleb Bahmutov",
-      "img": "/img/examples/cypress-hot-sear-questions-gleb-bahmutov-test-talks.jpg"
-    },
-    {
       "title": "This.JavaScript: State of Testing",
       "sourceName": "This Dot",
       "sourceUrl": "https://www.thisdot.co/",
@@ -54,15 +45,6 @@
       "img": "/img/examples/web-platform-podcast.png"
     },
     {
-      "title": "JavaScript Testing Using Jest with Kent C. Dodds",
-      "url": "https://joecolantonio.com/testtalks/195-javascript-testing-using-jest-with-kent-c-dodds/",
-      "sourceName": "TestTalks",
-      "sourceUrl": "https://joecolantonio.com/testtalks/",
-      "date": "Mar 18, 2018",
-      "author": "Joe Colantonio and Kent C. Dodds",
-      "img": "/img/examples/javascript-testing-using-jest-and-cypress.jpg"
-    },
-    {
       "title": "Using Cypress for end-to-end testing with Gleb Bahmutov",
       "url": "https://www.youtube.com/watch?v=zTHQqiu_y0Q&list=PLkp6BbeMCOm3TYAIPYkv1R8ESme8xlHVV&index=4",
       "sourceName": "Developer small talk",
@@ -79,15 +61,6 @@
       "date": "Dec 15, 2017",
       "author": "Kent C. Dodds, Justin Searls, Gleb Bahmutov and Brian Mann",
       "img": "/img/examples/hashbang-ok-grow-cypress-assert-js.jpg"
-    },
-    {
-      "title": "Test Automation Using Cypress.io with Brian Mann & Gleb Bahmutov",
-      "url": "https://joecolantonio.com/testtalks/177-cyrpress-io-brian-mann-gleb-bahmutov/",
-      "sourceName": "TestTalks",
-      "sourceUrl": "https://joecolantonio.com/testtalks/",
-      "date": "Nov 5, 2017",
-      "author": "Joe Colantonio, Brian Mann, & Gleb Bahmutov",
-      "img": "/img/examples/test-talks-podcast-test-automation.jpg"
     },
     {
       "title": "Big Testing in JavaScript",
