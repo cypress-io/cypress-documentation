@@ -23,24 +23,31 @@ function useShowAnnouncementBar() {
   return isActive && showAnnouncementBar
 }
 
-function setActiveRecursively(sidebarItems, activePath) {
-  const activeElements = sidebarItems?.filter((item) => {
-    if (activePath === item.href) {
-      return true
-    }
-
-    if (setActiveRecursively(item.items, activePath)) {
-      item.collapsed = false
-      return true
+function cloneSidebarWithActivePathExpanded(sidebarItems, activePath) {
+  let hasActive = false
+  const items = sidebarItems.map((item) => {
+    if (item.items) {
+      const { items, hasActive: localHasActive } =
+        cloneSidebarWithActivePathExpanded(item.items, activePath)
+      hasActive = hasActive || localHasActive
+      return {
+        ...item,
+        items,
+        collapsed: !localHasActive,
+      }
+    } else {
+      if (item.href === activePath) {
+        hasActive = true
+      }
+      return { ...item }
     }
   })
-
-  return Boolean(activeElements?.length)
+  return { items, hasActive }
 }
 
 export default function DocSidebarDesktopContent({ path, sidebar, className }) {
   const showAnnouncementBar = useShowAnnouncementBar()
-  setActiveRecursively(sidebar, path)
+  const { items } = cloneSidebarWithActivePathExpanded(sidebar, path)
 
   return (
     <nav
@@ -58,7 +65,7 @@ export default function DocSidebarDesktopContent({ path, sidebar, className }) {
     >
       <div className="p-[24px] text-left">
         <DocMenu
-          items={sidebar}
+          items={items}
           LinkComponent={Link}
           activePath={path}
           collapsible
