@@ -284,42 +284,6 @@ With this return value in hand, Cypress verifies any upcoming assertions, such
 as user's `.should()` commands, or if there are none, the default implicit
 assertions that the subject should exist.
 
-### Using existing queries
-
-Many custom queries are wrappers around other, already implemented queries -
-most commonly `.get()`.
-
-This is quite simple:
-
-```javascript
-Cypress.Commands.addQuery('getFirstButton', function getFirstButton(options) {
-  const getFn = cy.now('get', 'button:first', options)
-
-  return (subject) => {
-    console.log('The subject we received was:', subject)
-
-    const btn = getFn(subject)
-
-    console.log('.get returned this element:', btn)
-
-    return btn
-  }
-})
-```
-
-Calling `cy.now()` on a query calls the outer function of that query, and
-returns the inner function. In our case, we call `get` with `button:first` and
-pass through whatever `options` the user provided us.
-
-In our own inner function, we can then call `getFn`, and do whatever we want
-with the return value.
-
-Remember that commands - including queries - don't have a meaningful return
-value. Calling `cy.get()` directly would just add it to the queue of commands to
-be executed later (which is not idempotent!). `cy.now()` lets us directly call
-the original `get` query function, without Cypress' chaining and command queue
-logic wrapped around it.
-
 ### Overwriting Existing Queries
 
 You can also modify the behavior of existing Cypress queries. This is useful to
