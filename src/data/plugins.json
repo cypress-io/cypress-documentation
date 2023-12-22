@@ -392,6 +392,13 @@
           "link": "https://github.com/Zaista/cypress-fixture-faker",
           "keywords": ["fixture", "faker"],
           "badge": "community"
+        },
+        {
+          "name": "cypress-solid",
+          "description": "A Cypress plugin to help you test applications using the Solid Protocol.",
+          "link": "https://github.com/NoelDeMartin/cypress-solid",
+          "keywords": ["solid", "solid-protocol"],
+          "badge": "community"
         }
       ]
     },
