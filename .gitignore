@@ -29,8 +29,6 @@ cypress/videos
 .docusaurus
 .cache-loader
 
-.nuxt
-.husky
 themes
 .eslintcache
 db.json

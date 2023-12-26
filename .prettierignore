@@ -1,14 +1,10 @@
 dist
+node_modules
+
 .husky
 .vscode
 .circleci
 .github
-assets
-node_modules
-.eslintignore
-.eslintcache
-.eslintrc-textlint
 .gitignore
-.mergify.yml
 .node-version
 .textlintrc
