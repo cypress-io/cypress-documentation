@@ -1027,6 +1027,13 @@
           "link": "https://github.com/fochlac/cypress-devserver-esbuild",
           "keywords": ["component", "esbuild", "devserver"],
           "badge": "community"
+        },
+        {
+          "name": "cypress-rspack-dev-server",
+          "description": "Build Cypress Component Tests using Rspack.",
+          "link": "https://github.com/th3fallen/cypress-rspack-dev-server",
+          "keywords": ["component", "Rspack", "dev-server"],
+          "badge": "community"
         }
       ]
     },
