@@ -19,7 +19,6 @@ assertion. It is not retryable, chainable, or timeout-able.
 ```javascript
 cy.stub()
 cy.stub(object, method)
-cy.stub(object, method, replacerFn)
 ```
 
 ### Usage
@@ -40,10 +39,6 @@ The `object` that has the `method` to be replaced.
 **<Icon name="angle-right" /> method** **_(String)_**
 
 The name of the `method` on the `object` to be wrapped.
-
-**<Icon name="angle-right" /> replacerFn** **_(Function)_**
-
-The function used to replace the `method` on the `object`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
 
@@ -82,7 +77,7 @@ expect(util.addListeners).to.be.called
 // assume App.start calls util.addListeners
 let listenersAdded = false
 
-cy.stub(util, 'addListeners', () => {
+cy.stub(util, 'addListeners').callsFake(() => {
   listenersAdded = true
 })
 
