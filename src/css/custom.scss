@@ -70,6 +70,7 @@ html[data-theme] {
   --ifm-font-size-base: 14px;
   --ifm-link-hover-color: theme(colors.indigo.500);;
   --ifm-link-hover-decoration: none;
+  --doc-sidebar-hidden-width: 0;
 }
 
 html[data-theme='light'] {

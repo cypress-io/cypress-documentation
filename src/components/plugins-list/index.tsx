@@ -26,7 +26,7 @@ export default function PluginsList() {
 
           <ul className={clsx(s.pluginsList, '!pl-0')}>
             {plugin.plugins.map((plugin) => (
-              <li key={plugin.name} className="!list-none">
+              <li key={plugin.name} className="card">
                 <div className={s.pluginTitle}>
                   <h3>
                     <a
