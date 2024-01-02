@@ -4,10 +4,11 @@
 
 .navbar {
   padding: 0 2rem;
-}
-
-[data-theme='dark'] .navbar {
-  box-shadow: rgba(255, 255, 255, 0.2) 0 1px 2px 0;
+  box-shadow: none;
+  @apply border-b border-gray-50;
+  [data-theme='dark'] & {
+    @apply border-gray-800;
+  }
 }
 
 .navbar__logo {
