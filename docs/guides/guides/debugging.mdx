@@ -253,24 +253,6 @@ Cypress emits multiple events you can listen to as shown below.
   alt="console log events for debugging"
 />
 
-## Run Cypress command outside the test
-
-If you need to run a Cypress command straight from the Developer Tools console,
-you can use the internal command `cy.now('command name', ...arguments)`. For
-example, to run the equivalent of `cy.task('database', 123)` outside the normal
-execution command chain:
-
-```javascript
-cy.now('task', 'database', 123).then(console.log)
-// runs cy.task('database', 123) and prints the resolved value
-```
-
-:::caution
-
-The `cy.now()` command is an internal command and may change in the future.
-
-:::
-
 ## Troubleshooting Cypress
 
 There are times when you will encounter errors or unexpected behavior with
