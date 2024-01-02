@@ -182,6 +182,17 @@ For example, here's how burn-in would execute on a **new** test:
 
 The new test has passed all 3 burn-in attempts, and therefore is **not flaky**.
 
+:::info
+
+Any update to these attributes counts as a new/modified test for the purposes of burn-in:
+
+- Test title (full path)
+- Spec title (full file path)
+- Test body
+- Any hooks before or after the test
+
+:::
+
 #### Previously flaky or failing tests
 
 If a test failed in a previous run, you should be wary once it manages to pass. It's best to demonstrate consistently passing behavior, which is why burn-in also applies in this situation. Similarly, when a test was flaky in the previous run, they are burned-in with extra scrutiny to ensure that a passing result has overcome a previously flaky status.
@@ -294,9 +305,25 @@ It can be configured on a per-run basis. For example, you can use the [Cypress A
 
 If you would like to provide us with feedback about these levels of configuration for burn-in, please let us know. _(Feedback form coming soon)_ It's an experimental feature, so we certainly appreciate all the feedback we can get.
 
-#### How do you determine the test's history/lineage for the purposes of burn-in?
+#### How is test run history taken into account when executing burn-in across branches?
 
-_Coming soon: FAQ on how Cypress Cloud tracks test history_
+If the test run is on the default branch, or if no default branch is set, then the test's run history on any other branch is completely ignored. For example, if a feature branch which adds a new test that was previously burned-in and passed is merged into the default branch, then that test will be burned-in again on the next run on this default branch because this test did not exist for any previous run on the default branch.
+
+If the run is **not** on the default branch, then the run history extends beyond your branch to include runs on the default branch that preceded the first run on your branch.
+
+:::info
+
+**Note:** When enabling burn-in, any test that has **not** burned-in since it was first added, most recently modified, most recently failed, or most recently flaked is then also burned-in.
+
+For example, let's say is burn-in is disabled while a test is found to be flaky (by test retries), and the test then passes without flake for multiple subsequent runs while burn-in is still disabled. Then if burn-in is enabled now, the test would be burned-in as if it was previously flaky. This is because the test has yet to demonstrate it can consistently pass in a controlled setting, i.e. on a single instance for any given test run.
+
+:::
+
+:::caution
+
+When burn-in is first enabled, **every test is burned-in.** Take this into consideration when timing the enablement of burn-in, especially in your CI.
+
+:::
 
 #### Is there any UI in Cypress Cloud to help understand the burn-in behavior and results?
 
