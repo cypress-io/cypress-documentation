@@ -313,9 +313,9 @@ If the run is **not** on the default branch, then the run history extends beyond
 
 :::info
 
-**Note:** When enabling burn-in, any test that has **not** burned-in since it was first added, most recently modified, most recently failed, or most recently flaked is then also burned-in.
+**Note:** When enabling burn-in, burn-in will execute for any test that has **not** burned-in since it was first added, most recently modified, most recently failed, or most recently flaked.
 
-For example, let's say is burn-in is disabled while a test is found to be flaky (by test retries), and the test then passes without flake for multiple subsequent runs while burn-in is still disabled. Then if burn-in is enabled now, the test would be burned-in as if it was previously flaky. This is because the test has yet to demonstrate it can consistently pass in a controlled setting, i.e. on a single instance for any given test run.
+For example, let's say burn-in is disabled while a test is found to be flaky (by test retries), and the test then passes without flake for multiple subsequent runs while burn-in is still disabled. If burn-in is enabled after these runs, the test will be burned-in as previously flaky. This is because the test has yet to demonstrate it can consistently pass in a controlled setting, i.e. on a single instance in one test run.
 
 :::
 
