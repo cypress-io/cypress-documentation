@@ -37,9 +37,34 @@
   flex: initial;
 }
 
+.navbar__items.navbar__items--left,
+.navbar__items.navbar__items--right {
+  position: absolute;
+}
+
+.navbar__items.navbar__items--left {
+  left: 24px;
+  height: var(--ifm-navbar-height);
+}
+
+.navbar__items.navbar__items--right {
+  right: 24px;
+  height: var(--ifm-navbar-height);
+}
+
+@media screen and (max-width: 960px) {
+  .navbar__items.navbar__items--right {
+    right: 0;
+  }
+}
+
 .navbar__items.navbar__items--right a {
   margin-left: 0;
   padding: 0 0.5rem 0 0.5rem;
+}
+
+nav .navbar__inner {
+  justify-content: center;
 }
 
 .navbar__link {

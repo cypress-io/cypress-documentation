@@ -1,7 +1,13 @@
 @media (max-width: 996px) {
   .searchBox {
     position: absolute;
-    right: var(--ifm-navbar-padding-horizontal);
+    right: 100px;
+  }
+}
+
+@media (max-width: 640px) {
+  .searchBox {
+    right: 0;
   }
 }
 
