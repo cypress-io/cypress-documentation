@@ -123,7 +123,7 @@ modified HTML or JS value.
 
 End-to-end (E2E) tests excel at testing complex systems. However, there are
 still behaviors that are hard to verify and make tests flaky (i.e., unreliable)
-and fail sometimes due to unpredictable conditions (eg., temporary outages in
+and fail sometimes due to unpredictable conditions (e.g., temporary outages in
 external dependencies, random network errors, etc.). Some other common race
 conditions that could result in unreliable tests include:
 
@@ -195,7 +195,7 @@ Any update to these attributes counts as a new/modified test for the purposes of
 
 #### Previously flaky or failing tests
 
-If a test failed in a previous run, you should be wary once it manages to pass. It's best to demonstrate consistently passing behavior, which is why burn-in also applies in this situation. Similarly, when a test was flaky in the previous run, they are burned-in with extra scrutiny to ensure that a passing result has overcome a previously flaky status.
+If a test failed in a previous run, you should be wary once it manages to pass. It's best to demonstrate consistently passing behavior, which is why burn-in also applies in this situation. Similarly, when a test was flaky in the previous run, it is burned-in with extra scrutiny to ensure that a passing result has overcome a previously flaky status.
 
 Burn-in will verify all previously failing tests will pass 3 consecutive attempts on a single run, and that previously flaky tests will pass 5 consecutive attempts in a single run.
 
