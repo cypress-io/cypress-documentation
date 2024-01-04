@@ -5,9 +5,9 @@
 .navbar {
   padding: 0 2rem;
   box-shadow: none;
-  @apply border-b border-gray-50;
+  @apply border-b border-gray-1000/[.07];
   [data-theme='dark'] & {
-    @apply border-gray-800;
+    @apply border-gray-900;
   }
 }
 

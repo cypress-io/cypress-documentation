@@ -363,3 +363,9 @@ h6 {
 .theme-edit-this-page{
   display: flex;
 }
+
+.card{
+  html[data-theme='dark'] & {
+    @apply bg-gray-900;
+  }
+}

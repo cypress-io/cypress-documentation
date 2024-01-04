@@ -34,3 +34,10 @@
     @apply text-indigo-400;
   }
 }
+
+.table-of-contents__left-border {
+  @apply border-gray-1000/[.07];
+  html[data-theme='dark'] & {
+    @apply border-gray-900;
+  }
+}
