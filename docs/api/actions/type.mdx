@@ -95,7 +95,7 @@ Pass in an options object to change the default behavior of `.type()`.
 | `timeout`                    | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts)           | Time to wait for `.type()` to resolve before [timing out](#Timeouts)                                                                               |
 | `waitForAnimations`          | [`waitForAnimations`](/guides/references/configuration#Actionability)          | Whether to wait for elements to [finish animating](/guides/core-concepts/interacting-with-elements#Animations) before executing the command.       |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 - `.type()` yields the same subject it was given.
 - It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried)
@@ -249,7 +249,7 @@ cy.get('input').type('{shift+alt+b}hello')
 
 When a modifier is specified on its own, it will remain activated for the
 duration of the `.type()` command, and is released when all subsequent
-characters are typed. However, [{release: false}](#Options) can be passed as an
+characters are typed. However, [\{release: false\}](#Options) can be passed as an
 [option](#Key-Combinations).
 
 ```javascript
@@ -346,7 +346,7 @@ though it's _not_ a focusable element).
 ```javascript
 // all of the type events are fired on the body
 cy.get('body').type(
-  '{upArrow}{upArrow}{downArrow}{downArrow}{leftArrow}{rightArrow}{leftArrow}{rightArrow}ba'
+  '{upArrow}{upArrow}{downArrow}{downArrow}{leftArrow}{rightArrow}{leftArrow}{rightArrow}ba',
 )
 ```
 
@@ -576,18 +576,18 @@ submitted.
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
 - `.type()` requires being chained off a command that yields DOM element(s).
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
 - `.type()` will automatically wait for the element to reach an
   [actionable state](/guides/core-concepts/interacting-with-elements).
 - `.type()` will automatically [retry](/guides/core-concepts/retry-ability)
   until all chained assertions have passed.
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
 - `.type()` can time out waiting for the element to reach an
   [actionable state](/guides/core-concepts/interacting-with-elements).

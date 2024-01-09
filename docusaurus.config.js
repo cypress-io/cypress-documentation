@@ -47,7 +47,7 @@ const config = {
             cypressConfigExample,
             cypressConfigPluginExample,
             visitMountExample,
-            // [copyTsToJs, { prettierOptions: prettierConfig }],
+            [copyTsToJs, { prettierOptions: prettierConfig }],
           ],
           showLastUpdateTime: true,
         },
