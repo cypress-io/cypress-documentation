@@ -1,6 +1,6 @@
 import type { Code, Content } from 'mdast'
 import type { Node } from 'unist'
-import visit from 'unist-util-visit'
+import { visit } from 'unist-util-visit'
 import { createDirective } from '../utils/createDirective'
 import { isCode, isMatchedDirective } from '../utils/matchHelpers'
 import { hydrateVisitMountExample } from './hydrateVisitMountExample'
