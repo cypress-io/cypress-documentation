@@ -3,24 +3,24 @@ import ts, { CompilerOptions } from 'typescript'
 import { PluginOptions } from './pluginOptions'
 import { transformEsmToCjs } from './transformEsmToCjs'
 
-export function transformTsToJs(code: string, options: PluginOptions) {
+export async function transformTsToJs(code: string, options: PluginOptions) {
   const tsCode = escapeNewLines(code)
   const esmCode = tsToEsm(tsCode, options).outputText
 
-  const prettyTsCode = prettier
-    .format(
+  const prettyTsCode = (
+    await prettier.format(
       restoreNewLines(tsCode),
-      makePrettierOptions(options.prettierOptions)
+      makePrettierOptions(options.prettierOptions),
     )
-    .slice(0, -1)
+  ).slice(0, -1)
 
   const cjsCode = transformEsmToCjs(esmCode)
-  const prettyCjsCode = prettier
-    .format(
+  const prettyCjsCode = (
+    await prettier.format(
       restoreNewLines(cjsCode),
-      makePrettierOptions(options.prettierOptions)
+      makePrettierOptions(options.prettierOptions),
     )
-    .slice(0, -1)
+  ).slice(0, -1)
 
   return {
     tsCode: prettyTsCode,
@@ -29,7 +29,7 @@ export function transformTsToJs(code: string, options: PluginOptions) {
 }
 
 function makeTsCompilerOptions(
-  overrideOptions?: CompilerOptions
+  overrideOptions?: CompilerOptions,
 ): CompilerOptions {
   return {
     newLine: ts.NewLineKind.LineFeed,

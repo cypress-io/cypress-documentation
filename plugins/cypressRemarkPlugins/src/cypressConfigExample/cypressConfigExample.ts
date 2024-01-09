@@ -1,16 +1,13 @@
-import type { Code, Content } from 'mdast'
+import type { Code } from 'mdast'
 import type { Node } from 'unist'
 import { visit } from 'unist-util-visit'
-import { createDirective } from '../utils/createDirective'
 import { isCode, isMatchedDirective } from '../utils/matchHelpers'
 import { hydrateConfigSample } from './hydrateConfigSample'
 
 export function cypressConfigExample(this: any) {
-  const tagName = 'cypress-config-example'
-  createDirective(this, tagName)
   return (root) => {
     visit(root, 'containerDirective', (node: Node) => {
-      if (isMatchedDirective(node, tagName)) {
+      if (isMatchedDirective(node, 'cypressConfigExample')) {
         let result: Node[] = []
         if (node.children.length === 1 && isCode(node.children[0])) {
           result = transformNode(node.children[0])
@@ -43,5 +40,5 @@ function transformNode(codeNode: Code, importNode?: Code) {
       type: 'jsx',
       value: `\n</CypressConfigFileTabs>`,
     },
-  ] as Content[]
+  ]
 }

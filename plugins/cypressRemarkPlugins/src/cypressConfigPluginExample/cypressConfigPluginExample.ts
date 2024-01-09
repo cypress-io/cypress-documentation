@@ -1,16 +1,14 @@
 import type { Code, Content, Root } from 'mdast'
 import type { Node } from 'unist'
-import visit from 'unist-util-visit'
-import { createDirective } from '../utils/createDirective'
+import { visit } from 'unist-util-visit'
 import { hydratePluginSample } from './hydratePluginSample'
 import { isCode, isMatchedDirective } from '../utils/matchHelpers'
 
 export function cypressConfigPluginExample(this: any) {
   const tagName = 'cypress-config-plugin-example'
-  createDirective(this, tagName)
   return (root: Root) => {
     //@ts-ignore
-    visit(root, 'containerDirective', (node: Node) => {
+    visit(root, (node: Node) => {
       if (isMatchedDirective(node, tagName)) {
         let result: Node[] = []
         if (node.children.length === 1 && isCode(node.children[0])) {

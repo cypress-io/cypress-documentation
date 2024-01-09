@@ -1,13 +1,11 @@
 import type { Code, Content } from 'mdast'
 import type { Node } from 'unist'
 import { visit } from 'unist-util-visit'
-import { createDirective } from '../utils/createDirective'
 import { isCode, isMatchedDirective } from '../utils/matchHelpers'
 import { hydrateVisitMountExample } from './hydrateVisitMountExample'
 
 export function visitMountExample(this: any) {
   const tagName = 'visit-mount-example'
-  createDirective(this, tagName)
   return (root) => {
     visit(root, 'containerDirective', (node: Node) => {
       if (isMatchedDirective(node, tagName)) {
