@@ -14,9 +14,13 @@ export function cypressConfigExample(this: any) {
         } else if (isCode(node.children[0]) && isCode(node.children[1])) {
           result = transformNode(node.children[1], node.children[0])
         } else {
-          result = node.children
+          return
         }
-        node.children = result
+        node.data = {
+          hName: 'CypressConfigFileTabs',
+        }
+
+        // node.children = result
       }
     })
   }
@@ -27,18 +31,10 @@ function transformNode(codeNode: Code, importNode?: Code) {
 
   return [
     {
-      type: 'jsx',
-      value: `<CypressConfigFileTabs>\n`,
-    },
-    {
       type: codeNode.type,
-      lang: 'typescript',
+      lang: 'ts',
       meta: 'copyTsToJs',
       value: tsCode,
-    },
-    {
-      type: 'jsx',
-      value: `\n</CypressConfigFileTabs>`,
     },
   ]
 }
