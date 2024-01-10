@@ -1,5 +1,5 @@
-import { transformEsmToCjs } from './transformEsmToCjs'
 import { expect, it } from 'vitest'
+import { transformEsmToCjs } from './transformEsmToCjs'
 
 it(`should replace "import foo from 'bar'" with "const foo = require('bar')"`, () => {
   const code = `import foo from 'bar'`

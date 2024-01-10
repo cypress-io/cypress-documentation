@@ -7,7 +7,7 @@ import { hydrateVisitMountExample } from './hydrateVisitMountExample'
 export function visitMountExample(this: any) {
   const tagName = 'visit-mount-example'
   return (root) => {
-    visit(root, 'containerDirective', (node: Node) => {
+    visit(root, (node: Node) => {
       if (isMatchedDirective(node, tagName)) {
         let result: Node[] = []
         if (node.children.length === 1 && isCode(node.children[0])) {
