@@ -3,5 +3,5 @@
   "singleQuote": true,
   "printWidth": 80,
   "proseWrap": "preserve",
-  "parser": "typescript"
+  "trailingComma": "es5"
 }

@@ -366,9 +366,8 @@ on('before:browser:launch', (browser, options) => {
     const myMimeType = 'my/mimetype'
 
     // prevents the browser download prompt
-    options.preferences[
-      'browser.helperApps.neverAsk.saveToDisk'
-    ] = `${existingMimeTypes},${myMimeType}`
+    options.preferences['browser.helperApps.neverAsk.saveToDisk'] =
+      `${existingMimeTypes},${myMimeType}`
 
     return options
   }

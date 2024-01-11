@@ -346,9 +346,12 @@ Cypress.Commands.add('mount', (component, ...args) => {
   args.global.plugins.push(createPinia())
   args.global.plugins.push(createI18n())
 
-  return mount(() => {
-    return h(VApp, {}, component)
-  }, ...args)
+  return mount(
+    () => {
+      return h(VApp, {}, component)
+    },
+    ...args
+  )
 })
 ```
 
@@ -433,9 +436,12 @@ Cypress.Commands.add('mount', (component, ...args) => {
   args.global.plugins = args.global.plugins || []
   args.global.plugins.push(new Vuetify(vuetifyOptions))
 
-  return mount(() => {
-    return h(VApp, {}, component)
-  }, ...args)
+  return mount(
+    () => {
+      return h(VApp, {}, component)
+    },
+    ...args
+  )
 })
 ```
 
