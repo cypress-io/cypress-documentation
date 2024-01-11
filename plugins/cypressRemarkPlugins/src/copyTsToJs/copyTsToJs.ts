@@ -18,25 +18,19 @@ export function copyTsToJs(
     visit(root, (node: Node) => {
       if (isParent(node)) {
         let index = 0
-        const treatNode = () => {
-          if (index >= node.children.length) return
-
+        while (index < node.children.length) {
           const child = node.children[index]!
           if (matchNode(child)) {
-            transformNode(child, {
+            const result = transformNode(child, {
               prettierOptions,
               typescriptCompilerOptions,
-            }).then((result) => {
-              node.children.splice(index, 1, ...result)
-              index += result.length
-              treatNode()
             })
+            node.children.splice(index, 1, ...result)
+            index += result.length
           } else {
             index += 1
-            treatNode()
           }
         }
-        treatNode()
       }
     })
   }
@@ -54,8 +48,8 @@ function matchNode(node: Node): node is Code & Parent {
   )
 }
 
-async function transformNode(node: Code, options: PluginOptions) {
-  const { tsCode, jsCode } = await transformTsToJs(node.value, options)
+function transformNode(node: Code, options: PluginOptions) {
+  const { tsCode, jsCode } = transformTsToJs(node.value, options)
 
   return [
     {

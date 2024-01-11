@@ -20,7 +20,7 @@ export function cypressConfigExample(this: any) {
           hName: 'CypressConfigFileTabs',
         }
 
-        // node.children = result
+        node.children = result
       }
     })
   }

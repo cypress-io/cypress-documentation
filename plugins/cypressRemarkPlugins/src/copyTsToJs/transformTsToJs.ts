@@ -1,26 +1,27 @@
-import prettier, { Options } from 'prettier'
+import prettier from '@prettier/sync'
+import { type Options } from 'prettier'
 import ts, { CompilerOptions } from 'typescript'
 import { PluginOptions } from './pluginOptions'
 import { transformEsmToCjs } from './transformEsmToCjs'
 
-export async function transformTsToJs(code: string, options: PluginOptions) {
+export function transformTsToJs(code: string, options: PluginOptions) {
   const tsCode = escapeNewLines(code)
   const esmCode = tsToEsm(tsCode, options).outputText
 
-  const prettyTsCode = (
-    await prettier.format(
+  const prettyTsCode = prettier
+    .format(
       restoreNewLines(tsCode),
       makePrettierOptions(options.prettierOptions),
     )
-  ).slice(0, -1)
+    .slice(0, -1)
 
   const cjsCode = transformEsmToCjs(esmCode)
-  const prettyCjsCode = (
-    await prettier.format(
+  const prettyCjsCode = prettier
+    .format(
       restoreNewLines(cjsCode),
       makePrettierOptions(options.prettierOptions),
     )
-  ).slice(0, -1)
+    .slice(0, -1)
 
   return {
     tsCode: prettyTsCode,
