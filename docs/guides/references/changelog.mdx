@@ -1394,7 +1394,7 @@ _Released 11/22/2022_
 - Re-implemented the 'Run All Specs' for End to End Testing for running multiple
   tests sequentially in open mode. This feature had been previously removed in
   Cypress 10.0. Enable 'Run All Specs' with the new experimental flag,
-  [`experimentalRunAllSpecs`](guides/references/experiments#End-to-End-Testing).
+  [`experimentalRunAllSpecs`](/guides/references/experiments#End-to-End-Testing).
   Please leave any feedback around 'Run All Specs'
   [here](https://github.com/cypress-io/cypress/discussions/21628). Your feedback
   will help us make product decisions around the future of this feature.
@@ -4412,7 +4412,7 @@ in more detail and how to change your code to migrate to Cypress 7.0.**
   [#243](https://github.com/cypress-io/cypress/issues/243).
 - Cypress now throws an error if the application under test redirects more than
   20 times. The number of times allowed to redirect is configurable via the
-  [`redirectionLimit`](guides/references/configuration#Global) config. Addresses
+  [`redirectionLimit`](/guides/references/configuration#Global) config. Addresses
   [#14445](https://github.com/cypress-io/cypress/issues/14445).
 - The default preprocessor now targets a more modern version of ECMAScript.
   Addressed in [#15274](https://github.com/cypress-io/cypress/pull/15274).
@@ -4428,7 +4428,7 @@ in more detail and how to change your code to migrate to Cypress 7.0.**
   [#8714](https://github.com/cypress-io/cypress/issues/8714).
 - The bundled Node.js version was upgraded from `12.18.3` to `14.16.0`. This
   could change the behavior of code within the `pluginsFile` when using the
-  [bundled Node.js version](guides/references/configuration#Node-version) of
+  [bundled Node.js version](/guides/references/configuration#Node-version) of
   Cypress. Addressed in
   [#15292](https://github.com/cypress-io/cypress/pull/15292).
 - Installing Cypress on your system now requires Node.js 12+. Addresses
@@ -4464,7 +4464,7 @@ in more detail and how to change your code to migrate to Cypress 7.0.**
   - `cy.intercept()` can now be called with a new overload:
     `cy.intercept(url, routeMatcher, handler)`. `routeMatcher` will be merged
     with `url`, and the handler is required.
-- [`cy.visit()`](api/commands/visit) can now visit pages with
+- [`cy.visit()`](/api/commands/visit) can now visit pages with
   `application/xhtml*` content-type. Addresses
   [#15738](https://github.com/cypress-io/cypress/issues/15738).
 - You can now pass runner specific configuration in order to pass different
@@ -4476,7 +4476,7 @@ in more detail and how to change your code to migrate to Cypress 7.0.**
 - You can now create a new spec file directly from the Test Runner in the
   Desktop. Addressed in
   [#15335](https://github.com/cypress-io/cypress/issues/15335).
-- [`cy.tick()`](api/commands/tick) now accepts a `log` option. Addresses
+- [`cy.tick()`](/api/commands/tick) now accepts a `log` option. Addresses
   [#15180](https://github.com/cypress-io/cypress/issues/15180).
 - The Cypress proxy now adds a `keep-alive` header to all proxy responses.
   Addressed in [#15292](https://github.com/cypress-io/cypress/pull/15292)
@@ -4485,14 +4485,14 @@ in more detail and how to change your code to migrate to Cypress 7.0.**
 
 **Bugfixes:**
 
-- The `response.body` of [`cy.intercept()`](api/commands/intercept) is now
+- The `response.body` of [`cy.intercept()`](/api/commands/intercept) is now
   correct after stubbing a response using `res.send({ fixture })` in a
   `req.continue` callback or a `before:response` or `response` handler.
   Addressed in [#14543](https://github.com/cypress-io/cypress/pull/14543).
 - Fixed an issue where only the first matching alias for a route would yield a
-  response object on [`cy.wait()`](api/commands/wait). Fixes
+  response object on [`cy.wait()`](/api/commands/wait). Fixes
   [#14522](https://github.com/cypress-io/cypress/issues/14522).
-- [`.click()`](api/commands/click) will no longer fail with "coordsHistory must
+- [`.click()`](/api/commands/click) will no longer fail with "coordsHistory must
   be at least 2 sets of coords" when specifying `{ multiple: true }`. Fixes
   [#3738](https://github.com/cypress-io/cypress/issues/3738).
 - Cypress now checks visibility correctly when an element has CSS "position:
@@ -4511,10 +4511,10 @@ in more detail and how to change your code to migrate to Cypress 7.0.**
 - The types for `set-cookie` allow `string[]`, so the header's type has been
   changed to reflect this. Addresses
   [#15419](https://github.com/cypress-io/cypress/pull/15419).
-- The type definition for [`cy.writeFile()`](api/commands/writefile) now allows
+- The type definition for [`cy.writeFile()`](/api/commands/writefile) now allows
   4 arguments. Addresses
   [#15353](https://github.com/cypress-io/cypress/issues/15353).
-- [`.then()`](api/commands/then) will show the correct type when raw
+- [`.then()`](/api/commands/then) will show the correct type when raw
   HTMLElements are provided. Addresses
   [#14875](https://github.com/cypress-io/cypress/issues/14875)
 - The Cypress Studio icon now displays properly for tests with long titles.
