@@ -1,4 +1,4 @@
-import type { Code, Content, Root } from 'mdast'
+import type { Code, RootContent, Root } from 'mdast'
 import type { Node } from 'unist'
 import { visit } from 'unist-util-visit'
 import { hydratePluginSample } from './hydratePluginSample'
@@ -16,31 +16,28 @@ export function cypressConfigPluginExample(this: any) {
         } else if (isCode(node.children[0]) && isCode(node.children[1])) {
           result = transformNode(node.children[1], node.children[0])
         } else {
-          result = node.children
+          return true
         }
+
+        node.data = {
+          hName: 'CypressConfigFileTabs',
+        }
+
         node.children = result
       }
     })
   }
 }
 
-function transformNode(codeNode: Code, importNode?: Code) {
+function transformNode(codeNode: Code, importNode?: Code): Code[] {
   const tsCode = hydratePluginSample(codeNode.value, importNode?.value)
 
   return [
-    {
-      type: 'jsx',
-      value: `<CypressConfigFileTabs>\n`,
-    },
     {
       type: 'code',
       lang: 'typescript',
       meta: 'copyTsToJs',
       value: tsCode,
     },
-    {
-      type: 'jsx',
-      value: `\n</CypressConfigFileTabs>`,
-    },
-  ] as Content[]
+  ]
 }

@@ -14,8 +14,9 @@ export function cypressConfigExample(this: any) {
         } else if (isCode(node.children[0]) && isCode(node.children[1])) {
           result = transformNode(node.children[1], node.children[0])
         } else {
-          return
+          return true
         }
+
         node.data = {
           hName: 'CypressConfigFileTabs',
         }
@@ -26,7 +27,7 @@ export function cypressConfigExample(this: any) {
   }
 }
 
-function transformNode(codeNode: Code, importNode?: Code) {
+function transformNode(codeNode: Code, importNode?: Code): Code[] {
   const tsCode = hydrateConfigSample(codeNode.value, importNode?.value)
 
   return [
