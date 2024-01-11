@@ -173,7 +173,7 @@ the `same-origin` restrictions. But with [`cy.origin()`](/api/commands/origin)
 you no longer need these kind of brittle hacks, as your multi-origin logic can
 all reside in a single test, like the following.
 
-&nbsp;<Badge type="success">After</Badge> One big test using `cy.origin()`
+<Badge type="success">After</Badge> One big test using `cy.origin()`
 
 ```js
 it('securely edits content', () => {
@@ -2695,7 +2695,7 @@ it('test', () => {
 [cy.intercept()][intercept] instead. Due to this deprecation, the type yielded
 by [cy.wait(alias)](/api/commands/wait) has changed.
 
-&nbsp;<Badge type="danger">Before</Badge> Before 6.0.0,
+<Badge type="danger">Before</Badge> Before 6.0.0,
 [cy.wait(alias)](/api/commands/wait) would yield an object of type `WaitXHR`.
 
 <Badge type="success">After</Badge> In 6.0.0 and onwards, [cy.wait(alias)](/api/commands/wait)
@@ -3259,7 +3259,7 @@ it('uses invokes done and returns promise', () => {
 
 ##### Example #2
 
-&nbsp;<Badge type="danger">Before</Badge> Sometimes it might make more sense to
+<Badge type="danger">Before</Badge> Sometimes it might make more sense to
 use the `done` callback and not return a promise:
 
 ```javascript

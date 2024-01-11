@@ -7,7 +7,7 @@ title: Best Practices
 ### <Icon name="graduation-cap" /> Real World Practices
 
 The Cypress team maintains the
-&nbsp;<Icon name="github" inline="true" contentType="rwa" />, a full stack
+<Icon name="github" inline="true" contentType="rwa" />, a full stack
 example application that demonstrates **best practices and scalable strategies
 with Cypress in practical and realistic scenarios**.
 
@@ -29,14 +29,14 @@ and start testing.
 
 :::danger
 
-&#8239;<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:**
+<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:**
 Sharing page objects, using your UI to log in, and not taking shortcuts.
 
 :::
 
 :::tip
 
-&#8239;<Icon name="check-circle" color="green" /> **Best Practice:** Test specs
+<Icon name="check-circle" color="green" /> **Best Practice:** Test specs
 in isolation, programmatically log into your application, and take control of
 your application's state.
 
@@ -64,14 +64,14 @@ in our examples.
 
 :::danger
 
-&#8239;<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Using
+<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Using
 highly brittle selectors that are subject to change.
 
 :::
 
 :::tip
 
-&#8239;<Icon name="check-circle" color="green" /> **Best Practice:** Use
+<Icon name="check-circle" color="green" /> **Best Practice:** Use
 `data-*` attributes to provide context to your selectors and isolate them from
 CSS or JS changes.
 
@@ -227,14 +227,14 @@ recommend you approach testing your components, look to: [Cypress Component Test
 
 :::danger
 
-&#8239;<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Trying
+<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Trying
 to assign the return value of Commands with `const`, `let`, or `var`.
 
 :::
 
 :::tip
 
-&#8239;<Icon name="check-circle" color="green" /> **Best Practice:** Use
+<Icon name="check-circle" color="green" /> **Best Practice:** Use
 [aliases and closures to access and store](/guides/core-concepts/variables-and-aliases)
 what Commands yield you.
 
@@ -286,14 +286,14 @@ For working with either of these patterns, please read our
 
 :::danger
 
-&#8239;<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Trying
+<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Trying
 to visit or interact with sites or servers you do not control.
 
 :::
 
 :::tip
 
-&#8239;<Icon name="check-circle" color="green" /> **Best Practice:** Only test
+<Icon name="check-circle" color="green" /> **Best Practice:** Only test
 websites that you control. Try to avoid visiting or requiring a 3rd party
 server. If you choose, you may use [`cy.request()`](/api/commands/request) to
 talk to 3rd party servers via their APIs. If possible, cache results via
@@ -443,14 +443,14 @@ email's functionality and visual style:
 
 :::danger
 
-&#8239;<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:**
+<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:**
 Coupling multiple tests together.
 
 :::
 
 :::tip
 
-&#8239;<Icon name="check-circle" color="green" /> **Best Practice:** Tests
+<Icon name="check-circle" color="green" /> **Best Practice:** Tests
 should always be able to be run independently from one another **and still
 pass**.
 
@@ -574,14 +574,14 @@ can be run independently and pass.
 
 :::danger
 
-&#8239;<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Acting
+<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Acting
 like you're writing unit tests.
 
 :::
 
 :::tip
 
-&#8239;<Icon name="check-circle" color="green" /> **Best Practice:** Add
+<Icon name="check-circle" color="green" /> **Best Practice:** Add
 multiple assertions and don't worry about it
 
 :::
@@ -660,14 +660,14 @@ describe('my form', () => {
 
 :::danger
 
-&#8239;<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Using
+<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Using
 `after` or `afterEach` hooks to clean up state.
 
 :::
 
 :::tip
 
-&#8239;<Icon name="check-circle" color="green" /> **Best Practice:** Clean up
+<Icon name="check-circle" color="green" /> **Best Practice:** Clean up
 state **before** tests run.
 
 :::
@@ -862,7 +862,7 @@ script.
 
 :::danger
 
-&#8239;<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:**
+<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:**
 Waiting for arbitrary time periods using
 [`cy.wait(Number)`](/api/commands/wait#Time).
 
@@ -870,7 +870,7 @@ Waiting for arbitrary time periods using
 
 :::tip
 
-&#8239;<Icon name="check-circle" color="green" /> **Best Practice:** Use route
+<Icon name="check-circle" color="green" /> **Best Practice:** Use route
 aliases or assertions to guard Cypress from proceeding until an explicit
 condition is met.
 
@@ -957,7 +957,7 @@ waste.
 
 :::danger
 
-&#8239;<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Trying
+<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Trying
 to start a web server from within Cypress scripts with
 [`cy.exec()`](/api/commands/exec) or [`cy.task()`](/api/commands/task).
 
@@ -965,7 +965,7 @@ to start a web server from within Cypress scripts with
 
 :::tip
 
-&#8239;<Icon name="check-circle" color="green" /> **Best Practice:** Start a web
+<Icon name="check-circle" color="green" /> **Best Practice:** Start a web
 server prior to running Cypress.
 
 :::
@@ -1007,14 +1007,14 @@ We have
 
 :::danger
 
-&#8239;<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Using
+<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Using
 [cy.visit()](/api/commands/visit) without setting a `baseUrl`.
 
 :::
 
 :::tip
 
-&#8239;<Icon name="check-circle" color="green" /> **Best Practice:** Set a
+<Icon name="check-circle" color="green" /> **Best Practice:** Set a
 `baseUrl` in your [Cypress configuration](/guides/references/configuration).
 
 :::
