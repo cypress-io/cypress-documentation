@@ -56,7 +56,7 @@ argument
 
 ### Usage
 
-**<Icon name="check-circle" color="green" /> Correct Usage**
+<Icon name="check-circle" color="green" /> ****Correct Usage**
 
 ```js
 // spying
@@ -84,7 +84,7 @@ cy.intercept('/users*', { hostname: 'localhost' }, (req) => {
 
 ### Arguments
 
-#### **<Icon name="angle-right" /> method** **_(String)_**
+#### <Icon name="angle-right" /> **method _(String)_**
 
 Match the route to a specific
 [HTTP method](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods) (`GET`,
@@ -96,14 +96,14 @@ If no method is defined Cypress will match all requests by default.
 
 :::
 
-#### **<Icon name="angle-right" /> url** **_(String, Glob, RegExp)_**
+#### <Icon name="angle-right" /> **url _(String, Glob, RegExp)_**
 
 Specify the URL to match. See [Matching `url`][match-url] for examples.
 
 Alternatively, specify the URL via the [`routeMatcher`][arg-routematcher]
 argument (below).
 
-#### **<Icon name="angle-right" /> routeMatcher** **_(`RouteMatcher`)_**
+#### <Icon name="angle-right" /> **routeMatcher _(`RouteMatcher`)_**
 
 `routeMatcher` is an object used to match the incoming HTTP requests with this
 intercepted route.

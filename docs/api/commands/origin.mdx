@@ -37,7 +37,7 @@ cy.origin(url, options, callbackFn)
 
 ### Usage
 
-**<Icon name="check-circle" color="green" /> Correct Usage**
+<Icon name="check-circle" color="green" /> **Correct Usage**
 
 ```js
 const hits = getHits() // Defined elsewhere
@@ -57,7 +57,7 @@ cy.visit('/')
 cy.get('h1').contains('My cool site under test')
 ```
 
-**<Icon name="exclamation-triangle" color="red" /> Incorrect Usage**
+<Icon name="exclamation-triangle" color="red" /> Incorrect Usage**
 
 ```js
 const hits = getHits()
@@ -77,7 +77,7 @@ cy.get('h1').contains('My cool site under test')
 
 ### Arguments
 
-**<Icon name="angle-right" /> url** **_(String)_**
+<Icon name="angle-right" /> **url _(String)_**
 
 A URL specifying the secondary origin in which the callback is to be executed.
 This should at the very least contain a hostname, and may also include the
@@ -96,7 +96,7 @@ This argument will be used in two ways:
    the callback. So `cy.visit()` and `cy.request()` will use this URL as a
    prefix, not the configured `baseUrl`.
 
-**<Icon name="angle-right" /> options** **_(Object)_**
+<Icon name="angle-right" /> **options _(Object)_**
 
 Pass in an options object to control the behavior of `cy.origin()`.
 
@@ -113,7 +113,7 @@ the JavaScript context in which it was declared. Values passed into `args`
 
 :::
 
-**<Icon name="angle-right" /> callbackFn** **_(Function)_**
+<Icon name="angle-right" /> **callbackFn _(Function)_**
 
 The function containing the commands to be executed in the secondary origin.
 
@@ -165,7 +165,7 @@ Values returned or yielded from the callback function **must** be serializable
 or they will not be returned to the primary origin. For example, the following
 will not work:
 
-**<Icon name="exclamation-triangle" color="red" /> Incorrect Usage**
+<Icon name="exclamation-triangle" color="red" /> Incorrect Usage**
 
 ```js
 cy.origin('https://example.cypress.io', () => {
@@ -176,7 +176,7 @@ cy.origin('https://example.cypress.io', () => {
 
 Instead, you must explicitly yield a serializable value:
 
-**<Icon name="check-circle" color="green" /> Correct Usage**
+<Icon name="check-circle" color="green" /> **Correct Usage**
 
 ```js
 cy.origin('https://example.cypress.io', () => {
@@ -280,7 +280,7 @@ this functionality in a `login`
 duplicate this login code in every test. Here's an idealized example of how to
 do this with `cy.origin()`.
 
-**<Icon name="exclamation-triangle" color="#f0ad4e" /> Inefficient Usage**
+<Icon name="exclamation-triangle" color="#f0ad4e" /> Inefficient Usage**
 
 ```js
 Cypress.Commands.add('login', (username, password) => {
@@ -358,7 +358,7 @@ for transmission. It is very important to understand that variables **inside**
 the callback are not shared with the scope **outside** the callback. For example
 this will not work:
 
-**<Icon name="exclamation-triangle" color="red" /> Incorrect Usage**
+<Icon name="exclamation-triangle" color="red" /> Incorrect Usage**
 
 ```js
 const foo = 1
@@ -373,7 +373,7 @@ cy.origin('cypress.io', () => {
 Instead, the variable must be explicitly passed into the callback using the
 `args` option:
 
-**<Icon name="check-circle" color="green" /> Correct Usage**
+<Icon name="check-circle" color="green" /> **Correct Usage**
 
 ```js
 const foo = 1

@@ -215,7 +215,7 @@ As a general rule there are some best practices when visual testing.
 
 ### Recognize the need for visual testing
 
-**<Icon name="exclamation-triangle" color="red" /> Assertions that verify style
+<Icon name="exclamation-triangle" color="red" /> Assertions that verify style
 properties**
 
 ```js
@@ -240,7 +240,7 @@ snapshot after you confirm the page is done changing.
 
 For example, if the snapshot command is `cy.mySnapshotCommand`:
 
-**<Icon name="exclamation-triangle" color="red" /> Incorrect Usage**
+<Icon name="exclamation-triangle" color="red" /> Incorrect Usage**
 
 ```js
 // the web application takes time to add the new item,
@@ -249,7 +249,7 @@ cy.get('.new-todo').type('write tests{enter}')
 cy.mySnapshotCommand()
 ```
 
-**<Icon name="check-circle" color="green" /> Correct Usage**
+<Icon name="check-circle" color="green" /> **Correct Usage**
 
 ```js
 // use a functional assertion to ensure
