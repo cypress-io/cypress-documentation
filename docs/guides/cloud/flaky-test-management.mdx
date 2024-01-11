@@ -32,17 +32,6 @@ mitigate flaky tests from failing entire test runs or CI builds.
 
 ## Flake Detection
 
-:::tip
-
-<strong>
-  <Icon name="star" /> Premium Cypress Cloud Feature
-</strong>
-
-**Test flake detection** is available to users with a
-[Team Cypress Cloud plan](https://cypress.io/pricing).
-
-:::
-
 One way to battle flaky tests is to detect and monitor them as they occur in an
 organized and methodical manner such that you can assess their severity to
 assist with prioritizing their fix.
@@ -74,7 +63,48 @@ in and out via the "Flaky" filter within this page.
 Any failure across multiple test run attempts triggered by test retrying will
 result in a given test case to be flagged as flaky.
 
-### Flaky Test Analytics
+## Flake Alerting
+
+Cypress Cloud can provide alerts via source control ([GitHub](/guides/cloud/integrations/source-control/github), [GitLab](/guides/cloud/integrations/source-control/gitlab), [BitBucket](/guides/cloud/integrations/source-control/bitbucket)), [Slack](/guides/cloud/integrations/slack), and [Microsoft Teams](/guides/cloud/integrations/teams) integrations to further assist with
+staying on top of flake occurrences.
+
+### GitHub
+
+Flake alerting via GitHub PR comments and status checks can be enabled within a
+project's GitHub integration settings:
+
+<DocsImage
+  src="/img/guides/cloud/flaky-test-management/gh-flake.png"
+  alt="GitHub flake alert settings"
+/>
+
+After enabling GitHub flake alerting, GitHub PR comments will show the number of
+flaky tests associated with the PR within the test summary, and include a
+"Flakiness" section highlighting the specific tests that flaked.
+
+<DocsImage
+  src="/img/guides/cloud/flaky-test-management/flake-pr-comment.png"
+  alt="GitHub flake alert pr comment"
+/>
+
+### Slack
+
+Flake alerting via Slack can be enabled within Slack integration settings:
+
+<DocsImage
+  src="/img/guides/cloud/flaky-test-management/slack-flake.png"
+  alt="Slack flake alert settings"
+/>
+
+After enabling Slack alerts, Cypress Cloud will send Slack messages whenever
+flaky tests are detected:
+
+<DocsImage
+  src="/img/guides/cloud/flaky-test-management/flake-slack-alert.png"
+  alt="Slack flake alert"
+/>
+
+## Flaky Test Analytics
 
 :::tip
 
@@ -82,7 +112,7 @@ result in a given test case to be flagged as flaky.
   <Icon name="star" /> Premium Cypress Cloud Feature
 </strong>
 
-**Test flake analytics** are available to users with a
+**Flaky test analytics** are available to users with a
 [Team Cypress Cloud plan](https://cypress.io/pricing).
 
 :::
@@ -151,58 +181,6 @@ while exhibiting flake as demonstrated below:
 <DocsImage
   src="/img/guides/cloud/flaky-test-management/flake-v-fail-1.png"
   alt="flake rate vs fail rate"
-/>
-
-## Flake Alerting
-
-:::tip
-
-<strong>
-  <Icon name="star" /> Premium Cypress Cloud Feature
-</strong>
-
-**Test flake alerting** is available to users with a
-[Team Cypress Cloud plan](https://cypress.io/pricing).
-
-:::
-
-Cypress Cloud can provide alerts via source control ([GitHub](/guides/cloud/integrations/source-control/github), [GitLab](/guides/cloud/integrations/source-control/gitlab), [BitBucket](/guides/cloud/integrations/source-control/bitbucket)), [Slack](/guides/cloud/integrations/slack), and [Microsoft Teams](/guides/cloud/integrations/teams) integrations to further assist with
-staying on top of flake occurrences.
-
-### GitHub
-
-Flake alerting via GitHub PR comments and status checks can be enabled within a
-project's GitHub integration settings:
-
-<DocsImage
-  src="/img/guides/cloud/flaky-test-management/gh-flake.png"
-  alt="GitHub flake alert settings"
-/>
-
-After enabling GitHub flake alerting, GitHub PR comments will show the number of
-flaky tests associated with the PR within the test summary, and include a
-"Flakiness" section highlighting the specific tests that flaked.
-
-<DocsImage
-  src="/img/guides/cloud/flaky-test-management/flake-pr-comment.png"
-  alt="GitHub flake alert pr comment"
-/>
-
-### Slack
-
-Flake alerting via Slack can be enabled within Slack integration settings:
-
-<DocsImage
-  src="/img/guides/cloud/flaky-test-management/slack-flake.png"
-  alt="Slack flake alert settings"
-/>
-
-After enabling Slack alerts, Cypress Cloud will send Slack messages whenever
-flaky tests are detected:
-
-<DocsImage
-  src="/img/guides/cloud/flaky-test-management/flake-slack-alert.png"
-  alt="Slack flake alert"
 />
 
 ## See Also
