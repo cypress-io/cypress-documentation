@@ -33,7 +33,7 @@ function transformNode(codeNode: Code, importNode?: Code): Code[] {
   return [
     {
       type: codeNode.type,
-      lang: 'ts',
+      lang: 'typescript',
       meta: 'copyTsToJs',
       value: tsCode,
     },

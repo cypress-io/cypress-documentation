@@ -2,7 +2,7 @@
 // https://github.com/sapphiredev/documentation-plugins/tree/main/packages/ts2esm2cjs
 // and modified for our needs.
 
-import type { Code, Content } from 'mdast'
+import type { Code } from 'mdast'
 import type { Node, Parent } from 'unist'
 import { visit } from 'unist-util-visit'
 import { PluginOptions } from './pluginOptions'
@@ -48,7 +48,7 @@ function matchNode(node: Node): node is Code & Parent {
   )
 }
 
-function transformNode(node: Code, options: PluginOptions) {
+function transformNode(node: Code, options: PluginOptions) : Code[]{
   const { tsCode, jsCode } = transformTsToJs(node.value, options)
 
   return [
@@ -64,5 +64,5 @@ function transformNode(node: Code, options: PluginOptions) {
       meta: node.meta?.replace('copyTsToJs', ''),
       value: tsCode,
     },
-  ] as Content[]
+  ]
 }
