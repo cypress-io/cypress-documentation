@@ -2695,8 +2695,8 @@ it('test', () => {
 [cy.intercept()][intercept] instead. Due to this deprecation, the type yielded
 by [cy.wait(alias)](/api/commands/wait) has changed.
 
-<Badge type="danger">Before</Badge> Before 6.0.0,
-[cy.wait(alias)](/api/commands/wait) would yield an object of type `WaitXHR`.
+<Badge type="danger">Before</Badge> Before 6.0.0, [cy.wait(alias)](/api/commands/wait)
+would yield an object of type `WaitXHR`.
 
 <Badge type="success">After</Badge> In 6.0.0 and onwards, [cy.wait(alias)](/api/commands/wait)
 will yield an object of type `Interception`. This matches the new interception object
@@ -3259,8 +3259,8 @@ it('uses invokes done and returns promise', () => {
 
 ##### Example #2
 
-<Badge type="danger">Before</Badge> Sometimes it might make more sense to
-use the `done` callback and not return a promise:
+<Badge type="danger">Before</Badge> Sometimes it might make more sense to use the
+`done` callback and not return a promise:
 
 ```javascript
 it('uses invokes done and returns promise', (done) => {
