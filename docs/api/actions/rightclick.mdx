@@ -71,12 +71,12 @@ Pass in an options object to change the default behavior of `.rightclick()`.
 
 | Option                       | Default                                                                        | Description                                                                                                                                        |
 | ---------------------------- | ------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `altKey`                     | `false`                                                                        | Activates the alt key (option key for Mac). Aliases: <code>optionKey</code>.                                                                       |
+| `altKey`                     | `false`                                                                        | Activates the alt key (option key for Mac). Aliases: `optionKey`.                                                                                  |
 | `animationDistanceThreshold` | [`animationDistanceThreshold`](/guides/references/configuration#Actionability) | The distance in pixels an element must exceed over time to be [considered animating](/guides/core-concepts/interacting-with-elements#Animations).  |
-| `ctrlKey`                    | `false`                                                                        | Activates the control key. Aliases: <code>controlKey</code>.                                                                                       |
+| `ctrlKey`                    | `false`                                                                        | Activates the control key. Aliases: `controlKey`.                                                                                                  |
 | `force`                      | `false`                                                                        | Forces the action, disables [waiting for actionability](#Assertions)                                                                               |
 | `log`                        | `true`                                                                         | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log)                                                           |
-| `metaKey`                    | `false`                                                                        | Activates the meta key (Windows key or command key for Mac). Aliases: <code>commandKey</code>, <code>cmdKey</code>.                                |
+| `metaKey`                    | `false`                                                                        | Activates the meta key (Windows key or command key for Mac). Aliases: `commandKey`, `cmdKey`.                                                      |
 | `multiple`                   | `false`                                                                        | Serially click multiple elements                                                                                                                   |
 | `scrollBehavior`             | [`scrollBehavior`](/guides/references/configuration#Actionability)             | Viewport position to where an element [should be scrolled](/guides/core-concepts/interacting-with-elements#Scrolling) before executing the command |
 | `shiftKey`                   | `false`                                                                        | Activates the shift key.                                                                                                                           |
@@ -171,12 +171,12 @@ offers options to hold down keys across multiple commands. See
 
 The following key can be combined with `.rightclick()` through the `options`..
 
-| Option     | Notes                                                                                                               |
-| ---------- | ------------------------------------------------------------------------------------------------------------------- |
-| `altKey`   | Activates the alt key (option key for Mac). Aliases: <code>optionKey</code>.                                        |
-| `ctrlKey`  | Activates the control key. Aliases: <code>controlKey</code>.                                                        |
-| `metaKey`  | Activates the meta key (Windows key or command key for Mac). Aliases: <code>commandKey</code>, <code>cmdKey</code>. |
-| `shiftKey` | Activates the shift key.                                                                                            |
+| Option     | Notes                                                                                         |
+| ---------- | --------------------------------------------------------------------------------------------- |
+| `altKey`   | Activates the alt key (option key for Mac). Aliases: `optionKey`.                             |
+| `ctrlKey`  | Activates the control key. Aliases: `controlKey`.                                             |
+| `metaKey`  | Activates the meta key (Windows key or command key for Mac). Aliases: `commandKey`, `cmdKey`. |
+| `shiftKey` | Activates the shift key.                                                                      |
 
 ##### Command right click
 
