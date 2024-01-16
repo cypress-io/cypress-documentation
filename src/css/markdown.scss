@@ -1,7 +1,7 @@
 div.markdown {
   font-size: 1rem;
   word-spacing: 1px;
-
+  
   ul {
     padding-left: var(--ifm-list-left-padding);
     li {
@@ -29,6 +29,11 @@ div.markdown {
 
   h5 {
     --ifm-h5-font-size: 1.2rem;
+  }
+
+
+  p{
+    margin-bottom: 1rem;
   }
 
   a {
@@ -104,6 +109,8 @@ div.markdown {
   .inlineTOC ul {
     padding-left: 0;
   }
+  
+  --ifm-alert-border-radius: 5px;
 }
 
 /* override the background in the toc on mobile */
@@ -112,8 +119,4 @@ div.markdown {
 }
 [data-theme='dark'] .theme-doc-toc-mobile {
   --ifm-menu-color-background-active: #ffffff0d;
-}
-
-.markdown {
-  --ifm-alert-border-radius: 5px;
 }
