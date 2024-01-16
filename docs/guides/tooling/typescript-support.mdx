@@ -73,13 +73,11 @@ If that does not work, try restarting the IDE.
 
 ### Processing your Cypress configuration and plugins
 
-Cypress needs to be able to transpile your Cypress configuration and plugins written in TypeScript in order to make them executable within Cypress' Node.js runtime.
-To do this, Cypress will attempt to read the user's TypeScript and project configuration to apply the correct TypeScript loader to Cypress' Node.js runtime.
+Cypress needs to be able to transpile your Cypress configuration and plugins written in TypeScript in order to make them executable within Cypress's Node.js runtime. To do this, Cypress will attempt to read the user's TypeScript and project configuration to apply the correct TypeScript loader to Cypress's Node.js runtime.
 
-If your project is an `ESM` package (short for [ECMAScript Module](https://nodejs.org/api/esm.html#modules-ecmascript-modules)), Cypress attempts
-to apply the [ts-node/esm](https://github.com/TypeStrong/ts-node?tab=readme-ov-file#esm) Node.js loader to resolve the Cypress configuration and plugins. `ESM` is determined by Cypress if you have the `type: "module"` key-value pair present inside your project's `package.json`.
+If your project is an `ESM` package (short for [ECMAScript Module](https://nodejs.org/api/esm.html#modules-ecmascript-modules)), Cypress attempts to apply the [ts-node/esm](https://github.com/TypeStrong/ts-node?tab=readme-ov-file#esm) Node.js loader to resolve the Cypress configuration and plugins. `ESM` is determined by Cypress if you have the `type: "module"` key-value pair present inside your project's `package.json`.
 
-Otherwise, regular [ts-node](https://github.com/TypeStrong/ts-node?tab=readme-ov-file#node-flags-and-other-tools) is required into Cypress' Node.js runtime.
+Otherwise, regular [ts-node](https://github.com/TypeStrong/ts-node?tab=readme-ov-file#node-flags-and-other-tools) is required into Cypress's Node.js runtime.
 Since Node.js by itself can only interpret CommonJS files, Cypress attempts to make your TypeScript configuration compatable with Cypress' Node.js runtime.
 To do this, Cypress overrides the following configuration values found inside your project's `tsconfig.json`:
 
