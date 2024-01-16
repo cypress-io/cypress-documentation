@@ -34,6 +34,7 @@ div.markdown {
   a {
     text-decoration: none;
     font-weight: var(--ifm-font-weight-semibold);
+    color: var(--ifm-link-color);
 
     &:hover {
       border-bottom: 1px dotted var(--ifm-link-color);
