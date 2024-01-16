@@ -325,6 +325,14 @@
       "authorTwitter": "edgewords",
       "sourceName": "Edgewords",
       "sourceUrl": "https://www.edgewordstraining.co.uk/"
+    },
+    {
+      "title": "Bigbyte Academy - E2E Test Automation with Cypress",
+      "url": "https://bigbyte.academy/",
+      "author": "BigByte",
+      "authorTwitter": "bigbyte_academy",
+      "sourceName": "Bigbyte academy",
+      "sourceUrl": "https://bigbyte.academy/"
     }
   ]
 }
