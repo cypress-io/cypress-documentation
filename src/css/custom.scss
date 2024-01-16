@@ -49,9 +49,7 @@
   --ifm-heading-font-family: Poppins;
   --ifm-heading-font-weight: var(--ifm-font-weight-bold);
   --ifm-line-height-base: 1.6;
-  --ifm-heading-color: theme(colors.gray.1000)
-
-  --ifm-code-font-size: 95%;
+  --ifm-heading-color: theme(colors.gray.1000) --ifm-code-font-size: 95%;
   --ifm-pre-line-height: 1.5em;
 
   --ifm-code-background-color: #282a36;
@@ -68,7 +66,7 @@
 
 html[data-theme] {
   --ifm-font-size-base: 16px;
-  --ifm-link-hover-color: theme(colors.indigo.500);;
+  --ifm-link-hover-color: theme(colors.indigo.500);
   --ifm-link-hover-decoration: none;
   --doc-sidebar-hidden-width: 0;
 }
@@ -126,6 +124,12 @@ html[data-theme='dark'] {
 body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+@media (min-width: 997px) {
+  body .container {
+    @apply ml-[1rem];
+  }
 }
 
 /* add a small gap to the main content area when the width
@@ -360,11 +364,11 @@ h6 {
   font-size: var(--ifm-h6-font-size);
 }
 
-.theme-edit-this-page{
+.theme-edit-this-page {
   display: flex;
 }
 
-.card{
+.card {
   html[data-theme='dark'] & {
     @apply bg-gray-900;
   }

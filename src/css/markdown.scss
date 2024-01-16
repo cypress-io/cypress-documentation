@@ -1,11 +1,19 @@
 div.markdown {
   font-size: 1rem;
   word-spacing: 1px;
-  
+
   ul {
     padding-left: var(--ifm-list-left-padding);
     li {
       list-style: disc;
+    }
+  }
+
+  ol {
+    margin-bottom: 1rem;
+    padding-left: var(--ifm-list-left-padding);
+    li {
+      list-style: decimal;
     }
   }
 
@@ -31,8 +39,7 @@ div.markdown {
     --ifm-h5-font-size: 1.2rem;
   }
 
-
-  p{
+  p {
     margin-bottom: 1rem;
   }
 
@@ -86,7 +93,7 @@ div.markdown {
     border-bottom: none;
   }
 
-  div[class^="language-"]{
+  div[class^='language-'] {
     margin-top: 2px;
   }
 

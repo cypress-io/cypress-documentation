@@ -7,6 +7,7 @@ import {
 } from '@docusaurus/theme-common/internal'
 import { translate } from '@docusaurus/Translate'
 import DocMenu from '@cypress-design/react-docmenu'
+import Tag from '@cypress-design/react-tag'
 import styles from './styles.module.css'
 
 function useShowAnnouncementBar() {
@@ -45,6 +46,19 @@ function cloneSidebarWithActivePathExpanded(sidebarItems, activePath) {
   return { items, hasActive }
 }
 
+function SidebarLink({ children, customProps, className, href, style }) {
+  return (
+    <Link {...{ className, href, style }}>
+      {children}{' '}
+      {customProps?.new_label ? (
+        <Tag color="indigo" size="16" dark style={{ marginTop: '-2px' }}>
+          New
+        </Tag>
+      ) : null}
+    </Link>
+  )
+}
+
 export default function DocSidebarDesktopContent({ path, sidebar, className }) {
   const showAnnouncementBar = useShowAnnouncementBar()
   const { items } = cloneSidebarWithActivePathExpanded(sidebar, path)
@@ -66,7 +80,7 @@ export default function DocSidebarDesktopContent({ path, sidebar, className }) {
       <div className="p-[8px] text-left">
         <DocMenu
           items={items}
-          LinkComponent={Link}
+          LinkComponent={SidebarLink}
           activePath={path}
           collapsible
         />
