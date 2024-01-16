@@ -135,20 +135,20 @@ Listed in the [Visual Testing plugins](/plugins#visual-testing) section.
 
 First joint webinar with Applitools
 
-<!-- textlint-disable -->
+{/* textlint-disable */}
 
 <DocsVideo src="https://youtube.com/embed/qVRjhABuyG0" />
 
-<!-- textlint-enable -->
+{/* textlint-enable */}
 
 Second joint webinar with Applitools with a focus on
 [Component Testing](/guides/core-concepts/testing-types#What-is-Component-Testing)
 
-<!-- textlint-disable -->
+{/* textlint-disable */}
 
 <DocsVideo src="https://youtube.com/embed/Bxh_ebMk1aM" />
 
-<!-- textlint-enable -->
+{/* textlint-enable */}
 
 <Icon name="external-link-alt" url="https://applitools.com/" />
 
@@ -161,11 +161,11 @@ Second joint webinar with Applitools with a focus on
 
 ### Percy
 
-<!-- textlint-disable -->
+{/* textlint-disable */}
 
 <DocsVideo src="https://youtube.com/embed/MXfZeE9RQDw" />
 
-<!-- textlint-enable -->
+{/* textlint-enable */}
 
 <Icon name="external-link-alt" url="https://percy.io/" />
 
@@ -195,11 +195,11 @@ to see these Percy and Cypress in action.
 
 ### Happo
 
-<!-- textlint-disable -->
+{/* textlint-disable */}
 
 <DocsVideo src="https://youtube.com/embed/C_p12IvN5HU" />
 
-<!-- textlint-enable -->
+{/* textlint-enable */}
 
 <Icon name="external-link-alt" url="https://happo.io/" />
 
@@ -215,8 +215,7 @@ As a general rule there are some best practices when visual testing.
 
 ### Recognize the need for visual testing
 
-**<Icon name="exclamation-triangle" color="red" /> Assertions that verify style
-properties**
+<Icon name="exclamation-triangle" color="red" /> Assertions that verify style properties**
 
 ```js
 cy.get('.completed').should('have.css', 'text-decoration', 'line-through')
@@ -233,14 +232,14 @@ verify the page appearance.
 
 :::tip
 
-&nbsp;<Icon name="check-circle" color="green" /> **Best Practice:** Take a
-snapshot after you confirm the page is done changing.
+<Icon name="check-circle" color="green" /> **Best Practice:** Take a snapshot after
+you confirm the page is done changing.
 
 :::
 
 For example, if the snapshot command is `cy.mySnapshotCommand`:
 
-**<Icon name="exclamation-triangle" color="red" /> Incorrect Usage**
+<Icon name="exclamation-triangle" color="red" /> Incorrect Usage**
 
 ```js
 // the web application takes time to add the new item,
@@ -249,7 +248,7 @@ cy.get('.new-todo').type('write tests{enter}')
 cy.mySnapshotCommand()
 ```
 
-**<Icon name="check-circle" color="green" /> Correct Usage**
+<Icon name="check-circle" color="green" /> **Correct Usage**
 
 ```js
 // use a functional assertion to ensure
@@ -265,8 +264,8 @@ cy.mySnapshotCommand()
 
 :::tip
 
-&nbsp;<Icon name="check-circle" color="green" /> **Best Practice:** Control the
-timestamp inside the application under test.
+<Icon name="check-circle" color="green" /> **Best Practice:** Control the timestamp
+inside the application under test.
 
 :::
 
@@ -286,8 +285,8 @@ cy.mySnapshotCommand()
 
 :::tip
 
-&nbsp;<Icon name="check-circle" color="green" /> **Best Practice:** Use
-[cy.fixture()](/api/commands/fixture) and network mocking to set the application state.
+<Icon name="check-circle" color="green" /> **Best Practice:** Use [cy.fixture()](/api/commands/fixture)
+and network mocking to set the application state.
 
 :::
 
@@ -306,8 +305,8 @@ cy.mySnapshotCommand()
 
 :::tip
 
-&nbsp;<Icon name="check-circle" color="green" /> **Best Practice:** Use visual
-diffing to check individual DOM elements rather than the entire page.
+<Icon name="check-circle" color="green" /> **Best Practice:** Use visual diffing
+to check individual DOM elements rather than the entire page.
 
 :::
 
@@ -318,9 +317,9 @@ breaking tests in other unrelated components.
 
 :::tip
 
-&nbsp;<Icon name="check-circle" color="green" /> **Best Practice:** Use
-[Component Testing](/guides/component-testing/overview) to test the individual components
-functionality in addition to end-to-end and visual tests.
+<Icon name="check-circle" color="green" /> **Best Practice:** Use [Component Testing](/guides/component-testing/overview)
+to test the individual components functionality in addition to end-to-end and visual
+tests.
 
 :::
 
@@ -338,9 +337,9 @@ the
 - [Plugins](/guides/tooling/plugins-guide)
 - [Visual Testing Plugins](/plugins#visual-testing)
 - [Writing a Plugin](/api/plugins/writing-a-plugin)
-- &nbsp;<Icon name="github" contentType="rwa" /> is a full stack example
-  application that demonstrates **best practices and scalable strategies with
-  Cypress in practical and realistic scenarios**.
+- <Icon name="github" contentType="rwa" /> is a full stack example application that
+  demonstrates **best practices and scalable strategies with Cypress in practical
+  and realistic scenarios**.
 - Read the blog post
   [Debug a Flaky Visual Regression Test](https://www.cypress.io/blog/2020/10/02/debug-a-flaky-visual-regression-test/)
 - Read the blog post

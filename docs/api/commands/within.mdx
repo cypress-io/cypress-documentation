@@ -17,7 +17,7 @@ chain further commands that rely on the subject after `.within()`.
 
 ### Usage
 
-**<Icon name="check-circle" color="green" /> Correct Usage**
+<Icon name="check-circle" color="green" /> **Correct Usage**
 
 ```javascript
 cy.get('.list')
@@ -25,7 +25,7 @@ cy.get('.list')
   .within(($list) => {}) // Yield the first `.list` and scope all commands within it
 ```
 
-**<Icon name="exclamation-triangle" color="red" /> Incorrect Usage**
+<Icon name="exclamation-triangle" color="red" /> Incorrect Usage**
 
 ```javascript
 cy.within(() => {}) // Errors, cannot be chained off 'cy'
@@ -35,11 +35,11 @@ cy.get('div').within(($divs) => {}) // Probably errors, because get('div') yield
 
 ### Arguments
 
-**<Icon name="angle-right" /> callbackFn** **_(Function)_**
+<Icon name="angle-right" /> **callbackFn _(Function)_**
 
 Pass a function that takes the current yielded subject as its first argument.
 
-**<Icon name="angle-right" /> options** **_(Object)_**
+<Icon name="angle-right" /> **options _(Object)_**
 
 Pass in an options object to change the default behavior of `.within()`.
 
@@ -157,7 +157,7 @@ commands.
 
 ```html
 <section class="example">
-  <!-- note the input field outside the form -->
+  {/* note the input field outside the form */}
   <input id="name" type="text" />
   <form>
     <input name="email" type="email" />

@@ -1,4 +1,5 @@
-import prettier, { Options } from 'prettier'
+import prettier from '@prettier/sync'
+import { type Options } from 'prettier'
 import ts, { CompilerOptions } from 'typescript'
 import { PluginOptions } from './pluginOptions'
 import { transformEsmToCjs } from './transformEsmToCjs'
@@ -10,7 +11,7 @@ export function transformTsToJs(code: string, options: PluginOptions) {
   const prettyTsCode = prettier
     .format(
       restoreNewLines(tsCode),
-      makePrettierOptions(options.prettierOptions)
+      makePrettierOptions(options.prettierOptions),
     )
     .slice(0, -1)
 
@@ -18,7 +19,7 @@ export function transformTsToJs(code: string, options: PluginOptions) {
   const prettyCjsCode = prettier
     .format(
       restoreNewLines(cjsCode),
-      makePrettierOptions(options.prettierOptions)
+      makePrettierOptions(options.prettierOptions),
     )
     .slice(0, -1)
 
@@ -29,7 +30,7 @@ export function transformTsToJs(code: string, options: PluginOptions) {
 }
 
 function makeTsCompilerOptions(
-  overrideOptions?: CompilerOptions
+  overrideOptions?: CompilerOptions,
 ): CompilerOptions {
   return {
     newLine: ts.NewLineKind.LineFeed,

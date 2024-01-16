@@ -17,13 +17,13 @@ chain further commands that rely on the subject after `.type()`.
 
 ### Usage
 
-**<Icon name="check-circle" color="green" /> Correct Usage**
+<Icon name="check-circle" color="green" /> **Correct Usage**
 
 ```javascript
 cy.get('input').type('Hello, World') // Type 'Hello, World' into the 'input'
 ```
 
-**<Icon name="exclamation-triangle" color="red" /> Incorrect Usage**
+<Icon name="exclamation-triangle" color="red" /> **Incorrect Usage**
 
 ```javascript
 cy.type('Welcome') // Errors, cannot be chained off 'cy'
@@ -32,7 +32,7 @@ cy.clock().type('www.cypress.io') // Errors, 'clock' does not yield DOM elements
 
 ### Arguments
 
-**<Icon name="angle-right" /> text** **_(String)_**
+<Icon name="angle-right" /> **text _(String)_**
 
 The text to be typed into the DOM element.
 
@@ -79,7 +79,7 @@ sequences:
 | `{meta}`  | Activates the `metaKey` modifier. Aliases: `{command}`, `{cmd}` |
 | `{shift}` | Activates the `shiftKey` modifier.                              |
 
-**<Icon name="angle-right" /> options** **_(Object)_**
+<Icon name="angle-right" /> **options _(Object)_**
 
 Pass in an options object to change the default behavior of `.type()`.
 
@@ -95,7 +95,7 @@ Pass in an options object to change the default behavior of `.type()`.
 | `timeout`                    | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts)           | Time to wait for `.type()` to resolve before [timing out](#Timeouts)                                                                               |
 | `waitForAnimations`          | [`waitForAnimations`](/guides/references/configuration#Actionability)          | Whether to wait for elements to [finish animating](/guides/core-concepts/interacting-with-elements#Animations) before executing the command.       |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 - `.type()` yields the same subject it was given.
 - It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried)
@@ -249,7 +249,7 @@ cy.get('input').type('{shift+alt+b}hello')
 
 When a modifier is specified on its own, it will remain activated for the
 duration of the `.type()` command, and is released when all subsequent
-characters are typed. However, [{release: false}](#Options) can be passed as an
+characters are typed. However, [\{release: false\}](#Options) can be passed as an
 [option](#Key-Combinations).
 
 ```javascript
@@ -576,18 +576,18 @@ submitted.
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
 - `.type()` requires being chained off a command that yields DOM element(s).
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
 - `.type()` will automatically wait for the element to reach an
   [actionable state](/guides/core-concepts/interacting-with-elements).
 - `.type()` will automatically [retry](/guides/core-concepts/retry-ability)
   until all chained assertions have passed.
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
 - `.type()` can time out waiting for the element to reach an
   [actionable state](/guides/core-concepts/interacting-with-elements).
@@ -621,8 +621,8 @@ following:
 | Version                                       | Changes                                                                                                                   |
 | --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
 | [6.1.0](/guides/references/changelog#6-1-0)   | Added option `scrollBehavior`                                                                                             |
-| [5.6.0](/guides/references/changelog#5.6.0)   | Support single key combination syntax                                                                                     |
-| [5.5.0](/guides/references/changelog#5.5.0)   | Support `beforeinput` event                                                                                               |
+| [5.6.0](/guides/references/changelog#5-6-0)   | Support single key combination syntax                                                                                     |
+| [5.5.0](/guides/references/changelog#5-5-0)   | Support `beforeinput` event                                                                                               |
 | [3.4.1](/guides/references/changelog#3-4-1)   | Added `parseSpecialCharSequences` option                                                                                  |
 | [3.3.0](/guides/references/changelog#3-3-0)   | Added `{insert}`, `{pageup}` and `{pagedown}` character sequences                                                         |
 | [3.2.0](/guides/references/changelog#3-2-0)   | Added `{home}` and `{end}` character sequences                                                                            |

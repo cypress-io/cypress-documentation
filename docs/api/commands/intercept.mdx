@@ -56,7 +56,7 @@ argument
 
 ### Usage
 
-**<Icon name="check-circle" color="green" /> Correct Usage**
+<Icon name="check-circle" color="green" /> ****Correct Usage**
 
 ```js
 // spying
@@ -84,7 +84,7 @@ cy.intercept('/users*', { hostname: 'localhost' }, (req) => {
 
 ### Arguments
 
-#### **<Icon name="angle-right" /> method** **_(String)_**
+#### <Icon name="angle-right" /> **method _(String)_**
 
 Match the route to a specific
 [HTTP method](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods) (`GET`,
@@ -96,14 +96,14 @@ If no method is defined Cypress will match all requests by default.
 
 :::
 
-#### **<Icon name="angle-right" /> url** **_(String, Glob, RegExp)_**
+#### <Icon name="angle-right" /> **url _(String, Glob, RegExp)_**
 
 Specify the URL to match. See [Matching `url`][match-url] for examples.
 
 Alternatively, specify the URL via the [`routeMatcher`][arg-routematcher]
 argument (below).
 
-#### **<Icon name="angle-right" /> routeMatcher** **_(`RouteMatcher`)_**
+#### <Icon name="angle-right" /> **routeMatcher _(`RouteMatcher`)_**
 
 `routeMatcher` is an object used to match the incoming HTTP requests with this
 intercepted route.
@@ -147,7 +147,7 @@ See
 [Stubbing a response with a `StaticResponse` object](#With-a-StaticResponse-object)
 for an example.
 
-#### <Icon name="angle-right" /> routeHandler (<code>Function</code>)
+#### <Icon name="angle-right" /> routeHandler (`Function`)
 
 The `routeHandler` function is called whenever a request is matched, with the
 first argument being the request object. From inside the callback, you have
@@ -701,7 +701,7 @@ beforeEach(() => {
 Specify [`routeHandler`][arg-routehandler] as the last argument to modify the
 outgoing request, stub a response, make assertions, etc.
 
-<!-- TODO DX-188 emphasize the usage of StaticResponse as the routeHandler -->
+{/* TODO DX-188 emphasize the usage of StaticResponse as the routeHandler */}
 
 If a function is passed as the `routeHandler`, it will be called with the
 intercepted HTTP request:
@@ -714,7 +714,7 @@ cy.intercept('/api', (req) => {
 
 From here, you can do several things with the intercepted request:
 
-<!-- TODO DX-190 add links to examples -->
+{/* TODO DX-190 add links to examples */}
 
 - modify and make assertions on the request like its body, headers, URL, method,
   etc. ([example](#Asserting-on-a-request-1))
