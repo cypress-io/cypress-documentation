@@ -27,7 +27,7 @@ cy.visit(options)
 
 ### Usage
 
-**<Icon name="check-circle" color="green" /> Correct Usage**
+<Icon name="check-circle" color="green" /> **Correct Usage**
 
 ```javascript
 cy.visit('/') // visits the baseUrl
@@ -41,7 +41,7 @@ cy.visit({
 
 ### Arguments
 
-**<Icon name="angle-right" /> url** **_(String)_**
+<Icon name="angle-right" /> **url _(String)_**
 
 The URL to visit.
 
@@ -53,9 +53,9 @@ URL or Cypress will attempt to act as your web server. See the
 [prefixes notes](#Prefixes) for more details.
 
 **Note:** visiting a new domain requires the Cypress window to reload. You
-cannot visit different super domains in a single test.
+cannot visit different super domains in a single test without the use of [`cy.origin()`](/api/commands/origin).
 
-**<Icon name="angle-right" /> options** **_(Object)_**
+<Icon name="angle-right" /> **options _(Object)_**
 
 Pass in an options object to control the behavior of `cy.visit()`.
 

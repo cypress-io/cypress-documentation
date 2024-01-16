@@ -150,7 +150,7 @@ Now let's imagine you have a single `insecure` link (or JavaScript redirect) in
 your application code.
 
 ```html
-<!-- Application code -->
+{/* Application code */}
 <html>
   <a href="http://example.cypress.io/page2">Page 2</a>
 </html>
@@ -211,7 +211,7 @@ The most common situation where you might encounter this error is when you click
 on an `<a>` that navigates to another superdomain.
 
 ```html
-<!-- Application code that is served at `localhost:8080` -->
+{/* Application code that is served at `localhost:8080` */}
 <html>
   <a href="https://example.cypress.io">Cypress</a>
 </html>
@@ -369,7 +369,7 @@ When we say JavaScript Redirects we are talking about any kind of code that does
 something like this:
 
 ```html
-<!-- Application code that is served at `localhost:8080` -->
+{/* Application code that is served at `localhost:8080` */}
 <html>
   <button id="nav">Navigate to Cypress example</button>
   <script>

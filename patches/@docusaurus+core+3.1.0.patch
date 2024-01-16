@@ -1,8 +1,8 @@
 diff --git a/node_modules/@docusaurus/core/lib/client/ClientLifecyclesDispatcher.js b/node_modules/@docusaurus/core/lib/client/ClientLifecyclesDispatcher.js
-index 062d7c1..8c8f1ea 100644
+index 903f8dc..cdc15f2 100644
 --- a/node_modules/@docusaurus/core/lib/client/ClientLifecyclesDispatcher.js
 +++ b/node_modules/@docusaurus/core/lib/client/ClientLifecyclesDispatcher.js
-@@ -16,7 +16,19 @@ export function dispatchLifecycleAction(lifecycleAction, ...args) {
+@@ -16,7 +16,20 @@ export function dispatchLifecycleAction(lifecycleAction, ...args) {
  }
  function scrollAfterNavigation({ location, previousLocation, }) {
      if (!previousLocation) {
@@ -19,36 +19,28 @@ index 062d7c1..8c8f1ea 100644
 +          element?.scrollIntoView({ behavior: 'instant'});
 +        }
 +      }, 250)
-+      return; // no previous location so don't continue
++
++      return; // no-op: use native browser feature
      }
      const samePathname = location.pathname === previousLocation.pathname;
      const sameHash = location.hash === previousLocation.hash;
-@@ -27,12 +39,17 @@ function scrollAfterNavigation({ location, previousLocation, }) {
-     }
-     const { hash } = location;
-     if (!hash) {
--        window.scrollTo(0, 0);
-+      window.scrollTo(0, 0);
-     }
-     else {
--        const id = decodeURIComponent(hash.substring(1));
--        const element = document.getElementById(id);
--        element?.scrollIntoView();
-+      const id = decodeURIComponent(hash.substring(1));
-+      const element = document.getElementById(id);
-+      element?.scrollIntoView();
-+      setTimeout(() => {
-+        if(!isElementInView(element)) {
-+          element?.scrollIntoView({ behavior: 'instant'});
-+        }         
-+      }, 250)
+@@ -33,6 +46,11 @@ function scrollAfterNavigation({ location, previousLocation, }) {
+         const id = decodeURIComponent(hash.substring(1));
+         const element = document.getElementById(id);
+         element?.scrollIntoView();
++        setTimeout(() => {
++          if(!isElementInView(element)) {
++            element?.scrollIntoView({ behavior: 'instant'});
++          }         
++        }, 250)
      }
  }
  function ClientLifecyclesDispatcher({ children, location, previousLocation, }) {
-@@ -44,4 +61,13 @@ function ClientLifecyclesDispatcher({ children, location, previousLocation, }) {
+@@ -44,4 +62,14 @@ function ClientLifecyclesDispatcher({ children, location, previousLocation, }) {
      }, [previousLocation, location]);
      return children;
  }
++
 +function isElementInView(el) {
 +  const rect = el.getBoundingClientRect();
 +  return (

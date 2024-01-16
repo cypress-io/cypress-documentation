@@ -2,6 +2,7 @@
 // Note: type annotations allow type checking and IDEs autocompletion
 
 const darkCodeTheme = require('./src/theme/prism-material-oceanic')
+const { default: remarkDirective } = require('remark-directive')
 
 const fs = require('fs')
 const {
@@ -20,6 +21,7 @@ const config = {
   url: 'https://docs.cypress.io',
   baseUrl: '/',
   onBrokenLinks: 'throw',
+  onBrokenAnchors: 'log',
   onBrokenMarkdownLinks: 'throw',
   favicon: undefined,
 
@@ -42,10 +44,19 @@ const config = {
             'https://github.com/cypress-io/cypress-documentation/tree/main/',
           routeBasePath: '/',
           remarkPlugins: [
+            remarkDirective,
             cypressConfigExample,
             cypressConfigPluginExample,
             visitMountExample,
-            [copyTsToJs, { prettierOptions: prettierConfig }],
+            [
+              copyTsToJs,
+              {
+                prettierOptions: {
+                  ...prettierConfig,
+                  parser: 'typescript',
+                },
+              },
+            ],
           ],
           showLastUpdateTime: true,
         },

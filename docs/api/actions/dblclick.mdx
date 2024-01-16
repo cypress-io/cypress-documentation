@@ -21,7 +21,7 @@ chain further commands that rely on the subject after `.dblclick()`.
 
 ### Usage
 
-**<Icon name="check-circle" color="green" /> Correct Usage**
+<Icon name="check-circle" color="green" /> **Correct Usage**
 
 ```javascript
 cy.get('button').dblclick() // Double click on button
@@ -29,7 +29,7 @@ cy.focused().dblclick() // Double click on el with focus
 cy.contains('Welcome').dblclick() // Double click on first el containing 'Welcome'
 ```
 
-**<Icon name="exclamation-triangle" color="red" /> Incorrect Usage**
+<Icon name="exclamation-triangle" color="red" /> **Incorrect Usage**
 
 ```javascript
 cy.dblclick('button') // Errors, cannot be chained off 'cy'
@@ -38,7 +38,7 @@ cy.window().dblclick() // Errors, 'window' does not yield DOM element
 
 ### Arguments
 
-**<Icon name="angle-right" /> position** **_(String)_**
+<Icon name="angle-right" /> **position _(String)_**
 
 The position where the double click should be issued. The `center` position is
 the default position. Valid positions are `topLeft`, `top`, `topRight`, `left`,
@@ -49,26 +49,26 @@ the default position. Valid positions are `topLeft`, `top`, `topRight`, `left`,
   alt="cypress-command-positions-diagram"
 />
 
-**<Icon name="angle-right" /> x** **_(Number)_**
+<Icon name="angle-right" /> **x _(Number)_**
 
 The distance in pixels from the element's left to issue the double click.
 
-**<Icon name="angle-right" /> y** **_(Number)_**
+<Icon name="angle-right" /> **y _(Number)_**
 
 The distance in pixels from the element's top to issue the double click.
 
-**<Icon name="angle-right" /> options** **_(Object)_**
+<Icon name="angle-right" /> **options _(Object)_**
 
 Pass in an options object to change the default behavior of `.dblclick()`.
 
 | Option                       | Default                                                                        | Description                                                                                                                                        |
 | ---------------------------- | ------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `altKey`                     | `false`                                                                        | Activates the alt key (option key for Mac). Aliases: <code>optionKey</code>.                                                                       |
+| `altKey`                     | `false`                                                                        | Activates the alt key (option key for Mac). Aliases: `optionKey`.                                                                                  |
 | `animationDistanceThreshold` | [`animationDistanceThreshold`](/guides/references/configuration#Actionability) | The distance in pixels an element must exceed over time to be [considered animating](/guides/core-concepts/interacting-with-elements#Animations).  |
-| `ctrlKey`                    | `false`                                                                        | Activates the control key. Aliases: <code>controlKey</code>.                                                                                       |
+| `ctrlKey`                    | `false`                                                                        | Activates the control key. Aliases: `controlKey`.                                                                                                  |
 | `log`                        | `true`                                                                         | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log)                                                           |
 | `force`                      | `false`                                                                        | Forces the action, disables [waiting for actionability](#Assertions)                                                                               |
-| `metaKey`                    | `false`                                                                        | Activates the meta key (Windows key or command key for Mac). Aliases: <code>commandKey</code>, <code>cmdKey</code>.                                |
+| `metaKey`                    | `false`                                                                        | Activates the meta key (Windows key or command key for Mac). Aliases: `commandKey`, `cmdKey`.                                                      |
 | `multiple`                   | `true`                                                                         | Serially click multiple elements                                                                                                                   |
 | `scrollBehavior`             | [`scrollBehavior`](/guides/references/configuration#Actionability)             | Viewport position to where an element [should be scrolled](/guides/core-concepts/interacting-with-elements#Scrolling) before executing the command |
 | `shiftKey`                   | `false`                                                                        | Activates the shift key.                                                                                                                           |
@@ -164,12 +164,12 @@ offers options to hold down keys across multiple commands. See
 
 The following modifiers can be combined with `.dblclick()`.
 
-| Option     | Notes                                                                                                               |
-| ---------- | ------------------------------------------------------------------------------------------------------------------- |
-| `altKey`   | Activates the alt key (option key for Mac). Aliases: <code>optionKey</code>.                                        |
-| `ctrlKey`  | Activates the control key. Aliases: <code>controlKey</code>.                                                        |
-| `metaKey`  | Activates the meta key (Windows key or command key for Mac). Aliases: <code>commandKey</code>, <code>cmdKey</code>. |
-| `shiftKey` | Activates the shift key.                                                                                            |
+| Option     | Notes                                                                                         |
+| ---------- | --------------------------------------------------------------------------------------------- |
+| `altKey`   | Activates the alt key (option key for Mac). Aliases: `optionKey`.                             |
+| `ctrlKey`  | Activates the control key. Aliases: `controlKey`.                                             |
+| `metaKey`  | Activates the meta key (Windows key or command key for Mac). Aliases: `commandKey`, `cmdKey`. |
+| `shiftKey` | Activates the shift key.                                                                      |
 
 ##### Alt click
 
