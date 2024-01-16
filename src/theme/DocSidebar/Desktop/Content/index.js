@@ -63,7 +63,7 @@ export default function DocSidebarDesktopContent({ path, sidebar, className }) {
         className
       )}
     >
-      <div className="p-[24px] text-left">
+      <div className="p-[8px] text-left">
         <DocMenu
           items={items}
           LinkComponent={Link}
