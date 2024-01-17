@@ -61,8 +61,14 @@ This illustrates the limited code from the
 [AWS Amplify Framework](https://aws.amazon.com/amplify/framework/) needed to
 programmatically log an existing a user into an application.
 
+<!-- prettier-ignore-start -->
+<Tabs>
+  <TabItem value="v5" label="Amplify v5.x.x" default>
+<!-- prettier-ignore-end -->
+
 ```jsx
 // Add 'aws-amplify' library into your application
+import Amplify, { Auth } from 'aws-amplify'
 
 // Configure Auth category with your Amazon Cognito credentials
 Amplify.configure({
@@ -77,6 +83,37 @@ Auth.signIn(username, password)
   .then((user) => console.log(user))
   .catch((err) => console.log(err))
 ```
+
+<!-- prettier-ignore-start -->
+  </TabItem>
+  <TabItem value="v6" label="Amplify v6.x.x">
+<!-- prettier-ignore-end -->
+
+```tsx
+import { Amplify } from "aws-amplify";
+import { fetchAuthSession, signIn } from "aws-amplify/auth";
+
+Amplify.configure({
+  Auth: {
+    Cognito: {
+      userPoolId: "XX-XXXX-X_XXXXXXXXX",
+      userPoolClientId: "XXXXXXXXXXXXXXXXXXXXXXXXX",
+      // OR:
+      identityPoolId: 'XX-XXXX-X:XXXXXXXX-XXXX', // Amazon Cognito Identity Pool ID
+    },
+  },
+});
+signIn({ username, password, { authFlowType: "USER_PASSWORD_AUTH" } })
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  .then((_signInOutput) => fetchAuthSession())
+  .then((authSession) => console.log(authSession))
+  .catch((err) => console.log(err));
+```
+
+<!-- prettier-ignore-start -->
+  </TabItem>
+</Tabs>
+<!-- prettier-ignore-end -->
 
 ## Amazon Cognito Setup
 
@@ -168,7 +205,7 @@ const awsConfig = require('./aws-exports-es5.js')
 
 There are two ways you can authenticate to AWS Cognito:
 
-- [Login with `cy.origin()`](/guides/end-to-end-testing/amazon-cognito-authentication#Login-with-cy-origin)
+- [Login with `cy.origin()`](/guides/end-to-end-testing/amazon-cognito-authentication#Login-with-cyorigin)
 - [Programmatic Access](/guides/end-to-end-testing/amazon-cognito-authentication#Programmatic-Login)
 
 ### Login with [`cy.origin()`](/api/commands/origin)
@@ -302,6 +339,11 @@ In this `loginByCognitoApi` command, we call `Auth.signIn`, then use that
 response to set the items inside of localStorage for the UI to know that our
 user is logged into the application.
 
+<!-- prettier-ignore-start -->
+<Tabs>
+  <TabItem value="v5" label="Amplify v5.x.x" default>
+<!-- prettier-ignore-end -->
+
 ```jsx
 // cypress/support/auth-provider-commands/cognito.ts
 
@@ -358,6 +400,74 @@ Cypress.Commands.add('loginByCognitoApi', (username, password) => {
   cy.visit('/')
 })
 ```
+
+<!-- prettier-ignore-start -->
+  </TabItem>
+  <TabItem value="v6" label="Amplify v6.x.x">
+<!-- prettier-ignore-end -->
+
+```tsx
+// cypress/support/auth-provider-commands/cognito.ts
+
+import { Amplify } from 'aws-amplify'
+import { fetchAuthSession, signIn } from 'aws-amplify/auth'
+
+Amplify.configure(Cypress.env('awsConfig'))
+const fetchJwts = async (username: string, password: string) => {
+  const options = { authFlowType: 'USER_PASSWORD_AUTH' as const }
+  await signIn({ username, password, options })
+  const authSession = await fetchAuthSession()
+  const tokens = authSession.tokens!
+  const accessToken = tokens.accessToken
+  const accessTokenPayload = accessToken.payload
+  return {
+    idToken: tokens.idToken!.toString(),
+    accessToken: accessToken.toString(),
+    clientId: accessTokenPayload.client_id as string,
+    accessTokenSub: accessTokenPayload.sub!,
+  }
+}
+type JwtResponse = Awaited<ReturnType<typeof fetchJwts>>
+
+// Amazon Cognito
+Cypress.Commands.add(
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  'loginByCognitoApi',
+  (username: string, password: string) => {
+    const log = Cypress.log({
+      displayName: 'COGNITO LOGIN',
+      message: [`🔐 Authenticating | ${username}`],
+      autoEnd: false,
+    })
+
+    log.snapshot('before')
+
+    cy.wrap(fetchJwts(username, password), { log: false }).then(
+      (unknownJwts) => {
+        const { idToken, accessToken, clientId, accessTokenSub } =
+          unknownJwts as JwtResponse
+
+        const keyPrefix = `CognitoIdentityServiceProvider.${clientId}`
+        const keyPrefixWithUsername = `${keyPrefix}.${accessTokenSub}`
+
+        const ls = window.localStorage
+        ls.setItem(`${keyPrefixWithUsername}.idToken`, idToken)
+        ls.setItem(`${keyPrefixWithUsername}.accessToken`, accessToken)
+        ls.setItem(`${keyPrefix}.LastAuthUser`, accessTokenSub)
+
+        log.snapshot('after')
+        log.end()
+      }
+    )
+  }
+)
+```
+
+<!-- prettier-ignore-start -->
+  </TabItem>
+</Tabs>
+<!-- prettier-ignore-end -->
 
 Finally, we can use our `loginByCognitoApi` command in at test. Below is our
 test to login as a user via [Amazon Cognito](https://aws.amazon.com/cognito),
