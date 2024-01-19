@@ -506,12 +506,6 @@
   force = true
 
 [[redirects]]
-  from = "/guides/cloud/debugging/recorded-runs"
-  to = "/guides/cloud/recorded-runs"
-  status = 301
-  force = true
-
-[[redirects]]
   from = "/api/commands"
   to = "/api/table-of-contents"
   status = 301
