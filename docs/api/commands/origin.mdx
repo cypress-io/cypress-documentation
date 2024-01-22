@@ -57,7 +57,7 @@ cy.visit('/')
 cy.get('h1').contains('My cool site under test')
 ```
 
-<Icon name="exclamation-triangle" color="red" /> Incorrect Usage**
+<Icon name="exclamation-triangle" color="red" /> **Incorrect Usage**
 
 ```js
 const hits = getHits()
@@ -165,7 +165,7 @@ Values returned or yielded from the callback function **must** be serializable
 or they will not be returned to the primary origin. For example, the following
 will not work:
 
-<Icon name="exclamation-triangle" color="red" /> Incorrect Usage**
+<Icon name="exclamation-triangle" color="red" /> **Incorrect Usage**
 
 ```js
 cy.origin('https://example.cypress.io', () => {
@@ -280,7 +280,7 @@ this functionality in a `login`
 duplicate this login code in every test. Here's an idealized example of how to
 do this with `cy.origin()`.
 
-<Icon name="exclamation-triangle" color="#f0ad4e" /> Inefficient Usage**
+<Icon name="exclamation-triangle" color="#f0ad4e" /> **Inefficient Usage**
 
 ```js
 Cypress.Commands.add('login', (username, password) => {
@@ -358,7 +358,7 @@ for transmission. It is very important to understand that variables **inside**
 the callback are not shared with the scope **outside** the callback. For example
 this will not work:
 
-<Icon name="exclamation-triangle" color="red" /> Incorrect Usage**
+<Icon name="exclamation-triangle" color="red" /> **Incorrect Usage**
 
 ```js
 const foo = 1
