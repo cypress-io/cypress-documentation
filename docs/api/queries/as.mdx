@@ -33,7 +33,7 @@ cy.stub(api, 'onUnauth').as('unauth') // Alias stub as @unauth
 cy.spy(win, 'fetch').as('winFetch') // Alias spy as @winFetch
 ```
 
-<Icon name="exclamation-triangle" color="red" /> Incorrect Usage**
+<Icon name="exclamation-triangle" color="red" /> **Incorrect Usage**
 
 ```javascript
 cy.as('foo') // Errors, cannot be chained off 'cy'
