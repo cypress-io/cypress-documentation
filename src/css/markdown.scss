@@ -23,7 +23,8 @@ div.markdown {
     margin-bottom: 0;
   }
 
-  h2 {
+  body & h2 {
+    @apply mb-2;
     --ifm-h2-font-size: 2rem;
   }
 
