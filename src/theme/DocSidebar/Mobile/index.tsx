@@ -1,9 +1,5 @@
 import React from 'react'
-import clsx from 'clsx'
-import {
-  NavbarSecondaryMenuFiller,
-  ThemeClassNames,
-} from '@docusaurus/theme-common'
+import { NavbarSecondaryMenuFiller } from '@docusaurus/theme-common'
 import { useNavbarMobileSidebar } from '@docusaurus/theme-common/internal'
 import DocMenu from '@cypress-design/react-docmenu'
 import { cloneSidebarWithActivePathExpanded } from '../utils'
