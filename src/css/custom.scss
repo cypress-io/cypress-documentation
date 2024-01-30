@@ -373,3 +373,7 @@ h6 {
     @apply bg-gray-900;
   }
 }
+
+.navbar-sidebar__backdrop {
+  @apply bg-gray-900/[.80] backdrop-blur;
+}
