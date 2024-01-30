@@ -16,7 +16,7 @@ export default function NavbarMobilePrimaryMenu() {
     <ul className="menu__list">
       {items.map((item, i) => (
         <NavbarItem
-          className="text-gray-700 dark:text-gray-300"
+          className="text-gray-700 bg-transparent hover:bg-transparent dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100"
           mobile
           {...item}
           onClick={() => mobileSidebar.toggle()}
