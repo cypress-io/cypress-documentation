@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
 import clsx from 'clsx'
-import Link from '@docusaurus/Link'
 import {
   useAnnouncementBar,
   useScrollPosition,
 } from '@docusaurus/theme-common/internal'
 import { translate } from '@docusaurus/Translate'
 import DocMenu from '@cypress-design/react-docmenu'
-import Tag from '@cypress-design/react-tag'
 import styles from './styles.module.css'
+import { cloneSidebarWithActivePathExpanded } from '../../utils'
+import { SidebarLink } from '../../SidebarLink'
 
 function useShowAnnouncementBar() {
   const { isActive } = useAnnouncementBar()
@@ -22,41 +22,6 @@ function useShowAnnouncementBar() {
     [isActive]
   )
   return isActive && showAnnouncementBar
-}
-
-function cloneSidebarWithActivePathExpanded(sidebarItems, activePath) {
-  let hasActive = false
-  const items = sidebarItems.map((item) => {
-    if (item.items) {
-      const { items, hasActive: localHasActive } =
-        cloneSidebarWithActivePathExpanded(item.items, activePath)
-      hasActive = hasActive || localHasActive
-      return {
-        ...item,
-        items,
-        collapsed: !localHasActive,
-      }
-    } else {
-      if (item.href === activePath) {
-        hasActive = true
-      }
-      return { ...item }
-    }
-  })
-  return { items, hasActive }
-}
-
-function SidebarLink({ children, customProps, className, href, style }) {
-  return (
-    <Link {...{ className, href, style }}>
-      {children}{' '}
-      {customProps?.new_label ? (
-        <Tag color="indigo" size="16" dark style={{ marginTop: '-2px' }}>
-          New
-        </Tag>
-      ) : null}
-    </Link>
-  )
 }
 
 export default function DocSidebarDesktopContent({ path, sidebar, className }) {
