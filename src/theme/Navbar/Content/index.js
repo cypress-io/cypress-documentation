@@ -15,7 +15,7 @@ function useNavbarItems() {
   return useThemeConfig().navbar.items
 }
 
-function NavbarItems({ items }: { items: any[] }) {
+function NavbarItems({ items }) {
   return (
     <>
       {items.map((item, i) => (
@@ -37,7 +37,7 @@ ${JSON.stringify(item, null, 2)}`,
   )
 }
 
-function NavbarContentLayout({ left, center, right }: any) {
+function NavbarContentLayout({ left, center, right }) {
   return (
     <div className="navbar__inner">
       <div className="navbar__items navbar__items--left">{left}</div>
