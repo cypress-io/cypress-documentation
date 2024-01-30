@@ -1,7 +1,12 @@
 import React from 'react'
 import { useThemeConfig } from '@docusaurus/theme-common'
 import { useNavbarMobileSidebar } from '@docusaurus/theme-common/internal'
-import NavbarItem from '@theme/NavbarItem'
+import Link from '@docusaurus/Link'
+import {
+  IconChevronRightSmall,
+  IconArrowTopRight,
+} from '@cypress-design/react-icon'
+
 function useNavbarItems() {
   // TODO temporary casting until ThemeConfig type is improved
   return useThemeConfig().navbar.items
@@ -15,13 +20,20 @@ export default function NavbarMobilePrimaryMenu() {
   return (
     <ul className="menu__list">
       {items.map((item, i) => (
-        <NavbarItem
-          className="text-gray-700 bg-transparent hover:bg-transparent dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100"
+        <Link
+          className="flex items-center justify-between my-[8px] py-[8px] px-[12px] text-gray-700 bg-transparent hover:bg-transparent dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100"
           mobile
           {...item}
           onClick={() => mobileSidebar.toggle()}
           key={i}
-        />
+        >
+          {item.label}
+          {item.to?.startsWith('http') ? (
+            <IconArrowTopRight stroke-color="jade-300" />
+          ) : (
+            <IconChevronRightSmall />
+          )}
+        </Link>
       ))}
     </ul>
   )
