@@ -1,9 +1,10 @@
-import React from 'react';
-import {useNavbarMobileSidebar} from '@docusaurus/theme-common/internal';
-import {translate} from '@docusaurus/Translate';
-import IconMenu from '@theme/Icon/Menu';
+import React, { useEffect } from 'react'
+import { useNavbarMobileSidebar } from '@docusaurus/theme-common/internal'
+import { translate } from '@docusaurus/Translate'
+import IconMenu from '@theme/Icon/Menu'
 export default function MobileSidebarToggle() {
-  const {toggle, shown} = useNavbarMobileSidebar();
+  const { toggle, shown } = useNavbarMobileSidebar()
+
   return (
     <button
       onClick={toggle}
@@ -15,8 +16,9 @@ export default function MobileSidebarToggle() {
       })}
       aria-expanded={shown}
       className="navbar__toggle clean-btn"
-      type="button">
+      type="button"
+    >
       <IconMenu />
     </button>
-  );
+  )
 }

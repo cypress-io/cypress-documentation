@@ -150,18 +150,6 @@ const config = {
             to: 'https://learn.cypress.io',
             label: 'Learn',
           },
-          {
-            href: 'https://github.com/cypress-io/cypress-documentation',
-            position: 'right',
-            className: 'github-logo',
-            'aria-label': 'Cypress GitHub repository',
-          },
-          {
-            href: 'https://on.cypress.io/discord',
-            position: 'right',
-            className: 'discord-logo',
-            'aria-label': 'Cypress Discord',
-          },
         ],
       },
       // optional, can be commented out

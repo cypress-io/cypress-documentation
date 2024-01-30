@@ -4,6 +4,7 @@ import { translate } from '@docusaurus/Translate'
 import NavbarColorModeToggle from '@theme/Navbar/ColorModeToggle'
 import IconClose from '@theme/Icon/Close'
 import NavbarLogo from '@theme/Navbar/Logo'
+import { SocialIcons } from '../../Content/SocialIcons'
 
 function CloseButton() {
   const mobileSidebar = useNavbarMobileSidebar()
@@ -27,6 +28,7 @@ export default function NavbarMobileSidebarHeader() {
   return (
     <div className="navbar-sidebar__brand">
       <NavbarLogo />
+      <SocialIcons className="flex ml-[8px]" />
       <CloseButton />
     </div>
   )

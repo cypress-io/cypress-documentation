@@ -5,8 +5,16 @@ import DocMenu from '@cypress-design/react-docmenu'
 import { cloneSidebarWithActivePathExpanded } from '../utils'
 import { SidebarLink } from '../SidebarLink'
 
+interface DocSidebarMobileSecondaryMenuProps {
+  sidebar: any
+  path: string
+}
+
 // eslint-disable-next-line react/function-component-definition
-const DocSidebarMobileSecondaryMenu = ({ sidebar, path }) => {
+const DocSidebarMobileSecondaryMenu = ({
+  sidebar,
+  path,
+}: DocSidebarMobileSecondaryMenuProps) => {
   const mobileSidebar = useNavbarMobileSidebar()
   const { items } = cloneSidebarWithActivePathExpanded(sidebar, path)
   return (
@@ -26,7 +34,7 @@ const DocSidebarMobileSecondaryMenu = ({ sidebar, path }) => {
   )
 }
 
-function DocSidebarMobile(props) {
+function DocSidebarMobile(props: any) {
   return (
     <NavbarSecondaryMenuFiller
       component={DocSidebarMobileSecondaryMenu}
