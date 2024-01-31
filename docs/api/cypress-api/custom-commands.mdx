@@ -616,13 +616,13 @@ Cypress.Commands.add(
 )
 ```
 
-<Icon name="check-circle" color="green" /> Valid Usage**
+<Icon name="check-circle" color="green" /> **Valid Usage**
 
 ```javascript
 cy.get('button').click() // has subject, and is `element`
 ```
 
-<Icon name="exclamation-triangle" color="red" /> Invalid Usage**
+<Icon name="exclamation-triangle" color="red" /> **Invalid Usage**
 
 ```javascript
 cy.click() // no subject, will error
@@ -649,7 +649,7 @@ Cypress.Commands.add(
 )
 ```
 
-<Icon name="check-circle" color="green" /> Valid Usage**
+<Icon name="check-circle" color="green" /> **Valid Usage**
 
 ```javascript
 cy.get('button').trigger() // has subject, and is `element`
@@ -657,7 +657,7 @@ cy.document().trigger() // has subject, and is `document`
 cy.window().trigger() // has subject, and is `window`
 ```
 
-<Icon name="exclamation-triangle" color="red" /> Invalid Usage**
+<Icon name="exclamation-triangle" color="red" /> **Invalid Usage**
 
 ```javascript
 cy.trigger() // no subject, will error
@@ -693,7 +693,7 @@ Cypress.Commands.add(
 )
 ```
 
-<Icon name="check-circle" color="green" /> Valid Usage**
+<Icon name="check-circle" color="green" /> **Valid Usage**
 
 ```javascript
 cy.scrollTo() // no subject, but valid because it's optional
@@ -701,7 +701,7 @@ cy.get('#main').scrollTo() // has subject, and is `element`
 cy.visit().scrollTo() // has subject, and since visit yields `window` it's ok
 ```
 
-<Icon name="exclamation-triangle" color="red" /> Invalid Usage**
+<Icon name="exclamation-triangle" color="red" /> **Invalid Usage**
 
 ```javascript
 cy.document().scrollTo() // has subject, but it's a `document`, will error
