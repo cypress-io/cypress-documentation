@@ -142,19 +142,8 @@ body {
   }
 }
 
-[data-theme='dark'] .alert.alert--info h2,
-h3,
-h4 {
-  border-bottom: none;
-  padding-bottom: 0;
-}
-
 [class^='toggle_'] button {
   margin-left: 0.15rem;
-}
-
-.alert.alert--info {
-  margin-bottom: 2rem;
 }
 
 /* using attribute selector for these dynamic classes */
@@ -162,10 +151,18 @@ h4 {
   display: none;
 }
 
-.alert.alert--info h2,
-h3 {
-  border-bottom: none;
-  padding-bottom: 0;
+.alert.alert--info {
+  [data-theme='dark'] &,
+  & {
+    margin-bottom: 2rem;
+    h2,
+    h3,
+    h4 {
+      border-bottom: none;
+      padding-bottom: 0;
+      margin-bottom: 4px;
+    }
+  }
 }
 
 div[class^='announcementBar'] {
