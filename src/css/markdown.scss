@@ -4,15 +4,15 @@ div.markdown {
 
   ul {
     padding-left: var(--ifm-list-left-padding);
-    li {
-      list-style: disc;
+    & > li {
+      list-style: circle;
     }
   }
 
   ol {
     margin-bottom: 1rem;
     padding-left: var(--ifm-list-left-padding);
-    li {
+    & > li {
       list-style: decimal;
     }
   }
