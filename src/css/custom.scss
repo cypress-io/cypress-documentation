@@ -122,9 +122,11 @@ html[data-theme='dark'] {
 }
 
 /* prevent fonts from looking chunky, esp in Firefox */
-body {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@media (min-resolution: 2dppx) {
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
 }
 
 /* add a small gap to the main content area when the width
