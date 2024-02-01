@@ -5,6 +5,13 @@ div.markdown {
   ul {
     padding-left: var(--ifm-list-left-padding);
     & > li {
+      list-style: disc;
+    }
+  }
+
+  ul,
+  ol {
+    ul > li {
       list-style: circle;
     }
   }
