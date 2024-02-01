@@ -127,12 +127,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-@media (min-width: 997px) {
-  body .container {
-    @apply ml-[1rem];
-  }
-}
-
 /* add a small gap to the main content area when the width
   starts to approach the sidebar */
 @media screen and (min-width: 997px) and (max-width: 1660px) {
