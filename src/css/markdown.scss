@@ -118,6 +118,13 @@ div.markdown {
     }
   }
 
+  .theme-admonition {
+    h2 {
+      font-size: 1.5rem;
+      @apply mb-4 mt-3;
+    }
+  }
+
   .inlineTOC ul {
     padding-left: 0;
   }
