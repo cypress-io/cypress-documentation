@@ -63,11 +63,22 @@ div.markdown {
 
   // add border bottom to code tags that are in a link
   a:has(> code) {
-    border-bottom: 1px dotted var(--ifm-link-color);
-
+    &,
     &:hover {
-      border-bottom: 1px solid var(--ifm-link-color);
+      display: inline-block;
+      border: 0.1rem solid rgba(0, 0, 0, 0.1);
+      border-radius: var(--ifm-code-border-radius);
+      background-color: var(--ifm-code-background);
+      padding: 0 0.2rem 0.1rem;
     }
+  }
+
+  a > code {
+    border: none;
+    border-bottom: 1px dotted var(--ifm-link-color);
+    background: transparent;
+    border-radius: 0;
+    padding: 0;
   }
 
   // ensure text links in admonitions have underline
