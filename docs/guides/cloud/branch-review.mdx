@@ -1,7 +1,7 @@
 ---
 title: Branch Review
 sidebar_position: 50
-sidebar_class_name: new_label
+sidebar_custom_props: { 'new_label': true }
 ---
 
 :::info
@@ -129,15 +129,15 @@ Recording exactly one run for every commit as the best/only way to ensure comple
 2. Get a glance of changes in your branch across key statuses
 3. See what has changed in a specific status, for example:
    - <img
-       className="br-ui"
+       className="br-ui inline-block"
        src="/img/guides/cloud/branch-review/test-status-up.png"
      /> total number introduced in your branch
    - <img
-       className="br-ui"
+       className="br-ui inline-block"
        src="/img/guides/cloud/branch-review/test-status-down.png"
      /> total number decreased or resolved in your branch
    - <img
-       className="br-ui"
+       className="br-ui inline-block"
        src="/img/guides/cloud/branch-review/test-status-total.png"
      /> total count, for example, _3 new and 1 existing_
 4. The test state (failed, flaky, pending) is also indicated at the spec level
