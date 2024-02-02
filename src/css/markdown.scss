@@ -126,9 +126,12 @@ div.markdown {
   }
 
   .theme-admonition {
-    h2 {
-      font-size: 1.5rem;
-      @apply mb-4 mt-2;
+    [data-theme='dark'] &,
+    & {
+      h2 {
+        font-size: 1.5rem;
+        @apply mb-4 mt-2;
+      }
     }
   }
 
