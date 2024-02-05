@@ -74,13 +74,10 @@ div.markdown {
   }
 
   a > code {
-    body & {
-      border: none;
-      border-bottom: 1px dotted var(--ifm-link-color);
-      background: transparent;
-      border-radius: 0;
-      padding: 0;
-    }
+    border-bottom: 1px dotted var(--ifm-link-color);
+    background: transparent;
+    border-radius: 0;
+    padding: 0;
   }
 
   // ensure text links in admonitions have underline
