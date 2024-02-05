@@ -74,6 +74,9 @@ div.markdown {
   }
 
   a > code {
+    border-top: none;
+    border-left: none;
+    border-right: none;
     border-bottom: 1px dotted var(--ifm-link-color);
     background: transparent;
     border-radius: 0;
