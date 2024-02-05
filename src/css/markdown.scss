@@ -70,7 +70,7 @@ div.markdown {
         border: 0.1rem solid rgba(0, 0, 0, 0.1);
         border-radius: var(--ifm-code-border-radius);
         background-color: var(--ifm-code-background);
-        padding: 0 0.2rem 0.1rem;
+        padding: 0 0.2rem 0.2rem;
       }
     }
 
@@ -78,8 +78,8 @@ div.markdown {
       border: none;
       background: transparent;
       border-radius: 0;
-      padding: 0;
-      text-decoration: underline dotted;
+      text-decoration: underline dotted 1px;
+      text-underline-offset: 3px;
     }
 
     a:hover > code {
