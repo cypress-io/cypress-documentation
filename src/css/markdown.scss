@@ -61,25 +61,30 @@ div.markdown {
     }
   }
 
-  // add border bottom to code tags that are in a link
-  a:has(> code) {
-    &,
-    &:hover {
-      display: inline-block;
-      border: 0.1rem solid rgba(0, 0, 0, 0.1);
-      border-radius: var(--ifm-code-border-radius);
-      background-color: var(--ifm-code-background);
-      padding: 0 0.2rem 0.1rem;
+  .alert,
+  & {
+    // add border bottom to code tags that are in a link
+    a:has(> code) {
+      &,
+      &:hover {
+        border: 0.1rem solid rgba(0, 0, 0, 0.1);
+        border-radius: var(--ifm-code-border-radius);
+        background-color: var(--ifm-code-background);
+        padding: 0 0.2rem 0.1rem;
+      }
     }
-  }
 
-  a > code {
-    border: none;
-    // to work around a bug in cssnano grouping, we use rem here...
-    border-bottom: 0.08rem dotted var(--ifm-link-color);
-    background: transparent;
-    border-radius: 0;
-    padding: 0;
+    a > code {
+      border: none;
+      background: transparent;
+      border-radius: 0;
+      padding: 0;
+      text-decoration: underline dotted;
+    }
+
+    a:hover > code {
+      text-decoration-style: solid;
+    }
   }
 
   // ensure text links in admonitions have underline
