@@ -74,11 +74,14 @@ div.markdown {
   }
 
   a > code {
-    border: none;
-    border-bottom: 1px dotted var(--ifm-link-color);
-    background: transparent;
-    border-radius: 0;
-    padding: 0;
+    body &,
+    & {
+      border: none;
+      border-bottom: 1px dotted var(--ifm-link-color);
+      background: transparent;
+      border-radius: 0;
+      padding: 0;
+    }
   }
 
   // ensure text links in admonitions have underline
@@ -86,9 +89,6 @@ div.markdown {
     border-bottom: 1px dotted var(--ifm-link-color);
 
     &:hover {
-      border-bottom: 1px solid var(--ifm-link-color);
-    }
-    body & > code {
       border-bottom: 1px solid var(--ifm-link-color);
     }
   }
@@ -140,12 +140,9 @@ div.markdown {
   }
 
   .theme-admonition {
-    [data-theme='dark'] &,
-    & {
-      h2 {
-        font-size: 1.5rem;
-        @apply mb-4 mt-2;
-      }
+    h2 {
+      font-size: 1.5rem;
+      @apply mb-4 mt-2;
     }
   }
 
