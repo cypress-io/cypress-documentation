@@ -316,7 +316,7 @@ We provide two options to override the configuration while your test are
 running, `Cypress.config()` and suite-specific or test-specific configuration
 overrides.
 
-‼️ **Note:** The configuration values below are all writeable and **can be
+⚠️ **Note:** The configuration values below are all writeable and **can be
 changed** via per test configuration. Any other configuration values are
 readonly and cannot be changed at run time.
 
@@ -459,7 +459,7 @@ To block a host:
 - ✅ Pass only the host
 - ✅ Use wildcard `*` patterns
 - ✅ Include the port other than `80` and `443`
-- ‼️ Do **NOT** include protocol: `http://` or `https://`
+- ❌ Do **NOT** include protocol: `http://` or `https://`
 
 :::info
 
@@ -502,7 +502,7 @@ For instance given a URL: `https://google.com/search?q=cypress`
 
 - ✅ Matches `google.com`
 - ✅ Matches `*google.com`
-- ‼️ Does NOT match `*.google.com`
+- ❌ Does NOT match `*.google.com`
 
 :::
 

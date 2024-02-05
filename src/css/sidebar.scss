@@ -1,9 +1,12 @@
-.theme-doc-sidebar-container .menu {
-  background-color: var(--ifm-menu-color-background);
-}
-
 .theme-doc-sidebar-item-category {
   padding-bottom: 0.3rem;
+}
+
+body .theme-doc-sidebar-container {
+  @apply border-r border-gray-1000/[0.07];
+  html[data-theme='dark'] & {
+    @apply border-gray-900;
+  }
 }
 
 /* sidebar menu */
@@ -21,8 +24,7 @@
 
 /* sidebar menu collapsible children */
 .theme-doc-sidebar-item-category-level-2,
-.theme-doc-sidebar-item-category-level-3
-  > .menu__list-item-collapsible {
+.theme-doc-sidebar-item-category-level-3 > .menu__list-item-collapsible {
   font-size: 1.025rem;
 }
 
@@ -34,18 +36,4 @@
 // helps delineate different refs in sidebar, particularly in API section
 .theme-doc-sidebar-item-link.theme-doc-sidebar-item-link-level-2.menu__list-item.sidebar-guide-ref {
   font-weight: 600;
-}
-
-// "new" feature label in sidebar
-.theme-doc-sidebar-item-link.theme-doc-sidebar-item-link-level-2.menu__list-item.new_label,
-.theme-doc-sidebar-item-link.theme-doc-sidebar-item-link-level-3.menu__list-item.new_label {
-  a::after {
-    background-color: var(--cypress-color-indigo-400);
-    color: #fff;
-    content: "New";
-    font-size: .7rem;
-    border-radius: 5px;
-    margin-left: 5px;
-    padding: 2px 5px;
-  }
 }
