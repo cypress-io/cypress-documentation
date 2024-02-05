@@ -88,6 +88,9 @@ div.markdown {
     &:hover {
       border-bottom: 1px solid var(--ifm-link-color);
     }
+    body & > code {
+      border-bottom: 1px solid var(--ifm-link-color);
+    }
   }
 
   h2 {
