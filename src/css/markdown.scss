@@ -76,7 +76,7 @@ div.markdown {
   a > code {
     border: none;
     // to work around a bug in cssnano grouping, we use rem here...
-    border-bottom: 0.1rem dotted var(--ifm-link-color);
+    border-bottom: 0.08rem dotted var(--ifm-link-color);
     background: transparent;
     border-radius: 0;
     padding: 0;
