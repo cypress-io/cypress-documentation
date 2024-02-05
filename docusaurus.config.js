@@ -95,6 +95,18 @@ const config = {
     ],
     'docusaurus-plugin-sass',
     require.resolve('docusaurus-plugin-image-zoom'),
+    // ....
+    async function myPlugin(context, options) {
+      return {
+        name: 'docusaurus-tailwindcss',
+        configurePostCss(postcssOptions) {
+          // Appends TailwindCSS and AutoPrefixer.
+          postcssOptions.plugins.push(require('tailwindcss'))
+          postcssOptions.plugins.push(require('autoprefixer'))
+          return postcssOptions
+        },
+      }
+    },
   ],
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
@@ -105,55 +117,38 @@ const config = {
         logo: {
           href: '/guides/overview/why-cypress',
           alt: 'Cypress Logo',
-          src: '/img/logo/cypress-logo-dark.png',
+          src: '/img/logo/cypress-logo-light.svg',
+          srcDark: '/img/logo/cypress-logo-dark.svg',
         },
         items: [
           {
             to: '/guides/overview/why-cypress',
             label: 'Guides',
-            position: 'left',
             activeBasePath: 'guides',
           },
           {
             to: '/api/table-of-contents',
             label: 'API',
-            position: 'left',
             activeBasePath: 'api',
           },
           {
             to: '/plugins',
             label: 'Plugins',
-            position: 'left',
             activeBasePath: 'plugins',
           },
           {
             to: '/examples/recipes',
             label: 'Examples',
-            position: 'left',
             activeBasePath: 'examples',
           },
           {
             to: '/faq/questions/using-cypress-faq',
             label: 'FAQ',
-            position: 'left',
             activeBasePath: 'faq',
           },
           {
             to: 'https://learn.cypress.io',
             label: 'Learn',
-            position: 'left',
-          },
-          {
-            href: 'https://github.com/cypress-io/cypress-documentation',
-            position: 'right',
-            className: 'github-logo',
-            'aria-label': 'Cypress GitHub repository',
-          },
-          {
-            href: 'https://on.cypress.io/discord',
-            position: 'right',
-            className: 'discord-logo',
-            'aria-label': 'Cypress Discord',
           },
         ],
       },
