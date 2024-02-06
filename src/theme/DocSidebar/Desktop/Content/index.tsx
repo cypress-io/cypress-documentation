@@ -51,7 +51,6 @@ export default function DocSidebarDesktopContent({
       )}
     >
       <div className="p-[8px] text-left">
-        <pre className="text-right">{path}</pre>
         <DocMenu
           items={items}
           LinkComponent={SidebarLink as any}
