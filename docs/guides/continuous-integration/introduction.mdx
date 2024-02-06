@@ -454,6 +454,10 @@ to see why the commit information is unavailable.
 DEBUG=commit-info,cypress:server:record
 ```
 
+:::info
+Cypress versions less than 3.15.0 will need to manually provide the CI ENVs to correctly send their SCM to the Cloud
+:::
+
 #### CI Build Information
 
 In some newer CI providers, Cypress can't map the environment variables required
