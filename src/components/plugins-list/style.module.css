@@ -50,24 +50,12 @@ ul.pluginsList li p {
 }
 
 .pluginBadge {
-  margin-bottom: 5px;
+  margin-bottom: 10px;
 }
 
 .pluginTitle {
   border-bottom: 1px solid #eee;
   margin-bottom: 0.6em;
-}
-
-@media (min-width: 1280px) {
-  .pluginTitle {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-
-  .pluginBadge {
-    margin: 0;
-  }
 }
 
 /* remove hash symbol from appearing in the ::before
