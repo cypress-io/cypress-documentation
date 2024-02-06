@@ -63,20 +63,18 @@ default values.
 
 ### Global
 
-<!-- prettier-ignore-start -->
-
-| Option                 | Default                           | Description                                                                                                                                                                                  |
-| ---------------------- | --------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `clientCertificates`   | `[]`                              | An optional array of [client certificates](/guides/references/client-certificates).                                                                                                          |
-| `env`                  | `{}`                              | Any values to be set as [environment variables](/guides/guides/environment-variables).                                                                                                       |
-| `includeShadowDom`     | `false`                           | Whether to traverse shadow DOM boundaries and include elements within the shadow DOM in the results of query commands (e.g. [`cy.get()`](/api/commands/get)).                                |
-| `numTestsKeptInMemory` | `50`                              | The number of tests for which snapshots and command data are kept in memory. Reduce this number if you are experiencing high memory consumption in your browser during a test run.           |
-| `port`                 | `null`                            | Port used to host Cypress. Normally this is a randomly generated port.                                                                                                                       |
-| `redirectionLimit`     | `20`                              | The number of times that the application under test can redirect before erroring.                                                                                                            |
-| `reporter`             | `spec`                            | The [reporter](/guides/tooling/reporters) used during `cypress run`.                                                                                                                         |
-| `reporterOptions`      | `null`                            | The [reporter options](/guides/tooling/reporters#Reporter-Options) used. Supported options depend on the reporter.                                                                           |
-| `retries`              | `{ "runMode": 0, "openMode": 0 }` | The number of times to retry a failing test. Can be configured to apply to `cypress run` or `cypress open` separately. See [Test Retries](/guides/guides/test-retries) for more information. |
-| `watchForFileChanges`  | `true`                            | Whether Cypress will watch and restart tests on test file changes.                                                                                                                           |
+| Option                 | Default                               | Description                                                                                                                                                                                                                                                                                               |
+| ---------------------- | ------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `clientCertificates`   | `[]`                                  | An optional array of [client certificates](/guides/references/client-certificates).                                                                                                                                                                                                                       |
+| `env`                  | `{}`                                  | Any values to be set as [environment variables](/guides/guides/environment-variables).                                                                                                                                                                                                                    |
+| `includeShadowDom`     | `false`                               | Whether to traverse shadow DOM boundaries and include elements within the shadow DOM in the results of query commands (e.g. [`cy.get()`](/api/commands/get)).                                                                                                                                             |
+| `numTestsKeptInMemory` | Default based on `run` or `open` mode | The number of tests for which snapshots and command data are kept in memory. `numTestsKeptInMemory` is set to `50` by default during `cypress open` and set to `0` by default during `cypress run`. Reduce this number if you are experiencing high memory consumption in your browser during a test run. |
+| `port`                 | `null`                                | Port used to host Cypress. Normally this is a randomly generated port.                                                                                                                                                                                                                                    |
+| `redirectionLimit`     | `20`                                  | The number of times that the application under test can redirect before erroring.                                                                                                                                                                                                                         |
+| `reporter`             | `spec`                                | The [reporter](/guides/tooling/reporters) used during `cypress run`.                                                                                                                                                                                                                                      |
+| `reporterOptions`      | `null`                                | The [reporter options](/guides/tooling/reporters#Reporter-Options) used. Supported options depend on the reporter.                                                                                                                                                                                        |
+| `retries`              | `{ "runMode": 0, "openMode": 0 }`     | The number of times to retry a failing test. Can be configured to apply to `cypress run` or `cypress open` separately. As of Cypress `13.4.0`, the experimental Flake Detection strategy can also be configured. See [Test Retries](/guides/guides/test-retries) for more information.                    |
+| `watchForFileChanges`  | Default based on `run` or `open` mode | Whether Cypress will watch and restart tests on test file changes. `watchForFileChanges` is set to `true` by default during `cypress open` and set to `false` by default during `cypress run`.                                                                                                            |
 
 ### Timeouts
 
@@ -126,9 +124,9 @@ For more options regarding screenshots, view the
 | Option                  | Default          | Description                                                                                                                                                                                                                                                                                                                   |
 | ----------------------- | ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `trashAssetsBeforeRuns` | `true`           | Whether Cypress will trash assets within the `downloadsFolder`, `screenshotsFolder`, and `videosFolder` before tests run with `cypress run`.                                                                                                                                                                                  |
-| `videoCompression`      | `false`          | The quality setting for the video compression, in Constant Rate Factor (CRF). The value can be `false` or `0` to disable compression or a CRF between `1` and `51`, where a lower value results in better quality (at the expense of a higher file size). Setting this option to `true` will result in a default CRF of `32`.             |
-| `videosFolder`          | `cypress/videos` | Where Cypress will automatically save the video of the test run when tests run with `cypress run`.                                                                                                                                                                                                                       |
-| `video`                 | `false`          | Whether Cypress will capture a video of the tests run with `cypress run`.                                                                                                                                                                                                                                                |
+| `videoCompression`      | `false`          | The quality setting for the video compression, in Constant Rate Factor (CRF). The value can be `false` or `0` to disable compression or a CRF between `1` and `51`, where a lower value results in better quality (at the expense of a higher file size). Setting this option to `true` will result in a default CRF of `32`. |
+| `videosFolder`          | `cypress/videos` | Where Cypress will automatically save the video of the test run when tests run with `cypress run`.                                                                                                                                                                                                                            |
+| `video`                 | `false`          | Whether Cypress will capture a video of the tests run with `cypress run`.                                                                                                                                                                                                                                                     |
 
 ### Downloads
 
@@ -139,12 +137,12 @@ For more options regarding screenshots, view the
 
 ### Browser
 
-| Option                  | Default                              | Description                                                                                                                                                                                                                                                                                                                                                        |
-| ----------------------- | ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `chromeWebSecurity`     | `true`                               | Whether to enable Chromium-based browser's Web Security for same-origin policy and insecure mixed content.                                                                                                                                                            |
-| `blockHosts`            | `null`                               | A String or Array of hosts that you wish to block traffic for. [Please read the notes for examples on using this.](#blockHosts)                                                                                                                                                                                                                                    |
-| `modifyObstructiveCode` | `true`                               | Whether Cypress will search for and replace obstructive JS code in `.js` or `.html` files. [Please read the notes for more information on this setting.](#modifyObstructiveCode)                                                                                                                                                                                   |
-| `userAgent`             | `null`                               | Enables you to override the default user agent the browser sends in all request headers. User agent values are typically used by servers to help identify the operating system, browser, and browser version. See [User-Agent MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent) for example user agent values.              |
+| Option                  | Default | Description                                                                                                                                                                                                                                                                                                                                           |
+| ----------------------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `chromeWebSecurity`     | `true`  | Whether to enable Chromium-based browser's Web Security for same-origin policy and insecure mixed content.                                                                                                                                                                                                                                            |
+| `blockHosts`            | `null`  | A String or Array of hosts that you wish to block traffic for. [Please read the notes for examples on using this.](#blockHosts)                                                                                                                                                                                                                       |
+| `modifyObstructiveCode` | `true`  | Whether Cypress will search for and replace obstructive JS code in `.js` or `.html` files. [Please read the notes for more information on this setting.](#modifyObstructiveCode)                                                                                                                                                                      |
+| `userAgent`             | `null`  | Enables you to override the default user agent the browser sends in all request headers. User agent values are typically used by servers to help identify the operating system, browser, and browser version. See [User-Agent MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent) for example user agent values. |
 
 ### Viewport
 
@@ -179,16 +177,16 @@ creating `e2e` and `component` objects inside your Cypress configuration.
 These options are available to be specified inside the `e2e` configuration
 object:
 
-| Option               | Default                               | Description                                                                                                                                                                                           |
-| -------------------- | ------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `baseUrl`            | `null`                                | URL used as prefix for [`cy.visit()`](/api/commands/visit) or [`cy.request()`](/api/commands/request) command's URL.                                                                                  |
-| `setupNodeEvents`    | `null`                                | Function in which node events can be registered and config can be modified. Takes the place of the (removed) pluginFile option. [Please read the notes for examples on using this.](#setupNodeEvents) |
-| `supportFile`        | `cypress/support/e2e.{js,jsx,ts,tsx}` | Path to file to load before spec files load. This file is compiled and bundled. (Pass `false` to disable)                                                                                             |
-| `specPattern`        | <code>cypress/e2e/\*\*/*.cy.{js,jsx,ts,tsx}</code> | A String or Array of glob patterns of the test files to load.                                                                                                                                         |
-| `excludeSpecPattern` | `*.hot-update.js`                     | A String or Array of glob patterns used to ignore test files that would otherwise be shown in your list of tests. [Please read the notes on using this.](#excludeSpecPattern)                         |
-| `experimentalRunAllSpecs`      | `false`                               | Enables the "Run All Specs" UI feature, allowing the execution of multiple specs sequentially. |
-| `slowTestThreshold`  | `10000`                               | Time, in milliseconds, to consider a test "slow" during `cypress run`. A slow test will display in orange text in the default reporter.                                                               |
-| `testIsolation`        | `true`                      | Whether or not  [test isolation](/guides/core-concepts/writing-and-organizing-tests#Test-Isolation) is enabled to ensure a clean browser context between tests. |
+| Option                    | Default                                               | Description                                                                                                                                                                                           |
+| ------------------------- | ----------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `baseUrl`                 | `null`                                                | URL used as prefix for [`cy.visit()`](/api/commands/visit) or [`cy.request()`](/api/commands/request) command's URL.                                                                                  |
+| `setupNodeEvents`         | `null`                                                | Function in which node events can be registered and config can be modified. Takes the place of the (removed) pluginFile option. [Please read the notes for examples on using this.](#setupNodeEvents) |
+| `supportFile`             | `cypress/support/e2e.{js,jsx,ts,tsx}`                 | Path to file to load before spec files load. This file is compiled and bundled. (Pass `false` to disable)                                                                                             |
+| `specPattern`             | <code>cypress/e2e/\*\*/\*.cy.\{js,jsx,ts,tsx\}</code> | A String or Array of glob patterns of the test files to load.                                                                                                                                         |
+| `excludeSpecPattern`      | `*.hot-update.js`                                     | A String or Array of glob patterns used to ignore test files that would otherwise be shown in your list of tests. [Please read the notes on using this.](#excludeSpecPattern)                         |
+| `experimentalRunAllSpecs` | `false`                                               | Enables the "Run All Specs" UI feature, allowing the execution of multiple specs sequentially.                                                                                                        |
+| `slowTestThreshold`       | `10000`                                               | Time, in milliseconds, to consider a test "slow" during `cypress run`. A slow test will display in orange text in the default reporter.                                                               |
+| `testIsolation`           | `true`                                                | Whether or not [test isolation](/guides/core-concepts/writing-and-organizing-tests#Test-Isolation) is enabled to ensure a clean browser context between tests.                                        |
 
 :::cypress-config-example
 
@@ -207,17 +205,16 @@ object:
 These options are available to be specified inside the `component` configuration
 object:
 
-| Option               | Default                                  | Description                                                                                                                                                                                      |
-| -------------------- | ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `devServer`          | `null`                                   | Required option used to configure the component testing dev server. [Please read the notes for examples on using this.](#devServer)                                              |
-| `indexHtmlFile`      | `cypress/support/component-index.html`   | This is where Cypress renders your components and allows you to add in global assets, such as styles, fonts, and external scripts.                                       |
-| `setupNodeEvents`    | `null`                                   | Function in which node events can be registered and config can be modified. Takes the place of the (removed) plugins file. [Please read the notes for examples on using this.](#setupNodeEvents) |
-| `supportFile`        | `cypress/support/component.js`           | Path to file to load before spec files load. This file is compiled and bundled. (Pass `false` to disable)                                                                                        |
-| `specPattern`        | <code>\*\*/*.cy.{js,jsx,ts,tsx}</code>                | A glob pattern String or Array of glob pattern Strings of the spec files to load. <br /><br />Note that any files found matching the `e2e.specPattern` value will be automatically **excluded.** |
-| `excludeSpecPattern` | `['/snapshots/*', '/image_snapshots/*']` | A String or Array of glob patterns used to ignore spec files that would otherwise be shown in your list of specs. [Please read the notes on using this.](#excludeSpecPattern)                    |
-`experimentalSingleTabRunMode`                | `false` | Run all specs in a single tab, instead of creating a new tab per spec. This can improve run mode performance, but can impact spec isolation and reliability on large test suites. This experiment currently only applies to Component Testing.
-| `slowTestThreshold`  | `250`                                    | Time, in milliseconds, to consider a test "slow" during `cypress run`. A slow test will display in orange text in the default reporter.                                                          |
-
+| Option                         | Default                                   | Description                                                                                                                                                                                                                                    |
+| ------------------------------ | ----------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `devServer`                    | `null`                                    | Required option used to configure the component testing dev server. [Please read the notes for examples on using this.](#devServer)                                                                                                            |
+| `indexHtmlFile`                | `cypress/support/component-index.html`    | This is where Cypress renders your components and allows you to add in global assets, such as styles, fonts, and external scripts.                                                                                                             |
+| `setupNodeEvents`              | `null`                                    | Function in which node events can be registered and config can be modified. Takes the place of the (removed) plugins file. [Please read the notes for examples on using this.](#setupNodeEvents)                                               |
+| `supportFile`                  | `cypress/support/component.js`            | Path to file to load before spec files load. This file is compiled and bundled. (Pass `false` to disable)                                                                                                                                      |
+| `specPattern`                  | <code>\*\*/\*.cy.\{js,jsx,ts,tsx\}</code> | A glob pattern String or Array of glob pattern Strings of the spec files to load. <br /><br />Note that any files found matching the `e2e.specPattern` value will be automatically **excluded.**                                               |
+| `excludeSpecPattern`           | `['/snapshots/*', '/image_snapshots/*']`  | A String or Array of glob patterns used to ignore spec files that would otherwise be shown in your list of specs. [Please read the notes on using this.](#excludeSpecPattern)                                                                  |
+| `experimentalSingleTabRunMode` | `false`                                   | Run all specs in a single tab, instead of creating a new tab per spec. This can improve run mode performance, but can impact spec isolation and reliability on large test suites. This experiment currently only applies to Component Testing. |
+| `slowTestThreshold`            | `250`                                     | Time, in milliseconds, to consider a test "slow" during `cypress run`. A slow test will display in orange text in the default reporter.                                                                                                        |
 
 :::cypress-config-example
 
@@ -230,8 +227,6 @@ object:
 ```
 
 :::
-
-<!-- prettier-ignore-end -->
 
 ## Overriding Options
 
@@ -321,7 +316,7 @@ We provide two options to override the configuration while your test are
 running, `Cypress.config()` and suite-specific or test-specific configuration
 overrides.
 
-‼️ **Note:** The configuration values below are all writeable and **can be
+⚠️ **Note:** The configuration values below are all writeable and **can be
 changed** via per test configuration. Any other configuration values are
 readonly and cannot be changed at run time.
 
@@ -343,6 +338,7 @@ readonly and cannot be changed at run time.
 - `screenshotOnRunFailure`
 - `scrollBehavior`
 - `slowTestThreshold`
+- `taskTimeout`
 - `testIsolation` - this option can only be overridden at the suite-specific
   override level
 - `viewportHeight`
@@ -463,7 +459,7 @@ To block a host:
 - ✅ Pass only the host
 - ✅ Use wildcard `*` patterns
 - ✅ Include the port other than `80` and `443`
-- ‼️ Do **NOT** include protocol: `http://` or `https://`
+- ❌ Do **NOT** include protocol: `http://` or `https://`
 
 :::info
 
@@ -506,7 +502,7 @@ For instance given a URL: `https://google.com/search?q=cypress`
 
 - ✅ Matches `google.com`
 - ✅ Matches `*google.com`
-- ‼️ Does NOT match `*.google.com`
+- ❌ Does NOT match `*.google.com`
 
 :::
 
@@ -715,24 +711,25 @@ DEBUG=cypress:cli,cypress:server:specs
 
 ## History
 
-| Version                                       | Changes                                                                               |
-| --------------------------------------------- | ------------------------------------------------------------------------------------- |
-| [13.0.0](/guides/references/changelog#13-0-0) | Removed `nodeVersion` option.                                                         |
-| [13.0.0](/guides/references/changelog#13-0-0) | Removed `videoUploadOnPasses` option.                                                 |
-| [11.0.0](/guides/references/changelog#11-0-0) | Removed `e2e.experimentalSessionAndOrigin` option.                                    |
-| [10.4.0](/guides/references/changelog#10-4-0) | Added `e2e.testIsolation` option.                                                     |
-| [10.0.0](/guides/references/changelog#10-0-0) | Reworked page to support new `cypress.config.js` and deprecated `cypress.json` files. |
-| [8.7.0](/guides/references/changelog#8-7-0)   | Added `slowTestThreshold` option.                                                     |
-| [8.0.0](/guides/references/changelog#8-0-0)   | Added `clientCertificates` option and removed `firefoxGcInterval` configuration.      |
-| [7.0.0](/guides/references/changelog#7-0-0)   | Added `e2e` and `component` options.                                                  |
-| [7.0.0](/guides/references/changelog#7-0-0)   | Added `redirectionLimit` option.                                                      |
-| [6.1.0](/guides/references/changelog#6-1-0)   | Added `scrollBehavior` option.                                                        |
-| [5.2.0](/guides/references/changelog#5-2-0)   | Added `includeShadowDom` option.                                                      |
-| [5.0.0](/guides/references/changelog#5-0-0)   | Added `retries` configuration.                                                        |
-| [5.0.0](/guides/references/changelog#5-0-0)   | Renamed `blacklistHosts` configuration to `blockHosts`.                               |
-| [4.1.0](/guides/references/changelog#4-12-0)  | Added `screenshotOnRunFailure` configuration.                                         |
-| [4.0.0](/guides/references/changelog#4-0-0)   | Added `firefoxGcInterval` configuration.                                              |
-| [3.5.0](/guides/references/changelog#3-5-0)   | Added `nodeVersion` configuration.                                                    |
+| Version                                       | Changes                                                                                                                                       |
+| --------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| [13.4.0](/guides/references/changelog#13-4-0) | Added support for configuring the Experimental Flake Detection strategy via `retries.experimentalStrategy` and `retries.experimentalOptions`. |
+| [13.0.0](/guides/references/changelog#13-0-0) | Removed `nodeVersion` option.                                                                                                                 |
+| [13.0.0](/guides/references/changelog#13-0-0) | Removed `videoUploadOnPasses` option.                                                                                                         |
+| [11.0.0](/guides/references/changelog#11-0-0) | Removed `e2e.experimentalSessionAndOrigin` option.                                                                                            |
+| [10.4.0](/guides/references/changelog#10-4-0) | Added `e2e.testIsolation` option.                                                                                                             |
+| [10.0.0](/guides/references/changelog#10-0-0) | Reworked page to support new `cypress.config.js` and deprecated `cypress.json` files.                                                         |
+| [8.7.0](/guides/references/changelog#8-7-0)   | Added `slowTestThreshold` option.                                                                                                             |
+| [8.0.0](/guides/references/changelog#8-0-0)   | Added `clientCertificates` option and removed `firefoxGcInterval` configuration.                                                              |
+| [7.0.0](/guides/references/changelog#7-0-0)   | Added `e2e` and `component` options.                                                                                                          |
+| [7.0.0](/guides/references/changelog#7-0-0)   | Added `redirectionLimit` option.                                                                                                              |
+| [6.1.0](/guides/references/changelog#6-1-0)   | Added `scrollBehavior` option.                                                                                                                |
+| [5.2.0](/guides/references/changelog#5-2-0)   | Added `includeShadowDom` option.                                                                                                              |
+| [5.0.0](/guides/references/changelog#5-0-0)   | Added `retries` configuration.                                                                                                                |
+| [5.0.0](/guides/references/changelog#5-0-0)   | Renamed `blacklistHosts` configuration to `blockHosts`.                                                                                       |
+| [4.1.0](/guides/references/changelog#4-12-0)  | Added `screenshotOnRunFailure` configuration.                                                                                                 |
+| [4.0.0](/guides/references/changelog#4-0-0)   | Added `firefoxGcInterval` configuration.                                                                                                      |
+| [3.5.0](/guides/references/changelog#3-5-0)   | Added `nodeVersion` configuration.                                                                                                            |
 
 ## See also
 

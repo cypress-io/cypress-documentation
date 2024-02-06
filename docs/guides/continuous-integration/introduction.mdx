@@ -21,11 +21,11 @@ sidebar_position: 10
 
 ## Setting up CI
 
-<!-- textlint-disable -->
+{/* textlint-disable */}
 
 <DocsVideo src="https://youtube.com/embed/saYovXS9Llk" />
 
-<!-- textlint-enable -->
+{/* textlint-enable */}
 
 ### Basics
 
@@ -225,7 +225,7 @@ Mounting a project directory with an existing `node_modules` into a
 `cypress/base` docker image **will not work**:
 
 ```shell
-docker run -it -v /app:/app cypress/base:18.12.1 bash -c 'cypress run'
+docker run -it -v /app:/app cypress/base:20.9.0 bash -c 'cypress run'
 Error: the cypress binary is not installed
 ```
 
@@ -261,7 +261,7 @@ You can see the total available machine memory and the current free memory by
 running the [`cypress info`](https://on.cypress.io/command-line#cypress-info)
 command.
 
-<!-- hack: using css language label to respect decimals in syntax highlightng -->
+{/* hack: using css language label to respect decimals in syntax highlightng */}
 
 ```css
 npx cypress info
@@ -319,7 +319,7 @@ has these dependencies installed.
 #### Ubuntu/Debian
 
 ```shell
-apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
+apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libnss3 libxss1 libasound2 libxtst6 xauth xvfb
 ```
 
 #### CentOS
@@ -647,12 +647,6 @@ colors are not properly formatted in your CI.
 NO_COLOR=1 cypress run
 ```
 
-## Workshop
-
-Cypress team has created a full workshop showing how to run Cypress on popular
-CI providers. Find the workshop at
-[github.com/cypress-io/cypress-workshop-ci](https://github.com/cypress-io/cypress-workshop-ci).
-
 ## See also
 
 - [Cypress Real World App](https://github.com/cypress-io/cypress-realworld-app)
@@ -660,10 +654,9 @@ CI providers. Find the workshop at
   viewport sizes.
 - [cypress-example-kitchensink](https://github.com/cypress-io/cypress-example-kitchensink#ci-status)
   is set up to run on multiple CI providers.
-- [Test Replay](/guides/cloud/debugging/test-replay)
+- [Test Replay](/guides/cloud/test-replay)
 - [Cross Browser Testing Guide](/guides/guides/cross-browser-testing)
 - [Blog: Setting up Bitbucket Pipelines with proper caching of npm and Cypress](https://www.cypress.io/blog/2018/08/30/setting-up-bitbucket-pipelines-with-proper-caching-of-npm-and-cypress/)
 - [Blog: Record Test Artifacts from any Docker CI](https://www.cypress.io/blog/2018/08/28/record-test-artifacts-from-any-ci/)
 - [Continuous Integration with Cypress](https://www.cypress.io/blog/2019/10/04/webcast-recording-continuous-integration-with-cypress/)
-  webinar covering TeamCity, Travis and CircleCI setups,
-  [slides](https://cypress.slides.com/cypress-io/cypress-on-ci).
+  webinar covering TeamCity, Travis and CircleCI setups.

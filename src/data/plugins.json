@@ -392,13 +392,30 @@
           "link": "https://github.com/Zaista/cypress-fixture-faker",
           "keywords": ["fixture", "faker"],
           "badge": "community"
+        },
+        {
+          "name": "cypress-solid",
+          "description": "A Cypress plugin to help you test applications using the Solid Protocol.",
+          "link": "https://github.com/NoelDeMartin/cypress-solid",
+          "keywords": ["solid", "solid-protocol"],
+          "badge": "community"
         }
       ]
     },
     {
       "name": "Custom Commands",
-      "description": " Read the <a target=\"_blank\" href=\"/api/plugins/preprocessors-api\">Custom Commands</a> and <a target=\"_blank\" href=\"/api/plugins/preprocessors-api\">Custom Query</a> documentation to learn more.",
+      "description": "Read the <a target=\"_blank\" href=\"/api/plugins/preprocessors-api\">Custom Commands</a> and <a target=\"_blank\" href=\"/api/plugins/preprocessors-api\">Custom Query</a> documentation to learn more.",
       "plugins": [
+        {
+          "name": "Puppeteer",
+          "description": "Utilize Puppeteer's browser API with one command within Cypress.",
+          "link": "https://github.com/cypress-io/cypress/tree/develop/npm/puppeteer",
+          "keywords": [
+            "puppeteer",
+            "multi-tab"
+          ],
+          "badge": "official"
+        },
         {
           "name": "cypress-testing-library",
           "description": "🐅 Simple and complete custom Cypress commands and utilities that encourage good testing practices.",
@@ -738,6 +755,13 @@
           "link": "https://github.com/MohamadKh75/cypress-plugin-dotenv",
           "keywords": ["testing", "commands", ".env", "environment variables"],
           "badge": "community"
+        },
+        {
+          "name": "cypress-intercept-formdata",
+          "description": "Work with Cypress' Intercept multipart/form-data requests",
+          "link": "https://github.com/yoavniran/cypress-intercept-formdata",
+          "keywords": ["testing", "commands", "intercept", "form-data", "request"],
+          "badge": "community"
         }
       ]
     },
@@ -1009,6 +1033,13 @@
           "description": "Build Cypress Component Tests using esbuild.",
           "link": "https://github.com/fochlac/cypress-devserver-esbuild",
           "keywords": ["component", "esbuild", "devserver"],
+          "badge": "community"
+        },
+        {
+          "name": "cypress-rspack-dev-server",
+          "description": "Build Cypress Component Tests using Rspack.",
+          "link": "https://github.com/th3fallen/cypress-rspack-dev-server",
+          "keywords": ["component", "Rspack", "dev-server"],
           "badge": "community"
         }
       ]

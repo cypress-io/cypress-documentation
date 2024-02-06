@@ -61,14 +61,14 @@ Cypress.Commands.add('mount', (component, options = {}) => {
   options.extensions.components = options.extensions.components || {}
 
   /* Add any global plugins */
-  // options.global.plugins.push({
+  // options.extensions.plugins.push({
   //   install(app) {
   //     app.use(MyPlugin);
   //   },
   // });
 
   /* Add any global components */
-  // options.global.components['Button'] = Button;
+  // options.extensions.components['Button'] = Button;
 
   return mount(component, options)
 })

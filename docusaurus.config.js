@@ -2,6 +2,7 @@
 // Note: type annotations allow type checking and IDEs autocompletion
 
 const darkCodeTheme = require('./src/theme/prism-material-oceanic')
+const { default: remarkDirective } = require('remark-directive')
 
 const fs = require('fs')
 const {
@@ -20,6 +21,7 @@ const config = {
   url: 'https://docs.cypress.io',
   baseUrl: '/',
   onBrokenLinks: 'throw',
+  onBrokenAnchors: 'log',
   onBrokenMarkdownLinks: 'throw',
   favicon: undefined,
 
@@ -42,11 +44,21 @@ const config = {
             'https://github.com/cypress-io/cypress-documentation/tree/main/',
           routeBasePath: '/',
           remarkPlugins: [
+            remarkDirective,
             cypressConfigExample,
             cypressConfigPluginExample,
             visitMountExample,
-            [copyTsToJs, { prettierOptions: prettierConfig }],
+            [
+              copyTsToJs,
+              {
+                prettierOptions: {
+                  ...prettierConfig,
+                  parser: 'typescript',
+                },
+              },
+            ],
           ],
+          showLastUpdateTime: true,
         },
         blog: false,
         theme: {
@@ -83,6 +95,18 @@ const config = {
     ],
     'docusaurus-plugin-sass',
     require.resolve('docusaurus-plugin-image-zoom'),
+    // ....
+    async function myPlugin(context, options) {
+      return {
+        name: 'docusaurus-tailwindcss',
+        configurePostCss(postcssOptions) {
+          // Appends TailwindCSS and AutoPrefixer.
+          postcssOptions.plugins.push(require('tailwindcss'))
+          postcssOptions.plugins.push(require('autoprefixer'))
+          return postcssOptions
+        },
+      }
+    },
   ],
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
@@ -93,55 +117,38 @@ const config = {
         logo: {
           href: '/guides/overview/why-cypress',
           alt: 'Cypress Logo',
-          src: '/img/logo/cypress-logo-dark.png',
+          src: '/img/logo/cypress-logo-light.svg',
+          srcDark: '/img/logo/cypress-logo-dark.svg',
         },
         items: [
           {
             to: '/guides/overview/why-cypress',
             label: 'Guides',
-            position: 'left',
             activeBasePath: 'guides',
           },
           {
             to: '/api/table-of-contents',
             label: 'API',
-            position: 'left',
             activeBasePath: 'api',
           },
           {
             to: '/plugins',
             label: 'Plugins',
-            position: 'left',
             activeBasePath: 'plugins',
           },
           {
             to: '/examples/recipes',
             label: 'Examples',
-            position: 'left',
             activeBasePath: 'examples',
           },
           {
             to: '/faq/questions/using-cypress-faq',
             label: 'FAQ',
-            position: 'left',
             activeBasePath: 'faq',
           },
           {
             to: 'https://learn.cypress.io',
             label: 'Learn',
-            position: 'left',
-          },
-          {
-            href: 'https://github.com/cypress-io/cypress-documentation',
-            position: 'right',
-            className: 'github-logo',
-            'aria-label': 'Cypress GitHub repository',
-          },
-          {
-            href: 'https://on.cypress.io/discord',
-            position: 'right',
-            className: 'discord-logo',
-            'aria-label': 'Cypress Discord',
           },
         ],
       },
@@ -150,8 +157,7 @@ const config = {
       announcementBar: {
         //give id a unique value to get a new announcement bar to appear
         id: 'cypress-v13',
-        content:
-          `📢 &nbsp; <strong>v13.0.0</strong> - Replay your tests as they occurred in your CI run and debug with confidence using <a href="/guides/cloud/debugging/test-replay">Test Replay</a> in <a href="/guides/cloud/introduction">Cypress Cloud</a>! 🎉`,
+        content: `📢 &nbsp; <strong>v13.0.0</strong> - Replay your tests as they occurred in your CI run and debug with confidence using <a href="/guides/cloud/debugging/test-replay">Test Replay</a> in <a href="/guides/cloud/introduction">Cypress Cloud</a>! 🎉`,
         isCloseable: true,
       },
       footer: {
@@ -169,7 +175,7 @@ const config = {
                 href: 'https://learn.cypress.io',
               },
               {
-                label: 'YouTube',
+                label: 'Cypress.io YouTube',
                 href: 'https://www.youtube.com/channel/UC-EOsTo2l2x39e4JmSaWNRQ',
               },
             ],
@@ -268,7 +274,7 @@ const config = {
         darkTheme: darkCodeTheme,
       },
       zoom: {
-        selector: ':not(.mediaImage, .navbar__logo img, .logo)', // don't zoom these images
+        selector: ':not(.mediaImage, .navbar__logo img, .logo, .br-ui)', // don't zoom these images
         background: {
           light: 'rgb(50, 50, 50)',
           dark: 'rgb(50, 50, 50)',

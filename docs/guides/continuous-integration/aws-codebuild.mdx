@@ -92,9 +92,7 @@ for single build configurations. One way to solve this is using an
 
 :::info
 
-<strong>Enabling batch builds in the CodeBuild UI for the project</strong>
-<br />
-<br />
+**Enabling batch builds in the CodeBuild UI for the project**
 
 Per the
 [AWS CodeBuild batch build documentation](https://docs.aws.amazon.com/codebuild/latest/userguide/batch-build-buildspec.html),
@@ -109,7 +107,7 @@ projects:
 
 - Navigate to the AWS CodeBuild Console
 - Select the project
-- Click "Edit" --> "Batch Configuration"
+- Click "Edit" **-->** "Batch Configuration"
 - Create "New service Role" and enter the name of the role
 - Leave all other options as optional
 - Click "Update batch configuration"
@@ -128,7 +126,7 @@ offers a way to specify an image hosted on DockerHub or the
 
 The Cypress team maintains the official
 [Docker Images](https://github.com/cypress-io/cypress-docker-images) for running
-Cypress locally and in CI, which are built with Google Chrome and Firefox. For
+Cypress locally and in CI, which are built with Google Chrome, Firefox and Microsoft Edge. For
 example, this allows us to run the tests in Firefox by passing the
 `--browser firefox` attribute to `cypress run`.
 
@@ -180,13 +178,15 @@ version: 0.2
 
 ## AWS CodeBuild Batch configuration
 ## https://docs.aws.amazon.com/codebuild/latest/userguide/batch-build-buildspec.html
-## Define build to run using the "cypress/browsers:node12.14.1-chrome85-ff81" image from the Cypress Amazon ECR Public Gallery
+## Define build to run using the
+## "cypress/browsers:node-20.9.0-chrome-118.0.5993.88-1-ff-118.0.2-edge-118.0.2088.46-1" image
+## from the Cypress Amazon ECR Public Gallery
 batch:
   fast-fail: false
   build-list:
     - identifier: cypress-e2e-tests
       env:
-        image: public.ecr.aws/cypress-io/cypress/browsers:node18.12.0-chrome106-ff106
+        image: public.ecr.aws/cypress-io/cypress/browsers:node-20.9.0-chrome-118.0.5993.88-1-ff-118.0.2-edge-118.0.2088.46-1
 
 phases:
   install:
@@ -260,9 +260,7 @@ section.
 
 :::info
 
-<strong>Enabling batch builds in the CodeBuild UI for the project</strong>
-<br />
-<br />
+**Enabling batch builds in the CodeBuild UI for the project**
 
 Per the
 [AWS CodeBuild batch build documentation](https://docs.aws.amazon.com/codebuild/latest/userguide/batch-build-buildspec.html),
@@ -277,7 +275,7 @@ projects:
 
 - Navigate to the AWS CodeBuild Console
 - Select the project
-- Click "Edit" --> "Batch Configuration"
+- Click "Edit" **-->** "Batch Configuration"
 - Create "New service Role" and enter the name of the role
 - Leave all other options as optional
 - Click "Update batch configuration"

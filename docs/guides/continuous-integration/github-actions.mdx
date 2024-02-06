@@ -67,7 +67,7 @@ For Example:
 jobs:
   cypress-run:
     steps:
-      uses: cypress-io/github-action@v6
+      - uses: cypress-io/github-action@v6
 ```
 
 Alternatively, as a mitigation strategy for unforeseen breaks, bind to a
@@ -96,7 +96,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       # Install NPM dependencies, cache them correctly
       # and run all Cypress tests
       - name: Cypress run
@@ -173,7 +173,9 @@ Cypress locally and in CI.
 
 Below we extend the previous example by adding the `container` attribute using a
 [Cypress Docker Image](https://github.com/cypress-io/cypress-docker-images)
-built with Google Chrome `106`. Specifying a browser version allows our tests to
+built with the version of Google Chrome embedded in the tag name of the Docker image
+shown as `chrome-xxx`.
+Specifying a browser version allows our tests to
 execute without any influence from browser version changes in the GitHub runner
 image.
 
@@ -186,11 +188,11 @@ jobs:
   cypress-run:
     runs-on: ubuntu-22.04
     container:
-      image: cypress/browsers:node18.12.0-chrome106-ff106
+      image: cypress/browsers:node-20.9.0-chrome-118.0.5993.88-1-ff-118.0.2-edge-118.0.2088.46-1
       options: --user 1001
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
@@ -236,7 +238,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Cypress install
         uses: cypress-io/github-action@v6
@@ -246,7 +248,7 @@ jobs:
           build: npm run build
 
       - name: Save build folder
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: build
           if-no-files-found: error
@@ -257,10 +259,10 @@ jobs:
     needs: install
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Download the build folder
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: build
           path: build
@@ -329,7 +331,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Cypress install
         uses: cypress-io/github-action@v6
@@ -339,7 +341,7 @@ jobs:
           build: npm run build
 
       - name: Save build folder
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: build
           if-no-files-found: error
@@ -374,10 +376,10 @@ jobs:
         containers: [1, 2, 3, 4, 5]
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Download the build folder
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: build
 
@@ -433,8 +435,8 @@ are leveraging three useful features of
    to [Cypress Cloud](https://on.cypress.io/cloud):
 
    - In-depth and shareable
-     [test reports](/guides/cloud/debugging/recorded-runs#Latest-Runs).
-   - Visibility into test failures via quick access to [Test Replay](/guides/cloud/debugging/test-replay), error messages, stack
+     [test reports](/guides/cloud/recorded-runs#Latest-Runs).
+   - Visibility into test failures via quick access to [Test Replay](/guides/cloud/test-replay), error messages, stack
      traces, screenshots, videos, and contextual details.
    - [Integrating testing with the pull-request (PR) process](/guides/cloud/integrations/source-control/github)
      via
@@ -495,7 +497,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Cypress run
         uses: cypress-io/github-action@v6
@@ -522,7 +524,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Cypress run
         uses: cypress-io/github-action@v6

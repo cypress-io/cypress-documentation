@@ -19,7 +19,7 @@ Cypress.require(moduleNameOrPath)
 
 ## Usage
 
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+<Icon name="check-circle" color="green"></Icon> **Correct Usage**
 
 ```js
 cy.origin('cypress.io', () => {
@@ -30,7 +30,7 @@ cy.origin('cypress.io', () => {
 })
 ```
 
-**<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
+<Icon name="exclamation-triangle" color="red"></Icon> **Incorrect Usage**
 
 ```js
 // `Cypress.require()` cannot be used outside the `cy.origin()` callback.
@@ -97,7 +97,7 @@ cy.origin('cypress.io', async () => {
   - `.coffee`
 - `Cypress.require('dependency-name')` must on one line as a continuous string:
 
-<!-- prettier-ignore-start -->
+{/* prettier-ignore-start */}
 ```js
 // ✅ GOOD
 Cypress.require('lodash')
@@ -118,7 +118,7 @@ Cypress.require(
   'lodash'
 )
 ```
-<!-- prettier-ignore-end -->
+{/* prettier-ignore-end */}
 
 ## Why not `require` or `import`?
 

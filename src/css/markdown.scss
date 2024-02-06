@@ -1,6 +1,28 @@
 div.markdown {
-  font-size: 1.125rem;
+  font-size: 1rem;
   word-spacing: 1px;
+
+  ul {
+    padding-left: var(--ifm-list-left-padding);
+    & > li {
+      list-style: disc;
+    }
+  }
+
+  ul,
+  ol {
+    ul > li {
+      list-style: circle;
+    }
+  }
+
+  ol {
+    margin-bottom: 1rem;
+    padding-left: var(--ifm-list-left-padding);
+    & > li {
+      list-style: decimal;
+    }
+  }
 
   /* have to override this for specificity */
   h1:first-child {
@@ -8,7 +30,8 @@ div.markdown {
     margin-bottom: 0;
   }
 
-  h2 {
+  body & h2 {
+    @apply mb-2;
     --ifm-h2-font-size: 2rem;
   }
 
@@ -24,21 +47,43 @@ div.markdown {
     --ifm-h5-font-size: 1.2rem;
   }
 
+  p {
+    margin-bottom: 1rem;
+  }
+
   a {
     text-decoration: none;
     font-weight: var(--ifm-font-weight-semibold);
+    color: var(--ifm-link-color);
 
     &:hover {
       border-bottom: 1px dotted var(--ifm-link-color);
     }
   }
 
-  // add border bottom to code tags that are in a link
-  a:has(> code) {
-    border-bottom: 1px dotted var(--ifm-link-color);
+  .alert,
+  & {
+    // add border bottom to code tags that are in a link
+    a:has(> code) {
+      &,
+      &:hover {
+        border: 0.1rem solid rgba(0, 0, 0, 0.1);
+        border-radius: var(--ifm-code-border-radius);
+        background-color: var(--ifm-code-background);
+        padding: 0 0.2rem 0.2rem;
+      }
+    }
 
-    &:hover {
-      border-bottom: 1px solid var(--ifm-link-color);
+    a > code {
+      border: none;
+      background: transparent;
+      border-radius: 0;
+      text-decoration: underline dotted 1px;
+      text-underline-offset: 3px;
+    }
+
+    a:hover > code {
+      text-decoration-style: solid;
     }
   }
 
@@ -52,9 +97,9 @@ div.markdown {
   }
 
   h2 {
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
     padding-bottom: 0.5rem;
-    border-bottom: 2px solid var(--ifm-toc-border-color);
+    line-height: 2.25rem;
 
     // hide hash link borders in headers when hovered
     a {
@@ -73,8 +118,8 @@ div.markdown {
     border-bottom: none;
   }
 
-  ul li {
-    margin: 0.7rem 0;
+  div[class^='language-'] {
+    margin-top: 2px;
   }
 
   /* add dotted underline to links on tablet and smaller mobile devices */
@@ -96,6 +141,19 @@ div.markdown {
       }
     }
   }
+
+  .theme-admonition {
+    h2 {
+      font-size: 1.5rem;
+      @apply mb-4 mt-2;
+    }
+  }
+
+  .inlineTOC ul {
+    padding-left: 0;
+  }
+
+  --ifm-alert-border-radius: 5px;
 }
 
 /* override the background in the toc on mobile */

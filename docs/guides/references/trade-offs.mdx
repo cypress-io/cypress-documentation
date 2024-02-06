@@ -18,7 +18,6 @@ to have. In a sense they prevent you from writing bad, slow, or flaky tests.
 
 - Cypress is not a general purpose [automation tool](#Automation-restrictions).
 - Cypress commands run [inside of a browser](#Inside-the-browser).
-- There will never be support for [multiple browser tabs](#Multiple-tabs).
 - You cannot use Cypress to drive
   [two browsers at the same time](#Multiple-browsers-open-at-the-same-time).
 - Each test is bound to a single superdomain. Cross-origin navigation inside
@@ -96,38 +95,9 @@ the browser may take a little extra work.
 In the future we **do** have plans to release back end adapters for other
 languages.
 
-### Multiple tabs
-
-Because Cypress runs in the browser, it will never have multi-tabs support. We
-do have access to the browser automation APIs to actually switch tabs, but there
-is no reason for us to ever expose them.
-
-Most of the time this use case is needed when users click an `<a>` that opens a
-new tab. Users then want to switch to that tab to verify that the content
-loaded. But, you shouldn't need to do this. In fact we have
-[recipes of showing you how to test this without multiple tabs](/examples/recipes#Testing-the-DOM).
-
-To take this a step further - we don't believe there is any use case for testing
-the browser's native behavior. You should ask yourself why you are testing that
-clicking an `<a href="/foo" target="_blank">` opens a new tab. You already know
-that is what the browser is designed to do and you already know that it is
-triggered by the `target="_blank"` attribute.
-
-Since that is the case, test **the thing** triggering the browser to perform
-this behavior - as opposed to testing the behavior itself.
-
-```js
-cy.get('a[href="/foo"]').should('have.attr', 'target', '_blank')
-```
-
-This principle applies to everything in Cypress. Do not test what does not need
-testing. It is slow, brittle, and adds zero value. Only test the underlying
-thing that causes the behavior you care about testing.
-
 ### Multiple browsers open at the same time
 
-Just like with multiple tabs - Cypress does not support controlling more than 1
-open browser at a time.
+Cypress does not support controlling more than 1 open browser at a time.
 
 With that said, except in the most unusual and rare circumstances, you can still
 test most application behavior without opening multiple browsers at the same

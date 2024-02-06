@@ -1,9 +1,12 @@
-.theme-doc-sidebar-container .menu {
-  background-color: var(--ifm-menu-color-background);
-}
-
 .theme-doc-sidebar-item-category {
   padding-bottom: 0.3rem;
+}
+
+body .theme-doc-sidebar-container {
+  @apply border-r border-gray-1000/[0.07];
+  html[data-theme='dark'] & {
+    @apply border-gray-900;
+  }
 }
 
 /* sidebar menu */
@@ -21,12 +24,16 @@
 
 /* sidebar menu collapsible children */
 .theme-doc-sidebar-item-category-level-2,
-.theme-doc-sidebar-item-category-level-3
-  > .menu__list-item-collapsible {
+.theme-doc-sidebar-item-category-level-3 > .menu__list-item-collapsible {
   font-size: 1.025rem;
 }
 
 /* sidebar chevrons */
 .menu__link--sublist:after {
   background: var(--ifm-menu-link-sublist-icon) 50%/1.7rem 1.7rem;
+}
+
+// helps delineate different refs in sidebar, particularly in API section
+.theme-doc-sidebar-item-link.theme-doc-sidebar-item-link-level-2.menu__list-item.sidebar-guide-ref {
+  font-weight: 600;
 }

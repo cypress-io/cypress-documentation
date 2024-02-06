@@ -24,7 +24,7 @@ cy.session(id, setup, options)
 
 ### Usage
 
-**<Icon name="check-circle" color="green" /> Correct Usage**
+<Icon name="check-circle" color="green" /> **Correct Usage**
 
 ```javascript
 // Caching session when logging in via page visit
@@ -48,7 +48,7 @@ cy.session(username, () => {
 })
 ```
 
-**<Icon name="exclamation-triangle" color="red" /> Incorrect Usage**
+<Icon name="exclamation-triangle" color="red" /> **Incorrect Usage**
 
 ```javascript
 // visiting before calling cy.session() is redundant, it needs to
@@ -70,7 +70,7 @@ cy.url().should('contain', '/login-successful')
 
 ### Arguments
 
-**<Icon name="angle-right" /> id** **_(String, Array, Object)_**
+<Icon name="angle-right" /> **id _(String, Array, Object)_**
 
 A unique identifier that will be used to cache and restore a given session. In
 simple cases, a `String` value is sufficient. In order to simplify generation of
@@ -94,7 +94,7 @@ serialize into an identifier, so exercise care with the data you specify.
 
 :::
 
-**<Icon name="angle-right" /> setup** **_(Function)_**
+<Icon name="angle-right" /> **setup _(Function)_**
 
 This function is called whenever a session for the given `id` hasn't yet been
 cached, or if it's no longer valid (see the `validate` option). After `setup`
@@ -109,7 +109,7 @@ cleared when `testIsolation` is disabled.
 Cookies, local storage and session storage in all domains are always cleared
 before `setup` runs, regardless of the `testIsolation` configuration.
 
-**<Icon name="angle-right" /> options** **_(Object)_**
+<Icon name="angle-right" /> **options _(Object)_**
 
 | Option             | Default     | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
 | ------------------ | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -692,7 +692,7 @@ const login = (name, email) => {
 }
 ```
 
-**<Icon name="exclamation-triangle" color="red" /> Incorrect Usage**
+<Icon name="exclamation-triangle" color="red" /> **Incorrect Usage**
 
 If you have custom `login` code that uses multiple parameters (in this example,
 a name, a token, and a password), in order to be able to log in many different
@@ -731,7 +731,7 @@ In summary, you need to ensure that the `id` is unique. Create it from all the
 parameters used inside the `setup` function that may change, otherwise `id`
 values may collide and create unexpected results.
 
-**<Icon name="check-circle" color="green" /> Correct Usage**
+<Icon name="check-circle" color="green" /> **Correct Usage**
 
 In this example, setting the `id` to `[name, uniqueKey]` guarantees that calling
 `login()` with different `name`, `token` and `password` values will create and
@@ -772,7 +772,7 @@ necessary.
 
 ### The Instrument Panel
 
-<!-- GA TODO: update /guides/core-concepts/cypress-app#Instrument-Panel -->
+{/* GA TODO: update /guides/core-concepts/cypress-app#Instrument-Panel */}
 
 Whenever a session is created or restored inside a test, an extra instrument
 panel is displayed at the top of the test to give more information about the

@@ -493,6 +493,282 @@
   status = 301
   force = true
 
+[[redirects]]
+  from = "/guides/cloud/debugging/test-replay"
+  to = "/guides/cloud/test-replay"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/debugging/recorded-runs"
+  to = "/guides/cloud/recorded-runs"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/api/commands"
+  to = "/api/table-of-contents"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/api/commands/"
+  to = "/api/table-of-contents"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/api/commands/route"
+  to = "/api/commands/intercept"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/api/commands/route2"
+  to = "/api/commands/intercept"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/api/commands/server"
+  to = "/api/commands/intercept"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/api/cypress-api/cypress-server"
+  to = "/api/commands/intercept"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/api/cypress-api/guides/component-testing/introduction"
+  to = "/guides/component-testing/overview"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/api/introduction/api"
+  to = "/api/table-of-contents"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/api/utilities/moment"
+  to = "/guides/overview/why-cypress"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/coverage"
+  to = "/guides/tooling/code-coverage"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/dashboard-service"
+  to = "/guides/cloud/introduction"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/dashboard/overview/runs-dashboard"
+  to = "/guides/cloud/recorded-runs"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/docs/all-example-apps"
+  to = "/examples/applications"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/examples/examples/applications"
+  to = "/examples/applications"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/examples/examples/tutorials"
+  to = "/examples/tutorials"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/examples/examples/workshop"
+  to = "/examples/workshop"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/component-testing/angular/quickstart"
+  to = "/guides/component-testing/angular/overview"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/component-testing/react/quickstart"
+  to = "/guides/component-testing/react/overview"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/component-testing/svelte/quickstart"
+  to = "/guides/component-testing/svelte/overview"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/component-testing/vue/quickstart"
+  to = "/guides/component-testing/vue/overview"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/core-concepts/dashboard-service"
+  to = "/guides/cloud/introduction"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/core-concepts/launching-browsers"
+  to = "/guides/guides/launching-browsers"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/getting-started"
+  to = "/guides/getting-started/installing-cypress"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/getting-started/installing-cypress.md"
+  to = "/guides/getting-started/installing-cypress"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/getting-started/why-cypress"
+  to = "guides/overview/why-cypress"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/guides/continuous-integration"
+  to = "/guides/continuous-integration/introduction"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/guides/plugins-guide"
+  to = "/api/plugins/writing-a-plugin"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/guides/reporters"
+  to = "/guides/tooling/reporters"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/installing-and-running"
+  to = "/guides/getting-started/installing-cypress"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/references/known-issues"
+  to = "/guides/references/trade-offs"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/tooling/intelligent-code-completion"
+  to = "/guides/tooling/IDE-integration"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/web-security"
+  to = "/guides/guides/web-security"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/intelligent-code-completion"
+  to = "/guides/tooling/IDE-integration"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/ja"
+  to = "/guides/overview/why-cypress"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/test-runner"
+  to = "/guides/core-concepts/cypress-app"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/why-cypress"
+  to = "/guides/overview/why-cypress"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/writeFile"
+  to = "/api/commands/writefile"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/zh-cn"
+  to = "/guides/overview/why-cypress"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/zh-cn/guides/getting-started/installing-cypress"
+  to = "/guides/getting-started/installing-cypress"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/zh-cn/guides/guides/command-line"
+  to = "/guides/guides/command-line"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/zh-cn/guides/guides/module-api"
+  to = "/guides/guides/module-api"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/zh-cn/guides/overview/why-cypress"
+  to = "/guides/overview/why-cypress"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/zh-cn/guides/references/assertions"
+  to = "/guides/references/assertions"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/zh-cn/guides/references/configuration"
+  to = "/guides/references/configuration"
+  status = 301
+  force = true
+
 [[plugins]]
 package = "@netlify/plugin-sitemap"
 
