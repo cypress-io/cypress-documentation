@@ -1,4 +1,7 @@
-export function cloneSidebarWithActivePathExpanded(sidebarItems, activePath) {
+export function cloneSidebarWithActivePathExpanded(
+  sidebarItems: any[],
+  activePath: string
+): any {
   let hasActive = false
   const items = sidebarItems.map((item) => {
     if (item.items) {

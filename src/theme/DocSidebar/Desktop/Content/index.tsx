@@ -24,7 +24,15 @@ function useShowAnnouncementBar() {
   return isActive && showAnnouncementBar
 }
 
-export default function DocSidebarDesktopContent({ path, sidebar, className }) {
+export default function DocSidebarDesktopContent({
+  path,
+  sidebar,
+  className,
+}: {
+  path: string
+  sidebar: any
+  className: string
+}) {
   const showAnnouncementBar = useShowAnnouncementBar()
   const { items } = cloneSidebarWithActivePathExpanded(sidebar, path)
 
@@ -43,9 +51,10 @@ export default function DocSidebarDesktopContent({ path, sidebar, className }) {
       )}
     >
       <div className="p-[8px] text-left">
+        <pre className="text-right">{path}</pre>
         <DocMenu
           items={items}
-          LinkComponent={SidebarLink}
+          LinkComponent={SidebarLink as any}
           activePath={path}
           collapsible
         />
