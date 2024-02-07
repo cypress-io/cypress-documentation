@@ -270,31 +270,7 @@ it might be good enough for the job.
 
 ### <Icon name="angle-right" /> I'm working with a restrictive VPN. Which subdomains do I have to allow on my VPN for Cypress Cloud to work properly?
 
-If you are running the tests from within a restrictive VPN you will need to
-allow some URLs so that Cypress can have effective communication with Cypress
-Cloud.
-
-**The URLs are the following:**
-
-- `https://api.cypress.io` - **Cypress API**
-- `https://assets.cypress.io` - **Asset CDN** (Org logos, icons, videos,
-  screenshots, etc.)
-- `https://authenticate.cypress.io` - **Authentication API**
-- `https://capture.cypress.io` - **Cypress Test Replay**
-- `https://s3.amazonaws.com/capture.cypress.io` - **Uploading Cypress Test Replay from Test Runner**
-- `https://cloud.cypress.io` - **Cypress Cloud**
-- `https://docs.cypress.io` - **Cypress documentation**
-- `https://download.cypress.io` - **CDN download of Cypress binary**
-- `https://on.cypress.io` - **URL shortener for link redirects**
-
-**If you are using GitHub Enterprise or GitLab for Enterprise (Self-managed),
-you may also need to add the following to the version control IP allowlist:**
-
-- `3.211.102.119` - **Dedicated IP**
-- `18.213.72.78` - **Dedicated IP**
-- `35.169.145.173` - **Dedicated IP**
-- `44.199.152.70` - **Dedicated IP**
-- `52.70.95.89` - **Dedicated IP**
+<UrlAllowList />
 
 ## Cypress Cloud Account
 
