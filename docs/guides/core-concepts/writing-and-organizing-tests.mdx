@@ -97,7 +97,7 @@ files are located, if you're starting your first project, we recommend you use
 the above structure.
 
 You can modify the folder configuration in your configuration file. See the
-[Cypress configuration](/guides/references/configuration#Folders-Files) for more
+[Cypress configuration](/guides/references/configuration) for more
 detail.
 
 :::info
@@ -119,7 +119,7 @@ these should also be ignored when you check into source control.
 ### Spec files
 
 Test files are located in `cypress/e2e` by default, but can be
-[configured](/guides/references/configuration#Folders-Files) to another
+[configured](/guides/references/configuration#e2e) to another
 directory. Test files may be written as:
 
 - `.js`
@@ -150,7 +150,7 @@ within your `cypress/e2e` folder.
 
 Fixtures are used as external pieces of static data that can be used by your
 tests. Fixture files are located in `cypress/fixtures` by default, but can be
-[configured](/guides/references/configuration#Folders-Files) to another
+[configured](/guides/references/configuration#Folders--Files) to another
 directory.
 
 You would typically use them with the [`cy.fixture()`](/api/commands/fixture)
@@ -273,7 +273,7 @@ other cool things. Read our [plugins guide](/guides/tooling/plugins-guide) for
 more details and examples.
 
 The initial imported plugins file can be
-[configured to another file](/guides/references/configuration#Folders-Files).
+[configured to another file](/guides/references/configuration#Folders--Files).
 
 ### Support file
 
@@ -332,7 +332,7 @@ want applied and available to all of your spec files.
 
 The initial imported support file can be configured to another file or turned
 off completely using the
-[supportFile](/guides/references/configuration#Folders-Files) configuration.
+[supportFile](/guides/references/configuration#Testing-Type-Specific-Options) configuration.
 From your support file you can `import` or `require` other files to keep things
 organized.
 
@@ -985,7 +985,7 @@ The folder, the files within the folder, and all child folders and their files
 :::info
 
 Those folder paths refer to the
-[default folder paths](/guides/references/configuration#Folders-Files). If
+[default folder paths](/guides/references/configuration#Folders--Files). If
 you've configured Cypress to use different folder paths then the folders
 specific to your configuration will be watched.
 
