@@ -29,7 +29,7 @@ _Released 1/16/2024_
 - Now `node_modules` will not be ignored if a project path or a provided path to spec files contains it. Fixes [#23616](https://github.com/cypress-io/cypress/issues/23616).
 - Updated display of assertions and commands with a URL argument to escape markdown formatting so that values are displayed as is and assertion values display as bold. Fixes [#24960](https://github.com/cypress-io/cypress/issues/24960) and [#28100](https://github.com/cypress-io/cypress/issues/28100).
 - When generating assertions via Cypress Studio, the preview of the generated assertions now correctly displays the past tense of 'expected' instead of 'expect'. Fixed in [#28593](https://github.com/cypress-io/cypress/pull/28593).
-- Fixed a regression in [`13.6.2`](/guides/references/changelog#13.6.2) where the `body` element was not highlighted correctly in Test Replay. Fixed in [#28627](https://github.com/cypress-io/cypress/pull/28627).
+- Fixed a regression in [`13.6.2`](/guides/references/changelog#13-6-2) where the `body` element was not highlighted correctly in Test Replay. Fixed in [#28627](https://github.com/cypress-io/cypress/pull/28627).
 - Correctly sync `Cypress.currentRetry` with secondary origin so test retries that leverage [`cy.origin()`](/api/commands/origin) render logs as expected. Fixes [#28574](https://github.com/cypress-io/cypress/issues/28574).
 - Fixed an issue where some cross-origin logs, like assertions or cy.clock(), were getting too many dom snapshots. Fixes [#28609](https://github.com/cypress-io/cypress/issues/28609).
 - Fixed asset capture for Test Replay for requests that are routed through service workers. This addresses an issue where styles were not being applied properly in Test Replay and [`cy.intercept()`](/api/commands/intercept) was not working properly for requests in this scenario. Fixes [#28516](https://github.com/cypress-io/cypress/issues/28516).
@@ -133,7 +133,7 @@ _Released 11/8/2023_
 **Bugfixes:**
 
 - Fixed an issue in chromium based browsers, where global style updates can trigger flooding of font face requests in DevTools and Test Replay. This can affect performance due to the flooding of messages in CDP. Fixes [#28150](https://github.com/cypress-io/cypress/issues/28150) and [#28215](https://github.com/cypress-io/cypress/issues/28215).
-- Fixed a regression in [`13.3.3`](#13.3.3) where Cypress would hang on loading shared workers when using `cy.reload` to reload the page. Fixes [#28248](https://github.com/cypress-io/cypress/issues/28248).
+- Fixed a regression in [`13.3.3`](#13-3-3) where Cypress would hang on loading shared workers when using `cy.reload` to reload the page. Fixes [#28248](https://github.com/cypress-io/cypress/issues/28248).
 - Fixed an issue where network requests made from tabs, or windows other than the main Cypress tab, would be delayed. Fixes [#28113](https://github.com/cypress-io/cypress/issues/28113).
 - Fixed an issue with 'other' targets (e.g. pdf documents embedded in an object tag) not fully loading. Fixes [#28228](https://github.com/cypress-io/cypress/issues/28228) and [#28162](https://github.com/cypress-io/cypress/issues/28162).
 - Fixed an issue where clicking a link to download a file could cause a page load timeout when the download attribute was missing. Note: download behaviors in experimental Webkit are still an issue. Fixes [#14857](https://github.com/cypress-io/cypress/issues/14857).
@@ -152,7 +152,7 @@ _Released 10/30/2023_
 
 **Bugfixes:**
 
-- Fixed a regression in [`13.3.2`](#13.3.2) where Cypress would crash with 'Inspected target navigated or closed' or 'Session with given id not found'. Fixes [#28141](https://github.com/cypress-io/cypress/issues/28141) and [#28148](https://github.com/cypress-io/cypress/issues/28148).
+- Fixed a regression in [`13.3.2`](#13-3-2) where Cypress would crash with 'Inspected target navigated or closed' or 'Session with given id not found'. Fixes [#28141](https://github.com/cypress-io/cypress/issues/28141) and [#28148](https://github.com/cypress-io/cypress/issues/28148).
 
 ## 13.3.3
 
@@ -1908,11 +1908,11 @@ _Released 9/13/2022_
   [`experimentalModifyObstructiveThirdPartyCode`](/guides/references/experiments#Configuration)
   experiment is enabled. Fixes
   [#23597](https://github.com/cypress-io/cypress/issues/23597).
-- Fix regression introduced by Cypress [10.0.0](#10.0.0) where the `before:spec`
+- Fix regression introduced by Cypress [10.0.0](#10-0-0) where the `before:spec`
   plugin event was not triggered in `open` mode when the
   [`experimentalInteractiveRunEvents`](/guides/references/experiments#Configuration)
   experiment was enabled. Fixed #22360.
-- Fixed a regression introduced in [10.4.0](#10.4.0) where referencing an
+- Fixed a regression introduced in [10.4.0](#10-4-0) where referencing an
   aliased custom command would return undefined. Fixes
   [#23652](https://github.com/cypress-io/cypress/issues/23652).
 - Users can now log into the Dashboard from the "Choose a browser" page of the
@@ -5446,7 +5446,7 @@ _Released 10/14/2020_
 
 **Bugfixes:**
 
-- We fixed a regression in [5.8.0](#5-8-0) where the `chromeWebSecurity` option
+- We fixed a regression in [5.0.0](#5-0-0) where the `chromeWebSecurity` option
   had no effect in Electron. Fixes
   [#8399](https://github.com/cypress-io/cypress/issues/8399).
 - Tests will no longer hang and now properly throw when there is an error thrown
@@ -11904,7 +11904,7 @@ _Released 11/16/2016_
   [#294](https://github.com/cypress-io/cypress/issues/294).
 - There is a new [configuration](/guides/references/configuration) property
   called: ~~`trashAssetsBeforeHeadlessRuns`~~ (This was changed to
-  `trashAssetsBeforeRuns` in [`3.0.0`](#3.0.0)) that is set to `true` by default
+  `trashAssetsBeforeRuns` in [`3.0.0`](#3-0-0)) that is set to `true` by default
   and will automatically clear out screenshots + videos folders before each run.
   These files are not deleted, they are just moved to your trash.
 - There are several new [configuration](/guides/references/configuration)
