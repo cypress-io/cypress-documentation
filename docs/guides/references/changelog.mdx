@@ -3022,7 +3022,7 @@ _Released 4/11/2022_
   `any` when the correct type is `Cookie`. Fixed in
   [#20513](https://github.com/cypress-io/cypress/pull/20513).
 - Added the missing `Cypress.Command.addAll()` Typescript types. Fixed
-  [#18886](https://github.com/cypress-io/cypress/issue/18886).
+  [#18886](https://github.com/cypress-io/cypress/issues/18886).
 - Fixed an uncommon error observed in `cy.session()` where an error was thrown
   when no cookies had been set for the session and the user clicks the session
   command log to view additional details in the DevTools console. Fixed in
@@ -3354,7 +3354,7 @@ _Released 12/20/2021_
   [#3350](https://github.com/cypress-io/cypress/issues/3350).
 - The default `maxHttpBufferSize` for the internal socket server has been
   increased to
-  [Node's maximum Buffer size](https://nodejs.org/api/buffer#bufferconstantsmax_length)
+  [Node's maximum Buffer size](https://nodejs.org/api/buffer.html#bufferconstantsmax_length)
   (size varies by OS) to allow large file writes with `cy.writeFile()`.
   Addresses [#19140](https://github.com/cypress-io/cypress/issues/19140).
 - Add `CYPRESS_VERIFY_TIMEOUT` environment variable to override the timeout
