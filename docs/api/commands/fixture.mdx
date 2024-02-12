@@ -29,7 +29,7 @@ cy.fixture('logo.png').then((logo) => {
 <Icon name="angle-right" /> **filePath _(String)_**
 
 A path to a file within the
-[`fixturesFolder`](/guides/references/configuration#Folders-Files) , which
+[`fixturesFolder`](/guides/references/configuration#Folders--Files) , which
 defaults to `cypress/fixtures`.
 
 You can nest fixtures within folders and reference them by defining the path
@@ -89,7 +89,7 @@ cy.fixture('users.json').as('usersData')
 
 When no extension is passed to `cy.fixture()`, Cypress will search for files
 with the specified name within the
-[`fixturesFolder`](/guides/references/configuration#Folders-Files) (which
+[`fixturesFolder`](/guides/references/configuration#Folders--Files) (which
 defaults to `cypress/fixtures`) and resolve the first one.
 
 ```javascript
