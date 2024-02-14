@@ -167,7 +167,7 @@ it('validates the change', () => {
 
 After migrating, when `testIsolation=true` by default, this flow would need to
 be contained within a single test. While the above practice has always been
-[discouraged](/guides/references/best-practices#Having-tests-rely-on-the-state-of-previous-tests)
+[discouraged](/guides/references/best-practices#Having-Tests-Rely-On-The-State-Of-Previous-Tests)
 we know some users have historically written tests this way, often to get around
 the `same-origin` restrictions. But with [`cy.origin()`](/api/commands/origin)
 you no longer need these kind of brittle hacks, as your multi-origin logic can
@@ -1207,7 +1207,7 @@ when Cypress loads.
 This option is no longer used, and all plugin file functionality has moved into
 the [`setupNodeEvents()`](/guides/references/configuration#setupNodeEvents) and
 [`devServer`](/guides/references/configuration#devServer) options. See the
-[Plugins file removed](#Plugins-file-removed) section of this migration guide
+[Plugins file removed](#Plugins-File-Removed) section of this migration guide
 for more details.
 
 :::caution
@@ -1925,7 +1925,7 @@ cy.intercept('/slow', (req) => {
 })
 ```
 
-[Read more about available functions on `res`.](/api/commands/intercept#intercepted-response)
+[Read more about available functions on `res`.](/api/commands/intercept#Intercepted-responses)
 
 #### Falsy values are no longer dropped in `StaticResponse` bodies
 
@@ -1966,11 +1966,11 @@ it.
 limited to configuration and there are no breaking changes to the `mount` API.
 The migration guide contains the following steps:
 
-1. [Update your Cypress configuration to remove `experimentalComponentTesting`](/guides/references/migration-guide#1-Remove-experimentalComponentTesting-config)
-2. [Install updated dependencies](/guides/references/migration-guide##2-Install-component-testing-dependencies)
-3. [Update the plugins file](/guides/references/migration-guide#3-Update-plugins-file-to-use-dev-server-start)
-4. [Use CLI commands to launch](/guides/references/migration-guide#4-Use-CLI-commands-to-launch)
-5. [Update the support file (optionally)](/guides/references/migration-guide#5-Update-the-support-file-optionally)
+1. [Update your Cypress configuration to remove `experimentalComponentTesting`](#1-Remove-experimentalComponentTesting-config)
+2. [Install updated dependencies](#2-Install-component-testing-dependencies)
+3. [Update the plugins file](#3-Update-plugins-file-to-use-dev-serverstart)
+4. [Use CLI commands to launch](#4-Use-CLI-commands-to-launch)
+5. [Update the support file (optionally)](#5-Update-the-support-file-optionally)
 
 #### 1. Remove `experimentalComponentTesting` config
 
