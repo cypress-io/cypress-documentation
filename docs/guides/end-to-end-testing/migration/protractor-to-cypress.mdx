@@ -25,7 +25,7 @@ migration guide to help you and your team transition from Protractor to Cypress.
 
 If you see any inaccuracies with this guide or feel like something has been
 misrepresented, please
-[start a discussion here](https://github.com/cypress-io/cypress/discussions/new).
+[start a discussion here](https://github.com/cypress-io/cypress/discussions/new?category=general).
 
 :::
 
@@ -956,8 +956,8 @@ commands are
 [not invoked immediately](/guides/core-concepts/introduction-to-cypress#Commands-Are-Asynchronous)
 and are enqueued to run serially at a later time. Cypress commands might look
 like promises, but the
-[Cypress API is not an exact implementation of Promises](/guides/core-concepts/introduction-to-cypress#Commands-Are-Not-Promises).
-The modern web is asychronous, therefore you need to interact with modern web
+[Cypress API is not an exact implementation of Promises](/guides/core-concepts/introduction-to-cypress#The-Cypress-Command-Queue).
+The modern web is asynchronous, therefore you need to interact with modern web
 apps in an asynchronous fashion. This is why the Cypress API is asynchronous.
 This allows you to write deterministic tests since all of your commands are
 executed serially, enabling your tests to run predictably each time.
@@ -1086,7 +1086,7 @@ Cypress makes it easy to
 
 Check out our in-depth guides to run your Cypress tests in
 [GitHub Actions](/guides/continuous-integration/github-actions),
-[CircleCI](/guides/continuous-integration/introduction#CircleCI),
+[CircleCI](/guides/continuous-integration/circleci),
 [GitLab CI](/guides/continuous-integration/gitlab-ci),
 [Bitbucket Pipeline](/guides/continuous-integration/bitbucket-pipelines), or
 [AWS CodeBuild](/guides/continuous-integration/aws-codebuild).
@@ -1106,7 +1106,7 @@ With Cypress, your tests can be
 This is an important distinction between Protractor and Cypress parallelization.
 One of the reasons why Cypress parallelizes tests per file is because some users
 may write tests that build up state that subsequent tests, although we
-[do not recommend relying on the state of previous tests](/guides/references/best-practices#Having-tests-rely-on-the-state-of-previous-tests).
+[do not recommend relying on the state of previous tests](/guides/references/best-practices#Having-Tests-Rely-On-The-State-Of-Previous-Tests).
 
 With Cypress, all you need to do is pass the `--parallel` and `--record` flag to
 `cypress run`, and it will take care of the rest for you:
