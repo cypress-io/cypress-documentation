@@ -45,7 +45,7 @@ The name of the `method` on the `object` to be wrapped.
 - `cy.spy()` is _synchronous_ and returns a value (the spy) instead of a
   Promise-like chain-able object. It can be aliased.
 - `cy.spy()` returns a
-  [Sinon.js spy](https://sinonjs.org/releases/v6.1.5/spies/). All methods found
+  [Sinon.js spy](https://sinonjs.org/releases/v8/spies/). All methods found
   on Sinon.JS spies are supported.
 
 ## Examples
@@ -115,7 +115,7 @@ You will see the following in the command log:
 #### Automatic reset/restore between tests
 
 `cy.spy()` creates spies in a
-[sandbox](https://sinonjs.org/releases/v6.1.5/sandbox/), so all spies created
+[sandbox](https://sinonjs.org/releases/v8/sandbox/), so all spies created
 are automatically reset/restored between tests without you having to explicitly
 reset/restore them.
 
