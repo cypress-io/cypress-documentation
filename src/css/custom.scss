@@ -293,13 +293,6 @@ div[class^='codeBlockTitle'] {
   display: none;
 }
 
-/* adding this back after original Docusaurus
-   rules overwritten by .embedContainer
-   TODO: fix what causes this */
-[class^='mainContentHeader'] {
-  margin-bottom: 20px;
-}
-
 /* add some more spacing for main doc container */
 [class^='docItemContainer'] {
   margin: 0 10px;

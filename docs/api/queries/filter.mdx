@@ -132,14 +132,14 @@ cy.get('[data-testid="testattr"]').filter(':contains("Hello\u00a0world")')
 
 - `.filter()` will automatically [retry](/guides/core-concepts/retry-ability)
   until the element(s)
-  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).
+  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Implicit-Assertions).
 - `.filter()` will automatically [retry](/guides/core-concepts/retry-ability)
   until all chained assertions have passed.
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
 
 - `.filter()` can time out waiting for the element(s) to
-  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).
+  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Implicit-Assertions).
 - `.filter()` can time out waiting for assertions you've added to pass.
 
 ## Command Log

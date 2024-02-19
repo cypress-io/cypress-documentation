@@ -26,6 +26,7 @@ import VideoRecordingSupportedBrowsers from "@site/docs/partials/_video-recordin
 import Logo from "@site/src/components/logo";
 import CloudFreePlan from "@site/docs/partials/_cloud_free_plan.mdx";
 import CiProviderCloudSteps from "@site/docs/partials/_ci_provider_cloud_steps.mdx";
+import UrlAllowList from "@site/docs/partials/_url_allowlist.mdx";
 
 // Font Awesome
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -141,5 +142,6 @@ export default {
   VideoRecordingSupportedBrowsers,
   Logo,
   CloudFreePlan,
-  CiProviderCloudSteps
+  CiProviderCloudSteps,
+  UrlAllowList
 }
