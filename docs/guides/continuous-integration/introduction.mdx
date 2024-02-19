@@ -613,30 +613,6 @@ crashing.
 
 :::
 
-### Running headless tests without Xvfb
-
-:::caution
-
-Using the `ELECTRON_RUN_AS_NODE=1` env var is experimental and not fully tested,
-so may not work in all environments.
-
-:::
-
-Chromium based browsers and Firefox can spawn without Xvfb when run via the
-`--headless` flag. If you're testing against either of those browsers using the
-`--browser` flag, you can opt out of Cypress spawning an X11 server by setting
-the environment variable
-[`ELECTRON_RUN_AS_NODE=1`](https://www.electronjs.org/docs/api/environment-variables#electron_run_as_node).
-
-:::caution
-
-Electron cannot be run without an X11 server. Cypress's default browser is
-Electron and won't be able to launch if you set this environment variable.
-Likewise, Cypress's interactive mode (running via `cypress open`) is run via
-Electron and cannot be opened without an X11 server.
-
-:::
-
 ### Colors
 
 If you want colors to be disabled, you can pass the `NO_COLOR` environment
