@@ -25,7 +25,7 @@
   },
   "dependencies": {
     "@cypress-design/css": "^0.18.0",
-    "@cypress-design/react-docmenu": "^0.6.0",
+    "@cypress-design/react-docmenu": "^0.7.0",
     "@cypress-design/react-tag": "^0.3.3",
     "@docusaurus/core": "^3.1.1",
     "@docusaurus/preset-classic": "^3.1.1",
