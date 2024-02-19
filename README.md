@@ -12,7 +12,7 @@ Cloud & FAQ found at https://docs.cypress.io.
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/dbf22ada-b50c-49b0-a933-bf02e87d25d1/deploy-status)](https://app.netlify.com/sites/cypress-docs/deploys)
 
-Our docs are built using [Docusaurus 2](https://docusaurus.io/).
+Our docs are built using [Docusaurus](https://docusaurus.io/).
 
 ### Installation
 
