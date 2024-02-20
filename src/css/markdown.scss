@@ -61,12 +61,29 @@ div.markdown {
     }
   }
 
-  // add border bottom to code tags that are in a link
-  a:has(> code) {
-    border-bottom: 1px dotted var(--ifm-link-color);
+  .alert,
+  & {
+    // add border bottom to code tags that are in a link
+    a:has(> code) {
+      &,
+      &:hover {
+        border: 0.1rem solid rgba(0, 0, 0, 0.1);
+        border-radius: var(--ifm-code-border-radius);
+        background-color: var(--ifm-code-background);
+        padding: 0 0.2rem 0.2rem;
+      }
+    }
 
-    &:hover {
-      border-bottom: 1px solid var(--ifm-link-color);
+    a > code {
+      border: none;
+      background: transparent;
+      border-radius: 0;
+      text-decoration: underline dotted 1px;
+      text-underline-offset: 3px;
+    }
+
+    a:hover > code {
+      text-decoration-style: solid;
     }
   }
 
