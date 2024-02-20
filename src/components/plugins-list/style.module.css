@@ -3,7 +3,7 @@ section {
 }
 
 h3 {
-  margin-bottom: .75rem;
+  margin-bottom: 0.75rem;
 }
 
 .plugins .wrapper {
@@ -37,12 +37,11 @@ ul.pluginsList {
   padding: 0;
 }
 
-ul.pluginsList li {
+body ul.pluginsList li {
   box-sizing: border-box;
   list-style: none;
   padding: 20px;
-  border: 1px solid #e8e8e8;
-  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.15);
+  padding-top: 12px;
   margin: 0 !important;
 }
 
@@ -74,7 +73,7 @@ ul.pluginsList li p {
 /* remove hash symbol from appearing in the ::before
    of the anchors in titles */
 .pluginTitle > h3 > a::before {
-  content: "";
+  content: '';
   margin-left: 0;
   padding-right: 0;
 }

@@ -2,6 +2,22 @@
 title: Changelog
 ---
 
+## 13.6.4
+
+_Released 1/30/2024_
+
+**Performance:**
+
+- Fixed a performance regression from [`13.3.2`](/guides/references/changelog#13-3-2) where aborted requests may not correlate correctly. Fixes [#28734](https://github.com/cypress-io/cypress/issues/28734).
+
+**Bugfixes:**
+
+- Fixed an issue with capturing assets for Test Replay when service workers are registered in Cypress support files. This issue would cause styles to not render properly in Test Replay. Fixes [#28747](https://github.com/cypress-io/cypress/issues/28747).
+
+**Misc:**
+
+- Added missing properties to the `Cypress.spec` interface for TypeScript users. Addresses [#27835](https://github.com/cypress-io/cypress/issues/27835).
+
 ## 13.6.3
 
 _Released 1/16/2024_
@@ -23,7 +39,7 @@ _Released 1/16/2024_
 
 **Performance:**
 
-- Fixed a performance regression from [`13.3.2`](/guides/references/changelog#13.3.2) where requests may not correlate correctly when test isolation is off. Fixes [#28545](https://github.com/cypress-io/cypress/issues/28545).
+- Fixed a performance regression from [`13.3.2`](/guides/references/changelog#13-3-2) where requests may not correlate correctly when test isolation is off. Fixes [#28545](https://github.com/cypress-io/cypress/issues/28545).
 
 **Dependency Updates:**
 
@@ -5984,7 +6000,7 @@ _Released 7/21/2020_
 **Features:**
 
 - You can now pass an `ensureScrollability: false` option to
-  [.scrollTo()](/api/commands/scrollto) to skip checking whether the element is
+  [.scrollTo()](/api/commands/scrollTo) to skip checking whether the element is
   scrollable. Addresses
   [#1924](https://github.com/cypress-io/cypress/issues/1924).
 - [cy.clock()](/api/commands/clock) now accepts Dates as well as a Number for
@@ -9963,7 +9979,7 @@ _Released 5/29/2018_
   [#1753](https://github.com/cypress-io/cypress/issues/1753).
 - The type definition for [`.filter()`](/api/commands/filter) now correctly
   supports a function argument.
-- The type definition for [`.scrollIntoView()`](/api/commands/scrollintoview) no
+- The type definition for [`.scrollIntoView()`](/api/commands/scrollIntoView) no
   longer errors when passed a `duration` option. Fixes
   [#1606](https://github.com/cypress-io/cypress/issues/1606).
 - `NODE_OPTIONS` environment variables now print within the `cypress:cli` logs
@@ -10967,11 +10983,11 @@ _Released 09/10/2017_
 - New [.trigger()](/api/commands/trigger) command. Useful for triggering
   arbitrary events. Fixes
   [#406](https://github.com/cypress-io/cypress/issues/406).
-- New [cy.scrollTo()](/api/commands/scrollto) command. Useful for having a
+- New [cy.scrollTo()](/api/commands/scrollTo) command. Useful for having a
   container scroll to a specific position. Fixes
   [#497](https://github.com/cypress-io/cypress/issues/497) &
   [#313](https://github.com/cypress-io/cypress/issues/313).
-- New [.scrollIntoView()](/api/commands/scrollintoview) command. Useful for
+- New [.scrollIntoView()](/api/commands/scrollIntoView) command. Useful for
   scrolling an element into view. Fixes
   [#498](https://github.com/cypress-io/cypress/issues/498) &
   [#313](https://github.com/cypress-io/cypress/issues/313) &
@@ -11250,8 +11266,8 @@ Note: we are still updating all of the docs to reflect all the 0.20.0 changes.
 - [New "Cypress.Commands"](/api/cypress-api/custom-commands)
 - [New "Cypress.log"](/api/cypress-api/cypress-log)
 - [New ".trigger()"](/api/commands/trigger)
-- [New "cy.scrollTo()"](/api/commands/scrollto)
-- [New ".scrollIntoView()"](/api/commands/scrollintoview)
+- [New "cy.scrollTo()"](/api/commands/scrollTo)
+- [New ".scrollIntoView()"](/api/commands/scrollIntoView)
 - [Updated "Installing Cypress"](/guides/getting-started/installing-cypress)
 - [Updated "Writing Your First Test"](/guides/end-to-end-testing/writing-your-first-end-to-end-test)
 - [Updated "Testing Your App"](/guides/end-to-end-testing/testing-your-app)
