@@ -223,7 +223,7 @@ a remote page and does not resolve until all of the external resources complete
 their loading phase. Because we expect your applications to observe differing
 load times, this command's default timeout is set to 60000ms. If you visit an
 invalid url or a
-[second unique domain](/guides/guides/web-security#Same-superdomain-per-test),
+[second unique domain](/guides/guides/web-security#Different-superdomain-per-test-requires-cyorigin-command),
 Cypress will log a verbose yet friendly error message.
 
 **_In CI, how do I make sure my server has started?_**
@@ -678,7 +678,7 @@ cover everything.
 ### <Icon name="angle-right" /> Is it possible to catch the promise chain in Cypress?
 
 No. You cannot add a `.catch` error handler to a failed command.
-[Read more about how the Cypress commands are not Promises](/guides/core-concepts/introduction-to-cypress#Commands-Are-Not-Promises)
+[Read more about how the Cypress commands are not Promises](/guides/core-concepts/introduction-to-cypress#The-Cypress-Command-Queue)
 
 ### <Icon name="angle-right" /> Is there a way to modify the screenshots/video resolution?
 
