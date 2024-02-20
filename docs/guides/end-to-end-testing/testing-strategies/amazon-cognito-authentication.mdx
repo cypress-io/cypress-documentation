@@ -231,9 +231,6 @@ const loginToCognito = (username: string, password: string) => {
   })
 
   cy.visit('/')
-  cy.contains('Sign in with AWS', {
-    includeShadowDom: true,
-  }).click()
 
   cy.origin(
     Cypress.env('cognito_domain'),
@@ -244,6 +241,7 @@ const loginToCognito = (username: string, password: string) => {
       },
     },
     ({ username, password }) => {
+      cy.contains("Sign in with your email and password");
       // Cognito log in page has some elements of the same id but are off screen.
       // We only want the visible elements to log in
       cy.get('input[name="username"]:visible').type(username)
@@ -282,7 +280,7 @@ is in the
 :::
 
 ```jsx
-describe('Cognito', function () {
+describe('Cognito, cy.origin() login', function () {
   beforeEach(function () {
     // Seed database with test data
     cy.task('db:seed')
@@ -304,12 +302,12 @@ describe('Cognito', function () {
 
 Lastly, we can refactor our login command to take advantage of
 [`cy.session()`](/api/commands/session) to store our logged in user so we don't
-have to reauthenticate with everything test.
+have to reauthenticate with every test.
 
 ```jsx
 // cypress/support/auth-provider-commands/cognito.ts
 // Amazon Cognito
-Cypress.Commands.add('loginByCognito', (username, password) => {
+Cypress.Commands.add('loginByCognito, cy.origin() login', (username, password) => {
   cy.session(
     `cognito-${username}`,
     () => {
@@ -483,7 +481,7 @@ is in the
 :::
 
 ```jsx
-describe('Cognito', function () {
+describe('Cognito, programmatic login', function () {
   beforeEach(function () {
     // Seed database with test data
     cy.task('db:seed')
@@ -505,11 +503,14 @@ describe('Cognito', function () {
 
 :::info
 
-<strong>Programmatic Login</strong>
+<strong>AWS Backend Services Need No Adaptation</strong>
 
-Unlike programmatic login, authenticating with
-[`cy.origin()`](/api/commands/origin) does not require adapting the application
-to work. This step is only needed if implementing programmatic login.
+Often times, AWS Cognito is used when other AWS services provide the backend,
+such as AWS AppSync for GraphQL APIs or AWS API Gateway for REST APIs.  These
+backend services can be configured to verify cognito JWTs without additional
+code. However, this example application is instead hosting a backend locally,
+implemented with the Express NPM library, and so it must be adapted to verify
+the Cognito JWTs to authorize the frontend's requests.
 
 :::
 
@@ -530,6 +531,10 @@ In order to validate API requests from the frontend, we install
 [jwks-rsa](https://github.com/auth0/node-jwks-rsa) and configure validation for
 JWT's from [Amazon Cognito](https://aws.amazon.com/cognito).
 
+<!-- prettier-ignore-start -->
+<Tabs>
+  <TabItem value="v5" label="Amplify v5.x.x" default>
+<!-- prettier-ignore-end -->
 ```jsx
 // backend/helpers.ts
 // ... initial imports
@@ -551,6 +556,36 @@ export const checkCognitoJwt = jwt(awsCognitoJwtConfig).unless({
   path: ['/testData/*'],
 })
 ```
+<!-- prettier-ignore-start -->
+  </TabItem>
+  <TabItem value="v6" label="Amplify v6.x.x">
+<!-- prettier-ignore-end -->
+```jsx
+// backend/helpers.ts
+// ... initial imports
+import jwt from 'express-jwt'
+import jwksRsa from 'jwks-rsa'
+
+// ...
+const userPoolId = awsConfig.Auth.Cognito.userPoolId;
+const region = userPoolId.split("_")[0];
+const awsCognitoJwtConfig = {
+  secret: jwksRsa.expressJwtSecret({
+    jwksUri: `https://cognito-idp.${region}.amazonaws.com/${userPoolId}/.well-known/jwks.json`,
+  }),
+
+  issuer: `https://cognito-idp.${region}.amazonaws.com/${userPoolId}`,
+  algorithms: ['RS256'],
+}
+
+export const checkCognitoJwt = jwt(awsCognitoJwtConfig).unless({
+  path: ['/testData/*'],
+})
+```
+<!-- prettier-ignore-start -->
+  </TabItem>
+</Tabs>
+<!-- prettier-ignore-end -->
 
 Once this helper is defined, we can use globally to apply to all routes:
 
@@ -578,21 +613,20 @@ First, we create a `AppCognito.tsx` container, based off of the `App.tsx`
 component.
 
 A `useEffect` hook is added to get the access token for the authenticated user
-and send an `COGNITO` event with the `user` and `token` objects to work with the
-existing authentication layer (`authMachine.ts`). We use the
-`AmplifyAuthenticator` component to provide the login form from
-[Amazon Cognito](https://aws.amazon.com/cognito).
+and send a `COGNITO` event with the token to work with the existing authentication
+layer (`authMachine.ts`).  If no access token is yet available, we redirect the
+browser to the [Amazon Cognito](https://aws.amazon.com/cognito) User Pool Hosted UI
+to provide the login form.
 
 ```jsx
-// src/containers/AppOkta.tsx
+// src/containers/AppCognito.tsx, amplify v6
 // initial imports ...
-import Amplify from "aws-amplify";
-import { AmplifyAuthenticator, AmplifySignUp, AmplifySignIn } from "@aws-amplify/ui-react";
-import { AuthState, onAuthUIStateChange } from "@aws-amplify/ui-components";
+import { Amplify, ResourcesConfig } from "aws-amplify";
+import { fetchAuthSession, signInWithRedirect, signOut } from "aws-amplify/auth";
 
 import awsConfig from "../aws-exports";
 
-Amplify.configure(awsConfig);
+Amplify.configure(awsConfig as ResourcesConfig);
 
 // ...
 
@@ -601,26 +635,27 @@ const AppCognito: React.FC = () => {
   // ...
 
   useEffect(() => {
-    return onAuthUIStateChange((nextAuthState, authData) => {
-      if (nextAuthState === AuthState.SignedIn) {
-        authService.send("COGNITO", { user: authData });
-      }
-    });
-  }, []);
+    if (!isLoggedIn) {
+      fetchAuthSession().then((authSession) => {
+        if (authSession && authSession.tokens && authSession.tokens.accessToken) {
+          const { tokens, userSub } = authSession;
+          authService.send("COGNITO", {
+            accessTokenJwtString: tokens!.accessToken.toString(),
+            userSub: userSub!,
+            email: tokens!.idToken!.payload.email,
+          });
+        } else {
+          void signInWithRedirect();
+        }
+      });
+    }
+  }, [isLoggedIn]);
 
   // ...
 
-  return isLoggedIn ? (
-    // ...
-  ) : (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <AmplifyAuthenticator usernameAlias="email">
-        <AmplifySignUp slot="sign-up" usernameAlias="email" />
-        <AmplifySignIn slot="sign-in" usernameAlias="email" />
-      </AmplifyAuthenticator>
-    </Container>
-  );
+  if (!isLoggedIn) {
+    return null; // redirection will occur soon anyway
+  }
 };
 
 export default AppCognito;
