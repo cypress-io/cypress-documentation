@@ -307,21 +307,24 @@ have to reauthenticate with every test.
 ```jsx
 // cypress/support/auth-provider-commands/cognito.ts
 // Amazon Cognito
-Cypress.Commands.add('loginByCognito, cy.origin() login', (username, password) => {
-  cy.session(
-    `cognito-${username}`,
-    () => {
-      return loginToCognito(username, password)
-    },
-    {
-      validate() {
-        cy.visit('/')
-        // revalidate our session to make sure we are logged in
-        cy.contains('Get Started').should('be.visible')
+Cypress.Commands.add(
+  'loginByCognito, cy.origin() login',
+  (username, password) => {
+    cy.session(
+      `cognito-${username}`,
+      () => {
+        return loginToCognito(username, password)
       },
-    }
-  )
-})
+      {
+        validate() {
+          cy.visit('/')
+          // revalidate our session to make sure we are logged in
+          cy.contains('Get Started').should('be.visible')
+        },
+      }
+    )
+  }
+)
 ```
 
 <DocsVideo src="https://vimeo.com/789093817" />
@@ -506,7 +509,7 @@ describe('Cognito, programmatic login', function () {
 <strong>AWS Backend Services Need No Adaptation</strong>
 
 Often times, AWS Cognito is used when other AWS services provide the backend,
-such as AWS AppSync for GraphQL APIs or AWS API Gateway for REST APIs.  These
+such as AWS AppSync for GraphQL APIs or AWS API Gateway for REST APIs. These
 backend services can be configured to verify cognito JWTs without additional
 code. However, this example application is instead hosting a backend locally,
 implemented with the Express NPM library, and so it must be adapted to verify
@@ -535,6 +538,7 @@ JWT's from [Amazon Cognito](https://aws.amazon.com/cognito).
 <Tabs>
   <TabItem value="v5" label="Amplify v5.x.x" default>
 <!-- prettier-ignore-end -->
+
 ```jsx
 // backend/helpers.ts
 // ... initial imports
@@ -556,10 +560,12 @@ export const checkCognitoJwt = jwt(awsCognitoJwtConfig).unless({
   path: ['/testData/*'],
 })
 ```
+
 <!-- prettier-ignore-start -->
   </TabItem>
   <TabItem value="v6" label="Amplify v6.x.x">
 <!-- prettier-ignore-end -->
+
 ```jsx
 // backend/helpers.ts
 // ... initial imports
@@ -567,8 +573,8 @@ import jwt from 'express-jwt'
 import jwksRsa from 'jwks-rsa'
 
 // ...
-const userPoolId = awsConfig.Auth.Cognito.userPoolId;
-const region = userPoolId.split("_")[0];
+const userPoolId = awsConfig.Auth.Cognito.userPoolId
+const region = userPoolId.split('_')[0]
 const awsCognitoJwtConfig = {
   secret: jwksRsa.expressJwtSecret({
     jwksUri: `https://cognito-idp.${region}.amazonaws.com/${userPoolId}/.well-known/jwks.json`,
@@ -582,6 +588,7 @@ export const checkCognitoJwt = jwt(awsCognitoJwtConfig).unless({
   path: ['/testData/*'],
 })
 ```
+
 <!-- prettier-ignore-start -->
   </TabItem>
 </Tabs>
@@ -614,7 +621,7 @@ component.
 
 A `useEffect` hook is added to get the access token for the authenticated user
 and send a `COGNITO` event with the token to work with the existing authentication
-layer (`authMachine.ts`).  If no access token is yet available, we redirect the
+layer (`authMachine.ts`). If no access token is yet available, we redirect the
 browser to the [Amazon Cognito](https://aws.amazon.com/cognito) User Pool Hosted UI
 to provide the login form.
 
