@@ -16,7 +16,7 @@ event will fire once for each machine on which the tests are run.
 :::caution
 
 ⚠️ When running via `cypress open`, the `before:run` event only fires if the
-[experimentalInteractiveRunEvents flag](/guides/references/configuration#Experiments)
+[experimentalInteractiveRunEvents flag](/guides/references/experiments#Configuration)
 is enabled.
 
 :::
@@ -31,7 +31,7 @@ on('before:run', (details) => {
 
 :::
 
-**<Icon name="angle-right" /> details** **_(Object)_**
+<Icon name="angle-right" /> **details _(Object)_**
 
 Details of the run, including the project config, system information, and the
 version of Cypress. More details are included when running via `cypress run`.

@@ -7,7 +7,7 @@ sidebar_label: Introduction
 [Cypress Cloud](https://on.cypress.io/cloud) is our enterprise-ready companion
 to the open-source Cypress app, allowing you to:
 
-- [View past test results](#View-past-test-results) from your CI environment.
+- [View and debug past test results](#View-and-debug-past-test-results) from your CI environment.
 - [Analyze and diagnose](#Analyze-and-diagnose-test-health) test health.
 - [Reduce test time and save money](#Reduce-test-time--CI-costs) by smartly
   orchestrating future runs across multiple machines.
@@ -22,11 +22,14 @@ read on for more benefits of Cypress Cloud.
 
 ## Benefits
 
-### View past test results
+### View and debug past test results
 
 Each test run is stored in Cypress Cloud, where you can see past results and the
-current state of your app on the [Latest Runs](/guides/cloud/recorded-runs) page. View
-each test's
+current state of your app on the [Latest Runs](/guides/cloud/recorded-runs) page.
+
+Replay the test as it executed during the recorded run with full debug capability using [<Logo src="/img/guides/cloud/test-replay/replay-icon.svg" /> Test Replay](/guides/cloud/test-replay).
+
+Or view each test's
 [command logs, screenshots, video replays, stack traces, and CI logs](/guides/cloud/recorded-runs#Test-detail-sidebar).
 Quickly identifying a test failure in CI is just a click away.
 
@@ -55,10 +58,17 @@ are problematic, getting slower, or growing over time.
 [Smart Orchestration](/guides/cloud/smart-orchestration/overview) enables you to run
 tests across multiple machines simultaneously in your CI environment while
 Cypress Cloud coordinates runners and
-[balances test loads](/guides/cloud/smart-orchestration/load-balancing#Balance-strategy) - no setup required!
+[balances test loads](/guides/cloud/smart-orchestration/load-balancing#Balance-strategy) -
+no setup required! You can prioritize recently failed specs with
+[Spec Prioritization](/guides/cloud/smart-orchestration/spec-prioritization) to
+surface problems earlier, and cancel whole test runs on failure with
+[Auto Cancellation](/guides/cloud/smart-orchestration/run-cancellation) to save
+on resource usage. You can also
+[cancel in-progress runs](/guides/cloud/recorded-runs#Run-cancellation) manually
+from Cypress Cloud if you need to.
 
 <DocsImage
-  src="/img/dashboard/introduction/orchestration-diagram.png"
+  src="/img/guides/cloud/introduction/orchestration-diagram.png"
   alt="Diagram comparing serial and parallel test configurations"
 />
 
@@ -90,7 +100,7 @@ and [GitLab](https://docs.gitlab.com/ee/subscriptions/self_managed/) instances
 too.
 
 <DocsImage
-  src="/img/dashboard/github-integration/status-checks-per-spec.jpg"
+  src="/img/guides/cloud/integrations/github/status-checks-per-spec.jpg"
   alt="Status checks per spec"
 />
 
@@ -101,7 +111,7 @@ Get notified on test progress directly in your team's
 [Microsoft Teams](/guides/cloud/integrations/teams) channels.
 
 <DocsImage
-  src="/img/dashboard/slack-integration/cypress-slack-integration-channel-feed.jpg"
+  src="/img/guides/cloud/integrations/slack/cypress-slack-integration-channel-feed.jpg"
   alt="Cypress notification feed in Slack channel"
   width={560}
 />

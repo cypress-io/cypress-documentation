@@ -20,13 +20,13 @@ structure as its subject.
 
 ### Usage
 
-**<Icon name="check-circle" color="green" /> Correct Usage**
+<Icon name="check-circle" color="green" /> **Correct Usage**
 
 ```javascript
 cy.getCookies().spread(() => {}) // Yield all cookies
 ```
 
-**<Icon name="exclamation-triangle" color="red" /> Incorrect Usage**
+<Icon name="exclamation-triangle" color="red" /> **Incorrect Usage**
 
 ```javascript
 cy.spread(() => {}) // Errors, cannot be chained off 'cy'
@@ -35,11 +35,11 @@ cy.clock().spread() // Errors, 'clock' does not yield an array
 
 ### Arguments
 
-**<Icon name="angle-right" /> fn** **_(Function)_**
+<Icon name="angle-right" /> **fn _(Function)_**
 
 Pass a function that expands the array into its arguments.
 
-**<Icon name="angle-right" /> options** **_(Object)_**
+<Icon name="angle-right" /> **options _(Object)_**
 
 Pass in an options object to change the default behavior of `.spread()`.
 
@@ -107,7 +107,7 @@ cy.getCookies().spread((cookie1, cookie2, cookie3) => {
 
 | Version                                     | Changes                   |
 | ------------------------------------------- | ------------------------- |
-| [0.5.9](/guides/references/changelog#0-5.9) | `.spread()` command added |
+| [0.5.9](/guides/references/changelog#0-5-9) | `.spread()` command added |
 
 ## See also
 

@@ -25,14 +25,14 @@ cy.contains(selector, content, options)
 
 ### Usage
 
-**<Icon name="check-circle" color="green" /> Correct Usage**
+<Icon name="check-circle" color="green" /> **Correct Usage**
 
 ```javascript
 cy.get('.nav').contains('About') // Yield el in .nav containing 'About'
 cy.contains('Hello') // Yield first el in document containing 'Hello'
 ```
 
-**<Icon name="exclamation-triangle" color="red" /> Incorrect Usage**
+<Icon name="exclamation-triangle" color="red" /> **Incorrect Usage**
 
 ```javascript
 cy.title().contains('My App') // Errors, 'title' does not yield DOM element
@@ -41,18 +41,18 @@ cy.getCookies().contains('_key') // Errors, 'getCookies' does not yield DOM elem
 
 ### Arguments
 
-**<Icon name="angle-right" /> content** **_(String, Number, RegExp)_**
+<Icon name="angle-right" /> **content _(String, Number, RegExp)_**
 
 Get the DOM element containing the content.
 
-**<Icon name="angle-right" /> selector** **_(String selector)_**
+<Icon name="angle-right" /> **selector _(String selector)_**
 
 Specify a selector to filter DOM elements containing the text. Cypress will
 _ignore_ its [default preference order](#Notes) for the specified selector.
 Using a selector allows you to return more _shallow_ elements (higher in the
 tree) that contain the specific text.
 
-**<Icon name="angle-right" /> options** **_(Object)_**
+<Icon name="angle-right" /> **options _(Object)_**
 
 Pass in an options object to change the default behavior of `.contains()`.
 
@@ -313,7 +313,7 @@ cy.contains('Hello world')
 
 **Tip:** read about assertions against a text with non-breaking space entities
 in
-[How do I get an element's text contents?](/faq/questions/using-cypress-faq#How-do-I-get-an-element-s-text-contents)
+[How do I get an element's text contents?](/faq/questions/using-cypress-faq#How-do-I-get-an-elements-text-contents)
 
 ### Single Element
 
@@ -459,14 +459,14 @@ cy.contains('Age').find('input').type('29')
 
 - `.contains()` will automatically [retry](/guides/core-concepts/retry-ability)
   until the element(s)
-  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).
+  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Implicit-Assertions).
 - `.contains()`will automatically [retry](/guides/core-concepts/retry-ability)
   until all chained assertions have passed.
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
 
 - `.contains()` can time out waiting for the element(s) to
-  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).
+  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Implicit-Assertions).
 - `.contains()` can time out waiting for assertions you've added to pass.
 
 ## Command Log

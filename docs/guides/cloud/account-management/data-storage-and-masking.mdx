@@ -1,0 +1,170 @@
+---
+title: Data Storage and Controls
+sidebar_position: 80
+---
+
+:::info
+
+## <Icon name="graduation-cap" /> What you'll learn
+
+- What data Cypress Cloud stores
+- What controls exist to manage data sent to and viewed in Cypress Cloud
+
+:::
+
+## Data Storage
+
+:::caution
+
+Please refer to the [Cypress Cloud Terms of Use](https://cloud.cypress.io/terms-of-use) and our [Security & Compliance](https://www.cypress.io/security/) guide for more specifics around reasonable use of Cypress Cloud, data storage and security at Cypress.
+
+:::
+
+When you run Cypress via `cypress run` and pass the `--record` flag, the following data is stored in Cypress Cloud for every run:
+
+- Standard output in the terminal
+- Test results
+- Test definitions
+- Cypress configuration (minus Cypress environment variables)
+- Screenshots
+- Videos
+- OS environment variables related to CI and git information
+
+When [Test Replay](/guides/cloud/test-replay) capturing is enabled, the additional data outlined below will be sent to Cypress Cloud. [See our guide on disabling Test Replay.](/guides/cloud/test-replay#Opt-out-of-Test-Replay)
+
+- The rendered DOM and CSS styles for the application under test
+- Cypress commands and events represented in the Command Log
+- Network traffic within your application under test
+- Browser console logs
+
+Cypress Cloud does not capture anything related to the code of your application under test or the code within any repositories that are associated with your project.
+
+You, the customer, own and are responsible for your test content. We trust that customers will make decisions about the appropriateness of data to use in testing and will avoid use of PII, PHI, or other types of protected information. Cypress makes commercially reasonable efforts to protect confidentiality of information that is provided to Cypress Cloud.
+
+## Types of Data
+
+We understand that controlling what data is sent to Cypress Cloud is important to our users. Cypress provides a number of ways to control what data is sent to Cypress Cloud.
+
+If you'd like more granular control over what data is sent to Cypress Cloud, please [contact us](https://www.cypress.io/contact/) to discuss your needs.
+
+### Project access controls
+
+Cypress Cloud offers controls around the visibility of a project. You can set a project to be public or private. [See project access control settings.](/guides/cloud/account-management/projects#Public-vs-Private)
+
+Setting a project to private means that only the users explicitly invited to the organization will have visibility into the project, its runs, and any data captured by Cypress.
+
+### Test Replay controls
+
+#### Disable Test Replay
+
+You can disable capturing data in Test Replay per project by following [this guide](/guides/cloud/test-replay#Opt-out-of-Test-Replay). This means Test Replay will not be available for viewing or debugging in the project. This will prevent Cypress Cloud from capturing the following data:
+
+- The rendered DOM and CSS styles for the application under test
+- Cypress commands and events represented in the Command Log
+- Network traffic within your application under test
+- Browser console logs
+
+### Screenshot controls
+
+#### Blackout elements in screenshots
+
+Cypress offers an option to black out (mask) an array of elements from screenshots. [See screenshot API docs.](/api/commands/screenshot#Arguments) This allows you to black out specific elements on screenshots so that they will not be visible in the locally saved screenshots or to any users that have access to the run in Cypress Cloud.
+
+Add a control to your [support file](/guides/references/configuration#Testing-Type-Specific-Options) to set the default blackout options for all screenshots.
+
+```js
+before(() => {
+  Cypress.Screenshot.defaults({
+    // blackout all elements with 'mask-cy' attribute
+    blackout: ['mask-cy'],
+  })
+})
+```
+
+Add a control for a specific screenshot to blackout specific elements.
+
+```js
+it('admin page loads', () => {
+  cy.visit('/admin')
+  cy.screenshot({
+    blackout: ['.user-name'],
+  })
+})
+```
+
+#### Remove Cypress Command Log from screenshots
+
+Cypress offers an option to hide the Cypress Command Log from screenshots so that no information from that area will be captured in screenshots. See the [`cy.screenshot()`](/api/commands/screenshot#Arguments) command for more information.
+
+Add a control to your [support file](/guides/references/configuration#Testing-Type-Specific-Options) to set the default capture options for all screenshots.
+
+```js
+before(() => {
+  Cypress.Screenshot.defaults({
+    capture: 'viewport', // or fullPage
+  })
+})
+```
+
+Add a control for a specific screenshot to only capture the application under test.
+
+```js
+it('sign in page', () => {
+  cy.visit('/sign-in')
+  cy.screenshot({
+    capture: 'viewport', // or fullPage
+  })
+})
+```
+
+### Video controls
+
+#### Disable video upload
+
+You can delete videos that are recorded when you are passing `video: true` by following [this guide to control what is uploaded to Cypress Cloud](/guides/guides/screenshots-and-videos#Control-which-videos-to-keep-and-upload-to-Cypress-Cloud).
+
+### Cypress Command Log controls
+
+#### Turn off Cypress Command Log rendering
+
+You can disable showing the entirety of the Cypress Command Log as well as the Application under Test (AUT) controls in your tests to prevent all test content from being shown and recorded in any screenshot or video by passing `--no-runner-ui` via the CLI while running Cypress tests. See [Cypress Command Line options](/guides/guides/command-line#Options). This means that the AUT will be the only thing that is rendered while running tests, so the only thing that is captured in screenshots and videos.
+
+Note that when `--no-runner-ui` is set, data from the Cypress Command Log will still be sent to Cypress Cloud to be generated and displayed in Test Replay if it is enabled. See [Disable Test Replay](/guides/cloud/test-replay#Opt-out-of-Test-Replay) for more information.
+
+#### Mask data in the Cypress Command Log
+
+There are multiple ways to mask data in the Cypress Command Log. Note that when these strategies are used, data within test definitions will still be sent to Cypress Cloud.
+
+##### `log: false` for Cypress commands
+
+You can pass `log: false` as an option to Cypress-specific commands in your tests to prevent the data from being shown visibly in the Cypress Command Log and being shown in any captured screenshots or videos.
+
+##### Disable logging of XHR/Fetch requests
+
+By default, Cypress logs all requests that match any [`cy.intercept()`](/api/commands/intercept) in the Cypress Command Log, as well as all XMLHttpRequests and fetch requests. You can use `cy.intercept()` to disable these logs by passing `{ log: false }` in the second parameter. See the [`cy.intercept()`](/api/commands/intercept#Disabling-logs-for-a-request) command for more information.
+
+```js
+before(() => {
+  // disable Cypress's default behavior of logging all XMLHttpRequests and fetches
+  cy.intercept({ resourceType: /xhr|fetch/ }, { log: false })
+})
+```
+
+##### Mask Cypress commands in the Cypress Command Log
+
+Users can mask passwords in the Cypress Command Log by using a custom command like the code below. [See our guide on masking the contents of the `.type()` command.](/api/cypress-api/custom-commands#Overwrite-type-command)
+
+<DocsImage src="/img/api/custom-commands/custom-command-type-masked-password.png" />
+
+### Network requests controls
+
+Cypress allows users to block requests from specified hosts. [See our blockHosts configuration guide.](/guides/references/configuration#blockHosts)
+
+<DocsImage
+  src="/img/guides/references/v10/blocked-host.png"
+  alt="Network tab of dev tools showing blocked host"
+/>
+
+## See Also
+
+- [Cypress Cloud FAQ](/faq/questions/cloud-faq)

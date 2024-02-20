@@ -2,6 +2,90 @@
 title: Migration Guide
 ---
 
+## Migrating to Cypress 13.0
+
+This guide details the changes and how to change your code to migrate to Cypress
+version 13.
+[See the full changelog for version v13.0](/guides/references/changelog#13-0-0).
+
+### Cypress Cloud Test Replay
+
+[Test Replay](/guides/cloud/test-replay) is enabled by default in `v13` of the Cypress App.
+
+You may need to allowlist `capture.cypress.io` if you work with a strict VPN. See our FAQ section about [VPN subdomain allowlisting](/faq/questions/cloud-faq#Im-working-with-a-restrictive-VPN-Which-subdomains-do-I-have-to-allow-on-my-VPN-for-Cypress-Cloud-to-work-properly).
+
+With Test Replay enabled, the Cypress Runner UI is hidden by default when recording a run to the Cloud. If the Runner UI is needed during the run, you can enable it by passing [`--runner-ui`](/guides/guides/command-line#cypress-run-runner-ui) to the [`cypress run`](/guides/guides/command-line#cypress-run) command.
+
+You can [opt-out](/guides/cloud/test-replay#Opt-out-of-Test-Replay) of this feature in Cloud project-level settings.
+
+### Video updates
+
+#### `video` is set to `false` by default
+
+You can continue recording video by setting `video` to `true` either in your Cypress configuration or via [overriding options](/guides/references/configuration#Overriding-Options). This can be useful if you want video locally or want video for some other reason, like in non-Chromium browsers where [Test Replay](/guides/cloud/test-replay) is not available.
+
+:::cypress-config-example
+
+```ts
+{
+  video: true
+}
+```
+
+:::
+
+#### `videoUploadOnPasses` configuration option has been removed
+
+Most users used `videoUploadOnPasses` as a way to skip the time to compress and upload videos to the Cloud. Since we're turning off `videoCompression` by default, this configuration option does not offer the time saving value that it once would.
+
+If you want to prevent a passing test from uploading to the Cloud, we recommend deleting the video using our [guide with code examples to discard captured video of passing tests](/guides/guides/screenshots-and-videos#Control-which-videos-to-keep-and-upload-to-Cypress-Cloud).
+
+#### `videoCompression` is set to `false` by default
+
+Cypress has the capability to compress recorded videos after a run to reduce the video file size. By default, compression is now turned off. This results in a reduced run time by removing the time to compress the video, a larger video file size and better video quality.
+
+You can enable this with the `videoCompression` [configuration](/guides/references/configuration#Videos) option if you'd like to reduce the video file size for any reason. This will also reduce the video quality and take slightly longer to process and complete the run.
+
+:::cypress-config-example
+
+```ts
+{
+  // value can be true/false -or- an integer between 0 and 51
+  videoCompression: true,
+}
+```
+
+:::
+
+### `cy.readFile()` is now a query command
+
+In Cypress `v13`, the [`.readFile()`](/api/commands/readfile) command is now a query.
+Tests written using it should continue to operate exactly as before; no changes
+are necessary.
+
+`readFile()` will re-read the file from disk if any upcoming command in the same
+chain fails. Assertions no longer have to be directly attached.
+
+```js
+cy.readFile(`users.json`).its('users.123.fullName').should('eq', 'John Doe')
+```
+
+Beginning with Cypress `v13`, the above test will re-read the file until the file
+exists, it has the requested property, and it passes the assertion.
+
+In previous versions of Cypress, the above command would retry until the file
+existed, but would _not_ re-read it from disk if the file didn't have the
+requested property or the contents didn't match.
+
+#### `.readFile()` can no longer be overwritten with `Cypress.Commands.overwrite()`
+
+Queries must be overwritten using `Cypress.Commands.overwriteQuery()`. If you
+were previously overwriting `cy.readFile()`, you will need to update your code
+to use `Cypress.Commands.overwriteQuery('readFile', function() { ... })` rather
+than `Cypress.Commands.overwrite('readFile', () => { ... })`. For more details
+on overwriting queries, see the
+[Overwriting Existing Queries](/api/cypress-api/custom-queries#Overwriting-Existing-Queries).
+
 ## Migrating to Cypress 12.0
 
 This guide details the changes and how to change your code to migrate to Cypress
@@ -83,13 +167,13 @@ it('validates the change', () => {
 
 After migrating, when `testIsolation=true` by default, this flow would need to
 be contained within a single test. While the above practice has always been
-[discouraged](/guides/references/best-practices#Having-tests-rely-on-the-state-of-previous-tests)
+[discouraged](/guides/references/best-practices#Having-Tests-Rely-On-The-State-Of-Previous-Tests)
 we know some users have historically written tests this way, often to get around
 the `same-origin` restrictions. But with [`cy.origin()`](/api/commands/origin)
 you no longer need these kind of brittle hacks, as your multi-origin logic can
 all reside in a single test, like the following.
 
-&nbsp;<Badge type="success">After</Badge> One big test using `cy.origin()`
+<Badge type="success">After</Badge> One big test using `cy.origin()`
 
 ```js
 it('securely edits content', () => {
@@ -1123,7 +1207,7 @@ when Cypress loads.
 This option is no longer used, and all plugin file functionality has moved into
 the [`setupNodeEvents()`](/guides/references/configuration#setupNodeEvents) and
 [`devServer`](/guides/references/configuration#devServer) options. See the
-[Plugins file removed](#Plugins-file-removed) section of this migration guide
+[Plugins file removed](#Plugins-File-Removed) section of this migration guide
 for more details.
 
 :::caution
@@ -1145,7 +1229,7 @@ More information can be found in the
 [Plugins API documentation](/api/plugins/writing-a-plugin#Plugins-API) and the
 [Configuration API documentation](/api/plugins/configuration-api#Usage).
 
-<Badge type="danger">Before</Badge> <code>cypress/plugins/index.js</code>
+<Badge type="danger">Before</Badge> `cypress/plugins/index.js`
 
 ```js
 module.exports = (on, config) => {
@@ -1346,7 +1430,7 @@ recommend doing it manually if you are a Cypress Cloud user.
 ### Generated Files
 
 Generated screenshots and videos will still be created inside their respective
-[folders](/guides/references/configuration#Folders-Files) (`screenshotsFolder`,
+[folders](/guides/references/configuration#Folders--Files) (`screenshotsFolder`,
 `videosFolder`). However, the paths of generated files inside those folders will
 be stripped of any common ancestor paths shared between all spec files found by
 the `specPattern` option (or via the `--spec` command line option or `spec`
@@ -1417,6 +1501,19 @@ respectively.
 Any previous dev servers or mounting libraries from the `@cypress` namespace
 should be uninstalled in Cypress 10.
 
+### Clashing Types with Jest
+
+You may want to consider configuring your app with a separate `tsconfig.json` to solve
+[clashing types with jest](/guides/tooling/typescript-support#Clashing-types-with-Jest).
+You will need to exclude `cypress.config.ts`, `cypress`, `node_modules` in your
+root `tsconfig.json` file.
+
+```json
+{
+  "exclude": ["cypress.config.ts", "cypress", "node_modules"]
+}
+```
+
 ### Code Coverage Plugin
 
 The [Cypress Code Coverage](https://github.com/cypress-io/code-coverage#readme)
@@ -1473,21 +1570,15 @@ Below are several examples of migrating various commands from
 
 #### Read and attach a fixture
 
-<Badge type="danger">Before</Badge> Attaching a fixture from disk with <code>
-  cypress-file-upload
-</code>
+{/* prettier-ignore */}
+<Badge type="danger">Before</Badge> Attaching a fixture from disk with `cypress-file-upload`
 
 ```js
 cy.get('[data-cy="file-input"]').attachFile('myfixture.json')
 ```
 
-<Badge type="success">After</Badge> Selecting a fixture from disk with <code>
-  .selectFile()
-</code>
-. Cypress follows paths from your project root (same as <a href="/api/commands/readfile">
-  <code>cy.readFile()</code>
-</a>
-).
+{/* prettier-ignore */}
+<Badge type="success">After</Badge> Selecting a fixture from disk with `.selectFile()`. Cypress follows paths from your project root (same as [`cy.readFile()`](/api/commands/readfile)).
 
 ```js
 cy.get('[data-cy="file-input"]').selectFile('cypress/fixtures/myfixture.json')
@@ -1500,9 +1591,8 @@ cy.get('[data-cy="file-input"]').selectFile('@myfixture')
 
 #### Using drag-n-drop
 
-<Badge type="danger">Before</Badge> Dragging and dropping a file with <code>
-  cypress-file-upload
-</code>
+{/* prettier-ignore */}
+<Badge type="danger">Before</Badge> Dragging and dropping a file with `cypress-file-upload`
 
 ```js
 cy.get('[data-cy="dropzone"]').attachFile('myfixture.json', {
@@ -1510,13 +1600,8 @@ cy.get('[data-cy="dropzone"]').attachFile('myfixture.json', {
 })
 ```
 
-<Badge type="success">After</Badge> Selecting a fixture from disk with <code>
-  .selectFile()
-</code>
-. Cypress follows paths from the root of your test folder (same as <a href="/api/commands/readfile">
-  <code>cy.readFile()</code>
-</a>
-).
+{/* prettier-ignore */}
+<Badge type="success">After</Badge> Selecting a fixture from disk with `.selectFile()`. Cypress follows paths from the root of your test folder (same as [`cy.readFile()`](/api/commands/readfile)).
 
 ```js
 cy.get('[data-cy="dropzone"]').selectFile('fixtures/myfixture.json', {
@@ -1526,9 +1611,8 @@ cy.get('[data-cy="dropzone"]').selectFile('fixtures/myfixture.json', {
 
 #### Overriding the file name
 
-<Badge type="danger">Before</Badge> Dragging and dropping a file with <code>
-  cypress-file-upload
-</code>
+{/* prettier-ignore */}
+<Badge type="danger">Before</Badge> Dragging and dropping a file with `cypress-file-upload`
 
 ```js
 cy.get('[data-cy="dropzone"]').attachFile({
@@ -1537,13 +1621,8 @@ cy.get('[data-cy="dropzone"]').attachFile({
 })
 ```
 
-<Badge type="success">After</Badge> Selecting a fixture from disk with <code>
-  .selectFile()
-</code>
-. Cypress follows paths from the root of your test folder (same as <a href="/api/commands/readfile">
-  <code>cy.readFile()</code>
-</a>
-).
+{/* prettier-ignore */}
+<Badge type="success">After</Badge> Selecting a fixture from disk with `.selectFile()`. Cypress follows paths from the root of your test folder (same as [`cy.readFile()`](/api/commands/readfile)).
 
 ```js
 cy.get('[data-cy="dropzone"]').selectFile({
@@ -1554,9 +1633,8 @@ cy.get('[data-cy="dropzone"]').selectFile({
 
 #### Working with file contents
 
-<Badge type="danger">Before</Badge> Working with file contents before using using <code>
-  cypress-file-upload
-</code>
+{/* prettier-ignore */}
+<Badge type="danger">Before</Badge> Working with file contents before using using `cypress-file-upload`
 
 ```js
 const special = 'file.spss'
@@ -1575,9 +1653,8 @@ cy.fixture(special, 'binary')
 ```
 
 <Badge type="success">After</Badge> Working with file contents before using with
-<code>.selectFile()</code>. The <code>null</code> encoding introduced in Cypress
-9.0 makes working with binary data simpler, and is the preferred encoding for
-use with <code>.selectFile()</code>.
+`.selectFile()`. The `null` encoding introduced in Cypress 9.0 makes working with
+binary data simpler, and is the preferred encoding for use with `.selectFile()`.
 
 ```js
 const special = 'file.spss'
@@ -1604,9 +1681,8 @@ cy.get('[data-cy="file-input"]').selectFile('@special')
 
 #### Specifying a custom mimeType
 
-<Badge type="danger">Before</Badge> Specifying the MIME type with <code>
-  cypress-file-upload
-</code>
+{/* prettier-ignore */}
+<Badge type="danger">Before</Badge> Specifying the MIME type with `cypress-file-upload`
 
 ```js
 cy.get('[data-cy="dropzone"]').attachFile({
@@ -1615,10 +1691,8 @@ cy.get('[data-cy="dropzone"]').attachFile({
 })
 ```
 
-<Badge type="success">After</Badge> Specifying a MIME type with <code>
-  .selectFile()
-</code>
-.
+{/* prettier-ignore */}
+<Badge type="success">After</Badge> Specifying a MIME type with `.selectFile()`.
 
 ```js
 cy.get('[data-cy="dropzone"]').selectFile({
@@ -1665,7 +1739,7 @@ cypress run --browser=firefox --headless
 ```
 
 <Badge type="success">After</Badge> All browsers headless by default, so you can
-remove the <code>--headless</code> flag during <code>cypress run</code>.
+remove the `--headless` flag during `cypress run`.
 
 ```script
 cypress run --browser=chrome
@@ -1851,7 +1925,7 @@ cy.intercept('/slow', (req) => {
 })
 ```
 
-[Read more about available functions on `res`.](/api/commands/intercept#intercepted-response)
+[Read more about available functions on `res`.](/api/commands/intercept#Intercepted-responses)
 
 #### Falsy values are no longer dropped in `StaticResponse` bodies
 
@@ -1892,11 +1966,11 @@ it.
 limited to configuration and there are no breaking changes to the `mount` API.
 The migration guide contains the following steps:
 
-1. [Update your Cypress configuration to remove `experimentalComponentTesting`](/guides/references/migration-guide#1-Remove-experimentalComponentTesting-config)
-2. [Install updated dependencies](/guides/references/migration-guide##2-Install-component-testing-dependencies)
-3. [Update the plugins file](/guides/references/migration-guide#3-Update-plugins-file-to-use-dev-server-start)
-4. [Use CLI commands to launch](/guides/references/migration-guide#4-Use-CLI-commands-to-launch)
-5. [Update the support file (optionally)](/guides/references/migration-guide#5-Update-the-support-file-optionally)
+1. [Update your Cypress configuration to remove `experimentalComponentTesting`](#1-Remove-experimentalComponentTesting-config)
+2. [Install updated dependencies](#2-Install-component-testing-dependencies)
+3. [Update the plugins file](#3-Update-plugins-file-to-use-dev-serverstart)
+4. [Use CLI commands to launch](#4-Use-CLI-commands-to-launch)
+5. [Update the support file (optionally)](#5-Update-the-support-file-optionally)
 
 #### 1. Remove `experimentalComponentTesting` config
 
@@ -2016,7 +2090,7 @@ module.exports = (on, config) => {
 Projects using React may not need to update their plugins file. If your project
 is using a webpack scaffold or boilerplate, it is recommended to use a preset
 plugin imported from
-[`@cypress/react/plugins`](https://github.com/cypress-io/cypress/tree/develop/npm/react/plugins).
+[`@cypress/react/plugins`](https://github.com/cypress-io/cypress/tree/v7.7.0/npm/react/plugins).
 
 **Preset Plugins for React**
 
@@ -2177,9 +2251,8 @@ it('renders a Button', () => {
 })
 ```
 
-<Badge type="success">After</Badge> Stylesheets are supported via an import and <code>
-  mountingOptions.stylesheets
-</code> is not recommended
+<Badge type="success">After</Badge> Stylesheets are supported via an import and `mountingOptions.stylesheets`
+is not recommended
 
 ```js
 // In the majority of modern style-loaders,
@@ -2543,7 +2616,7 @@ code to be more specific about your assertions on non-existent elements.
 it('test', () => {
   // the modal element is removed from the DOM on click
   cy.get('[data-cy="modal"]').find('.close').click()
-  // assertions below pass in <code 6.0, but properly fail in 6.0+
+  // assertions below pass in Cypress < 6.0, but properly fail in 6.0+
   cy.get('[data-cy="modal"]').should('not.be.visible')
   cy.get('[data-cy="modal"]').should('not.contain', 'Upgrade')
 })
@@ -2575,9 +2648,8 @@ browser's implementation on how they regard elements with `opacity: 0`.
 
 #### Assert visibility of `opacity: 0` element
 
-<Badge type="danger">Before</Badge> Failed assertion that <code>
-  opacity: 0
-</code> element is not visible.
+<Badge type="danger">Before</Badge> Failed assertion that `opacity: 0` element is
+not visible.
 
 ```js
 it('test', () => {
@@ -2587,9 +2659,8 @@ it('test', () => {
 })
 ```
 
-<Badge type="success">After</Badge> Passed assertion that <code>
-  opacity: 0
-</code> element is not visible.
+<Badge type="success">After</Badge> Passed assertion that `opacity: 0` element is
+not visible.
 
 ```js
 it('test', () => {
@@ -2620,8 +2691,8 @@ it('test', () => {
 [cy.intercept()][intercept] instead. Due to this deprecation, the type yielded
 by [cy.wait(alias)](/api/commands/wait) has changed.
 
-&nbsp;<Badge type="danger">Before</Badge> Before 6.0.0,
-[cy.wait(alias)](/api/commands/wait) would yield an object of type `WaitXHR`.
+<Badge type="danger">Before</Badge> Before 6.0.0, [cy.wait(alias)](/api/commands/wait)
+would yield an object of type `WaitXHR`.
 
 <Badge type="success">After</Badge> In 6.0.0 and onwards, [cy.wait(alias)](/api/commands/wait)
 will yield an object of type `Interception`. This matches the new interception object
@@ -2701,9 +2772,8 @@ plugin to Cypress's built-in test retries.
 
 #### Configure test retries via the CLI
 
-<Badge type="danger">Before</Badge> Setting retries with <code>
-  cypress-plugin-retries
-</code> via env vars
+<Badge type="danger">Before</Badge> Setting retries with `cypress-plugin-retries`
+via env vars
 
 ```shell
 CYPRESS_RETRIES=2 cypress run
@@ -2717,9 +2787,8 @@ CYPRESS_RETRIES=2 cypress run
 
 #### Configure test retries in the configuration file
 
-<Badge type="danger">Before</Badge> Setting retries with <code>
-  cypress-plugin-retries
-</code> via configuration
+<Badge type="danger">Before</Badge> Setting retries with `cypress-plugin-retries`
+via configuration
 
 ```json
 {
@@ -2753,9 +2822,8 @@ CYPRESS_RETRIES=2 cypress run
 
 #### Configure test retries per test
 
-<Badge type="danger">Before</Badge> Setting retries with <code>
-  cypress-plugin-retries
-</code> via the test
+<Badge type="danger">Before</Badge> Setting retries with `cypress-plugin-retries`
+via the test
 
 ```js
 it('test', () => {
@@ -2808,7 +2876,7 @@ API has changed.
 Mainly there is a new `attempts` Array on each `test` which will reflect the
 result of each test retry.
 
-<Badge type="danger">Before</Badge> <code>results.runs</code> Module API results
+<Badge type="danger">Before</Badge> `results.runs` Module API results
 
 ```json
 {
@@ -2859,7 +2927,7 @@ result of each test retry.
 }
 ```
 
-<Badge type="success">After</Badge> <code>results.runs</code> Module API results
+<Badge type="success">After</Badge> `results.runs` Module API results
 
 ```json
 {
@@ -2914,7 +2982,7 @@ result of each test retry.
 The [Cypress.Cookies.defaults()](/api/cypress-api/cookies) `whitelist` option
 has been renamed to `preserve` to more closely reflect its behavior.
 
-<Badge type="danger">Before</Badge> <code>whitelist</code> option
+<Badge type="danger">Before</Badge> `whitelist` option
 
 ```js
 Cypress.Cookies.defaults({
@@ -2922,7 +2990,7 @@ Cypress.Cookies.defaults({
 })
 ```
 
-<Badge type="success">After</Badge> <code>preserve</code> option
+<Badge type="success">After</Badge> `preserve` option
 
 ```js
 Cypress.Cookies.defaults({
@@ -2940,7 +3008,7 @@ This should be updated in all places where Cypress configuration can be set
 including via the Cypress configuration file, command line arguments, the
 `pluginsFile`, `Cypress.config()` or environment variables.
 
-<Badge type="danger">Before</Badge> <code>blacklistHosts</code> configuration
+<Badge type="danger">Before</Badge> `blacklistHosts` configuration
 
 ```json
 {
@@ -2948,7 +3016,7 @@ including via the Cypress configuration file, command line arguments, the
 }
 ```
 
-<Badge type="success">After</Badge> <code>blockHosts</code> configuration
+<Badge type="success">After</Badge> `blockHosts` configuration
 
 ```json
 {
@@ -2965,8 +3033,7 @@ The return type of the [Cypress.Blob](/api/utilities/blob) methods
 `arrayBufferToBlob`, `base64StringToBlob`, `binaryStringToBlob`, and
 `dataURLToBlob` have changed from `Promise<Blob>` to `Blob`.
 
-<Badge type="danger">Before</Badge> <code>Cypress.Blob</code> methods returned a
-Promise
+<Badge type="danger">Before</Badge> `Cypress.Blob` methods returned a Promise
 
 ```js
 Cypress.Blob.base64StringToBlob(this.logo, 'image/png').then((blob) => {
@@ -2974,7 +3041,7 @@ Cypress.Blob.base64StringToBlob(this.logo, 'image/png').then((blob) => {
 })
 ```
 
-<Badge type="success">After</Badge> <code>Cypress.Blob</code> methods return a Blob
+<Badge type="success">After</Badge> `Cypress.Blob` methods return a Blob
 
 ```js
 const blob = Cypress.Blob.base64StringToBlob(this.logo, 'image/png')
@@ -2987,7 +3054,7 @@ const blob = Cypress.Blob.base64StringToBlob(this.logo, 'image/png')
 The `cy.server()` `whitelist` option has been renamed to `ignore` to more
 closely reflect its behavior.
 
-<Badge type="danger">Before</Badge> <code>whitelist</code> option
+<Badge type="danger">Before</Badge> `whitelist` option
 
 ```js
 cy.server({
@@ -2997,7 +3064,7 @@ cy.server({
 })
 ```
 
-<Badge type="success">After</Badge> <code>ignore</code> option
+<Badge type="success">After</Badge> `ignore` option
 
 ```js
 cy.server({
@@ -3017,9 +3084,7 @@ property if specified.
 If you were using the `experimentalGetCookiesSameSite` configuration to get the
 `sameSite` property previously, this should be removed.
 
-<Badge type="danger">Before</Badge> Cookies yielded before had no <code>
-  sameSite
-</code> property.
+<Badge type="danger">Before</Badge> Cookies yielded before had no `sameSite` property.
 
 ```js
 cy.getCookie('token').then((cookie) => {
@@ -3036,9 +3101,8 @@ cy.getCookie('token').then((cookie) => {
 })
 ```
 
-<Badge type="success">After</Badge> Cookies yielded now have <code>
-  sameSite
-</code> property if specified.
+<Badge type="success">After</Badge> Cookies yielded now have `sameSite` property
+if specified.
 
 ```js
 cy.getCookie('token').then((cookie) => {
@@ -3060,9 +3124,8 @@ cy.getCookie('token').then((cookie) => {
 
 The globals `__dirname` and `__filename` no longer include a leading slash.
 
-<Badge type="danger">Before</Badge> <code>__dirname</code> / <code>
-  __filename
-</code>
+{/* prettier-ignore */}
+<Badge type="danger">Before</Badge> `__dirname` / `__filename`
 
 ```js
 // cypress/integration/app_spec.js
@@ -3072,9 +3135,8 @@ it('include leading slash < 5.0', () => {
 })
 ```
 
-<Badge type="success">After</Badge> <code>__dirname</code> / <code>
-  __filename
-</code>
+{/* prettier-ignore */}
+<Badge type="success">After</Badge> `__dirname` / `__filename`
 
 ```js
 // cypress/integration/app_spec.js
@@ -3091,7 +3153,7 @@ systems, this is available as `libgbm-dev`). To install all required
 dependencies on Ubuntu/Debian, you can run the script below:
 
 ```shell
-apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
+apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libnss3 libxss1 libasound2 libxtst6 xauth xvfb
 ```
 
 ### TypeScript esModuleInterop
@@ -3186,8 +3248,8 @@ it('uses invokes done and returns promise', () => {
 
 ##### Example #2
 
-&nbsp;<Badge type="danger">Before</Badge> Sometimes it might make more sense to
-use the `done` callback and not return a promise:
+<Badge type="danger">Before</Badge> Sometimes it might make more sense to use the
+`done` callback and not return a promise:
 
 ```javascript
 it('uses invokes done and returns promise', (done) => {
@@ -3296,7 +3358,7 @@ expect(true).to.be.ture
 
 `include` now always use strict equality unless the `deep` property is set.
 
-<Badge type="danger">Before</Badge> <code>include</code> would always use deep equality
+<Badge type="danger">Before</Badge> `include` would always use deep equality
 
 ```javascript
 // Would pass in Cypress 3 but will fail correctly in 4
@@ -3311,8 +3373,7 @@ cy.wrap([
 })
 ```
 
-<Badge type="success">After</Badge> Need to specificy <code>deep.include</code> for
-deep equality
+<Badge type="success">After</Badge> Need to specificy `deep.include` for deep equality
 
 ```javascript
 // Specifically check for deep.include to pass in Cypress 4
@@ -3347,7 +3408,7 @@ cy.stub(obj, 'nonExistingProperty')
 
 For spies and stubs, the `reset()` method was replaced by `resetHistory()`.
 
-<Badge type="danger">Before</Badge> Spies and stubs using <code>reset()</code>.
+<Badge type="danger">Before</Badge> Spies and stubs using `reset()`.
 
 ```javascript
 const spy = cy.spy()
@@ -3357,10 +3418,8 @@ spy.reset()
 stub.reset()
 ```
 
-<Badge type="success">After</Badge> Update spies and stubs should now use <code>
-  resetHistory()
-</code>
-.
+{/* prettier-ignore */}
+<Badge type="success">After</Badge> Update spies and stubs should now use `resetHistory()`.
 
 ```javascript
 const spy = cy.spy()
@@ -3392,9 +3451,8 @@ on('before:browser:launch', (browser, args) => {
 })
 ```
 
-<Badge type="success">After</Badge> Access the <code>args</code> property off <code>
-  launchOptions
-</code>
+{/* prettier-ignore */}
+<Badge type="success">After</Badge> Access the `args` property off `launchOptions`
 
 ```js
 on('before:browser:launch', (browser, launchOptions) => {
@@ -3412,9 +3470,8 @@ in `before:browser:launch` by modifying the `launchOptions` object.
 
 Now, you must pass those options as `launchOptions.preferences`:
 
-<Badge type="danger">Before</Badge> Passing BrowserWindow options on the <code>
-  launchOptions
-</code> object is no longer supported.
+<Badge type="danger">Before</Badge> Passing BrowserWindow options on the `launchOptions`
+object is no longer supported.
 
 ```js
 on('before:browser:launch', (browser, args) => {
@@ -3424,9 +3481,8 @@ on('before:browser:launch', (browser, args) => {
 })
 ```
 
-<Badge type="success">After</Badge> Pass BrowserWindow options on the <code>
-  options.preferences
-</code> object instead.
+<Badge type="success">After</Badge> Pass BrowserWindow options on the `options.preferences`
+object instead.
 
 ```js
 on('before:browser:launch', (browser, launchOptions) => {
@@ -3446,15 +3502,13 @@ See the
 [docs for `cypress run --browser`](/guides/guides/command-line#cypress-run-browser-lt-browser-name-or-path-gt)
 for more information.
 
-<Badge type="danger">Before</Badge> Passing <code>canary</code> will no longer find
-a browser
+<Badge type="danger">Before</Badge> Passing `canary` will no longer find a browser
 
 ```shell
 cypress run --browser canary
 ```
 
-<Badge type="success">After</Badge> Pass <code>chrome:canary</code> to launch Chrome
-Canary
+<Badge type="success">After</Badge> Pass `chrome:canary` to launch Chrome Canary
 
 ```shell
 cypress run --browser chrome:canary
@@ -3500,7 +3554,7 @@ module.exports = (on, config) => {
 }
 ```
 
-<Badge type="success">After</Badge> Use <code>browser.name</code> to check for Electron
+<Badge type="success">After</Badge> Use `browser.name` to check for Electron
 
 ```js
 module.exports = (on, config) => {
@@ -3528,9 +3582,8 @@ module.exports = (on, config) => {
 }
 ```
 
-<Badge type="success">After</Badge> Use <code>browser.name</code> and <code>
-  browser.family
-</code> to select non-Electron Chromium-based browsers
+<Badge type="success">After</Badge> Use `browser.name` and `browser.family` to select
+non-Electron Chromium-based browsers
 
 ```js
 module.exports = (on, config) => {

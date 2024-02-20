@@ -26,12 +26,20 @@ conditions that could result in unreliable tests include:
 - Resource dependencies availability
 - Network issues
 
-With test retries, Cypress is able to retry failed tests to help reduce test
-flakiness and continuous integration (CI) build failures. By doing so, this will
+With test retries, Cypress is able to retry failed tests to help [detect test
+flakiness](/guides/cloud/flaky-test-management#Flake-Detection) and continuous integration (CI) build failures. By doing so, this will
 save your team valuable time and resources so you can focus on what matters most
 to you.
 
 ## How It Works
+
+:::info
+
+You may want to use the [experimental test retries](/guides/references/experiments#Experimental-Test-Retries) feature which offers more options for [detecting flaky tests](/guides/cloud/flaky-test-management#Flake-Detection). This experimental feature is available as of Cypress `13.4.0`.
+
+Test retries were originally intended to give failing tests more chances to "pass" (for instance, if CI environments for testing are unreliable), while still being determined as flaky if they do eventually pass. However this may not be the desired result in all cases. Experimental retries give you control over the conditions of the pass or fail result.
+
+:::
 
 By default, tests will not retry when they fail. You will need to
 [enable test retries in your configuration](#Configure-Test-Retries) to use this
@@ -99,7 +107,7 @@ attempt for review and debugging if desired.
 
 Typically you will want to define different retry attempts for `cypress run`
 versus `cypress open`. You can configure this in the
-[Cypress configuration](/guides/guides/command-line#cypress-open-config-file-lt-configuration-file-gt)
+[Cypress configuration](/guides/references/configuration#Global)
 by passing the `retries` option an object with the following options:
 
 - `runMode` allows you to define the number of test retries when running
@@ -109,13 +117,13 @@ by passing the `retries` option an object with the following options:
 
 ```jsx
 {
-  "retries": {
+  retries: {
     // Configure retry attempts for `cypress run`
     // Default is 0
-    "runMode": 2,
+    runMode: 2,
     // Configure retry attempts for `cypress open`
     // Default is 0
-    "openMode": 0
+    openMode: 0
   }
 }
 ```
@@ -124,12 +132,12 @@ by passing the `retries` option an object with the following options:
 
 If you want to configure the retry attempts for all tests run in both
 `cypress run` and `cypress open`, you can configure this in the
-[Cypress configuration](/guides/guides/command-line#cypress-open-config-file-lt-configuration-file-gt)
+[Cypress configuration](/guides/references/configuration#Global)
 by defining the `retries` property and setting the desired number of retries.
 
 ```jsx
 {
-  "retries": 1
+  retries: 1
 }
 ```
 
@@ -309,6 +317,8 @@ can review the
 [Flake Detection](/guides/cloud/flaky-test-management#Flake-Detection) and
 [Flake Alerting](/guides/cloud/flaky-test-management#Flake-Alerting) features
 highlighted in the Test Flake Management Guide.
+
+<TestReplayInfo />
 
 ## Frequently Asked Questions (FAQs)
 

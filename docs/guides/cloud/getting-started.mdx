@@ -15,10 +15,7 @@ sidebar_position: 20
 
 ## Create a Cypress Cloud account
 
-To get started with Cypress Cloud,
-[sign up here](https://cloud.cypress.io/signup) for our
-[free plan](https://www.cypress.io/pricing) which comes with **3** users and
-**500** monthly test results.
+<CloudFreePlan />
 
 Once complete, come back here for information on how to integrate your app with
 Cypress Cloud.
@@ -34,9 +31,8 @@ can also record your tests when running locally.
 
 :::tip
 
-&#8239<Icon name="check-circle" color="green" /> Make sure to
-[install](/guides/getting-started/installing-cypress) and
-[open](/guides/getting-started/opening-the-app) the Cypress app to get started
+<Icon name="check-circle" color="green" /> Make sure to [install](/guides/getting-started/installing-cypress)
+and [open](/guides/getting-started/opening-the-app) the Cypress app to get started
 recording!
 
 :::
@@ -89,12 +85,12 @@ recording!
      alt="Record Instructions"
    />
 9. After setting up your project, Cypress inserts a unique
-   [projectId](#Identification) into your Cypress configuration file. If you're
+   [projectId](/guides/cloud/account-management/projects#Project-ID) into your Cypress configuration file. If you're
    using source control, we recommend that you check your configuration file,
    including the `projectId`, into source control.
 10. Within [Continuous Integration](/guides/continuous-integration/introduction)
     or from your local computer's terminal, pass the displayed
-    [Record Key](#Identification) while running the
+    [Record Key](/guides/cloud/account-management/projects#Record-key) while running the
     [cypress run](/guides/guides/command-line#cypress-run) command.
 
     Provide record key directly:

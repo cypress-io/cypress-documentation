@@ -43,33 +43,22 @@ test:
     - npm run e2e
 ```
 
-:::info
-
-<strong>Try it out</strong>
-
-To try out the example above yourself, fork the
-[Cypress Kitchen Sink](https://github.com/cypress-io/cypress-example-kitchensink)
-example project and place the above GitHub Action configuration in
-`.gitlab-ci.yml`.
-
-:::
-
 **How this configuration works:**
 
 - On _push_ to this repository, this job will provision and start GitLab-hosted
-  Linux instance for running the outlined `stages` declared in `script` with in
+  Linux instance for running the outlined `stages` declared in `script` within
   the `test` job section of the configuration.
-- The code is checked out from our GitHub/GitLab repository.
+- The code is checked out from the GitLab repository.
 - Finally, our scripts will:
   - Install npm dependencies
   - Start the project web server (`npm start`)
-  - Run the Cypress tests within our GitHub repository within Electron.
+  - Run the Cypress tests within the GitLab repository using Electron.
 
 ## Testing in Chrome and Firefox with Cypress Docker Images
 
 The Cypress team maintains the official
 [Docker Images](https://github.com/cypress-io/cypress-docker-images) for running
-Cypress tests locally and in CI, which are built with Google Chrome and Firefox.
+Cypress tests locally and in CI, which are built with Google Chrome, Firefox and Microsoft Edge.
 For example, this allows us to run the tests in Firefox by passing the
 `--browser firefox` attribute to `cypress run`.
 
@@ -78,7 +67,7 @@ stages:
   - test
 
 test:
-  image: cypress/browsers:node16.16.0-chrome107-ff107-edge
+  image: cypress/browsers:node-20.9.0-chrome-118.0.5993.88-1-ff-118.0.2-edge-118.0.2088.46-1
   stage: test
   script:
     # install dependencies
@@ -109,7 +98,7 @@ cache:
     - .npm/
 
 test:
-  image: cypress/browsers:node16.16.0-chrome107-ff107-edge
+  image: cypress/browsers:node-20.9.0-chrome-118.0.5993.88-1-ff-118.0.2-edge-118.0.2088.46-1
   stage: test
   script:
     # install dependencies
@@ -161,7 +150,8 @@ assign it to the `build` stage.
 stages:
   - build
 
-## Set environment variables for folders in "cache" job settings for npm modules and Cypress binary
+## Set environment variables for folders in "cache" job settings
+## for npm modules and Cypress binary
 variables:
   npm_config_cache: '$CI_PROJECT_DIR/.npm'
   CYPRESS_CACHE_FOLDER: '$CI_PROJECT_DIR/cache/Cypress'
@@ -173,9 +163,9 @@ cache:
     - node_modules
     - build
 
-## Install NPM dependencies and Cypress
+## Install npm dependencies and Cypress
 install:
-  image: cypress/browsers:node16.16.0-chrome107-ff107-edge
+  image: cypress/browsers:node-20.9.0-chrome-118.0.5993.88-1-ff-118.0.2-edge-118.0.2088.46-1
   stage: build
   script:
     - npm ci
@@ -191,12 +181,21 @@ The addition of the
 configuration of a job will allow us to run multiples instances of Cypress at
 same time.
 
+:::info
+
+The following configuration using the `--parallel` and `--record` flags to
+[cypress run](/guides/guides/command-line#cypress-run) requires setting up
+recording test results to [Cypress Cloud](/guides/cloud/introduction).
+
+:::
+
 ```yaml
 stages:
   - build
   - test
 
-## Set environment variables for folders in "cache" job settings for npm modules and Cypress binary
+## Set environment variables for folders in "cache" job settings
+## for npm modules and Cypress binary
 variables:
   npm_config_cache: '$CI_PROJECT_DIR/.npm'
   CYPRESS_CACHE_FOLDER: '$CI_PROJECT_DIR/cache/Cypress'
@@ -209,15 +208,15 @@ cache:
     - node_modules
     - build
 
-## Install NPM dependencies and Cypress
+## Install npm dependencies and Cypress
 install:
-  image: cypress/browsers:node16.16.0-chrome107-ff107-edge
+  image: cypress/browsers:node-20.9.0-chrome-118.0.5993.88-1-ff-118.0.2-edge-118.0.2088.46-1
   stage: build
   script:
     - npm ci
 
 ui-chrome-tests:
-  image: cypress/browsers:node16.16.0-chrome107-ff107-edge
+  image: cypress/browsers:node-20.9.0-chrome-118.0.5993.88-1-ff-118.0.2-edge-118.0.2088.46-1
   stage: test
   parallel: 5
   script:
@@ -226,46 +225,13 @@ ui-chrome-tests:
     # start the server in the background
     - npm start &
     # run Cypress tests in parallel
-    - npx cypress run --record --parallel --browser chrome --group "UI - Chrome"
+    - npx cypress run --record --parallel --browser chrome --group UI-Chrome
 ```
-
-:::note
-
-The above configuration using the `--parallel` and `--record` flags to
-[cypress run](/guides/guides/command-line#cypress-run) requires setting up
-recording test results to [Cypress Cloud](https://on.cypress.io/cloud).
-
-:::
 
 ## Using Cypress Cloud with GitLab CI/CD
 
 In the GitLab CI configuration we have defined in the previous section, we are
 leveraging three useful features of
-[Cypress Cloud](https://on.cypress.io/cloud):
+[Cypress Cloud](/guides/cloud/introduction):
 
-1. [Recording test results with the `--record` flag](https://on.cypress.io/how-do-i-record-runs)
-   to [Cypress Cloud](https://on.cypress.io/cloud):
-
-   - In-depth and shareable
-     [test reports](/guides/cloud/recorded-runs#Latest-Runs).
-   - Visibility into test failures via quick access to error messages, stack
-     traces, screenshots, videos, and contextual details.
-   - [Integrating testing with the merge-request process](/guides/cloud/integrations/source-control/gitlab)
-     via
-     [commit status guards](/guides/cloud/integrations/source-control/gitlab#Commit-statuses)
-     and convenient
-     [test report comments](/guides/cloud/integrations/source-control/gitlab#Merge-Request-comments).
-   - [Detecting flaky tests](/guides/cloud/flaky-test-management) and surfacing
-     them via [Slack alerts](/guides/cloud/flaky-test-management#Slack) or
-     [GitLab PR status checks](/guides/cloud/integrations/source-control/gitlab).
-
-2. [Parallelizing test runs](/guides/cloud/smart-orchestration/parallelization)
-   and optimizing their execution via
-   [intelligent load-balancing](/guides/cloud/smart-orchestration/load-balancing#Balance-strategy)
-   of test specs across CI machines with the `--parallel` flag.
-
-3. Organizing and consolidating multiple `cypress run` calls by labeled groups
-   into a single report within [Cypress Cloud](https://on.cypress.io/cloud). In
-   the example above we use the `--group "UI - Chrome"` flag to organize all UI
-   tests for the Chrome browser into a group labeled "UI - Chrome" in the
-   [Cypress Cloud](https://on.cypress.io/cloud) report.
+<CiProviderCloudSteps />

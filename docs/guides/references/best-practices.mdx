@@ -7,9 +7,10 @@ title: Best Practices
 ### <Icon name="graduation-cap" /> Real World Practices
 
 The Cypress team maintains the
-&nbsp;<Icon name="github" inline="true" contentType="rwa" />, a full stack
-example application that demonstrates **best practices and scalable strategies
-with Cypress in practical and realistic scenarios**.
+
+<Icon name="github" inline="true" contentType="rwa" />, a full stack example
+application that demonstrates **best practices and scalable strategies with
+Cypress in practical and realistic scenarios**.
 
 The RWA achieves full [code-coverage](/guides/tooling/code-coverage) with
 end-to-end tests
@@ -29,16 +30,16 @@ and start testing.
 
 :::danger
 
-&#8239;<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:**
-Sharing page objects, using your UI to log in, and not taking shortcuts.
+<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Sharing page objects,
+using your UI to log in, and not taking shortcuts.
 
 :::
 
 :::tip
 
-&#8239;<Icon name="check-circle" color="green" /> **Best Practice:** Test specs
-in isolation, programmatically log into your application, and take control of
-your application's state.
+<Icon name="check-circle" color="green" /> **Best Practice:** Test specs in isolation,
+programmatically log into your application, and take control of your application's
+state.
 
 :::
 
@@ -64,16 +65,15 @@ in our examples.
 
 :::danger
 
-&#8239;<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Using
-highly brittle selectors that are subject to change.
+<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Using highly brittle
+selectors that are subject to change.
 
 :::
 
 :::tip
 
-&#8239;<Icon name="check-circle" color="green" /> **Best Practice:** Use
-`data-*` attributes to provide context to your selectors and isolate them from
-CSS or JS changes.
+<Icon name="check-circle" color="green" /> **Best Practice:** Use `data-*` attributes
+to provide context to your selectors and isolate them from CSS or JS changes.
 
 :::
 
@@ -221,22 +221,22 @@ package to use the familiar testing library methods (like `findByRole`,
 `findByLabelText`, etc...) to select elements in Cypress specs.
 
 In particular, if you're looking for more resources to understand how we
-recommend you approach testing your components, look to:
+recommend you approach testing your components, look to: [Cypress Component Testing](/guides/component-testing/overview).
 
 ## <Icon name="angle-right" /> Assigning Return Values
 
 :::danger
 
-&#8239;<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Trying
-to assign the return value of Commands with `const`, `let`, or `var`.
+<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Trying to assign
+the return value of Commands with `const`, `let`, or `var`.
 
 :::
 
 :::tip
 
-&#8239;<Icon name="check-circle" color="green" /> **Best Practice:** Use
-[aliases and closures to access and store](/guides/core-concepts/variables-and-aliases)
-what Commands yield you.
+<Icon name="check-circle" color="green" /> **Best Practice:** Use [aliases and closures
+to access and store](/guides/core-concepts/variables-and-aliases) what Commands yield
+you.
 
 :::
 
@@ -286,18 +286,18 @@ For working with either of these patterns, please read our
 
 :::danger
 
-&#8239;<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Trying
-to visit or interact with sites or servers you do not control.
+<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Trying to visit
+or interact with sites or servers you do not control.
 
 :::
 
 :::tip
 
-&#8239;<Icon name="check-circle" color="green" /> **Best Practice:** Only test
-websites that you control. Try to avoid visiting or requiring a 3rd party
-server. If you choose, you may use [`cy.request()`](/api/commands/request) to
-talk to 3rd party servers via their APIs. If possible, cache results via
-[`cy.session()`](/api/commands/session) to avoid repeat visits.
+<Icon name="check-circle" color="green" /> **Best Practice:** Only test websites
+that you control. Try to avoid visiting or requiring a 3rd party server. If you choose,
+you may use [`cy.request()`](/api/commands/request) to talk to 3rd party servers
+via their APIs. If possible, cache results via [`cy.session()`](/api/commands/session)
+to avoid repeat visits.
 
 :::
 
@@ -443,16 +443,15 @@ email's functionality and visual style:
 
 :::danger
 
-&#8239;<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:**
-Coupling multiple tests together.
+<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Coupling multiple
+tests together.
 
 :::
 
 :::tip
 
-&#8239;<Icon name="check-circle" color="green" /> **Best Practice:** Tests
-should always be able to be run independently from one another **and still
-pass**.
+<Icon name="check-circle" color="green" /> **Best Practice:** Tests should always
+be able to be run independently from one another **and still pass**.
 
 :::
 
@@ -574,15 +573,15 @@ can be run independently and pass.
 
 :::danger
 
-&#8239;<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Acting
-like you're writing unit tests.
+<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Acting like you're
+writing unit tests.
 
 :::
 
 :::tip
 
-&#8239;<Icon name="check-circle" color="green" /> **Best Practice:** Add
-multiple assertions and don't worry about it
+<Icon name="check-circle" color="green" /> **Best Practice:** Add multiple assertions
+and don't worry about it
 
 :::
 
@@ -634,8 +633,8 @@ Why you shouldn't do this in end-to-end tests:
 - Resetting tests is much slower than adding more assertions
 
 It is common for tests in Cypress to issue 30+ commands. Because nearly every
-command has a default assertion (and can therefore fail), even by limiting your
-assertions you're not saving yourself anything because **any single command
+command has an implicit assertion (and can therefore fail), even by limiting
+your assertions you're not saving yourself anything because **any single command
 could implicitly fail**.
 
 How you should rewrite those tests:
@@ -660,15 +659,15 @@ describe('my form', () => {
 
 :::danger
 
-&#8239;<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Using
-`after` or `afterEach` hooks to clean up state.
+<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Using `after`
+or `afterEach` hooks to clean up state.
 
 :::
 
 :::tip
 
-&#8239;<Icon name="check-circle" color="green" /> **Best Practice:** Clean up
-state **before** tests run.
+<Icon name="check-circle" color="green" /> **Best Practice:** Clean up state **before**
+tests run.
 
 :::
 
@@ -862,17 +861,15 @@ script.
 
 :::danger
 
-&#8239;<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:**
-Waiting for arbitrary time periods using
-[`cy.wait(Number)`](/api/commands/wait#Time).
+<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Waiting for arbitrary
+time periods using [`cy.wait(Number)`](/api/commands/wait#Time).
 
 :::
 
 :::tip
 
-&#8239;<Icon name="check-circle" color="green" /> **Best Practice:** Use route
-aliases or assertions to guard Cypress from proceeding until an explicit
-condition is met.
+<Icon name="check-circle" color="green" /> **Best Practice:** Use route aliases or
+assertions to guard Cypress from proceeding until an explicit condition is met.
 
 :::
 
@@ -957,16 +954,16 @@ waste.
 
 :::danger
 
-&#8239;<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Trying
-to start a web server from within Cypress scripts with
-[`cy.exec()`](/api/commands/exec) or [`cy.task()`](/api/commands/task).
+<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Trying to start
+a web server from within Cypress scripts with [`cy.exec()`](/api/commands/exec) or
+[`cy.task()`](/api/commands/task).
 
 :::
 
 :::tip
 
-&#8239;<Icon name="check-circle" color="green" /> **Best Practice:** Start a web
-server prior to running Cypress.
+<Icon name="check-circle" color="green" /> **Best Practice:** Start a web server
+prior to running Cypress.
 
 :::
 
@@ -1007,15 +1004,15 @@ We have
 
 :::danger
 
-&#8239;<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Using
-[cy.visit()](/api/commands/visit) without setting a `baseUrl`.
+<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Using [cy.visit()](/api/commands/visit)
+without setting a `baseUrl`.
 
 :::
 
 :::tip
 
-&#8239;<Icon name="check-circle" color="green" /> **Best Practice:** Set a
-`baseUrl` in your [Cypress configuration](/guides/references/configuration).
+<Icon name="check-circle" color="green" /> **Best Practice:** Set a `baseUrl` in
+your [Cypress configuration](/guides/references/configuration).
 
 :::
 

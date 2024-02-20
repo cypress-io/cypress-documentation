@@ -14,7 +14,7 @@ cy.focused(options)
 
 ### Usage
 
-**<Icon name="check-circle" color="green" /> Correct Usage**
+<Icon name="check-circle" color="green" /> **Correct Usage**
 
 ```javascript
 cy.focused() // Yields the element currently in focus
@@ -22,7 +22,7 @@ cy.focused() // Yields the element currently in focus
 
 ### Arguments
 
-**<Icon name="angle-right" /> options** **_(Object)_**
+<Icon name="angle-right" /> **options _(Object)_**
 
 Pass in an options object to change the default behavior of `cy.focused()`.
 
@@ -71,14 +71,14 @@ cy.focused().should('have.attr', 'name', 'username')
 
 - `cy.focused()` will automatically [retry](/guides/core-concepts/retry-ability)
   until the element(s)
-  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).
+  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Implicit-Assertions).
 - `cy.focused()` will automatically [retry](/guides/core-concepts/retry-ability)
   until all chained assertions have passed.
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
 
 - `cy.focused()` can time out waiting for the element(s) to
-  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).
+  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Implicit-Assertions).
 - `cy.focused()` can time out waiting for assertions you've added to pass.
 
 ## Command Log

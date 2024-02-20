@@ -32,7 +32,7 @@ This will install Cypress locally as a dev dependency for your project.
 
 :::info
 
-Make sure that you have already run
+Make sure you have Node.js installed and that you have already run
 [`npm init`](https://docs.npmjs.com/cli/init) or have a `node_modules` folder or
 `package.json` file in the root of your project to ensure cypress is installed
 in the correct directory.
@@ -155,16 +155,15 @@ Cypress is a desktop application that is installed on your computer. The desktop
 application supports these operating systems:
 
 - **macOS** 10.9 and above _(Intel or Apple Silicon 64-bit (x64 or arm64))_
-- **Linux** Ubuntu 12.04 and above, Fedora 21 and Debian 8 _(x86_64 or Arm
+- **Linux** Ubuntu 20.04 and above, Fedora 21 and Debian 8 _(x86_64 or Arm
   64-bit (x64 or arm64))_ (see [Linux Prerequisites](#Linux-Prerequisites) down
   below)
-- **Windows** 7 and above _(64-bit only)_
+- **Windows** 10 and above _(64-bit only)_
 
 ### Node.js
 
-If you're using `npm`, `pnpm` or `Yarn` to install Cypress, we support:
+Cypress requires Node.js in order to install. We support the versions listed below:
 
-- **Node.js** 16.x
 - **Node.js** 18.x
 - **Node.js** 20.x and above
 
@@ -212,7 +211,13 @@ on your system.
 #### Ubuntu/Debian
 
 ```shell
-apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
+apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libnss3 libxss1 libasound2 libxtst6 xauth xvfb
+```
+
+#### Arch
+
+```shell
+pacman -S gtk2 gtk3 alsa-lib xorg-server-xvfb libxss nss libnotify
 ```
 
 #### CentOS
@@ -239,7 +244,7 @@ container with the Node.js process.
   ui:
     image: cypress/base:latest
     # if targeting a specific node version, use e.g.
-    # image: cypress/base:14
+    # image: cypress/base:18.12.1
 ```
 
 `cypress/base` is a drop-in replacement for

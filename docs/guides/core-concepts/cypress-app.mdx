@@ -191,11 +191,12 @@ without leaving the Cypress app.
 This feature eliminates the tedious process of switching between Cypress, your
 local editor, and CI output, in order to fix failed tests. It does this by
 enabling you to use the [Test Runner](#Test-Runner) to run only the tests that
-failed in your last recorded test run, as well as review screenshots, videos,
-and logs from your tests.
+failed in your last recorded test run, as well as review the
+[Test Replay](/guides/cloud/test-replay) and other artifacts like screenshots,
+videos, and logs from your tests.
 
 The Debug page shows the latest completed
-[test run](/guides/cloud/recorded-runs#Latest-Runs) that matches the HEAD commit
+[test run](/guides/cloud/recorded-runs#Latest-Runs) that matches the `HEAD` commit
 (the commit currently checked out in the working directory) of your local
 project. Users can see and switch to relevant runs within the Debug page. If no
 run is found for your current commit, then Cypress shows the most recent run in
@@ -401,7 +402,7 @@ Under Test is rendered.
 ### Application Under Test <E2EOnlyBadge />
 
 In
-[E2E Testing](/guides/core-concepts/testing-types#What-is-End-to-end-Testing),
+[E2E Testing](/guides/core-concepts/testing-types#What-is-E2E-Testing),
 the right-hand side of the Test Runner is used to display the Application Under
 Test (AUT): the application that was navigated to using a
 [`cy.visit()`](/api/commands/visit) or any subsequent routing calls made from
@@ -684,7 +685,7 @@ debugging tools to help you understand a test. You can:
 - See detailed information about [errors](#Errors) that occur.
 - Receive additional [console output](#Console-output) about each command.
 - [Pause commands](#Special-commands) and step through them iteratively.
-<!-- - Visualize when hidden or multiple elements are found. -->
+  {/* - Visualize when hidden or multiple elements are found. */}
 
 ### Errors
 

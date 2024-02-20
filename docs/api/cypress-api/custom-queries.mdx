@@ -51,7 +51,7 @@ Cypress.Commands.overwriteQuery(name, callbackFn)
 
 ### Usage
 
-**<Icon name="check-circle" color="green" /> Correct Usage**
+<Icon name="check-circle" color="green" /> **Correct Usage**
 
 ```javascript
 Cypress.Commands.addQuery('getById', function (id) {
@@ -65,11 +65,11 @@ Cypress.Commands.overwriteQuery('get', function (originalFn, ...args) {
 
 ### Arguments
 
-**<Icon name="angle-right" /> name** **_(String)_**
+<Icon name="angle-right" /> **name _(String)_**
 
 The name of the query you're adding.
 
-**<Icon name="angle-right" /> callbackFn** **_(Function)_**
+<Icon name="angle-right" /> **callbackFn _(Function)_**
 
 Pass a function that receives the arguments passed to the query.
 
@@ -284,42 +284,6 @@ With this return value in hand, Cypress verifies any upcoming assertions, such
 as user's `.should()` commands, or if there are none, the default implicit
 assertions that the subject should exist.
 
-### Using existing queries
-
-Many custom queries are wrappers around other, already implemented queries -
-most commonly `.get()`.
-
-This is quite simple:
-
-```javascript
-Cypress.Commands.addQuery('getFirstButton', function getFirstButton(options) {
-  const getFn = cy.now('get', 'button:first', options)
-
-  return (subject) => {
-    console.log('The subject we received was:', subject)
-
-    const btn = getFn(subject)
-
-    console.log('.get returned this element:', btn)
-
-    return btn
-  }
-})
-```
-
-Calling `cy.now()` on a query calls the outer function of that query, and
-returns the inner function. In our case, we call `get` with `button:first` and
-pass through whatever `options` the user provided us.
-
-In our own inner function, we can then call `getFn`, and do whatever we want
-with the return value.
-
-Remember that commands - including queries - don't have a meaningful return
-value. Calling `cy.get()` directly would just add it to the queue of commands to
-be executed later (which is not idempotent!). `cy.now()` lets us directly call
-the original `get` query function, without Cypress' chaining and command queue
-logic wrapped around it.
-
 ### Overwriting Existing Queries
 
 You can also modify the behavior of existing Cypress queries. This is useful to
@@ -446,8 +410,8 @@ already quite expressive and powerful.
 
 Don't do things like:
 
-- **<Icon name="exclamation-triangle" color="red" />** `cy.getButton()`
-- **<Icon name="exclamation-triangle" color="red" />** `.getFirstTableRow()`
+- <Icon name="exclamation-triangle" color="red" /> `cy.getButton()`
+- <Icon name="exclamation-triangle" color="red" /> `.getFirstTableRow()`
 
 Both of these are wrapping `cy.get(selector)`. It's completely unnecessary. Just
 call `.get('button')` or `.get('tr:first')`.
@@ -470,6 +434,6 @@ Try not to overcomplicate things and create too many abstractions.
 ## See also
 
 - See how to add
-  [TypeScript support for custom commands](/guides/tooling/typescript-support#Types-for-custom-commands)
+  [TypeScript support for custom commands](/guides/tooling/typescript-support#Types-for-Custom-Commands)
 - [Plugins using custom commands](/plugins#custom-commands)
 - [Cypress.log()](/api/cypress-api/cypress-log)

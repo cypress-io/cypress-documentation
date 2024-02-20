@@ -3,11 +3,15 @@ import type { Node, Parent } from 'unist'
 
 export function isMatchedDirective(
   node: Node,
-  tagName: string
+  tagName: string,
 ): node is Parent {
   return (
-    //@ts-ignore
-    Array.isArray((node as Parent).children) && node.data?.hName === tagName
+    (node.type === 'containerDirective' ||
+      node.type === 'leafDirective' ||
+      node.type === 'textDirective') &&
+    'name' in node &&
+    node.name === tagName &&
+    'children' in node
   )
 }
 

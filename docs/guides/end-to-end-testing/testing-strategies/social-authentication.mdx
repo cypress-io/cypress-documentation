@@ -17,15 +17,13 @@ slug: /guides/end-to-end-testing/social-authentication
 
 :::caution
 
-<strong>
-  <Icon name="exclamation-triangle" /> Not recommended in CI
-</strong>
+<Icon name="exclamation-triangle" /> **Not recommended in CI**
 
 Cypress does **not** recommend testing social connection authentication as a
 primary means of application authentication testing. This is due to the
-[challenges](/guides/references/best-practices#Challenges-with-Social-Connection-Authentication)
+[challenges](/guides/references/best-practices#Potential-Challenges-Authenticating-with-Social-Platforms)
 mentioned in our
-[Best Practices Guide](/guides/references/best-practices#Potential-Challenges-Authenticating-with-Social-Platforms).
+[Best Practices Guide](/guides/references/best-practices).
 
 Relying on social authentication in CI will likely result in bot detection and
 in some cases, account suspension due to violating the provider's Terms of

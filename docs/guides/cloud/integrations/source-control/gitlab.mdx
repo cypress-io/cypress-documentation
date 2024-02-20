@@ -5,15 +5,22 @@ sidebar_label: GitLab
 ---
 
 [Cypress Cloud](https://on.cypress.io/cloud) can integrate your Cypress tests
-with your GitLab workflow via [commit statuses](#Commit-statuses) and
+with your GitLab workflow via [status checks](#Status-checks) and
 [merge request comments](#Merge-Request-comments). A project first needs to be
 [set up to record](/guides/cloud/account-management/projects) to Cypress Cloud
 to use GitLab integration.
 
 <DocsImage
-  src="/img/dashboard/gitlab-integration/gitlab-merge-request-comment.jpg"
+  src="/img/guides/cloud/integrations/gitlab/gitlab-merge-request-comment.jpg"
   width={800}
 />
+
+:::caution
+
+<Icon name="exclamation-triangle" /> The user enabling the integration needs to have
+admin access to GitLab.
+
+:::
 
 :::caution
 
@@ -31,9 +38,7 @@ If you still face issues after this, please
 
 :::tip
 
-<strong>
-  <Icon name="star" /> Premium Cypress Cloud Feature
-</strong>
+<Icon name="star" /> **Premium Cypress Cloud Feature**
 
 GitLab for Enterprise (Self-managed) is included in our
 [Business and Enterprise paid pricing plans](https://www.cypress.io/pricing).
@@ -63,7 +68,7 @@ with more limited access permissions.
 2. Select the organization you wish to integrate with a GitLab.
 
    <DocsImage
-     src="/img/dashboard/select-cypress-organization.jpg"
+     src="/img/guides/cloud/organizations/select-cypress-organization.jpg"
      alt="Select an organization"
      width={600}
    />
@@ -72,7 +77,7 @@ with more limited access permissions.
    navigation.
 
    <DocsImage
-     src="/img/dashboard/navigate-to-organization-integrations.jpg"
+     src="/img/guides/cloud/organizations/navigate-to-organization-integrations.jpg"
      alt="Install Cypress GitLab from Integrations"
      width={600}
    />
@@ -92,7 +97,7 @@ with more limited access permissions.
 :::warning
 
 If you are running the tests from within a restrictive VPN, see
-[which subdomains to add to your allowlist for Cypress Cloud and your GitLab integration to work properly](/faq/questions/cloud-faq#Im-working-at-a-restrictive-VPN-Which-subdomains-do-I-have-to-allow-on-my-VPN-for-Cypress-Cloud-to-work-properly)
+[which subdomains to add to your allowlist for Cypress Cloud and your GitLab integration to work properly](/faq/questions/cloud-faq#Im-working-with-a-restrictive-VPN-Which-subdomains-do-I-have-to-allow-on-my-VPN-for-Cypress-Cloud-to-work-properly)
 
 :::
 
@@ -111,15 +116,13 @@ from merging any MRs with flaky tests.
 You can manage this behavior on your project's **Project Settings** page.
 
 <DocsImage
-  src="/img/dashboard/gitlab-integration/gitlab-status-checks.jpg"
+  src="/img/guides/cloud/integrations/gitlab/gitlab-status-checks.jpg"
   width={800}
 />
 
 :::tip
 
-<strong>
-  <Icon name="star" /> Premium Cypress Cloud Feature
-</strong>
+<Icon name="star" /> **Premium Cypress Cloud Feature**
 
 Reporting on flaky status checks is included in our
 [Team, Business and Enterprise paid pricing plans](https://www.cypress.io/pricing).
@@ -135,9 +138,11 @@ failed or were flaky.
 You can manage this behavior on your project's **Project Settings** page.
 
 <DocsImage
-  src="/img/dashboard/gitlab-integration/gitlab-merge-requests.jpg"
+  src="/img/guides/cloud/integrations/gitlab/gitlab-merge-requests.jpg"
   width={800}
 />
+
+<TestReplayInfo />
 
 ## Uninstalling the GitLab integration
 

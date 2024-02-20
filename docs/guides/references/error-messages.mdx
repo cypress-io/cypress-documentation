@@ -55,7 +55,7 @@ The `supportFile` configuration option was removed from the root configutation
 object in Cypress version `10.0.0`. Instead, it must be added within each
 testing type's configuration object as a separate property if you would like to
 use a file other than the default
-[supportFile](/guides/references/configuration#Folders-Files) configuration.
+[supportFile](/guides/references/configuration#Testing-Type-Specific-Options) configuration.
 
 #### Use modules for utility functions
 
@@ -141,24 +141,24 @@ troubleshooting resources.
 Getting this error means you've tried to interact with a "dead" DOM element -
 meaning the current subject has been removed from the DOM.
 
-<!--
-To reproduce the following screenshot:
-describe('detachment example', () => {
-  beforeEach(() => {
-    cy.get('body').then(($body) => {
-      const $outer = Cypress.$('<div />').appendTo($body)
-      Cypress.$('<button />').appendTo($outer).click(function () { Cypress.$(this).replaceWith(this.outerHTML) })
-    })
-  })
+{
+// To reproduce the following screenshot:
+// describe('detachment example', () => {
+// beforeEach(() => {
+// cy.get('body').then(($body) => {
+//       const $outer = Cypress.$('<div />').appendTo($body)
+//       Cypress.$('<button />').appendTo($outer).click(function () { Cypress.$(this).replaceWith(this.outerHTML) })
+// })
+// })
 
-  it('detaches from dom', () => {
-    cy.get('button')
-    .click()
-    .parent()
-    .should('have.text', 'Clicked')
-  })
-})
--->
+// it('detaches from dom', () => {
+// cy.get('button')
+// .click()
+// .parent()
+// .should('have.text', 'Clicked')
+// })
+// })
+}
 
 <DocsImage
   src="/img/guides/references/cypress-method-failed-page-updated.png"
@@ -263,21 +263,21 @@ element is actually not interactable in your application._
 
 ### <Icon name="exclamation-triangle" color="red" /> `cy...()` failed because the element is currently animating
 
-<!--
-To reproduce the following screenshot:
-describe('animating example', () => {
-  beforeEach(() => {
-    cy.get('body').then(($body) => {
-      Cypress.$('<input style="position: absolute;" />').appendTo($body)
-      .animate({ left: '+=1000000' }, 10)
-    })
-  })
-  it('is animating', () => {
-    cy.get('input')
-    .type('some text', { timeout: 20 })
-  })
-})
--->
+{
+// To reproduce the following screenshot:
+// describe('animating example', () => {
+// beforeEach(() => {
+// cy.get('body').then(($body) => {
+//       Cypress.$('<input style="position: absolute;" />').appendTo($body)
+// .animate({ left: '+=1000000' }, 10)
+// })
+// })
+// it('is animating', () => {
+// cy.get('input')
+// .type('some text', { timeout: 20 })
+// })
+// })
+}
 
 <DocsImage
   src="/img/guides/references/cy-method-failed-element-is-animating.png"
@@ -596,7 +596,7 @@ The version of Mocha was upgraded with Cypress 4.0. Mocha 3+ no longer allows
 returning a promise and invoking a done callback. Read more about it in the
 [4.0 migration guide](/guides/references/migration-guide#Mocha-upgrade).
 
-### <Icon name="exclamation-triangle" color="red" /> CypressError: Timed out retrying: Expected to find element: ‘…’, but never found it. Queried from element: <…>
+### <Icon name="exclamation-triangle" color="red" /> CypressError: Timed out retrying: Expected to find element: ‘…’, but never found it. Queried from element: \<…>
 
 If you get this error in a case where the element is definitely visible in the
 DOM, your document might contain malformed HTML. In such cases,
@@ -678,7 +678,7 @@ and when to use the
 [--ci-build-id](/guides/guides/command-line#cypress-run-ci-build-id-lt-id-gt)
 option.
 
-### <Icon name="exclamation-triangle" color="red" /> The `--ci-build-id`, `--group`, `--tag`, `--parallel`, or `--auto-cancel-after-failures` flags can only be used when recording {#record-params-without-recording}
+### <Icon name="exclamation-triangle" color="red" /> The `--ci-build-id`, `--group`, `--tag`, `--parallel`, or `--auto-cancel-after-failures` flags can only be used when recording
 
 You passed the `--ci-build-id`,
 [--group](/guides/guides/command-line#cypress-run-group-lt-name-gt),
@@ -704,7 +704,7 @@ not automatically determine or generate a `ciBuildId`.
 In order to use either of these parameters a `ciBuildId` must be determined.
 
 The `ciBuildId` is automatically detected if you are running Cypress in most
-[CI providers](/guides/continuous-integration/introduction#Examples). Please
+[CI providers](/guides/continuous-integration/ci-provider-examples). Please
 review the
 [natively recognized environment variables](/guides/cloud/smart-orchestration/parallelization#CI-Build-ID-environment-variables-by-provider)
 for your CI provider.
@@ -937,7 +937,7 @@ attribute and setting a `CORS` header.
 
 ## Browser Errors
 
-<!-- keep old hash -->
+{/* keep old hash */}
 
 <a name="The-Chromium-Renderer-process-just-crashed"></a>
 

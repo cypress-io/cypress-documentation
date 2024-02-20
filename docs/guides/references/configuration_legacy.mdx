@@ -26,7 +26,7 @@ results to [Cypress Cloud](https://on.cypress.io/cloud-introduction) the
 
 You can change the configuration file or turn off the use of a configuration
 file by using the
-[`--config-file` flag](/guides/guides/command-line#cypress-open-config-file-lt-config-file-gt).
+[`--config-file` flag](/guides/guides/command-line#cypress-open-config-file-lt-configuration-file-gt).
 
 :::
 
@@ -161,11 +161,11 @@ file.
 The Node version is used in Cypress to:
 
 - Build files in the
-  [integrationFolder](/guides/references/configuration#Folders-Files).
+  [integrationFolder](#Folders--Files).
 - Build files in the
-  [supportFile](/guides/references/configuration#Folders-Files).
+  [supportFile](#Folders--Files).
 - Execute code in the
-  [pluginsFile](/guides/references/configuration#Folders-Files).
+  [pluginsFile](#Folders--Files).
 
 <DocsImage
   src="/img/guides/configuration/test-runner-settings-nodejs-version.jpg"
@@ -452,9 +452,9 @@ value has been set via the following ways:
 - Default value
 - The [configuration file](/guides/references/configuration)
 - The
-  [Cypress environment file](/guides/guides/environment-variables#Option-2-cypress-env-json)
+  [Cypress environment file](/guides/guides/environment-variables#Option-2-cypressenvjson)
 - System
-  [environment variables](/guides/guides/environment-variables#Option-3-CYPRESS)
+  [environment variables](/guides/guides/environment-variables#Option-3-CYPRESS_)
 - [Command Line arguments](/guides/guides/command-line)
 - [Plugins file](/api/plugins/configuration-api)
 
@@ -469,9 +469,6 @@ value has been set via the following ways:
 
 By passing a string or array of strings you can block requests made to one or
 more hosts.
-
-To see a working example of this please check out our
-[Stubbing Google Analytics Recipe](/examples/recipes#Stubbing-and-spying).
 
 To block a host:
 
@@ -533,7 +530,7 @@ send a `503` status code. As a convenience it also sets a
 
 <DocsImage
   src="/img/guides/references/v10/blocked-host.png"
-  alt="Network tab of dev tools with analytics.js request selected and the response header highlighted "
+  alt="Network tab of dev tools showing blocked host"
 />
 
 ### modifyObstructiveCode
@@ -686,9 +683,9 @@ IntelliSense is available for Cypress while editing your configuration file.
 
 #### <Icon name="angle-right" /> `baseUrl` is not set
 
-Make sure you do not accidentally place the <code>baseUrl</code> or another
-top-level config variable into the <code>env</code> block. The following
-configuration is <i>incorrect</i> and WILL NOT WORK:
+Make sure you do not accidentally place the `baseUrl` or another
+top-level config variable into the `env` block. The following
+configuration is _incorrect_ and WILL NOT WORK:
 
 ```javascript
 // ⛔️ DOES NOT WORK

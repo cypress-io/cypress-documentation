@@ -16,14 +16,14 @@ chain further commands that rely on the subject after `.each()`.
 
 ### Usage
 
-**<Icon name="check-circle" color="green" /> Correct Usage**
+<Icon name="check-circle" color="green" /> **Correct Usage**
 
 ```javascript
 cy.get('ul>li').each(() => {...}) // Iterate through each 'li'
 cy.getCookies().each(() => {...}) // Iterate through each cookie
 ```
 
-**<Icon name="exclamation-triangle" color="red" /> Incorrect Usage**
+<Icon name="exclamation-triangle" color="red" /> **Incorrect Usage**
 
 ```javascript
 
@@ -33,7 +33,7 @@ cy.clock().each(() => {...})    // Errors, 'clock' does not yield an array
 
 ### Arguments
 
-**<Icon name="angle-right" /> callbackFn** **_(Function)_**
+<Icon name="angle-right" /> **callbackFn _(Function)_**
 
 Pass a function that is invoked with the following arguments:
 

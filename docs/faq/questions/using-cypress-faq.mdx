@@ -223,7 +223,7 @@ a remote page and does not resolve until all of the external resources complete
 their loading phase. Because we expect your applications to observe differing
 load times, this command's default timeout is set to 60000ms. If you visit an
 invalid url or a
-[second unique domain](/guides/guides/web-security#Same-superdomain-per-test),
+[second unique domain](/guides/guides/web-security#Different-superdomain-per-test-requires-cyorigin-command),
 Cypress will log a verbose yet friendly error message.
 
 **_In CI, how do I make sure my server has started?_**
@@ -572,10 +572,9 @@ like `.click()` or `.type()`.
 
 ### <Icon name="angle-right" /> Can I test anchor links that open in a new tab?
 
-Cypress does not and may never have multi-tab support for various reasons.
+Cypress does not have native multi-tab support, but new tabs can be tested with the [@cypress/puppeteer plugin](https://github.com/cypress-io/cypress/blob/develop/npm/puppeteer/README.md).
 
-Luckily there are lots of clear and safe workarounds that enable you to test
-this behavior in your application.
+If you would like to test anchor links natively, there are lots of workarounds that enable you to test them in your application.
 
 [Read through the recipe on tab handling and links to see how to test anchor links.](/examples/recipes#Testing-the-DOM)
 
@@ -679,7 +678,7 @@ cover everything.
 ### <Icon name="angle-right" /> Is it possible to catch the promise chain in Cypress?
 
 No. You cannot add a `.catch` error handler to a failed command.
-[Read more about how the Cypress commands are not Promises](/guides/core-concepts/introduction-to-cypress#Commands-Are-Not-Promises)
+[Read more about how the Cypress commands are not Promises](/guides/core-concepts/introduction-to-cypress#The-Cypress-Command-Queue)
 
 ### <Icon name="angle-right" /> Is there a way to modify the screenshots/video resolution?
 
@@ -811,7 +810,7 @@ cy.get('@consoleLog').should('be.calledWith', 'Hello World!')
 :::
 
 Also, check out our
-[Stubbing `console` Receipe](/examples/recipes#Stubbing-and-spying).
+[Stubbing `console` Recipe](/examples/recipes#Stubbing-and-spying).
 
 ### <Icon name="angle-right" /> How do I use special characters with `cy.get()`?
 
@@ -823,7 +822,7 @@ To test elements with those characters in ids, they need to be escaped with
 [`Cypress.$.escapeSelector`](https://api.jquery.com/jQuery.escapeSelector/).
 
 ```html
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <body>
     <div id="Configuration/Setup/TextField.id">Hello World</div>
@@ -996,7 +995,7 @@ Yes, you sure can. While executing tests, you can view the entire
 `<head>` element. Check out this example.
 
 ```html
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
     <meta charset="utf-8" />
@@ -1106,9 +1105,10 @@ a look at [cypress-movie](https://github.com/bahmutov/cypress-movie) project.
 Yes, for example see [this webinar](https://www.youtube.com/watch?v=U30BKedA2CY)
 hosted by Curiosity Software. In addition, since our
 
-&#8239;<Icon name="github" inline="true" contentType="rwa" /> is implemented using XState
+<Icon name="github" inline="true" contentType="rwa" /> is implemented using XState
 model state library, we are looking for ways to make model-based testing simpler
-and more powerful. Read [Access XState from Cypress Test](https://glebbahmutov.com/blog/cypress-and-xstate/) for our start.
+and more powerful. Read [Access XState from Cypress Test](https://glebbahmutov.com/blog/cypress-and-xstate/)
+for our start.
 
 ### <Icon name="angle-right" /> Can Cypress test WASM code?
 
@@ -1147,9 +1147,7 @@ for more info.
 For end-to-end tests, yes, as you can read in the official
 [Gatsby docs](https://www.gatsbyjs.com/docs/end-to-end-testing/). You can also
 watch the "Cypress + Gatsby webinar"
-[recording](https://www.youtube.com/watch?v=Tx6Lg9mwcCE) and browse the
-webinar's
-[slides](https://cypress.slides.com/amirrustam/cypress-gatsby-confidently-fast-web-development).
+[recording](https://www.youtube.com/watch?v=Tx6Lg9mwcCE).
 
 For component testing, Gatsby is not currently supported out of the box, but it
 might be possible by

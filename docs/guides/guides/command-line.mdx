@@ -107,10 +107,11 @@ cypress run [options]
 | `--env`, `-e`                  | [Specify environment variables](#cypress-run-env-lt-env-gt)                                                                                                                                   |
 | `--group`                      | [Group recorded tests together under a single run](#cypress-run-group-lt-name-gt)                                                                                                             |
 | `--headed`                     | [Displays the browser instead of running headlessly](#cypress-run-headed)                                                                                                                     |
-| `--headless`                   | [Hide the browser instead of running headed (default during `cypress run`)](#cypress-run-headless)                                                                                            |
+| `--headless`                   | Hide the browser instead of running headed (default during `cypress run`)                                                                                                                     |
 | `--help`, `-h`                 | Output usage information                                                                                                                                                                      |
 | `--key`, `-k`                  | [Specify your secret record key](#cypress-run-record-key-lt-record-key-gt)                                                                                                                    |
 | `--no-exit`                    | [Keep Cypress open after tests in a spec file run](#cypress-run-no-exit)                                                                                                                      |
+| `--no-runner-ui`               | [Hides the Cypress Runner UI](#cypress-run-no-runner-ui)                                                                                                                                      |
 | `--parallel`                   | [Run recorded specs in parallel across multiple machines](#cypress-run-parallel)                                                                                                              |
 | `--port`,`-p`                  | [Override default port](#cypress-run-port-lt-port-gt)                                                                                                                                         |
 | `--project`, `-P`              | [Path to a specific project](#cypress-run-project-lt-project-path-gt)                                                                                                                         |
@@ -118,6 +119,7 @@ cypress run [options]
 | `--record`                     | [Whether to record the test run](#cypress-run-record-key-lt-record-key-gt)                                                                                                                    |
 | `--reporter`, `-r`             | [Specify a Mocha reporter](#cypress-run-reporter-lt-reporter-gt)                                                                                                                              |
 | `--reporter-options`, `-o`     | [Specify Mocha reporter options](#cypress-run-reporter-lt-reporter-gt)                                                                                                                        |
+| `--runner-ui`                  | [Displays the Cypress Runner UI. Useful for when Test Replay is enabled and you would still like the Cypress Runner UI to be displayed for screenshots and video](#cypress-run-runner-ui)     |
 | `--spec`, `-s`                 | [Specify the spec files to run](#cypress-run-spec-lt-spec-gt)                                                                                                                                 |
 | `--tag`, `-t`                  | [Identify a run with a tag or tags](#cypress-run-tag-lt-tag-gt)                                                                                                                               |
 
@@ -299,6 +301,15 @@ access to **developer tools** after a `spec` has run.
 cypress run --headed --no-exit
 ```
 
+#### `cypress run --no-runner-ui` {#cypress-run-no-runner-ui}
+
+To prevent Cypress from rendering the Runner UI, use
+`--no-runner-ui`.
+
+```shell
+cypress run --no-runner-ui
+```
+
 #### `cypress run --parallel` {#cypress-run-parallel}
 
 Run recorded specs in
@@ -383,6 +394,16 @@ You can specify reporter options using the
 cypress run --reporter junit --reporter-options mochaFile=result.xml,toConsole=true
 ```
 
+#### `cypress run --runner-ui` {#cypress-run-runner-ui}
+
+To force Cypress to render the Runner UI, use `--runner-ui`.
+
+```shell
+cypress run --runner-ui
+```
+
+Useful for when [Test Replay](/guides/cloud/test-replay) is enabled and you would still like the Runner UI to be rendered for screenshots and video.
+
 #### `cypress run --spec <spec>` {#cypress-run-spec-lt-spec-gt}
 
 Run tests specifying a single test file to run instead of all tests. The spec
@@ -417,15 +438,15 @@ app/
     unit/
     e2e/
       cypress/
-        integration/
-          spec.js
+        e2e/
+          spec.cy.js
       cypress.config.js
 ```
 
 If we are in the `app` folder, we can run the specs using the following command
 
 ```shell
-cypress run --project tests/e2e --spec ./tests/e2e/cypress/e2e/spec.js
+cypress run --project tests/e2e --spec ./tests/e2e/cypress/e2e/spec.cy.js
 ```
 
 #### `cypress run --tag <tag>` {#cypress-run-tag-lt-tag-gt}
@@ -446,7 +467,7 @@ cypress run --record --tag "production,nightly"
 Cypress Cloud will display any tags sent with the appropriate run.
 
 <DocsImage
-  src="/img/dashboard/dashboard-run-with-tags.png"
+  src="/img/guides/cloud/runs/dashboard-run-with-tags.png"
   alt="Cypress run in Cypress Cloud displaying flags"
 />
 
@@ -518,19 +539,19 @@ By passing `--browser` and `--e2e` or `--component` when launching a project,
 you can open Cypress and launch the browser at the same time. Otherwise, you
 will be guided through selecting a browser, project, and/or testing type.
 
-| Option                | Description                                                                                                                   |
-| --------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| `--browser`, `-b`     | [Path to a custom browser to be added to the list of available browsers in Cypress](#cypress-open-browser-lt-browser-path-gt) |
-| `--component`         | [Run component tests](/guides/core-concepts/testing-types#What-is-Component-Testing)                                          |
-| `--config`, `-c`      | [Specify configuration](#cypress-open-config-lt-config-gt)                                                                    |
-| `--config-file`, `-C` | [Specify configuration file](#cypress-open-config-file-lt-configuration-file-gt)                                              |
-| `--detached`, `-d`    | Open Cypress in detached mode                                                                                                 |
-| `--e2e`               | Run end to end tests (default)                                                                                                |
-| `--env`, `-e`         | [Specify environment variables](#cypress-open-env-lt-env-gt)                                                                  |
-| `--global`            | [Run in global mode](#cypress-open-global)                                                                                    |
-| `--help`, `-h`        | Output usage information                                                                                                      |
-| `--port`, `-p`        | [Override default port](#cypress-open-port-lt-port-gt)                                                                        |
-| `--project`, `-P`     | [Path to a specific project](#cypress-open-project-lt-project-path-gt)                                                        |
+| Option                | Description                                                                                                                                                                         |
+| --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `--browser`, `-b`     | [Run Cypress in the browser with the given name. If a filesystem path is supplied, Cypress will attempt to use the browser at that path.](#cypress-open-browser-lt-browser-path-gt) |
+| `--component`         | [Open in component testing mode](/guides/core-concepts/testing-types#What-is-Component-Testing)                                                                                     |
+| `--config`, `-c`      | [Specify configuration](#cypress-open-config-lt-config-gt)                                                                                                                          |
+| `--config-file`, `-C` | [Specify configuration file](#cypress-open-config-file-lt-configuration-file-gt)                                                                                                    |
+| `--detached`, `-d`    | Open Cypress in detached mode                                                                                                                                                       |
+| `--e2e`               | Open in end to end testing mode (default)                                                                                                                                           |
+| `--env`, `-e`         | [Specify environment variables](#cypress-open-env-lt-env-gt)                                                                                                                        |
+| `--global`            | [Open in global mode](#cypress-open-global)                                                                                                                                         |
+| `--help`, `-h`        | Output usage information                                                                                                                                                            |
+| `--port`, `-p`        | [Override default port](#cypress-open-port-lt-port-gt)                                                                                                                              |
+| `--project`, `-P`     | [Path to a specific project](#cypress-open-project-lt-project-path-gt)                                                                                                              |
 
 #### `cypress open --browser <browser-path>` {#cypress-open-browser-lt-browser-path-gt}
 
@@ -643,7 +664,7 @@ Prints information about Cypress and the current environment such as:
 - Operating system information.
 - System memory including free space.
 
-<!-- hack: using css language label to respect decimals in syntax highlightng -->
+{/* hack: using css language label to respect decimals in syntax highlightng */}
 
 ```css
 cypress info
@@ -720,7 +741,7 @@ In most cases the binary and the package versions will be the same, but they
 could be different if you have installed a different version of the package and
 for some reason failed to install the matching binary version.
 
-<!-- hack: using css language label to respect decimals in syntax highlightng -->
+{/* hack: using css language label to respect decimals in syntax highlightng */}
 
 ```css
 cypress version
@@ -732,7 +753,7 @@ Bundled Node version: 16.16.0
 
 You can print each individual component's version number also.
 
-<!-- hack: using css language label to respect decimals in syntax highlightng -->
+{/* hack: using css language label to respect decimals in syntax highlightng */}
 
 ```css
 cypress version --component package
@@ -767,7 +788,7 @@ Print all existing installed versions of Cypress. The output will be a table
 with cached versions and the last time the binary was used by the user,
 determined from the file's access time.
 
-<!-- hack: using css language label to respect decimals in syntax highlightng -->
+{/* hack: using css language label to respect decimals in syntax highlightng */}
 
 ```css
 cypress cache list
@@ -784,7 +805,7 @@ You can calculate the size of every Cypress version folder by adding the
 `--size` argument to the command. Note that calculating the disk size can be
 slow.
 
-<!-- hack: using css language label to respect decimals in syntax highlightng -->
+{/* hack: using css language label to respect decimals in syntax highlightng */}
 
 ```css
 cypress cache list --size

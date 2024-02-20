@@ -14,13 +14,13 @@ Traverse into the shadow DOM of an element.
 
 ### Usage
 
-**<Icon name="check-circle" color="green" /> Correct Usage**
+<Icon name="check-circle" color="green" /> **Correct Usage**
 
 ```javascript
 cy.get('.shadow-host').shadow()
 ```
 
-**<Icon name="exclamation-triangle" color="red" /> Incorrect Usage**
+<Icon name="exclamation-triangle" color="red" /> **Incorrect Usage**
 
 ```javascript
 cy.shadow() // Errors, cannot be chained off 'cy'
@@ -60,7 +60,7 @@ cy.get('.shadow-host').shadow().find('.my-button').click()
 
 - `.shadow()` will automatically [retry](/guides/core-concepts/retry-ability)
   until the element(s)
-  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).
+  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Implicit-Assertions).
 - `.shadow()` will automatically [retry](/guides/core-concepts/retry-ability)
   until the element(s) host(s) a shadow root.
 - `.shadow()` will automatically [retry](/guides/core-concepts/retry-ability)
@@ -69,7 +69,7 @@ cy.get('.shadow-host').shadow().find('.my-button').click()
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
 
 - `.shadow()` can time out waiting for the element(s) to
-  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).
+  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Implicit-Assertions).
 - `.shadow()` can time out waiting for the element(s) to host a shadow root.
 - `.shadow()` can time out waiting for assertions you've added to pass.
 

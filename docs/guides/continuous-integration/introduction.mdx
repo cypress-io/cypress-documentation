@@ -21,11 +21,11 @@ sidebar_position: 10
 
 ## Setting up CI
 
-<!-- textlint-disable -->
+{/* textlint-disable */}
 
 <DocsVideo src="https://youtube.com/embed/saYovXS9Llk" />
 
-<!-- textlint-enable -->
+{/* textlint-enable */}
 
 ### Basics
 
@@ -170,7 +170,8 @@ insight into what happened when your tests ran.
 - Get the entire stack trace of failed tests.
 - View screenshots taken when tests fail and when using
   [`cy.screenshot()`](/api/commands/screenshot).
-- Watch a video of your entire test run or a clip at the point of test failure.
+- Watch a video of your entire test run or a clip at the point of test failure
+  when the `video` configuration is enabled.
 - See which machines ran each test when
   [parallelized](/guides/cloud/smart-orchestration/parallelization).
 
@@ -224,7 +225,7 @@ Mounting a project directory with an existing `node_modules` into a
 `cypress/base` docker image **will not work**:
 
 ```shell
-docker run -it -v /app:/app cypress/base:14.16.0 bash -c 'cypress run'
+docker run -it -v /app:/app cypress/base:20.9.0 bash -c 'cypress run'
 Error: the cypress binary is not installed
 ```
 
@@ -260,7 +261,7 @@ You can see the total available machine memory and the current free memory by
 running the [`cypress info`](https://on.cypress.io/command-line#cypress-info)
 command.
 
-<!-- hack: using css language label to respect decimals in syntax highlightng -->
+{/* hack: using css language label to respect decimals in syntax highlightng */}
 
 ```css
 npx cypress info
@@ -318,7 +319,7 @@ has these dependencies installed.
 #### Ubuntu/Debian
 
 ```shell
-apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
+apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libnss3 libxss1 libasound2 libxtst6 xauth xvfb
 ```
 
 #### CentOS
@@ -376,6 +377,7 @@ values in the Cypress configuration.
 **_Typical use cases would be modifying things like:_**
 
 - `CYPRESS_BASE_URL`
+- `CYPRESS_VIDEO`
 - `CYPRESS_VIDEO_COMPRESSION`
 - `CYPRESS_REPORTER`
 - `CYPRESS_INSTALL_BINARY`
@@ -611,30 +613,6 @@ crashing.
 
 :::
 
-### Running headless tests without Xvfb
-
-:::caution
-
-Using the `ELECTRON_RUN_AS_NODE=1` env var is experimental and not fully tested,
-so may not work in all environments.
-
-:::
-
-Chromium based browsers and Firefox can spawn without Xvfb when run via the
-`--headless` flag. If you're testing against either of those browsers using the
-`--browser` flag, you can opt out of Cypress spawning an X11 server by setting
-the environment variable
-[`ELECTRON_RUN_AS_NODE=1`](https://www.electronjs.org/docs/api/environment-variables#electron_run_as_node).
-
-:::caution
-
-Electron cannot be run without an X11 server. Cypress's default browser is
-Electron and won't be able to launch if you set this environment variable.
-Likewise, Cypress's interactive mode (running via `cypress open`) is run via
-Electron and cannot be opened without an X11 server.
-
-:::
-
 ### Colors
 
 If you want colors to be disabled, you can pass the `NO_COLOR` environment
@@ -645,12 +623,6 @@ colors are not properly formatted in your CI.
 NO_COLOR=1 cypress run
 ```
 
-## Workshop
-
-Cypress team has created a full workshop showing how to run Cypress on popular
-CI providers. Find the workshop at
-[github.com/cypress-io/cypress-workshop-ci](https://github.com/cypress-io/cypress-workshop-ci).
-
 ## See also
 
 - [Cypress Real World App](https://github.com/cypress-io/cypress-realworld-app)
@@ -658,9 +630,9 @@ CI providers. Find the workshop at
   viewport sizes.
 - [cypress-example-kitchensink](https://github.com/cypress-io/cypress-example-kitchensink#ci-status)
   is set up to run on multiple CI providers.
+- [Test Replay](/guides/cloud/test-replay)
 - [Cross Browser Testing Guide](/guides/guides/cross-browser-testing)
 - [Blog: Setting up Bitbucket Pipelines with proper caching of npm and Cypress](https://www.cypress.io/blog/2018/08/30/setting-up-bitbucket-pipelines-with-proper-caching-of-npm-and-cypress/)
 - [Blog: Record Test Artifacts from any Docker CI](https://www.cypress.io/blog/2018/08/28/record-test-artifacts-from-any-ci/)
 - [Continuous Integration with Cypress](https://www.cypress.io/blog/2019/10/04/webcast-recording-continuous-integration-with-cypress/)
-  webinar covering TeamCity, Travis and CircleCI setups,
-  [slides](https://cypress.slides.com/cypress-io/cypress-on-ci).
+  webinar covering TeamCity, Travis and CircleCI setups.

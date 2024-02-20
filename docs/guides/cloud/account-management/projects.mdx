@@ -247,7 +247,7 @@ test runs. Deleting projects can only be done from
 3. Go to the project's **Settings** page.
 4. At the very bottom of the Settings page click the **Remove Project** button.
    <DocsImage
-     src="/img/dashboard/remove-project-dialog.png"
+     src="/img/guides/cloud/projects/remove-project-dialog.png"
      alt="Delete project dialog"
      width="80%"
    />
@@ -288,7 +288,7 @@ test count to other developers viewing your project's README file.
    Configure Badge modal, and embed it in your project's README file for
    everyone to see!
 
-   <!-- prettier-ignore -->
+   {/* prettier-ignore */}
     <DocsImage
       src="/img/guides/cloud/projects/cloud-badge-configuration.jpg"
       alt="README Badge configuration form"
@@ -299,6 +299,35 @@ See also
 [Highlight your project's test status with Cypress README badges](https://www.cypress.io/blog/2020/09/02/highlight-your-projects-test-status-with-cypress-readme-badges/)
 announcement.
 
+## Best Practices
+
+### Multi-repo Implementation
+
+When Cypress tests reside in a repository separate from the application code, it creates a suboptimal Cloud experience - especially when considering the commit and branch interpretation for each git directory.
+
+:::info
+
+For any given Cypress project, all commits or branches associated to recorded runs should belong or relate to a single `.git` repository.
+
+:::
+
+If this is not possible, there are some measures to help organize your data:
+
+1. Create two separate projects in Cypress Cloud, for example, **App Project** and **Test Project**
+
+2. For the **App Project**:
+
+   - Link the GitHub integration to the Application code repo
+   - Override the `COMMIT_INFO_*` environment variables used by the test recording to reflect the state of the checked out Application code repo
+   - Record any runs related to the Application code repo to **App Project**
+   - Capture any Cypress config/tests repo related identifiers (short sha/release number) as tags decorated on the run
+
+3. For the **Test Project**:
+
+   - Link the GitHub integration to the Cypress config/tests repo
+   - Ensure any runs recorded to **Test Project** are related to test code changes in the Cypress config/tests repo
+     - The Application code repo state that the tests are executed against could likewise be captured as tags here, if necessary.
+
 ## Third party integrations
 
 You can integrate your project with many third party tools and edit those
@@ -306,21 +335,21 @@ settings from within the project settings page.
 
 See our integration guides to learn more:
 
-### CI/CD
+### Source Control Providers
 
-<!-- prettier-ignore-start -->
+{/* prettier-ignore-start */}
 
-- &#8239;<Logo src="/img/logo/github.svg" /> [GitHub integration guide](/guides/cloud/integrations/source-control/github)
-- &#8239;<Logo src="/img/logo/gitlab.svg" /> [GitLab integration guide](/guides/cloud/integrations/source-control/gitlab)
-- &#8239;<Logo src="/img/logo/bitbucket.svg" /> [Bitbucket integration guide](/guides/cloud/integrations/source-control/bitbucket)
+- <Logo src="/img/logo/github.svg" /> [GitHub integration guide](/guides/cloud/integrations/source-control/github)
+- <Logo src="/img/logo/gitlab.svg" /> [GitLab integration guide](/guides/cloud/integrations/source-control/gitlab)
+- <Logo src="/img/logo/bitbucket.svg" /> [Bitbucket integration guide](/guides/cloud/integrations/source-control/bitbucket)
 
-### Project Management
+### Issue Management
 
-- &#8239;<Logo src="/img/logo/jira.svg" /> [Jira integration guide](/guides/cloud/integrations/jira)
+- <Logo src="/img/logo/jira.svg" /> [Jira integration guide](/guides/cloud/integrations/jira)
 
-### Messaging
+### Team Communication
 
-- &#8239;<Logo src="/img/logo/slack.svg" /> [Cypress integration for Slack guide](/guides/cloud/integrations/slack)
-- &#8239;<Logo src="/img/logo/ms-teams.svg" /> [Cypress integration for Microsoft Teams guide](/guides/cloud/integrations/teams)
+- <Logo src="/img/logo/slack.svg" /> [Cypress integration for Slack guide](/guides/cloud/integrations/slack)
+- <Logo src="/img/logo/ms-teams.svg" /> [Cypress integration for Microsoft Teams guide](/guides/cloud/integrations/teams)
 
-<!-- prettier-ignore-end -->
+{/* prettier-ignore-end */}

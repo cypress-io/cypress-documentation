@@ -26,9 +26,9 @@ cy.intercept(method, url)
 cy.intercept(routeMatcher)
 ```
 
-See arguments [url](/api/commands/intercept#url-String-Glob-RegExp),
-[method](/api/commands/intercept#method-String) and
-[routeMatcher](/api/commands/intercept#routeMatcher-RouteMatcher)
+See arguments [url](#url-String-Glob-RegExp),
+[method](#method-String) and
+[routeMatcher](#routeMatcher-RouteMatcher)
 
 ```js
 // spying and response stubbing
@@ -39,7 +39,7 @@ cy.intercept(url, routeMatcher, staticResponse)
 ```
 
 See
-[staticResponse](/api/commands/intercept#staticResponse-lt-code-gtStaticResponselt-code-gt)
+[staticResponse](#staticResponse-StaticResponse)
 argument
 
 ```js
@@ -51,12 +51,12 @@ cy.intercept(url, routeMatcher, routeHandler)
 ```
 
 See
-[routeHandler](/api/commands/intercept#routeHandler-lt-code-gtFunctionlt-code-gt)
+[routeHandler](#routeHandler-Function)
 argument
 
 ### Usage
 
-**<Icon name="check-circle" color="green" /> Correct Usage**
+<Icon name="check-circle" color="green" /> **Correct Usage**
 
 ```js
 // spying
@@ -84,7 +84,7 @@ cy.intercept('/users*', { hostname: 'localhost' }, (req) => {
 
 ### Arguments
 
-#### **<Icon name="angle-right" /> method** **_(String)_**
+#### <Icon name="angle-right" /> **method _(String)_**
 
 Match the route to a specific
 [HTTP method](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods) (`GET`,
@@ -96,14 +96,14 @@ If no method is defined Cypress will match all requests by default.
 
 :::
 
-#### **<Icon name="angle-right" /> url** **_(String, Glob, RegExp)_**
+#### <Icon name="angle-right" /> **url _(String, Glob, RegExp)_**
 
 Specify the URL to match. See [Matching `url`][match-url] for examples.
 
 Alternatively, specify the URL via the [`routeMatcher`][arg-routematcher]
 argument (below).
 
-#### **<Icon name="angle-right" /> routeMatcher** **_(`RouteMatcher`)_**
+#### <Icon name="angle-right" /> **routeMatcher _(`RouteMatcher`)_**
 
 `routeMatcher` is an object used to match the incoming HTTP requests with this
 intercepted route.
@@ -147,7 +147,7 @@ See
 [Stubbing a response with a `StaticResponse` object](#With-a-StaticResponse-object)
 for an example.
 
-#### <Icon name="angle-right" /> routeHandler (<code>Function</code>)
+#### <Icon name="angle-right" /> routeHandler (`Function`)
 
 The `routeHandler` function is called whenever a request is matched, with the
 first argument being the request object. From inside the callback, you have
@@ -155,7 +155,7 @@ access to the entire request-response where you can modify the outgoing request,
 send a response, access the real response, and more.
 
 See ["Intercepted requests"][req] and
-[Request/Response Modification with `routeHandler`](#Request-Response-Modification-with-routeHandler).
+[Request/Response Modification with `routeHandler`](#RequestResponse-Modification-with-routeHandler).
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
 
@@ -171,7 +171,7 @@ See ["Intercepted requests"][req] and
 :::info
 
 `cy.intercept` can be used solely for spying: to passively listen for matching
-routes and apply [aliases](#Aliasing-a-Route) to them without manipulating the
+routes and apply [aliases](#Aliasing-an-intercepted-route) to them without manipulating the
 request or its response in any way. This alone is powerful as it allows you to
 [wait](#Waiting-on-a-request) for these requests, resulting in more reliable
 tests.
@@ -254,7 +254,7 @@ cy.intercept(
 // this example will cause 1 request to `/temporary-error`
 // to receive a network error and subsequent requests will
 // not match this `RouteMatcher`
-cy.intercept('/temporary-error', { times: 1 }, { forceNetworkError: true })
+cy.intercept({ url: '/temporary-error', times: 1 }, { forceNetworkError: true })
 ```
 
 ### Pattern Matching
@@ -268,7 +268,8 @@ cy.intercept({
 // matches:
 //   PUT /users/1
 //   PATCH /users/1
-//   doesn't match
+//
+// doesn't match:
 //   GET /users
 //   GET /users/1
 
@@ -318,7 +319,7 @@ For more guidance around aliasing requests with GraphQL, see
 ### Waiting on a request
 
 Use [cy.wait()](/api/commands/wait) with
-[aliasing an intercepted route](#aliasing-an-intercepted-route) to wait for the
+[aliasing an intercepted route](#Aliasing-an-intercepted-route) to wait for the
 request/response cycle to complete.
 
 #### With URL
@@ -700,7 +701,7 @@ beforeEach(() => {
 Specify [`routeHandler`][arg-routehandler] as the last argument to modify the
 outgoing request, stub a response, make assertions, etc.
 
-<!-- TODO DX-188 emphasize the usage of StaticResponse as the routeHandler -->
+{/* TODO DX-188 emphasize the usage of StaticResponse as the routeHandler */}
 
 If a function is passed as the `routeHandler`, it will be called with the
 intercepted HTTP request:
@@ -713,7 +714,7 @@ cy.intercept('/api', (req) => {
 
 From here, you can do several things with the intercepted request:
 
-<!-- TODO DX-190 add links to examples -->
+{/* TODO DX-190 add links to examples */}
 
 - modify and make assertions on the request like its body, headers, URL, method,
   etc. ([example](#Asserting-on-a-request-1))
@@ -862,7 +863,7 @@ Lifecycle][lifecycle].
 :::
 
 See also
-[Providing a stub response with `req.reply()`](#Providing-a-stub-response-with-req-reply)
+[Providing a stub response with `req.reply()`](#Providing-a-stub-response-with-reqreply)
 
 Modifying the real response (`continue`):
 
@@ -1350,7 +1351,7 @@ The following properties are available on `StaticResponse`.
 You can supply a `StaticResponse` to Cypress in 3 ways:
 
 - To `cy.intercept()` as
-  [`an argument`](#staticResponse-lt-code-gtStaticResponselt-code-gt), to stub a
+  [`an argument`](#staticResponse-StaticResponse), to stub a
   response to a route: `cy.intercept('/url', staticResponse)`
 - To [`req.reply()`][req-reply], to stub a response from a request handler:
   `req.reply(staticResponse)`
@@ -1392,7 +1393,7 @@ The following steps are used to handle the request phase.
    information on the `req` object.
    - If [`req.reply()`][req-reply] is called, immediately end the request phase
      with the provided response. See
-     ["Providing a stub response with `req.reply()`"](#Providing-a-stub-response-with-req-reply).
+     ["Providing a stub response with `req.reply()`"](#Providing-a-stub-response-with-reqreply).
    - If [`req.continue()`][req-continue] is called, immediately end the request
      phase, and send the request to the destination server. If a callback is
      provided to [`req.continue()`][req-continue], it will be called during the
@@ -1618,11 +1619,6 @@ information about the request and response to the console:
 - [Network Requests Guide](/guides/guides/network-requests)
 - [Cypress Example Recipes](https://github.com/cypress-io/cypress-example-recipes#stubbing-and-spying)
 - [Kitchen Sink Examples](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/cypress/e2e/2-advanced-examples/network_requests.cy.js)
-<!-- TODO add examples from the resources below to `cypress-example-recipes` repo -->
-- [Smart GraphQL Stubbing in Cypress](https://glebbahmutov.com/blog/smart-graphql-stubbing/)
-  blog post
-- [How cy.intercept works](https://slides.com/bahmutov/how-cy-intercept-works)
-- [Cypress `cy.intercept()` Problems](https://glebbahmutov.com/blog/cypress-intercept-problems/)
 
 <!-- map often used refs to deeplinks within page !-->
 
@@ -1632,9 +1628,9 @@ information about the request and response to the console:
 [req-continue]: #Controlling-the-outbound-request-with-reqcontinue
 [req-reply]: #Providing-a-stub-response-with-reqreply
 [res]: #Intercepted-responses
-[res-send]: #Ending-the-response-with-res-send
+[res-send]: #Ending-the-response-with-ressend
 [match-url]: #Matching-url
 [glob-match-url]: #Glob-Pattern-Matching-URLs
 [arg-method]: #method-String
-[arg-routehandler]: #routeHandler-lt-code-gtstring-object-Function-StaticResponselt-code-gt
+[arg-routehandler]: #routeHandler-Function
 [arg-routematcher]: #routeMatcher-RouteMatcher

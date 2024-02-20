@@ -4,8 +4,6 @@ title: Cross Origin Testing
 
 :::info
 
-<strong> Note </strong>
-
 As of Cypress [v12.0.0](https://on.cypress.io/changelog#12-0-0), Cypress has the
 capability to visit multiple origins in a single test via the
 [cy.origin()](https://on.cypress.io/origin) command!
@@ -55,13 +53,12 @@ the `http://localhost:3000` URL is considered to be a different origin from the
 
 The rules are:
 
-- &#8239;<Icon name="exclamation-triangle" color="red" /> You **cannot**
-  &nbsp;[visit](/api/commands/visit) two domains of different superdomains in
-  the same test and continue to interact with the page without the use of the
-  [`cy.origin()`](/api/commands/origin) command.
-- &#8239;<Icon name="check-circle" color="green" /> You **can**
-  &nbsp;[visit](/api/commands/visit) two or more domains of different origin in
-  **different** tests without needing [`cy.origin()`](/api/commands/origin).
+- <Icon name="exclamation-triangle" color="red" /> You **cannot** [visit](/api/commands/visit)
+  two domains of different superdomains in the same test and continue to interact
+  with the page without the use of the [`cy.origin()`](/api/commands/origin) command.
+- <Icon name="check-circle" color="green" /> You **can** [visit](/api/commands/visit)
+  two or more domains of different origin in **different** tests without needing
+  [`cy.origin()`](/api/commands/origin).
 
 For practical purposes, this means the following:
 
@@ -111,7 +108,7 @@ it('navigates to new origin', () => {
 This limitation exists because Cypress switches to the domain under each
 specific test when it runs. For more information on this, please see our Web
 Security page regarding
-[Different superdomain per test requires cy.origin command](/guides/guides/web-security#Different-superdomain-per-test-requires-cy-origin-command).
+[Different superdomain per test requires cy.origin command](/guides/guides/web-security#Different-superdomain-per-test-requires-cyorigin-command).
 
 #### Other workarounds
 

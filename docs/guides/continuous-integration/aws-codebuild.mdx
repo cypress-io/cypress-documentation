@@ -92,9 +92,7 @@ for single build configurations. One way to solve this is using an
 
 :::info
 
-<strong>Enabling batch builds in the CodeBuild UI for the project</strong>
-<br />
-<br />
+**Enabling batch builds in the CodeBuild UI for the project**
 
 Per the
 [AWS CodeBuild batch build documentation](https://docs.aws.amazon.com/codebuild/latest/userguide/batch-build-buildspec.html),
@@ -109,7 +107,7 @@ projects:
 
 - Navigate to the AWS CodeBuild Console
 - Select the project
-- Click "Edit" --> "Batch Configuration"
+- Click "Edit" **-->** "Batch Configuration"
 - Create "New service Role" and enter the name of the role
 - Leave all other options as optional
 - Click "Update batch configuration"
@@ -128,7 +126,7 @@ offers a way to specify an image hosted on DockerHub or the
 
 The Cypress team maintains the official
 [Docker Images](https://github.com/cypress-io/cypress-docker-images) for running
-Cypress locally and in CI, which are built with Google Chrome and Firefox. For
+Cypress locally and in CI, which are built with Google Chrome, Firefox and Microsoft Edge. For
 example, this allows us to run the tests in Firefox by passing the
 `--browser firefox` attribute to `cypress run`.
 
@@ -180,13 +178,15 @@ version: 0.2
 
 ## AWS CodeBuild Batch configuration
 ## https://docs.aws.amazon.com/codebuild/latest/userguide/batch-build-buildspec.html
-## Define build to run using the "cypress/browsers:node12.14.1-chrome85-ff81" image from the Cypress Amazon ECR Public Gallery
+## Define build to run using the
+## "cypress/browsers:node-20.9.0-chrome-118.0.5993.88-1-ff-118.0.2-edge-118.0.2088.46-1" image
+## from the Cypress Amazon ECR Public Gallery
 batch:
   fast-fail: false
   build-list:
     - identifier: cypress-e2e-tests
       env:
-        image: public.ecr.aws/cypress-io/cypress/browsers:node16.14.2-slim-chrome100-ff99-edge
+        image: public.ecr.aws/cypress-io/cypress/browsers:node-20.9.0-chrome-118.0.5993.88-1-ff-118.0.2-edge-118.0.2088.46-1
 
 phases:
   install:
@@ -260,9 +260,7 @@ section.
 
 :::info
 
-<strong>Enabling batch builds in the CodeBuild UI for the project</strong>
-<br />
-<br />
+**Enabling batch builds in the CodeBuild UI for the project**
 
 Per the
 [AWS CodeBuild batch build documentation](https://docs.aws.amazon.com/codebuild/latest/userguide/batch-build-buildspec.html),
@@ -277,7 +275,7 @@ projects:
 
 - Navigate to the AWS CodeBuild Console
 - Select the project
-- Click "Edit" --> "Batch Configuration"
+- Click "Edit" **-->** "Batch Configuration"
 - Create "New service Role" and enter the name of the role
 - Leave all other options as optional
 - Click "Update batch configuration"
@@ -291,10 +289,11 @@ Cypress locally and in CI, which are built with Google Chrome and Firefox. This
 allows us to run the tests in Firefox by passing the `--browser firefox`
 attribute to `cypress run`.
 
-:::note
+:::info
 
-The following configuration with `--parallel` and `--record` options to Cypress
-requires a subscription to [Cypress Cloud](https://on.cypress.io/cloud).
+The following configuration using the `--parallel` and `--record` flags to
+[cypress run](/guides/guides/command-line#cypress-run) requires setting up
+recording test results to [Cypress Cloud](/guides/cloud/introduction).
 
 :::
 
@@ -309,8 +308,7 @@ The fields are delimited by a pipe (`|`) character as follows:
 ```yaml
 ## Group Name | Browser | Specs | Cypress Configuration options (optional)
 
-'UI - Chrome -
-Mobile|chrome|cypress/tests/ui/*|viewportWidth=375,viewportHeight=667'
+'UI-Chrome-Mobile|chrome|cypress/tests/ui/*|viewportWidth=375,viewportHeight=667'
 ```
 
 The `build-matrix` will run all permutations delimited items.
@@ -325,13 +323,11 @@ batch:
         # ...
         variables:
           CY_GROUP_SPEC:
-            - 'UI - Chrome|chrome|cypress/tests/ui/*'
-            - 'UI - Chrome -
-              Mobile|chrome|cypress/tests/ui/*|viewportWidth=375,viewportHeight=667'
+            - 'UI-Chrome|chrome|cypress/tests/ui/*'
+            - 'UI-Chrome-Mobile|chrome|cypress/tests/ui/*|viewportWidth=375,viewportHeight=667'
             - 'API|chrome|cypress/tests/api/*'
-            - 'UI - Firefox|firefox|cypress/tests/ui/*'
-            - 'UI - Firefox -
-              Mobile|firefox|cypress/tests/ui/*|viewportWidth=375,viewportHeight=667'
+            - 'UI-Firefox|firefox|cypress/tests/ui/*'
+            - 'UI-Firefox-Mobile|firefox|cypress/tests/ui/*|viewportWidth=375,viewportHeight=667'
 ```
 
 During the install phase, we utilize shell scripting with the
@@ -430,34 +426,9 @@ are still facing issues after this, please
 
 In the AWS CodeBuild configuration we have defined in the previous section, we
 are leveraging three useful features of
-[Cypress Cloud](https://on.cypress.io/cloud):
+[Cypress Cloud](/guides/cloud/introduction):
 
-1. [Recording test results with the `--record` flag](https://on.cypress.io/how-do-i-record-runs)
-   to [Cypress Cloud](https://on.cypress.io/cloud):
-
-   - In-depth and shareable
-     [test reports](/guides/cloud/recorded-runs#Latest-Runs).
-   - Visibility into test failures via quick access to error messages, stack
-     traces, screenshots, videos, and contextual details.
-   - [Integrating testing with the pull-request (PR) process](/guides/cloud/integrations/source-control/github)
-     via
-     [commit status check guards](/guides/cloud/integrations/source-control/github#Status-checks)
-     and convenient
-     [test report comments](/guides/cloud/integrations/source-control/github#Pull-request-comments).
-   - [Detecting flaky tests](/guides/cloud/flaky-test-management) and surfacing
-     them via [Slack alerts](/guides/cloud/flaky-test-management#Slack) or
-     [GitHub PR status checks](/guides/cloud/flaky-test-management#GitHub).
-
-2. [Parallelizing test runs](/guides/cloud/smart-orchestration/parallelization)
-   and optimizing their execution via
-   [intelligent load-balancing](/guides/cloud/smart-orchestration/load-balancing#Balance-strategy)
-   of test specs across CI machines with the `--parallel` flag.
-
-3. Organizing and consolidating multiple `cypress run` calls by labeled groups
-   into a single report within [Cypress Cloud](https://on.cypress.io/cloud). In
-   the example above we use the `--group "UI - Chrome"` flag (for the first
-   group) to organize all UI tests for the Chrome browser into a group labeled
-   "UI - Chrome" inside the [Cypress Cloud](https://on.cypress.io/cloud) report.
+<CiProviderCloudSteps />
 
 ## Cypress Real World Example with AWS CodeBuild
 

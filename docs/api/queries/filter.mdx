@@ -27,13 +27,13 @@ The querying behavior of this command matches exactly how
 
 ### Usage
 
-**<Icon name="check-circle" color="green" /> Correct Usage**
+<Icon name="check-circle" color="green" /> **Correct Usage**
 
 ```javascript
 cy.get('td').filter('.users') // Yield all el's with class '.users'
 ```
 
-**<Icon name="exclamation-triangle" color="red" /> Incorrect Usage**
+<Icon name="exclamation-triangle" color="red" /> **Incorrect Usage**
 
 ```javascript
 cy.filter('.animated') // Errors, cannot be chained off 'cy'
@@ -42,11 +42,11 @@ cy.clock().filter() // Errors, 'clock' does not yield DOM elements
 
 ### Arguments
 
-**<Icon name="angle-right" /> selector** **_(String selector)_**
+<Icon name="angle-right" /> **selector _(String selector)_**
 
 A selector used to filter matching DOM elements.
 
-**<Icon name="angle-right" /> options** **_(Object)_**
+<Icon name="angle-right" /> **options _(Object)_**
 
 Pass in an options object to change the default behavior of `.filter()`.
 
@@ -132,14 +132,14 @@ cy.get('[data-testid="testattr"]').filter(':contains("Hello\u00a0world")')
 
 - `.filter()` will automatically [retry](/guides/core-concepts/retry-ability)
   until the element(s)
-  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).
+  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Implicit-Assertions).
 - `.filter()` will automatically [retry](/guides/core-concepts/retry-ability)
   until all chained assertions have passed.
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
 
 - `.filter()` can time out waiting for the element(s) to
-  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).
+  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Implicit-Assertions).
 - `.filter()` can time out waiting for assertions you've added to pass.
 
 ## Command Log

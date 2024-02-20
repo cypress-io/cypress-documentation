@@ -9,6 +9,10 @@
   letter-spacing: 0.04em;
 }
 
+p > .badge {
+  display: inline;
+}
+
 .success {
   background-color: #28a745;
 }

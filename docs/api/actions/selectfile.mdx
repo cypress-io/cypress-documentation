@@ -20,7 +20,7 @@ chain further commands that rely on the subject after `.selectFile()`.
 
 ### Usage
 
-**<Icon name="check-circle" color="green" /> Correct Usage**
+<Icon name="check-circle" color="green" /> **Correct Usage**
 
 ```javascript
 cy.get('input[type=file]').selectFile('file.json')
@@ -37,7 +37,7 @@ cy.get('input[type=file]').selectFile('file.json', { action: 'drag-drop' })
 cy.document().selectFile('file.json', { action: 'drag-drop' })
 ```
 
-**<Icon name="exclamation-triangle" color="red" /> Incorrect Usage**
+<Icon name="exclamation-triangle" color="red" /> **Incorrect Usage**
 
 ```javascript
 // Errors, cannot be chained off 'cy'
@@ -50,8 +50,7 @@ cy.get('input[type=file]').selectFile('file contents')
 
 ### Arguments
 
-**<Icon name="angle-right" /> file** **_(String, Array, Object or
-Cypress.Buffer)_**
+<Icon name="angle-right" /> **file _(String, Array, Object or Cypress.Buffer)_**
 
 Either a single file, or an array of files. A file can be:
 
@@ -63,7 +62,7 @@ Either a single file, or an array of files. A file can be:
   [`TypedArray`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray)
   containing binary data, such as `Uint8Array.from('123')`.
   [`Cypress.Buffer`](/api/utilities/buffer) instances, such as those returned by
-  `cy.readFile('file.json', { encoding: null })` or created by
+  `cy.readFile('file.json', null)` or created by
   `Cypress.Buffer.from('foo')` are `TypedArray` instances.
 - An object with a non-null `contents` property, specifying details about the
   file. Eg: `{contents: '@alias', fileName: 'file.json'}`
@@ -77,13 +76,13 @@ If an object is provided, it can have the following properties.
 | `mimeType`     | The [mimeType](https://developer.mozilla.org/en-US/docs/Web/API/File/type) of the file. If omitted, it will be [inferred](https://github.com/jshttp/mime-types#mimelookuppath) from the file extension. If one cannot be inferred, it will default to an empty string.          |
 | `lastModified` | The file's last modified timestamp, in milliseconds elapsed since the UNIX epoch (eg. [`Date.prototype.getTime()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getTime)). This defaults to `Date.now()`.                              |
 
-**<Icon name="angle-right" /> options** **_(Object)_**
+<Icon name="angle-right" /> **options _(Object)_**
 
 Pass in an options object to change the default behavior of `.selectFile()`.
 
 | Option                       | Default                                                                        | Description                                                                                                                                       |
 | ---------------------------- | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `action`                     | `'select'`                                                                     | Switches modes. Valid values are `select` and `drag-drop`. See [Actions](#Actions) below for more details.                                        |
+| `action`                     | `'select'`                                                                     | Switches modes. Valid values are `select` and `drag-drop`. See [Action](#Action) below for more details.                                          |
 | `animationDistanceThreshold` | [`animationDistanceThreshold`](/guides/references/configuration#Actionability) | The distance in pixels an element must exceed over time to be [considered animating](/guides/core-concepts/interacting-with-elements#Animations). |
 | `force`                      | `false`                                                                        | Forces the action, disables [waiting for actionability](#Assertions).                                                                             |
 | `log`                        | `true`                                                                         | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log).                                                         |
@@ -144,7 +143,7 @@ though a user would not be able to directly activate the file input.
 ### From a fixture
 
 ```javascript
-cy.fixture('file.json', { encoding: null }).as('myFixture')
+cy.fixture('file.json', null).as('myFixture')
 cy.get('input[type=file]').selectFile('@myFixture')
 ```
 
@@ -324,8 +323,8 @@ following:
 
 | Version                                     | Changes                                                                                                                      |
 | ------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| [9.3.0](/guides/references/changelog#9.3.0) | `.selectFile()` command added                                                                                                |
-| [9.4.0](/guides/references/changelog#9.4.0) | Support for `TypedArray` and `mimeType` property added. Default `fileName` name is no longer lost when working with aliases. |
+| [9.3.0](/guides/references/changelog#9-3-0) | `.selectFile()` command added                                                                                                |
+| [9.4.0](/guides/references/changelog#9-4-0) | Support for `TypedArray` and `mimeType` property added. Default `fileName` name is no longer lost when working with aliases. |
 
 ### Community Recognition
 

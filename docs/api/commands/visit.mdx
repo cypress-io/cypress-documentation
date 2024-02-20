@@ -12,7 +12,7 @@ Visit a remote URL.
 We recommend setting a `baseUrl` when using `cy.visit()`.
 
 Read about
-[best practices](/guides/references/best-practices#Setting-a-global-baseUrl)
+[best practices](/guides/references/best-practices#Setting-a-Global-baseUrl)
 here.
 
 :::
@@ -27,7 +27,7 @@ cy.visit(options)
 
 ### Usage
 
-**<Icon name="check-circle" color="green" /> Correct Usage**
+<Icon name="check-circle" color="green" /> **Correct Usage**
 
 ```javascript
 cy.visit('/') // visits the baseUrl
@@ -41,7 +41,7 @@ cy.visit({
 
 ### Arguments
 
-**<Icon name="angle-right" /> url** **_(String)_**
+<Icon name="angle-right" /> **url _(String)_**
 
 The URL to visit.
 
@@ -53,9 +53,9 @@ URL or Cypress will attempt to act as your web server. See the
 [prefixes notes](#Prefixes) for more details.
 
 **Note:** visiting a new domain requires the Cypress window to reload. You
-cannot visit different super domains in a single test.
+cannot visit different super domains in a single test without the use of [`cy.origin()`](/api/commands/origin).
 
-**<Icon name="angle-right" /> options** **_(Object)_**
+<Icon name="angle-right" /> **options _(Object)_**
 
 Pass in an options object to control the behavior of `cy.visit()`.
 
@@ -460,7 +460,7 @@ following:
 | [0.17.0](/guides/references/changelog#0-17-0) | Cannot `cy.visit()` two different super domains in a single test                 |
 | [0.6.8](/guides/references/changelog#0-6-8)   | Added option `log`                                                               |
 | [0.4.3](/guides/references/changelog#0-4-3)   | Added option `onBeforeLoad`                                                      |
-| [< 0.3.3](/guides/references/changelog#0-3.3) | `cy.visit()` command added                                                       |
+| [< 0.3.3](/guides/references/changelog#0-3-3) | `cy.visit()` command added                                                       |
 
 ## See also
 

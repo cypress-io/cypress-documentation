@@ -76,9 +76,9 @@ problem:
 ## Download specific Chrome version
 
 The Chrome browser is evergreen - meaning it will automatically update itself,
-sometimes causing a breaking change in your automated tests. We host
-[chromium.cypress.io](https://chromium.cypress.io) with links to download a
-specific released version of Chrome (dev, Canary and stable) for every platform.
+sometimes causing a breaking change in your automated tests. You can use
+[https://vikyd.github.io/download-chromium-history-version](https://vikyd.github.io/download-chromium-history-version) to download a
+specific released version of Chromium for every platform.
 
 ## Clear Cypress cache
 
@@ -109,7 +109,7 @@ ways to ensure that Cypress can "see" it.
 
 :::info
 
-&#8239;<strong>Using the `--browser` command line argument</strong>
+<strong>Using the `--browser` command line argument</strong>
 
 You can also supply the `--browser` command line argument to launch a browser
 from a known filesystem path to bypass browser auto detection.
@@ -207,35 +207,15 @@ ID below:
 caljajdfkjjjdehjdoimjkkakekklcck
 ```
 
+You can check the current company policies for your Chrome installation by typing `chrome://policy` into the address bar and pressing Enter.
+
 ## Allow Cypress URLs on VPNs
 
 To send the data and results of your tests to
 [Cypress Cloud](https://on.cypress.io/cloud-introduction), Cypress needs free
 access to some URLs.
 
-If you are running the tests from within a restrictive VPN you will need to
-allow some URLs so that Cypress can have effective communication with Cypress
-Cloud.
-
-**The URLs are the following:**
-
-- `https://api.cypress.io` - **Cypress API**
-- `https://assets.cypress.io` - **Asset CDN** (Org logos, icons, videos,
-  screenshots, etc.)
-- `https://authenticate.cypress.io` - **Authentication API**
-- `https://cloud.cypress.io` - **Cypress Cloud**
-- `https://docs.cypress.io` - **Cypress documentation**
-- `https://download.cypress.io` - **CDN download of Cypress binary**
-- `https://on.cypress.io` - **URL shortener for link redirects**
-
-**If you are using GitHub Enterprise or GitLab for Enterprise (Self-managed),
-you may also need to add the following to the version control IP allowlist:**
-
-- `3.211.102.119` - **Dedicated IP**
-- `18.213.72.78` - **Dedicated IP**
-- `35.169.145.173` - **Dedicated IP**
-- `44.199.152.70` - **Dedicated IP**
-- `52.70.95.89` - **Dedicated IP**
+<UrlAllowList />
 
 ## Clear App Data
 
@@ -460,6 +440,12 @@ environment variable below during `cypress open` or `cypress run`.
 
 ```shell
 CYPRESS_NO_COMMAND_LOG=1 cypress run
+```
+
+You can also hide the entire Cypress Runner UI in `cypress run` by passing the [`--no-runner-ui`](/guides/guides/command-line#cypress-run-no-runner-ui) command line flag.
+
+```shell
+cypress run --no-runner-ui
 ```
 
 With this variable set, Cypress will skip rendering the Command Log entirely,
