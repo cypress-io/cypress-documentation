@@ -1572,7 +1572,7 @@ to 84% faster startup times!
 **Breaking Changes:**
 
 **Read our
-[Migration Guide](/guides/references/migration-guide#Migrating-to-Cypress-version-11-0)
+[Migration Guide](/guides/references/migration-guide#Migrating-to-Cypress-110)
 which explains the breaking changes in more detail.**
 
 ###### Component Testing:
@@ -1588,24 +1588,24 @@ which explains the breaking changes in more detail.**
   [#24329](https://github.com/cypress-io/cypress/issues/24329).
 - `mountHook` from `cypress/react` has been removed. We recommend replacing it
   with `mount` and a component. See
-  [migration guide](/guides/references/migration-guide#React-mountHook-Removed).
+  [migration guide](/guides/references/migration-guide#React---mountHook-Removed).
   Addresses [#24328](https://github.com/cypress-io/cypress/issues/24328).
 - `unmount` from `cypress/react` has been removed. We recommend using the API
   React provides for unmounting components,
   [unmountComponentAtNode](https://reactjs.org/docs/react-dom.html#unmountcomponentatnode).
   See
-  [migration guide](/guides/references/migration-guide#React-unmount-Removed).
+  [migration guide](/guides/references/migration-guide#React---unmount-Removed).
   Addresses [#24328](https://github.com/cypress-io/cypress/issues/24328).
 - `mountCallback` from `cypress/vue` has been removed. We recommend using
   `mount`. See
-  [migration guide](/guides/references/migration-guide#Vue-mountCallback-Removed).
+  [migration guide](/guides/references/migration-guide#Vue---mountCallback-Removed).
   Addresses [#24328](https://github.com/cypress-io/cypress/issues/24328).
 - `mount` from `cypress/vue` now returns an object with both the VueWrapper
   (wrapper) and the component instance (component). Addresses
   [#24342](https://github.com/cypress-io/cypress/issues/24342).
 - When providing an inline `viteConfig` inside of `cypress.config`, any
   `vite.config.js` file is not automatically merged. See
-  [migration guide](/guides/references/migration-guide#Vite-Dev-Server-cypress-vite-dev-server).
+  [migration guide](/guides/references/migration-guide#Vite-Dev-Server-cypressvite-dev-server).
   Addresses [#24133](https://github.com/cypress-io/cypress/issues/24133).
 - Angular providers passed as part of the mounting options will be assigned at
   the module level using the `TestBed.configureTestingModule` API. This means
@@ -1614,7 +1614,7 @@ which explains the breaking changes in more detail.**
   specified in `@Component({ providers: [...] })` will not be overridden when
   using `cy.mount(MyComponent, { providers: [...] })`. To override
   component-level providers, use the `TestBed.overrideComponent` API. See
-  [migration guide](/guides/references/migration-guide#Angular-Providers-Mounting-Options-Change).
+  [migration guide](/guides/references/migration-guide#Angular---Providers-Mounting-Options-Change).
   Addresses [#24047](https://github.com/cypress-io/cypress/issues/24047) and
   [#23427](https://github.com/cypress-io/cypress/issues/23427).
 
