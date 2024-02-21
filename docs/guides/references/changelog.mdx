@@ -5173,7 +5173,7 @@ Cypress now offers full network stubbing support with the introduction of the
 [cy.intercept()](/api/commands/intercept) command (previously `cy.route2()`).
 With [cy.intercept()](/api/commands/intercept) your tests can intercept, modify
 and wait on any type of HTTP request originating from your app. See our guide on
-[Migrating `cy.route()` to `cy.intercept()`](/guides/references/migration-guide#Migrating-cy-route-to-cy-intercept).
+[Migrating `cy.route()` to `cy.intercept()`](/guides/references/migration-guide#Migrating-cyroute-to-cyintercept).
 
 **Breaking Changes:**
 
@@ -5226,7 +5226,7 @@ deprecations.
 - `cy.server()` and `cy.route()` have been deprecated. In a future release,
   support for `cy.server()` and `cy.route()` will be removed. We encourage you
   to use [cy.intercept()](/api/commands/intercept) instead. See our guide on
-  [Migrating `cy.route()` to `cy.intercept()`](/guides/references/migration-guide#Migrating-cy-route-to-cy-intercept).
+  [Migrating `cy.route()` to `cy.intercept()`](/guides/references/migration-guide#Migrating-cyroute-to-cyintercept).
   Addressed in [#9185](https://github.com/cypress-io/cypress/pull/9185).
 - `experimentalFetchPolyfill` has been deprecated. We encourage you to use
   [cy.intercept()](/api/commands/intercept) to intercept requests using the
