@@ -6134,11 +6134,11 @@ _Released 7/7/2020_
 - Using Cypress commands to traverse the DOM on an application with a global
   `parent` variable will no longer throw Illegal Invocation errors. Fixes
   [#6412](https://github.com/cypress-io/cypress/issues/6412).
-- When [experimentalShadowDomSupport](/guides/references/experiments#Shadow-DOM)
+- When `experimentalShadowDomSupport`
   is enabled, using [.type()](/api/commands/type) on an input in the Shadow DOM
   will not result in an error. Fixes
   [#7741](https://github.com/cypress-io/cypress/issues/7741).
-- When [experimentalShadowDomSupport](/guides/references/experiments#Shadow-DOM)
+- When `experimentalShadowDomSupport`
   is enabled, checking for visibility on a shadow dom host element will no
   longer hang if the host element was the foremost element and had an ancestor
   with fixed position. Fixes
@@ -6188,7 +6188,7 @@ _Released 6/23/2020_
   [#7590](https://github.com/cypress-io/cypress/issues/7590).
 - We fixed a regression in [4.8.0](#4-8-0) where [.click()](/api/commands/click)
   would hang if the subject had a shadow root and
-  [experimentalShadowDomSupport](/guides/references/experiments#Shadow-DOM) was
+  `experimentalShadowDomSupport` was
   not enabled. Fixes [#7679](https://github.com/cypress-io/cypress/issues/7679).
 - We fixed a regression in [4.6.0](#4-6-0) so that
   [`.should('have.value')`](/api/commands/should) now properly asserts against
@@ -6204,7 +6204,7 @@ _Released 6/23/2020_
   [Command Log](/guides/core-concepts/cypress-app#Command-Log) regardless of
   what is in the `beforeEach` hook. Fixes
   [#7731](https://github.com/cypress-io/cypress/issues/7731).
-- When [experimentalShadowDomSupport](/guides/references/experiments#Shadow-DOM)
+- When `experimentalShadowDomSupport`
   is enabled, querying shadow dom in certain situations will no longer cause the
   error `Cannot read property 'length' of undefined` during `cypress run`. Fixes
   [#7676](https://github.com/cypress-io/cypress/issues/7676).
@@ -6271,8 +6271,8 @@ _Released 6/8/2020_
   by clicking the file. Addresses
   [#7506](https://github.com/cypress-io/cypress/issues/7506).
 - We added experimental shadow DOM support through the
-  [experimentalShadowDomSupport](/guides/references/experiments#Shadow-DOM)
-  option. See the [Experiments page](/guides/references/experiments#Shadow-DOM)
+  `experimentalShadowDomSupport`
+  option. See the [Experiments page](/guides/references/experiments#History)
   for more information. Addresses
   [#144](https://github.com/cypress-io/cypress/issues/144).
 
