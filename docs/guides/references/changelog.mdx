@@ -11815,8 +11815,8 @@ _Released 11/27/2016_
 **Breaking Changes:**
 
 - Previously, we auto-magically included all files within
-  [`cypress/support`](/guides/core-concepts/writing-and-organizing-tests#Folder-Structure).
-  This has now [gone away](/guides/references/error-messages) and we've
+  [`cypress/support`](/guides/references/legacy-configuration#Folders--Files).
+  This has now [gone away](/guides/references/error-messages#Support-file-missing-or-invalid) and we've
   simplified this to automatically including a single `cypress/support/index.js`
   file. That single file acts as the entry point meaning you should `import` or
   `require` the other support files you'd like to include. Although this is
@@ -11825,7 +11825,7 @@ _Released 11/27/2016_
   the implementation of it has. We will automatically seed a
   `cypress/support/index.js` file for you (even on existing projects). The file
   location of `cypress/support/index.js` can be changed with the new
-  [`supportFile`](/guides/references/configuration#Testing-Type-Specific-Options)
+  [`supportFile`](/guides/references/legacy-configuration#Folders--Files)
   option in your `cypress.json`. This feature can also be turned off by
   specifying `supportFile: false`.
 
