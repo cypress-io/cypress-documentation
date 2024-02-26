@@ -7597,7 +7597,7 @@ _Released 10/31/2019_
 
 **Features:**
 
-- [testFiles](/guides/references/configuration#Folders-Files) now also accepts
+- [testFiles](/guides/references/legacy-configuration#Folders--Files) now also accepts
   an Array of glob patterns when specifying what test files to load in
   configuration. Addresses
   [#5401](https://github.com/cypress-io/cypress/issues/5401).
@@ -7684,12 +7684,12 @@ _Released 10/23/2019_
   pass `false` to the `--config-file` to not use any configuration file.
   Addresses [#1369](https://github.com/cypress-io/cypress/issues/1369).
 - You can now use your system's Node version by setting the
-  [nodeVersion](/guides/references/configuration#Node-version) to `system` in
+  [nodeVersion](/guides/references/legacy-configuration#Node-version) to `system` in
   your configuration. This Node version will be used to build files in your
-  [integrationFolder](/guides/references/configuration#Folders-Files) and
-  [supportFile](/guides/references/configuration#Folders-Files) and also be used
+  [integrationFolder](/guides/references/legacy-configuration#Folders--Files) and
+  [supportFile](/guides/references/legacy-configuration#Folders--Files) and also be used
   to execute code in your
-  [pluginsFile](/guides/references/configuration#Folders-Files). If not set,
+  [pluginsFile](/guides/references/legacy-configuration#Folders--Files). If not set,
   Cypress will continue to use the Node version bundled with Cypress. Addresses
   [#4432](https://github.com/cypress-io/cypress/issues/4432).
 - [.dblclick()](/api/commands/dblclick) now accepts `position`, `x`, and `y`
@@ -9259,8 +9259,8 @@ _Released 11/2/2018_
 - We updated how we handle
   [trashAssetsBeforeRuns](/guides/references/configuration#Screenshots)
   behavior. We now trash the contents of the
-  [screenshotsFolder](/guides/references/configuration#Folders-Files) and
-  [videosFolder](/guides/references/configuration#Folders-Files) directories
+  [screenshotsFolder](/guides/references/legacy-configuration#Folders--Files) and
+  [videosFolder](/guides/references/legacy-configuration#Folders--Files) directories
   instead of trashing the directories themselves. This helps maintain any file
   access permissions for the directories. Fixes
   [#1943](https://github.com/cypress-io/cypress/issues/1943) and
@@ -9661,7 +9661,7 @@ _Released 6/28/2018_
   elements with `position: sticky`. Fixes
   [#1475](https://github.com/cypress-io/cypress/issues/1475).
 - Fixed a bug where changing the
-  [integrationFolder](/guides/references/configuration#Folders-Files) in Windows
+  [integrationFolder](/guides/references/legacy-configuration#Folders--Files) in Windows
   would lead to errors with plugins. Fixes
   [#1704](https://github.com/cypress-io/cypress/issues/1704).
 - Cypress no longer crashes when a 3rd party server sends invalid `gzip`
@@ -12967,12 +12967,12 @@ _Released 03/28/2016_
 - Cypress no longer looks at your `tests` directory for test files. Now, by
   default, it looks in the `cypress/integration` directory.
 - We've removed the configuration option `testFolder` and renamed it to
-  [`integrationFolder`](/guides/references/configuration#Folders-Files) inside
+  [`integrationFolder`](/guides/references/legacy-configuration#Folders--Files) inside
   of the `cypress.json`.
 - We've renamed the `cypress` npm package to be `cypress-cli`. You'll see a
   giant deprecation warning until your scripts have been updated to reference
   `cypress-cli`.. You can also uninstall the `cypress` npm package.
-- Added new [`fileServerFolder`](/guides/references/configuration#Folders-Files)
+- Added new [`fileServerFolder`](/guides/references/legacy-configuration#Folders--Files)
   configuration option that can mount a directory other than your project root
   when using Cypress as a web server.
 
