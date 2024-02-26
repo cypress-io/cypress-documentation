@@ -13,6 +13,14 @@ in browser-targeted code.
 
 ## Syntax
 
+:::caution
+
+Using `Cypress.require()` within the [`cy.origin()`](https://docs.cypress.io/api/commands/origin)
+callback requires enabling the
+[`experimentalOriginDependencies`](/guides/references/experiments#End-to-End-Testing) option in the Cypress configuration.
+
+:::
+
 ```js
 Cypress.require(moduleNameOrPath)
 ```
