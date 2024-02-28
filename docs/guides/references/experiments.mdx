@@ -261,7 +261,7 @@ object:
 | --------------------------------- | ------- | ---------------------------------------------------------------------------------------------------------- |
 | `experimentalStudio`              | `false` | Generate and save commands directly to your test suite by interacting with your app as an end user would.  |
 | `experimentalRunAllSpecs`         | `false` | Enables the "Run All Specs" UI feature, allowing the execution of multiple specs sequentially.             |
-| `experimentalOriginDependencies`  | `false` | Enables support for `require`/`import` within `cy.origin`.                                                 |
+| `experimentalOriginDependencies`  | `false` | Enables support for `Cypress.require` within `cy.origin`.                                                  |
 | `experimentalSkipDomainInjection` | `null`  | Removes injecting `document.domain` into `text/html` pages for any sites that match the provided patterns. |
 
 #### Experimental Skip Domain Injection
@@ -328,7 +328,8 @@ configuration object:
 
 | Version                                       | Changes                                                                                                                                       |
 | --------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
-| [12.3.0](/guides/references/changelog#13-4-0) | Added support for configuring the Experimental Flake Detection strategy via `retries.experimentalStrategy` and `retries.experimentalOptions`. |
+| [13.4.0](/guides/references/changelog#13-4-0) | Added support for configuring the Experimental Flake Detection strategy via `retries.experimentalStrategy` and `retries.experimentalOptions`. |
+| [12.6.0](/guides/references/changelog#12-6-0) | Removed `require`/`import` and added `Cypress.require` for `experimentalOriginDependencies`.                                                  |
 | [12.4.0](/guides/references/changelog#12-4-0) | Added `experimentalSkipDomainInjection` and `experimentalMemoryManagement`.                                                                   |
 | [12.0.0](/guides/references/changelog#12-0-0) | Removed `experimentalSessionAndOrigin` and made it the default behavior. Added `experimentalOriginDependencies`.                              |
 | [11.2.0](/guides/references/changelog#11-2-0) | Added `experimentalRunAllSpecs`.                                                                                                              |
