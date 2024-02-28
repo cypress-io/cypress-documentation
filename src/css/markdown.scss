@@ -24,10 +24,9 @@ div.markdown {
     }
   }
 
-  /* have to override this for specificity */
   h1:first-child {
     --ifm-h1-font-size: 2.5rem;
-    margin-bottom: 0;
+    margin-bottom: 2rem;
   }
 
   body & h2 {
