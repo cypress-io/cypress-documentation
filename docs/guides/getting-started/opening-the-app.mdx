@@ -1,6 +1,10 @@
 ---
-title: Opening the App
+title: 'Open the App with Cypress: Step-by-Step Guide'
+sidebar_label: 'Opening the App'
+description: 'Open the app effectively in Cypress. Get started with a guide on opening the application for testing and improve your workflow'
 ---
+
+# Opening the App
 
 :::info
 
@@ -15,7 +19,8 @@ title: Opening the App
 
 ## `cypress open`
 
-You can open Cypress from your **project root** one of the following ways:
+You can open Cypress from your **project root** in one of the following ways,
+depending on the package manager (npm, Yarn or pnpm) you are using:
 
 **Using `npx`**
 
@@ -26,7 +31,13 @@ npx cypress open
 **Or by using `yarn`**
 
 ```shell
-yarn run cypress open
+yarn cypress open
+```
+
+**Or by using `pnpm`**
+
+```shell
+pnpm cypress open
 ```
 
 After a moment, the Cypress Launchpad will open.

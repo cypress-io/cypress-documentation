@@ -2,6 +2,40 @@
 title: Changelog
 ---
 
+## 13.6.6
+
+_Released 2/22/2024_
+
+**Bugfixes:**
+
+- Fixed a regression introduced in [`13.6.5`](/guides/references/changelog#13-6-5) where `cypress verify` would fail for [`nx`](https://nx.dev/) users. Fixes [#28982](https://github.com/cypress-io/cypress/issues/28982).
+
+## 13.6.5
+
+_Released 2/20/2024_
+
+**Bugfixes:**
+
+- Fixed tests hanging when the Chrome browser extension is disabled. Fixes [#28392](https://github.com/cypress-io/cypress/issues/28392).
+- Fixed an issue which caused the browser to relaunch after closing the browser from the Launchpad. Fixes [#28852](https://github.com/cypress-io/cypress/issues/28852).
+- Fixed an issue with the unzip promise never being rejected when an empty error happens. Fixed in [#28850](https://github.com/cypress-io/cypress/pull/28850).
+- Fixed a regression introduced in [`13.6.3`](/guides/references/changelog#13-6-3) where Cypress could crash when processing service worker requests through our proxy. Fixes [#28950](https://github.com/cypress-io/cypress/issues/28950).
+- Fixed incorrect type definition of `dom.getContainsSelector`. Fixed in [#28339](https://github.com/cypress-io/cypress/pull/28339).
+
+**Misc:**
+
+- Improved accessibility of the Cypress App in some areas. Addressed in [#28774](https://github.com/cypress-io/cypress/pull/28774).
+- Changed references of LayerCI to webapp.io. Addressed in [#28874](https://github.com/cypress-io/cypress/pull/28874).
+
+**Dependency Updates:**
+
+- Upgraded `electron` from `25.8.4` to `27.1.3`.
+- Upgraded bundled Node.js version from `18.15.0` to `18.17.0`.
+- Upgraded bundled Chromium version from `114.0.5735.289` to `118.0.5993.117`.
+- Updated buffer from `5.6.0` to `5.7.1`. Addressed in [#28934](https://github.com/cypress-io/cypress/pull/28934).
+- Updated [`duplexify`](https://www.npmjs.com/package/duplexify) from `4.1.1` to `4.1.2`. Addressed in [#28941](https://github.com/cypress-io/cypress/pull/28941).
+- Updated [`is-ci`](https://www.npmjs.com/package/is-ci) from `3.0.0` to `3.0.1`. Addressed in [#28933](https://github.com/cypress-io/cypress/pull/28933).
+
 ## 13.6.4
 
 _Released 1/30/2024_
@@ -136,7 +170,7 @@ _Released 11/8/2023_
 - Fixed a regression in [`13.3.3`](#13-3-3) where Cypress would hang on loading shared workers when using `cy.reload` to reload the page. Fixes [#28248](https://github.com/cypress-io/cypress/issues/28248).
 - Fixed an issue where network requests made from tabs, or windows other than the main Cypress tab, would be delayed. Fixes [#28113](https://github.com/cypress-io/cypress/issues/28113).
 - Fixed an issue with 'other' targets (e.g. pdf documents embedded in an object tag) not fully loading. Fixes [#28228](https://github.com/cypress-io/cypress/issues/28228) and [#28162](https://github.com/cypress-io/cypress/issues/28162).
-- Fixed an issue where clicking a link to download a file could cause a page load timeout when the download attribute was missing. Note: download behaviors in experimental Webkit are still an issue. Fixes [#14857](https://github.com/cypress-io/cypress/issues/14857).
+- Fixed an issue where clicking a link to download a file could cause a page load timeout when the download attribute was missing. Note: download behaviors in experimental WebKit are still an issue. Fixes [#14857](https://github.com/cypress-io/cypress/issues/14857).
 - Fixed an issue to account for canceled and failed downloads to correctly reflect these status in Command log as a download failure where previously it would be pending. Fixed in [#28222](https://github.com/cypress-io/cypress/pull/28222).
 - Fixed an issue determining visibility when an element is hidden by an ancestor with a shared edge. Fixes [#27514](https://github.com/cypress-io/cypress/issues/27514).
 - We now pass a flag to Chromium browsers to disable Chrome translation, both the manual option and the popup prompt, when a page with a differing language is detected. Fixes [#28225](https://github.com/cypress-io/cypress/issues/28225).
@@ -148,7 +182,7 @@ _Released 10/30/2023_
 
 **Features:**
 
-- Introduced experimental configuration options for advanced retry logic: adds `experimentalStrategy` and `experimentalOptions` keys to the `retry` configuration key. See [Experimental Flake Detection Features](/guides/references/experiments/#Experimental-Flake-Detection-Features) for more information. Addressed in [#27930](https://github.com/cypress-io/cypress/pull/27930).
+- Introduced experimental configuration options for advanced retry logic: adds `experimentalStrategy` and `experimentalOptions` keys to the `retry` configuration key. See [Experimental Flake Detection Features](/guides/references/experiments#Experimental-Flake-Detection-Features) for more information. Addressed in [#27930](https://github.com/cypress-io/cypress/pull/27930).
 
 **Bugfixes:**
 
@@ -603,7 +637,7 @@ _Released 04/17/2023_
   [#22777](https://github.com/cypress-io/cypress/issues/22777) and
   [#26388](https://github.com/cypress-io/cypress/issues/26388).
 - Updated to use the `SEMAPHORE_GIT_WORKING_BRANCH`
-  [Semphore](https://docs.semaphoreci.com) CI environment variable to correctly
+  [Semaphore](https://docs.semaphoreci.com) CI environment variable to correctly
   associate a Cloud run to the current branch. Previously this was incorrectly
   associating a run to the target branch. Fixes
   [#26309](https://github.com/cypress-io/cypress/issues/26309).
@@ -1285,7 +1319,7 @@ Read more about 12.0 in
   disabled, this changes how Cypress cleans up the browser context before each
   test and you may experience test errors with this upgrade. To better
   understand the full impact of this change, please review the
-  [migration guide](/guides/references/migration-guide#test-isolation).
+  [migration guide](/guides/references/migration-guide#Test-Isolation).
   - In Cypress v12, the `testIsolation` configuration values have changed from
     `on` or `off` to `true` or `false`. Addressed in
     [#24935](https://github.com/cypress-io/cypress/pull/24935).
@@ -1546,7 +1580,7 @@ to 84% faster startup times!
 **Breaking Changes:**
 
 **Read our
-[Migration Guide](/guides/references/migration-guide#Migrating-to-Cypress-version-11-0)
+[Migration Guide](/guides/references/migration-guide#Migrating-to-Cypress-110)
 which explains the breaking changes in more detail.**
 
 ###### Component Testing:
@@ -1562,24 +1596,24 @@ which explains the breaking changes in more detail.**
   [#24329](https://github.com/cypress-io/cypress/issues/24329).
 - `mountHook` from `cypress/react` has been removed. We recommend replacing it
   with `mount` and a component. See
-  [migration guide](/guides/references/migration-guide#React-mountHook-Removed).
+  [migration guide](/guides/references/migration-guide#React---mountHook-Removed).
   Addresses [#24328](https://github.com/cypress-io/cypress/issues/24328).
 - `unmount` from `cypress/react` has been removed. We recommend using the API
   React provides for unmounting components,
   [unmountComponentAtNode](https://reactjs.org/docs/react-dom.html#unmountcomponentatnode).
   See
-  [migration guide](/guides/references/migration-guide#React-unmount-Removed).
+  [migration guide](/guides/references/migration-guide#React---unmount-Removed).
   Addresses [#24328](https://github.com/cypress-io/cypress/issues/24328).
 - `mountCallback` from `cypress/vue` has been removed. We recommend using
   `mount`. See
-  [migration guide](/guides/references/migration-guide#Vue-mountCallback-Removed).
+  [migration guide](/guides/references/migration-guide#Vue---mountCallback-Removed).
   Addresses [#24328](https://github.com/cypress-io/cypress/issues/24328).
 - `mount` from `cypress/vue` now returns an object with both the VueWrapper
   (wrapper) and the component instance (component). Addresses
   [#24342](https://github.com/cypress-io/cypress/issues/24342).
 - When providing an inline `viteConfig` inside of `cypress.config`, any
   `vite.config.js` file is not automatically merged. See
-  [migration guide](/guides/references/migration-guide#Vite-Dev-Server-cypress-vite-dev-server).
+  [migration guide](/guides/references/migration-guide#Vite-Dev-Server-cypressvite-dev-server).
   Addresses [#24133](https://github.com/cypress-io/cypress/issues/24133).
 - Angular providers passed as part of the mounting options will be assigned at
   the module level using the `TestBed.configureTestingModule` API. This means
@@ -1588,7 +1622,7 @@ which explains the breaking changes in more detail.**
   specified in `@Component({ providers: [...] })` will not be overridden when
   using `cy.mount(MyComponent, { providers: [...] })`. To override
   component-level providers, use the `TestBed.overrideComponent` API. See
-  [migration guide](/guides/references/migration-guide#Angular-Providers-Mounting-Options-Change).
+  [migration guide](/guides/references/migration-guide#Angular---Providers-Mounting-Options-Change).
   Addresses [#24047](https://github.com/cypress-io/cypress/issues/24047) and
   [#23427](https://github.com/cypress-io/cypress/issues/23427).
 
@@ -1768,7 +1802,7 @@ _Released 9/27/2022_
 
 - Added support for requiring dependencies within the
   [`cy.origin()`](/api/commands/origin) callback. See the
-  [`cy.origin()`](/api/commands/origin#Dependencies-Sharing-Code) docs for more
+  [`cy.origin()`](/api/commands/origin#Dependencies--Sharing-Code) docs for more
   information.
 - Added support for visiting cross-origin pages outside of a
   [`cy.origin()`](/api/commands/origin) callback. See the
@@ -3104,7 +3138,7 @@ _Released 3/14/2022_
   browser. Fixes [#20496](https://github.com/cypress-io/cypress/issues/20496).
 - Updates were made to the pre-release build setup such that Cypress will use a
   unique cache folder for each
-  [pre-release installation](/guides/getting-started/installing-cypress#Install-pre-release-version)
+  [pre-release installation](/guides/references/advanced-installation#Install-pre-release-version)
   on a machine. This removes the need to run `cypress clear cache` before
   installing a new pre-release version of Cypress or before installing a new
   released version of Cypress after a pre-release version had been installed.
@@ -3281,7 +3315,7 @@ _Released 1/18/2022_
   This environment variable is useful for users who are downloading the Cypress
   binary from a proxy that is not one-to-one with the Cypress's default download
   url. More information can be found in the
-  [Install Binary](/guides/getting-started/installing-cypress#Install-binary)
+  [Install Binary](/guides/references/advanced-installation#Install-binary)
   documentation. Fixes
   [#15697](https://github.com/cypress-io/cypress/issues/15697).
 
@@ -3941,9 +3975,7 @@ to Cypress 8.0.**
   option. See [Client certificates](/guides/references/client-certificates) for
   more detail.
 - Setting the environment variable `ELECTRON_RUN_AS_NODE` now starts Cypress as
-  a normal Node.js process rather than an Electron process. See
-  [Running headless tests without Xvfb](/guides/continuous-integration/introduction#Running-headless-tests-without-Xvfb)
-  for more details. Addresses
+  a normal Node.js process rather than an Electron process. Addresses
   [#16505](https://github.com/cypress-io/cypress/issues/16505).
 
 **Bugfixes:**
@@ -4181,7 +4213,7 @@ _Released 05/10/2021_
   logs. Addresses [#16236](https://github.com/cypress-io/cypress/issues/16236).
 - Cypress can now use the certificate authority specified in NPM config if
   `CYPRESS_DOWNLOAD_USE_CA` is specified. See
-  ["Using a custom CA"](/guides/getting-started/installing-cypress#Using-a-custom-CA)
+  ["Using a custom CA"](/guides/references/advanced-installation#Using-a-custom-certificate-authority-CA)
   for more information. Addresses
   [#8825](https://github.com/cypress-io/cypress/issues/8825).
 
@@ -4478,7 +4510,7 @@ to Cypress 7.0.**
   [#8714](https://github.com/cypress-io/cypress/issues/8714).
 - The bundled Node.js version was upgraded from `12.18.3` to `14.16.0`. This
   could change the behavior of code within the `pluginsFile` when using the
-  [bundled Node.js version](/guides/references/configuration#Node-version) of
+  [bundled Node.js version](/guides/references/legacy-configuration#Node-version) of
   Cypress. Addressed in
   [#15292](https://github.com/cypress-io/cypress/pull/15292).
 - Installing Cypress on your system now requires Node.js 12+. Addresses
@@ -5084,7 +5116,7 @@ _Released 12/07/2020_
   `before()` hook. Fixes
   [#9162](https://github.com/cypress-io/cypress/issues/9162).
 - We no longer strip `/` from URLs when they are explicitly passed with query
-  paramaters. Fixes [#9360](https://github.com/cypress-io/cypress/issues/9360).
+  parameters. Fixes [#9360](https://github.com/cypress-io/cypress/issues/9360).
 - Fixed the regression in `Cypress.dom.isVisible` behavior for elements with
   `position: fixed`, addresses
   [#8998](https://github.com/cypress-io/cypress/issues/8998) and
@@ -5147,7 +5179,7 @@ Cypress now offers full network stubbing support with the introduction of the
 [cy.intercept()](/api/commands/intercept) command (previously `cy.route2()`).
 With [cy.intercept()](/api/commands/intercept) your tests can intercept, modify
 and wait on any type of HTTP request originating from your app. See our guide on
-[Migrating `cy.route()` to `cy.intercept()`](/guides/references/migration-guide#Migrating-cy-route-to-cy-intercept).
+[Migrating `cy.route()` to `cy.intercept()`](/guides/references/migration-guide#Migrating-cyroute-to-cyintercept).
 
 **Breaking Changes:**
 
@@ -5200,7 +5232,7 @@ deprecations.
 - `cy.server()` and `cy.route()` have been deprecated. In a future release,
   support for `cy.server()` and `cy.route()` will be removed. We encourage you
   to use [cy.intercept()](/api/commands/intercept) instead. See our guide on
-  [Migrating `cy.route()` to `cy.intercept()`](/guides/references/migration-guide#Migrating-cy-route-to-cy-intercept).
+  [Migrating `cy.route()` to `cy.intercept()`](/guides/references/migration-guide#Migrating-cyroute-to-cyintercept).
   Addressed in [#9185](https://github.com/cypress-io/cypress/pull/9185).
 - `experimentalFetchPolyfill` has been deprecated. We encourage you to use
   [cy.intercept()](/api/commands/intercept) to intercept requests using the
@@ -5929,7 +5961,7 @@ _Released 8/3/2020_
   allow plugins to better target specific Cypress versions. Addresses
   [#6352](https://github.com/cypress-io/cypress/issues/6352).
 - During `cypress open`, you can now run a subset of all specs by
-  [entering a text search filter and clicking 'Run n tests'](/guides/core-concepts/writing-and-organizing-tests#Run-filtered-specs).
+  entering a text search filter and clicking 'Run n tests'
   Addresses [#6581](https://github.com/cypress-io/cypress/issues/6581).
 
 **Bugfixes:**
@@ -6007,7 +6039,7 @@ _Released 7/21/2020_
   now. Fixes [#7786](https://github.com/cypress-io/cypress/issues/7786).
 - The [Module API](/guides/guides/module-api) has a new
   `cypress.cli.parseRunArguments` function to assist in parsing user-supplied
-  command line arguments using the same logic as `cypress run` uses. Addesses
+  command line arguments using the same logic as `cypress run` uses. Addresses
   [#7760](https://github.com/cypress-io/cypress/issues/7760).
 
 **Bugfixes:**
@@ -6026,7 +6058,7 @@ _Released 7/21/2020_
   longer throw an `invalid for option "size"` error. Fixes
   [#6099](https://github.com/cypress-io/cypress/issues/6099).
 - Setting `viewportHeight` or `viewportWidth` from within the
-  [test configuration](/guides/core-concepts/writing-and-organizing-tests#test-configuration)
+  [test configuration](/guides/core-concepts/writing-and-organizing-tests#Test-Configuration)
   now properly changes the viewport size for the duration of the suite or test.
 - Setting deep objects and arrays on `config` within the `pluginsFile` now sets
   the values correctly. Fixes
@@ -6108,11 +6140,11 @@ _Released 7/7/2020_
 - Using Cypress commands to traverse the DOM on an application with a global
   `parent` variable will no longer throw Illegal Invocation errors. Fixes
   [#6412](https://github.com/cypress-io/cypress/issues/6412).
-- When [experimentalShadowDomSupport](/guides/references/experiments#Shadow-DOM)
+- When `experimentalShadowDomSupport`
   is enabled, using [.type()](/api/commands/type) on an input in the Shadow DOM
   will not result in an error. Fixes
   [#7741](https://github.com/cypress-io/cypress/issues/7741).
-- When [experimentalShadowDomSupport](/guides/references/experiments#Shadow-DOM)
+- When `experimentalShadowDomSupport`
   is enabled, checking for visibility on a shadow dom host element will no
   longer hang if the host element was the foremost element and had an ancestor
   with fixed position. Fixes
@@ -6162,7 +6194,7 @@ _Released 6/23/2020_
   [#7590](https://github.com/cypress-io/cypress/issues/7590).
 - We fixed a regression in [4.8.0](#4-8-0) where [.click()](/api/commands/click)
   would hang if the subject had a shadow root and
-  [experimentalShadowDomSupport](/guides/references/experiments#Shadow-DOM) was
+  `experimentalShadowDomSupport` was
   not enabled. Fixes [#7679](https://github.com/cypress-io/cypress/issues/7679).
 - We fixed a regression in [4.6.0](#4-6-0) so that
   [`.should('have.value')`](/api/commands/should) now properly asserts against
@@ -6178,7 +6210,7 @@ _Released 6/23/2020_
   [Command Log](/guides/core-concepts/cypress-app#Command-Log) regardless of
   what is in the `beforeEach` hook. Fixes
   [#7731](https://github.com/cypress-io/cypress/issues/7731).
-- When [experimentalShadowDomSupport](/guides/references/experiments#Shadow-DOM)
+- When `experimentalShadowDomSupport`
   is enabled, querying shadow dom in certain situations will no longer cause the
   error `Cannot read property 'length' of undefined` during `cypress run`. Fixes
   [#7676](https://github.com/cypress-io/cypress/issues/7676).
@@ -6245,8 +6277,8 @@ _Released 6/8/2020_
   by clicking the file. Addresses
   [#7506](https://github.com/cypress-io/cypress/issues/7506).
 - We added experimental shadow DOM support through the
-  [experimentalShadowDomSupport](/guides/references/experiments#Shadow-DOM)
-  option. See the [Experiments page](/guides/references/experiments#Shadow-DOM)
+  `experimentalShadowDomSupport`
+  option. See the [Experiments page](/guides/references/experiments#History)
   for more information. Addresses
   [#144](https://github.com/cypress-io/cypress/issues/144).
 
@@ -7194,7 +7226,7 @@ _Released 01/10/2020_
   characters were typed in `type="number"` inputs. Fixes
   [#6055](https://github.com/cypress-io/cypress/issues/6055).
 - Child elements of an element that uses both `transform` and `height` or
-  `width` are now properly seen as visible during visiblity checks. Addresses
+  `width` are now properly seen as visible during visibility checks. Addresses
   [#5974](https://github.com/cypress-io/cypress/issues/5974).
 - We now properly check backface visibility when the parents of a target element
   have the CSS style `transform-style: preserve-3d`. Fixes
@@ -7243,7 +7275,7 @@ _Released 12/26/2019_
 **Bugfixes:**
 
 - We fixed a bug where
-  [cypress run --headless](/guides/guides/command-line#cypress-run-headless)
+  [cypress run --headless](/guides/guides/command-line#Options)
   would not run Chrome-family browsers headlessly. Fixes
   [#5949](https://github.com/cypress-io/cypress/issues/5949).
 - We fixed an issue where, on some systems with IPv4 and IPv6 enabled, Cypress
@@ -7563,7 +7595,7 @@ _Released 10/31/2019_
 
 **Features:**
 
-- [testFiles](/guides/references/configuration#Folders-Files) now also accepts
+- [testFiles](/guides/references/legacy-configuration#Folders--Files) now also accepts
   an Array of glob patterns when specifying what test files to load in
   configuration. Addresses
   [#5401](https://github.com/cypress-io/cypress/issues/5401).
@@ -7606,7 +7638,7 @@ _Released 10/31/2019_
 - We updated `.type()` to properly respect focus selection changes during
   typing. Fixes [#5456](https://github.com/cypress-io/cypress/issues/5456).
 - We fixed a regression in [3.5.0](#3-5-0) that caused selected text to be
-  overwritten while typing a modifer key during `.type()`. Fixes
+  overwritten while typing a modifier key during `.type()`. Fixes
   [#5439](https://github.com/cypress-io/cypress/issues/5439).
 - We now send all the proper events during `.type()` to input elements with type
   `date`, `time`, and `datetime-local` so that it now behaves as it did prior to
@@ -7650,12 +7682,12 @@ _Released 10/23/2019_
   pass `false` to the `--config-file` to not use any configuration file.
   Addresses [#1369](https://github.com/cypress-io/cypress/issues/1369).
 - You can now use your system's Node version by setting the
-  [nodeVersion](/guides/references/configuration#Node-version) to `system` in
+  [nodeVersion](/guides/references/legacy-configuration#Node-version) to `system` in
   your configuration. This Node version will be used to build files in your
-  [integrationFolder](/guides/references/configuration#Folders-Files) and
-  [supportFile](/guides/references/configuration#Folders-Files) and also be used
+  [integrationFolder](/guides/references/legacy-configuration#Folders--Files) and
+  [supportFile](/guides/references/legacy-configuration#Folders--Files) and also be used
   to execute code in your
-  [pluginsFile](/guides/references/configuration#Folders-Files). If not set,
+  [pluginsFile](/guides/references/legacy-configuration#Folders--Files). If not set,
   Cypress will continue to use the Node version bundled with Cypress. Addresses
   [#4432](https://github.com/cypress-io/cypress/issues/4432).
 - [.dblclick()](/api/commands/dblclick) now accepts `position`, `x`, and `y`
@@ -7668,7 +7700,7 @@ _Released 10/23/2019_
   of the element. Addresses
   [#4440](https://github.com/cypress-io/cypress/issues/4440).
 - [cy.visit()](/api/commands/visit) now accepts a `qs` option representing an
-  object of query paramaters to be used in the URL. Addresses
+  object of query parameters to be used in the URL. Addresses
   [#5034](https://github.com/cypress-io/cypress/issues/5034).
 - [cy.viewport()](/api/commands/viewport) now allows for viewport sizes up to
   4,000 pixels. Addresses
@@ -7904,7 +7936,7 @@ _Released 10/23/2019_
   doc.
 - Added a section to our Debugging doc about our `cypress-fiddle` plugin used
   for playing around with small test cases.
-- Added a section to our [Debugging](/guides/guides/debugging#Patch-Cypress) doc
+- Added a section to our [Debugging](/guides/references/troubleshooting#Patch-Cypress) doc
   explaining how to patch an installed version of Cypress.
 - Mention not needing to decode portions of the `url` in the `cy.route()` doc.
 - Mention that the `file://` prefix is not supported in the
@@ -7926,7 +7958,7 @@ _Released 10/23/2019_
   [#4720](https://github.com/cypress-io/cypress/pull/4720).
 - Upgraded `node` from `8.9.3` to `12.0.0`. Addressed in
   [#4720](https://github.com/cypress-io/cypress/pull/4720).
-- Upgaded `jquery` from `2.2.4` to `3.1.1`. Addressed in
+- Upgraded `jquery` from `2.2.4` to `3.1.1`. Addressed in
   [#1229](https://github.com/cypress-io/cypress/pull/1229).
 - Upgraded `sanitize-filename` from `1.6.1` to `1.6.3`. Addressed in
   [#5216](https://github.com/cypress-io/cypress/pull/5216).
@@ -8033,7 +8065,7 @@ _Released 7/29/2019_
   [#4781](https://github.com/cypress-io/cypress/pull/4781) and
   [#4817](https://github.com/cypress-io/cypress/pull/4817).
 - We increased the cypress binary verification phase from 10 seconds to 30
-  seconds to accomodate underpowered or overwhelmed machines typically found in
+  seconds to accommodate underpowered or overwhelmed machines typically found in
   CI environments. Addresses
   [#4624](https://github.com/cypress-io/cypress/issues/4624).
 
@@ -8043,7 +8075,7 @@ _Released 7/29/2019_
   [GitHub Integration](/guides/cloud/integrations/source-control/github) with
   the Cypress Dashboard.
 - Updated instructions for adding types for custom commands in the
-  [TypeScript Support](/guides/tooling/typescript-support#Types-for-custom-commands)
+  [TypeScript Support](/guides/tooling/typescript-support#Types-for-Custom-Commands)
   doc. Addressed in
   [#1901](https://github.com/cypress-io/cypress-documentation/pull/1901)
 - Added a section about video encoding and how to speed up the encoding time to
@@ -8310,7 +8342,7 @@ _Released 6/27/2019_
   Cypress Dashboard. Addresses
   [#3582](https://github.com/cypress-io/cypress/issues/3582).
 - The tests titles and headers in the Command Log no longer truncate with
-  elipsis when the text is longer than that width of the Command Log. Instead
+  ellipsis when the text is longer than that width of the Command Log. Instead
   the text wraps so that all text is shown. Addresses
   [#3947](https://github.com/cypress-io/cypress/issues/3947).
 - Special env vars are now truncated in `Cypress.env()` and the debug logs.
@@ -8332,11 +8364,11 @@ _Released 6/27/2019_
   teach end-to-end testing with Cypress. Addressed in
   [#1766](https://github.com/cypress-io/cypress-documentation/pull/1766).
 - Added a section about
-  [Hacking on Cypress](/guides/guides/debugging#Hacking-on-Cypress) in the
+  [Hacking on Cypress](/guides/references/troubleshooting#Hacking-on-Cypress) in the
   Debugging doc. Addressed in
   [#1783](https://github.com/cypress-io/cypress-documentation/pull/1783).
 - Added a section on how to
-  [opt out of sending exception data to Cypress](/guides/getting-started/installing-cypress#Opt-out-of-sending-exception-data-to-Cypress)
+  [opt out of sending exception data to Cypress](/guides/references/advanced-installation#Opt-out-of-sending-exception-data-to-Cypress)
   in the Installing Cypress doc.
 
 **Dependency Updates**
@@ -8643,7 +8675,7 @@ _Released 5/17/2019_
 - Added new options `retryOnStatusCodeFailure` and `retryOnNetworkFailure` to
   [cy.visit()](/api/commands/visit) and [cy.request()](/api/commands/request).
 - Updated
-  [install instructions for Windows](/guides/getting-started/installing-cypress#Download-URLs)
+  [install instructions for Windows](/guides/references/advanced-installation#Download-URLs)
   on how to target 64bit and 32bit infrastructures. Addressed in
   [#1568](https://github.com/cypress-io/cypress-documentation/issues/1568).
 - Updated [.its()](/api/commands/its) and [.invoke()](/api/commands/invoke) docs
@@ -8728,7 +8760,7 @@ _Released 3/15/2019_
 - The
   [`--browser` argument](/guides/guides/command-line#cypress-run-browser-lt-browser-name-or-path-gt)
   of the [Command Line](/guides/guides/command-line) and the
-  [`browser` argument](/guides/guides/module-api#cypress-run) of the
+  [`browser` argument](/guides/guides/module-api#cypressrun) of the
   [Module API](/guides/guides/module-api) have been updated to allow passing a
   `<path>`. Addresses
   [#1026](https://github.com/cypress-io/cypress/issues/1026).
@@ -9077,7 +9109,7 @@ Merry Christmas everyone!
 **Misc:**
 
 - Removed the word 'already' from the Cypress install message in order to be
-  less confusing. Adresses
+  less confusing. Addresses
   [#2754](https://github.com/cypress-io/cypress/issues/2754).
 - Fixed incomplete type definitions for [cy.request](/api/commands/request).
   Fixes [#2305](https://github.com/cypress-io/cypress/issues/2305).
@@ -9192,7 +9224,7 @@ _Released 11/2/2018_
   The [following flags](https://nodejs.org/api/fs.html#fs_file_system_flags) are
   available. Fixes [#1249](https://github.com/cypress-io/cypress/issues/1249).
 - There is a new
-  [CYPRESS_DOWNLOAD_MIRROR](/guides/getting-started/installing-cypress#Mirroring)
+  [CYPRESS_DOWNLOAD_MIRROR](/guides/references/advanced-installation#Mirroring)
   environment variable for installing Cypress at a mirror url. Fixes
   [#2609](https://github.com/cypress-io/cypress/pull/2609).
 - The [Module API](/guides/guides/module-api) now returns the `runUrl` from
@@ -9225,8 +9257,8 @@ _Released 11/2/2018_
 - We updated how we handle
   [trashAssetsBeforeRuns](/guides/references/configuration#Screenshots)
   behavior. We now trash the contents of the
-  [screenshotsFolder](/guides/references/configuration#Folders-Files) and
-  [videosFolder](/guides/references/configuration#Folders-Files) directories
+  [screenshotsFolder](/guides/references/legacy-configuration#Folders--Files) and
+  [videosFolder](/guides/references/legacy-configuration#Folders--Files) directories
   instead of trashing the directories themselves. This helps maintain any file
   access permissions for the directories. Fixes
   [#1943](https://github.com/cypress-io/cypress/issues/1943) and
@@ -9299,7 +9331,7 @@ _Released 11/2/2018_
 - Added `runUrl` to returned run in [Module API doc](/guides/guides/module-api).
 - Documented new `CYPRESS_DOWNLOAD_MIRROR` flag and rewrote advanced install
   instructions to be clearer in
-  [Installing Cypress doc](/guides/getting-started/installing-cypress#Advanced).
+  [Installing Cypress doc](/guides/references/advanced-installation).
 
 **Dependency Updates**
 
@@ -9627,7 +9659,7 @@ _Released 6/28/2018_
   elements with `position: sticky`. Fixes
   [#1475](https://github.com/cypress-io/cypress/issues/1475).
 - Fixed a bug where changing the
-  [integrationFolder](/guides/references/configuration#Folders-Files) in Windows
+  [integrationFolder](/guides/references/legacy-configuration#Folders--Files) in Windows
   would lead to errors with plugins. Fixes
   [#1704](https://github.com/cypress-io/cypress/issues/1704).
 - Cypress no longer crashes when a 3rd party server sends invalid `gzip`
@@ -10413,7 +10445,7 @@ _Released 12/14/2017_
 
 - Renamed `environmentVariables` to `env` in the Desktop GUI. Fixes
   [#1052](https://github.com/cypress-io/cypress/issues/1052).
-- [Cypress.config()](/guides/references/configuration#Cypress-config) now
+- [Cypress.config()](/api/cypress-api/config) now
   returns a complete set of configuration values. Fixes
   [#509](https://github.com/cypress-io/cypress/issues/509).
 - Added TypeScript typings for bundled Cypress tools like `$`, `_`, etc. Fixes
@@ -10451,7 +10483,7 @@ _Released 12/6/2017_
 **Misc:**
 
 - There is now a new
-  [`CYPRESS_SKIP_BINARY_INSTALL`](/guides/getting-started/installing-cypress#Skipping-installation)
+  [`CYPRESS_SKIP_BINARY_INSTALL`](/guides/references/advanced-installation#Environment-variables)
   flag you can pass during `npm install` which skips the binary installation
   after the `cypress` npm module completes its installation. Fixes
   [#1005](https://github.com/cypress-io/cypress/issues/1005).
@@ -10592,7 +10624,7 @@ _Released 11/19/2017_
   [#533](https://github.com/cypress-io/cypress/issues/533).
 - We have created a
   [`@cypress/webpack-preprocessor`](https://github.com/cypress-io/cypress/tree/master/npm/webpack-preprocessor)
-  preprocessor npm package for you webpack users (because we are nice ￰ ﾟﾘﾉ).
+  preprocessor npm package for you webpack users (because we are nice!).
   Fixes [#676](https://github.com/cypress-io/cypress/issues/676).
 
 **Bugfixes:**
@@ -10670,7 +10702,7 @@ _Released 10/29/2017_
 - The branch name is now properly collected when recording in Buildkite CI.
   Fixes [#777](https://github.com/cypress-io/cypress/issues/777).
 - You can install the Cypress binary from any URL or file path using the
-  [`CYPRESS_BINARY_VERSION` environment variable](/guides/getting-started/installing-cypress#Advanced).
+  [`CYPRESS_BINARY_VERSION` environment variable](/guides/references/advanced-installation).
   Closes [#701](https://github.com/cypress-io/cypress/issues/701).
 
 **Documentation Changes:**
@@ -10994,11 +11026,11 @@ _Released 09/10/2017_
   [#519](https://github.com/cypress-io/cypress/issues/519).
 - Input ranges are now more easily testable using the new
   [.trigger()](/api/commands/trigger) command. See our
-  [new recipe](/examples/recipes#Form-Interactions) for details on how. Fixes
+  [new recipe](/examples/recipes#Testing-the-DOM) for details on how. Fixes
   [#287](https://github.com/cypress-io/cypress/issues/287).
 - Testing drag and drop is now possible using the new
   [.trigger()](/api/commands/trigger) command. See our
-  [new recipe](/examples/recipes#Form-Interactions) for details on how. Fixes
+  [new recipe](/examples/recipes#Testing-the-DOM) for details on how. Fixes
   [#386](https://github.com/cypress-io/cypress/issues/386).
 - Updated [.click()](/api/commands/click) command to accept more position
   arguments. Fixes [#499](https://github.com/cypress-io/cypress/issues/499).
@@ -11043,9 +11075,7 @@ _Released 09/10/2017_
   to
   [check an element's actionability](/guides/core-concepts/interacting-with-elements#Actionability).
   Fixes [#569](https://github.com/cypress-io/cypress/issues/569).
-- Using
-  [Chai.js's `assert` interface](/guides/references/assertions#TDD-Assertions)
-  now works correctly in your specs.
+- Using Chai.js's `assert` interface now works correctly in your specs.
 - Screenshots are now taken during each runnable that fails. Errors in tests
   will happen there. Errors in hooks will also happen there. Previously a
   screenshot would only happen after everything (including hooks) ran. Fixes
@@ -11067,7 +11097,7 @@ _Released 09/10/2017_
   version `2.9.25` to `3.5.0`
 - Updated [chai](/guides/references/bundled-libraries#Chai) from version `1.9.2`
   to `3.5.0`
-- Updated [sinon](/guides/references/bundled-libraries#Sinon-JS) from version
+- Updated [sinon](/guides/references/bundled-libraries#Sinonjs) from version
   `1.x` to `3.2.0`
 - Updated [jQuery](/api/utilities/$) from version `2.1.4` to `2.2.4`.
 - Removed [chai-jQuery](/guides/references/bundled-libraries#Chai-jQuery) and
@@ -11783,8 +11813,8 @@ _Released 11/27/2016_
 **Breaking Changes:**
 
 - Previously, we auto-magically included all files within
-  [`cypress/support`](/guides/core-concepts/writing-and-organizing-tests#Folder-Structure).
-  This has now [gone away](/guides/references/error-messages) and we've
+  [`cypress/support`](/guides/references/legacy-configuration#Folders--Files).
+  This has now [gone away](/guides/references/error-messages#Support-file-missing-or-invalid) and we've
   simplified this to automatically including a single `cypress/support/index.js`
   file. That single file acts as the entry point meaning you should `import` or
   `require` the other support files you'd like to include. Although this is
@@ -11793,7 +11823,7 @@ _Released 11/27/2016_
   the implementation of it has. We will automatically seed a
   `cypress/support/index.js` file for you (even on existing projects). The file
   location of `cypress/support/index.js` can be changed with the new
-  [`supportFile`](/guides/references/configuration#Testing-Type-Specific-Options)
+  [`supportFile`](/guides/references/legacy-configuration#Folders--Files)
   option in your `cypress.json`. This feature can also be turned off by
   specifying `supportFile: false`.
 
@@ -11860,8 +11890,8 @@ _Released 11/16/2016_
 
 **Roadmap:**
 
-- The changes in version [`0.17.11`](#01711-11162016) below are in preparation
-  for Cypress ￢ﾀﾙ platform service: a portal where screenshots, videos, config,
+- The changes in version `0.17.11` below are in preparation
+  for Cypress platform service: a portal where screenshots, videos, config,
   and logs of your builds are accessible.
 
 **Overview:**
@@ -12643,7 +12673,7 @@ _Released 05/17/2016_
   you'll want to reinstall them. You only have to install them once and they
   will persist.
 - The `whitelist` callback function of
-  [`Cypress.Cookies.defaults()`](/api/cypress-api/cookies#Defaults) now receives
+  [`Cypress.Cookies.defaults()`](/api/cypress-api/cookies#History) now receives
   a `cookie object` instead of just the `cookies name` as a string.
 
 **Features:**
@@ -12935,12 +12965,12 @@ _Released 03/28/2016_
 - Cypress no longer looks at your `tests` directory for test files. Now, by
   default, it looks in the `cypress/integration` directory.
 - We've removed the configuration option `testFolder` and renamed it to
-  [`integrationFolder`](/guides/references/configuration#Folders-Files) inside
+  [`integrationFolder`](/guides/references/legacy-configuration#Folders--Files) inside
   of the `cypress.json`.
 - We've renamed the `cypress` npm package to be `cypress-cli`. You'll see a
   giant deprecation warning until your scripts have been updated to reference
   `cypress-cli`.. You can also uninstall the `cypress` npm package.
-- Added new [`fileServerFolder`](/guides/references/configuration#Folders-Files)
+- Added new [`fileServerFolder`](/guides/references/legacy-configuration#Folders--Files)
   configuration option that can mount a directory other than your project root
   when using Cypress as a web server.
 
@@ -13274,7 +13304,7 @@ _Released 12/31/2015_
 **Features:**
 
 - Added `waitForAnimations` and `animationDistanceThreshold`
-  [configuration options](/guides/references/configuration#Animations).
+  [configuration options](/guides/references/configuration#Actionability).
 - Cypress now automatically detects and waits for an element which is animating
   to stop animating. The threshold that Cypress considers _animating_ is set to
   a distance of `5px` per `60fps`. In other words, if your element is moving too
@@ -13854,7 +13884,7 @@ _Released 10/04/2015_
 **Features:**
 
 - [`.blur()`](/api/commands/blur) now accepts `{force: true}` which removes
-  error checking such as validating the element is urrently in focus.
+  error checking such as validating the element is currently in focus.
 
 **Bugfixes:**
 
@@ -13940,7 +13970,7 @@ _Released 09/25/2015_
   So you'll now always see the full assertion message.
 - Fixed some scenarios where assertions would not be logged as a child command.
 - Assertions based around the `window` or `document` object no longer cause Chai
-  to bomb on formatting their object structures (due to cylic references) and
+  to bomb on formatting their object structures (due to cyclic references) and
   instead now will show up as `<window>` and `<document>`.
 
 **Misc:**
@@ -14154,7 +14184,7 @@ _Released 09/13/2015_
 
 - The internal retry loop of Cypress now runs at `60fps`, instead of `20fps`.
 - Cypress overrides chai's default inspection function for DOM elements meaning
-  instead of seeing `{ Object (0, length, ...) }` you will now ee the nicely
+  instead of seeing `{ Object (0, length, ...) }` you will now see the nicely
   formatted Cypress DOM element like: `<button#primary.btn-large>`.
 - Cypress now overrides chai's `match` chainer and provides a specific error
   message when a non `regex` value is provided. Fixes
@@ -14178,7 +14208,7 @@ _Released 09/13/2015_
 **Other News:**
 
 - Cypress is currently seeking to raise a Series A. This will enable us to grow
-  the team and speed up development but seeking it has come at a ost for current
+  the team and speed up development but seeking it has come at a cost for current
   development speed. If you have any VC connections
   [please send them our way](mailto:support@cypress.io).
 
@@ -14341,7 +14371,7 @@ _Released 08/06/2015_
 - Cypress can now be run through the terminal.
 - You can now run all of your tests inside of the GUI App.
 - You can use the CLI tool to run Cypress in CI. The documentation for this
-  needs to be written, but it will be very simple to do. You will robably only
+  needs to be written, but it will be very simple to do. You will probably only
   have to write 2 lines in your CI scripts to run Cypress.
 - You can configure CI to use any reporter built into Mocha, and additionally we
   are adding JUnit XML output (for Jenkins) as a built in default.
@@ -14353,11 +14383,11 @@ _Released 08/06/2015_
 - Several security problems with projects have been closed in preparation for
   running in CI.
 - Extensive memory profiling has been done and Cypress has implemented several
-  strategies for aggressively causing garbage collection. The ebugging tools
+  strategies for aggressively causing garbage collection. The debugging tools
   (which allow you to walk back in time through DOM snapshots, or access objects
-  from previous tests) could exhaust all available emory in previous versions.
+  from previous tests) could exhaust all available memory in previous versions.
   This likely never affected most users, but if a user ran 1000's of tests
-  (which have been written in Cypress) it ould bomb. Now Cypress only stores
+  (which have been written in Cypress) it would bomb. Now Cypress only stores
   data for up to 50 tests, and will begin purging data past that. When run in
   the terminal, Cypress doesn't apply any of its debugging tools, so CI will be
   unaffected.
@@ -14367,7 +14397,7 @@ _Released 08/06/2015_
 
 - Everything except for the `cypress driver` is now minified.
 - Some users have reported problems upgrading previous versions. This is because
-  we changed the name from "cypress" to "Cypress" including some inaries. If
+  we changed the name from "cypress" to "Cypress" including some binaries. If
   your upgrade does not finish you can redownload the latest version of Cypress
   or use the CLI tool to reinstall it.
 - Our build and testing processes have been upgraded to accommodate Linux
@@ -14421,7 +14451,7 @@ _Released 07/06/2015_
 **Bugfixes:**
 
 - Fixed edge case with [`cy.contains()`](/api/commands/contains) and command
-  options `visible` and `exist` where it would always fail ven though the
+  options `visible` and `exist` where it would always fail even though the
   matched element was in the correct state.
 
 **Misc:**
