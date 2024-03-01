@@ -511,8 +511,9 @@ describe('Cognito, programmatic login', function () {
 Often times, AWS Cognito is used when other AWS services provide the backend,
 such as AWS AppSync for GraphQL APIs or AWS API Gateway for REST APIs. These
 backend services can be configured to verify cognito JWTs without additional
-code. However, this example application is instead hosting a backend locally,
-implemented with the Express NPM library, and so it must be adapted to verify
+code. However, if you are hosting a webserver backend, like the [cypress
+real-world app](https://github.com/cypress-io/cypress-realworld-app) does with
+the Express NPM library, it must be adapted, as the real-world app is, to verify
 the Cognito JWTs to authorize the frontend's requests.
 
 :::
