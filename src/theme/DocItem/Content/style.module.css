@@ -2,10 +2,6 @@ main {
   padding: 2rem 0;
 }
 
-.mainContentHeader {
-  margin-bottom: 2rem;
-}
-
 div.mainContentHeader a:hover {
   border-bottom: none;
 }
