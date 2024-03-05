@@ -126,31 +126,31 @@ You will commonly use these chainers after using DOM commands like:
 These chainers are used on assertions with [`cy.stub()`](/api/commands/stub) and
 [`cy.spy()`](/api/commands/spy).
 
-| Sinon.JS property/method | Assertion                                                                                                                   |
-| ------------------------ | --------------------------------------------------------------------------------------------------------------------------- |
-| called                   | `.should('have.been.called')`<br />`expect(spy).to.be.called`                                                               |
-| callCount                | `.should('have.callCount', 3)`<br />`expect(spy).to.have.callCount(n)`                                                      |
-| calledOnce               | `.should('have.been.calledOnce')`<br />`expect(spy).to.be.calledOnce`                                                       |
-| calledTwice              | `.should('have.been.calledTwice')`<br />`expect(spy).to.be.calledTwice`                                                     |
-| calledThrice             | `.should('have.been.calledThrice')`<br />`expect(spy).to.be.calledThrice`                                                   |
-| calledBefore             | `.should('have.been.calledBefore', spy2)`<br />`expect(spy1).to.be.calledBefore(spy2)`                                      |
-| calledAfter              | `.should('have.been.calledAfter', spy2)`<br />`expect(spy1).to.be.calledAfter(spy2)`                                        |
-| calledWithNew            | `.should('have.been.calledWithNew')`<br />`expect(spy).to.be.calledWithNew`                                                 |
-| alwaysCalledWithNew      | `.should('have.always.been.calledWithNew')`<br />`expect(spy).to.always.be.calledWithNew`                                   |
-| calledOn                 | `.should('have.been.calledOn', context)`<br />`expect(spy).to.be.calledOn(context)`                                         |
-| alwaysCalledOn           | `.should('have.always.been.calledOn', context)`<br />`expect(spy).to.always.be.calledOn(context)`                           |
-| calledWith               | `.should('have.been.calledWith', ['arg1, 'arg2'])`<br />`expect(spy).to.be.calledWith(...args)`                             |
-| alwaysCalledWith         | `.should('have.always.been.calledWith', ['arg1', 'arg2'])`<br />`expect(spy).to.always.be.calledWith(...args)`              |
-| calledOnceWith           | `.should('have.been.calledOnceWith', ['arg1', 'arg2'])`<br />`expect(spy).to.be.calledOnceWith(...args)`                    |
-| calledWithExactly        | `.should('have.been.calledWithExactly', ['arg1, 'arg2'])`<br />`expect(spy).to.be.calledWithExactly(...args)`               |
-| alwaysCalledWithExactly  | `.should('have.always.been.calledWithExactly', ['arg1, 'arg2'])`<br />`expect(spy).to.always.be.calledWithExactly(...args)` |
-| calledOnceWithExactly    | `.should('have.been.calledOnceWithExactly', ['arg1, 'arg2'])`<br />`expect(spy).to.be.calledOnceWithExactly(...args)`       |
-| calledWithMatch          | `.should('have.been.calledWithMatch', ['arg1, 'arg2'])`<br />`expect(spy).to.be.calledWithMatch(...args)`                   |
-| alwaysCalledWithMatch    | `.should('have.always.been.calledWithMatch', ['arg1, 'arg2'])`<br />`expect(spy).to.always.be.calledWithMatch(...args)`     |
-| returned                 | `.should('have.returned', 'foo')`<br />`expect(spy).to.have.returned(returnVal)`                                            |
-| alwaysReturned           | `.should('have.always.returned', 'foo')`<br />`expect(spy).to.have.always.returned(returnVal)`                              |
-| threw                    | `.should('have.thrown', TypeError)`<br />`expect(spy).to.have.thrown(errorObjOrErrorTypeStringOrNothing)`                   |
-| alwaysThrew              | `.should('have.always.thrown', 'TypeError')`<br />`expect(spy).to.have.always.thrown(errorObjOrErrorTypeStringOrNothing)`   |
+| Sinon.JS property/method | Assertion                                                                                                                 |
+| ------------------------ | ------------------------------------------------------------------------------------------------------------------------- |
+| called                   | `.should('have.been.called')`<br />`expect(spy).to.be.called`                                                             |
+| callCount                | `.should('have.callCount', 3)`<br />`expect(spy).to.have.callCount(n)`                                                    |
+| calledOnce               | `.should('have.been.calledOnce')`<br />`expect(spy).to.be.calledOnce`                                                     |
+| calledTwice              | `.should('have.been.calledTwice')`<br />`expect(spy).to.be.calledTwice`                                                   |
+| calledThrice             | `.should('have.been.calledThrice')`<br />`expect(spy).to.be.calledThrice`                                                 |
+| calledBefore             | `.should('have.been.calledBefore', spy2)`<br />`expect(spy1).to.be.calledBefore(spy2)`                                    |
+| calledAfter              | `.should('have.been.calledAfter', spy2)`<br />`expect(spy1).to.be.calledAfter(spy2)`                                      |
+| calledWithNew            | `.should('have.been.calledWithNew')`<br />`expect(spy).to.be.calledWithNew`                                               |
+| alwaysCalledWithNew      | `.should('have.always.been.calledWithNew')`<br />`expect(spy).to.always.be.calledWithNew`                                 |
+| calledOn                 | `.should('have.been.calledOn', context)`<br />`expect(spy).to.be.calledOn(context)`                                       |
+| alwaysCalledOn           | `.should('have.always.been.calledOn', context)`<br />`expect(spy).to.always.be.calledOn(context)`                         |
+| calledWith               | `.should('have.been.calledWith', ...args)`<br />`expect(spy).to.be.calledWith(...args)`                                   |
+| alwaysCalledWith         | `.should('have.always.been.calledWith', ...args)`<br />`expect(spy).to.always.be.calledWith(...args)`                     |
+| calledOnceWith           | `.should('have.been.calledOnceWith', ...args)`<br />`expect(spy).to.be.calledOnceWith(...args)`                           |
+| calledWithExactly        | `.should('have.been.calledWithExactly', ...args)`<br />`expect(spy).to.be.calledWithExactly(...args)`                     |
+| alwaysCalledWithExactly  | `.should('have.always.been.calledWithExactly', ...args)`<br />`expect(spy).to.always.be.calledWithExactly(...args)`       |
+| calledOnceWithExactly    | `.should('have.been.calledOnceWithExactly', ...args)`<br />`expect(spy).to.be.calledOnceWithExactly(...args)`             |
+| calledWithMatch          | `.should('have.been.calledWithMatch',...args)`<br />`expect(spy).to.be.calledWithMatch(...args)`                          |
+| alwaysCalledWithMatch    | `.should('have.always.been.calledWithMatch',...args)`<br />`expect(spy).to.always.be.calledWithMatch(...args)`            |
+| returned                 | `.should('have.returned', 'foo')`<br />`expect(spy).to.have.returned(returnVal)`                                          |
+| alwaysReturned           | `.should('have.always.returned', 'foo')`<br />`expect(spy).to.have.always.returned(returnVal)`                            |
+| threw                    | `.should('have.thrown', TypeError)`<br />`expect(spy).to.have.thrown(errorObjOrErrorTypeStringOrNothing)`                 |
+| alwaysThrew              | `.should('have.always.thrown', 'TypeError')`<br />`expect(spy).to.have.always.thrown(errorObjOrErrorTypeStringOrNothing)` |
 
 ## Adding New Assertions
 
