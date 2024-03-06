@@ -1077,6 +1077,13 @@
           "badge": "verified"
         },
         {
+          "name": "Pixeleye",
+          "description": "Open-source, multi-browser visual review and testing platform.",
+          "link": "https://pixeleye.io/docs/integrations/cypress",
+          "keywords": ["open-source", "screenshots", "visual regression", "multi-browser"],
+          "badge": "community"
+        },
+        {
           "name": "Happo",
           "description": "Cross-platform, cross-browser screenshot testing for modern user interfaces.",
           "link": "https://github.com/happo/happo-cypress",
