@@ -294,13 +294,14 @@ node -p 'os.cpus()'
   [`resource_class: large`](https://circleci.com/docs/configuration-reference/#docker-execution-environment)
   providing 4 vCPUs and 8 GB of RAM. `cypress info` reports
   `System Memory: 73.6 GB free 48.6 GB`.
-- [Real World App](https://github.com/cypress-io/cypress-realworld-app) also
-  executes its tests using
-  [GitHub Actions](https://github.com/cypress-io/github-action) with the
-  [default hosted runner](https://docs.github.com/en/actions/reference/specifications-for-github-hosted-runners)
-  with 2 vCPUs and 7GB of RAM. `cypress info` reports
-  `System Memory: 7.29 GB free 632 MB` with CPUs reported as
-  `Intel(R) Xeon(R) Platinum 8171M CPU @ 2.60GHz`.
+- The [Real World App](https://github.com/cypress-io/cypress-realworld-app) project also
+  executes its tests on
+  [GitHub Actions](https://docs.github.com/en/actions) using the
+  [Cypress GitHub Action](https://github.com/cypress-io/github-action) with the
+  [standard Ubuntu GitHub-hosted runner for Public repositories](https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners/about-github-hosted-runners)
+  providing 4 vCPUs and 16 GB of RAM. `cypress info` reports
+  `System Memory: 16.8 GB free 15.5 GB` with CPUs reported as
+  `AMD EPYC 7763 64-Core Processor`.
 
 **Tip:** if there are problems with longer specs, try splitting them into
 shorter ones, following
