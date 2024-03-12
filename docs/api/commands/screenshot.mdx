@@ -300,6 +300,17 @@ cy.screenshot()
 cy.get('.sticky-header').invoke('css', 'position', null)
 ```
 
+### Chromium-specific behavior with regard to tabs
+
+Chromium will not capture screenshots when the Renderer process for the Cypress
+tab is paused. This most often happens if a new tab was opened by clicking on
+an anchor with `target="_blank"`. To accommodate capturing screenshots in this
+situation, Cypress will attempt to activate the Cypress tab when a screenshot is
+captured. We make our best effort to activate the tab via our Chromium extension.
+If the extension is disabled, Cypress will force the main tab to the front. This
+will cause the browser to steal focus in open mode. To prevent Cypress from
+stealing focus, [ensure that the extension is enabled](/guides/references/troubleshooting#Allow-the-Cypress-Chrome-extension).
+
 ## Rules
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
