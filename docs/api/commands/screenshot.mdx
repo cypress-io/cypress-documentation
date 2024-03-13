@@ -302,7 +302,7 @@ cy.get('.sticky-header').invoke('css', 'position', null)
 
 ### Chromium-specific behavior with regard to tabs
 
-Chromium will not capture screenshots when the Renderer process for the Cypress
+Chromium will not capture screenshots when the renderer process for the Cypress
 tab is paused. This most often happens if a new tab was opened by clicking on
 an anchor with `target="_blank"`. To accommodate capturing screenshots in this
 situation, Cypress will attempt to activate the Cypress tab when a screenshot is
