@@ -1077,6 +1077,13 @@
           "badge": "verified"
         },
         {
+          "name": "Pixeleye",
+          "description": "Open-source, multi-browser visual review and testing platform.",
+          "link": "https://pixeleye.io/docs/integrations/cypress",
+          "keywords": ["open-source", "screenshots", "visual regression", "multi-browser"],
+          "badge": "community"
+        },
+        {
           "name": "Happo",
           "description": "Cross-platform, cross-browser screenshot testing for modern user interfaces.",
           "link": "https://github.com/happo/happo-cypress",
@@ -1227,10 +1234,10 @@
           "badge": "community"
         },
         {
-          "name": "cypress-allure-plugin",
-          "description": "Integrates Allure reporter with Cypress. Command logging and screenshot attachment out of the box.",
-          "link": "https://github.com/Shelex/cypress-allure-plugin",
-          "keywords": ["reporter", "allure"],
+          "name": "allure-cypress",
+          "description": "Allure reporter for Cypress. Creates rich HTML test reports with screenshots, steps and more.",
+          "link": "https://github.com/allure-framework/allure-js/tree/main/packages/allure-cypress",
+          "keywords": ["reporter", "allure", "step", "screenshot"],
           "badge": "community"
         },
         {
