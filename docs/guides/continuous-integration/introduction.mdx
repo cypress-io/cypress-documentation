@@ -309,22 +309,11 @@ shorter ones, following
 
 ### Dependencies
 
-If you are not using one of the above CI providers then make sure your system
-has these dependencies installed.
+Cypress runs on many CI providers' virtual machine environments out-of-the-box without needing additional dependencies installed.
 
 #### Linux
 
-#### Ubuntu/Debian
-
-```shell
-apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libnss3 libxss1 libasound2 libxtst6 xauth xvfb
-```
-
-#### CentOS
-
-```shell
-yum install -y xorg-x11-server-Xvfb gtk2-devel gtk3-devel libnotify-devel GConf2 nss libXScrnSaver alsa-lib
-```
+If you see a message about a missing dependency when you run Cypress in a Linux CI environment, then refer to the [Linux Prerequisites](/guides/getting-started/installing-cypress#Linux-Prerequisites) lists for guidance.
 
 ### Caching
 
