@@ -91,7 +91,7 @@ it('completes todo', () => {
 
   cy.contains('.todo-list li', 'write tests').should('have.class', 'completed')
 
-  // run 'npm i cypress-plugin-snapshots -S'
+  // run 'npm install cypress-plugin-snapshots --save'
   // capture the element screenshot and
   // compare to the baseline image
   cy.get('.todoapp').toMatchImageSnapshot({
