@@ -364,3 +364,8 @@ h6 {
 .navbar-sidebar__backdrop {
   @apply bg-gray-900/[.80] backdrop-blur;
 }
+
+// @see https://github.com/cypress-io/cypress-documentation/issues/5771
+#__docusaurus_skipToContent_fallback {
+  scroll-margin-top: var(--ifm-navbar-height);
+}
