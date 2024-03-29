@@ -169,7 +169,8 @@
           "link": "https://github.com/bahmutov/cypress-dark",
           "keywords": ["theme"],
           "badge": "verified"
-        },       {
+        },       
+        {
           "name": "cypress-voice-plugin",
           "description": "Cypress plugin to announce spec result and time in Cypress Test Runner.",
           "link": "https://github.com/dennisbergevin/cypress-voice-plugin",
