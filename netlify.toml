@@ -168,6 +168,12 @@
   force = true
 
 [[redirects]]
+  from = "/guides/migrating-to-cypress/selenium"
+  to = "/guides/end-to-end-testing/selenium-to-cypress"
+  status = 301
+  force = true
+
+[[redirects]]
   from = "/guides/references/bundled-tools"
   to = "/guides/references/bundled-libraries"
   status = 301
