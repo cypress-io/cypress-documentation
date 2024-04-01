@@ -171,6 +171,13 @@
           "badge": "verified"
         },
         {
+          "name": "cypress-voice-plugin",
+          "description": "Cypress plugin to announce spec result and time in Cypress Test Runner.",
+          "link": "https://github.com/dennisbergevin/cypress-voice-plugin",
+          "keywords": ["auditory", "ui", "results", "duration"],
+          "badge": "community"
+        },
+        {
           "name": "cypress-protobuf",
           "description": "Encode a fixture with Protocol Buffers.",
           "link": "https://github.com/NoriSte/cypress-protobuf",
