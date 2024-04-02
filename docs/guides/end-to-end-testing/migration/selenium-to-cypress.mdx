@@ -119,9 +119,6 @@ The reason this guide will handle it as a standalone application is because it m
   alt="install Cypress"
 />
 
-<br />
-<br />
-
 <DocsImage
   src="/img/guides/migrating-to-cypress/OpenCypressApp.png"
   alt="open the Cypress app"
@@ -260,7 +257,6 @@ cy.get('#myButton').click()
 Any wait until functionality that you have been using in Selenium is no longer required
 in Cypress. This functionality is built in.
 
-<br />
 The next vital part to migrate would be the assertions, we can all agree assertions
 are moderately vital to a test automation framework. The next piece of code is a
 python Selenium assertion to validate if a button is visible. While it is possible
@@ -366,7 +362,6 @@ total number of tests run, the duration of the run, and the counts of failed, pa
 Npx cypress run
 ```
 
-<br />
 This would completely replace the Selenium step in your current CI/CD workflow.
 
 ### Cypress Cloud
@@ -380,7 +375,7 @@ it would be remiss not to explore the potential benefits afforded by its feature
 
 Some of the core features include:
 
-- ##### [Test Replay](https://docs.cypress.io/guides/cloud/test-replay)
+##### [Test Replay](https://docs.cypress.io/guides/cloud/test-replay)
 
 One of the major difficulties in troubleshooting headless testing is having to reproduce the failure in your local
 environment in order to debug failures in CI. Cypress Cloud resolves this issue with Test Replay. Test Replay's
@@ -390,8 +385,7 @@ locally so you can swiftly get back to shipping valuable software for your users
 leading up to crashes or failures by inspecting the DOM, network events, and console logs of your application under
 test exactly as they ran in CI.
 
-<br />- #####
-[Parallelization](https://docs.cypress.io/guides/cloud/smart-orchestration/parallelization)
+##### [Parallelization](https://docs.cypress.io/guides/cloud/smart-orchestration/parallelization)
 
 To enhance testing efficiency further, Cypress Cloud offers a built-in solution for test parallelization. With a simple
 toggle, tests can run in parallel, eliminating the need for complex configurations to run tests concurrently.
@@ -400,8 +394,7 @@ Cypress will assign each spec file to an available machine based on our
 [balance strategy](https://docs.cypress.io/guides/cloud/smart-orchestration/load-balancing#Balance-strategy).
 Due to this balance strategy, the run order of the spec files is not guaranteed when parallelized.
 
-<br />- ##### [Analytics and
-Reporting](https://docs.cypress.io/guides/cloud/analytics)
+##### [Analytics and Reporting](https://docs.cypress.io/guides/cloud/analytics)
 
 The last step in pipeline integration is reporting the results. While most pipelines can report if there is a failure,
 precise numbers require a bit more configuration. One of the most popular plugins to show reports is
