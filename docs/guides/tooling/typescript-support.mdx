@@ -78,7 +78,7 @@ Cypress needs to be able to transpile your Cypress configuration and plugins wri
 If your project is an `ESM` package (short for [ECMAScript Module](https://nodejs.org/api/esm.html#modules-ecmascript-modules)), Cypress attempts to apply the [ts-node/esm](https://github.com/TypeStrong/ts-node?tab=readme-ov-file#esm) Node.js loader to resolve the Cypress configuration and plugins. `ESM` is determined by Cypress if you have the `type: "module"` key-value pair present inside your project's `package.json`.
 
 Otherwise, regular [ts-node](https://github.com/TypeStrong/ts-node?tab=readme-ov-file#node-flags-and-other-tools) is required into Cypress's Node.js runtime.
-Since Node.js by itself can only interpret CommonJS files, Cypress attempts to make your TypeScript configuration compatable with Cypress' Node.js runtime.
+Since Node.js by itself can only interpret CommonJS files, Cypress attempts to make your TypeScript configuration compatible with Cypress' Node.js runtime.
 To do this, Cypress overrides the following configuration values found inside your project's `tsconfig.json`:
 
 ```json
