@@ -69,7 +69,7 @@ locally installed browsers, there's no need for complex configurations or additi
 ### Infinitely Expandable
 
 Recognizing the diverse needs of web applications, Cypress offers extensibility through various Node.js
-[plugins](/plugins#__docusaurus_skipToContent_fallback). These plugins, many of which are contributed by the
+[plugins](/plugins). These plugins, many of which are contributed by the
 community, allow users to tailor their testing framework to specific project requirements, ensuring flexibility and scalability.
 
 ### Strong Community Support
@@ -83,7 +83,7 @@ assistance, making it a highly supported testing framework.
 
 Compared to Selenium, Cypress offers a more intuitive and user-friendly experience. Features like the [selector
 playground](/guides/core-concepts/cypress-app#Selector-Playground) and
-[built-in screenshots](/guides/guides/screenshots-and-videos#__docusaurus_skipToContent_fallback) simplify test writing and
+[built-in screenshots](/guides/guides/screenshots-and-videos) simplify test writing and
 debugging, allowing users to focus on creating effective tests without the need for constant navigation between the test server and browser. This
 streamlined approach enhances productivity and accelerates the testing process. While debugging is never the most enjoyable task in
 development, Cypress is here to assist us. With its clear and concise error messages and multitude of plugins for feedback,
@@ -127,7 +127,9 @@ And now you're all set to start the migration.
 
 ## Strategy and Considerations
 
+:::info
 If the current automation framework supports Cucumber, jump to the section [Migrating test cases with Cucumber](#Migrating-test-cases-with-Cucumber).
+:::
 
 Before starting to write any code, take the time to assess the architecture of your framework. A well-structured
 framework will be a great deal easier to maintain and expand in the future.
@@ -151,7 +153,7 @@ For some teams, the heightened maintenance overhead may outweigh the benefits. H
 backend dependencies and enhance framework stability.
 
 In larger applications, locating specific tests within the framework can prove challenging. Therefore, establishing
-guidelines for test organization is essential for creating a maintainable framework. Some teams prefer organizing tests
+guidelines for [test organization](/guides/core-concepts/writing-and-organizing-tests) is essential for creating a maintainable framework. Some teams prefer organizing tests
 based on application functionality, while others opt for organization by webpage. While performance and functionality
 remain unaffected, clear guidelines on test placement are imperative for framework maintainability.
 
@@ -243,12 +245,12 @@ an option, rewriting the selectors might be required to conform to the best prac
 ##### Plugins
 
 One significant advantage of implementing Cypress is gaining access to its
-[extensive library of plugins](/plugins#__docusaurus_skipToContent_fallback).
+[extensive library of plugins](/plugins).
 This collection of community-built solutions can effectively address virtually any issue you might encounter.
 
-##### Iframe
+##### iframe
 
-It's widely acknowledged that Cypress doesn't handle iframes effectively. However, with the support of a robust
+It's acknowledged that Cypress could handle iframes more effectively _out-of-the-box_. But, with the support of a robust
 community, solutions are readily available. In the case of iframes, the [cypress-iframe - npm](https://www.npmjs.com/package/cypress-iframe)
 plugin was developed. This plugin will add a custom command to find and interact with an iframe.
 
@@ -274,7 +276,7 @@ be relatively straightforward.
 The main difference would be that instead of adding the whole flow into a single `it` section, you add the different steps into
 an `it` like section, where the `it` is replaced with the standard Gherkin syntax.
 
-The first snippet comprises plain Cypress code, whereas the second snippet demonstrates the Cucumber version
+The first snippet comprises plain Cypress code, whereas the second snippet demonstrates the Cucumber version.
 
 ```javascript
 it("I should see a search bar", () => {
