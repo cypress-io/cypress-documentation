@@ -34,16 +34,17 @@ Ruby. Its widespread adoption is further evidenced by its integration into vario
 tools, underscoring its versatility in browser interaction.
 
 A key differentiator of Cypress, not only from Selenium but also from other test automation frameworks,
-is its unique approach of running tests inside an interactive browser rather than against one.
-This approach minimizes flakiness and grants users greater control over both the framework and the
-application under test. Cypress's ability to wait for page loading without explicit declaration allows
-for patient execution until the application is fully ready. Additionally, Cypress simplifies test recording
+is its [unique approach](/guides/overview/key-differences#Architecture) of running tests
+inside an interactive browser rather than against one. This approach [minimizes flakiness](/guides/overview/key-differences#Flake-resistant)
+and grants users greater control over both the framework and the application under test. Cypress's ability to wait for page loading without explicit
+declaration allows for patient execution until the application is fully ready. Additionally, Cypress simplifies test recording
 without requiring complex configurations or setups, facilitating easy troubleshooting and bug
-reporting with access to screenshots and videos.
+reporting with access to screenshots, videos, and time travel debugging.
 
-Furthermore, the addition of component testing to Cypress has fostered collaboration between testing
-and development teams, enabling them to work with the same tools and language. This alignment not only
-streamlines the testing process but also promotes consistency and efficiency across teams.
+Furthermore, the addition of [component testing](/guides/component-testing/overview) to Cypress has fostered
+[collaboration](https://www.cypress.io/blog/2023/01/26/what-cypress-component-testing-means-for-qa-teams) between testing and development teams,
+enabling them to work with the same tools and language. This alignment streamlines the testing process and promotes
+consistency and efficiency across teams.
 
 ## Top 5 reasons to migrate
 
@@ -60,32 +61,37 @@ minimizing flakiness and enhancing test reliability.
 ### Ease of Setup
 
 Unlike traditional test automation frameworks that require cumbersome setup processes, Cypress
-streamlines the setup with just two Node.js commands: 'npm install' and 'npx cypress run'.
+streamlines the setup with just two Node.js commands: ['npm install'](/guides/getting-started/installing-cypress#npm-install)
+and ['npx cypress open'](/guides/getting-started/opening-the-app#cypress-open).
 Within seconds, users can have a fully functional framework up and running. Since Cypress utilizes
 locally installed browsers, there's no need for complex configurations or additional installations.
 
 ### Infinitely Expandable
 
 Recognizing the diverse needs of web applications, Cypress offers extensibility through various Node.js
-plugins. These plugins, many of which are contributed by the community, allow users to tailor their testing
-framework to specific project requirements, ensuring flexibility and scalability.
+[plugins](/plugins#__docusaurus_skipToContent_fallback). These plugins, many of which are contributed by the
+community, allow users to tailor their testing framework to specific project requirements, ensuring flexibility and scalability.
 
 ### Strong Community Support
 
-Cypress boasts a vibrant community that not only contributes plugins but also prioritizes documentation.
-With extensive documentation and support initiatives like the ambassador program, Cypress users benefit from a
-wealth of resources and assistance, making it a highly supported testing framework.
+Cypress boasts a vibrant community that contributes plugins and prioritizes documentation.
+With extensive documentation, support initiatives like the [Ambassador program](https://www.cypress.io/ambassadors), and a [Discord
+community](https://discord.com/invite/cypress) of over 10,000 testers and developers, Cypress users benefit from wealth of resources and
+assistance, making it a highly supported testing framework.
 
 ### Ease of Use
 
-Compared to Selenium, Cypress offers a more intuitive and user-friendly experience. Features like the selector
-playground and built-in screenshots simplify test writing and debugging, allowing users to focus on creating effective
-tests without the need for constant navigation between the test server and browser. This streamlined approach enhances
-productivity and accelerates the testing process.
+Compared to Selenium, Cypress offers a more intuitive and user-friendly experience. Features like the [selector
+playground](/guides/core-concepts/cypress-app#Selector-Playground) and
+[built-in screenshots](/guides/guides/screenshots-and-videos#__docusaurus_skipToContent_fallback) simplify test writing and
+debugging, allowing users to focus on creating effective tests without the need for constant navigation between the test server and browser. This
+streamlined approach enhances productivity and accelerates the testing process. While debugging is never the most enjoyable task in
+development, Cypress is here to assist us. With its clear and concise error messages and multitude of plugins for feedback,
+debugging has never been easier.
 
 In summary, migrating to Cypress offers a host of benefits, including reduced flakiness, simplified setup,
 extensibility, strong community support, and enhanced ease of use. With Cypress, testing becomes not only more
-reliable and efficient but also more enjoyable for developers and QA professionals alike."
+reliable and efficient but also more enjoyable for developers and QA professionals alike.
 
 ## Evaluating Suitability for Migration
 
@@ -95,78 +101,34 @@ Depending on the organization's needs, emphasis may be placed on high-priority c
 it is essential to evaluate whether any business or organization-specific logic embedded within the framework
 can be rebuilt or migrated to JavaScript or TypeScript.
 
-If the current test automation framework employs the Page Object Model, it may be advantageous to start with simpler
-tasks before tackling more complex test cases. Beginning with low-hanging fruit allows for the migration of selectors
-and basic interactions, providing the test automation engineer or developer with a gradual introduction to the framework.
-This incremental approach facilitates faster migration of additional tests and reduces the complexity of larger, more intricate tests.
+If the current test automation framework employs the [Page Object Model](https://www.selenium.dev/documentation/test_practices/encouraged/page_object_models/),
+it may be advantageous to start with simpler tasks before tackling more complex test cases. Beginning with low-hanging fruit allows for the migration
+of selectors and basic interactions, providing the test automation engineer or developer with a gradual introduction to the framework.
+This incremental approach facilitates faster migration of additional tests and reduces the complexity of larger, more intricate tests.  
+Alternatively, if the current framework does not utilize the Page Object Model, selector migration will occur naturally as part of
+migrating the actual codebase.
 
 It's important to note that if the Selenium framework relies on XPath, migration will necessitate changing those selectors.
-While the cypress-xpath plugin remains functional, it is deprecated and may not be the optimal solution in the long term.
+While the 'cypress-xpath' plugin remains functional, it is deprecated and may not be the optimal solution in the long term.
 
-Alternatively, if the current framework does not utilize the Page Object Model, selector migration will occur naturally as part of
-migrating the actual codebase. Alternatively, this could present an opportune moment to adopt the Page Object Model methodology,
+Alternatively, this could present an opportune moment to adopt the Page Object Model methodology,
 streamlining test maintenance and enhancing readability.
 
 ## Getting started with Cypress
 
-To start with a new Cypress framework, open the CLI and navigate to the directory in which you wish to install Cypress.
-This can be inside the application directory, or you could consider Cypress as a separate entity. For the purpose of this guide,
-Cypress will be considered a separate framework, outside the application under test. There is no difference in installation or use.
-The reason this guide will handle it as a standalone application is because it makes screenshots clearer.
+Installing and configuring Cypress is very easy and we have provided step-by-step guides to help you get started.
 
-<DocsImage
-  src="/img/guides/migrating-to-cypress/InstallCypress.png"
-  alt="install Cypress"
-/>
+You will first [install Cypress](/guides/getting-started/installing-cypress).
+You will then [open the Cypress application](/guides/getting-started/opening-the-app).
 
-<DocsImage
-  src="/img/guides/migrating-to-cypress/OpenCypressApp.png"
-  alt="open the Cypress app"
-/>
+Check out our in-depth [E2E getting started guide](/guides/end-to-end-testing/writing-your-first-end-to-end-test).
 
-<br />
-The first choice will be the testing type used by the framework, which in this migration
-guide will be E2E testing. After selecting an option, Cypress will inform you that
-it has created several directories and files.
-
-<DocsImage
-  src="/img/guides/migrating-to-cypress/WelcomeToCypress.png"
-  alt="welcome to Cypress screen"
-/>
-
-<br />
-<DocsImage
-  src="/img/guides/migrating-to-cypress/LookForCypressInstallFiles.png"
-  alt="look for Cypress install files and folders"
-/>
-
-<br />
-<br />
-Once all those files have been created, all that is left is selecting a browser
-to work against. After selecting a browser, Cypress will suggest creating
-example specs, or you can jump right into it.
-
-<DocsImage
-  src="/img/guides/migrating-to-cypress/CreateFirstSpec.png"
-  alt="create your first spec"
-/>
-
-<br />
-<br />
-If you've selected 'Create new spec', Cypress should immediately start running
-that spec file.
-
-<DocsImage
-  src="/img/guides/migrating-to-cypress/CypressRunSpec.png"
-  alt="Cypress run your first spec"
-/>
-
-<br />
 And now you're all set to start the migration.
 
-## Migrating test cases
+## Strategy and Considerations
 
-If the current automation framework supports cucumber, move towards the section [Migrating test cases with Cucumber](#Migrating-test-cases-with-Cucumber).
+If the current automation framework supports Cucumber, jump to the section [Migrating test cases with Cucumber](#Migrating-test-cases-with-Cucumber).
+
 Before starting to write any code, take the time to assess the architecture of your framework. A well-structured
 framework will be a great deal easier to maintain and expand in the future.
 
@@ -182,7 +144,8 @@ wherein the POM solely comprises page selectors, while others advocate for a mor
 both selectors and all possible page actions. It's crucial to engage in team discussions to align on POM structure,
 thereby avoiding surprises during the initial pull request.
 
-Another critical consideration is whether the team intends to leverage Cypress intercept functionality to stub API calls.
+Another critical consideration is whether the team intends to leverage
+[Cypress intercept functionality](/api/commands/intercept) to stub API calls.
 While this approach reduces the need for end-to-end tests, it significantly increases the number of smaller tests.
 For some teams, the heightened maintenance overhead may outweigh the benefits. However, stubbing API requests can diminish
 backend dependencies and enhance framework stability.
@@ -197,7 +160,7 @@ Investing time in contemplation and extensive team discussions regarding these q
 
 With thorough preparation underway, it's time to initiate the actual migration process.
 
-One of the first things to migrate would be all page-objects or selectors, depending on the frontend framework the
+One of the first things to migrate would be all page-objects or selectors, and depending on the frontend framework the
 developers are using, this could be mostly copy and paste. For instance, in Vue.js the selector in Selenium would be
 `vl-checkbox` while in Cypress this would be `.vl-checkbox`. Granted, the difference is annoying to fix,
 but you could migrate all selectors in record time.
@@ -205,7 +168,7 @@ but you could migrate all selectors in record time.
 One of the most significant changes between Selenium and Cypress is the actual testing syntax.
 While Selenium will run a class or different scenarios, Cypress will run every `it` in a `*.cy.js` file.
 So, the flow of a test should be transferred inside an `it`. To make matters more structured, it is possible to add
-several `it`s inside a `describe`. This allows you as the user to create a subdivision akin to Test suites and test cases.
+several `it`s inside a `describe`. This allows you as the user to create a subdivision akin to test suites and test cases.
 
 ```javascript
 describe('General information', () => {
@@ -257,7 +220,7 @@ cy.get('#myButton').click()
 Any wait until functionality that you have been using in Selenium is no longer required
 in Cypress. This functionality is built in.
 
-The next vital part to migrate would be the assertions, we can all agree assertions
+The next vital part to migrate would be the assertions. We can all agree assertions
 are moderately vital to a test automation framework. The next piece of code is a
 python Selenium assertion to validate if a button is visible. While it is possible
 to add third-party libraries, the built-in assertions of Cypress can tackle a wide
@@ -273,21 +236,21 @@ In Cypress, the same command would be:
 cy.get('#myButton').should('be.visible')
 ```
 
-<br />
 Considering the easy and clear syntax of Cypress, transferring all the selectors
 might take the longest. And while copying and pasting the selectors is definitely
-an option. Rewriting the selectors might be required to confirm with the best practices.
+an option, rewriting the selectors might be required to conform to the best practices.
 
 ##### Plugins
 
-One significant advantage of implementing Cypress is gaining access to its extensive library of plugins.
+One significant advantage of implementing Cypress is gaining access to its
+[extensive library of plugins](/plugins#__docusaurus_skipToContent_fallback).
 This collection of community-built solutions can effectively address virtually any issue you might encounter.
 
 ##### Iframe
 
-It's widely acknowledged that Cypress doesn't handle Iframes effectively. However, with the support of a robust
-community, solutions are readily available. In the case of Iframes, the [cypress-iframe - npm](https://www.npmjs.com/package/cypress-iframe)
-plugin was developed. This plugin will add a custom command to find and interact with an Iframe.
+It's widely acknowledged that Cypress doesn't handle iframes effectively. However, with the support of a robust
+community, solutions are readily available. In the case of iframes, the [cypress-iframe - npm](https://www.npmjs.com/package/cypress-iframe)
+plugin was developed. This plugin will add a custom command to find and interact with an iframe.
 
 ##### File upload
 
@@ -304,13 +267,14 @@ the stability and usability of the intercept feature: [Shopify/cypress-graphql](
 
 ## Migrating test cases with Cucumber
 
-If you're currently using a cucumber framework, this Cypress plugin can assist you in transitioning smoothly.
-Although it alters the conventional `describe` and `it` functionality, the adjustment process should be relatively straightforward.
+If you're currently using a Cucumber framework, [this Cypress plugin](https://github.com/badeball/cypress-cucumber-preprocessor) can assist you
+in transitioning smoothly. Although it alters the conventional `describe` and `it` functionality, the adjustment process should
+be relatively straightforward.
 
 The main difference would be that instead of adding the whole flow into a single `it` section, you add the different steps into
 an `it` like section, where the `it` is replaced with the standard Gherkin syntax.
 
-The first snippet comprises plain Cypress code, whereas the second snippet demonstrates the cucumber version
+The first snippet comprises plain Cypress code, whereas the second snippet demonstrates the Cucumber version
 
 ```javascript
 it("I should see a search bar", () => {
@@ -340,8 +304,7 @@ Then('I should see a search bar', () => {
 
 <br />
 As evident, the actual code or logic remains unchanged. The difference lies in the
-structure of the spec file and the framework's architecture. [Run cucumber/gherkin-syntaxed
-specs with Cypress](https://github.com/badeball/cypress-cucumber-preprocessor).
+structure of the spec file and the framework's architecture.
 
 ## Integration with CI/CD Pipeline
 
@@ -354,8 +317,8 @@ docker image or one provided by Cypress via Docker Hub. These Docker images, not
 include various versions of Chrome, Firefox, and Edge.
 
 Executing the following command initiates a headless run against the Electron browser. Upon completion, a succinct
-table is generated, detailing the number of tests for each cy.js file, in addition to the failed, skipped and passed
-tests with the run time of each specific cy.js file. At the bottom of the table, a comprehensive summary displays the
+table is generated, detailing the number of tests for each 'cy.js' file, in addition to the failed, skipped and passed
+tests with the run time of each specific 'cy.js' file. At the bottom of the table, a comprehensive summary displays the
 total number of tests run, the duration of the run, and the counts of failed, passed, and skipped tests.
 
 ```bash
@@ -364,9 +327,13 @@ npx cypress run
 
 This would completely replace the Selenium step in your current CI/CD workflow.
 
+Learn more about running Cypress tests in Continuous Integration [here](/guides/continuous-integration/introduction).
+
 ### Cypress Cloud
 
-The notable distinction in integration between Cypress and Selenium emerges when discussing Cypress Cloud specifically.
+The notable distinction in integration between Cypress and Selenium emerges when discussing
+[Cypress Cloud](/guides/cloud/introduction), a service built on the rich result data coming from tests run in the
+open source application.
 
 Cypress.io offers its tailored pipeline structure, meticulously designed to execute tests efficiently.
 Accompanying this structure are several advanced features that warrant attention during
@@ -421,9 +388,11 @@ and identifying plugins that could enrich the Cypress experience.
 Welcome to the world of smooth testing!
 
 Cypress not only competes effectively with established frameworks like Selenium but also introduces a host of enhancements.
-These enhancements encompass easier setup and maintenance, along with significant quality-of-life improvements, as detailed
-in the blog post. The minimized flakiness and simplified programming experience have positioned Cypress as a premier Test
-Automation framework, embraced by numerous users.
+These enhancements encompass easier setup and maintenance, along with
+[significant quality-of-life improvements](https://go.cypress.io/hubfs/Case-Study_Beamery.pdf). The
+[minimized flakiness](<https://go.cypress.io/hubfs/Case-Study_Perlego%20(1).pdf>)
+and [simplified programming experience](https://go.cypress.io/hubfs/Case-Study_vidyard.pdf) have positioned Cypress as a premier Test
+Automation framework, embraced by thousands of development and testing teams.
 
 Migrations have traditionally been perceived as costly and time-intensive endeavors. We trust that this guide has alleviated
 those concerns. The migration process is not only straightforward but also promises a more stable and efficient framework,
