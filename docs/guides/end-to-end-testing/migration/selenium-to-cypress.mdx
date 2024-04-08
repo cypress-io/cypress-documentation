@@ -41,7 +41,7 @@ declaration allows for patient execution until the application is fully ready. A
 without requiring complex configurations or setups, facilitating easy troubleshooting and bug
 reporting with access to screenshots, videos, and time travel debugging.
 
-Furthermore, the addition of [component testing](/guides/component-testing/overview) to Cypress has fostered
+Furthermore, the addition of [Component Testing](/guides/component-testing/overview) to Cypress has fostered
 [collaboration](https://www.cypress.io/blog/2023/01/26/what-cypress-component-testing-means-for-qa-teams) between testing and development teams,
 enabling them to work with the same tools and language. This alignment streamlines the testing process and promotes
 consistency and efficiency across teams.
@@ -51,14 +51,14 @@ consistency and efficiency across teams.
 While migration is often perceived as a hassle, investing in Cypress is undoubtedly worthwhile.
 In fact, migrating to Cypress may not even pose a significant challenge.
 
-### Reduction of Flakiness
+### 1. Reduction of Flakiness
 
 One of the primary benefits of Cypress is its ability to reduce flakiness in tests. Occasional
 test failures can undermine trust in the testing framework. Cypress addresses this concern by
 offering features such as automatic retries and implicit waiting on the application, effectively
 minimizing flakiness and enhancing test reliability.
 
-### Ease of Setup
+### 2. Ease of Setup
 
 Unlike traditional test automation frameworks that require cumbersome setup processes, Cypress
 streamlines the setup with just two Node.js commands: ['npm install'](/guides/getting-started/installing-cypress#npm-install)
@@ -66,46 +66,45 @@ and ['npx cypress open'](/guides/getting-started/opening-the-app#cypress-open).
 Within seconds, users can have a fully functional framework up and running. Since Cypress utilizes
 locally installed browsers, there's no need for complex configurations or additional installations.
 
-### Infinitely Expandable
+### 3. Infinitely Expandable
 
-Recognizing the diverse needs of web applications, Cypress offers extensibility through various Node.js
+Recognizing the diverse needs of web applications, Cypress offers extensibility through various
 [plugins](/plugins). These plugins, many of which are contributed by the
 community, allow users to tailor their testing framework to specific project requirements, ensuring flexibility and scalability.
 
-### Strong Community Support
+### 4. Strong Community Support
 
 Cypress boasts a vibrant community that contributes plugins and prioritizes documentation.
 With extensive documentation, support initiatives like the [Ambassador program](https://www.cypress.io/ambassadors), and a [Discord
 community](https://discord.com/invite/cypress) of over 10,000 testers and developers, Cypress users benefit from wealth of resources and
 assistance, making it a highly supported testing framework.
 
-### Ease of Use
+### 5. Ease of Use
 
 Compared to Selenium, Cypress offers a more intuitive and user-friendly experience. Features like the [selector
 playground](/guides/core-concepts/cypress-app#Selector-Playground) and
 [built-in screenshots](/guides/guides/screenshots-and-videos) simplify test writing and
 debugging, allowing users to focus on creating effective tests without the need for constant navigation between the test server and browser. This
-streamlined approach enhances productivity and accelerates the testing process. While debugging is never the most enjoyable task in
-development, Cypress is here to assist us. With its clear and concise error messages and multitude of plugins for feedback,
+streamlined approach enhances productivity and accelerates the testing process. Cypress [Test Replay](/guides/cloud/test-replay), which provides
+the ability to time travel and interactively debug tests, is not a capability that Selenium provides. While debugging is never the most enjoyable
+task in development, Cypress is here to assist us. With its clear and concise error messages and multitude of plugins for feedback,
 debugging has never been easier.
 
-In summary, migrating to Cypress offers a host of benefits, including reduced flakiness, simplified setup,
-extensibility, strong community support, and enhanced ease of use. With Cypress, testing becomes not only more
-reliable and efficient but also more enjoyable for developers and QA professionals alike.
+With Cypress, testing becomes not only more reliable and efficient but also more enjoyable for developers and QA professionals alike.
 
 ## Evaluating Suitability for Migration
 
-In order for a migration to proceed smoothly, it is crucial to conduct a thorough analysis of the existing test cases
-and framework functionality. This analysis serves as a cornerstone for determining the priority of test case migration.
-Depending on the organization's needs, emphasis may be placed on high-priority cases rather than quick wins. Additionally,
-it is essential to evaluate whether any business or organization-specific logic embedded within the framework
+In order for a migration to proceed smoothly, it is important to conduct a thorough analysis of the existing test cases
+and framework functionality. This analysis serves as a cornerstone for determining the priority of test case migration since
+not all test cases need to be migrated at once. Depending on the organization's needs, emphasis may be placed on high-priority cases rather
+than quick wins. Additionally, it is essential to evaluate whether any business or organization-specific logic embedded within the framework
 can be rebuilt or migrated to JavaScript or TypeScript.
 
 If the current test automation framework employs the [Page Object Model](https://www.selenium.dev/documentation/test_practices/encouraged/page_object_models/),
 it may be advantageous to start with simpler tasks before tackling more complex test cases. Beginning with low-hanging fruit allows for the migration
 of selectors and basic interactions, providing the test automation engineer or developer with a gradual introduction to the framework.
-This incremental approach facilitates faster migration of additional tests and reduces the complexity of larger, more intricate tests.  
-Alternatively, if the current framework does not utilize the Page Object Model, selector migration will occur naturally as part of
+This incremental approach facilitates faster migration of additional tests and reduces the complexity of larger, more intricate tests. Alternatively, if the
+current framework does not utilize the Page Object Model, selector migration will occur naturally as part of
 migrating the actual codebase.
 
 It's important to note that if the Selenium framework relies on XPath, migration will necessitate changing those selectors.
@@ -220,9 +219,9 @@ cy.get('#myButton').click()
 
 <br />
 Any wait until functionality that you have been using in Selenium is no longer required
-in Cypress. This functionality is built in.
+in Cypress. This functionality is [built in](/guides/core-concepts/retry-ability).
 
-The next vital part to migrate would be the assertions. We can all agree assertions
+The next vital part to migrate would be the [assertions](/guides/references/assertions). We can all agree assertions
 are moderately vital to a test automation framework. The next piece of code is a
 python Selenium assertion to validate if a button is visible. While it is possible
 to add third-party libraries, the built-in assertions of Cypress can tackle a wide
@@ -242,24 +241,18 @@ Considering the easy and clear syntax of Cypress, transferring all the selectors
 might take the longest. And while copying and pasting the selectors is definitely
 an option, rewriting the selectors might be required to conform to the best practices.
 
-##### Plugins
-
-One significant advantage of implementing Cypress is gaining access to its
-[extensive library of plugins](/plugins).
-This collection of community-built solutions can effectively address virtually any issue you might encounter.
-
 ##### iframe
 
 It's acknowledged that Cypress could handle iframes more effectively _out-of-the-box_. But, with the support of a robust
-community, solutions are readily available. In the case of iframes, the [cypress-iframe - npm](https://www.npmjs.com/package/cypress-iframe)
+community, solutions are readily available. In the case of iframes, the [cypress-iframe](https://www.npmjs.com/package/cypress-iframe)
 plugin was developed. This plugin will add a custom command to find and interact with an iframe.
 
 ##### File upload
 
 Another community-based solution worth mentioning is file uploads. Although Cypress offers a built-in solution for
-handling file uploads, it may not be compatible with every upload component available. While `cy.get().selectFile()`
-suffices in most scenarios, every so often, the web application requires a different approach. In such instances,
-plugins like this prove invaluable: [cypress-file-upload - npm](https://www.npmjs.com/package/cypress-file-upload).
+handling [file uploads](/api/commands/selectfile), it may not be compatible with every upload component available.
+While `cy.get('input[type=file]').selectFile('file.json')` suffices in most scenarios, every so often, the web application requires a different
+approach. In such instances, plugins like this prove invaluable: [cypress-file-upload](https://www.npmjs.com/package/cypress-file-upload).
 
 ##### GraphQL
 
@@ -367,7 +360,7 @@ Due to this balance strategy, the run order of the spec files is not guaranteed 
 
 The last step in pipeline integration is reporting the results. While most pipelines can report if there is a failure,
 precise numbers require a bit more configuration. One of the most popular plugins to show reports is
-mochawesome ([cypress-mochawesome-reporter - npm](https://www.npmjs.com/package/cypress-mochawesome-reporter)). This
+mochawesome ([cypress-mochawesome-reporter](https://www.npmjs.com/package/cypress-mochawesome-reporter)). This
 plugin can easily be integrated into most pipeline infrastructure, with the correct CI/CD plugin.
 
 But even without the mochawesome package, any pipeline infrastructure can register the error code (error code 1) if
