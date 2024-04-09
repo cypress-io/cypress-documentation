@@ -319,7 +319,7 @@
 
 [[redirects]]
   from = "/guides/dashboard/analytics"
-  to = "/guides/cloud/analytics"
+  to = "/guides/cloud/analytics/overview"
   status = 301
   force = true
 
