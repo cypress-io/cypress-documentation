@@ -143,10 +143,10 @@ Each plugin submitted to the plugins list should have the following:
 
 Plugins are listed in in the following order to for users:
 
-- official
-- verified
-- community
-- experimental
+- official (Cypress owned)
+- verified (community owned and verified by Cypress)
+- community (community owned and unverified)
+- deprecated (npm registry missing, source repo archived or incompatible with v10+)
 
 ### Adding Pages
 
