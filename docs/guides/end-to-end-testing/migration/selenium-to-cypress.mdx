@@ -243,18 +243,18 @@ Considering the easy and clear syntax of Cypress, transferring all the selectors
 might take the longest. And while copying and pasting the selectors is definitely
 an option, rewriting the selectors might be required to conform to the best practices.
 
-##### iframe
+##### Multiple tabs
 
-It's acknowledged that Cypress could handle iframes more effectively _out-of-the-box_. But, with the support of a robust
-community, solutions are readily available. In the case of iframes, the [cypress-iframe](https://www.npmjs.com/package/cypress-iframe)
-plugin was developed. This plugin will add a custom command to find and interact with an iframe.
+When you have the need to interact with multiple browser tabs in Cypress, an official plugin has been provided to accomplish this
+goal. The [Puppeteer plugin](https://github.com/cypress-io/cypress/tree/develop/npm/puppeteer) utilizes Puppeteer's browser API
+with one command within Cypress.
 
 ##### File upload
 
-Another community-based solution worth mentioning is file uploads. Although Cypress offers a built-in solution for
-handling [file uploads](/api/commands/selectfile), it may not be compatible with every upload component available.
-While `cy.get('input[type=file]').selectFile('file.json')` suffices in most scenarios, every so often, the web application requires a different
-approach. In such instances, plugins like this prove invaluable: [cypress-file-upload](https://www.npmjs.com/package/cypress-file-upload).
+Because Selenium cannot interact with the file upload dialog, it provides a way to upload files without opening the dialog. Cypress
+provides support uploading files through the built-in ['selectFile'](/api/commands/selectfile) command. There are
+[many options](https://www.cypress.io/blog/2022/01/19/uploading-files-with-selectfile) available to allow you to upload a single
+file, multiple files, and even drag and drop in Cypress.
 
 ##### GraphQL
 
