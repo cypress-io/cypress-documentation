@@ -164,9 +164,11 @@ Investing time in contemplation and extensive team discussions regarding these q
 With thorough preparation underway, it's time to initiate the actual migration process.
 
 One of the first things to migrate would be all page-objects or selectors, and depending on the frontend framework the
-developers are using, this could be mostly copy and paste. For instance, in Vue.js the selector in Selenium would be
-`vl-checkbox` while in Cypress this would be `.vl-checkbox`. Granted, the difference is annoying to fix,
-but you could migrate all selectors in record time.
+developers are using, this could be a quick find and replace. For instance, in Vue.js the selector in Selenium would be
+`vl-checkbox` while in Cypress this would be `.vl-checkbox`. This will allow you to quickly have Cypress tests that can
+be used to test your application. This may also be an opportunity to review your tests to see how subject to change the
+selectors are today. Cypress documents many best practices about how to write robust tests and the section on
+[selecting elements](/guides/references/best-practices#Selecting-Elements) is a great resource to review.
 
 One of the most significant changes between Selenium and Cypress is the actual testing syntax.
 While Selenium will run a class or different scenarios, Cypress will run every `it` in a `*.cy.js` file.
