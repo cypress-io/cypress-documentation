@@ -322,6 +322,12 @@
   to = "/guides/cloud/analytics/overview"
   status = 301
   force = true
+  
+ [[redirects]]
+  from = "/guides/cloud/analytics"
+  to = "/guides/cloud/analytics/overview"
+  status = 301
+  force = true
 
 [[redirects]]
   from = "/guides/dashboard/flaky-test-management"
