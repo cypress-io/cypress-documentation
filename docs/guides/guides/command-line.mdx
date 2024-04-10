@@ -22,6 +22,75 @@ all of the commands in this document from your **project root**.
 
 ## How to run commands
 
+You can run Cypress from your **project root** using a command which
+depends on the package manager you are using: npm, Yarn or pnpm.
+For example, you would prefix the command
+[cypress run](http://localhost:3000/guides/guides/command-line#cypress-run) as shown:
+
+<Tabs groupId="package-manager"
+  defaultValue="npm"
+  values={[
+    {label: 'npm', value: 'npm'},
+    {label: 'Yarn', value: 'yarn'},
+    {label: 'pnpm', value: 'pnpm'},
+  ]}>
+  <TabItem value="npm">
+
+```shell
+npx cypress run
+```
+
+  </TabItem>
+  <TabItem value="yarn">
+
+```shell
+yarn cypress run
+```
+
+  </TabItem>
+  <TabItem value="pnpm">
+
+```shell
+pnpm cypress run
+```
+
+  </TabItem>
+</Tabs>
+
+Add any required [options](#Options) to the end of the command line.
+As an example, if you want to run tests in headless mode from a single spec file
+and record the results with Cypress Cloud, the command should be:
+
+<Tabs groupId="package-manager"
+  defaultValue="npm"
+  values={[
+    {label: 'npm', value: 'npm'},
+    {label: 'Yarn', value: 'yarn'},
+    {label: 'pnpm', value: 'pnpm'},
+  ]}>
+  <TabItem value="npm">
+
+```shell
+npx cypress run --record --spec "cypress/e2e/my-spec.cy.js"
+```
+
+  </TabItem>
+  <TabItem value="yarn">
+
+```shell
+yarn cypress run --record --spec "cypress/e2e/my-spec.cy.js"
+```
+
+  </TabItem>
+  <TabItem value="pnpm">
+
+```shell
+pnpm cypress run --record --spec "cypress/e2e/my-spec.cy.js"
+```
+
+  </TabItem>
+</Tabs>
+
 :::info
 
 You can alternatively require and run Cypress as a node module using our
@@ -29,66 +98,128 @@ You can alternatively require and run Cypress as a node module using our
 
 :::
 
-For brevity we've omitted the full path to the cypress executable in each
-command's documentation.
+## Using scripts
 
-To run a command, you'll need to prefix each command in order to properly locate
-the cypress executable.
+Cypress command strings can be saved as scripts for reuse.
 
-```shell
-npx cypress run
-```
-
-...or by using Yarn...
-
-```shell
-yarn cypress run
-```
-
-...or by using pnpm...
-
-```shell
-pnpm cypress run
-```
-
-You may find it easier to add the cypress command to the `scripts` object in
-your `package.json` file and call it from an
-[`npm run` script](https://docs.npmjs.com/cli/run-script.html).
-
-When calling a command using `npm run`, you need to pass the command's arguments
-using the `--` string. For example, if you have the following command defined in
-your `package.json`
+Let's say you often need to run Cypress E2E tests in headless mode using the Chrome browser.
+You can add the corresponding command
+`cypress run --browser chrome` to the `scripts` object in
+your `package.json` file and use the name
+`e2e:chrome` to identify it.
 
 ```json
 {
   "scripts": {
-    "cy:run": "cypress run"
+    "e2e:chrome": "cypress run --browser chrome"
   }
 }
 ```
 
-...and want to run tests from a single spec file and record the results with
-Cypress Cloud, the command should be:
+Running the script `e2e:chrome` as follows will run the command you defined:
+
+<Tabs groupId="package-manager"
+  defaultValue="npm"
+  values={[
+    {label: 'npm', value: 'npm'},
+    {label: 'Yarn', value: 'yarn'},
+    {label: 'pnpm', value: 'pnpm'},
+  ]}>
+  <TabItem value="npm">
 
 ```shell
-npm run cy:run -- --record --spec "cypress/e2e/my-spec.cy.js"
+npm run e2e:chrome
 ```
 
-You can also invoke the
-locally installed Cypress tool directly:
+  </TabItem>
+  <TabItem value="yarn">
 
 ```shell
-npx cypress run --record --spec "cypress/e2e/my-spec.cy.js"
+yarn e2e:chrome
 ```
+
+  </TabItem>
+  <TabItem value="pnpm">
+
+```shell
+pnpm e2e:chrome
+```
+
+  </TabItem>
+</Tabs>
+
+:::caution
+
+<strong>Best Practice</strong>
+
+Don't use `cypress` as the exact name of a script, especially if you use Yarn as package manager.
+When running commands on the Cypress binary (e.g. `yarn cypress verify`), Yarn will reference the
+script of the same name instead and Cypress CLI commands may not work as expected.
+
+:::
+
+### Extending script options
+
+You do not have to define a new script for every variation of a command string you need. You can extend a script with additional options.
+
+Let's say that when you ran the full set of tests with the script `e2e:chrome` it showed a failure in one test spec `cypress/e2e/my-spec.cy.js`.
+You corrected the problem and would like to re-run the tests only for the test spec which previously failed.
+
+The option [`--spec`](#cypress-run-spec-lt-spec-gt) allows you to specify which test specs to run, so you can add this to the command after the script name `e2e:chrome`:
+
+<Tabs groupId="package-manager"
+  defaultValue="npm"
+  values={[
+    {label: 'npm', value: 'npm'},
+    {label: 'Yarn', value: 'yarn'},
+    {label: 'pnpm', value: 'pnpm'},
+  ]}>
+  <TabItem value="npm">
+
+```shell
+npm run e2e:chrome -- --spec "cypress/e2e/my-spec.cy.js"
+```
+
+  </TabItem>
+  <TabItem value="yarn">
+
+```shell
+yarn e2e:chrome --spec "cypress/e2e/my-spec.cy.js"
+```
+
+  </TabItem>
+  <TabItem value="pnpm">
+
+```shell
+pnpm e2e:chrome --spec "cypress/e2e/my-spec.cy.js"
+```
+
+  </TabItem>
+</Tabs>
+
+Refer to each package manager's documentation for full details of command and script usage:
+
+- [npm CLI](https://docs.npmjs.com/cli/)<br />
+  When adding Cypress [options](#Options) after a script name called from `npm`, you need to pass the command's arguments using the `--` string (see
+  [`npm-run-script`](https://docs.npmjs.com/cli/run-script.html)).
+- [Yarn CLI](https://classic.yarnpkg.com/lang/en/docs/cli/)
+- [pnpm CLI](https://pnpm.io/pnpm-cli)
 
 :::info
 
-Read how we typically organize and execute npm scripts in the blog post
-[How I Organize my npm Scripts](https://glebbahmutov.com/blog/organize-npm-scripts/).
+Read an example of organizing and executing npm scripts in the blog post
+[How I Organize my NPM Scripts](https://glebbahmutov.com/blog/organize-npm-scripts/).
 
 :::
 
 ## Commands
+
+:::info
+
+The prefix required to run `cypress` is not shown in the list of commands below.
+You need to add the prefix `npx`, `yarn` or `pnpm` to the command line, corresponding to the package manager you are using. See [How to run commands](#How-to-run-commands).
+
+:::
 
 ### `cypress run`
 
@@ -413,7 +544,7 @@ Useful for when [Test Replay](/guides/cloud/test-replay) is enabled and you woul
 #### `cypress run --spec <spec>` {#cypress-run-spec-lt-spec-gt}
 
 Run tests specifying a single test file to run instead of all tests. The spec
-path should be an absolute path or can relative to the current working
+path should be an absolute path or can be relative to the current working
 directory.
 
 ```shell
