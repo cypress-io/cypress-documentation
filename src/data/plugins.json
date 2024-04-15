@@ -318,6 +318,13 @@
           "badge": "community"
         },
         {
+          "name": "cypress-fail-on-network-error",
+          "description": "Fail cypress test on network error.",
+          "link": "https://github.com/nils-hoyer/cypress-fail-on-network-error",
+          "keywords": ["network", "error", "fail"],
+          "badge": "community"
+        },
+        {
           "name": "cypress-codegen",
           "description": "A Cypress plugin which automatically adds and enables IntelliSense for custom commands",
           "link": "https://github.com/ExpediaGroup/cypress-codegen",
