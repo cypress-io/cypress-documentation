@@ -141,12 +141,12 @@ Each plugin submitted to the plugins list should have the following:
 2. CI pipeline
 3. Compatibility with at least the latest major version of Cypress
 
-Plugins are listed in in the following order to for users:
+Plugins are listed in the following order:
 
-- official
-- verified
-- community
-- experimental
+- official (Cypress owned)
+- verified (community owned and verified by Cypress)
+- community (community owned and unverified)
+- deprecated (npm registry missing, source repo archived or incompatible with v10+)
 
 ### Adding Pages
 

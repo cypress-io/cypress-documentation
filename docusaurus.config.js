@@ -21,7 +21,7 @@ const config = {
   url: 'https://docs.cypress.io',
   baseUrl: '/',
   onBrokenLinks: 'throw',
-  onBrokenAnchors: 'log',
+  onBrokenAnchors: 'throw',
   onBrokenMarkdownLinks: 'throw',
   favicon: undefined,
 

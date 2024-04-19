@@ -19,26 +19,38 @@ description: 'Open the app effectively in Cypress. Get started with a guide on o
 
 ## `cypress open`
 
-You can open Cypress from your **project root** in one of the following ways,
+You can open Cypress from your **project root** using one of the following commands,
 depending on the package manager (npm, Yarn or pnpm) you are using:
 
-**Using `npx`**
+<Tabs
+  defaultValue="npm"
+  values={[
+    {label: 'npm', value: 'npm'},
+    {label: 'Yarn', value: 'yarn'},
+    {label: 'pnpm', value: 'pnpm'},
+  ]}>
+  <TabItem value="npm">
 
 ```shell
 npx cypress open
 ```
 
-**Or by using `yarn`**
+  </TabItem>
+  <TabItem value="yarn">
 
 ```shell
 yarn cypress open
 ```
 
-**Or by using `pnpm`**
+  </TabItem>
+  <TabItem value="pnpm">
 
 ```shell
 pnpm cypress open
 ```
+
+  </TabItem>
+</Tabs>
 
 After a moment, the Cypress Launchpad will open.
 
