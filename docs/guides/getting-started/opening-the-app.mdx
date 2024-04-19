@@ -63,7 +63,7 @@ the `scripts` field in your `package.json` file.
 ```javascript
 {
   "scripts": {
-    "cypress:open": "cypress open"
+    "cy:open": "cypress open"
   }
 }
 ```
@@ -71,7 +71,7 @@ the `scripts` field in your `package.json` file.
 Now you can invoke the command from your project root like so:
 
 ```shell
-npm run cypress:open
+npm run cy:open
 ```
 
 ...and Cypress will open right up for you.
@@ -83,7 +83,7 @@ npm run cypress:open
 Don't use `cypress` as the exact name of a script, especially if you use Yarn as package manager.
 When running commands on the Cypress binary (e.g. `yarn cypress verify`), Yarn will reference the
 script of the same name instead and [Cypress CLI commands](/guides/guides/command-line) may not work as expected.
-Use instead a descriptive and non-ambiguous script name such as `cypress:open` or `cypress:run`.
+Use instead a descriptive and non-ambiguous script name such as `cy:open` or `cy:run`.
 
 :::
 
