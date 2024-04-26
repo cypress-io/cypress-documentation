@@ -82,7 +82,8 @@ cy.clearLocalStorage(/app-/)
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
 
-- `cy.clearLocalStorage()` cannot have any assertions chained.
+- `cy.clearLocalStorage()` will only run assertions you have chained once, and
+  will not [retry](/guides/core-concepts/retry-ability).
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
 
