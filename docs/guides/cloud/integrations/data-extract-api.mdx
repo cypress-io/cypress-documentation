@@ -4,13 +4,14 @@ sidebar_position: 70
 sidebar_custom_props: { 'new_label': true }
 ---
 
-:::info
+Enterprise Reporting data can be downloaded from Cloud using the Cypress Cloud API. The data is returned in file
+formats that allow you to easily incorporate it into your BI reporting platform, as well as a JSON file that can be
+programmatically parsed. This API allows you to retrieve your test data at a variety of levels, including
+all the way down to the individual test result data which includes status, error messages, build tags and groups,
+Test Replay links, and much more.
 
-**Coming Soon**
-
-Pull robust test data from Cypress Cloud to further analyze results and create dashboards
-in your preferred BI tools.
-:::
+All of the data that is viewable in [Enterprise Reporting ](/guides/cloud/analytics/enterprise-reporting)
+can be retrieved using this API.
 
 :::tip
 
@@ -19,3 +20,353 @@ in your preferred BI tools.
 **Data extract API** is available to users with an
 [Enterprise Cypress Cloud plan](https://cypress.io/pricing).
 :::
+
+## Overview of the API
+
+The reporting data is accessed using an API key that can be accessed from Cloud.
+Visit Integrations → Enterprise API in Cypress Cloud and copy the API key that has been created for your
+organization. There is nothing to enable. If you are subscribed to the Enterprise Cypress Cloud plan
+the ability to access your test data via API is already enabled.
+
+<DocsImage
+  src="/img/guides/cloud/analytics/enterprise-reporting-jwt.png"
+  alt="Cloud Enterprise Reporting API download data"
+/>
+
+<br />A couple of things to note:
+
+- Data shown in Enterprise Reporting is not real-time. It is available as of midnight of the current day.
+  I.e. - data will be populated through "end of day yesterday".
+- Historical data is available as specified by your data retention limit in Cypress Cloud.
+
+## API endpoint details
+
+The following API endpoint will be used. Substitute your assigned API key
+where indicated by the `YOUR-API-KEY` placeholder text. The `report_id` specifies
+the type of data that will be retrieved.
+
+https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=REPORT-TYPE&export_format=csv
+
+Query parameters include a mandatory `start_date` and optional `end_date` value. For example,
+`?start_date=2024-01-01&end_date=2024-04-15`
+
+Every type of report supports the returning of data in three file formats:
+
+- json
+- csv
+- xlsx
+
+Specify the type of data formatting by setting the value of the `export_format` query string
+parameter to `json`, `csv`, or `xlsx`.
+
+### Tests per project
+
+This data helps you understand which projects in your organization are utilizing the
+most or least tests. Data is returned in a simple summary per project.
+
+The report_id is: `usage-per-project-summary`
+
+Data returned includes:
+
+- project_name
+- test_run_count
+
+Example:
+https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=usage-per-project-summary&export_format=csv&start_date=2024-01-01
+
+### Tests per project over time
+
+This data helps you understand which projects in your organization are utilizing the
+most or least tests and how that usage looks over time.
+
+The report_id is: `usage-per-project-over-time`
+
+Data returned includes:
+
+- project_name
+- test_run_count
+- week
+- day
+
+Example:
+https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=usage-per-project-over-time&export_format=csv&start_date=2024-01-01
+
+### Status by build
+
+This data helps you understand the success and failure rates at the build level. If any part of the
+build fails then the entire build is failed.
+
+The report_id is: `status-per-build-summary`
+
+Data returned includes:
+
+- status
+- test_run_count
+
+Example:
+https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=status-per-build-summary&export_format=csv&start_date=2024-01-01
+
+### Status by build over time
+
+This data helps you understand the success and failure rates at the build level. If any part of the
+build fails then the entire build is failed. The data is reported over time.
+
+The report_id is: `status-per-build-over-time`
+
+Data returned includes:
+
+- status
+- test_run_count
+- week
+- day
+
+Example:
+https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=status-per-build-over-time&export_format=csv&start_date=2024-01-01
+
+### Status by spec
+
+This data helps you understand the success and failure rates at the spec level. If any part of the
+spec fails then the entire spec is failed.
+
+The report_id is: `status-per-spec-summary`
+
+Data returned includes:
+
+- status
+- test_run_count
+
+Example:
+https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=status-per-spec-summary&export_format=csv&start_date=2024-01-01
+
+### Status by spec over time
+
+This data helps you understand the success and failure rates at the spec level. If any part of the
+spec fails then the entire spec is failed. The data is reported over time.
+
+The report_id is: `status-per-spec-over-time`
+
+Data returned includes:
+
+- status
+- test_run_count
+- week
+- day
+
+Example:
+https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=status-per-spec-over-time&export_format=csv&start_date=2024-01-01
+
+### Status by test run
+
+This data helps you understand the success and failure rates at the individual test level.
+
+The report_id is: `status-per-test-summary`
+
+Data returned includes:
+
+- failed
+- passed
+
+Example:
+https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=status-per-test-summary&export_format=csv&start_date=2024-01-01
+
+### Status by test run over time
+
+This data helps you understand the success and failure rates at the individual test level.
+The data is reported over time.
+
+The report_id is: `status-per-test-over-time`
+
+Data returned includes:
+
+- project_name
+- test_run_count
+- week
+- status
+
+Example:
+https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=status-per-test-over-time&export_format=csv&start_date=2024-01-01
+
+### Cypress build versions
+
+This data helps you monitor and track which versions of the Cypress app are being
+used in your organization.
+
+The report_id is: `cypress-build-versions-summary`
+
+Data returned includes:
+
+- build_count
+- cypress_version
+
+Example:
+https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=cypress-build-versions-summary&export_format=csv&start_date=2024-01-01
+
+### Cypress build versions over time
+
+This data helps you monitor and track which versions of the Cypress app are being
+used in your organization. This data is reported over time.
+
+The report_id is: `cypress-build-versions-over-time`
+
+Data returned includes:
+
+- build_count
+- cypress_version
+- week
+
+Example:
+https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=cypress-build-versions-over-time&export_format=csv&start_date=2024-01-01
+
+### Test flake detail over time
+
+This data helps you identify where flake is occurring in your organization
+and how that changes over time.
+
+The report_id is: `flake-per-project-over-time`
+
+Data returned includes:
+
+- project_name
+- flaky_test_count
+- week
+- day
+
+Example:
+https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=flake-per-project-over-time&export_format=csv&start_date=2024-01-01
+
+### Cypress test types
+
+This data helps you to grow and manage your Cypress test suite by understanding how
+you are adopting end-to-end and component testing in your organization.
+
+The report_id is: `cypress-test-types`
+
+Data returned includes:
+
+- testing_type (e2e or component)
+- total_tests
+- total_e2e
+- total_ct
+- week
+- day
+
+Example:
+https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=cypress-test-types&export_format=csv&start_date=2024-01-01
+
+### Cypress test suite size
+
+This data helps you to understand and manage the growth of your test suite size across
+all projects in your organization. It calculates the average number of test cases executed per run
+and excludes runs that errored or timed out since they don't accurately represent the size of your
+test suite.
+
+The report_id is: `test-suite-size-summary`
+
+Data returned includes:
+
+- total_tests
+- total_e2e
+- total_ct
+- week
+
+Example:
+https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=test-suite-size-summary&export_format=csv&start_date=2024-01-01
+
+### Cypress test suite over time
+
+This data helps you to understand and manage the growth of your test suite size across
+all projects in your organization. It calculates the average number of test cases executed per run
+and excludes runs that errored or timed out since they don't accurately represent the size of your
+test suite. This data is reported over time.
+
+The report_id is: `test-suite-size-over-time`
+
+Data returned includes:
+
+- project_name
+- total_tests
+- total_e2e
+- total_ct
+- week
+
+Example:
+https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=test-suite-size-over-time&export_format=csv&start_date=2024-01-01
+
+### Project test count and status
+
+This data allows you to extract consolidated run status at the project level.
+Data is accumulated from the status of each individual test result. This data is
+reported over time.
+
+The report_id is: `status-per-test-daily`
+
+Data returned includes:
+
+- project_name
+- status
+- test_run_count
+- week
+- day
+
+Example:
+https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=status-per-test-daily&export_format=csv&start_date=2024-01-01
+
+### Individual test results with errors
+
+:::info
+**Coming Soon**
+
+This report allows you to extract all test result details for failed tests. Limited
+to three days of data returned in a single request.
+:::
+
+The report_id is: `COMING-SOON`
+
+Data returned includes:
+
+- project_name
+- created_at (date and time)
+- build_number
+- commit_author_name
+- commit_branch
+- commit_sha
+- ci_build_id
+- status
+- group_name
+- build_tags
+- error_name
+- error_message
+- test_replay_url
+
+Example:
+https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=COMING-SOON&export_format=csv&start_date=2024-01-01
+
+### Individual test results
+
+:::info
+**Coming Soon**
+
+This report allows you to extract all test result details regardless of test result status. Limited
+to one day of data returned in a single request, with a maximum of 500,000 records.
+:::
+
+The report_id is: `COMING-SOON`
+
+Data returned includes:
+
+- project_name
+- created_at (date and time)
+- build_number
+- commit_author_name
+- commit_branch
+- commit_sha
+- ci_build_id
+- status
+- group_name
+- build_tags
+- error_name
+- error_message
+- test_replay_url
+
+Example:
+https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=COMING-SOON&export_format=csv&start_date=2024-01-01
