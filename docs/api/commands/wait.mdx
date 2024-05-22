@@ -18,21 +18,36 @@ cy.wait(aliases, options)
 
 ```typescript
 // Specifying request and response types for aliased intercepts
-type CustomRequest = {}
-type CustomResponse = {}
+type UserReq = {}
+type UserRes = {}
+type ActivityReq = {}
+type ActivityRes = {}
 
 cy.intercept('/users/*').as('getUsers')
+cy.intercept('/activities/*').as('getActivities')
+
 // As templated types:
 cy.wait<CustomRequest, CustomResponse>('@getUsers').then(({ request, response }) => {
-  request.body // will be of type CustomRequest
-  response.body // will be of type CustomResponse
+  request.body // will be of type UserReq
+  response.body // will be of type UserRes
 })
 
 // As inferred types, with type `Interception` available in `cypress/types/net-stubbing`
 cy.wait('@getUsers').then(({ request, response }: Interception<CustomRequest, CustomResponse>) => {
-  request.body // will be of type CustomRequest
-  response.body // will be of type CustomResponse
+  request.body // will be of type UserReq
+  response.body // will be of type UserRes
 })
+
+// When passing an array of aliases, types must me inferred:
+cy.wait(['@getUsers', 'getActivities']).then(
+  (interceptions: Array<Interception<UserReq | ActivityReq, UserRes, ActivityRes>>) => {
+    interceptions.forEach(({ request, response }) => {
+      request.body // will be of type UserReq | ActivityReq
+      response.body // will be of type UserRes | ActivityRes
+    })
+  }
+)
+
 ```
 
 ### Usage
@@ -194,28 +209,6 @@ cy.wait(['@getUsers', '@getActivities', '@getComments']).then(
   }
 )
 ```
-
-In Typescript, you are able specify an array of types for the request and response bodies.
-
-```typescript
-type GetUsersReq = {}
-type GetUsersRes = {}
-
-type GetActivitiesReq = {}
-type GetActiviesRes = {}
-
-cy.intercept('/users/*').as('getUsers')
-cy.intercept('/activities/*').as('getActivities')
-
-cy.wait(['@getUsers', '@getActivities']).then(
-  (interceptions: Array<Interception<GetUsersReq | GetActiviesReq, GetUsersRes | GetActiviesRes>>) => {
-    interceptions.forEach(({ request, response }) => {
-      request.body // Is of type GetUsersReq | GetActivitiesReq
-      response.body // Is of type GetUsersRes | GetActivitiesRes
-    })
-  }
-)
-
 :::
 
 #### Using [`.spread()`](/api/commands/spread) to spread the array into multiple arguments.
