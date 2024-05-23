@@ -1,0 +1,262 @@
+---
+title: 'Seamless Cypress Installation Guide'
+sidebar_label: Installing Cypress
+description: 'Follow a step-by-step guide to install Cypress seamlessly. Learn the prerequisites, installation process, and get started with Cypress for efficient testing'
+---
+
+# Installing Cypress
+
+:::info
+
+## <Icon name="graduation-cap" /> What you'll learn
+
+- How to install Cypress via `npm`, `yarn` or `pnpm`
+- How to install Cypress via direct download
+- How to version and run Cypress via `package.json`
+
+:::
+
+First, make sure you have all the [system requirements](#System-requirements).
+
+## Installing
+
+### <Icon name="terminal" /> `npm install`
+
+Install Cypress via `npm`:
+
+```shell
+cd /your/project/path
+```
+
+```shell
+npm install cypress --save-dev
+```
+
+This will install Cypress locally as a dev dependency for your project.
+
+:::info
+
+Make sure you have Node.js installed and that you have already run
+[`npm init`](https://docs.npmjs.com/cli/init) or have a `node_modules` folder or
+`package.json` file in the root of your project to ensure cypress is installed
+in the correct directory.
+
+:::
+
+:::info
+
+System proxy properties `http_proxy`, `https_proxy` and `no_proxy` are respected
+for the download of the Cypress binary. You can also use the npm properties
+`npm_config_proxy` and `npm_config_https_proxy`. Those have lower priority, so
+they will only be used if the system properties are being resolved to not use a
+proxy.
+
+:::
+
+:::tip
+
+<strong>Best Practice</strong>
+
+The recommended approach is to install Cypress with `npm` because:
+
+- Cypress is versioned like any other dependency.
+- It simplifies running Cypress in
+  [Continuous Integration](/guides/continuous-integration/introduction).
+
+:::
+
+### <Icon name="terminal" /> `yarn add`
+
+Installing Cypress via [`Yarn`](https://yarnpkg.com):
+
+```shell
+cd /your/project/path
+```
+
+```shell
+yarn add cypress --dev
+```
+
+System proxy properties `http_proxy`, `https_proxy` and `no_proxy` are respected
+for the download of the Cypress binary.
+
+### <Icon name="terminal" /> `pnpm add`
+
+Installing Cypress via [`pnpm`](https://pnpm.io/):
+
+```shell
+cd /your/project/path
+```
+
+```shell
+pnpm add --save-dev cypress
+```
+
+:::info
+
+You need to make sure that you have the `pnpm` environment installed locally.
+If not you need to install it: `npm install pnpm@latest --global`.
+
+:::
+
+### <Icon name="download" /> Direct download
+
+If you're not using Node or a package manager (`npm`, `pnpm` or `Yarn`) in your project or you want to try Cypress out
+quickly, you can always
+[download Cypress directly from our CDN](https://download.cypress.io/desktop).
+
+:::caution
+
+Recording runs to Cypress Cloud is not possible from the direct download. This
+download is only intended as a quick way to try out Cypress. To record tests to
+Cypress Cloud, you'll need to install Cypress as an `npm` dependency.
+
+:::
+
+The direct download will always grab the latest available version. Your platform
+will be detected automatically.
+
+Then you can manually unzip and double click. Cypress will run without needing
+to install any dependencies.
+
+:::info
+
+<strong>Direct downloading for old versions</strong>
+
+It is possible to download an old version from our CDN by suffixing the URL with
+the desired version (ex.
+[https://download.cypress.io/desktop/12.17.4](https://download.cypress.io/desktop/12.17.4)).
+
+:::
+
+### <Icon name="cog" /> Advanced Installation
+
+If you have more complex requirements, want to level-up your Cypress workflow or
+just need help with troubleshooting, check out our
+[Advanced Installation](/guides/references/advanced-installation) reference.
+
+### <Icon name="sync-alt" /> Continuous integration
+
+Please read our
+[Continuous Integration](/guides/continuous-integration/introduction) docs for
+help installing Cypress in CI. When running in Linux you may need to install some
+[system dependencies](#Linux-Prerequisites)
+or you can use our [Docker images](/examples/docker) which have everything you
+need prebuilt.
+
+## System requirements
+
+### Operating System
+
+Cypress is a desktop application that is installed on your computer. The desktop
+application supports these operating systems:
+
+- **macOS** 10.15 and above _(Intel or Apple Silicon 64-bit (x64 or arm64))_
+- **Linux** Ubuntu 20.04 and above, Fedora 38 and above, and Debian 10 and above _(x64 or arm64)_ (see [Linux Prerequisites](#Linux-Prerequisites) down
+  below)
+- **Windows** 10 and above _(64-bit only)_
+
+### Node.js
+
+Cypress requires Node.js in order to install. We support the versions listed below:
+
+- **Node.js** 18.x
+- **Node.js** 20.x and above
+
+Cypress generally aligns with
+[Node's release schedule](https://github.com/nodejs/Release).
+
+### Hardware
+
+When running Cypress locally, it should run comfortably on any machine that is
+capable of modern web development.
+
+When running Cypress in CI, however, some of the lower-tier configurations might
+not be able to run Cypress reliably, especially when recording videos or doing
+longer test runs.
+
+Some issues you might run into in CI that could be a sign of insufficient
+resources are:
+
+- Exiting early during `cypress run` or abruptly closing (“crashing”)
+- Frozen or missing frames in the video that is captured
+- Increased runtime
+
+When running Cypress in CI, we recommend that you have the following hardware
+requirements:
+
+#### CPU
+
+- 2 CPUs minimum to run Cypress
+- 1 additional CPU if video recording is enabled
+- 1 additional CPU per process you run outside of Cypress, such as:
+  - App server (frontend)
+  - App server (backend)
+  - App database
+  - Any additional infrastructure (Redis, Kafka, etc..)
+
+### Memory
+
+- 4GB minimum, 8GB+ for longer test runs
+
+### Linux Prerequisites
+
+If you're using Linux, you'll want to have the required dependencies installed
+on your system. Depending on your system defaults, these dependencies may already be installed.
+If not, run the command line for your operating system listed below.
+[Cypress Docker images](#Docker), which are Debian-based, already include the necessary dependencies.
+
+#### Ubuntu/Debian
+
+```shell
+apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libnss3 libxss1 libasound2 libxtst6 xauth xvfb
+```
+
+For Ubuntu 24.04 use the following command:
+
+```shell
+apt-get install libgtk2.0-0t64 libgtk-3-0t64 libgbm-dev libnotify-dev libnss3 libxss1 libasound2t64 libxtst6 xauth xvfb
+```
+
+#### Arch
+
+```shell
+pacman -S gtk2 gtk3 alsa-lib xorg-server-xvfb libxss nss libnotify
+```
+
+#### CentOS
+
+```shell
+yum install -y xorg-x11-server-Xvfb gtk2-devel gtk3-devel libnotify-devel GConf2 nss libXScrnSaver alsa-lib
+```
+
+#### Amazon Linux 2023
+
+```shell
+dnf install -y xorg-x11-server-Xvfb gtk3-devel nss alsa-lib
+```
+
+#### Docker
+
+Docker images with all of the required dependencies installed are available
+under [cypress/base](https://github.com/cypress-io/cypress-docker-images)
+
+If you're running your projects in containers, then you'll want Cypress in the
+container with the Node.js process.
+
+```
+  ui:
+    image: cypress/base:latest
+    # if targeting a specific node version, use e.g.
+    # image: cypress/base:18.12.1
+```
+
+`cypress/base` is a drop-in replacement for
+[base docker node images](https://hub.docker.com/_/node/).
+
+**Great, now [install Cypress](#Installing)!**
+
+## Next Steps
+
+[Open the app](/guides/getting-started/opening-the-app) and take it for a test
+drive!

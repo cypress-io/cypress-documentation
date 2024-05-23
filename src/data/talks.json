@@ -1,0 +1,205 @@
+{
+  "large": [
+    {
+      "title": "Componentizing end-to-end tests",
+      "sourceName": "JSConf US 2019",
+      "sourceUrl": "https://2019.jsconf.us/",
+      "date": "Sept 11, 2019",
+      "author": "Nicholas Boll",
+      "youtubeId": "Pv2YHXQOEJY"
+    },
+    {
+      "title": "Documenting application behaviours with E2E tests",
+      "sourceName": "HolyJS 2019",
+      "sourceUrl": "https://holyjs.ru/en/",
+      "date": "Aug 28, 2019",
+      "author": "Basarat Ali Syed",
+      "youtubeId": "3oCDjj_AtaE"
+    },
+    {
+      "title": "Next Level E2E Testing with Cypress @ Webdeveloper Stammtisch Saar 37",
+      "sourceUrl": "https://speakerdeck.com/mrcube42",
+      "url": "https://speakerdeck.com/mrcube42/next-level-e2e-testing-with-cypress-at-webdeveloper-stammtisch-saar-37",
+      "sourceName": "Speaker Deck",
+      "author": "David Wurfel",
+      "date": "Apr 04, 2019",
+      "img": "/img/examples/next-level-e2e-testing-with-cypress.png"
+    },
+    {
+      "title": "Cypress: testing without Selenium, part 1",
+      "sourceName": "Selenium Camp",
+      "sourceUrl": "https://seleniumcamp.com",
+      "date": "Mar 11, 2019",
+      "author": "Gleb Bahmutov",
+      "youtubeId": "hk4qtXgL12k",
+      "slides": "https://seleniumcamp.com/talk/cypress-testing-without-selenium/"
+    },
+    {
+      "title": "Building Web Apps with Hyperapp",
+      "sourceName": "NERD Summit",
+      "sourceUrl": "https://nerd.ngo/",
+      "date": "Mar 10, 2019",
+      "author": "Gleb Bahmutov",
+      "youtubeId": "8pcx0XitUCc",
+      "slides": "https://slides.com/bahmutov/hyperapp-intro#/"
+    },
+    {
+      "title": "Continuous Integration with GitLab CI",
+      "sourceName": "NERD Summit",
+      "sourceUrl": "https://nerd.ngo/",
+      "date": "Mar 10, 2019",
+      "author": "Pete Johanson",
+      "youtubeId": "EuwLdbCu3DE",
+      "slides": "https://petejohanson.gitlab.io/nerdsummit-2019-gitlab-ci-cd/#/"
+    },
+    {
+      "title": "Less painful E2E tests with Cypress.io",
+      "url": "https://fosdem.org/2019/schedule/event/e2e_tests_cypress/",
+      "sourceName": "FOSDEM 2019",
+      "sourceUrl": "https://fosdem.org/2019/schedule/event/keynotes_welcome/",
+      "date": "Feb 3, 2019",
+      "author": "Pavel Kruhlei",
+      "slides": "https://fosdem.org/2019/schedule/event/e2e_tests_cypress/attachments/slides/3010/export/events/attachments/e2e_tests_cypress/slides/3010/Slides.pdf",
+      "img": "/img/examples/painless-e2e-with-cypress.png"
+    },
+    {
+      "title": "There and Back Again: e2e Testing React with Cypress",
+      "sourceName": "Grow IT Conf",
+      "sourceUrl": "https://2018.growit.events/",
+      "date": "Jan 9, 2019",
+      "author": "Nikola Duza",
+      "youtubeId": "I3WJhutZovw",
+      "slides": "https://slides.com/nikolalsvk/e2e-cypress"
+    },
+    {
+      "title": "Sleeping better at night with Cypress.io",
+      "sourceName": "React Day Berlin",
+      "sourceUrl": "https://reactday.berlin/",
+      "date": "Dec 20, 2018",
+      "author": "Tomasz Łakomy",
+      "youtubeId": "-tE0SQ0cR4c"
+    },
+    {
+      "title": "Cypress: The future of E2E testing",
+      "sourceName": "NG-BE 2018",
+      "sourceUrl": "https://ng-be.org/",
+      "date": "Dec 11, 2018",
+      "author": "Dominic Elm",
+      "youtubeId": "pXyBligMMr0",
+      "slides": "https://speakerdeck.com/d3lm/cypress-the-future-of-e2e-testing"
+    },
+    {
+      "title": "Well Tested Software",
+      "url": "https://vimeo.com/311931793",
+      "sourceName": "Øredev 2018",
+      "sourceUrl": "http://oredev.org/2018/home",
+      "date": "Nov 24, 2018",
+      "author": "Gleb Bahmutov",
+      "img": "/img/examples/well-tested-software.jpg",
+      "slides": "https://slides.com/bahmutov/well-tested-software"
+    },
+    {
+      "title": "Automated testing for the modern web",
+      "sourceName": "JSConf Colombia",
+      "sourceUrl": "https://jsconf.co/",
+      "date": "Nov 17, 2018",
+      "author": "Jennifer Shehane",
+      "youtubeId": "ggJ1-ChxHrQ",
+      "slides": "https://speakerdeck.com/jennifershehane/automated-testing-for-the-modern-web"
+    },
+    {
+      "title": "Next Generation Web Application End to End Testing",
+      "sourceName": "Devoxx Belgium",
+      "sourceUrl": "https://devoxx.be/",
+      "date": "Nov 4, 2018",
+      "author": "Amir Rustamzadeh",
+      "youtubeId": "CkGQ0fFH3yE",
+      "slides": "https://speakerdeck.com/amir/next-generation-web-application-end-to-end-testing-with-cypress"
+    },
+    {
+      "title": "E2E Testing with Cypress",
+      "sourceName": "RVA JavaScript Conf 2018",
+      "sourceUrl": "https://www.rvajavascript.com/",
+      "date": "Nov 2, 2018",
+      "author": "Don Denoncourt",
+      "youtubeId": "HMv365RRwtA",
+      "slides": "https://slides.com/bahmutov/well-tested-software"
+    },
+    {
+      "title": "Deterministic Mocking with GraphQL and Apollo",
+      "sourceName": "React Boston 2018",
+      "sourceUrl": "http://www.reactboston.com/",
+      "date": "Sep 29, 2018",
+      "author": "Hillary Bauer & Mark Faga",
+      "youtubeId": "K445DtQ5oHY",
+      "slides": "https://github.com/mjfaga/react-boston-2018-lunar-launch"
+    },
+    {
+      "title": "Changing the Game with Cypress",
+      "sourceName": "NG-Talks",
+      "sourceUrl": "https://ngtalks.io/",
+      "date": "Aug 27, 2018",
+      "author": "Dominic Elm",
+      "youtubeId": "B7cUpqUlqsU",
+      "slides": "https://speakerdeck.com/d3lm/changing-the-game-with-cypress"
+    },
+    {
+      "title": "Frontend Development 2018 - What's in your stack?",
+      "sourceName": "NDC Conferences",
+      "sourceUrl": "https://ndcconferences.com/",
+      "date": "Jul 31, 2018",
+      "author": "Stefan Judis",
+      "youtubeId": "88K8oO_dYbI",
+      "slides": "https://speakerdeck.com/stefanjudis/frontend-development-2018-whats-in-your-stack"
+    },
+    {
+      "title": "Everything I know about writing quality software",
+      "sourceName": "BuzzJS",
+      "date": "Jul 30, 2018",
+      "author": "Gleb Bahmutov",
+      "youtubeId": "1PMxLTfh6lo",
+      "slides": "https://slides.com/bahmutov/quality-software"
+    },
+    {
+      "title": "Hassle free E2E tests with Cypress",
+      "sourceName": "React Vienna",
+      "date": "Jul 17, 2018",
+      "author": "David Madner",
+      "youtubeId": "jijOIqtBGYg"
+    },
+    {
+      "title": "QIT: Caching, Testing, and Project Management",
+      "sourceName": "Coding Blocks",
+      "date": "Jul 1, 2018",
+      "author": "Dave Follett, Joe Zack, Nicolas Marcora",
+      "youtubeId": "NTanPba9mZM"
+    },
+    {
+      "title": "Cypress E2E Testing",
+      "sourceName": "Northwest Chicago Javascript",
+      "date": "Jun 21, 2018",
+      "author": "Steve Schwarz",
+      "youtubeId": "LFUm9qV_Gjo",
+      "slides": "https://docs.google.com/presentation/d/1wMR3n8WJAw7VeibSkosdXA2VRjtKNpDD4wRqOPKQElQ/edit#slide=id.p"
+    },
+    {
+      "title": "Automated Testing for the Modern Web",
+      "url": "https://www.recallact.com/presentation/automated-testing-modern-web",
+      "sourceName": "Recall Act",
+      "sourceUrl": "https://www.recallact.com/",
+      "date": "Jun 21, 2018",
+      "author": "Jennifer Shehane",
+      "img": "/img/examples/automated-testing-for-the-modern.png",
+      "slides": "https://speakerdeck.com/jennifershehane/automated-testing-for-the-modern-web"
+    },
+    {
+      "title": "Testing, the way it should be",
+      "sourceName": "ReactiveConf",
+      "sourceUrl": "https://reactiveconf.com/",
+      "date": "Oct 27, 2016",
+      "author": "Brian Mann",
+      "youtubeId": "N9RbcP4iY90",
+      "slides": "https://speakerdeck.com/brianmann/enter-cypress-integration-testing-done-right"
+    }
+  ]
+}

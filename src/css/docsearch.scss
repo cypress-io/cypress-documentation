@@ -1,0 +1,46 @@
+/* DocSearch overrides */
+
+/* controls the color of the search cmd+k buttons */
+/* have to override this for specificity */
+[data-theme='dark'] button.DocSearch {
+  --docsearch-muted-color: var(--ifm-color-gray-100);
+  color: var(--docsearch-muted-color);
+}
+
+/* have to override this for specificity */
+[data-theme='light'] .DocSearch-Hits {
+  /* controls color of headers in search */
+  .DocSearch-Hit-source {
+    color: var(--ifm-color-primary-dark);
+    font-size: 1rem;
+  }
+
+  /* controls the color search results */
+  .DocSearch-Hit-Container mark {
+    font-weight: var(--ifm-font-weight-bold);
+    color: var(--ifm-color-primary-dark);
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+  /* controls color of bg on selected marked text */
+  .DocSearch-Hit[aria-selected='true'] mark {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+}
+[data-theme='dark'] .DocSearch-Hits {
+  /* controls color of headers in search */
+  .DocSearch-Hit-source {
+    color: var(--ifm-color-primary-light);
+    font-size: 1rem;
+  }
+
+  /* controls the color search results */
+  .DocSearch-Hit-Container mark {
+    font-weight: var(--ifm-font-weight-bold);
+    color: var(--ifm-color-primary-light);
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+  /* controls color of bg on selected marked text */
+  .DocSearch-Hit[aria-selected='true'] mark {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+}

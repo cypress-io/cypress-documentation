@@ -1,0 +1,13 @@
+.docsImage {
+  margin-bottom: 1rem;
+}
+
+.docsImage img {
+  box-shadow: 0 2px 10px 1px rgba(0, 0, 0, 0.26) !important;
+}
+
+.caption {
+  font-size: 0.85rem;
+  text-align: center;
+  margin-top: 0.8rem;
+}

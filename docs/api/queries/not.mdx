@@ -1,0 +1,128 @@
+---
+title: not
+slug: /api/commands/not
+---
+
+Filter DOM element(s) from a set of DOM elements.
+
+:::info
+
+Opposite of [`.filter()`](/api/commands/filter)
+
+:::
+
+:::info
+
+The querying behavior of this command matches exactly how
+[`.not()`](http://api.jquery.com/not) works in jQuery.
+
+:::
+
+## Syntax
+
+```javascript
+.not(selector)
+.not(selector, options)
+```
+
+### Usage
+
+<Icon name="check-circle" color="green" /> **Correct Usage**
+
+```javascript
+cy.get('input').not('.required') // Yield all inputs without class '.required'
+```
+
+<Icon name="exclamation-triangle" color="red" /> **Incorrect Usage**
+
+```javascript
+cy.not('.icon') // Errors, cannot be chained off 'cy'
+cy.clock().not() // Errors, 'clock' does not yield DOM elements
+```
+
+### Arguments
+
+<Icon name="angle-right" /> **selector _(String selector)_**
+
+A selector used to remove matching DOM elements.
+
+<Icon name="angle-right" /> **options _(Object)_**
+
+Pass in an options object to change the default behavior of `.not()`.
+
+| Option    | Default                                                              | Description                                                                              |
+| --------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
+| `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.not()` to resolve before [timing out](#Timeouts)                      |
+
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+
+- `.not()` yields the new DOM element(s) it found.
+- `.not()` is a query, and it is _safe_ to chain further commands.
+
+## Examples
+
+### Selector
+
+#### Yield the elements that do not have class `active`
+
+```html
+<ul>
+  <li>Home</li>
+  <li class="active">About</li>
+  <li>Services</li>
+  <li>Pricing</li>
+  <li>Contact</li>
+</ul>
+```
+
+```javascript
+cy.get('ul>li').not('.active').should('have.length', 4) // true
+```
+
+## Rules
+
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
+
+- `.not()` requires being chained off a command that yields DOM element(s).
+
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
+
+- `.not()` will automatically [retry](/guides/core-concepts/retry-ability) until
+  the element(s)
+  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Implicit-Assertions).
+- `.not()` will automatically [retry](/guides/core-concepts/retry-ability) until
+  all chained assertions have passed.
+
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
+
+- `.not()` can time out waiting for the element(s) to
+  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Implicit-Assertions).
+- `.not()` can time out waiting for assertions you've added to pass.
+
+## Command Log
+
+**_Find all buttons that are not of type submit_**
+
+```javascript
+cy.get('form').find('button').not('[type="submit"]')
+```
+
+The commands above will display in the Command Log as:
+
+<DocsImage
+  src="/img/api/not/filter-elements-with-not-and-optional-selector.png"
+  alt="Command Log not"
+/>
+
+When clicking on `not` within the command log, the console outputs the
+following:
+
+<DocsImage
+  src="/img/api/not/log-elements-found-when-using-cy-not.png"
+  alt="Console Log not"
+/>
+
+## See also
+
+- [`.filter()`](/api/commands/filter)

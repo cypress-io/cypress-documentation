@@ -1,15 +1,9 @@
 [build]
   publish = "dist/"
-  command = "yarn build"
+  command = "npm run build"
 
 [context.deploy-preview]
   publish = "dist/"
-
-[[redirects]]
-  from = "/"
-  to = "/guides/overview/why-cypress/"
-  status = 200
-  force = true
 
 [[redirects]]
   from = "/guides"
@@ -18,7 +12,7 @@
   force = true
 
 [[redirects]]
-  from = "/api"
+  from = "/api/"
   to = "/api/table-of-contents/"
   status = 301
   force = true
@@ -30,14 +24,38 @@
   force = true
 
 [[redirects]]
-  from = "/plugins"
-  to = "/plugins/directory"
+  from = "/api/events/catalog-of-events"
+  to = "/api/cypress-api/catalog-of-events"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/plugins/directory"
+  to = "/plugins"
   status = 301
   force = true
 
 [[redirects]]
   from = "/examples"
-  to = "/examples/examples/recipes/"
+  to = "/examples/recipes/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/examples/examples"
+  to = "/examples/recipes/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/examples/examples/recipes"
+  to = "/examples/recipes/"
+  status = 301
+  force = true
+  
+[[redirects]]
+  from = "/examples/examples/docker"
+  to = "/examples/docker"
   status = 301
   force = true
 
@@ -146,6 +164,12 @@
 [[redirects]]
   from = "/guides/migrating-to-cypress/protractor"
   to = "/guides/end-to-end-testing/protractor-to-cypress"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/migrating-to-cypress/selenium"
+  to = "/guides/end-to-end-testing/selenium-to-cypress"
   status = 301
   force = true
 
@@ -301,19 +325,13 @@
 
 [[redirects]]
   from = "/guides/dashboard/analytics"
-  to = "/guides/cloud/analytics"
+  to = "/guides/cloud/analytics/overview"
   status = 301
   force = true
-
-[[redirects]]
-  from = "/guides/dashboard/bitbucket-integration"
-  to = "/guides/cloud/bitbucket-integration"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/guides/dashboard/flaky-test-management"
-  to = "/guides/cloud/flaky-test-management"
+  
+ [[redirects]]
+  from = "/guides/cloud/analytics"
+  to = "/guides/cloud/analytics/overview"
   status = 301
   force = true
 
@@ -324,14 +342,8 @@
   force = true
 
 [[redirects]]
-  from = "/guides/dashboard/github-integration"
-  to = "/guides/cloud/github-integration"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/guides/dashboard/gitlab-integration"
-  to = "/guides/cloud/gitlab-integration"
+  from = "/guides/dashboard/flaky-test-management"
+  to = "/guides/cloud/flaky-test-management"
   status = 301
   force = true
 
@@ -342,8 +354,62 @@
   force = true
 
 [[redirects]]
+  from = "/guides/dashboard/github-integration"
+  to = "/guides/cloud/integrations/github"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/github-integration"
+  to = "/guides/cloud/integrations/github"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/dashboard/gitlab-integration"
+  to = "/guides/cloud/integrations/gitlab"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/gitlab-integration"
+  to = "/guides/cloud/integrations/gitlab"
+  status = 301
+  force = true
+
+[[redirects]]
   from = "/guides/dashboard/jira-integration"
-  to = "/guides/cloud/jira-integration"
+  to = "/guides/cloud/integrations/jira"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/jira-integration"
+  to = "/guides/cloud/integrations/jira"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/dashboard/slack-integration"
+  to = "/guides/cloud/integrations/slack"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/slack-integration"
+  to = "/guides/cloud/integrations/slack"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/dashboard/bitbucket-integration"
+  to = "/guides/cloud/integrations/bitbucket"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/bitbucket-integration"
+  to = "/guides/cloud/integrations/bitbucket"
   status = 301
   force = true
 
@@ -366,12 +432,6 @@
   force = true
 
 [[redirects]]
-  from = "/guides/dashboard/slack-integration"
-  to = "/guides/cloud/slack-integration"
-  status = 301
-  force = true
-
-[[redirects]]
   from = "/guides/dashboard/smart-orchestration"
   to = "/guides/cloud/smart-orchestration"
   status = 301
@@ -386,6 +446,338 @@
 [[redirects]]
   from = "/faq/questions/dashboard-faq"
   to = "/faq/questions/cloud-faq"
+  status = 301
+  force = true
+
+# New Cloud IA (Summer 2023)
+
+[[redirects]]
+  from = "/guides/cloud/projects"
+  to = "/guides/cloud/account-management/projects"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/organizations"
+  to = "/guides/cloud/account-management/organizations"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/users"
+  to = "/guides/cloud/account-management/users"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/smart-orchestration"
+  to = "/guides/cloud/smart-orchestration/overview"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/guides/parallelization"
+  to = "/guides/cloud/smart-orchestration/parallelization"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/runs"
+  to = "/guides/cloud/recorded-runs"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/integrations/github"
+  to = "/guides/cloud/integrations/source-control/github"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/integrations/gitlab"
+  to = "/guides/cloud/integrations/source-control/gitlab"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/integrations/bitbucket"
+  to = "/guides/cloud/integrations/source-control/bitbucket"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/debugging/test-replay"
+  to = "/guides/cloud/test-replay"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/debugging/recorded-runs"
+  to = "/guides/cloud/recorded-runs"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/api/commands"
+  to = "/api/table-of-contents"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/api/commands/"
+  to = "/api/table-of-contents"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/api/commands/route"
+  to = "/api/commands/intercept"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/api/commands/route2"
+  to = "/api/commands/intercept"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/api/commands/server"
+  to = "/api/commands/intercept"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/api/cypress-api/cypress-server"
+  to = "/api/commands/intercept"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/api/cypress-api/guides/component-testing/introduction"
+  to = "/guides/component-testing/overview"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/api/introduction/api"
+  to = "/api/table-of-contents"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/api/utilities/moment"
+  to = "/guides/overview/why-cypress"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/coverage"
+  to = "/guides/tooling/code-coverage"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/dashboard-service"
+  to = "/guides/cloud/introduction"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/dashboard/overview/runs-dashboard"
+  to = "/guides/cloud/recorded-runs"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/docs/all-example-apps"
+  to = "/examples/applications"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/examples/examples/applications"
+  to = "/examples/applications"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/examples/examples/tutorials"
+  to = "/examples/tutorials"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/examples/examples/workshop"
+  to = "/examples/workshop"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/component-testing/angular/quickstart"
+  to = "/guides/component-testing/angular/overview"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/component-testing/react/quickstart"
+  to = "/guides/component-testing/react/overview"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/component-testing/svelte/quickstart"
+  to = "/guides/component-testing/svelte/overview"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/component-testing/vue/quickstart"
+  to = "/guides/component-testing/vue/overview"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/core-concepts/dashboard-service"
+  to = "/guides/cloud/introduction"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/core-concepts/launching-browsers"
+  to = "/guides/guides/launching-browsers"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/getting-started"
+  to = "/guides/getting-started/installing-cypress"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/getting-started/installing-cypress.md"
+  to = "/guides/getting-started/installing-cypress"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/getting-started/why-cypress"
+  to = "guides/overview/why-cypress"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/guides/continuous-integration"
+  to = "/guides/continuous-integration/introduction"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/guides/plugins-guide"
+  to = "/api/plugins/writing-a-plugin"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/guides/reporters"
+  to = "/guides/tooling/reporters"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/installing-and-running"
+  to = "/guides/getting-started/installing-cypress"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/references/known-issues"
+  to = "/guides/references/trade-offs"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/tooling/intelligent-code-completion"
+  to = "/guides/tooling/IDE-integration"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/web-security"
+  to = "/guides/guides/web-security"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/intelligent-code-completion"
+  to = "/guides/tooling/IDE-integration"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/ja"
+  to = "/guides/overview/why-cypress"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/test-runner"
+  to = "/guides/core-concepts/cypress-app"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/why-cypress"
+  to = "/guides/overview/why-cypress"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/writeFile"
+  to = "/api/commands/writefile"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/zh-cn"
+  to = "/guides/overview/why-cypress"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/zh-cn/guides/getting-started/installing-cypress"
+  to = "/guides/getting-started/installing-cypress"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/zh-cn/guides/guides/command-line"
+  to = "/guides/guides/command-line"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/zh-cn/guides/guides/module-api"
+  to = "/guides/guides/module-api"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/zh-cn/guides/overview/why-cypress"
+  to = "/guides/overview/why-cypress"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/zh-cn/guides/references/assertions"
+  to = "/guides/references/assertions"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/zh-cn/guides/references/configuration"
+  to = "/guides/references/configuration"
   status = 301
   force = true
 

@@ -1,0 +1,88 @@
+---
+title: Organizations
+sidebar_position: 20
+---
+
+:::info
+
+## <Icon name="graduation-cap" /> What you'll learn
+
+- What an Organization ID is and how it is useful
+- How to manage Organizations
+
+:::
+
+Organizations are used to group and manage projects. Here you can create
+projects, manage users, access billing and usage information, leverage third
+party integrations, and apply org-level settings.
+
+## Organization ID
+
+An Organization's ID is a unique identifier in
+[UUID](https://tools.ietf.org/html/rfc4122) format that can be found under the
+"Organization settings" section of Cypress Cloud. This ID is used frequently by
+the Support, Success, and Sales teams to reference an Organization.
+
+To locate your Organization's ID, go to "Organization settings" then
+Organization ID. Click on the clipboard icon to copy the ID for easy sharing
+with Cypress teams.
+
+<DocsImage
+  src="/img/guides/cloud/organizations/cypress-organization-UUID.gif"
+  alt="Locate UUID gif"
+/>
+
+## Managing Organizations
+
+### Create Org
+
+You can create an organization from within
+[Cypress Cloud](https://on.cypress.io/cloud) by opening the organization
+switcher and clicking **<Icon name="plus" /> Create new organization**.
+
+<DocsImage
+  src="/img/guides/cloud/organizations/create-org.jpg"
+  alt="Create new organization"
+/>
+
+### Delete Org
+
+You can delete organizations that you own as long as they do not have any
+projects in the organization. You must first
+[delete](/guides/cloud/account-management/projects#Delete-Project) or
+[transfer ownership](/guides/cloud/account-management/projects#Transfer-ownership)
+of your projects your projects to another organization before you can delete the
+organization.
+
+<DocsImage
+  src="/img/guides/cloud/organizations/remove-organization-dialog.jpg"
+  alt="Delete Organization"
+  width="80%"
+/>
+
+## Integrations
+
+Owner and admin roles can integrate Cypress Cloud with many third party tools
+under **Organization > Integrations** and edit those settings from within the
+**Project settings** page.
+
+See our integration guides to learn more:
+
+### Source Control Providers
+
+{/* prettier-ignore-start */}
+
+- <Logo src="/img/logo/github.svg" /> [GitHub integration guide](/guides/cloud/integrations/source-control/github)
+- <Logo src="/img/logo/gitlab.svg" /> [GitLab integration guide](/guides/cloud/integrations/source-control/gitlab)
+- <Logo src="/img/logo/bitbucket.svg" /> [Bitbucket integration guide](/guides/cloud/integrations/source-control/bitbucket)
+
+### Issue Management
+
+- <Logo src="/img/logo/jira.svg" /> [Jira integration guide](/guides/cloud/integrations/jira)
+
+### Team Communication
+
+- <Logo src="/img/logo/slack.svg" /> [Cypress integration for Slack guide](/guides/cloud/integrations/slack)
+- <Logo src="/img/logo/ms-teams.svg" /> [Cypress integration for Microsoft Teams guide](/guides/cloud/integrations/teams)
+
+{/* prettier-ignore-end */}

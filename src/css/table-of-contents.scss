@@ -1,0 +1,41 @@
+/* format right-side TOC */
+/* give list breathing room */
+.table-of-contents {
+  font-size: 1rem;
+
+  a:hover {
+    @apply text-indigo-500;
+    html[data-theme='dark'] & {
+      @apply text-indigo-400;
+    }
+  }
+}
+
+/* but not as much on the children */
+.table-of-contents li ul li {
+  a {
+    @apply text-gray-700;
+    html[data-theme='dark'] & {
+      @apply text-gray-300;
+    }
+  }
+}
+/* only target top level section titles in right side TOC */
+.table-of-contents > li > .table-of-contents__link {
+  font-weight: 600;
+  @apply my-3;
+}
+
+.table-of-contents .table-of-contents__link--active {
+  @apply text-indigo-500;
+  html[data-theme='dark'] & {
+    @apply text-indigo-400;
+  }
+}
+
+.table-of-contents__left-border {
+  @apply border-gray-1000/[.07];
+  html[data-theme='dark'] & {
+    @apply border-gray-900;
+  }
+}

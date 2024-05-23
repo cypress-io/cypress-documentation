@@ -1,0 +1,22 @@
+---
+title: Docker
+sidebar_position: 40
+---
+
+## Images
+
+<Icon name="github" url="https://github.com/cypress-io/cypress-docker-images" />
+
+This repo holds various Docker images for running Cypress locally and in CI.
+
+The Docker images:
+
+- `cypress/base:<Node version>` has the operating system dependencies required
+  to run Cypress.
+- `cypress/browsers:<tag>` extends the base images with pre-installed browsers.
+- `cypress/included:<Cypress version>` extends the base images with
+  pre-installed Cypress versions.
+- `cypress/factory:<tag>` is a docker image that can be used with docker args to
+  generate a docker container with specific versions of node, yarn, chrome,
+  firefox, edge and cypress. It's used to create the above docker images and can
+  be used by you to create a custom docker image with versions of your choice.

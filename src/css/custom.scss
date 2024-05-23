@@ -1,0 +1,371 @@
+/* https://dev.to/sajclarke_62/using-tailwindcss-v3-in-docusaurus-in-5-steps-5c26 */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/**
+ * Any CSS included here will be global. The classic template
+ * bundles Infima by default. Infima is a CSS framework designed to
+ * work well for content-centric websites.
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500;700&display=swap');
+@import './announcement-bar.scss';
+@import './markdown.scss';
+@import './sidebar.scss';
+@import './navbar.scss';
+@import './inline-toc.scss';
+@import './embeds.scss';
+@import './table-of-contents.scss';
+@import './docsearch.scss';
+
+/* You can override the default Infima variables here. */
+:root {
+  --ifm-navbar-shadow: none;
+  --ifm-color-white: #ffffff;
+  --ifm-color-black: #0a0a0a;
+
+  --ifm-color-gray-50: theme(colors.gray.50);
+  --ifm-color-gray-100: theme(colors.gray.100);
+  --ifm-color-gray-200: theme(colors.gray.200);
+  --ifm-color-gray-300: theme(colors.gray.300);
+  --ifm-color-gray-400: theme(colors.gray.400);
+  --ifm-color-gray-500: theme(colors.gray.500);
+  --ifm-color-gray-600: theme(colors.gray.600);
+  --ifm-color-gray-700: theme(colors.gray.700);
+  --ifm-color-gray-800: theme(colors.gray.800);
+  --ifm-color-gray-900: theme(colors.gray.900);
+  --ifm-color-gray-1000: theme(colors.gray.1000);
+  --ifm-color-primary: theme(colors.jade.300);
+  --ifm-color-primary-dark: theme(colors.jade.400);
+  --ifm-color-primary-darker: theme(colors.jade.500);
+  --ifm-color-primary-darkest: theme(colors.jade.600);
+  --ifm-color-primary-light: theme(colors.jade.200);
+  --ifm-color-primary-lighter: theme(colors.jade.100);
+  --ifm-color-primary-lightest: theme(colors.jade.50);
+
+  --ifm-font-family-base: ui-sans-serif, system-ui, -apple-system, Segoe UI,
+    Roboto, Helvetica Neue, Arial;
+  --ifm-heading-font-family: Poppins;
+  --ifm-heading-font-weight: var(--ifm-font-weight-bold);
+  --ifm-line-height-base: 1.6;
+  --ifm-heading-color: theme(colors.gray.1000) --ifm-code-font-size: 95%;
+  --ifm-pre-line-height: 1.5em;
+
+  --ifm-code-background-color: #282a36;
+
+  //border color of divider between code title and block
+  --ifm-code-background-color-light: #3b3e51;
+  //bg color when code is highlighted via comments
+  --docusaurus-highlighted-code-line-bg: rgba(71, 128, 220, 0.4);
+
+  // border color in current area of toc
+  --toc-highlight: var(--ifm-color-primary);
+  --ifm-alert-shadow: none;
+}
+
+html[data-theme] {
+  --ifm-font-size-base: 16px;
+  --ifm-link-hover-color: theme(colors.indigo.500);
+  --ifm-link-hover-decoration: none;
+  --doc-sidebar-hidden-width: 0;
+}
+
+html[data-theme='light'] {
+  --ifm-font-color-base: var(--ifm-color-gray-800);
+  --ifm-background-color: var(--ifm-color-white);
+
+  --ifm-menu-color-active: var(--ifm-color-primary-darkest);
+  --ifm-menu-color-background: rgba(0, 0, 0, 0.02);
+  --ifm-menu-color-background-active: var(--ifm-color-primary-lighter);
+
+  --ifm-breadcrumb-color-active: var(--ifm-color-primary-dark);
+  --ifm-breadcrumb-item-background-active: var(--ifm-color-gray-50);
+
+  --docsearch-muted-color: var(--ifm-color-gray-700);
+  --docsearch-highlight-color: var(--ifm-color-primary-dark);
+
+  --ifm-tabs-color-active: var(--ifm-color-primary);
+  --ifm-tabs-color: var(--ifm-color-gray-300);
+  --ifm-tabs-hover-color: rgba(255, 255, 255, 0.08);
+
+  --ifm-link-color: theme(colors.indigo.500);
+
+  --ifm-toc-border-color: var(--ifm-color-gray-100);
+
+  // adjust hue & transparency of `code` so dotted underline shows through in light mode
+  --ifm-code-background: #dadada33;
+}
+
+html[data-theme='dark'] {
+  --ifm-font-color-base: var(--ifm-color-gray-50);
+  --ifm-background-color: var(--ifm-color-gray-1000);
+
+  --ifm-menu-color: var(--ifm-color-gray-100);
+  --ifm-menu-color-active: var(--ifm-color-primary);
+  --ifm-menu-color-background-active: them(colors.jade.900);
+
+  --ifm-breadcrumb-color-active: var(--ifm-color-primary);
+  --ifm-breadcrumb-item-background-active: var(--ifm-color-gray-900);
+
+  --docsearch-muted-color-override: var(--ifm-color-gray-100);
+  --docsearch-highlight-color: var(--ifm-color-primary-darker);
+
+  --ifm-tabs-color-active: var(--ifm-color-primary);
+  --ifm-tabs-color: var(--ifm-color-gray-300);
+  --ifm-tabs-hover-color: rgba(255, 255, 255, 0.08);
+
+  --ifm-link-color: #29a7ff;
+
+  --ifm-toc-border-color: var(--ifm-color-gray-900);
+}
+
+/* prevent fonts from looking chunky, esp in Firefox */
+@media (min-resolution: 2dppx) {
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* add a small gap to the main content area when the width
+  starts to approach the sidebar */
+@media screen and (min-width: 997px) and (max-width: 1660px) {
+  [class^='docPage'] {
+    //dynamic class name, so using the prefix
+    gap: 18px;
+  }
+}
+
+[class^='toggle_'] button {
+  margin-left: 0.15rem;
+}
+
+/* using attribute selector for these dynamic classes */
+[class^='admonitionHeading'] {
+  display: none;
+}
+
+.alert.alert--info {
+  [data-theme='dark'] &,
+  & {
+    margin-bottom: 2rem;
+    h2,
+    h3,
+    h4 {
+      border-bottom: none;
+      padding-bottom: 0;
+      margin-bottom: 4px;
+    }
+  }
+}
+
+div[class^='announcementBar'] {
+  font-size: 1rem;
+  font-weight: var(--ifm-font-weight-semibold);
+  border-bottom: none;
+}
+
+div[class^='announcementBar'] div[class^='content'] {
+  font-size: 1rem;
+  border-bottom: none;
+}
+
+div[class^='announcementBar'] .close {
+  margin-right: 1rem;
+}
+
+/* Font Awesome Icons */
+.svg-inline--fa {
+  display: inline-block;
+  height: 1em;
+  width: 1em;
+}
+
+/* open external page icon */
+.footer__link-item svg {
+  display: none;
+}
+
+.footer__links {
+  margin-bottom: 2rem;
+}
+
+.mediaGridContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px 40px;
+}
+
+.mediaListContainer {
+  margin-bottom: 50px;
+}
+
+.mediaColumn {
+  max-width: 350px;
+}
+
+.mediaTitleContainer {
+  height: 75px;
+
+  h3 {
+    font-size: 1.25rem;
+  }
+}
+
+.mediaImage {
+  width: 100%;
+  height: auto;
+  border: 1px solid #ddd;
+  box-shadow: 0 1px 2px #ddd;
+}
+
+/* remove extra vertical space from tabs when it contains a code block */
+.tabs-container .margin-top--md .theme-code-block {
+  margin-top: -1rem;
+}
+
+/* code title styling */
+div[class^='codeBlockTitle'] {
+  font-size: 1.1rem;
+  font-weight: var(--ifm-font-weight-bold);
+  color: var(--ifm-color-gray-50);
+  border-bottom: 2px solid var(--ifm-code-background-color-light);
+}
+
+.tabs-container {
+  background-color: var(--ifm-code-background-color);
+  border-radius: var(--ifm-code-border-radius);
+}
+
+.tabs-container .tabs {
+  background-color: #1f2937;
+  border-radius: 0.4rem 0.4rem 0 0;
+  box-shadow: inset 0px -6px 0px -4px var(--ifm-code-background-color-light);
+}
+
+@media (min-width: 997px) and (max-width: 1180px) {
+  .tabs-container .tabs {
+    max-width: 36rem;
+  }
+}
+
+.tabs-container .tabs__item {
+  margin: 0;
+  padding: 0.75rem 1rem;
+  font-size: 1.05rem;
+}
+
+.tabs-container .tabs__item:hover {
+  background-color: var(--ifm-tabs-hover-color);
+}
+
+/* api tables */
+.api-table caption {
+  text-align: left;
+  margin: 4px;
+  font-weight: bold;
+  font-size: 1.25rem;
+}
+
+.api-table thead td {
+  font-weight: bold;
+}
+
+.api-table.table-list td:first-child {
+  font-weight: bold;
+}
+
+/* hide the docs version badge, not useful until we
+  use the Docusaurus versioning */
+.theme-doc-version-badge {
+  display: none;
+}
+
+/* tweaks/hiding content after version banner
+  for internal review */
+.theme-doc-version-banner {
+  font-size: 1.1rem;
+  margin-top: 4rem;
+}
+.theme-doc-version-banner + div {
+  display: none;
+}
+
+/* add some more spacing for main doc container */
+[class^='docItemContainer'] {
+  margin: 0 10px;
+}
+
+[class^='docItemContainer'] [class^='codeBlockLines'] {
+  max-width: 0;
+}
+
+/* hides the osano widget */
+.osano-cm-widget {
+  display: none;
+}
+
+.logo {
+  width: 20px;
+  display: inline-block;
+  vertical-align: text-top;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--ifm-heading-color);
+  font-family: var(--ifm-heading-font-family);
+  font-weight: var(--ifm-heading-font-weight);
+  line-height: var(--ifm-heading-line-height);
+  margin: var(--ifm-heading-margin-top) 0 var(--ifm-heading-margin-bottom) 0;
+}
+
+h1 {
+  font-size: var(--ifm-h1-font-size);
+}
+
+h2 {
+  font-size: var(--ifm-h2-font-size);
+}
+
+h3 {
+  font-size: var(--ifm-h3-font-size);
+  margin-bottom: 0.75rem;
+}
+
+h4 {
+  font-size: var(--ifm-h4-font-size);
+}
+
+h5 {
+  font-size: var(--ifm-h5-font-size);
+}
+
+h6 {
+  font-size: var(--ifm-h6-font-size);
+}
+
+.theme-edit-this-page {
+  display: flex;
+}
+
+.card {
+  html[data-theme='dark'] & {
+    @apply bg-gray-900;
+  }
+}
+
+.navbar-sidebar__backdrop {
+  @apply bg-gray-900/[.80] backdrop-blur;
+}
+
+// @see https://github.com/cypress-io/cypress-documentation/issues/5771
+#__docusaurus_skipToContent_fallback {
+  scroll-margin-top: var(--ifm-navbar-height);
+}
