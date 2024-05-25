@@ -171,6 +171,13 @@
           "badge": "community"
         },
         {
+          "name": "cypress-plugin-last-failed",
+          "description": "A companion Cypress plugin for `cy-grep` that re-runs the last failed test(s).",
+          "link": "https://github.com/dennisbergevin/cypress-plugin-last-failed",
+          "keywords": ["grep", "ui", "failure", "results"],
+          "badge": "community"
+        },
+        {
           "name": "cly",
           "description": "A prototype of generating quicker project scaffolding for Cypress.",
           "link": "https://github.com/bahmutov/cly",
