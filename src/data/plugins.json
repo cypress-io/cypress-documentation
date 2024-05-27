@@ -1305,7 +1305,7 @@
         },
         {
           "name": "cypress-temp-mail",
-          "description": "Lightweight npm package with quick setup that offers temporary test email accounts to facilitate end-to-end testing",
+          "description": "Temporary email provider for cypress testing",
           "link": "https://github.com/madhusaran/cypress-temp-mail",
           "keywords": ["cypress-temp-mail", "email", "temp-mail", "test-email", "test", "commands"],
           "badge": "community"
