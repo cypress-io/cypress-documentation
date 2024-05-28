@@ -27,7 +27,7 @@ cy.intercept('/users/*').as('getUsers')
 cy.intercept('/activities/*').as('getActivities')
 
 // As templated types:
-cy.wait<CustomRequest, CustomResponse>('@getUsers').then(
+cy.wait<UserReq, UserRes>('@getUsers').then(
   ({ request, response }) => {
     request.body // will be of type UserReq
     response.body // will be of type UserRes
@@ -36,17 +36,17 @@ cy.wait<CustomRequest, CustomResponse>('@getUsers').then(
 
 // As inferred types, with type `Interception` available in `cypress/types/net-stubbing`
 cy.wait('@getUsers').then(
-  ({ request, response }: Interception<CustomRequest, CustomResponse>) => {
+  ({ request, response }: Interception<UserReq, UserRes>) => {
     request.body // will be of type UserReq
     response.body // will be of type UserRes
   }
 )
 
-// When passing an array of aliases, types must me inferred:
+// When passing an array of aliases, types must be inferred:
 cy.wait(['@getUsers', 'getActivities']).then(
   (
     interceptions: Array<
-      Interception<UserReq | ActivityReq, UserRes, ActivityRes>
+      Interception<UserReq | ActivityReq, UserRes | ActivityRes>
     >
   ) => {
     interceptions.forEach(({ request, response }) => {
