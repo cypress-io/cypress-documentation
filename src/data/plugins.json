@@ -1302,6 +1302,13 @@
           "link": "https://github.com/e23thr/cypress-guerrillamail",
           "keywords": ["email", "guerrillamail", "test", "commands"],
           "badge": "community"
+        },
+        {
+          "name": "cypress-temp-mail",
+          "description": "Lightweight npm library designed to generate temporary email addresses for end-to-end testing with Cypress",
+          "link": "https://github.com/madhusaran/cypress-temp-mail",
+          "keywords": ["cypress-temp-mail", "email","temp-mail", "test", "commands"],
+          "badge": "community"
         }
       ]
     }
