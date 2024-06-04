@@ -1309,7 +1309,12 @@
           "link": "https://github.com/madhusaran/cypress-temp-mail",
           "keywords": ["cypress-temp-mail", "email","temp-mail", "test", "commands"],
           "badge": "community"
-        },
+        }        
+      ]
+    },
+    {
+      "name": "SMS",
+      "plugins": [
         {
           "name": "cypress-temp-sms",
           "description": "Generates temporary mobile numbers that shall be used for SMS verification (OTP,2FA)",
