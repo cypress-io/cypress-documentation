@@ -1309,7 +1309,14 @@
           "link": "https://github.com/madhusaran/cypress-temp-mail",
           "keywords": ["cypress-temp-mail", "email","temp-mail", "test", "commands"],
           "badge": "community"
-        }        
+        },
+        {
+          "name":"cymap",
+          "description":"Access email from any email server by leveraging IMAP capabilities inside Cypress.",
+          "link":"https://github.com/FC122/cymap",
+          "keywords":["imap", "email", "test", "commands"],
+          "badge":"community"
+        }
       ]
     },
     {
