@@ -27,12 +27,10 @@ cy.intercept('/users/*').as('getUsers')
 cy.intercept('/activities/*').as('getActivities')
 
 // As templated types:
-cy.wait<UserReq, UserRes>('@getUsers').then(
-  ({ request, response }) => {
-    request.body // will be of type UserReq
-    response.body // will be of type UserRes
-  }
-)
+cy.wait<UserReq, UserRes>('@getUsers').then(({ request, response }) => {
+  request.body // will be of type UserReq
+  response.body // will be of type UserRes
+})
 
 // As inferred types, with type `Interception` available in `cypress/types/net-stubbing`
 cy.wait('@getUsers').then(
