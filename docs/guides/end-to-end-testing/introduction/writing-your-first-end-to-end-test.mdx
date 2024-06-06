@@ -443,7 +443,7 @@ the new page. If we read it out loud, it might sound like:
 3. _Click on it_
 4. _Get the URL_
 5. _Assert it includes: `/commands/actions`_
-6. _Get the input with the `action-email` data-testid_
+6. _Get the input with the `action-email` class_
 7. _Type `fake@email.com` into the input_
 8. _Assert the input reflects the new value_
 
@@ -455,7 +455,7 @@ Or in the _Given_, _When_, _Then_ syntax:
 
 1. _**Given** a user visits `https://example.cypress.io`_
 2. _**When** they click the link labeled `type`_
-3. _And they type "fake@email.com" into the `[data-testid="action-email"]`
+3. _And they type "fake@email.com" into the input that has a class of `action-email`
    input_
 4. _**Then** the URL should include `/commands/actions`_
 5. _And the `[data-testid="action-email"]` input has "fake@email.com" as its
