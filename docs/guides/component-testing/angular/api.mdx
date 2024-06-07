@@ -11,6 +11,15 @@ sidebar_position: 40
 import { mount } from 'cypress/angular'
 ```
 
+:::info
+Be sure to use the `cypress/angular-signals` package if using Angular `17.2` and up and wishing to test `signal()`s within your component tests.
+
+```js
+import { mount } from 'cypress/angular-signals'
+```
+
+:::
+
 <table class="api-table">
   <tr>
     <td>Description</td>
@@ -153,7 +162,7 @@ providers, declarations, imports and even component @Inputs()
   <tr>
     <td>componentProperties</td>
     <td>Partial&lt;&lbrace;[P in keyof T]: T[P];&rbrace;&gt; (optional)</td>
-    <td></td>
+    <td> If using the `cypress/angular-signals` test harness, this type is adapted to `Partial<{[P in keyof T]: T[P] extends InputSignal<infer V> ? InputSignal<V> | WritableSignal<V> | V : T[P]}>` to allow for generic types to be wrapped inside a signal</td>
   </tr>
 </table>
 
