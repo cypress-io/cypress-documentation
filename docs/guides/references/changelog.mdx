@@ -14,7 +14,7 @@ _Released 6/18/2024_
 
 - We now trigger `input` and `change` events when typing `{upArrow}` and `{downArrow}` via `.type()` on `input[type=number]` elements. Fixes [#29611](https://github.com/cypress-io/cypress/issues/29611).
 - Fixed an issue where auto scrolling the reporter would sometimes be disabled without the user's intent. Fixes [#25084](https://github.com/cypress-io/cypress/issues/25084).
-- Fixed an issue where `inlineSourceMaps` was still being used when `sourceMaps` was provided in a user's typescript config for typescript version 5. Fixes [#26203](https://github.com/cypress-io/cypress/issues/26203).
+- Fixed an issue where `inlineSourceMaps` was still being used when `sourceMaps` was provided in a user's TypeScript config for TypeScript version 5. Fixes [#26203](https://github.com/cypress-io/cypress/issues/26203).
 - When capture protocol script fails verification, an appropriate error is now displayed. Previously, an error regarding Test Replay archive location was shown. Addressed in [#29603](https://github.com/cypress-io/cypress/pull/29603).
 - Fixed an issue where receiving HTTP responses with invalid headers raised an error. Now Cypress removes the invalid headers and gives a warning in the console with debug mode on. Fixes [#28865](https://github.com/cypress-io/cypress/issues/28865).
 
@@ -266,7 +266,7 @@ _Released 1/16/2024_
 
 **Bugfixes:**
 
-- Force `moduleResolution` to `node` when `typescript` projects are detected to correctly run Cypress. This change should not have a large impact as `commonjs` is already forced when `ts-node` is registered. This fix does not impact the ESM Typescript configuration loader. Fixes [#27731](https://github.com/cypress-io/cypress/issues/27731).
+- Force `moduleResolution` to `node` when TypeScript projects are detected to correctly run Cypress. This change should not have a large impact as `commonjs` is already forced when `ts-node` is registered. This fix does not impact the ESM TypeScript configuration loader. Fixes [#27731](https://github.com/cypress-io/cypress/issues/27731).
 - No longer wait for additional frames when recording a video for a spec that was skipped by the Cloud due to Auto Cancellation. Fixes [#27898](https://github.com/cypress-io/cypress/issues/27898).
 - Now `node_modules` will not be ignored if a project path or a provided path to spec files contains it. Fixes [#23616](https://github.com/cypress-io/cypress/issues/23616).
 - Updated display of assertions and commands with a URL argument to escape markdown formatting so that values are displayed as is and assertion values display as bold. Fixes [#24960](https://github.com/cypress-io/cypress/issues/24960) and [#28100](https://github.com/cypress-io/cypress/issues/28100).
@@ -310,7 +310,7 @@ _Released 12/26/2023_
 
 **Dependency Updates:**
 
-- Updated ts-node from `10.9.1` to `10.9.2`. Cypress will longer error during `cypress run` or `cypress open` when using Typescript 5.3.2+ with `extends` in `tsconfig.json`. Addresses [#28385](https://github.com/cypress-io/cypress/issues/28385).
+- Updated ts-node from `10.9.1` to `10.9.2`. Cypress will longer error during `cypress run` or `cypress open` when using typescript 5.3.2+ with `extends` in `tsconfig.json`. Addresses [#28385](https://github.com/cypress-io/cypress/issues/28385).
 
 ## 13.6.1
 
@@ -521,7 +521,7 @@ Refer to the [v13 Migration Guide](/guides/references/migration-guide#Migrating-
 - Automation performance is now improved by switching away from websockets to direct CDP calls for Chrome and Electron browsers. Addressed in [#27592](https://github.com/cypress-io/cypress/issues/27592).
 - Edge cases where `cy.intercept` would not properly intercept have been addressed. Addressed in [#27592](https://github.com/cypress-io/cypress/issues/27592).
 - Node 14 support has been removed and Node 16 support has been deprecated. Node 16 may continue to work with Cypress `v13`, but will not be supported moving forward to closer coincide with [Node 16's end-of-life](https://nodejs.org/en/blog/announcements/nodejs16-eol) schedule. It is recommended that users update to at least Node 18.
-- The minimum supported Typescript version is `4.x`.
+- The minimum supported TypeScript version is `4.x`.
 
 **Features:**
 
@@ -583,7 +583,7 @@ _Released 07/10/2023_
 **Bugfixes:**
 
 - Fixed invalid stored preference when enabling in-app notifications that could cause the application to crash. Fixes [#27228](https://github.com/cypress-io/cypress/issues/27228).
-- Fixed an issue with the Typescript types of [`cy.screenshot()`](/api/commands/screenshot). Fixed in [#27130](https://github.com/cypress-io/cypress/pull/27130).
+- Fixed an issue with the TypeScript types of [`cy.screenshot()`](/api/commands/screenshot). Fixed in [#27130](https://github.com/cypress-io/cypress/pull/27130).
 
 **Dependency Updates:**
 
@@ -604,7 +604,7 @@ _Released 07/06/2023_
 - Fixed an issue where chrome was not recovering from browser crashes properly. Fixes [#24650](https://github.com/cypress-io/cypress/issues/24650).
 - Fixed a race condition that was causing a GraphQL error to appear on the [Debug page](/guides/cloud/recorded-runs#Debug) when viewing a running Cypress Cloud build. Fixed in [#27134](https://github.com/cypress-io/cypress/pull/27134).
 - Fixed a race condition in electron where the test window exiting prematurely during the browser launch process was causing the whole test run to fail. Addressed in [#27167](https://github.com/cypress-io/cypress/pull/27167).
-- Fixed minor issues with Typescript types in the CLI. Fixes [#24110](https://github.com/cypress-io/cypress/issues/24110).
+- Fixed minor issues with TypeScript types in the CLI. Fixes [#24110](https://github.com/cypress-io/cypress/issues/24110).
 - Fixed an issue where a value for the Electron debug port would not be respected if defined using the `ELECTRON_EXTRA_LAUNCH_ARGS` environment variable. Fixes [#26711](https://github.com/cypress-io/cypress/issues/26711).
 
 **Dependency Updates:**
@@ -1401,7 +1401,7 @@ _Released 12/20/2022_
   [`sourceRoot`](https://angular.io/guide/workspace-config#project-configuration-options)
   configuration would not be respected. Fixes
   [#24827](https://github.com/cypress-io/cypress/issues/24827).
-- Fixed Typescript typings for [`cy.nextUntil()`](/api/commands/nextuntil) to
+- Fixed TypeScript typings for [`cy.nextUntil()`](/api/commands/nextuntil) to
   include the `filter` parameter. Fixes
   [#24772](https://github.com/cypress-io/cypress/issues/24772).
 
@@ -2581,7 +2581,7 @@ _Released 6/28/2022_
 - Fix styling issue observed when long text was entered in the search when
   filtering specs in the Cypress runner. Fixes
   [#21686](https://github.com/cypress-io/cypress/issues/21686).
-- Corrected the Typescript types to include `baseUrl` as a valid test config
+- Corrected the TypeScript types to include `baseUrl` as a valid test config
   override option. Fixes
   [#22374](https://github.com/cypress-io/cypress/issues/22374) and
   [#22072](https://github.com/cypress-io/cypress/issues/22072).
@@ -3261,10 +3261,10 @@ _Released 4/11/2022_
   sometimes throw an expected error on navigation with `cy.back()` and
   `cy.go()`. Fixed [#19749](https://github.com/cypress-io/cypress/issues/19749)
   and [#20539](https://github.com/cypress-io/cypress/issues/20539).
-- Corrected the Typescript type for a cookie which was incorrectly typed as
+- Corrected the TypeScript type for a cookie which was incorrectly typed as
   `any` when the correct type is `Cookie`. Fixed in
   [#20513](https://github.com/cypress-io/cypress/pull/20513).
-- Added the missing `Cypress.Command.addAll()` Typescript types. Fixed
+- Added the missing `Cypress.Command.addAll()` TypeScript types. Fixed
   [#18886](https://github.com/cypress-io/cypress/issues/18886).
 - Fixed an uncommon error observed in `cy.session()` where an error was thrown
   when no cookies had been set for the session and the user clicks the session
