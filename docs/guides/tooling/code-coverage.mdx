@@ -686,23 +686,6 @@ Read the blog post
 [Back end Code Coverage from Cypress API tests](https://glebbahmutov.com/blog/backend-coverage/)
 for the full tutorial.
 
-## Future work
-
-We are currently exploring two additional features for code coverage during
-end-to-end tests. First, we would like to avoid the "manual" instrumentation
-step using the Istanbul.js library and instead capture the native code coverage
-that can be collected by the Chrome browser's V8 engine. You can find a
-proof-of-concept example in
-[bahmutov/cypress-native-chrome-code-coverage-example](https://github.com/bahmutov/cypress-native-chrome-code-coverage-example)
-repository.
-
-Second, we would like to capture the code coverage from _the locally running
-back end server_ that is serving the front end web application and handles the
-API requests from the web application under test. We believe that E2E tests with
-additional
-[API tests](https://www.cypress.io/blog/2017/11/07/add-gui-to-your-e2e-api-tests/)
-that Cypress can perform can effectively cover a lot of back end code.
-
 ## Videos
 
 There is a series of videos we have recorded showing code coverage in Cypress
