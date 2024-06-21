@@ -1061,6 +1061,18 @@
       "description": "<a target=\"_blank\" href=\"/guides/tooling/visual-testing\">Visual testing</a> is a great complement to functional testing.",
       "plugins": [
         {
+          "name": "Wopee.io",
+          "description": "Wopee.io: Easy visual testing with Cypress.",
+          "link": "https://docs.wopee.io/integrations/cypress/01-getting-started/",
+          "keywords": [
+            "fullpage",
+            "screenshots",
+            "visual regression",
+            "screenshots comparison"
+          ],
+          "badge": "community"
+        },
+        {
           "name": "SmartBear VisualTest",
           "description": "Visual regression testing for Cypress tests with SmartBear VisualTest.",
           "link": "https://support.smartbear.com/visualtest/docs/en/software-development-kits--sdks-/cypress-sdk.html",
