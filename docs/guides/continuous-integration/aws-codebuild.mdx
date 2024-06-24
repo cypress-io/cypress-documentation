@@ -179,14 +179,14 @@ version: 0.2
 ## AWS CodeBuild Batch configuration
 ## https://docs.aws.amazon.com/codebuild/latest/userguide/batch-build-buildspec.html
 ## Define build to run using the
-## "cypress/browsers:node-20.9.0-chrome-118.0.5993.88-1-ff-118.0.2-edge-118.0.2088.46-1" image
+## "cypress/browsers:node-20.14.0-chrome-126.0.6478.114-1-ff-127.0.1-edge-126.0.2592.61-1" image
 ## from the Cypress Amazon ECR Public Gallery
 batch:
   fast-fail: false
   build-list:
     - identifier: cypress-e2e-tests
       env:
-        image: public.ecr.aws/cypress-io/cypress/browsers:node-20.9.0-chrome-118.0.5993.88-1-ff-118.0.2-edge-118.0.2088.46-1
+        image: public.ecr.aws/cypress-io/cypress/browsers:node-20.14.0-chrome-126.0.6478.114-1-ff-127.0.1-edge-126.0.2592.61-1
 
 phases:
   install:
