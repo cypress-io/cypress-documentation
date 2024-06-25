@@ -172,6 +172,10 @@ locale. `yyyy-MM-dd` is the format required by
 [the W3 spec](https://www.w3.org/TR/html/infrastructure.html#dates-and-times)
 and is what the input's `value` will be set to regardless of browser or locale.
 
+`{upArrow}` and `{downArrow}` can increase and decrease the day value,
+depending on "step" parameter provided. Using cy.type() with `{upArrow}` and `{downArrow}`
+mimics behavior of `stepUp` and `stepDown` input methods.
+
 Special characters (`{leftArrow}`, `{selectAll}`, etc.) are not permitted.
 
 ### Month Inputs
@@ -186,6 +190,11 @@ since month input support varies between browsers and the format varies based on
 locale. `yyyy-MM` is the format required by
 [the W3 spec](https://www.w3.org/TR/html/infrastructure.html#months) and is what
 the input's `value` will be set to regardless of browser or locale.
+
+
+`{upArrow}` and `{downArrow}` can increase and decrease the month value,
+depending on "step" parameter provided. Using cy.type() with `{upArrow}` and `{downArrow}`
+mimics behavior of `stepUp` and `stepDown` input methods.
 
 Special characters (`{leftArrow}`, `{selectAll}`, etc.) are not permitted.
 
@@ -207,6 +216,10 @@ and is what the input's `value` will be set to regardless of browser or locale.
 
 Special characters (`{leftArrow}`, `{selectAll}`, etc.) are not permitted.
 
+`{upArrow}` and `{downArrow}` can increase and decrease the week value,
+depending on "step" parameter provided. Using cy.type() with `{upArrow}` and `{downArrow}`
+mimics behavior of `stepUp` and `stepDown` input methods.
+
 ### Time Inputs
 
 Using `.type()` on a time input (`<input type="time">`) requires specifying a
@@ -217,6 +230,10 @@ valid time in the format:
 - `HH:mm:ss.SSS` (e.g. `12:00:00.384`)
 
 Where `HH` is 00-23, `mm` is 00-59, `ss` is 00-59, and `SSS` is 000-999.
+
+`{upArrow}` and `{downArrow}` can increase and decrease the seconds value,
+depending on "step" parameter provided. Using cy.type() with `{upArrow}` and `{downArrow}`
+mimics behavior of `stepUp` and `stepDown` input methods.
 
 Special characters (`{leftArrow}`, `{selectAll}`, etc.) are not permitted.
 
