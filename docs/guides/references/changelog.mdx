@@ -2,14 +2,6 @@
 title: Changelog
 ---
 
-## 13.13.0
-
-_Released 7/02/2024 (PENDING)_
-
-**Features:**
-
-- `.type({upArrow})` and `.type({downArrow})` now also works for date, month, week, time, datetime-local and range input types. Addresses [#29665](https://github.com/cypress-io/cypress/issues/29665).
-
 ## 13.12.0
 
 _Released 6/18/2024_
@@ -959,9 +951,9 @@ _Released 03/14/2023_
   via [`cy.intercept()`](/api/commands/intercept) by passing `log: false` or
   `log: true`. Addresses
   [#7362](https://github.com/cypress-io/cypress/issues/7362).
-  - This can be used to override Cypress's default behavior of logging all XHRs
-    and fetches, see the
-    [example](/api/commands/intercept#Disabling-logs-for-a-request).
+- This can be used to override Cypress's default behavior of logging all XHRs
+  and fetches, see the
+  [example](/api/commands/intercept#Disabling-logs-for-a-request).
 - It is now possible to control the number of connection attempts to the browser
   using the `CYPRESS_CONNECT_RETRY_THRESHOLD` Environment Variable. Learn more
   [here](/guides/references/advanced-installation#Environment-variables).
@@ -1537,9 +1529,9 @@ Read more about 12.0 in
   test and you may experience test errors with this upgrade. To better
   understand the full impact of this change, please review the
   [migration guide](/guides/references/migration-guide#Test-Isolation).
-  - In Cypress v12, the `testIsolation` configuration values have changed from
-    `on` or `off` to `true` or `false`. Addressed in
-    [#24935](https://github.com/cypress-io/cypress/pull/24935).
+- In Cypress v12, the `testIsolation` configuration values have changed from
+  `on` or `off` to `true` or `false`. Addressed in
+  [#24935](https://github.com/cypress-io/cypress/pull/24935).
 - The `experimentalSessionAndOrigin` configuration option has been removed and
   all functionality associated with this experiment is now enabled by default,
   with the exception of using `require` and `import` with callback supplied to
@@ -1910,11 +1902,11 @@ _Released 10/25/2022_
   [#23379](https://github.com/cypress-io/cypress/issues/23379),
   [#23766](https://github.com/cypress-io/cypress/issues/23766),
   [#23767](https://github.com/cypress-io/cypress/issues/23767).
-  - Users will be prompted to connect a project to the Dashboard when logging in
-    from the Cypress Launchpad after a testing type has been selected.
-  - Users will be prompted to record runs to the Dashboard from both the Cypress
-    App and Cypress Launchpad if a project is connected to the Dashboard and has
-    no recorded runs.
+- Users will be prompted to connect a project to the Dashboard when logging in
+  from the Cypress Launchpad after a testing type has been selected.
+- Users will be prompted to record runs to the Dashboard from both the Cypress
+  App and Cypress Launchpad if a project is connected to the Dashboard and has
+  no recorded runs.
 
 **Bugfixes:**
 
@@ -1957,10 +1949,10 @@ _Released 10/25/2022_
   has changed. The previous modes of `legacy` and `strict` have been replaced
   with `on` and `off`. Fixes
   [#24206](https://github.com/cypress-io/cypress/issues/24206).
-  - The default mode is `on` when
-    [`experimentalSessionAndOrigin`](/guides/references/experiments) is enabled.
-  - The [cy.session()](/api/commands/session) command now inherits the test
-    isolation behavior for the suite it runs in.
+- The default mode is `on` when
+  [`experimentalSessionAndOrigin`](/guides/references/experiments) is enabled.
+- The [cy.session()](/api/commands/session) command now inherits the test
+  isolation behavior for the suite it runs in.
 
 ## 10.10.0
 
@@ -2717,16 +2709,16 @@ _Released 6/2/2022_
 - Improved support for esm in windows. Fixed
   [#22038](https://github.com/cypress-io/cypress/issues/22038)
 - Improved TypeScript detection in project:
-  - Ensures TypeScript actually exists (via `require.resolve`) and is specified
-    in dependencies or devDependencies before migrating a project to use it.
-  - When creating a new project include `*tsconfig.json` glob in algorithm to
-    detect TypeScript.
-  - When migrating the existing files in the `cypress` folder should be enough
-    info to make the determination.
-  - No longer includes `.d.ts` files when detecting TypeScript
-  - Fixed [#22034](https://github.com/cypress-io/cypress/issues/22034),
-    [#22108](https://github.com/cypress-io/cypress/issues/22018), and
-    [#21997](https://github.com/cypress-io/cypress/issues/21997)
+- Ensures TypeScript actually exists (via `require.resolve`) and is specified
+  in dependencies or devDependencies before migrating a project to use it.
+- When creating a new project include `*tsconfig.json` glob in algorithm to
+  detect TypeScript.
+- When migrating the existing files in the `cypress` folder should be enough
+  info to make the determination.
+- No longer includes `.d.ts` files when detecting TypeScript
+- Fixed [#22034](https://github.com/cypress-io/cypress/issues/22034),
+  [#22108](https://github.com/cypress-io/cypress/issues/22018), and
+  [#21997](https://github.com/cypress-io/cypress/issues/21997)
 - Vite dev-server for component testing will not crash if user has vite plugins
   that rely on non-empty plugins list. Fixed
   [#22021](https://github.com/cypress-io/cypress/issues/22021)
@@ -2787,73 +2779,73 @@ which explains some breaking changes in more detail.**
 
 - We introduced several breaking changes to the **Cypress configuration file**
   detailed below:
-  - Using a `cypress.json` configuration file is no longer supported. Replace
-    this configuration file with a `cypress.config.js`, `cypress.config.ts`,
-    `cypress.config.cjs` or `cypress.config.mjs` file. This change provides
-    better flexibility and extensibility of configuration. An error will be
-    thrown if both a `cypress.json` file and `cypress.config.{cjs,js,mjs,ts}`
-    file are found. Addressed in
-    [#18221](https://github.com/cypress-io/cypress/pull/18221),
-    [#18300](https://github.com/cypress-io/cypress/pull/18300),
-    [#20554](https://github.com/cypress-io/cypress/pull/20554), and
-    [#20643](https://github.com/cypress-io/cypress/pull/20643).
-  - A Cypress configuration file is now required and passing the CLI flag
-    `--config-file=false` will throw an error. Addressed in
-    [#20643](https://github.com/cypress-io/cypress/pull/20643).
-  - A default configuration file will no longer be auto-generated by Cypress
-    when a configuration file doesn't exist. Instead, you can run `cypress open`
-    and set up your project with a specific testing type to have this file
-    generated. This allows you to customize the configuration setup by
-    testing-type for the language and dependencies leveraged in your project.
-  - The configuration file's JSON schema is no longer supported since the
-    configuration can no longer be provided via a JSON format.
+- Using a `cypress.json` configuration file is no longer supported. Replace
+  this configuration file with a `cypress.config.js`, `cypress.config.ts`,
+  `cypress.config.cjs` or `cypress.config.mjs` file. This change provides
+  better flexibility and extensibility of configuration. An error will be
+  thrown if both a `cypress.json` file and `cypress.config.{cjs,js,mjs,ts}`
+  file are found. Addressed in
+  [#18221](https://github.com/cypress-io/cypress/pull/18221),
+  [#18300](https://github.com/cypress-io/cypress/pull/18300),
+  [#20554](https://github.com/cypress-io/cypress/pull/20554), and
+  [#20643](https://github.com/cypress-io/cypress/pull/20643).
+- A Cypress configuration file is now required and passing the CLI flag
+  `--config-file=false` will throw an error. Addressed in
+  [#20643](https://github.com/cypress-io/cypress/pull/20643).
+- A default configuration file will no longer be auto-generated by Cypress
+  when a configuration file doesn't exist. Instead, you can run `cypress open`
+  and set up your project with a specific testing type to have this file
+  generated. This allows you to customize the configuration setup by
+  testing-type for the language and dependencies leveraged in your project.
+- The configuration file's JSON schema is no longer supported since the
+  configuration can no longer be provided via a JSON format.
 - Cypress has made several **configuration option changes** including renaming
   options, removing options, and only allowing some options within a specific
   testing type. Please run `cypress open` to have our automated migration update
   these options for you.
 
-  - Many configuration options are now specific to either end-to-end or
-    component testing. The types have also been updated to match the new
-    structure. Addressed in
-    [#20677](https://github.com/cypress-io/cypress/pull/20677).
-  - The `baseUrl` and `experimentalSessionAndOrigin` configuration options are
-    no longer valid as top-level configuration options and can only be defined
-    within the `e2e` configuration. Addressed in
-    [#20589](https://github.com/cypress-io/cypress/pull/20589) and
-    [#21588](https://github.com/cypress-io/cypress/pull/21588).
-  - The `supportFile` and `slowTestThreshold` options are no longer valid as
-    top-level configuration options and must now be defined within the `e2e`
-    and/or `component` configurations.
-  - Previously the `supportFile` option defaulted to `cypress/support/index.js`.
-    Now the [`e2e.supportFile`](/guides/references/configuration#e2e) option
-    defaults to `cypress/support/e2e.{js,jsx,ts,tsx}` and the
-    [`component.supportFile`](/guides/references/configuration#component) option
-    defaults to `cypress/support/component.{js,jsx,ts,tsx}`. Addressed in
-    [#19776](https://github.com/cypress-io/cypress/pull/19776) and
-    [#19364](https://github.com/cypress-io/cypress/pull/19364).
-  - The `pluginsFile` option was removed. This option should be replaced with
-    the new
-    [`setupNodeEvents()`](/guides/references/configuration#setupNodeEvents) and
-    [`devServer()`](/guides/references/configuration#devServer) configuration
-    options. Addressed in
-    [#18798](https://github.com/cypress-io/cypress/pull/18798) and
-    [#20560](https://github.com/cypress-io/cypress/pull/20560).
-  - The `testFiles` option was removed. This option was replaced with the new
-    `specPattern` option. Addressed in
-    [#19319](https://github.com/cypress-io/cypress/pull/19319) and
-    [#20565](https://github.com/cypress-io/cypress/pull/20565).
-  - The `integrationFolder` and `componentFolder` options were removed. These
-    options were made obsolete by the new `specPattern` option. Addressed in
-    [#19319](https://github.com/cypress-io/cypress/pull/19319).
-  - The `ignoreTestFiles` option was removed. This option was replaced with the
-    new `excludeSpecPattern` option. Addressed in
-    [#19319](https://github.com/cypress-io/cypress/pull/19319).
-  - The `experimentalStudio` option was removed with the removal of the
-    experimental Cypress Studio feature. If this option is configured in your
-    project, a warning message will be displayed. Please leave any feedback
-    around Cypress Studio
-    [here](https://github.com/cypress-io/cypress/discussions/21561). Addressed
-    in [#20515](https://github.com/cypress-io/cypress/pull/20515).
+- Many configuration options are now specific to either end-to-end or
+  component testing. The types have also been updated to match the new
+  structure. Addressed in
+  [#20677](https://github.com/cypress-io/cypress/pull/20677).
+- The `baseUrl` and `experimentalSessionAndOrigin` configuration options are
+  no longer valid as top-level configuration options and can only be defined
+  within the `e2e` configuration. Addressed in
+  [#20589](https://github.com/cypress-io/cypress/pull/20589) and
+  [#21588](https://github.com/cypress-io/cypress/pull/21588).
+- The `supportFile` and `slowTestThreshold` options are no longer valid as
+  top-level configuration options and must now be defined within the `e2e`
+  and/or `component` configurations.
+- Previously the `supportFile` option defaulted to `cypress/support/index.js`.
+  Now the [`e2e.supportFile`](/guides/references/configuration#e2e) option
+  defaults to `cypress/support/e2e.{js,jsx,ts,tsx}` and the
+  [`component.supportFile`](/guides/references/configuration#component) option
+  defaults to `cypress/support/component.{js,jsx,ts,tsx}`. Addressed in
+  [#19776](https://github.com/cypress-io/cypress/pull/19776) and
+  [#19364](https://github.com/cypress-io/cypress/pull/19364).
+- The `pluginsFile` option was removed. This option should be replaced with
+  the new
+  [`setupNodeEvents()`](/guides/references/configuration#setupNodeEvents) and
+  [`devServer()`](/guides/references/configuration#devServer) configuration
+  options. Addressed in
+  [#18798](https://github.com/cypress-io/cypress/pull/18798) and
+  [#20560](https://github.com/cypress-io/cypress/pull/20560).
+- The `testFiles` option was removed. This option was replaced with the new
+  `specPattern` option. Addressed in
+  [#19319](https://github.com/cypress-io/cypress/pull/19319) and
+  [#20565](https://github.com/cypress-io/cypress/pull/20565).
+- The `integrationFolder` and `componentFolder` options were removed. These
+  options were made obsolete by the new `specPattern` option. Addressed in
+  [#19319](https://github.com/cypress-io/cypress/pull/19319).
+- The `ignoreTestFiles` option was removed. This option was replaced with the
+  new `excludeSpecPattern` option. Addressed in
+  [#19319](https://github.com/cypress-io/cypress/pull/19319).
+- The `experimentalStudio` option was removed with the removal of the
+  experimental Cypress Studio feature. If this option is configured in your
+  project, a warning message will be displayed. Please leave any feedback
+  around Cypress Studio
+  [here](https://github.com/cypress-io/cypress/discussions/21561). Addressed
+  in [#20515](https://github.com/cypress-io/cypress/pull/20515).
 
 - During `cypress open`, the ability to "Run all specs" and "Run filtered specs"
   has been removed. Please leave feedback around the removal of this feature
@@ -2887,180 +2879,180 @@ which explains some breaking changes in more detail.**
 - Cypress 10 now includes beta support for **component testing**. More features
   around component testing are detailed below:
 
-  - Component testing is now integrated directly into the main app, allowing you
-    to choose which testing experience you want upon launching Cypress. See our
-    [current support for frameworks and bundlers](/guides/component-testing/component-framework-configuration).
-    Addressed in [#21111](https://github.com/cypress-io/cypress/pull/21111).
-  - Cypress will now guide you through installing the component testing
-    dependencies and project setup necessary to begin component testing in
-    Cypress. Previously this required manual setup and referencing the
-    documentation.
-  - When you use the Cypress app during `cypress open` to configure your project
-    for CT testing, a [`cy.mount()`](/api/commands/mount) command will be
-    automatically scaffolded for you in a `ct.supportFile`.
-  - You can now create an empty component testing spec file from within the
-    Cypress app directly and preview the specfile upon creation.
-  - The following component testing plugins are now shipped with Cypress to
-    enable easy `cy.mount()` implementation. Your local framework dependencies
-    found in `node_modules` will be referenced to prevent adding additional
-    dependencies or peer-dependencies to your `package.json`. From now on, the
-    latest plugin version will be shipped with each Cypress release. See our
-    [current support for frameworks and bundlers](/guides/component-testing/component-framework-configuration).
-    Addressed in [#20930](https://github.com/cypress-io/cypress/pull/20930).
-    - `@cypress/mount-utils@2.0.0`
-    - `@cypress/react@6.0.0`
-    - `@cypress/vue@4.0.0`
-    - `@cypress/vue2@1.0.0`
+- Component testing is now integrated directly into the main app, allowing you
+  to choose which testing experience you want upon launching Cypress. See our
+  [current support for frameworks and bundlers](/guides/component-testing/component-framework-configuration).
+  Addressed in [#21111](https://github.com/cypress-io/cypress/pull/21111).
+- Cypress will now guide you through installing the component testing
+  dependencies and project setup necessary to begin component testing in
+  Cypress. Previously this required manual setup and referencing the
+  documentation.
+- When you use the Cypress app during `cypress open` to configure your project
+  for CT testing, a [`cy.mount()`](/api/commands/mount) command will be
+  automatically scaffolded for you in a `ct.supportFile`.
+- You can now create an empty component testing spec file from within the
+  Cypress app directly and preview the specfile upon creation.
+- The following component testing plugins are now shipped with Cypress to
+  enable easy `cy.mount()` implementation. Your local framework dependencies
+  found in `node_modules` will be referenced to prevent adding additional
+  dependencies or peer-dependencies to your `package.json`. From now on, the
+  latest plugin version will be shipped with each Cypress release. See our
+  [current support for frameworks and bundlers](/guides/component-testing/component-framework-configuration).
+  Addressed in [#20930](https://github.com/cypress-io/cypress/pull/20930).
+- `@cypress/mount-utils@2.0.0`
+- `@cypress/react@6.0.0`
+- `@cypress/vue@4.0.0`
+- `@cypress/vue2@1.0.0`
 
 - We've enhanced how you can set and refresh **configuration** detailed below:
 
-  - Support for `cypress.config.js|ts|cjs|mjs` configuration files was added.
-    Addressed in [#20643](https://github.com/cypress-io/cypress/pull/20643).
-  - The Cypress app will now refresh when changes are made in the configuration
-    file instead of closing the app. Addressed in
-    [#21160](https://github.com/cypress-io/cypress/pull/21160).
+- Support for `cypress.config.js|ts|cjs|mjs` configuration files was added.
+  Addressed in [#20643](https://github.com/cypress-io/cypress/pull/20643).
+- The Cypress app will now refresh when changes are made in the configuration
+  file instead of closing the app. Addressed in
+  [#21160](https://github.com/cypress-io/cypress/pull/21160).
 
 - We've added several **new configuration options** detailed below:
 
-  - The [`setupNodeEvents()`](/guides/references/configuration#setupNodeEvents)
-    option is a new testing type specific configuration option. It must be
-    defined within the [`e2e`](/guides/references/configuration#e2e) and/or
-    [`component`](/guides/references/configuration#component) configurations.
-    This option allows you to modify your loaded configuration, listen to events
-    and register plugins. This option replaces the `pluginsFile` option.
-    Addressed in [#18798](https://github.com/cypress-io/cypress/pull/18798) and
-    [#20560](https://github.com/cypress-io/cypress/pull/20560).
+- The [`setupNodeEvents()`](/guides/references/configuration#setupNodeEvents)
+  option is a new testing type specific configuration option. It must be
+  defined within the [`e2e`](/guides/references/configuration#e2e) and/or
+  [`component`](/guides/references/configuration#component) configurations.
+  This option allows you to modify your loaded configuration, listen to events
+  and register plugins. This option replaces the `pluginsFile` option.
+  Addressed in [#18798](https://github.com/cypress-io/cypress/pull/18798) and
+  [#20560](https://github.com/cypress-io/cypress/pull/20560).
 
-  - The [`devServer`](/guides/references/configuration#devServer) option is a
-    new component testing specific option that must be defined within the
-    [`component`](/guides/references/configuration#component) configuration.
-    This option provides a mechanism for starting a component testing dev-server
-    when tests are running.
+- The [`devServer`](/guides/references/configuration#devServer) option is a
+  new component testing specific option that must be defined within the
+  [`component`](/guides/references/configuration#component) configuration.
+  This option provides a mechanism for starting a component testing dev-server
+  when tests are running.
 
-  - The `specPattern` option is a new testing-type specific configuration option
-    that must be defined within the
-    [`e2e`](/guides/references/configuration#e2e) and/or
-    [`component`](/guides/references/configuration#component) configurations.
-    This option accepts a glob or an array of globs of the spec files to load.
-    This option simplifies the spec discovery by replacing the
-    `componentFolder`, `integrationFolder` and `testFiles` options. Addressed in
-    [#19319](https://github.com/cypress-io/cypress/pull/19319),
-    [#20565](https://github.com/cypress-io/cypress/pull/20565) and
-    [#20853](https://github.com/cypress-io/cypress/pull/20853).
+- The `specPattern` option is a new testing-type specific configuration option
+  that must be defined within the
+  [`e2e`](/guides/references/configuration#e2e) and/or
+  [`component`](/guides/references/configuration#component) configurations.
+  This option accepts a glob or an array of globs of the spec files to load.
+  This option simplifies the spec discovery by replacing the
+  `componentFolder`, `integrationFolder` and `testFiles` options. Addressed in
+  [#19319](https://github.com/cypress-io/cypress/pull/19319),
+  [#20565](https://github.com/cypress-io/cypress/pull/20565) and
+  [#20853](https://github.com/cypress-io/cypress/pull/20853).
 
-    - The [`e2e.specPattern`](/guides/references/configuration#e2e) default
-      value for new projects is `cypress/e2e/**.cy.{js,jsx,ts,tsx}`. For
-      existing projects, please run `cypress open` to have your spec files
-      automatically migrated to match this `specPattern`. Addressed in
-      [#21193](https://github.com/cypress-io/cypress/pull/21193).
-    - The [`component.specPattern`](/guides/references/configuration#component)
-      default value is `**/*.cy.{js,jsx,ts,tsx}`.
+- The [`e2e.specPattern`](/guides/references/configuration#e2e) default
+  value for new projects is `cypress/e2e/**.cy.{js,jsx,ts,tsx}`. For
+  existing projects, please run `cypress open` to have your spec files
+  automatically migrated to match this `specPattern`. Addressed in
+  [#21193](https://github.com/cypress-io/cypress/pull/21193).
+- The [`component.specPattern`](/guides/references/configuration#component)
+  default value is `**/*.cy.{js,jsx,ts,tsx}`.
 
-  - The `excludeSpecPattern` option is a new testing type specific configuration
-    option that must be defined within the
-    [`e2e`](/guides/references/configuration#e2e) and/or
-    [`component`](/guides/references/configuration#component) configurations.
-    This option accepts a glob or an array of globs which allows you to ignore
-    spec files that would otherwise be shown in your list of specs. This option
-    replaces the `ignoreTestFiles` option. Addressed in
-    [#19319](https://github.com/cypress-io/cypress/pull/19319),
-    [#19980](https://github.com/cypress-io/cypress/pull/19980),
-    [#20763](https://github.com/cypress-io/cypress/pull/20763),
-    [#20853](https://github.com/cypress-io/cypress/pull/20853).
-    - The [`e2e.excludeSpecPattern`](/guides/references/configuration#e2e)
-      default value is the same as the replaced `ignoreTestFiles` glob pattern
-      of `*.hot-update.js`.
-    - The
-      [`component.excludeSpecPattern`](/guides/references/configuration#component)
-      default value is `['**/__snapshots__/*','**/__image_snapshots__/*']` plus
-      the `e2e.specPattern` glob patterns.
-    - The `**/node_modules/**` pattern is automatically added to both
-      `e2e.excludeSpecPattern` and `component.excludeSpecPattern` and can't be
-      overridden. This is consistent with \<10.0 behavior.
-  - Intelligent Code Completion was added with the `defineConfig()` helper
-    function. This enables configuration auto-completion and in-line
-    documentation in the configuration file in your IDE. While it's not strictly
-    necessary for Cypress to parse your configuration, we recommend wrapping
-    your config object with `defineConfig()`. Addressed in
-    [#18302](https://github.com/cypress-io/cypress/pull/18302).
+- The `excludeSpecPattern` option is a new testing type specific configuration
+  option that must be defined within the
+  [`e2e`](/guides/references/configuration#e2e) and/or
+  [`component`](/guides/references/configuration#component) configurations.
+  This option accepts a glob or an array of globs which allows you to ignore
+  spec files that would otherwise be shown in your list of specs. This option
+  replaces the `ignoreTestFiles` option. Addressed in
+  [#19319](https://github.com/cypress-io/cypress/pull/19319),
+  [#19980](https://github.com/cypress-io/cypress/pull/19980),
+  [#20763](https://github.com/cypress-io/cypress/pull/20763),
+  [#20853](https://github.com/cypress-io/cypress/pull/20853).
+- The [`e2e.excludeSpecPattern`](/guides/references/configuration#e2e)
+  default value is the same as the replaced `ignoreTestFiles` glob pattern
+  of `*.hot-update.js`.
+- The
+  [`component.excludeSpecPattern`](/guides/references/configuration#component)
+  default value is `['**/__snapshots__/*','**/__image_snapshots__/*']` plus
+  the `e2e.specPattern` glob patterns.
+- The `**/node_modules/**` pattern is automatically added to both
+  `e2e.excludeSpecPattern` and `component.excludeSpecPattern` and can't be
+  overridden. This is consistent with \<10.0 behavior.
+- Intelligent Code Completion was added with the `defineConfig()` helper
+  function. This enables configuration auto-completion and in-line
+  documentation in the configuration file in your IDE. While it's not strictly
+  necessary for Cypress to parse your configuration, we recommend wrapping
+  your config object with `defineConfig()`. Addressed in
+  [#18302](https://github.com/cypress-io/cypress/pull/18302).
 
 - We've made some updates to **Cypress API commands** detailed below:
 
-  - Enhancements were made to provide visual indication of nested commands and
-    logs. With this change, users are now able to click on log groups to print
-    additional log details to the dev tools console.
-  - The `.within()` command was updated to provide visual indication of logs and
-    commands executed in the `.within` command context. Addresses
-    [#20433](https://github.com/cypress-io/cypress/issues/20433).
-  - The redundant `cy.session()` log is now removed. Address
-    [#7673](https://github.com/cypress-io/cypress/issues/7673) in
-    [#21457](https://github.com/cypress-io/cypress/pull/21457).
+- Enhancements were made to provide visual indication of nested commands and
+  logs. With this change, users are now able to click on log groups to print
+  additional log details to the dev tools console.
+- The `.within()` command was updated to provide visual indication of logs and
+  commands executed in the `.within` command context. Addresses
+  [#20433](https://github.com/cypress-io/cypress/issues/20433).
+- The redundant `cy.session()` log is now removed. Address
+  [#7673](https://github.com/cypress-io/cypress/issues/7673) in
+  [#21457](https://github.com/cypress-io/cypress/pull/21457).
 
-  - Users can now add custom `cy.hover()` and `cy.mount()` implementation using
-    `Cypress.Commands.add()` since we don't provide a default implementation.
-    Previously users had to use `Cypress.Command.override()` to provide the
-    custom implementation. Addresses
-    [#18941](https://github.com/cypress-io/cypress/issues/18941).
+- Users can now add custom `cy.hover()` and `cy.mount()` implementation using
+  `Cypress.Commands.add()` since we don't provide a default implementation.
+  Previously users had to use `Cypress.Command.override()` to provide the
+  custom implementation. Addresses
+  [#18941](https://github.com/cypress-io/cypress/issues/18941).
 
 - We've made some updates to the **Cypress CLI** detailed below:
 
-  - You can now pass in testing type specific configuration options via the
-    `--config` CLI flag without nesting JSON. Addressed in
-    [#20127](https://github.com/cypress-io/cypress/pull/20127).
+- You can now pass in testing type specific configuration options via the
+  `--config` CLI flag without nesting JSON. Addressed in
+  [#20127](https://github.com/cypress-io/cypress/pull/20127).
 
-  - New `--e2e` and `--component` CLI flags were added to `cypress run` and
-    `cypress open` to allow a user to run or launch Cypress for a specific
-    testing-type. If a testing-type specific CLI flag is not provided when
-    running `cypress run`, Cypress will run end-to-end tests by default.
-  - A warning message is now displayed when `cypress open` is ran with the
-    `--browser` CLI flag for a browser that does not exist on the system.
-    Addressed in [#18473](https://github.com/cypress-io/cypress/pull/18473).
-  - If a testing type and browser flag are passed to `cypress open` when
-    launching a specific project, the browser will automatically launch.
-    Addressed in [#21538](https://github.com/cypress-io/cypress/pull/21538).
+- New `--e2e` and `--component` CLI flags were added to `cypress run` and
+  `cypress open` to allow a user to run or launch Cypress for a specific
+  testing-type. If a testing-type specific CLI flag is not provided when
+  running `cypress run`, Cypress will run end-to-end tests by default.
+- A warning message is now displayed when `cypress open` is ran with the
+  `--browser` CLI flag for a browser that does not exist on the system.
+  Addressed in [#18473](https://github.com/cypress-io/cypress/pull/18473).
+- If a testing type and browser flag are passed to `cypress open` when
+  launching a specific project, the browser will automatically launch.
+  Addressed in [#21538](https://github.com/cypress-io/cypress/pull/21538).
 
 - The `cypress open` experience has been updated to take you through our
   **Launchpad** with many features detailed below:
 
-  - When you launch Cypress via `cypress open` you'll be asked whether you want
-    to do end-to-end or component testing and taken through the configuration
-    necessary to set up your project. Addressed in
-    [#18924](https://github.com/cypress-io/cypress/pull/18924).
-  - Having files scaffolded on new projects during end-to-end testing is now opt
-    in and not automatic. Addressed in
-    [#18924](https://github.com/cypress-io/cypress/pull/18924).
+- When you launch Cypress via `cypress open` you'll be asked whether you want
+  to do end-to-end or component testing and taken through the configuration
+  necessary to set up your project. Addressed in
+  [#18924](https://github.com/cypress-io/cypress/pull/18924).
+- Having files scaffolded on new projects during end-to-end testing is now opt
+  in and not automatic. Addressed in
+  [#18924](https://github.com/cypress-io/cypress/pull/18924).
 
-  - When Cypress detects you have a `cypress.json` during `cypress run`, it will
-    error and ask you to run `cypress open` to migrate. When Cypress detects you
-    have a `cypress.json` during `cypress open`, it will guide you through
-    project migration to ensure your project continues to work as expected.
-    Addressed in [#18924](https://github.com/cypress-io/cypress/pull/18924).
+- When Cypress detects you have a `cypress.json` during `cypress run`, it will
+  error and ask you to run `cypress open` to migrate. When Cypress detects you
+  have a `cypress.json` during `cypress open`, it will guide you through
+  project migration to ensure your project continues to work as expected.
+  Addressed in [#18924](https://github.com/cypress-io/cypress/pull/18924).
 
 - After launching the browser, there are several new features in our **App**
   detailed below:
 
-  - The Cypress app has been redesigned so that the Command Log and all
-    associated navigation display with a dark background.
-  - You can now change specs or the browser within the same window as running
-    your tests.
-  - Many git details are now shown within your current project in Cypress
-    including the current branch and the last commit details of each spec in the
-    spec explorer. Addressed in
-    [#20648](https://github.com/cypress-io/cypress/pull/20648),
-    [#21139](https://github.com/cypress-io/cypress/pull/21139),
-    [#21436](https://github.com/cypress-io/cypress/pull/21436) and
-    [#20744](https://github.com/cypress-io/cypress/pull/20744)
-  - When creating a new spec within Cypress, your project's language is detected
-    to provide the correct file extension and the `specPattern` is checked to
-    ensure the spec is found by Cypress. After creating the spec, you can
-    preview the spec that was generated with the option to immediately run the
-    spec or create another spec. Addressed in
-    [#21225](https://github.com/cypress-io/cypress/pull/21225),
-    [#20567](https://github.com/cypress-io/cypress/pull/20567),
-    [#20657](https://github.com/cypress-io/cypress/pull/20657),
-    [#20962](https://github.com/cypress-io/cypress/pull/20962).
-  - The Settings page has been redesigned to more clearly distinguish between
-    settings that are specific to the project, your device, and the Dashboard.
+- The Cypress app has been redesigned so that the Command Log and all
+  associated navigation display with a dark background.
+- You can now change specs or the browser within the same window as running
+  your tests.
+- Many git details are now shown within your current project in Cypress
+  including the current branch and the last commit details of each spec in the
+  spec explorer. Addressed in
+  [#20648](https://github.com/cypress-io/cypress/pull/20648),
+  [#21139](https://github.com/cypress-io/cypress/pull/21139),
+  [#21436](https://github.com/cypress-io/cypress/pull/21436) and
+  [#20744](https://github.com/cypress-io/cypress/pull/20744)
+- When creating a new spec within Cypress, your project's language is detected
+  to provide the correct file extension and the `specPattern` is checked to
+  ensure the spec is found by Cypress. After creating the spec, you can
+  preview the spec that was generated with the option to immediately run the
+  spec or create another spec. Addressed in
+  [#21225](https://github.com/cypress-io/cypress/pull/21225),
+  [#20567](https://github.com/cypress-io/cypress/pull/20567),
+  [#20657](https://github.com/cypress-io/cypress/pull/20657),
+  [#20962](https://github.com/cypress-io/cypress/pull/20962).
+- The Settings page has been redesigned to more clearly distinguish between
+  settings that are specific to the project, your device, and the Dashboard.
 
 **Bugfixes:**
 
@@ -3186,20 +3178,20 @@ _Released 4/25/2022_
   [our blog post](https://cypress.io/blog/2022/04/25/cypress-9-6-0-easily-test-multi-domain-workflows-with-cy-origin/).
   Addressed [#17336](https://github.com/cypress-io/cypress/issues/17336) and
   [#944](https://github.com/cypress-io/cypress/issues/944).
-  - Added a new configuration option called `experimentalSessionAndOrigin`. This
-    option enables support for [`cy.session()`](/api/commands/session) and
-    [`cy.origin()`](/api/commands/origin) for end-to-end testing.
-  - The `experimentalSessionSupport` configuration option has been removed and
-    replaced by the `experimentalSessionAndOrigin` configuration option. Please
-    update your configuration to use the new `experimentalSessionAndOrigin`
-    option to continue to opt-in to this experimental feature.
-  - When `experimentalSessionAndOrigin` is enabled, cross-origin requests will
-    no longer immediately fail, but instead, time out based on the
-    [`pageLoadTimeout`](/guides/references/configuration#Timeouts)
-    configuration. This allows the request to be appropriately handled by the
-    [`cy.origin()`](/api/commands/origin) command.
-  - When `experimentalSessionAndOrigin` is enabled, Cypress will no longer wait
-    on page loads between hooks before moving on to the next test.
+- Added a new configuration option called `experimentalSessionAndOrigin`. This
+  option enables support for [`cy.session()`](/api/commands/session) and
+  [`cy.origin()`](/api/commands/origin) for end-to-end testing.
+- The `experimentalSessionSupport` configuration option has been removed and
+  replaced by the `experimentalSessionAndOrigin` configuration option. Please
+  update your configuration to use the new `experimentalSessionAndOrigin`
+  option to continue to opt-in to this experimental feature.
+- When `experimentalSessionAndOrigin` is enabled, cross-origin requests will
+  no longer immediately fail, but instead, time out based on the
+  [`pageLoadTimeout`](/guides/references/configuration#Timeouts)
+  configuration. This allows the request to be appropriately handled by the
+  [`cy.origin()`](/api/commands/origin) command.
+- When `experimentalSessionAndOrigin` is enabled, Cypress will no longer wait
+  on page loads between hooks before moving on to the next test.
 
 **Bugfixes:**
 
@@ -3391,10 +3383,10 @@ _Released 2/28/2022_
 - Added a `ready` event to the Plugins process to ensure all plugins have
   successfully started before the configuration is loaded and the tests start.
   Fixed in [#19792](https://github.com/cypress-io/cypress/issues/19792).
-  - This fixes an issue where the plugin is never executed and leaves Cypress
-    stuck in the initialization phase, where the user can only view the loading
-    spinner.
-  - This enables support for node's experimental `--loader` flag for plugins.
+- This fixes an issue where the plugin is never executed and leaves Cypress
+  stuck in the initialization phase, where the user can only view the loading
+  spinner.
+- This enables support for node's experimental `--loader` flag for plugins.
 - Made a change to the DNS lookup to improve test performances and reliability
   on MacOS machines that leverage the VMWare CBCloud SaaS solution. Before this
   change, random test failures were observed, as well as hanging tests and
@@ -3470,20 +3462,20 @@ _Released 1/31/2022_
 
 - Enhancements were made to `.selectFile()` after receiving feedback after its
   initial release in [9.3.0](/guides/references/changelog#9-3-0).
-  - The default behavior was updated to automatically infer the mime type of
-    files based on their extension to correctly encode file uploads. Addressed
-    in [#19751](https://github.com/cypress-io/cypress/issues/19751).
-  - Added the `mimeType` property so you can explicitly set the mime type on
-    files using the `mimeType` property. Addressed in
-    [#19751](https://github.com/cypress-io/cypress/issues/19751).
-  - Updated file contents types to allow either a
-    [`TypedArray`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray)
-    instance or a `Cypress.Buffer` instance, where previously file contents were
-    expected to only be an instance of `Cypress.Buffer`. Addressed in
-    [#19751](https://github.com/cypress-io/cypress/issues/19751).
-  - Updated `.selectFile()` to retain the fileName of files read from disk to
-    work with aliases. Addressed in
-    [#19803](https://github.com/cypress-io/cypress/issues/19803).
+- The default behavior was updated to automatically infer the mime type of
+  files based on their extension to correctly encode file uploads. Addressed
+  in [#19751](https://github.com/cypress-io/cypress/issues/19751).
+- Added the `mimeType` property so you can explicitly set the mime type on
+  files using the `mimeType` property. Addressed in
+  [#19751](https://github.com/cypress-io/cypress/issues/19751).
+- Updated file contents types to allow either a
+  [`TypedArray`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray)
+  instance or a `Cypress.Buffer` instance, where previously file contents were
+  expected to only be an instance of `Cypress.Buffer`. Addressed in
+  [#19751](https://github.com/cypress-io/cypress/issues/19751).
+- Updated `.selectFile()` to retain the fileName of files read from disk to
+  work with aliases. Addressed in
+  [#19803](https://github.com/cypress-io/cypress/issues/19803).
 
 **Bugfixes:**
 
@@ -3551,13 +3543,13 @@ _Released 1/18/2022_
   observed with using graceful-fs v4.2.0 with resolve v1.21+. Addressed in
   [#19676](https://github.com/cypress-io/cypress/issues/19676) and resolves
   [#19610](https://github.com/cypress-io/cypress/pull/19610).
-  - **NOTE:** This upgrade to `graceful-fs` breaks Cypress's compatibility with
-    Yarn 2. We have observed errors with Yarn 2.4.2 with `graceful-fs` 4.2.9.
-    Before this change, Cypress had minimal Yarn 2 support (see
-    [#6377](https://github.com/cypress-io/cypress/issues/6377)). Between Yarn 3
-    fixing multiple bugs and the migration path from Yarn 2 to Yarn 3 being
-    minimal, we felt the best step forward was to support and recommend Yarn 3
-    over Yarn 2.
+- **NOTE:** This upgrade to `graceful-fs` breaks Cypress's compatibility with
+  Yarn 2. We have observed errors with Yarn 2.4.2 with `graceful-fs` 4.2.9.
+  Before this change, Cypress had minimal Yarn 2 support (see
+  [#6377](https://github.com/cypress-io/cypress/issues/6377)). Between Yarn 3
+  fixing multiple bugs and the migration path from Yarn 2 to Yarn 3 being
+  minimal, we felt the best step forward was to support and recommend Yarn 3
+  over Yarn 2.
 - Upgraded `electron` from `15.2.0` to `15.3.4`. Addressed in
   [#19351](https://github.com/cypress-io/cypress/issues/19351).
 
@@ -3651,10 +3643,10 @@ _Released 12/20/2021_
   types. Fixes [#18879](https://github.com/cypress-io/cypress/issues/18879),
   [#19095](https://github.com/cypress-io/cypress/issues/19095) and
   [#18940](https://github.com/cypress-io/cypress/issues/18940).
-  - Custom command implementations typings take into account `prevSubject`
-    variants.
-  - Custom command implementations now allows to NOT return a value.
-  - Custom command overwrites typings take into account `originalFn` function.
+- Custom command implementations typings take into account `prevSubject`
+  variants.
+- Custom command implementations now allows to NOT return a value.
+- Custom command overwrites typings take into account `originalFn` function.
 - Add types for `Cypress.session.clearAllSavedSessions()`. Fixes
   [#19363](https://github.com/cypress-io/cypress/issues/19363).
 
@@ -3674,20 +3666,20 @@ _Released 12/03/2021_
   built binary didn't contain patches to some dependencies. Addressed in
   [#19239](https://github.com/cypress-io/cypress/pull/19239). This fixed some
   issues including:
-  - Requests containing `~` will no longer be improperly encoded. Fixes
-    [#19083](https://github.com/cypress-io/cypress/issues/19083),
-    [#19084](https://github.com/cypress-io/cypress/issues/19084),
-    [#19115](https://github.com/cypress-io/cypress/issues/19115),
-    [#19096](https://github.com/cypress-io/cypress/issues/19096),
-    [#19178](https://github.com/cypress-io/cypress/issues/19178).
-  - A TypeError displaying `data.hasOwnProperty is not a function` will no
-    longer throw in some situations. Fixes
-    [#19091](https://github.com/cypress-io/cypress/issues/19091).
-  - Empty extra hooks will no longer be sent as data when recording to the
-    Dashboard. Fixes
-    [#19087](https://github.com/cypress-io/cypress/issues/19087).
-  - The Runner hanging when baseUrl is set to null to load a local file. Fixes
-    [#19105](https://github.com/cypress-io/cypress/issues/19105)
+- Requests containing `~` will no longer be improperly encoded. Fixes
+  [#19083](https://github.com/cypress-io/cypress/issues/19083),
+  [#19084](https://github.com/cypress-io/cypress/issues/19084),
+  [#19115](https://github.com/cypress-io/cypress/issues/19115),
+  [#19096](https://github.com/cypress-io/cypress/issues/19096),
+  [#19178](https://github.com/cypress-io/cypress/issues/19178).
+- A TypeError displaying `data.hasOwnProperty is not a function` will no
+  longer throw in some situations. Fixes
+  [#19091](https://github.com/cypress-io/cypress/issues/19091).
+- Empty extra hooks will no longer be sent as data when recording to the
+  Dashboard. Fixes
+  [#19087](https://github.com/cypress-io/cypress/issues/19087).
+- The Runner hanging when baseUrl is set to null to load a local file. Fixes
+  [#19105](https://github.com/cypress-io/cypress/issues/19105)
 - When using the default configuration of `"nodeVersion": "system"` with an
   installed system node >=17, Cypress will now work properly rather than throw
   an error incorrectly pointing to the user's plugin file. Fixes
@@ -3815,17 +3807,17 @@ _Released 10/25/2021_
 
 - There are changes to how "slow" tests are determined and displayed in Cypress.
   Addresses [#18496](https://github.com/cypress-io/cypress/pull/18496).
-  - Added a [`slowTestThreshold`](/guides/references/configuration#Timeouts)
-    configuration option to customize when tests are considered "slow" during
-    `cypress run`. A test that runs slower than the given threshold will display
-    in orange text in the default 'spec' reporter. This configuration can be set
-    in your Cypress config file or via specific
-    [test configuration](/guides/core-concepts/writing-and-organizing-tests#Test-Configuration).
-  - The default slow test threshold was changed from 75ms (Mocha's default) to
-    10000ms for e2e tests and 250ms for component tests. To restore the old
-    behavior, you can add `"slowTestThreshold": 75` to your Cypress config file.
-  - All tests will show the time the test ran in milliseconds during
-    `cypress run` with the default 'spec' reporter.
+- Added a [`slowTestThreshold`](/guides/references/configuration#Timeouts)
+  configuration option to customize when tests are considered "slow" during
+  `cypress run`. A test that runs slower than the given threshold will display
+  in orange text in the default 'spec' reporter. This configuration can be set
+  in your Cypress config file or via specific
+  [test configuration](/guides/core-concepts/writing-and-organizing-tests#Test-Configuration).
+- The default slow test threshold was changed from 75ms (Mocha's default) to
+  10000ms for e2e tests and 250ms for component tests. To restore the old
+  behavior, you can add `"slowTestThreshold": 75` to your Cypress config file.
+- All tests will show the time the test ran in milliseconds during
+  `cypress run` with the default 'spec' reporter.
 - Users can pass an `overwrite: true` option to `Cypress.Screenshot.defaults` to
   change default behavior to overwrite existing screenshots without having to
   set `overwrite` for each `cy.screenshot()` command. Addresses
@@ -4074,21 +4066,21 @@ _Released 08/04/2021_
   [our blog](https://cypress.io/blog/2021/08/03/authenticate-faster-in-tests-cy-session-command/)
   and the [`cy.session()`](/api/commands/session) doc for more detail.
 - The logging experience around HTTP requests has been updated.
-  - `fetch` requests are always displayed in the Command Log, regardless of if
-    `experimentalFetchSupport` is enabled.
-  - Duplicate logs for XHRs, fetches, and `cy.intercept()` have been
-    consolidated - Fixes
-    [#14843](https://github.com/cypress-io/cypress/issues/14843).
-  - The user experience around the information displayed in the console when
-    clicking on `cy.intercept()` request logs has been improved.
-  - Request logs now indicate if a request has gone to the origin or if it has
-    been stubbed by displaying a filled or empty circle in the request log.
-  - Request logs now display information about if the request and/or response
-    was modified by a `cy.intercept()`.
-  - The tooltip displayed when mousing over a request log now displays
-    information about the matched `cy.intercept()`/`cy.route()` rules.
-  - Fixed an issue where pending request logs were not ended between tests.
-    Fixes [#14655](https://github.com/cypress-io/cypress/issues/14655).
+- `fetch` requests are always displayed in the Command Log, regardless of if
+  `experimentalFetchSupport` is enabled.
+- Duplicate logs for XHRs, fetches, and `cy.intercept()` have been
+  consolidated - Fixes
+  [#14843](https://github.com/cypress-io/cypress/issues/14843).
+- The user experience around the information displayed in the console when
+  clicking on `cy.intercept()` request logs has been improved.
+- Request logs now indicate if a request has gone to the origin or if it has
+  been stubbed by displaying a filled or empty circle in the request log.
+- Request logs now display information about if the request and/or response
+  was modified by a `cy.intercept()`.
+- The tooltip displayed when mousing over a request log now displays
+  information about the matched `cy.intercept()`/`cy.route()` rules.
+- Fixed an issue where pending request logs were not ended between tests.
+  Fixes [#14655](https://github.com/cypress-io/cypress/issues/14655).
 - There's now a `Cypress.currentTest` property to access name the currently
   executing test via `Cypress.currentTest.title` and
   `Cypress.currentTest.titlePath`. Addresses
@@ -4204,12 +4196,12 @@ to Cypress 8.0.**
   [#7434](https://github.com/cypress-io/cypress/issues/7434).
 - There are several fixes for [`cy.intercept()`](/api/commands/intercept)
   including:
-  - The `times` option now works correctly with `req.continue`. Fixes
-    [#16821](https://github.com/cypress-io/cypress/issues/16821).
-  - `localhost` is now accepted as a valid `hostname` in the `RouteMatcher`.
-    Fixes [#17015](https://github.com/cypress-io/cypress/issues/17015).
-  - `delay` now works correctly with a `statusCode` of 204. Fixes
-    [#15188](https://github.com/cypress-io/cypress/issues/15188).
+- The `times` option now works correctly with `req.continue`. Fixes
+  [#16821](https://github.com/cypress-io/cypress/issues/16821).
+- `localhost` is now accepted as a valid `hostname` in the `RouteMatcher`.
+  Fixes [#17015](https://github.com/cypress-io/cypress/issues/17015).
+- `delay` now works correctly with a `statusCode` of 204. Fixes
+  [#15188](https://github.com/cypress-io/cypress/issues/15188).
 - When using the experimental
   [Cypress Studio](/guides/references/cypress-studio), there should be a reduced
   occurrence of "Studio failed to save commands" error messages. Fixes
@@ -4267,14 +4259,14 @@ _Released 06/23/2021_
 - The experience when opening a new project via `cypress open` has been
   improved. Addressed in
   [#15826](https://github.com/cypress-io/cypress/pull/15826).
-  - The scaffolded example files have been updated to include examples tests of
-    the TodoMVC project.
-  - You can now easily delete all of the scaffolded example files directly from
-    the Test Runner GUI.
-  - There's now a button to create a new spec file when no spec files are found
-    in the project.
-  - A new onboarding banner with be present with helpful links for new users and
-    new projects.
+- The scaffolded example files have been updated to include examples tests of
+  the TodoMVC project.
+- You can now easily delete all of the scaffolded example files directly from
+  the Test Runner GUI.
+- There's now a button to create a new spec file when no spec files are found
+  in the project.
+- A new onboarding banner with be present with helpful links for new users and
+  new projects.
 - The incoming request object yielded to request handler functions passed to
   `cy.intercept()` (`req`) now has a `req.query` property, which is a
   getter/setter for the query parameters on the request URL. Addresses
@@ -4661,47 +4653,47 @@ to Cypress 7.0.**
   [cy.intercept()](/api/commands/intercept). See the
   [cy.intercept()](/api/commands/intercept) docs for full usage examples.
   Breaking changes:
-  - Request handlers supplied to `cy.intercept()` are now matched starting with
-    the most recently defined request interceptor. This allows users to override
-    request handlers by calling `cy.intercept()` again. This matches the
-    previous behavior that was default in `cy.route()`. Addresses
-    [#9302](https://github.com/cypress-io/cypress/issues/9302).
-  - `cy.intercept()` now automatically parses more JSON MIME types, including
-    'application/vnd.api+json'. You can now remove `JSON.parse(req.body)` or
-    `JSON.parse(res.body)` from some tests that previously required it.
-    Addresses [#14763](https://github.com/cypress-io/cypress/issues/14763).
-  - Falsy values (with the exception of `undefined`) supplied as the body of a
-    `StaticResponse` to `cy.intercept()` will now be JSONified and sent as the
-    body. Previously, an empty string was sent instead. Addresses
-    [#15234](https://github.com/cypress-io/cypress/issues/15234) and
-    [#14205](https://github.com/cypress-io/cypress/issues/14205).
-  - The `matchUrlAgainstPath` `RouteMatcher` property has been removed from
-    `cy.intercept()`.
-  - The "substring match" from `cy.intercept()` URL matching has been removed.
-    Previously, a URL would match if it contained the supplied string anywhere.
-    Now, the URL (including querystring) only matches if it is an equality match
-    or a minimatch.
-  - `res.delay()` and `res.throttle()` have been renamed to `res.setDelay()` and
-    `res.setThrottle()`, respectively. Addresses
-    [#15700](https://github.com/cypress-io/cypress/issues/15700).
-  - `cy.route2()` was previously aliased to `cy.intercept()`. Now the alias
-    `cy.route2()` has been removed. Please update usage of `cy.route2()` to
-    `cy.intercept()`. Addressed in
-    [#14709](https://github.com/cypress-io/cypress/pull/14709).
+- Request handlers supplied to `cy.intercept()` are now matched starting with
+  the most recently defined request interceptor. This allows users to override
+  request handlers by calling `cy.intercept()` again. This matches the
+  previous behavior that was default in `cy.route()`. Addresses
+  [#9302](https://github.com/cypress-io/cypress/issues/9302).
+- `cy.intercept()` now automatically parses more JSON MIME types, including
+  'application/vnd.api+json'. You can now remove `JSON.parse(req.body)` or
+  `JSON.parse(res.body)` from some tests that previously required it.
+  Addresses [#14763](https://github.com/cypress-io/cypress/issues/14763).
+- Falsy values (with the exception of `undefined`) supplied as the body of a
+  `StaticResponse` to `cy.intercept()` will now be JSONified and sent as the
+  body. Previously, an empty string was sent instead. Addresses
+  [#15234](https://github.com/cypress-io/cypress/issues/15234) and
+  [#14205](https://github.com/cypress-io/cypress/issues/14205).
+- The `matchUrlAgainstPath` `RouteMatcher` property has been removed from
+  `cy.intercept()`.
+- The "substring match" from `cy.intercept()` URL matching has been removed.
+  Previously, a URL would match if it contained the supplied string anywhere.
+  Now, the URL (including querystring) only matches if it is an equality match
+  or a minimatch.
+- `res.delay()` and `res.throttle()` have been renamed to `res.setDelay()` and
+  `res.setThrottle()`, respectively. Addresses
+  [#15700](https://github.com/cypress-io/cypress/issues/15700).
+- `cy.route2()` was previously aliased to `cy.intercept()`. Now the alias
+  `cy.route2()` has been removed. Please update usage of `cy.route2()` to
+  `cy.intercept()`. Addressed in
+  [#14709](https://github.com/cypress-io/cypress/pull/14709).
 - Component tests have been migrated to use a dedicated test runner and are
   bundled differently. See the
   [Migration Guide](/guides/references/migration-guide#Component-Testing) for
   full examples on how to migrate. Addressed in
   [#14479](https://github.com/cypress-io/cypress/pull/14479).
-  - Component tests will not be executed when running `cypress open` or
-    `cypress run`. Now, they need to be executed by running `cypress open-ct` or
-    `cypress run-ct`. Addressed in
-    [#15701](https://github.com/cypress-io/cypress/pull/15701).
-  - `experimentalComponentTesting` must be removed from your configuration file,
-    `cypress.json` by default, or it will throw an error. Addressed in
-    [#15701](https://github.com/cypress-io/cypress/pull/15701).
-  - The `file:preprocessor` event is no longer used to compile component tests.
-    Now, a `dev-server:start` event must be registered.
+- Component tests will not be executed when running `cypress open` or
+  `cypress run`. Now, they need to be executed by running `cypress open-ct` or
+  `cypress run-ct`. Addressed in
+  [#15701](https://github.com/cypress-io/cypress/pull/15701).
+- `experimentalComponentTesting` must be removed from your configuration file,
+  `cypress.json` by default, or it will throw an error. Addressed in
+  [#15701](https://github.com/cypress-io/cypress/pull/15701).
+- The `file:preprocessor` event is no longer used to compile component tests.
+  Now, a `dev-server:start` event must be registered.
 - Cypress now catches uncaught errors and fails the test even if the application
   under test has defined `window.onerror`. Addresses
   [#8802](https://github.com/cypress-io/cypress/pull/8802).
@@ -4748,21 +4740,21 @@ to Cypress 7.0.**
   the [cy.intercept()](/api/commands/intercept) docs for full usage examples.
   Addressed in [#14543](https://github.com/cypress-io/cypress/pull/14543). New
   features:
-  - There are new events on the req object for `cy.intercept()` including
-    `before:response`, `response`, and `after:response`.
-  - Response handlers (supplied via event handlers or via `req.continue(cb)`)
-    supplied to `cy.intercept()` will be called in reverse order until
-    `res.send` is called or until there are no more response handlers.
-  - A new option, `middleware`, has been added to the `RouteMatcher` type. If
-    true, the supplied request handler will be called before any non-middleware
-    request handlers.
-  - A new function, `req.continue(cb)`, is available on request objects yielded
-    by `cy.intercept()`. It is functionally the same as `req.reply(cb)` - the
-    request will stop propagating to other event handlers, will be sent
-    outgoing, and the response will be handled by cb.
-  - `cy.intercept()` can now be called with a new overload:
-    `cy.intercept(url, routeMatcher, handler)`. `routeMatcher` will be merged
-    with `url`, and the handler is required.
+- There are new events on the req object for `cy.intercept()` including
+  `before:response`, `response`, and `after:response`.
+- Response handlers (supplied via event handlers or via `req.continue(cb)`)
+  supplied to `cy.intercept()` will be called in reverse order until
+  `res.send` is called or until there are no more response handlers.
+- A new option, `middleware`, has been added to the `RouteMatcher` type. If
+  true, the supplied request handler will be called before any non-middleware
+  request handlers.
+- A new function, `req.continue(cb)`, is available on request objects yielded
+  by `cy.intercept()`. It is functionally the same as `req.reply(cb)` - the
+  request will stop propagating to other event handlers, will be sent
+  outgoing, and the response will be handled by cb.
+- `cy.intercept()` can now be called with a new overload:
+  `cy.intercept(url, routeMatcher, handler)`. `routeMatcher` will be merged
+  with `url`, and the handler is required.
 - [`cy.visit()`](/api/commands/visit) can now visit pages with
   `application/xhtml*` content-type. Addresses
   [#15738](https://github.com/cypress-io/cypress/issues/15738).
@@ -5056,29 +5048,29 @@ _Released 2/1/2021_
   [Cypress Studio](/guides/references/cypress-studio). To enable the Cypress
   Studio you can set `experimentalStudio` to `true` in your Cypress
   configuration. Issues addressed:
-  - Cypress Studio now prompts to start adding commands after visiting an
-    inputted url. Addresses
-    [#14688](https://github.com/cypress-io/cypress/issues/14688).
-  - Empty `.type()` commands will no longer be generated when tabbing through
-    inputs. Addresses
-    [#14684](https://github.com/cypress-io/cypress/issues/14684).
-  - Cypress Studio no longer prompt to enter a URL if the test is in an errored
-    state. Addresses
-    [#14686](https://github.com/cypress-io/cypress/issues/14686).
-  - Cypress Studio now reloads tests when `watchForFileChanges` is `false`.
-    Addresses [#14744](https://github.com/cypress-io/cypress/issues/14744).
-  - An empty `.click()` command will no longer be added before `.type()` in
-    Cypress Studio when it is followed by typed characters. Addresses
-    [#14685](https://github.com/cypress-io/cypress/issues/14685).
-  - Cypress Studio will now use the correct selector for an element even if the
-    click event changed the selectors. Addresses
-    [#14658](https://github.com/cypress-io/cypress/issues/14658).
-  - Multi-select `selects` are now supported in Cypress Studio. Addresses
-    [#14743](https://github.com/cypress-io/cypress/issues/14743).
-  - There's an improved UI for command failures within Cypress Studio. Addresses
-    [#14691](https://github.com/cypress-io/cypress/issues/14691).
-  - The Selector Playground is now closed automatically when Cypress Studio is
-    opened. [#14689](https://github.com/cypress-io/cypress/issues/14689).
+- Cypress Studio now prompts to start adding commands after visiting an
+  inputted url. Addresses
+  [#14688](https://github.com/cypress-io/cypress/issues/14688).
+- Empty `.type()` commands will no longer be generated when tabbing through
+  inputs. Addresses
+  [#14684](https://github.com/cypress-io/cypress/issues/14684).
+- Cypress Studio no longer prompt to enter a URL if the test is in an errored
+  state. Addresses
+  [#14686](https://github.com/cypress-io/cypress/issues/14686).
+- Cypress Studio now reloads tests when `watchForFileChanges` is `false`.
+  Addresses [#14744](https://github.com/cypress-io/cypress/issues/14744).
+- An empty `.click()` command will no longer be added before `.type()` in
+  Cypress Studio when it is followed by typed characters. Addresses
+  [#14685](https://github.com/cypress-io/cypress/issues/14685).
+- Cypress Studio will now use the correct selector for an element even if the
+  click event changed the selectors. Addresses
+  [#14658](https://github.com/cypress-io/cypress/issues/14658).
+- Multi-select `selects` are now supported in Cypress Studio. Addresses
+  [#14743](https://github.com/cypress-io/cypress/issues/14743).
+- There's an improved UI for command failures within Cypress Studio. Addresses
+  [#14691](https://github.com/cypress-io/cypress/issues/14691).
+- The Selector Playground is now closed automatically when Cypress Studio is
+  opened. [#14689](https://github.com/cypress-io/cypress/issues/14689).
 
 **Misc:**
 
@@ -5614,8 +5606,8 @@ _Released 10/26/2020_
 
 - Updated the Cypress proxy layer to proxy HTTPS traffic from non-AUT origins.
   Addressed in [#8827](https://github.com/cypress-io/cypress/pull/8827).
-  - This fixed an issue with `cy.route2()` where HTTPS requests to a non-AUT
-    origin would not be intercepted as expected.
+- This fixed an issue with `cy.route2()` where HTTPS requests to a non-AUT
+  origin would not be intercepted as expected.
 - `cy.route2()` now properly handles passing a method as its first argument.
   Fixes [#8729](https://github.com/cypress-io/cypress/issues/8729).
 - Fixed an issue with `cy.route2()` where a "Cannot set property response of
@@ -5650,8 +5642,8 @@ _Released 10/26/2020_
 - Upgraded `electron` from `10.1.3` to `10.1.5`. Addressed in
   [#8927](https://github.com/cypress-io/cypress/issues/8927) and
   [#8975](https://github.com/cypress-io/cypress/issues/8975).
-  - This addresses a Chrome security issue, CVE-2020-15999. Addresses
-    [#8922](https://github.com/cypress-io/cypress/issues/8922).
+- This addresses a Chrome security issue, CVE-2020-15999. Addresses
+  [#8922](https://github.com/cypress-io/cypress/issues/8922).
 - Upgraded `color-string` from `1.5.3` to `1.5.4`. Addressed in
   [#8945](https://github.com/cypress-io/cypress/issues/8945).
 - Upgraded `pretty-bytes` from `^5.3.0` to `^5.4.1`. Addressed in
@@ -5766,9 +5758,9 @@ _Released 9/28/2020_
 - Firefox support is now out of beta! 🎉 Firefox 80 and newer are now officially
   stable when used with Cypress. Addresses
   [#8241](https://github.com/cypress-io/cypress/issues/8241).
-  - Versions of Firefox older than 80 can still be used, but will be subject to
-    the `firefoxGcInterval` workaround. The desktop GUI will display a warning
-    if such versions are used.
+- Versions of Firefox older than 80 can still be used, but will be subject to
+  the `firefoxGcInterval` workaround. The desktop GUI will display a warning
+  if such versions are used.
 
 **Bugfixes:**
 
@@ -5906,17 +5898,17 @@ _Released 9/1/2020_
 **Features:**
 
 - Introducing _experimental_ full network stubbing support 🎉.
-  - With `experimentalNetworkStubbing` enabled, the `cy.route2` command is
-    available. Addressed in
-    [#4176](https://github.com/cypress-io/cypress/issues/4176).
-  - By using `cy.route2()` , your tests can intercept, modify, and wait on any
-    type of HTTP request originating from your app, including `XMLHttpRequest`s,
-    `fetch` requests, beacons, and subresources (like iframes and scripts).
-  - Outgoing HTTP requests can be modified before reaching the destination
-    server, and the HTTP response can be intercepted as well before it reaches
-    the browser.
-  - See the `cy.route2()` docs for more information on how to enable this
-    experiment.
+- With `experimentalNetworkStubbing` enabled, the `cy.route2` command is
+  available. Addressed in
+  [#4176](https://github.com/cypress-io/cypress/issues/4176).
+- By using `cy.route2()` , your tests can intercept, modify, and wait on any
+  type of HTTP request originating from your app, including `XMLHttpRequest`s,
+  `fetch` requests, beacons, and subresources (like iframes and scripts).
+- Outgoing HTTP requests can be modified before reaching the destination
+  server, and the HTTP response can be intercepted as well before it reaches
+  the browser.
+- See the `cy.route2()` docs for more information on how to enable this
+  experiment.
 - `cy.trigger()` now accepts an `eventConstructor` option for specifying the
   constructor with which to create the event to trigger. Addresses
   [#5650](https://github.com/cypress-io/cypress/issues/5650).
@@ -10479,9 +10471,9 @@ _Released 2/15/2018_
   large existing cache (in the hundreds of `mb`). Before upgrading, you should
   open the browser and then manually clear the Cache. Or - if you have already
   upgraded to `2.0.0` delete the following folders:
-  - OSX: `~/Library/Caches/Cypress`
-  - Linux: `~/.cache/Cypress`
-  - Windows: `%APPDATA%\Cypress\cy\production\browsers`
+- OSX: `~/Library/Caches/Cypress`
+- Linux: `~/.cache/Cypress`
+- Windows: `%APPDATA%\Cypress\cy\production\browsers`
 
 ## 1.4.2
 
@@ -14755,7 +14747,7 @@ _Released 07/03/2015_
 - [`.invoke()`](/api/commands/invoke) and [`.its()`](/api/commands/its) will now
   log out the
   $el if it's a DOM object, which will now correctly highlight the
-  $el during a
+$el during a
   command revert. Additionally if these commands have been called on a DOM
   object, their `onConsole` message will include the DOM objects.
 
@@ -15959,12 +15951,12 @@ _Released 03/19/2015_
 - [`.type()`](/api/commands/type) now causes previously `focused` elements to
   receive `blur` event/
 - Typing `{enter}` now handles form submit logic as per the HTML spec.
-  - Form with 1 input, no defaultButton.
-  - Form with 2 inputs, no defaultButton.
-  - Form with disabled defaultButton.
-  - Form with multiple defaultButtons.
-  - Correctly processes defaultButton click event, form submit event.
-  - Intelligently handle defaultPrevented events from descendants.
+- Form with 1 input, no defaultButton.
+- Form with 2 inputs, no defaultButton.
+- Form with disabled defaultButton.
+- Form with multiple defaultButtons.
+- Correctly processes defaultButton click event, form submit event.
+- Intelligently handle defaultPrevented events from descendants.
 
 **Bugfixes:**
 
