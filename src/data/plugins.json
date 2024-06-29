@@ -769,6 +769,13 @@
           "badge": "deprecated"
         },
         {
+          "name": "cypress-html-validate",
+          "description": "Cypress HTML-Validate plugin for validating HTML document",
+          "link": "https://gitlab.com/html-validate/cypress-html-validate",
+          "keywords": ["commands", "html", "html-validate", "markup", "lint", "validation"],
+          "badge": "community"
+        },
+        {
           "name": "cypress-rest-graphql",
           "description": "Add visual output and helper functions for performing REST and graphQL queries.",
           "link": "https://github.com/BrandedEntertainmentNetwork/cypress-rest-graphql",
