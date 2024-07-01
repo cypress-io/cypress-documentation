@@ -1328,6 +1328,13 @@
           "link":"https://github.com/FC122/cymap",
           "keywords":["imap", "email", "test", "commands"],
           "badge":"community"
+        },
+        {
+          "name":"cypress-mailpit",
+          "description":"A collection of useful Cypress commands for testing Emails utilizing the Mailpit RestAPI. Comes with TypeScript support",
+          "link":"https://github.com/pushpak1300/cypress-mailpit",
+          "keywords":["mailpit", "email", "test", "commands", "email"],
+          "badge":"community"
         }
       ]
     },
