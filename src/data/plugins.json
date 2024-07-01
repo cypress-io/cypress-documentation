@@ -490,6 +490,13 @@
           "badge": "community"
         },
         {
+          "name": "cypress-ajv-schema-validator",
+          "description": "Lightweight JSON Schema validator for Cypress using AJV. Supports: JSON Schema, OpenAPI, Swagger.",
+          "link": "https://github.com/sclavijosuero/cypress-ajv-schema-validator",
+          "keywords": ["api", "schema"],
+          "badge": "community"
+        },
+        {
           "name": "cy-view",
           "description": "Run tests on multiple URLs at various viewport sizes.",
           "link": "https://github.com/andrewmcoupe/cy-view",
@@ -501,6 +508,13 @@
           "description": "Helps test your applications for accessibility issues using axe-core.",
           "link": "https://github.com/avanslaars/cypress-axe",
           "keywords": ["accessibility", "a11y"],
+          "badge": "community"
+        },
+        {
+          "name": "wick-a11y",
+          "description": "Analyze your website’s accessibility with seamless integration into your Cypress tests using axe-core and cypress-axe. Results in: Cypress log, graphically on the tested web page, and a generated HTML report.",
+          "link": "https://github.com/sclavijosuero/wick-a11y",
+          "keywords": ["accessibility", "a11y", "report"],
           "badge": "community"
         },
         {
