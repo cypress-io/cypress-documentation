@@ -121,7 +121,8 @@ of different job configurations for a single job definition.
 
 The
 [build-list strategy](https://docs.aws.amazon.com/codebuild/latest/userguide/batch-build-buildspec.html#build-spec.batch.build-list)
-offers a way to specify an image hosted on DockerHub or the
+offers a way to specify an image hosted on
+[Docker Hub](https://hub.docker.com/) or the
 [Amazon Elastic Container Registry (ECR)](https://aws.amazon.com/ecr/).
 
 The Cypress team maintains the official
@@ -134,9 +135,8 @@ example, this allows us to run the tests in Firefox by passing the
 
 <strong>Cypress Amazon Public ECR</strong>
 
-The Cypress team has published it's
 [Docker Images](https://github.com/cypress-io/cypress-docker-images) for running
-Cypress locally and in CI in the
+Cypress locally and in CI are published to the
 [Amazon ECR Public Gallery](https://gallery.ecr.aws).
 
 The images are available in the following
@@ -159,16 +159,15 @@ contains the images to use.
 What's the difference in the images?
 
 The `base` Docker images are used by the `browsers` and `included` images for
-the base operating system and set of initial dependencies, but does not install
+the base operating system and set of initial dependencies, but do not install
 Cypress or additional browsers.
 
-The `browsers` images extend a `base` image and installs one or more browsers
-such as Chrome or Firefox.
+The `browsers` images extend a `base` image and install Chrome, Firefox and Edge.
 
-The `included` images extend a `browsers` image and installs a specific version
-of Cypress and adds a Docker entrypoint for the `cypress run` command. These
+The `included` images extend a `browsers` image and install a specific version
+of Cypress and add a Docker entrypoint for the `cypress run` command. These
 images are for testing a containerized version of Cypress in a project during
-local development and are not used in CI environments.
+local development and are less used in CI environments.
 
 :::
 
