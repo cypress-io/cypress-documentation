@@ -87,14 +87,15 @@ Cypress checks a lot of things to determine if an element is not hidden. The fol
 
 :::tip
 
-Most of the time you should check if element is not hidden. Some elements might be visible but not clickable or interactable. 
+You should use the 'is.not.hidden' check in most cases. Some items may be visible but not clickable or interactive.
 
-Cypress check visibility like browsers [checkVisibility](https://developer.mozilla.org/en-US/docs/Web/API/Element/checkVisibility).
-There are some exceptions from browser checks:
-- in `option` inside `select` visibility is determined by visibility of parent `select` element
-- if element is offscreen it is consided invisible
-- if parent cover element it is consided invisible
-In old browsers that not support [checkVisibility] check is hidden is performed.
+Cypress checks visibility like browsers [checkVisibility](https://developer.mozilla.org/en-US/docs/Web/API/Element/checkVisibility).
+However, there are exceptions to checking visibility in the browser:
+
+- The visibility of an `option` in a `select` is determined by the visibility of the `select` to which it belongs
+- If the position of an html element is off screen it is considered invisible
+- If a parent element covers a child element, the element is considered invisible
+- In old browsers where [checkVisibility] is not supported, is hidden is used.
 
 :::info
 
