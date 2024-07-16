@@ -36,9 +36,9 @@ This will install Cypress locally as a dev dependency for your project.
 
 :::info
 
-Make sure you have Node.js installed and that you have already run
+Make sure you have [Node.js installed](#Installing-Nodejs) and that you have already run
 [`npm init`](https://docs.npmjs.com/cli/init) or have a `node_modules` folder or
-`package.json` file in the root of your project to ensure cypress is installed
+`package.json` file in the root of your project to ensure Cypress is installed
 in the correct directory.
 
 :::
@@ -62,6 +62,18 @@ The recommended approach is to install Cypress with `npm` because:
 - Cypress is versioned like any other dependency.
 - It simplifies running Cypress in
   [Continuous Integration](/guides/continuous-integration/introduction).
+
+:::
+
+:::info
+
+<strong>snap</strong>
+
+The [Node.js Snap for Linux](https://github.com/nodejs/snap) package manager has constrained operating system access. Install using:
+
+```shell
+npm install cypress --save-dev --foreground-scripts
+```
 
 :::
 
@@ -158,12 +170,28 @@ application supports these operating systems:
 
 ### Node.js
 
-Cypress requires Node.js in order to install. We support the versions listed below:
+Cypress requires [Node.js](https://nodejs.org/) in order to install. We support the versions listed below:
 
 - **Node.js** 18.x, 20.x, 22.x and above
 
 Cypress generally aligns with
 [Node's release schedule](https://github.com/nodejs/Release).
+
+#### Installing Node.js
+
+Follow the instructions on [Download Node.js](https://nodejs.org/en/download/) to download and install [Node.js](https://nodejs.org/).
+
+If you are using a [Cypress Docker image](../continuous-integration/introduction#Cypress-Docker-variants), you will find a fixed version of Node.js is pre-installed in the image.
+You select the Node.js version using the Docker image tag.
+
+:::tip
+
+<strong>Best Practice</strong>
+
+Use a [Node.js package manager](https://nodejs.org/en/download/package-manager/all) to install Node.js.
+Package managers for Node.js allow you to switch between different versions easily.
+
+:::
 
 ### Hardware
 
