@@ -245,7 +245,7 @@ const loginToCognito = (username: string, password: string) => {
       },
     },
     ({ username, password }) => {
-      cy.contains("Sign in with your email and password");
+      cy.contains('Sign in with your email and password')
       // Cognito log in page has some elements of the same id but are off screen.
       // We only want the visible elements to log in
       cy.get('input[name="username"]:visible').type(username)
