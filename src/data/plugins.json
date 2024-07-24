@@ -539,6 +539,13 @@
           "badge": "community"
         },
         {
+          "name": "@mavrou/cy-graphql",
+          "description": "Cypress commands for end-to-end GraphQL testing",
+          "link": "https://github.com/dimavroudis/cy-graphql",
+          "keywords": ["graphql", "intercept", "networking", "commands"],
+          "badge": "community"
+        },
+        {
           "name": "cy-mobile-commands",
           "description": "Mobile testing helper for Cypress.",
           "link": "https://gitlab.com/nTopus/cy-mobile-commands#readme",
