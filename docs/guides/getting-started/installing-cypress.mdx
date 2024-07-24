@@ -163,10 +163,12 @@ need prebuilt.
 Cypress is a desktop application that is installed on your computer. The desktop
 application supports these operating systems:
 
-- **macOS** 10.15 and above _(Intel or Apple Silicon 64-bit (x64 or arm64))_
+- **macOS** 10.15 and above _(Intel or Apple Silicon 64-bit (x64 or arm64))_.
 - **Linux** Ubuntu 20.04 and above, Fedora 38 and above, and Debian 10 and above _(x64 or arm64)_ (see [Linux Prerequisites](#Linux-Prerequisites) down
-  below)
-- **Windows** 10 and above _(64-bit only)_
+  below).
+  - Cypress requires a minimum of [`glibc`](https://www.gnu.org/software/libc/) version `2.17` to run. We recommend a [`glibc`](https://www.gnu.org/software/libc/) version of `2.28` or later.
+  - Though Cypress does not actively support CentOS 7, RHEL 7, or Amazon Linux 2, the Cypress application binary should be able to run on these platforms as the [`glibc`](https://www.gnu.org/software/libc/) version meets the minimum requirement.
+- **Windows** 10 and above _(64-bit only)_.
 
 ### Node.js
 
