@@ -370,6 +370,11 @@ minutes off install time by preventing a large binary download.
   Cypress caches. Consider using `yarn install --frozen-lockfile` as an
   [`npm ci`](https://docs.npmjs.com/cli/ci) equivalent.
 
+- If you are using `pnpm` and Github Actions, **do not cache anything** across builds.
+  The Cypress Github Action [does not support](https://github.com/cypress-io/github-action/issues/1044)
+  caching of any form, and caching pnpm packages between builds will result in
+  intermittent failures.
+
 - If you need to override the binary location for some reason, use
   [CYPRESS_CACHE_FOLDER](/guides/references/advanced-installation#Binary-cache)
   environment variable.
