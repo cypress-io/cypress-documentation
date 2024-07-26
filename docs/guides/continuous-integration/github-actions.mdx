@@ -219,8 +219,9 @@ When working with actions that have multiple jobs, it is recommended to have an
 initial "install" job that will download any dependencies and build your app,
 and then cache these assets for use later by subsequent jobs.
 
-The Cypress GitHub Action will automatically cache and restore your Node
-dependencies for you.
+For Yarn and npm, the Cypress GitHub Action will automatically cache and restore your Node
+dependencies for you. The Cypress Github Action does not do any caching for pnpm, and
+[advises not to use any caching of any form](https://github.com/cypress-io/github-action?tab=readme-ov-file#pnpm).
 
 For build assets, you will need to cache and restore them manually.
 
