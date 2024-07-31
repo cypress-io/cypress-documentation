@@ -178,15 +178,19 @@ these steps:
 1. Add `experimentalWebKitSupport: true` to your
    [configuration](/guides/references/configuration) to enable the experiment.
 2. Install the `playwright-webkit` npm package in your repo to acquire WebKit
-   itself: `npm install playwright-webkit@1.34 --save-dev`.
-   - We built this experiment on top of the Playwright WebKit browser as a
-     stepping stone towards creating a better UX with Cypress-provided browsers
-     in the future. Thank you, Playwright contributors.
+   itself:
+   ```shell
+   npm install playwright-webkit --save-dev
+   ```
 3. Now, you should be able to use WebKit like any other browser. For example, to
    record with WebKit in CI:
    ```shell
    cypress run --browser webkit --record # ...
    ```
+
+We built this experiment on top of the Playwright WebKit browser as a
+stepping stone towards creating a better UX with Cypress-provided browsers
+in the future. Thank you, Playwright contributors.
 
 WebKit support is _experimental_, so you may encounter issues. If you encounter
 an issue not on the "Known Issues" list, please
