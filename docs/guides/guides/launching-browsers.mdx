@@ -177,12 +177,13 @@ these steps:
 
 1. Add `experimentalWebKitSupport: true` to your
    [configuration](/guides/references/configuration) to enable the experiment.
-2. Install the `playwright-webkit` npm package in your repo to acquire WebKit
+2. For installation on Linux, refer to [Linux Dependencies](#Linux-Dependencies) below.
+3. Install the `playwright-webkit` npm package in your repo to acquire WebKit
    itself:
    ```shell
    npm install playwright-webkit --save-dev
    ```
-3. Now, you should be able to use WebKit like any other browser. For example, to
+4. Now, you should be able to use WebKit like any other browser. For example, to
    record with WebKit in CI:
    ```shell
    cypress run --browser webkit --record # ...
@@ -196,6 +197,15 @@ WebKit support is _experimental_, so you may encounter issues. If you encounter
 an issue not on the "Known Issues" list, please
 [open an issue](https://github.com/cypress-io/cypress/issues/new/choose) on the
 GitHub repository.
+
+#### Linux Dependencies
+
+WebKit requires additional dependencies to run on Linux. To install the required
+dependencies, run this:
+
+```shell
+npx playwright install-deps webkit
+```
 
 #### Known Issues with `experimentalWebKitSupport`
 
@@ -212,15 +222,6 @@ GitHub repository.
 - See issues labeled
   [`experiment: webkit`](https://github.com/cypress-io/cypress/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3A%22experiment%3A+webkit%22)
   for a complete list.
-
-#### Linux Dependencies
-
-WebKit requires additional dependencies to run on Linux. To install the required
-dependencies, run this:
-
-```shell
-npx playwright install-deps webkit
-```
 
 ### Launching by a path
 
