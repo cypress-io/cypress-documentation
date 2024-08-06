@@ -178,12 +178,12 @@ these steps:
 
 1. Add `experimentalWebKitSupport: true` to your
    [configuration](/guides/references/configuration) to enable the experiment.
-2. For installation on Linux, refer to [Linux Dependencies](#Linux-Dependencies) below.
-3. Install the `playwright-webkit` npm package in your repo to acquire WebKit
-   itself:
+2. Install the [playwright-webkit](https://www.npmjs.com/package/playwright-webkit)
+   npm package in your repo to acquire WebKit itself:
    ```shell
    npm install playwright-webkit --save-dev
    ```
+3. Before running on Linux, refer to [Linux Dependencies](#Linux-Dependencies) below.
 4. Now, you should be able to use WebKit like any other browser. For example, to
    record with WebKit in CI:
    ```shell
@@ -201,8 +201,10 @@ GitHub repository.
 
 #### Linux Dependencies
 
-WebKit requires additional dependencies to run on Linux. To install the required
-dependencies, run this:
+WebKit requires additional dependencies to run on Linux.
+To install the required dependencies, run the following command from the same directory
+where you installed `playwright-webkit`.
+If the version of `playwright-webkit` is changed, run the command again.
 
 ```shell
 npx playwright install-deps webkit
