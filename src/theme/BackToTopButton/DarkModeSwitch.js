@@ -7,7 +7,8 @@ import {
 import { useColorMode } from '@docusaurus/theme-common'
 
 export default function DarkModeSwitch() {
-  const { colorMode, setColorMode } = useColorMode()
+   const storedTheme = localStorage.getItem('theme')
+  const { colorMode, setColorMode } = useColorMode(storedTheme)
   const isDark = colorMode === 'dark'
   return (
     <button
