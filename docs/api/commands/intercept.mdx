@@ -54,6 +54,22 @@ See
 [routeHandler](#routeHandler-Function)
 argument
 
+```typescript
+// Specifying request and response types
+type CustomRequest = {
+  kind: 'custom_request'
+}
+type CustomResponse = {
+  kind: 'custom_response'
+}
+cy.intercept<CustomRequest, CustomResponse>(url, (req) => {
+  req.body // .body of request will be of type CustomRequest
+  req.continue((res) => {
+    res.body // .body of request will be of type CustomResponse
+  })
+})
+```
+
 ### Usage
 
 <Icon name="check-circle" color="green" /> **Correct Usage**
@@ -1601,16 +1617,16 @@ information about the request and response to the console:
 
 ## History
 
-| Version                                       | Changes                                                                                                                                                                                                                                                                                              |
-| --------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [12.2.0](/guides/references/changelog#12-2-0) | Added `resourceType` property to `req` and `RouteMatcher`.                                                                                                                                                                                                                                           |
-| [7.6.0](/guides/references/changelog#7-0-0)   | Added `query` option to `req` (The incoming request object yielded to request handler functions).                                                                                                                                                                                                    |
-| [7.0.0](/guides/references/changelog#7-0-0)   | Removed `matchUrlAgainstPath` option from `RouteMatcher`, reversed handler ordering, added request events, removed substring URL matching, removed `cy.route2` alias, added `middleware` RouteMatcher option, renamed `res.delay()` to `res.setDelay()` and `res.throttle()` to `res.setThrottle()`. |
-| [6.4.0](/guides/references/changelog#6-4-0)   | Renamed `delayMs` property to `delay` (backwards-compatible).                                                                                                                                                                                                                                        |
-| [6.2.0](/guides/references/changelog#6-2-0)   | Added `matchUrlAgainstPath` option to `RouteMatcher`.                                                                                                                                                                                                                                                |
-| [6.0.0](/guides/references/changelog#6-0-0)   | Renamed `cy.route2()` to `cy.intercept()`.                                                                                                                                                                                                                                                           |
-| [6.0.0](/guides/references/changelog#6-0-0)   | Removed `experimentalNetworkStubbing` option and made it the default behavior.                                                                                                                                                                                                                       |
-| [5.1.0](/guides/references/changelog#5-1-0)   | Added experimental `cy.route2()` command under `experimentalNetworkStubbing` option.                                                                                                                                                                                                                 |
+| Version | Changes |
+| ----------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | |
+| [12.2.0](/guides/references/changelog#12-2-0) | Added `resourceType` property to `req` and `RouteMatcher`. |
+| [7.6.0](/guides/references/changelog#7-0-0) | Added `query` option to `req` (The incoming request object yielded to request handler functions). |
+| [7.0.0](/guides/references/changelog#7-0-0) | Removed `matchUrlAgainstPath` option from `RouteMatcher`, reversed handler ordering, added request events, removed substring URL matching, removed `cy.route2` alias, added `middleware` RouteMatcher option, renamed `res.delay()` to `res.setDelay()` and `res.throttle()` to `res.setThrottle()`. |
+| [6.4.0](/guides/references/changelog#6-4-0) | Renamed `delayMs` property to `delay` (backwards-compatible). |
+| [6.2.0](/guides/references/changelog#6-2-0) | Added `matchUrlAgainstPath` option to `RouteMatcher`. |
+| [6.0.0](/guides/references/changelog#6-0-0) | Renamed `cy.route2()` to `cy.intercept()`. |
+| [6.0.0](/guides/references/changelog#6-0-0) | Removed `experimentalNetworkStubbing` option and made it the default behavior. |
+| [5.1.0](/guides/references/changelog#5-1-0) | Added experimental `cy.route2()` command under `experimentalNetworkStubbing` option. |
 
 ## See also
 
