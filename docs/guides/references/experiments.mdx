@@ -320,36 +320,62 @@ you will need to add the correct matching glob pattern.
 These experiments are available to be specified inside the `component`
 configuration object:
 
-| Option                         | Default | Description                                                                                                                                                                       |
-| ------------------------------ | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `experimentalSingleTabRunMode` | `false` | Run all specs in a single tab, instead of creating a new tab per spec. This can improve run mode performance, but can impact spec isolation and reliability on large test suites. |
+| Option                          | Default | Description                                                                                                                                                                       |
+| ------------------------------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `experimentalSingleTabRunMode`  | `false` | Run all specs in a single tab, instead of creating a new tab per spec. This can improve run mode performance, but can impact spec isolation and reliability on large test suites. |
+| `experimentalJustInTimeCompile` | `false` | Enables Just-In-Time (JIT) compiling for component testing, which will only compile assets related to the spec before the spec is run. Currently supported for Vite and Webpack.  |
+
+#### Experimental Just-In-Time Compile
+
+By default, Cypress compiles all specs used by Component Testing before allowing any spec to run. This works fine for smaller projects most of the time.
+
+However, as a Component Testing suite grows, the dev server (`vite` or `webpack-dev-server`, depending on your application) also grows with it. This can get to a point where the dev server grows so large that it consumes a large majority of CPU and memory resources, leading to:
+
+- Out Of Memory (OOM) errors.
+- `chunk load error`, specific to Webpack where parts of the bundle fail to load.
+- long run times while running component tests in CI in `cypress run` mode.
+- Unable to efficiently develop tests in `cypress open` mode because the initial and recompiling times for specs and related components is extremely long.
+- Inability to leverage [Smart orchestration](/guides/cloud/smart-orchestration/overview) effectively to scale resources due to all assets being compiled into the dev server regardless of what specs are run.
+
+The `experimentalJustInTimeCompile` option is designed to remedy this problem. Enabling this option will enable Just-In-Time (JIT) compiling for component testing, which will only compile assets and resources related to the spec before the spec is run. This is applicable in both `open` and `run` modes.
+
+In `open` and `run` modes, the dev server will start up when the Cypress application starts with the component testing type, but will only compile the spec once it is selected or run. When a different spec is run, the different spec is then compiled, omitting the previously run spec from the dev server.
+
+This makes developing your current spec much faster in `open` mode when it comes to initial compiling and recompiling, with a minor tradeoff being to recompile when you switch specs.
+
+This also significantly reduces the memory requirements needed to run your tests in `run` mode, with a tradeoff being that your tests might run slightly slower since the dev server needs to recompile. If time is a factor, [Smart orchestration](/guides/cloud/smart-orchestration/overview) can now be effectively used to parallelize your component testing runs on smaller infrastructure since the dev server only compiles what is needed to run the spec.
+
+We are using `experimentalJustInTimeCompile` internally within Cypress for our larger Component Testing suites and have noticed significant reductions in memory when running `cypress run` mode and have gained significantly faster compile times when leveraging `cypress open` to develop our tests.
+
+If you are using this experiment and would like to leave feedback, please comment on our [github discussion](https://github.com/cypress-io/cypress/discussions/30024).
 
 ## History
 
-| Version                                       | Changes                                                                                                                                       |
-| --------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
-| [13.4.0](/guides/references/changelog#13-4-0) | Added support for configuring the Experimental Flake Detection strategy via `retries.experimentalStrategy` and `retries.experimentalOptions`. |
-| [12.6.0](/guides/references/changelog#12-6-0) | Removed `require`/`import` and added `Cypress.require` for `experimentalOriginDependencies`.                                                  |
-| [12.4.0](/guides/references/changelog#12-4-0) | Added `experimentalSkipDomainInjection` and `experimentalMemoryManagement`.                                                                   |
-| [12.0.0](/guides/references/changelog#12-0-0) | Removed `experimentalSessionAndOrigin` and made it the default behavior. Added `experimentalOriginDependencies`.                              |
-| [11.2.0](/guides/references/changelog#11-2-0) | Added `experimentalRunAllSpecs`.                                                                                                              |
-| [10.8.0](/guides/references/changelog#10-8-0) | Added `experimentalWebKitSupport`.                                                                                                            |
-| [10.6.0](/guides/references/changelog#10-6-0) | Added support for `experimentalSingleTabRunMode`.                                                                                             |
-| [10.4.0](/guides/references/changelog#10-4-0) | Added support for `experimentalModifyObstructiveThirdPartyCode`.                                                                              |
-| [9.6.0](/guides/references/changelog#9-6-0)   | Added support for `experimentalSessionAndOrigin` and removed `experimentalSessionSupport`.                                                    |
-| [8.2.0](/guides/references/changelog#8-2-0)   | Added support for `experimentalSessionSupport`.                                                                                               |
-| [7.1.0](/guides/references/changelog#7-1-0)   | Added support for `experimentalInteractiveRunEvents`.                                                                                         |
-| [7.0.0](/guides/references/changelog#7-0-0)   | Removed `experimentalComponentTesting` and made it the default behavior.                                                                      |
-| [6.7.0](/guides/references/changelog#6-7-0)   | Removed `experimentalRunEvents` and made it the default behavior.                                                                             |
-| [6.3.0](/guides/references/changelog#6-3-0)   | Added support for `experimentalStudio`.                                                                                                       |
-| [6.2.0](/guides/references/changelog#6-2-0)   | Added support for `experimentalRunEvents`.                                                                                                    |
-| [6.0.0](/guides/references/changelog#6-0-0)   | Removed `experimentalNetworkStubbing` and made it the default behavior when using [cy.intercept()](/api/commands/intercept).                  |
-| [6.0.0](/guides/references/changelog#6-0-0)   | Deprecated `experimentalFetchPolyfill`.                                                                                                       |
-| [5.2.0](/guides/references/changelog#5-2-0)   | Removed `experimentalShadowDomSupport` and made it the default behavior.                                                                      |
-| [5.1.0](/guides/references/changelog#5-1-0)   | Added support for `experimentalNetworkStubbing`.                                                                                              |
-| [5.0.0](/guides/references/changelog#5-0-0)   | Removed `experimentalGetCookiesSameSite` and made it the default behavior.                                                                    |
-| [4.9.0](/guides/references/changelog#4-9-0)   | Added support for `experimentalFetchPolyfill`.                                                                                                |
-| [4.8.0](/guides/references/changelog#4-8-0)   | Added support for `experimentalShadowDomSupport`.                                                                                             |
-| [4.6.0](/guides/references/changelog#4-6-0)   | Added support for `experimentalSourceRewriting`.                                                                                              |
-| [4.5.0](/guides/references/changelog#4-5-0)   | Added support for `experimentalComponentTesting`.                                                                                             |
-| [4.3.0](/guides/references/changelog#4-3-0)   | Added support for `experimentalGetCookiesSameSite`.                                                                                           |
+| Version                                         | Changes                                                                                                                                       |
+| ----------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| [13.14.0](/guides/references/changelog#13-14-0) | Added support for configuring the Experimental Just In Time (JIT) Compiling for Component Testing via `experimentalJustInTimeCompile`.        |
+| [13.4.0](/guides/references/changelog#13-4-0)   | Added support for configuring the Experimental Flake Detection strategy via `retries.experimentalStrategy` and `retries.experimentalOptions`. |
+| [12.6.0](/guides/references/changelog#12-6-0)   | Removed `require`/`import` and added `Cypress.require` for `experimentalOriginDependencies`.                                                  |
+| [12.4.0](/guides/references/changelog#12-4-0)   | Added `experimentalSkipDomainInjection` and `experimentalMemoryManagement`.                                                                   |
+| [12.0.0](/guides/references/changelog#12-0-0)   | Removed `experimentalSessionAndOrigin` and made it the default behavior. Added `experimentalOriginDependencies`.                              |
+| [11.2.0](/guides/references/changelog#11-2-0)   | Added `experimentalRunAllSpecs`.                                                                                                              |
+| [10.8.0](/guides/references/changelog#10-8-0)   | Added `experimentalWebKitSupport`.                                                                                                            |
+| [10.6.0](/guides/references/changelog#10-6-0)   | Added support for `experimentalSingleTabRunMode`.                                                                                             |
+| [10.4.0](/guides/references/changelog#10-4-0)   | Added support for `experimentalModifyObstructiveThirdPartyCode`.                                                                              |
+| [9.6.0](/guides/references/changelog#9-6-0)     | Added support for `experimentalSessionAndOrigin` and removed `experimentalSessionSupport`.                                                    |
+| [8.2.0](/guides/references/changelog#8-2-0)     | Added support for `experimentalSessionSupport`.                                                                                               |
+| [7.1.0](/guides/references/changelog#7-1-0)     | Added support for `experimentalInteractiveRunEvents`.                                                                                         |
+| [7.0.0](/guides/references/changelog#7-0-0)     | Removed `experimentalComponentTesting` and made it the default behavior.                                                                      |
+| [6.7.0](/guides/references/changelog#6-7-0)     | Removed `experimentalRunEvents` and made it the default behavior.                                                                             |
+| [6.3.0](/guides/references/changelog#6-3-0)     | Added support for `experimentalStudio`.                                                                                                       |
+| [6.2.0](/guides/references/changelog#6-2-0)     | Added support for `experimentalRunEvents`.                                                                                                    |
+| [6.0.0](/guides/references/changelog#6-0-0)     | Removed `experimentalNetworkStubbing` and made it the default behavior when using [cy.intercept()](/api/commands/intercept).                  |
+| [6.0.0](/guides/references/changelog#6-0-0)     | Deprecated `experimentalFetchPolyfill`.                                                                                                       |
+| [5.2.0](/guides/references/changelog#5-2-0)     | Removed `experimentalShadowDomSupport` and made it the default behavior.                                                                      |
+| [5.1.0](/guides/references/changelog#5-1-0)     | Added support for `experimentalNetworkStubbing`.                                                                                              |
+| [5.0.0](/guides/references/changelog#5-0-0)     | Removed `experimentalGetCookiesSameSite` and made it the default behavior.                                                                    |
+| [4.9.0](/guides/references/changelog#4-9-0)     | Added support for `experimentalFetchPolyfill`.                                                                                                |
+| [4.8.0](/guides/references/changelog#4-8-0)     | Added support for `experimentalShadowDomSupport`.                                                                                             |
+| [4.6.0](/guides/references/changelog#4-6-0)     | Added support for `experimentalSourceRewriting`.                                                                                              |
+| [4.5.0](/guides/references/changelog#4-5-0)     | Added support for `experimentalComponentTesting`.                                                                                             |
+| [4.3.0](/guides/references/changelog#4-3-0)     | Added support for `experimentalGetCookiesSameSite`.                                                                                           |
