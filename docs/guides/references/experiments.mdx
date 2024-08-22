@@ -334,7 +334,7 @@ However, as a Component Testing suite grows, the dev server (`vite` or `webpack-
 - Out Of Memory (OOM) errors.
 - `chunk load error`, specific to Webpack where parts of the bundle fail to load.
 - long run times while running component tests in CI in `cypress run` mode.
-- Unable to efficiently develop tests in `cypress open` mode because the initial and recompiling times for specs and related components is extremely long.
+- Unable to efficiently develop tests in `cypress open` mode because the initial and recompiling times for specs and related components are extremely long.
 - Inability to leverage [Smart orchestration](/guides/cloud/smart-orchestration/overview) effectively to scale resources due to all assets being compiled into the dev server regardless of what specs are run.
 
 The `experimentalJustInTimeCompile` option is designed to remedy this problem. Enabling this option will enable Just-In-Time (JIT) compiling for component testing, which will only compile assets and resources related to the spec before the spec is run. This is applicable in both `open` and `run` modes.
