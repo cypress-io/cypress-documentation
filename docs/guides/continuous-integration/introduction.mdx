@@ -206,38 +206,68 @@ cypress run --record --key=abc123 --parallel
 
 ### Official Cypress Docker Images
 
-We have [created](https://github.com/cypress-io/cypress-docker-images) an
-official [cypress/base](https://hub.docker.com/r/cypress/base/) container with
-all of the required dependencies installed. You can add Cypress and go! We are
-also adding images with browsers pre-installed under
-[cypress/browsers](https://hub.docker.com/r/cypress/browsers/) name. A typical
-Dockerfile would look like this:
+CI providers, such as [GitHub Actions](https://docs.github.com/en/actions/using-jobs/running-jobs-in-a-container) and
+[CircleCI](https://circleci.com/docs/executor-intro/#docker), allow workflows to run using
+[Docker container images](https://docs.docker.com/guides/docker-concepts/the-basics/what-is-a-container/).
 
-```text
-FROM cypress/base
-RUN npm install
-RUN npx cypress run
-```
+Cypress supports the use of [Docker](https://docs.docker.com/guides/docker-overview/)
+through the provisioning of official [Cypress Docker images](https://github.com/cypress-io/cypress-docker-images).
+Images are Linux-based and support `Linux/amd64` and `Linux/arm64` platforms.
 
-:::caution
+Cypress Docker images provide a consistent environment tailored for use with Cypress.
+By choosing an appropriate Cypress Docker image, you determine the exact environment that your Cypress tests run in.
+This allows you to shield your workflows from version updates made by your CI provider,
+for instance if they update Node.js or browser versions.
 
-Mounting a project directory with an existing `node_modules` into a
-`cypress/base` docker image **will not work**:
+[Cypress Docker images](https://github.com/cypress-io/cypress-docker-images) are available from the repositories:
 
-```shell
-docker run -it -v /app:/app cypress/base:20.9.0 bash -c 'cypress run'
-Error: the cypress binary is not installed
-```
+- [Docker Hub](https://hub.docker.com/u/cypress)
+- [Amazon ECR (Elastic Container Registry) Public Gallery](https://gallery.ecr.aws/cypress-io)
 
-Instead, you should build a docker container for your project's version of
-cypress.
+#### Cypress Docker variants
 
-:::
+- [cypress/base](https://github.com/cypress-io/cypress-docker-images/tree/master/base) is the entry-level Cypress Docker image.
+  It contains a complete Linux (Debian) operating system, together with the
+  [prerequisite operating system packages](https://docs.cypress.io/guides/getting-started/installing-cypress#UbuntuDebian) for Cypress,
+  Node.js, npm and Yarn v1 Classic.
+  An image `<tag>` gives you the choice of Node.js version.
 
-#### Docker images & CI examples
+- [cypress/browsers](https://github.com/cypress-io/cypress-docker-images/tree/master/browsers) builds on the
+  [cypress/base](https://github.com/cypress-io/cypress-docker-images/tree/master/base) image.
+  For `Linux/amd64` images it adds Google Chrome, Mozilla Firefox and Microsoft Edge browsers.
+  A corresponding image `<tag>` allows selection of the combined Node.js and browser versions.
+  Currently `Linux/arm64` images do **not** contain browsers.
 
-See our [examples](/examples/docker) for additional information on our
-maintained images and configurations on several CI providers.
+- [cypress/included](https://github.com/cypress-io/cypress-docker-images/tree/master/included) builds on the
+  [cypress/browsers](https://github.com/cypress-io/cypress-docker-images/tree/master/browsers) image.
+  It adds a fixed version of Cypress, globally installed by npm.
+  A short-form image `<tag>` selects the version of Cypress.
+  A corresponding long-form `<tag>` selects the version of Cypress and documents the combined Node.js and browser versions.
+
+[cypress/base](https://github.com/cypress-io/cypress-docker-images/tree/master/base) allows testing in the Electron browser,
+built-in to Cypress. [cypress/browsers](https://github.com/cypress-io/cypress-docker-images/tree/master/browsers)
+adds the capability to test against Chrome, Firefox and Edge. These are the primary images for use in CI workflows.
+[cypress/included](https://github.com/cypress-io/cypress-docker-images/tree/master/included)
+is intended to support local testing. It can also be used in CI workflows.
+
+- [cypress/factory](https://github.com/cypress-io/cypress-docker-images/tree/master/factory)
+  provides the base operating system image and allows individual selection of other components
+  by version. It is used to generate customized Docker images.
+
+#### CI Docker examples
+
+You can find examples that use Cypress Docker images in CI on the documentation page
+[CI Provider Examples](ci-provider-examples) and in the example repository
+[cypress-example-kitchensink](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/README.md).
+
+The following individual workflows show Cypress Docker images being used in CircleCI
+
+- [Real World App - CircleCI](https://github.com/cypress-io/cypress-realworld-app/blob/develop/.circleci/config.yml)
+
+and in GitHub Actions
+
+- [Real World App - GitHub Actions](https://github.com/cypress-io/cypress-realworld-app/blob/develop/.github/workflows/main.yml)
+- [cypress-docker-images - GitHub Actions](https://github.com/cypress-io/cypress-docker-images/blob/master/.github/workflows/example-cypress-github-action.yml)
 
 ## Advanced setup
 
