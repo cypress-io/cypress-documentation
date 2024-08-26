@@ -16,6 +16,45 @@ cy.wait(alias, options)
 cy.wait(aliases, options)
 ```
 
+```typescript
+// Specifying request and response types for aliased intercepts
+type UserReq = {}
+type UserRes = {}
+type ActivityReq = {}
+type ActivityRes = {}
+
+cy.intercept('/users/*').as('getUsers')
+cy.intercept('/activities/*').as('getActivities')
+
+// As templated types:
+cy.wait<UserReq, UserRes>('@getUsers').then(({ request, response }) => {
+  request.body // will be of type UserReq
+  response.body // will be of type UserRes
+})
+
+// As inferred types, with type `Interception` available in `cypress/types/net-stubbing`
+cy.wait('@getUsers').then(
+  ({ request, response }: Interception<UserReq, UserRes>) => {
+    request.body // will be of type UserReq
+    response.body // will be of type UserRes
+  }
+)
+
+// When passing an array of aliases, types must be inferred:
+cy.wait(['@getUsers', 'getActivities']).then(
+  (
+    interceptions: Array<
+      Interception<UserReq | ActivityReq, UserRes | ActivityRes>
+    >
+  ) => {
+    interceptions.forEach(({ request, response }) => {
+      request.body // will be of type UserReq | ActivityReq
+      response.body // will be of type UserRes | ActivityRes
+    })
+  }
+)
+```
+
 ### Usage
 
 <Icon name="check-circle" color="green" /> **Correct Usage**
