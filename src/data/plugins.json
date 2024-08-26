@@ -1134,9 +1134,9 @@
         },
         {
           "name": "Cypress Visual Regression",
-          "description": "Adds visual regression testing to Cypress.",
-          "link": "https://github.com/mjhea0/cypress-visual-regression",
-          "keywords": ["image-diff", "snapshot"],
+          "description": "Plugin that adds powerful visual regression testing capabilities to Cypress, that comes with a comparison preview built in the Cypress Test Runner.",
+          "link": "https://github.com/cypress-visual-regression/cypress-visual-regression",
+          "keywords": ["image-diff", "snapshot", "visual regression"],
           "badge": "community"
         },
         {
