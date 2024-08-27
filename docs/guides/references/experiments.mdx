@@ -329,7 +329,7 @@ configuration object:
 
 By default, Cypress compiles all specs used by Component Testing before allowing any spec to run. This works fine for smaller projects most of the time.
 
-However, as a Component Testing suite grows, the dev server (`vite` or `webpack-dev-server`, depending on your application) also grows with it. This can get to a point where the dev server grows so large that it consumes a large majority of CPU and memory resources, leading to:
+However, as a component testing suite grows, the dev server (`vite` or `webpack-dev-server`, depending on your application) also grows with it. This can get to a point where the dev server grows so large that it consumes a large majority of CPU and memory resources, leading to:
 
 - Out Of Memory (OOM) errors.
 - `chunk load error`, specific to Webpack where parts of the bundle fail to load.
