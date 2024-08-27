@@ -172,6 +172,10 @@ locale. `yyyy-MM-dd` is the format required by
 [the W3 spec](https://www.w3.org/TR/html/infrastructure.html#dates-and-times)
 and is what the input's `value` will be set to regardless of browser or locale.
 
+`{upArrow}` and `{downArrow}` can increase and decrease the day value,
+depending on "step" parameter provided. Using `.type()` with `{upArrow}` and `{downArrow}`
+mimics behavior of `stepUp` and `stepDown` input methods.
+
 Special characters (`{leftArrow}`, `{selectAll}`, etc.) are not permitted.
 
 ### Month Inputs
@@ -186,6 +190,10 @@ since month input support varies between browsers and the format varies based on
 locale. `yyyy-MM` is the format required by
 [the W3 spec](https://www.w3.org/TR/html/infrastructure.html#months) and is what
 the input's `value` will be set to regardless of browser or locale.
+
+`{upArrow}` and `{downArrow}` can increase and decrease the month value,
+depending on "step" parameter provided. Using `.type()` with `{upArrow}` and `{downArrow}`
+mimics behavior of `stepUp` and `stepDown` input methods.
 
 Special characters (`{leftArrow}`, `{selectAll}`, etc.) are not permitted.
 
@@ -207,6 +215,10 @@ and is what the input's `value` will be set to regardless of browser or locale.
 
 Special characters (`{leftArrow}`, `{selectAll}`, etc.) are not permitted.
 
+`{upArrow}` and `{downArrow}` can increase and decrease the week value,
+depending on "step" parameter provided. Using `.type()` with `{upArrow}` and `{downArrow}`
+mimics behavior of `stepUp` and `stepDown` input methods.
+
 ### Time Inputs
 
 Using `.type()` on a time input (`<input type="time">`) requires specifying a
@@ -217,6 +229,10 @@ valid time in the format:
 - `HH:mm:ss.SSS` (e.g. `12:00:00.384`)
 
 Where `HH` is 00-23, `mm` is 00-59, `ss` is 00-59, and `SSS` is 000-999.
+
+`{upArrow}` and `{downArrow}` can increase and decrease the seconds value,
+depending on "step" parameter provided. Using `.type()` with `{upArrow}` and `{downArrow}`
+mimics behavior of `stepUp` and `stepDown` input methods.
 
 Special characters (`{leftArrow}`, `{selectAll}`, etc.) are not permitted.
 
@@ -618,22 +634,23 @@ following:
 
 ## History
 
-| Version                                       | Changes                                                                                                                   |
-| --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
-| [6.1.0](/guides/references/changelog#6-1-0)   | Added option `scrollBehavior`                                                                                             |
-| [5.6.0](/guides/references/changelog#5-6-0)   | Support single key combination syntax                                                                                     |
-| [5.5.0](/guides/references/changelog#5-5-0)   | Support `beforeinput` event                                                                                               |
-| [3.4.1](/guides/references/changelog#3-4-1)   | Added `parseSpecialCharSequences` option                                                                                  |
-| [3.3.0](/guides/references/changelog#3-3-0)   | Added `{insert}`, `{pageup}` and `{pagedown}` character sequences                                                         |
-| [3.2.0](/guides/references/changelog#3-2-0)   | Added `{home}` and `{end}` character sequences                                                                            |
-| [0.20.0](/guides/references/changelog#0-20-0) | Supports for typing in inputs of type `date`, `time`, `month`, and `week`                                                 |
-| [0.17.1](/guides/references/changelog#0-17-1) | Added `ctrl`, `cmd`, `shift`, and `alt` keyboard modifiers                                                                |
-| [0.16.3](/guides/references/changelog#0-16-3) | Supports for typing in elements with `tabindex` attribute                                                                 |
-| [0.16.2](/guides/references/changelog#0-16-2) | Added `{downarrow}` and `{uparrow}` character sequences                                                                   |
-| [0.8.0](/guides/references/changelog#0-8-0)   | Outputs Key Events Table to console on click                                                                              |
-| [0.8.0](/guides/references/changelog#0-8-0)   | Added `{selectall}`, `{del}`, `{backspace}`, `{esc}`, `{{}`, `{enter}`, `{leftarrow}`, `{rightarrow}` character sequences |
-| [0.8.0](/guides/references/changelog#0-8-0)   | Added small delay (10ms) between each keystroke during `cy.type()`                                                        |
-| [0.6.12](/guides/references/changelog#0-6-12) | Added option `force`                                                                                                      |
+| Version                                         | Changes                                                                                                                                |
+| ----------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- | --- |
+| [13.14.0](/guides/references/changelog#13-14-0) | Added support for `.type({upArrow})` and `.type({downArrow})` to work on date, month, week, time, datetime-local and range input types |     |
+| [6.1.0](/guides/references/changelog#6-1-0)     | Added option `scrollBehavior`                                                                                                          |
+| [5.6.0](/guides/references/changelog#5-6-0)     | Support single key combination syntax                                                                                                  |
+| [5.5.0](/guides/references/changelog#5-5-0)     | Support `beforeinput` event                                                                                                            |
+| [3.4.1](/guides/references/changelog#3-4-1)     | Added `parseSpecialCharSequences` option                                                                                               |
+| [3.3.0](/guides/references/changelog#3-3-0)     | Added `{insert}`, `{pageup}` and `{pagedown}` character sequences                                                                      |
+| [3.2.0](/guides/references/changelog#3-2-0)     | Added `{home}` and `{end}` character sequences                                                                                         |
+| [0.20.0](/guides/references/changelog#0-20-0)   | Supports for typing in inputs of type `date`, `time`, `month`, and `week`                                                              |
+| [0.17.1](/guides/references/changelog#0-17-1)   | Added `ctrl`, `cmd`, `shift`, and `alt` keyboard modifiers                                                                             |
+| [0.16.3](/guides/references/changelog#0-16-3)   | Supports for typing in elements with `tabindex` attribute                                                                              |
+| [0.16.2](/guides/references/changelog#0-16-2)   | Added `{downarrow}` and `{uparrow}` character sequences                                                                                |
+| [0.8.0](/guides/references/changelog#0-8-0)     | Outputs Key Events Table to console on click                                                                                           |
+| [0.8.0](/guides/references/changelog#0-8-0)     | Added `{selectall}`, `{del}`, `{backspace}`, `{esc}`, `{{}`, `{enter}`, `{leftarrow}`, `{rightarrow}` character sequences              |
+| [0.8.0](/guides/references/changelog#0-8-0)     | Added small delay (10ms) between each keystroke during `cy.type()`                                                                     |
+| [0.6.12](/guides/references/changelog#0-6-12)   | Added option `force`                                                                                                                   |
 
 ## See also
 
