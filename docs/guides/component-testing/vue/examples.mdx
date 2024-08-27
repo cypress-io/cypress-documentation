@@ -204,7 +204,7 @@ In order to encourage interoperability between your existing component tests and
 Cypress, we support using Vue Test Utils' API.
 
 ```js
-cy.mount(Stepper).then({ wrapper, component }) => {
+cy.mount(Stepper).then(({ wrapper, component }) => {
   // `wrapper` is the Vue Test Utils wrapper
   // `component` is the component instance itself
 })
