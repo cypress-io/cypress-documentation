@@ -6738,7 +6738,7 @@ _Released 5/20/2020_
   [#5273](https://github.com/cypress-io/cypress/issues/5273).
 - Number arguments passed to `have.text`, `have.id`, `have.data`, `have.value`,
   and `have.attr`
-  [assertions chainers](/guides/references/assertions#Chai-jQuery) are now
+  [assertions chainers](/api/assertions#Chai-jQuery) are now
   automatically cast to strings for comparison. Addresses
   [#7314](https://github.com/cypress-io/cypress/issues/7314).
 
@@ -7385,7 +7385,7 @@ to Cypress 4.0.**
 - Appending `.only` to multiple tests or suites will now run all tests with the
   `.only` property. Addresses
   [#2828](https://github.com/cypress-io/cypress/issues/2828).
-- The [`isFinite` assertion](/guides/references/assertions) is now supported.
+- The [`isFinite` assertion](/api/assertions) is now supported.
   Addresses [#5669](https://github.com/cypress-io/cypress/issues/5669).
 - The `empty` assertion is now supported when used against Map objects.
   Addresses [#6072](https://github.com/cypress-io/cypress/issues/6072).
@@ -8749,7 +8749,7 @@ _Released 5/23/2019_
   [#4252](https://github.com/cypress-io/cypress/issues/4252), and
   [#4253](https://github.com/cypress-io/cypress/issues/4253).
 - Fixed issue where support for `have.focus`, `not.have.focus`, `be.focused` and
-  `not.be.focused` [assertions](/guides/references/assertions) were not working.
+  `not.be.focused` [assertions](/api/assertions) were not working.
   Fixes [#4265](https://github.com/cypress-io/cypress/issues/4265).
 - Names given to [`.as()`](/api/commands/as) now work properly when they contain
   a `.` character. Fixes
@@ -8812,7 +8812,7 @@ _Released 5/17/2019_
   [Settings of the Test Runner](/guides/references/proxy-configuration#View-proxy-settings-in-Cypress).
   Addresses [#3856](https://github.com/cypress-io/cypress/issues/3856).
 - Support for `have.focus`, `not.have.focus`, `be.focused` and `not.be.focused`
-  [assertions](/guides/references/assertions) have been added. Addresses
+  [assertions](/api/assertions) have been added. Addresses
   [#97](https://github.com/cypress-io/cypress/issues/97).
 - We now offer a separate 32bit and 64bit build for Windows. Addresses
   [#716](https://github.com/cypress-io/cypress/issues/716),
@@ -8989,7 +8989,7 @@ _Released 5/17/2019_
   sequences to [.type()](/api/commands/type#Arguments). Addressed in
   [#1567](https://github.com/cypress-io/cypress-documentation/pull/1567).
 - Added newly supported `focus` assertion to
-  [Assertions](/guides/references/assertions) doc. Addresses
+  [Assertions](/api/assertions) doc. Addresses
   [#1372](https://github.com/cypress-io/cypress-documentation/pull/1372).
 - Added new options `retryOnStatusCodeFailure` and `retryOnNetworkFailure` to
   [cy.visit()](/api/commands/visit) and [cy.request()](/api/commands/request).
@@ -9483,7 +9483,7 @@ _Released 12/03/2018_
   [cy.wait()](/api/commands/wait)
 - Added 'History' table to [cy.wait()](/api/commands/wait)
 - Added 'Alias' for assertions that are aliases of each other to
-  [Assertions](/guides/references/assertions)
+  [Assertions](/api/assertions)
 
 **Dependency Updates**
 
@@ -11302,7 +11302,7 @@ _Released 09/10/2017_
 - `Cypress.Dom` has been renamed to `Cypress.dom`.
 - `Cypress.Log.command` has been renamed to
   [Cypress.log](/api/cypress-api/cypress-log).
-- [`chai-jQuery` assertions](/guides/references/assertions#Chai-jQuery) no
+- [`chai-jQuery` assertions](/api/assertions#Chai-jQuery) no
   longer change the subject when using `prop`, `attr`, and `css` with the
   **3rd** argument (which acts as equality check). Fixes
   [#605](https://github.com/cypress-io/cypress/issues/605).
@@ -11324,11 +11324,11 @@ _Released 09/10/2017_
 
 **Features:**
 
-- [`chai-jQuery` assertions](/guides/references/assertions#Chai-jQuery) have
+- [`chai-jQuery` assertions](/api/assertions#Chai-jQuery) have
   improved error messaging, and have had their internal double assertions
   removed, and can now be made on raw DOM objects. Fixes
   [#605](https://github.com/cypress-io/cypress/issues/605).
-- [`chai-jQuery` assertions](/guides/references/assertions#Chai-jQuery) now
+- [`chai-jQuery` assertions](/api/assertions#Chai-jQuery) now
   throw a nice error message when you're asserting on a non DOM object. Fixes
   [#604](https://github.com/cypress-io/cypress/issues/604).
 - New [.trigger()](/api/commands/trigger) command. Useful for triggering
@@ -11622,7 +11622,7 @@ Note: we are still updating all of the docs to reflect all the 0.20.0 changes.
 - [Updated "Testing Your App"](/guides/end-to-end-testing/testing-your-app)
 - [Updated "Command Line"](/guides/guides/command-line)
 - [Updated "Debugging"](/guides/guides/debugging)
-- [Updated "Assertions"](/guides/references/assertions)
+- [Updated "Assertions"](/api/assertions)
 - [Updated "Interacting with Elements"](/guides/core-concepts/interacting-with-elements)
 
 ## 0.19.4
