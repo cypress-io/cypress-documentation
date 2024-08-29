@@ -262,8 +262,7 @@ cypress.run({...})
     process.exit(result.failures)
   }
 
-  // print test results and exit
-  // with the number of failed tests as exit code
+  // exit with the number of failed tests as exit code
   process.exit(result.totalFailed)
 })
 .catch(err => {
