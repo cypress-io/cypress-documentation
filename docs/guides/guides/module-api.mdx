@@ -231,7 +231,7 @@ You can find the TypeScript definition for the results object in the
 
 ### Handling errors
 
-Even when tests fail or a spec errors, the `Promise` resolves with the test results. 
+Even when tests fail or a spec errors, the `Promise` resolves with the test results.
 If a spec errors, the error message will be in the `runs` array under the `error` field.
 The `Promise` is only rejected if Cypress cannot run for some reason (for example if
 a binary has not been installed or it cannot find a module dependency). In that
