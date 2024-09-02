@@ -7,7 +7,7 @@ sidebar_custom_props: { 'new_label': true }
 Enterprise Reporting data can be downloaded from Cloud using the Cypress Cloud API. The data is returned in file
 formats that allow you to easily incorporate it into your BI reporting platform, as well as a JSON file that can be
 programmatically parsed. This API allows you to retrieve your test data at a variety of levels, including
-all the way down to the individual test result data which includes status, error messages, build tags and groups,
+all the way down to the individual test result data which includes status, error messages, runs tags and groups,
 Test Replay links, and much more.
 
 All of the data that is viewable in [Enterprise Reporting ](/guides/cloud/analytics/enterprise-reporting)
@@ -51,16 +51,19 @@ The following query parameters are available for use:
 
 - start_date. **Required** and should be passed in either yyyy-MM-dd or yyyy-MM-ddTHH:mm:ss format.
 
-  For example, `?start_date=2024-01-01` or `?start_date=2024-01-01T12%3A30%3A00`
+  For example, to request a start date of September 1, 2024, use: `?start_date=2024-09-01`. To request a
+  start date of 12:30p UTC on that day, use: `?start_date=2024-09-01T12%3A30%3A00`
 
-- end_date. Optional and should be passed in either yyyy-MM-dd or yyyy-MM-ddTHH:mm:ss format.
+- end_date. Optional and should be passed in either yyyy-MM-dd or yyyy-MM-ddTHH:mm:ss format. If no end date is
+  specified the query will default to today.
 
-  For example, `?end_date=2024-01-01` or `?end_date=2024-01-01T12%3A30%3A00`
+  For example, to request an end date of start of day September 1, 2024, use: `?end_date=2024-09-01`. To request an
+  end date of 12:30p UTC on that day, use: `?end_date=2024-09-01T12%3A30%3A00`
 
 - projects. Optional, and accepts the name of your Cypress project. The project name should be URL encoded. You can
   pass as many projects parameters as needed.
 
-  For example, `&projects=project%20a&projects=test123`
+  For example, to request that the data be filtered for projects _Project e2e_ and _Phoenix_, use: `&projects=Project%20e2e&projects=Phoenix`
 
 Every type of report supports the returning of data in three file formats:
 
@@ -119,10 +122,10 @@ Data returned includes:
 Example:
 https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=usage-per-project-over-time&export_format=csv&start_date=2024-01-01
 
-### Status by build
+### Status by run
 
-This data helps you understand the success and failure rates at the build level. If any part of the
-build fails then the entire build is failed.
+This data helps you understand the success and failure rates at the run level. If any part of the
+run fails then the entire run is failed.
 
 The report_id is: `status-per-build-summary`
 
@@ -134,10 +137,10 @@ Data returned includes:
 Example:
 https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=status-per-build-summary&export_format=csv&start_date=2024-01-01
 
-### Status by build over time
+### Status by run over time
 
-This data helps you understand the success and failure rates at the build level. If any part of the
-build fails then the entire build is failed. The data is reported over time.
+This data helps you understand the success and failure rates at the run level. If any part of the
+run fails then the entire run is failed. The data is reported over time.
 
 The report_id is: `status-per-build-over-time`
 
@@ -214,7 +217,7 @@ Data returned includes:
 Example:
 https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=status-per-test-over-time&export_format=csv&start_date=2024-01-01
 
-### Cypress build versions
+### Cypress run versions
 
 This data helps you monitor and track which versions of the Cypress app are being
 used in your organization.
@@ -223,13 +226,13 @@ The report_id is: `cypress-build-versions-summary`
 
 Data returned includes:
 
-- build_count
+- run_count
 - cypress_version
 
 Example:
 https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=cypress-build-versions-summary&export_format=csv&start_date=2024-01-01
 
-### Cypress build versions over time
+### Cypress run versions over time
 
 This data helps you monitor and track which versions of the Cypress app are being
 used in your organization. This data is reported over time.
@@ -238,14 +241,14 @@ The report_id is: `cypress-build-versions-over-time`
 
 Data returned includes:
 
-- build_count
+- run_count
 - cypress_version
 - week
 
 Example:
 https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=cypress-build-versions-over-time&export_format=csv&start_date=2024-01-01
 
-### Cypress build versions per project over time
+### Cypress run versions per project over time
 
 This data helps you monitor and track which versions of the Cypress app are being used in your organization.
 The versions are reported at the project level. This data is reported over time.
@@ -255,7 +258,7 @@ The report_id is: `cypress-build-versions-per-project-over-time`
 Data returned includes:
 
 - project_name
-- build_count
+- run_count
 - cypress_version
 - week
 
@@ -417,7 +420,7 @@ Data returned includes:
 
 - project_name
 - created_at (date and time)
-- build_number
+- run_number
 - commit_author_name
 - spec (path and filename)
 - status
@@ -438,7 +441,7 @@ Data returned includes:
 Example:
 https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=spec-details&export_format=csv&start_date=2024-01-01
 
-### Individual test results with errors
+### Individual failed test results
 
 This report allows you to extract all test result details for failed tests. The maximum number of records
 returned is 500,000. Make multiple requests with different start_date and end_date parameter values if your volume of records will
@@ -450,14 +453,14 @@ Data returned includes:
 
 - project_name
 - created_at (date and time)
-- build_number
+- run_number
 - commit_author_name
 - commit_branch
 - commit_sha
 - ci_build_id
 - status
 - group_name
-- build_tags (string array)
+- run_tags (string array)
 - error_name (string array)
 - error_message (string array)
 - test_replay_url
@@ -477,14 +480,14 @@ Data returned includes:
 
 - project_name
 - created_at (date and time)
-- build_number
+- run_number
 - commit_author_name
 - commit_branch
 - commit_sha
 - ci_build_id
 - status
 - group_name
-- build_tags (string array)
+- run_tags (string array)
 - test_duration
 - error_name (string array)
 - error_message (string array)
@@ -493,20 +496,20 @@ Data returned includes:
 Example:
 https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=test-details&export_format=csv&start_date=2024-01-01
 
-### Average build duration over time
+### Average run duration over time
 
-This report allows you to retrieve the average, median, min and max durations of a build. This data is reported over time.
+This report allows you to retrieve the average, median, min and max durations of a run. This data is reported over time.
 
 The report_id is: `average-passing-build-duration`
 
 Data returned includes:
 
 - project_name
-- build_count
-- avg_pass_build_duration (average)
-- mdn_pass_build_duration (median)
-- min_pass_build_duration (min)
-- max_pass_build_duration (max)
+- run_count
+- avg_pass_run_duration (average)
+- mdn_pass_run_duration (median)
+- min_pass_run_duration (min)
+- max_pass_run_duration (max)
 - day
 - week
 
@@ -603,14 +606,14 @@ Data returned includes:
 
 - project_name
 - created_at (date and time)
-- build_number
+- run_number
 - commit_author_name
 - commit_branch
 - commit_sha
 - ci_build_id
 - status
 - group_name
-- build_tags (string array)
+- run_tags (string array)
 - error_name (string array)
 - error_message (string array)
 - test_replay_url
@@ -618,7 +621,7 @@ Data returned includes:
 Example:
 https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=flaky-test-details&export_format=csv&start_date=2024-01-01
 
-### Top flaky per project
+### Top flaky tests per project
 
 This report allows you to understand which tests have the highest flaky count and provides a URL to an example of a recent
 occurrence of this flake. Enables teams to jump directly to Cypress Cloud for troubleshooting using test replay.
