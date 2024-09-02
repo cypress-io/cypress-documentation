@@ -560,7 +560,8 @@ https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_i
 
 This report allows you to understand the flaky _rate_ occuring in your projects, not just the _count_ of flaky tests.
 Sometimes a high flake count is seen simply because the test runs very frequently, but the % of flake could be lower than in
-other tests that run less often. The flaky rate per project is calculated for the time period requested.
+other tests that run less often. The flaky rate per project is calculated for the time period requested. Flaky rate is shown
+as a whole number. For example: 1 flaky test over 4 runs has a flaky rate of 25.
 
 The report_id is: `flake-rate-per-project`
 
@@ -578,7 +579,8 @@ https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_i
 
 This report allows you to understand the flaky _rate_ occuring in your projects, not just the _count_ of flaky tests.
 Sometimes a high flake count is seen simply because the test runs very frequently, but the % of flake could be lower than in
-other tests that run less often. The flaky rate per project is calculated for the time period requested.
+other tests that run less often. The flaky rate per project is calculated for the time period requested. Flaky rate is shown
+as a whole number. For example: 1 flaky test over 4 runs has a flaky rate of 25.
 
 The report_id is: `flake-rate-per-project-over-time`
 
@@ -642,6 +644,7 @@ https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_i
 
 This report allows you to understand which tests have the highest number of failures and provides a URL to an example of a recent
 occurrence of this failure. Enables teams to jump directly to Cypress Cloud and understand the full context surrounding the failure.
+Fail rate is shown as a whole number. For example: 1 failed test over 4 runs has a fail rate of 25.
 
 The report_id is: `top-failures-per-project`
 
