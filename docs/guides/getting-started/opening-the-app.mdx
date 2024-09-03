@@ -1,6 +1,10 @@
 ---
-title: Opening the App
+title: 'Open the App with Cypress: Step-by-Step Guide'
+sidebar_label: 'Opening the App'
+description: 'Open the app effectively in Cypress. Get started with a guide on opening the application for testing and improve your workflow'
 ---
+
+# Opening the App
 
 :::info
 
@@ -15,19 +19,38 @@ title: Opening the App
 
 ## `cypress open`
 
-You can open Cypress from your **project root** one of the following ways:
+You can open Cypress from your **project root** using one of the following commands,
+depending on the package manager (npm, Yarn or pnpm) you are using:
 
-**Using `npx`**
+<Tabs
+  defaultValue="npm"
+  values={[
+    {label: 'npm', value: 'npm'},
+    {label: 'Yarn', value: 'yarn'},
+    {label: 'pnpm', value: 'pnpm'},
+  ]}>
+  <TabItem value="npm">
 
 ```shell
 npx cypress open
 ```
 
-**Or by using `yarn`**
+  </TabItem>
+  <TabItem value="yarn">
 
 ```shell
-yarn run cypress open
+yarn cypress open
 ```
+
+  </TabItem>
+  <TabItem value="pnpm">
+
+```shell
+pnpm cypress open
+```
+
+  </TabItem>
+</Tabs>
 
 After a moment, the Cypress Launchpad will open.
 
@@ -40,7 +63,7 @@ the `scripts` field in your `package.json` file.
 ```javascript
 {
   "scripts": {
-    "cypress:open": "cypress open"
+    "cy:open": "cypress open"
   }
 }
 ```
@@ -48,7 +71,7 @@ the `scripts` field in your `package.json` file.
 Now you can invoke the command from your project root like so:
 
 ```shell
-npm run cypress:open
+npm run cy:open
 ```
 
 ...and Cypress will open right up for you.
@@ -58,9 +81,9 @@ npm run cypress:open
 <strong>Best Practice</strong>
 
 Don't use `cypress` as the exact name of a script, especially if you use Yarn as package manager.
-When running commands on the Cypress binary (e.g `yarn cypress verify`), Yarn will reference the
+When running commands on the Cypress binary (e.g. `yarn cypress verify`), Yarn will reference the
 script of the same name instead and [Cypress CLI commands](/guides/guides/command-line) may not work as expected.
-Use instead a descriptive and non-ambiguous script name such as `cypress:open` or `cypress:run`.
+Use instead a descriptive and non-ambiguous script name such as `cy:open` or `cy:run`.
 
 :::
 

@@ -13,6 +13,7 @@ to use GitHub integration.
 <DocsImage
   src="/img/guides/cloud/integrations/github/pull-request-cypress-integration-comments-github-checks.jpg"
   alt="Cypress GitHub App PR"
+  width={800}
 />
 
 :::caution
@@ -419,22 +420,25 @@ Reporting on flaky status checks is included in our
 The Cypress GitHub App can provide detailed test information within the pull
 requests via comments that include:
 
-- **Run statistics, such as tests passed, failed, skipped, and over-limit.**
 - **Run context details:**
   - The associated Cypress project
+  - A link to the corresponding [Branch Review](../../branch-review)
   - Run status (passed, failed, etc.)
-  - Commit message
-  - Commit SHA
-  - The time the run started and finished, as well as the duration
-- **Run failures:**
-  - A summary of the tests that failed
-  - A link back to the associated failure within Cypress Cloud
+  - Run duration
+  - Commit message and SHA
+  - Committer
+- **Test results:**
+  - Run statistics, such as tests passed, failed, skipped, flaky, and pending.
+- **Tests for review:**
+  - A summary of the tests that failed or are flaky
+  - A link back to the associated failed or flaky test within Cypress Cloud
 
 An example of a Cypress pull-request comment can be seen below:
 
 <DocsImage
   src="/img/guides/cloud/integrations/github/pr-comment-fail.jpg"
   alt="Cypress GitHub App PR comment"
+  width={800}
 />
 
 ### Disable PR comments

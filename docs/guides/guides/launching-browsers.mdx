@@ -49,15 +49,15 @@ browser by using the drop down near the top right corner:
 
 Cypress supports the browser versions below:
 
-- Chrome 80 and above.
+- Chrome 64 and above. Chrome 80 and above is required for `cypress open` usage.
 - Edge 80 and above.
 - Firefox 86 and above.
 
 ### Download specific Chrome version
 
 The Chrome browser is evergreen - meaning it will automatically update itself,
-sometimes causing a breaking change in your automated tests. You can use
-[https://vikyd.github.io/download-chromium-history-version](https://vikyd.github.io/download-chromium-history-version) to download a
+sometimes causing a breaking change in your automated tests.
+You can use the information in [Download Chromium](https://on.cypress.io/chromium-downloads) to download a
 specific released version of Chromium for every platform.
 
 ### Electron Browser
@@ -85,7 +85,8 @@ seeing failures in CI, to easily debug them you may want to run locally with the
 ### Chrome Browsers
 
 All Chrome\* flavored browsers will be detected and are supported above
-Chrome 64.
+Chrome 64, with the restriction that a minimum of Chrome 80 is required to use
+`cypress open`.
 
 You can launch Chrome like this:
 
@@ -177,21 +178,35 @@ these steps:
 
 1. Add `experimentalWebKitSupport: true` to your
    [configuration](/guides/references/configuration) to enable the experiment.
-2. Install the `playwright-webkit` NPM package in your repo to acquire WebKit
-   itself: `npm install --save-dev playwright-webkit@1.34`.
-   - We built this experiment on top of the Playwright WebKit browser as a
-     stepping stone towards creating a better UX with Cypress-provided browsers
-     in the future. Thank you, Playwright contributors.
-3. Now, you should be able to use WebKit like any other browser. For example, to
+2. For installation on Linux, refer to [Linux Dependencies](#Linux-Dependencies) below.
+3. Install the `playwright-webkit` npm package in your repo to acquire WebKit
+   itself:
+   ```shell
+   npm install playwright-webkit --save-dev
+   ```
+4. Now, you should be able to use WebKit like any other browser. For example, to
    record with WebKit in CI:
    ```shell
    cypress run --browser webkit --record # ...
    ```
 
+We built this experiment on top of the Playwright WebKit browser as a
+stepping stone towards creating a better UX with Cypress-provided browsers
+in the future. Thank you, Playwright contributors.
+
 WebKit support is _experimental_, so you may encounter issues. If you encounter
 an issue not on the "Known Issues" list, please
 [open an issue](https://github.com/cypress-io/cypress/issues/new/choose) on the
 GitHub repository.
+
+#### Linux Dependencies
+
+WebKit requires additional dependencies to run on Linux. To install the required
+dependencies, run this:
+
+```shell
+npx playwright install-deps webkit
+```
 
 #### Known Issues with `experimentalWebKitSupport`
 
@@ -208,15 +223,6 @@ GitHub repository.
 - See issues labeled
   [`experiment: webkit`](https://github.com/cypress-io/cypress/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3A%22experiment%3A+webkit%22)
   for a complete list.
-
-#### Linux Dependencies
-
-WebKit requires additional dependencies to run on Linux. To install the required
-dependencies, run this:
-
-```shell
-npx playwright install-deps webkit
-```
 
 ### Launching by a path
 
@@ -434,3 +440,8 @@ the chrome of the browser. You'll always be able to visually distinguish these.
 ## Troubleshooting
 
 [Having issues launching installed browsers? Read more about troubleshooting browser launching](/guides/references/troubleshooting#Launching-browsers)
+
+## See also
+
+- [Browser Launch API](/api/plugins/browser-launch-api)
+- [Cross browser Testing](/guides/guides/cross-browser-testing)

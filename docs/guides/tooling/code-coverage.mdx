@@ -149,14 +149,6 @@ crucial parts of your application. The collected information can be sent to
 external services, automatically run during pull request reviews, and integrated
 into CI.
 
-:::info
-
-The full source code for this guide can be found in the
-[cypress-io/cypress-example-todomvc-redux](https://github.com/cypress-io/cypress-example-todomvc-redux)
-repository.
-
-:::
-
 ## Instrumenting code
 
 Cypress does not instrument your code - you need to do it yourself. The golden
@@ -298,7 +290,7 @@ documentation for up-to-date installation instructions.
 :::
 
 ```shell
-npm install -D @cypress/code-coverage
+npm install @cypress/code-coverage --save-dev
 ```
 
 Then add the code below to the
@@ -694,23 +686,6 @@ Read the blog post
 [Back end Code Coverage from Cypress API tests](https://glebbahmutov.com/blog/backend-coverage/)
 for the full tutorial.
 
-## Future work
-
-We are currently exploring two additional features for code coverage during
-end-to-end tests. First, we would like to avoid the "manual" instrumentation
-step using the Istanbul.js library and instead capture the native code coverage
-that can be collected by the Chrome browser's V8 engine. You can find a
-proof-of-concept example in
-[bahmutov/cypress-native-chrome-code-coverage-example](https://github.com/bahmutov/cypress-native-chrome-code-coverage-example)
-repository.
-
-Second, we would like to capture the code coverage from _the locally running
-back end server_ that is serving the front end web application and handles the
-API requests from the web application under test. We believe that E2E tests with
-additional
-[API tests](https://www.cypress.io/blog/2017/11/07/add-gui-to-your-e2e-api-tests/)
-that Cypress can perform can effectively cover a lot of back end code.
-
 ## Videos
 
 There is a series of videos we have recorded showing code coverage in Cypress
@@ -758,8 +733,6 @@ following repositories:
   The RWA achieves full code coverage with end-to-end tests
   [across multiple browsers](/guides/guides/cross-browser-testing) and
   [device sizes](/api/commands/viewport).
-- [cypress-io/cypress-example-todomvc-redux](https://github.com/cypress-io/cypress-example-todomvc-redux)
-  is the example code used in this guide.
 - [cypress-io/cypress-example-conduit-app](https://github.com/cypress-io/cypress-example-conduit-app)
   shows how to collect the coverage information from both back and front end
   code and merge it into a single report.

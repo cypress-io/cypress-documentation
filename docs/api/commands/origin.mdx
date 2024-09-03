@@ -202,10 +202,10 @@ cy.origin('example.cypress.io', () => {
 })
 ```
 
-Here the `baseUrl` inside the `cy.origin()` callback is set to `www.cypress.io`
+Here the `baseUrl` inside the `cy.origin()` callback is set to `example.cypress.io`
 and the protocol defaults to `https`. When `cy.visit()` is called with the path
 `/history/founder`, the three are concatenated to make
-`https://www.cypress.io/history/founder`.
+`https://example.cypress.io/history/founder`.
 
 #### Alternative navigation
 
@@ -528,8 +528,7 @@ There are other testing scenarios which are not currently covered by
 
 - It cannot run commands
   [in a different browser window](/guides/references/trade-offs#Multiple-browsers-open-at-the-same-time)
-- It cannot run commands
-  [in a different browser tab](/guides/references/trade-offs#Multiple-tabs)
+- It cannot run commands in a different browser tab
 - It cannot run commands
   [inside an `<iframe>` element](/faq/questions/using-cypress-faq#How-do-I-test-elements-inside-an-iframe)
 

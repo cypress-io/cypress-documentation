@@ -97,7 +97,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      # Install NPM dependencies, cache them correctly
+      # Install npm dependencies, cache them correctly
       # and run all Cypress tests
       - name: Cypress run
         uses: cypress-io/github-action@v6
@@ -105,6 +105,11 @@ jobs:
           build: npm run build
           start: npm start
 ```
+
+<!--
+TODO - Protect existing workflows from failing in fork
+See https://github.com/cypress-io/cypress-documentation/issues/5754
+Until this is issue is resolved, the "Try it out" instructions should not be displayed.
 
 :::tip
 
@@ -116,6 +121,7 @@ example project and place the above GitHub Action configuration in a newly
 created `main.yml` file within `.github/workflows/`.
 
 :::
+ -->
 
 **How this action works:**
 
@@ -188,7 +194,7 @@ jobs:
   cypress-run:
     runs-on: ubuntu-22.04
     container:
-      image: cypress/browsers:node-20.9.0-chrome-118.0.5993.88-1-ff-118.0.2-edge-118.0.2088.46-1
+      image: cypress/browsers:node-20.14.0-chrome-126.0.6478.114-1-ff-127.0.1-edge-126.0.2592.61-1
       options: --user 1001
     steps:
       - name: Checkout
@@ -284,7 +290,7 @@ for more info.
 
 [Cypress Cloud](/guides/cloud/introduction) offers the ability to
 [parallelize and group test runs](/guides/cloud/smart-orchestration/parallelization)
-along with additional insights and [analytics](/guides/cloud/analytics) for
+along with additional insights and [analytics](/guides/cloud/analytics/overview) for
 Cypress tests.
 
 Using parallelization with the Cypress GitHub Action requires setting up
@@ -396,7 +402,7 @@ jobs:
 
 <strong>Ensure Correct Container</strong>
 
-If a docker container was used in the install job, the same docker container
+If a Docker container was used in the install job, the same Docker container
 must also be used in the worker jobs.
 
 :::

@@ -6,7 +6,7 @@ sidebar_position: 10
 ## Commands
 
 Cypress commands don't do anything at the moment they are invoked, but rather
-enqueue themselves to be run later. Commands can be chained commands together
+enqueue themselves to be run later. Commands can be chained together
 because Cypress manages a Promise chain on your behalf, with each command
 yielding a 'subject' to the next command, until the chain ends or an error is
 encountered.
@@ -170,7 +170,8 @@ Cypress exposes interfaces to write
 details.
 
 The Cypress community has created a large number of
-[Command Plugins](/plugins#custom-commands) which you can install or download.
+
+<a href="/plugins#custom-commands">Command Plugins</a> which you can install or download.
 
 ### APIs
 
@@ -178,7 +179,7 @@ Cypress exposes a number of properties and methods on the global `Cypress`
 object.
 
 The _key_ difference between Cypress APIs and Cypress commands is that Cypress
-APIs execute the moment they are invoked and are **not** enqueue to run at a
+APIs execute the moment they are invoked and are **not** enqueued to run at a
 later time.
 
 | Property                                                                 | Usage                                                                                                                          |
@@ -197,6 +198,7 @@ later time.
 | [`Cypress.isCy()`](/api/cypress-api/iscy)                                | checks if a variable is a valid instance of cy or a cy chainable.                                                              |
 | [`Cypress.Keyboard.defaults()`](/api/cypress-api/keyboard-api)           | Set default values for how the `.type()` command is executed.                                                                  |
 | [`Cypress.platform`](/api/cypress-api/platform)                          | The underlaying OS name, as returned by Node's `os.platform()`.                                                                |
+| [`Cypress.require`](/api/cypress-api/require)                            | Enables utilizing dependencies within the [cy.origin()](/api/commands/origin) callback function.                               |
 | [`Cypress.Screenshot.defaults()`](/api/cypress-api/screenshot-api)       | Set defaults for screenshots captured by the `.screenshot()` command and the automatic screenshots taken during test failures. |
 | [`Cypress.SelectorPlayground`](/api/cypress-api/selector-playground-api) | Configure options used by the [Selector Playground](/guides/core-concepts/cypress-app#Selector-Playground).                    |
 | [`Cypress.session`](/api/cypress-api/session)                            | A collection of helper methods related to the `.session()` command.                                                            |

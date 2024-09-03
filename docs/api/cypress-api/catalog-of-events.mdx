@@ -194,6 +194,18 @@ Cypress.on('uncaught:exception', (err, runnable) => {
 })
 ```
 
+If an uncaught exception is thrown from a domain within a `cy.origin()` command, the uncaught exception handler will need to added within the `cy.origin()` command to take effect.
+
+```javascript
+cy.origin('https://example.cypress.io', () => {
+  Cypress.on('uncaught:exception', (err, runnable) => {
+    // returning false here prevents Cypress
+    // inside the cy.origin() method from failing the test
+    return false
+  })
+})
+```
+
 ### To conditionally turn off uncaught exception handling for a certain error
 
 <SupportFileConfiguration />

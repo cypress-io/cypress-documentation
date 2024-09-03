@@ -81,20 +81,20 @@ ul.pluginsList li p {
   color: white;
 }
 
-.badgePill.badgeCommunity {
-  background-color: #737373;
-}
-
-.badgePill.badgeExperimental {
-  background-color: #965cc1;
-}
-
 .badgePill.badgeOfficial {
-  background-color: #257e8e;
+  background-color: #11d3d7;
 }
 
 .badgePill.badgeVerified {
-  background-color: #00805b;
+  background-color: #25bd4d;
+}
+
+.badgePill.badgeCommunity {
+  background-color: #9d44eb;
+}
+
+.badgePill.badgeDeprecated {
+  background-color: #7f112c;
 }
 
 .keyword {

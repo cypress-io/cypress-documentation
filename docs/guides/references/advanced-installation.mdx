@@ -13,6 +13,7 @@ title: Advanced Installation
 | `CYPRESS_CACHE_FOLDER`            | [Changes the Cypress binary cache location](#Binary-cache)                                     |
 | `CYPRESS_RUN_BINARY`              | [Location of Cypress binary at run-time](#Run-binary)                                          |
 | `CYPRESS_VERIFY_TIMEOUT`          | Overrides the timeout duration for the `verify` command. The default value is 30000.           |
+| `CYPRESS_SKIP_VERIFY`             | Skips the `verify` command (for stable CI environments)                                        |
 | ~~CYPRESS_SKIP_BINARY_INSTALL~~   | <Badge type="danger">removed</Badge> use `CYPRESS_INSTALL_BINARY=0` instead                    |
 | ~~CYPRESS_BINARY_VERSION~~        | <Badge type="danger">removed</Badge> use `CYPRESS_INSTALL_BINARY` instead                      |
 
@@ -25,11 +26,17 @@ Cypress is installed. To override what is installed, you set
 **This is helpful if you want to:**
 
 - Install a version different than the default npm package.
-  `shell CYPRESS_INSTALL_BINARY=2.0.1 npm install cypress@2.0.3 `
+  ```shell
+  CYPRESS_INSTALL_BINARY=13.7.0 npm install cypress@13.7.1
+  ```
 - Specify an external URL (to bypass a corporate firewall).
-  `shell CYPRESS_INSTALL_BINARY=https://company.domain.com/cypress.zip npm install cypress `
+  ```shell
+  CYPRESS_INSTALL_BINARY=https://company.domain.com/cypress.zip npm install cypress
+  ```
 - Specify a file to install locally instead of using the internet.
-  `shell CYPRESS_INSTALL_BINARY=/local/path/to/cypress.zip npm install cypress `
+  ```shell
+  CYPRESS_INSTALL_BINARY=/local/path/to/cypress.zip npm install cypress
+  ```
 
 In all cases, the fact that the binary was installed from a custom location _is
 not saved in your `package.json` file_. Every repeated installation needs to use
@@ -150,10 +157,10 @@ for all available platforms.
 | `GET`  | `/desktop/:version`                   | Download Cypress with a specified version                                  |
 | `GET`  | `/desktop/:version?platform=p&arch=a` | Download Cypress with a specified version and platform and/or architecture |
 
-**Example of downloading Cypress `3.0.0` for Windows 64-bit:**
+**Example of downloading Cypress `12.17.4` for Windows 64-bit:**
 
 ```text
-https://download.cypress.io/desktop/3.0.0?platform=win32&arch=x64
+https://download.cypress.io/desktop/12.17.4?platform=win32&arch=x64
 ```
 
 ## Mirroring
@@ -217,7 +224,7 @@ CYPRESS_DOWNLOAD_PATH_TEMPLATE=\${endpoint}/\${platform}-\${arch}/cypress.zip
 
 ## Using a custom certificate authority (CA)
 
-Cypress can be configured to use the `ca` and `cafile` options from your NPM
+Cypress can be configured to use the `ca` and `cafile` options from your npm
 config file to download the Cypress binary.
 
 For example, to use the CA at `/home/person/certs/ca.crt` when downloading
@@ -311,80 +318,14 @@ rely on these being available past 60 days.
 
 ## Windows Subsystem for Linux
 
-First, install the [prerequisite Linux packages](/guides/getting-started/installing-cypress#Linux-Prerequisites) using the command that relates to your
-Linux distribution ([Ubuntu/Debian](/guides/getting-started/installing-cypress#UbuntuDebian) or [CentOS](/guides/getting-started/installing-cypress#CentOS)).
+Cypress requires an [X-server](https://en.wikipedia.org/wiki/X.Org_Server) (X11) to display the Cypress UI from a Windows Subsystem for Linux installation. This requirement is met by current versions of Windows Subsystem for Linux (WSL2) with X11 support being included through Windows Subsystem for Linux GUI (WSLg).
 
-We need to have an [X-server](https://en.wikipedia.org/wiki/X.Org_Server) to
-display the Cypress UI from the linux subsystem. There are a variety of
-X-servers available, here we are going to use VcXsrv, you can use any other
-similar tool.
+Refer to [GitHub: Windows Subsystem for Linux GUI (WSLg)](https://github.com/microsoft/wslg) for installation instructions on Ubuntu and install the [prerequisite Linux packages](/guides/getting-started/installing-cypress#Linux-Prerequisites) before running Cypress.
 
-Download [VcXsrv](https://sourceforge.net/projects/vcxsrv/) and install. You can
-set the settings to your preference ("Multiple windows" and "Start no client"
-are recommended), but on the page that lets you enable extra settings, be sure
-to select "Disable access control" which is required as WSL2 has its own IP
-address, which changes often.
+Refer to Microsoft Learn [Windows Subsystem for Linux Documentation](https://learn.microsoft.com/en-us/windows/wsl/) for additional information.
 
-<DocsImage
-  src="/img/guides/install/vcxsrv-extra-settings.png"
-  alt="Disable access control in vcxsrv"
-/>
+:::info
 
-In your `.bashrc` (or equivalent such as `.zshrc`) set the `DISPLAY` environment
-variable.
+Cypress.io does not specifically support the use of Cypress under Windows Subsystem for Linux (WSL). If you want to report an issue, please ensure that you can reproduce it without using WSL on one of the Cypress [supported operating systems](/guides/getting-started/installing-cypress#Operating-System).
 
-```shell
-# set DISPLAY variable to the IP automatically assigned to WSL2
-export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2; exit;}'):0.0
-```
-
-To confirm `DISPLAY` variable has been set, print it out in the terminal. You
-may need to restart your terminal to see this change.
-
-```shell
-echo $DISPLAY
-# something like 172.17.224.1:0.0
-```
-
-The VcXsrv GUI uses [D-Bus](https://www.freedesktop.org/wiki/Software/dbus/) to
-internally communicate. After the `export DISPLAY` line in your `.bashrc`, add
-the following:
-
-```shell
-sudo /etc/init.d/dbus start &> /dev/null
-```
-
-Now your user needs to be granted access to run `sudo dbus` without needing to
-enter a password. To do so, use the `visudo` command:
-
-```shell
-sudo visudo -f /etc/sudoers.d/dbus
-```
-
-In the editor that launches, add the following line, replacing `<your_username>`
-with your username (you can use the `whoami` command to print your username if
-you don't know it).
-
-```
-<your_username> ALL = (root) NOPASSWD: /etc/init.d/dbus
-```
-
-Go to Control Panel > System and Security > Windows Defender Firewall > Inbound
-Rules > New Rule.
-
-<DocsImage
-  src="/img/guides/install/windows-firewall-disable-vcxsrv.png"
-  alt="Add rule to allow connections for vcxsrv"
-/>
-
-Select Program and click on next. On the This program path, browse and select
-path to VcxSrv. On the next page select allow the connection and click next. On
-the next page, select all three options (Domain, Private, Public).
-
-<DocsImage
-  src="/img/guides/install/rule-application-selection.png"
-  alt="Select inbound rule application cases for vcxsrv"
-/>
-
-Give the rule a suitable name and description and click finish. WSL2 should now
-be able to open a GUI from shell.
+:::

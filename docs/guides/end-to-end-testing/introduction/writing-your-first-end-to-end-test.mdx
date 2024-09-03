@@ -1,8 +1,12 @@
 ---
-title: Writing Your First E2E Test
+title: 'End-to-End Testing: Your First Test with Cypress'
+sidebar_label: 'Your First Test with Cypress'
+description: 'Dive into Cypress end-to-end testing with a guide on writing your first test. Learn step-by-step, best practices, and tips for efficient test creation'
 sidebar_position: 10
 slug: /guides/end-to-end-testing/writing-your-first-end-to-end-test
 ---
+
+# Your First Test with Cypress
 
 :::info
 
@@ -23,7 +27,7 @@ your first test. We're going to do this with the **Create new empty
 spec** button.
 
 <DocsImage
-  src="/img/guides/end-to-end-testing/writing-your-first-end-to-end-test/create-new-empty-spec.png"
+  src="/img/guides/end-to-end-testing/writing-your-first-end-to-end-test/create-new-spec.png"
   alt="Cypress with the Create new empty spec button highlighted"
 />
 
@@ -53,9 +57,12 @@ automatically displays any changes.
 />
 
 Even though we haven't written any code yet - that's okay - let's click on your
-new spec and watch Cypress launch it. Spoiler alert: it's probably going to
-**FAIL**. Don't worry, it's just because you haven't set up Cypress to visit a
-page in your app yet! Let's try something different.
+new spec and watch Cypress launch it. Cypress will visit `https://example.cypress.io` and the test passes.
+
+<DocsImage
+  src="/img/guides/end-to-end-testing/writing-your-first-end-to-end-test/new-spec-test-run.png"
+  alt="Cypress showing the newly created spec passing"
+/>
 
 ## Write your first test
 
@@ -436,7 +443,7 @@ the new page. If we read it out loud, it might sound like:
 3. _Click on it_
 4. _Get the URL_
 5. _Assert it includes: `/commands/actions`_
-6. _Get the input with the `action-email` data-testid_
+6. _Get the input with the `action-email` class_
 7. _Type `fake@email.com` into the input_
 8. _Assert the input reflects the new value_
 
@@ -448,7 +455,7 @@ Or in the _Given_, _When_, _Then_ syntax:
 
 1. _**Given** a user visits `https://example.cypress.io`_
 2. _**When** they click the link labeled `type`_
-3. _And they type "fake@email.com" into the `[data-testid="action-email"]`
+3. _And they type "fake@email.com" into the input that has a class of `action-email`
    input_
 4. _**Then** the URL should include `/commands/actions`_
 5. _And the `[data-testid="action-email"]` input has "fake@email.com" as its

@@ -193,6 +193,170 @@ in the future
 
 :::
 
+### Signals
+
+With the releases of Angular versions [17.1](https://github.com/angular/angular/blob/main/CHANGELOG.md#1710-2024-01-17) and [17.2](https://github.com/angular/angular/blob/main/CHANGELOG.md#1720-2024-02-14), [input](https://github.com/angular/angular/pull/53521) and [model](https://github.com/angular/angular/pull/54252) signals were introduced into the `@angular/core` API.
+Since signals introduced new methods and types to the core API, Cypress introduced a new test harness, `@cypress/angular-signals`.
+
+Though basic signals were introduced in Angular `16`, this testing harness requires Angular `17.2` and above.
+
+For the below examples, we'll be working with a very simple component called `TestComponent`, which looks something like shown below:
+
+```typescript
+// app/components/test-component.component.ts
+import { Component, input, model } from '@angular/core'
+
+@Component({
+  selector: 'test-component',
+  templateUrl: './test-component.component.html',
+  standalone: true,
+})
+export class TestComponent {
+  title = input.required<string>()
+  count = model<number>(1)
+}
+```
+
+```html
+<!-- app/components/test-component.component.html -->
+<p data-cy="test-component-title-display">{{ title() }}</p>
+<p data-cy="test-component-count-display">{{ count() }}</p>
+<button data-cy="test-component-count-incr" (click)="count.set(count() + 1)">
+  Increase
+</button>
+<button data-cy="test-component-count-decr" (click)="count.set(count() - 1)">
+  Decrease
+</button>
+```
+
+#### Testing Signals
+
+There are two ways to test signals within Cypress Component Testing:
+
+1. [Inferred Generic Type](#Inferred-Generic-Type)
+2. [Writable Signal](#Writable-Signal)
+
+##### Inferred Generic Type
+
+In the example below, the `title` prop being passed into our `TestComponent` is a `string`. A `string` is the generic type of our `input()` signal we defined in our `TestComponent`.
+
+```typescript
+let titleProp = 'Test Component'
+cy.mount(TestComponent, {
+  componentProperties: {
+    title: titleProp,
+  },
+})
+
+cy.get('[data-cy="test-component-title-display"]').should(
+  'have.text',
+  'Test Component'
+)
+```
+
+:::info
+Under the hood, Cypress wraps the generic value in a writable `signal()` and merges it into the prop. In other words, the `@cypress/angular-signals` test harness in this example is really:
+
+```typescript
+cy.mount(TestComponent, {
+  componentProperties: {
+    title: signal('Test Component'),
+  },
+})
+```
+
+:::
+
+This works for any signal. Shown below is an example of testing a `model()` signal with a generic type `number` as seen in our `TestComponent`:
+
+```ts
+cy.mount(TestComponent, {
+  componentProperties: {
+    title: 'Test Component',
+    count: 3,
+  },
+})
+
+cy.get('[data-cy="test-component-count-display"]').should('have.text', '3')
+```
+
+##### Writable Signal
+
+Inferred generic types work very well for most test cases. However, they don't allow us to update the prop in the component after the prop is passed in. For this use case, we need to use a writable `signal()`.
+
+This allows us to test our one-way data binding for our `input()` signals.
+
+```typescript
+const myTitlePropAsSignal = signal('Test Component')
+cy.mount(TestComponent, {
+  componentProperties: {
+    title: myTitlePropAsSignal,
+  },
+})
+
+cy.get('[data-cy="test-component-title-display"]').should(
+  'have.text',
+  'Test Component'
+)
+cy.then(() => {
+  // now set the input() through a signal to update the one-way binding
+  myTitlePropAsSignal.set('FooBar')
+})
+
+cy.get('[data-cy="test-component-title-display"]').should('have.text', 'FooBar')
+```
+
+And our two-way data binding for our `model()` signals.
+
+```typescript
+let count = signal(5)
+cy.mount(TestComponent, {
+  componentProperties: {
+    title: 'Test Component',
+    count,
+  },
+})
+
+cy.then(() => {
+  // now set the model() through a signal to update the binding in the component
+  count.set(8)
+})
+
+cy.get('[data-cy="test-component-count-display"]').should('have.text', '8')
+
+// some action occurs that changes the count to 9 inside the component, which updates the binding in our test
+cy.get('[data-cy="test-component-count-incr"]').click()
+cy.get('[data-cy="test-component-count-display"]').should('have.text', '9')
+cy.then(() => {
+  expect(count()).to.equal(9)
+})
+```
+
+##### Change Spies
+
+Cypress doesn't propagate changes via spy from `input()` signals.
+
+For writable signals, such as `model()`s or `signal()`s, Cypress **will** propagate changes if an output spy is created with the prop's name suffixed with `Change`. In the example below,
+`countChange` will spy on changes to the `count` signal.
+
+```typescript
+cy.mount(TestComponent, {
+  componentProperties: {
+    title: 'Test Component',
+    count: 4,
+    // @ts-expect-error
+    countChange: createOutputSpy('countChange'),
+  },
+})
+
+// some action occurs that changes the count
+cy.get('[data-cy="test-component-count-incr"]').click()
+
+cy.get('@countChange').should('have.been.called')
+```
+
+These spies can automatically be created if `autoSpyOutputs: true` is configured. The suffix in this case will be `ChangeSpy`.
+
 ## Custom Mount Commands
 
 ### Customizing `cy.mount()`

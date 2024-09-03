@@ -17,14 +17,14 @@ install it:
 <TabItem value='npm'>
 
 ```shell
-npm install --save-dev typescript
+npm install typescript --save-dev
 ```
 
 </TabItem>
 <TabItem value='yarn'>
 
 ```shell
-yarn add --dev typescript
+yarn add typescript --dev
 ```
 
 </TabItem>
@@ -78,7 +78,7 @@ Cypress needs to be able to transpile your Cypress configuration and plugins wri
 If your project is an `ESM` package (short for [ECMAScript Module](https://nodejs.org/api/esm.html#modules-ecmascript-modules)), Cypress attempts to apply the [ts-node/esm](https://github.com/TypeStrong/ts-node?tab=readme-ov-file#esm) Node.js loader to resolve the Cypress configuration and plugins. `ESM` is determined by Cypress if you have the `type: "module"` key-value pair present inside your project's `package.json`.
 
 Otherwise, regular [ts-node](https://github.com/TypeStrong/ts-node?tab=readme-ov-file#node-flags-and-other-tools) is required into Cypress's Node.js runtime.
-Since Node.js by itself can only interpret CommonJS files, Cypress attempts to make your TypeScript configuration compatable with Cypress' Node.js runtime.
+Since Node.js by itself can only interpret CommonJS files, Cypress attempts to make your TypeScript configuration compatible with Cypress' Node.js runtime.
 To do this, Cypress overrides the following configuration values found inside your project's `tsconfig.json`:
 
 ```json
@@ -248,10 +248,8 @@ As you can see there are generic parameters `<'type', 'element'>` are used:
 #### Examples:
 
 - See
-  [Adding Custom Commands](https://github.com/cypress-io/cypress-example-recipes#fundamentals)
+  [Adding Custom Commands (TS)](https://github.com/cypress-io/cypress-example-recipes#fundamentals)
   example recipe.
-- You can find an example with custom commands written in TypeScript in
-  [omerose/cypress-support](https://github.com/omerose/cypress-support) repo.
 - Example project
   [cypress-example-todomvc custom commands](https://github.com/cypress-io/cypress-example-todomvc#custom-commands)
   uses custom commands to avoid boilerplate code.
@@ -364,7 +362,7 @@ Both Jest and Expect (bundled inside Cypress) provide the clashing types for the
 1. Configure a separate `tsconfig.json` for E2E tests. See our example
    [cypress-io/cypress-and-jest-typescript-example](https://github.com/cypress-io/cypress-and-jest-typescript-example)
    repo.
-2. Remove Cypress global variables by using NPM package
+2. Remove Cypress global variables by using npm package
    [local-cypress](https://github.com/bahmutov/local-cypress). Read the blog
    post
    [How to Avoid Using Global Cypress Variables](https://glebbahmutov.com/blog/local-cypress/)

@@ -52,7 +52,7 @@
   to = "/examples/recipes/"
   status = 301
   force = true
-  
+
 [[redirects]]
   from = "/examples/examples/docker"
   to = "/examples/docker"
@@ -82,7 +82,7 @@
   to = "/guides/component-testing/overview"
   status = 301
   force = true
-	
+
 [[redirects]]
   from = "/guides/component-testing/introduction"
   to = "/guides/component-testing/overview"
@@ -168,11 +168,17 @@
   force = true
 
 [[redirects]]
+  from = "/guides/migrating-to-cypress/selenium"
+  to = "/guides/end-to-end-testing/selenium-to-cypress"
+  status = 301
+  force = true
+
+[[redirects]]
   from = "/guides/references/bundled-tools"
   to = "/guides/references/bundled-libraries"
   status = 301
   force = true
-  
+
 [[redirects]]
   from = "/guides/references/bundled-tools.html"
   to = "/guides/references/bundled-libraries"
@@ -319,7 +325,13 @@
 
 [[redirects]]
   from = "/guides/dashboard/analytics"
-  to = "/guides/cloud/analytics"
+  to = "/guides/cloud/analytics/overview"
+  status = 301
+  force = true
+
+ [[redirects]]
+  from = "/guides/cloud/analytics"
+  to = "/guides/cloud/analytics/overview"
   status = 301
   force = true
 
@@ -592,12 +604,6 @@
 [[redirects]]
   from = "/examples/examples/tutorials"
   to = "/examples/tutorials"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/examples/examples/workshop"
-  to = "/examples/workshop"
   status = 301
   force = true
 

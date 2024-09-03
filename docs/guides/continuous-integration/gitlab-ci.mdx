@@ -54,11 +54,11 @@ test:
   - Start the project web server (`npm start`)
   - Run the Cypress tests within the GitLab repository using Electron.
 
-## Testing in Chrome and Firefox with Cypress Docker Images
+## Testing with Cypress Docker Images
 
 The Cypress team maintains the official
 [Docker Images](https://github.com/cypress-io/cypress-docker-images) for running
-Cypress tests locally and in CI, which are built with Google Chrome, Firefox and Microsoft Edge.
+Cypress tests locally and in CI, which are built with Google Chrome, Mozilla Firefox and Microsoft Edge.
 For example, this allows us to run the tests in Firefox by passing the
 `--browser firefox` attribute to `cypress run`.
 
@@ -67,7 +67,7 @@ stages:
   - test
 
 test:
-  image: cypress/browsers:node-20.9.0-chrome-118.0.5993.88-1-ff-118.0.2-edge-118.0.2088.46-1
+  image: cypress/browsers:node-20.14.0-chrome-126.0.6478.114-1-ff-127.0.1-edge-126.0.2592.61-1
   stage: test
   script:
     # install dependencies
@@ -98,7 +98,7 @@ cache:
     - .npm/
 
 test:
-  image: cypress/browsers:node-20.9.0-chrome-118.0.5993.88-1-ff-118.0.2-edge-118.0.2088.46-1
+  image: cypress/browsers:node-20.14.0-chrome-126.0.6478.114-1-ff-127.0.1-edge-126.0.2592.61-1
   stage: test
   script:
     # install dependencies
@@ -119,7 +119,7 @@ test:
 
 [Cypress Cloud](/guides/cloud/introduction) offers the ability to
 [parallelize and group test runs](/guides/cloud/smart-orchestration/parallelization)
-along with additional insights and [analytics](/guides/cloud/analytics) for
+along with additional insights and [analytics](/guides/cloud/analytics/overview) for
 Cypress tests.
 
 The addition of the
@@ -165,7 +165,7 @@ cache:
 
 ## Install npm dependencies and Cypress
 install:
-  image: cypress/browsers:node-20.9.0-chrome-118.0.5993.88-1-ff-118.0.2-edge-118.0.2088.46-1
+  image: cypress/browsers:node-20.14.0-chrome-126.0.6478.114-1-ff-127.0.1-edge-126.0.2592.61-1
   stage: build
   script:
     - npm ci
@@ -210,13 +210,13 @@ cache:
 
 ## Install npm dependencies and Cypress
 install:
-  image: cypress/browsers:node-20.9.0-chrome-118.0.5993.88-1-ff-118.0.2-edge-118.0.2088.46-1
+  image: cypress/browsers:node-20.14.0-chrome-126.0.6478.114-1-ff-127.0.1-edge-126.0.2592.61-1
   stage: build
   script:
     - npm ci
 
 ui-chrome-tests:
-  image: cypress/browsers:node-20.9.0-chrome-118.0.5993.88-1-ff-118.0.2-edge-118.0.2088.46-1
+  image: cypress/browsers:node-20.14.0-chrome-126.0.6478.114-1-ff-127.0.1-edge-126.0.2592.61-1
   stage: test
   parallel: 5
   script:
