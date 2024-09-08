@@ -285,8 +285,8 @@ There are several levels of `DEBUG` messages
 DEBUG=cypress:server ...
 ## prints ALL messages from server package
 DEBUG=cypress:server* ...
-## prints messages only from config parsing
-DEBUG=cypress:server:config ...
+## prints messages only from project base operations
+DEBUG=cypress:server:project ...
 ```
 
 This allows you to isolate the problem a little better
@@ -298,25 +298,25 @@ server, reporter, driver, command line, etc. Each package writes debug logs
 under a different source. Here are a few common log sources and when you might
 want to enable them
 
-| Set `DEBUG` to value            | To enable debugging                                           |
-| ------------------------------- | ------------------------------------------------------------- |
-| `cypress:cli`                   | The top-level command line parsing problems                   |
-| `cypress:server:args`           | Incorrect parsed command line arguments                       |
-| `cypress:server:specs`          | Not finding the expected specs                                |
-| `cypress:server:project`        | Opening the project                                           |
-| `cypress:server:browsers`       | Finding installed browsers                                    |
-| `cypress:launcher`              | Launching the found browser                                   |
-| `cypress:server:video`          | Video recording                                               |
-| `cypress:network:*`             | Adding network interceptors                                   |
-| `cypress:net-stubbing*`         | Network interception in the proxy layer                       |
-| `cypress:server:reporter`       | Problems with test reporters                                  |
-| `cypress:server:preprocessor`   | Processing specs                                              |
-| `cypress:server:socket-e2e`     | Watching spec files                                           |
-| `cypress:server:task`           | Invoking the `cy.task()` command                              |
-| `cypress:server:socket-base`    | Debugging `cy.request()` command                              |
-| `cypress:webpack`               | Bundling specs using webpack                                  |
-| `cypress:server:fixture`        | Loading fixture files                                         |
-| `cypress:server:record:ci-info` | Git commit and CI information when recording to Cypress Cloud |
+| Set `DEBUG` to value             | To enable debugging                                           |
+| -------------------------------- | ------------------------------------------------------------- |
+| `cypress:cli`                    | The top-level command line parsing problems                   |
+| `cypress:server:args`            | Incorrect parsed command line arguments                       |
+| `cypress:data-context:sources:*` | Not finding the expected project data                         |
+| `cypress:server:project`         | Opening the project                                           |
+| `cypress:server:browsers`        | Finding installed browsers                                    |
+| `cypress:launcher`               | Launching the found browser                                   |
+| `cypress:server:video`           | Video recording                                               |
+| `cypress:network:*`              | Adding network interceptors                                   |
+| `cypress:net-stubbing*`          | Network interception in the proxy layer                       |
+| `cypress:server:reporter`        | Problems with test reporters                                  |
+| `cypress:server:preprocessor`    | Processing specs                                              |
+| `cypress:server:socket-e2e`      | Watching spec files                                           |
+| `cypress:server:task`            | Invoking the `cy.task()` command                              |
+| `cypress:server:socket-base`     | Debugging `cy.request()` command                              |
+| `cypress:webpack`                | Bundling specs using webpack                                  |
+| `cypress:server:fixture`         | Loading fixture files                                         |
+| `cypress:server:record:ci-info`  | Git commit and CI information when recording to Cypress Cloud |
 
 You can combine several areas together using the comma character. For example,
 to debug specs not being found, use:
@@ -324,7 +324,7 @@ to debug specs not being found, use:
 ```shell
 ## see how CLI arguments were parsed
 ## and how Cypress tried to locate spec files
-DEBUG=cypress:cli,cypress:server:specs npx cypress run --spec ...
+DEBUG=cypress:cli,cypress:data-context:sources:FileDataSource,cypress:data-context:sources:ProjectDataSource npx cypress run --spec ...
 ```
 
 You can also exclude a log source using `-` character. For example, to see all
