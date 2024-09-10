@@ -247,34 +247,69 @@ an issue you have by clearing this app data.
 
 ## Print DEBUG logs
 
-Cypress is built using the [debug](https://github.com/visionmedia/debug) module.
-That means you can receive helpful debugging output by running Cypress with this
-turned on. **Note:** you will see a LOT of messages when running with
+Cypress is built using the [debug](https://github.com/debug-js/debug) module.
+That means you can receive helpful debugging output by running Cypress with
+the environment variable `DEBUG` set to `cypress:*` prior to running `cypress run` or `cypress open`.
+**Note:** you will see a LOT of messages when running with the
 `DEBUG=...` setting.
 
-**On Mac or Linux:**
+**On macOS, Linux or Windows (Git Bash):**
+
+<Tabs groupId="package-manager"
+  defaultValue="npm"
+  values={[
+    {label: 'npm', value: 'npm'},
+    {label: 'Yarn', value: 'yarn'},
+    {label: 'pnpm', value: 'pnpm'},
+  ]}>
+  <TabItem value="npm">
 
 ```shell
-DEBUG=cypress:* cypress run
+DEBUG=cypress:* npx cypress run
 ```
 
-**On Windows:**
+  </TabItem>
+  <TabItem value="yarn">
 
-On Windows, you'll need to run the command in a command prompt terminal (not
-PowerShell).
+```shell
+DEBUG=cypress:* yarn cypress run
+```
+
+  </TabItem>
+  <TabItem value="pnpm">
+
+```shell
+DEBUG=cypress:* pnpm cypress run
+```
+
+  </TabItem>
+</Tabs>
+
+You can change `run` to `open` in the above to capture debug logs when starting your tests from the [Cypress Specs](../core-concepts/cypress-app#Specs) UI.
+
+For non-POSIX type shells on Windows, set the `DEBUG` environment variable as follows. (Replace `npx` with `yarn` or `pnpm` if you are using Yarn or pnpm package managers instead of npm.)
+
+**On Windows CMD:**
 
 ```shell
 set DEBUG=cypress:*
-cypress run
+npx cypress run
+```
+
+**On Windows PowerShell:**
+
+```shell
+$env:DEBUG='cypress:*'
+npx cypress run
 ```
 
 If you have issues with the logs not printing, it may be a permissions issue
 with setting the environment variable in your terminal. You may need to run your
 terminal in administrative mode or review your permission settings.
 
-Read more
-[about the CLI options here](/guides/guides/command-line#Debugging-commands) and
-[Good Logging](https://glebbahmutov.com/blog/good-logging/) blog post.
+[How to run Cypress CLI commands](/guides/guides/command-line#How-to-run-commands) provides background information on running Cypress from the command line and includes a reference of additional command line options.
+
+Read more: [Good Logging](https://glebbahmutov.com/blog/good-logging/) blog post.
 
 ### Detailed Logs
 
@@ -304,11 +339,11 @@ want to enable them
 | `cypress:server:args`            | Incorrect parsed command line arguments                       |
 | `cypress:data-context:sources:*` | Not finding the expected project data                         |
 | `cypress:server:project`         | Opening the project                                           |
-| `cypress:server:browsers`        | Finding installed browsers                                    |
-| `cypress:launcher`               | Launching the found browser                                   |
+| `cypress:server:browsers:*`      | Finding installed browsers                                    |
+| `cypress:launcher:*`             | Launching the found browser                                   |
 | `cypress:server:video`           | Video recording                                               |
 | `cypress:network:*`              | Adding network interceptors                                   |
-| `cypress:net-stubbing*`          | Network interception in the proxy layer                       |
+| `cypress:net-stubbing:*`         | Network interception in the proxy layer                       |
 | `cypress:server:reporter`        | Problems with test reporters                                  |
 | `cypress:server:preprocessor`    | Processing specs                                              |
 | `cypress:server:socket-e2e`      | Watching spec files                                           |
@@ -327,7 +362,7 @@ to debug specs not being found, use:
 DEBUG=cypress:cli,cypress:data-context:sources:FileDataSource,cypress:data-context:sources:ProjectDataSource npx cypress run --spec ...
 ```
 
-You can also exclude a log source using `-` character. For example, to see all
+You can also exclude a log source using the `-` character. For example, to see all
 `cypress:server*` messages without noisy browser messages use:
 
 ```shell
@@ -367,7 +402,7 @@ cypress:server:socket-base backend:request { eventName: 'http:request', args:
 Some 3rd party modules like
 [@cypress/request](https://github.com/cypress-io/request) output additional log
 messages by inspecting the `NODE_DEBUG` environment variable. For example to
-debug the network interception and the requests made by the `@cypress/request`
+debug the network interception and the requests made by the `@cypress/request` module
 use:
 
 ```shell
@@ -400,18 +435,12 @@ You can tell Cypress to log out a summary of the memory and CPU usage of itself
 and any subprocesses at a regular interval by enabling the
 `cypress:server:util:process_profiler` debug stream, like so:
 
-**On Mac or Linux:**
-
 ```shell
-DEBUG=cypress:server:util:process_profiler cypress run
+DEBUG=cypress:server:util:process_profiler npx cypress run
 ```
 
-**On Windows:**
-
-```shell
-set DEBUG=cypress:server:util:process_profiler
-cypress run
-```
+(See [Print DEBUG Logs](#Print-DEBUG-logs) above for hints on setting
+the `DEBUG` environment variable in a non-POSIX Windows terminal.)
 
 In the resulting output, processes are grouped by their name.
 
@@ -420,7 +449,7 @@ In the resulting output, processes are grouped by their name.
   alt="Process printout of Cypress in CLI"
 />
 
-By default, process information is collected and summarized is printed once
+By default, process information is collected, summarized and is printed once
 every 10 seconds. You can override this interval by setting the
 `CYPRESS_PROCESS_PROFILER_INTERVAL` environment variable to the desired interval
 in milliseconds.
@@ -445,7 +474,7 @@ CYPRESS_NO_COMMAND_LOG=1 cypress run
 You can also hide the entire Cypress Runner UI in `cypress run` by passing the [`--no-runner-ui`](/guides/guides/command-line#cypress-run-no-runner-ui) command line flag.
 
 ```shell
-cypress run --no-runner-ui
+npx cypress run --no-runner-ui
 ```
 
 With this variable set, Cypress will skip rendering the Command Log entirely,
