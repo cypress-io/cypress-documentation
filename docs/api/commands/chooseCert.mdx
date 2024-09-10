@@ -1,0 +1,105 @@
+---
+title: chooseCert
+---
+
+Choose a client certificate group to run your tests with those specific certificates.
+
+## Syntax
+
+```javascript
+cy.chooseCert(group_name)
+```
+
+### Usage
+
+You must have the `clientCertificates` configuration set in your [Cypress configuration file](https://on.cypress.io/configuration). The `clientCertificates` configuration is only available in the `e2e` configuration object. An example of the configuration is shown below:
+
+> Note: Notice how each certificate is grouped under the `group` key. This is used to filter the certificates when `cy.chooseCert()` is called.
+
+:::cypress-config-example
+```ts
+{
+  e2e: {
+    clientCertificates: [
+      {
+        url: 'https://example.com/*',
+        ca: ['certs/ca.crt'],
+        certs: [
+          {
+            group: 'user',
+            cert: 'certs/user.crt',
+            key: 'certs/user.key',
+          },
+          {
+            group: 'admin',
+            cert: 'certs/admin.crt',
+            key: 'certs/admin.key',
+          },
+        ],
+      },
+    ],
+  },
+}
+```
+:::
+
+Now you can just choose the certificate group you want to use in your test using `cy.chooseCert()`. An example is shown below:
+
+```typescript
+cy.chooseCert(null) // Defaults to certificates without a group
+
+// Send a request to your domain and expect a 404 response due to lack of a valid certificate
+cy.request({
+  url: "https://example.com",
+  failOnStatusCode: false,
+}).then((response) => {
+  expect(response.status).to.eq(404);
+});
+
+cy.chooseCert('user') // Chooses certificates with the group 'user'
+
+// Send a request to your domain now and get 200 response due to the valid certificate (user)
+cy.request({
+  url: "https://example.com",
+}).then((response) => {
+  expect(response.status).to.eq(200);
+  expect(response.body).to.contain('Welcome user');
+});
+
+cy.chooseCert('admin') // Chooses certificates with the group 'admin'
+
+// Send a request to your domain now and get 200 response due to the valid certificate (admin)
+cy.request({
+  url: "https://example.com",
+}).then((response) => {
+  expect(response.status).to.eq(200);
+  expect(response.body).to.contain('Welcome admin');
+});
+```
+
+### Arguments
+
+<Icon name="angle-right" /> **group_name _(string | null)_**
+
+The group name to choose and filter the client certificates from.
+If null is provided, the command will default to certificates without a group.
+
+> NOTE: The default grouping is done under the 'default' group. Thus, providing 'default' as a group name is same as providing `null`.
+
+<Icon name="angle-right" /> **options _(Object)_**
+
+Pass in an options object to change the default behavior of `cy.chooseCert()`.
+
+| Option    | Default                                                    | Description                                                                              |
+| --------- | ---------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `log`     | `true`                                                     | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |   |
+
+## History
+
+| Version                       | Changes                   |
+| ----------------------------- | ------------------------- |
+| [13.14.4 (PENDING)](https://github.com/cypress-io/cypress/pull/30203) | Client certificate selector option during e2e tests. Addresses [#27302](https://github.com/cypress-io/cypress/issues/27302). |
+
+## See also
+
+- [Client Certificates](/guides/references/client-certificates)
