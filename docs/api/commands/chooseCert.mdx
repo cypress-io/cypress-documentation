@@ -17,6 +17,7 @@ You must have the `clientCertificates` configuration set in your [Cypress config
 > Note: Notice how each certificate is grouped under the `group` key. This is used to filter the certificates when `cy.chooseCert()` is called.
 
 :::cypress-config-example
+
 ```ts
 {
   e2e: {
@@ -41,6 +42,7 @@ You must have the `clientCertificates` configuration set in your [Cypress config
   },
 }
 ```
+
 :::
 
 Now you can just choose the certificate group you want to use in your test using `cy.chooseCert()`. An example is shown below:
@@ -50,31 +52,31 @@ cy.chooseCert(null) // Defaults to certificates without a group
 
 // Send a request to your domain and expect a 404 response due to lack of a valid certificate
 cy.request({
-  url: "https://example.com",
+  url: 'https://example.com',
   failOnStatusCode: false,
 }).then((response) => {
-  expect(response.status).to.eq(404);
-});
+  expect(response.status).to.eq(404)
+})
 
 cy.chooseCert('user') // Chooses certificates with the group 'user'
 
 // Send a request to your domain now and get 200 response due to the valid certificate (user)
 cy.request({
-  url: "https://example.com",
+  url: 'https://example.com',
 }).then((response) => {
-  expect(response.status).to.eq(200);
-  expect(response.body).to.contain('Welcome user');
-});
+  expect(response.status).to.eq(200)
+  expect(response.body).to.contain('Welcome user')
+})
 
 cy.chooseCert('admin') // Chooses certificates with the group 'admin'
 
 // Send a request to your domain now and get 200 response due to the valid certificate (admin)
 cy.request({
-  url: "https://example.com",
+  url: 'https://example.com',
 }).then((response) => {
-  expect(response.status).to.eq(200);
-  expect(response.body).to.contain('Welcome admin');
-});
+  expect(response.status).to.eq(200)
+  expect(response.body).to.contain('Welcome admin')
+})
 ```
 
 ### Arguments
@@ -90,14 +92,14 @@ If null is provided, the command will default to certificates without a group.
 
 Pass in an options object to change the default behavior of `cy.chooseCert()`.
 
-| Option    | Default                                                    | Description                                                                              |
-| --------- | ---------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| `log`     | `true`                                                     | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |   |
+| Option | Default | Description                                                                              |
+| ------ | ------- | ---------------------------------------------------------------------------------------- | --- |
+| `log`  | `true`  | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |     |
 
 ## History
 
-| Version                       | Changes                   |
-| ----------------------------- | ------------------------- |
+| Version                                                               | Changes                                                                                                                      |
+| --------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
 | [13.14.4 (PENDING)](https://github.com/cypress-io/cypress/pull/30203) | Client certificate selector option during e2e tests. Addresses [#27302](https://github.com/cypress-io/cypress/issues/27302). |
 
 ## See also
