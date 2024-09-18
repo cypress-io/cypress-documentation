@@ -54,6 +54,79 @@ CYPRESS_INSTALL_BINARY=0 npm install
 
 Now Cypress will skip its install phase once the npm module is installed.
 
+### Troubleshoot installation
+
+The Cypress [Life Cycle script](https://docs.npmjs.com/cli/using-npm/scripts) `postinstall` installs the Cypress binary after the [Cypress npm module](https://www.npmjs.com/package/cypress) has been installed. Package managers however execute the `postinstall` step in the background by default which hides the debug output. Execute `cypress install` separately with [debug logging](./troubleshooting#Log-sources) enabled to view the debug logs.
+
+<Tabs groupId="package-manager"
+  defaultValue="npm"
+  values={[
+    {label: 'npm', value: 'npm'},
+    {label: 'Yarn', value: 'yarn'},
+    {label: 'pnpm', value: 'pnpm'},
+  ]}>
+  <TabItem value="npm">
+
+```shell
+CYPRESS_INSTALL_BINARY=0 npm install cypress --save-dev
+DEBUG=cypress:cli* npx cypress install
+```
+
+  </TabItem>
+  <TabItem value="yarn">
+
+```shell
+CYPRESS_INSTALL_BINARY=0 yarn add cypress --dev
+DEBUG=cypress:cli* yarn cypress install
+```
+
+  </TabItem>
+  <TabItem value="pnpm">
+
+```shell
+CYPRESS_INSTALL_BINARY=0 pnpm add --save-dev cypress
+DEBUG=cypress:cli* pnpm cypress install
+```
+
+  </TabItem>
+</Tabs>
+
+To set environment variables `CYPRESS_INSTALL_BINARY` and `DEBUG` in Windows CMD or PowerShell terminals, refer to examples in [Print DEBUG Logs](./troubleshooting#Print-DEBUG-logs).
+
+In Continuous Integration (CI) use the following commands to display debug logs from the Cypress binary installation:
+
+<Tabs groupId="package-manager"
+  defaultValue="npm"
+  values={[
+    {label: 'npm', value: 'npm'},
+    {label: 'Yarn', value: 'yarn'},
+    {label: 'pnpm', value: 'pnpm'},
+  ]}>
+  <TabItem value="npm">
+
+```shell
+DEBUG=cypress:cli* npm ci --foreground-scripts
+```
+
+  </TabItem>
+  <TabItem value="yarn">
+
+```shell
+yarn install --frozen-lockfile --ignore-scripts # Yarn v1 Classic only
+DEBUG=cypress:cli* yarn cypress install
+```
+
+  </TabItem>
+  <TabItem value="pnpm">
+
+```shell
+pnpm install --frozen-lockfile --ignore-scripts
+DEBUG=cypress:cli* pnpm cypress install
+```
+
+  </TabItem>
+</Tabs>
+
 ## Binary cache
 
 As of version `3.0`, Cypress downloads the matching Cypress binary to the global
