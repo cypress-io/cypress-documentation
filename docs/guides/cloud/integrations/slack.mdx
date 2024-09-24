@@ -7,13 +7,18 @@ sidebar_label: Slack
 One of our most-requested Cypress Cloud features, the Cypress app for Slack provides real-time results for your Cypress tests, all in one place—improving remote collaboration and giving wider visibility into test behavior and Application Quality.
 
 The Cypress app for Slack allows you to:
+
 - Improve cross-team collaboration by instantly surfacing Cypress results to the teams that need visibility
 - Confirm that key tests pass prior to launching new products or features
 - Reduce the time it takes to catch failed tests
 
-<DocsVideo src="https://www.youtube.com/embed/hnDPz7dognY?si=PRRy4f5n6f1jzfVJ" title="Cypress app for Slack" />
+<DocsVideo
+  src="https://www.youtube.com/embed/hnDPz7dognY?si=PRRy4f5n6f1jzfVJ"
+  title="Cypress app for Slack"
+/>
 
 ## Getting started
+
 You need just three things to get started:
 
 - Cypress Cloud account
@@ -28,7 +33,7 @@ You need just three things to get started:
    workspace.
 4. After you approve the app permissions, you can choose your Slack workspace and channel to
    associate with the installation.
-4. The installation is complete!
+5. The installation is complete!
 
 Now Cypress will post run results for all projects in your organization to the specified Slack channel.
 
@@ -38,20 +43,24 @@ The Slack messages can be tailored to match your teams' needs.
 
 - The Slack app can send results to one or more public or private Slack channels or directly to a specific user
 - You can select your notification preferences for when and where run results should be posted.
-- The app can be configured at the organization-level and project-level which supports multiple teams working on separate projects. 
+- The app can be configured at the organization-level and project-level which supports multiple teams working on separate projects.
 
 ### Per-Organization vs per-project configuration
 
 The following describes where to go to configure Slack for an organization and a project. The remaining sections will describe the supported configuration options.
 
 #### Organization settings
+
 To share Slack configuration for an organization:
+
 1. Navigate to the Integrations page for the organization you wish to configure.
 2. Within the Slack integration, click Configure.
 3. Configure the app.
 
 #### Project settings
+
 To share Slack configuration for a project:
+
 1. Navigate to the Project Settings page for the project you wish to configure.
 2. Click on the Integrations tab within the Project Settings page.
 3. Configure the app with the Slack Integration section.
@@ -146,11 +155,13 @@ manages your information.
 ### Authorizations
 
 When authorized, Cypress can:
- - View information about a user’s identity
- - Post messages to specific channels in Slack & direct message conversations
- - Show previews of cloud.cypress.io URLs in messages
- - View URLs from cloud.cypress.io
+
+- View information about a user’s identity
+- Post messages to specific channels in Slack & direct message conversations
+- Show previews of cloud.cypress.io URLs in messages
+- View URLs from cloud.cypress.io
 
 ### App scopes
+
 - User token scopes: `links:read`, `links:write`
 - Bot token scopes: `chat:write`, `incoming-webhook`, `links:read`, `links:write`
