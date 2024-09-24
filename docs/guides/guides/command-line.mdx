@@ -673,8 +673,10 @@ you open. These persist on all projects until you quit Cypress. These options
 will also override values in the Cypress configuration file.
 
 By passing `--browser` and `--e2e` or `--component` when launching a project,
-you can open Cypress and launch the browser at the same time. Otherwise, you
-will be guided through selecting a browser, project, and/or testing type.
+you can open Cypress and launch the browser at the same time. If passing the
+`--browser` flag alone, the browser will launch automatically after being
+guided through project and/or testing type selection. Otherwise, you will
+be guided through selecting a browser, project, and/or testing type.
 
 | Option                | Description                                                                                                                                                                         |
 | --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -979,48 +981,16 @@ cypress cache prune
 
 ### Enable Debug Logs
 
-Cypress is built using the [debug](https://github.com/visionmedia/debug) module.
-That means you can receive helpful debugging output by running Cypress with this
-turned on prior to running `cypress open` or `cypress run`.
-
-**On Mac or Linux:**
+If you are using macOS, Linux or Windows (Git Bash)
+and your package manager is npm, you can run Cypress with debug logs using the following CLI command:
 
 ```shell
-DEBUG=cypress:* cypress open
+DEBUG=cypress:* npx cypress run
 ```
 
-```shell
-DEBUG=cypress:* cypress run
-```
-
-**On Windows:**
-
-```shell
-set DEBUG=cypress:*
-```
-
-```shell
-cypress run
-```
-
-Cypress is a rather large and complex project involving a dozen or more
-submodules, and the default output can be overwhelming.
-
-**To filter debug output to a specific module**
-
-```shell
-DEBUG=cypress:cli cypress run
-```
-
-```shell
-DEBUG=cypress:launcher cypress run
-```
-
-...or even a 3rd level deep submodule
-
-```shell
-DEBUG=cypress:server:project cypress run
-```
+See [Troubleshooting](../references/troubleshooting#Print-DEBUG-logs) for more detailed instructions on options
+to generate debug logs, also with Yarn and pnpm package managers,
+and with Windows CMD and PowerShell terminal windows.
 
 ## History
 

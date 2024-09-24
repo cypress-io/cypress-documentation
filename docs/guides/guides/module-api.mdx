@@ -231,8 +231,9 @@ You can find the TypeScript definition for the results object in the
 
 ### Handling errors
 
-Even when tests fail, the `Promise` resolves with the test results. The
-`Promise` is only rejected if Cypress cannot run for some reason (for example if
+Even when tests fail or a spec errors, the `Promise` resolves with the test results.
+If a spec errors, the error message will be in the `runs` array under the `error` field.
+The `Promise` is only rejected if Cypress cannot run for some reason (for example if
 a binary has not been installed or it cannot find a module dependency). In that
 case, the `Promise` will be rejected with a detailed error.
 
@@ -261,8 +262,7 @@ cypress.run({...})
     process.exit(result.failures)
   }
 
-  // print test results and exit
-  // with the number of failed tests as exit code
+  // exit with the number of failed tests as exit code
   process.exit(result.totalFailed)
 })
 .catch(err => {

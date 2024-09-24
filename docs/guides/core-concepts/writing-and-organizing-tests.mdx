@@ -380,9 +380,9 @@ its logic by opening or running Cypress with
 [debug logs](/guides/references/troubleshooting#Print-DEBUG-logs) enabled:
 
 ```shell
-DEBUG=cypress:server:specs npx cypress open
+DEBUG=cypress:cli,cypress:data-context:sources:FileDataSource,cypress:data-context:sources:ProjectDataSource npx cypress open
 ## or
-DEBUG=cypress:server:specs npx cypress run
+DEBUG=cypress:cli,cypress:data-context:sources:FileDataSource,cypress:data-context:sources:ProjectDataSource npx cypress run
 ```
 
 ## Writing tests

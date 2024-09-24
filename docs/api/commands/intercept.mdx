@@ -54,6 +54,22 @@ See
 [routeHandler](#routeHandler-Function)
 argument
 
+```typescript
+// Specifying request and response types
+type CustomRequest = {
+  kind: 'custom_request'
+}
+type CustomResponse = {
+  kind: 'custom_response'
+}
+cy.intercept<CustomRequest, CustomResponse>(url, (req) => {
+  req.body // .body of request will be of type CustomRequest
+  req.continue((res) => {
+    res.body // .body of request will be of type CustomResponse
+  })
+})
+```
+
 ### Usage
 
 <Icon name="check-circle" color="green" /> **Correct Usage**
