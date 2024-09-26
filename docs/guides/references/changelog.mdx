@@ -256,7 +256,7 @@ _Released 4/23/2024_
 
 **Bugfixes:**
 
-- Fixed a regression introduced in [`13.6.0`](https://docs.cypress.io/guides/references/changelog#13-6-0) where Cypress would occasionally exit with status code 1, even when a test run was successful, due to an unhandled WebSocket exception (`Error: WebSocket connection closed`). Addresses [#28523](https://github.com/cypress-io/cypress/issues/28523).
+- Fixed a regression introduced in [`13.6.0`](#13-6-0) where Cypress would occasionally exit with status code 1, even when a test run was successful, due to an unhandled WebSocket exception (`Error: WebSocket connection closed`). Addresses [#28523](https://github.com/cypress-io/cypress/issues/28523).
 - Fixed an issue where Cypress would hang on some commands when an invalid `timeout` option was provided. Fixes [#29323](https://github.com/cypress-io/cypress/issues/29323).
 
 **Misc:**
@@ -277,7 +277,7 @@ _Released 4/18/2024_
 
 **Bugfixes:**
 
-- Fixed a regression introduced in [`13.7.3`](https://docs.cypress.io/guides/references/changelog#13-7-3) where Cypress could hang handling long assertion messages. Fixes [#29350](https://github.com/cypress-io/cypress/issues/29350).
+- Fixed a regression introduced in [`13.7.3`](#13-7-3) where Cypress could hang handling long assertion messages. Fixes [#29350](https://github.com/cypress-io/cypress/issues/29350).
 
 **Misc:**
 
@@ -341,7 +341,7 @@ _Released 3/13/2024_
 
 **Performance:**
 
-- Fixed a performance regression from [`13.6.3`](/guides/references/changelog#13-6-3) where unhandled service worker requests may not correlate correctly. Fixes [#28868](https://github.com/cypress-io/cypress/issues/28868).
+- Fixed a performance regression from [`13.6.3`](#13-6-3) where unhandled service worker requests may not correlate correctly. Fixes [#28868](https://github.com/cypress-io/cypress/issues/28868).
 - Reduces the number of attempts to retry failed Test Replay artifact uploads from 8 to 3, to reduce time spent on artifact upload attempts that will not succeed. Addressed in [#28986](https://github.com/cypress-io/cypress/pull/28986).
 
 **Bugfixes:**
@@ -368,7 +368,7 @@ _Released 2/22/2024_
 
 **Bugfixes:**
 
-- Fixed a regression introduced in [`13.6.5`](/guides/references/changelog#13-6-5) where `cypress verify` would fail for [`nx`](https://nx.dev/) users. Fixes [#28982](https://github.com/cypress-io/cypress/issues/28982).
+- Fixed a regression introduced in [`13.6.5`](#13-6-5) where `cypress verify` would fail for [`nx`](https://nx.dev/) users. Fixes [#28982](https://github.com/cypress-io/cypress/issues/28982).
 
 ## 13.6.5
 
@@ -379,7 +379,7 @@ _Released 2/20/2024_
 - Fixed tests hanging when the Chrome browser extension is disabled. Fixes [#28392](https://github.com/cypress-io/cypress/issues/28392).
 - Fixed an issue which caused the browser to relaunch after closing the browser from the Launchpad. Fixes [#28852](https://github.com/cypress-io/cypress/issues/28852).
 - Fixed an issue with the unzip promise never being rejected when an empty error happens. Fixed in [#28850](https://github.com/cypress-io/cypress/pull/28850).
-- Fixed a regression introduced in [`13.6.3`](/guides/references/changelog#13-6-3) where Cypress could crash when processing service worker requests through our proxy. Fixes [#28950](https://github.com/cypress-io/cypress/issues/28950).
+- Fixed a regression introduced in [`13.6.3`](#13-6-3) where Cypress could crash when processing service worker requests through our proxy. Fixes [#28950](https://github.com/cypress-io/cypress/issues/28950).
 - Fixed incorrect type definition of `dom.getContainsSelector`. Fixed in [#28339](https://github.com/cypress-io/cypress/pull/28339).
 
 **Misc:**
@@ -402,7 +402,7 @@ _Released 1/30/2024_
 
 **Performance:**
 
-- Fixed a performance regression from [`13.3.2`](/guides/references/changelog#13-3-2) where aborted requests may not correlate correctly. Fixes [#28734](https://github.com/cypress-io/cypress/issues/28734).
+- Fixed a performance regression from [`13.3.2`](#13-3-2) where aborted requests may not correlate correctly. Fixes [#28734](https://github.com/cypress-io/cypress/issues/28734).
 
 **Bugfixes:**
 
@@ -423,7 +423,7 @@ _Released 1/16/2024_
 - Now `node_modules` will not be ignored if a project path or a provided path to spec files contains it. Fixes [#23616](https://github.com/cypress-io/cypress/issues/23616).
 - Updated display of assertions and commands with a URL argument to escape markdown formatting so that values are displayed as is and assertion values display as bold. Fixes [#24960](https://github.com/cypress-io/cypress/issues/24960) and [#28100](https://github.com/cypress-io/cypress/issues/28100).
 - When generating assertions via Cypress Studio, the preview of the generated assertions now correctly displays the past tense of 'expected' instead of 'expect'. Fixed in [#28593](https://github.com/cypress-io/cypress/pull/28593).
-- Fixed a regression in [`13.6.2`](/guides/references/changelog#13-6-2) where the `body` element was not highlighted correctly in Test Replay. Fixed in [#28627](https://github.com/cypress-io/cypress/pull/28627).
+- Fixed a regression in [`13.6.2`](#13-6-2) where the `body` element was not highlighted correctly in Test Replay. Fixed in [#28627](https://github.com/cypress-io/cypress/pull/28627).
 - Correctly sync `Cypress.currentRetry` with secondary origin so test retries that leverage [`cy.origin()`](/api/commands/origin) render logs as expected. Fixes [#28574](https://github.com/cypress-io/cypress/issues/28574).
 - Fixed an issue where some cross-origin logs, like assertions or cy.clock(), were getting too many dom snapshots. Fixes [#28609](https://github.com/cypress-io/cypress/issues/28609).
 - Fixed asset capture for Test Replay for requests that are routed through service workers. This addresses an issue where styles were not being applied properly in Test Replay and [`cy.intercept()`](/api/commands/intercept) was not working properly for requests in this scenario. Fixes [#28516](https://github.com/cypress-io/cypress/issues/28516).
@@ -433,7 +433,7 @@ _Released 1/16/2024_
 
 **Performance:**
 
-- Fixed a performance regression from [`13.3.2`](/guides/references/changelog#13-3-2) where requests may not correlate correctly when test isolation is off. Fixes [#28545](https://github.com/cypress-io/cypress/issues/28545).
+- Fixed a performance regression from [`13.3.2`](#13-3-2) where requests may not correlate correctly when test isolation is off. Fixes [#28545](https://github.com/cypress-io/cypress/issues/28545).
 
 **Dependency Updates:**
 
@@ -453,8 +453,8 @@ _Released 12/26/2023_
 
 **Bugfixes:**
 
-- Fixed a regression in [`13.6.1`](/guides/references/changelog#13-6-1) where a malformed URI would crash Cypress. Fixes [#28521](https://github.com/cypress-io/cypress/issues/28521).
-- Fixed a regression in [`12.4.0`](/guides/references/changelog#12-4-0) where erroneous `<br>` tags were displaying in error messages in the Command Log making them less readable. Fixes [#28452](https://github.com/cypress-io/cypress/issues/28452).
+- Fixed a regression in [`13.6.1`](#13-6-1) where a malformed URI would crash Cypress. Fixes [#28521](https://github.com/cypress-io/cypress/issues/28521).
+- Fixed a regression in [`12.4.0`](#12-4-0) where erroneous `<br>` tags were displaying in error messages in the Command Log making them less readable. Fixes [#28452](https://github.com/cypress-io/cypress/issues/28452).
 
 **Performance:**
 
@@ -1075,7 +1075,7 @@ _Released 03/15/2023_
 
 **Bugfixes:**
 
-- Fixed a regression in Cypress [10](/guides/references/changelog#10-0-0) where
+- Fixed a regression in Cypress [10](#10-0-0) where
   the reporter auto-scroll configuration inside user preferences was
   unintentionally being toggled off. Users must now explicitly enable/disable
   auto-scroll under user preferences, which is enabled by default. Fixes
@@ -3391,7 +3391,7 @@ _Released 4/11/2022_
 - Fixed an issue where `cy.type('{enter}')` was not sending the Enter key for
   Firefox `v98+`. This was not an issue with Firefox `v97` and below. Fixed
   [#20562](https://github.com/cypress-io/cypress/issues/20562).
-- Fixed a regression in [9.3.0](/guides/references/changelog#9-3-0) where glob
+- Fixed a regression in [9.3.0](#9-3-0) where glob
   patterns provided to the `--spec` CLI parameter was incorrectly splitting the
   patterns in unexpected places when it should have split on commas. Fixes
   [#20794](https://github.com/cypress-io/cypress/issues/20794).
@@ -3405,11 +3405,11 @@ _Released 4/11/2022_
   [installing pre-release versions](/guides/references/advanced-installation#Install-pre-release-version)
   of the Cypress binary are within the maximum path length of 260 characters.
   Fixed in [#20961](https://github.com/cypress-io/cypress/pull/20961).
-- Fixed a regression in [8.6.0](/guides/references/changelog#8-6-0) which
+- Fixed a regression in [8.6.0](#8-6-0) which
   prevented `.pause()` from correctly executing when passing the
   `--headed --no-exit` CLI flags to `cypress run`. Fixed
   [#20745](https://github.com/cypress-io/cypress/issues/20745).
-- Fixed a regression in [9.2.0](/guides/references/changelog#9-2-0) which would
+- Fixed a regression in [9.2.0](#9-2-0) which would
   sometimes throw an expected error on navigation with `cy.back()` and
   `cy.go()`. Fixed [#19749](https://github.com/cypress-io/cypress/issues/19749)
   and [#20539](https://github.com/cypress-io/cypress/issues/20539).
@@ -3493,7 +3493,7 @@ _Released 3/14/2022_
   incorrect target element because the target focus changed within a key-down
   event handler callback. Fixed in
   [#20525](https://github.com/cypress-io/cypress/pull/20525).
-- Fixed a regression in [9.5.0](/guides/references/changelog#9-5-0) where ANSI
+- Fixed a regression in [9.5.0](#9-5-0) where ANSI
   colors were not removed from the FireFox warning message about the
   `chromeWebSecurity` configuration option having no effect on the Firefox
   browser. Fixes [#20496](https://github.com/cypress-io/cypress/issues/20496).
@@ -3544,10 +3544,10 @@ _Released 2/28/2022_
   change, random test failures were observed, as well as hanging tests and
   initially pending HTTP and HTTPS responses. Fixed in
   [#20062](https://github.com/cypress-io/cypress/issues/20062).
-- Fixed a regression in [9.5.0](/guides/references/changelog#9-5-0) where ANSI
+- Fixed a regression in [9.5.0](#9-5-0) where ANSI
   colors were not removed from the `cy.fixtures()` error code frame. Fixes
   [#20208](https://github.com/cypress-io/cypress/issues/20208).
-- Fixed a regression in [9.5.0](/guides/references/changelog#9-5-0) where the
+- Fixed a regression in [9.5.0](#9-5-0) where the
   test config override errors were formatted incorrectly. Fixes
   [#20208](https://github.com/cypress-io/cypress/issues/20208).
 - Fixed an issue where Cypress would throw an error when reporting or wrapping
@@ -3602,7 +3602,7 @@ _Released 1/31/2022_
 
 **Bugfixes:**
 
-- Fixed a regression in [9.4.0](/guides/references/changelog#9-4-0) where the
+- Fixed a regression in [9.4.0](#9-4-0) where the
   line endings in the public npm package prevented some users from running
   Cypress. Fixes [#19986](https://github.com/cypress-io/cypress/issues/19986).
 
@@ -3613,7 +3613,7 @@ _Released 1/31/2022_
 **Features**
 
 - Enhancements were made to `.selectFile()` after receiving feedback after its
-  initial release in [9.3.0](/guides/references/changelog#9-3-0).
+  initial release in [9.3.0](#9-3-0).
   - The default behavior was updated to automatically infer the mime type of
     files based on their extension to correctly encode file uploads. Addressed
     in [#19751](https://github.com/cypress-io/cypress/issues/19751).
@@ -3631,10 +3631,10 @@ _Released 1/31/2022_
 
 **Bugfixes:**
 
-- Fixed a regression in [9.3.0](/guides/references/changelog#9-3-0) to correctly
+- Fixed a regression in [9.3.0](#9-3-0) to correctly
   parse the `--spec` CLI parameter for glob patterns containing a range. Fixes
   [#19783](https://github.com/cypress-io/cypress/issues/19783).
-- Fixed regression in [9.2.1](/guides/references/changelog#9-1-1) where the
+- Fixed regression in [9.2.1](#9-1-1) where the
   `--openssl-legacy-provider` flag was not being passed to the plugins' child
   process when the user's system Node version was Node 17+ built with OpenSSL
   v3+ which resulted in Cypress crashing when trying to run tests. Fixes
@@ -3711,7 +3711,7 @@ _Released 1/10/2022_
 
 **Bugfixes:**
 
-- Fixed a regression in [9.2.0](/guides/references/changelog#9-2-0) to keep
+- Fixed a regression in [9.2.0](#9-2-0) to keep
   Cypress open after each spec finishes when the `--headed --no-exit` flags are
   passed to `cypress run`. Fixes
   [#19485](https://github.com/cypress-io/cypress/issues/19485).
@@ -3775,13 +3775,13 @@ _Released 12/20/2021_
   from errors thrown by the fail event. Fixes
   [#14867](https://github.com/cypress-io/cypress/issues/14867) and
   [#17660](https://github.com/cypress-io/cypress/issues/17660).
-- Fixed a regression in [9.0.0](/guides/references/changelog#9-0-0) where a
+- Fixed a regression in [9.0.0](#9-0-0) where a
   fixture provided in a static response to `cy.intercept()` did not support
   passing `null` to encoding to read the fixture as a Buffer. This identified an
   undocumented 9.0.0 Breaking Change where the default read behavior of a
   fixture changed from a Buffer to being read with `utf8` encoding. Fixes
   [#19344](https://github.com/cypress-io/cypress/issues/19344).
-- Fixed a regression in [9.0.0](/guides/references/changelog#9-0-0) where
+- Fixed a regression in [9.0.0](#9-0-0) where
   `cy.contains()` attempted to ignore `<script>` and `<style>` elements found
   within `<body>`. by deleting them from the dom. This behavior was corrected to
   ignore the elements without deleting them. Fixes
@@ -3814,7 +3814,7 @@ _Released 12/03/2021_
 
 **Bugfixes:**
 
-- Fixed a regression in [9.1.0](/guides/references/changelog#9-1-0) where our
+- Fixed a regression in [9.1.0](#9-1-0) where our
   built binary didn't contain patches to some dependencies. Addressed in
   [#19239](https://github.com/cypress-io/cypress/pull/19239). This fixed some
   issues including:
@@ -4127,12 +4127,12 @@ _Released 08/27/2021_
 
 **Bugfixes:**
 
-- Fixed a regression in [8.3.0](/guides/references/changelog#8-3-0) where the
+- Fixed a regression in [8.3.0](#8-3-0) where the
   correct exit code would not be issued during `cypress run-ct` while running in
   the Electron browser. Fixes
   [#17752](https://github.com/cypress-io/cypress/issues/17752) and
   [#17885](https://github.com/cypress-io/cypress/issues/17885).
-- Fixed a regression in [8.3.0](/guides/references/changelog#8-3-0) where
+- Fixed a regression in [8.3.0](#8-3-0) where
   Cypress would cause a `SIGSEGV` error on Mac when closing the Cypress app
   opened via `cypress open`. Fixes
   [#17766](https://github.com/cypress-io/cypress/issues/17766).
@@ -4167,7 +4167,7 @@ _Released 08/16/2021_
 - We addressed an issue that increased CPU usage during video recording in
   Chrome 89+/Electron 12+. Fixes
   [#16152](https://github.com/cypress-io/cypress/issues/16152).
-- Fixed a regression in [7.2.0](/guides/references/changelog#7-2-0) that would
+- Fixed a regression in [7.2.0](#7-2-0) that would
   cause `cy.visit()` to take longer to fire its load event in some
   circumstances. Fixes
   [#16671](https://github.com/cypress-io/cypress/issues/16671).
@@ -4177,14 +4177,14 @@ _Released 08/16/2021_
 - Fixed an issue that could cause intermittent OpenSSL errors when the local CA
   cert cache becomes corrupted. Fixes
   [#8705](https://github.com/cypress-io/cypress/issues/8705).
-- Fixed a regression in [7.2.0](/guides/references/changelog#7-2-0) causing the
+- Fixed a regression in [7.2.0](#7-2-0) causing the
   menu bar of Cypress to not be clickable in Windows. Fixes
   [#16323](https://github.com/cypress-io/cypress/issues/16323).
 - `res.send` of `cy.intercept()` will no longer override JSON-related content
   types. Fixes [#17084](https://github.com/cypress-io/cypress/issues/17084).
 - The `times` option of `cy.intercept` now works properly with `req.reply`.
   Fixes [#17139](https://github.com/cypress-io/cypress/issues/17139).
-- Fixed a regression in [8.0.0](/guides/references/changelog#8-0-0) where
+- Fixed a regression in [8.0.0](#8-0-0) where
   Cypress would always warn that `chromeWebSecurity` is set to "false" when it
   wasn't. Fixes [#17614](https://github.com/cypress-io/cypress/issues/17614).
 
@@ -4248,7 +4248,7 @@ _Released 08/04/2021_
 - Cypress now properly runs the final test when nested in a suite with a
   `before` hook. Fixes
   [#9026](https://github.com/cypress-io/cypress/issues/9026).
-- Fixed a regression in [8.0.0](/guides/references/changelog#8-0-0) where an
+- Fixed a regression in [8.0.0](#8-0-0) where an
   error would longer throw when there is no `/etc/passwd` entry for the current
   user, such as in some Docker and GitHub Action setups. Fixes
   [#17415](https://github.com/cypress-io/cypress/issues/17415).
@@ -4588,12 +4588,12 @@ _Released 05/10/2021_
 - Cypress now properly handles when a form submit or anchor tag target is set to
   `_top` or `_parent` so that it no longer redirects the parent frame. Fixes
   [#1244](https://github.com/cypress-io/cypress/issues/1244).
-- Fixed a regression in [6.5.0](/guides/references/changelog#6-5-0) that could
+- Fixed a regression in [6.5.0](#6-5-0) that could
   cause Cypress to crash with a
   `RangeError: Maximum call stack size exceeded at _deconstructPacket` error.
   Most commonly, this occurred when handling network errors with `cy.request()`.
   Fixes [#15101](https://github.com/cypress-io/cypress/issues/15101).
-- Fixed a regression in [7.0.0](/guides/references/changelog#7-0-0) that caused
+- Fixed a regression in [7.0.0](#7-0-0) that caused
   the Test Runner to crash with an `ERR_INVALID_ARG_TYPE` type error when
   testing a binary file upload. Fixes
   [#15898](https://github.com/cypress-io/cypress/issues/15898) and
@@ -4602,7 +4602,7 @@ _Released 05/10/2021_
   'exit' event in an effort to fix some situations where the browser cannot be
   found even though it is on the system. Addressed in
   [#16312](https://github.com/cypress-io/cypress/issues/16312).
-- Fixed a regression in [6.5.0](/guides/references/changelog#6-5-0) that caused
+- Fixed a regression in [6.5.0](#6-5-0) that caused
   a node warning about `.then()` only accepting functions to display. Fixes
   [#15281](https://github.com/cypress-io/cypress/issues/15281).
 - `cy.intercept()` now adds a `access-control-expose-headers: '*'` header by
@@ -4662,17 +4662,17 @@ _Released 04/26/2021_
 
 **Performance:**
 
-- Fixed a regression in [7.0.0](/guides/references/changelog#7-0-0) that caused
+- Fixed a regression in [7.0.0](#7-0-0) that caused
   tests to run slowly, especially when run with constrained CPU resources. Fixes
   [#15853](https://github.com/cypress-io/cypress/issues/15853).
-- Fixed a regression in [7.0.0](/guides/references/changelog#7-0-0) causing
+- Fixed a regression in [7.0.0](#7-0-0) causing
   decreased performance in Chromium browsers due to requesting screencast frames
   when video is disabled. Fixes
   [#16030](https://github.com/cypress-io/cypress/issues/16030).
 
 **Bugfixes:**
 
-- Fixed a regression in [7.0.0](/guides/references/changelog#7-0-0) that caused
+- Fixed a regression in [7.0.0](#7-0-0) that caused
   the Test Runner to crash with an `ERR_INVALID_ARG_TYPE` type error. We now
   correctly detect a utf8 request body with multi-byte Unicode characters. Fixes
   [#15901](https://github.com/cypress-io/cypress/issues/15901).
@@ -4717,7 +4717,7 @@ _Released 04/26/2021_
 - Downgraded the Chromium browser version used during `cypress run` and when
   selecting Electron browser in `cypress open` from `89.0.4348.1` to
   `89.0.4328.0`. This was done to address a performance regression introduced in
-  [7.0.0](/guides/references/changelog#7-0-0). Addressed in
+  [7.0.0](#7-0-0). Addressed in
   [#16113](https://github.com/cypress-io/cypress/pull/16113).
 - Upgraded `systeminformation` from `5.3.1` to `5.6.4`. Addressed in
   [#15819](https://github.com/cypress-io/cypress/issues/15819).
@@ -5516,7 +5516,7 @@ _Released 11/30/2020_
   frozen or blank. Fixes
   [#9265](https://github.com/cypress-io/cypress/issues/9265).
 - We fixed a regression introduced in
-  [5.0.0](/guides/references/changelog#5-0-0) that would cause an
+  [5.0.0](#5-0-0) that would cause an
   `Option 'sourceMap' cannot be specified with option 'inlineSourceMap'` error
   to throw when setting `sourceMap` in your tsconfig. Fixes
   [#8477](https://github.com/cypress-io/cypress/issues/8477).
@@ -5624,7 +5624,7 @@ deprecations.
 **Bugfixes:**
 
 - We fixed a regression introduced in
-  [3.5.0](/guides/references/changelog#3-5-0) that would cause
+  [3.5.0](#3-5-0) that would cause
   [.type()](/api/commands/type) to not type the entire string when focus was
   called away from the target element. Fixes
   [#9254](https://github.com/cypress-io/cypress/issues/9254).
@@ -5633,7 +5633,7 @@ deprecations.
   [#2717](https://github.com/cypress-io/cypress/issues/2717) and
   [#7721](https://github.com/cypress-io/cypress/issues/7721).
 - We fixed a regression introduced in
-  [5.6.0](/guides/references/changelog#5-6-0) that would cause the Test Runner
+  [5.6.0](#5-6-0) that would cause the Test Runner
   to crashes and display a white page when switching tabs while tests are
   running. Fixes [#9151](https://github.com/cypress-io/cypress/issues/9151).
 - Fixed an issue where `Content-Length` for `cy.route2` request bodies could be
@@ -5689,7 +5689,7 @@ _Released 11/09/2020_
 
 **Bugfixes:**
 
-- Fixed a regression introduced in [4.12.0](/guides/references/changelog#4-12-0)
+- Fixed a regression introduced in [4.12.0](#4-12-0)
   where snapshotting caused images to load too many times. Fixes
   [#8679](https://github.com/cypress-io/cypress/issues/8679).
 - Using [cy.visit()](/api/commands/visit) on sites with `content-type` of
@@ -8124,15 +8124,15 @@ _Released 10/23/2019_
   [cy.visit()](/api/commands/visit) to IP addresses over HTTPS, leading to
   `ERR_SSL_VERSION_OR_CIPHER_MISMATCH` errors. Fixes
   [#771](https://github.com/cypress-io/cypress/issues/771).
-- We fixed a bug introduced in [3.3.0](/guides/references/changelog#3-3-0) where
+- We fixed a bug introduced in [3.3.0](#3-3-0) where
   some HTTPS sites failed to load during [cy.visit()](/api/commands/visit) and
   [cy.request()](/api/commands/request) with a "handshake failed" error. Fixes
   [#4394](https://github.com/cypress-io/cypress/issues/4394).
 - We fixed a bug where ECC SSL Certificates were not supported during
   [cy.visit()](/api/commands/visit) that was introduced in
-  [3.3.0](/guides/references/changelog#3-3-0). Fixes
+  [3.3.0](#3-3-0). Fixes
   [#4368](https://github.com/cypress-io/cypress/issues/4368).
-- We fixed an issue introduced in [3.4.0](/guides/references/changelog#3-4-0)
+- We fixed an issue introduced in [3.4.0](#3-4-0)
   that would cause the Selector Playground to not properly highlight the
   currently hovered element. Fixes
   [#4872](https://github.com/cypress-io/cypress/issues/4872).
@@ -8148,11 +8148,11 @@ _Released 10/23/2019_
 - Cypress no longer crashes with `dest.end` errors on Windows machines. Fixes
   [#2181](https://github.com/cypress-io/cypress/issues/2181).
 - The `onFocus` event no longer incorrectly fires on hidden elements. This fixes
-  an issue introduced in [3.3.2](/guides/references/changelog#3-3-2). Fixes
+  an issue introduced in [3.3.2](#3-3-2). Fixes
   [#4898](https://github.com/cypress-io/cypress/issues/4898).
 - You can now call [.click()](/api/commands/click) on inputs or textareas that
   are `readonly`. This fixes an issue introduced in
-  [3.4.1](/guides/references/changelog#3-4-1). Fixes
+  [3.4.1](#3-4-1). Fixes
   [#4874](https://github.com/cypress-io/cypress/issues/4874).
 - Cypress no longer crashes with a `"port" option should be a number or string`
   error when receiving an erroneous HTTP CONNECT. Fixes
@@ -8167,7 +8167,7 @@ _Released 10/23/2019_
   a test run when using Node >12.11.0 on Windows OS. Fixes
   [#5241](https://github.com/cypress-io/cypress/issues/5241).
 - We fixed a bug where the Chrome policy warnings introduced in
-  [3.4.0](/guides/references/changelog#3-4-0) would not appear. Fixes
+  [3.4.0](#3-4-0) would not appear. Fixes
   [#4986](https://github.com/cypress-io/cypress/issues/4986).
 - We improved the way that cookies are handled for Chrome browsers. This fixes
   an issue when parsing cookies that were set with a domain beginning with a `.`
@@ -8239,7 +8239,7 @@ _Released 10/23/2019_
   scrolls the search and filter bar. Addresses
   [#4904](https://github.com/cypress-io/cypress/issues/4904).
 - We fixed some layout issues within the Test Runner that were introduced in
-  [3.4.1](/guides/references/changelog#3-4-1). Addresses
+  [3.4.1](#3-4-1). Addresses
   [#4888](https://github.com/cypress-io/cypress/issues/4888),
   [#4912](https://github.com/cypress-io/cypress/issues/4912), and
   [#4959](https://github.com/cypress-io/cypress/issues/4959).
@@ -8347,7 +8347,7 @@ _Released 7/29/2019_
   [#3479](https://github.com/cypress-io/cypress/issues/3479),
   [#1543](https://github.com/cypress-io/cypress/issues/1543), and
   [#3650](https://github.com/cypress-io/cypress/issues/3650).
-- Fixed a regression introduced in [3.4.0](/guides/references/changelog#3-4-0)
+- Fixed a regression introduced in [3.4.0](#3-4-0)
   that caused an error to be thrown when chaining together multiple assertions
   using the `and` chainable getter. Fixes
   [#4833](https://github.com/cypress-io/cypress/issues/4833).
@@ -8569,7 +8569,7 @@ _Released 6/27/2019_
 **Performance Improvements:**
 
 - We fixed a regression introduced in
-  [3.3.0](/guides/references/changelog#3-3-0) that was causing the Test Runner
+  [3.3.0](#3-3-0) that was causing the Test Runner
   to do extremely unnecessary re-renders of the Command Log on any command
   change - leading to exponential performance degradation on any run. This was
   the root cause behind many users experiencing a reduction in performance when
@@ -8581,7 +8581,7 @@ _Released 6/27/2019_
   [#2366](https://github.com/cypress-io/cypress/issues/2366).
 - We no longer delay proxied responses with no body with status codes 1xx,
   204, 304. This fixes a regression introduced in
-  [3.2.0](/guides/references/changelog#3-2-0) where responses with these status
+  [3.2.0](#3-2-0) where responses with these status
   codes were delayed when using a proxy. Fixes
   [#4298](https://github.com/cypress-io/cypress/issues/4298).
 - Snapshots were previously being mistakenly stored then instantly deleted when
@@ -8658,7 +8658,7 @@ _Released 6/27/2019_
   `cy.window().scrollTo()` or `cy.window().trigger()` in an application with
   multiple iframes. Fixes
   [#4396](https://github.com/cypress-io/cypress/issues/4396).
-- Fixed a regression in [3.3.0](/guides/references/changelog#3-3-0) causing some
+- Fixed a regression in [3.3.0](#3-3-0) causing some
   users using proxy to see the "Browser was not launched through Cypress" error
   during `cypress open`. This was caused by incorrectly routing requests for
   Cypress's internal server on `localhost` through the user's proxy. Fixes
@@ -8676,7 +8676,7 @@ _Released 6/27/2019_
 - Fixed a visual bug when aliasing a non-route subject multiple times that would
   cause the Test Runner to show 'undefined' alias with empty counts. Fixes
   [#4429](https://github.com/cypress-io/cypress/issues/4429).
-- Fixed regression introduced in [3.2.0](/guides/references/changelog#3-2-0)
+- Fixed regression introduced in [3.2.0](#3-2-0)
   where Cypress would error because it could not find a type definition file for
   '../sinon'. Fixes [#4272](https://github.com/cypress-io/cypress/issues/4272).
 - [cy.writeFile()](/api/commands/writefile) no longer errors in TypeScript files
@@ -8773,7 +8773,7 @@ _Released 5/23/2019_
 - We've
   [written a blog post](https://www.cypress.io/blog/2019/05/22/how-we-improved-network-speed-by-300-in-cypress-3-3-0/)
   about the 300% increase in proxy performance delivered in
-  [3.3.0](/guides/references/changelog#3-3-0).
+  [3.3.0](#3-3-0).
 
 **Bugfixes:**
 
@@ -8785,7 +8785,7 @@ _Released 5/23/2019_
 - Fixed a bug for users running external network proxies that prevented requests
   from completing. Requests should now all work correctly. Fixes
   [#4257](https://github.com/cypress-io/cypress/issues/4257).
-- Fixed a regression in [3.3.0](/guides/references/changelog#3-3-0) causing
+- Fixed a regression in [3.3.0](#3-3-0) causing
   large requests such as `multipart/form-data` uploads to hang. Fixes
   [#4240](https://github.com/cypress-io/cypress/issues/4240),
   [#4252](https://github.com/cypress-io/cypress/issues/4252), and
@@ -8904,16 +8904,16 @@ _Released 5/17/2019_
 
 **Bugfixes:**
 
-- Fixed a regression introduced in [3.2.0](/guides/references/changelog#3-2-0)
+- Fixed a regression introduced in [3.2.0](#3-2-0)
   that caused an error to throw when visiting domains with certain public
   suffixes. Fixes [#3717](https://github.com/cypress-io/cypress/issues/3717).
 - When running Cypress with `NODE_OPTIONS` environment variables set, Cypress no
   longer issues an incorrect 0 exit code.
   [#1676](https://github.com/cypress-io/cypress/issues/1676)
-- Fixed a regression introduced in [3.2.0](/guides/references/changelog#3-2-0)
+- Fixed a regression introduced in [3.2.0](#3-2-0)
   that caused [.its()](/api/commands/its) to no longer retry when it yields
   `undefined`. [#3837](https://github.com/cypress-io/cypress/issues/3837)
-- Fixed a regression introduced in [3.2.0](/guides/references/changelog#3-2-0)
+- Fixed a regression introduced in [3.2.0](#3-2-0)
   that caused [cy.fixture()](/api/commands/fixture) to throw a `EISDIR` error if
   a directory had the same name as a file within that same directory. Fixes
   [#3739](https://github.com/cypress-io/cypress/issues/3739).
@@ -9488,10 +9488,10 @@ _Released 12/03/2018_
 
 **Bugfixes:**
 
-- Fixed regression introduced in [3.1.1](/guides/references/changelog#3-1-1)
+- Fixed regression introduced in [3.1.1](#3-1-1)
   with `requestAnimationFrame` that caused some animations not to run. Fixes
   [#2725](https://github.com/cypress-io/cypress/issues/2725).
-- Fixed regression introduced in [3.1.2](/guides/references/changelog#3-1-2)
+- Fixed regression introduced in [3.1.2](#3-1-2)
   that caused DOM elements passed to [cy.wrap()](/api/commands/wrap) to no
   longer yield the proper jQuery array instance. Fixes
   [#2820](https://github.com/cypress-io/cypress/issues/2820).
@@ -9499,7 +9499,7 @@ _Released 12/03/2018_
   error on subsequent tests. Fixes
   [#2850](https://github.com/cypress-io/cypress/issues/2850).
 - Fixed issue where a fix included in
-  [3.1.2](/guides/references/changelog#3-1-2) did not pass the `windowsHide`
+  [3.1.2](#3-1-2) did not pass the `windowsHide`
   argument to the proper options. Fixes
   [#2667](https://github.com/cypress-io/cypress/issues/2667) and
   [#2809](https://github.com/cypress-io/cypress/issues/2809).
