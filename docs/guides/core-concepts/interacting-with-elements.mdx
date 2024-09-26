@@ -46,7 +46,7 @@ core concept guide).
 **_Checks and Actions Performed_**
 
 - [Scroll the element into view.](#Scrolling)
-- [Ensure the element is not hidden.](#Visibility)
+- [Ensure the element is not hidden.](#Hidability)
 - [Ensure the element is not disabled.](#Disability)
 - [Ensure the element is not detached.](#Detached)
 - [Ensure the element is not readonly.](#Readonly)
@@ -59,10 +59,9 @@ Whenever Cypress cannot interact with an element, it could fail at any of the
 above steps. You will usually get an error explaining why the element was not
 found to be actionable.
 
-### Visibility
+### Hidability
 
-Cypress checks a lot of things to determine an element's visibility. The
-following calculations factor in CSS translations and transforms.
+Cypress checks a lot of things to determine if an element is not hidden. The following calculations factor in CSS translations and transforms.
 
 #### An element is considered hidden if:
 
@@ -83,6 +82,20 @@ following calculations factor in CSS translations and transforms.
 
 \***hides overflow** means it has `overflow: hidden`, `overflow-x: hidden`,
 `overflow-y: hidden`, `overflow: scroll`, or `overflow: auto`
+
+### Visibility
+
+:::tip
+
+You should use the 'is.not.hidden' check in most cases. Some items may be visible but not clickable or interactive.
+
+Cypress checks visibility like browsers [checkVisibility](https://developer.mozilla.org/en-US/docs/Web/API/Element/checkVisibility).
+However, there are exceptions to checking visibility in the browser:
+
+- The visibility of an `option` in a `select` is determined by the visibility of the `select` to which it belongs
+- If the position of an html element is off screen it is considered invisible
+- If a parent element covers a child element, the element is considered invisible
+- In old browsers where [checkVisibility] is not supported, is hidden is used.
 
 :::info
 
