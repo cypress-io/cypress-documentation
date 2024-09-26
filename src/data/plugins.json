@@ -428,6 +428,13 @@
           "link": "https://github.com/cypress-io/cypress-browserify-preprocessor",
           "keywords": ["browserify"],
           "badge": "deprecated"
+        },
+        {
+          "name": "cypress-test-data-generator",
+          "description": "Generate realistic test data for Cypress tests using Faker.js.",
+          "link": "https://github.com/yourusername/cypress-test-data-generator",
+          "keywords": ["data-generation", "faker", "testing", "test-data"],
+          "badge": "community"
         }
       ]
     },
