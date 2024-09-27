@@ -432,7 +432,7 @@
         {
           "name": "cypress-test-data-generator",
           "description": "Generate realistic test data for Cypress tests using Faker.js.",
-          "link": "https://github.com/yourusername/cypress-test-data-generator",
+          "link": "https://github.com/khawjaahmad/cypress-test-data-generator",
           "keywords": ["data-generation", "faker", "testing", "test-data"],
           "badge": "community"
         }
