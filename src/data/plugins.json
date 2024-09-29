@@ -360,6 +360,13 @@
           "badge": "community"
         },
         {
+          "name": "cypress-test-data-generator",
+          "description": "Generate realistic test data for Cypress tests using Faker.js.",
+          "link": "https://github.com/khawjaahmad/cypress-test-data-generator",
+          "keywords": ["data-generation", "faker", "testing", "test-data"],
+          "badge": "community"
+        },
+        {
           "name": "@cypress/instrument-cra",
           "description": "NPM module for create-react-app applications to instrument source code without ejecting react-scripts.",
           "link": "https://github.com/cypress-io/instrument-cra",
@@ -428,13 +435,6 @@
           "link": "https://github.com/cypress-io/cypress-browserify-preprocessor",
           "keywords": ["browserify"],
           "badge": "deprecated"
-        },
-        {
-          "name": "cypress-test-data-generator",
-          "description": "Generate realistic test data for Cypress tests using Faker.js.",
-          "link": "https://github.com/khawjaahmad/cypress-test-data-generator",
-          "keywords": ["data-generation", "faker", "testing", "test-data"],
-          "badge": "community"
         }
       ]
     },
