@@ -534,88 +534,130 @@ Some common situations on why you would want to run Cypress by itself are to:
   module
 
 Here is how you can launch Cypress directly without the npm CLI module. First,
-find where the binary is installed using the
-[cypress cache path](/guides/guides/command-line#cypress-cache-path) command.
+find where Cypress binary versions are installed using the
+[cypress cache path](/guides/guides/command-line#cypress-cache-path) and
+[cypress cache list](/guides/guides/command-line#cypress-cache-list) commands.
 
-For example, on a Linux machine:
+An example on a Linux machine shows:
 
-```shell
-npx cypress cache path
-/root/.cache/Cypress
+```text
+$ npx cypress cache path
+/home/<username>/.cache/Cypress
+$ npx cypress cache list
 ```
+
+| version | last used   |
+| ------- | ----------- |
+| 13.15.0 | 12 days ago |
+
+You can replace the Linux `/home/<username>` directory with the `~` character in the following example steps.
 
 Second, try a smoke test that verifies that the application has all its required
-dependencies present on the host machine:
+dependencies present on the host machine. Ignore the warning about running the Cypress binary directly.
 
-```shell
-/root/.cache/Cypress/3.3.1/Cypress/Cypress --smoke-test --ping=101
+```text
+$ ~/.cache/Cypress/13.15.0/Cypress/Cypress --smoke-test --ping=101
+
+DevTools listening on ws://127.0.0.1:39737/devtools/browser/162ad33c-294b-460b-812e-cc317907ac86
+It looks like you are running the Cypress binary directly.
+
+This is not the recommended approach, and Cypress may not work correctly.
+
+Please install the cypress NPM package and follow the instructions here:
+
+https://on.cypress.io/installing-cypress
 101
 ```
 
-If there is a missing dependency, the application should print an error message.
-You can see the Electron verbose log messages by setting an
-[environment variable ELECTRON_ENABLE_LOGGING](https://www.electronjs.org/docs/api/command-line-switches):
+If there is a missing dependency, the smoke test will fail to run and the application will print an error message
+referring to [Linux Prerequisites](../getting-started/installing-cypress#Linux-Prerequisites).
+Follow the instructions to ensure all required dependencies are installed.
 
-```shell
-ELECTRON_ENABLE_LOGGING=true DISPLAY=10.130.4.201:0 /root/.cache/Cypress/3.3.1/Cypress/Cypress --smoke-test --ping=101
-[809:0617/151243.281369:ERROR:bus.cc(395)] Failed to connect to the bus: Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory
-101
-```
+To troubleshoot missing shared library dependencies on Linux, use the `ldd` command on the Cypress binary.
+A missing dependency should be identified with "not found" in the output.
 
-If the smoke test fails to execute, check if a shared library is missing (a
-common problem on Linux machines without all of the Cypress dependencies
-present).
-
-```shell
-ldd /home/person/.cache/Cypress/3.3.1/Cypress/Cypress
-  linux-vdso.so.1 (0x00007ffe9eda0000)
-  libnode.so => /home/person/.cache/Cypress/3.3.1/Cypress/libnode.so (0x00007fecb43c8000)
-  libpthread.so.0 => /lib/x86_64-linux-gnu/libpthread.so.0 (0x00007fecb41ab000)
-  libgtk-3.so.0 => not found
-  libgdk-3.so.0 => not found
+```text
+ldd ~/.cache/Cypress/13.15.0/Cypress/Cypress
+	linux-vdso.so.1 (0x00007ffe0e7db000)
+	libffmpeg.so => /home/<username>/.cache/Cypress/13.15.0/Cypress/libffmpeg.so (0x0000774bc7a00000)
+	libdl.so.2 => /lib/x86_64-linux-gnu/libdl.so.2 (0x0000774bd26d0000)
+	libpthread.so.0 => /lib/x86_64-linux-gnu/libpthread.so.0 (0x0000774bd26cb000)
+	libgobject-2.0.so.0 => /lib/x86_64-linux-gnu/libgobject-2.0.so.0 (0x0000774bd2668000)
+	libglib-2.0.so.0 => /lib/x86_64-linux-gnu/libglib-2.0.so.0 (0x0000774bd251f000)
+	libgio-2.0.so.0 => /lib/x86_64-linux-gnu/libgio-2.0.so.0 (0x0000774bc7e30000)
+	libnss3.so => not found
   ...
 ```
 
-**Tip:** use [Cypress Docker image](/examples/docker) or install dependencies by
-copying them from one of our official Docker images.
+**Tip:** If you are having problems with dependencies, use a [Cypress Docker image](../getting-started/installing-cypress#Docker-Prerequisites). These have all Cypress dependencies pre-installed.
 
-**Note:** verbose Electron logging might show warnings that still allow Cypress
-to work normally. For example, Cypress opens normally despite the scary output
-below:
+On Ubuntu `24.04` you may receive a fatal error including the text `FATAL:setuid_sandbox_host.cc` due to added security in this version of Ubuntu.
+Refer to the [Ubuntu 24.04 Release notes](https://discourse.ubuntu.com/t/noble-numbat-release-notes/39890) in the section [Unprivileged user namespace restrictions](https://discourse.ubuntu.com/t/noble-numbat-release-notes/39890#unprivileged-user-namespace-restrictions-15) and apply one of the workarounds to disable unprivileged user namespace restrictions for the entire system, either for one boot or persistently, as described.
+
+Alternatively you can follow the instructions in the error message similar to:
+
+> You need to make sure that `/home/<username>/.cache/Cypress/13.15.0/Cypress/chrome-sandbox` is owned by root and has mode 4755.
+
+and execute for example:
 
 ```shell
-ELECTRON_ENABLE_LOGGING=true DISPLAY=10.130.4.201:0 /root/.cache/Cypress/3.3.1/Cypress/Cypress
-[475:0617/150421.326986:ERROR:bus.cc(395)] Failed to connect to the bus: Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory
-[475:0617/150425.061526:ERROR:bus.cc(395)] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
-[475:0617/150425.079819:ERROR:bus.cc(395)] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
-[475:0617/150425.371013:INFO:CONSOLE(73292)] "%cDownload the React DevTools for a better development experience: https://fb.me/react-devtools
-You might need to use a local HTTP server (instead of file://): https://fb.me/react-devtools-faq", source: file:///root/.cache/Cypress/3.3.1/Cypress/resources/app/packages/desktop-gui/dist/app.js (73292)
+sudo chown root:root ~/.cache/Cypress/13.15.0/Cypress/chrome-sandbox
+sudo chmod +4755 ~/.cache/Cypress/13.15.0/Cypress/chrome-sandbox
 ```
 
-You can also see verbose Cypress logs when running the Cypress binary
+You can see the Electron verbose log messages by setting an
+[environment variable ELECTRON_ENABLE_LOGGING](https://www.electronjs.org/docs/api/command-line-switches).
 
-```shell
-DEBUG=cypress* DISPLAY=10.130.4.201:0 /root/.cache/Cypress/3.3.1/Cypress/Cypress --smoke-test --ping=101
-cypress:ts Running without ts-node hook in environment "production" +0ms
-cypress:server:cypress starting cypress with argv [ '/root/.cache/Cypress/3.3.1/Cypress/Cypress', '--smoke-test', '--ping=101' ] +0ms
-cypress:server:args argv array: [ '/root/.cache/Cypress/3.3.1/Cypress/Cypress', '--smoke-test', '--ping=101' ] +0ms
-cypress:server:args argv parsed: { _: [ '/root/.cache/Cypress/3.3.1/Cypress/Cypress' ], smokeTest: true, ping: 101, cwd: '/root/.cache/Cypress/3.3.1/Cypress/resources/app/packages/server' } +7ms
-cypress:server:args options { _: [ '/root/.cache/Cypress/3.3.1/Cypress/Cypress' ], smokeTest: true, ping: 101, cwd: '/root/.cache/Cypress/3.3.1/Cypress/resources/app/packages/server', config: {} } +2ms
-cypress:server:args argv options: { _: [ '/root/.cache/Cypress/3.3.1/Cypress/Cypress' ], smokeTest: true, ping: 101, cwd: '/root/.cache/Cypress/3.3.1/Cypress/resources/app/packages/server', config: {}, pong: 101 } +1ms
-cypress:server:appdata path: /root/.config/Cypress/cy/production +0ms
-cypress:server:cypress starting in mode smokeTest +356ms
+**Note:** Verbose Electron logging might show warnings that still allow Cypress
+to work normally. For example, the following Bluetooth related warning can be ignored:
+
+> WARNING:bluez_dbus_manager.cc
+
+```text
+ELECTRON_ENABLE_LOGGING=true ~/.cache/Cypress/13.15.0/Cypress/Cypress --smoke-test --ping=101
+
+DevTools listening on ws://127.0.0.1:33161/devtools/browser/1f8a2d15-ea42-403f-8eb4-757f1a9d0b25
+[3959:1005/201139.970068:WARNING:bluez_dbus_manager.cc(247)] Floss manager not present, cannot set Floss enable/disable.
+It looks like you are running the Cypress binary directly.
+
+This is not the recommended approach, and Cypress may not work correctly.
+
+Please install the cypress NPM package and follow the instructions here:
+
+https://on.cypress.io/installing-cypress
 101
-cypress:server:cypress about to exit with code 0 +4ms
 ```
 
-If the smoke test does not show a specific error yet fails, try printing the
+You can also see Cypress debug logs by setting an
+[environment variable `DEBUG=cypress:*`](#Print-DEBUG-logs).
+
+```text
+$ DEBUG=cypress:* ~/.cache/Cypress/13.15.0/Cypress/Cypress --smoke-test --ping=101
+  cypress:snapshot:info Caching 3374, defining 4217 modules! Using cache +0ms
+  cypress:snapshot:debug initializing packherd require +0ms
+  cypress:server:performance-benchmark elapsed time at v8-snapshot-startup-time: 204.65ms +0ms
+  cypress:server:appdata path: /home/<username>/.config/Cypress/cy/production/browsers +0ms
+  cypress:server appending default switches for electron: [
+  cypress:server   { name: '--test-type' },
+  ...
+  cypress:server   { name: '--enable-precise-memory-info' }
+  cypress:server ] +0ms
+  cypress:server:cypress starting cypress with argv [ '/home/<username>/.cache/Cypress/13.15.0/Cypress/Cypress', '--smoke-test', '--ping=101' ] +0ms
+  ...
+  cypress:server:cypress running Electron currently +13ms
+101
+  cypress:server:cypress about to exit with code 0 +18ms
+  cypress:server:browsers browsers.kill called with no active instance +0ms
+```
+
+If the smoke test does not show a specific error yet crashes, try printing the
 Electron crash stack to maybe pinpoint the problem better:
 
 ```shell
 ELECTRON_ENABLE_STACK_DUMPING=1 npx cypress verify
 ...
 Received signal 11 SEGV_MAPERR ffffffb27e8955bb
-#0 0x55c6389f83d9 (/root/.cache/Cypress/3.8.2/Cypress/Cypress+0x35d13d8)
+#0 0x55c6389f83d9 (/home/<username>/.cache/Cypress/13.15.0/Cypress/Cypress+0x35d13d8)
 r8: 0000000000000000  r9: 00007ffcf0387c80 r10: 00007ffcf0387bd8 r11: 000000000000000e
 r12: 00007ffcf0387d2c r13: 00007f3ea737b720 r14: ffffffb27e89558b r15: 00007f3ea8974200
 di: 0000000000000000  si: 0000000000000020  bp: 0000000000000000  bx: 0000004f2f375580
