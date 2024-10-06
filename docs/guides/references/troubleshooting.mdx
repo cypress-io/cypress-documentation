@@ -657,23 +657,32 @@ Alternatively, you can apply the patch during a post-install phase. In your
 3. Edit the line causing the problem _in your local node_modules folder_ within
    `node_modules/cypress`.
 4. Run the `npx patch-package cypress` command. This command will create a new
-   file `patches/cypress+3.4.1.patch`.
+   file named after the current Cypress version, for example, `patches/cypress+13.15.0.patch`.
 
 ```css
 npx patch-package cypress
-patch-package 6.1.2
+patch-package 8.0.0
 • Creating temporary folder
-• Installing cypress@3.4.1 with npm
+• Installing cypress@13.15.0 with npm
 • Diffing your files with clean files
-✔ Created file patches/cypress+3.4.1.patch
+✔ Created file patches/cypress+13.15.0.patch
+
+💡 cypress is on GitHub! To draft an issue based on your patch run
+
+    npx patch-package cypress --create-issue
 ```
 
 5. Commit the new `patches` folder to git.
 
 :::info
 
-If you find a patch for an error, please add a comment explaining your
-workaround to the relevant Cypress GitHub issue. It will help us release an
-official fix faster.
+If you find a patch for an error,
+please add a comment to the relevant Cypress GitHub issue explaining your workaround.
+It can help us release an official fix faster.
+Alternatively you can use the following command to create a new issue based on your patch contents.
+
+```shell
+npx patch-package cypress --create-issue
+```
 
 :::
