@@ -157,7 +157,7 @@ const config = {
       announcementBar: {
         //give id a unique value to get a new announcement bar to appear
         id: 'ga-ui-cov-a11y',
-        content: `📢 NEW! Improve app quality with instant insights using <a href="https://www.cypress.io/accessibility">Cypress Accessibility</a> and <a href="https://www.cypress.io/ui-coverage">UI Coverage</a>.`,
+        content: `📢 NEW! Improve app quality with instant insights using <a href="https://www.cypress.io/accessibility">Cypress Accessibility</a> or <a href="https://www.cypress.io/ui-coverage">UI Coverage</a>.`,
         isCloseable: true,
       },
       footer: {
