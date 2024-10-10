@@ -31,11 +31,10 @@ We make it possible to:
 - [Run tests](#Run-tests)
 - [Debug Tests](#Debug-tests)
 - [Integrate with CI](#Integrate-with-CI)
-- [Optimize your Test Suite](#Integrate-with-CI)
-- [Debug Tests from CI](#Integrate-with-CI)
-- [Analyze Testing Trends](#Integrate-with-CI)
-- [Integrate into your workflow](#Integrate-with-CI)
-
+- [Optimize your Test Suite](#Optimize-your-Test-Suite)
+- [Replay Tests](#Replay-Tests)
+- [Integrate into your workflow](#Integrate-into-your-workflow)
+- [Analyze Testing Trends](#Analyze-Testing-Trends)
 
 Cypress is most often compared to Selenium; however Cypress is both
 fundamentally and architecturally different. [See our comparison of Cypress vs Selenium](https://www.cypress.io/comparison/selenium).
@@ -124,7 +123,8 @@ do:
 
 #### Cypress Cloud
 
-  **Test Replay:** Record to [Cypress Cloud](/guides/cloud/introduction) and replay the test exactly as it executed during the run for zero-configuration debugging using [Test Replay](/guides/cloud/test-replay).
+**Test Replay:** Record to [Cypress Cloud](/guides/cloud/introduction) and replay the test exactly as it executed during the run for zero-configuration debugging using [Test Replay](/guides/cloud/test-replay).
+
 - **Smart Orchestration:** Once you're set up to record to Cypress Cloud, easily
   [parallelize](/guides/cloud/smart-orchestration/parallelization) your test
   suite, rerun failed specs first with
@@ -137,7 +137,7 @@ do:
 - **Branch Review:** Quickly identify the impact a pull request might have on your test suite in a single view using [Branch Review](/guides/cloud/branch-review). Compare which tests are failing, flaky, pending, added, or modified between the source and base branches and prevent the merging of low-quality code.
 - **Integrations:** Integrate with [GitHub](/guides/cloud/integrations/source-control/github), [GitLab](/guides/cloud/integrations/source-control/gitlab), or [Bitbucket](/guides/cloud/integrations/source-control/bitbucket) to see test results directly on every push or pull request. Cypress Cloud also integrates with
   [Slack](/guides/cloud/integrations/slack), [Jira](/guides/cloud/integrations/jira), and [Microsoft Teams](/guides/cloud/integrations/teams) to keep your team in the loop.
-- **Test Analytics:** Track test results over time with [Test Analytics](/guides/cloud/analytics) to identify trends, regressions, and improvements in your test suite. Use our [Data Extract API](/guides/cloud/integrations/data-extract-api) to extract the data that is important to your team. 
+- **Test Analytics:** Track test results over time with [Test Analytics](/guides/cloud/analytics/overview) to identify trends, regressions, and improvements in your test suite. Use our [Data Extract API](/guides/cloud/integrations/data-extract-api) to extract the data that is important to your team.
 
 ### <Icon name="cog" /> Set up tests
 
@@ -170,7 +170,7 @@ the developer tools you know and love.
 ### <Icon name="bug" /> Integrate with CI
 
 Cypress can be easily integrated into your CI provider. We have guides for all
-the popular CI providers. You can also use [Cypress GitHub Action](/guides/guides/github-actions) to run your tests. 
+the popular CI providers. You can also use [Cypress GitHub Action](/guides/cloud/integrations/source-control/github) to run your tests.
 
 ### <Icon name="bug" /> Optimize your Test Suite
 
