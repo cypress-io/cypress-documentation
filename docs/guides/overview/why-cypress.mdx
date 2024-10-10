@@ -21,33 +21,34 @@ sidebar_position: 10
 ## In a nutshell
 
 Cypress is a next generation front end testing tool built for the modern web.
-We address the key pain points developers and QA engineers
-face when testing modern applications.
+We address the key pain points teams
+face when testing modern applications and maintaining test suites.
 
 We make it possible to:
 
-- [Set up tests](#Setting-up-tests)
-- [Write tests](#Writing-tests)
-- [Run tests](#Running-tests)
-- [Debug Tests](#Debugging-tests)
+- [Set up tests](#Set-up-tests)
+- [Write tests](#Write-tests)
+- [Run tests](#Run-tests)
+- [Debug Tests](#Debug-tests)
+- [Integrate with CI](#Integrate-with-CI)
+- [Optimize your Test Suite](#Integrate-with-CI)
+- [Debug Tests from CI](#Integrate-with-CI)
+- [Analyze Testing Trends](#Integrate-with-CI)
+- [Integrate into your workflow](#Integrate-with-CI)
+
 
 Cypress is most often compared to Selenium; however Cypress is both
-fundamentally and architecturally different. Cypress is not constrained by the
-same restrictions as Selenium.
-
-This enables you to **write faster**, **easier** and **more reliable** tests.
+fundamentally and architecturally different. [See our comparison of Cypress vs Selenium](https://www.cypress.io/comparison/selenium).
 
 ## Who uses Cypress?
 
-Our users are typically developers or QA engineers building web applications
-using modern JavaScript frameworks.
+Our users are typically developers, QA engineers, and teams looking to build web applications and increase the quality of their existing application.
 
-Cypress enables you to write all types of tests:
+Cypress enables you to write:
 
 - [End-to-end tests](/guides/end-to-end-testing/writing-your-first-end-to-end-test)
 - [Component tests](/guides/component-testing/overview)
-- Integration tests
-- Unit tests
+- API tests
 
 Cypress can test anything that runs in a browser.
 
@@ -55,19 +56,19 @@ Cypress can test anything that runs in a browser.
 
 Cypress consists of a free,
 [open source](https://github.com/cypress-io/cypress),
-[locally installed](/guides/getting-started/installing-cypress) application
-**and** Cypress Cloud for [recording your tests](/guides/cloud/introduction).
+[locally installed](/guides/getting-started/installing-cypress) app
+**and** [Cypress Cloud](/guides/cloud/introduction) for recording tests, surfacing test results, and providing test analytics.
 
 - **First:** Cypress helps you set up and start writing tests every day while
   you build your application locally. _TDD at its best!_
 - **Later:** After building up a suite of tests and
   [integrating Cypress](/guides/continuous-integration/introduction) with your
   CI Provider, [Cypress Cloud](/guides/cloud/introduction) can record your test
-  runs. You'll never have to wonder: _Why did this fail?_
+  runs surfacing exactly what happened during the test in [Test Replay](/guides/cloud/test-replay). You'll never have to wonder: _Why did this fail?_
 
 ## Our mission
 
-Our mission is to build a thriving, open source ecosystem that enhances
+Our mission is to build a thriving testing solution that enhances
 productivity, makes testing an enjoyable experience, and generates developer
 happiness. We hold ourselves accountable to champion a testing process **that
 actually works**.
@@ -95,7 +96,9 @@ that makes everyone happy.
 ## Features
 
 Cypress comes fully baked, batteries included. Here is a list of things it can
-do that no other testing framework can:
+do:
+
+#### Cypress App
 
 - **Time Travel:** Cypress takes snapshots as your tests run. Hover over
   commands in the [Command Log](/guides/core-concepts/cypress-app#Command-Log)
@@ -115,12 +118,13 @@ do that no other testing framework can:
   involving your server. You can stub network traffic however you like.
 - **Consistent Results:** Our architecture doesn't use Selenium or WebDriver.
   Say hello to fast, consistent and reliable tests that are flake-free.
-- **Screenshots, Videos, and Test Replay:** View screenshots taken automatically on failure,
-  or videos, if enabled, of your entire test suite when run from the CLI. Record
-  to [Cypress Cloud](/guides/cloud/introduction) and replay the test as it executed during the run for zero-configuration debugging using [Test Replay](/guides/cloud/test-replay).
 - **Cross Browser Testing:** Run tests within Firefox and Chrome-family browsers
   (including Edge and Electron) locally and
-  [optimally in a Continuous Integration pipeline](/guides/guides/cross-browser-testing).
+  [in a Continuous Integration pipeline](/guides/guides/cross-browser-testing).
+
+#### Cypress Cloud
+
+  **Test Replay:** Record to [Cypress Cloud](/guides/cloud/introduction) and replay the test exactly as it executed during the run for zero-configuration debugging using [Test Replay](/guides/cloud/test-replay).
 - **Smart Orchestration:** Once you're set up to record to Cypress Cloud, easily
   [parallelize](/guides/cloud/smart-orchestration/parallelization) your test
   suite, rerun failed specs first with
@@ -130,34 +134,66 @@ do that no other testing framework can:
   tight feedback loops.
 - **Flake Detection:** Discover and diagnose unreliable tests with Cypress
   Cloud's [Flaky test management](/guides/cloud/flaky-test-management).
+- **Branch Review:** Quickly identify the impact a pull request might have on your test suite in a single view using [Branch Review](/guides/cloud/branch-review). Compare which tests are failing, flaky, pending, added, or modified between the source and base branches and prevent the merging of low-quality code.
+- **Integrations:** Integrate with [GitHub](/guides/cloud/integrations/source-control/github), [GitLab](/guides/cloud/integrations/source-control/gitlab), or [Bitbucket](/guides/cloud/integrations/source-control/bitbucket) to see test results directly on every push or pull request. Cypress Cloud also integrates with
+  [Slack](/guides/cloud/integrations/slack), [Jira](/guides/cloud/integrations/jira), and [Microsoft Teams](/guides/cloud/integrations/teams) to keep your team in the loop.
+- **Test Analytics:** Track test results over time with [Test Analytics](/guides/cloud/analytics) to identify trends, regressions, and improvements in your test suite. Use our [Data Extract API](/guides/cloud/integrations/data-extract-api) to extract the data that is important to your team. 
 
-### <Icon name="cog" /> Setting up tests
+### <Icon name="cog" /> Set up tests
 
 There are no servers, drivers, or any other dependencies to install or
-configure. You can quickly see your first passing test using template example test specs for
+configure. You can quickly see your first passing test within minutes for
 [End-to-end tests](/guides/end-to-end-testing/writing-your-first-end-to-end-test) or
 [Component tests](/guides/component-testing/getting-started).
 
-### <Icon name="code" /> Writing tests
+### <Icon name="code" /> Write tests
 
-Tests written in Cypress are meant to be easy to read and understand. Our API
+Tests written in Cypress are meant to be easy to read and understand. Our [API](/api/table-of-contents)
 comes fully baked, on top of tools you are familiar with already.
 
 <DocsVideo src="/img/snippets/writing-tests.mp4" title="Writing Tests" />
 
-### <Icon name="play-circle" /> Running tests
+### <Icon name="play-circle" /> Run tests
 
 Cypress runs as fast as your browser can render content. You can watch tests run
-in real time as you develop your applications. TDD FTW!
+in real time as you develop your applications and time travel to previous steps. TDD FTW!
 
 <DocsVideo src="/img/snippets/running-tests.mp4" title="Running Tests" />
 
-### <Icon name="bug" /> Debugging tests
+### <Icon name="bug" /> Debug tests
 
 Readable error messages help you to debug quickly. You also have access to all
 the developer tools you know and love.
 
 <DocsVideo src="/img/snippets/debugging.mp4" title="Debugging Tests" />
+
+### <Icon name="bug" /> Integrate with CI
+
+Cypress can be easily integrated into your CI provider. We have guides for all
+the popular CI providers. You can also use [Cypress GitHub Action](/guides/guides/github-actions) to run your tests. 
+
+### <Icon name="bug" /> Optimize your Test Suite
+
+Cypress can run tests in parallel, and you can group test runs by browser or
+device. You can also run tests in a headless mode to speed up your test suite.
+
+### <Icon name="bug" /> Replay Tests
+
+With [Cypress Cloud](/guides/cloud/introduction), you can record your tests and replay them exactly as they
+executed during the run and debug using [Test Replay](/guides/cloud/test-replay).
+
+### <Icon name="bug" /> Integrate into your workflow
+
+Cypress Cloud integrates with GitHub, GitLab, and Bitbucket to see test results
+directly on every push or pull request. You can also integrate with Slack, Jira,
+and Microsoft Teams to keep your team in the loop.
+
+### <Icon name="bug" /> Analyze Testing Trends
+
+Track test results over time with [Test Analytics](/guides/cloud/analytics) to
+identify trends, regressions, and improvements in your test suite. Use our [Data
+Extract API](/guides/cloud/integrations/data-extract-api) to extract the data
+that is important to your team.
 
 ## Test types
 
@@ -225,11 +261,7 @@ it('adds a todo', () => {
 ### Other
 
 Finally, through a large number of [official and 3rd party plugins](/plugins)
-you can write Cypress [a11y](https://github.com/component-driven/cypress-axe),
-
-<a href="/plugins#visual-testing">visual</a>,
-[email](/faq/questions/using-cypress-faq#How-do-I-check-that-an-email-was-sent-out)
-and other types of tests.
+you can write other types of tests.
 
 ## Cypress in the Real World
 
