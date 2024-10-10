@@ -41,29 +41,37 @@ fundamentally and architecturally different. [See our comparison of Cypress vs S
 
 ## Who uses Cypress?
 
-Our users are typically developers, QA engineers, and teams looking to build web applications and increase the quality of their existing application.
+Our users are typically developers, QA engineers, and teams looking to build web applications 
+and increase the quality of their existing applications.
 
-Cypress enables you to write:
+Cypress provides solutions for:
 
-- [End-to-end tests](/guides/end-to-end-testing/writing-your-first-end-to-end-test)
-- [Component tests](/guides/component-testing/overview)
-- API tests
+- [End-to-end testing](/guides/end-to-end-testing/writing-your-first-end-to-end-test)
+- [Component testing](/guides/component-testing/overview)
+- Accessibility testing
+- UI Coverage
 
-Cypress can test anything that runs in a browser.
+Cypress can test anything that runs in a browser and surface insights into how to improve the health 
+of your test suite and the quality of your application.
 
 ## Cypress ecosystem
 
 Cypress consists of a free,
 [open source](https://github.com/cypress-io/cypress),
 [locally installed](/guides/getting-started/installing-cypress) app
-**and** [Cypress Cloud](/guides/cloud/introduction) for recording tests, surfacing test results, and providing test analytics.
+**and** [Cypress Cloud](/guides/cloud/introduction) for recording tests, surfacing test results, and providing test analytics. 
+Additionally, the Cypress Cloud provides add-ons for Cypress Accessibility and UI Coverage.
 
 - **First:** Cypress helps you set up and start writing tests every day while
   you build your application locally. _TDD at its best!_
-- **Later:** After building up a suite of tests and
+- **Next:** After building up a suite of tests and
   [integrating Cypress](/guides/continuous-integration/introduction) with your
   CI Provider, [Cypress Cloud](/guides/cloud/introduction) can record your test
-  runs surfacing exactly what happened during the test in [Test Replay](/guides/cloud/test-replay). You'll never have to wonder: _Why did this fail?_
+  runs surfacing exactly what happened during the test in [Test Replay](/guides/cloud/test-replay). 
+  You'll never have to wonder: _Why did this fail?_
+- **Finally:** Add on Cypress Accessibility to ensure your application is
+  accessible to all users, and Cypress UI Coverage to ensure you have tested
+  every part of your application.
 
 ## Our mission
 
@@ -137,6 +145,94 @@ do:
 - **Integrations:** Integrate with [GitHub](/guides/cloud/integrations/source-control/github), [GitLab](/guides/cloud/integrations/source-control/gitlab), or [Bitbucket](/guides/cloud/integrations/source-control/bitbucket) to see test results directly on every push or pull request. Cypress Cloud also integrates with
   [Slack](/guides/cloud/integrations/slack), [Jira](/guides/cloud/integrations/jira), and [Microsoft Teams](/guides/cloud/integrations/teams) to keep your team in the loop.
 - **Test Analytics:** Track test results over time with [Test Analytics](/guides/cloud/analytics/overview) to identify trends, regressions, and improvements in your test suite. Use our [Data Extract API](/guides/cloud/integrations/data-extract-api) to extract the data that is important to your team.
+
+#### Add ons
+
+- **Cypress Accessibility:** Ensure your application is accessible to all users
+  with Cypress Accessibility.
+- **Cypress UI Coverage:** Ensure you have tested every part of your application
+  with Cypress UI Coverage.
+
+## Solutions
+
+Cypress can be used to ensure several different testing doverage. This can provide
+even more confidence that your application under test is working as intended and accessible to all users.
+
+### End-to-end
+
+Cypress was originally designed to run end-to-end (E2E) tests on anything that
+runs in a browser. A typical E2E test visits the application in a browser and
+performs actions via the UI just like a real user would.
+
+```js
+it('adds todos', () => {
+  cy.visit('https://example.cypress.io/')
+  cy.get('[data-testid="new-todo"]')
+    .type('write code{enter}')
+    .type('write tests{enter}')
+  // confirm the application is showing two items
+  cy.get('[data-testid="todos"]').should('have.length', 2)
+})
+```
+
+### Component
+
+You can also use Cypress to mount components from supported web frameworks and
+execute [component tests](/guides/component-testing/overview).
+
+```js
+import TodoList from './components/TodoList'
+
+it('contains the correct number of todos', () => {
+  const todos = [
+    { text: 'Buy milk', id: 1 },
+    { text: 'Learn Component Testing', id: 2 },
+  ]
+
+  cy.mount(<TodoList todos={todos} />)
+  // the component starts running like a mini web app
+  cy.get('[data-testid="todos"]').should('have.length', todos.length)
+})
+```
+
+### Accessibility
+
+You can write Cypress tests to checks the accessibility of your application. 
+When combined with Cypress Accessibility, insights can be surfaced when 
+accessibility standards are not met through your testing - with no configuration required.
+
+```js
+it('adds todos', () => {
+  cy.visit('https://example.cypress.io/')
+  //..  
+})
+```
+
+### API
+
+Cypress can perform arbitrary HTTP calls, thus you can use it for API testing.
+
+```js
+it('adds a todo', () => {
+  cy.request({
+    url: '/todos',
+    method: 'POST',
+    body: {
+      title: 'Write REST API',
+    },
+  })
+    .its('body')
+    .should('deep.contain', {
+      title: 'Write REST API',
+      completed: false,
+    })
+})
+```
+
+### Other
+
+Finally, through a large number of [official and 3rd party plugins](/plugins)
+you can write other types of tests.
 
 ## Get Started
 
@@ -217,74 +313,6 @@ that is important to your team.
   src="/img/guides/cloud/analytics/dashboard-analytics-overview.png"
   alt="Cloud Analytics Screenshot"
 />
-
-## Test types
-
-Cypress can be used to write several different types of tests. This can provide
-even more confidence that your application under test is working as intended.
-
-### End-to-end
-
-Cypress was originally designed to run end-to-end (E2E) tests on anything that
-runs in a browser. A typical E2E test visits the application in a browser and
-performs actions via the UI just like a real user would.
-
-```js
-it('adds todos', () => {
-  cy.visit('https://example.cypress.io/')
-  cy.get('[data-testid="new-todo"]')
-    .type('write code{enter}')
-    .type('write tests{enter}')
-  // confirm the application is showing two items
-  cy.get('[data-testid="todos"]').should('have.length', 2)
-})
-```
-
-### Component
-
-You can also use Cypress to mount components from supported web frameworks and
-execute [component tests](/guides/component-testing/overview).
-
-```js
-import TodoList from './components/TodoList'
-
-it('contains the correct number of todos', () => {
-  const todos = [
-    { text: 'Buy milk', id: 1 },
-    { text: 'Learn Component Testing', id: 2 },
-  ]
-
-  cy.mount(<TodoList todos={todos} />)
-  // the component starts running like a mini web app
-  cy.get('[data-testid="todos"]').should('have.length', todos.length)
-})
-```
-
-### API
-
-Cypress can perform arbitrary HTTP calls, thus you can use it for API testing.
-
-```js
-it('adds a todo', () => {
-  cy.request({
-    url: '/todos',
-    method: 'POST',
-    body: {
-      title: 'Write REST API',
-    },
-  })
-    .its('body')
-    .should('deep.contain', {
-      title: 'Write REST API',
-      completed: false,
-    })
-})
-```
-
-### Other
-
-Finally, through a large number of [official and 3rd party plugins](/plugins)
-you can write other types of tests.
 
 ## Cypress in the Real World
 
