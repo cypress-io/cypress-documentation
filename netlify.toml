@@ -765,7 +765,13 @@
 
 [[redirects]]
   from = "/zh-cn/guides/references/assertions"
-  to = "/guides/references/assertions"
+  to = "/api/assertions"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/references/assertions"
+  to = "/api/assertions"
   status = 301
   force = true
 
