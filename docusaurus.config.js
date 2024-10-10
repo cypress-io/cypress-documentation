@@ -156,8 +156,8 @@ const config = {
       // Styles for this are controlled in src/css/announcement-bar.scss
       announcementBar: {
         //give id a unique value to get a new announcement bar to appear
-        id: 'cypress-v13',
-        content: `📢 &nbsp; <strong>v13.0.0</strong> - Replay your tests as they occurred in your CI run and debug with confidence using <a href="/guides/cloud/debugging/test-replay">Test Replay</a> in <a href="/guides/cloud/introduction">Cypress Cloud</a>! 🎉`,
+        id: 'ga-ui-cov-a11y',
+        content: `📢 NEW! Improve app quality with instant insights using <a href="https://www.cypress.io/accessibility">Cypress Accessibility</a> and <a href="https://www.cypress.io/ui-coverage">UI Coverage</a>.`,
         isCloseable: true,
       },
       footer: {
