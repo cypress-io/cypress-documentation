@@ -511,6 +511,13 @@
           "badge": "community"
         },
         {
+          "name": "cypress-accessibility",
+          "description": "Test your web applications and components for accessibility issues with axe-core®.",
+          "link": "https://github.com/rowellx68/cypress-accessibility",
+          "keywords": ["accessibility", "a11y", "axe-core"],
+          "badge": "community"
+        },
+        {
           "name": "cypress-drag-drop",
           "description": "Adds a cypress child command for drag'n'drop support.",
           "link": "https://github.com/4teamwork/cypress-drag-drop",
