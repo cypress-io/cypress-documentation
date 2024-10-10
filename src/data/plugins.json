@@ -91,6 +91,18 @@
       ]
     },
     {
+      "name": "Secret Managment",
+      "plugins": [ 
+         {
+          "name": "Cypress AWS Secrets Manager",
+          "description": "This plugin integrates AWS Secrets Manager into your Cypress tests, ensuring that sensitive data like API keys, passwords, and tokens remain secure during testing. It allows for secure loading and updating of secrets directly from your tests.",
+          "link": "https://github.com/alecmestroni/cypress-aws-secrets-manager/",
+          "keywords": ["aws", "secrets", "aws-secrets-manager", "secrets-manager"],
+          "badge": "community"
+        }
+      ]
+    },
+    {
       "name": "Development Tools",
       "plugins": [
         {
@@ -480,6 +492,13 @@
           "description": "Helper utility for annotating your tests with steps. Adds cy.step() and cy.section() commands",
           "link": "https://github.com/filiphric/cypress-plugin-steps",
           "keywords": ["step", "section", "readability"],
+          "badge": "community"
+        },
+        {
+          "name": "cypress-env",
+          "description": " This utility simplifies the process of handling different environments (such as test, staging, and production) by providing a environment-specific settings in your Cypress tests.",
+          "link": "https://github.com/alecmestroni/cypress-env",
+          "keywords": ["multi", "environment", "env", "multi-environment", "test", "stage", "prod"],
           "badge": "community"
         },
         {
@@ -1212,6 +1231,13 @@
     {
       "name": "Reporting",
       "plugins": [
+        {
+          "name": "cypress-xray-junit-reporter",
+          "description": "Enhances your Cypress test suite with the cypress-xray-junit-reporter a specialized custom reporter designed to seamlessly generating comprehensive XRay-compatible JUnit-style XML reports, complete with embedded screenshots on test failures, facilitating a thorough analysis of test execution.",
+          "link": "https://github.com/alecmestroni/cypress-xray-junit-reporter",
+          "keywords": ["reporter", "xray", "mochawesome", "jira", "screenshot", "issue", "junit", "screenshots","CI", "CLI"],
+          "badge": "community"
+        },
         {
           "name": "cypress-failed-log",
           "description": "Saves the Cypress test command log as a JSON file if a test fails.",
