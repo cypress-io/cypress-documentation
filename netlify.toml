@@ -775,6 +775,12 @@
   status = 301
   force = true
 
+[[redirects]]
+  from = "/guides/references/legacy-configuration"
+  to = "/guides/references/configuration"
+  status = 301
+  force = true
+
 [[plugins]]
 package = "@netlify/plugin-sitemap"
 
