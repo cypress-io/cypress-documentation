@@ -530,9 +530,9 @@
           "badge": "community"
         },
         {
-          "name": "cypress-accessibility",
+          "name": "cypress-a11y-report",
           "description": "Test your web applications and components for accessibility issues with axe-core®.",
-          "link": "https://github.com/rowellx68/cypress-accessibility",
+          "link": "https://github.com/rowellx68/cypress-a11y-report",
           "keywords": ["accessibility", "a11y", "axe-core"],
           "badge": "community"
         },
