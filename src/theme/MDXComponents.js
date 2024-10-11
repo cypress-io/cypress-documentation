@@ -3,7 +3,6 @@ import MDXComponents from "@theme-original/MDXComponents";
 import AnatomyOfAnError from "@site/docs/partials/_anatomy-of-an-error.mdx";
 import Badge from "@site/src/components/badge";
 import ComponentOnlyBadge from "@site/src/components/component-only-badge";
-import CtBetaAlert from "@site/docs/partials/_CtBetaAlert.mdx";
 import TestReplayInfo from "@site/docs/partials/_test-replay-info.mdx";
 import CypressConfigFileTabs from "@site/src/components/cypress-config-file-tabs";
 import DefaultSelectorPriority from "@site/docs/partials/_default-selector-priority.mdx";
@@ -20,7 +19,6 @@ import SupportFileConfiguration from "@site/docs/partials/_support-file-configur
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 import ThenShouldAndDifference from "@site/docs/partials/_then-should-and-difference.mdx";
-import WarningPluginsFile from "@site/docs/partials/_warning-plugins-file.mdx";
 import WarningSetupNodeEvents from "@site/docs/partials/_warning-setup-node-events.mdx";
 import VideoRecordingSupportedBrowsers from "@site/docs/partials/_video-recording-supported-browsers.mdx"
 import Logo from "@site/src/components/logo";
@@ -120,7 +118,6 @@ export default {
   AnatomyOfAnError,
   Badge,
   ComponentOnlyBadge,
-  CtBetaAlert,
   CypressConfigFileTabs,
   DefaultSelectorPriority,
   DocsImage,
@@ -137,7 +134,6 @@ export default {
   TabItem,
   TestReplayInfo,
   ThenShouldAndDifference,
-  WarningPluginsFile,
   WarningSetupNodeEvents,
   VideoRecordingSupportedBrowsers,
   Logo,

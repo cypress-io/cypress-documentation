@@ -4,10 +4,7 @@ title: Configuration
 
 :::caution
 
-This guide is for Cypress 10+ and the new JavaScript configuration file format.
-
-If you are on an older version of Cypress that uses `cypress.json`, please see
-the [legacy configuration](/guides/references/legacy-configuration) guide.
+This guide is for Cypress 10+.
 
 For more info on upgrading configuration to Cypress 10, see the
 [migration guide](/guides/references/migration-guide#Migrating-to-Cypress-100).
@@ -627,13 +624,6 @@ The `setupNodeEvents` function allows you to tap into, modify, or extend the
 internal behavior of Cypress using the [`on`](/api/plugins/writing-a-plugin#on)
 and [`config`](/api/plugins/writing-a-plugin#config) arguments, and is valid as
 an [`e2e`](#e2e) or [`component`](#component) testing specific option.
-
-:::info
-
-This function was added in Cypress version `10.0.0` to replace the deprecated
-[plugins file](/guides/references/legacy-configuration#Plugins).
-
-:::
 
 :::cypress-config-example
 
