@@ -631,7 +631,7 @@ _Released 08/31/2023_
 
 **Bugfixes:**
 
-- Fixed a regression introduced in Cypress [13.0.0](#13-0-0) where the [Module API](/app/guide/module-api), [`after:run`](/api/plugins/after-run-api), and [`after:spec`](/api/plugins/after-spec-api) results did not include the `stats.skipped` field for each run result. Fixes [#27694](https://github.com/cypress-io/cypress/issues/27694). Addressed in [#27695](https://github.com/cypress-io/cypress/pull/27695).
+- Fixed a regression introduced in Cypress [13.0.0](#13-0-0) where the [Module API](/app/guides/module-api), [`after:run`](/api/plugins/after-run-api), and [`after:spec`](/api/plugins/after-spec-api) results did not include the `stats.skipped` field for each run result. Fixes [#27694](https://github.com/cypress-io/cypress/issues/27694). Addressed in [#27695](https://github.com/cypress-io/cypress/pull/27695).
 - Individual CDP errors that occur while capturing data for Test Replay will no longer prevent the entire run from being available. Addressed in [#27709](https://github.com/cypress-io/cypress/pull/27709).
 - Fixed an issue where the release date on the `v13` landing page was a day behind. Fixed in [#27711](https://github.com/cypress-io/cypress/pull/27711).
 - Fixed an issue where fatal protocol errors would leak between specs causing all subsequent specs to fail to upload protocol information. Fixed in [#27720](https://github.com/cypress-io/cypress/pull/27720)
@@ -663,12 +663,12 @@ Refer to the [v13 Migration Guide](/app/references/migration-guide#Migrating-to-
 
 - The [`video`](/app/references/configuration#Videos) configuration option now defaults to `false`. Addresses [#26157](https://github.com/cypress-io/cypress/issues/26157).
 - The [`videoCompression`](/app/references/configuration#Videos) configuration option now defaults to `false`. Addresses [#26160](https://github.com/cypress-io/cypress/issues/26160).
-- The [`videoUploadOnPasses`](/app/references/configuration#Videos) configuration option has been removed. Please see our [screenshots & videos guide](/app/guide/screenshots-and-videos#Delete-videos-for-specs-without-failing-or-retried-tests) on how to accomplish similar functionality. Addresses [#26899](https://github.com/cypress-io/cypress/issues/26899).
+- The [`videoUploadOnPasses`](/app/references/configuration#Videos) configuration option has been removed. Please see our [screenshots & videos guide](/app/guides/screenshots-and-videos#Delete-videos-for-specs-without-failing-or-retried-tests) on how to accomplish similar functionality. Addresses [#26899](https://github.com/cypress-io/cypress/issues/26899).
 - Requests for assets at relative paths for component testing are now correctly forwarded to the dev server. Fixes [#26725](https://github.com/cypress-io/cypress/issues/26725).
 - The [`cy.readFile()`](/api/commands/readfile) command is now retry-able as a [query command](/app/core-concepts/retry-ability). This should not affect any tests using it; the functionality is unchanged. However, it can no longer be overwritten using [`Cypress.Commands.overwrite()`](/api/cypress-api/custom-commands#Overwrite-Existing-Commands). Addressed in [#25595](https://github.com/cypress-io/cypress/pull/25595).
 - The deprecated configuration option `nodeVersion` has been removed. Addresses [#27016](https://github.com/cypress-io/cypress/issues/27016).
-- The properties and values returned by the [Module API](/app/guide/module-api) and included in the arguments of handlers for the [`after:run`](/api/plugins/after-run-api) and [`after:spec`](/api/plugins/after-spec-api) have been changed to be more consistent. Addresses [#23805](https://github.com/cypress-io/cypress/issues/23805).
-- For Cypress Cloud runs with Test Replay enabled, the Cypress Runner UI is now hidden during the run. This change was made to improve performance in situations where the Runner no longer needs to be rendered. If video is recorded during the run, the Runner will not be visible. In addition, if a screenshot with `capture: runner` is taken, the screenshot will be taken as if the `capture: viewport` option was passed. You can turn off this behavior by passing [`--runner-ui`](/app/guide/command-line#cypress-run-runner-ui). Addressed in [#27482](https://github.com/cypress-io/cypress/pull/27482).
+- The properties and values returned by the [Module API](/app/guides/module-api) and included in the arguments of handlers for the [`after:run`](/api/plugins/after-run-api) and [`after:spec`](/api/plugins/after-spec-api) have been changed to be more consistent. Addresses [#23805](https://github.com/cypress-io/cypress/issues/23805).
+- For Cypress Cloud runs with Test Replay enabled, the Cypress Runner UI is now hidden during the run. This change was made to improve performance in situations where the Runner no longer needs to be rendered. If video is recorded during the run, the Runner will not be visible. In addition, if a screenshot with `capture: runner` is taken, the screenshot will be taken as if the `capture: viewport` option was passed. You can turn off this behavior by passing [`--runner-ui`](/app/guides/command-line#cypress-run-runner-ui). Addressed in [#27482](https://github.com/cypress-io/cypress/pull/27482).
 - The browser and browser page unexpectedly closing in the middle of a test run are now gracefully handled. Addressed in [#27592](https://github.com/cypress-io/cypress/issues/27592).
 - Automation performance is now improved by switching away from websockets to direct CDP calls for Chrome and Electron browsers. Addressed in [#27592](https://github.com/cypress-io/cypress/issues/27592).
 - Edge cases where `cy.intercept` would not properly intercept have been addressed. Addressed in [#27592](https://github.com/cypress-io/cypress/issues/27592).
@@ -677,7 +677,7 @@ Refer to the [v13 Migration Guide](/app/references/migration-guide#Migrating-to-
 
 **Features:**
 
-- Added [`--runner-ui`](/app/guide/command-line#cypress-run-runner-ui) and [`--no-runner-ui`](https://docs.cypress.io/app/guide/command-line#cypress-run-no-runner-ui) CLI flags to control whether the Cypress Runner UI is visible during a run. Addressed in [#27582](https://github.com/cypress-io/cypress/pull/27582).
+- Added [`--runner-ui`](/app/guides/command-line#cypress-run-runner-ui) and [`--no-runner-ui`](https://docs.cypress.io/app/guides/command-line#cypress-run-no-runner-ui) CLI flags to control whether the Cypress Runner UI is visible during a run. Addressed in [#27582](https://github.com/cypress-io/cypress/pull/27582).
 - Consolidates and improves terminal output when uploading test artifacts to Cypress Cloud. Addressed in [#27402](https://github.com/cypress-io/cypress/pull/27402)
 
 **Bugfixes:**
@@ -1221,7 +1221,7 @@ _Released 02/15/2023_
 **Features:**
 
 - Added a new CLI flag, called
-  [`--auto-cancel-after-failures`](/app/guide/command-line#Options), that
+  [`--auto-cancel-after-failures`](/app/guides/command-line#Options), that
   overrides the project-level
   ["Auto Cancellation"](/app/cloud/smart-orchestration/run-cancellation)
   value when recording to the Cloud. This gives Cloud users on Business and
@@ -1546,7 +1546,7 @@ _Released 12/20/2022_
   migration wizard. Fixes
   [#25138](https://github.com/cypress-io/cypress/issues/25138).
 - Fixed an issue where the Cypress migration wizard would fail to run in
-  [global mode](/app/guide/command-line#cypress-open-global) on newer
+  [global mode](/app/guides/command-line#cypress-open-global) on newer
   versions of Cypress. Addressed in
   [#25138](https://github.com/cypress-io/cypress/issues/25138).
 - Fixed an issue with Angular Component Testing where a custom
@@ -1588,7 +1588,7 @@ _Released 12/12/2022_
 - Cleaned up temp files generated by `cypress run`. Addressed by
   [#24957](https://github.com/cypress-io/cypress/pull/24957)
 - The Chrome web security configuration tooltip will now be shown only if
-  [`chromeWebSecurity`](/app/guide/web-security#Disabling-Web-Security) is
+  [`chromeWebSecurity`](/app/guides/web-security#Disabling-Web-Security) is
   set to false when using a non-chromium browser. Fixes
   [#23846](https://github.com/cypress-io/cypress/issues/23846).
 - Fixed an issue where updating a component would not trigger the `supportFile`
@@ -2046,7 +2046,7 @@ _Released 10/25/2022_
 **Features:**
 
 - [`cy.session()`](/api/commands/session) is now supported when using
-  [WebKit (Experimental)](/app/guide/launching-browsers#WebKit-Experimental)
+  [WebKit (Experimental)](/app/guides/launching-browsers#WebKit-Experimental)
   and `experimentalSessionAndOrigin` is enabled. Addresses
   [#24116](https://github.com/cypress-io/cypress/issues/24116),
   [#23832](https://github.com/cypress-io/cypress/issues/23832).
@@ -3011,7 +3011,7 @@ which explains some breaking changes in more detail.**
   Addressed in [#20515](https://github.com/cypress-io/cypress/pull/20515).
 - You will no longer be able to run your tests during `cypress run` or
   `cypress open` in
-  [browser versions that are not supported by Cypress](/app/guide/launching-browsers#Browser-versions-supported).
+  [browser versions that are not supported by Cypress](/app/guides/launching-browsers#Browser-versions-supported).
 
 - Generated screenshots and videos will still be created inside their respective
   folders (`screenshotsFolder`, `videosFolder`). However, the paths of generated
@@ -4555,7 +4555,7 @@ _Released 05/10/2021_
 **Features:**
 
 - Component tests can now be launched via the
-  [Module API](/app/guide/module-api) by passing `testingType: 'component'`
+  [Module API](/app/guides/module-api) by passing `testingType: 'component'`
   via the new `testingType` property. The `testingType` will default to `e2e`.
   Addresses [#16302](https://github.com/cypress-io/cypress/issues/16302).
 - `cy.intercept()` now accepts a `times` option in the `RouteMatcher`. `times`
@@ -5646,7 +5646,7 @@ deprecations.
   for 6.0 migration.
 - Many of our docs examples have been updated to use
   [cy.intercept()](/api/commands/intercept) in place of `cy.route()` including
-  our [Network Requests](/app/guide/network-requests) doc.
+  our [Network Requests](/app/guides/network-requests) doc.
 
 **Misc:**
 
@@ -5775,7 +5775,7 @@ _Released 10/26/2020_
   using [cy.visit()](/api/commands/visit) to URLs that redirect and set
   Transfer-Encoding: chunked will no longer fail in Cypress with a "Parse
   Error". Fixes [#8497](https://github.com/cypress-io/cypress/issues/8497).
-- `cypress.run()` through the [Module API](/app/guide/module-api) now has a
+- `cypress.run()` through the [Module API](/app/guides/module-api) now has a
   `status` property in the results matching the correct CLI types (`"failed"` or
   `"finished"`). Addresses
   [#8798](https://github.com/cypress-io/cypress/issues/8798).
@@ -5808,12 +5808,12 @@ _Released 10/14/2020_
 **Features:**
 
 - You can now run
-  [cypress cache prune](/app/guide/command-line#cypress-cache-prune) to
+  [cypress cache prune](/app/guides/command-line#cypress-cache-prune) to
   delete all installed Cypress versions from the cache except for the
   currently-installed version. Addresses
   [#5972](https://github.com/cypress-io/cypress/issues/5972).
 - There's a new `--size` option for the
-  [cypress cache list](/app/guide/command-line#cypress-cache-list) command
+  [cypress cache list](/app/guides/command-line#cypress-cache-list) command
   that prints the sizes of the Cypress cache folders. Addresses
   [#6404](https://github.com/cypress-io/cypress/issues/6404).
 - For video recordings of runs, there is now a video chapter key for each test.
@@ -6123,7 +6123,7 @@ _Released 8/19/2020_
 Cypress now includes support for test retries! Similar to how Cypress will retry
 assertions when they fail, test retries will allow you to automatically retry a
 failed test prior to marking it as failed. Read our new guide on
-[Test Retries](/app/guide/test-retries) for more details.
+[Test Retries](/app/guides/test-retries) for more details.
 
 **Breaking Changes:**
 
@@ -6134,7 +6134,7 @@ to Cypress 5.0.**
 - The
   [`cypress-plugin-retries`](https://github.com/Bkucera/cypress-plugin-retries)
   plugin has been deprecated in favor of
-  [test retries](/app/guide/test-retries) built into Cypress. Addresses
+  [test retries](/app/guides/test-retries) built into Cypress. Addresses
   [#1313](https://github.com/cypress-io/cypress/issues/1313).
 - The [Cypress.Cookies.defaults()](/api/cypress-api/cookies) `whitelist` option
   has been renamed to `preserve` to more closely reflect its behavior. Addressed
@@ -6203,7 +6203,7 @@ to Cypress 5.0.**
 - The error `Maximum call stack size exceeded` will no longer throw when calling
   `scrollIntoView` on an element in the shadow dom. Fixes
   [#7986](https://github.com/cypress-io/cypress/issues/7986).
-- Cypress [environment variables](/app/guide/environment-variables) that
+- Cypress [environment variables](/app/guides/environment-variables) that
   accept arrays as their value will now properly evaluate as arrays. Fixes
   [#6810](https://github.com/cypress-io/cypress/issues/6810).
 - Elements having `display: inline` will no longer be considered hidden if it
@@ -6241,7 +6241,7 @@ to Cypress 5.0.**
 
 **Documentation Changes:**
 
-- We have a new guide on [Test Retries](/app/guide/test-retries).
+- We have a new guide on [Test Retries](/app/guides/test-retries).
 - Our [Migration Guide](/app/references/migration-guide) has a new section
   for 5.0 migration.
 
@@ -6398,7 +6398,7 @@ _Released 7/21/2020_
   [#1924](https://github.com/cypress-io/cypress/issues/1924).
 - [cy.clock()](/api/commands/clock) now accepts Dates as well as a Number for
   now. Fixes [#7786](https://github.com/cypress-io/cypress/issues/7786).
-- The [Module API](/app/guide/module-api) has a new
+- The [Module API](/app/guides/module-api) has a new
   `cypress.cli.parseRunArguments` function to assist in parsing user-supplied
   command line arguments using the same logic as `cypress run` uses. Addresses
   [#7760](https://github.com/cypress-io/cypress/issues/7760).
@@ -6540,7 +6540,7 @@ _Released 6/23/2020_
   replace `window.fetch` with a polyfill that Cypress can spy on and stub.
   Addresses [#7710](https://github.com/cypress-io/cypress/issues/7710).
 - You can now pass a `--quiet` flag to
-  [cypress run](/app/guide/command-line#cypress-run) to silence any Cypress
+  [cypress run](/app/guides/command-line#cypress-run) to silence any Cypress
   specific output from stdout. Addresses
   [#7714](https://github.com/cypress-io/cypress/issues/7714).
 
@@ -6579,7 +6579,7 @@ _Released 6/23/2020_
   [Command Log](/app/core-concepts/cypress-app#Command-Log) are now visible
   when targeting absolute positioned elements. Fixes
   [#7762](https://github.com/cypress-io/cypress/issues/7762).
-- [cypress run](/app/guide/command-line#cypress-run) will no longer crash
+- [cypress run](/app/guides/command-line#cypress-run) will no longer crash
   when provided an empty string to the `--project` flag. Fixes
   [#7743](https://github.com/cypress-io/cypress/issues/7743).
 
@@ -6756,14 +6756,14 @@ _Released 5/20/2020_
 
 **Features:**
 
-- [Errors](/app/guide/debugging#Errors) in the Test Runner now display a
+- [Errors](/app/guides/debugging#Errors) in the Test Runner now display a
   code frame to preview where the failure occurred with the relevant file, line
   number, and column number highlighted. Clicking on the file link will open the
   file in your
   [preferred file opener](/app/tooling/IDE-integration#File-Opener-Preference)
   and highlight the line and column in editors that support it. Addresses
   [#3762](https://github.com/cypress-io/cypress/issues/3762).
-- Cypress now utilizes [source maps](/app/guide/debugging#Source-maps) to
+- Cypress now utilizes [source maps](/app/guides/debugging#Source-maps) to
   enhance the error experience. Stack traces are translated so that your source
   files are shown instead of the generated file that is loaded by the browser.
   Cypress will include an inline source map in your spec file. If you
@@ -6965,7 +6965,7 @@ _Released 4/20/2020_
 - We fixed some extra spacing displaying below the project nav in the Test
   Runner. Addresses [#7023](https://github.com/cypress-io/cypress/issues/7023)
 - The typings for run results when using the
-  [Module API](/app/guide/module-api) now indicate they can be `null` or
+  [Module API](/app/guides/module-api) now indicate they can be `null` or
   `undefined`. Addresses
   [#6126](https://github.com/cypress-io/cypress/issues/6126).
 - We're continuing to make progress in converting our codebase from CoffeeScript
@@ -7023,7 +7023,7 @@ _Released 3/30/2020_
 
 **Features:**
 
-- [Errors shown in the Test Runner](/app/guide/debugging#Errors) have a new
+- [Errors shown in the Test Runner](/app/guides/debugging#Errors) have a new
   design including an expandable stack trace, better highlighting of code
   elements, and 'Learn more' links that link to relevant Cypress documentation.
   This is part of our larger improvements to error display with more exciting
@@ -7141,7 +7141,7 @@ _Released 3/16/2020_
 
 - Videos can now be recorded when running Electron in `--headed` mode. Addresses
   [#1767](https://github.com/cypress-io/cypress/issues/1767).
-- [cypress cache list](/app/guide/command-line#cypress-cache-list) now
+- [cypress cache list](/app/guides/command-line#cypress-cache-list) now
   prints the last time the cached binary was accessed for each version present.
   Addresses [#6682](https://github.com/cypress-io/cypress/issues/6682).
 
@@ -7165,7 +7165,7 @@ _Released 3/16/2020_
 - We fixed a bug causing specs to hang after rerunning tests during
   `cypress open` when there was an exception if thrown in an `after` hook. Fixes
   [#6619](https://github.com/cypress-io/cypress/issues/6619).
-- [cypress verify](/app/guide/command-line#cypress-verify) no longer
+- [cypress verify](/app/guides/command-line#cypress-verify) no longer
   incorrectly prints messaging about this being the first time using that
   Cypress version. Fixes
   [#6607](https://github.com/cypress-io/cypress/issues/6607).
@@ -7370,7 +7370,7 @@ Cypress 4.0.0 includes support for
 [Mozilla Firefox](https://www.mozilla.org/firefox/) browsers (beta support) and
 [Microsoft Edge](https://www.microsoft.com/edge) (Chromium based) browsers which
 is a big step forward for
-[Cross Browser Testing](/app/guide/cross-browser-testing) in Cypress. We've
+[Cross Browser Testing](/app/guides/cross-browser-testing) in Cypress. We've
 also updated many of the
 [underlying tools](/app/references/bundled-libraries) behind Cypress that
 bring new powerful features.
@@ -7395,7 +7395,7 @@ to Cypress 4.0.**
   their `family` field. Addresses
   [#6243](https://github.com/cypress-io/cypress/issues/6243).
 - The
-  [`--browser` flag](/app/guide/command-line#cypress-run-browser-lt-browser-name-or-path-gt)
+  [`--browser` flag](/app/guides/command-line#cypress-run-browser-lt-browser-name-or-path-gt)
   no longer accepts `canary` as its sole argument to run Chrome Canary. You now
   have to specify `chrome:canary` to use the Chrome Canary browser. Addresses
   [#6243](https://github.com/cypress-io/cypress/issues/6243).
@@ -7446,7 +7446,7 @@ to Cypress 4.0.**
 
 **Documentation Changes:**
 
-- Added [Cross Browser Testing Guide](/app/guide/cross-browser-testing) with
+- Added [Cross Browser Testing Guide](/app/guides/cross-browser-testing) with
   helpful CI strategies to consider when running tests across multiple browsers.
 - Added [Cypress.isBrowser()](/api/cypress-api/isbrowser) doc.
 
@@ -7636,7 +7636,7 @@ _Released 12/26/2019_
 **Bugfixes:**
 
 - We fixed a bug where
-  [cypress run --headless](/app/guide/command-line#Options)
+  [cypress run --headless](/app/guides/command-line#Options)
   would not run Chrome-family browsers headlessly. Fixes
   [#5949](https://github.com/cypress-io/cypress/issues/5949).
 - We fixed an issue where, on some systems with IPv4 and IPv6 enabled, Cypress
@@ -7694,7 +7694,7 @@ _Released 12/12/2019_
   `cypress run --headless --browser chrome`. Addresses
   [#832](https://github.com/cypress-io/cypress/issues/832).
 - Cypress now accepts a
-  [--tag](/app/guide/command-line#cypress-run-tag-lt-tag-gt) argument to be
+  [--tag](/app/guides/command-line#cypress-run-tag-lt-tag-gt) argument to be
   used to identify separate runs. Any tags assigned will be shown on the run in
   the Cypress Dashboard. Addresses
   [#2561](https://github.com/cypress-io/cypress/issues/2561).
@@ -7745,7 +7745,7 @@ _Released 12/12/2019_
   [#5871](https://github.com/cypress-io/cypress/issues/5871) and
   [#5892](https://github.com/cypress-io/cypress/issues/5892).
 - The Test Runner now shows a non-Chrome logo for
-  [browsers passed in via `config.browser`](/app/guide/launching-browsers#Customize-available-browsers)
+  [browsers passed in via `config.browser`](/app/guides/launching-browsers#Customize-available-browsers)
   that are not of the Chrome family. It also supports showing the Firefox logo
   (in preparation for Firefox browser support). Fixes
   [#5745](https://github.com/cypress-io/cypress/issues/5745).
@@ -7780,7 +7780,7 @@ _Released 11/27/2019_
 
 - Cypress now includes the full list of browsers found and their properties
   within the Cypress configuration. This means that the `browsers` array is also
-  [editable within plugins by accessing `config.browsers`](/app/guide/launching-browsers#Customize-available-browsers)
+  [editable within plugins by accessing `config.browsers`](/app/guides/launching-browsers#Customize-available-browsers)
   via the [Configuration API](/api/plugins/configuration-api). The currently
   available browsers are also displayed within the
   [configuration panel](/app/references/configuration#Resolved-Configuration)
@@ -7821,8 +7821,8 @@ _Released 11/27/2019_
   [GitHub Integration](/app/cloud/integrations/source-control/github). Fixes
   [#5728](https://github.com/cypress-io/cypress/issues/5728).
 - Cypress now automatically strips double quotes from
-  [--ci-build-id](/app/guide/command-line#cypress-run-ci-build-id-lt-id-gt)
-  and [group](/app/guide/command-line#cypress-run-group-lt-name-gt) flag
+  [--ci-build-id](/app/guides/command-line#cypress-run-ci-build-id-lt-id-gt)
+  and [group](/app/guides/command-line#cypress-run-group-lt-name-gt) flag
   arguments during `cypress run`. Fixes
   [#5686](https://github.com/cypress-io/cypress/issues/5686).
 - Assertions printed in the
@@ -7869,7 +7869,7 @@ _Released 11/27/2019_
 - Updated the [its()](/api/commands/its) and [invoke()](/api/commands/invoke)
   doc to allow for arguments of type Number for their first argument.
 - Documented
-  [how to pass in a custom list of browsers](/app/guide/launching-browsers#Customize-available-browsers)
+  [how to pass in a custom list of browsers](/app/guides/launching-browsers#Customize-available-browsers)
   using `config.browsers`.
 
 **Dependency Updates:**
@@ -8032,13 +8032,13 @@ _Released 10/23/2019_
 
 - We now record video by default when you run Cypress in Chrome, Chromium, or
   Canary such as during
-  [cypress run --browser chrome](/app/guide/command-line#cypress-run-browser-lt-browser-name-or-path-gt).
+  [cypress run --browser chrome](/app/guides/command-line#cypress-run-browser-lt-browser-name-or-path-gt).
   Addresses [#4608](https://github.com/cypress-io/cypress/issues/4608).
 - There is a new [.rightclick()](/api/commands/rightclick) command to right
   click on DOM elements. Addresses
   [#53](https://github.com/cypress-io/cypress/issues/53).
 - Cypress now accepts a
-  [`--config-file` argument](/app/guide/command-line#cypress-run-config-file-lt-configuration-file-gt)
+  [`--config-file` argument](/app/guides/command-line#cypress-run-config-file-lt-configuration-file-gt)
   to specify a different file to be used for Cypress configuration. You can also
   pass `false` to the `--config-file` to not use any configuration file.
   Addresses [#1369](https://github.com/cypress-io/cypress/issues/1369).
@@ -8252,7 +8252,7 @@ _Released 10/23/2019_
   an `options` object as an argument. Addresses
   [#5341](https://github.com/cypress-io/cypress/issues/5341).
 - We added `failures` and `message` types when a run fails using the
-  [Module API](/app/guide/module-api). Addresses
+  [Module API](/app/guides/module-api). Addresses
   [#5335](https://github.com/cypress-io/cypress/issues/5335).
 - We're continuing to make progress in converting our codebase from CoffeeScript
   to JavaScript. Addresses
@@ -8273,8 +8273,8 @@ _Released 10/23/2019_
 - Updated the [.dblclick()](/api/commands/dblclick) doc to include new
   `position`, `x`, and `y` arguments plus `force` and `multiple` options.
 - Added the `--config-file` argument to
-  [Command Line](/app/guide/command-line) and
-  [Module API](/app/guide/module-api) doc.
+  [Command Line](/app/guides/command-line) and
+  [Module API](/app/guides/module-api) doc.
 - Added the `nodeVersion` argument to
   [Configuration](/app/references/configuration) doc and mentioned its uses
   in the [Plugins Guide](/app/tooling/plugins-guide) and
@@ -8440,7 +8440,7 @@ _Released 7/29/2019_
   doc. Addressed in
   [#1901](https://github.com/cypress-io/cypress-documentation/pull/1901)
 - Added a section about video encoding and how to speed up the encoding time to
-  [Screenshots and Videos](/app/guide/screenshots-and-videos#Video-encoding)
+  [Screenshots and Videos](/app/guides/screenshots-and-videos#Video-encoding)
   doc. Addressed in
   [#1880](https://github.com/cypress-io/cypress-documentation/pull/1880)
 
@@ -9119,10 +9119,10 @@ _Released 3/15/2019_
   `M-SEARCH`, `NOTIFY`, `SUBSCRIBE`, `UNSUBSCRIBE`, `SEARCH`, and `CONNECT`.
   Addresses [#1302](https://github.com/cypress-io/cypress/issues/1302)
 - The
-  [`--browser` argument](/app/guide/command-line#cypress-run-browser-lt-browser-name-or-path-gt)
-  of the [Command Line](/app/guide/command-line) and the
-  [`browser` argument](/app/guide/module-api#cypressrun) of the
-  [Module API](/app/guide/module-api) have been updated to allow passing a
+  [`--browser` argument](/app/guides/command-line#cypress-run-browser-lt-browser-name-or-path-gt)
+  of the [Command Line](/app/guides/command-line) and the
+  [`browser` argument](/app/guides/module-api#cypressrun) of the
+  [Module API](/app/guides/module-api) have been updated to allow passing a
   `<path>`. Addresses
   [#1026](https://github.com/cypress-io/cypress/issues/1026).
 - [cy.type()](/api/commands/type) now accepts `{home}` and `{end}` special
@@ -9230,7 +9230,7 @@ _Released 3/15/2019_
   [#1419](https://github.com/cypress-io/cypress-documentation/issues/1419)
 - Document how to accept or reject project transfers
   [#1474](https://github.com/cypress-io/cypress-documentation/issues/1474)
-- Updated [docs](/app/guide/launching-browsers) on explain how to run Chrome
+- Updated [docs](/app/guides/launching-browsers) on explain how to run Chrome
   and Chromium browsers
   [#1339](https://github.com/cypress-io/cypress-documentation/issues/1339)
 - Added `{home}` and `{end}` character sequences to
@@ -9588,7 +9588,7 @@ _Released 11/2/2018_
   [CYPRESS_DOWNLOAD_MIRROR](/app/references/advanced-installation#Mirroring)
   environment variable for installing Cypress at a mirror url. Fixes
   [#2609](https://github.com/cypress-io/cypress/pull/2609).
-- The [Module API](/app/guide/module-api) now returns the `runUrl` from
+- The [Module API](/app/guides/module-api) now returns the `runUrl` from
   `cypress.run()`. Fixes
   [#2596](https://github.com/cypress-io/cypress/issues/2596).
 - Specs now properly display as focused when navigating through specs via the
@@ -9689,7 +9689,7 @@ _Released 11/2/2018_
 **Documentation Changes:**
 
 - Added `flag` option to [`cy.writeFile()` doc](/api/commands/writefile).
-- Added `runUrl` to returned run in [Module API doc](/app/guide/module-api).
+- Added `runUrl` to returned run in [Module API doc](/app/guides/module-api).
 - Documented new `CYPRESS_DOWNLOAD_MIRROR` flag and rewrote advanced install
   instructions to be clearer in
   [Installing Cypress doc](/app/references/advanced-installation).
@@ -9743,17 +9743,17 @@ _Released 8/13/2018_
 **Features:**
 
 - `cypress run` accepts a new
-  [--parallel](/app/guide/command-line#cypress-run-parallel) flag to run
+  [--parallel](/app/guides/command-line#cypress-run-parallel) flag to run
   specs in parallel. Fixes
   [#1690](https://github.com/cypress-io/cypress/issues/1690) and
   [#64](https://github.com/cypress-io/cypress/issues/64) and
   [#2297](https://github.com/cypress-io/cypress/issues/2297).
 - `cypress run` accepts a new
-  [--group](/app/guide/command-line#cypress-run-group-lt-name-gt) flag to
+  [--group](/app/guides/command-line#cypress-run-group-lt-name-gt) flag to
   group multiple spec files within a single run. Fixes
   [#2169](https://github.com/cypress-io/cypress/issues/2169)
 - `cypress run` accepts a new
-  [`--ci-build-id`](/app/guide/command-line#cypress-run-ci-build-id-lt-id-gt)
+  [`--ci-build-id`](/app/guides/command-line#cypress-run-ci-build-id-lt-id-gt)
   flag. Fixes [#2153](https://github.com/cypress-io/cypress/issues/2153).
 
 **Bugfixes:**
@@ -9789,8 +9789,8 @@ _Released 8/13/2018_
   enough run history for this to be determined. Fixes
   [#2276](https://github.com/cypress-io/cypress/issues/2276).
 - When using the new
-  [--parallel](/app/guide/command-line#cypress-run-parallel) or
-  [--group](/app/guide/command-line#cypress-run-group-lt-name-gt) feature,
+  [--parallel](/app/guides/command-line#cypress-run-parallel) or
+  [--group](/app/guides/command-line#cypress-run-group-lt-name-gt) feature,
   we now visually indicate that to you in the standard output when recording.
   Fixes [#2275](https://github.com/cypress-io/cypress/issues/2275).
 - We have added support for more CI providers to automatically detect and show
@@ -9803,9 +9803,9 @@ _Released 8/13/2018_
   was bumped to `1.1.0`. This supports more JavaScript features by default,
   including async/await, object rest spread, and class properties. Fixes
   [#2254](https://github.com/cypress-io/cypress/issues/2254).
-- [cypress run](/app/guide/command-line#cypress-run) now creates a new
+- [cypress run](/app/guides/command-line#cypress-run) now creates a new
   browser profile per run per browser, but keeps the same browser profile when
-  run via [cypress open](/app/guide/command-line#cypress-open). This means
+  run via [cypress open](/app/guides/command-line#cypress-open). This means
   you can run Cypress locally over multiple processes and the browser profiles
   will not conflict with each other. Fixes
   [#1566](https://github.com/cypress-io/cypress/issues/1566).
@@ -9828,7 +9828,7 @@ _Released 8/13/2018_
 
 - [Added `Parallelization` doc.](/app/cloud/smart-orchestration/parallelization)
 - [Update `Dashboard Service` doc with new screenshots and run sections.](/app/cloud/introduction)
-- [Update `Command Line` doc with new flags and alphabetized flags.](/app/guide/command-line)
+- [Update `Command Line` doc with new flags and alphabetized flags.](/app/guides/command-line)
 
 ## 3.0.3
 
@@ -9864,12 +9864,12 @@ _Released 7/30/2018_
   [#1905](https://github.com/cypress-io/cypress/issues/1905) and
   [#1912](https://github.com/cypress-io/cypress/issues/1912).
 - We are now properly serializing nested object arguments when using the
-  [Module API](/app/guide/module-api) via `cypress.open()` or
+  [Module API](/app/guides/module-api) via `cypress.open()` or
   `cypress.run()`. Passing nested objects in `reporterOptions` now works
   correctly. This is especially useful when using `mocha-multi-reporters`. In
-  addition to fixing the [Module API](/app/guide/module-api), we are now
+  addition to fixing the [Module API](/app/guides/module-api), we are now
   also properly handling nested arguments from the
-  [Command Line](/app/guide/command-line). In order to pass nested objects
+  [Command Line](/app/guides/command-line). In order to pass nested objects
   within CLI params you must pass stringified JSON. This is useful for
   properties such as `blacklistHosts`. Fixes
   [#1348](https://github.com/cypress-io/cypress/issues/1348) and
@@ -9877,11 +9877,11 @@ _Released 7/30/2018_
   [#2221](https://github.com/cypress-io/cypress/issues/2221).
 - Fixed a bug causing screenshots saved via
   [cy.screenshot()](/api/commands/screenshot) to be in different folders when
-  you ran using [cypress open](/app/guide/command-line#cypress-open) vs
-  [cypress run](/app/guide/command-line#cypress-run) . Fixes
+  you ran using [cypress open](/app/guides/command-line#cypress-open) vs
+  [cypress run](/app/guides/command-line#cypress-run) . Fixes
   [#2091](https://github.com/cypress-io/cypress/issues/2091).
 - Fixed bugs with Electron losing focus when running headlessly via
-  [cypress run](/app/guide/command-line#cypress-run) after navigation. Now
+  [cypress run](/app/guides/command-line#cypress-run) after navigation. Now
   the browser will always act as if it is focused no matter what and in all
   situations when running headlessly. If you were seeing focus related problems
   when running headlessly, this should fix them. Fixes issue
@@ -9989,7 +9989,7 @@ _Released 7/30/2018_
 
 **Documentation Changes:**
 
-- [New "Module API" doc](/app/guide/module-api)
+- [New "Module API" doc](/app/guides/module-api)
 
 ## 3.0.2
 
@@ -10079,15 +10079,15 @@ _Released 6/28/2018_
 **Misc:**
 
 - There are now several new CLI commands for interacting with the binary cache:
-  [cypress cache path](/app/guide/command-line#cypress-cache-path),
-  [cypress cache list](/app/guide/command-line#cypress-cache-list), and
-  [cypress cache clear](/app/guide/command-line#cypress-cache-clear). Fixes
+  [cypress cache path](/app/guides/command-line#cypress-cache-path),
+  [cypress cache list](/app/guides/command-line#cypress-cache-list), and
+  [cypress cache clear](/app/guides/command-line#cypress-cache-clear). Fixes
   [#1856](https://github.com/cypress-io/cypress/issues/1856).
 - We've added a new CLI flag: `--no-exit` for
-  [cypress run](/app/guide/command-line#cypress-run) to keep the browser
+  [cypress run](/app/guides/command-line#cypress-run) to keep the browser
   open after the tests finish running. Fixes
   [#1871](https://github.com/cypress-io/cypress/issues/1871).
-- The [CLI](/app/guide/command-line) now respects config values and
+- The [CLI](/app/guides/command-line) now respects config values and
   environment variables put in your `.npmrc` file. Fixes
   [#1399](https://github.com/cypress-io/cypress/issues/1399) and
   [#1853](https://github.com/cypress-io/cypress/issues/1853).
@@ -10110,7 +10110,7 @@ _Released 6/28/2018_
   [#1897](https://github.com/cypress-io/cypress/issues/1897) and
   [#1907](https://github.com/cypress-io/cypress/issues/1907).
 - We improved error logging and the user experience around
-  [cypress verify](/app/guide/command-line#cypress-verify). Fixes
+  [cypress verify](/app/guides/command-line#cypress-verify). Fixes
   [#1984](https://github.com/cypress-io/cypress/issues/1984).
 - We no longer log the `skipping install` message if the Cypress binary is
   already installed locally. Fixes
@@ -10159,7 +10159,7 @@ _Released 6/28/2018_
 **Documentation Changes:**
 
 - [Update `cy.screenshot()` doc to include new file naming behavior](/api/commands/screenshot)
-- [Updated "Command Line" doc to include new cache commands](/app/guide/command-line)
+- [Updated "Command Line" doc to include new cache commands](/app/guides/command-line)
 - [Added `Cypress.browser` doc.](/api/cypress-api/browser)
 - [Added `Cypress.spec` doc.](/api/cypress-api/spec)
 - [Added `after:screenshot` plugin event doc.](/api/plugins/after-screenshot-api)
@@ -10362,7 +10362,7 @@ _Released 5/29/2018_
   you've provided does not exist. Fixes
   [#1192](https://github.com/cypress-io/cypress/issues/1192).
 - You can now pass a normal object to `cypress.open()` or `cypress.run()`
-  through the [Module API](/app/guide/module-api), just as you would from
+  through the [Module API](/app/guides/module-api), just as you would from
   the command line. [#1442](https://github.com/cypress-io/cypress/issues/1442).
 - Added type definitions for `Cypress.off` and `Cypress.log`. Fixes
   [#1110](https://github.com/cypress-io/cypress/issues/1110) and
@@ -10426,9 +10426,9 @@ _Released 5/29/2018_
 - [Update `cy.screenshot()` doc to include new accepted usage and options](/api/commands/screenshot)
 - [Update `Installing Cypress` doc to include new options for Cypress binary caching](/app/getting-started/installing-cypress)
 - [Updated `Writing and Organizing Tests` to include newly seeded `examples` folder](/app/core-concepts/writing-and-organizing-tests)
-- [Updated `cypress run` spec args](/app/guide/command-line#cypress-run)
+- [Updated `cypress run` spec args](/app/guides/command-line#cypress-run)
 - [Updated `Dashboard Service`](/app/cloud/introduction)
-- [Updated `Launching Browsers` to include our disabling of device discovery notifications](/app/guide/launching-browsers)
+- [Updated `Launching Browsers` to include our disabling of device discovery notifications](/app/guides/launching-browsers)
 - [Updated `Preprocessors` to reflect all ways `close` event could be triggered](/app/cloud/introduction)
 - Updated use of "running headlessly" to more accurate "during `cypress run`"
 
@@ -10819,7 +10819,7 @@ _Released 12/14/2017_
 - [Added `Configuration API`](/api/plugins/configuration-api)
 - [Added `Recipes`](/examples/recipes)
 - [Updated `Configuration`](/app/references/configuration)
-- [Updated `Environment Variables`](/app/guide/environment-variables)
+- [Updated `Environment Variables`](/app/guides/environment-variables)
 - [Updated `Using Cypress FAQ`](/faq/questions/using-cypress-faq)
 - [Updated `Plugins Guide`](/app/tooling/plugins-guide)
 - [Updated `Writing a Plugin API`](/api/plugins/writing-a-plugin)
@@ -11004,11 +11004,11 @@ _Released 11/19/2017_
 **Misc:**
 
 - There is a new `--global` option useful with
-  [cypress open](/app/guide/command-line#cypress-open) to force Cypress to
+  [cypress open](/app/guides/command-line#cypress-open) to force Cypress to
   open in global mode. This is helpful when you have multiple nested Cypress
   projects but only want to install Cypress once in the root project. Fixes
   [#889](https://github.com/cypress-io/cypress/issues/889).
-- The [module API](/app/guide/module-api) accepts `reporterOptions` as an
+- The [module API](/app/guides/module-api) accepts `reporterOptions` as an
   object literal like it does for the `env` and `config` properties. Fixes
   [#899](https://github.com/cypress-io/cypress/issues/899).
 
@@ -11258,7 +11258,7 @@ _Released 09/17/2017_
 
 **Documentation Changes:**
 
-- [Updated "Command Line"](/app/guide/command-line)
+- [Updated "Command Line"](/app/guides/command-line)
 - [Updated "Interacting with Elements"](/app/core-concepts/interacting-with-elements)
 
 ## 0.20.0
@@ -11286,7 +11286,7 @@ _Released 09/10/2017_
 - No need to use `cypress-cli` anymore to manage Cypress versions. **You will
   need to uninstall the `cypress-cli` by running
   `npm uninstall -g cypress-cli`**.
-- The [`cypress` module can be `required`](/app/guide/module-api) in your
+- The [`cypress` module can be `required`](/app/guides/module-api) in your
   own node projects to programmatically control Cypress the same way you would
   from the command line.
 - We've updated the installation experience to account for running locally and
@@ -11306,7 +11306,7 @@ _Released 09/10/2017_
   [missing linux dependencies](/app/continuous-integration/introduction#Dependencies)
   instead of absolutely _nothing_ like before.
 - We have better error handling and messaging around Xvfb failures.
-- There is a new [`--browser` option](/app/guide/command-line#cypress-run)
+- There is a new [`--browser` option](/app/guides/command-line#cypress-run)
   that lets you change the browser that runs from the command line. This works
   the same way as changing the browser in the GUI, with the exception that any
   browser other than the default `electron` browser will **not** record a video.
@@ -11314,7 +11314,7 @@ _Released 09/10/2017_
 - Whenever you encounter errors in the CLI we'll output helpful debugging
   information at the bottom of each error.
 - You can use the new environment variable
-  [`DEBUG=cypress:cli`](/app/guide/command-line#Debugging-commands) to see
+  [`DEBUG=cypress:cli`](/app/guides/command-line#Debugging-commands) to see
   debugging output from the CLI.
 
 **Breaking Changes:**
@@ -11399,19 +11399,19 @@ _Released 09/10/2017_
   `time`, `month`, and `week`. Fixes
   [#27](https://github.com/cypress-io/cypress/issues/27).
 - You can now pass a browser option to
-  [cypress run](/app/guide/command-line#cypress-run) as
+  [cypress run](/app/guides/command-line#cypress-run) as
   `--browser <browser name>`. This enables you to run the same set of browsers
   when running from the CLI as when you're running from the GUI. Fixes
   [#462](https://github.com/cypress-io/cypress/issues/462) and
   [#531](https://github.com/cypress-io/cypress/issues/531).
-- [cypress open](/app/guide/command-line#cypress-open) no longer opens a
+- [cypress open](/app/guides/command-line#cypress-open) no longer opens a
   detached process by default. Instead `cypress open` now accepts a new flag
   `--detached`, which replicates this behavior. Fixes
   [#531](https://github.com/cypress-io/cypress/issues/531).
 - We have all new [docker examples](/examples/docker) you can check out.
 - The [`cypress` npm package](https://www.npmjs.com/package/cypress) now checks
   the currently installed version on `install` and
-  [run](/app/guide/command-line#cypress-run) and does not re-install Cypress
+  [run](/app/guides/command-line#cypress-run) and does not re-install Cypress
   if it is already installed. Fixes
   [#396](https://github.com/cypress-io/cypress/issues/396).
 - We've added a new [Cypress.Commands](/api/cypress-api/custom-commands)
@@ -11554,7 +11554,7 @@ _Released 09/10/2017_
 - The example_spec from the
   [kitchen-sink](https://github.com/cypress-io/cypress-example-kitchensink) will
   never accidentally be seeded when running
-  [cypress run](/app/guide/command-line#cypress-run) on a brand new project.
+  [cypress run](/app/guides/command-line#cypress-run) on a brand new project.
 
 **Misc:**
 
@@ -11591,7 +11591,7 @@ _Released 09/10/2017_
 - The Test Runner now accounts for cypress being installed per project as npm
   module. Fixes [#500](https://github.com/cypress-io/cypress/issues/500) and
   [#514](https://github.com/cypress-io/cypress/issues/514).
-- [cypress install](/app/guide/command-line) `-d` option. Fixes
+- [cypress install](/app/guides/command-line) `-d` option. Fixes
   [#389](https://github.com/cypress-io/cypress/issues/389).
 - Exposing Cypress Binary should no longer be necessary when cypress is locally
   installed. Fixes [#379](https://github.com/cypress-io/cypress/issues/379).
@@ -11644,8 +11644,8 @@ _Released 09/10/2017_
 - You can now call [.focus()](/api/commands/focus) and
   [.blur()](/api/commands/blur) on [cy.window()](/api/commands/window).
 - The `CYPRESS_DEBUG` env option has been removed in favor of the `debug` module
-  and [`DEBUG=cypress:*`](/app/guide/command-line#Debugging-commands) usage.
-- Attempting to run [cypress run](/app/guide/command-line#cypress-run) on a
+  and [`DEBUG=cypress:*`](/app/guides/command-line#Debugging-commands) usage.
+- Attempting to run [cypress run](/app/guides/command-line#cypress-run) on a
   project without a `cypress.json` now errors instead of scaffolding and running
   the kitchen sink.
 
@@ -11662,8 +11662,8 @@ Note: we are still updating all of the docs to reflect all the 0.20.0 changes.
 - [Updated "Installing Cypress"](/app/getting-started/installing-cypress)
 - [Updated "Writing Your First Test"](/app/end-to-end-testing/writing-your-first-end-to-end-test)
 - [Updated "Testing Your App"](/app/end-to-end-testing/testing-your-app)
-- [Updated "Command Line"](/app/guide/command-line)
-- [Updated "Debugging"](/app/guide/debugging)
+- [Updated "Command Line"](/app/guides/command-line)
+- [Updated "Debugging"](/app/guides/debugging)
 - [Updated "Assertions"](/app/references/assertions)
 - [Updated "Interacting with Elements"](/app/core-concepts/interacting-with-elements)
 
@@ -11694,7 +11694,7 @@ _Released 04/16/2017_
 **Features:**
 
 - You can now run your tests in the
-  [Electron browser](/app/guide/launching-browsers#Electron-Browser) that
+  [Electron browser](/app/guides/launching-browsers#Electron-Browser) that
   comes built with Cypress. You will see it as an option in the browser
   dropdown. This is the same browser that Cypress uses when running
   `cypress run`. This is useful for debugging issues that only occur during
@@ -11802,10 +11802,10 @@ _Released 02/11/2017_
 **Breaking Changes:**
 
 - We have done our very best to create as little breaking changes as possible.
-- You will need to download a new [cypress-cli](/app/guide/command-line) -
+- You will need to download a new [cypress-cli](/app/guides/command-line) -
   version `0.13.1`.
 - Older CLI versions will continue to work on `0.19.0` except for the
-  [cypress open](/app/guide/command-line#cypress-open) command - and will we
+  [cypress open](/app/guides/command-line#cypress-open) command - and will we
   print a warning to nudge you to upgrade.
 - Newer CLI versions will not work on versions of Cypress < `0.19.0` (but we
   don't know why this would ever even happen).
@@ -11837,7 +11837,7 @@ _Released 02/11/2017_
 - Projects will no longer automatically acquire a `projectId` when being added.
   There is now a very explicit **opt-in** process where you setup your project
   to record. This should make it much clearer what's going on behind the scenes.
-- [cypress run](/app/guide/command-line#cypress-run) now behaves likes
+- [cypress run](/app/guides/command-line#cypress-run) now behaves likes
   `cypress ci` previously did and downloads + installs Cypress if it's not
   already installed.
 - `cypress ci` now works in OSX, and also works in Linux in Desktop flavors
@@ -11845,7 +11845,7 @@ _Released 02/11/2017_
 
 **Misc:**
 
-- [cypress run](/app/guide/command-line#cypress-run) will now download and
+- [cypress run](/app/guides/command-line#cypress-run) will now download and
   install Cypress if it is not already installed.
 - We renamed `CYPRESS_CI_KEY` TO `CYPRESS_RECORD_KEY`. This makes it clearer
   what this key actually does - and the fact that it can be run anywhere
@@ -11856,12 +11856,12 @@ _Released 02/11/2017_
 - We've improved many of the error messages related to recording runs. Fixes
   [#423](https://github.com/cypress-io/cypress/issues/423).
 - `cypress ci` has been deprecated. You now use
-  [`cypress run --record --key <record_key>`](/app/guide/command-line#cypress-run).
+  [`cypress run --record --key <record_key>`](/app/guides/command-line#cypress-run).
   The key you used to pass to `cypress ci` is the same key. We've consolidated
   these commands into just
-  [cypress run](/app/guide/command-line#cypress-run) which makes it simpler
+  [cypress run](/app/guides/command-line#cypress-run) which makes it simpler
   and clearer. Their only difference is that passing `--record` to
-  [cypress run](/app/guide/command-line#cypress-run) will **record** the
+  [cypress run](/app/guides/command-line#cypress-run) will **record** the
   build to our Dashboard. Fixes
   [#417](https://github.com/cypress-io/cypress/issues/417).
 
@@ -12239,7 +12239,7 @@ _Released 11/21/2016_
 
 **Misc:**
 
-- Improved [cypress run](/app/guide/command-line#cypress-run) and
+- Improved [cypress run](/app/guides/command-line#cypress-run) and
   `cypress ci` headless output. Fixes
   [#306](https://github.com/cypress-io/cypress/issues/306).
 - Improved performance by preventing `snapshots` from being taken during
@@ -12261,14 +12261,14 @@ _Released 11/16/2016_
   completes. Additionally, it tracks the `config` settings used during the build
   and tracks each individual test failure.
 - If you do _not_ want these assets to be tracked by Cypress, you need to switch
-  to using [cypress run](/app/guide/command-line#cypress-run). We will
+  to using [cypress run](/app/guides/command-line#cypress-run). We will
   happily remove any build assets that are accidentally uploaded to us during
   the update transition.
 
 **Features:**
 
 - We now record videos during a headless run with both `cypress ci` and
-  [cypress run](/app/guide/command-line#cypress-run). Fixes
+  [cypress run](/app/guides/command-line#cypress-run). Fixes
   [#229](https://github.com/cypress-io/cypress/issues/229).
 - After completing `cypress ci`, we now upload build assets (such as
   `screenshots` and `videos`) to be used in our upcoming admin interface. This
@@ -12289,7 +12289,7 @@ _Released 11/16/2016_
 - We removed scaffolding any directories on a new project (during
   `cypress run`). Fixes
   [#295](https://github.com/cypress-io/cypress/issues/295).
-- [cypress run](/app/guide/command-line#cypress-run) no longer prompts the
+- [cypress run](/app/guides/command-line#cypress-run) no longer prompts the
   user for any kind of interaction, thus enabling you to use this in CI if you
   choose to do so. Fixes
   [#294](https://github.com/cypress-io/cypress/issues/294).
@@ -12391,7 +12391,7 @@ _Released 10/12/2016_
   [`chromeWebSecurity`](/app/references/configuration#Browser) option you can
   set in `cypress.json` to turn off Chrome's Web Security features. We've
   written a brand new reference that details why and how you could use this.
-  [Cypress Web Security](/app/guide/web-security). This option can be used
+  [Cypress Web Security](/app/guides/web-security). This option can be used
   for accessing `cross origin` `<iframes>` or if your application needs to test
   navigation across super domains. Fixes
   [#262](https://github.com/cypress-io/cypress/issues/262).
@@ -12789,7 +12789,7 @@ _Released 08/30/2016_
 
 **Misc:**
 
-- [cypress run](/app/guide/command-line#cypress-run) no longer requires
+- [cypress run](/app/guides/command-line#cypress-run) no longer requires
   being logged in.
 - Renamed configuration option `commandTimeout` to
   [`defaultCommandTimeout`](/app/references/configuration). Cypress will
@@ -12805,7 +12805,7 @@ _Released 08/30/2016_
   now being a random open port. You can still configure a specific `port` if
   needed within the [configuration](/app/references/configuration).
 - We have upgraded the `Chromium` that runs headlessly on
-  [cypress run](/app/guide/command-line#cypress-run) to version `51`.
+  [cypress run](/app/guides/command-line#cypress-run) to version `51`.
 - The internal version of `node` which is built into Cypress is now `6.1.0`.
 - Cypress `.js` files are no longer minified to make them easier to debug.
 - We are cleaning up internal `__cypress` cookies more so they won't get in the
@@ -12890,11 +12890,11 @@ _Released 06/17/2016_
 
 - `Cypress.Server.defaults()` now accepts a `urlMatchingOptions` option for
   passing options to [minimatch](https://github.com/isaacs/minimatch).
-- [cypress run](/app/guide/command-line#cypress-run) now exits with the
+- [cypress run](/app/guides/command-line#cypress-run) now exits with the
   number of test failures instead of always exiting with 0. This matches the
   same way `cypress ci` works. Fixes
   [#167](https://github.com/cypress-io/cypress/issues/167).
-- In the [Cypress CLI tool](/app/guide/command-line) package version
+- In the [Cypress CLI tool](/app/guides/command-line) package version
   `0.11.1`, you can now pass the `--spec` option to `cypress ci`. This enables
   you to run a specific spec file as opposed to all tests. Fixes
   [#161](https://github.com/cypress-io/cypress/issues/161).
@@ -12995,7 +12995,7 @@ _Released 05/17/2016_
 **Notes:**
 
 - Updating through the Desktop App in **Linux** does not work. To update please
-  run [cypress install](/app/guide/command-line) from the command line.
+  run [cypress install](/app/guides/command-line) from the command line.
 - We are still updating the docs to reflect all of these changes.
 - All users must _LOG IN AGAIN_ and re-add their projects. Sorry, we've changed
   the way we store local data.
@@ -13011,7 +13011,7 @@ _Released 05/17/2016_
   these APIs for Chrome, and therefore running on multiple browsers will no
   longer work. This is a temporary setback as we'll be adding driver support for
   all of the other browsers over a period of time. You can read more about our
-  browser management [here](/app/guide/launching-browsers).
+  browser management [here](/app/guides/launching-browsers).
 
 **Breaking Changes:**
 
@@ -13045,7 +13045,7 @@ _Released 05/17/2016_
 - Browser sessions are spawned independently of your existing profiles and we've
   disabled things like password saving / prompting, JavaScript popup blocking,
   and other features which get in the way of testing. Read more
-  [here](/app/guide/launching-browsers)
+  [here](/app/guides/launching-browsers)
 - We automatically spawn Chrome in a **custom theme** so you can visually
   distinguish the difference between browser sessions spawned with Cypress vs
   your normal sessions. We know this may feel a little jarring because you're
@@ -13181,13 +13181,13 @@ _Released 04/10/2016_
 - Cypress will now
   [display the **resolved** configuration values when you open a project](/app/references/configuration#Resolved-Configuration).
   This tells you the source of all config values.
-- The latest version of the [Cypress CLI](/app/guide/command-line) now
+- The latest version of the [Cypress CLI](/app/guides/command-line) now
   accepts passing arguments to
-  [cypress open](/app/guide/command-line#cypress-open). Example:
+  [cypress open](/app/guides/command-line#cypress-open). Example:
   `cypress open --config waitForAnimations=false --env foo=bar,baz=quux`. This
   enables you to set and override local `cypress.json` configuration and
   additionally set environment variables.
-- [Environment Variables](/app/guide/environment-variables) that match any
+- [Environment Variables](/app/guides/environment-variables) that match any
   configuration keys (such as `pageLoadTimeout` or `watchForFileChanges`) now
   override their values. So, if you
   `export CYPRESS_WATCH_FOR_FILE_CHANGES=false` it will turn off this
@@ -13248,7 +13248,7 @@ _Released 04/03/2016_
 
 **Bugfixes:**
 
-- The [--reporter](/app/guide/command-line#cypress-run) CLI option is now
+- The [--reporter](/app/guides/command-line#cypress-run) CLI option is now
   working again.
 - the `teamcity` reporter is now also working again.
 
@@ -13465,9 +13465,9 @@ _Released 03/08/2016_
   out the underlying Desktop architecture and refactored all of the back end
   code to prepare for an open source release.
 - If you choose to install Cypress from the
-  [CLI Tool](/app/guide/command-line) you must update to the latest version
+  [CLI Tool](/app/guides/command-line) you must update to the latest version
   `0.9.1`. Just run `npm install -g cypress` and then you can run
-  [cypress install](/app/guide/command-line). You don't need to do anything
+  [cypress install](/app/guides/command-line). You don't need to do anything
   if you update from within the Test Runner itself.
 
 **Features:**
@@ -13490,7 +13490,7 @@ _Released 03/08/2016_
   [#110](https://github.com/cypress-io/cypress/issues/110).
 - All error messages from using the CLI have been rewritten and improved.
 - Cypress will now automatically prompt you to add a project when using
-  [cypress run](/app/guide/command-line#cypress-run) on a project that has
+  [cypress run](/app/guides/command-line#cypress-run) on a project that has
   not yet been added.
 - Domain cookies are now proxied better. There's still more work to do before
   they are 100% fixed but now most typical domain cookie scenarios should 'just
@@ -13501,7 +13501,7 @@ _Released 03/08/2016_
 
 **Bugfixes:**
 
-- Using [cypress run](/app/guide/command-line#cypress-run) in OSX now works
+- Using [cypress run](/app/guides/command-line#cypress-run) in OSX now works
   again.
 - Added fs polling support to fix issues where Cypress would not detect file
   changes.
@@ -13851,7 +13851,7 @@ _Released 12/9/2015_
 - You will now see better stack traces and errors during `cypress run` / in CI.
   No more `undefined is not a function` errors.
 - Ported all links to use the new Cypress CDN.
-- [Documentation to CLI](/app/guide/command-line).
+- [Documentation to CLI](/app/guides/command-line).
 
 **Bugfixes:**
 
@@ -14048,7 +14048,7 @@ _Released 11/01/2015_
   been written yet).
 - `Environment Variable` support has been added and can be accessed in your
   tests with [`Cypress.env`](/api/cypress-api/env). The docs have been written
-  [Environment Variable](/app/guide/environment-variables) and
+  [Environment Variable](/app/guides/environment-variables) and
   [here](/api/cypress-api/env).
 
 **Misc:**
@@ -14210,7 +14210,7 @@ _Released 10/07/2015_
 - Fixed situation where an error being thrown from an XHR was being improperly
   handled (in a slightly different way than the problem above).
 - Stopped sending CI data when
-  [cypress run](/app/guide/command-line#cypress-run) was issued.
+  [cypress run](/app/guides/command-line#cypress-run) was issued.
 
 **Misc:**
 
@@ -14250,7 +14250,7 @@ _Released 10/04/2015_
 **Bugfixes:**
 
 - [`.pause()`](/api/commands/pause) is now noop during
-  [cypress run](/app/guide/command-line#cypress-run) or `cypress ci`.
+  [cypress run](/app/guides/command-line#cypress-run) or `cypress ci`.
 
 **Misc:**
 

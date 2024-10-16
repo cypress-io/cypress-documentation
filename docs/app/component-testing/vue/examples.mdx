@@ -49,7 +49,7 @@ cy.mount(Stepper, {
 
 ### Testing Event Handlers
 
-Pass a Cypress [spy](/app/guide/stubs-spies-and-clocks#Spies) to an event
+Pass a Cypress [spy](/app/guides/stubs-spies-and-clocks#Spies) to an event
 prop and validate it was called:
 
 ```js
@@ -246,7 +246,7 @@ Usage of the `cy.get('@vue')` alias may look something like the below code
 snippet.
 
 Notice that we're using the `'should'` function signature in order to take
-advantage of Cypress's [retryability](/app/guide/test-retries). If we
+advantage of Cypress's [retryability](/app/guides/test-retries). If we
 chained using `cy.then` instead of `cy.should`, we may run into the kinds of
 issues you have in Vue Test Utils tests where you have to use `await` frequently
 in order to make sure the DOM has updated or any reactive events have fired.

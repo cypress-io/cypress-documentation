@@ -72,7 +72,7 @@ When using the `--record` flag while running your tests, videos are processed,
 compressed, and uploaded to [Cypress Cloud](/cloud/introduction) after
 every spec file runs, successful or not. To change this behavior to only process
 videos in the case that tests fail, see how to
-[delete videos for specs without failing or retried tests](/app/guide/screenshots-and-videos#Delete-videos-for-specs-without-failing-or-retried-tests).
+[delete videos for specs without failing or retried tests](/app/guides/screenshots-and-videos#Delete-videos-for-specs-without-failing-or-retried-tests).
 Deleting the video will cause the video to not be uploaded to Cypress Cloud.
 
 Cypress clears any existing videos before a `cypress run`. If you do not want to
@@ -151,7 +151,7 @@ machine as well as skip the time used to process, compress, and upload the video
 to [Cypress Cloud](/cloud/introduction).
 
 To only process videos in the case that a test fails, you can
-[delete videos for specs without failing or retried tests](/app/guide/screenshots-and-videos#Delete-videos-for-specs-without-failing-or-retried-tests),
+[delete videos for specs without failing or retried tests](/app/guides/screenshots-and-videos#Delete-videos-for-specs-without-failing-or-retried-tests),
 which will not upload the video of passed runs to Cypress Cloud.
 
 For more fine grained control, you can use Cypress's
@@ -162,7 +162,7 @@ spec file is run and delete the video when certain conditions are met.
 
 The example below shows how to delete the recorded video for specs that had no
 retry attempts or failures when using Cypress
-[test retries](/app/guide/test-retries).
+[test retries](/app/guides/test-retries).
 
 :::cypress-config-plugin-example
 

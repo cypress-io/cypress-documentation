@@ -70,7 +70,7 @@ need to be aware of.
 
 Cypress changes its own host URL to match that of your applications. With the
 exception of `cy.origin`, Cypress requires that the URLs navigated to have the
-[same superdomain](/app/guide/cross-origin-testing#Parts-of-a-URL) for the
+[same superdomain](/app/guides/cross-origin-testing#Parts-of-a-URL) for the
 entirety of a single test.
 
 If you attempt to visit two different superdomains, the `cy.origin` command must
@@ -81,7 +81,7 @@ actually being run on the first domain.
 
 Without `cy.origin`, you can visit different superdomains in _different_ tests,
 but not in the _same_ test. Please read our
-[Cross Origin Testing Guide](/app/guide/cross-origin-testing) for more
+[Cross Origin Testing Guide](/app/guides/cross-origin-testing) for more
 information.
 
 Although Cypress tries to enforce this limitation, it is possible for your
@@ -103,7 +103,7 @@ application and will error via command timeout unless the `cy.origin` command is
 used.
 
 Read on to learn about
-[working around these common problems](/app/guide/web-security#Common-Workarounds).
+[working around these common problems](/app/guides/web-security#Common-Workarounds).
 
 ### Cross-origin iframes
 
@@ -129,7 +129,7 @@ iframe supports it).
 Other than that, you'll have to wait for us to implement APIs to support this
 (check our [open issue](https://github.com/cypress-io/cypress/issues/136)), or
 you can
-[disable web security](/app/guide/web-security#Disabling-Web-Security).
+[disable web security](/app/guides/web-security#Disabling-Web-Security).
 
 ### Insecure Content
 
@@ -191,7 +191,7 @@ flag set to `true`.
 
 If you're in a situation where you don't control the code, or otherwise cannot
 work around this, you can bypass this restriction in Cypress by
-[disabling web security](/app/guide/web-security#Disabling-Web-Security).
+[disabling web security](/app/guides/web-security#Disabling-Web-Security).
 
 ### Same port per test
 
@@ -400,13 +400,13 @@ However, if this is necessary, most of these issues can usually be remedied by
 applying` the
 [modify obstructive third-party code](/app/references/experiments#Configuration)
 experimental flag or by
-[disabling web security](/app/guide/web-security#Disabling-Web-Security).
+[disabling web security](/app/guides/web-security#Disabling-Web-Security).
 
 ## Disabling Web Security
 
 So if you cannot work around any of the issues using the suggested workarounds
 above, including
-[modifying obstructive third-party code](/app/guide/web-security#Modifying-Obstructive-Third-Party-Code)
+[modifying obstructive third-party code](/app/guides/web-security#Modifying-Obstructive-Third-Party-Code)
 with `cy.origin`, you may want to disable web security.
 
 One last thing to consider here is that every once in a while we discover bugs

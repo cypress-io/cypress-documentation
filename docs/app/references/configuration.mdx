@@ -63,14 +63,14 @@ default values.
 | Option                 | Default                               | Description                                                                                                                                                                                                                                                                                               |
 | ---------------------- | ------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `clientCertificates`   | `[]`                                  | An optional array of [client certificates](/app/references/client-certificates).                                                                                                                                                                                                                          |
-| `env`                  | `{}`                                  | Any values to be set as [environment variables](/app/guide/environment-variables).                                                                                                                                                                                                                        |
+| `env`                  | `{}`                                  | Any values to be set as [environment variables](/app/guides/environment-variables).                                                                                                                                                                                                                        |
 | `includeShadowDom`     | `false`                               | Whether to traverse shadow DOM boundaries and include elements within the shadow DOM in the results of query commands (e.g. [`cy.get()`](/api/commands/get)).                                                                                                                                             |
 | `numTestsKeptInMemory` | Default based on `run` or `open` mode | The number of tests for which snapshots and command data are kept in memory. `numTestsKeptInMemory` is set to `50` by default during `cypress open` and set to `0` by default during `cypress run`. Reduce this number if you are experiencing high memory consumption in your browser during a test run. |
 | `port`                 | `null`                                | Port used to host Cypress. Normally this is a randomly generated port.                                                                                                                                                                                                                                    |
 | `redirectionLimit`     | `20`                                  | The number of times that the application under test can redirect before erroring.                                                                                                                                                                                                                         |
 | `reporter`             | `spec`                                | The [reporter](/app/tooling/reporters) used during `cypress run`.                                                                                                                                                                                                                                         |
 | `reporterOptions`      | `null`                                | The [reporter options](/app/tooling/reporters#Reporter-Options) used. Supported options depend on the reporter.                                                                                                                                                                                           |
-| `retries`              | `{ "runMode": 0, "openMode": 0 }`     | The number of times to retry a failing test. Can be configured to apply to `cypress run` or `cypress open` separately. As of Cypress `13.4.0`, the experimental Flake Detection strategy can also be configured. See [Test Retries](/app/guide/test-retries) for more information.                        |
+| `retries`              | `{ "runMode": 0, "openMode": 0 }`     | The number of times to retry a failing test. Can be configured to apply to `cypress run` or `cypress open` separately. As of Cypress `13.4.0`, the experimental Flake Detection strategy can also be configured. See [Test Retries](/app/guides/test-retries) for more information.                        |
 | `watchForFileChanges`  | Default based on `run` or `open` mode | Whether Cypress will watch and restart tests on test file changes. `watchForFileChanges` is set to `true` by default during `cypress open` and set to `false` by default during `cypress run`.                                                                                                            |
 
 ### Timeouts
@@ -246,14 +246,14 @@ cypress run --browser firefox --config viewportWidth=1280,viewportHeight=720
 ### Specifying an Alternative Config File
 
 In the Cypress CLI, you can change which config file Cypress will use with the
-[`--config-file`](/app/guide/command-line#cypress-open-config-file-lt-configuration-file-gt)
+[`--config-file`](/app/guides/command-line#cypress-open-config-file-lt-configuration-file-gt)
 flag.
 
 ```shell
 cypress run --config-file tests/cypress.config.js
 ```
 
-See the [Command Line](/app/guide/command-line) guide for more examples.
+See the [Command Line](/app/guides/command-line) guide for more examples.
 
 ### Testing Type-Specific Overrides
 
@@ -290,7 +290,7 @@ For example:
 ### Environment Variables
 
 Configuration options can be overridden with
-[environment variables](/app/guide/environment-variables). This is
+[environment variables](/app/guides/environment-variables). This is
 especially useful in
 [Continuous Integration](/app/continuous-integration/introduction) or when
 working locally. This gives you the ability to change configuration options
@@ -305,7 +305,7 @@ export CYPRESS_VIEWPORT_HEIGHT=600
 ```
 
 See the
-[Environment Variables](/app/guide/environment-variables#Option-3-CYPRESS_)
+[Environment Variables](/app/guides/environment-variables#Option-3-CYPRESS_)
 guide for more examples.
 
 ## Test Configuration
@@ -434,10 +434,10 @@ highlighted to show where the value has been set via the following ways:
 - Default value
 - [Cypress configuration file](/app/references/configuration)
 - The
-  [Cypress environment file](/app/guide/environment-variables#Option-2-cypressenvjson)
+  [Cypress environment file](/app/guides/environment-variables#Option-2-cypressenvjson)
 - System
-  [environment variables](/app/guide/environment-variables#Option-3-CYPRESS_)
-- [Command Line arguments](/app/guide/command-line)
+  [environment variables](/app/guides/environment-variables#Option-3-CYPRESS_)
+- [Command Line arguments](/app/guides/command-line)
 - [setupNodeEvents](#setupNodeEvents)
 
 <DocsImage
@@ -616,7 +616,7 @@ patterns we search for may accidentally rewrite valid JS code. If that's the
 case, please disable this option.
 
 Details for `experimentalModifyObstructiveThirdPartyCode` can be found
-[here](/app/guide/web-security#Modifying-Obstructive-Third-Party-Code).
+[here](/app/guides/web-security#Modifying-Obstructive-Third-Party-Code).
 
 ### setupNodeEvents
 
@@ -726,7 +726,7 @@ DEBUG=cypress:cli,cypress:data-context:sources:FileDataSource,cypress:data-conte
 
 - [Cypress.config()](/api/cypress-api/config) and
   [Cypress.env()](/api/cypress-api/env)
-- [Environment variables](/app/guide/environment-variables)
+- [Environment variables](/app/guides/environment-variables)
 - [Environment Variables recipe](/examples/recipes#Fundamentals)
 - Blog post
   [Keep passwords secret in E2E tests](https://glebbahmutov.com/blog/keep-passwords-secret-in-e2e-tests/)

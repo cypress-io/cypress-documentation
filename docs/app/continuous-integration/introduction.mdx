@@ -178,7 +178,7 @@ insight into what happened when your tests ran.
 #### To record tests:
 
 1. [Set up your project to record](/cloud/getting-started#Setup)
-2. [Pass the `--record` flag to `cypress run`](/app/guide/command-line#cypress-run)
+2. [Pass the `--record` flag to `cypress run`](/app/guides/command-line#cypress-run)
    within CI.
 
 ```shell
@@ -195,7 +195,7 @@ You'll want to refer to your CI provider's documentation on how to set up
 multiple machines to run in your CI environment.
 
 Once multiple machines are available within your CI environment, you can pass
-the [--parallel](/app/guide/command-line#cypress-run-parallel) flag to have
+the [--parallel](/app/guides/command-line#cypress-run-parallel) flag to have
 your tests run in parallel.
 
 ```shell
@@ -507,7 +507,7 @@ cy.request({
 ```
 
 Refer to the dedicated
-[Environment Variables Guide](/app/guide/environment-variables) for more
+[Environment Variables Guide](/app/guides/environment-variables) for more
 examples.
 
 ### Module API
@@ -515,7 +515,7 @@ examples.
 Oftentimes it can be less complex to programmatically control and boot your
 servers with a Node script.
 
-If you're using our [Module API](/app/guide/module-api) then you can write a
+If you're using our [Module API](/app/guides/module-api) then you can write a
 script that boots and then shuts down the server later. As a bonus, you can work
 with the results and do other things.
 
@@ -548,7 +548,7 @@ that downloads the platform-specific Cypress binary. If the hook is skipped for
 any reason the Cypress binary will be missing (unless it was already cached).
 
 To better diagnose the error, add
-[commands to get information about the Cypress cache](/app/guide/command-line#cypress-cache-command)
+[commands to get information about the Cypress cache](/app/guides/command-line#cypress-cache-command)
 to your CI setup. This will print where the binary is located and what versions
 are already present.
 
@@ -642,7 +642,7 @@ NO_COLOR=1 cypress run
 - [cypress-example-kitchensink](https://github.com/cypress-io/cypress-example-kitchensink#ci-status)
   is set up to run on multiple CI providers.
 - [Test Replay](/cloud/test-replay)
-- [Cross Browser Testing Guide](/app/guide/cross-browser-testing)
+- [Cross Browser Testing Guide](/app/guides/cross-browser-testing)
 - [Blog: Setting up Bitbucket Pipelines with proper caching of npm and Cypress](https://www.cypress.io/blog/2018/08/30/setting-up-bitbucket-pipelines-with-proper-caching-of-npm-and-cypress/)
 - [Blog: Record Test Artifacts from any Docker CI](https://www.cypress.io/blog/2018/08/28/record-test-artifacts-from-any-ci/)
 - [Continuous Integration with Cypress](https://www.cypress.io/blog/2019/10/04/webcast-recording-continuous-integration-with-cypress/)

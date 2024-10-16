@@ -41,7 +41,7 @@ data is sent to the Cloud for every run:
 - OS environment variables related to CI and git information
 
 You have the option to
-[delete videos or screenshots](/app/guide/screenshots-and-videos#Control-which-videos-to-keep-and-upload-to-Cypress-Cloud)
+[delete videos or screenshots](/app/guides/screenshots-and-videos#Control-which-videos-to-keep-and-upload-to-Cypress-Cloud)
 before being sent to the Cloud so those are not captured.
 
 When [Test Replay](#Test-Replay) capturing is enabled, the additional data outlined
@@ -85,7 +85,7 @@ the problem was.
 Which [pricing tier](https://www.cypress.io/pricing) is best for you depends on
 the number of tests you record each month in your organization.
 
-Tests are recorded when [cypress run](/app/guide/command-line#cypress-run)
+Tests are recorded when [cypress run](/app/guides/command-line#cypress-run)
 is called with the `--record` flag while supplying the record `--key`. This
 means your [test run data](/cloud/recorded-runs#Latest-Runs) is being
 "recorded" to Cypress Cloud.
@@ -155,7 +155,7 @@ always remain optional. We hope you'll find a tremendous amount of value in it,
 but it is not coupled with being able to run your tests.
 
 You can always run your tests in CI using
-[cypress run](/app/guide/command-line#cypress-run) without the `--record`
+[cypress run](/app/guides/command-line#cypress-run) without the `--record`
 flag which does not communicate with our external servers and will not record
 any test results.
 
@@ -253,7 +253,7 @@ Find a variable across your containers that is the same for all of them, but is
 different from run to run. For example, it could be an environment variable
 called `CI_RUN_ID` that you set when creating the containers to run Cypress. You
 can pass this variable via CLI argument
-[`--ci-build-id`](/app/guide/command-line#cypress-run-ci-build-id-lt-id-gt)
+[`--ci-build-id`](/app/guides/command-line#cypress-run-ci-build-id-lt-id-gt)
 when starting Cypress in each container:
 
 ```shell

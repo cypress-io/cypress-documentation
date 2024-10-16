@@ -4,7 +4,7 @@ sidebar_position: 60
 sidebar_label: Flake Management
 ---
 
-By enabling [test retries](/app/guide/test-retries), Cypress Cloud can
+By enabling [test retries](/app/guides/test-retries), Cypress Cloud can
 detect, flag, and track flaky tests from your recorded Cypress test runs in your
 CI/CD pipeline.
 
@@ -25,7 +25,7 @@ without any change to the code, but this time it passes.
 <strong>What are test retries?</strong>
 
 Cypress has the ability to automatically
-[retry failed tests](/app/guide/test-retries#Configure-Test-Retries) to
+[retry failed tests](/app/guides/test-retries#Configure-Test-Retries) to
 mitigate flaky tests from failing entire test runs or CI builds.
 
 :::
@@ -51,7 +51,7 @@ assist with prioritizing their fix.
 
 Test retries is the _fundamental mechanism_ that enables the detection of flaky
 tests by Cypress Cloud. Therefore, **enabling
-[test retries](/app/guide/test-retries#Configure-Test-Retries) is required**
+[test retries](/app/guides/test-retries#Configure-Test-Retries) is required**
 to take advantage of any flaky test management feature.
 
 If you want more control over the pass/fail result of any test deemed flaky by test retries, you may want to use [experimental test retries](/app/references/experiments#Experimental-Flake-Detection-Features), which is available as of Cypress `13.4.0`.

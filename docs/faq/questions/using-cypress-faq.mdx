@@ -223,7 +223,7 @@ a remote page and does not resolve until all of the external resources complete
 their loading phase. Because we expect your applications to observe differing
 load times, this command's default timeout is set to 60000ms. If you visit an
 invalid url or a
-[second unique domain](/app/guide/web-security#Different-superdomain-per-test-requires-cyorigin-command),
+[second unique domain](/app/guides/web-security#Different-superdomain-per-test-requires-cyorigin-command),
 Cypress will log a verbose yet friendly error message.
 
 **_In CI, how do I make sure my server has started?_**
@@ -281,13 +281,13 @@ Read more about the
 ### <Icon name="angle-right" /> I want to run tests only within one specific folder. How do I do this?
 
 You can specify which test files to run during
-[cypress run](/app/guide/command-line#cypress-run) by
-[passing a glob to the `--spec` flag](/app/guide/command-line#cypress-run-spec-lt-spec-gt)
+[cypress run](/app/guides/command-line#cypress-run) by
+[passing a glob to the `--spec` flag](/app/guides/command-line#cypress-run-spec-lt-spec-gt)
 matching the files you want to run. You should be able to pass a glob matching
 the specific folder where the tests are you want to run.
 
 This feature is only available when using
-[cypress run](/app/guide/command-line#cypress-run).
+[cypress run](/app/guides/command-line#cypress-run).
 
 ### <Icon name="angle-right" /> Is there a suggested way or best practice for how I should target elements or write element selectors?
 
@@ -369,7 +369,7 @@ it('fails on unhandled rejection', () => {
 Yes, you can pass configuration to Cypress via environment variables, CLI
 arguments, JSON files and other means.
 
-[Read the Environment Variables guide.](/app/guide/environment-variables)
+[Read the Environment Variables guide.](/app/guides/environment-variables)
 
 ### <Icon name="angle-right" /> Can I override or change the default user agent the browser uses?
 
@@ -441,7 +441,7 @@ You can run a group of tests or a single test by placing an
 on a test suite or specific test.
 
 You can run a single test file or group of tests by passing the `--spec` flag to
-[cypress run](/app/guide/command-line#cypress-run).
+[cypress run](/app/guides/command-line#cypress-run).
 
 ### <Icon name="angle-right" /> How do I test uploading a file?
 
@@ -716,7 +716,7 @@ application under test runs in any way, so you can safely ignore this warning.
 The network traffic between Cypress and the backend server still happens via
 HTTPS.
 
-See also the [Web Security](/app/guide/web-security) guide.
+See also the [Web Security](/app/guides/web-security) guide.
 
 ### <Icon name="angle-right" /> How do I run the server and tests together and then shutdown the server?
 
@@ -941,7 +941,7 @@ You can read more about parallelization
 First, make sure you have [Node](https://nodejs.org) installed on your system.
 `npm` is a Node package that is installed globally by default when you install
 Node and is required to install our
-[`cypress` npm package](/app/guide/command-line).
+[`cypress` npm package](/app/guides/command-line).
 
 Next, you'd want to check that you have the proper permissions for installing on
 your system or you may need to run `sudo npm install cypress`.
@@ -954,7 +954,7 @@ Tools open. Refer to
 this feature.
 
 You may try running the tests locally and
-[select the Electron browser](/app/guide/launching-browsers#Electron-Browser),
+[select the Electron browser](/app/guides/launching-browsers#Electron-Browser),
 that is as close as you will get with Developer Tools open and replicating the
 environment that was run during `cypress run`.
 

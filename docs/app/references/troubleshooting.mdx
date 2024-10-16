@@ -63,11 +63,11 @@ When debugging a failing test, follow these general principles to isolate the
 problem:
 
 - Look at the
-  [video recordings and screenshots](/app/guide/screenshots-and-videos).
+  [video recordings and screenshots](/app/guides/screenshots-and-videos).
 - Split large spec files into smaller ones.
 - Split long tests into smaller tests.
 - Run the same test using
-  [--browser chrome](/app/guide/command-line#cypress-run-browser-lt-browser-name-or-path-gt).
+  [--browser chrome](/app/guides/command-line#cypress-run-browser-lt-browser-name-or-path-gt).
   The problem might be isolated to the Electron browser.
 - If isolated to the Electron browser. Run the same tests in both Electron and
   Chrome, then compare the screenshots/videos. Look for and isolate any
@@ -102,7 +102,7 @@ npm install cypress --save-dev
 ## Launching browsers
 
 Cypress attempts to
-[automatically find installed Chrome versions for you](/app/guide/launching-browsers).
+[automatically find installed Chrome versions for you](/app/guides/launching-browsers).
 However, probing for browsers across different environments can be error-prone.
 If Cypress cannot find a browser but you know you have it installed, there are
 ways to ensure that Cypress can "see" it.
@@ -113,7 +113,7 @@ ways to ensure that Cypress can "see" it.
 
 You can also supply the `--browser` command line argument to launch a browser
 from a known filesystem path to bypass browser auto detection.
-[See 'Launching Browsers' for more information](/app/guide/launching-browsers#Launching-by-a-path)
+[See 'Launching Browsers' for more information](/app/guides/launching-browsers#Launching-by-a-path)
 
 :::
 
@@ -126,7 +126,7 @@ Another way to log what is found by Cypress is to run Cypress with the
 will print information about the found browsers and their properties to the
 terminal.
 
-**Tip:** use the [cypress info](/app/guide/command-line#cypress-info)
+**Tip:** use the [cypress info](/app/guides/command-line#cypress-info)
 command to see all locally detected browsers.
 
 ### Mac
@@ -316,7 +316,7 @@ If you have issues with the logs not printing, it may be a permissions issue
 with setting the environment variable in your terminal. You may need to run your
 terminal in administrative mode or review your permission settings.
 
-[How to run Cypress CLI commands](/app/guide/command-line#How-to-run-commands) provides background information on running Cypress from the command line and includes a reference of additional command line options.
+[How to run Cypress CLI commands](/app/guides/command-line#How-to-run-commands) provides background information on running Cypress from the command line and includes a reference of additional command line options.
 
 Read more: [Good Logging](https://glebbahmutov.com/blog/good-logging/) blog post.
 
@@ -481,7 +481,7 @@ environment variable below during `cypress open` or `cypress run`.
 CYPRESS_NO_COMMAND_LOG=1 cypress run
 ```
 
-You can also hide the entire Cypress Runner UI in `cypress run` by passing the [`--no-runner-ui`](/app/guide/command-line#cypress-run-no-runner-ui) command line flag.
+You can also hide the entire Cypress Runner UI in `cypress run` by passing the [`--no-runner-ui`](/app/guides/command-line#cypress-run-no-runner-ui) command line flag.
 
 ```shell
 npx cypress run --no-runner-ui

@@ -14,7 +14,7 @@ version 13.
 
 You may need to allowlist `capture.cypress.io` if you work with a strict VPN. See our FAQ section about [VPN subdomain allowlisting](/faq/questions/cloud-faq#Im-working-with-a-restrictive-VPN-Which-subdomains-do-I-have-to-allow-on-my-VPN-for-Cypress-Cloud-to-work-properly).
 
-With Test Replay enabled, the Cypress Runner UI is hidden by default when recording a run to the Cloud. If the Runner UI is needed during the run, you can enable it by passing [`--runner-ui`](/app/guide/command-line#cypress-run-runner-ui) to the [`cypress run`](/app/guide/command-line#cypress-run) command.
+With Test Replay enabled, the Cypress Runner UI is hidden by default when recording a run to the Cloud. If the Runner UI is needed during the run, you can enable it by passing [`--runner-ui`](/app/guides/command-line#cypress-run-runner-ui) to the [`cypress run`](/app/guides/command-line#cypress-run) command.
 
 You can [opt-out](/app/cloud/test-replay#Opt-out-of-Test-Replay) of this feature in Cloud project-level settings.
 
@@ -38,7 +38,7 @@ You can continue recording video by setting `video` to `true` either in your Cyp
 
 Most users used `videoUploadOnPasses` as a way to skip the time to compress and upload videos to the Cloud. Since we're turning off `videoCompression` by default, this configuration option does not offer the time saving value that it once would.
 
-If you want to prevent a passing test from uploading to the Cloud, we recommend deleting the video using our [guide with code examples to discard captured video of passing tests](/app/guide/screenshots-and-videos#Control-which-videos-to-keep-and-upload-to-Cypress-Cloud).
+If you want to prevent a passing test from uploading to the Cloud, we recommend deleting the video using our [guide with code examples to discard captured video of passing tests](/app/guides/screenshots-and-videos#Control-which-videos-to-keep-and-upload-to-Cypress-Cloud).
 
 #### `videoCompression` is set to `false` by default
 
@@ -858,7 +858,7 @@ Related notes:
   will begin and either a JavaScript or TypeScript config file will be created
   depending on what your project uses.
 - You may use the `--config-file` command line flag or the `configFile`
-  [module API](/app/guide/module-api) option to specify a `.js` or `.ts`
+  [module API](/app/guides/module-api) option to specify a `.js` or `.ts`
   file. JSON config files are no longer supported.
 - Cypress now requires a config file, so specifying `--config-file false` on the
   command line or a `configFile` value of `false` in the module API is no longer
@@ -2753,12 +2753,12 @@ This guide details the changes and how to change your code to migrate to Cypress
 
 Test retries are available in Cypress 5.0. This means that tests can be re-run a
 number of times before potentially being marked as a failed test. Read the
-[Test Retries](/app/guide/test-retries) doc for more information on how this
+[Test Retries](/app/guides/test-retries) doc for more information on how this
 works and how to turn on test retries.
 
 When test retries are turned on, there will now be a screenshot taken for every
 failed attempt, so there could potentially be more than 1 screenshot per test
-failure. Read the [Test Retries](/app/guide/test-retries) doc for more
+failure. Read the [Test Retries](/app/guides/test-retries) doc for more
 information on how this works.
 
 The
@@ -2867,7 +2867,7 @@ it(
 ### Module API results
 
 To more accurately reflect result data for runs with
-[test retries](/app/guide/test-retries), the structure of each run's `runs`
+[test retries](/app/guides/test-retries), the structure of each run's `runs`
 array resolved from the `Promise` returned from `cypress.run()` of the Module
 API has changed.
 
@@ -3497,7 +3497,7 @@ Before 4.0, `cypress run --browser canary` would run tests in Chrome Canary.
 Now, you must pass `--browser chrome:canary` to select Chrome Canary.
 
 See the
-[docs for `cypress run --browser`](/app/guide/command-line#cypress-run-browser-lt-browser-name-or-path-gt)
+[docs for `cypress run --browser`](/app/guides/command-line#cypress-run-browser-lt-browser-name-or-path-gt)
 for more information.
 
 <Badge type="danger">Before</Badge> Passing `canary` will no longer find a browser

@@ -93,7 +93,7 @@ Here is what this process should look like for Facebook setup:
 
 Now that our application is set up and ready to go, we are ready to write our
 automated tests. For these social connections, the
-[`experimentalModifyObstructiveThirdPartyCode`](/app/guide/web-security#Modifying-Obstructive-Third-Party-Code)
+[`experimentalModifyObstructiveThirdPartyCode`](/app/guides/web-security#Modifying-Obstructive-Third-Party-Code)
 configuration option must be enabled.
 
 ## Setting Auth0 app credentials in Cypress
@@ -101,7 +101,7 @@ configuration option must be enabled.
 To have access to test user credentials within our tests we need to configure
 Cypress to use the social username, password, and name environment variables set
 in the `cypress.env.json` file or by one of our
-[supported methods](/app/guide/environment-variables#Setting).
+[supported methods](/app/guides/environment-variables#Setting).
 
 ```json
 // cypress.env.json
@@ -425,7 +425,7 @@ Happy testing!
 
 ## See also
 
-- [Cross Origin Testing Guide](/app/guide/cross-origin-testing)
+- [Cross Origin Testing Guide](/app/guides/cross-origin-testing)
 - [AWS Cognito Authentication Guide](/app/end-to-end-testing/amazon-cognito-authentication)
 - [Azure Active Directory Authentication Guide](/app/end-to-end-testing/azure-active-directory-authentication)
 - [`cy.origin()`](/api/commands/origin)

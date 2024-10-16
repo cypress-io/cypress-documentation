@@ -53,7 +53,7 @@ at no additional cost, subject to usage limits.
 
 Test Replay is automatically enabled when updating to `v13` of Cypress. If desired, an opt-out is provided through project-level settings. Learn about what this means for capturing video of test failure in Cypress Cloud under ["See also"](#See-also) below.
 
-All you need to do after [recording test runs](/app/cloud/getting-started) is log in to your Cypress Cloud account and leverage these new debugging capabilities. No additional software, configuration or changes to the existing test recording process is required. For example, you do not need to edit your [Cypress configuration](/app/references/configuration) file or pass any flags or new commands when recording via [the command line](/app/guide/command-line#Commands) in order to enable or use Test Replay.
+All you need to do after [recording test runs](/app/cloud/getting-started) is log in to your Cypress Cloud account and leverage these new debugging capabilities. No additional software, configuration or changes to the existing test recording process is required. For example, you do not need to edit your [Cypress configuration](/app/references/configuration) file or pass any flags or new commands when recording via [the command line](/app/guides/command-line#Commands) in order to enable or use Test Replay.
 
 ## Accessing Test Replay
 
@@ -152,7 +152,7 @@ Cypress Cloud relies on certain web APIs implemented by specific browsers. Safar
 
 The Cypress [Test Runner](/app/core-concepts/cypress-app#Test-Runner) "Runner UI" is made up of the powerful [command log](/app/core-concepts/cypress-app#Command-Log) which displays every command executed in your spec. The UI also includes the URL bar, browser selector, and the viewport size control above the application under test.
 
-The Runner UI is visible during `cypress open` mode, but is also rendered ([headless](/app/guide/command-line#Options)-ly) during `cypress run` so that it displays within captured screenshots or videos, to assist in debugging CI failures.
+The Runner UI is visible during `cypress open` mode, but is also rendered ([headless](/app/guides/command-line#Options)-ly) during `cypress run` so that it displays within captured screenshots or videos, to assist in debugging CI failures.
 
 ### Problem
 
@@ -164,11 +164,11 @@ With Test Replay, Cypress Cloud regenerates the entire UI for viewing the run an
 
 Therefore, as of Cypress `v13`, the Runner UI is no longer rendered during `cypress run` for users using Test Replay, with an option to opt-out of this behavior.
 
-If you'd like to render the Runner UI, you can turn on this behavior by passing `--runner-ui` as a CLI flag. You may encounter a slower performance when turning this on, especially in lower resourced machines. Learn more about the `--runner-ui` [command line option](/app/guide/command-line#cypress-run-runner-ui).
+If you'd like to render the Runner UI, you can turn on this behavior by passing `--runner-ui` as a CLI flag. You may encounter a slower performance when turning this on, especially in lower resourced machines. Learn more about the `--runner-ui` [command line option](/app/guides/command-line#cypress-run-runner-ui).
 
 ## See also
 
 - [Test Replay FAQ](/faq/questions/cloud-faq#Test-Replay)
 - [Cypress v13 changelog](/app/references/changelog#13-0-0)
 - [Cypress Default Video Configuration](/app/references/configuration#Videos)
-- [Cypress Video Artifacts](/app/guide/screenshots-and-videos#Videos)
+- [Cypress Video Artifacts](/app/guides/screenshots-and-videos#Videos)

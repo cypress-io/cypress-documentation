@@ -33,7 +33,7 @@ If you have not set up your project yet, check out our
 [Continuous Integration guide](/app/continuous-integration/introduction). If
 you are running or planning to run tests across multiple browsers (Firefox,
 Chrome, or Edge), we also recommend checking out our
-[Cross Browser Testing guide](/app/guide/cross-browser-testing) for helpful
+[Cross Browser Testing guide](/app/guides/cross-browser-testing) for helpful
 CI strategies when using parallelization.
 
 <DocsImage
@@ -57,8 +57,8 @@ when parallelized.
    to run in your CI environment.
 
 2. Once multiple machines are available within your CI environment, you can pass
-   the [--parallel](/app/guide/command-line#cypress-run-parallel) key to
-   [cypress run](/app/guide/command-line#cypress-run) to have your recorded
+   the [--parallel](/app/guides/command-line#cypress-run-parallel) key to
+   [cypress run](/app/guides/command-line#cypress-run) to have your recorded
    tests parallelized.
 
 ```shell
@@ -68,7 +68,7 @@ cypress run --record --key=abc123 --parallel
 :::info
 
 Running tests in parallel requires the
-[`--record` flag](/app/guide/command-line#cypress-run) be passed. This
+[`--record` flag](/app/guides/command-line#cypress-run) be passed. This
 ensures Cypress can properly collect the data needed to parallelize future runs.
 This also gives you the full benefit of seeing the results of your parallelized
 tests in [Cypress Cloud](/app/cloud/introduction). If you have not set up
@@ -200,9 +200,9 @@ time, and we can further decrease the build time by adding more machines.
 
 ## Grouping test runs
 
-Multiple [cypress run](/app/guide/command-line#cypress-run) calls can be
+Multiple [cypress run](/app/guides/command-line#cypress-run) calls can be
 labeled and associated to a **single** run by passing in the
-[`--group <name>` flag](/app/guide/command-line#cypress-run-group-lt-name-gt),
+[`--group <name>` flag](/app/guides/command-line#cypress-run-group-lt-name-gt),
 where `name` is an arbitrary reference label. The group name must be unique
 within the associated test run.
 
@@ -227,7 +227,7 @@ runs can be utilized independently of Cypress parallelization.
 
 Grouping test runs with or without parallelization is a useful mechanism when
 implementing a CI strategy for cross browser testing. Check out the
-[Cross Browser Testing guide](/app/guide/cross-browser-testing) to learn
+[Cross Browser Testing guide](/app/guides/cross-browser-testing) to learn
 more.
 
 :::
@@ -333,7 +333,7 @@ identifier is based on environment variables that are unique to each CI build,
 and vary based on CI provider. Cypress has out-of-the-box support for most of
 the commonly-used CI providers, so you would typically not need to directly set
 the CI build ID via the
-[`--ci-build-id` flag](/app/guide/command-line#cypress-run-ci-build-id-lt-id-gt).
+[`--ci-build-id` flag](/app/guides/command-line#cypress-run-ci-build-id-lt-id-gt).
 
 <DocsImage
   src="/img/app/parallelization/ci-build-id.png"
@@ -367,7 +367,7 @@ You can pass a different value to link agents to the same run. For example, if
 you are using Jenkins and think the environment variable `BUILD_TAG` is more
 unique than the environment variable `BUILD_NUMBER`, pass the `BUILD_TAG` value
 via CLI
-[`--ci-build-id` flag](/app/guide/command-line#cypress-run-ci-build-id-lt-id-gt).
+[`--ci-build-id` flag](/app/guides/command-line#cypress-run-ci-build-id-lt-id-gt).
 
 ```shell
 cypress run --record --parallel --ci-build-id $BUILD_TAG
@@ -435,7 +435,7 @@ test run.
   runs parallelized CI jobs across multiple operating systems, browsers, and
   viewport sizes.
 - [Continuous Integration Guide](/app/continuous-integration/introduction)
-- [Cross Browser Testing Guide](/app/guide/cross-browser-testing)
+- [Cross Browser Testing Guide](/app/guides/cross-browser-testing)
 - [Blog: Run Your End-to-end Tests 10 Times Faster with Automatic Test Parallelization](https://www.cypress.io/blog/2018/09/05/run-end-to-end-tests-on-ci-faster/)
 - [Blog: Run and group tests the way you want to](https://glebbahmutov.com/blog/run-and-group-tests/)
 - [CI Configurations in Kitchen Sink Example](https://github.com/cypress-io/cypress-example-kitchensink#ci-status)

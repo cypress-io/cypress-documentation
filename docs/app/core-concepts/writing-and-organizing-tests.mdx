@@ -111,7 +111,7 @@ screenshots and videos taken during the testing of your application. Many users
 will opt to add these folders to their `.gitignore` file. Additionally, if you
 are storing sensitive environment variables in your
 [Cypress configuration](/app/references/configuration) or
-[`cypress.env.json`](/app/guide/environment-variables#Option-2-cypressenvjson),
+[`cypress.env.json`](/app/guides/environment-variables#Option-2-cypressenvjson),
 these should also be ignored when you check into source control.
 
 :::
@@ -155,7 +155,7 @@ directory.
 
 You would typically use them with the [`cy.fixture()`](/api/commands/fixture)
 command and most often when you're stubbing
-[Network Requests](/app/guide/network-requests).
+[Network Requests](/app/guides/network-requests).
 
 ### Asset Files
 
@@ -192,7 +192,7 @@ to `cypress/screenshots` by default.
 ```
 
 To learn more about screenshots and settings available, see
-[Screenshots and Videos](/app/guide/screenshots-and-videos#Screenshots)
+[Screenshots and Videos](/app/guides/screenshots-and-videos#Screenshots)
 
 #### Video Files
 
@@ -253,7 +253,7 @@ Replay the test as it executed during the recorded run with full debug capabilit
 
 Screenshots and videos are stored permanently, attached to their respective test
 results, and easily shared or browsed through our web interface. To learn more about videos and settings available, see
-[Screenshots and Videos](/app/guide/screenshots-and-videos#Screenshots).
+[Screenshots and Videos](/app/guides/screenshots-and-videos#Screenshots).
 
 ### Plugins file
 
@@ -711,7 +711,7 @@ describe(
 #### Single test configuration
 
 You can configure the number of retry attempts during `cypress run` or
-`cypress open`. See [Test Retries](/app/guide/test-retries) for more
+`cypress open`. See [Test Retries](/app/guides/test-retries) for more
 information.
 
 ```js
@@ -809,7 +809,7 @@ failing any assertions. The test screenshot below shows a passed test:
 />
 
 Note that a test can pass after several
-[test retries](/app/guide/test-retries). In that case the Command Log shows
+[test retries](/app/guides/test-retries). In that case the Command Log shows
 some failed attempts, but ultimately the entire test finishes successfully.
 
 ### Failed
@@ -945,7 +945,7 @@ implementation.
 
 ## Watching tests
 
-When running in using [cypress open](/app/guide/command-line#cypress-open),
+When running in using [cypress open](/app/guides/command-line#cypress-open),
 Cypress watches the filesystem for changes to your spec files. Soon after adding
 or updating a test Cypress will reload it and run all of the tests in that spec
 file.
@@ -970,7 +970,7 @@ behavior.
 #### Files
 
 - [Cypress configuration](/app/references/configuration)
-- [cypress.env.json](/app/guide/environment-variables)
+- [cypress.env.json](/app/guides/environment-variables)
 
 #### Folders
 
@@ -1010,10 +1010,10 @@ configuration property to `false` to disable file watching.
 :::caution
 
 **Nothing** is watched during
-[cypress run](/app/guide/command-line#cypress-run).
+[cypress run](/app/guides/command-line#cypress-run).
 
 The `watchForFileChanges` property is only in effect when running Cypress using
-[cypress open](/app/guide/command-line#cypress-open).
+[cypress open](/app/guides/command-line#cypress-open).
 
 :::
 
