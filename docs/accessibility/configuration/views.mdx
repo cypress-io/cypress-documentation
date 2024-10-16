@@ -13,7 +13,7 @@ sidebar_position: 40
   supported, if you need to split them up.
 :::
 
-Cypress Accessibility automatically groups certain URL patterns to create [views](https://cypressio.gitbook.io/ui-coverage/important-concepts/views). For URLs that are not automatically grouped (e.g. `/users/alice` and `/users/bob` are not automatically grouped into `/users/*`), the `views` property allows you to specify your own URL patterns that represent views.
+Cypress Accessibility automatically groups certain URL patterns to create [views](/ui-coverage/core-concepts/views). For URLs that are not automatically grouped (e.g. `/users/alice` and `/users/bob` are not automatically grouped into `/users/*`), the `views` property allows you to specify your own URL patterns that represent views.
 
 Each URL pattern provided defines a view that is made up of all URLs that match the pattern. The first pattern that a given URL matches is used as its view. If a URL doesn't match any of the patterns, it is grouped by the default Accessibility grouping rules, if possible.
 
