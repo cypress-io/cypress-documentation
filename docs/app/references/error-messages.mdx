@@ -456,7 +456,7 @@ multiple domains in a single test.
 
 :::
 
-See our [Web Security](/app/guide/web-security#Limitations) documentation.
+See our [Web Security](/app/guides/web-security#Limitations) documentation.
 
 ### <Icon name="exclamation-triangle" color="red" /> `cy.visit()` failed because you are attempting to visit a different origin domain
 
@@ -480,7 +480,7 @@ You can visit urls that are of different origin across different tests, so you
 may consider splitting your `cy.visit()` of different origin domains into
 separate tests.
 
-See our [Web Security](/app/guide/web-security#Limitations) documentation
+See our [Web Security](/app/guides/web-security#Limitations) documentation
 for more information and workarounds.
 
 ### <Icon name="exclamation-triangle" color="red" /> `cy.visit()` succeeded, but commands are timing out
@@ -528,7 +528,7 @@ it('navigates to example.cypress.io and runs additional commands', () => {
 })
 ```
 
-See our [Web Security](/app/guide/web-security#Limitations) documentation
+See our [Web Security](/app/guides/web-security#Limitations) documentation
 for more information and workarounds.
 
 ### <Icon name="exclamation-triangle" color="red" /> `Cypress.addParentCommand()` / `Cypress.addDualCommand()` / `Cypress.addChildCommand()` has been removed and replaced by `Cypress.Commands.add()`
@@ -609,7 +609,7 @@ if you've exhausted all other possibilities.
 You may receive this error when trying to run Cypress tests in
 [Continuous Integration](/app/continuous-integration/introduction). This
 means that you did not pass a specific record key to:
-[cypress run --record](/app/guide/command-line#cypress-run).
+[cypress run --record](/app/guides/command-line#cypress-run).
 
 Since no record key was passed, Cypress checks for any environment variable with
 the name `CYPRESS_RECORD_KEY`. In this case, that was also not found.
@@ -663,8 +663,8 @@ then bump the version of your CI cache to ensure a clean build.
 ### <Icon name="exclamation-triangle" color="red" /> Incorrect usage of `--ci-build-id` flag
 
 You passed the `--ci-build-id` flag but did not provide either a
-[--group](/app/guide/command-line#cypress-run-group-lt-name-gt) or
-[--parallel](/app/guide/command-line#cypress-run-parallel) flag.
+[--group](/app/guides/command-line#cypress-run-group-lt-name-gt) or
+[--parallel](/app/guides/command-line#cypress-run-parallel) flag.
 
 The `--ci-build-id` flag is used to either group or parallelize multiple runs
 together.
@@ -672,16 +672,16 @@ together.
 Check out our
 [guide on parallelizing runs](/app/cloud/smart-orchestration/parallelization)
 and when to use the
-[--ci-build-id](/app/guide/command-line#cypress-run-ci-build-id-lt-id-gt)
+[--ci-build-id](/app/guides/command-line#cypress-run-ci-build-id-lt-id-gt)
 option.
 
 ### <Icon name="exclamation-triangle" color="red" /> The `--ci-build-id`, `--group`, `--tag`, `--parallel`, or `--auto-cancel-after-failures` flags can only be used when recording
 
 You passed the `--ci-build-id`,
-[--group](/app/guide/command-line#cypress-run-group-lt-name-gt),
-[--tag](/app/guide/command-line#cypress-run-tag-lt-tag-gt),
-[--parallel](/app/guide/command-line#cypress-run-parallel), or
-[--auto-cancel-after-failures](/app/guide/command-line#auto-cancel-after-runs)
+[--group](/app/guides/command-line#cypress-run-group-lt-name-gt),
+[--tag](/app/guides/command-line#cypress-run-tag-lt-tag-gt),
+[--parallel](/app/guides/command-line#cypress-run-parallel), or
+[--auto-cancel-after-failures](/app/guides/command-line#auto-cancel-after-runs)
 flag without also passing the `--record` flag.
 
 These flags can only be used when recording to
@@ -694,8 +694,8 @@ documentation to learn more.
 ### <Icon name="exclamation-triangle" color="red" /> We could not determine a unique CI build ID
 
 You passed the
-[--group](/app/guide/command-line#cypress-run-group-lt-name-gt) or
-[--parallel](/app/guide/command-line#cypress-run-parallel) flag but we could
+[--group](/app/guides/command-line#cypress-run-group-lt-name-gt) or
+[--parallel](/app/guides/command-line#cypress-run-parallel) flag but we could
 not automatically determine or generate a `ciBuildId`.
 
 In order to use either of these parameters a `ciBuildId` must be determined.
@@ -707,7 +707,7 @@ review the
 for your CI provider.
 
 You can avoid this check in the future by passing an ID to the
-[--ci-build-id](/app/guide/command-line#cypress-run-ci-build-id-lt-id-gt)
+[--ci-build-id](/app/guides/command-line#cypress-run-ci-build-id-lt-id-gt)
 flag manually.
 
 Please review our
@@ -717,11 +717,11 @@ documentation to learn more.
 ### <Icon name="exclamation-triangle" color="red" /> Group name has already been used for this run
 
 You passed the
-[--group](/app/guide/command-line#cypress-run-group-lt-name-gt) flag, but
+[--group](/app/guides/command-line#cypress-run-group-lt-name-gt) flag, but
 this group name has already been used for this run.
 
 If you are trying to parallelize this run, then also pass the
-[--parallel](/app/guide/command-line#cypress-run-parallel) flag, else pass a
+[--parallel](/app/guides/command-line#cypress-run-parallel) flag, else pass a
 different group name.
 
 Please review
@@ -730,7 +730,7 @@ documentation to learn more.
 
 ### <Icon name="exclamation-triangle" color="red" /> Cannot parallelize tests across environments
 
-You passed the [--parallel](/app/guide/command-line#cypress-run-parallel)
+You passed the [--parallel](/app/guides/command-line#cypress-run-parallel)
 flag, but we do not parallelize tests across different environments.
 
 This machine is sending different environment parameters than the first machine
@@ -755,7 +755,7 @@ You passed the `--parallel` flag, but this run group was originally created
 without the `--parallel` flag.
 
 You cannot use the
-[--parallel](/app/guide/command-line#cypress-run-parallel) flag with this
+[--parallel](/app/guides/command-line#cypress-run-parallel) flag with this
 group.
 
 Please review our
@@ -767,7 +767,7 @@ documentation to learn more.
 You did not pass the `--parallel` flag, but this run's group was originally
 created with the `--parallel` flag.
 
-You must use the [--parallel](/app/guide/command-line#cypress-run-parallel)
+You must use the [--parallel](/app/guides/command-line#cypress-run-parallel)
 flag with this group.
 
 Please review our
@@ -777,7 +777,7 @@ documentation to learn more.
 ### <Icon name="exclamation-triangle" color="red" /> Cannot parallelize tests on a stale run
 
 This error is thrown when you are attempting to pass the
-[--parallel](/app/guide/command-line#cypress-run-parallel) flag to a run
+[--parallel](/app/guides/command-line#cypress-run-parallel) flag to a run
 that Cypress detected was completed over 24 hours ago.
 
 In order to uniquely identify each run during `cypress run`, Cypress attempts to
@@ -791,7 +791,7 @@ see the CI Build ID that is detected for each completed run by looking at the
 details section at the top of your run in
 [Cypress Cloud](https://on.cypress.io/cloud). ​ ​You can generate and pass in
 your own unique CI Build ID per run as described
-[here](/app/guide/command-line#cypress-run-ci-build-id-lt-id-gt).
+[here](/app/guides/command-line#cypress-run-ci-build-id-lt-id-gt).
 
 Please also review our
 [parallelization](/app/cloud/smart-orchestration/parallelization)
@@ -807,7 +807,7 @@ before completing. All `cypress run` calls with any new groups must be executed 
 
 #### Troubleshooting
 
-- If you are passing [`--ci-build-id`](/app/guide/command-line#cypress-run-ci-build-id-lt-id-gt), make sure it is generating a unique value for the run. If it is not unique and matches a previous run, you may see this error.
+- If you are passing [`--ci-build-id`](/app/guides/command-line#cypress-run-ci-build-id-lt-id-gt), make sure it is generating a unique value for the run. If it is not unique and matches a previous run, you may see this error.
 - If you are running `cypress run` calls in parallel and they are not completing within the default 60 second run completion delay, you can increase this delay. [See instructions](/app/cloud/account-management/projects#Run-completion-delay).
 
 Please review our
@@ -879,7 +879,7 @@ precedent.
 :::info
 
 For a more thorough explanation of Cypress's Web Security model,
-[please read our dedicated guide to it](/app/guide/web-security).
+[please read our dedicated guide to it](/app/guides/web-security).
 
 :::
 
@@ -912,7 +912,7 @@ If you find yourself stuck and can't work around these issues you can set
 [Cypress configuration](/app/references/configuration) when running in Chrome
 family browsers (this setting will not work in other browsers). Before doing so
 you should really understand and
-[read about the reasoning here](/app/guide/web-security).
+[read about the reasoning here](/app/guides/web-security).
 
 :::cypress-config-example
 
@@ -991,7 +991,7 @@ one of the following:
 - Don't copy the URL you see when launching a Cypress browser from the Cypress
   App and open it in a non-Cypress browser. If you want to run your tests in a
   different browser, follow the instructions in the
-  [Cross Browser Testing](/app/guide/cross-browser-testing) guide.
+  [Cross Browser Testing](/app/guides/cross-browser-testing) guide.
 
 ### <Icon name="exclamation-triangle" color="red" /> Cannot connect to API server
 
@@ -1026,7 +1026,7 @@ Here are some potential workarounds:
    with Chrome.
 2. Use the built-in Electron browser for tests, since it is not affected by
    these policies.
-   [See the guide to launching browsers for more information.](/app/guide/launching-browsers#Electron-Browser)
+   [See the guide to launching browsers for more information.](/app/guides/launching-browsers#Electron-Browser)
 3. Try using Chromium instead of Google Chrome for your tests, since it may be
    unaffected by GPO. You can
    [download the latest Chromium build here.](https://download-chromium.appspot.com)
