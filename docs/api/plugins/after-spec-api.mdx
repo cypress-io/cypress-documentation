@@ -12,7 +12,7 @@ The `after:spec` event fires after a spec file is run. When running cypress via
 :::caution
 
 ⚠️ When running via `cypress open`, the `after:spec` event only fires if the
-[experimentalInteractiveRunEvents flag](/guides/references/configuration#Experiments)
+[experimentalInteractiveRunEvents flag](/app/references/configuration#Experiments)
 is enabled.
 
 :::
@@ -132,7 +132,7 @@ This will skip the compression and uploading of the video when recording to
 Cypress Cloud.
 
 The example below shows how to delete the recorded video for specs that had no
-retry attempts when using Cypress [test retries](/guides/guides/test-retries).
+retry attempts when using Cypress [test retries](/app/guide/test-retries).
 
 :::cypress-config-plugin-example
 
@@ -165,5 +165,5 @@ on(
 - [Before Spec API](/api/plugins/before-spec-api)
 - [Before Run API](/api/plugins/before-run-api)
 - [After Run API](/api/plugins/after-run-api)
-- [Plugins Guide](/guides/tooling/plugins-guide)
+- [Plugins Guide](/app/tooling/plugins-guide)
 - [Writing a Plugin](/api/plugins/writing-a-plugin)

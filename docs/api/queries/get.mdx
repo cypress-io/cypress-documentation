@@ -4,7 +4,7 @@ slug: /api/commands/get
 ---
 
 Get one or more DOM elements by selector or
-[alias](/guides/core-concepts/variables-and-aliases).
+[alias](/app/core-concepts/variables-and-aliases).
 
 :::info
 
@@ -51,7 +51,7 @@ previously aliased DOM element has gone stale.
 
 <strong>Core Concept</strong>
 
-[You can read more about aliasing objects and elements in our Core Concept Guide](/guides/core-concepts/variables-and-aliases#Aliases).
+[You can read more about aliasing objects and elements in our Core Concept Guide](/app/core-concepts/variables-and-aliases#Aliases).
 
 :::
 
@@ -59,14 +59,14 @@ previously aliased DOM element has gone stale.
 
 Pass in an options object to change the default behavior of `cy.get()`.
 
-| Option             | Default                                                                           | Description                                                                                                  |
-| ------------------ | --------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
-| `log`              | `true`                                                                            | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log)                     |
-| `timeout`          | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts)              | Time to wait for `cy.get()` to resolve before [timing out](#Timeouts)                                        |
-| `withinSubject`    | null                                                                              | Element to search for children in. If null, search begins from root-level DOM element                        |
-| `includeShadowDom` | [`includeShadowDom` config option value](/guides/references/configuration#Global) | Whether to traverse shadow DOM boundaries and include elements within the shadow DOM in the yielded results. |
+| Option             | Default                                                                        | Description                                                                                                  |
+| ------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------ |
+| `log`              | `true`                                                                         | Displays the command in the [Command log](/app/core-concepts/cypress-app#Command-Log)                        |
+| `timeout`          | [`defaultCommandTimeout`](/app/references/configuration#Timeouts)              | Time to wait for `cy.get()` to resolve before [timing out](#Timeouts)                                        |
+| `withinSubject`    | null                                                                           | Element to search for children in. If null, search begins from root-level DOM element                        |
+| `includeShadowDom` | [`includeShadowDom` config option value](/app/references/configuration#Global) | Whether to traverse shadow DOM boundaries and include elements within the shadow DOM in the yielded results. |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
 
 - `cy.get()` yields the DOM element(s) it found, or the results of the alias
   lookup.
@@ -176,7 +176,7 @@ cy.get('#comparison')
 ### Alias
 
 For a detailed explanation of aliasing,
-[read more about aliasing here](/guides/core-concepts/variables-and-aliases#Aliases).
+[read more about aliasing here](/app/core-concepts/variables-and-aliases#Aliases).
 
 #### Get the aliased 'todos' elements
 
@@ -221,22 +221,22 @@ it('disables on click', () => {
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
+### Requirements [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
 
 - `cy.get()` requires being chained off a command that yields DOM element(s).
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
+### Assertions [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
 
-- `cy.get()` will automatically [retry](/guides/core-concepts/retry-ability)
+- `cy.get()` will automatically [retry](/app/core-concepts/retry-ability)
   until the element(s)
-  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Implicit-Assertions).
-- `cy.get()` will automatically [retry](/guides/core-concepts/retry-ability)
+  [exist in the DOM](/app/core-concepts/introduction-to-cypress#Implicit-Assertions).
+- `cy.get()` will automatically [retry](/app/core-concepts/retry-ability)
   until all chained assertions have passed.
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
+### Timeouts [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
 
 - `cy.get()` can time out waiting for the element(s) to
-  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Implicit-Assertions).
+  [exist in the DOM](/app/core-concepts/introduction-to-cypress#Implicit-Assertions).
 - `cy.get()` can time out waiting for assertions you've added to pass.
 
 ## Command Log
@@ -264,9 +264,9 @@ the following:
 
 ## History
 
-| Version                                     | Changes                          |
-| ------------------------------------------- | -------------------------------- |
-| [5.2.0](/guides/references/changelog#5-2-0) | Added `includeShadowDom` option. |
+| Version                                  | Changes                          |
+| ---------------------------------------- | -------------------------------- |
+| [5.2.0](/app/references/changelog#5-2-0) | Added `includeShadowDom` option. |
 
 ## See also
 
@@ -274,4 +274,4 @@ the following:
 - [`cy.contains()`](/api/commands/contains)
 - [`.find()`](/api/commands/find)
 - [`.within()`](/api/commands/within)
-- [Retry-ability](/guides/core-concepts/retry-ability)
+- [Retry-ability](/app/core-concepts/retry-ability)

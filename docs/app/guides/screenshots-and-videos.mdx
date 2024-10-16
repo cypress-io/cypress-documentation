@@ -1,0 +1,220 @@
+---
+title: Screenshots and Videos
+---
+
+:::info
+
+## <Icon name="graduation-cap" /> What you'll learn
+
+- How Cypress captures screenshots of test failures automatically
+- How to manually capture your own screenshot
+- How Cypress can record a video of the entire run
+- Some options of what to do with screenshot and video artifacts
+
+:::
+
+<TestReplayInfo />
+
+## Screenshots
+
+Cypress comes with the ability to take screenshots, whether you are running via
+`cypress open` or `cypress run`, even in CI.
+
+To take a manual screenshot you can use the
+[`cy.screenshot()`](/api/commands/screenshot) command.
+
+Additionally, Cypress will automatically capture screenshots when a failure
+happens during `cypress run`. Screenshots on failure are _not_ automatically
+taken during `cypress open`.
+
+Capturing of screenshots when a test fails can be turned off entirely by setting
+[`screenshotOnRunFailure`](/app/references/configuration#Screenshots) to
+`false` from within the
+[Cypress configuration](/app/references/configuration) or by setting
+`screenshotOnRunFailure` to `false` in the
+[Cypress.Screenshot.defaults()](/api/cypress-api/screenshot-api).
+
+Screenshots are stored in the
+[`screenshotsFolder`](/app/references/configuration#Screenshots) which is set
+to `cypress/screenshots` by default.
+
+Cypress clears any existing screenshots before `cypress run`. If you do not want
+to clear your screenshots folder before a run, you can set
+[`trashAssetsBeforeRuns`](/app/references/configuration#Screenshots) to
+`false`.
+
+## Videos
+
+<VideoRecordingSupportedBrowsers />
+
+Video recording is disabled by default, but can be turned on by setting
+[`video`](/app/references/configuration#Videos) to `true` from within your
+configuration.
+
+If enabled, Cypress records a video for each spec file when running tests during
+`cypress run`. Videos are _not_ recorded during `cypress open`.
+
+:::cypress-config-example
+
+```ts
+{
+  video: true
+}
+```
+
+:::
+
+Videos are stored in the
+[`videosFolder`](/app/references/configuration#Videos) which is set to
+`cypress/videos` by default.
+
+When using the `--record` flag while running your tests, videos are processed,
+compressed, and uploaded to [Cypress Cloud](/app/cloud/introduction) after
+every spec file runs, successful or not. To change this behavior to only process
+videos in the case that tests fail, see how to
+[delete videos for specs without failing or retried tests](/app/guide/screenshots-and-videos#Delete-videos-for-specs-without-failing-or-retried-tests).
+Deleting the video will cause the video to not be uploaded to Cypress Cloud.
+
+Cypress clears any existing videos before a `cypress run`. If you do not want to
+clear your videos folder before a run, you can set
+[`trashAssetsBeforeRuns`](/app/references/configuration#Videos) to `false`.
+
+### Video encoding
+
+After a video is recorded, Cypress encodes the video to a commonly digestable
+format. Part of this encoding process includes video compression.
+
+Compression is disabled by default, meaning this step will be skipped
+completely, so the file size of the video will be larger, but the encoding
+process is faster. Setting
+[`videoCompression`](/app/references/configuration#Videos) to `true` will
+coerce the video compression value to 32 Constant Rate Factor (CRF), which takes
+longer to process, but results in a smaller video.
+
+**Enabling compression**
+
+:::cypress-config-example
+
+```ts
+{
+  videoCompression: true
+}
+```
+
+:::
+
+If your spec files have a long run duration and
+[`videoCompression`](/app/references/configuration#Videos) is enabled, you
+might notice a time gap between a finished spec and a new spec starting during
+`cypress run`. During this time, Cypress is encoding the captured video and
+possibly uploading it to Cypress Cloud.
+
+**Change compression value from 32**
+
+:::cypress-config-example
+
+```ts
+{
+  videoCompression: 15
+}
+```
+
+:::
+
+In addition to enabling or disabling video compress, you can specify the CRF
+value used to compress the video. Here are some common scenarios:
+
+- If the machine is encoding the video slowly (which is often the case for
+  virtual machines that use less CPU cores), try increasing the CRF value.
+
+- If your videos are extremely low quality, try decreasing the CRF value.
+
+A lower `videoCompression` value will spend less time compressing and result in
+a bigger video file size and higher quality video.
+
+:::info
+
+If you are an FFmpeg pro and want to see all the settings and debug messages
+during the encoding, run Cypress with the following environment variable:
+
+```shell
+DEBUG=cypress:server:video
+```
+
+:::
+
+### Control which videos to keep and upload to Cypress Cloud
+
+You may want to have more control over which videos you want to keep and upload
+to Cypress Cloud. Deleting videos after the run can save resource space on the
+machine as well as skip the time used to process, compress, and upload the video
+to [Cypress Cloud](/app/cloud/introduction).
+
+To only process videos in the case that a test fails, you can
+[delete videos for specs without failing or retried tests](/app/guide/screenshots-and-videos#Delete-videos-for-specs-without-failing-or-retried-tests),
+which will not upload the video of passed runs to Cypress Cloud.
+
+For more fine grained control, you can use Cypress's
+[`after:spec`](/api/plugins/after-spec-api) event listener that fires after each
+spec file is run and delete the video when certain conditions are met.
+
+### Delete videos for specs without failing or retried tests
+
+The example below shows how to delete the recorded video for specs that had no
+retry attempts or failures when using Cypress
+[test retries](/app/guide/test-retries).
+
+:::cypress-config-plugin-example
+
+```ts
+import fs from 'fs'
+```
+
+```ts
+on(
+  'after:spec',
+  (spec: Cypress.Spec, results: CypressCommandLine.RunResult) => {
+    if (results && results.video) {
+      // Do we have failures for any retry attempts?
+      const failures = results.tests.some((test) =>
+        test.attempts.some((attempt) => attempt.state === 'failed')
+      )
+      if (!failures) {
+        // delete the video if the spec passed and no tests retried
+        fs.unlinkSync(results.video)
+      }
+    }
+  }
+)
+```
+
+:::
+
+## Now What?
+
+So you are capturing screenshots and recording videos of your test runs, now
+what?
+
+### Share Them With Your Team
+
+{/* Line breaks removed to prevent random br elements */}
+
+Something you can take advantage of today is
+[Cypress Cloud](/app/cloud/introduction): our companion enterprise service
+that stores your artifacts for you and lets you view them from any web browser,
+as well as share them with your team.
+
+### Visual Regression Test / Screenshot Diffing
+
+Another possibility is visual regression testing: comparing screenshots of past
+runs with the current run to ensure that nothing changed.
+[Read about how to implement visual testing.](/app/tooling/visual-testing)
+
+## See also
+
+- [After Screenshot API](/api/plugins/after-screenshot-api)
+- [Cypress.Screenshot](/api/cypress-api/screenshot-api)
+- [`cy.screenshot()`](/api/commands/screenshot)
+- [Cypress Cloud](/app/cloud/introduction)
+- [Test Replay](/app/cloud/test-replay)
+- [Visual Testing](/app/tooling/visual-testing)

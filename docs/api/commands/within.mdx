@@ -5,7 +5,7 @@ title: within
 Scopes all subsequent cy commands to within this element. Useful when working
 within a particular group of elements such as a `<form>`.
 
-It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried) to
+It is [unsafe](/app/core-concepts/retry-ability#Only-queries-are-retried) to
 chain further commands that rely on the subject after `.within()`.
 
 ## Syntax
@@ -43,14 +43,14 @@ Pass a function that takes the current yielded subject as its first argument.
 
 Pass in an options object to change the default behavior of `.within()`.
 
-| Option | Default | Description                                                                              |
-| ------ | ------- | ---------------------------------------------------------------------------------------- |
-| `log`  | `true`  | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
+| Option | Default | Description                                                                           |
+| ------ | ------- | ------------------------------------------------------------------------------------- |
+| `log`  | `true`  | Displays the command in the [Command log](/app/core-concepts/cypress-app#Command-Log) |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
 
 - `.within()` yields the same subject it was given.
-- It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried)
+- It is [unsafe](/app/core-concepts/retry-ability#Only-queries-are-retried)
   to chain further commands that rely on the subject after `.within()`.
 
 Trying to return a different element the `.within` callback have no effect:
@@ -180,17 +180,17 @@ cy.get('form').within(($form) => {
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
+### Requirements [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
 
 - `.within()` requires being chained off a previous command that yields exactly
   one DOM element.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
+### Assertions [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
 
 - `.within()` will only run assertions you have chained once, and will not
-  [retry](/guides/core-concepts/retry-ability).
+  [retry](/app/core-concepts/retry-ability).
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
+### Timeouts [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
 
 - `.within()` cannot time out.
 
@@ -221,11 +221,11 @@ outputs the following:
 
 ## History
 
-| Version                                       | Changes                                                                          |
-| --------------------------------------------- | -------------------------------------------------------------------------------- |
-| [12.0.0](/guides/references/changelog#12-0-0) | `.within()` now throws an error when given more than one element as the subject. |
-| [5.4.0](/guides/references/changelog#5-4-0)   | fixed the yielded value to always be the parent element                          |
-| [< 0.3.3](/guides/references/changelog#0-3-3) | `.within()` command added                                                        |
+| Version                                    | Changes                                                                          |
+| ------------------------------------------ | -------------------------------------------------------------------------------- |
+| [12.0.0](/app/references/changelog#12-0-0) | `.within()` now throws an error when given more than one element as the subject. |
+| [5.4.0](/app/references/changelog#5-4-0)   | fixed the yielded value to always be the parent element                          |
+| [< 0.3.3](/app/references/changelog#0-3-3) | `.within()` command added                                                        |
 
 ## See also
 

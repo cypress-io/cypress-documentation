@@ -1,0 +1,152 @@
+---
+title: Enterprise Reporting
+sidebar_position: 30
+sidebar_custom_props: { 'new_label': true }
+---
+
+Enterprise Reporting is available within Cypress Cloud so that you can spot trends and anomalies,
+track usage, and govern your overall test program across all projects in your organization. Included
+is the ability to interact with visual cards that highlight usage, test metrics, test types, flake,
+build versions, and more. The raw data from all graphs presented in Cloud can be downloaded in a variety
+of formats. And if you prefer to programmatically retrieve test data for use within your own analytics
+platform, take a look at our [data extract API](/app/cloud/integrations/data-extract-api).
+
+:::tip
+
+<Icon name="star" /> **Premium Cypress Cloud Feature**
+
+**Enterprise Reporting** is available to users with an
+[Enterprise Cypress Cloud plan](https://cypress.io/pricing).
+:::
+
+## Comprehensive Insights & Data Access
+
+If available in your Cypress plan, Enterprise Reporting is accessible by clicking on the "Enterprise
+Reporting" link in the menu.
+
+Your insights are logically grouped into tabs named **Overall Usage**, **Test Results**, **Test
+Setup**, **Test Execution**, **Flaky Tests**, and **Raw Data**. When the page first loads, data is displayed for all projects in your
+organization for the current month and the preceding two months. However, the ability to customize your date range and projects is
+supported through the filters available on the page.
+
+A couple of things to note:
+
+- Data shown in Enterprise Reporting is not real-time. It is available as of midnight UTC of the current day.
+  I.e. - data will be populated through "end of day yesterday".
+- Historical data is available as specified by your data retention limit in Cypress Cloud.
+
+The type of information and insights available on the various tabs are described in the sections that follow.
+
+### Overall Usage
+
+- How many Cypress tests are you utilizing across all projects in your organization?
+- Where are those tests concentrated?
+- How has test utilization changed over time?
+
+These are a few of the questions that can be answered by the cards shown on the **Overall Usage** tab of Enterprise
+Reporting. Utilize the `Start Date` and `End Date` filters if you need to drill into a specific time period. The `Projects`
+filter can be used to filter the data by one or multiple projects. The data on this tab correlates to what
+Cypress Cloud [counts as a test result](/faq/questions/cloud-faq#What-counts-as-a-test-result).
+
+<DocsImage
+  src="/img/app/cloud/analytics/enterprise-reporting-usage-report.png"
+  alt="Cloud Enterprise Reporting usage report"
+/>
+
+### Test Results
+
+How many of your runs, specs, or individual tests are passing or failing? The **Test Results** tab
+of Enterprise Reporting allows you to review the status rates of your tests from all three levels of granularity.
+
+<DocsImage
+  src="/img/app/cloud/analytics/enterprise-reporting-test-results.png"
+  alt="Cloud Enterprise Reporting test results report"
+/>
+
+### Test Setup
+
+The **Test Setup** tab on Enterprise Reporting contains metrics that show how your runs are configured and maintained.
+
+- What is your proportion of end-to-end tests to [component tests](/app/component-testing/overview)?
+- How has the size of your test suites changed over time across your organization?
+- What projects are configured and using Cypress smart orchestration capabilities?
+- Which version of Cypress are you using for your runs?
+
+These are some of the questions that will be answered by the data presented on this tab.
+
+<DocsImage
+  src="/img/app/cloud/analytics/enterprise-reporting-test-setup1.png"
+  alt="Cloud Enterprise Reporting test setup report"
+/>
+
+<DocsImage
+  src="/img/app/cloud/analytics/enterprise-reporting-test-setup2.png"
+  alt="Cloud Enterprise Reporting test setup report"
+/>
+
+### Test Execution
+
+The **Test Execution** tab on Enterprise Reporting helps you understand the environment and details around your Cypress runs.
+
+- Which browsers are being tested?
+- Are the browsers used for testing consistent across your organization or changing over time within a project?
+- Have there been changes to the text execution times of your Cypress runs?
+- What is the average failure or error rate of tests across your organization and how do individual projects compare to those averages?
+
+These are some of the questions that will be answered by the data presented on this tab.
+
+<DocsImage
+  src="/img/app/cloud/analytics/enterprise-reporting-test-execution1.png"
+  alt="Cloud Enterprise Reporting test execution report"
+/>
+
+<DocsImage
+  src="/img/app/cloud/analytics/enterprise-reporting-test-execution2.png"
+  alt="Cloud Enterprise Reporting test execution report"
+/>
+
+### Flaky Tests
+
+The **Flaky Tests** tab on Enterprise Reporting allows you to see flaky test occurrences and rates for your entire organization or
+specific projects. This can be a single snapshot based on the start and end date filters, or can be viewed over time. Flake
+_rate_ can be helpful because it allows you to see what % of runs in a project are flaky. This allows easy comparison of flaky
+tests between projects regardless of the volume of runs occuring in the projects.
+
+<DocsImage
+  src="/img/app/cloud/analytics/enterprise-reporting-flaky-tests.png"
+  alt="Cloud Enterprise Reporting test suite report"
+/>
+
+### Download data from Cloud
+
+All of the charts shown in Enterprise Reporting allow you to download the raw data used to
+render the chart visual. If you would like to manually download the raw data for further review, simply
+hover over the chart, select `Download results` from the three ellipsis menu in the upper right corner of the
+chart, and a menu will be displayed that allows you to download the data in the following formats:
+
+- .csv
+- .xlsx
+- .json
+- .png
+
+Once you select the format you want to download, the file will immediately be downloaded by your browser.
+
+<DocsImage
+  src="/img/app/cloud/analytics/enterprise-reporting-download.png"
+  alt="Cloud Enterprise Reporting download data"
+/>
+
+### Retrieve your test data through API
+
+The Cypress Cloud [data extract API](/app/cloud/integrations/data-extract-api) provides full access to
+the test data shown within the Cloud Enterprise Reporting pages. Examples of the granular data are
+provided on the **Raw Data** tab so that you can review the data before you decide to integrate with the
+Cypress Cloud API. To download, simply hover over the chart, select `Download results`, and choose the
+download format of your data. When you are ready to integrate with the API you can visit the
+[data extract API](/app/cloud/integrations/data-extract-api) page for the list of endpoints, data
+returned, and instructions for how to integrate.
+
+<DocsImage
+  src="/img/app/cloud/analytics/enterprise-reporting-sample-download.png"
+  alt="Cloud Enterprise Reporting retrieve JWT"
+/>

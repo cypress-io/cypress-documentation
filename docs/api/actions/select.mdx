@@ -5,7 +5,7 @@ slug: /api/commands/select
 
 Select an `<option>` within a `<select>`.
 
-It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried) to
+It is [unsafe](/app/core-concepts/retry-ability#Only-queries-are-retried) to
 chain further commands that rely on the subject after `.select()`.
 
 ## Syntax
@@ -47,16 +47,16 @@ selected.
 
 Pass in an options object to change the default behavior of `.select()`.
 
-| Option    | Default                                                              | Description                                                                              |
-| --------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| `force`   | `false`                                                              | Forces the action, disables [waiting for actionability](#Assertions)                     |
-| `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
-| `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.select()` to resolve before [timing out](#Timeouts)                   |
+| Option    | Default                                                           | Description                                                                           |
+| --------- | ----------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| `force`   | `false`                                                           | Forces the action, disables [waiting for actionability](#Assertions)                  |
+| `log`     | `true`                                                            | Displays the command in the [Command log](/app/core-concepts/cypress-app#Command-Log) |
+| `timeout` | [`defaultCommandTimeout`](/app/references/configuration#Timeouts) | Time to wait for `.select()` to resolve before [timing out](#Timeouts)                |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
 
 - `.select()` yields the same subject it was given.
-- It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried)
+- It is [unsafe](/app/core-concepts/retry-ability#Only-queries-are-retried)
   to chain further commands that rely on the subject after `.select()`.
 
 ## Examples
@@ -244,7 +244,7 @@ cy.get('select#name option:selected').should('have.text', 'Peter')
 ### Actionability
 
 `.select()` is an action command that follows the rules of
-[Actionability](/guides/core-concepts/interacting-with-elements).
+[Actionability](/app/core-concepts/interacting-with-elements).
 
 However, passing `{ force: true }` to `.select()` will not override the
 actionability checks for selecting a disabled `<option>` or an option within a
@@ -253,22 +253,22 @@ disabled `<optgroup>`. See
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
+### Requirements [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
 
 - `.select()` requires being chained off a command that yields DOM element(s).
 - `.select()` requires the element to be a `select`.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
+### Assertions [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
 
 - `.select()` will automatically wait for the element to reach an
-  [actionable state](/guides/core-concepts/interacting-with-elements).
-- `.select()` will automatically [retry](/guides/core-concepts/retry-ability)
+  [actionable state](/app/core-concepts/interacting-with-elements).
+- `.select()` will automatically [retry](/app/core-concepts/retry-ability)
   until all chained assertions have passed.
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
+### Timeouts [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
 
 - `.select()` can time out waiting for the element to reach an
-  [actionable state](/guides/core-concepts/interacting-with-elements).
+  [actionable state](/app/core-concepts/interacting-with-elements).
 - `.select()` can time out waiting for assertions you've added to pass.
 
 ## Command Log

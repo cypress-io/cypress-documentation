@@ -26,12 +26,12 @@ cy.getAllCookies() // Get all cookies
 Pass in an options object to change the default behavior of
 `cy.getAllCookies()`.
 
-| Option    | Default                                                        | Description                                                                              |
-| --------- | -------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| `log`     | `true`                                                         | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
-| `timeout` | [`responseTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.getAllCookies()` to resolve before [timing out](#Timeouts)          |
+| Option    | Default                                                     | Description                                                                           |
+| --------- | ----------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| `log`     | `true`                                                      | Displays the command in the [Command log](/app/core-concepts/cypress-app#Command-Log) |
+| `timeout` | [`responseTimeout`](/app/references/configuration#Timeouts) | Time to wait for `cy.getAllCookies()` to resolve before [timing out](#Timeouts)       |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
 
 `cy.getAllCookies()` yields an array of cookie objects. Each cookie object has
 the following properties:
@@ -75,16 +75,16 @@ cy.getAllCookies()
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
+### Requirements [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
 
 - `cy.getAllCookies()` requires being chained off of `cy`.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
+### Assertions [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
 
 - `cy.getAllCookies()` will only run assertions you have chained once, and will
-  not [retry](/guides/core-concepts/retry-ability).
+  not [retry](/app/core-concepts/retry-ability).
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
+### Timeouts [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
 
 - `cy.getAllCookies()` should never time out.
 

@@ -6,7 +6,7 @@ slug: /api/commands/selectfile
 Selects a file or files in an HTML5 input element or simulates dragging a file
 or files into the browser.
 
-It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried) to
+It is [unsafe](/app/core-concepts/retry-ability#Only-queries-are-retried) to
 chain further commands that rely on the subject after `.selectFile()`.
 
 ## Syntax
@@ -80,19 +80,19 @@ If an object is provided, it can have the following properties.
 
 Pass in an options object to change the default behavior of `.selectFile()`.
 
-| Option                       | Default                                                                        | Description                                                                                                                                       |
-| ---------------------------- | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `action`                     | `'select'`                                                                     | Switches modes. Valid values are `select` and `drag-drop`. See [Action](#Action) below for more details.                                          |
-| `animationDistanceThreshold` | [`animationDistanceThreshold`](/guides/references/configuration#Actionability) | The distance in pixels an element must exceed over time to be [considered animating](/guides/core-concepts/interacting-with-elements#Animations). |
-| `force`                      | `false`                                                                        | Forces the action, disables [waiting for actionability](#Assertions).                                                                             |
-| `log`                        | `true`                                                                         | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log).                                                         |
-| `timeout`                    | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts)           | Time to wait for `.selectFile()` to resolve before [timing out](#Timeouts).                                                                       |
-| `waitForAnimations`          | [`waitForAnimations`](/guides/references/configuration#Actionability)          | Whether to wait for elements to [finish animating](/guides/core-concepts/interacting-with-elements#Animations) before executing the command.      |
+| Option                       | Default                                                                     | Description                                                                                                                                    |
+| ---------------------------- | --------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| `action`                     | `'select'`                                                                  | Switches modes. Valid values are `select` and `drag-drop`. See [Action](#Action) below for more details.                                       |
+| `animationDistanceThreshold` | [`animationDistanceThreshold`](/app/references/configuration#Actionability) | The distance in pixels an element must exceed over time to be [considered animating](/app/core-concepts/interacting-with-elements#Animations). |
+| `force`                      | `false`                                                                     | Forces the action, disables [waiting for actionability](#Assertions).                                                                          |
+| `log`                        | `true`                                                                      | Displays the command in the [Command log](/app/core-concepts/cypress-app#Command-Log).                                                         |
+| `timeout`                    | [`defaultCommandTimeout`](/app/references/configuration#Timeouts)           | Time to wait for `.selectFile()` to resolve before [timing out](#Timeouts).                                                                    |
+| `waitForAnimations`          | [`waitForAnimations`](/app/references/configuration#Actionability)          | Whether to wait for elements to [finish animating](/app/core-concepts/interacting-with-elements#Animations) before executing the command.      |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
 
 - `.selectFile()` yields the same subject it was given.
-- It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried)
+- It is [unsafe](/app/core-concepts/retry-ability#Only-queries-are-retried)
   to chain further commands that rely on the subject after `.selectFile()`.
 
 ### Action
@@ -104,7 +104,7 @@ simulate two different user behaviors:
 
 By default, `.selectFile()` runs in 'select' mode, mimicking a user selecting
 one or more files on an HTML5 input element. In this mode, the
-[subject](/guides/core-concepts/introduction-to-cypress#Subject-Management) must
+[subject](/app/core-concepts/introduction-to-cypress#Subject-Management) must
 be a single `input` element with `type="file"`, or a `label` element connected
 to an input (either with its `for` attribute or by containing the input).
 
@@ -257,11 +257,11 @@ cy.get('input[type=file]').selectFile('does-not-exist.yaml')
 #### The element must first reach actionability
 
 `.selectFile()` is an "action command" that follows all the rules of
-[Actionability](/guides/core-concepts/interacting-with-elements).
+[Actionability](/app/core-concepts/interacting-with-elements).
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
+### Requirements [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
 
 - `.selectFile()` requires being chained off a command that yields DOM
   element(s). With the `input` action (default), it further requires a single
@@ -270,15 +270,15 @@ cy.get('input[type=file]').selectFile('does-not-exist.yaml')
 - If given an alias, `.selectFile()` requires that the subject of the alias must
   not be `null` or `undefined`.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
+### Assertions [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
 
 - `.selectFile()` will automatically wait for the element to reach an
-  [actionable state](/guides/core-concepts/interacting-with-elements).
+  [actionable state](/app/core-concepts/interacting-with-elements).
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
+### Timeouts [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
 
 - `.selectFile()` can time out waiting for the element to reach an
-  [actionable state](/guides/core-concepts/interacting-with-elements).
+  [actionable state](/app/core-concepts/interacting-with-elements).
 - `.selectFile()` can time out waiting for a file to exist on disk or for an
   alias to resolve.
 
@@ -321,10 +321,10 @@ following:
 
 ## History
 
-| Version                                     | Changes                                                                                                                      |
-| ------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| [9.3.0](/guides/references/changelog#9-3-0) | `.selectFile()` command added                                                                                                |
-| [9.4.0](/guides/references/changelog#9-4-0) | Support for `TypedArray` and `mimeType` property added. Default `fileName` name is no longer lost when working with aliases. |
+| Version                                  | Changes                                                                                                                      |
+| ---------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| [9.3.0](/app/references/changelog#9-3-0) | `.selectFile()` command added                                                                                                |
+| [9.4.0](/app/references/changelog#9-4-0) | Support for `TypedArray` and `mimeType` property added. Default `fileName` name is no longer lost when working with aliases. |
 
 ### Community Recognition
 
@@ -336,7 +336,7 @@ repository.
 
 ## See also
 
-- [Guide: Variables and Aliases](/guides/core-concepts/variables-and-aliases)
+- [Guide: Variables and Aliases](/app/core-concepts/variables-and-aliases)
 - [`.fixture()`](/api/commands/fixture)
 - [`.get()`](/api/commands/get)
 - [`.readFile()`](/api/commands/readfile)

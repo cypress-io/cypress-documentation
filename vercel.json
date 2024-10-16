@@ -27,7 +27,7 @@
     },
     {
       "source": "/guides/references/bundled-tools.html",
-      "destination": "/guides/references/bundled-libraries",
+      "destination": "/app/references/bundled-libraries",
       "permanent": true
     }
   ]

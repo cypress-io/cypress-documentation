@@ -16,7 +16,7 @@ An alias of [`.should()`](/api/commands/should)
 :::info
 
 **Note:** `.and()` assumes you are already familiar with core concepts such as
-[assertions](/guides/core-concepts/introduction-to-cypress#Assertions)
+[assertions](/app/core-concepts/introduction-to-cypress#Assertions)
 
 :::
 
@@ -56,9 +56,9 @@ cy.get('button').click().and('be.focused') // Should not be chained off
 
 <Icon name="angle-right" /> **chainers _(String)_**
 
-Any valid chainer that comes from [Chai](/guides/references/assertions#Chai) or
-[Chai-jQuery](/guides/references/assertions#Chai-jQuery) or
-[Sinon-Chai](/guides/references/assertions#Sinon-Chai).
+Any valid chainer that comes from [Chai](/app/references/assertions#Chai) or
+[Chai-jQuery](/app/references/assertions#Chai-jQuery) or
+[Sinon-Chai](/app/references/assertions#Sinon-Chai).
 
 <Icon name="angle-right" /> **value _(String)_**
 
@@ -73,7 +73,7 @@ A method to be called on the chainer.
 Pass a function that can have any number of explicit assertions within it.
 Whatever was passed to the function is what is yielded.
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
 
 - In most cases, `.and()` yields the same subject it was given.
 - `.and()` is an assertion, and it is _safe_ to chain further commands that use
@@ -210,8 +210,8 @@ expect({ foo: 'bar' }).to.have.property('foo').and.eq('bar')
 
 #### How do I know which assertions change the subject and which keep it the same?
 
-The chainers that come from [Chai](/guides/references/bundled-libraries#Chai) or
-[Chai-jQuery](/guides/references/bundled-libraries#Chai-jQuery) will always
+The chainers that come from [Chai](/app/references/bundled-libraries#Chai) or
+[Chai-jQuery](/app/references/bundled-libraries#Chai-jQuery) will always
 document what they return.
 
 #### Using a callback function will not change what is yielded
@@ -239,13 +239,13 @@ cy.get('button')
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
+### Requirements [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
 
 - `.and()` requires being chained off a previous command.
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
+### Timeouts [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
 
-- `.and()` will continue to [retry](/guides/core-concepts/retry-ability) its
+- `.and()` will continue to [retry](/app/core-concepts/retry-ability) its
   specified assertions until it times out.
 
 ```javascript
@@ -295,5 +295,5 @@ following:
 ## See also
 
 - [`.should()`](/api/commands/should)
-- [Guide: Introduction to Cypress](/guides/core-concepts/introduction-to-cypress#Assertions)
-- [Reference: List of Assertions](/guides/references/assertions)
+- [Guide: Introduction to Cypress](/app/core-concepts/introduction-to-cypress#Assertions)
+- [Reference: List of Assertions](/app/references/assertions)

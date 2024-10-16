@@ -8,7 +8,7 @@ Clear a specific browser cookie.
 
 Cypress automatically clears all cookies _before_ each test to prevent state
 from being shared across tests when
-[test isolation](/guides/core-concepts/writing-and-organizing-tests#Test-Isolation)
+[test isolation](/app/core-concepts/writing-and-organizing-tests#Test-Isolation)
 is enabled. You shouldn't need to use this command unless you're using it to
 clear a specific cookie inside a single test or test isolation is disabled.
 
@@ -39,13 +39,13 @@ The name of the cookie to be cleared.
 
 Pass in an options object to change the default behavior of `cy.clearCookie()`.
 
-| Option    | Default                                                        | Description                                                                              |
-| --------- | -------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| `domain`  | Hostname of the current URL                                    | Clears the cookie from the specified domain                                              |
-| `log`     | `true`                                                         | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
-| `timeout` | [`responseTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.clearCookie()` to resolve before [timing out](#Timeouts)            |
+| Option    | Default                                                     | Description                                                                           |
+| --------- | ----------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| `domain`  | Hostname of the current URL                                 | Clears the cookie from the specified domain                                           |
+| `log`     | `true`                                                      | Displays the command in the [Command log](/app/core-concepts/cypress-app#Command-Log) |
+| `timeout` | [`responseTimeout`](/app/references/configuration#Timeouts) | Time to wait for `cy.clearCookie()` to resolve before [timing out](#Timeouts)         |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
 
 - `cy.clearCookie()` yields `null`.
 
@@ -71,15 +71,15 @@ cy.url().should('include', 'login')
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
+### Requirements [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
 
 - `cy.clearCookie()` requires being chained off of `cy`.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
+### Assertions [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
 
 - `cy.clearCookie()` cannot have any assertions chained.
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
+### Timeouts [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
 
 - `cy.clearCookie()` should never time out.
 

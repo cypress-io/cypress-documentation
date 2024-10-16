@@ -5,7 +5,7 @@ slug: /api/commands/click
 
 Click a DOM element.
 
-It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried) to
+It is [unsafe](/app/core-concepts/retry-ability#Only-queries-are-retried) to
 chain further commands that rely on the subject after `.click()`.
 
 ## Syntax
@@ -61,24 +61,24 @@ The distance in pixels from the element's top to issue the click.
 
 Pass in an options object to change the default behavior of `.click()`.
 
-| Option                       | Default                                                                        | Description                                                                                                                                        |
-| ---------------------------- | ------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `altKey`                     | `false`                                                                        | Activates the alt key (option key for Mac). Aliases: `optionKey`.                                                                                  |
-| `animationDistanceThreshold` | [`animationDistanceThreshold`](/guides/references/configuration#Actionability) | The distance in pixels an element must exceed over time to be [considered animating](/guides/core-concepts/interacting-with-elements#Animations).  |
-| `ctrlKey`                    | `false`                                                                        | Activates the control key. Aliases: `controlKey`.                                                                                                  |
-| `log`                        | `true`                                                                         | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log)                                                           |
-| `force`                      | `false`                                                                        | Forces the action, disables [waiting for actionability](#Assertions)                                                                               |
-| `metaKey`                    | `false`                                                                        | Activates the meta key (Windows key or command key for Mac). Aliases: `commandKey`, `cmdKey`.                                                      |
-| `multiple`                   | `false`                                                                        | Serially click multiple elements                                                                                                                   |
-| `scrollBehavior`             | [`scrollBehavior`](/guides/references/configuration#Actionability)             | Viewport position to where an element [should be scrolled](/guides/core-concepts/interacting-with-elements#Scrolling) before executing the command |
-| `shiftKey`                   | `false`                                                                        | Activates the shift key.                                                                                                                           |
-| `timeout`                    | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts)           | Time to wait for `.click()` to resolve before [timing out](#Timeouts)                                                                              |
-| `waitForAnimations`          | [`waitForAnimations`](/guides/references/configuration#Actionability)          | Whether to wait for elements to [finish animating](/guides/core-concepts/interacting-with-elements#Animations) before executing the command.       |
+| Option                       | Default                                                                     | Description                                                                                                                                     |
+| ---------------------------- | --------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| `altKey`                     | `false`                                                                     | Activates the alt key (option key for Mac). Aliases: `optionKey`.                                                                               |
+| `animationDistanceThreshold` | [`animationDistanceThreshold`](/app/references/configuration#Actionability) | The distance in pixels an element must exceed over time to be [considered animating](/app/core-concepts/interacting-with-elements#Animations).  |
+| `ctrlKey`                    | `false`                                                                     | Activates the control key. Aliases: `controlKey`.                                                                                               |
+| `log`                        | `true`                                                                      | Displays the command in the [Command log](/app/core-concepts/cypress-app#Command-Log)                                                           |
+| `force`                      | `false`                                                                     | Forces the action, disables [waiting for actionability](#Assertions)                                                                            |
+| `metaKey`                    | `false`                                                                     | Activates the meta key (Windows key or command key for Mac). Aliases: `commandKey`, `cmdKey`.                                                   |
+| `multiple`                   | `false`                                                                     | Serially click multiple elements                                                                                                                |
+| `scrollBehavior`             | [`scrollBehavior`](/app/references/configuration#Actionability)             | Viewport position to where an element [should be scrolled](/app/core-concepts/interacting-with-elements#Scrolling) before executing the command |
+| `shiftKey`                   | `false`                                                                     | Activates the shift key.                                                                                                                        |
+| `timeout`                    | [`defaultCommandTimeout`](/app/references/configuration#Timeouts)           | Time to wait for `.click()` to resolve before [timing out](#Timeouts)                                                                           |
+| `waitForAnimations`          | [`waitForAnimations`](/app/references/configuration#Actionability)          | Whether to wait for elements to [finish animating](/app/core-concepts/interacting-with-elements#Animations) before executing the command.       |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
 
 - `.click()` yields the same subject it was given.
-- It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried)
+- It is [unsafe](/app/core-concepts/retry-ability#Only-queries-are-retried)
   to chain further commands that rely on the subject after `.click()`.
 
 ## Examples
@@ -117,7 +117,7 @@ cy.get('#top-banner').click(15, 40)
 #### Force a click regardless of its actionable state
 
 Forcing a click overrides the
-[actionable checks](/guides/core-concepts/interacting-with-elements#Forcing)
+[actionable checks](/app/core-concepts/interacting-with-elements#Forcing)
 Cypress applies and will automatically fire the events.
 
 ```javascript
@@ -142,7 +142,7 @@ cy.get('#footer .next').click(5, 60, { force: true })
 By default, Cypress will error if you're trying to click multiple elements. By
 passing `{ multiple: true }` Cypress will iteratively apply the click to each
 element and will also log to the
-[Command Log](/guides/core-concepts/cypress-app#Command-Log) multiple times.
+[Command Log](/app/core-concepts/cypress-app#Command-Log) multiple times.
 
 ```javascript
 cy.get('[id^=btn]').click({ multiple: true })
@@ -186,7 +186,7 @@ cy.get('li:first').click({
 #### The element must first reach actionability
 
 `.click()` is an "action command" that follows all the rules of
-[Actionability](/guides/core-concepts/interacting-with-elements).
+[Actionability](/app/core-concepts/interacting-with-elements).
 
 ### Focus
 
@@ -209,21 +209,21 @@ then the element will not receive focus as per the spec.
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
+### Requirements [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
 
 - `.click()` requires being chained off a command that yields DOM element(s).
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
+### Assertions [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
 
 - `.click()` will automatically wait for the element to reach an
-  [actionable state](/guides/core-concepts/interacting-with-elements).
-- `.click()`will automatically [retry](/guides/core-concepts/retry-ability)
+  [actionable state](/app/core-concepts/interacting-with-elements).
+- `.click()`will automatically [retry](/app/core-concepts/retry-ability)
   until all chained assertions have passed.
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
+### Timeouts [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
 
 - `.click()` can time out waiting for the element to reach an
-  [actionable state](/guides/core-concepts/interacting-with-elements).
+  [actionable state](/app/core-concepts/interacting-with-elements).
 - `.click()` can time out waiting for assertions you've added to pass.
 
 ## Command Log
@@ -251,10 +251,10 @@ following:
 
 ## History
 
-| Version                                     | Changes                                                                                                             |
-| ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
-| [6.1.0](/guides/references/changelog#6-1-0) | Added option `scrollBehavior`                                                                                       |
-| [3.5.0](/guides/references/changelog#3-5-0) | Added sending `mouseover`, `mousemove`, `mouseout`, `pointerdown`, `pointerup`, and `pointermove` during `.click()` |
+| Version                                  | Changes                                                                                                             |
+| ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| [6.1.0](/app/references/changelog#6-1-0) | Added option `scrollBehavior`                                                                                       |
+| [3.5.0](/app/references/changelog#3-5-0) | Added sending `mouseover`, `mousemove`, `mouseout`, `pointerdown`, `pointerup`, and `pointermove` during `.click()` |
 
 ## See also
 

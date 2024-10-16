@@ -5,7 +5,7 @@ slug: /api/commands/scrollTo
 
 Scroll to a specific position.
 
-It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried) to
+It is [unsafe](/app/core-concepts/retry-ability#Only-queries-are-retried) to
 chain further commands that rely on the subject after `.scrollTo()`.
 
 ## Syntax
@@ -66,18 +66,18 @@ window/element's height to scroll to.
 
 Pass in an options object to change the default behavior of `cy.scrollTo()`.
 
-| Option             | Default                                                              | Description                                                                              |
-| ------------------ | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| `duration`         | `0`                                                                  | Scrolls over the duration (in ms)                                                        |
-| `easing`           | `swing`                                                              | Will scroll with the easing animation                                                    |
-| `ensureScrollable` | `true`                                                               | Ensure element is scrollable. Error if element cannot scroll.                            |
-| `log`              | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
-| `timeout`          | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.scrollTo()` to resolve before [timing out](#Timeouts)                 |
+| Option             | Default                                                           | Description                                                                           |
+| ------------------ | ----------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| `duration`         | `0`                                                               | Scrolls over the duration (in ms)                                                     |
+| `easing`           | `swing`                                                           | Will scroll with the easing animation                                                 |
+| `ensureScrollable` | `true`                                                            | Ensure element is scrollable. Error if element cannot scroll.                         |
+| `log`              | `true`                                                            | Displays the command in the [Command log](/app/core-concepts/cypress-app#Command-Log) |
+| `timeout`          | [`defaultCommandTimeout`](/app/references/configuration#Timeouts) | Time to wait for `.scrollTo()` to resolve before [timing out](#Timeouts)              |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
 
 - `.scrollTo()` yields the same subject it was given.
-- It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried)
+- It is [unsafe](/app/core-concepts/retry-ability#Only-queries-are-retried)
   to chain further commands that rely on the subject after `.scrollTo()`.
 
 ## Examples
@@ -148,7 +148,7 @@ cy.get('table').find('tr:last-child').should('be.visible')
 ### Actionability
 
 `cy.scrollTo()` is an "action command" that follows all the rules of
-[Actionability](/guides/core-concepts/interacting-with-elements).
+[Actionability](/app/core-concepts/interacting-with-elements).
 
 ### Scopes
 
@@ -179,16 +179,16 @@ _Cypress does not reflect the accurate scroll positions of any elements within
 snapshots._ If you want to see the actual scrolling behavior in action, we
 recommend using [`.pause()`](/api/commands/pause) to walk through each command
 or
-[watching the video of the test run](/guides/guides/screenshots-and-videos#Videos).
+[watching the video of the test run](/app/guide/screenshots-and-videos#Videos).
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
+### Requirements [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
 
 - `.scrollTo()` requires being chained off a command that yields DOM element(s).
 - `.scrollTo()` requires the element to be scrollable.
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
+### Timeouts [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
 
 - `.scrollTo()` can time out waiting for assertions you've added to pass.
 
@@ -218,9 +218,9 @@ following:
 
 ## History
 
-| Version                                       | Changes                                      |
-| --------------------------------------------- | -------------------------------------------- |
-| [4.11.0](/guides/references/changelog#4-11-0) | Added support for `ensureScrollable` option. |
+| Version                                    | Changes                                      |
+| ------------------------------------------ | -------------------------------------------- |
+| [4.11.0](/app/references/changelog#4-11-0) | Added support for `ensureScrollable` option. |
 
 ## See also
 

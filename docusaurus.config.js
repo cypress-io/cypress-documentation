@@ -115,16 +115,16 @@ const config = {
       navbar: {
         style: 'dark',
         logo: {
-          href: '/guides/overview/why-cypress',
+          href: '/app/overview/why-cypress',
           alt: 'Cypress Logo',
           src: '/img/logo/cypress-logo-light.svg',
           srcDark: '/img/logo/cypress-logo-dark.svg',
         },
         items: [
           {
-            to: '/guides/overview/why-cypress',
-            label: 'Guides',
-            activeBasePath: 'guides',
+            to: '/app/overview/why-cypress',
+            label: 'App',
+            activeBasePath: 'app',
           },
           {
             to: '/api/table-of-contents',

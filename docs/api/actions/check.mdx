@@ -5,7 +5,7 @@ slug: /api/commands/check
 
 Check checkbox(es) or radio(s).
 
-It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried) to
+It is [unsafe](/app/core-concepts/retry-ability#Only-queries-are-retried) to
 chain further commands that rely on the subject after `.check()`.
 
 :::caution
@@ -55,19 +55,19 @@ Values of checkboxes or radios that should be checked.
 
 Pass in an options object to change the default behavior of `.check()`.
 
-| Option                       | Default                                                                        | Description                                                                                                                                        |
-| ---------------------------- | ------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `animationDistanceThreshold` | [`animationDistanceThreshold`](/guides/references/configuration#Actionability) | The distance in pixels an element must exceed over time to be [considered animating](/guides/core-concepts/interacting-with-elements#Animations).  |
-| `log`                        | `true`                                                                         | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log)                                                           |
-| `force`                      | `false`                                                                        | Forces the action, disables [waiting for actionability](#Assertions)                                                                               |
-| `scrollBehavior`             | [`scrollBehavior`](/guides/references/configuration#Actionability)             | Viewport position to where an element [should be scrolled](/guides/core-concepts/interacting-with-elements#Scrolling) before executing the command |
-| `timeout`                    | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts)           | Time to wait for `.check()` to resolve before [timing out](#Timeouts)                                                                              |
-| `waitForAnimations`          | [`waitForAnimations`](/guides/references/configuration#Actionability)          | Whether to wait for elements to [finish animating](/guides/core-concepts/interacting-with-elements#Animations) before executing the command.       |
+| Option                       | Default                                                                     | Description                                                                                                                                     |
+| ---------------------------- | --------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| `animationDistanceThreshold` | [`animationDistanceThreshold`](/app/references/configuration#Actionability) | The distance in pixels an element must exceed over time to be [considered animating](/app/core-concepts/interacting-with-elements#Animations).  |
+| `log`                        | `true`                                                                      | Displays the command in the [Command log](/app/core-concepts/cypress-app#Command-Log)                                                           |
+| `force`                      | `false`                                                                     | Forces the action, disables [waiting for actionability](#Assertions)                                                                            |
+| `scrollBehavior`             | [`scrollBehavior`](/app/references/configuration#Actionability)             | Viewport position to where an element [should be scrolled](/app/core-concepts/interacting-with-elements#Scrolling) before executing the command |
+| `timeout`                    | [`defaultCommandTimeout`](/app/references/configuration#Timeouts)           | Time to wait for `.check()` to resolve before [timing out](#Timeouts)                                                                           |
+| `waitForAnimations`          | [`waitForAnimations`](/app/references/configuration#Actionability)          | Whether to wait for elements to [finish animating](/app/core-concepts/interacting-with-elements#Animations) before executing the command.       |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
 
 - `.check()` yields the same subject it was given.
-- It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried)
+- It is [unsafe](/app/core-concepts/retry-ability#Only-queries-are-retried)
   to chain further commands that rely on the subject after `.check()`.
 
 ## Examples
@@ -164,26 +164,26 @@ cy.get('#pick-fruit :checked').should('be.checked').and('have.value', 'apple')
 #### The element must first reach actionability
 
 `.check()` is an "action command" that follows all the rules of
-[Actionability](/guides/core-concepts/interacting-with-elements).
+[Actionability](/app/core-concepts/interacting-with-elements).
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
+### Requirements [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
 
 - `.check()` requires being chained off a command that yields DOM element(s).
 - `.check()` requires the element to have type `checkbox` or `radio`.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
+### Assertions [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
 
 - `.check()` will automatically wait for the element to reach an
-  [actionable state](/guides/core-concepts/interacting-with-elements).
-- `.check()` will automatically [retry](/guides/core-concepts/retry-ability)
+  [actionable state](/app/core-concepts/interacting-with-elements).
+- `.check()` will automatically [retry](/app/core-concepts/retry-ability)
   until all chained assertions have passed.
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
+### Timeouts [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
 
 - `.check()` can time out waiting for the element to reach an
-  [actionable state](/guides/core-concepts/interacting-with-elements).
+  [actionable state](/app/core-concepts/interacting-with-elements).
 - `.check()` can time out waiting for assertions you've added to pass.
 
 ## Command Log

@@ -45,12 +45,12 @@ Index, name of property or name of nested properties (with dot notation) to get.
 
 Pass in an options object to change the default behavior of `.its()`.
 
-| Option    | Default                                                              | Description                                                                              |
-| --------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
-| `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.its()` to resolve before [timing out](#Timeouts)                      |
+| Option    | Default                                                           | Description                                                                           |
+| --------- | ----------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| `log`     | `true`                                                            | Displays the command in the [Command log](/app/core-concepts/cypress-app#Command-Log) |
+| `timeout` | [`defaultCommandTimeout`](/app/references/configuration#Timeouts) | Time to wait for `.its()` to resolve before [timing out](#Timeouts)                   |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
 
 - `.its()` 'yields the value of the property.
 - `.its()` is a query, and it is _safe_ to chain further commands.
@@ -193,16 +193,16 @@ cy.window().its('evilProp').should('not.exist')
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
+### Requirements [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
 
 - `.its()` requires being chained off a previous command.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
+### Assertions [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
 
-- `.its()` will automatically [retry](/guides/core-concepts/retry-ability) until
+- `.its()` will automatically [retry](/app/core-concepts/retry-ability) until
   it has a property that is not `null` or `undefined`.
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
+### Timeouts [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
 
 - `.its()` can time out waiting for the property to exist.
 - `.its()` can time out waiting for assertions you've added to pass.
@@ -242,10 +242,10 @@ following:
 
 ## History
 
-| Version                                     | Changes                                                       |
-| ------------------------------------------- | ------------------------------------------------------------- |
-| [3.8.0](/guides/references/changelog#3-8-0) | Added support for `options` argument                          |
-| [3.7.0](/guides/references/changelog#3-7-0) | Added support for arguments of type Number for `propertyName` |
+| Version                                  | Changes                                                       |
+| ---------------------------------------- | ------------------------------------------------------------- |
+| [3.8.0](/app/references/changelog#3-8-0) | Added support for `options` argument                          |
+| [3.7.0](/app/references/changelog#3-7-0) | Added support for arguments of type Number for `propertyName` |
 
 ## See also
 

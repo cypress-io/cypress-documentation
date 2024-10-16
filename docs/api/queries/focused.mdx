@@ -26,12 +26,12 @@ cy.focused() // Yields the element currently in focus
 
 Pass in an options object to change the default behavior of `cy.focused()`.
 
-| Option    | Default                                                              | Description                                                                              |
-| --------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
-| `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.focused()` to resolve before [timing out](#Timeouts)                |
+| Option    | Default                                                           | Description                                                                           |
+| --------- | ----------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| `log`     | `true`                                                            | Displays the command in the [Command log](/app/core-concepts/cypress-app#Command-Log) |
+| `timeout` | [`defaultCommandTimeout`](/app/references/configuration#Timeouts) | Time to wait for `cy.focused()` to resolve before [timing out](#Timeouts)             |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
 
 - `cy.focused()` yields the DOM element it found.
 - `cy.focused()` is a query, and it is _safe_ to chain further commands.
@@ -62,23 +62,23 @@ cy.focused().should('have.attr', 'name', 'username')
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
+### Requirements [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
 
 - `cy.focused()` requires being chained off a command that yields DOM
   element(s).
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
+### Assertions [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
 
-- `cy.focused()` will automatically [retry](/guides/core-concepts/retry-ability)
+- `cy.focused()` will automatically [retry](/app/core-concepts/retry-ability)
   until the element(s)
-  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Implicit-Assertions).
-- `cy.focused()` will automatically [retry](/guides/core-concepts/retry-ability)
+  [exist in the DOM](/app/core-concepts/introduction-to-cypress#Implicit-Assertions).
+- `cy.focused()` will automatically [retry](/app/core-concepts/retry-ability)
   until all chained assertions have passed.
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
+### Timeouts [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
 
 - `cy.focused()` can time out waiting for the element(s) to
-  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Implicit-Assertions).
+  [exist in the DOM](/app/core-concepts/introduction-to-cypress#Implicit-Assertions).
 - `cy.focused()` can time out waiting for assertions you've added to pass.
 
 ## Command Log

@@ -4,7 +4,7 @@ title: focus
 
 Focus on a DOM element.
 
-It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried) to
+It is [unsafe](/app/core-concepts/retry-ability#Only-queries-are-retried) to
 chain further commands that rely on the subject after `.focus()`.
 
 ## Syntax
@@ -35,15 +35,15 @@ cy.window().focus() // Errors, 'window' does not yield DOM element
 
 Pass in an options object to change the default behavior of `.focus()`.
 
-| Option    | Default                                                              | Description                                                                              |
-| --------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
-| `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.focus()` to resolve before [timing out](#Timeouts)                    |
+| Option    | Default                                                           | Description                                                                           |
+| --------- | ----------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| `log`     | `true`                                                            | Displays the command in the [Command log](/app/core-concepts/cypress-app#Command-Log) |
+| `timeout` | [`defaultCommandTimeout`](/app/references/configuration#Timeouts) | Time to wait for `.focus()` to resolve before [timing out](#Timeouts)                 |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
 
 - `.focus()` yields the same subject it was given.
-- It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried)
+- It is [unsafe](/app/core-concepts/retry-ability#Only-queries-are-retried)
   to chain further commands that rely on the subject after `.focus()`.
 
 ## Examples
@@ -71,7 +71,7 @@ cy.get('textarea').focus().type('Nice Product!').blur()
 
 `.focus()` is not implemented like other action commands, and does not follow
 the same rules of
-[waiting for actionability](/guides/core-concepts/interacting-with-elements).
+[waiting for actionability](/app/core-concepts/interacting-with-elements).
 
 `.focus()` is a helpful command used as a shortcut. Normally there's no way for
 a user to "focus" an element without causing another action or side effect.
@@ -112,16 +112,16 @@ events. Your best bet here is to keep Cypress focused when working on a test.
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
+### Requirements [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
 
 - `.focus()` requires being chained off a command that yields DOM element(s).
 - `.focus()` requires the element to be able to receive focus.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
+### Assertions [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
 
 - `.focus()` will automatically wait for assertions you have chained to pass.
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
+### Timeouts [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
 
 - `.focus()` can time out waiting for assertions you've added to pass.
 

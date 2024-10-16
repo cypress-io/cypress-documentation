@@ -7,7 +7,7 @@ Enables you to work with the subject yielded from the previous command.
 :::info
 
 **Note:** `.then()` assumes you are already familiar with core concepts such as
-[closures](/guides/core-concepts/variables-and-aliases#Closures).
+[closures](/app/core-concepts/variables-and-aliases#Closures).
 
 :::
 
@@ -41,15 +41,15 @@ cy.location().then((loc) => {}) // Yields location object as first arg
 
 Pass in an options object to change the default behavior of `.then()`.
 
-| Option    | Default                                                              | Description                                                          |
-| --------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- |
-| `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.then()` to resolve before [timing out](#Timeouts) |
+| Option    | Default                                                           | Description                                                          |
+| --------- | ----------------------------------------------------------------- | -------------------------------------------------------------------- |
+| `timeout` | [`defaultCommandTimeout`](/app/references/configuration#Timeouts) | Time to wait for `.then()` to resolve before [timing out](#Timeouts) |
 
 <Icon name="angle-right" /> **callbackFn _(Function)_**
 
 Pass a function that takes the previously yielded subject as its first argument.
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
 
 Whatever is returned from the callback function becomes the new subject and will
 flow into the next command (with the exception of `undefined` or `null`).
@@ -67,7 +67,7 @@ flow into the next command (with the exception of `undefined` or `null`).
   modified, and the previous subject will carry over to the next command.
 
 The callback function of `.then()` is not retried. It is
-[unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried) to return
+[unsafe](/app/core-concepts/retry-ability#Only-queries-are-retried) to return
 DOM elements directly from the callback and then use further commands on them.
 Instead, use Cypress queries to locate the elements you're interested in acting
 or asserting on.
@@ -77,7 +77,7 @@ or asserting on.
 :::info
 
 We have several more examples in our
-[Core Concepts Guide](/guides/core-concepts/variables-and-aliases) which go into
+[Core Concepts Guide](/app/core-concepts/variables-and-aliases) which go into
 the various ways you can use `.then()` to store, compare, and debug values.
 
 :::
@@ -226,16 +226,16 @@ cy.get('button')
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
+### Requirements [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
 
 - `.then()` requires being chained off a previous command.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
+### Assertions [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
 
 - `.then()` will only run assertions you have chained once, and will not
-  [retry](/guides/core-concepts/retry-ability).
+  [retry](/app/core-concepts/retry-ability).
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
+### Timeouts [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
 
 - `.then()` can time out waiting for a promise you've returned to resolve.
 
@@ -245,10 +245,10 @@ cy.get('button')
 
 ## History
 
-| Version                                       | Changes                 |
-| --------------------------------------------- | ----------------------- |
-| [0.14.0](/guides/references/changelog#0-14-0) | Added `timeout` option  |
-| [< 0.3.3](/guides/references/changelog#0-3-3) | `.then()` command added |
+| Version                                    | Changes                 |
+| ------------------------------------------ | ----------------------- |
+| [0.14.0](/app/references/changelog#0-14-0) | Added `timeout` option  |
+| [< 0.3.3](/app/references/changelog#0-3-3) | `.then()` command added |
 
 ## See also
 
@@ -258,5 +258,5 @@ cy.get('button')
 - [`.its()`](/api/commands/its)
 - [`.should()`](/api/commands/should)
 - [`.spread()`](/api/commands/spread)
-- [Guide: Using Closures to compare values](/guides/core-concepts/variables-and-aliases#Closures)
-- [Guide: Chains of Commands](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+- [Guide: Using Closures to compare values](/app/core-concepts/variables-and-aliases#Closures)
+- [Guide: Chains of Commands](/app/core-concepts/introduction-to-cypress#Chains-of-Commands)

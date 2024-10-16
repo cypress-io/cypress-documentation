@@ -10,7 +10,7 @@ assertion. It is not retryable, chainable, or timeout-able.
 :::info
 
 **Note:** `.stub()` assumes you are already familiar with our guide:
-[Stubs, Spies, and Clocks](/guides/guides/stubs-spies-and-clocks)
+[Stubs, Spies, and Clocks](/app/guide/stubs-spies-and-clocks)
 
 :::
 
@@ -45,7 +45,7 @@ The name of the `method` on the `object` to be wrapped.
 
 The function used to replace the `method` on the `object`.
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
 
 - `cy.stub()` is _synchronous_ and returns a value (the stub) instead of a
   Promise-like chain-able object. It can be aliased.
@@ -233,17 +233,17 @@ outputs the following:
 
 ## History
 
-| Version                                       | Changes                   |
-| --------------------------------------------- | ------------------------- |
-| [0.20.0](/guides/references/changelog#0-20-0) | Added `.log(bool)` method |
-| [0.18.8](/guides/references/changelog#0-18-8) | `cy.stub()` command added |
+| Version                                    | Changes                   |
+| ------------------------------------------ | ------------------------- |
+| [0.20.0](/app/references/changelog#0-20-0) | Added `.log(bool)` method |
+| [0.18.8](/app/references/changelog#0-18-8) | `cy.stub()` command added |
 
 ## See also
 
 - [`.as()`](/api/commands/as)
 - [`cy.clock()`](/api/commands/clock)
 - [`cy.spy()`](/api/commands/spy)
-- [Guide: Stubs, Spies and Clocks](/guides/guides/stubs-spies-and-clocks)
+- [Guide: Stubs, Spies and Clocks](/app/guide/stubs-spies-and-clocks)
 - [Recipe: Stubbing, Spying](/examples/recipes#Stubbing-and-spying)
 - [Recipe: Unit Test - Stubbing Dependencies](/examples/recipes)
 - [Stub navigator API in end-to-end tests](https://glebbahmutov.com/blog/stub-navigator-api/)

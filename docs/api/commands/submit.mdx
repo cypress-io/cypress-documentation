@@ -4,12 +4,12 @@ title: submit
 
 Submit a form.
 
-It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried) to
+It is [unsafe](/app/core-concepts/retry-ability#Only-queries-are-retried) to
 chain further commands that rely on the subject after `.submit()`.
 
 :::caution
 
-The [subject](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+The [subject](/app/core-concepts/introduction-to-cypress#Subject-Management)
 must be a `<form>`.
 
 :::
@@ -42,15 +42,15 @@ cy.get('input').submit() // Errors, 'input' does not yield a form
 
 Pass in an options object to change the default behavior of `.submit()`.
 
-| Option    | Default                                                              | Description                                                                              |
-| --------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
-| `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.submit()` to resolve before [timing out](#Timeouts)                   |
+| Option    | Default                                                           | Description                                                                           |
+| --------- | ----------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| `log`     | `true`                                                            | Displays the command in the [Command log](/app/core-concepts/cypress-app#Command-Log) |
+| `timeout` | [`defaultCommandTimeout`](/app/references/configuration#Timeouts) | Time to wait for `.submit()` to resolve before [timing out](#Timeouts)                |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
 
 - `.submit()` yields the same subject it was given.
-- It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried)
+- It is [unsafe](/app/core-concepts/retry-ability#Only-queries-are-retried)
   to chain further commands that rely on the subject after `.submit()`.
 
 ## Example
@@ -76,7 +76,7 @@ cy.get('#contact').submit()
 
 `.submit()` is not implemented like other action commands, and does not follow
 the same rules of
-[waiting for actionability](/guides/core-concepts/interacting-with-elements).
+[waiting for actionability](/app/core-concepts/interacting-with-elements).
 
 `.submit()` is a helpful command used as a shortcut. Normally a user has to
 perform a different "action" to submit a form. It could be clicking a submit
@@ -98,16 +98,16 @@ failures.
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
+### Requirements [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
 
 - `.submit()` requires being chained off a command that yields DOM element(s).
 - `.submit()` requires the element to be a `form`.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
+### Assertions [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
 
 - `.submit()` will automatically wait for assertions you have chained to pass.
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
+### Timeouts [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
 
 - `.submit()` can time out waiting for assertions you've added to pass.
 
@@ -137,9 +137,9 @@ following:
 
 ## History
 
-| Version                                       | Changes                   |
-| --------------------------------------------- | ------------------------- |
-| [< 0.3.3](/guides/references/changelog#0-3-3) | `.submit()` command added |
+| Version                                    | Changes                   |
+| ------------------------------------------ | ------------------------- |
+| [< 0.3.3](/app/references/changelog#0-3-3) | `.submit()` command added |
 
 ## See also
 

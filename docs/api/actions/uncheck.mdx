@@ -5,7 +5,7 @@ slug: /api/commands/uncheck
 
 Uncheck checkbox(es).
 
-It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried) to
+It is [unsafe](/app/core-concepts/retry-ability#Only-queries-are-retried) to
 chain further commands that rely on the subject after `.uncheck()`.
 
 ## Syntax
@@ -48,19 +48,19 @@ Values of checkboxes that should be unchecked.
 
 Pass in an options object to change the default behavior of `.uncheck()`.
 
-| Option                       | Default                                                                        | Description                                                                                                                                        |
-| ---------------------------- | ------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `animationDistanceThreshold` | [`animationDistanceThreshold`](/guides/references/configuration#Actionability) | The distance in pixels an element must exceed over time to be [considered animating](/guides/core-concepts/interacting-with-elements#Animations).  |
-| `force`                      | `false`                                                                        | Forces the action, disables [waiting for actionability](#Assertions)                                                                               |
-| `log`                        | `true`                                                                         | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log)                                                           |
-| `scrollBehavior`             | [`scrollBehavior`](/guides/references/configuration#Actionability)             | Viewport position to where an element [should be scrolled](/guides/core-concepts/interacting-with-elements#Scrolling) before executing the command |
-| `timeout`                    | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts)           | Time to wait for `.uncheck()` to resolve before [timing out](#Timeouts)                                                                            |
-| `waitForAnimations`          | [`waitForAnimations`](/guides/references/configuration#Actionability)          | Whether to wait for elements to [finish animating](/guides/core-concepts/interacting-with-elements#Animations) before executing the command.       |
+| Option                       | Default                                                                     | Description                                                                                                                                     |
+| ---------------------------- | --------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| `animationDistanceThreshold` | [`animationDistanceThreshold`](/app/references/configuration#Actionability) | The distance in pixels an element must exceed over time to be [considered animating](/app/core-concepts/interacting-with-elements#Animations).  |
+| `force`                      | `false`                                                                     | Forces the action, disables [waiting for actionability](#Assertions)                                                                            |
+| `log`                        | `true`                                                                      | Displays the command in the [Command log](/app/core-concepts/cypress-app#Command-Log)                                                           |
+| `scrollBehavior`             | [`scrollBehavior`](/app/references/configuration#Actionability)             | Viewport position to where an element [should be scrolled](/app/core-concepts/interacting-with-elements#Scrolling) before executing the command |
+| `timeout`                    | [`defaultCommandTimeout`](/app/references/configuration#Timeouts)           | Time to wait for `.uncheck()` to resolve before [timing out](#Timeouts)                                                                         |
+| `waitForAnimations`          | [`waitForAnimations`](/app/references/configuration#Actionability)          | Whether to wait for elements to [finish animating](/app/core-concepts/interacting-with-elements#Animations) before executing the command.       |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
 
 - `.uncheck()` yields the same subject it was given.
-- It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried)
+- It is [unsafe](/app/core-concepts/retry-ability#Only-queries-are-retried)
   to chain further commands that rely on the subject after `.uncheck()`.
 
 ## Examples
@@ -102,26 +102,26 @@ cy.get('[type="checkbox"]').uncheck(['ga', 'ca'])
 #### The element must first reach actionability
 
 `.uncheck()` is an "action command" that follows all the rules of
-[Actionability](/guides/core-concepts/interacting-with-elements).
+[Actionability](/app/core-concepts/interacting-with-elements).
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
+### Requirements [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
 
 - `.uncheck()` requires being chained off a command that yields DOM element(s).
 - `.uncheck()` requires the element to have type `checkbox`.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
+### Assertions [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
 
 - `.uncheck()` will automatically wait for the element to reach an
-  [actionable state](/guides/core-concepts/interacting-with-elements).
-- `.uncheck()` will automatically [retry](/guides/core-concepts/retry-ability)
+  [actionable state](/app/core-concepts/interacting-with-elements).
+- `.uncheck()` will automatically [retry](/app/core-concepts/retry-ability)
   until all chained assertions have passed.
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
+### Timeouts [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
 
 - `.uncheck()` can time out waiting for the element to reach an
-  [actionable state](/guides/core-concepts/interacting-with-elements).
+  [actionable state](/app/core-concepts/interacting-with-elements).
 - `.uncheck()` can time out waiting for assertions you've added to pass.
 
 ## Command Log
@@ -153,11 +153,11 @@ following:
 
 ## History
 
-| Version                                       | Changes                       |
-| --------------------------------------------- | ----------------------------- |
-| [6.1.0](/guides/references/changelog#6-1-0)   | Added option `scrollBehavior` |
-| [0.6.12](/guides/references/changelog#0-6-12) | Added option `force`          |
-| [0.3.3](/guides/references/changelog#0-3-3)   | `.uncheck()` command added    |
+| Version                                    | Changes                       |
+| ------------------------------------------ | ----------------------------- |
+| [6.1.0](/app/references/changelog#6-1-0)   | Added option `scrollBehavior` |
+| [0.6.12](/app/references/changelog#0-6-12) | Added option `force`          |
+| [0.3.3](/app/references/changelog#0-3-3)   | `.uncheck()` command added    |
 
 ## See also
 

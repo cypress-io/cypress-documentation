@@ -10,7 +10,7 @@ command with an `@` prefix.
 :::info
 
 **Note:** `.as()` assumes you are already familiar with core concepts such as
-[aliases](/guides/core-concepts/variables-and-aliases)
+[aliases](/app/core-concepts/variables-and-aliases)
 
 :::
 
@@ -55,7 +55,7 @@ Pass in an options object to change the default behavior of `.as()`.
 | ------ | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `type` | `query` | The type of alias to store, which impacts how the value is retrieved later in the test. Valid values are `query` and `static`. A `query` alias re-runs all queries leading up to the resulting value each time the alias is requested. A `static` alias is retrieved once when the alias is stored, and will never change. `type` has no effect when aliasing intercepts, spies, and stubs. |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
 
 - `.as()` yields the same subject it was given.
 - It is _safe_ to chain further commands after `.as()`.
@@ -128,7 +128,7 @@ of `this`.
 :::caution
 
 **Note:** all aliases are reset before each test. See the
-[aliases guide](/guides/core-concepts/variables-and-aliases) for details.
+[aliases guide](/app/core-concepts/variables-and-aliases) for details.
 
 :::
 
@@ -183,17 +183,17 @@ describe('A fixture', () => {
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
+### Requirements [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
 
 - `.as()` requires being chained off a previous command.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
+### Assertions [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
 
 - `.as()` is a utility command.
 - `.as()` will not run assertions. Assertions will pass through as if this
   command did not exist.
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
+### Timeouts [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
 
 - `.as()` cannot time out.
 
@@ -218,13 +218,13 @@ Aliases of routes display in the routes instrument panel:
 
 ## History
 
-| Version                                       | Changes                                                       |
-| --------------------------------------------- | ------------------------------------------------------------- |
-| [12.3.0](/guides/references/changelog#12-3-0) | Added option `type` to opt into the pre-12.0.0 behavior.      |
-| [12.0.0](/guides/references/changelog#12-0-0) | All aliases now re-run queries leading up to them by default. |
+| Version                                    | Changes                                                       |
+| ------------------------------------------ | ------------------------------------------------------------- |
+| [12.3.0](/app/references/changelog#12-3-0) | Added option `type` to opt into the pre-12.0.0 behavior.      |
+| [12.0.0](/app/references/changelog#12-0-0) | All aliases now re-run queries leading up to them by default. |
 
 ## See also
 
 - [`cy.get()`](/api/commands/get)
 - [`cy.wait()`](/api/commands/wait)
-- [Guides: Aliases](/guides/core-concepts/variables-and-aliases)
+- [Aliases](/app/core-concepts/variables-and-aliases)

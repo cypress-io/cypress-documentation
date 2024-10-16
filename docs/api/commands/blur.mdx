@@ -4,7 +4,7 @@ title: blur
 
 Blur a focused element.
 
-It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried) to
+It is [unsafe](/app/core-concepts/retry-ability#Only-queries-are-retried) to
 chain further commands that rely on the subject after `.blur()`.
 
 :::caution
@@ -49,16 +49,16 @@ cy.window().blur() // Errors, 'window' does not yield DOM element
 
 Pass in an options object to change the default behavior of `.blur`.
 
-| Option    | Default                                                              | Description                                                                              |
-| --------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
-| `force`   | `false`                                                              | Forces the action, disables checking if [element is focused](#Requirements)              |
-| `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.blur()` to resolve before [timing out](#Timeouts)                     |
+| Option    | Default                                                           | Description                                                                           |
+| --------- | ----------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| `log`     | `true`                                                            | Displays the command in the [Command log](/app/core-concepts/cypress-app#Command-Log) |
+| `force`   | `false`                                                           | Forces the action, disables checking if [element is focused](#Requirements)           |
+| `timeout` | [`defaultCommandTimeout`](/app/references/configuration#Timeouts) | Time to wait for `.blur()` to resolve before [timing out](#Timeouts)                  |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
 
 - `.blur()` yields the same subject it was given.
-- It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried)
+- It is [unsafe](/app/core-concepts/retry-ability#Only-queries-are-retried)
   to chain further commands that rely on the subject after `.blur()`.
 
 ## Examples
@@ -90,7 +90,7 @@ cy.get('input:first').blur({ force: true })
 
 `.blur()` is not implemented like other action commands, and does not follow the
 same rules of
-[waiting for actionability](/guides/core-concepts/interacting-with-elements).
+[waiting for actionability](/app/core-concepts/interacting-with-elements).
 
 `.blur()` is a helpful command used as a shortcut. Normally there's no way for a
 user to "blur" an element. Typically the user would have to perform **another**
@@ -115,17 +115,17 @@ events. Your best bet here is to keep Cypress focused when working on a test.
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
+### Requirements [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
 
 - `.blur()` requires being chained off a command that yields DOMelement(s).
 - `.blur()` requires the element to currently have focus.
 - `.blur()` requires the element to be able to receive focus.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
+### Assertions [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
 
 - `.blur()` will automatically wait for assertions you have chained to pass.
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
+### Timeouts [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
 
 - `.blur()` can time out waiting for assertions you've added to pass.
 

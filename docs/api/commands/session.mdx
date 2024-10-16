@@ -11,7 +11,7 @@ and
 tests.
 
 The `cy.session()` command will inherit the
-[`testIsolation`](/guides/core-concepts/writing-and-organizing-tests#Test-Isolation)
+[`testIsolation`](/app/core-concepts/writing-and-organizing-tests#Test-Isolation)
 value to determine whether or not the page is cleared when caching and restoring
 the browser context.
 
@@ -116,7 +116,7 @@ before `setup` runs, regardless of the `testIsolation` configuration.
 | `validate`         | `undefined` | Validates the newly-created or restored session. Function to run immediately after the session is created and `setup` function runs or after a session is restored and the page is cleared. If it throws an exception, contains any failing Cypress command, returns a Promise which rejects or resolves to `false`, or the last Cypress command yielded `false`, the session is considered invalid.<br/><br/>- If validation fails immediately after `setup`, the test will fail.<br/>- If validation fails after restoring a session, `setup` will re-run. |
 | `cacheAcrossSpecs` | `false`     | When enabled, the newly created session is considered "global" and can be restored in any spec during the test execution in the same Cypress run on the same machine. Use this option for a session that will be used multiple times, across many specs.                                                                                                                                                                                                                                                                                                     |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
 
 - `cy.session()` yields `null`.
 
@@ -447,9 +447,9 @@ it('should test something on the /other page', () => {
 
 Tests will obviously be faster if you call `cy.visit()` only when necessary.
 This can be easily realised by
-[organizing tests into suites](/guides/core-concepts/writing-and-organizing-tests#Test-Structure)
+[organizing tests into suites](/app/core-concepts/writing-and-organizing-tests#Test-Structure)
 and calling `cy.visit()` **after** logging in, inside a
-[`beforeEach`](/guides/core-concepts/writing-and-organizing-tests#Hooks) hook.
+[`beforeEach`](/app/core-concepts/writing-and-organizing-tests#Hooks) hook.
 
 ```javascript
 const login = (name) => {
@@ -757,7 +757,7 @@ generate random unique ids if an arbitrary name-space does not meet your needs.
 #### Why are all my Cypress commands failing after calling `cy.session()`?
 
 When
-[`testIsolation`](/guides/core-concepts/writing-and-organizing-tests#Test-Isolation)
+[`testIsolation`](/app/core-concepts/writing-and-organizing-tests#Test-Isolation)
 is enabled, ensure that you're calling [`cy.visit()`](/api/commands/visit) after
 calling `cy.session()`, otherwise your tests will be running on a blank page.
 
@@ -772,7 +772,7 @@ necessary.
 
 ### The Instrument Panel
 
-{/* GA TODO: update /guides/core-concepts/cypress-app#Instrument-Panel */}
+{/* GA TODO: update /app/core-concepts/cypress-app#Instrument-Panel */}
 
 Whenever a session is created or restored inside a test, an extra instrument
 panel is displayed at the top of the test to give more information about the
@@ -846,13 +846,13 @@ data, including cookies, `localStorage` and `sessionStorage`.
 
 ## History
 
-| Version                                       | Changes                                                                                    |
-| --------------------------------------------- | ------------------------------------------------------------------------------------------ |
-| [12.0.0](/guides/references/changelog#12-0-0) | Removed `experimentalSessionAndOrigin` and made the command available by default.          |
-| [11.0.0](/guides/references/changelog#11-0-0) | The `setup` option is now required.                                                        |
-| [10.9.0](/guides/references/changelog#10-9-0) | Added `cacheAcrossSpecs` property.                                                         |
-| [9.6.0](/guides/references/changelog#9-6-0)   | Added support for `experimentalSessionAndOrigin` and removed `experimentalSessionSupport`. |
-| [8.2.0](/guides/references/changelog#8-2-0)   | `cy.session()` command added and can be used when `experimentalSessionSupport` is enabled. |
+| Version                                    | Changes                                                                                    |
+| ------------------------------------------ | ------------------------------------------------------------------------------------------ |
+| [12.0.0](/app/references/changelog#12-0-0) | Removed `experimentalSessionAndOrigin` and made the command available by default.          |
+| [11.0.0](/app/references/changelog#11-0-0) | The `setup` option is now required.                                                        |
+| [10.9.0](/app/references/changelog#10-9-0) | Added `cacheAcrossSpecs` property.                                                         |
+| [9.6.0](/app/references/changelog#9-6-0)   | Added support for `experimentalSessionAndOrigin` and removed `experimentalSessionSupport`. |
+| [8.2.0](/app/references/changelog#8-2-0)   | `cy.session()` command added and can be used when `experimentalSessionSupport` is enabled. |
 
 ## See also
 

@@ -56,14 +56,14 @@ tree) that contain the specific text.
 
 Pass in an options object to change the default behavior of `.contains()`.
 
-| Option             | Default                                                                           | Description                                                                                                  |
-| ------------------ | --------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
-| `matchCase`        | `true`                                                                            | Check case sensitivity                                                                                       |
-| `log`              | `true`                                                                            | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log)                     |
-| `timeout`          | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts)              | Time to wait for `.contains()` to resolve before [timing out](#Timeouts)                                     |
-| `includeShadowDom` | [`includeShadowDom` config option value](/guides/references/configuration#Global) | Whether to traverse shadow DOM boundaries and include elements within the shadow DOM in the yielded results. |
+| Option             | Default                                                                        | Description                                                                                                  |
+| ------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------ |
+| `matchCase`        | `true`                                                                         | Check case sensitivity                                                                                       |
+| `log`              | `true`                                                                         | Displays the command in the [Command log](/app/core-concepts/cypress-app#Command-Log)                        |
+| `timeout`          | [`defaultCommandTimeout`](/app/references/configuration#Timeouts)              | Time to wait for `.contains()` to resolve before [timing out](#Timeouts)                                     |
+| `includeShadowDom` | [`includeShadowDom` config option value](/app/references/configuration#Global) | Whether to traverse shadow DOM boundaries and include elements within the shadow DOM in the yielded results. |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
 
 - `.contains()` yields the new DOM element it found.
 - `.contains()` is a query, and it is _safe_ to chain further commands.
@@ -181,7 +181,7 @@ cy.contains('ul', 'apples')
 #### Keep the form as the subject
 
 Here's an example that uses the selector to ensure that the `<form>` remains the
-[subject](/guides/core-concepts/introduction-to-cypress#Subject-Management) for
+[subject](/app/core-concepts/introduction-to-cypress#Subject-Management) for
 future chaining.
 
 ```html
@@ -450,23 +450,23 @@ cy.contains('Age').find('input').type('29')
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
+### Requirements [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
 
 - `.contains()` can be chained off of `cy` or off a command that yields DOM
   element(s).
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
+### Assertions [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
 
-- `.contains()` will automatically [retry](/guides/core-concepts/retry-ability)
+- `.contains()` will automatically [retry](/app/core-concepts/retry-ability)
   until the element(s)
-  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Implicit-Assertions).
-- `.contains()`will automatically [retry](/guides/core-concepts/retry-ability)
+  [exist in the DOM](/app/core-concepts/introduction-to-cypress#Implicit-Assertions).
+- `.contains()`will automatically [retry](/app/core-concepts/retry-ability)
   until all chained assertions have passed.
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
+### Timeouts [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
 
 - `.contains()` can time out waiting for the element(s) to
-  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Implicit-Assertions).
+  [exist in the DOM](/app/core-concepts/introduction-to-cypress#Implicit-Assertions).
 - `.contains()` can time out waiting for assertions you've added to pass.
 
 ## Command Log
@@ -494,14 +494,14 @@ outputs the following:
 
 ## History
 
-| Version                                     | Changes                               |
-| ------------------------------------------- | ------------------------------------- |
-| [5.2.0](/guides/references/changelog#5-2-0) | Added `includeShadowDom` option.      |
-| [4.0.0](/guides/references/changelog#4-0-0) | Added support for option `matchCase`. |
+| Version                                  | Changes                               |
+| ---------------------------------------- | ------------------------------------- |
+| [5.2.0](/app/references/changelog#5-2-0) | Added `includeShadowDom` option.      |
+| [4.0.0](/app/references/changelog#4-0-0) | Added support for option `matchCase`. |
 
 ## See also
 
 - [`cy.get()`](/api/commands/get)
 - [`.invoke()`](/api/commands/invoke)
 - [`.within()`](/api/commands/within)
-- [Retry-ability](/guides/core-concepts/retry-ability)
+- [Retry-ability](/app/core-concepts/retry-ability)

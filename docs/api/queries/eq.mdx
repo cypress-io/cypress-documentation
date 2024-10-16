@@ -53,12 +53,12 @@ at within an array of elements.
 
 Pass in an options object to change the default behavior of `.eq()`.
 
-| Option    | Default                                                              | Description                                                                              |
-| --------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
-| `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.eq()` to resolve before [timing out](#Timeouts)                       |
+| Option    | Default                                                           | Description                                                                           |
+| --------- | ----------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| `log`     | `true`                                                            | Displays the command in the [Command log](/app/core-concepts/cypress-app#Command-Log) |
+| `timeout` | [`defaultCommandTimeout`](/app/references/configuration#Timeouts) | Time to wait for `.eq()` to resolve before [timing out](#Timeouts)                    |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
 
 - `.eq()` yields the new DOM element it found.
 - `.eq()` is a query, and it is _safe_ to chain further commands.
@@ -130,22 +130,22 @@ cy.get('li').eq(-2).should('contain', 'sphynx') // true
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
+### Requirements [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
 
 - `.eq()` requires being chained off a command that yields DOM element(s).
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
+### Assertions [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
 
-- `.eq()` will automatically [retry](/guides/core-concepts/retry-ability) until
+- `.eq()` will automatically [retry](/app/core-concepts/retry-ability) until
   the element(s)
-  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Implicit-Assertions).
-- `.eq()` will automatically [retry](/guides/core-concepts/retry-ability) until
+  [exist in the DOM](/app/core-concepts/introduction-to-cypress#Implicit-Assertions).
+- `.eq()` will automatically [retry](/app/core-concepts/retry-ability) until
   all chained assertions have passed.
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
+### Timeouts [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
 
 - `.eq()` can time out waiting for the element(s) to
-  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Implicit-Assertions).
+  [exist in the DOM](/app/core-concepts/introduction-to-cypress#Implicit-Assertions).
 - `.eq()` can time out waiting for assertions you've added to pass.
 
 ## Command Log

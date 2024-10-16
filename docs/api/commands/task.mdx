@@ -9,7 +9,7 @@ Execute code in [Node](https://nodejs.org) via the `task` plugin event.
 <strong>Anti-Pattern</strong>
 
 We do not recommend starting a web server using `cy.task()`. Read about
-[best practices](/guides/references/best-practices#Web-Servers) here.
+[best practices](/app/references/best-practices#Web-Servers) here.
 
 :::
 
@@ -57,7 +57,7 @@ the given event has been handled.
 <Icon name="angle-right" /> **event _(String)_**
 
 An event name to be handled via the `task` event in the
-[setupNodeEvents](/guides/tooling/plugins-guide#Using-a-plugin) function.
+[setupNodeEvents](/app/tooling/plugins-guide#Using-a-plugin) function.
 
 <Icon name="angle-right" /> **arg _(Object)_**
 
@@ -93,15 +93,15 @@ on('task', {
 
 Pass in an options object to change the default behavior of `cy.task()`.
 
-| Option    | Default                                                    | Description                                                                              |
-| --------- | ---------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| `log`     | `true`                                                     | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
-| `timeout` | [`taskTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.task()` to resolve before [timing out](#Timeouts)                   |
+| Option    | Default                                                 | Description                                                                           |
+| --------- | ------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| `log`     | `true`                                                  | Displays the command in the [Command log](/app/core-concepts/cypress-app#Command-Log) |
+| `timeout` | [`taskTimeout`](/app/references/configuration#Timeouts) | Time to wait for `cy.task()` to resolve before [timing out](#Timeouts)                |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
 
 `cy.task()` yields the value returned or resolved by the `task` event in
-[setupNodeEvents](/guides/tooling/plugins-guide#Using-a-plugin).
+[setupNodeEvents](/app/tooling/plugins-guide#Using-a-plugin).
 
 ## Examples
 
@@ -235,7 +235,7 @@ on('task', {
 ### Save a variable across non same-origin URL visits
 
 When visiting non same-origin URL, Cypress will
-[change the hosted URL to the new URL](/guides/guides/web-security), wiping the
+[change the hosted URL to the new URL](/app/guide/web-security), wiping the
 state of any local variables. We want to save a variable across visiting non
 same-origin URLs.
 
@@ -374,7 +374,7 @@ Cypress.config('taskTimeout') // => 30000
 
 You can configure the `cy.task()` timeout within a suite or test by passing the
 new configuration value within the
-[test configuration](/guides/references/configuration#Test-Configuration).
+[test configuration](/app/references/configuration#Test-Configuration).
 
 This will set the timeout throughout the duration of the tests, then return it
 to the default `taskTimeout` when complete.
@@ -503,17 +503,17 @@ on('task', {
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
+### Requirements [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
 
 - `cy.task()` requires being chained off of `cy`.
 - `cy.task()` requires the task to eventually end.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
+### Assertions [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
 
 - `cy.task()` will only run assertions you have chained once, and will not
-  [retry](/guides/core-concepts/retry-ability).
+  [retry](/app/core-concepts/retry-ability).
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
+### Timeouts [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
 
 - `cy.task()` can time out waiting for the task to end.
 
@@ -545,9 +545,9 @@ the following:
 
 ## History
 
-| Version                                     | Changes                   |
-| ------------------------------------------- | ------------------------- |
-| [3.0.0](/guides/references/changelog#3-0-0) | `cy.task()` command added |
+| Version                                  | Changes                   |
+| ---------------------------------------- | ------------------------- |
+| [3.0.0](/app/references/changelog#3-0-0) | `cy.task()` command added |
 
 ## See also
 

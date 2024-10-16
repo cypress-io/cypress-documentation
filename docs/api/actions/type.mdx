@@ -5,7 +5,7 @@ slug: /api/commands/type
 
 Type into a DOM element.
 
-It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried) to
+It is [unsafe](/app/core-concepts/retry-ability#Only-queries-are-retried) to
 chain further commands that rely on the subject after `.type()`.
 
 ## Syntax
@@ -83,22 +83,22 @@ sequences:
 
 Pass in an options object to change the default behavior of `.type()`.
 
-| Option                       | Default                                                                        | Description                                                                                                                                        |
-| ---------------------------- | ------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `animationDistanceThreshold` | [`animationDistanceThreshold`](/guides/references/configuration#Actionability) | The distance in pixels an element must exceed over time to be [considered animating](/guides/core-concepts/interacting-with-elements#Animations).  |
-| `delay`                      | `10`                                                                           | Delay after each keypress                                                                                                                          |
-| `force`                      | `false`                                                                        | Forces the action, disables [waiting for actionability](#Assertions)                                                                               |
-| `log`                        | `true`                                                                         | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log)                                                           |
-| `parseSpecialCharSequences`  | `true`                                                                         | Parse special characters for strings surrounded by `{}`, such as `{esc}`. Set to `false` to type the literal characters instead                    |
-| `release`                    | `true`                                                                         | Keep a modifier activated between commands                                                                                                         |
-| `scrollBehavior`             | [`scrollBehavior`](/guides/references/configuration#Actionability)             | Viewport position to where an element [should be scrolled](/guides/core-concepts/interacting-with-elements#Scrolling) before executing the command |
-| `timeout`                    | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts)           | Time to wait for `.type()` to resolve before [timing out](#Timeouts)                                                                               |
-| `waitForAnimations`          | [`waitForAnimations`](/guides/references/configuration#Actionability)          | Whether to wait for elements to [finish animating](/guides/core-concepts/interacting-with-elements#Animations) before executing the command.       |
+| Option                       | Default                                                                     | Description                                                                                                                                     |
+| ---------------------------- | --------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| `animationDistanceThreshold` | [`animationDistanceThreshold`](/app/references/configuration#Actionability) | The distance in pixels an element must exceed over time to be [considered animating](/app/core-concepts/interacting-with-elements#Animations).  |
+| `delay`                      | `10`                                                                        | Delay after each keypress                                                                                                                       |
+| `force`                      | `false`                                                                     | Forces the action, disables [waiting for actionability](#Assertions)                                                                            |
+| `log`                        | `true`                                                                      | Displays the command in the [Command log](/app/core-concepts/cypress-app#Command-Log)                                                           |
+| `parseSpecialCharSequences`  | `true`                                                                      | Parse special characters for strings surrounded by `{}`, such as `{esc}`. Set to `false` to type the literal characters instead                 |
+| `release`                    | `true`                                                                      | Keep a modifier activated between commands                                                                                                      |
+| `scrollBehavior`             | [`scrollBehavior`](/app/references/configuration#Actionability)             | Viewport position to where an element [should be scrolled](/app/core-concepts/interacting-with-elements#Scrolling) before executing the command |
+| `timeout`                    | [`defaultCommandTimeout`](/app/references/configuration#Timeouts)           | Time to wait for `.type()` to resolve before [timing out](#Timeouts)                                                                            |
+| `waitForAnimations`          | [`waitForAnimations`](/app/references/configuration#Actionability)          | Whether to wait for elements to [finish animating](/app/core-concepts/interacting-with-elements#Animations) before executing the command.       |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management)
 
 - `.type()` yields the same subject it was given.
-- It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried)
+- It is [unsafe](/app/core-concepts/retry-ability#Only-queries-are-retried)
   to chain further commands that rely on the subject after `.type()`.
 
 ## Examples
@@ -380,7 +380,7 @@ cy.get('body').type('{shift}', { release: false }).get('li:first').click()
 #### Force typing regardless of its actionable state
 
 Forcing typing overrides the
-[actionable checks](/guides/core-concepts/interacting-with-elements#Forcing)
+[actionable checks](/app/core-concepts/interacting-with-elements#Forcing)
 Cypress applies and will automatically fire the events.
 
 ```javascript
@@ -412,7 +412,7 @@ cy.get('input[type=text]').type('Test all the things', { force: true })
 ### Actionability
 
 `.type()` is an "action command" that follows all the rules of
-[Actionability](/guides/core-concepts/interacting-with-elements).
+[Actionability](/app/core-concepts/interacting-with-elements).
 
 ### Events
 
@@ -592,21 +592,21 @@ submitted.
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
 - `.type()` requires being chained off a command that yields DOM element(s).
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Assertions)
 
 - `.type()` will automatically wait for the element to reach an
-  [actionable state](/guides/core-concepts/interacting-with-elements).
-- `.type()` will automatically [retry](/guides/core-concepts/retry-ability)
+  [actionable state](/app/core-concepts/interacting-with-elements).
+- `.type()` will automatically [retry](/app/core-concepts/retry-ability)
   until all chained assertions have passed.
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Timeouts)
 
 - `.type()` can time out waiting for the element to reach an
-  [actionable state](/guides/core-concepts/interacting-with-elements).
+  [actionable state](/app/core-concepts/interacting-with-elements).
 - `.type()` can time out waiting for assertions you've added to pass.
 
 ## Command Log
@@ -634,23 +634,23 @@ following:
 
 ## History
 
-| Version                                         | Changes                                                                                                                                |
-| ----------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
-| [13.14.0](/guides/references/changelog#13-14-0) | Added support for `.type({upArrow})` and `.type({downArrow})` to work on date, month, week, time, datetime-local and range input types |
-| [6.1.0](/guides/references/changelog#6-1-0)     | Added option `scrollBehavior`                                                                                                          |
-| [5.6.0](/guides/references/changelog#5-6-0)     | Support single key combination syntax                                                                                                  |
-| [5.5.0](/guides/references/changelog#5-5-0)     | Support `beforeinput` event                                                                                                            |
-| [3.4.1](/guides/references/changelog#3-4-1)     | Added `parseSpecialCharSequences` option                                                                                               |
-| [3.3.0](/guides/references/changelog#3-3-0)     | Added `{insert}`, `{pageup}` and `{pagedown}` character sequences                                                                      |
-| [3.2.0](/guides/references/changelog#3-2-0)     | Added `{home}` and `{end}` character sequences                                                                                         |
-| [0.20.0](/guides/references/changelog#0-20-0)   | Supports for typing in inputs of type `date`, `time`, `month`, and `week`                                                              |
-| [0.17.1](/guides/references/changelog#0-17-1)   | Added `ctrl`, `cmd`, `shift`, and `alt` keyboard modifiers                                                                             |
-| [0.16.3](/guides/references/changelog#0-16-3)   | Supports for typing in elements with `tabindex` attribute                                                                              |
-| [0.16.2](/guides/references/changelog#0-16-2)   | Added `{downarrow}` and `{uparrow}` character sequences                                                                                |
-| [0.8.0](/guides/references/changelog#0-8-0)     | Outputs Key Events Table to console on click                                                                                           |
-| [0.8.0](/guides/references/changelog#0-8-0)     | Added `{selectall}`, `{del}`, `{backspace}`, `{esc}`, `{{}`, `{enter}`, `{leftarrow}`, `{rightarrow}` character sequences              |
-| [0.8.0](/guides/references/changelog#0-8-0)     | Added small delay (10ms) between each keystroke during `cy.type()`                                                                     |
-| [0.6.12](/guides/references/changelog#0-6-12)   | Added option `force`                                                                                                                   |
+| Version                                      | Changes                                                                                                                                |
+| -------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| [13.14.0](/app/references/changelog#13-14-0) | Added support for `.type({upArrow})` and `.type({downArrow})` to work on date, month, week, time, datetime-local and range input types |
+| [6.1.0](/app/references/changelog#6-1-0)     | Added option `scrollBehavior`                                                                                                          |
+| [5.6.0](/app/references/changelog#5-6-0)     | Support single key combination syntax                                                                                                  |
+| [5.5.0](/app/references/changelog#5-5-0)     | Support `beforeinput` event                                                                                                            |
+| [3.4.1](/app/references/changelog#3-4-1)     | Added `parseSpecialCharSequences` option                                                                                               |
+| [3.3.0](/app/references/changelog#3-3-0)     | Added `{insert}`, `{pageup}` and `{pagedown}` character sequences                                                                      |
+| [3.2.0](/app/references/changelog#3-2-0)     | Added `{home}` and `{end}` character sequences                                                                                         |
+| [0.20.0](/app/references/changelog#0-20-0)   | Supports for typing in inputs of type `date`, `time`, `month`, and `week`                                                              |
+| [0.17.1](/app/references/changelog#0-17-1)   | Added `ctrl`, `cmd`, `shift`, and `alt` keyboard modifiers                                                                             |
+| [0.16.3](/app/references/changelog#0-16-3)   | Supports for typing in elements with `tabindex` attribute                                                                              |
+| [0.16.2](/app/references/changelog#0-16-2)   | Added `{downarrow}` and `{uparrow}` character sequences                                                                                |
+| [0.8.0](/app/references/changelog#0-8-0)     | Outputs Key Events Table to console on click                                                                                           |
+| [0.8.0](/app/references/changelog#0-8-0)     | Added `{selectall}`, `{del}`, `{backspace}`, `{esc}`, `{{}`, `{enter}`, `{leftarrow}`, `{rightarrow}` character sequences              |
+| [0.8.0](/app/references/changelog#0-8-0)     | Added small delay (10ms) between each keystroke during `cy.type()`                                                                     |
+| [0.6.12](/app/references/changelog#0-6-12)   | Added option `force`                                                                                                                   |
 
 ## See also
 

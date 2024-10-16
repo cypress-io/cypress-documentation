@@ -79,7 +79,7 @@ referenced with the `@` character and the name of the alias.
 
 <strong>Core Concept</strong>
 
-[You can read more about aliasing routes in our Core Concept Guide](/guides/guides/network-requests#Waiting).
+[You can read more about aliasing routes in our Core Concept Guide](/app/guide/network-requests#Waiting).
 
 :::
 
@@ -92,19 +92,19 @@ command and referenced with the `@` character and the name of the alias.
 
 Pass in an options object to change the default behavior of `cy.wait()`.
 
-| Option            | Default                                                                                                                       | Description                                                                              |
-| ----------------- | ----------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| `log`             | `true`                                                                                                                        | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
-| `timeout`         | [`requestTimeout`](/guides/references/configuration#Timeouts), [`responseTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.wait()` to resolve before [timing out](#Timeouts)                   |
-| `requestTimeout`  | [`requestTimeout`](/guides/references/configuration#Timeouts)                                                                 | Overrides the global `requestTimeout` for this request. Defaults to `timeout`.           |
-| `responseTimeout` | [`responseTimeout`](/guides/references/configuration#Timeouts)                                                                | Overrides the global `responseTimeout` for this request. Defaults to `timeout`.          |
+| Option            | Default                                                                                                                 | Description                                                                           |
+| ----------------- | ----------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| `log`             | `true`                                                                                                                  | Displays the command in the [Command log](/app/core-concepts/cypress-app#Command-Log) |
+| `timeout`         | [`requestTimeout`](/app/references/configuration#Timeouts), [`responseTimeout`](/app/references/configuration#Timeouts) | Time to wait for `cy.wait()` to resolve before [timing out](#Timeouts)                |
+| `requestTimeout`  | [`requestTimeout`](/app/references/configuration#Timeouts)                                                              | Overrides the global `requestTimeout` for this request. Defaults to `timeout`.        |
+| `responseTimeout` | [`responseTimeout`](/app/references/configuration#Timeouts)                                                             | Overrides the global `responseTimeout` for this request. Defaults to `timeout`.       |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
 
 #### When given a `time` argument:
 
 - `cy.wait()` yields the same subject it was given.
-- It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried)
+- It is [unsafe](/app/core-concepts/retry-ability#Only-queries-are-retried)
   to chain further commands that rely on the subject after `.wait()`.
 
 #### When given an `alias` argument:
@@ -130,7 +130,7 @@ You almost **never** need to wait for an arbitrary period of time. There are
 always better ways to express this in Cypress.
 
 Read about
-[best practices](/guides/references/best-practices#Unnecessary-Waiting) here.
+[best practices](/app/references/best-practices#Unnecessary-Waiting) here.
 
 :::
 
@@ -140,7 +140,7 @@ or [`cy.pause()`](/api/commands/pause) when debugging your test code.
 ### Alias
 
 For a detailed explanation of aliasing,
-[read more about waiting on routes here](/guides/guides/network-requests#Waiting).
+[read more about waiting on routes here](/app/guide/network-requests#Waiting).
 
 #### Wait for a specific request to respond
 
@@ -254,7 +254,7 @@ cy.get(...)
 ```
 
 Read
-[Guide: Introduction to Cypress](/guides/core-concepts/introduction-to-cypress#Commands-Run-Serially)
+[Guide: Introduction to Cypress](/app/core-concepts/introduction-to-cypress#Commands-Run-Serially)
 
 ### Timeouts {#Notes-Timeouts}
 
@@ -265,7 +265,7 @@ periods.
 
 The first period waits for a matching request to leave the browser. This
 duration is configured by the
-[`requestTimeout`](/guides/references/configuration#Timeouts) option - which has
+[`requestTimeout`](/app/references/configuration#Timeouts) option - which has
 a default of `5000` ms.
 
 This means that when you begin waiting for an aliased request, Cypress will wait
@@ -279,7 +279,7 @@ found, you will get an error message that looks like this:
 
 Once Cypress detects that a matching request has begun its request, it then
 switches over to the 2nd waiting period. This duration is configured by the
-[`responseTimeout`](/guides/references/configuration#Timeouts) option - which
+[`responseTimeout`](/app/references/configuration#Timeouts) option - which
 has a default of `30000` ms.
 
 This means Cypress will now wait up to 30 seconds for the external server to
@@ -302,19 +302,19 @@ requests to complete within the given `requestTimeout` and `responseTimeout`.
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
+### Requirements [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
 
 - When passed a `time` argument `cy.wait()` can be chained off of `cy` or off
   another command.
 - When passed an `alias` argument `cy.wait()` requires being chained off of
   `cy`.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
+### Assertions [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
 
 - `cy.wait()` will only run assertions you have chained once, and will not
-  [retry](/guides/core-concepts/retry-ability).
+  [retry](/app/core-concepts/retry-ability).
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
+### Timeouts [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
 
 - `cy.wait()` can time out waiting for the request to go out.
 - `cy.wait()` can time out waiting for the response to return.
@@ -356,10 +356,10 @@ following:
 
 ## History
 
-| Version                                       | Changes                                             |
-| --------------------------------------------- | --------------------------------------------------- |
-| [3.1.3](/guides/references/changelog#3-1-3)   | Added `requestTimeout` and `responseTimeout` option |
-| [< 0.3.3](/guides/references/changelog#0-3-3) | `cy.wait()` command added                           |
+| Version                                    | Changes                                             |
+| ------------------------------------------ | --------------------------------------------------- |
+| [3.1.3](/app/references/changelog#3-1-3)   | Added `requestTimeout` and `responseTimeout` option |
+| [< 0.3.3](/app/references/changelog#0-3-3) | `cy.wait()` command added                           |
 
 ## See also
 

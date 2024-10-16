@@ -16,7 +16,7 @@ An alias of [`.and()`](/api/commands/and)
 :::info
 
 **Note:** `.should()` assumes you are already familiar with core concepts such
-as [assertions](/guides/core-concepts/introduction-to-cypress#Assertions)
+as [assertions](/app/core-concepts/introduction-to-cypress#Assertions)
 
 :::
 
@@ -49,9 +49,9 @@ cy.should('eq', '42') // Should not be chained off 'cy'
 
 <Icon name="angle-right" /> **chainers _(String)_**
 
-Any valid chainer that comes from [Chai](/guides/references/assertions#Chai) or
-[Chai-jQuery](/guides/references/assertions#Chai-jQuery) or
-[Sinon-Chai](/guides/references/assertions#Sinon-Chai).
+Any valid chainer that comes from [Chai](/app/references/assertions#Chai) or
+[Chai-jQuery](/app/references/assertions#Chai-jQuery) or
+[Sinon-Chai](/app/references/assertions#Sinon-Chai).
 
 <Icon name="angle-right" /> **value _(String)_**
 
@@ -66,7 +66,7 @@ A method to be called on the chainer.
 Pass a function that can have any number of explicit assertions within it.
 Whatever was passed to the function is what is yielded.
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
 
 In most cases, `.should()` yields the same subject it was given from the
 previous command.
@@ -422,8 +422,8 @@ cy.get('button')
 
 #### How do I know which assertions change the subject and which keep it the same?
 
-The chainers that come from [Chai](/guides/references/bundled-libraries#Chai) or
-[Chai-jQuery](/guides/references/bundled-libraries#Chai-jQuery) will always
+The chainers that come from [Chai](/app/references/bundled-libraries#Chai) or
+[Chai-jQuery](/app/references/bundled-libraries#Chai-jQuery) will always
 document what they return.
 
 #### Using a callback function will not change what is yielded
@@ -450,13 +450,13 @@ cy.get('button')
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
+### Requirements [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
 
 - `.should()` requires being chained off a previous command.
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
+### Timeouts [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
 
-- `.should()` will continue to [retry](/guides/core-concepts/retry-ability) its
+- `.should()` will continue to [retry](/app/core-concepts/retry-ability) its
   specified assertions until it times out.
 
 ```javascript
@@ -501,15 +501,15 @@ following:
 
 ## History
 
-| Version                                       | Changes                                         |
-| --------------------------------------------- | ----------------------------------------------- |
-| [11.0.0](/guides/references/changelog#11-0-0) | Throw error if Cypress command used in callback |
-| [0.11.4](/guides/references/changelog#0-11-4) | Allows callback function argument               |
-| [< 0.3.3](/guides/references/changelog#0-3-3) | `.should()` command added                       |
+| Version                                    | Changes                                         |
+| ------------------------------------------ | ----------------------------------------------- |
+| [11.0.0](/app/references/changelog#11-0-0) | Throw error if Cypress command used in callback |
+| [0.11.4](/app/references/changelog#0-11-4) | Allows callback function argument               |
+| [< 0.3.3](/app/references/changelog#0-3-3) | `.should()` command added                       |
 
 ## See also
 
 - [`.and()`](/api/commands/and)
-- [Guide: Introduction to Cypress](/guides/core-concepts/introduction-to-cypress#Assertions)
-- [Reference: List of Assertions](/guides/references/assertions)
+- [Guide: Introduction to Cypress](/app/core-concepts/introduction-to-cypress#Assertions)
+- [Reference: List of Assertions](/app/references/assertions)
 - [cypress-example-kitchensink Assertions](https://example.cypress.io/commands/assertions)

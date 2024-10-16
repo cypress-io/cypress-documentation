@@ -12,9 +12,9 @@ import TOCInline from '@theme/TOCInline'
 
 ### <Icon name="angle-right" /> Is Cypress free and open source?
 
-[Cypress](/guides/core-concepts/cypress-app) is a free, downloadable and open
+[Cypress](/app/core-concepts/cypress-app) is a free, downloadable and open
 source (MIT license) application. This is always free to use.
-[Cypress Cloud](/guides/cloud/introduction) is a web application that offers a
+[Cypress Cloud](/app/cloud/introduction) is a web application that offers a
 variety of billing plans (including a free, open source plan) for when you want
 to record your test runs in CI.
 
@@ -22,9 +22,9 @@ Please see our [Pricing Page](https://www.cypress.io/pricing) for more details.
 
 ### <Icon name="angle-right" /> What operating systems do you support?
 
-You can [install Cypress](/guides/getting-started/installing-cypress) on Mac,
+You can [install Cypress](/app/getting-started/installing-cypress) on Mac,
 Linux, and Windows. For additional information, please see our
-[System requirements](/guides/getting-started/installing-cypress#System-requirements).
+[System requirements](/app/getting-started/installing-cypress#System-requirements).
 
 ### <Icon name="angle-right" /> Do you support native mobile apps?
 
@@ -120,11 +120,11 @@ You'll write your tests in JavaScript, but beyond that Cypress works everywhere.
 ### <Icon name="angle-right" /> Can I run Cypress on another browser other than Chrome?
 
 You can read about our currently available browsers
-[here](/guides/guides/launching-browsers).
+[here](/app/guide/launching-browsers).
 
 ### <Icon name="angle-right" /> Will Cypress work in my CI provider?
 
-Cypress works in any [CI provider](/guides/continuous-integration/introduction).
+Cypress works in any [CI provider](/app/continuous-integration/introduction).
 
 ### <Icon name="angle-right" /> Does Cypress require me to change any of my existing code?
 
@@ -150,7 +150,7 @@ critical ways:
   things like Cookies where we extend outside of the JavaScript sandbox and
   interact with the underlying browser APIs. This gives us flexibility to
   determine which type of event to use in specific situations. Native event
-  support is on our [roadmap](/guides/references/roadmap).
+  support is on our [roadmap](/app/references/roadmap).
 
 ### <Icon name="angle-right" /> If Cypress runs in the browser, doesn't that mean it's sandboxed?
 
@@ -293,7 +293,7 @@ Common examples are:
 
 ### <Icon name="angle-right" /> When should I write a End-to-End tests and when should I write Component Tests?
 
-For more information on how to choose a Cypress testing type, we recommend this [Testing Types Guide](/guides/core-concepts/testing-types).
+For more information on how to choose a Cypress testing type, we recommend this [Testing Types Guide](/app/core-concepts/testing-types).
 
 ### <Icon name="angle-right" /> When should I write a unit test and when should I write an end-to-end test?
 
@@ -326,7 +326,7 @@ features. Good tests:
 - Are flake-free and do not fail randomly.
 - Give you confidence to refactor code and add new features.
 - Are able to run both locally and on a
-  [continuous integration](/guides/continuous-integration/introduction) server.
+  [continuous integration](/app/continuous-integration/introduction) server.
 
 Certainly, unit and end-to-end tests are NOT in opposition to each other and are
 complementary tools in your toolbox.
@@ -334,7 +334,7 @@ complementary tools in your toolbox.
 ### <Icon name="angle-right" /> How do I convince my company to use Cypress?
 
 First, be honest with yourself -
-[is Cypress the right tool](/guides/overview/why-cypress) for your company and
+[is Cypress the right tool](/app/overview/why-cypress) for your company and
 your project? We believe that the best approach is a "bottoms up" approach,
 where you can demonstrate how Cypress solves your company's particular needs.
 Implement a prototype with your project to see how it feels. Test a couple of
@@ -351,7 +351,7 @@ follow through these links:
 
 - [GitHub (Releases & changelog)](https://github.com/cypress-io/cypress/releases)
 - [npm (Releases)](https://www.npmjs.com/package/cypress)
-- [Changelog at Cypress Docs](/guides/references/changelog)
+- [Changelog at Cypress Docs](/app/references/changelog)
 
 ### <Icon name="angle-right" /> How often are Cypress versions released?
 
@@ -370,7 +370,7 @@ patch as soon as possible.
 
 Cypress runs locally so no data is sent to Cypress aside from exception data,
 which can be disabled using the instructions
-[here](https://docs.cypress.io/guides/references/advanced-installation#Opt-out-of-sending-exception-data-to-Cypress).
+[here](https://docs.cypress.io/app/references/advanced-installation#Opt-out-of-sending-exception-data-to-Cypress).
 
 ### <Icon name="angle-right" /> Can I write API tests using Cypress? <E2EOnlyBadge />
 
@@ -426,7 +426,7 @@ pipes the request and response objects into Cypress GUI for easier debugging.
 
 A good strategy for writing targeted API tests is to use them to reach the
 hard-to-test code not covered by other tests. You can find such places in the
-code using the [code coverage](/guides/tooling/code-coverage) as a guide. Watch
+code using the [code coverage](/app/tooling/code-coverage) as a guide. Watch
 the
 [Ship safer code with Cypress and Codecov](https://www.cypress.io/blog/2021/01/22/webcast-recording-ship-safer-code-with-cypress-and-codecov/)
 webinar where we show how to apply this strategy and reach the 100% fullstack

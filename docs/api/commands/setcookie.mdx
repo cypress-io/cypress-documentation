@@ -33,19 +33,19 @@ The value of the cookie to set.
 
 Pass in an options object to change the default behavior of `cy.setCookie()`.
 
-| Option     | Default                                                        | Description                                                                                                                                                                                                           |
-| ---------- | -------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `log`      | `true`                                                         | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log)                                                                                                                              |
-| `domain`   | Hostname of the current URL                                    | The domain the cookie is visible to                                                                                                                                                                                   |
-| `expiry`   | 20 years into the future                                       | When the cookie expires, specified in seconds since [Unix Epoch](https://en.wikipedia.org/wiki/Unix_time).                                                                                                            |
-| `hostOnly` | `false`                                                        | Whether the cookie is a host-only cookie, (i.e. the request's host must exactly match the domain of the cookie)                                                                                                       |
-| `httpOnly` | `false`                                                        | Whether the cookie is an HTTP only cookie                                                                                                                                                                             |
-| `path`     | `/`                                                            | The cookie path                                                                                                                                                                                                       |
-| `secure`   | `false`                                                        | Whether the cookie is a secure cookie                                                                                                                                                                                 |
-| `timeout`  | [`responseTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.setCookie()` to resolve before [timing out](#Timeouts)                                                                                                                                           |
-| `sameSite` | `undefined`                                                    | Cookie's SameSite value. If set, should be one of `lax`, `strict`, or `no_restriction`. Pass `undefined` to use the browser's default. Note: `no_restriction` can only be used if the `secure` flag is set to `true`. |
+| Option     | Default                                                     | Description                                                                                                                                                                                                           |
+| ---------- | ----------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `log`      | `true`                                                      | Displays the command in the [Command log](/app/core-concepts/cypress-app#Command-Log)                                                                                                                                 |
+| `domain`   | Hostname of the current URL                                 | The domain the cookie is visible to                                                                                                                                                                                   |
+| `expiry`   | 20 years into the future                                    | When the cookie expires, specified in seconds since [Unix Epoch](https://en.wikipedia.org/wiki/Unix_time).                                                                                                            |
+| `hostOnly` | `false`                                                     | Whether the cookie is a host-only cookie, (i.e. the request's host must exactly match the domain of the cookie)                                                                                                       |
+| `httpOnly` | `false`                                                     | Whether the cookie is an HTTP only cookie                                                                                                                                                                             |
+| `path`     | `/`                                                         | The cookie path                                                                                                                                                                                                       |
+| `secure`   | `false`                                                     | Whether the cookie is a secure cookie                                                                                                                                                                                 |
+| `timeout`  | [`responseTimeout`](/app/references/configuration#Timeouts) | Time to wait for `cy.setCookie()` to resolve before [timing out](#Timeouts)                                                                                                                                           |
+| `sameSite` | `undefined`                                                 | Cookie's SameSite value. If set, should be one of `lax`, `strict`, or `no_restriction`. Pass `undefined` to use the browser's default. Note: `no_restriction` can only be used if the `secure` flag is set to `true`. |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
 
 `cy.setCookie()` yields a cookie object with the following properties:
 
@@ -77,16 +77,16 @@ cy.getCookie('session_id').should(
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
+### Requirements [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
 
 - `cy.setCookie()` requires being chained off of `cy`.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
+### Assertions [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
 
 - `cy.setCookie()` will only run assertions you have chained once, and will not
-  [retry](/guides/core-concepts/retry-ability).
+  [retry](/app/core-concepts/retry-ability).
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
+### Timeouts [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
 
 - `cy.setCookie()` should never time out.
 
@@ -123,12 +123,12 @@ following:
 
 ## History
 
-| Version                                       | Changes                                                                                                                                          |
-| --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
-| [12.7.0](/guides/references/changelog#12-7-0) | Support `hostOnly` option for a given domain.                                                                                                    |
-| [5.0.0](/guides/references/changelog#5-0-0)   | Removed `experimentalGetCookiesSameSite` and made `sameSite` property always available.                                                          |
-| [4.3.0](/guides/references/changelog#4-3-0)   | Added `sameSite` property when the [experimentalGetCookiesSameSite](/guides/references/configuration#Experiments) configuration value is `true`. |
-| [0.16.0](/guides/references/changelog#0-16-0) | `cy.setCookie()` command added                                                                                                                   |
+| Version                                    | Changes                                                                                                                                       |
+| ------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| [12.7.0](/app/references/changelog#12-7-0) | Support `hostOnly` option for a given domain.                                                                                                 |
+| [5.0.0](/app/references/changelog#5-0-0)   | Removed `experimentalGetCookiesSameSite` and made `sameSite` property always available.                                                       |
+| [4.3.0](/app/references/changelog#4-3-0)   | Added `sameSite` property when the [experimentalGetCookiesSameSite](/app/references/configuration#Experiments) configuration value is `true`. |
+| [0.16.0](/app/references/changelog#0-16-0) | `cy.setCookie()` command added                                                                                                                |
 
 ## See also
 

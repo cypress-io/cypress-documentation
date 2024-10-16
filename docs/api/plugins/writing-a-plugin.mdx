@@ -7,7 +7,7 @@ The Plugins API allows you to hook into and extend Cypress behavior.
 :::info
 
 **Note:** This document assumes you have read the
-[Plugins Guide](/guides/tooling/plugins-guide).
+[Plugins Guide](/app/tooling/plugins-guide).
 
 :::
 
@@ -15,7 +15,7 @@ The Plugins API allows you to hook into and extend Cypress behavior.
 
 ## Plugins API
 
-The [`setupNodeEvents`](/guides/references/configuration#setupNodeEvents)
+The [`setupNodeEvents`](/app/references/configuration#setupNodeEvents)
 function (or deprecated [plugins file][legacypluginsfile] function) receives 2
 arguments: [`on`](#on) and [`config`](#config). It can return a synchronous
 value or can also return a Promise, which will be awaited until it resolves.
@@ -57,7 +57,7 @@ please [refer to the docs for each one](#List-of-events).
 ### config
 
 `config` is the resolved
-[Cypress configuration](/guides/references/configuration) of the opened project.
+[Cypress configuration](/app/references/configuration) of the opened project.
 
 This configuration contains all of the values that get passed into the browser
 for your project.
@@ -73,9 +73,9 @@ of the standard configuration. **These values are read only and cannot be
 modified from the plugins file.**
 
 - `configFile`: The absolute path to the
-  [Cypress configuration file](/guides/references/configuration). See the
-  [--config-file](/guides/guides/command-line#cypress-open) and
-  [configFile](/guides/guides/module-api) docs for more information on this
+  [Cypress configuration file](/app/references/configuration). See the
+  [--config-file](/app/guide/command-line#cypress-open) and
+  [configFile](/app/guide/module-api) docs for more information on this
   value.
 - `projectRoot`: The absolute path to the root of the project (e.g.
   `/Users/me/dev/my-project`)
@@ -103,12 +103,12 @@ modified from the plugins file.**
 
 ## Execution context
 
-The [`setupNodeEvents`](/guides/references/configuration#setupNodeEvents)
+The [`setupNodeEvents`](/app/references/configuration#setupNodeEvents)
 function (or deprecated [plugins file][legacypluginsfile] function) is invoked
 when Cypress opens a project.
 
 Cypress does this by spawning an independent `child_process` which then
-`requires` the [Cypress configuration file](/guides/references/configuration).
+`requires` the [Cypress configuration file](/app/references/configuration).
 This is similar to the way Visual Studio Code or Atom works.
 
 This code will be executed using the the Node version that launched Cypress.
@@ -116,7 +116,7 @@ This code will be executed using the the Node version that launched Cypress.
 ### npm modules
 
 When Cypress executes the
-[`setupNodeEvents`](/guides/references/configuration#setupNodeEvents) function
+[`setupNodeEvents`](/app/references/configuration#setupNodeEvents) function
 (or deprecated [plugins file][legacypluginsfile] function) it will execute with
 `process.cwd()` set to your project's path. Additionally - you will be able to
 `require` **any node module** you have installed, including local files inside
@@ -154,12 +154,12 @@ console.log(process.cwd()) // /Users/janelane/Dev/my-project
 
 ## Error handling
 
-The [Cypress configuration file](/guides/references/configuration) is loaded in
+The [Cypress configuration file](/app/references/configuration) is loaded in
 its own child process so it is isolated away from the context that Cypress
 itself runs in. That means you cannot accidentally modify or change Cypress's
 own execution in any way.
 
-If your [`setupNodeEvents`](/guides/references/configuration#setupNodeEvents)
+If your [`setupNodeEvents`](/app/references/configuration#setupNodeEvents)
 function (or deprecated [plugins file][legacypluginsfile] function) has an
 uncaught exception, an unhandled rejection from a promise, or a syntax error -
 Cypress will automatically catch those and display them to you inside of the
@@ -173,7 +173,7 @@ Normally when writing code in Node, you typically have to restart the process
 after changing any files.
 
 Cypress automatically watches your
-[Cypress configuration file](/guides/references/configuration) and any changes
+[Cypress configuration file](/app/references/configuration) and any changes
 made will take effect immediately. We will read the file in and execute the
 exported function again.
 
@@ -181,4 +181,4 @@ This enables you to iterate on plugin code even with Cypress already running.
 
 <!-- map often used refs to deeplinks within page !-->
 
-[legacypluginsfile]: /guides/references/legacy-configuration#Plugins
+[legacypluginsfile]: /app/references/legacy-configuration#Plugins

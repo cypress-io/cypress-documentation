@@ -6,7 +6,7 @@ The `before:run` event fires before a run starts. When running cypress via
 `cypress open`, the event will fire when opening a project.
 
 The event will fire each time `cypress run` executes. As a result, if running
-your specs in [parallel](/guides/cloud/smart-orchestration/parallelization), the
+your specs in [parallel](/app/cloud/smart-orchestration/parallelization), the
 event will fire once for each machine on which the tests are run.
 
 ## Syntax
@@ -16,7 +16,7 @@ event will fire once for each machine on which the tests are run.
 :::caution
 
 ⚠️ When running via `cypress open`, the `before:run` event only fires if the
-[experimentalInteractiveRunEvents flag](/guides/references/experiments#Configuration)
+[experimentalInteractiveRunEvents flag](/app/references/experiments#Configuration)
 is enabled.
 
 :::
@@ -115,5 +115,5 @@ on('before:run', (details) => {
 - [After Run API](/api/plugins/after-run-api)
 - [Before Spec API](/api/plugins/before-spec-api)
 - [After Spec API](/api/plugins/after-spec-api)
-- [Plugins Guide](/guides/tooling/plugins-guide)
+- [Plugins Guide](/app/tooling/plugins-guide)
 - [Writing a Plugin](/api/plugins/writing-a-plugin)

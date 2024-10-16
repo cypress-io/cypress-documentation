@@ -3,8 +3,8 @@ title: Preprocessors API
 ---
 
 A preprocessor is the plugin responsible for preparing a
-[support file](/guides/core-concepts/writing-and-organizing-tests#Support-file)
-or a [spec file](/guides/core-concepts/writing-and-organizing-tests#Spec-files)
+[support file](/app/core-concepts/writing-and-organizing-tests#Support-file)
+or a [spec file](/app/core-concepts/writing-and-organizing-tests#Spec-files)
 for the browser.
 
 A preprocessor could transpile your file from another language (CoffeeScript or
@@ -66,7 +66,7 @@ Editing the options allows you to do things like:
 <WarningSetupNodeEvents />
 
 To use a preprocessor, you should bind to the `file:preprocessor` event in your
-[setupNodeEvents](/guides/tooling/plugins-guide#Using-a-plugin) function:
+[setupNodeEvents](/app/tooling/plugins-guide#Using-a-plugin) function:
 
 :::cypress-config-plugin-example
 

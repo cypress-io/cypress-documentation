@@ -40,12 +40,12 @@ A selector used to filter matching DOM elements.
 
 Pass in an options object to change the default behavior of `.siblings()`.
 
-| Option    | Default                                                              | Description                                                                              |
-| --------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
-| `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.siblings()` to resolve before [timing out](#Timeouts)                 |
+| Option    | Default                                                           | Description                                                                           |
+| --------- | ----------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| `log`     | `true`                                                            | Displays the command in the [Command log](/app/core-concepts/cypress-app#Command-Log) |
+| `timeout` | [`defaultCommandTimeout`](/app/references/configuration#Timeouts) | Time to wait for `.siblings()` to resolve before [timing out](#Timeouts)              |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
 
 - `.siblings()` yields the new DOM element(s) it found.
 - `.siblings()` is a query, and it is _safe_ to chain further commands.
@@ -81,22 +81,22 @@ cy.get('li').siblings('.active')
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
+### Requirements [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
 
 - `.siblings()` requires being chained off a command that yields DOM element(s).
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
+### Assertions [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
 
-- `.siblings()` will automatically [retry](/guides/core-concepts/retry-ability)
+- `.siblings()` will automatically [retry](/app/core-concepts/retry-ability)
   until the element(s)
-  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Implicit-Assertions).
-- `.siblings()` will automatically [retry](/guides/core-concepts/retry-ability)
+  [exist in the DOM](/app/core-concepts/introduction-to-cypress#Implicit-Assertions).
+- `.siblings()` will automatically [retry](/app/core-concepts/retry-ability)
   until all chained assertions have passed.
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
+### Timeouts [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
 
 - `.siblings()` can time out waiting for the element(s) to
-  [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Implicit-Assertions).
+  [exist in the DOM](/app/core-concepts/introduction-to-cypress#Implicit-Assertions).
 - `.siblings()` can time out waiting for assertions you've added to pass.
 
 ## Command Log
@@ -124,9 +124,9 @@ following:
 
 ## History
 
-| Version                                       | Changes                     |
-| --------------------------------------------- | --------------------------- |
-| [< 0.3.3](/guides/references/changelog#0-3-3) | `.siblings()` command added |
+| Version                                    | Changes                     |
+| ------------------------------------------ | --------------------------- |
+| [< 0.3.3](/app/references/changelog#0-3-3) | `.siblings()` command added |
 
 ## See also
 

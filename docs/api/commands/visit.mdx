@@ -12,7 +12,7 @@ Visit a remote URL.
 We recommend setting a `baseUrl` when using `cy.visit()`.
 
 Read about
-[best practices](/guides/references/best-practices#Setting-a-Global-baseUrl)
+[best practices](/app/references/best-practices#Setting-a-Global-baseUrl)
 here.
 
 :::
@@ -46,7 +46,7 @@ cy.visit({
 The URL to visit.
 
 Cypress will prefix the URL with the `baseUrl` configured in your
-[global configuration](/guides/references/configuration#Global) if set.
+[global configuration](/app/references/configuration#Global) if set.
 
 If the `baseUrl` has not been set, you will need to specify a fully qualified
 URL or Cypress will attempt to act as your web server. See the
@@ -61,31 +61,31 @@ Pass in an options object to control the behavior of `cy.visit()`.
 
 By default, the `cy.visit()` commands' will use the `pageLoadTimeout` and
 `baseUrl` set globally in your
-[configuration](/guides/references/configuration#Global).
+[configuration](/app/references/configuration#Global).
 
-| Option                     | Default                                                        | Description                                                                                                                                                                                                                              |
-| -------------------------- | -------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `url`                      | `null`                                                         | The URL to visit. This value will be appended to the `baseUrl` if one is configured. Behaves the same as the `url` argument.                                                                                                             |
-| `method`                   | `GET`                                                          | The HTTP method to use in the visit. Can be `GET` or `POST`.                                                                                                                                                                             |
-| `body`                     | `null`                                                         | An optional body to send along with a `POST` request. If it is a string, it will be passed along unmodified. If it is an object, it will be URL encoded to a string and sent with a `Content-Type: application/x-www-urlencoded` header. |
-| `headers`                  | `{}`                                                           | An object that maps HTTP header names to values to be sent along with the request. _Note:_ `headers` will only be sent for the initial `cy.visit()` request, not for any subsequent requests.                                            |
-| `qs`                       | `null`                                                         | Query parameters to append to the `url` of the request                                                                                                                                                                                   |
-| `log`                      | `true`                                                         | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log)                                                                                                                                                 |
-| `auth`                     | `null`                                                         | Adds Basic Authorization headers                                                                                                                                                                                                         |
-| `failOnStatusCode`         | `true`                                                         | Whether to fail on response codes other than `2xx` and `3xx`                                                                                                                                                                             |
-| `onBeforeLoad`             | `function`                                                     | Called before your page has loaded all of its resources.                                                                                                                                                                                 |
-| `onLoad`                   | `function`                                                     | Called once your page has fired its load event.                                                                                                                                                                                          |
-| `retryOnStatusCodeFailure` | `false`                                                        | Whether Cypress should automatically retry status code errors under the hood. Cypress will retry a request up to 4 times if this is set to true.                                                                                         |
-| `retryOnNetworkFailure`    | `true`                                                         | Whether Cypress should automatically retry transient network errors under the hood. Cypress will retry a request up to 4 times if this is set to true.                                                                                   |
-| `timeout`                  | [`pageLoadTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.visit()` to resolve before [timing out](#Timeouts) Note: Network requests are limited by the underlying operating system, and may still time out if this value is increased.                                        |
+| Option                     | Default                                                     | Description                                                                                                                                                                                                                              |
+| -------------------------- | ----------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `url`                      | `null`                                                      | The URL to visit. This value will be appended to the `baseUrl` if one is configured. Behaves the same as the `url` argument.                                                                                                             |
+| `method`                   | `GET`                                                       | The HTTP method to use in the visit. Can be `GET` or `POST`.                                                                                                                                                                             |
+| `body`                     | `null`                                                      | An optional body to send along with a `POST` request. If it is a string, it will be passed along unmodified. If it is an object, it will be URL encoded to a string and sent with a `Content-Type: application/x-www-urlencoded` header. |
+| `headers`                  | `{}`                                                        | An object that maps HTTP header names to values to be sent along with the request. _Note:_ `headers` will only be sent for the initial `cy.visit()` request, not for any subsequent requests.                                            |
+| `qs`                       | `null`                                                      | Query parameters to append to the `url` of the request                                                                                                                                                                                   |
+| `log`                      | `true`                                                      | Displays the command in the [Command log](/app/core-concepts/cypress-app#Command-Log)                                                                                                                                                    |
+| `auth`                     | `null`                                                      | Adds Basic Authorization headers                                                                                                                                                                                                         |
+| `failOnStatusCode`         | `true`                                                      | Whether to fail on response codes other than `2xx` and `3xx`                                                                                                                                                                             |
+| `onBeforeLoad`             | `function`                                                  | Called before your page has loaded all of its resources.                                                                                                                                                                                 |
+| `onLoad`                   | `function`                                                  | Called once your page has fired its load event.                                                                                                                                                                                          |
+| `retryOnStatusCodeFailure` | `false`                                                     | Whether Cypress should automatically retry status code errors under the hood. Cypress will retry a request up to 4 times if this is set to true.                                                                                         |
+| `retryOnNetworkFailure`    | `true`                                                      | Whether Cypress should automatically retry transient network errors under the hood. Cypress will retry a request up to 4 times if this is set to true.                                                                                   |
+| `timeout`                  | [`pageLoadTimeout`](/app/references/configuration#Timeouts) | Time to wait for `cy.visit()` to resolve before [timing out](#Timeouts) Note: Network requests are limited by the underlying operating system, and may still time out if this value is increased.                                        |
 
 You can also set all `cy.visit()` commands' `pageLoadTimeout` and `baseUrl`
-globally in the [Cypress configuration](/guides/references/configuration).
+globally in the [Cypress configuration](/app/references/configuration).
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
 
 - `cy.visit()` yields the `window` object after the page finishes loading.
-- It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried)
+- It is [unsafe](/app/core-concepts/retry-ability#Only-queries-are-retried)
   to chain further commands that rely on the yielded `window` after
   `cy.visit()`.
 
@@ -114,7 +114,7 @@ cy.visit('http://localhost:8000')
 #### Change the default timeout
 
 Overrides the `pageLoadTimeout` set globally in your
-[configuration](/guides/references/configuration) for this page load.
+[configuration](/app/references/configuration) for this page load.
 
 ```javascript
 // Wait 30 seconds for page 'load' event
@@ -244,7 +244,7 @@ cy.visit({
 #### Visit is automatically prefixed with `baseUrl`
 
 Cypress will prefix the URL with the `baseUrl` if it has been set. Configure
-`baseUrl` in the [Cypress configuration](/guides/references/configuration) to
+`baseUrl` in the [Cypress configuration](/app/references/configuration) to
 prevent repeating yourself in every `cy.visit()` command.
 
 :::cypress-config-example
@@ -275,7 +275,7 @@ cy.visit('https://example.cypress.io')
 Cypress will automatically attempt to serve your files if you don't provide a
 host and `baseUrl` **is not defined**. The path should be relative to your
 project's root folder (the directory that contains the
-[Cypress configuration file](/guides/references/configuration)).
+[Cypress configuration file](/app/references/configuration)).
 
 Having Cypress serve your files is useful in smaller projects and example apps,
 but isn't recommended for production apps. It is always better to run your own
@@ -289,7 +289,7 @@ cy.visit('app/index.html')
 
 If you have `baseUrl` set, but need to visit a local file in a single test or a
 group of tests, disable the `baseUrl` using
-[per-test configuration](/guides/references/configuration#Test-Configuration).
+[per-test configuration](/app/references/configuration#Test-Configuration).
 Imagine this Cypress configuration:
 
 :::cypress-config-example
@@ -397,18 +397,18 @@ does so immediately before any of your application code runs.
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
+### Requirements [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
 
 - `cy.visit()` requires being chained off of `cy`.
 - `cy.visit()` requires the response to be `content-type: text/html`.
 - `cy.visit()` requires the response code to be `2xx` after following redirects.
 - `cy.visit()` requires the load `load` event to eventually fire.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
+### Assertions [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
 
 - `cy.visit()` will automatically wait for assertions you have chained to pass
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
+### Timeouts [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
 
 - `cy.visit()` can time out waiting for the page to fire its `load` event.
 - `cy.visit()` can time out waiting for assertions you've added to pass.
@@ -448,19 +448,19 @@ following:
 
 ## History
 
-| Version                                       | Changes                                                                          |
-| --------------------------------------------- | -------------------------------------------------------------------------------- |
-| [11.0.0](/guides/references/changelog#11-0-0) | Removed `experimentalSessionAndOrigin` reference                                 |
-| [3.5.0](/guides/references/changelog#3-5-0)   | Added support for options `qs`                                                   |
-| [3.3.0](/guides/references/changelog#3-3-0)   | Added support for options `retryOnStatusCodeFailure` and `retryOnNetworkFailure` |
-| [3.2.0](/guides/references/changelog#3-2-0)   | Added options `url`, `method`, `body`, and `headers`                             |
-| [1.1.3](/guides/references/changelog#1-1-3)   | Added option `failOnStatusCode`                                                  |
-| [0.18.2](/guides/references/changelog#0-18-2) | Automatically send `Accept: text/html,*/*` request header                        |
-| [0.18.2](/guides/references/changelog#0-18-2) | Automatically send `User-Agent` header                                           |
-| [0.17.0](/guides/references/changelog#0-17-0) | Cannot `cy.visit()` two different super domains in a single test                 |
-| [0.6.8](/guides/references/changelog#0-6-8)   | Added option `log`                                                               |
-| [0.4.3](/guides/references/changelog#0-4-3)   | Added option `onBeforeLoad`                                                      |
-| [< 0.3.3](/guides/references/changelog#0-3-3) | `cy.visit()` command added                                                       |
+| Version                                    | Changes                                                                          |
+| ------------------------------------------ | -------------------------------------------------------------------------------- |
+| [11.0.0](/app/references/changelog#11-0-0) | Removed `experimentalSessionAndOrigin` reference                                 |
+| [3.5.0](/app/references/changelog#3-5-0)   | Added support for options `qs`                                                   |
+| [3.3.0](/app/references/changelog#3-3-0)   | Added support for options `retryOnStatusCodeFailure` and `retryOnNetworkFailure` |
+| [3.2.0](/app/references/changelog#3-2-0)   | Added options `url`, `method`, `body`, and `headers`                             |
+| [1.1.3](/app/references/changelog#1-1-3)   | Added option `failOnStatusCode`                                                  |
+| [0.18.2](/app/references/changelog#0-18-2) | Automatically send `Accept: text/html,*/*` request header                        |
+| [0.18.2](/app/references/changelog#0-18-2) | Automatically send `User-Agent` header                                           |
+| [0.17.0](/app/references/changelog#0-17-0) | Cannot `cy.visit()` two different super domains in a single test                 |
+| [0.6.8](/app/references/changelog#0-6-8)   | Added option `log`                                                               |
+| [0.4.3](/app/references/changelog#0-4-3)   | Added option `onBeforeLoad`                                                      |
+| [< 0.3.3](/app/references/changelog#0-3-3) | `cy.visit()` command added                                                       |
 
 ## See also
 

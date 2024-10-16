@@ -7,7 +7,7 @@ Spy and stub network requests and responses.
 :::info
 
 **Tip**: We recommend you read the
-[Network Requests](/guides/guides/network-requests) guide first.
+[Network Requests](/app/guide/network-requests) guide first.
 
 :::
 
@@ -173,7 +173,7 @@ send a response, access the real response, and more.
 See ["Intercepted requests"][req] and
 [Request/Response Modification with `routeHandler`](#RequestResponse-Modification-with-routeHandler).
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
 
 - `cy.intercept()` yields `null`, but can be aliased.
 - Waiting on an aliased `cy.intercept()` route using
@@ -300,7 +300,7 @@ cy.intercept({
 
 While `cy.intercept` doesn't yield anything, you can chain
 [`.as`](/api/commands/as) to it to create an
-[alias](/guides/core-concepts/variables-and-aliases#Aliases) which can be used
+[alias](/app/core-concepts/variables-and-aliases#Aliases) which can be used
 to [wait on a request](#Waiting-on-a-request).
 
 ```js
@@ -328,7 +328,7 @@ cy.wait('@gqlMutation')
 :::info
 
 For more guidance around aliasing requests with GraphQL, see
-[Working with GraphQL](/guides/end-to-end-testing/working-with-graphql).
+[Working with GraphQL](/app/end-to-end-testing/working-with-graphql).
 
 :::
 
@@ -546,7 +546,7 @@ cy.wait('@headers')
 
 You can add, modify or delete a header to all outgoing requests using a
 `beforeEach()` in the
-[supportFile](/guides/core-concepts/writing-and-organizing-tests#Support-file).
+[supportFile](/app/core-concepts/writing-and-organizing-tests#Support-file).
 
 ```js
 beforeEach(() => {
@@ -691,7 +691,7 @@ cy.intercept('/users', (req) => {
 #### Throttle or delay response all incoming responses
 
 You can throttle or delay all incoming responses using a `beforeEach()` in the
-[supportFile](/guides/core-concepts/writing-and-organizing-tests#Support-file).
+[supportFile](/app/core-concepts/writing-and-organizing-tests#Support-file).
 
 ```js
 // Throttle API responses to simulate real-world conditions
@@ -1613,26 +1613,26 @@ information about the request and response to the console:
   alt="Screenshot of cy.intercept console output"
 />
 
-[Read more about request logging in Cypress.](/guides/guides/network-requests#Command-Log)
+[Read more about request logging in Cypress.](/app/guide/network-requests#Command-Log)
 
 ## History
 
-| Version                                       | Changes                                                                                                                                                                                                                                                                                              |
-| --------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [12.2.0](/guides/references/changelog#12-2-0) | Added `resourceType` property to `req` and `RouteMatcher`.                                                                                                                                                                                                                                           |
-| [7.6.0](/guides/references/changelog#7-0-0)   | Added `query` option to `req` (The incoming request object yielded to request handler functions).                                                                                                                                                                                                    |
-| [7.0.0](/guides/references/changelog#7-0-0)   | Removed `matchUrlAgainstPath` option from `RouteMatcher`, reversed handler ordering, added request events, removed substring URL matching, removed `cy.route2` alias, added `middleware` RouteMatcher option, renamed `res.delay()` to `res.setDelay()` and `res.throttle()` to `res.setThrottle()`. |
-| [6.4.0](/guides/references/changelog#6-4-0)   | Renamed `delayMs` property to `delay` (backwards-compatible).                                                                                                                                                                                                                                        |
-| [6.2.0](/guides/references/changelog#6-2-0)   | Added `matchUrlAgainstPath` option to `RouteMatcher`.                                                                                                                                                                                                                                                |
-| [6.0.0](/guides/references/changelog#6-0-0)   | Renamed `cy.route2()` to `cy.intercept()`.                                                                                                                                                                                                                                                           |
-| [6.0.0](/guides/references/changelog#6-0-0)   | Removed `experimentalNetworkStubbing` option and made it the default behavior.                                                                                                                                                                                                                       |
-| [5.1.0](/guides/references/changelog#5-1-0)   | Added experimental `cy.route2()` command under `experimentalNetworkStubbing` option.                                                                                                                                                                                                                 |
+| Version                                    | Changes                                                                                                                                                                                                                                                                                              |
+| ------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [12.2.0](/app/references/changelog#12-2-0) | Added `resourceType` property to `req` and `RouteMatcher`.                                                                                                                                                                                                                                           |
+| [7.6.0](/app/references/changelog#7-0-0)   | Added `query` option to `req` (The incoming request object yielded to request handler functions).                                                                                                                                                                                                    |
+| [7.0.0](/app/references/changelog#7-0-0)   | Removed `matchUrlAgainstPath` option from `RouteMatcher`, reversed handler ordering, added request events, removed substring URL matching, removed `cy.route2` alias, added `middleware` RouteMatcher option, renamed `res.delay()` to `res.setDelay()` and `res.throttle()` to `res.setThrottle()`. |
+| [6.4.0](/app/references/changelog#6-4-0)   | Renamed `delayMs` property to `delay` (backwards-compatible).                                                                                                                                                                                                                                        |
+| [6.2.0](/app/references/changelog#6-2-0)   | Added `matchUrlAgainstPath` option to `RouteMatcher`.                                                                                                                                                                                                                                                |
+| [6.0.0](/app/references/changelog#6-0-0)   | Renamed `cy.route2()` to `cy.intercept()`.                                                                                                                                                                                                                                                           |
+| [6.0.0](/app/references/changelog#6-0-0)   | Removed `experimentalNetworkStubbing` option and made it the default behavior.                                                                                                                                                                                                                       |
+| [5.1.0](/app/references/changelog#5-1-0)   | Added experimental `cy.route2()` command under `experimentalNetworkStubbing` option.                                                                                                                                                                                                                 |
 
 ## See also
 
 - [`.as()`](/api/commands/as)
 - [`cy.wait()`](/api/commands/wait)
-- [Network Requests Guide](/guides/guides/network-requests)
+- [Network Requests Guide](/app/guide/network-requests)
 - [Cypress Example Recipes](https://github.com/cypress-io/cypress-example-recipes#stubbing-and-spying)
 - [Kitchen Sink Examples](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/cypress/e2e/2-advanced-examples/network_requests.cy.js)
 

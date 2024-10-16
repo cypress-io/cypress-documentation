@@ -12,7 +12,7 @@ yielding a 'subject' to the next command, until the chain ends or an error is
 encountered.
 
 Learn more about how commands chain together in the
-[Introduction to Chains of Commands](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands).
+[Introduction to Chains of Commands](/app/core-concepts/introduction-to-cypress#Chains-of-Commands).
 
 Cypress commands can be classified one of the following
 
@@ -22,7 +22,7 @@ Cypress commands can be classified one of the following
 - `other` - any other command that is useful for writing tests
 
 The differences between queries and other commands are outline in the
-[Retry-ability Guide](/guides/core-concepts/retry-ability).
+[Retry-ability Guide](/app/core-concepts/retry-ability).
 
 ### Queries
 
@@ -70,8 +70,8 @@ to make sure the DOM element or other data they yield is always up to date.
 Assertions are Cypress commands that assert on the state of your application.
 They pause your test until the given condition is met, or until they time out.
 Learn more about Cypress assertions in the
-[Introduction to Assertions](/guides/core-concepts/introduction-to-cypress#Assertions)
-and the [Assertions Reference](/guides/references/assertions).
+[Introduction to Assertions](/app/core-concepts/introduction-to-cypress#Assertions)
+and the [Assertions Reference](/app/references/assertions).
 
 | Command                             | Usage                                                                                                      |
 | ----------------------------------- | ---------------------------------------------------------------------------------------------------------- |
@@ -84,7 +84,7 @@ Actions are Cypress commands that interact with your application as a user
 would. They wait for elements to be actionable before interacting with the page.
 
 Learn more about action commands in our
-[Actionability Guide](/guides/core-concepts/interacting-with-elements).
+[Actionability Guide](/app/core-concepts/interacting-with-elements).
 
 | Command                                             | Usage                                                                                    |
 | --------------------------------------------------- | ---------------------------------------------------------------------------------------- |
@@ -200,7 +200,7 @@ later time.
 | [`Cypress.platform`](/api/cypress-api/platform)                          | The underlaying OS name, as returned by Node's `os.platform()`.                                                                |
 | [`Cypress.require`](/api/cypress-api/require)                            | Enables utilizing dependencies within the [cy.origin()](/api/commands/origin) callback function.                               |
 | [`Cypress.Screenshot.defaults()`](/api/cypress-api/screenshot-api)       | Set defaults for screenshots captured by the `.screenshot()` command and the automatic screenshots taken during test failures. |
-| [`Cypress.SelectorPlayground`](/api/cypress-api/selector-playground-api) | Configure options used by the [Selector Playground](/guides/core-concepts/cypress-app#Selector-Playground).                    |
+| [`Cypress.SelectorPlayground`](/api/cypress-api/selector-playground-api) | Configure options used by the [Selector Playground](/app/core-concepts/cypress-app#Selector-Playground).                       |
 | [`Cypress.session`](/api/cypress-api/session)                            | A collection of helper methods related to the `.session()` command.                                                            |
 | [`Cypress.spec`](/api/cypress-api/spec)                                  | An object with information about the currently executing spec file.                                                            |
 | [`Cypress.testingType`](/api/cypress-api/testing-type)                   | The current testing type, eg. `"e2e"` or `"component".                                                                         |
@@ -224,16 +224,16 @@ Cypress makes several common libraries available directly on the global
 ## Plugins
 
 The Plugins API allows you to hook into and extend Cypress behavior. For more
-details, see the [Plugins Guide](/guides/tooling/plugins-guide) and
+details, see the [Plugins Guide](/app/tooling/plugins-guide) and
 [Writing a Plugin](/api/plugins/writing-a-plugin).
 
-| API                                                         | Usage                                                                                                                                                                                                                                                                       |
-| ----------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [After Run Event](/api/plugins/after-run-api)               | The `after:run` event fires after a run is finished. When running cypress via cypress open, the event will fire when closing a project.                                                                                                                                     |
-| [After Screenshot Event](/api/plugins/after-screenshot-api) | After a screenshot is taken, you can get details about it via the `after:screenshot` plugin event.                                                                                                                                                                          |
-| [After Spec Event](/api/plugins/after-spec-api)             | The `after:spec` event fires after a spec file is run. When running cypress via cypress open, the event will fire when the browser closes.                                                                                                                                  |
-| [Before Run Event](/api/plugins/before-run-api)             | The `before:run` event fires before a run starts. When running cypress via cypress open, the event will fire when opening a project.                                                                                                                                        |
-| [Before Spec Event](/api/plugins/before-spec-api)           | The `before:spec` event fires before a spec file is run. When running cypress via cypress open, the event will fire when the browser launches.                                                                                                                              |
-| [Browser Launch API](/api/plugins/browser-launch-api)       | Before Cypress launches a browser, it gives you the opportunity to modify the browser preferences, install extensions, add and remove command-line arguments, and modify other options from the [`setupNodeEvents`](/guides/tooling/plugins-guide#Using-a-plugin) function. |
-| [Configuration API](/api/plugins/configuration-api)         | Cypress enables you to dynamically modify configuration values and environment variables from your Cypress configuration.                                                                                                                                                   |
-| [Preprocessors API](/api/plugins/preprocessors-api)         | A preprocessor is the plugin responsible for preparing a support file or a test file for the browser. A preprocessor also typically watches the source files for changes, processes them again, and then notifies Cypress to re-run the tests.                              |
+| API                                                         | Usage                                                                                                                                                                                                                                                                    |
+| ----------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| [After Run Event](/api/plugins/after-run-api)               | The `after:run` event fires after a run is finished. When running cypress via cypress open, the event will fire when closing a project.                                                                                                                                  |
+| [After Screenshot Event](/api/plugins/after-screenshot-api) | After a screenshot is taken, you can get details about it via the `after:screenshot` plugin event.                                                                                                                                                                       |
+| [After Spec Event](/api/plugins/after-spec-api)             | The `after:spec` event fires after a spec file is run. When running cypress via cypress open, the event will fire when the browser closes.                                                                                                                               |
+| [Before Run Event](/api/plugins/before-run-api)             | The `before:run` event fires before a run starts. When running cypress via cypress open, the event will fire when opening a project.                                                                                                                                     |
+| [Before Spec Event](/api/plugins/before-spec-api)           | The `before:spec` event fires before a spec file is run. When running cypress via cypress open, the event will fire when the browser launches.                                                                                                                           |
+| [Browser Launch API](/api/plugins/browser-launch-api)       | Before Cypress launches a browser, it gives you the opportunity to modify the browser preferences, install extensions, add and remove command-line arguments, and modify other options from the [`setupNodeEvents`](/app/tooling/plugins-guide#Using-a-plugin) function. |
+| [Configuration API](/api/plugins/configuration-api)         | Cypress enables you to dynamically modify configuration values and environment variables from your Cypress configuration.                                                                                                                                                |
+| [Preprocessors API](/api/plugins/preprocessors-api)         | A preprocessor is the plugin responsible for preparing a support file or a test file for the browser. A preprocessor also typically watches the source files for changes, processes them again, and then notifies Cypress to re-run the tests.                           |

@@ -29,13 +29,13 @@ The name of the cookie to get. Required.
 
 Pass in an options object to change the default behavior of `cy.getCookie()`.
 
-| Option    | Default                                                        | Description                                                                              |
-| --------- | -------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| `domain`  | Hostname of the current URL                                    | Retrieves the cookie from the specified domain                                           |
-| `log`     | `true`                                                         | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
-| `timeout` | [`responseTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.getCookie()` to resolve before [timing out](#Timeouts)              |
+| Option    | Default                                                     | Description                                                                           |
+| --------- | ----------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| `domain`  | Hostname of the current URL                                 | Retrieves the cookie from the specified domain                                        |
+| `log`     | `true`                                                      | Displays the command in the [Command log](/app/core-concepts/cypress-app#Command-Log) |
+| `timeout` | [`responseTimeout`](/app/references/configuration#Timeouts) | Time to wait for `cy.getCookie()` to resolve before [timing out](#Timeouts)           |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
 
 `cy.getCookie()` yields a cookie object with the following properties:
 
@@ -123,16 +123,16 @@ Check out our example recipes using `cy.getCookie()` to test
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
+### Requirements [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
 
 - `cy.getCookie()` requires being chained off of `cy`.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
+### Assertions [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
 
 - `cy.getCookie()` will only run assertions you have chained once, and will not
-  [retry](/guides/core-concepts/retry-ability).
+  [retry](/app/core-concepts/retry-ability).
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
+### Timeouts [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
 
 - `cy.getCookie()` should never time out.
 
@@ -167,10 +167,10 @@ following:
 
 ## History
 
-| Version                                     | Changes                                                                                            |
-| ------------------------------------------- | -------------------------------------------------------------------------------------------------- |
-| [5.0.0](/guides/references/changelog#5-0-0) | Removed `experimentalGetCookiesSameSite` and made `sameSite` property always available.            |
-| [4.3.0](/guides/references/changelog#4-3-0) | Added `sameSite` property when the `experimentalGetCookiesSameSite` configuration value is `true`. |
+| Version                                  | Changes                                                                                            |
+| ---------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| [5.0.0](/app/references/changelog#5-0-0) | Removed `experimentalGetCookiesSameSite` and made `sameSite` property always available.            |
+| [4.3.0](/app/references/changelog#4-3-0) | Added `sameSite` property when the `experimentalGetCookiesSameSite` configuration value is `true`. |
 
 ## See also
 

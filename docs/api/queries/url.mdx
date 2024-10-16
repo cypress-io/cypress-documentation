@@ -35,13 +35,13 @@ Pass in an options object to change the default behavior of `cy.url()`.
 
 **cy.url( _options_ )**
 
-| Option    | Default                                                              | Description                                                                              |
-| --------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| `decode`  | `false`                                                              | Decode URL                                                                               |
-| `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
-| `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.url()` to resolve before [timing out](#Timeouts)                    |
+| Option    | Default                                                           | Description                                                                           |
+| --------- | ----------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| `decode`  | `false`                                                           | Decode URL                                                                            |
+| `log`     | `true`                                                            | Displays the command in the [Command log](/app/core-concepts/cypress-app#Command-Log) |
+| `timeout` | [`defaultCommandTimeout`](/app/references/configuration#Timeouts) | Time to wait for `cy.url()` to resolve before [timing out](#Timeouts)                 |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
 
 - `cy.url()` yields the current URL as a string.
 - `cy.url()` is a query, and it is _safe_ to chain further commands.
@@ -108,9 +108,9 @@ return them the full current URL. We almost never refer to the URL as an `href`.
 #### Hardcoded versus using the configuration object
 
 Instead of hard-coding the URL used in the assertion, we recommend you define a
-`baseUrl` in your [Cypress configuration](/guides/references/configuration). For
+`baseUrl` in your [Cypress configuration](/app/references/configuration). For
 more details on why, see our Best Practices guide on
-[setting a global `baseUrl`](/guides/references/best-practices#Setting-a-Global-baseUrl).
+[setting a global `baseUrl`](/app/references/best-practices#Setting-a-Global-baseUrl).
 
 Given the remote URL, `http://localhost:8000/index.html`, and the baseUrl,
 `http://localhost:8000`, these assertions are the same.
@@ -128,16 +128,16 @@ cy.url().should('contain', '#users/new')
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
+### Requirements [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
 
 - `cy.url()` requires being chained off of `cy`.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
+### Assertions [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
 
-- `cy.url()` will automatically [retry](/guides/core-concepts/retry-ability)
+- `cy.url()` will automatically [retry](/app/core-concepts/retry-ability)
   until all chained assertions have passed
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
+### Timeouts [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
 
 - `cy.url()` can time out waiting for assertions you've added to pass.
 
@@ -159,10 +159,10 @@ When clicking on URL within the Command Log, the console outputs the following:
 
 ## History
 
-| Version                                       | Changes                  |
-| --------------------------------------------- | ------------------------ |
-| [8.4.0](/guides/references/changelog#8-4-0)   | `decode` option added    |
-| [< 0.3.3](/guides/references/changelog#0-3-3) | `cy.url()` command added |
+| Version                                    | Changes                  |
+| ------------------------------------------ | ------------------------ |
+| [8.4.0](/app/references/changelog#8-4-0)   | `decode` option added    |
+| [< 0.3.3](/app/references/changelog#0-3-3) | `cy.url()` command added |
 
 ## See also
 

@@ -29,7 +29,7 @@ cy.fixture('logo.png').then((logo) => {
 <Icon name="angle-right" /> **filePath _(String)_**
 
 A path to a file within the
-[`fixturesFolder`](/guides/references/configuration#Folders--Files) , which
+[`fixturesFolder`](/app/references/configuration#Folders--Files) , which
 defaults to `cypress/fixtures`.
 
 You can nest fixtures within folders and reference them by defining the path
@@ -65,11 +65,11 @@ extension.
 
 Pass in an options object to change the default behavior of `cy.fixture()`.
 
-| Option    | Default                                                        | Description                                                               |
-| --------- | -------------------------------------------------------------- | ------------------------------------------------------------------------- |
-| `timeout` | [`responseTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.fixture()` to resolve before [timing out](#Timeouts) |
+| Option    | Default                                                     | Description                                                               |
+| --------- | ----------------------------------------------------------- | ------------------------------------------------------------------------- |
+| `timeout` | [`responseTimeout`](/app/references/configuration#Timeouts) | Time to wait for `cy.fixture()` to resolve before [timing out](#Timeouts) |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
 
 - `cy.fixture()` yields the contents of the file. Formatting is determined by
   its file extension.
@@ -89,7 +89,7 @@ cy.fixture('users.json').as('usersData')
 
 When no extension is passed to `cy.fixture()`, Cypress will search for files
 with the specified name within the
-[`fixturesFolder`](/guides/references/configuration#Folders--Files) (which
+[`fixturesFolder`](/app/references/configuration#Folders--Files) (which
 defaults to `cypress/fixtures`) and resolve the first one.
 
 ```javascript
@@ -317,16 +317,16 @@ cy.fixture('todo.json').then((todo) => {
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
+### Requirements [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
 
 - `cy.fixture()` requires being chained off of `cy`.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
+### Assertions [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
 
 - `cy.fixture()` will only run assertions you have chained once, and will not
-  [retry](/guides/core-concepts/retry-ability).
+  [retry](/app/core-concepts/retry-ability).
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
+### Timeouts [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
 
 - `cy.fixture()` should never time out.
 
@@ -344,7 +344,7 @@ practical purposes it should never happen.
 
 ## See also
 
-- [Guide: Variables and Aliases](/guides/core-concepts/variables-and-aliases)
+- [Guide: Variables and Aliases](/app/core-concepts/variables-and-aliases)
 - [`cy.intercept()`](/api/commands/intercept)
 - [`.then()`](/api/commands/then)
 - [`.readFile()`](/api/commands/readfile) for a similar command without caching
