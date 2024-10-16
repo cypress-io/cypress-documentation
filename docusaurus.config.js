@@ -146,6 +146,10 @@ const config = {
             label: 'Accessibility',
             activeBasePath: 'accessibility',
           },
+          {
+            to: 'https://learn.cypress.io',
+            label: 'Learn',
+          },
         ],
       },
       // optional, can be commented out
