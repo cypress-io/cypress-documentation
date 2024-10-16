@@ -570,7 +570,7 @@ https://on.cypress.io/installing-cypress
 ```
 
 If there is a missing dependency, the smoke test will fail to run and the application will print an error message
-referring to [Linux Prerequisites](../getting-started/installing-cypress#Linux-Prerequisites).
+referring to [Linux Prerequisites](/app/get-started/installing-cypress#Linux-Prerequisites).
 Follow the instructions to ensure all required dependencies are installed.
 
 To troubleshoot missing shared library dependencies on Linux, use the `ldd` command on the Cypress binary.
@@ -589,7 +589,7 @@ ldd ~/.cache/Cypress/13.15.0/Cypress/Cypress
   ...
 ```
 
-**Tip:** If you are having problems with dependencies, use a [Cypress Docker image](../getting-started/installing-cypress#Docker-Prerequisites). These have all Cypress dependencies pre-installed.
+**Tip:** If you are having problems with dependencies, use a [Cypress Docker image](/app/get-started/installing-cypress#Docker-Prerequisites). These have all Cypress dependencies pre-installed.
 
 On Ubuntu `24.04` you may receive a fatal error including the text `FATAL:setuid_sandbox_host.cc` due to added security in this version of Ubuntu.
 Refer to the [Ubuntu 24.04 Release notes](https://discourse.ubuntu.com/t/noble-numbat-release-notes/39890) in the section [Unprivileged user namespace restrictions](https://discourse.ubuntu.com/t/noble-numbat-release-notes/39890#unprivileged-user-namespace-restrictions-15) and apply one of the workarounds to disable unprivileged user namespace restrictions for the entire system, either for one boot or persistently, as described.

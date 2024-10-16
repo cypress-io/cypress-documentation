@@ -122,7 +122,7 @@ modified HTML or JS value.
 
 ### Experimental Test Retries
 
-[Test retries](/app/guides/test-retries) is a Cypress [Flake Detection](/app/cloud/flaky-test-management#Flake-Detection) feature that enables you to re-attempt any tests that initially fail. The failure may not be a "true" failure, i.e. flaky. The only way to determine this is to retry the test.
+[Test retries](/app/guides/test-retries) is a Cypress [Flake Detection](/cloud/features/flaky-test-management#Flake-Detection) feature that enables you to re-attempt any tests that initially fail. The failure may not be a "true" failure, i.e. flaky. The only way to determine this is to retry the test.
 
 Normally, test retries simply stop on the first passing attempt. And the final test result of any flaky test is always "passing", regardless of how many prior attempts failed. The following experimental settings for retries give you more control over the retries process.
 
@@ -335,7 +335,7 @@ However, as a component testing suite grows, the dev server (`vite` or `webpack-
 - `chunk load error`, specific to Webpack where parts of the bundle fail to load.
 - long run times while running component tests in CI in `cypress run` mode.
 - Unable to efficiently develop tests in `cypress open` mode because the initial and recompiling times for specs and related components are extremely long.
-- Inability to leverage [Smart orchestration](/app/cloud/features/smart-orchestration/overview) effectively to scale resources due to all assets being compiled into the dev server regardless of what specs are run.
+- Inability to leverage [Smart orchestration](/cloud/features/smart-orchestration/overview) effectively to scale resources due to all assets being compiled into the dev server regardless of what specs are run.
 
 The `experimentalJustInTimeCompile` option is designed to remedy this problem. Enabling this option will enable Just-In-Time (JIT) compiling for component testing, which will only compile assets and resources related to the spec before the spec is run. This is applicable in both `open` and `run` modes.
 
