@@ -343,7 +343,7 @@ In `open` and `run` modes, the dev server will start up when the Cypress applica
 
 This makes developing your current spec much faster in `open` mode when it comes to initial compiling and recompiling, with a minor tradeoff being to recompile when you switch specs.
 
-This also significantly reduces the memory requirements needed to run your tests in `run` mode, with a tradeoff being that your tests might run slightly slower since the dev server needs to recompile. If time is a factor, [Smart orchestration](/app/cloud/features/smart-orchestration/overview) can now be effectively used to parallelize your component testing runs on smaller infrastructure since the dev server only compiles what is needed to run the spec.
+This also significantly reduces the memory requirements needed to run your tests in `run` mode, with a tradeoff being that your tests might run slightly slower since the dev server needs to recompile. If time is a factor, [Smart orchestration](/cloud/features/smart-orchestration/overview) can now be effectively used to parallelize your component testing runs on smaller infrastructure since the dev server only compiles what is needed to run the spec.
 
 We are using `experimentalJustInTimeCompile` internally within Cypress for our larger component testing suites and have noticed significant reductions in memory when running `cypress run` mode and have gained significantly faster compile times when leveraging `cypress open` to develop our tests.
 
