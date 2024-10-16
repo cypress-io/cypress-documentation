@@ -64,14 +64,14 @@ grab the reader's attention with a blurb.
 
 If you are starting a new page and want to add images, add a new folder to
 [`static/img`](/static/img). For example when adding a new "Code Coverage" page
-to `guides/tooling`, I have created new folder `assets/img/guides/tooling` and
+to `app/tooling`, I have created new folder `assets/img/app/tooling` and
 copied an image there called `coverage-object.png`. Within the markdown, I can
 include the image using the
 [`<DocsImage />` component](/src/components/docs-image).
 
 ```jsx
 <DocsImage
-  src="/img/guides/tooling/coverage-object.png"
+  src="/img/app/tooling/coverage-object.png"
   alt="code coverage object"
 />
 ```
@@ -172,7 +172,7 @@ go away.
 
 ### Writing the Changelog
 
-When adding to the [Changelog](/docs/guides/references/changelog.mdx), create a
+When adding to the [Changelog](/docs/app/references/changelog.mdx), create a
 new section with the title as the version number on top of the previous section.
 Be sure to follow the category structure defined below (in this order). Each
 bullet point in the list should _always_ be associated to an issue on the
