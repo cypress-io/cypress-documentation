@@ -132,6 +132,11 @@ const config = {
             activeBasePath: 'api',
           },
           {
+            to: '/cloud/introduction',
+            label: 'Cloud',
+            activeBasePath: 'cloud',
+          },
+          {
             to: '/plugins',
             label: 'Plugins',
             activeBasePath: 'plugins',
