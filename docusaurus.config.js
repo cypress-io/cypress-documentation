@@ -146,20 +146,6 @@ const config = {
             label: 'Accessibility',
             activeBasePath: 'accessibility',
           },
-          {
-            to: '/plugins',
-            label: 'Plugins',
-            activeBasePath: 'plugins',
-          },
-          {
-            to: '/examples/recipes',
-            label: 'Examples',
-            activeBasePath: 'examples',
-          },
-          {
-            to: 'https://learn.cypress.io',
-            label: 'Learn',
-          },
         ],
       },
       // optional, can be commented out
