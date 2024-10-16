@@ -1677,7 +1677,7 @@ and [Mocha](https://mochajs.org/) globals.
 
 ## Component Testing
 
-#### What is component testing?
+#### <Icon name="angle-right" /> What is component testing?
 
 Many modern front-end UI libraries encourage writing applications using small,
 reusable building blocks known as components. Components start small (think
@@ -1688,7 +1688,7 @@ Component testing is about testing an individual component in isolation from the
 rest of the app. This allows only having to worry about the component's
 functionality and not how it fits into an entire page.
 
-#### What frameworks does component testing support?
+#### <Icon name="angle-right" /> What frameworks does component testing support?
 
 We support [Angular](/app/component-testing/angular/overview),
 [React](/app/component-testing/react/overview),
@@ -1699,7 +1699,7 @@ We also support several meta-frameworks like Next.js, Create React App, and
 Nuxt, as well as Webpack and Vite for bundling. Check each framework's overview
 guide for more info.
 
-#### How does Cypress do component testing?
+#### <Icon name="angle-right" /> How does Cypress do component testing?
 
 Cypress will take a component and mount it into a blank canvas. When doing so,
 you have direct access to the component's API, making it easier to pass in props
@@ -1709,7 +1709,7 @@ Cypress commands, selectors, and assertions to write your tests.
 Cypress supports multiple frameworks and development servers for component
 testing.
 
-#### When should I use component testing vs end-to-end testing?
+#### <Icon name="angle-right" /> When should I use component testing vs end-to-end testing?
 
 The biggest difference between end-to-end testing and component testing is that
 an end-to-end test "visits" an entire page, and a component test "mounts"
@@ -1726,7 +1726,7 @@ Use end-to-end testing to validate user journey's through your application as a
 whole. Don't repeat the same tests in the component tests; instead, focus on how
 an actual user will use the application.
 
-#### How does Cypress component testing compare to other options?
+#### <Icon name="angle-right" /> How does Cypress component testing compare to other options?
 
 When Cypress mounts a component, it does so in an actual browser and not a
 simulated environment like jsdom. This allows you to visually see and interact
@@ -1741,7 +1741,7 @@ Component tests can also use the vast Cypress ecosystem, plugins, and services
 (like [Cypress Cloud](https://www.cypress.io/cloud) already available to
 complement your component tests.
 
-#### What is the Mount Function?
+#### <Icon name="angle-right" /> What is the Mount Function?
 
 We ship a `mount` function for each UI library that is imported from the
 `cypress` package. It is responsible for rendering components within Cypress's
@@ -1768,26 +1768,26 @@ This allows you to use `cy.mount()` in any component test without having to
 your needs. See the examples guide for each framework for info on creating a
 custom `cy.mount()` command.
 
-#### Why isn't my component rendering as it should?
+#### <Icon name="angle-right" /> Why isn't my component rendering as it should?
 
 Any global styles and fonts must be imported and made available to your
 component, just like in the application. See our guide on
 [Styling Components](/app/component-testing/styling-components) for more
 information on doing so.
 
-#### Why doesn't my spec show in the Specs page?
+#### <Icon name="angle-right" /> Why doesn't my spec show in the Specs page?
 
 If something appears missing from the spec list, make sure the files have the
 [proper extension and the `specPattern` is correctly defined](/app/component-testing/component-framework-configuration#Spec-Pattern-for-Component-Tests).
 
-#### How do I fix ESLint errors for things like using the global Cypress objects?
+#### <Icon name="angle-right" /> How do I fix ESLint errors for things like using the global Cypress objects?
 
 If you experience ESLint errors in your code editor around Cypress globals,
 install the
 [`eslint-plugin-cypress`](https://www.npmjs.com/package/eslint-plugin-cypress)
 ESLint plugin.
 
-#### Why isn't TypeScript recognizing the global Cypress objects or custom cypress commands (eg: `cy.mount`)?
+#### <Icon name="angle-right" /> Why isn't TypeScript recognizing the global Cypress objects or custom cypress commands (eg: `cy.mount`)?
 
 In some instances, TypeScript might not recognize the custom `cy.mount()`
 command in Cypress spec files not located in the **cypress** directory. You will
@@ -1811,7 +1811,7 @@ file in your **tsconfig.json** file. See our
 [TypeScript Configuration](/app/tooling/typescript-support#Using-an-External-Typings-File)
 guide for more info on doing this.
 
-#### How do I get TypeScript to recognize Cypress types and not Jest types?
+#### <Icon name="angle-right" /> How do I get TypeScript to recognize Cypress types and not Jest types?
 
 For frameworks that include Jest out of the box (like Create React App), you
 might run into issues where the Cypress global types for TypeScript conflict
