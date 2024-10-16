@@ -9,15 +9,15 @@ sidebar_position: 150
 
 ## A single element is showing up as multiple different elements
 
-If a single element is being identified as multiple different elements by UI Coverage and therefore shows up as many different elements, then you likely have a problem 
+If a single element is being identified as multiple different elements by UI Coverage and therefore shows up as many different elements, then you likely have a problem
 with [Element Identification](/ui-coverage/core-concepts/element-identification).
 
 If elements have auto-generated or otherwise unrepresentative attributes that are used as identifiers, then that attribute may have one value in one snapshot and a different value in another snapshot, which leads to UI Coverage considering those two different elements.
 
 Some common examples of this include:
 
-* Library-specific identifiers, such as `id` attributes with values that are library-generated and are not representative of the element
-* Identifiers that include dynamic data, such as UUID's
+- Library-specific identifiers, such as `id` attributes with values that are library-generated and are not representative of the element
+- Identifiers that include dynamic data, such as UUID's
 
 To resolve this problem, you can do one of the following:
 
@@ -33,29 +33,29 @@ If elements do not have accurate identifiers, such as unique `data-cy` or `data-
 
 Some common examples of this include:
 
-* Missing `data-*` or `id` values that would otherwise identify the elements
-* Generic identifiers, such as `data-test="button"`, used on many different elements
-* The use of identifiers that are not used by UI Coverage by default, such as `aria-label`
+- Missing `data-*` or `id` values that would otherwise identify the elements
+- Generic identifiers, such as `data-test="button"`, used on many different elements
+- The use of identifiers that are not used by UI Coverage by default, such as `aria-label`
 
 To resolve this problem, you can do one of the following:
 
 1. Add a unique identifier to the interactive elements, such as representative `data-cy` or `data-test` values
 2. Ignore generic and unrepresentative attributes using [attributeFilters](/ui-coverage/configuration/attributefilters) configuration
-3. Update the attributes used by UI Coverage for identification using 
-[significantAttributes](/ui-coverage/configuration/significantattributes) configuration
+3. Update the attributes used by UI Coverage for identification using
+   [significantAttributes](/ui-coverage/configuration/significantattributes) configuration
 4. Manually identify the elements using [elements](/ui-coverage/configuration/elements) configuration
 
 ## Elements that perform the same action are not being grouped together but should be
 
-If elements that perform the same action are not being grouped together, then you likely have a problem 
+If elements that perform the same action are not being grouped together, then you likely have a problem
 with [Element Grouping](/ui-coverage/core-concepts/element-grouping).
 
 If repeated elements have unique attributes that are used as identifiers, then UI Coverage may not group the elements together due to their lack of similarity.
 
 Some common examples of this include:
 
-* Library-specific identifiers, such as `id` attributes with values that are library-generated and are not representative of the element
-* Identifiers that include dynamic data, such as UUID's
+- Library-specific identifiers, such as `id` attributes with values that are library-generated and are not representative of the element
+- Identifiers that include dynamic data, such as UUID's
 
 To resolve this problem, you can do one of the following:
 
@@ -71,9 +71,9 @@ If repeated elements have shared attributes, such as the same `data-cy` or `data
 
 Some common examples of this include:
 
-* Missing `data-*` or `id` values that would otherwise identify the elements
-* Generic identifiers, such as `data-test="button"`, used on many different elements
-* The use of identifiers that are not used by UI Coverage by default, such as `aria-label`
+- Missing `data-*` or `id` values that would otherwise identify the elements
+- Generic identifiers, such as `data-test="button"`, used on many different elements
+- The use of identifiers that are not used by UI Coverage by default, such as `aria-label`
 
 To resolve this problem, you can do one of the following:
 

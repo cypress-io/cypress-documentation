@@ -8,9 +8,9 @@ sidebar_position: 60
 # views
 
 :::info
-  Note: setting views impacts both Accessibility and UI Coverage reports.
-  Nesting this property under an `accessibility` or `uiCoverage` key is
-  supported, if you need to split them up.
+Note: setting views impacts both Accessibility and UI Coverage reports.
+Nesting this property under an `accessibility` or `uiCoverage` key is
+supported, if you need to split them up.
 :::
 
 UI Coverage automatically groups certain URL patterns to create [views](/ui-coverage/core-concepts/views). For URLs that are not automatically grouped (e.g. `/users/alice` and `/users/bob` are not automatically grouped into `/users/*`), the `views` property allows you to specify URL patterns that represent views.
@@ -44,7 +44,7 @@ An array of objects used to define views within UI Coverage. _**Each object can 
 
 _Required._ String (URL Pattern)
 
-A URL pattern that groups matching URLs into a single view. This utilizes the [URL Pattern API](https://developer.mozilla.org/en-US/docs/Web/API/URL\_Pattern\_API) syntax for matching.
+A URL pattern that groups matching URLs into a single view. This utilizes the [URL Pattern API](https://developer.mozilla.org/en-US/docs/Web/API/URL_Pattern_API) syntax for matching.
 
 ### groupBy
 
@@ -83,7 +83,7 @@ https://cypress.io/users/bob#baz
 https://cypress.io/users/*
 ```
 
-***
+---
 
 ### Using named path parameters
 
@@ -114,7 +114,7 @@ https://cypress.io/users/bob#baz
 https://cypress.io/users/:name
 ```
 
-***
+---
 
 ### Grouping URLs by named path parameters
 
@@ -125,9 +125,7 @@ https://cypress.io/users/:name
   "views": [
     {
       "pattern": "https://cypress.io/analytics/:type/:id",
-      "groupBy": [
-        "type"
-      ]
+      "groupBy": ["type"]
     }
   ]
 }
@@ -149,7 +147,7 @@ https://cypress.io/analytics/performance/:id
 https://cypress.io/analytics/usage/:id
 ```
 
-***
+---
 
 ### Grouping URLs by named query parameters
 
@@ -160,9 +158,7 @@ https://cypress.io/analytics/usage/:id
   "views": [
     {
       "pattern": "https://cypress.io/app?*name=:name{&*}?#*",
-      "groupBy": [
-        "name"
-      ]
+      "groupBy": ["name"]
     }
   ]
 }
@@ -184,7 +180,7 @@ https://cypress.io/app?name=hello
 https://cypress.io/app?name=world
 ```
 
-***
+---
 
 ### Grouping URLs by path parameters to ignore dynamic hosts
 
@@ -195,9 +191,7 @@ https://cypress.io/app?name=world
   "views": [
     {
       "pattern": "https://*.cypress.io/:path*",
-      "groupBy": [
-        "path"
-      ]
+      "groupBy": ["path"]
     }
   ]
 }

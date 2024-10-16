@@ -15,11 +15,11 @@ This allows you to review the results within CI and to determine if the results 
 
 Fetching Accessibility results for a run supports fetching results for the following CI providers. Please see the docs below for information on general setup.
 
-* [Azure](/app/continuous-integration/ci-provider-examples#Azure-Pipelines) (requires Cypress v13.13.1)
-* [CircleCI ](/app/continuous-integration/circleci)
-* [GitHub Actions](/app/continuous-integration/github-actions)
-* [GitLab](/app/continuous-integration/gitlab-ci)
-* [Jenkins](/app/continuous-integration/ci-provider-examples#Jenkins)
+- [Azure](/app/continuous-integration/ci-provider-examples#Azure-Pipelines) (requires Cypress v13.13.1)
+- [CircleCI ](/app/continuous-integration/circleci)
+- [GitHub Actions](/app/continuous-integration/github-actions)
+- [GitLab](/app/continuous-integration/gitlab-ci)
+- [Jenkins](/app/continuous-integration/ci-provider-examples#Jenkins)
 
 Please reach out to Cypress Support to request support for a different provider.
 
@@ -52,27 +52,26 @@ getAccessibilityResults({
   projectId: '...', // optional if set from env
   recordKey: '...', // optional if set from env
   runTags: [process.env.RUN_TAGS], // required if recording multiple runs
-})
-.then((results) => {
-  const {
-    runNumber,
-    accessibilityReportUrl,
-    summary,
-    rules
-  } = results
+}).then((results) => {
+  const { runNumber, accessibilityReportUrl, summary, rules } = results
   const { total } = summary.violationCounts
-  
-  console.log(`Received ${summary.isPartialReport ? 'partial' : ''} results for run #${runNumber}.`).
-  console.log(`See full report at ${accessibilityReportUrl}.`)
-  
+
+  console
+    .log(
+      `Received ${summary.isPartialReport ? 'partial' : ''} results for run #${runNumber}.`
+    )
+    .console.log(`See full report at ${accessibilityReportUrl}.`)
+
   // write your logic to conditionally fail based on the results
   if (total > 0) {
-   const { critical, serious, moderate, minor } = summary.violationCounts
- 
-   console.log(`${total} Accessibility violations were detected - ${critical} critical, ${serious} serious, ${moderate} moderate, and ${minor} minor.`)
-   console.log('The following rules were violated:')
-   console.log(rules)
-   
+    const { critical, serious, moderate, minor } = summary.violationCounts
+
+    console.log(
+      `${total} Accessibility violations were detected - ${critical} critical, ${serious} serious, ${moderate} moderate, and ${minor} minor.`
+    )
+    console.log('The following rules were violated:')
+    console.log(rules)
+
     throw new Error(
       `${total} Accessibility violations detected and must be fixed.`
     )
@@ -93,7 +92,7 @@ getAccessibilityResults({
   // Can be explicitly passed to override the env var
   projectId: string
 
-  // The project's record key. 
+  // The project's record key.
   // Optional if the CYPRESS_RECORD_KEY env is set
   // Can be explicitly passed to override the env var
   recordKey: string
@@ -179,13 +178,13 @@ This is necessary to identify each unique run and return a corresponding set of 
 
 **Example**
 
-* Let's imagine that within a single CI build you call `cypress run --record` multiple times because you're running one set of tests against a `staging` environment, followed by a `production` environment.
-* In this scenario, you pass a different `--tag` to each cypress run
-  * `cypress run --record --tag staging`
-  * `cypress run --record --tag production`
-* When calling `getAccessibilityResults` you would then pass these same tags to get the unique set of results for each run
-  * `getAccessibilityResults({ runTags: ['staging']})`
-  * `getAccessibilityResults({ runTags: ['production']})`
+- Let's imagine that within a single CI build you call `cypress run --record` multiple times because you're running one set of tests against a `staging` environment, followed by a `production` environment.
+- In this scenario, you pass a different `--tag` to each cypress run
+  - `cypress run --record --tag staging`
+  - `cypress run --record --tag production`
+- When calling `getAccessibilityResults` you would then pass these same tags to get the unique set of results for each run
+  - `getAccessibilityResults({ runTags: ['staging']})`
+  - `getAccessibilityResults({ runTags: ['production']})`
 
 :::
 
@@ -252,7 +251,7 @@ pipeline {
       image 'cypress/base:latest'
     }
   }
-  
+
   environment {
     CYPRESS_PROJECT_ID: 'xxxx'
     CYPRESS_RECORD_KEY = credentials('cypress-record-key')
@@ -265,7 +264,7 @@ pipeline {
         sh 'npx cypress run --record'
       }
     }
-    
+
 +   stage('Verify Accessibility Results') {
 +     steps {
 +       sh 'npm install --force https://cdn.cypress.io/extract-cloud-results/v1/extract-cloud-results.tgz'

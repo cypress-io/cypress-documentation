@@ -9,64 +9,64 @@ sidebar_position: 200
 
 ## **Week of 10/7/2024**
 
-* **Improved Table Grouping:** The default grouping rules have been updated to more accurately identify and group elements in tables.
+- **Improved Table Grouping:** The default grouping rules have been updated to more accurately identify and group elements in tables.
 
 ## **Week of 9/23/2024**
 
-* **Improved Link Display Logic:** Links will now more consistently display across the reports, matching defined views more closely.
+- **Improved Link Display Logic:** Links will now more consistently display across the reports, matching defined views more closely.
 
 ## **Week of 9/9/2024**
 
-* **Element Tooltips:** We have improved the user experience of UI Coverage by adding tooltips for elements, emphasizing their selectors, making it easier to navigate coverage reports and identify elements.
+- **Element Tooltips:** We have improved the user experience of UI Coverage by adding tooltips for elements, emphasizing their selectors, making it easier to navigate coverage reports and identify elements.
 
 ## Week of 8/19/2024
 
-* **Results API:** We have added the new [Results API](/ui-coverage/results-api) which enables you to programmatically fetch your run's UI Coverage results in a CI environment. This allows you to act the results within CI by allowing you to determine if the results are acceptable or need to be addressed before code changes can merge.
+- **Results API:** We have added the new [Results API](/ui-coverage/results-api) which enables you to programmatically fetch your run's UI Coverage results in a CI environment. This allows you to act the results within CI by allowing you to determine if the results are acceptable or need to be addressed before code changes can merge.
 
 ## **Week of 8/12/2024**
 
-* **Improved attributeFilters Behavior:** When matching against class attributes, the [attributeFilters](/ui-coverage/configuration/attributefilters) configuration option now targets and filters individual class names rather than the entire value of the class attribute.
+- **Improved attributeFilters Behavior:** When matching against class attributes, the [attributeFilters](/ui-coverage/configuration/attributefilters) configuration option now targets and filters individual class names rather than the entire value of the class attribute.
 
 ## Week of 8/5/2024
 
-* **View Untested Elements:** You can now quickly access all of the untested elements across all views in the "Untested elements" section. 
-Save time and improve your coverage by testing these areas of your application, or use 
-[elementFilters](/ui-coverage/configuration/elementfilters) in UI Coverage [configuration](/ui-coverage/configuration/overview) to ignore certain elements.
-* **View Tested Elements:** You can now quickly access all of the tested elements across all views in the "Tested elements" section. Identify potential redundant coverage by looking through the elements with the highest numbers of interactions and tests.
+- **View Untested Elements:** You can now quickly access all of the untested elements across all views in the "Untested elements" section.
+  Save time and improve your coverage by testing these areas of your application, or use
+  [elementFilters](/ui-coverage/configuration/elementfilters) in UI Coverage [configuration](/ui-coverage/configuration/overview) to ignore certain elements.
+- **View Tested Elements:** You can now quickly access all of the tested elements across all views in the "Tested elements" section. Identify potential redundant coverage by looking through the elements with the highest numbers of interactions and tests.
 
 ## Week of 7/22/2024
 
-* **View Untested Links:** You can now quickly access all of the untested links across all views in the "Untested links" section. Save time and improve your coverage by testing these areas of your application, 
-or use [viewFilters](/ui-coverage/configuration/viewfilters) in UI Coverage [configuration](/ui-coverage/configuration/overvie) to ignore certain links.
+- **View Untested Links:** You can now quickly access all of the untested links across all views in the "Untested links" section. Save time and improve your coverage by testing these areas of your application,
+  or use [viewFilters](/ui-coverage/configuration/viewfilters) in UI Coverage [configuration](/ui-coverage/configuration/overvie) to ignore certain links.
 
 ## Week of 6/24/2024
 
-* **View** [**configuration information for each run**](/accessibility/configuration/overview#Viewing-Configuration-for-a-Run) **in the properties tab:** There, you'll find the configuration set for the project at the start of the run. This will help you understand what factors might be driving a score change. This helps distinguish config criteria changes from other factors such as changes to your application, tests, Cypress versions, and more.
-* **Anchor elements considered interactive:** Anchor elements (`a` tags) are now considered interactive even when they do not have an `href` attribute.
+- **View** [**configuration information for each run**](/accessibility/configuration/overview#Viewing-Configuration-for-a-Run) **in the properties tab:** There, you'll find the configuration set for the project at the start of the run. This will help you understand what factors might be driving a score change. This helps distinguish config criteria changes from other factors such as changes to your application, tests, Cypress versions, and more.
+- **Anchor elements considered interactive:** Anchor elements (`a` tags) are now considered interactive even when they do not have an `href` attribute.
 
 ## Week of 5/20/2024
 
-* **Manage Configuration in Project Settings:** Added the ability to configure what should be tested or ignored in your score calculations to ensure your team is capturing what's relevant to your testing strategy. This feature allows owners and admins to easily update and manage settings using an editor within Project Settings.
-  * `elementFilters`: Exclude specific elements by CSS selector.
-  * `views`: Define URL patterns for grouping in the UI.
-  * `viewFilters`: Exclude groups of URLs from reports.
-  * `attributeFilters`: Determine which attributes are used for identifying and grouping elements.
-  * `elementGroups`: Create custom rules for grouping elements to reduce noise in scores.
-  * `significantAttributes`: Prioritize custom attributes over defaults for element identification and grouping.
+- **Manage Configuration in Project Settings:** Added the ability to configure what should be tested or ignored in your score calculations to ensure your team is capturing what's relevant to your testing strategy. This feature allows owners and admins to easily update and manage settings using an editor within Project Settings.
+  - `elementFilters`: Exclude specific elements by CSS selector.
+  - `views`: Define URL patterns for grouping in the UI.
+  - `viewFilters`: Exclude groups of URLs from reports.
+  - `attributeFilters`: Determine which attributes are used for identifying and grouping elements.
+  - `elementGroups`: Create custom rules for grouping elements to reduce noise in scores.
+  - `significantAttributes`: Prioritize custom attributes over defaults for element identification and grouping.
 
 ## Week of 3/25/2024
 
-* **Project-Level Configuration Options:** UI Coverage now supports project-level configuration, enabling users to customize UI Coverage settings without updating their HTML. Users can exclude specific URLs and elements by selector and group elements to simplify coverage analysis. For configuration assistance, contact your Account Executive.
+- **Project-Level Configuration Options:** UI Coverage now supports project-level configuration, enabling users to customize UI Coverage settings without updating their HTML. Users can exclude specific URLs and elements by selector and group elements to simplify coverage analysis. For configuration assistance, contact your Account Executive.
 
 ## Week of 3/4/2024
 
-* **Element Interaction Details:** UI Coverage now provides detailed insights into the testing status of every interactive element, including interaction types, frequency, and locations within the UI. A new tracking system shows where each element has been identified and tested, and link details indicate visit frequency.
+- **Element Interaction Details:** UI Coverage now provides detailed insights into the testing status of every interactive element, including interaction types, frequency, and locations within the UI. A new tracking system shows where each element has been identified and tested, and link details indicate visit frequency.
 
 ## Week of 2/26/2024
 
-* **Element Grouping Improvements:** Introduced "cascade" behavior for the `data-cy-ui-group` attribute, which now allows users to place the attribute on a wrapper or parent element, so that it pass grouping values to child interactive elements.
-* **Text Filter:** Text filtering has been added to UI Coverage reports, allowing users to filter the "Views" list by name for easy searching.
+- **Element Grouping Improvements:** Introduced "cascade" behavior for the `data-cy-ui-group` attribute, which now allows users to place the attribute on a wrapper or parent element, so that it pass grouping values to child interactive elements.
+- **Text Filter:** Text filtering has been added to UI Coverage reports, allowing users to filter the "Views" list by name for easy searching.
 
 ## Week of 12/31/2023
 
-* **URL Grouping:** UI Coverage reports now intelligently group repeated URLs to reduce duplicate Views. This update simplifies reports, making it easier to identify and prioritize issues by minimizing duplicate Views, resulting in a more polished and user-friendly experience.
+- **URL Grouping:** UI Coverage reports now intelligently group repeated URLs to reduce duplicate Views. This update simplifies reports, making it easier to identify and prioritize issues by minimizing duplicate Views, resulting in a more polished and user-friendly experience.

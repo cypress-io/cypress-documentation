@@ -15,11 +15,11 @@ This allows you to review the results within CI and to determine if the results 
 
 Fetching UI Coverage results for a run supports fetching results for the following CI providers. Please see the docs below for information on general setup.
 
-* [Azure](/app/continuous-integration/ci-provider-examples#Azure-Pipelines) (requires Cypress v13.13.1)
-* [CircleCI ](/app/continuous-integration/circleci)
-* [GitHub Actions](/app/continuous-integration/github-actions)
-* [GitLab](/app/continuous-integration/gitlab-ci)
-* [Jenkins](/app/continuous-integration/ci-provider-examples#Jenkins)
+- [Azure](/app/continuous-integration/ci-provider-examples#Azure-Pipelines) (requires Cypress v13.13.1)
+- [CircleCI ](/app/continuous-integration/circleci)
+- [GitHub Actions](/app/continuous-integration/github-actions)
+- [GitLab](/app/continuous-integration/gitlab-ci)
+- [Jenkins](/app/continuous-integration/ci-provider-examples#Jenkins)
 
 Please reach out to Cypress Support to request support for a different provider.
 
@@ -58,28 +58,28 @@ getUICoverageResults({
     summary,
     views
   } = results
- 
+
   console.log(`Received ${summary.isPartialReport ? 'partial' : ''} results for run #${runNumber}.`).
   console.log(`See full report at ${uiCoverageReportUrl}.`)
-  
+
   // verify project coverage
   if (summary.coverage &#x3C; 80) {
     throw new Error(`Project coverage is ${summary.coverage}, which does not meet the minimum coverage of 80%.`)
   }
-  
+
   const criticalViews = [
     /login/,
     /checkout/
   ]
-  
+
   // verify critical view coverage
   const criticalViewResults = views.forEach((view) => {
     const {
-      displayName, 
+      displayName,
       coverage,
       uiCoverageReportUrl
     } = view
-  
+
     const isCriticalView = criticalViews.some((rx) => rx.test(displayName))
     if (!isCriticalView) return
 
@@ -103,7 +103,7 @@ getUICoverageResults({
   // Can be explicitly passed to override the env var
   projectId: string
 
-  // The project's record key. 
+  // The project's record key.
   // Optional if the CYPRESS_RECORD_KEY env is set
   // Can be explicitly passed to override the env var
   recordKey: string
@@ -145,10 +145,10 @@ The UI Coverage results for the run are returned as an object containing the fol
 
     // The number of views tested and analyzed.
     viewCount: number
-    
+
     // The number of interactive elements that were tested.
     testedElementsCount:number
-    
+
     // The number of interactive elements that were not tested.
     untestedElementsCount: number
   }
@@ -157,16 +157,16 @@ The UI Coverage results for the run are returned as an object containing the fol
   views: [{
     // The sanatized URL pattern shown in the report.
     displayName: string
-    
+
     // The view coverage from 0-100 with 2 decimal precision (e.g 92.45).
     coverage: float
-  
+
     // The number of interactive elements that were tested on this view.
     testedElementsCount:number
-    
+
     // The number of interactive elements that were not tested on this view.
     untestedElementsCount: number
-    
+
     // The url that links the report for this view.
     uiCoverageReportUrl: 'https://cloud.cypress.io/[...]'
   }]
@@ -189,13 +189,13 @@ This is necessary to identify each unique run and return a corresponding set of 
 
 **Example**
 
-* Let's imagine that within a single CI build you call `cypress run --record` multiple times because you're running one set of tests against a `staging` environment, followed by a `production` environment.
-* In this scenario, you pass a different `--tag` to each cypress run
-  * `cypress run --record --tag staging`
-  * `cypress run --record --tag production`
-* When calling `getUICoverageResults` you would then pass these same tags to get the unique set of results for each run
-  * `getUICoverageResults({ runTags: ['staging']})`
-  * `getUICoverageResults({ runTags: ['production']})`
+- Let's imagine that within a single CI build you call `cypress run --record` multiple times because you're running one set of tests against a `staging` environment, followed by a `production` environment.
+- In this scenario, you pass a different `--tag` to each cypress run
+  - `cypress run --record --tag staging`
+  - `cypress run --record --tag production`
+- When calling `getUICoverageResults` you would then pass these same tags to get the unique set of results for each run
+  - `getUICoverageResults({ runTags: ['staging']})`
+  - `getUICoverageResults({ runTags: ['production']})`
 
 :::
 
@@ -248,6 +248,7 @@ run-cypress:
 +   - npm install --force https://cdn.cypress.io/extract-cloud-results/v1/extract-cloud-results.tgz
 +   - node ./scripts/verifyUICoverageResults.js
 ```
+
 </TabItem>
 
 <TabItem value="Jenkins">
@@ -259,7 +260,7 @@ pipeline {
       image 'cypress/base:latest'
     }
   }
-  
+
   environment {
     CYPRESS_PROJECT_ID: 'xxxx'
     CYPRESS_RECORD_KEY = credentials('cypress-record-key')
@@ -272,7 +273,7 @@ pipeline {
         sh 'npx cypress run --record'
       }
     }
-    
+
 +   stage('Verify UI Coverage Results') {
 +     steps {
 +       sh 'npm install --force https://cdn.cypress.io/extract-cloud-results/v1/extract-cloud-results.tgz'
@@ -282,6 +283,7 @@ pipeline {
   }
 }
 ```
+
 </TabItem>
 
 <TabItem value="Azure">

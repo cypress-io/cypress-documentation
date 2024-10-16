@@ -17,25 +17,24 @@ It's important to note that the Web Content Accessibility Guidelines (WCAG) stan
 
 The following weights are applied to the accessibility report data:
 
-Severity of Issue | Weight                                                                                                                                       |
-------------------| ------
-Critical | 10
-Serious | 7
-Moderate | 3
-Minor | 1
-
+| Severity of Issue | Weight |
+| ----------------- | ------ |
+| Critical          | 10     |
+| Serious           | 7      |
+| Moderate          | 3      |
+| Minor             | 1      |
 
 In order to create scores for each snapshot, View, and the entire run, we use the following process:
 
-* For each Snapshot
-  * Sum the weights of each passed check
-  * Sum the weights of each failed check
-  * Score equals ratio of passed weight over total weight
-    * [Sum of weights from passed checks] / [Sum of weights from passed checks + Sum of weights from failed checks]
-* For each View
-  * Score equals the average of all Snapshot scores found in the View
-* For the Run
-  * Score equals the average of all Snapshots in the Run
+- For each Snapshot
+  - Sum the weights of each passed check
+  - Sum the weights of each failed check
+  - Score equals ratio of passed weight over total weight
+    - [Sum of weights from passed checks] / [Sum of weights from passed checks + Sum of weights from failed checks]
+- For each View
+  - Score equals the average of all Snapshot scores found in the View
+- For the Run
+  - Score equals the average of all Snapshots in the Run
 
 ## Interpreting your scores
 

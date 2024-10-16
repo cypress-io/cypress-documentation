@@ -8,9 +8,9 @@ sidebar_position: 40
 # views
 
 :::info
-  Note: setting views impacts both Accessibility and UI Coverage reports.
-  Nesting this property under an `accessibility` or `uiCoverage` key is
-  supported, if you need to split them up.
+Note: setting views impacts both Accessibility and UI Coverage reports.
+Nesting this property under an `accessibility` or `uiCoverage` key is
+supported, if you need to split them up.
 :::
 
 Cypress Accessibility automatically groups certain URL patterns to create [views](/ui-coverage/core-concepts/views). For URLs that are not automatically grouped (e.g. `/users/alice` and `/users/bob` are not automatically grouped into `/users/*`), the `views` property allows you to specify your own URL patterns that represent views.
@@ -44,7 +44,7 @@ An array of objects used to define views within Accessibility. _**Each object ca
 
 _Required._ String (URL Pattern)
 
-A URL pattern that is used to group matching URLs into a view. Uses [URL Pattern API](https://developer.mozilla.org/en-US/docs/Web/API/URL\_Pattern\_API) syntax.
+A URL pattern that is used to group matching URLs into a view. Uses [URL Pattern API](https://developer.mozilla.org/en-US/docs/Web/API/URL_Pattern_API) syntax.
 
 ### groupBy <a href="#groupby" id="groupby"></a>
 
@@ -156,9 +156,7 @@ https://cypress.io/analytics/usage/:id
   "views": [
     {
       "pattern": "https://cypress.io/app?*name=:name{&*}?#*",
-      "groupBy": [
-        "name"
-      ]
+      "groupBy": ["name"]
     }
   ]
 }
@@ -189,9 +187,7 @@ https://cypress.io/app?name=world
   "views": [
     {
       "pattern": "https://*.cypress.io/:rest*\\?*#*",
-      "groupBy": [
-        "rest"
-      ]
+      "groupBy": ["rest"]
     }
   ]
 }
