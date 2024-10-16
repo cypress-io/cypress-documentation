@@ -43,7 +43,7 @@ export default function NotFound() {
                       <a href="/examples/tutorials">Tutorials</a>
                     </li>
                     <li>
-                      <a href="/app/cloud/introduction">Cypress Cloud</a>
+                      <a href="/cloud/introduction">Cypress Cloud</a>
                     </li>
                   </ul>
               </div>

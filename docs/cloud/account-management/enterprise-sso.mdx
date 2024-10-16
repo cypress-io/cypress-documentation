@@ -57,16 +57,16 @@ below, refer to
 
 1. Log into your Okta dashboard and head to the **Admin** section.
    <DocsImage
-     src="/img/app/cloud/sso/okta-admin-cypress-sso-setup.png"
+     src="/img/cloud/sso/okta-admin-cypress-sso-setup.png"
      alt="Okta Admin"
    />
 1. Create a new SAML-based Web application.
    <DocsImage
-     src="/img/app/cloud/sso/okta-add-application-step1-cypress-sso.png"
+     src="/img/cloud/sso/okta-add-application-step1-cypress-sso.png"
      alt="Create Okta SAML App"
    />
    <DocsImage
-     src="/img/app/cloud/sso/okta-add-application-step3-cypress-sso.png"
+     src="/img/cloud/sso/okta-add-application-step3-cypress-sso.png"
      alt="Create Okta SAML App"
      width={600}
    />
@@ -86,7 +86,7 @@ below, refer to
 - Copy the Identity Provider Single sign-on URL to Cypress Cloud.
 - Download the certificate and upload that to Cypress Cloud.
   <DocsImage
-    src="/img/app/cloud/sso/okta-download-certificate-for-cypress-dashboard.png"
+    src="/img/cloud/sso/okta-download-certificate-for-cypress-dashboard.png"
     alt="Download Certificate"
   />
 
@@ -100,7 +100,7 @@ Cypress Cloud can integrate with your identity provider via SAML. In addition to
 the documentation below, refer to your provider's official documentation for
 configuring a SAML integration.
 
-<DocsImage src="/img/app/cloud/sso/enterprise-SSO-SAML.png" alt="SAML SSO" />
+<DocsImage src="/img/cloud/sso/enterprise-SSO-SAML.png" alt="SAML SSO" />
 
 1. Log into the admin interface for your identity provider.
 1. Work through the setup wizard supplying the information requested:
@@ -157,9 +157,9 @@ organization to sign in through your SSO provider.
 - Once SSO is successfully set up, users will need to be invited via your SSO
   provider, as the Cypress Cloud invitation option will be disabled.
 - All SSO Users are initially added with the
-  [User Role](/app/cloud/account-management/users#User-roles) of Member. If a
+  [User Role](/cloud/account-management/users#User-roles) of Member. If a
   User needs different User Role permissions, this can be changed via Cypress
   Cloud by a current member with the role of Owner or Admin.
 - SSO users are separate accounts from Google/GitHub or email/password users. If
   there are duplicate users, duplicates can be removed by any
-  [Owner or Admin](/app/cloud/account-management/users#User-roles).
+  [Owner or Admin](/cloud/account-management/users#User-roles).
