@@ -1,0 +1,78 @@
+---
+sidebar_label: Changelog
+title: ''
+description: ''
+sidebar_position: 200
+---
+
+# Changelog
+
+## Week of 9/20/2024
+
+* A minor bugfix was released for score calculations, to fix a scenario where some snapshots could be counted more than once if they appeared in multiple tests. This may result in a small difference in the total score for runs before and after the change.
+* Documentation updates to reflect recently released features and capabilities.
+
+## Week of 9/9/2024
+
+* We have introduced the new "Rules" tab for all users. This allows you to more easily review the outcome of all the rules that were tested for, across the entire run, and see which rules have the most failing elements. This also helps you understand the exact effect of any underlying configuration on rule outcomes.
+* We have introduced new element statuses, beyond just failures. This allows Cypress Accessibility to surface any inconclusive or "manual review" items from Axe Core, as well as track and display elements whose results were explicitly ignored. Learn more in the [run-level reports](/accessibility/core-concepts/run-level-reports) [Elements section](/accessibility/core-concepts/run-level-reports#elements).
+* Elements ignored by configuration will have results captured, but these results will not affect your score. This ensures you can use filters to peek behind the curtain and understand exactly what is being excluded from a given run's results.
+* The Detail View that displays failing elements will now also display inconclusive and (optionally) ignored elements for each rule. Inconclusive and ignored elements have distinct orange and gray icons and highlights respectively.
+
+## Week of 8/23/2024
+
+* Cypress Accessibility results will now appear in GitHub Pull Request comments alongside test results. [Learn more about our GitHub integration here](https://docs.cypress.io/guides/cloud/integrations/source-control/github#Install-the-Cypress-GitHub-app).
+* iFrames are now supported for accessibility checks. iFrame processing is _opt-in_ for existing customers, but new customers will begin with iFrames enabled and can choose to opt out instead. This is to avoid disrupting existing pipelines, especially because iFrame content is not _always_ something you want to include in your reports.
+
+## Week of 8/5/2024
+
+* We now support fetching Accessibility results from CircleCI workflows with the [Results API](accessibility/results-api).
+
+## Week of 7/29/2024
+
+* Fetching results in Azure and Jenkins is now supported in the new [Results API](accessibility/results-api), which enables you to programmatically fetch your run's Accessibility results in a CI environment.
+
+## Week of 7/15/2024
+
+* The new [Results API](accessibility/results-api), which enables you to programmatically fetch your run's Accessibility results in a CI environment, now supports fetching results in GitLab CI workflows.
+
+## Week of 6/24/2024
+
+* We have added the new [Results API](accessibility/results-api) which enables you to programmatically fetch your run's Accessibility results in a CI environment. This allows you to review the results within CI and to determine if the results are acceptable or need to be addressed before code changes can merge.
+* View [configuration information for each run](https://cypressio.gitbook.io/accessibility/configuration#viewing-configuration-for-a-run) in the properties tab. There, you'll find the configuration set for the project at the start of the run. This will help you understand what factors might be driving a score change. This helps distinguish config criteria changes from other factors such as changes to your application, tests, Cypress versions, and more.
+
+## Week of 5/20/2024
+
+* Shadow DOM elements are now visible and highlighted in A11y report snapshots. By highlighting shadow DOM elements in snapshots, developers can identify and address all accessibility violations, including those within encapsulated components, thus enhancing the overall accessibility of the web application.
+* You can now click directly into the accessibility report from any respective run from the "Latest Runs" page in Cypress Cloud. This improvement streamlines access and navigation to accessibility reports, saving you time and reducing the number of steps needed to view the details.
+* We've added the ability to configure and customize your Accessibility report in Project Settings. You can set configuration through our editor equipped with linting and IntelliSense code completion. Control what should be tested or ignored in your score calculations to ensure your team is capturing what's relevant to your organization's goals.
+
+## Week of 4/15/2024
+
+* We've added full depth axe-core® details for each element flagged with an accessibility violation, providing comprehensive context to help developers accurately identify and resolve issues.
+
+## Week of 3/25/2024
+
+* The new Violation Severity Breakdown displays a small bar graph indicating the severity level of accessibility violations across the entire run, or on the level of individual pages or components. This gives users more information at a glance about what pages have the most severe problems, and the overall makeup of their accessibility report. Pages with more severe problems will now be more obvious when scanning the report, helping users decide what pages need more investigation or which pages have the fewest problems.
+
+## Week of 3/18/2024
+
+* You can now refine your Views list by severity or specific rule sets. For instance, isolate pages featuring "Critical" violations only, or focus solely on WCAG 2.1 A violations. If your project has varying levels of accessibility, filtering pages or components with specific types of violations can serve as an initial step to comprehend and prioritize areas with the most severe issues.
+* Cypress will now conduct accessibility checks within the Shadow DOM on all runs, expanding the accessibility testing scope.
+
+## Week of 2/25/2024
+
+* We've introduced text filtering so that users can filter the "Views" list by name, making it effortless to search and locate specific items.
+* To improve clarity and context, we've also implemented a tooltip-style feature that displays the position of the highlighted elements. This means that when an accessibility violation is reported and is associated with a specific element on the screen, it's a lot easier to locate.
+
+## Week of 1/15/2024
+
+* We've introduced a new feature that streamlines accessibility management - the aggregation of all violations into a single comprehensive report. Look for the "View all" link next to the violations count at the top of the accessibility tab. This will show you all violations detected across an entire run, regardless of what page or component they are detected on.
+
+## Week of 12/31/2023
+
+* Users can now discover and address accessibility violations swiftly by utilizing the newly integrated "Print Elements to Console" button within your browser's developer tools.
+
+## Week of 12/17/2023
+
+* Users can now view a detailed breakdown of the total number of Views (pages and/or components) and Violations detected during a specific run.

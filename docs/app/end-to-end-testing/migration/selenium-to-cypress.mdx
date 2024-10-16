@@ -34,8 +34,8 @@ Ruby. Its widespread adoption is further evidenced by its integration into vario
 tools, underscoring its versatility in browser interaction.
 
 A key differentiator of Cypress, not only from Selenium but also from other test automation frameworks,
-is its [unique approach](/app/overview/key-differences#Architecture) of running tests
-inside an interactive browser rather than against one. This approach [minimizes flakiness](/app/overview/key-differences#Flake-resistant)
+is its [unique approach](/app/get-started/key-differences#Architecture) of running tests
+inside an interactive browser rather than against one. This approach [minimizes flakiness](/app/get-started/key-differences#Flake-resistant)
 and grants users greater control over both the framework and the application under test. Cypress's ability to wait for page loading without explicit
 declaration allows for patient execution until the application is fully ready. Additionally, Cypress simplifies test recording
 without requiring complex configurations or setups, facilitating easy troubleshooting and bug
@@ -61,8 +61,8 @@ minimizing flakiness and enhancing test reliability.
 ### 2. Ease of Setup
 
 Unlike traditional test automation frameworks that require cumbersome setup processes, Cypress
-streamlines the setup with just two Node.js commands: ['npm install'](/app/getting-started/installing-cypress#npm-install)
-and ['npx cypress open'](/app/getting-started/opening-the-app#cypress-open).
+streamlines the setup with just two Node.js commands: ['npm install'](/app/get-started/installing-cypress#npm-install)
+and ['npx cypress open'](/app/get-started/opening-the-app#cypress-open).
 Within seconds, users can have a fully functional framework up and running. Since Cypress utilizes
 locally installed browsers, there's no need for complex configurations or additional installations.
 
@@ -85,7 +85,7 @@ Compared to Selenium, Cypress offers a more intuitive and user-friendly experien
 playground](/app/core-concepts/cypress-app#Selector-Playground) and
 [built-in screenshots](/app/guides/screenshots-and-videos) simplify test writing and
 debugging, allowing users to focus on creating effective tests without the need for constant navigation between the test server and browser. This
-streamlined approach enhances productivity and accelerates the testing process. Cypress [Test Replay](/cloud/test-replay), which provides
+streamlined approach enhances productivity and accelerates the testing process. Cypress [Test Replay](/cloud/features/test-replay), which provides
 the ability to time travel and interactively debug tests in your CI/CD pipeline, is not a capability that Selenium provides. While debugging is never the most enjoyable
 task in development, Cypress is here to assist us. With its clear and concise error messages and multitude of plugins for feedback,
 debugging has never been easier.
@@ -117,8 +117,8 @@ streamlining test maintenance and enhancing readability.
 
 Installing and configuring Cypress is very easy and we have provided step-by-step guides to help you get started.
 
-You will first [install Cypress](/app/getting-started/installing-cypress).
-You will then [open the Cypress application](/app/getting-started/opening-the-app).
+You will first [install Cypress](/app/get-started/installing-cypress).
+You will then [open the Cypress application](/app/get-started/opening-the-app).
 
 Check out our in-depth [E2E getting started guide](/app/end-to-end-testing/writing-your-first-end-to-end-test).
 
@@ -331,7 +331,7 @@ Learn more about [running Cypress tests in Continuous Integration](/app/continuo
 ### Cypress Cloud
 
 The notable distinction in integration between Cypress and Selenium emerges when discussing
-[Cypress Cloud](/cloud/introduction), a service built on the rich result data coming from tests run in the
+[Cypress Cloud](/cloud/get-started/introduction), a service built on the rich result data coming from tests run in the
 open source application.
 
 Cypress.io offers its tailored pipeline structure, meticulously designed to execute tests efficiently.
@@ -341,7 +341,7 @@ it would be remiss not to explore the potential benefits afforded by its feature
 
 Some of the core features include:
 
-##### [Test Replay](/cloud/test-replay)
+##### [Test Replay](/cloud/features/test-replay)
 
 One of the major difficulties in troubleshooting headless testing is having to reproduce the failure in your local
 environment in order to debug failures in CI. Cypress Cloud resolves this issue with Test Replay. Test Replay's
@@ -351,16 +351,16 @@ locally so you can swiftly get back to shipping valuable software for your users
 leading up to crashes or failures by inspecting the DOM, network events, and console logs of your application under
 test exactly as they ran in CI.
 
-##### [Parallelization](/cloud/smart-orchestration/parallelization)
+##### [Parallelization](/cloud/features/smart-orchestration/parallelization)
 
 To enhance testing efficiency further, Cypress Cloud offers a built-in solution for test parallelization. With a simple
 toggle, tests can run in parallel, eliminating the need for complex configurations to run tests concurrently.
 
 Cypress will assign each spec file to an available machine based on our
-[balance strategy](/cloud/smart-orchestration/load-balancing#Balance-strategy).
+[balance strategy](/cloud/features/smart-orchestration/load-balancing#Balance-strategy).
 Due to this balance strategy, the run order of the spec files is not guaranteed when parallelized.
 
-##### [Analytics and Reporting](/cloud/analytics/overview)
+##### [Analytics and Reporting](/cloud/features/analytics/overview)
 
 The last step in pipeline integration is reporting the results. While most pipelines can report if there is a failure,
 precise numbers require a bit more configuration. One of the most popular plugins to show reports is
@@ -370,7 +370,7 @@ plugin can easily be integrated into most pipeline infrastructure, with the corr
 But even without the mochawesome package, any pipeline infrastructure can register the error code (error code 1) if
 there are test failures. And as soon as this error code is found, webhooks can trigger a notification in your medium of choice.
 
-Cypress Cloud can also serve as an automated pipeline integration, furnishing [built-in analytics and reporting capabilities](/cloud/analytics/overview). This feature grants you visibility into metrics such as run duration,
+Cypress Cloud can also serve as an automated pipeline integration, furnishing [built-in analytics and reporting capabilities](/cloud/features/analytics/overview). This feature grants you visibility into metrics such as run duration,
 flaky tests, and the slowest-performing tests, enabling comprehensive monitoring of test health at scale. Moreover, this
 negates the necessity of adding another package or dependency, as Cypress Cloud seamlessly interacts with the tests.
 

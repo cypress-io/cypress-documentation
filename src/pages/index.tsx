@@ -2,5 +2,5 @@ import React from 'react'
 import { Redirect } from '@docusaurus/router'
 
 export default function Home() {
-  return <Redirect to="/app/overview/why-cypress" />
+  return <Redirect to="/app/get-started/why-cypress" />
 }

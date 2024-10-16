@@ -98,7 +98,7 @@ You can create multiple Record Keys for a project, or delete existing ones from
 [Cypress Cloud](https://on.cypress.io/cloud).
 
 <DocsImage
-  src="/img/app/cloud/projects/record-keys-in-project-settings-dashboard.jpg"
+  src="/img/cloud/projects/record-keys-in-project-settings-dashboard.jpg"
   alt="Record key in project settings"
 />
 
@@ -106,7 +106,7 @@ You can also find your Record Key inside of the _Settings_ tab in the Cypress
 App.
 
 <DocsImage
-  src="/img/app/cloud/projects/record-key-desktop-gui.jpg"
+  src="/img/cloud/projects/record-key-desktop-gui.jpg"
   alt="Record Key in Configuration Tab"
 />
 
@@ -140,9 +140,9 @@ Visit your project settings to see who has access to your project's runs.
   handled. Anyone who knows your `projectId` will be able to see the recorded
   runs for public projects.
 
-- **Private** means that only [users](/app/cloud/account-management/users)
+- **Private** means that only [users](/cloud/account-management/users)
   you invite to your
-  [organization](/app/cloud/account-management/organizations) can see its
+  [organization](/cloud/account-management/organizations) can see its
   recorded runs. Even if someone knows your `projectId`, they will not have
   access to your runs unless you have invited them.
 
@@ -154,7 +154,7 @@ Visit your project settings to see who has access to your project's runs.
 4. Here you will see a section displaying **Access**. Choose the appropriate
    access you'd like to assign.
    <DocsImage
-     src="/img/app/cloud/projects/access-to-runs.jpg"
+     src="/img/cloud/projects/access-to-runs.jpg"
      alt="access-to-runs"
    />
 
@@ -166,11 +166,11 @@ Toggle Spec Prioritization to reduce feedback time by running previously failed 
 canceling.
 
 These settings can significantly improve developer resolution time, reduce your monthly CI bill and free up CI resources. See our
-[Spec Prioritization](/app/cloud/smart-orchestration/spec-prioritization)
-and [Auto Cancellation](/app/cloud/smart-orchestration/run-cancellation) guides to learn more.
+[Spec Prioritization](/cloud/features/smart-orchestration/spec-prioritization)
+and [Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation) guides to learn more.
 
 <DocsImage
-  src="/img/app/cloud/smart-orchestration/spec-prioritization-active.png"
+  src="/img/cloud/features/smart-orchestration/spec-prioritization-active.png"
   alt="Run completion delay settings"
 />
 
@@ -182,11 +182,11 @@ You can edit the number of seconds that a run will wait for new groups to join
 before transitioning to 'completed'.
 
 See our
-[Parallelization guide](/app/cloud/smart-orchestration/parallelization#Run-completion-delay)
+[Parallelization guide](/cloud/features/smart-orchestration/parallelization#Run-completion-delay)
 to learn more.
 
 <DocsImage
-  src="/img/app/cloud/projects/run-completion-delay.jpg"
+  src="/img/cloud/projects/run-completion-delay.jpg"
   alt="Run completion delay settings"
 />
 
@@ -199,7 +199,7 @@ You can lengthen the timeout if you are experiencing runs that have passing / fa
 captured by Cloud due to a timeout. You can shorten the timeout if you need faster feedback.
 
 <DocsImage
-  src="/img/app/cloud/projects/run-timeout-setting.jpg"
+  src="/img/cloud/projects/run-timeout-setting.jpg"
   alt="Run timeout setting"
 />
 
@@ -208,7 +208,7 @@ captured by Cloud due to a timeout. You can shorten the timeout if you need fast
 #### Transfer project to other user or organization
 
 You can transfer projects that you own to another
-[organization](/app/cloud/account-management/organizations) you are a part of
+[organization](/cloud/account-management/organizations) you are a part of
 or to another user in the organization. Projects can only be transferred from
 [Cypress Cloud](https://on.cypress.io/cloud).
 
@@ -218,12 +218,12 @@ or to another user in the organization. Projects can only be transferred from
 4. Scroll down to the **Transfer Ownership** section and click **Transfer
    Ownership**.
    <DocsImage
-     src="/img/app/cloud/projects/transfer-ownership-button.jpg"
+     src="/img/cloud/projects/transfer-ownership-button.jpg"
      alt="Transfer ownership button"
    />
 5. Select the user or organization, then click **Transfer**.
    <DocsImage
-     src="/img/app/cloud/projects/transfer-ownership-of-project-dialog.jpg"
+     src="/img/cloud/projects/transfer-ownership-of-project-dialog.jpg"
      alt="Transfer Project dialog"
      width="80%"
    />
@@ -231,7 +231,7 @@ or to another user in the organization. Projects can only be transferred from
 :::caution
 
 <Icon name="exclamation-triangle" /> You are not allowed to transfer a project to
-an organization that is currently enrolled in a [free trial](/app/cloud/free-trial).
+an organization that is currently enrolled in a [free trial](/cloud/get-started/free-trial).
 
 :::
 
@@ -241,7 +241,7 @@ Upon transferring, you can cancel the transfer at any time by visiting the
 organization's projects and clicking **Cancel Transfer**.
 
 <DocsImage
-  src="/img/app/cloud/projects/cancel-transfer-of-project.jpg"
+  src="/img/cloud/projects/cancel-transfer-of-project.jpg"
   alt="Cancel pending transfer of project"
 />
 
@@ -252,7 +252,7 @@ You will be able to accept or reject the transferred project by clicking the
 notification in the sidebar and clicking 'Accept' or 'Reject'.
 
 <DocsImage
-  src="/img/app/cloud/projects/accept-or-reject-transfer-of-project.jpg"
+  src="/img/cloud/projects/accept-or-reject-transfer-of-project.jpg"
   alt="Accept or reject a transferred project"
 />
 
@@ -267,7 +267,7 @@ test runs. Deleting projects can only be done from
 3. Go to the project's **Settings** page.
 4. At the very bottom of the Settings page click the **Remove Project** button.
    <DocsImage
-     src="/img/app/cloud/projects/remove-project-dialog.png"
+     src="/img/cloud/projects/remove-project-dialog.png"
      alt="Delete project dialog"
      width="80%"
    />
@@ -310,7 +310,7 @@ test count to other developers viewing your project's README file.
 
    {/* prettier-ignore */}
     <DocsImage
-      src="/img/app/cloud/projects/cloud-badge-configuration.jpg"
+      src="/img/cloud/projects/cloud-badge-configuration.jpg"
       alt="README Badge configuration form"
       width="80%"
     />
@@ -359,17 +359,17 @@ See our integration guides to learn more:
 
 {/* prettier-ignore-start */}
 
-- <Logo src="/img/logo/github.svg" /> [GitHub integration guide](/app/cloud/integrations/source-control/github)
-- <Logo src="/img/logo/gitlab.svg" /> [GitLab integration guide](/app/cloud/integrations/source-control/gitlab)
-- <Logo src="/img/logo/bitbucket.svg" /> [Bitbucket integration guide](/app/cloud/integrations/source-control/bitbucket)
+- <Logo src="/img/logo/github.svg" /> [GitHub integration guide](/cloud/integrations/source-control/github)
+- <Logo src="/img/logo/gitlab.svg" /> [GitLab integration guide](/cloud/integrations/source-control/gitlab)
+- <Logo src="/img/logo/bitbucket.svg" /> [Bitbucket integration guide](/cloud/integrations/source-control/bitbucket)
 
 ### Issue Management
 
-- <Logo src="/img/logo/jira.svg" /> [Jira integration guide](/app/cloud/integrations/jira)
+- <Logo src="/img/logo/jira.svg" /> [Jira integration guide](/cloud/integrations/jira)
 
 ### Team Communication
 
-- <Logo src="/img/logo/slack.svg" /> [Cypress integration for Slack guide](/app/cloud/integrations/slack)
-- <Logo src="/img/logo/ms-teams.svg" /> [Cypress integration for Microsoft Teams guide](/app/cloud/integrations/teams)
+- <Logo src="/img/logo/slack.svg" /> [Cypress integration for Slack guide](/cloud/integrations/slack)
+- <Logo src="/img/logo/ms-teams.svg" /> [Cypress integration for Microsoft Teams guide](/cloud/integrations/teams)
 
 {/* prettier-ignore-end */}

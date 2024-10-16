@@ -61,7 +61,7 @@
 
 [[redirects]]
   from = "/faq"
-  to = "/faq/questions/using-cypress-faq/"
+  to = "/app/faq/"
   status = 301
   force = true
 
@@ -319,37 +319,37 @@
 
 [[redirects]]
   from = "/guides/component-testing/component-test-troubleshooting"
-  to = "/guides/component-testing/faq"
+  to = "/app/faq"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/dashboard/analytics"
-  to = "/guides/cloud/analytics/overview"
+  to = "/guides/cloud/features/analytics/overview"
   status = 301
   force = true
 
  [[redirects]]
-  from = "/guides/cloud/analytics"
-  to = "/guides/cloud/analytics/overview"
+  from = "/guides/cloud/features/analytics"
+  to = "/guides/cloud/features/analytics/overview"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/dashboard/flaky-test-management"
-  to = "/guides/cloud/flaky-test-management"
+  to = "/guides/cloud/features/flaky-test-management"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/dashboard/flaky-test-management"
-  to = "/guides/cloud/flaky-test-management"
+  to = "/guides/cloud/features/flaky-test-management"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/dashboard/introduction"
-  to = "/guides/cloud/introduction"
+  to = "/guides/cloud/get-started/introduction"
   status = 301
   force = true
 
@@ -433,7 +433,7 @@
 
 [[redirects]]
   from = "/guides/dashboard/smart-orchestration"
-  to = "/guides/cloud/smart-orchestration"
+  to = "/guides/cloud/features/smart-orchestration"
   status = 301
   force = true
 
@@ -470,20 +470,20 @@
   force = true
 
 [[redirects]]
-  from = "/guides/cloud/smart-orchestration"
-  to = "/guides/cloud/smart-orchestration/overview"
+  from = "/guides/cloud/features/smart-orchestration"
+  to = "/guides/cloud/features/smart-orchestration/overview"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/guides/parallelization"
-  to = "/guides/cloud/smart-orchestration/parallelization"
+  to = "/guides/cloud/features/smart-orchestration/parallelization"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/cloud/runs"
-  to = "/guides/cloud/recorded-runs"
+  to = "/guides/cloud/features/recorded-runs"
   status = 301
   force = true
 
@@ -507,13 +507,13 @@
 
 [[redirects]]
   from = "/guides/cloud/debugging/test-replay"
-  to = "/guides/cloud/test-replay"
+  to = "/guides/cloud/features/test-replay"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/cloud/debugging/recorded-runs"
-  to = "/guides/cloud/recorded-runs"
+  to = "/guides/cloud/features/recorded-runs"
   status = 301
   force = true
 
@@ -579,13 +579,13 @@
 
 [[redirects]]
   from = "/dashboard-service"
-  to = "/guides/cloud/introduction"
+  to = "/guides/cloud/get-started/introduction"
   status = 301
   force = true
 
 [[redirects]]
   from = "/dashboard/overview/runs-dashboard"
-  to = "/guides/cloud/recorded-runs"
+  to = "/guides/cloud/features/recorded-runs"
   status = 301
   force = true
 
@@ -633,7 +633,7 @@
 
 [[redirects]]
   from = "/guides/core-concepts/dashboard-service"
-  to = "/guides/cloud/introduction"
+  to = "/guides/cloud/get-started/introduction"
   status = 301
   force = true
 
@@ -669,7 +669,7 @@
 
 [[redirects]]
   from = "/guides/guides/plugins-guide"
-  to = "/api/plugins/writing-a-plugin"
+  to = "/api/node-events/writing-a-plugin"
   status = 301
   force = true
 

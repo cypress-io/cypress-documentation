@@ -1,0 +1,118 @@
+---
+sidebar_label: viewFilters
+title: ''
+description: ''
+sidebar_position: 30
+---
+
+# viewFilters
+
+:::info
+  Note: setting `viewFilters` impacts both Accessibility and UI Coverage reports.
+  This cannot be nested.
+:::
+
+By default, every URL that is visited within a run is included in the Accessibility report. The `viewFilters` property allows you to specify URL patterns for URLs that should be excluded from Accessibility. Excluding a URL also excludes all links to that URL.
+
+For every URL visited by Cypress in a run and every link element found, the first `viewFilters` rule for which the `pattern` property matches the URL is used to either include or exclude the URL based on the `include` value. URLs that do not match any rules are included by default.
+
+## Syntax <a href="#syntax" id="syntax"></a>
+
+```typescript
+{
+  "viewFilters": [
+    {
+      "pattern": string,
+      "include": boolean
+    }
+  ]
+}
+```
+
+### viewFilters <a href="#viewfilters" id="viewfilters"></a>
+
+_Optional._ Object\[]
+
+An array of objects used to specify URLs to exclude from Accessibility. _**Each object can have the following properties:**_
+
+### pattern <a href="#pattern" id="pattern"></a>
+
+_Required._ String (URL Pattern)
+
+Used to match URLs. Uses [URL Pattern API](https://developer.mozilla.org/en-US/docs/Web/API/URL\_Pattern\_API) syntax.
+
+### include <a href="#include" id="include"></a>
+
+_Optional._ Boolean
+
+_Default:_ `true`
+
+A boolean that represents whether or not a matched URL should be included in Accessibility.
+
+## Examples <a href="#examples" id="examples"></a>
+
+### Excluding URLs by hostname <a href="#excluding-urls-by-hostname" id="excluding-urls-by-hostname"></a>
+
+**Config**
+
+```json
+{
+  "viewFilters": [
+    {
+      "pattern": "https://app.okta.com/*",
+      "include": false
+    }
+  ]
+}
+```
+
+**Visited URLs**
+
+```
+https://app.okta.com/login
+https://cypress.io/home
+https://cypress.io/about
+```
+
+**Views shown in UI**
+
+```
+https://cypress.io/home
+https://cypress.io/about
+```
+
+### Including only specific URLs <a href="#including-only-specific-urls" id="including-only-specific-urls"></a>
+
+**Config**
+
+```json
+{
+  "viewFilters": [
+    {
+      "pattern": "https://cypress.io/dashboards*",
+      "include": true
+    },
+    {
+      "pattern": "*",
+      "include": false
+    }
+  ]
+}
+```
+
+**Visited URLs**
+
+```
+https://cypress.io/dashboards
+https://cypress.io/dashboards/1
+https://cypress.io/dashboards/2
+https://cypress.io/home
+https://cypress.io/login
+```
+
+**Views shown in UI**
+
+```
+https://cypress.io/dashboards
+https://cypress.io/dashboards/*
+```

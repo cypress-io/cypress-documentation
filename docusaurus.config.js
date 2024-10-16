@@ -115,14 +115,14 @@ const config = {
       navbar: {
         style: 'dark',
         logo: {
-          href: '/app/overview/why-cypress',
+          href: '/app/get-started/why-cypress',
           alt: 'Cypress Logo',
           src: '/img/logo/cypress-logo-light.svg',
           srcDark: '/img/logo/cypress-logo-dark.svg',
         },
         items: [
           {
-            to: '/app/overview/why-cypress',
+            to: '/app/get-started/why-cypress',
             label: 'App',
             activeBasePath: 'app',
           },
@@ -132,9 +132,19 @@ const config = {
             activeBasePath: 'api',
           },
           {
-            to: '/cloud/introduction',
+            to: '/cloud/get-started/introduction',
             label: 'Cloud',
             activeBasePath: 'cloud',
+          },
+          {
+            to: '/ui-coverage/get-started/introduction',
+            label: 'UI Coverage',
+            activeBasePath: 'ui-coverage',
+          },
+          {
+            to: '/accessibility/get-started/introduction',
+            label: 'Accessibility',
+            activeBasePath: 'accessibility',
           },
           {
             to: '/plugins',
@@ -145,11 +155,6 @@ const config = {
             to: '/examples/recipes',
             label: 'Examples',
             activeBasePath: 'examples',
-          },
-          {
-            to: '/faq/questions/using-cypress-faq',
-            label: 'FAQ',
-            activeBasePath: 'faq',
           },
           {
             to: 'https://learn.cypress.io',

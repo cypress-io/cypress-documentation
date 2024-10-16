@@ -1,0 +1,214 @@
+---
+sidebar_label: views
+title: ''
+description: ''
+sidebar_position: 40
+---
+
+# views
+
+:::info
+  Note: setting views impacts both Accessibility and UI Coverage reports.
+  Nesting this property under an `accessibility` or `uiCoverage` key is
+  supported, if you need to split them up.
+:::
+
+Cypress Accessibility automatically groups certain URL patterns to create [views](https://cypressio.gitbook.io/ui-coverage/important-concepts/views). For URLs that are not automatically grouped (e.g. `/users/alice` and `/users/bob` are not automatically grouped into `/users/*`), the `views` property allows you to specify your own URL patterns that represent views.
+
+Each URL pattern provided defines a view that is made up of all URLs that match the pattern. The first pattern that a given URL matches is used as its view. If a URL doesn't match any of the patterns, it is grouped by the default Accessibility grouping rules, if possible.
+
+The `groupBy` property of a view definition allows you to create multiple views with a single URL pattern, grouping URLs by the specified named parameter(s).
+
+## Syntax
+
+```typescript
+{
+  "views": [
+    {
+      "pattern": string,
+      "groupBy": [
+        string
+      ]
+    }
+  ]
+}
+```
+
+### views <a href="#views" id="views"></a>
+
+_Optional._ Object\[]
+
+An array of objects used to define views within Accessibility. _**Each object can have the following properties:**_
+
+### pattern <a href="#pattern" id="pattern"></a>
+
+_Required._ String (URL Pattern)
+
+A URL pattern that is used to group matching URLs into a view. Uses [URL Pattern API](https://developer.mozilla.org/en-US/docs/Web/API/URL\_Pattern\_API) syntax.
+
+### groupBy <a href="#groupby" id="groupby"></a>
+
+_Optional._ String\[]
+
+The URL parameters that should be used to subdivide the URLs into multiple views, rather than being grouped into a single view.
+
+## Examples <a href="#examples" id="examples"></a>
+
+### Grouping dynamic path parameters <a href="#grouping-dynamic-path-parameters" id="grouping-dynamic-path-parameters"></a>
+
+**Config**
+
+```json
+{
+  "views": [
+    {
+      "pattern": "https://cypress.io/users/*"
+    }
+  ]
+}
+```
+
+**Visited URLs**
+
+```
+https://cypress.io/users/alice
+https://cypress.io/users/alice?foo=bar
+https://cypress.io/users/bob
+https://cypress.io/users/bob#baz
+```
+
+**Views shown in UI**
+
+```
+https://cypress.io/users/*
+```
+
+### Using named path parameters <a href="#using-named-path-parameters" id="using-named-path-parameters"></a>
+
+**Config**
+
+Copy
+
+```json
+{
+  "views": [
+    {
+      "pattern": "https://cypress.io/users/:name\\?*#*"
+    }
+  ]
+}
+```
+
+**Visited URLs**
+
+```
+https://cypress.io/users/alice
+https://cypress.io/users/alice?foo=bar
+https://cypress.io/users/bob
+https://cypress.io/users/bob#baz
+```
+
+**Views shown in UI**
+
+```
+https://cypress.io/users/:name
+```
+
+### Grouping URLs by named path parameters <a href="#grouping-urls-by-named-path-parameters" id="grouping-urls-by-named-path-parameters"></a>
+
+**Config**
+
+```
+{
+  "views": [
+    {
+      "pattern": "https://cypress.io/analytics/:type/:id\\?*#*",
+      "groupBy": [
+        "type"
+      ]
+    }
+  ]
+}
+```
+
+**Visited URLs**
+
+```
+https://cypress.io/analytics/performance/foo
+https://cypress.io/analytics/performance/bar
+https://cypress.io/analytics/usage/foo
+https://cypress.io/analytics/usage/bar
+```
+
+**Views shown in UI**
+
+```
+https://cypress.io/analytics/performance/:id
+https://cypress.io/analytics/usage/:id
+```
+
+### Grouping URLs by named query parameters <a href="#grouping-urls-by-named-query-parameters" id="grouping-urls-by-named-query-parameters"></a>
+
+**Config**
+
+```json
+{
+  "views": [
+    {
+      "pattern": "https://cypress.io/app?*name=:name{&*}?#*",
+      "groupBy": [
+        "name"
+      ]
+    }
+  ]
+}
+```
+
+**Visited URLs**
+
+```
+https://cypress.io/app?foo=1&name=hello
+https://cypress.io/app?name=hello&bar=2
+https://cypress.io/app?foo=3&name=world&bar=4
+https://cypress.io/app?foo=5&name=world#baz
+```
+
+**Views shown in UI**
+
+```
+https://cypress.io/app?name=hello
+https://cypress.io/app?name=world
+```
+
+### Grouping URLs by path parameters to ignore dynamic hosts <a href="#grouping-urls-by-path-parameters-to-ignore-dynamic-hosts" id="grouping-urls-by-path-parameters-to-ignore-dynamic-hosts"></a>
+
+**Config**
+
+```json
+{
+  "views": [
+    {
+      "pattern": "https://*.cypress.io/:rest*\\?*#*",
+      "groupBy": [
+        "rest"
+      ]
+    }
+  ]
+}
+```
+
+**Visited URLs**
+
+```url
+https://sub1.cypress.io/foo
+https://sub2.cypress.io/bar
+https://sub3.cypress.io/foo
+https://sub4.cypress.io/bar
+```
+
+**Views shown in UI**
+
+```
+https://*.cypress.io/foo
+https://*.cypress.io/bar
+```

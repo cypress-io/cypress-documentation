@@ -288,9 +288,9 @@ for more info.
 
 <DocsVideo src="https://youtube.com/embed/96Yn_IiQUJI" />
 
-[Cypress Cloud](/cloud/introduction) offers the ability to
-[parallelize and group test runs](/cloud/smart-orchestration/parallelization)
-along with additional insights and [analytics](/cloud/analytics/overview) for
+[Cypress Cloud](/cloud/get-started/introduction) offers the ability to
+[parallelize and group test runs](/cloud/features/smart-orchestration/parallelization)
+along with additional insights and [analytics](/cloud/features/analytics/overview) for
 Cypress tests.
 
 Using parallelization with the Cypress GitHub Action requires setting up
@@ -435,27 +435,27 @@ the browser is consistent during an image upgrade.
 
 In the GitHub Actions configuration, we have defined in the previous section, we
 are leveraging three useful features of
-[Cypress Cloud](/cloud/introduction):
+[Cypress Cloud](/cloud/get-started/introduction):
 
 1. [Recording test results with the `record: true` option](https://on.cypress.io/how-do-i-record-runs)
    to [Cypress Cloud](https://on.cypress.io/cloud):
 
    - In-depth and shareable
-     [test reports](/cloud/recorded-runs#Latest-Runs).
-   - Visibility into test failures via quick access to [Test Replay](/cloud/test-replay), error messages, stack
+     [test reports](/cloud/features/recorded-runs#Latest-Runs).
+   - Visibility into test failures via quick access to [Test Replay](/cloud/features/test-replay), error messages, stack
      traces, screenshots, videos, and contextual details.
    - [Integrating testing with the pull-request (PR) process](/cloud/integrations/source-control/github)
      via
      [commit status check guards](/cloud/integrations/source-control/github#Status-checks)
      and convenient
      [test report comments](/cloud/integrations/source-control/github#Pull-request-comments).
-   - [Detecting flaky tests](/cloud/flaky-test-management) and surfacing
-     them via [Slack alerts](/cloud/flaky-test-management#Slack) or
-     [GitHub PR status checks](/cloud/flaky-test-management#GitHub).
+   - [Detecting flaky tests](/cloud/features/flaky-test-management) and surfacing
+     them via [Slack alerts](/cloud/features/flaky-test-management#Slack) or
+     [GitHub PR status checks](/cloud/features/flaky-test-management#GitHub).
 
-2. [Parallelizing test runs](/cloud/smart-orchestration/parallelization)
+2. [Parallelizing test runs](/cloud/features/smart-orchestration/parallelization)
    and optimizing their execution via
-   [intelligent load-balancing](/cloud/smart-orchestration/load-balancing#Balance-strategy)
+   [intelligent load-balancing](/cloud/features/smart-orchestration/load-balancing#Balance-strategy)
    of test specs across CI machines with the `parallel: true` option.
 
 3. Organizing and consolidating multiple `cypress run` calls by labeled groups

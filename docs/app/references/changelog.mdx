@@ -631,7 +631,7 @@ _Released 08/31/2023_
 
 **Bugfixes:**
 
-- Fixed a regression introduced in Cypress [13.0.0](#13-0-0) where the [Module API](/app/guides/module-api), [`after:run`](/api/plugins/after-run-api), and [`after:spec`](/api/plugins/after-spec-api) results did not include the `stats.skipped` field for each run result. Fixes [#27694](https://github.com/cypress-io/cypress/issues/27694). Addressed in [#27695](https://github.com/cypress-io/cypress/pull/27695).
+- Fixed a regression introduced in Cypress [13.0.0](#13-0-0) where the [Module API](/app/guides/module-api), [`after:run`](/api/node-events/after-run-api), and [`after:spec`](/api/node-events/after-spec-api) results did not include the `stats.skipped` field for each run result. Fixes [#27694](https://github.com/cypress-io/cypress/issues/27694). Addressed in [#27695](https://github.com/cypress-io/cypress/pull/27695).
 - Individual CDP errors that occur while capturing data for Test Replay will no longer prevent the entire run from being available. Addressed in [#27709](https://github.com/cypress-io/cypress/pull/27709).
 - Fixed an issue where the release date on the `v13` landing page was a day behind. Fixed in [#27711](https://github.com/cypress-io/cypress/pull/27711).
 - Fixed an issue where fatal protocol errors would leak between specs causing all subsequent specs to fail to upload protocol information. Fixed in [#27720](https://github.com/cypress-io/cypress/pull/27720)
@@ -643,11 +643,11 @@ _Released 08/29/2023_
 
 **Summary:**
 
-When recording to Cypress Cloud, users now receive our newest feature: [Test Replay](/app/cloud/test-replay). Test Replay brings the debugging experience you know and love from the Cypress app directly into your recorded tests in Cypress Cloud.
+When recording to Cypress Cloud, users now receive our newest feature: [Test Replay](/cloud/features/test-replay). Test Replay brings the debugging experience you know and love from the Cypress app directly into your recorded tests in Cypress Cloud.
 
 Previously, trying to debug failures and flake in CI was painful and time consuming with only videos & screenshots. Test Replay provides a way to inspect the DOM, network events, and console logs of your application from your tests exactly as they ran in CI.
 
-Test Replay is available in all Cypress Cloud plans. To start using Test Replay, simply record a run to Cypress Cloud. Learn more in the [Test Replay documentation](/app/cloud/test-replay).
+Test Replay is available in all Cypress Cloud plans. To start using Test Replay, simply record a run to Cypress Cloud. Learn more in the [Test Replay documentation](/cloud/features/test-replay).
 
 Test Replay now serves as the primary replacement for debugging via video. Video capture and `videoCompression` of captured video are now set to `false` by default and `videoUploadOnPasses` is removed.
 
@@ -667,7 +667,7 @@ Refer to the [v13 Migration Guide](/app/references/migration-guide#Migrating-to-
 - Requests for assets at relative paths for component testing are now correctly forwarded to the dev server. Fixes [#26725](https://github.com/cypress-io/cypress/issues/26725).
 - The [`cy.readFile()`](/api/commands/readfile) command is now retry-able as a [query command](/app/core-concepts/retry-ability). This should not affect any tests using it; the functionality is unchanged. However, it can no longer be overwritten using [`Cypress.Commands.overwrite()`](/api/cypress-api/custom-commands#Overwrite-Existing-Commands). Addressed in [#25595](https://github.com/cypress-io/cypress/pull/25595).
 - The deprecated configuration option `nodeVersion` has been removed. Addresses [#27016](https://github.com/cypress-io/cypress/issues/27016).
-- The properties and values returned by the [Module API](/app/guides/module-api) and included in the arguments of handlers for the [`after:run`](/api/plugins/after-run-api) and [`after:spec`](/api/plugins/after-spec-api) have been changed to be more consistent. Addresses [#23805](https://github.com/cypress-io/cypress/issues/23805).
+- The properties and values returned by the [Module API](/app/guides/module-api) and included in the arguments of handlers for the [`after:run`](/api/node-events/after-run-api) and [`after:spec`](/api/node-events/after-spec-api) have been changed to be more consistent. Addresses [#23805](https://github.com/cypress-io/cypress/issues/23805).
 - For Cypress Cloud runs with Test Replay enabled, the Cypress Runner UI is now hidden during the run. This change was made to improve performance in situations where the Runner no longer needs to be rendered. If video is recorded during the run, the Runner will not be visible. In addition, if a screenshot with `capture: runner` is taken, the screenshot will be taken as if the `capture: viewport` option was passed. You can turn off this behavior by passing [`--runner-ui`](/app/guides/command-line#cypress-run-runner-ui). Addressed in [#27482](https://github.com/cypress-io/cypress/pull/27482).
 - The browser and browser page unexpectedly closing in the middle of a test run are now gracefully handled. Addressed in [#27592](https://github.com/cypress-io/cypress/issues/27592).
 - Automation performance is now improved by switching away from websockets to direct CDP calls for Chrome and Electron browsers. Addressed in [#27592](https://github.com/cypress-io/cypress/issues/27592).
@@ -703,7 +703,7 @@ _Released 08/15/2023_
 
 **Dependency Updates:**
 
-- Upgraded [`webpack`](https://www.npmjs.com/package/webpack) from `v4` to `v5`. This means that we are now bundling your `e2e` tests with webpack 5. We don't anticipate this causing any noticeable changes. However, if you'd like to keep bundling your `e2e` tests with webpack 4 you can use the same process as before by pinning [@cypress/webpack-batteries-included-preprocessor](https://www.npmjs.com/package/@cypress/webpack-batteries-included-preprocessor) to `v2.x.x` and hooking into the [file:preprocessor](/api/plugins/preprocessors-api#Usage) plugin event. This will restore the previous bundling process. Additionally, if you're using [@cypress/webpack-batteries-included-preprocessor](https://www.npmjs.com/package/@cypress/webpack-batteries-included-preprocessor) already, a new version has been published to support webpack `v5`.
+- Upgraded [`webpack`](https://www.npmjs.com/package/webpack) from `v4` to `v5`. This means that we are now bundling your `e2e` tests with webpack 5. We don't anticipate this causing any noticeable changes. However, if you'd like to keep bundling your `e2e` tests with webpack 4 you can use the same process as before by pinning [@cypress/webpack-batteries-included-preprocessor](https://www.npmjs.com/package/@cypress/webpack-batteries-included-preprocessor) to `v2.x.x` and hooking into the [file:preprocessor](/api/node-events/preprocessors-api#Usage) plugin event. This will restore the previous bundling process. Additionally, if you're using [@cypress/webpack-batteries-included-preprocessor](https://www.npmjs.com/package/@cypress/webpack-batteries-included-preprocessor) already, a new version has been published to support webpack `v5`.
 - Upgraded [`tough-cookie`](https://www.npmjs.com/package/tough-cookie) from `4.0` to `4.1.3`, [`@cypress/request`](https://www.npmjs.com/package/@cypress/request) from `2.88.11` to `2.88.12` and [`@cypress/request-promise`](https://www.npmjs.com/package/@cypress/request-promise) from `4.2.6` to `4.2.7` to address a [security vulnerability](https://security.snyk.io/vuln/SNYK-JS-TOUGHCOOKIE-5672873). Fixes [#27261](https://github.com/cypress-io/cypress/issues/27261).
 
 ## 12.17.3
@@ -747,14 +747,14 @@ _Released 07/06/2023_
 
 **Features:**
 
-- Cypress Cloud users can now receive [desktop notifications](/app/cloud/recorded-runs#Notifications) about their runs, including when one starts, finishes, or fails. Addresses [#26686](https://github.com/cypress-io/cypress/issues/26686).
+- Cypress Cloud users can now receive [desktop notifications](/cloud/features/recorded-runs#Notifications) about their runs, including when one starts, finishes, or fails. Addresses [#26686](https://github.com/cypress-io/cypress/issues/26686).
 
 **Bugfixes:**
 
 - Fixed issues where commands would fail with the error `must only be invoked from the spec file or support file`. Fixes [#27149](https://github.com/cypress-io/cypress/issues/27149) and [#27163](https://github.com/cypress-io/cypress/issues/27163).
 - Fixed a regression introduced in Cypress [12.12.0](#12-12-0) where Cypress may fail to reconnect to the Chrome DevTools Protocol in Electron. Fixes [#26900](https://github.com/cypress-io/cypress/issues/26900).
 - Fixed an issue where chrome was not recovering from browser crashes properly. Fixes [#24650](https://github.com/cypress-io/cypress/issues/24650).
-- Fixed a race condition that was causing a GraphQL error to appear on the [Debug page](/app/cloud/recorded-runs#Debug) when viewing a running Cypress Cloud build. Fixed in [#27134](https://github.com/cypress-io/cypress/pull/27134).
+- Fixed a race condition that was causing a GraphQL error to appear on the [Debug page](/cloud/features/recorded-runs#Debug) when viewing a running Cypress Cloud build. Fixed in [#27134](https://github.com/cypress-io/cypress/pull/27134).
 - Fixed a race condition in electron where the test window exiting prematurely during the browser launch process was causing the whole test run to fail. Addressed in [#27167](https://github.com/cypress-io/cypress/pull/27167).
 - Fixed minor issues with TypeScript types in the CLI. Fixes [#24110](https://github.com/cypress-io/cypress/issues/24110).
 - Fixed an issue where a value for the Electron debug port would not be respected if defined using the `ELECTRON_EXTRA_LAUNCH_ARGS` environment variable. Fixes [#26711](https://github.com/cypress-io/cypress/issues/26711).
@@ -867,7 +867,7 @@ _Released 05/23/2023_
 
 - Adds Git-related messages for the
   [Runs page](/app/core-concepts/cypress-app#Runs) and
-  [Debug page](/app/cloud/recorded-runs#Debug) when users aren't using Git or
+  [Debug page](/cloud/features/recorded-runs#Debug) when users aren't using Git or
   there are no recorded runs for the current branch. Addresses
   [#26680](https://github.com/cypress-io/cypress/issues/26680).
 
@@ -1039,7 +1039,7 @@ _Released 03/28/2023_
 
 **Features:**
 
-- The [Debug page](/app/cloud/recorded-runs#Debug) now allows for navigating
+- The [Debug page](/cloud/features/recorded-runs#Debug) now allows for navigating
   between all runs recorded for a commit. Addresses
   [#25899](https://github.com/cypress-io/cypress/issues/25899) and
   [#26018](https://github.com/cypress-io/cypress/issues/26018).
@@ -1096,7 +1096,7 @@ _Released 03/14/2023_
 
 **Features:**
 
-- The [Debug page](/app/cloud/recorded-runs#Debug) is now able to show
+- The [Debug page](/cloud/features/recorded-runs#Debug) is now able to show
   real-time results from in-progress runs. Addresses
   [#25759](https://github.com/cypress-io/cypress/issues/25759).
 - Added the ability to control whether a request is logged to the command log
@@ -1116,7 +1116,7 @@ _Released 03/14/2023_
 - Fixed an issue where using `Cypress.require()` would throw the error
   `Cannot find module 'typescript'`. Fixes
   [#25885](https://github.com/cypress-io/cypress/issues/25885).
-- The [`before:spec`](/api/plugins/before-spec-api) API was updated to correctly
+- The [`before:spec`](/api/node-events/before-spec-api) API was updated to correctly
   support async event handlers in `run` mode. Fixes
   [#24403](https://github.com/cypress-io/cypress/issues/24403).
 - Updated the Component Testing
@@ -1223,7 +1223,7 @@ _Released 02/15/2023_
 - Added a new CLI flag, called
   [`--auto-cancel-after-failures`](/app/guides/command-line#Options), that
   overrides the project-level
-  ["Auto Cancellation"](/app/cloud/smart-orchestration/run-cancellation)
+  ["Auto Cancellation"](/cloud/features/smart-orchestration/run-cancellation)
   value when recording to the Cloud. This gives Cloud users on Business and
   Enterprise plans the flexibility to alter the auto-cancellation value per run.
   Addressed in [#25237](https://github.com/cypress-io/cypress/pull/25237).
@@ -1244,7 +1244,7 @@ _Released 02/15/2023_
 **Bugfixes:**
 
 - When a Cloud user is a part of multiple Cloud organizations, the
-  [Connect to Cloud setup](/app/cloud/getting-started#Set-up-a-project-to-record)
+  [Connect to Cloud setup](/cloud/get-started/setup#Set-up-a-project-to-record)
   now shows the correct organizational prompts when connecting a new project.
   Fixes [#25520](https://github.com/cypress-io/cypress/issues/25520).
 - Fixed an issue where Cypress would fail to load any specs if the project
@@ -2182,7 +2182,7 @@ _Released 9/27/2022_
   can optionally modify the dev server config. Addresses
   [#23302](https://github.com/cypress-io/cypress/issues/23302).
 - Launch options returned from the
-  [`before:browser:launch`](/api/plugins/browser-launch-api) event can now
+  [`before:browser:launch`](/api/node-events/browser-launch-api) event can now
   include an `env` key that can be used to pass environment variables to the
   browser when it is launched. Addressed by
   [#23624](https://github.com/cypress-io/cypress/pull/23624).
@@ -4314,7 +4314,7 @@ to Cypress 8.0.**
 - When running the `--headless` Chrome browser via `cypress run`, the device
   pixel ratio will now be 1 by default, matching the behavior of all other
   browsers. This behavior can be overridden through the
-  [browser launch API](/api/plugins/browser-launch-api#Override-the-device-pixel-ratio).
+  [browser launch API](/api/node-events/browser-launch-api#Override-the-device-pixel-ratio).
   Addresses [#17375](https://github.com/cypress-io/cypress/issues/17375).
 - Cypress now enforces version checks for browser launching and will error
   during `cypress run` and not allow opening the browser in `cypress open` when
@@ -5036,10 +5036,10 @@ _Released 3/15/2021_
   listen to `before:run`, `after:run`, `before:spec` and `after:spec` events in
   the plugins file without needing the
   [experimentalRunEvents](/app/references/experiments) configuration option.
-  See the [`before:run`](/api/plugins/before-run-api),
-  [`after:run`](/api/plugins/after-run-api),
-  [`before:spec`](/api/plugins/before-spec-api) and
-  [`after:spec`](/api/plugins/after-spec-api) docs for more information.
+  See the [`before:run`](/api/node-events/before-run-api),
+  [`after:run`](/api/node-events/after-run-api),
+  [`before:spec`](/api/node-events/before-spec-api) and
+  [`after:spec`](/api/node-events/after-spec-api) docs for more information.
   Addressed in [#15276](https://github.com/cypress-io/cypress/pull/15276).
 - When canceling a run from the Dashboard, previously only parallelized runs
   would cancel correctly. Now all recorded runs will respect cancelation and
@@ -5370,10 +5370,10 @@ _Released 12/21/2020_
 - You can now listen to `before:run`, `after:run`, `before:spec` and
   `after:spec` events in the plugins file when setting the
   [experimentalRunEvents](/app/references/experiments) configuration option
-  to `true`. See the [`before:run`](/api/plugins/before-run-api),
-  [`after:run`](/api/plugins/after-run-api),
-  [`before:spec`](/api/plugins/before-spec-api) and
-  [`after:spec`](/api/plugins/after-spec-api) docs for more information.
+  to `true`. See the [`before:run`](/api/node-events/before-run-api),
+  [`after:run`](/api/node-events/after-run-api),
+  [`before:spec`](/api/node-events/before-spec-api) and
+  [`after:spec`](/api/node-events/after-spec-api) docs for more information.
   Addressed in [#9646](https://github.com/cypress-io/cypress/pull/9646),
   [#14178](https://github.com/cypress-io/cypress/pull/14178)
   [#14238](https://github.com/cypress-io/cypress/pull/14238) and
@@ -6767,7 +6767,7 @@ _Released 5/20/2020_
   enhance the error experience. Stack traces are translated so that your source
   files are shown instead of the generated file that is loaded by the browser.
   Cypress will include an inline source map in your spec file. If you
-  [modify the preprocessor](/api/plugins/preprocessors-api), ensure that inline
+  [modify the preprocessor](/api/node-events/preprocessors-api), ensure that inline
   source maps are enabled to get the same experience. Users of
   `@cypress/webpack-preprocessor` should upgrade to v5.4.1 or later of the
   package which will correctly inline source maps. Addresses
@@ -7236,7 +7236,7 @@ _Released 2/28/2020_
 - There are "collapse all" and "expand all" links in the Test Runner's "Tests"
   tab to collapse or expand all folders within the "Integration Tests".
   Addresses [#6282](https://github.com/cypress-io/cypress/issues/6282).
-- The plugins file function's [config](/api/plugins/configuration-api) argument
+- The plugins file function's [config](/api/node-events/configuration-api) argument
   now includes `projectRoot` (absolute path to the root of the project) and
   `configFile` (absolute path to the configuration file). Addresses
   [#5941](https://github.com/cypress-io/cypress/issues/5941).
@@ -7390,7 +7390,7 @@ to Cypress 4.0.**
   array of browser arguments and instead yield an `options` object with an
   `args` property in order to support more advanced browser launch options.
   Addresses [#6306](https://github.com/cypress-io/cypress/issues/6306).
-- We updated the [Cypress browser objects](/api/plugins/browser-launch-api) of
+- We updated the [Cypress browser objects](/api/node-events/browser-launch-api) of
   all Chromium-based browsers, including Electron, to have `chromium` set as
   their `family` field. Addresses
   [#6243](https://github.com/cypress-io/cypress/issues/6243).
@@ -7453,7 +7453,7 @@ to Cypress 4.0.**
 **Misc:**
 
 - We now pass through errors caused when attempting to read arguments passed
-  through [config](/api/plugins/configuration-api). Addresses
+  through [config](/api/node-events/configuration-api). Addresses
   [#6279](https://github.com/cypress-io/cypress/issues/6279).
 - We fixed a broken 'Learn more' link within the Node.js Version panel of the
   Test Runner Settings. Addresses
@@ -7781,7 +7781,7 @@ _Released 11/27/2019_
 - Cypress now includes the full list of browsers found and their properties
   within the Cypress configuration. This means that the `browsers` array is also
   [editable within plugins by accessing `config.browsers`](/app/guides/launching-browsers#Customize-available-browsers)
-  via the [Configuration API](/api/plugins/configuration-api). The currently
+  via the [Configuration API](/api/node-events/configuration-api). The currently
   available browsers are also displayed within the
   [configuration panel](/app/references/configuration#Resolved-Configuration)
   under Settings in the Test Runner. Addresses
@@ -7818,7 +7818,7 @@ _Released 11/27/2019_
 - Cypress now captures the SHA of builds generated through Travis CI during pull
   requests. This should resolve issues with Cypress status checks sometimes not
   running within
-  [GitHub Integration](/app/cloud/integrations/source-control/github). Fixes
+  [GitHub Integration](/cloud/integrations/source-control/github). Fixes
   [#5728](https://github.com/cypress-io/cypress/issues/5728).
 - Cypress now automatically strips double quotes from
   [--ci-build-id](/app/guides/command-line#cypress-run-ci-build-id-lt-id-gt)
@@ -8200,7 +8200,7 @@ _Released 10/23/2019_
 - Setting the reserved `CYPRESS_ENV` environment variable will now throw an
   error. Addresses [#1621](https://github.com/cypress-io/cypress/issues/1621).
 - We now throw a better error when passing in an Object to the
-  [browser](/api/plugins/browser-launch-api) argument of the Browser Launch API
+  [browser](/api/node-events/browser-launch-api) argument of the Browser Launch API
   explaining that a String is expected instead. Addresses
   [#4966](https://github.com/cypress-io/cypress/issues/4966).
 - An error will now be thrown if an invalid `name` or `value` is supplied to
@@ -8278,7 +8278,7 @@ _Released 10/23/2019_
 - Added the `nodeVersion` argument to
   [Configuration](/app/references/configuration) doc and mentioned its uses
   in the [Plugins Guide](/app/tooling/plugins-guide) and
-  [Writing a Plugin](/api/plugins/writing-a-plugin) doc.
+  [Writing a Plugin](/api/node-events/writing-a-plugin) doc.
 - Updated all docs to mention 'configuration file' instead of static
   `cypress.json` file since this is not configurable via a `--config-file`
   argument.
@@ -8333,7 +8333,7 @@ _Released 7/29/2019_
 **Dashboard Features:**
 
 - We’re excited to announce
-  [GitHub integration](/app/cloud/integrations/source-control/github) for the
+  [GitHub integration](/cloud/integrations/source-control/github) for the
   [Cypress Dashboard](https://on.cypress.io/dashboard). You can now get timely
   and useful test run information within pull-requests via status checks and
   pull-request comments. Learn all about it on
@@ -8433,7 +8433,7 @@ _Released 7/29/2019_
 **Documentation Changes:**
 
 - We have new instructions on how to set up
-  [GitHub Integration](/app/cloud/integrations/source-control/github) with
+  [GitHub Integration](/cloud/integrations/source-control/github) with
   the Cypress Dashboard.
 - Updated instructions for adding types for custom commands in the
   [TypeScript Support](/app/tooling/typescript-support#Types-for-Custom-Commands)
@@ -9046,7 +9046,7 @@ _Released 5/17/2019_
   work we are doing. Addressed in
   [#1567](https://github.com/cypress-io/cypress-documentation/pull/1639).
 - Added a section about how to request our new
-  [Open Source Plan](/app/cloud/account-management/billing-and-usage#Requesting-OSS-plan-for-an-Org)
+  [Open Source Plan](/cloud/account-management/billing-and-usage#Requesting-OSS-plan-for-an-Org)
   in the Dashboard Service doc. Addressed in
   [#1567](https://github.com/cypress-io/cypress-documentation/pull/1584).
 
@@ -9422,7 +9422,7 @@ _Released 1/30/2019_
 **Documentation Changes:**
 
 - Added example on how to use a fake video for webcam testing to
-  [Browser API doc](/api/plugins/browser-launch-api#Use-fake-video-for-webcam-testing).
+  [Browser API doc](/api/node-events/browser-launch-api#Use-fake-video-for-webcam-testing).
 
 **Dependency Updates**
 
@@ -9826,8 +9826,8 @@ _Released 8/13/2018_
 
 **Documentation Changes:**
 
-- [Added `Parallelization` doc.](/app/cloud/smart-orchestration/parallelization)
-- [Update `Dashboard Service` doc with new screenshots and run sections.](/app/cloud/introduction)
+- [Added `Parallelization` doc.](/cloud/features/smart-orchestration/parallelization)
+- [Update `Dashboard Service` doc with new screenshots and run sections.](/cloud/get-started/introduction)
 - [Update `Command Line` doc with new flags and alphabetized flags.](/app/guides/command-line)
 
 ## 3.0.3
@@ -10140,7 +10140,7 @@ _Released 6/28/2018_
   between automatic ones and your own use of `cy.screenshot()`. Fixes
   [#2040](https://github.com/cypress-io/cypress/issues/2040).
 - There's now an
-  [`after:screenshot` plugin event](/api/plugins/after-screenshot-api) you can
+  [`after:screenshot` plugin event](/api/node-events/after-screenshot-api) you can
   use in your `pluginsFile` to work with screenshots after they are taken. This
   enables you to rename them, move their location, resize them, send them to a
   service, etc. Fixes
@@ -10162,7 +10162,7 @@ _Released 6/28/2018_
 - [Updated "Command Line" doc to include new cache commands](/app/guides/command-line)
 - [Added `Cypress.browser` doc.](/api/cypress-api/browser)
 - [Added `Cypress.spec` doc.](/api/cypress-api/spec)
-- [Added `after:screenshot` plugin event doc.](/api/plugins/after-screenshot-api)
+- [Added `after:screenshot` plugin event doc.](/api/node-events/after-screenshot-api)
 
 ## 3.0.1
 
@@ -10424,12 +10424,12 @@ _Released 5/29/2018_
 - [New `cy.task()` doc](/api/commands/task)
 - [New `Screenshot API` doc](/api/cypress-api/screenshot-api)
 - [Update `cy.screenshot()` doc to include new accepted usage and options](/api/commands/screenshot)
-- [Update `Installing Cypress` doc to include new options for Cypress binary caching](/app/getting-started/installing-cypress)
+- [Update `Installing Cypress` doc to include new options for Cypress binary caching](/app/get-started/installing-cypress)
 - [Updated `Writing and Organizing Tests` to include newly seeded `examples` folder](/app/core-concepts/writing-and-organizing-tests)
 - [Updated `cypress run` spec args](/app/guides/command-line#cypress-run)
-- [Updated `Dashboard Service`](/app/cloud/introduction)
+- [Updated `Dashboard Service`](/cloud/get-started/introduction)
 - [Updated `Launching Browsers` to include our disabling of device discovery notifications](/app/guides/launching-browsers)
-- [Updated `Preprocessors` to reflect all ways `close` event could be triggered](/app/cloud/introduction)
+- [Updated `Preprocessors` to reflect all ways `close` event could be triggered](/cloud/get-started/introduction)
 - Updated use of "running headlessly" to more accurate "during `cypress run`"
 
 ## 2.1.0
@@ -10461,7 +10461,7 @@ _Released 3/1/2018_
 - [Added `Selector Playground Guide`](/app/core-concepts/cypress-app#Selector-Playground)
 - [Added `Selector Playground API`](/api/cypress-api/selector-playground-api)
 - [Updated `Best Practices`](/app/references/best-practices)
-- [Updated `FAQ`](/faq/questions/using-cypress-faq)
+- [Updated `FAQ`](/app/faq)
 - [Updated `Introduction to Cypress`](/app/core-concepts/introduction-to-cypress)
 
 ## 2.0.4
@@ -10765,9 +10765,9 @@ _Released 12/17/2017_
 
 Documentation Changes:
 
-- [Added `Browser Launch API`](/api/plugins/browser-launch-api)
+- [Added `Browser Launch API`](/api/node-events/browser-launch-api)
 - [Updated `Plugins Guide`](/app/tooling/plugins-guide)
-- [Updated `Writing a Plugin API`](/api/plugins/writing-a-plugin)
+- [Updated `Writing a Plugin API`](/api/node-events/writing-a-plugin)
 
 ## 1.2.0
 
@@ -10816,13 +10816,13 @@ _Released 12/14/2017_
 
 **Documentation Changes:**
 
-- [Added `Configuration API`](/api/plugins/configuration-api)
+- [Added `Configuration API`](/api/node-events/configuration-api)
 - [Added `Recipes`](/examples/recipes)
 - [Updated `Configuration`](/app/references/configuration)
 - [Updated `Environment Variables`](/app/guides/environment-variables)
-- [Updated `Using Cypress FAQ`](/faq/questions/using-cypress-faq)
+- [Updated `Using Cypress FAQ`](/app/faq)
 - [Updated `Plugins Guide`](/app/tooling/plugins-guide)
-- [Updated `Writing a Plugin API`](/api/plugins/writing-a-plugin)
+- [Updated `Writing a Plugin API`](/api/node-events/writing-a-plugin)
 
 ## 1.1.4
 
@@ -10956,7 +10956,7 @@ _Released 11/19/2017_
   `node` process. This means you will be able to use `node` APIs that are
   executed outside of the browser.
 - We have currently added only
-  [one event](/api/plugins/writing-a-plugin#List-of-events) for modifying the
+  [one event](/api/node-events/writing-a-plugin#List-of-events) for modifying the
   test file preprocessor, but this paves the way for adding many more event
   types. You can now modify every aspect of how files are sent to the browser.
 - We have extracted the default Browserify preprocessor into its own package -
@@ -10970,7 +10970,7 @@ _Released 11/19/2017_
 - There is now a [Plugins API interface](/app/tooling/plugins-guide).
   Partially addresses [#684](https://github.com/cypress-io/cypress/issues/684).
 - We have added the first Plugin API event called:
-  [file:preprocessor](/api/plugins/writing-a-plugin#List-of-events). Fixes
+  [file:preprocessor](/api/node-events/writing-a-plugin#List-of-events). Fixes
   [#580](https://github.com/cypress-io/cypress/issues/580) and
   [#581](https://github.com/cypress-io/cypress/issues/581).
 - You can now customize the default Babe; configuration options for the
@@ -11019,9 +11019,9 @@ _Released 11/19/2017_
 - [Created "Conditional Testing" core concept](/app/core-concepts/conditional-testing)
 - [Created "Plugins" guide](/app/tooling/plugins-guide)
 - [Created "List of Plugins"](/plugins)
-- [Created "Writing a Plugin" API](/api/plugins/writing-a-plugin)
-- [Created "Preprocessors API"](/api/plugins/preprocessors-api)
-- [Updated "Using Cypress FAQ"](/faq/questions/using-cypress-faq)
+- [Created "Writing a Plugin" API](/api/node-events/writing-a-plugin)
+- [Created "Preprocessors API"](/api/node-events/preprocessors-api)
+- [Updated "Using Cypress FAQ"](/app/faq)
 - [Updated "Best Practices"](/app/references/best-practices)
 
 ## 1.0.3
@@ -11069,9 +11069,9 @@ _Released 10/29/2017_
 **Documentation Changes:**
 
 - [Created "Conditional Testing" core concept](/app/core-concepts/conditional-testing)
-- [Created "Key Differences" core concept](/app/overview/key-differences)
+- [Created "Key Differences" core concept](/app/get-started/key-differences)
 - [Updated "Best Practices"](/app/references/best-practices)
-- [Updated "FAQ Usage"](/faq/questions/using-cypress-faq)
+- [Updated "FAQ Usage"](/app/faq)
 
 ## 1.0.2
 
@@ -11121,7 +11121,7 @@ _Released 10/09/2017_
 - `1.0.0` marks our transition out of a **private** beta and into a **public**
   beta. We've lifted all the restrictions for using Cypress. It is now
   accessible to everyone. Until we are out of beta, the
-  [Dashboard Service](/app/cloud/introduction) will continue to be free.
+  [Dashboard Service](/cloud/get-started/introduction) will continue to be free.
 - We will continue to follow `semver` from this point on (and also a bit more
   rigorously).
 - Cypress is now [open source](https://github.com/cypress-io/cypress)! This
@@ -11165,7 +11165,7 @@ _Released 10/09/2017_
 
 **Documentation Changes:**
 
-- [Updated "Installing Cypress"](/app/getting-started/installing-cypress)
+- [Updated "Installing Cypress"](/app/get-started/installing-cypress)
 - [Updated "Writing your First Test"](/app/end-to-end-testing/writing-your-first-end-to-end-test)
 - Added a 10 minute Getting Started video that
   [Andrew Van Slaars](https://github.com/avanslaars) created.
@@ -11271,7 +11271,7 @@ _Released 09/10/2017_
   2,000 commits. It's full of breaking changes we wanted to land prior to having
   our public `1.0.0` release.
 - You can now
-  [install Cypress as a real `npm` module](/app/getting-started/installing-cypress),
+  [install Cypress as a real `npm` module](/app/get-started/installing-cypress),
   and even `require` it in your node files.
 - We rewrote the entire driver (we've all been there) and converted all 2,500+
   tests to be run within Cypress itself.
@@ -11474,7 +11474,7 @@ _Released 09/10/2017_
   Fixes [#436](https://github.com/cypress-io/cypress/issues/436) and
   [#465](https://github.com/cypress-io/cypress/issues/465).
 - There are no more global, in-app updates. Versioning should be primarily
-  [controlled via `npm`](/app/getting-started/installing-cypress) like every
+  [controlled via `npm`](/app/get-started/installing-cypress) like every
   other package / dependency in your project. For users not using `npm` you can
   manually download new versions of Cypress when they're released.
 
@@ -11659,7 +11659,7 @@ Note: we are still updating all of the docs to reflect all the 0.20.0 changes.
 - [New ".trigger()"](/api/commands/trigger)
 - [New "cy.scrollTo()"](/api/commands/scrollTo)
 - [New ".scrollIntoView()"](/api/commands/scrollIntoView)
-- [Updated "Installing Cypress"](/app/getting-started/installing-cypress)
+- [Updated "Installing Cypress"](/app/get-started/installing-cypress)
 - [Updated "Writing Your First Test"](/app/end-to-end-testing/writing-your-first-end-to-end-test)
 - [Updated "Testing Your App"](/app/end-to-end-testing/testing-your-app)
 - [Updated "Command Line"](/app/guides/command-line)
@@ -11790,7 +11790,7 @@ _Released 02/11/2017_
   [CI Docs](/app/continuous-integration/introduction) got a much needed
   facelift.
 - There is a new docs section related to the
-  [Dashboard](/app/cloud/introduction) and the new features.
+  [Dashboard](/cloud/get-started/introduction) and the new features.
 
 **Overview:**
 
@@ -13170,7 +13170,7 @@ _Released 04/22/2016_
 
 - Better error handling of unauthorized users attempting to login to Cypress
   with improved
-  [Login documentation](/app/getting-started/installing-cypress).
+  [Login documentation](/app/get-started/installing-cypress).
 
 ## 0.15.3
 
@@ -13930,7 +13930,7 @@ _Released 11/29/2015_
 
 **Features:**
 
-- There are now [Getting Started](/app/getting-started/installing-cypress)
+- There are now [Getting Started](/app/get-started/installing-cypress)
   docs including [configuration](/app/references/configuration) for
   `cypress.json`
 - Cypress now silently restarts the server whenever it detects a change to

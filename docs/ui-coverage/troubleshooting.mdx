@@ -1,0 +1,80 @@
+---
+sidebar_label: Troubleshooting
+title: ''
+description: ''
+sidebar_position: 150
+---
+
+# Troubleshooting
+
+## A single element is showing up as multiple different elements
+
+If a single element is being identified as multiple different elements by UI Coverage and therefore shows up as many different elements, then you likely have a problem with [Element Identification](https://cypressio.gitbook.io/ui-coverage/important-concepts/element-identification).
+
+If elements have auto-generated or otherwise unrepresentative attributes that are used as identifiers, then that attribute may have one value in one snapshot and a different value in another snapshot, which leads to UI Coverage considering those two different elements.
+
+Some common examples of this include:
+
+* Library-specific identifiers, such as `id` attributes with values that are library-generated and are not representative of the element
+* Identifiers that include dynamic data, such as UUID's
+
+To resolve this problem, you can do one of the following:
+
+1. Add a unique identifier to the interactive element, such as a representative `data-cy` or `data-test` value
+2. Ignore auto-generated or dynamic attributes using [attributeFilters](https://cypressio.gitbook.io/ui-coverage/configuration/attributefilters) configuration
+3. Manually identify the element using [elements](https://cypressio.gitbook.io/ui-coverage/configuration/elements) configuration
+
+## Multiple different elements are being considered the same element
+
+If multiple different elements are being identified as the same element by UI Coverage and therefore only show up as one element, then you likely have a problem with [Element Identification](https://cypressio.gitbook.io/ui-coverage/important-concepts/element-identification).
+
+If elements do not have accurate identifiers, such as unique `data-cy` or `data-test` values, then UI Coverage may treat different elements as a single element due to the similarity of their DOM structure and attributes.
+
+Some common examples of this include:
+
+* Missing `data-*` or `id` values that would otherwise identify the elements
+* Generic identifiers, such as `data-test="button"`, used on many different elements
+* The use of identifiers that are not used by UI Coverage by default, such as `aria-label`
+
+To resolve this problem, you can do one of the following:
+
+1. Add a unique identifier to the interactive elements, such as representative `data-cy` or `data-test` values
+2. Ignore generic and unrepresentative attributes using [attributeFilters](https://cypressio.gitbook.io/ui-coverage/configuration/attributefilters) configuration
+3. Update the attributes used by UI Coverage for identification using [significantAttributes](https://cypressio.gitbook.io/ui-coverage/configuration/significantattributes) configuration
+4. Manually identify the elements using [elements](https://cypressio.gitbook.io/ui-coverage/configuration/elements) configuration
+
+## Elements that perform the same action are not being grouped together but should be
+
+If elements that perform the same action are not being grouped together, then you likely have a problem with [Element Grouping](https://cypressio.gitbook.io/ui-coverage/important-concepts/element-grouping).
+
+If repeated elements have unique attributes that are used as identifiers, then UI Coverage may not group the elements together due to their lack of similarity.
+
+Some common examples of this include:
+
+* Library-specific identifiers, such as `id` attributes with values that are library-generated and are not representative of the element
+* Identifiers that include dynamic data, such as UUID's
+
+To resolve this problem, you can do one of the following:
+
+1. Add a shared identifier to the repeated elements, such as the same `data-cy` or `data-test` value
+2. Ignore auto-generated or dynamic attributes using [attributeFilters](https://cypressio.gitbook.io/ui-coverage/configuration/attributefilters) configuration
+3. Manually group the elements using [elementGroups](https://cypressio.gitbook.io/ui-coverage/configuration/elementgroups) configuration
+
+## Elements that perform different actions are being grouped together but should not be
+
+If elements that perform different actions are being incorrectly grouped together, then you likely have a problem with [Element Grouping](https://cypressio.gitbook.io/ui-coverage/important-concepts/element-grouping).
+
+If repeated elements have shared attributes, such as the same `data-cy` or `data-test` values, then UI Coverage may group the elements together due to the similarity of their DOM structure and attributes.
+
+Some common examples of this include:
+
+* Missing `data-*` or `id` values that would otherwise identify the elements
+* Generic identifiers, such as `data-test="button"`, used on many different elements
+* The use of identifiers that are not used by UI Coverage by default, such as `aria-label`
+
+To resolve this problem, you can do one of the following:
+
+1. Add a unique identifier to the interactive elements, such as representative `data-cy` or `data-test` values
+2. Ignore generic and unrepresentative attributes using [attributeFilters](https://cypressio.gitbook.io/ui-coverage/configuration/attributefilters) configuration
+3. Update the attributes used by UI Coverage for identification using [significantAttributes](https://cypressio.gitbook.io/ui-coverage/configuration/significantattributes) configuration
+4. Manually group the elements into their own groups using [elementGroups](https://cypressio.gitbook.io/ui-coverage/configuration/elementgroups) configuration

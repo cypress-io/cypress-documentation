@@ -1,0 +1,142 @@
+---
+sidebar_label: attributeFilters
+title: ''
+description: ''
+sidebar_position: 20
+---
+
+# attributeFilters
+
+UI Coverage has logic that automatically [identifies](/ui-coverage/core-concepts/element-identification) and [groups](/ui-coverage/core-concepts/element-grouping) elements based on their appearance and structure in the DOM.
+
+Sometimes, an element may have attributes that are auto-generated or otherwise not representative of the element that Cypress's UI Coverage algorithm uses for identification and grouping. This can cause the same element to be identified as multiple different elements, or multiple different elements to be identified as the same element.
+
+The `attributeFilters` configuration property allows users to specify patterns for attributes and their values that should **not** be used for identifying and grouping elements, thereby allowing UI Coverage to find more suitable identifiers for the impacted elements.
+
+For every attribute that an element has, the first `attributeFilters` rule for which the `attribute` property matches the attribute's name and the `value` property matches the attribute's value, the `include` value is used to determine whether or not the attribute will be used for element identification and grouping. Attributes that do not match any rules are included by default.
+
+## Syntax
+
+```json
+{
+  "uiCoverage": {
+    "attributeFilters": [
+      {
+        "attribute": string,
+        "value": string,
+        "include": boolean
+      }
+    ]
+  }
+}
+```
+
+### attributeFilters
+
+_Optional._ Object\[]
+
+An array of objects used to determine whether or not an attribute will be used for element identification and grouping. _**Each object can have the following properties:**_
+
+### attribute
+
+_Required._ String (Regex)
+
+Used to match the attribute names.
+
+### value
+
+_Optional._ String (Regex)
+
+_Default_: `.*` (matches any value).
+
+Used to match the attribute values.
+
+### include
+
+_Optional._ Boolean
+
+_Default:_ `true`
+
+Whether or not a matched attribute should be used for element identification and grouping.
+
+## Examples
+
+### Excluding common auto-generated id values
+
+#### Config
+
+```json
+{
+  "uiCoverage": {
+    "attributeFilters": [
+      {
+        "attribute": "id",
+        "value": "sizzle.*",
+        "include": false
+      },
+      {
+        "attribute": "id",
+        "value": ":r.*:",
+        "include": false
+      }
+    ]
+  }
+}
+```
+
+#### HTML
+
+```xml
+<body>
+  <button id="sizzle123" name="my-button">Button 1</button>
+  <button id=":r10:" name="other-button">Button 2</button>
+</body>
+```
+
+#### Elements shown in UI
+
+```
+[name="my-button"]
+[name="other-button"]
+```
+
+***
+
+### Excluding auto-generated attribute names
+
+#### Config
+
+```json
+{
+  "uiCoverage": {
+    "attributeFilters": [
+      {
+        "attribute": "ng-include-me",
+        "value": ".*",
+        "include": true
+      },
+      {
+        "attribute": "ng-.*",
+        "value": ".*",
+        "include": false
+      }
+    ]
+  }
+}
+```
+
+#### HTML
+
+```xml
+<body>
+  <button ng-include-me="my-button">Button 1</button>
+  <button ng-but-not-me="other-button">Button 2</button>
+</body>
+```
+
+#### Elements shown in UI
+
+```
+[ng-include-me="my-button"]
+:nth-child(2)
+```

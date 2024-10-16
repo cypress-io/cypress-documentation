@@ -10,19 +10,19 @@ version 13.
 
 ### Cypress Cloud Test Replay
 
-[Test Replay](/app/cloud/test-replay) is enabled by default in `v13` of the Cypress App.
+[Test Replay](/cloud/features/test-replay) is enabled by default in `v13` of the Cypress App.
 
 You may need to allowlist `capture.cypress.io` if you work with a strict VPN. See our FAQ section about [VPN subdomain allowlisting](/faq/questions/cloud-faq#Im-working-with-a-restrictive-VPN-Which-subdomains-do-I-have-to-allow-on-my-VPN-for-Cypress-Cloud-to-work-properly).
 
 With Test Replay enabled, the Cypress Runner UI is hidden by default when recording a run to the Cloud. If the Runner UI is needed during the run, you can enable it by passing [`--runner-ui`](/app/guides/command-line#cypress-run-runner-ui) to the [`cypress run`](/app/guides/command-line#cypress-run) command.
 
-You can [opt-out](/app/cloud/test-replay#Opt-out-of-Test-Replay) of this feature in Cloud project-level settings.
+You can [opt-out](/cloud/features/test-replay#Opt-out-of-Test-Replay) of this feature in Cloud project-level settings.
 
 ### Video updates
 
 #### `video` is set to `false` by default
 
-You can continue recording video by setting `video` to `true` either in your Cypress configuration or via [overriding options](/app/references/configuration#Overriding-Options). This can be useful if you want video locally or want video for some other reason, like in non-Chromium browsers where [Test Replay](/app/cloud/test-replay) is not available.
+You can continue recording video by setting `video` to `true` either in your Cypress configuration or via [overriding options](/app/references/configuration#Overriding-Options). This can be useful if you want video locally or want video for some other reason, like in non-Chromium browsers where [Test Replay](/cloud/features/test-replay) is not available.
 
 :::cypress-config-example
 
@@ -1224,8 +1224,8 @@ only be defined inside the `component` or `e2e`
 [configuration objects](/app/references/configuration#Testing-Type-Specific-Options).
 
 More information can be found in the
-[Plugins API documentation](/api/plugins/writing-a-plugin#Plugins-API) and the
-[Configuration API documentation](/api/plugins/configuration-api#Usage).
+[Plugins API documentation](/api/node-events/writing-a-plugin#Plugins-API) and the
+[Configuration API documentation](/api/node-events/configuration-api#Usage).
 
 <Badge type="danger">Before</Badge> `cypress/plugins/index.js`
 
@@ -1724,7 +1724,7 @@ is the default for all browsers.
 
 You should also update any use of the `isHeaded` or `isHeadless` property on
 [`Cypress.browser`](/api/cypress-api/browser) or the
-[browser launch API](/api/plugins/browser-launch-api) accordingly.
+[browser launch API](/api/node-events/browser-launch-api) accordingly.
 
 <Badge type="danger">Before</Badge> run headless browser
 
@@ -1751,7 +1751,7 @@ cypress run --browser=firefox
 
 The default screen size when running a headless browser has been reverted back
 to 1280x720 pixels. If you have any code in the
-[browser launch API](/api/plugins/browser-launch-api) to set the screen size to
+[browser launch API](/api/node-events/browser-launch-api) to set the screen size to
 1280x720, this can be removed.
 
 <Badge type="danger">Before</Badge> set screen size to 1280x720
@@ -3435,7 +3435,7 @@ browser arguments and instead yield a `launchOptions` object with an `args`
 property.
 
 You can see more examples of the new `launchOptions` in use in the
-[Browser Launch API doc](/api/plugins/browser-launch-api).
+[Browser Launch API doc](/api/node-events/browser-launch-api).
 
 <Badge type="danger">Before</Badge> The second argument is no longer an array.
 
@@ -3514,7 +3514,7 @@ cypress run --browser chrome:canary
 
 ### Chromium-based browser `family`
 
-We updated the [Cypress browser objects](/api/plugins/browser-launch-api) of all
+We updated the [Cypress browser objects](/api/node-events/browser-launch-api) of all
 Chromium-based browsers, including Electron, to have `chromium` set as their
 `family` field.
 

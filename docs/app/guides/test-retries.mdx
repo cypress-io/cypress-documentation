@@ -27,7 +27,7 @@ conditions that could result in unreliable tests include:
 - Network issues
 
 With test retries, Cypress is able to retry failed tests to help [detect test
-flakiness](/cloud/flaky-test-management#Flake-Detection) and continuous integration (CI) build failures. By doing so, this will
+flakiness](/cloud/features/flaky-test-management#Flake-Detection) and continuous integration (CI) build failures. By doing so, this will
 save your team valuable time and resources so you can focus on what matters most
 to you.
 
@@ -35,7 +35,7 @@ to you.
 
 :::info
 
-You may want to use the [experimental test retries](/app/references/experiments#Experimental-Test-Retries) feature which offers more options for [detecting flaky tests](/cloud/flaky-test-management#Flake-Detection). This experimental feature is available as of Cypress `13.4.0`.
+You may want to use the [experimental test retries](/app/references/experiments#Experimental-Test-Retries) feature which offers more options for [detecting flaky tests](/cloud/features/flaky-test-management#Flake-Detection). This experimental feature is available as of Cypress `13.4.0`.
 
 Test retries were originally intended to give failing tests more chances to "pass" (for instance, if CI environments for testing are unreliable), while still being determined as flaky if they do eventually pass. However this may not be the desired result in all cases. Experimental retries give you control over the conditions of the pass or fail result.
 
@@ -246,12 +246,12 @@ describe('User Login', () => {
 
 ## Videos
 
-You can use Cypress's [`after:spec`](/api/plugins/after-spec-api) event listener
+You can use Cypress's [`after:spec`](/api/node-events/after-spec-api) event listener
 that fires after each spec file is run to delete the recorded video for specs
 that had no retry attempts or failures. Deleting passing and non-retried videos
 after the run can save resource space on the machine as well as skip the time
 used to process, compress, and upload the video to
-[Cypress Cloud](/cloud/introduction).
+[Cypress Cloud](/cloud/get-started/introduction).
 
 ### Only upload videos for specs with failing or retried tests
 
@@ -286,7 +286,7 @@ on('after:spec', (spec, results) => {
 
 ## Cypress Cloud
 
-If you are using [Cypress Cloud](/cloud/introduction), information
+If you are using [Cypress Cloud](/cloud/get-started/introduction), information
 related to test retries is displayed on the Test Results tab for a run.
 Selecting the Flaky filter will show tests that retried and then passed during
 the run.
@@ -314,8 +314,8 @@ You can also see the Flaky Rate for a given test.
 
 For a comprehensive view of how flake is affecting your overall test suite, you
 can review the
-[Flake Detection](/cloud/flaky-test-management#Flake-Detection) and
-[Flake Alerting](/cloud/flaky-test-management#Flake-Alerting) features
+[Flake Detection](/cloud/features/flaky-test-management#Flake-Detection) and
+[Flake Alerting](/cloud/features/flaky-test-management#Flake-Alerting) features
 highlighted in the Test Flake Management Guide.
 
 <TestReplayInfo />

@@ -161,7 +161,7 @@ the failure.
 
 Cypress assists with debugging in headless mode, in numerous ways:
 
-- Replay the test as it executed during the recorded run with full debug capability using [Test Replay](/cloud/test-replay) in Cypress Cloud.
+- Replay the test as it executed during the recorded run with full debug capability using [Test Replay](/cloud/features/test-replay) in Cypress Cloud.
 - By automatically taking a
   screenshot of the app UI and command log at the exact point of test failure.
 - To see everything that happened prior to test failure, enable the [`video`](/app/references/configuration#Videos).
@@ -178,7 +178,7 @@ machine. Enabling test retries in the Cypress configuration can help you to get
 unblocked when unpredictable, flaky tests are occasionally failing.
 
 Cypress Cloud goes a step further and helps you and your team to
-[detect flaky tests](/cloud/flaky-test-management) that run in your CI/CD
+[detect flaky tests](/cloud/features/flaky-test-management) that run in your CI/CD
 pipeline.
 
 ## Getting Started
@@ -225,7 +225,7 @@ Check out the
 documentation for more details like how to
 [configure your tests to run in a specific browser](#Running-the-builder-with-a-specific-browser)
 or [record test results](#Recording-test-results-to-Cypress-Cloud) to
-[Cypress Cloud](https://docs.cypress.io/cloud/introduction).
+[Cypress Cloud](https://docs.cypress.io/cloud/get-started/introduction).
 
 :::
 
@@ -1098,11 +1098,11 @@ environment.
 
 ## Parallelization
 
-[Cypress Cloud](/cloud/introduction) allows you to run your test files in
+[Cypress Cloud](/cloud/get-started/introduction) allows you to run your test files in
 parallel across multiple CI machines.
 
 With Cypress, your tests can be
-[parallelized on a per spec file basis](https://docs.cypress.io/cloud/smart-orchestration/parallelization).
+[parallelized on a per spec file basis](https://docs.cypress.io/cloud/features/smart-orchestration/parallelization).
 This is an important distinction between Protractor and Cypress parallelization.
 One of the reasons why Cypress parallelizes tests per file is because some users
 may write tests that build up state that subsequent tests, although we
@@ -1118,7 +1118,7 @@ cypress run --record --parallel
 :::info
 
 For more information, check out our
-[docs on parallelization](/cloud/smart-orchestration/parallelization#Overview)!
+[docs on parallelization](/cloud/features/smart-orchestration/parallelization#Overview)!
 
 :::
 
@@ -1161,7 +1161,7 @@ to learn more.
 ### Recording test results to Cypress Cloud
 
 We recommend setting your
-[Cypress Cloud](https://docs.cypress.io/cloud/introduction) recording key
+[Cypress Cloud](https://docs.cypress.io/cloud/get-started/introduction) recording key
 as an environment variable and _NOT_ as a builder option when running it in CI.
 
 ```json
@@ -1182,7 +1182,7 @@ as an environment variable and _NOT_ as a builder option when running it in CI.
 
 Read the docs on
 [recording test results](http://on.cypress.io/recording-project-runs) to
-[Cypress Cloud](/cloud/introduction) to learn more.
+[Cypress Cloud](/cloud/get-started/introduction) to learn more.
 
 ### Specifying a custom Cypress configuration file
 
@@ -1254,7 +1254,7 @@ to ask questions or report issues related to our Cypress Angular Schematic.
 ## Next Steps
 
 For more information on how to create end-to-end tests with Cypress, be sure to
-check out [our official documentation here](/app/overview/why-cypress).
+check out [our official documentation here](/app/get-started/why-cypress).
 
 :::caution
 

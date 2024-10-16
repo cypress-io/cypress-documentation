@@ -22,7 +22,7 @@ particular stages of the Cypress lifecycle.
 If you want more details about how to write a plugin, we've written API docs
 that show you how to work with each plugin event.
 
-You can [check out the API docs here](/api/plugins/writing-a-plugin).
+You can [check out the API docs here](/api/node-events/writing-a-plugin).
 
 :::
 
@@ -45,7 +45,7 @@ This enables you to do things like:
 - Change the list of browsers used for testing
 - Write your configuration in `yml`
 
-Check out our [Configuration API docs](/api/plugins/configuration-api) which
+Check out our [Configuration API docs](/api/node-events/configuration-api) which
 describe how to use this event.
 
 ### Preprocessors
@@ -62,37 +62,37 @@ You can use the `file:preprocessor` event to do things like:
 - Customize the options for compiling TypeScript.
 - Swap out webpack for Browserify or anything else.
 
-Check out our [File Preprocessor API docs](/api/plugins/preprocessors-api) which
+Check out our [File Preprocessor API docs](/api/node-events/preprocessors-api) which
 describe how to use this event.
 
 ### Run Lifecycle
 
-The events [`before:run`](/api/plugins/before-run-api) and
-[`after:run`](/api/plugins/after-run-api) occur before and after a run,
+The events [`before:run`](/api/node-events/before-run-api) and
+[`after:run`](/api/node-events/after-run-api) occur before and after a run,
 respectively.
 
-You can use [`before:run`](/api/plugins/before-run-api) to do things like:
+You can use [`before:run`](/api/node-events/before-run-api) to do things like:
 
 - Set up reporting on a run
 - Start a timer for the run to time how long it takes
 
-You can use [`after:run`](/api/plugins/after-run-api) to do things like:
+You can use [`after:run`](/api/node-events/after-run-api) to do things like:
 
 - Finish up reporting on a run set up in `before:run`
 - Stop the timer for the run set up in `before:run`
 
 ### Spec Lifecycle
 
-The events [`before:spec`](/api/plugins/before-spec-api) and
-[`after:spec`](/api/plugins/after-spec-api) run before and after a single spec
+The events [`before:spec`](/api/node-events/before-spec-api) and
+[`after:spec`](/api/node-events/after-spec-api) run before and after a single spec
 is run, respectively.
 
-You can use [`before:spec`](/api/plugins/before-spec-api) to do things like:
+You can use [`before:spec`](/api/node-events/before-spec-api) to do things like:
 
 - Set up reporting on a spec running
 - Start a timer for the spec to time how long it takes
 
-You can use [`after:spec`](/api/plugins/after-spec-api) to do things like:
+You can use [`after:spec`](/api/node-events/after-spec-api) to do things like:
 
 - Finish up reporting set up in `before:spec`
 - Stop the timer for the spec set up in `before:spec`
@@ -101,8 +101,8 @@ You can use [`after:spec`](/api/plugins/after-spec-api) to do things like:
   conditionally based on the results of the spec, such as if it passes (so
   videos for failing tests are preserved for debugging purposes).
 
-Check out the [Before Spec API doc](/api/plugins/before-spec-api) and
-[After Spec API doc](/api/plugins/after-spec-api) which describe how to use
+Check out the [Before Spec API doc](/api/node-events/before-spec-api) and
+[After Spec API doc](/api/node-events/after-spec-api) which describe how to use
 these events.
 
 ### Browser Launching
@@ -116,7 +116,7 @@ You can use the `before:browser:launch` event to do things like:
 - Enable or disable experimental chrome features
 - Control which Chrome components are loaded
 
-Check out our [Browser Launch API docs](/api/plugins/browser-launch-api) which
+Check out our [Browser Launch API docs](/api/node-events/browser-launch-api) which
 describe how to use this event.
 
 ### Screenshot handling
@@ -130,7 +130,7 @@ You can use the `after:screenshot` event to do things like:
 - Rename the screenshot
 - Manipulate the screenshot image by resizing or cropping it
 
-Check out our [After Screenshot API docs](/api/plugins/after-screenshot-api)
+Check out our [After Screenshot API docs](/api/node-events/after-screenshot-api)
 which describe how to use this event.
 
 ### cy.task
@@ -232,4 +232,4 @@ on('<event>', (arg1, arg2) => {
 :::
 
 For information on writing plugins, please check out our
-[Writing a Plugin](/api/plugins/writing-a-plugin) guide.
+[Writing a Plugin](/api/node-events/writing-a-plugin) guide.

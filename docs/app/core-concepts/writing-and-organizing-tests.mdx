@@ -242,14 +242,14 @@ module API option, if specified)
 #### Assets in Cypress Cloud
 
 <DocsImage
-  src="/img/cloud/test-replay/test-replay-ui.png"
+  src="/img/cloud/features/test-replay/test-replay-ui.png"
   alt="View of Test Replay"
 />
 
 Instead of administering assets yourself, you can
-[save them to the cloud with Cypress Cloud](/cloud/recorded-runs#Run-Details).
+[save them to the cloud with Cypress Cloud](/cloud/features/recorded-runs#Run-Details).
 
-Replay the test as it executed during the recorded run with full debug capability using [<Logo src="/img/cloud/test-replay/replay-icon.svg" /> Test Replay](/cloud/test-replay).
+Replay the test as it executed during the recorded run with full debug capability using [<Logo src="/img/cloud/features/test-replay/replay-icon.svg" /> Test Replay](/cloud/features/test-replay).
 
 Screenshots and videos are stored permanently, attached to their respective test
 results, and easily shared or browsed through our web interface. To learn more about videos and settings available, see
@@ -265,8 +265,8 @@ rest of the operating system by calling the [cy.task()](/api/commands/task)
 command.
 
 The plugins file is a good place to define how you want to bundle the spec files
-via the [preprocessors](/api/plugins/preprocessors-api), how to find and launch
-the browsers via the [browser launch API](/api/plugins/browser-launch-api), and
+via the [preprocessors](/api/node-events/preprocessors-api), how to find and launch
+the browsers via the [browser launch API](/api/node-events/browser-launch-api), and
 other cool things. Read our [plugins guide](/app/tooling/plugins-guide) for
 more details and examples.
 
@@ -822,7 +822,7 @@ it could be a user hitting this bug!
   alt="Cypress with a single failed test"
 />
 
-After a test fails, the [Test Replay](/cloud/test-replay) or screenshots and videos with Cypress Cloud can help find the problem so it
+After a test fails, the [Test Replay](/cloud/features/test-replay) or screenshots and videos with Cypress Cloud can help find the problem so it
 can be fixed.
 
 ### Pending

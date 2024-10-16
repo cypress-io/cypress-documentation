@@ -670,7 +670,7 @@ The `--ci-build-id` flag is used to either group or parallelize multiple runs
 together.
 
 Check out our
-[guide on parallelizing runs](/app/cloud/smart-orchestration/parallelization)
+[guide on parallelizing runs](/cloud/features/smart-orchestration/parallelization)
 and when to use the
 [--ci-build-id](/app/guides/command-line#cypress-run-ci-build-id-lt-id-gt)
 option.
@@ -685,10 +685,10 @@ You passed the `--ci-build-id`,
 flag without also passing the `--record` flag.
 
 These flags can only be used when recording to
-[Cypress Cloud](/app/cloud/introduction).
+[Cypress Cloud](/cloud/get-started/introduction).
 
 Please review our
-[parallelization](/app/cloud/smart-orchestration/parallelization)
+[parallelization](/cloud/features/smart-orchestration/parallelization)
 documentation to learn more.
 
 ### <Icon name="exclamation-triangle" color="red" /> We could not determine a unique CI build ID
@@ -703,7 +703,7 @@ In order to use either of these parameters a `ciBuildId` must be determined.
 The `ciBuildId` is automatically detected if you are running Cypress in most
 [CI providers](/app/continuous-integration/ci-provider-examples). Please
 review the
-[natively recognized environment variables](/app/cloud/smart-orchestration/parallelization#CI-Build-ID-environment-variables-by-provider)
+[natively recognized environment variables](/cloud/features/smart-orchestration/parallelization#CI-Build-ID-environment-variables-by-provider)
 for your CI provider.
 
 You can avoid this check in the future by passing an ID to the
@@ -711,7 +711,7 @@ You can avoid this check in the future by passing an ID to the
 flag manually.
 
 Please review our
-[parallelization](/app/cloud/smart-orchestration/parallelization)
+[parallelization](/cloud/features/smart-orchestration/parallelization)
 documentation to learn more.
 
 ### <Icon name="exclamation-triangle" color="red" /> Group name has already been used for this run
@@ -725,7 +725,7 @@ If you are trying to parallelize this run, then also pass the
 different group name.
 
 Please review
-[grouping test runs](/app/cloud/smart-orchestration/parallelization#Grouping-test-runs)
+[grouping test runs](/cloud/features/smart-orchestration/parallelization#Grouping-test-runs)
 documentation to learn more.
 
 ### <Icon name="exclamation-triangle" color="red" /> Cannot parallelize tests across environments
@@ -746,7 +746,7 @@ parameters such as:
 - Major browser version
 
 Please review our
-[parallelization](/app/cloud/smart-orchestration/parallelization)
+[parallelization](/cloud/features/smart-orchestration/parallelization)
 documentation to learn more.
 
 ### <Icon name="exclamation-triangle" color="red" /> Cannot parallelize tests in this group
@@ -759,7 +759,7 @@ You cannot use the
 group.
 
 Please review our
-[grouping test runs](/app/cloud/smart-orchestration/parallelization#Grouping-test-runs)
+[grouping test runs](/cloud/features/smart-orchestration/parallelization#Grouping-test-runs)
 documentation to learn more.
 
 ### <Icon name="exclamation-triangle" color="red" /> Run must pass `--parallel` flag
@@ -771,7 +771,7 @@ You must use the [--parallel](/app/guides/command-line#cypress-run-parallel)
 flag with this group.
 
 Please review our
-[parallelization](/app/cloud/smart-orchestration/parallelization)
+[parallelization](/cloud/features/smart-orchestration/parallelization)
 documentation to learn more.
 
 ### <Icon name="exclamation-triangle" color="red" /> Cannot parallelize tests on a stale run
@@ -782,7 +782,7 @@ that Cypress detected was completed over 24 hours ago.
 
 In order to uniquely identify each run during `cypress run`, Cypress attempts to
 read a unique identifier from your CI provider as described in our
-[parallelization doc](/app/cloud/smart-orchestration/parallelization#CI-Build-ID-environment-variables-by-provider).
+[parallelization doc](/cloud/features/smart-orchestration/parallelization#CI-Build-ID-environment-variables-by-provider).
 
 You may encounter this error if Cypress is detecting the exact same CI Build ID
 matching a previous CI Build ID in a run that was completed over 24 hours ago.
@@ -794,7 +794,7 @@ your own unique CI Build ID per run as described
 [here](/app/guides/command-line#cypress-run-ci-build-id-lt-id-gt).
 
 Please also review our
-[parallelization](/app/cloud/smart-orchestration/parallelization)
+[parallelization](/cloud/features/smart-orchestration/parallelization)
 documentation to learn more.
 
 ### <Icon name="exclamation-triangle" color="red" /> Run is not accepting any new groups
@@ -802,16 +802,16 @@ documentation to learn more.
 The run you are attempting access to is already complete and will not accept new
 groups.
 
-When a run finishes all of its groups, it waits for a configurable set of time, [a run completion delay](/app/cloud/smart-orchestration/parallelization#Run-completion-delay),
+When a run finishes all of its groups, it waits for a configurable set of time, [a run completion delay](/cloud/features/smart-orchestration/parallelization#Run-completion-delay),
 before completing. All `cypress run` calls with any new groups must be executed during that time period.
 
 #### Troubleshooting
 
 - If you are passing [`--ci-build-id`](/app/guides/command-line#cypress-run-ci-build-id-lt-id-gt), make sure it is generating a unique value for the run. If it is not unique and matches a previous run, you may see this error.
-- If you are running `cypress run` calls in parallel and they are not completing within the default 60 second run completion delay, you can increase this delay. [See instructions](/app/cloud/account-management/projects#Run-completion-delay).
+- If you are running `cypress run` calls in parallel and they are not completing within the default 60 second run completion delay, you can increase this delay. [See instructions](/cloud/account-management/projects#Run-completion-delay).
 
 Please review our
-[parallelization](/app/cloud/smart-orchestration/parallelization)
+[parallelization](/cloud/features/smart-orchestration/parallelization)
 documentation to learn more.
 
 <a name="win-max-path-length"></a>
@@ -979,7 +979,7 @@ one of the following:
 **The `--proxy-server` or `--load-extension` arguments have been changed**
 
 - When adding a plugin with the
-  [Browser Launch API](/api/plugins/browser-launch-api), it's possible for a
+  [Browser Launch API](/api/node-events/browser-launch-api), it's possible for a
   necessary command-line argument to be changed. If you're running into this
   error, you can troubleshoot by inspecting `args` before and after the plugin
   runs, either by using `console.log()` or by

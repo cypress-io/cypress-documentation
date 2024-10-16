@@ -29,7 +29,7 @@ A '.cjs' file uses the [CommonJS](https://nodejs.org/api/modules.html) module
 syntax, which is the default for JavaScript files. All JavaScript config
 examples in our docs use the CommonJS format.
 
-If you [configure your tests to record](/cloud/getting-started#Setup) the
+If you [configure your tests to record](/cloud/get-started/setup#Setup) the
 results to [Cypress Cloud](https://on.cypress.io/cloud-introduction) the
 `projectId` will be stored in the config file as well.
 
@@ -63,14 +63,14 @@ default values.
 | Option                 | Default                               | Description                                                                                                                                                                                                                                                                                               |
 | ---------------------- | ------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `clientCertificates`   | `[]`                                  | An optional array of [client certificates](/app/references/client-certificates).                                                                                                                                                                                                                          |
-| `env`                  | `{}`                                  | Any values to be set as [environment variables](/app/guides/environment-variables).                                                                                                                                                                                                                        |
+| `env`                  | `{}`                                  | Any values to be set as [environment variables](/app/guides/environment-variables).                                                                                                                                                                                                                       |
 | `includeShadowDom`     | `false`                               | Whether to traverse shadow DOM boundaries and include elements within the shadow DOM in the results of query commands (e.g. [`cy.get()`](/api/commands/get)).                                                                                                                                             |
 | `numTestsKeptInMemory` | Default based on `run` or `open` mode | The number of tests for which snapshots and command data are kept in memory. `numTestsKeptInMemory` is set to `50` by default during `cypress open` and set to `0` by default during `cypress run`. Reduce this number if you are experiencing high memory consumption in your browser during a test run. |
 | `port`                 | `null`                                | Port used to host Cypress. Normally this is a randomly generated port.                                                                                                                                                                                                                                    |
 | `redirectionLimit`     | `20`                                  | The number of times that the application under test can redirect before erroring.                                                                                                                                                                                                                         |
 | `reporter`             | `spec`                                | The [reporter](/app/tooling/reporters) used during `cypress run`.                                                                                                                                                                                                                                         |
 | `reporterOptions`      | `null`                                | The [reporter options](/app/tooling/reporters#Reporter-Options) used. Supported options depend on the reporter.                                                                                                                                                                                           |
-| `retries`              | `{ "runMode": 0, "openMode": 0 }`     | The number of times to retry a failing test. Can be configured to apply to `cypress run` or `cypress open` separately. As of Cypress `13.4.0`, the experimental Flake Detection strategy can also be configured. See [Test Retries](/app/guides/test-retries) for more information.                        |
+| `retries`              | `{ "runMode": 0, "openMode": 0 }`     | The number of times to retry a failing test. Can be configured to apply to `cypress run` or `cypress open` separately. As of Cypress `13.4.0`, the experimental Flake Detection strategy can also be configured. See [Test Retries](/app/guides/test-retries) for more information.                       |
 | `watchForFileChanges`  | Default based on `run` or `open` mode | Whether Cypress will watch and restart tests on test file changes. `watchForFileChanges` is set to `true` by default during `cypress open` and set to `false` by default during `cypress run`.                                                                                                            |
 
 ### Timeouts
@@ -621,8 +621,8 @@ Details for `experimentalModifyObstructiveThirdPartyCode` can be found
 ### setupNodeEvents
 
 The `setupNodeEvents` function allows you to tap into, modify, or extend the
-internal behavior of Cypress using the [`on`](/api/plugins/writing-a-plugin#on)
-and [`config`](/api/plugins/writing-a-plugin#config) arguments, and is valid as
+internal behavior of Cypress using the [`on`](/api/node-events/writing-a-plugin#on)
+and [`config`](/api/node-events/writing-a-plugin#config) arguments, and is valid as
 an [`e2e`](#e2e) or [`component`](#component) testing specific option.
 
 :::cypress-config-example

@@ -251,7 +251,7 @@ tests.
 For example, your web application might _only_ be designed to work in a Chrome
 browser, and not inside the Electron browser.
 
-In the [setupNodeEvents](/api/plugins/configuration-api) function, you can
+In the [setupNodeEvents](/api/node-events/configuration-api) function, you can
 filter the list of browsers passed inside the `config` object and return the
 list of browsers you want available for selection during `cypress open`.
 
@@ -364,7 +364,7 @@ This enables you to do things like:
 - Load your own extension
 - Enable or disable experimental features
 
-[This part of the API is documented here.](/api/plugins/browser-launch-api)
+[This part of the API is documented here.](/api/node-events/browser-launch-api)
 
 ### Cypress Profile
 
@@ -443,5 +443,5 @@ the chrome of the browser. You'll always be able to visually distinguish these.
 
 ## See also
 
-- [Browser Launch API](/api/plugins/browser-launch-api)
+- [Browser Launch API](/api/node-events/browser-launch-api)
 - [Cross browser Testing](/app/guides/cross-browser-testing)

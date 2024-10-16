@@ -25,14 +25,14 @@ Cypress testing experience.
 <strong>Cypress Cloud integration</strong>
 
 When you configure the open source Cypress app to record tests to
-[Cypress Cloud](/cloud/introduction), you'll see data from your latest
+[Cypress Cloud](/cloud/get-started/introduction), you'll see data from your latest
 recorded runs directly in the Cypress app. This increased visibility into your
 test history allows you to debug your tests faster and more effectively, all
 within your local workflow.
 
 The data used by these features is pulled from Cypress Cloud, so they will only
 reflect test results that were
-[recorded](/cloud/getting-started#Set-up-a-project-to-record).
+[recorded](/cloud/get-started/setup#Set-up-a-project-to-record).
 
 If you're not sure whether you're logged in, you can always check using the
 profile control in the top right of the window.
@@ -105,7 +105,7 @@ Again, this analysis comes from Cypress Cloud.
 
 <strong>What is a flaky test?</strong>
 
-A test is considered to be [flaky](/cloud/flaky-test-management) when it
+A test is considered to be [flaky](/cloud/features/flaky-test-management) when it
 can pass and fail across multiple retry attempts without any code changes.
 
 :::
@@ -160,7 +160,7 @@ Running a large number of specs sequentially can consume more resources.
 />
 
 This screen shows detailed information about the most recently recorded
-[test runs](/cloud/recorded-runs#Latest-Runs) to Cypress Cloud, showing
+[test runs](/cloud/features/recorded-runs#Latest-Runs) to Cypress Cloud, showing
 the latest first.
 
 Cypress uses Git to show runs for your branch. Ensure that version control is
@@ -189,11 +189,11 @@ This feature eliminates the tedious process of switching between Cypress, your
 local editor, and CI output, in order to fix failed tests. It does this by
 enabling you to use the [Test Runner](#Test-Runner) to run only the tests that
 failed in your last recorded test run, as well as review the
-[Test Replay](/cloud/test-replay) and other artifacts like screenshots,
+[Test Replay](/cloud/features/test-replay) and other artifacts like screenshots,
 videos, and logs from your tests.
 
 The Debug page shows the latest completed
-[test run](/cloud/recorded-runs#Latest-Runs) that matches the `HEAD` commit
+[test run](/cloud/features/recorded-runs#Latest-Runs) that matches the `HEAD` commit
 (the commit currently checked out in the working directory) of your local
 project. Users can see and switch to relevant runs within the Debug page. If no
 run is found for your current commit, then Cypress shows the most recent run in
@@ -214,7 +214,7 @@ information using
 />
 
 You can receive notifications in the Cypress app for recorded runs directly from
-Cypress Cloud. Learn more about [Cloud Run Notifications](/cloud/recorded-runs#Notifications).
+Cypress Cloud. Learn more about [Cloud Run Notifications](/cloud/features/recorded-runs#Notifications).
 
 ## Test Runner
 

@@ -2,7 +2,7 @@
   "plugins": [
     {
       "name": "Preprocessors",
-      "description": "A preprocessor is the plugin responsible for preparing a support file or a test file for the browser. By default, Cypress comes packaged with webpack preprocessor already installed. Read the <a target=\"_blank\" href=\"/api/plugins/preprocessors-api\">Preprocessors API docs</a> to learn more.",
+      "description": "A preprocessor is the plugin responsible for preparing a support file or a test file for the browser. By default, Cypress comes packaged with webpack preprocessor already installed. Read the <a target=\"_blank\" href=\"/api/node-events/preprocessors-api\">Preprocessors API docs</a> to learn more.",
       "plugins": [
         {
           "name": "Webpack",
@@ -347,7 +347,7 @@
     },
     {
       "name": "Custom Commands",
-      "description": "Read the <a target=\"_blank\" href=\"/api/plugins/preprocessors-api\">Custom Commands</a> and <a target=\"_blank\" href=\"/api/plugins/preprocessors-api\">Custom Query</a> documentation to learn more.",
+      "description": "Read the <a target=\"_blank\" href=\"/api/node-events/preprocessors-api\">Custom Commands</a> and <a target=\"_blank\" href=\"/api/node-events/preprocessors-api\">Custom Query</a> documentation to learn more.",
       "plugins": [
         {
           "name": "Puppeteer",

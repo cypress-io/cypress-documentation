@@ -1,0 +1,31 @@
+---
+sidebar_label: Introduction
+title: ''
+description: 'Cypress Accessibility provides organized, visual, and actionable accessibility reports, based completely on the tests you record to Cypress Cloud, and powered by Axe Core by Deque Systems.'
+sidebar_position: 10
+---
+
+# Introduction
+
+<DocsImage
+  src="/img/accessibility/get-started/cypress-accessibility-overview.png"
+  alt="A graphic showing the Cypress Accessibility dashboard including list of rules, views, and the user interface showing how devtools can be used"
+/>
+
+## How it works
+
+Cypress Cloud generates an accessibility report for each unique state reached during your tests on a given Cypress run. This includes pages visited in end-to-end tests, as well as individual components rendered in component tests, and any states or pages that were encountered as a result of interactions performed during test execution.
+
+These individual accessibility "snapshots" are grouped into page- or component-level reports (called "Views"), and also form the bases of a unified report covering the entire run. This gives you multiple ways to examine your report - by focusing on the most important parts of your application, or by
+
+Reports are generated using the industry-standard open source [Axe Core](https://github.com/dequelabs/axe-core)® library created by Deque Systems, with a default configuration focused on the [Web Content Accessibility Guidelines (WCAG) 2.1](https://www.w3.org/WAI/standards-guidelines/wcag/).&#x20;
+
+## Understanding what is tested
+
+Axe Core checks for accessibility violations in your website's user interface, based on common accessibility standards. A violation detected by Axe usually indicates that some users with disabilities would have a problem using or perceiving a feature. An example of a violation would be an image without alternative text provided in the markup, which means the content is not perceivable to visually-impaired users. [Learn more about Axe.](https://github.com/dequelabs/axe-core)
+
+Axe reaches a high standard for automated testing, but cannot test every possible aspect of compliance, especially for heavily custom interfaces or aspects requiring human judgment. Please note that a 100% axe score does not mean all possible accessibility errors have been ruled out. [Axe typically detects up to 57% of the issues that would appear in a manual accessibility audit.](https://www.deque.com/blog/automated-testing-study-identifies-57-percent-of-digital-accessibility-issues/)
+
+##### Trademark notice
+
+*Note: DEQUE, DEQUELABS, AXE®, and AXE-CORE® are trademarks of Deque Systems, Inc. in the US and other countries.*

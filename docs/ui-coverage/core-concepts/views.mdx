@@ -1,0 +1,13 @@
+# Views
+
+UI Coverage is organized into views, which are the unique URLs across all snapshots from end-to-end tests and the unique mounted components from component tests.
+
+### Grouping
+
+UI Coverage uses certain default rules to generate a single view from dynamic URLs that represent the same page:
+
+* All search parameters are removed.
+* All hash parameters are removed, unless the hash parameter starts with a `/`, such as `#/admin`.
+* If there are multiple URLs that are exactly the same except for a different integer or UUID value in the same path parameter, then that path parameter is replaced with a wildcard (`*`).
+
+These rules can be overriden via [views.md](https://cypressio.gitbook.io/ui-coverage/configuration/views) configuration.

@@ -1,0 +1,65 @@
+---
+sidebar_label: significantAttributes
+title: ''
+description: ''
+sidebar_position: 50
+---
+
+# significantAttributes
+
+UI Coverage has logic that automatically [identifies](https://cypressio.gitbook.io/ui-coverage/important-concepts/element-identification) and [groups](https://cypressio.gitbook.io/ui-coverage/important-concepts/element-grouping) elements based on their appearance and structure in the DOM.
+
+Sometimes, your project may use custom attributes to identify elements that are not considered "significant" to the identification and grouping rules used by UI Coverage by default. This can cause UI Coverage to identify and group elements incorrectly, as it does not use the most meaningful attributes available.
+
+The attributes listed in `significantAttributes` are considered "significant" and are prioritized above the default significant attributes, but below `data-cy-ui-id` and `data-cy-ui-group`, for the purpose of identification and grouping.
+
+## Syntax
+
+```json
+{
+  "uiCoverage": {
+    "significantAttributes": [
+      string
+    ]
+  }
+}
+```
+
+### significantAttributes
+
+_Optional._ String\[]
+
+An array of attribute names that should be considered "significant" for the purpose of identification and grouping in UI Coverage.
+
+## Examples
+
+### Consider a custom attribute significant
+
+#### Config
+
+```json
+{
+  "uiCoverage": {
+    "significantAttributes": [
+      "data-custom-id"
+    ]
+  }
+}
+```
+
+#### HTML
+
+```xml
+<body>
+  <input id="a" data-custom-id="foo"></input>
+  <input id="b" data-custom-id="bar"></input>
+  <input id="c" data-custom-id="bar"></input>
+</body>
+```
+
+#### Elements shown in UI
+
+```
+[data-custom-id="foo"]
+[data-custom-id="bar"] (2 instances)
+```
