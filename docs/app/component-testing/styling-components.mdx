@@ -3,7 +3,37 @@ title: Styling Components
 sidebar_position: 20
 ---
 
-# Rendering Components Correctly
+:::info
+##### <Icon name="question-circle" color="#42a1c0" /> What you'll learn 
+
+- Why you should test your component's styles
+- How to render components correctly with their CSS styles
+- How to handle 3rd party CSS libraries
+
+:::
+
+## Why Test Your Component's Styles?
+
+Stylesheets are a critical part of your component's business logic. One of the
+best examples of this is a modal component. Common modal bugs include: z-index
+issues, inability to dismiss the overlay, and inability to interact with the
+parent page _after_ dismissing the modal.
+
+Node-based test runners like Jest or Vitest can't catch these kinds of issues
+because they render your styles in **emulated DOM environments** like JSDom.
+JSDom doesn't have a box model and certain kinds of assertions, such as if a
+parent is covering a child and preventing clicks, are not possible to test
+without a more realistic environment.
+
+On the other hand, browser-based runners like Cypress allow you to render your
+application's styles and components and allow Cypress's Driver to take advantage
+of the real box-model and style rendering engine. Cypress's commands like
+`cy.click` and assertions like `should('be.visible')` have business logic that
+makes sure the UI you're trying to assert on and interact with is visible and
+interactible for your end users. This is a benefit unique to browser-based test
+runners.
+
+## Rendering Components Correctly
 
 The first time you mount _any_ new component, you may notice that the component
 doesn't look like it should. Unless your application is written _exclusively_
@@ -101,27 +131,6 @@ that environment back together. We'll go into that in a moment. First, let's
 talk about stylesheets, testing, and one of Cypress's biggest differences in
 contrast to other component testing tools.
 
-## Why Test Your Component's Styles?
-
-Stylesheets are a critical part of your component's business logic. One of the
-best examples of this is a modal component. Common modal bugs include: z-index
-issues, inability to dismiss the overlay, and inability to interact with the
-parent page _after_ dismissing the modal.
-
-Node-based test runners like Jest or Vitest can't catch these kinds of issues
-because they render your styles in **emulated DOM environments** like JSDom.
-JSDom doesn't have a box model and certain kinds of assertions, such as if a
-parent is covering a child and preventing clicks, are not possible to test
-without a more realistic environment.
-
-On the other hand, browser-based runners like Cypress allow you to render your
-application's styles and components and allow Cypress's Driver to take advantage
-of the real box-model and style rendering engine. Cypress's commands like
-`cy.click` and assertions like `should('be.visible')` have business logic that
-makes sure the UI you're trying to assert on and interact with is visible and
-interactible for your end users. This is a benefit unique to browser-based test
-runners.
-
 ## Importing Stylesheets
 
 Each application or component library imports styles a little differently. We'll
@@ -149,7 +158,7 @@ fonts or other stylesheets within the `head`, ensure that the
 `cypress/support/component-index.html` file contains the same `<link>` tags. The
 same logic follows for any styles loaded in your Application's `main.js` file.
 If you import a `./styles.css` at the top of your `main.js` file, make sure to
-import it in your `cypress/support/component.js` file.
+`import` it in your `cypress/support/component.js` file.
 
 For this reason, it's strongly suggested to make a `src/setup.js` file that will
 be re-used in your `main.js` entrypoint as well as in your test setup. An

@@ -4,6 +4,15 @@ description: 'Explore Cypress documentation for a comprehensive guide on efficie
 sidebar_position: 10
 ---
 
+:::info
+##### <Icon name="question-circle" color="#42a1c0" /> What you'll learn 
+
+- The solutions Cypress provides for testing
+- The features of Cypress App, Cypress Cloud, UI Coverage, and Cypress Accessibility
+- Our mission and what we believe in
+- Key differences between Cypress and other testing tools
+:::
+
 ## In a nutshell
 
 Cypress is a next generation front end testing tool built for the modern web.
@@ -17,7 +26,6 @@ Cypress provides solutions for:
 
 - [End-to-end testing](#End-to-end-Testing)
 - [Component testing](#Component-Testing)
-- [API testing](#API-Testing)
 - [Accessibility testing](#Accessibility-Testing)
 - [UI Coverage](#UI-Coverage-1)
 - [and more...](#Other)
@@ -196,18 +204,6 @@ it('uses custom text for the button label', () => {
 </TabItem>
 </Tabs>
 
-### API Testing
-
-Cypress can perform arbitrary HTTP calls, thus you can use it for API testing.
-
-```js
-it('adds a todo', () => {
-  cy.request('POST', '/todos', { title: 'Write API Tests' })
-    .its('body')
-    .should('contain', { title: 'Write API Tests' })
-})
-```
-
 ### Accessibility Testing
 
 You can write Cypress tests to check the accessibility of your application.
@@ -239,7 +235,17 @@ You can increase release confidence by closing testing gaps in critical app flow
 
 ### Other
 
-Finally, through a large number of [official and 3rd party plugins](/app/plugins/plugins-list)
+Cypress can perform arbitrary HTTP calls, thus you can use it for API testing.
+
+```js
+it('adds a todo', () => {
+  cy.request('POST', '/todos', { title: 'Write API Tests' })
+    .its('body')
+    .should('contain', { title: 'Write API Tests' })
+})
+```
+
+And through a large number of [official and 3rd party plugins](/app/plugins/plugins-list)
 you can write many other types of tests!
 
 ## Our mission
