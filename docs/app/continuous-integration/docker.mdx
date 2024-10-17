@@ -1,0 +1,31 @@
+---
+title: Docker
+---
+
+## Images
+
+<Icon name="github" url="https://github.com/cypress-io/cypress-docker-images" />
+
+This repo holds the documentation, build and publish code for various Docker images for running Cypress locally and in CI.
+
+The following types of Cypress Docker images are available:
+
+- [cypress/base](https://github.com/cypress-io/cypress-docker-images/tree/master/base)`:<Node version>`
+  has the operating system dependencies required to run Cypress.
+- [cypress/browsers](https://github.com/cypress-io/cypress-docker-images/tree/master/browsers)`:<tag>`
+  extends the base images with pre-installed browsers.
+- [cypress/included](https://github.com/cypress-io/cypress-docker-images/tree/master/included)`:<Cypress version>`
+  extends the browsers images with pre-installed Cypress versions.
+- [cypress/factory](https://github.com/cypress-io/cypress-docker-images/tree/master/factory)`:<Factory version>`
+  is a Docker image that can be used with [`ARG`](https://docs.docker.com/reference/dockerfile/#arg) instructions
+  in a custom-built [`Dockerfile`](https://docs.docker.com/reference/dockerfile/) to generate a new Docker image
+  with specific versions of Node.js, Yarn v1 Classic, Chrome, Firefox, Edge and Cypress.
+  It's used to create the above Docker images and can
+  be used by you to create a custom Docker image with versions of your choice.
+
+## Examples
+
+- See [CI Docker examples](/app/continuous-integration/introduction#CI-Docker-examples)
+  for examples of using Cypress Docker images in Continuous Integration (CI)
+- See [Docker usage examples](https://github.com/cypress-io/cypress-docker-images/blob/master/README.md#examples)
+  in the [cypress-io/cypress-docker-images](https://github.com/cypress-io/cypress-docker-images) repo
