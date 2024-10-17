@@ -178,7 +178,7 @@ insight into what happened when your tests ran.
 #### To record tests:
 
 1. [Set up your project to record](/cloud/get-started/setup#Setup)
-2. [Pass the `--record` flag to `cypress run`](/app/guides/command-line#cypress-run)
+2. [Pass the `--record` flag to `cypress run`](/app/references/command-line#cypress-run)
    within CI.
 
 ```shell
@@ -195,7 +195,7 @@ You'll want to refer to your CI provider's documentation on how to set up
 multiple machines to run in your CI environment.
 
 Once multiple machines are available within your CI environment, you can pass
-the [--parallel](/app/guides/command-line#cypress-run-parallel) flag to have
+the [--parallel](/app/references/command-line#cypress-run-parallel) flag to have
 your tests run in parallel.
 
 ```shell
@@ -548,7 +548,7 @@ that downloads the platform-specific Cypress binary. If the hook is skipped for
 any reason the Cypress binary will be missing (unless it was already cached).
 
 To better diagnose the error, add
-[commands to get information about the Cypress cache](/app/guides/command-line#cypress-cache-command)
+[commands to get information about the Cypress cache](/app/references/command-line#cypress-cache-command)
 to your CI setup. This will print where the binary is located and what versions
 are already present.
 

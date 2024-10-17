@@ -9,7 +9,7 @@ Execute code in [Node](https://nodejs.org) via the `task` plugin event.
 <strong>Anti-Pattern</strong>
 
 We do not recommend starting a web server using `cy.task()`. Read about
-[best practices](/app/references/best-practices#Web-Servers) here.
+[best practices](/app/core-concepts/best-practices#Web-Servers) here.
 
 :::
 
@@ -57,7 +57,7 @@ the given event has been handled.
 <Icon name="angle-right" /> **event _(String)_**
 
 An event name to be handled via the `task` event in the
-[setupNodeEvents](/app/tooling/plugins-guide#Using-a-plugin) function.
+[setupNodeEvents](/app/plugins/plugins-guide#Using-a-plugin) function.
 
 <Icon name="angle-right" /> **arg _(Object)_**
 
@@ -95,13 +95,13 @@ Pass in an options object to change the default behavior of `cy.task()`.
 
 | Option    | Default                                                 | Description                                                                           |
 | --------- | ------------------------------------------------------- | ------------------------------------------------------------------------------------- |
-| `log`     | `true`                                                  | Displays the command in the [Command log](/app/core-concepts/cypress-app#Command-Log) |
+| `log`     | `true`                                                  | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log) |
 | `timeout` | [`taskTimeout`](/app/references/configuration#Timeouts) | Time to wait for `cy.task()` to resolve before [timing out](#Timeouts)                |
 
 ### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
 
 `cy.task()` yields the value returned or resolved by the `task` event in
-[setupNodeEvents](/app/tooling/plugins-guide#Using-a-plugin).
+[setupNodeEvents](/app/plugins/plugins-guide#Using-a-plugin).
 
 ## Examples
 

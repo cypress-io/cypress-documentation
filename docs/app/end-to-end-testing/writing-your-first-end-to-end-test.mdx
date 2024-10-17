@@ -87,7 +87,7 @@ Once you save this change you should see the browser reload.
 
 Although it doesn't do anything useful, this is our first passing test! ✅
 
-Over in the [Command Log](/app/core-concepts/cypress-app#Command-Log) you'll
+Over in the [Command Log](/app/core-concepts/open-mode#Command-Log) you'll
 see Cypress display the suite, the test and your first assertion (which should
 be passing in green).
 
@@ -99,7 +99,7 @@ be passing in green).
 :::info
 
 Notice Cypress displays a message about this being the default page
-[on the righthand side](/app/core-concepts/cypress-app#Application-Under-Test).
+[on the righthand side](/app/core-concepts/open-mode#Application-Under-Test).
 Cypress assumes you'll want to go out and [visit](/api/commands/visit) a URL on
 the internet - but it can also work just fine without that.
 
@@ -139,7 +139,7 @@ describe('My First Test', () => {
   alt="Failing test"
 />
 
-[Cypress](/app/core-concepts/cypress-app) gives you a visual structure of
+[Cypress](/app/core-concepts/open-mode) gives you a visual structure of
 suites, tests, and assertions. Soon you'll also see commands, page events,
 network requests, and more.
 
@@ -209,10 +209,10 @@ describe('My First Test', () => {
 Save the file and switch back over to the Cypress Test Runner. You might notice
 a few things:
 
-1. The [Command Log](/app/core-concepts/cypress-app#Command-Log) now shows
+1. The [Command Log](/app/core-concepts/open-mode#Command-Log) now shows
    the new `VISIT` action.
 2. The Kitchen Sink application has been loaded into the
-   [App Preview](/app/core-concepts/cypress-app#Overview) pane.
+   [App Preview](/app/core-concepts/open-mode#Overview) pane.
 3. The test is green, even though we made no assertions.
 4. The `VISIT` displays a **blue pending state** until the page finishes
    loading.
@@ -277,7 +277,7 @@ describe('My First Test', () => {
 ```
 
 Our test should now display `CONTAINS` in the
-[Command Log](/app/core-concepts/cypress-app#Command-Log) and still be green.
+[Command Log](/app/core-concepts/open-mode#Command-Log) and still be green.
 
 Even without adding an assertion, we know that everything is okay! This is
 because many of Cypress' commands are built to fail if they don't find what
@@ -346,7 +346,7 @@ You can almost read it like a little story! Cypress calls this "chaining" and we
 chain together commands to build tests that really express what the app does in
 a declarative way.
 
-Also note that the [App Preview](/app/core-concepts/cypress-app#Overview)
+Also note that the [App Preview](/app/core-concepts/open-mode#Overview)
 pane has updated further after the click, following the link and showing the
 destination page:
 
@@ -428,7 +428,7 @@ but we do so here since we are querying an external site, and sometimes that is
 all we have to work with.
 
 For more information on our guidance on selector best practices, see our guide
-on it [here](/app/references/best-practices#Selecting-Elements).
+on it [here](/app/core-concepts/best-practices#Selecting-Elements).
 
 :::
 
@@ -517,7 +517,7 @@ interactions and generate tests. Visit our
 - Take our free
   [Testing your first application](https://learn.cypress.io/testing-your-first-application)
   course.
-- Learn more about the [Cypress App](/app/core-concepts/cypress-app) UI.
+- Learn more about the [Cypress App](/app/core-concepts/open-mode) UI.
 - Start [testing your app](/app/end-to-end-testing/testing-your-app).
 - Set up
   [intelligent code completion](/app/tooling/IDE-integration#Intelligent-Code-Completion)

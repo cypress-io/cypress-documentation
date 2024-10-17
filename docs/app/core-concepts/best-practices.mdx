@@ -1,5 +1,6 @@
 ---
 title: Best Practices
+sidebar_position: 80
 ---
 
 :::info
@@ -136,7 +137,7 @@ by test code.
 
 <strong>Did you know?</strong>
 
-The [Selector Playground](/app/core-concepts/cypress-app#Selector-Playground)
+The [Selector Playground](/app/core-concepts/open-mode#Selector-Playground)
 automatically follows these best practices.
 
 When determining a unique selector, it will automatically prefer elements with:
@@ -221,7 +222,7 @@ package to use the familiar testing library methods (like `findByRole`,
 `findByLabelText`, etc...) to select elements in Cypress specs.
 
 In particular, if you're looking for more resources to understand how we
-recommend you approach testing your components, look to: [Cypress Component Testing](/app/component-testing/overview).
+recommend you approach testing your components, look to: [Cypress Component Testing](/app/component-testing/get-started).
 
 ## <Icon name="angle-right" /> Assigning Return Values
 
@@ -823,7 +824,7 @@ _<Icon name="github" /> Source:
 :::
 
 The `db:seed` task is defined within the
-[setupNodeEvents](/app/tooling/plugins-guide#Using-a-plugin) function of the
+[setupNodeEvents](/app/plugins/plugins-guide#Using-a-plugin) function of the
 project, and in this case sends a request to a dedicated back end API of the app
 to appropriately re-seed the database.
 

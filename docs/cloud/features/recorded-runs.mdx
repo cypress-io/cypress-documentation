@@ -284,10 +284,10 @@ canceled by members of the project.
 - If you have Analytics enabled, canceled runs will appear in the
   [Runs over time](/cloud/features/analytics/project-analytics#Run-status) chart.
 - Any incomplete calls to
-  [cypress run --record](/app/guides/command-line#cypress-run) for the run
+  [cypress run --record](/app/references/command-line#cypress-run) for the run
   will be marked as canceled and not run.
 - Any existing calls to
-  [cypress run --record](/app/guides/command-line#cypress-run) for the run
+  [cypress run --record](/app/references/command-line#cypress-run) for the run
   will exit with an error like below.
 
   <DocsImage
@@ -341,14 +341,14 @@ Cypress Cloud.
 ### Specs
 
 For even more visibility into your test results, information about recent runs
-is surfaced in the [Cypress app](/app/core-concepts/cypress-app). Aggregate
+is surfaced in the [Cypress app](/app/core-concepts/open-mode). Aggregate
 results of your latest runs are shown on the
-[Specs](/app/core-concepts/cypress-app#Specs) page while more detailed
+[Specs](/app/core-concepts/open-mode#Specs) page while more detailed
 information about specific runs can be found on the
-[Runs](/app/core-concepts/cypress-app#Runs) page.
+[Runs](/app/core-concepts/open-mode#Runs) page.
 
 <DocsImage
-  src="/img/app/core-concepts/cypress-app/spec-explorer.png"
+  src="/img/app/core-concepts/open-mode/spec-explorer.png"
   alt="Specs"
 />
 
@@ -357,7 +357,7 @@ information about specific runs can be found on the
 This screen shows detailed information about the most recently recorded
 [test runs](#Latest-Runs) to Cypress Cloud, showing the latest first.
 
-The [Runs](/app/core-concepts/cypress-app#Runs) page uses Git to show runs
+The [Runs](/app/core-concepts/open-mode#Runs) page uses Git to show runs
 for your branch. If no runs are found for your current branch, all runs for your
 project are shown as a fallback. The title of each run is taken from the
 [git commit message](https://www.educative.io/edpresso/git-commit-message-simply-explained)
@@ -365,19 +365,19 @@ for that change, and clicking on it will take you to the corresponding run page
 in Cypress Cloud.
 
 <DocsImage
-  src="/img/app/core-concepts/cypress-app/recorded-runs.jpg"
+  src="/img/app/core-concepts/open-mode/recorded-runs.jpg"
   alt="Recorded Runs"
 />
 
 ### Debug
 
-The [Debug](/app/core-concepts/cypress-app#Debug) page allows you to easily
+The [Debug](/app/core-concepts/open-mode#Debug) page allows you to easily
 debug failed CI test runs from within the Cypress app. From this page, you can
 review, rerun, and debug failed CI test runs that are recorded to Cypress
 Cloud - all without leaving the Cypress app.
 
 <DocsImage
-  src="/img/app/core-concepts/cypress-app/debug-page.png"
+  src="/img/app/core-concepts/open-mode/debug-page.png"
   alt="Debug"
 />
 

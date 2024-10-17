@@ -34,7 +34,7 @@ It should look something like **http://localhost:8080**.
 <strong>Anti-Pattern</strong>
 
 Don't try to start a web server from within Cypress scripts. Read about
-[best practices](/app/references/best-practices#Web-Servers) here.
+[best practices](/app/core-concepts/best-practices#Web-Servers) here.
 
 :::
 
@@ -234,7 +234,7 @@ facilitate this with Cypress:**
 
 - [`cy.exec()`](/api/commands/exec) - to run system commands
 - [`cy.task()`](/api/commands/task) - to run code in Node via the
-  [setupNodeEvents](/app/tooling/plugins-guide#Using-a-plugin) function
+  [setupNodeEvents](/app/plugins/plugins-guide#Using-a-plugin) function
 - [`cy.request()`](/api/commands/request) - to make HTTP requests
 
 If you're running `node.js` on your server, you might add a `before` or
@@ -536,7 +536,7 @@ From here you may want to explore some more of our guides:
   you work
 - [Introduction to Cypress](/app/core-concepts/introduction-to-cypress)
   explains how Cypress _really_ works
-- [Command Line](/app/guides/command-line) for running all your tests outside
+- [Command Line](/app/references/command-line) for running all your tests outside
   via `cypress run`
 - [Continuous Integration](/app/continuous-integration/introduction) for
   running Cypress in CI

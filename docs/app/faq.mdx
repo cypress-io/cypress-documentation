@@ -7,7 +7,7 @@ sidebar_position: 200
 
 ##### <Icon name="angle-right" /> Is Cypress free and open source?
 
-[Cypress](/app/core-concepts/cypress-app) is a free, downloadable and open
+[Cypress](/app/core-concepts/open-mode) is a free, downloadable and open
 source (MIT license) application. This is always free to use.
 [Cypress Cloud](/cloud/get-started/introduction) is a web application that offers a
 variety of billing plans (including a free, open source plan) for when you want
@@ -592,7 +592,7 @@ cy.get('button').then(($el) => {
 What you're asking about is conditional testing and control flow.
 
 Please read our extensive
-[Conditional Testing Guide](/app/core-concepts/conditional-testing) which
+[Conditional Testing Guide](/app/guides/conditional-testing) which
 explains this in detail.
 
 #### <Icon name="angle-right" /> How can I make Cypress wait until something is visible in the DOM?
@@ -695,23 +695,23 @@ Don't use classes or ID's. You add `data-*` attributes to your elements and
 target them that way.
 
 Read more about the
-[best practices for selecting elements here](/app/references/best-practices#Selecting-Elements).
+[best practices for selecting elements here](/app/core-concepts/best-practices#Selecting-Elements).
 
 #### <Icon name="angle-right" /> I want to run tests only within one specific folder. How do I do this?
 
 You can specify which test files to run during
-[cypress run](/app/guides/command-line#cypress-run) by
-[passing a glob to the `--spec` flag](/app/guides/command-line#cypress-run-spec-lt-spec-gt)
+[cypress run](/app/references/command-line#cypress-run) by
+[passing a glob to the `--spec` flag](/app/references/command-line#cypress-run-spec-lt-spec-gt)
 matching the files you want to run. You should be able to pass a glob matching
 the specific folder where the tests are you want to run.
 
 This feature is only available when using
-[cypress run](/app/guides/command-line#cypress-run).
+[cypress run](/app/references/command-line#cypress-run).
 
 #### <Icon name="angle-right" /> Is there a suggested way or best practice for how I should target elements or write element selectors?
 
 Yes. Read more about the
-[best practices for selecting elements here](/app/references/best-practices#Selecting-Elements).
+[best practices for selecting elements here](/app/core-concepts/best-practices#Selecting-Elements).
 
 #### <Icon name="angle-right" /> Can I prevent Cypress from failing my test when my application throws an uncaught exception error?
 
@@ -860,7 +860,7 @@ You can run a group of tests or a single test by placing an
 on a test suite or specific test.
 
 You can run a single test file or group of tests by passing the `--spec` flag to
-[cypress run](/app/guides/command-line#cypress-run).
+[cypress run](/app/references/command-line#cypress-run).
 
 #### <Icon name="angle-right" /> How do I test uploading a file?
 
@@ -884,7 +884,7 @@ You can read more about uploading files in
 
 Don't try to use your UI to check email. Instead opt to programmatically use 3rd
 party APIs or talk directly to your server. Read about this
-[best practice](/app/references/best-practices#Visiting-External-Sites) here.
+[best practice](/app/core-concepts/best-practices#Visiting-External-Sites) here.
 
 :::
 
@@ -1036,7 +1036,7 @@ We recommend utilizing one of the following to execute code outside of the
 browser.
 
 - [`cy.task()`](/api/commands/task) to run code in Node via the
-  [setupNodeEvents](/app/tooling/plugins-guide#Using-a-plugin) function
+  [setupNodeEvents](/app/plugins/plugins-guide#Using-a-plugin) function
 - [`cy.exec()`](/api/commands/exec) to execute a shell command
 
 [Check out the "Node Modules" example recipe.](/examples/recipes#Fundamentals)
@@ -1360,7 +1360,7 @@ You can read more about parallelization
 First, make sure you have [Node](https://nodejs.org) installed on your system.
 `npm` is a Node package that is installed globally by default when you install
 Node and is required to install our
-[`cypress` npm package](/app/guides/command-line).
+[`cypress` npm package](/app/references/command-line).
 
 Next, you'd want to check that you have the proper permissions for installing on
 your system or you may need to run `sudo npm install cypress`.

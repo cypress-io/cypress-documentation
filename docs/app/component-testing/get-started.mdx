@@ -4,40 +4,54 @@ sidebar_position: 20
 sidebar_label: Get Started
 ---
 
+
 Getting started with Component Testing is super simple. Follow the guide below for a step by step guide on how to configure your project and quickly begin writing your first tests in just a few seconds.
 
 ## Getting Started
+
+Assuming you've successfully
+[installed Cypress](/app/get-started/install-cypress) and
+[opened Cypress](/app/get-started/open-the-app), now it's time to setup component testing.
+
+The Cypress App will guide you through configuring your project.
 
 <DocsVideo
   src="/img/snippets/getting-started-with-ct.mp4"
   title="Getting Started With Component Testing"
 />
 
-### Install Cypress
-
-To begin we need to install Cypress in your project if you have not already done so.
-
-```bash
-npm install cypress --save-dev
-```
-
-### Open Cypress
-
-Once Cypress has been installed you can launch Cypress using the following command:
-
-```bash
-npx cypress open
-```
-
-:::info
-
-You can also launch Cypress for a specific [Testing Type](/app/core-concepts/testing-types) using either `--e2e` or in this case the `--component` [CLI Option](/app/guides/command-line#Options).
-
-:::
-
-Next, the Cypress Launchpad will guide you through configuring your project.
-
 ## Configuring Component Testing
+
+### Supported Frameworks
+
+Cypress currently has official mounting libraries for
+[React](/app/component-testing/react/overview),
+[Angular](/app/component-testing/angular/overview),
+[Vue](/app/component-testing/vue/overview), and
+[Svelte](/app/component-testing/svelte/overview) and support for the
+following development servers and frameworks:
+
+| Framework                                                                                                          | UI Library    | Bundler     |
+| ------------------------------------------------------------------------------------------------------------------ | ------------- | ----------- |
+| [Create React App 4-5](/app/component-testing/react/overview#Create-React-App-CRA)                                 | React 16-18   | Webpack 4-5 |
+| [Next.js 10-14](/app/component-testing/react/overview#Nextjs)                                                      | React 16-18   | Webpack 5   |
+| [React with Vite](/app/component-testing/react/overview#React-with-Vite)                                           | React 16-18   | Vite 2-5    |
+| [React with Webpack](/app/component-testing/react/overview#React-with-Webpack)                                     | React 16-18   | Webpack 4-5 |
+| [Vue CLI 4-5](/app/component-testing/vue/overview#Vue-CLI)                                                         | Vue 2-3       | Webpack 4-5 |
+| [Nuxt 2](/app/component-testing/vue/overview#Nuxt) <Badge type="info">Alpha</Badge>                                | Vue 2-3       | Webpack 4-5 |
+| [Vue with Vite](/app/component-testing/vue/overview#Vue-with-Vite)                                                 | Vue 2-3       | Vite 2-5    |
+| [Vue with Webpack](/app/component-testing/vue/overview#Vue-with-Webpack)                                           | Vue 2-3       | Webpack 4-5 |
+| [Angular](/app/component-testing/angular/overview#Framework-Configuration)                                         | Angular 13-18 | Webpack 5   |
+| [Svelte with Vite](/app/component-testing/svelte/overview#Svelte-with-Vite) <Badge type="info">Alpha</Badge>       | Svelte 3-4    | Vite 2-5    |
+| [Svelte with Webpack](/app/component-testing/svelte/overview#Svelte-with-Webpack) <Badge type="info">Alpha</Badge> | Svelte 3-4    | Webpack 4-5 |
+
+The following integrations are built and maintained by Cypress community members.
+
+| Framework                                                                               | UI Library | Bundler |
+| --------------------------------------------------------------------------------------- | ---------- | ------- |
+| [Qwik](https://github.com/qwikifiers/cypress-qwik) <Badge type="info">Community</Badge> | Qwik       | Vite    |
+| [Lit](https://github.com/redfox-mx/cypress-lit) <Badge type="info">Community</Badge>    | Lit        | Vite    |
+
 
 ### Select Testing Type
 
@@ -66,7 +80,7 @@ Click "Next Step" to continue.
   caption="React and Vite are automatically detected"
 />
 
-### Installing Dependencies
+### Install Dependencies
 
 The next screen checks that all the required dependencies are installed. All the
 items should have green checkboxes on them, indicating everything is good, so
@@ -101,7 +115,7 @@ to open the Cypress App.
 
 ## Writing Your First Test
 
-At this point, your project is configured to use Cypress Component Testing. However, when the test runner appears, it won't find any specs because we haven't created
+At this point, your project is configured to use Cypress Component Testing. However, when the app appears, it won't find any specs because we haven't created
 any yet. Now we need write our first Component Test.
 
 <DocsImage src="/img/app/component-testing/create-your-first-spec-cfc.png" />
@@ -389,7 +403,7 @@ it('stepper should default to 0', () => {
 
 The test will still pass as expected, and our selector is now future-proof. For
 more info on writing good selectors, see our guide
-[Selector Best Practices](/app/references/best-practices#Selecting-Elements).
+[Selector Best Practices](/app/core-concepts/best-practices#Selecting-Elements).
 
 ### Passing Props to Components
 

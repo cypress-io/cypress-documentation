@@ -79,19 +79,19 @@
 
 [[redirects]]
   from = "/guides/component-testing"
-  to = "/guides/component-testing/overview"
+  to = "/app/component-testing/get-started"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/component-testing/introduction"
-  to = "/guides/component-testing/overview"
+  to = "/app/component-testing/get-started"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/component-testing/writing-your-first-component-test"
-  to = "/guides/component-testing/overview"
+  to = "/app/component-testing/get-started"
   status = 301
   force = true
 
@@ -103,7 +103,7 @@
 
 [[redirects]]
   from = "/guides/core-concepts/test-runner"
-  to = "/guides/core-concepts/cypress-app"
+  to = "/guides/core-concepts/open-mode"
   status = 301
   force = true
 
@@ -127,7 +127,7 @@
 
 [[redirects]]
   from = "/guides/getting-started/component-testing"
-  to = "/guides/component-testing/overview"
+  to = "/app/component-testing/get-started"
   status = 301
   force = true
 
@@ -555,7 +555,7 @@
 
 [[redirects]]
   from = "/api/cypress-api/guides/component-testing/introduction"
-  to = "/guides/component-testing/overview"
+  to = "/app/component-testing/get-started"
   status = 301
   force = true
 
@@ -717,7 +717,7 @@
 
 [[redirects]]
   from = "/test-runner"
-  to = "/guides/core-concepts/cypress-app"
+  to = "/guides/core-concepts/open-mode"
   status = 301
   force = true
 
@@ -746,8 +746,8 @@
   force = true
 
 [[redirects]]
-  from = "/zh-cn/guides/guides/command-line"
-  to = "/guides/guides/command-line"
+  from = "/zh-cn/guides/references/command-line"
+  to = "/guides/references/command-line"
   status = 301
   force = true
 

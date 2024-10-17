@@ -41,7 +41,7 @@ declaration allows for patient execution until the application is fully ready. A
 without requiring complex configurations or setups, facilitating easy troubleshooting and bug
 reporting with access to screenshots, videos, and time travel debugging.
 
-Furthermore, the addition of [Component Testing](/app/component-testing/overview) to Cypress has fostered
+Furthermore, the addition of [Component Testing](/app/component-testing/get-started) to Cypress has fostered
 [collaboration](https://www.cypress.io/blog/2023/01/26/what-cypress-component-testing-means-for-qa-teams) between testing and development teams,
 enabling them to work with the same tools and language. This alignment streamlines the testing process and promotes
 consistency and efficiency across teams.
@@ -82,7 +82,7 @@ assistance, making it a highly supported testing framework.
 ### 5. Ease of Use
 
 Compared to Selenium, Cypress offers a more intuitive and user-friendly experience. Features like the [selector
-playground](/app/core-concepts/cypress-app#Selector-Playground) and
+playground](/app/core-concepts/open-mode#Selector-Playground) and
 [built-in screenshots](/app/guides/screenshots-and-videos) simplify test writing and
 debugging, allowing users to focus on creating effective tests without the need for constant navigation between the test server and browser. This
 streamlined approach enhances productivity and accelerates the testing process. Cypress [Test Replay](/cloud/features/test-replay), which provides
@@ -168,7 +168,7 @@ developers are using, this could be a quick find and replace. For instance, in V
 `vl-checkbox` while in Cypress this would be `.vl-checkbox`. This will allow you to quickly have Cypress tests that can
 be used to test your application. This may also be an opportunity to review your tests to see how subject to change the
 selectors are today. Cypress documents many best practices about how to write robust tests and the section on
-[selecting elements](/app/references/best-practices#Selecting-Elements) is a great resource to review.
+[selecting elements](/app/core-concepts/best-practices#Selecting-Elements) is a great resource to review.
 
 One of the most significant changes between Selenium and Cypress is the actual testing syntax.
 While Selenium will run a class or different scenarios, Cypress will run every `it` in a `*.cy.js` file.

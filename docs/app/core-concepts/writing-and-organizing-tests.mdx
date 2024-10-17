@@ -267,7 +267,7 @@ command.
 The plugins file is a good place to define how you want to bundle the spec files
 via the [preprocessors](/api/node-events/preprocessors-api), how to find and launch
 the browsers via the [browser launch API](/api/node-events/browser-launch-api), and
-other cool things. Read our [plugins guide](/app/tooling/plugins-guide) for
+other cool things. Read our [plugins guide](/app/plugins/plugins-guide) for
 more details and examples.
 
 The initial imported plugins file can be
@@ -396,7 +396,7 @@ Cypress will be a breeze.
 :::info
 
 To start writing tests for your app, follow our guides for writing your first
-[Component](/app/component-testing/overview) or
+[Component](/app/component-testing/get-started) or
 [End-to-End](/app/end-to-end-testing/writing-your-first-end-to-end-test)
 test.
 
@@ -519,7 +519,7 @@ describe('Hooks', () => {
 :::danger
 
 🚨 Before writing `after()` or `afterEach()` hooks, please see our
-[thoughts on the anti-pattern of cleaning up state with `after()` or `afterEach()`](/app/references/best-practices#Using-after-Or-afterEach-Hooks).
+[thoughts on the anti-pattern of cleaning up state with `after()` or `afterEach()`](/app/core-concepts/best-practices#Using-after-Or-afterEach-Hooks).
 
 :::
 
@@ -945,7 +945,7 @@ implementation.
 
 ## Watching tests
 
-When running in using [cypress open](/app/guides/command-line#cypress-open),
+When running in using [cypress open](/app/references/command-line#cypress-open),
 Cypress watches the filesystem for changes to your spec files. Soon after adding
 or updating a test Cypress will reload it and run all of the tests in that spec
 file.
@@ -1010,10 +1010,10 @@ configuration property to `false` to disable file watching.
 :::caution
 
 **Nothing** is watched during
-[cypress run](/app/guides/command-line#cypress-run).
+[cypress run](/app/references/command-line#cypress-run).
 
 The `watchForFileChanges` property is only in effect when running Cypress using
-[cypress open](/app/guides/command-line#cypress-open).
+[cypress open](/app/references/command-line#cypress-open).
 
 :::
 

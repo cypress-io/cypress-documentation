@@ -67,7 +67,7 @@ problem:
 - Split large spec files into smaller ones.
 - Split long tests into smaller tests.
 - Run the same test using
-  [--browser chrome](/app/guides/command-line#cypress-run-browser-lt-browser-name-or-path-gt).
+  [--browser chrome](/app/references/command-line#cypress-run-browser-lt-browser-name-or-path-gt).
   The problem might be isolated to the Electron browser.
 - If isolated to the Electron browser. Run the same tests in both Electron and
   Chrome, then compare the screenshots/videos. Look for and isolate any
@@ -126,7 +126,7 @@ Another way to log what is found by Cypress is to run Cypress with the
 will print information about the found browsers and their properties to the
 terminal.
 
-**Tip:** use the [cypress info](/app/guides/command-line#cypress-info)
+**Tip:** use the [cypress info](/app/references/command-line#cypress-info)
 command to see all locally detected browsers.
 
 ### Mac
@@ -294,7 +294,7 @@ DEBUG=cypress:* pnpm cypress run
   </TabItem>
 </Tabs>
 
-You can change `run` to `open` in the above to capture debug logs when starting your tests from the [Cypress Specs](../core-concepts/cypress-app#Specs) UI.
+You can change `run` to `open` in the above to capture debug logs when starting your tests from the [Cypress Specs](../core-concepts/open-mode#Specs) UI.
 
 For non-POSIX type shells on Windows, set the `DEBUG` environment variable as follows. (Replace `npx` with `yarn` or `pnpm` if you are using Yarn or pnpm package managers instead of npm.)
 
@@ -316,7 +316,7 @@ If you have issues with the logs not printing, it may be a permissions issue
 with setting the environment variable in your terminal. You may need to run your
 terminal in administrative mode or review your permission settings.
 
-[How to run Cypress CLI commands](/app/guides/command-line#How-to-run-commands) provides background information on running Cypress from the command line and includes a reference of additional command line options.
+[How to run Cypress CLI commands](/app/references/command-line#How-to-run-commands) provides background information on running Cypress from the command line and includes a reference of additional command line options.
 
 Read more: [Good Logging](https://glebbahmutov.com/blog/good-logging/) blog post.
 
@@ -469,7 +469,7 @@ verbose `cypress-verbose:server:util:process_profiler` debug stream.
 
 ## Disable the Command Log
 
-In some cases the [Command Log](/app/core-concepts/cypress-app#Command-Log),
+In some cases the [Command Log](/app/core-concepts/open-mode#Command-Log),
 responsible for displaying test commands, assertions, and statuses in the
 Cypress Test Runner, may cause performance issues resulting in slower tests or
 the browser crashing.
@@ -481,7 +481,7 @@ environment variable below during `cypress open` or `cypress run`.
 CYPRESS_NO_COMMAND_LOG=1 cypress run
 ```
 
-You can also hide the entire Cypress Runner UI in `cypress run` by passing the [`--no-runner-ui`](/app/guides/command-line#cypress-run-no-runner-ui) command line flag.
+You can also hide the entire Cypress Runner UI in `cypress run` by passing the [`--no-runner-ui`](/app/references/command-line#cypress-run-no-runner-ui) command line flag.
 
 ```shell
 npx cypress run --no-runner-ui
@@ -535,8 +535,8 @@ Some common situations on why you would want to run Cypress by itself are to:
 
 Here is how you can launch Cypress directly without the npm CLI module. First,
 find where Cypress binary versions are installed using the
-[cypress cache path](/app/guides/command-line#cypress-cache-path) and
-[cypress cache list](/app/guides/command-line#cypress-cache-list) commands.
+[cypress cache path](/app/references/command-line#cypress-cache-path) and
+[cypress cache list](/app/references/command-line#cypress-cache-list) commands.
 
 An example on a Linux machine shows:
 

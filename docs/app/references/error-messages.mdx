@@ -609,7 +609,7 @@ if you've exhausted all other possibilities.
 You may receive this error when trying to run Cypress tests in
 [Continuous Integration](/app/continuous-integration/introduction). This
 means that you did not pass a specific record key to:
-[cypress run --record](/app/guides/command-line#cypress-run).
+[cypress run --record](/app/references/command-line#cypress-run).
 
 Since no record key was passed, Cypress checks for any environment variable with
 the name `CYPRESS_RECORD_KEY`. In this case, that was also not found.
@@ -663,8 +663,8 @@ then bump the version of your CI cache to ensure a clean build.
 ### <Icon name="exclamation-triangle" color="red" /> Incorrect usage of `--ci-build-id` flag
 
 You passed the `--ci-build-id` flag but did not provide either a
-[--group](/app/guides/command-line#cypress-run-group-lt-name-gt) or
-[--parallel](/app/guides/command-line#cypress-run-parallel) flag.
+[--group](/app/references/command-line#cypress-run-group-lt-name-gt) or
+[--parallel](/app/references/command-line#cypress-run-parallel) flag.
 
 The `--ci-build-id` flag is used to either group or parallelize multiple runs
 together.
@@ -672,16 +672,16 @@ together.
 Check out our
 [guide on parallelizing runs](/cloud/features/smart-orchestration/parallelization)
 and when to use the
-[--ci-build-id](/app/guides/command-line#cypress-run-ci-build-id-lt-id-gt)
+[--ci-build-id](/app/references/command-line#cypress-run-ci-build-id-lt-id-gt)
 option.
 
 ### <Icon name="exclamation-triangle" color="red" /> The `--ci-build-id`, `--group`, `--tag`, `--parallel`, or `--auto-cancel-after-failures` flags can only be used when recording
 
 You passed the `--ci-build-id`,
-[--group](/app/guides/command-line#cypress-run-group-lt-name-gt),
-[--tag](/app/guides/command-line#cypress-run-tag-lt-tag-gt),
-[--parallel](/app/guides/command-line#cypress-run-parallel), or
-[--auto-cancel-after-failures](/app/guides/command-line#auto-cancel-after-runs)
+[--group](/app/references/command-line#cypress-run-group-lt-name-gt),
+[--tag](/app/references/command-line#cypress-run-tag-lt-tag-gt),
+[--parallel](/app/references/command-line#cypress-run-parallel), or
+[--auto-cancel-after-failures](/app/references/command-line#auto-cancel-after-runs)
 flag without also passing the `--record` flag.
 
 These flags can only be used when recording to
@@ -694,8 +694,8 @@ documentation to learn more.
 ### <Icon name="exclamation-triangle" color="red" /> We could not determine a unique CI build ID
 
 You passed the
-[--group](/app/guides/command-line#cypress-run-group-lt-name-gt) or
-[--parallel](/app/guides/command-line#cypress-run-parallel) flag but we could
+[--group](/app/references/command-line#cypress-run-group-lt-name-gt) or
+[--parallel](/app/references/command-line#cypress-run-parallel) flag but we could
 not automatically determine or generate a `ciBuildId`.
 
 In order to use either of these parameters a `ciBuildId` must be determined.
@@ -707,7 +707,7 @@ review the
 for your CI provider.
 
 You can avoid this check in the future by passing an ID to the
-[--ci-build-id](/app/guides/command-line#cypress-run-ci-build-id-lt-id-gt)
+[--ci-build-id](/app/references/command-line#cypress-run-ci-build-id-lt-id-gt)
 flag manually.
 
 Please review our
@@ -717,11 +717,11 @@ documentation to learn more.
 ### <Icon name="exclamation-triangle" color="red" /> Group name has already been used for this run
 
 You passed the
-[--group](/app/guides/command-line#cypress-run-group-lt-name-gt) flag, but
+[--group](/app/references/command-line#cypress-run-group-lt-name-gt) flag, but
 this group name has already been used for this run.
 
 If you are trying to parallelize this run, then also pass the
-[--parallel](/app/guides/command-line#cypress-run-parallel) flag, else pass a
+[--parallel](/app/references/command-line#cypress-run-parallel) flag, else pass a
 different group name.
 
 Please review
@@ -730,7 +730,7 @@ documentation to learn more.
 
 ### <Icon name="exclamation-triangle" color="red" /> Cannot parallelize tests across environments
 
-You passed the [--parallel](/app/guides/command-line#cypress-run-parallel)
+You passed the [--parallel](/app/references/command-line#cypress-run-parallel)
 flag, but we do not parallelize tests across different environments.
 
 This machine is sending different environment parameters than the first machine
@@ -755,7 +755,7 @@ You passed the `--parallel` flag, but this run group was originally created
 without the `--parallel` flag.
 
 You cannot use the
-[--parallel](/app/guides/command-line#cypress-run-parallel) flag with this
+[--parallel](/app/references/command-line#cypress-run-parallel) flag with this
 group.
 
 Please review our
@@ -767,7 +767,7 @@ documentation to learn more.
 You did not pass the `--parallel` flag, but this run's group was originally
 created with the `--parallel` flag.
 
-You must use the [--parallel](/app/guides/command-line#cypress-run-parallel)
+You must use the [--parallel](/app/references/command-line#cypress-run-parallel)
 flag with this group.
 
 Please review our
@@ -777,7 +777,7 @@ documentation to learn more.
 ### <Icon name="exclamation-triangle" color="red" /> Cannot parallelize tests on a stale run
 
 This error is thrown when you are attempting to pass the
-[--parallel](/app/guides/command-line#cypress-run-parallel) flag to a run
+[--parallel](/app/references/command-line#cypress-run-parallel) flag to a run
 that Cypress detected was completed over 24 hours ago.
 
 In order to uniquely identify each run during `cypress run`, Cypress attempts to
@@ -791,7 +791,7 @@ see the CI Build ID that is detected for each completed run by looking at the
 details section at the top of your run in
 [Cypress Cloud](https://on.cypress.io/cloud). ​ ​You can generate and pass in
 your own unique CI Build ID per run as described
-[here](/app/guides/command-line#cypress-run-ci-build-id-lt-id-gt).
+[here](/app/references/command-line#cypress-run-ci-build-id-lt-id-gt).
 
 Please also review our
 [parallelization](/cloud/features/smart-orchestration/parallelization)
@@ -807,7 +807,7 @@ before completing. All `cypress run` calls with any new groups must be executed 
 
 #### Troubleshooting
 
-- If you are passing [`--ci-build-id`](/app/guides/command-line#cypress-run-ci-build-id-lt-id-gt), make sure it is generating a unique value for the run. If it is not unique and matches a previous run, you may see this error.
+- If you are passing [`--ci-build-id`](/app/references/command-line#cypress-run-ci-build-id-lt-id-gt), make sure it is generating a unique value for the run. If it is not unique and matches a previous run, you may see this error.
 - If you are running `cypress run` calls in parallel and they are not completing within the default 60 second run completion delay, you can increase this delay. [See instructions](/cloud/account-management/projects#Run-completion-delay).
 
 Please review our

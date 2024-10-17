@@ -79,7 +79,7 @@ the problem was.
 Which [pricing tier](https://www.cypress.io/pricing) is best for you depends on
 the number of tests you record each month in your organization.
 
-Tests are recorded when [cypress run](/app/guides/command-line#cypress-run)
+Tests are recorded when [cypress run](/app/references/command-line#cypress-run)
 is called with the `--record` flag while supplying the record `--key`. This
 means your [test run data](/cloud/features/recorded-runs#Latest-Runs) is being
 "recorded" to Cypress Cloud.
@@ -149,7 +149,7 @@ always remain optional. We hope you'll find a tremendous amount of value in it,
 but it is not coupled with being able to run your tests.
 
 You can always run your tests in CI using
-[cypress run](/app/guides/command-line#cypress-run) without the `--record`
+[cypress run](/app/references/command-line#cypress-run) without the `--record`
 flag which does not communicate with our external servers and will not record
 any test results.
 
@@ -201,7 +201,7 @@ section of the [Cypress Cloud](/cloud/get-started/introduction) docs.
 2. Then [record your runs](/cloud/features/recorded-runs#Latest-Runs).
 
 After recording your tests, you will see them in
-[Cypress Cloud](https://on.cypress.io/cloud) and in the Cypress App [Runs](/app/core-concepts/cypress-app#Runs) tab.
+[Cypress Cloud](https://on.cypress.io/cloud) and in the Cypress App [Runs](/app/core-concepts/open-mode#Runs) tab.
 
 ### <Icon name="angle-right" /> Can I delete a run from Cypress Cloud?
 
@@ -247,7 +247,7 @@ Find a variable across your containers that is the same for all of them, but is
 different from run to run. For example, it could be an environment variable
 called `CI_RUN_ID` that you set when creating the containers to run Cypress. You
 can pass this variable via CLI argument
-[`--ci-build-id`](/app/guides/command-line#cypress-run-ci-build-id-lt-id-gt)
+[`--ci-build-id`](/app/references/command-line#cypress-run-ci-build-id-lt-id-gt)
 when starting Cypress in each container:
 
 ```shell
@@ -323,7 +323,7 @@ Anything you can do with Cypress - E2E, Component, API, etc.
 
 There is an important distinction between _session_ replay services (LogRocket, FullStory, DataDog, etc) and Cypress Test Replay. In session replay, user actions are captured as the application is used and delivered back in a replay-able format, usually video or stitched DOM snapshots. These are valuable tools for gathering product insight such as user behavior, per session.
 
-Cypress Test Replay captures every detail of your test runs as they happen in CI. Remember, these tests are running in a headless manner on a virtual machine with no UI being rendered. Sometimes tests will error or fail indicating an issue in your application. Since Cypress Cloud is monitoring the health of your CI test suite, each Test Replay offers a chance to step back in time to analyze and leverage [time travel debugging](/app/core-concepts/cypress-app#Time-traveling), network requests, console logs, JavaScript errors, and element rendering to address problems directly. This is incredibly valuable for developer and team productivity. No more hours wasted recreating CI issues on your local machine!
+Cypress Test Replay captures every detail of your test runs as they happen in CI. Remember, these tests are running in a headless manner on a virtual machine with no UI being rendered. Sometimes tests will error or fail indicating an issue in your application. Since Cypress Cloud is monitoring the health of your CI test suite, each Test Replay offers a chance to step back in time to analyze and leverage [time travel debugging](/app/core-concepts/open-mode#Time-traveling), network requests, console logs, JavaScript errors, and element rendering to address problems directly. This is incredibly valuable for developer and team productivity. No more hours wasted recreating CI issues on your local machine!
 
 ### <Icon name="angle-right" /> How much does Test Replay cost?
 

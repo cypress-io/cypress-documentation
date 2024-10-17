@@ -38,7 +38,7 @@ Pass in an options object to change the default behavior of `cy.url()`.
 | Option    | Default                                                           | Description                                                                           |
 | --------- | ----------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
 | `decode`  | `false`                                                           | Decode URL                                                                            |
-| `log`     | `true`                                                            | Displays the command in the [Command log](/app/core-concepts/cypress-app#Command-Log) |
+| `log`     | `true`                                                            | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/app/references/configuration#Timeouts) | Time to wait for `cy.url()` to resolve before [timing out](#Timeouts)                 |
 
 ### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
@@ -110,7 +110,7 @@ return them the full current URL. We almost never refer to the URL as an `href`.
 Instead of hard-coding the URL used in the assertion, we recommend you define a
 `baseUrl` in your [Cypress configuration](/app/references/configuration). For
 more details on why, see our Best Practices guide on
-[setting a global `baseUrl`](/app/references/best-practices#Setting-a-Global-baseUrl).
+[setting a global `baseUrl`](/app/core-concepts/best-practices#Setting-a-Global-baseUrl).
 
 Given the remote URL, `http://localhost:8000/index.html`, and the baseUrl,
 `http://localhost:8000`, these assertions are the same.

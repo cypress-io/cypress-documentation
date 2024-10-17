@@ -1,6 +1,6 @@
 ---
-title: Cypress App
-sidebar_position: 80
+title: Open Mode
+sidebar_position: 60
 ---
 
 :::info
@@ -42,7 +42,7 @@ profile control in the top right of the window.
 ### Launchpad
 
 <DocsImage
-  src="/img/app/core-concepts/cypress-app/the-launchpad.png"
+  src="/img/app/core-concepts/open-mode/the-launchpad.png"
   alt="The Launchpad"
 />
 
@@ -51,13 +51,13 @@ testing type and launching a browser.
 
 Once you get comfortable with Cypress you might find you don't need the
 Launchpad any more. In this case
-[you can run `cypress open` with the `--browser` and `--component` or `--e2e` options](/app/guides/command-line#cypress-open)
+[you can run `cypress open` with the `--browser` and `--component` or `--e2e` options](/app/references/command-line#cypress-open)
 to go straight to the Specs page.
 
 ### Specs
 
 <DocsImage
-  src="/img/app/core-concepts/cypress-app/spec-explorer.png"
+  src="/img/app/core-concepts/open-mode/spec-explorer.png"
   alt="Specs"
 />
 
@@ -127,7 +127,7 @@ Clicking on the flake indicator will take you to the spec’s
 
 #### Running Specs
 
-<DocsImage src="/img/app/core-concepts/cypress-app/spec-page.png" alt="Specs" />
+<DocsImage src="/img/app/core-concepts/open-mode/spec-page.png" alt="Specs" />
 
 To run a spec, simply click the row with the spec you would like to run. You
 will be taken to the [Test Runner](#Test-Runner) and the spec will execute. You
@@ -155,7 +155,7 @@ Running a large number of specs sequentially can consume more resources.
 ### Runs
 
 <DocsImage
-  src="/img/app/core-concepts/cypress-app/recorded-runs.jpg"
+  src="/img/app/core-concepts/open-mode/recorded-runs.jpg"
   alt="Recorded Runs"
 />
 
@@ -176,7 +176,7 @@ in Cypress Cloud.
 ### Debug
 
 <DocsImage
-  src="/img/app/core-concepts/cypress-app/debug-page.png"
+  src="/img/app/core-concepts/open-mode/debug-page.png"
   alt="Debug"
 />
 
@@ -223,7 +223,7 @@ interactively, allowing you to see commands as they execute while also viewing
 the Application or Component Under Test, and exploring its DOM.
 
 <DocsImage
-  src="/img/app/core-concepts/cypress-app/test-runner.png"
+  src="/img/app/core-concepts/open-mode/test-runner.png"
   alt="The Test Runner"
 />
 
@@ -235,7 +235,7 @@ every Cypress command executed within the test's block as well as any commands
 executed in relevant `before`, `beforeEach`, `afterEach`, and `after` hooks.
 
 <DocsImage
-  src="/img/app/core-concepts/cypress-app/command-log.png"
+  src="/img/app/core-concepts/open-mode/command-log.png"
   alt="Cypress app"
   width-600
 />
@@ -247,7 +247,7 @@ file where the code is located. Clicking on this link will open the file in your
 [preferred file opener](/app/tooling/IDE-integration#File-Opener-Preference).
 
 <DocsImage
-  src="/img/app/core-concepts/cypress-app/open-file-in-IDE.gif"
+  src="/img/app/core-concepts/open-mode/open-file-in-IDE.gif"
   alt="Open file in your IDE"
 />
 
@@ -271,7 +271,7 @@ command in the Command Log changes the state of the
 [AUT](#Application-Under-Test) preview:
 
 <DocsImage
-  src="/img/app/core-concepts/cypress-app/first-test-hover-contains.png"
+  src="/img/app/core-concepts/open-mode/first-test-hover-contains.png"
   alt="Hovering over the contains tab highlights the dom element in the App in the Cypress app"
 />
 
@@ -285,7 +285,7 @@ command, Cypress reverts back to the URL that was present when the snapshot was
 taken.
 
 <DocsImage
-  src="/img/app/core-concepts/cypress-app/first-test-url-revert.png"
+  src="/img/app/core-concepts/open-mode/first-test-url-revert.png"
   alt="The url address bar shows https://example.cypress.io/"
 />
 
@@ -300,7 +300,7 @@ In the following example, clicking on the `CLICK` command highlights it in
 purple, and does three other things worth noting:
 
 <DocsImage
-  src="/img/app/core-concepts/cypress-app/first-test-click-revert.png"
+  src="/img/app/core-concepts/open-mode/first-test-click-revert.png"
   alt="A click on the click command in the Command Log with Cypress app labeled as 1, 2, 3"
 />
 
@@ -340,7 +340,7 @@ shows important events from your application or component when they occur.
 Notice these look different (they are gray and without a number).
 
 <DocsImage
-  src="/img/app/core-concepts/cypress-app/first-test-page-load.png"
+  src="/img/app/core-concepts/open-mode/first-test-page-load.png"
   alt="Command log shows 'Page load --page loaded--' and 'New url https://example.cypress.io/'"
 />
 
@@ -373,21 +373,21 @@ it('intercept command log', () => {
 -->
 
 <DocsImage
-  src="/img/app/core-concepts/cypress-app/instrument-panel-routes.png"
+  src="/img/app/core-concepts/open-mode/instrument-panel-routes.png"
   alt="Routes Instrument Panel"
 />
 
 #### Stubs
 
 <DocsImage
-  src="/img/app/core-concepts/cypress-app/instrument-panel-stubs.png"
+  src="/img/app/core-concepts/open-mode/instrument-panel-stubs.png"
   alt="Stubs Instrument Panel"
 />
 
 #### Spies
 
 <DocsImage
-  src="/img/app/core-concepts/cypress-app/instrument-panel-spies.png"
+  src="/img/app/core-concepts/open-mode/instrument-panel-spies.png"
   alt="Spies Instrument Panel"
 />
 
@@ -420,7 +420,7 @@ developer tools to inspect elements as you would in your normal application. The
 DOM is completely available for debugging.
 
 <DocsImage
-  src="/img/app/core-concepts/cypress-app/application-under-test.png"
+  src="/img/app/core-concepts/open-mode/application-under-test.png"
   alt="Application Under Test"
 />
 
@@ -438,7 +438,7 @@ The image below shows that our application is displaying at `1000px` width,
 `660px` height and scaled to `100%`.
 
 <DocsImage
-  src="/img/app/core-concepts/cypress-app/viewport-scaling.png"
+  src="/img/app/core-concepts/open-mode/viewport-scaling.png"
   alt="Viewport Scaling"
 />
 
@@ -450,7 +450,7 @@ that prevent the tests from running.
 :::
 
 <DocsImage
-  src="/img/app/core-concepts/cypress-app/aut-error-e2e.png"
+  src="/img/app/core-concepts/open-mode/aut-error-e2e.png"
   alt="Errors"
 />
 
@@ -520,7 +520,7 @@ The image below shows that our application is displaying at `500px` width,
 `500px` height and scaled to `100%`.
 
 <DocsImage
-  src="/img/app/core-concepts/cypress-app/viewport-scaling-ct.png"
+  src="/img/app/core-concepts/open-mode/viewport-scaling-ct.png"
   alt="Cypress app showing mounted component test viewport scale"
 />
 
@@ -532,7 +532,7 @@ that prevent the tests from running.
 :::
 
 <DocsImage
-  src="/img/app/core-concepts/cypress-app/aut-error-ct.png"
+  src="/img/app/core-concepts/open-mode/aut-error-ct.png"
   alt="Cypress app showing error as application under test"
 />
 
@@ -594,7 +594,7 @@ To help with these common challenges, the Selector Playground automatically
 prefers certain `data-*` attributes when determining a unique selector.
 
 Please read our
-[Best Practices guide](/app/references/best-practices#Selecting-Elements) on
+[Best Practices guide](/app/core-concepts/best-practices#Selecting-Elements) on
 helping you target elements and prevent tests from breaking on CSS or JS
 changes.
 
@@ -605,7 +605,7 @@ next to the URL at the top of the Test Runner. Hover over elements in your app
 to preview a unique selector for that element in the tooltip.
 
 <DocsImage
-  src="/img/app/core-concepts/cypress-app/open-selector-playground.gif"
+  src="/img/app/core-concepts/open-mode/open-selector-playground.gif"
   alt="Opening selector playground and hovering over elements"
 />
 
@@ -614,7 +614,7 @@ can copy it to your clipboard ( <Icon name="copy" /> ) or print it to the
 console ( <Icon name="terminal" /> ).
 
 <DocsImage
-  src="/img/app/core-concepts/cypress-app/copy-selector-in-selector-playground.gif"
+  src="/img/app/core-concepts/open-mode/copy-selector-in-selector-playground.gif"
   alt="Clicking an element, copying its selector to clipboard, printing it to the console"
 />
 
@@ -628,7 +628,7 @@ When you edit the selector, it will show you how many elements match and
 highlight those elements in your app.
 
 <DocsImage
-  src="/img/app/core-concepts/cypress-app/typing-a-selector-to-find-in-playground.gif"
+  src="/img/app/core-concepts/open-mode/typing-a-selector-to-find-in-playground.gif"
   alt="Type a selector to see what elements it matches"
 />
 
@@ -643,7 +643,7 @@ Type in text to see which element it matches. Note that
 matches the text, even if multiple elements on the page contain the text.
 
 <DocsImage
-  src="/img/app/core-concepts/cypress-app/cy-contains-in-selector-playground.gif"
+  src="/img/app/core-concepts/open-mode/cy-contains-in-selector-playground.gif"
   alt="Experiment with cy.contains"
 />
 
@@ -654,7 +654,7 @@ open, the element highlighting might get in the way. Toggling the highlighting
 off will allow you to interact with your app more easily.
 
 <DocsImage
-  src="/img/app/core-concepts/cypress-app/turn-off-highlight-in-selector-playground.gif"
+  src="/img/app/core-concepts/open-mode/turn-off-highlight-in-selector-playground.gif"
   alt="Turn off highlighting"
 />
 
@@ -670,7 +670,7 @@ Cypress.
 | `f` | Bring focus to 'specs' window |
 
 <DocsImage
-  src="/img/app/core-concepts/cypress-app/keyboard-shortcuts.png"
+  src="/img/app/core-concepts/open-mode/keyboard-shortcuts.png"
   alt="Tooltips show keyboard shortcuts"
 />
 
@@ -697,7 +697,7 @@ Open up your Dev Tools and click on the `GET` for the `.action-email` class
 selector.
 
 <DocsImage
-  src="/img/app/core-concepts/cypress-app/first-test-console-output.png"
+  src="/img/app/core-concepts/open-mode/first-test-console-output.png"
   alt="Cypress app with get command pinned and console log open showing the yielded element"
 />
 
@@ -746,7 +746,7 @@ Now, when the test runs, Cypress provides us a UI (similar to debugger) to step
 forward through each command in the test.
 
 <DocsImage
-  src="/img/app/core-concepts/cypress-app/first-test-paused.png"
+  src="/img/app/core-concepts/open-mode/first-test-paused.png"
   alt="Cypress app shows label saying 'Paused' with Command Log showing 'Pause'"
 />
 

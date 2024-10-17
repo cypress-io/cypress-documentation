@@ -14,7 +14,7 @@ version 13.
 
 You may need to allowlist `capture.cypress.io` if you work with a strict VPN. See our FAQ section about [VPN subdomain allowlisting](/cloud/faq#Im-working-with-a-restrictive-VPN-Which-subdomains-do-I-have-to-allow-on-my-VPN-for-Cypress-Cloud-to-work-properly).
 
-With Test Replay enabled, the Cypress Runner UI is hidden by default when recording a run to the Cloud. If the Runner UI is needed during the run, you can enable it by passing [`--runner-ui`](/app/guides/command-line#cypress-run-runner-ui) to the [`cypress run`](/app/guides/command-line#cypress-run) command.
+With Test Replay enabled, the Cypress Runner UI is hidden by default when recording a run to the Cloud. If the Runner UI is needed during the run, you can enable it by passing [`--runner-ui`](/app/references/command-line#cypress-run-runner-ui) to the [`cypress run`](/app/references/command-line#cypress-run) command.
 
 You can [opt-out](/cloud/features/test-replay#Opt-out-of-Test-Replay) of this feature in Cloud project-level settings.
 
@@ -167,7 +167,7 @@ it('validates the change', () => {
 
 After migrating, when `testIsolation=true` by default, this flow would need to
 be contained within a single test. While the above practice has always been
-[discouraged](/app/references/best-practices#Having-Tests-Rely-On-The-State-Of-Previous-Tests)
+[discouraged](/app/core-concepts/best-practices#Having-Tests-Rely-On-The-State-Of-Previous-Tests)
 we know some users have historically written tests this way, often to get around
 the `same-origin` restrictions. But with [`cy.origin()`](/api/commands/origin)
 you no longer need these kind of brittle hacks, as your multi-origin logic can
@@ -3497,7 +3497,7 @@ Before 4.0, `cypress run --browser canary` would run tests in Chrome Canary.
 Now, you must pass `--browser chrome:canary` to select Chrome Canary.
 
 See the
-[docs for `cypress run --browser`](/app/guides/command-line#cypress-run-browser-lt-browser-name-or-path-gt)
+[docs for `cypress run --browser`](/app/references/command-line#cypress-run-browser-lt-browser-name-or-path-gt)
 for more information.
 
 <Badge type="danger">Before</Badge> Passing `canary` will no longer find a browser

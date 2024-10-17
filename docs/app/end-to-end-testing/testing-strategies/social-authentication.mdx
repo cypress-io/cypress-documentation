@@ -10,7 +10,7 @@ slug: /app/end-to-end-testing/social-authentication
 - Log into your application via Google, Facebook, or Microsoft through the UI
   with [`cy.origin()`](/api/commands/origin) using Auth0 social connections. The
   same patterns will work with Github, LinkedIn, and others.
-- Understanding [challenges](/app/references/best-practices#When-logging-in)
+- Understanding [challenges](/app/core-concepts/best-practices#When-logging-in)
   with social connections
 
 :::
@@ -21,9 +21,9 @@ slug: /app/end-to-end-testing/social-authentication
 
 Cypress does **not** recommend testing social connection authentication as a
 primary means of application authentication testing. This is due to the
-[challenges](/app/references/best-practices#Potential-Challenges-Authenticating-with-Social-Platforms)
+[challenges](/app/core-concepts/best-practices#Potential-Challenges-Authenticating-with-Social-Platforms)
 mentioned in our
-[Best Practices Guide](/app/references/best-practices).
+[Best Practices Guide](/app/core-concepts/best-practices).
 
 Relying on social authentication in CI will likely result in bot detection and
 in some cases, account suspension due to violating the provider's Terms of
