@@ -729,14 +729,14 @@ to either:
 
 This is documented in detail on the
 [Catalog Of Events](/api/cypress-api/catalog-of-events) page and the recipe
-[Handling errors](/examples/recipes#Fundamentals).
+[Handling errors](/app/references/recipes#Fundamentals).
 
 #### <Icon name="angle-right" /> Will Cypress fail the test when an application has unhandled rejected promise?
 
 By default no, Cypress does not listen to the unhandled promise rejection event
 in your application, and thus does not fail the test. You can set up your own
 listener though and fail the test, see our recipe
-[Handling errors](/examples/recipes#Fundamentals):
+[Handling errors](/app/references/recipes#Fundamentals):
 
 ```js
 // register listener during cy.visit
@@ -810,14 +810,14 @@ Yes.
 [You can set this with `blockHosts` in the Cypress configuration](/app/references/configuration#Browser).
 
 Also, check out our
-[Stubbing Google Analytics Recipe](/examples/recipes#Stubbing-and-spying).
+[Stubbing Google Analytics Recipe](/app/references/recipes#Stubbing-and-spying).
 
 #### <Icon name="angle-right" /> How can I verify that calls to analytics like Google Analytics are being made correct?
 
 You can stub their functions and then ensure they're being called.
 
 Check out our
-[Stubbing Google Analytics Recipe](/examples/recipes#Stubbing-and-spying).
+[Stubbing Google Analytics Recipe](/app/references/recipes#Stubbing-and-spying).
 
 #### <Icon name="angle-right" /> I'm trying to test a chat application. Can I run more than one browser at a time with Cypress?
 
@@ -996,7 +996,7 @@ Cypress does not have native multi-tab support, but new tabs can be tested with 
 
 If you would like to test anchor links natively, there are lots of workarounds that enable you to test them in your application.
 
-[Read through the recipe on tab handling and links to see how to test anchor links.](/examples/recipes#Testing-the-DOM)
+[Read through the recipe on tab handling and links to see how to test anchor links.](/app/references/recipes#Testing-the-DOM)
 
 #### <Icon name="angle-right" /> Can I dynamically test multiple viewports?
 
@@ -1040,7 +1040,7 @@ browser.
   [setupNodeEvents](/app/plugins/plugins-guide#Using-a-plugin) function
 - [`cy.exec()`](/api/commands/exec) to execute a shell command
 
-[Check out the "Node Modules" example recipe.](/examples/recipes#Fundamentals)
+[Check out the "Node Modules" example recipe.](/app/references/recipes#Fundamentals)
 
 #### <Icon name="angle-right" /> Is there a way to give a proper SSL certificate to your proxy so the page doesn't show up as "not secure"?
 
@@ -1195,10 +1195,10 @@ store, and even drive the application via Redux actions.
 
 - see
   [Testing Redux Store](https://www.cypress.io/blog/2018/11/14/testing-redux-store/)
-  blog post and [Redux Testing](/examples/recipes#Blogs) recipe.
+  blog post and [Redux Testing](/app/references/recipes#Blogs) recipe.
 - see
   [Testing Vue web applications with Vuex data store & REST back end](https://www.cypress.io/blog/2017/11/28/testing-vue-web-application-with-vuex-data-store-and-rest-backend/)
-  blog post and [Vue + Vuex + REST Testing](/examples/recipes#Blogs) recipe.
+  blog post and [Vue + Vuex + REST Testing](/app/references/recipes#Blogs) recipe.
 
 For component testing, you have a bit more control on how you set up your
 providers and plugins for state stores. See the
@@ -1230,7 +1230,7 @@ cy.get('@consoleLog').should('be.calledWith', 'Hello World!')
 :::
 
 Also, check out our
-[Stubbing `console` Recipe](/examples/recipes#Stubbing-and-spying).
+[Stubbing `console` Recipe](/app/references/recipes#Stubbing-and-spying).
 
 #### <Icon name="angle-right" /> How do I use special characters with `cy.get()`?
 

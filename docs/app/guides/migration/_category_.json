@@ -1,6 +1,5 @@
 {
-  "label": "Vue",
-  "position": 70,
+  "label": "Migrating to Cypress",
   "collapsible": true,
   "collapsed": true
 }

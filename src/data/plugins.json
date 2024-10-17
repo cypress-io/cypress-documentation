@@ -670,7 +670,7 @@
     },
     {
       "name": "Authentication",
-      "description": "Take a look at our auth guides for <a href=\"/app/end-to-end-testing/amazon-cognito-authentication\">Amazon Cognito</a>, <a href=\"/app/end-to-end-testing/amazon-cognito-authentication\">Amazon Cognito</a>, <a href=\"/app/end-to-end-testing/auth0-authentication\">Auth0</a>, <a href=\"/app/end-to-end-testing/amazon-cognito-authentication\">Amazon Cognito</a>, <a href=\"/app/end-to-end-testing/google-authentication\">Google</a>, <a href=\"/app/end-to-end-testing/okta-authentication\">Okta Cognito</a>, and <a href=\"/app/end-to-end-testing/social-authentication\">Social Logins</a>. Also checkout our <a target=\"_blank\" href=\"https://github.com/cypress-io/cypress-example-recipes#logging-in-recipes\">Logging in</a> recipes.",
+      "description": "Take a look at our auth guides for <a href=\"/app/guides/authentication-testing/amazon-cognito-authentication\">Amazon Cognito</a>, <a href=\"/app/guides/authentication-testing/amazon-cognito-authentication\">Amazon Cognito</a>, <a href=\"/app/guides/authentication-testing/auth0-authentication\">Auth0</a>, <a href=\"/app/guides/authentication-testing/amazon-cognito-authentication\">Amazon Cognito</a>, <a href=\"/app/guides/authentication-testing/google-authentication\">Google</a>, <a href=\"/app/guides/authentication-testing/okta-authentication\">Okta Cognito</a>, and <a href=\"/app/guides/authentication-testing/social-authentication\">Social Logins</a>. Also checkout our <a target=\"_blank\" href=\"https://github.com/cypress-io/cypress-example-recipes#logging-in-recipes\">Logging in</a> recipes.",
       "plugins": [
         {
           "name": "cypress-ntlm-auth",

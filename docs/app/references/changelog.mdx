@@ -2346,7 +2346,7 @@ _Released 8/30/2022_
 **Features:**
 
 - Re-introduces the experimental
-  [Cypress Studio feature](/app/references/cypress-studio). Cypress Studio
+  [Cypress Studio feature](/app/guides/cypress-studio). Cypress Studio
   provides a visual way to generate tests within Cypress by recording
   interactions against the application under test. Cypress Studio is available
   only in end-to-end tests, and must be enabled via the `e2e.experimentalStudio`
@@ -4263,7 +4263,7 @@ _Released 07/29/2021_
 **Features:**
 
 - When using `experimentalStudio`, you can now generate assertions in
-  [Cypress Studio](/app/references/cypress-studio) by right clicking on an
+  [Cypress Studio](/app/guides/cypress-studio) by right clicking on an
   element. Addressed in
   [#16295](https://github.com/cypress-io/cypress/pull/16295).
 - When searching specs in the Test Runner during end-to-end testing, characters
@@ -4355,7 +4355,7 @@ to Cypress 8.0.**
   - `delay` now works correctly with a `statusCode` of 204. Fixes
     [#15188](https://github.com/cypress-io/cypress/issues/15188).
 - When using the experimental
-  [Cypress Studio](/app/references/cypress-studio), there should be a reduced
+  [Cypress Studio](/app/guides/cypress-studio), there should be a reduced
   occurrence of "Studio failed to save commands" error messages. Fixes
   [#14767](https://github.com/cypress-io/cypress/issues/14767).
 - [`cy.invoke()`](/api/commands/invoke) now retains the proper `this` context on
@@ -4372,7 +4372,7 @@ _Released 07/07/2021_
 **Features:**
 
 - When using `experimentalStudio`,
-  [Cypress Studio](/app/references/cypress-studio) can now copy all commands
+  [Cypress Studio](/app/guides/cypress-studio) can now copy all commands
   generated to your clipboard. Addressed in
   [#16912](https://github.com/cypress-io/cypress/issues/16912).
 
@@ -5008,7 +5008,7 @@ _Released 3/17/2021_
   Dashboard with empty specfiles. Fixes
   [#15512](https://github.com/cypress-io/cypress/issues/15512).
 - When using `experimentalStudio`,
-  [Cypress Studio](/app/references/cypress-studio) the icon to add commands
+  [Cypress Studio](/app/guides/cypress-studio) the icon to add commands
   will now fully display on long test titles. Fixes
   [#15182](https://github.com/cypress-io/cypress/issues/15182).
 
@@ -5073,7 +5073,7 @@ _Released 3/15/2021_
   they're used against elements that contain text inputs. Fixes
   [#8447](https://github.com/cypress-io/cypress/issues/8447).
 - When using `experimentalStudio`,
-  [Cypress Studio](/app/references/cypress-studio) now records typing by
+  [Cypress Studio](/app/guides/cypress-studio) now records typing by
   using the value of the input rather than the keys that were pressed. Studio
   also no longer records pressing special keys (such as arrows or ctrl) except
   for Enter. Fixes [#15023](https://github.com/cypress-io/cypress/issues/15023).
@@ -5197,7 +5197,7 @@ _Released 2/1/2021_
   show in the code frame and work when interacting via your IDE. Addresses
   [#14659](https://github.com/cypress-io/cypress/issues/14659).
 - We addressed several issues with the experimental
-  [Cypress Studio](/app/references/cypress-studio). To enable the Cypress
+  [Cypress Studio](/app/guides/cypress-studio). To enable the Cypress
   Studio you can set `experimentalStudio` to `true` in your Cypress
   configuration. Issues addressed:
   - Cypress Studio now prompts to start adding commands after visiting an
@@ -5252,7 +5252,7 @@ _Released 1/19/2021_
 
 **Features:**
 
-- [**Cypress Studio**](/app/references/cypress-studio) provides a visual way
+- [**Cypress Studio**](/app/guides/cypress-studio) provides a visual way
   to generate tests within the Test Runner, by _recording interactions_ against
   the application under test. Cypress Studio is an experimental feature that can
   be enabled by adding the [experimentalStudio](/app/references/experiments)
@@ -8268,7 +8268,7 @@ _Released 10/23/2019_
 **Documentation Changes:**
 
 - Added a [.rightclick()](/api/commands/rightclick) doc.
-- Added a [Webinars](/examples/media/webinars-media) doc containing videos of
+- Added a Webinars doc containing videos of
   all of the official Cypress webcasts.
 - Updated the [.dblclick()](/api/commands/dblclick) doc to include new
   `position`, `x`, and `y` arguments plus `force` and `multiple` options.
@@ -8540,7 +8540,7 @@ _Released 7/9/2019_
 - New error message added about policy settings to our
   [Error Messages](/app/references/error-messages) doc. Addressed in
   [#1567](https://github.com/cypress-io/cypress-documentation/pull/1754).
-- [Real World](/examples/applications#Realworld) example tests were added to
+- [Real World](https://github.com/cypress-io/cypress-realworld-app) example tests were added to
   Example Applications doc. Addressed in
   [#1567](https://github.com/cypress-io/cypress-documentation/pull/1836).
 - More content was added to our [Code Coverage](/app/tooling/code-coverage)
@@ -8721,7 +8721,7 @@ _Released 6/27/2019_
   [#1744](https://github.com/cypress-io/cypress-documentation/pull/1744).
 - New [Visual Testing](/app/tooling/visual-testing) doc. Addressed in
   [#1744](https://github.com/cypress-io/cypress-documentation/pull/1536).
-- New [Courses](/examples/media/courses-media) doc to list online courses that
+- New Courses doc to list online courses that
   teach end-to-end testing with Cypress. Addressed in
   [#1766](https://github.com/cypress-io/cypress-documentation/pull/1766).
 - Added a section about
@@ -10788,7 +10788,7 @@ _Released 12/14/2017_
   option in `cypress.json` that allows you to block requests made to those
   hosts. Blocked requests will respond with a `503` status code. This is useful
   for blocking 3rd party domains like Google Analytics. We have added a
-  [new 'Stubbing Google Analytics' recipe](/examples/recipes#Stubbing-and-spying)
+  [new 'Stubbing Google Analytics' recipe](/app/references/recipes#Stubbing-and-spying)
   demonstrating this. Fixes
   [#442](https://github.com/cypress-io/cypress/issues/442).
 - Added chai assertions in TypeScript to generate autocompletion. Fixes
@@ -10817,7 +10817,7 @@ _Released 12/14/2017_
 **Documentation Changes:**
 
 - [Added `Configuration API`](/api/node-events/configuration-api)
-- [Added `Recipes`](/examples/recipes)
+- [Added `Recipes`](/app/references/recipes)
 - [Updated `Configuration`](/app/references/configuration)
 - [Updated `Environment Variables`](/app/guides/environment-variables)
 - [Updated `Using Cypress FAQ`](/app/faq)
@@ -10925,12 +10925,12 @@ _Released 11/26/2017_
 **Documentation Changes:**
 
 - [Added ESLint, Docker, and TypeScript to Plugins](/app/plugins/plugins-list)
-- [Added recipe for TypeScript with Browserify](/examples/recipes)
-- [Added recipe for TypeScript with webpack](/examples/recipes)
-- [Added recipe for Direct Controlling AngularJS](/examples/recipes)
-- [Added recipe for E2E API Testing](/examples/recipes)
-- [Added more video tutorials](/examples/tutorials)
-- [Improved displaying list of Tutorials, Recipes, Applications, and Docker examples](/examples/recipes)
+- [Added recipe for TypeScript with Browserify](/app/references/recipes)
+- [Added recipe for TypeScript with webpack](/app/references/recipes)
+- [Added recipe for Direct Controlling AngularJS](/app/references/recipes)
+- [Added recipe for E2E API Testing](/app/references/recipes)
+- Added more video tutorials
+- [Improved displaying list of Tutorials, Recipes, Applications, and Docker examples](/app/references/recipes)
 
 ## 1.1.1
 
@@ -11014,7 +11014,7 @@ _Released 11/19/2017_
 
 **Documentation Changes:**
 
-- [Created "Testing React TodoMVC" tutorials](/examples/tutorials)
+- Created "Testing React TodoMVC" tutorials
 - [Created "Variables and Aliases" core concept](/app/core-concepts/variables-and-aliases)
 - [Created "Conditional Testing" core concept](/app/guides/conditional-testing)
 - [Created "Plugins" guide](/app/plugins/plugins-guide)
@@ -11387,11 +11387,11 @@ _Released 09/10/2017_
   [#519](https://github.com/cypress-io/cypress/issues/519).
 - Input ranges are now more easily testable using the new
   [.trigger()](/api/commands/trigger) command. See our
-  [new recipe](/examples/recipes#Testing-the-DOM) for details on how. Fixes
+  [new recipe](/app/references/recipes#Testing-the-DOM) for details on how. Fixes
   [#287](https://github.com/cypress-io/cypress/issues/287).
 - Testing drag and drop is now possible using the new
   [.trigger()](/api/commands/trigger) command. See our
-  [new recipe](/examples/recipes#Testing-the-DOM) for details on how. Fixes
+  [new recipe](/app/references/recipes#Testing-the-DOM) for details on how. Fixes
   [#386](https://github.com/cypress-io/cypress/issues/386).
 - Updated [.click()](/api/commands/click) command to accept more position
   arguments. Fixes [#499](https://github.com/cypress-io/cypress/issues/499).
@@ -11408,7 +11408,7 @@ _Released 09/10/2017_
   detached process by default. Instead `cypress open` now accepts a new flag
   `--detached`, which replicates this behavior. Fixes
   [#531](https://github.com/cypress-io/cypress/issues/531).
-- We have all new [docker examples](/examples/docker) you can check out.
+- We have all new [docker examples](/app/continuous-integration/docker) you can check out.
 - The [`cypress` npm package](https://www.npmjs.com/package/cypress) now checks
   the currently installed version on `install` and
   [run](/app/references/command-line#cypress-run) and does not re-install Cypress

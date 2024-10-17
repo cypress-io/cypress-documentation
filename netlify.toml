@@ -37,25 +37,25 @@
 
 [[redirects]]
   from = "/examples"
-  to = "/examples/recipes/"
+  to = "/app/references/recipes/"
   status = 301
   force = true
 
 [[redirects]]
   from = "/examples/examples"
-  to = "/examples/recipes/"
+  to = "/app/references/recipes/"
   status = 301
   force = true
 
 [[redirects]]
-  from = "/examples/examples/recipes"
-  to = "/examples/recipes/"
+  from = "/examples/app/references/recipes"
+  to = "/app/references/recipes/"
   status = 301
   force = true
 
 [[redirects]]
-  from = "/examples/examples/docker"
-  to = "/examples/docker"
+  from = "/examples/app/continuous-integration/docker"
+  to = "/app/continuous-integration/docker"
   status = 301
   force = true
 
@@ -109,7 +109,7 @@
 
 [[redirects]]
   from = "/guides/core-concepts/cypress-studio"
-  to = "/guides/references/cypress-studio"
+  to = "/guides/guides/cypress-studio"
   status = 301
   force = true
 
@@ -133,25 +133,25 @@
 
 [[redirects]]
   from = "/guides/testing-strategies/auth0-authentication"
-  to = "/guides/end-to-end-testing/auth0-authentication"
+  to = "/app/guides/authentication-testing/auth0-authentication"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/testing-strategies/amazon-cognito-authentication"
-  to = "/guides/end-to-end-testing/amazon-cognito-authentication"
+  to = "/app/guides/authentication-testing/amazon-cognito-authentication"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/testing-strategies/okta-authentication"
-  to = "/guides/end-to-end-testing/okta-authentication"
+  to = "/app/guides/authentication-testing/okta-authentication"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/testing-strategies/google-authentication"
-  to = "/guides/end-to-end-testing/google-authentication"
+  to = "/app/guides/authentication-testing/google-authentication"
   status = 301
   force = true
 
@@ -163,13 +163,13 @@
 
 [[redirects]]
   from = "/guides/migrating-to-cypress/protractor"
-  to = "/guides/end-to-end-testing/protractor-to-cypress"
+  to = "/app/guides/migration/protractor-to-cypress"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/migrating-to-cypress/selenium"
-  to = "/guides/end-to-end-testing/selenium-to-cypress"
+  to = "/app/guides/migration/selenium-to-cypress"
   status = 301
   force = true
 
@@ -586,24 +586,6 @@
 [[redirects]]
   from = "/dashboard/overview/runs-dashboard"
   to = "/guides/cloud/features/recorded-runs"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/docs/all-example-apps"
-  to = "/examples/applications"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/examples/examples/applications"
-  to = "/examples/applications"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/examples/examples/tutorials"
-  to = "/examples/tutorials"
   status = 301
   force = true
 
