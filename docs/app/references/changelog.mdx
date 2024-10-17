@@ -631,7 +631,7 @@ _Released 08/31/2023_
 
 **Bugfixes:**
 
-- Fixed a regression introduced in Cypress [13.0.0](#13-0-0) where the [Module API](/app/guides/module-api), [`after:run`](/api/node-events/after-run-api), and [`after:spec`](/api/node-events/after-spec-api) results did not include the `stats.skipped` field for each run result. Fixes [#27694](https://github.com/cypress-io/cypress/issues/27694). Addressed in [#27695](https://github.com/cypress-io/cypress/pull/27695).
+- Fixed a regression introduced in Cypress [13.0.0](#13-0-0) where the [Module API](/app/references/module-api), [`after:run`](/api/node-events/after-run-api), and [`after:spec`](/api/node-events/after-spec-api) results did not include the `stats.skipped` field for each run result. Fixes [#27694](https://github.com/cypress-io/cypress/issues/27694). Addressed in [#27695](https://github.com/cypress-io/cypress/pull/27695).
 - Individual CDP errors that occur while capturing data for Test Replay will no longer prevent the entire run from being available. Addressed in [#27709](https://github.com/cypress-io/cypress/pull/27709).
 - Fixed an issue where the release date on the `v13` landing page was a day behind. Fixed in [#27711](https://github.com/cypress-io/cypress/pull/27711).
 - Fixed an issue where fatal protocol errors would leak between specs causing all subsequent specs to fail to upload protocol information. Fixed in [#27720](https://github.com/cypress-io/cypress/pull/27720)
@@ -667,7 +667,7 @@ Refer to the [v13 Migration Guide](/app/references/migration-guide#Migrating-to-
 - Requests for assets at relative paths for component testing are now correctly forwarded to the dev server. Fixes [#26725](https://github.com/cypress-io/cypress/issues/26725).
 - The [`cy.readFile()`](/api/commands/readfile) command is now retry-able as a [query command](/app/core-concepts/retry-ability). This should not affect any tests using it; the functionality is unchanged. However, it can no longer be overwritten using [`Cypress.Commands.overwrite()`](/api/cypress-api/custom-commands#Overwrite-Existing-Commands). Addressed in [#25595](https://github.com/cypress-io/cypress/pull/25595).
 - The deprecated configuration option `nodeVersion` has been removed. Addresses [#27016](https://github.com/cypress-io/cypress/issues/27016).
-- The properties and values returned by the [Module API](/app/guides/module-api) and included in the arguments of handlers for the [`after:run`](/api/node-events/after-run-api) and [`after:spec`](/api/node-events/after-spec-api) have been changed to be more consistent. Addresses [#23805](https://github.com/cypress-io/cypress/issues/23805).
+- The properties and values returned by the [Module API](/app/references/module-api) and included in the arguments of handlers for the [`after:run`](/api/node-events/after-run-api) and [`after:spec`](/api/node-events/after-spec-api) have been changed to be more consistent. Addresses [#23805](https://github.com/cypress-io/cypress/issues/23805).
 - For Cypress Cloud runs with Test Replay enabled, the Cypress Runner UI is now hidden during the run. This change was made to improve performance in situations where the Runner no longer needs to be rendered. If video is recorded during the run, the Runner will not be visible. In addition, if a screenshot with `capture: runner` is taken, the screenshot will be taken as if the `capture: viewport` option was passed. You can turn off this behavior by passing [`--runner-ui`](/app/references/command-line#cypress-run-runner-ui). Addressed in [#27482](https://github.com/cypress-io/cypress/pull/27482).
 - The browser and browser page unexpectedly closing in the middle of a test run are now gracefully handled. Addressed in [#27592](https://github.com/cypress-io/cypress/issues/27592).
 - Automation performance is now improved by switching away from websockets to direct CDP calls for Chrome and Electron browsers. Addressed in [#27592](https://github.com/cypress-io/cypress/issues/27592).
@@ -4555,7 +4555,7 @@ _Released 05/10/2021_
 **Features:**
 
 - Component tests can now be launched via the
-  [Module API](/app/guides/module-api) by passing `testingType: 'component'`
+  [Module API](/app/references/module-api) by passing `testingType: 'component'`
   via the new `testingType` property. The `testingType` will default to `e2e`.
   Addresses [#16302](https://github.com/cypress-io/cypress/issues/16302).
 - `cy.intercept()` now accepts a `times` option in the `RouteMatcher`. `times`
@@ -5775,7 +5775,7 @@ _Released 10/26/2020_
   using [cy.visit()](/api/commands/visit) to URLs that redirect and set
   Transfer-Encoding: chunked will no longer fail in Cypress with a "Parse
   Error". Fixes [#8497](https://github.com/cypress-io/cypress/issues/8497).
-- `cypress.run()` through the [Module API](/app/guides/module-api) now has a
+- `cypress.run()` through the [Module API](/app/references/module-api) now has a
   `status` property in the results matching the correct CLI types (`"failed"` or
   `"finished"`). Addresses
   [#8798](https://github.com/cypress-io/cypress/issues/8798).
@@ -6203,7 +6203,7 @@ to Cypress 5.0.**
 - The error `Maximum call stack size exceeded` will no longer throw when calling
   `scrollIntoView` on an element in the shadow dom. Fixes
   [#7986](https://github.com/cypress-io/cypress/issues/7986).
-- Cypress [environment variables](/app/guides/environment-variables) that
+- Cypress [environment variables](/app/references/environment-variables) that
   accept arrays as their value will now properly evaluate as arrays. Fixes
   [#6810](https://github.com/cypress-io/cypress/issues/6810).
 - Elements having `display: inline` will no longer be considered hidden if it
@@ -6398,7 +6398,7 @@ _Released 7/21/2020_
   [#1924](https://github.com/cypress-io/cypress/issues/1924).
 - [cy.clock()](/api/commands/clock) now accepts Dates as well as a Number for
   now. Fixes [#7786](https://github.com/cypress-io/cypress/issues/7786).
-- The [Module API](/app/guides/module-api) has a new
+- The [Module API](/app/references/module-api) has a new
   `cypress.cli.parseRunArguments` function to assist in parsing user-supplied
   command line arguments using the same logic as `cypress run` uses. Addresses
   [#7760](https://github.com/cypress-io/cypress/issues/7760).
@@ -6965,7 +6965,7 @@ _Released 4/20/2020_
 - We fixed some extra spacing displaying below the project nav in the Test
   Runner. Addresses [#7023](https://github.com/cypress-io/cypress/issues/7023)
 - The typings for run results when using the
-  [Module API](/app/guides/module-api) now indicate they can be `null` or
+  [Module API](/app/references/module-api) now indicate they can be `null` or
   `undefined`. Addresses
   [#6126](https://github.com/cypress-io/cypress/issues/6126).
 - We're continuing to make progress in converting our codebase from CoffeeScript
@@ -8252,7 +8252,7 @@ _Released 10/23/2019_
   an `options` object as an argument. Addresses
   [#5341](https://github.com/cypress-io/cypress/issues/5341).
 - We added `failures` and `message` types when a run fails using the
-  [Module API](/app/guides/module-api). Addresses
+  [Module API](/app/references/module-api). Addresses
   [#5335](https://github.com/cypress-io/cypress/issues/5335).
 - We're continuing to make progress in converting our codebase from CoffeeScript
   to JavaScript. Addresses
@@ -8274,7 +8274,7 @@ _Released 10/23/2019_
   `position`, `x`, and `y` arguments plus `force` and `multiple` options.
 - Added the `--config-file` argument to
   [Command Line](/app/references/command-line) and
-  [Module API](/app/guides/module-api) doc.
+  [Module API](/app/references/module-api) doc.
 - Added the `nodeVersion` argument to
   [Configuration](/app/references/configuration) doc and mentioned its uses
   in the [How to use Plugins](/app/plugins/plugins-guide) and
@@ -9121,8 +9121,8 @@ _Released 3/15/2019_
 - The
   [`--browser` argument](/app/references/command-line#cypress-run-browser-lt-browser-name-or-path-gt)
   of the [Command Line](/app/references/command-line) and the
-  [`browser` argument](/app/guides/module-api#cypressrun) of the
-  [Module API](/app/guides/module-api) have been updated to allow passing a
+  [`browser` argument](/app/references/module-api#cypressrun) of the
+  [Module API](/app/references/module-api) have been updated to allow passing a
   `<path>`. Addresses
   [#1026](https://github.com/cypress-io/cypress/issues/1026).
 - [cy.type()](/api/commands/type) now accepts `{home}` and `{end}` special
@@ -9588,7 +9588,7 @@ _Released 11/2/2018_
   [CYPRESS_DOWNLOAD_MIRROR](/app/references/advanced-installation#Mirroring)
   environment variable for installing Cypress at a mirror url. Fixes
   [#2609](https://github.com/cypress-io/cypress/pull/2609).
-- The [Module API](/app/guides/module-api) now returns the `runUrl` from
+- The [Module API](/app/references/module-api) now returns the `runUrl` from
   `cypress.run()`. Fixes
   [#2596](https://github.com/cypress-io/cypress/issues/2596).
 - Specs now properly display as focused when navigating through specs via the
@@ -9689,7 +9689,7 @@ _Released 11/2/2018_
 **Documentation Changes:**
 
 - Added `flag` option to [`cy.writeFile()` doc](/api/commands/writefile).
-- Added `runUrl` to returned run in [Module API doc](/app/guides/module-api).
+- Added `runUrl` to returned run in [Module API doc](/app/references/module-api).
 - Documented new `CYPRESS_DOWNLOAD_MIRROR` flag and rewrote advanced install
   instructions to be clearer in
   [Installing Cypress doc](/app/references/advanced-installation).
@@ -9864,10 +9864,10 @@ _Released 7/30/2018_
   [#1905](https://github.com/cypress-io/cypress/issues/1905) and
   [#1912](https://github.com/cypress-io/cypress/issues/1912).
 - We are now properly serializing nested object arguments when using the
-  [Module API](/app/guides/module-api) via `cypress.open()` or
+  [Module API](/app/references/module-api) via `cypress.open()` or
   `cypress.run()`. Passing nested objects in `reporterOptions` now works
   correctly. This is especially useful when using `mocha-multi-reporters`. In
-  addition to fixing the [Module API](/app/guides/module-api), we are now
+  addition to fixing the [Module API](/app/references/module-api), we are now
   also properly handling nested arguments from the
   [Command Line](/app/references/command-line). In order to pass nested objects
   within CLI params you must pass stringified JSON. This is useful for
@@ -9989,7 +9989,7 @@ _Released 7/30/2018_
 
 **Documentation Changes:**
 
-- [New "Module API" doc](/app/guides/module-api)
+- [New "Module API" doc](/app/references/module-api)
 
 ## 3.0.2
 
@@ -10362,7 +10362,7 @@ _Released 5/29/2018_
   you've provided does not exist. Fixes
   [#1192](https://github.com/cypress-io/cypress/issues/1192).
 - You can now pass a normal object to `cypress.open()` or `cypress.run()`
-  through the [Module API](/app/guides/module-api), just as you would from
+  through the [Module API](/app/references/module-api), just as you would from
   the command line. [#1442](https://github.com/cypress-io/cypress/issues/1442).
 - Added type definitions for `Cypress.off` and `Cypress.log`. Fixes
   [#1110](https://github.com/cypress-io/cypress/issues/1110) and
@@ -10819,7 +10819,7 @@ _Released 12/14/2017_
 - [Added `Configuration API`](/api/node-events/configuration-api)
 - [Added `Recipes`](/app/references/recipes)
 - [Updated `Configuration`](/app/references/configuration)
-- [Updated `Environment Variables`](/app/guides/environment-variables)
+- [Updated `Environment Variables`](/app/references/environment-variables)
 - [Updated `Using Cypress FAQ`](/app/faq)
 - [Updated `Plugins Guide`](/app/plugins/plugins-guide)
 - [Updated `Writing a Plugin API`](/api/node-events/overview)
@@ -11008,7 +11008,7 @@ _Released 11/19/2017_
   open in global mode. This is helpful when you have multiple nested Cypress
   projects but only want to install Cypress once in the root project. Fixes
   [#889](https://github.com/cypress-io/cypress/issues/889).
-- The [module API](/app/guides/module-api) accepts `reporterOptions` as an
+- The [module API](/app/references/module-api) accepts `reporterOptions` as an
   object literal like it does for the `env` and `config` properties. Fixes
   [#899](https://github.com/cypress-io/cypress/issues/899).
 
@@ -11286,7 +11286,7 @@ _Released 09/10/2017_
 - No need to use `cypress-cli` anymore to manage Cypress versions. **You will
   need to uninstall the `cypress-cli` by running
   `npm uninstall -g cypress-cli`**.
-- The [`cypress` module can be `required`](/app/guides/module-api) in your
+- The [`cypress` module can be `required`](/app/references/module-api) in your
   own node projects to programmatically control Cypress the same way you would
   from the command line.
 - We've updated the installation experience to account for running locally and
@@ -13187,7 +13187,7 @@ _Released 04/10/2016_
   `cypress open --config waitForAnimations=false --env foo=bar,baz=quux`. This
   enables you to set and override local `cypress.json` configuration and
   additionally set environment variables.
-- [Environment Variables](/app/guides/environment-variables) that match any
+- [Environment Variables](/app/references/environment-variables) that match any
   configuration keys (such as `pageLoadTimeout` or `watchForFileChanges`) now
   override their values. So, if you
   `export CYPRESS_WATCH_FOR_FILE_CHANGES=false` it will turn off this
@@ -14048,7 +14048,7 @@ _Released 11/01/2015_
   been written yet).
 - `Environment Variable` support has been added and can be accessed in your
   tests with [`Cypress.env`](/api/cypress-api/env). The docs have been written
-  [Environment Variable](/app/guides/environment-variables) and
+  [Environment Variable](/app/references/environment-variables) and
   [here](/api/cypress-api/env).
 
 **Misc:**

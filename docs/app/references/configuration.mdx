@@ -63,7 +63,7 @@ default values.
 | Option                 | Default                               | Description                                                                                                                                                                                                                                                                                               |
 | ---------------------- | ------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `clientCertificates`   | `[]`                                  | An optional array of [client certificates](/app/references/client-certificates).                                                                                                                                                                                                                          |
-| `env`                  | `{}`                                  | Any values to be set as [environment variables](/app/guides/environment-variables).                                                                                                                                                                                                                       |
+| `env`                  | `{}`                                  | Any values to be set as [environment variables](/app/references/environment-variables).                                                                                                                                                                                                                       |
 | `includeShadowDom`     | `false`                               | Whether to traverse shadow DOM boundaries and include elements within the shadow DOM in the results of query commands (e.g. [`cy.get()`](/api/commands/get)).                                                                                                                                             |
 | `numTestsKeptInMemory` | Default based on `run` or `open` mode | The number of tests for which snapshots and command data are kept in memory. `numTestsKeptInMemory` is set to `50` by default during `cypress open` and set to `0` by default during `cypress run`. Reduce this number if you are experiencing high memory consumption in your browser during a test run. |
 | `port`                 | `null`                                | Port used to host Cypress. Normally this is a randomly generated port.                                                                                                                                                                                                                                    |
@@ -290,7 +290,7 @@ For example:
 ### Environment Variables
 
 Configuration options can be overridden with
-[environment variables](/app/guides/environment-variables). This is
+[environment variables](/app/references/environment-variables). This is
 especially useful in
 [Continuous Integration](/app/continuous-integration/introduction) or when
 working locally. This gives you the ability to change configuration options
@@ -305,7 +305,7 @@ export CYPRESS_VIEWPORT_HEIGHT=600
 ```
 
 See the
-[Environment Variables](/app/guides/environment-variables#Option-3-CYPRESS_)
+[Environment Variables](/app/references/environment-variables#Option-3-CYPRESS_)
 guide for more examples.
 
 ## Test Configuration
@@ -434,9 +434,9 @@ highlighted to show where the value has been set via the following ways:
 - Default value
 - [Cypress configuration file](/app/references/configuration)
 - The
-  [Cypress environment file](/app/guides/environment-variables#Option-2-cypressenvjson)
+  [Cypress environment file](/app/references/environment-variables#Option-2-cypressenvjson)
 - System
-  [environment variables](/app/guides/environment-variables#Option-3-CYPRESS_)
+  [environment variables](/app/references/environment-variables#Option-3-CYPRESS_)
 - [Command Line arguments](/app/references/command-line)
 - [setupNodeEvents](#setupNodeEvents)
 
@@ -726,7 +726,7 @@ DEBUG=cypress:cli,cypress:data-context:sources:FileDataSource,cypress:data-conte
 
 - [Cypress.config()](/api/cypress-api/config) and
   [Cypress.env()](/api/cypress-api/env)
-- [Environment variables](/app/guides/environment-variables)
+- [Environment variables](/app/references/environment-variables)
 - [Environment Variables recipe](/app/references/recipes#Fundamentals)
 - Blog post
   [Keep passwords secret in E2E tests](https://glebbahmutov.com/blog/keep-passwords-secret-in-e2e-tests/)
