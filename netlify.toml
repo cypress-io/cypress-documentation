@@ -157,7 +157,7 @@
 
 [[redirects]]
   from = "/guides/testing-strategies/working-with-graphql"
-  to = "/guides/end-to-end-testing/working-with-graphql"
+  to = "/app/guides/network-requests"
   status = 301
   force = true
 

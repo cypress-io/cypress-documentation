@@ -6,37 +6,6 @@ description: 'Implement Amazon Cognito authentication in Cypress. Securely manag
 
 # Amazon Cognito Authentication
 
-:::info
-
-## <Icon name="graduation-cap" /> What you'll learn
-
-- Log in to [Amazon Cognito](https://aws.amazon.com/cognito) through the UI with
-  [`cy.origin()`](/api/commands/origin)
-- Programmatically authenticate with
-  [Amazon Cognito](https://aws.amazon.com/cognito) via a custom Cypress command
-- Adapting your [Amazon Cognito](https://aws.amazon.com/cognito) application for
-  programmatic authentication during testing
-
-:::
-
-:::tip
-
-**Authenticate by visiting a different domain with
-[`cy.origin()`](/api/commands/origin)**
-
-Typically, logging in a user within your app by authenticating via a third-party
-provider requires visiting a login page hosted on a different domain. Before
-Cypress [v12.0.0](https://on.cypress.io/changelog#12-0-0), Cypress tests were
-limited to visiting domains of the same origin, making programmatic login the
-only option for authenticating users with a third-party API. As of Cypress
-[v12.0.0](https://on.cypress.io/changelog#12-0-0), Cypress tests are no longer
-limited to visiting domains of a single origin, meaning you can easily
-authenticate to federated AWS Cognito via the UI!
-
-:::
-
-## What is Amazon Cognito?
-
 Amazon [Cognito](https://aws.amazon.com/cognito) is an authentication provider
 apart of [Amazon Web Services (AWS)](https://aws.amazon.com).
 

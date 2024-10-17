@@ -6,43 +6,12 @@ description: 'Implement Okta authentication in Cypress end-to-end testing. Ensur
 
 # Okta Authentication
 
-:::info
-
-## <Icon name="graduation-cap" /> What you'll learn
-
-- Log in to [Okta](https://okta.com) through the UI with
-  [`cy.origin()`](/api/commands/origin)
-- Programmatically authenticate with [Okta](https://okta.com) via a custom
-  Cypress command
-- Adapting your [Okta](https://okta.com) application for programmatic
-  authentication during testing
-
-:::
-
 :::caution
 
 The scope of this guide is to demonstrate authentication solely against the
 [Okta Universal Directory](https://www.okta.com/products/universal-directory/).
 Future guides will expand to cover [Okta](https://okta.com) authentication with
 other identity providers.
-
-:::
-
-:::tip
-
-**Authenticate by visiting a different domain with
-[`cy.origin()`](/api/commands/origin)**
-
-Typically, logging in a user within your app by authenticating via a third-party
-provider requires visiting a login page hosted on a different domain. Before
-Cypress [v12.0.0](https://on.cypress.io/changelog#12-0-0), Cypress tests were
-limited to visiting domains of the same origin, making programmatic login the
-only option for authenticating users with a third-party API. As of Cypress
-[v12.0.0](https://on.cypress.io/changelog#12-0-0), Cypress tests are no longer
-limited to visiting domains of a single origin, meaning you can easily
-authenticate to
-[Okta Universal Directory](https://www.okta.com/products/universal-directory/)
-via the UI!
 
 :::
 

@@ -3,18 +3,6 @@ title: Introduction
 sidebar_position: 10
 ---
 
-:::info
-
-## <Icon name="graduation-cap" /> What you'll learn
-
-- An overview of Continuous Integration
-- How to run Cypress tests in Continuous Integration
-- How to configure Cypress in various CI Providers
-- How to record tests to Cypress Cloud
-- How to run tests in parallel on CI
-
-:::
-
 ## What is Continuous Integration?
 
 <DocsVideo src="https://youtube.com/embed/USX6AntcPyg" />
@@ -34,9 +22,23 @@ locally in your terminal. You generally only need to do two things:
 
 1. **Install Cypress**
 
+<Tabs>
+<TabItem value="npm">
 ```shell
 npm install cypress --save-dev
 ```
+</TabItem>
+<TabItem value="yarn">
+```shell
+yarn add cypress --dev
+```
+</TabItem>
+<TabItem value="pnpm">
+```shell
+pnpm add --save-dev cypress
+```
+</TabItem>
+</Tabs>
 
 2. **Run Cypress**
 
@@ -106,16 +108,29 @@ If the server takes a very long time to start, we recommend trying the
 [start-server-and-test](https://github.com/bahmutov/start-server-and-test)
 module.
 
+<Tabs>
+<TabItem value="npm">
 ```shell
 npm install start-server-and-test --save-dev
 ```
+</TabItem>
+<TabItem value="yarn">
+```shell
+yarn add start-server-and-test --dev
+```
+</TabItem>
+<TabItem value="pnpm">
+```shell
+pnpm add --save-dev start-server-and-test
+```
+</TabItem>
+</Tabs>
 
 In your `package.json` scripts, pass the command to boot your server, the url
 your server is hosted on and your Cypress test command.
 
 ```json
 {
-  ...
   "scripts": {
     "start": "my-server -p 3030",
     "cy:run": "cypress run",

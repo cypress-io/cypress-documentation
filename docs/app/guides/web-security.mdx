@@ -140,8 +140,7 @@ application.
 
 #### Example of accessing insecure content
 
-```javascript
-// Test code
+```javascript title="test.cy.js"
 cy.visit('https://example.cypress.io')
 ```
 
@@ -149,8 +148,7 @@ In your application code, you set `cookies` and store a session on the browser.
 Now let's imagine you have a single `insecure` link (or JavaScript redirect) in
 your application code.
 
-```html
-{/* Application code */}
+```html title="index.html"
 <html>
   <a href="http://example.cypress.io/page2">Page 2</a>
 </html>
@@ -158,8 +156,7 @@ your application code.
 
 Cypress will immediately fail with the following test code:
 
-```javascript
-// Test code
+```javascript title="test.cy.js"
 cy.visit('https://example.cypress.io')
 cy.get('a').click() // will fail
 ```
@@ -210,15 +207,13 @@ and break down how to work around them in Cypress.
 The most common situation where you might encounter this error is when you click
 on an `<a>` that navigates to another superdomain.
 
-```html
-{/* Application code that is served at `localhost:8080` */}
+```html title="index.html"
 <html>
   <a href="https://example.cypress.io">Cypress</a>
 </html>
 ```
 
-```javascript
-// Test code
+```javascript title="test.cy.js"
 cy.visit('http://localhost:8080') // where your web server + HTML is hosted
 cy.get('a').click() // browser navigates to https://cypress.io
 cy.get('selector').should('exist') // Cypress errors
@@ -231,8 +226,7 @@ which you can read more about
 However, if you control this superdomain, either by owning the hosted instance
 or by other means, we recommend testing this superdomain with `cy.origin`.
 
-```javascript
-// Test code
+```javascript title="test.cy.js"
 cy.visit('http://localhost:8080') // where your web server + HTML is hosted
 cy.get('a').click() // browser navigates to https://example.cypress.io
 cy.origin('https://example.cypress.io', () => {
@@ -245,7 +239,7 @@ If not in control of this superdomain, we recommend you test that the `href`
 property is correct instead of performing the navigation. This will help lead to
 more deterministic tests.
 
-```javascript
+```javascript title="test.cy.js"
 // this test verifies the behavior and will run considerably faster
 cy.visit('http://localhost:8080')
 cy.get('a').should('have.attr', 'href', 'https://example.cypress.io') // no page load!
@@ -256,7 +250,7 @@ If for any reason the two above methods cannot be leveraged,
 [`cy.request()`](/api/commands/request) is _NOT bound to CORS or same-origin
 policy_.
 
-```javascript
+```javascript title="test.cy.js"
 cy.visit('http://localhost:8080')
 cy.get('a').then(($a) => {
   // pull off the fully qualified href from the <a>
@@ -272,8 +266,7 @@ cy.get('a').then(($a) => {
 When you submit a regular HTML form, the browser will follow the HTTP(s)
 request.
 
-```html
-<!-- Application code that is served at `localhost:8080`-->
+```html title="index.html"
 <html>
   <form method="POST" action="/submit">
     <input type="text" name="email" />
@@ -282,7 +275,7 @@ request.
 </html>
 ```
 
-```javascript
+```javascript title="test.cy.js"
 cy.visit('http://localhost:8080')
 cy.get('form').submit() // submit the form!
 ```
@@ -291,10 +284,8 @@ If your back end server handling the `/submit` route does a `30x` redirect to a
 different superdomain, you will need to use the `cy.origin` command if running
 additional Cypress commands after submitting the form.
 
-```javascript
-// imagine this is some node / express code
-// on your localhost:8080 server
-
+```javascript title="routes.js"
+// node / express code on localhost:8080 server
 app.post('/submit', (req, res) => {
   // redirect the browser to cypress.io
   res.redirect('https://example.cypress.io')
@@ -303,7 +294,7 @@ app.post('/submit', (req, res) => {
 
 You can test this with `cy.origin`, which may look like the following test case:
 
-```javascript
+```javascript title="test.cy.js"
 cy.visit('http://localhost:8080')
 cy.get('form').submit() // submit the form!
 cy.origin('cypress.io', () => {
@@ -318,7 +309,7 @@ Cognito, and others.
 In these situations, if controlling the domain under test, we recommend that you
 test these with `cy.origin`.
 
-```javascript
+```javascript title="test.cy.js"
 cy.visit('http://localhost:8080')
 cy.get('#login').click() // click a login button, which takes us to our authentication page.
 cy.origin('cypress.io', () => {
@@ -341,7 +332,7 @@ that's the case, you can still test this behavior with
 In fact we can likely bypass the initial visit altogether and `POST` directly to
 your SSO server.
 
-```javascript
+```javascript title="test.cy.js"
 cy.request('POST', 'https://sso.corp.com/auth', {
   username: 'foo',
   password: 'bar',
@@ -368,8 +359,7 @@ cy.request('POST', 'https://sso.corp.com/auth', {
 When we say JavaScript Redirects we are talking about any kind of code that does
 something like this:
 
-```html
-{/* Application code that is served at `localhost:8080` */}
+```html title="index.html"
 <html>
   <button id="nav">Navigate to Cypress example</button>
   <script>
@@ -382,7 +372,7 @@ something like this:
 
 You can test this with `cy.origin`, which may look like the following test case:
 
-```javascript
+```javascript title="test.cy.js"
 cy.visit('http://localhost:8080')
 cy.get('#nav').submit() // trigger a javascript redirect!
 cy.origin('https://example.cypress.io', () => {

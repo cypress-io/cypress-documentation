@@ -3,14 +3,6 @@ title: Cross Origin Testing
 e2eSpecific: true
 ---
 
-:::info
-
-As of Cypress [v12.0.0](https://on.cypress.io/changelog#12-0-0), Cypress has the
-capability to visit multiple origins in a single test via the
-[cy.origin()](https://on.cypress.io/origin) command!
-
-:::
-
 Cypress limits each test to visiting domains that share the same superdomain. If
 a navigation occurs that does not meet the same superdomain rule, the
 [`cy.origin()`](/api/commands/origin) command must be used to execute Cypress
