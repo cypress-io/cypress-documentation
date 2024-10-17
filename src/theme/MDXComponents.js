@@ -6,6 +6,8 @@ import Badge from "@site/src/components/badge";
 import ComponentOnlyBadge from "@site/src/components/component-only-badge";
 import TestReplayInfo from "@site/docs/partials/_test-replay-info.mdx";
 import CypressConfigFileTabs from "@site/src/components/cypress-config-file-tabs";
+import CypressInstallCommands from "@site/docs/partials/_cypress-install-commands.mdx";
+import CypressOpenCommands from "@site/docs/partials/_cypress-open-commands.mdx";
 import DefaultSelectorPriority from "@site/docs/partials/_default-selector-priority.mdx";
 import DocsImage from "@site/src/components/docs-image";
 import DocsVideo from "@site/src/components/docs-video";
@@ -122,6 +124,8 @@ export default {
   Badge,
   ComponentOnlyBadge,
   CypressConfigFileTabs,
+  CypressInstallCommands,
+  CypressOpenCommands,
   DefaultSelectorPriority,
   DocsImage,
   DocsVideo,
