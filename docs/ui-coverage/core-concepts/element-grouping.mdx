@@ -7,6 +7,8 @@ sidebar_position: 20
 
 # Element Grouping
 
+<UICovAddon />
+
 When multiple elements on a page have the same behavior, testing each element individually is not always required to ensure confidence and coverage. In many cases, interacting with just one of these elements is sufficient to verify their collective behavior. For example, options in a dropdown may be grouped if only one of the options should be tested in order to verify their behavior.
 
 UI Coverage groups elements that are related to one another through structural or behavioral hints. A group of elements is considered one element when it comes to scoring, and interacting with any element in the group will cause all elements in the group to be considered tested (e.g. clicking one treats all of them as having been clicked).
