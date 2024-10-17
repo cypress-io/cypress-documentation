@@ -45,6 +45,8 @@ If you check this in as a dependency, your installation will fail when we update
 
 Write a script using the `getAccessibilityResults` utility to retrieve the results and perform one or more assertions to verify if the changes are acceptable. This script will be executed in CI.
 
+The Cypress App [repository](https://github.com/cypress-io/cypress) uses the Results API to ensure no new violations have been introduced. You can reference [this script](https://github.com/cypress-io/cypress/blob/develop/scripts/verify-accessibility-results.js) as a real example.
+
 ```javascript title="scripts/verifyAccessibilityResults.js"
 const { getAccessibilityResults } = require('@cypress/extract-cloud-results')
 
@@ -53,7 +55,7 @@ getAccessibilityResults({
   recordKey: '...', // optional if set from env
   runTags: [process.env.RUN_TAGS], // required if recording multiple runs
 }).then((results) => {
-  const { runNumber, accessibilityReportUrl, summary, rules } = results
+  const { runNumber, accessibilityReportUrl, summary, rules, } = results
   const { total } = summary.violationCounts
 
   console
@@ -63,21 +65,52 @@ getAccessibilityResults({
     .console.log(`See full report at ${accessibilityReportUrl}.`)
 
   // write your logic to conditionally fail based on the results
-  if (total > 0) {
-    const { critical, serious, moderate, minor } = summary.violationCounts
+  if (total === 0) {
+    console.log('No Accessibility violations detected!')
+    return
+  }
+  
+  const { critical, serious, moderate, minor } = summary.violationCounts
 
-    console.log(
-      `${total} Accessibility violations were detected - ${critical} critical, ${serious} serious, ${moderate} moderate, and ${minor} minor.`
-    )
-    console.log('The following rules were violated:')
-    console.log(rules)
+  console.log(`${total} Accessibility violations were detected:`)
+  console.log(`  - ${critical} critical`)
+  console.log(`  - ${serious} serious`)
+  console.log(`  - ${moderate} moderate`)
+  console.log(`  - ${minor} minor.`)
 
-    throw new Error(
-      `${total} Accessibility violations detected and must be fixed.`
-    )
+  const newRuleViolations = rules.filter((rule) => {
+    return !rulesWithExistingViolations.includes(rule.name)
+  })
+
+  if (newRuleViolations.length > 0) {
+    console.error('The following rules were violated that were previously passing:')
+    console.error(newRuleViolations)
+    throw new Error(`${newRuleViolations.length} rule regressions were introduced and must be fixed.`)
   }
 
-  console.log('No Accessibility violations detected!')
+  if (total < rulesWithExistingViolations.length) {
+    console.warn(`It seems you have resolved ${rulesWithExistingViolations.length - total} rule(s). Remove them from the list of problematic rules so regressions are not introduced.`)
+  }
+
+  console.log('No new Accessibility violations detected!')
+
+  /**
+   * The list of rules that currently have 1+ elements that have been flagged with
+   * violations within the Cypress Accessibility report that need to be addressed.
+   *
+   * Once the violation is fixed in the Accessibility report,
+   * the fixed rule should be removed from this list.
+   *
+   * View the Accessibility report for the Cypress run in the Cloud
+   * for more details on how to address these failures.
+   */
+  const rulesWithExistingViolations = [
+    'aria-required-children',
+    'empty-heading',
+    'aria-dialog-name',
+    'link-in-text-block',
+    'list',
+  ]
 })
 ```
 
