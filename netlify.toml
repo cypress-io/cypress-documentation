@@ -31,7 +31,7 @@
 
 [[redirects]]
   from = "/plugins/directory"
-  to = "/plugins"
+  to = "/app/plugins/plugins-list"
   status = 301
   force = true
 
