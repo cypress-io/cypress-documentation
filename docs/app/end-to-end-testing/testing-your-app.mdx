@@ -8,17 +8,6 @@ slug: /app/end-to-end-testing/testing-your-app
 
 # Testing Your App
 
-:::info
-
-## <Icon name="graduation-cap" /> What you'll learn
-
-- The relationship between Cypress and your back end
-- How to configure Cypress to fit your app
-- Working with (or without!) your authentication mechanism
-- Effectively leveraging test data
-
-:::
-
 ## <Icon name="terminal" /> Step 1: Start your server
 
 Assuming you've successfully
@@ -38,9 +27,7 @@ Don't try to start a web server from within Cypress scripts. Read about
 
 :::
 
-:::info
-
-<strong>Why start a local development server?</strong>
+### Why start a local development server?
 
 You may be wondering - why can't I just visit my application that's already in
 production?
@@ -83,8 +70,6 @@ Many of our users run the _majority_ of their integration tests against a local
 development server, but then reserve a smaller set of **smoke tests** that run
 only against a deployed production app.
 
-:::
-
 ## <Icon name="globe" /> Step 2: Visit your server
 
 Once your server is running, it's time to visit it.
@@ -107,6 +92,7 @@ Once that file is created, you should see it in the list of spec files.
 <DocsImage
   src="/img/app/get-started/e2e/v10/testing-your-app-home-page-spec.png"
   alt="List of files including home_page.cy.js"
+  width="75%"
 />
 
 Now you'll need to add in the following code in your test file to visit your
@@ -134,6 +120,7 @@ it('successfully loads', () => {
 <DocsImage
   src="/img/app/get-started/e2e/v10/testing-your-app-visit-fail.png"
   alt="Error in Cypress showing cy.visit failed"
+  width="75%"
 />
 
 If you've started your server, then you should see your application loaded and
