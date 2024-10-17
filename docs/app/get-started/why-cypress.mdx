@@ -24,67 +24,31 @@ Cypress is a next generation front end testing tool built for the modern web.
 We address the key pain points teams
 face when testing modern applications and maintaining test suites.
 
-We make it possible to:
-
-- [Set up tests](#Set-up-tests)
-- [Write tests](#Write-tests)
-- [Run tests](#Run-tests)
-- [Debug Tests](#Debug-tests)
-- [Integrate with CI](#Integrate-with-CI)
-- [Optimize your Test Suite](#Optimize-your-Test-Suite)
-- [Replay Tests](#Replay-Tests)
-- [Integrate test results into your workflow](#Integrate-into-your-workflow)
-- [Analyze Testing Trends](#Analyze-Testing-Trends)
-
-## Who uses Cypress?
-
 Our users are typically developers, QA engineers, and teams looking to build web applications
 and increase the quality of their existing applications.
 
 Cypress provides solutions for:
 
-- [End-to-end testing](/app/end-to-end-testing/writing-your-first-end-to-end-test)
-- [Component testing](/app/component-testing/get-started)
-- [Accessibility testing](accessibility/get-started/introduction)
-- [UI Coverage](/ui-coverage/get-started/introduction)
+- [End-to-end testing](#End-to-end-Testing)
+- [Component testing](#Component-Testing)
+- [API testing](#API-Testing)
+- [Accessibility testing](#Accessibility-Testing)
+- [UI Coverage](#UI-Coverage-1)
+- [and more...](#Other)
 
 Cypress can test anything that runs in a browser and surface insights into how to improve the health
 of your test suite and the quality of your application.
 
-## Our mission
-
-Our mission is to build a thriving testing solution that enhances
-productivity, makes testing an enjoyable experience, and generates developer
-happiness. We hold ourselves accountable to champion a testing process **that
-actually works**.
-
-We believe our documentation should be approachable. This means enabling our
-readers to understand fully not just the **what** but the **why** as well.
-
-We want to help developers build a new generation of modern applications faster,
-better, and without the stress and anxiety associated with managing tests. We
-aim to elevate the art of software development by leveraging test results to
-generate actionable insights for long-term stability by proactively identifying
-areas for improvement.
-
-We know that in order for us to be successful we must enable, nurture, and
-foster an ecosystem that thrives on open source. Every line of test code is an
-investment in **your codebase**, it will never be coupled to us as a paid
-service or company. Tests will be able to run and work independently, _always_.
-
-We believe testing needs a lot of ❤️ and we are here to build a tool, a service,
-and a community that everyone can learn and benefit from. We're solving the
-hardest pain points shared by every developer working on the web. We believe in
-this mission and hope that you will join us to make Cypress a lasting ecosystem
-that makes everyone happy.
-
 ## Products
 
-Cypress consists of a free,
+- [Cypress App](/app/core-concepts/open-mode), a free,
 [open source](https://github.com/cypress-io/cypress),
-[locally installed](/app/get-started/install-cypress) App
-**and** [Cypress Cloud](/cloud/get-started/introduction) for recording tests, surfacing test results, and providing test analytics.
-Additionally, the Cypress Cloud provides add-ons for [Cypress Accessibility](/accessibility/get-started/introduction) and [UI Coverage](/ui-coverage/get-started/introduction).
+locally installed app.
+- [Cypress Cloud](/cloud/get-started/introduction), a paid service for recording tests, surfacing test results, and providing test analytics.
+- [UI Coverage](/ui-coverage/get-started/introduction), a paid add-on providing a visual overview of test coverage across every page and component of your app, offering clear insights into uncovered areas that everyone can understand.
+- [Cypress Accessibility](/accessibility/get-started/introduction), a paid add-on providing accessibility checks to ensure your application is accessible to all users.
+
+Cypress is a robust solution that can improve the quality of your application.
 
 - **First:** Cypress helps you set up and start writing tests every day while
   you build your application locally. _Test Driven Development at its best!_
@@ -97,7 +61,9 @@ Additionally, the Cypress Cloud provides add-ons for [Cypress Accessibility](/ac
   accessible to all users and [UI Coverage](/ui-coverage/get-started/introduction) to ensure you've tested
   every part of your application.
 
-**Below are listed some of the key features of each product.**
+## Features
+
+Below are listed some of the key features of each product.
 
 ### Cypress App
 
@@ -145,7 +111,7 @@ Additionally, the Cypress Cloud provides add-ons for [Cypress Accessibility](/ac
 - **Visualize Coverage:** [UI Coverage](/ui-coverage/get-started/introduction) provides a visual overview of test coverage across every page and component of your app, offering clear insights into uncovered areas that everyone can understand.
 - **Results API:** Use the UI Coverage [Results API](/ui-coverage/results-api) to programmatically access test coverage data and integrate it into your existing workflows.
 
-### Cypress Accessibility 
+### Cypress Accessibility
 
 - **Accessibility Checks:** Maximize the value of your existing Cypress tests by instantly adding thousands of [accessibility checks](/accessibility/get-started/introduction) with no setup, code changes, or performance penalty.
 - **Run-level reports:** Get a detailed report of accessibility issues found in your test runs with [Run-level reports](/accessibility/core-concepts/run-level-reports).
@@ -165,8 +131,7 @@ performs actions via the UI just like a real user would.
 ```js
 it('adds todos', () => {
   cy.visit('https://example.cypress.io/')
-  cy.get('[data-cy="new-todo"]')
-    .type('write tests{enter}')
+  cy.get('[data-cy="new-todo"]').type('write tests{enter}')
   // confirm the application is showing one item
   cy.get('[data-cy="todos"]').should('have.length', 1)
 })
@@ -176,7 +141,7 @@ it('adds todos', () => {
 
 Cypress [Component Testing](/app/component-testing/get-started) provides a component workbench for you to quickly
 build and test components from multiple front-end UI libraries — no matter how
-simple or complex. 
+simple or complex.
 
 Learn more about how to test components for
 [React](/app/component-testing/react/overview),
@@ -251,9 +216,9 @@ Cypress can perform arbitrary HTTP calls, thus you can use it for API testing.
 
 ```js
 it('adds a todo', () => {
-  cy.request('POST', '/todos', { title: 'Write API Tests'})
-  .its('body')
-  .should('contain', { title: 'Write API Tests' })
+  cy.request('POST', '/todos', { title: 'Write API Tests' })
+    .its('body')
+    .should('contain', { title: 'Write API Tests' })
 })
 ```
 
@@ -267,8 +232,8 @@ accessibility standards are not met through your testing - with no configuration
 it('adds todos', () => {
   cy.visit('https://example.cypress.io/')
   cy.get('img#logo')
-  // Assert that an image has the correct alt text
-  .should('have.attr', 'alt', 'Cypress Logo')
+    // Assert that an image has the correct alt text
+    .should('have.attr', 'alt', 'Cypress Logo')
 })
 ```
 
@@ -276,7 +241,6 @@ it('adds todos', () => {
   src="/img/accessibility/get-started/cypress-accessibility-overview.png"
   alt="A graphic showing the Cypress Accessibility dashboard including list of rules, views, and the user interface showing how devtools can be used"
 />
-
 
 ### UI Coverage
 
@@ -291,6 +255,33 @@ You can increase release confidence by closing testing gaps in critical app flow
 
 Finally, through a large number of [official and 3rd party plugins](/plugins)
 you can write many other types of tests!
+
+## Our mission
+
+Our mission is to build a thriving testing solution that enhances
+productivity, makes testing an enjoyable experience, and generates developer
+happiness. We hold ourselves accountable to champion a testing process **that
+actually works**.
+
+We believe our documentation should be approachable. This means enabling our
+readers to understand fully not just the **what** but the **why** as well.
+
+We want to help developers build a new generation of modern applications faster,
+better, and without the stress and anxiety associated with managing tests. We
+aim to elevate the art of software development by leveraging test results to
+generate actionable insights for long-term stability by proactively identifying
+areas for improvement.
+
+We know that in order for us to be successful we must enable, nurture, and
+foster an ecosystem that thrives on open source. Every line of test code is an
+investment in **your codebase**, it will never be coupled to us as a paid
+service or company. Tests will be able to run and work independently, _always_.
+
+We believe testing needs a lot of ❤️ and we are here to build a tool, a service,
+and a community that everyone can learn and benefit from. We're solving the
+hardest pain points shared by every developer working on the web. We believe in
+this mission and hope that you will join us to make Cypress a lasting ecosystem
+that makes everyone happy.
 
 ## Key Differences
 
@@ -352,8 +343,8 @@ For instance you can:
   can control WebSocket messages from within Cypress, conditionally load 3rd
   party scripts, or call functions directly on your application.
 - For [Component Tests](/app/component-testing/get-started), Cypress is browser-based, allowing you to test not only your component's
-functionality but also styles and appearance. You can visually see your
-component in action and interact with it in the app.
+  functionality but also styles and appearance. You can visually see your
+  component in action and interact with it in the app.
 
 ### Shortcuts
 
@@ -403,7 +394,6 @@ important trade-offs that we've made in making this possible.
 
 If you're interested in understanding more, we've written
 [an entire guide](/app/references/trade-offs) on this topic.
-
 
 ## Get Started
 

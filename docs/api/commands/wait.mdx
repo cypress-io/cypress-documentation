@@ -92,12 +92,12 @@ command and referenced with the `@` character and the name of the alias.
 
 Pass in an options object to change the default behavior of `cy.wait()`.
 
-| Option            | Default                                                                                                                 | Description                                                                           |
-| ----------------- | ----------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| Option            | Default                                                                                                                 | Description                                                                         |
+| ----------------- | ----------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
 | `log`             | `true`                                                                                                                  | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log) |
-| `timeout`         | [`requestTimeout`](/app/references/configuration#Timeouts), [`responseTimeout`](/app/references/configuration#Timeouts) | Time to wait for `cy.wait()` to resolve before [timing out](#Timeouts)                |
-| `requestTimeout`  | [`requestTimeout`](/app/references/configuration#Timeouts)                                                              | Overrides the global `requestTimeout` for this request. Defaults to `timeout`.        |
-| `responseTimeout` | [`responseTimeout`](/app/references/configuration#Timeouts)                                                             | Overrides the global `responseTimeout` for this request. Defaults to `timeout`.       |
+| `timeout`         | [`requestTimeout`](/app/references/configuration#Timeouts), [`responseTimeout`](/app/references/configuration#Timeouts) | Time to wait for `cy.wait()` to resolve before [timing out](#Timeouts)              |
+| `requestTimeout`  | [`requestTimeout`](/app/references/configuration#Timeouts)                                                              | Overrides the global `requestTimeout` for this request. Defaults to `timeout`.      |
+| `responseTimeout` | [`responseTimeout`](/app/references/configuration#Timeouts)                                                             | Overrides the global `responseTimeout` for this request. Defaults to `timeout`.     |
 
 ### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
 
