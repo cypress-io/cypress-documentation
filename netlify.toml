@@ -669,7 +669,7 @@
 
 [[redirects]]
   from = "/guides/guides/plugins-guide"
-  to = "/api/node-events/writing-a-plugin"
+  to = "/api/node-events/overview"
   status = 301
   force = true
 
