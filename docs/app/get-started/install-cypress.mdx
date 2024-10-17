@@ -14,28 +14,15 @@ First, make sure you have all the [system requirements](#System-requirements).
 Install Cypress via your preferred package manager. This will install Cypress locally as a dev dependency for your project. For pnpm, make sure that you have the `pnpm` environment installed: `npm install pnpm@latest --global`.
 
 <Tabs>
-<TabItem value="npm">
-```shell
-npm install cypress --save-dev
-```
-</TabItem>
-<TabItem value="yarn">
-```shell
-yarn add cypress --dev
-```
-</TabItem>
-<TabItem value="pnpm">
-```shell
-pnpm add --save-dev cypress
-```
-</TabItem>
+  <TabItem value="npm">```shell npm install cypress --save-dev ```</TabItem>
+  <TabItem value="yarn">```shell yarn add cypress --dev ```</TabItem>
+  <TabItem value="pnpm">```shell pnpm add --save-dev cypress ```</TabItem>
 </Tabs>
 
 Make sure you have [Node.js installed](#Installing-Nodejs) and that you have already run
 [`npm init`](https://docs.npmjs.com/cli/init) or have a `node_modules` folder or
 `package.json` file in the root of your project to ensure Cypress is installed
 in the correct directory.
-
 
 System [proxy properties](/app/references/proxy-configuration) `http_proxy`, `https_proxy` and `no_proxy` are respected
 for the download of the Cypress binary. You can also use the npm properties
