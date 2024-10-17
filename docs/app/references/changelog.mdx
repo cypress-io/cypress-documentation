@@ -1120,7 +1120,7 @@ _Released 03/14/2023_
   support async event handlers in `run` mode. Fixes
   [#24403](https://github.com/cypress-io/cypress/issues/24403).
 - Updated the Component Testing
-  [community framework](/app/component-testing/third-party-definitions)
+  [community framework](/app/component-testing/custom-frameworks)
   definition detection logic to take into account monorepo structures that hoist
   dependencies. Fixes
   [#25993](https://github.com/cypress-io/cypress/issues/25993).
@@ -1168,7 +1168,7 @@ _Released 02/24/2023_
   [#17527](https://github.com/cypress-io/cypress/issues/17527).
 - Added a Public API for third party component libraries to define a Framework
   Definition, embedding their library into the Cypress onboarding workflow.
-  Learn more [here](/app/component-testing/third-party-definitions).
+  Learn more [here](/app/component-testing/custom-frameworks).
   Implemented in [#25780](https://github.com/cypress-io/cypress/pull/25780) and
   closes [#25638](https://github.com/cypress-io/cypress/issues/25638).
 - Added a Debug Page tutorial slideshow for projects that are not connected to
@@ -10424,7 +10424,7 @@ _Released 5/29/2018_
 - [New `cy.task()` doc](/api/commands/task)
 - [New `Screenshot API` doc](/api/cypress-api/screenshot-api)
 - [Update `cy.screenshot()` doc to include new accepted usage and options](/api/commands/screenshot)
-- [Update `Installing Cypress` doc to include new options for Cypress binary caching](/app/get-started/installing-cypress)
+- [Update `Installing Cypress` doc to include new options for Cypress binary caching](/app/get-started/install-cypress)
 - [Updated `Writing and Organizing Tests` to include newly seeded `examples` folder](/app/core-concepts/writing-and-organizing-tests)
 - [Updated `cypress run` spec args](/app/guides/command-line#cypress-run)
 - [Updated `Dashboard Service`](/cloud/get-started/introduction)
@@ -11069,7 +11069,7 @@ _Released 10/29/2017_
 **Documentation Changes:**
 
 - [Created "Conditional Testing" core concept](/app/core-concepts/conditional-testing)
-- [Created "Key Differences" core concept](/app/get-started/key-differences)
+- [Created "Key Differences" core concept](/app/get-started/why-cypress)
 - [Updated "Best Practices"](/app/references/best-practices)
 - [Updated "FAQ Usage"](/app/faq)
 
@@ -11165,7 +11165,7 @@ _Released 10/09/2017_
 
 **Documentation Changes:**
 
-- [Updated "Installing Cypress"](/app/get-started/installing-cypress)
+- [Updated "Installing Cypress"](/app/get-started/install-cypress)
 - [Updated "Writing your First Test"](/app/end-to-end-testing/writing-your-first-end-to-end-test)
 - Added a 10 minute Getting Started video that
   [Andrew Van Slaars](https://github.com/avanslaars) created.
@@ -11271,7 +11271,7 @@ _Released 09/10/2017_
   2,000 commits. It's full of breaking changes we wanted to land prior to having
   our public `1.0.0` release.
 - You can now
-  [install Cypress as a real `npm` module](/app/get-started/installing-cypress),
+  [install Cypress as a real `npm` module](/app/get-started/install-cypress),
   and even `require` it in your node files.
 - We rewrote the entire driver (we've all been there) and converted all 2,500+
   tests to be run within Cypress itself.
@@ -11474,7 +11474,7 @@ _Released 09/10/2017_
   Fixes [#436](https://github.com/cypress-io/cypress/issues/436) and
   [#465](https://github.com/cypress-io/cypress/issues/465).
 - There are no more global, in-app updates. Versioning should be primarily
-  [controlled via `npm`](/app/get-started/installing-cypress) like every
+  [controlled via `npm`](/app/get-started/install-cypress) like every
   other package / dependency in your project. For users not using `npm` you can
   manually download new versions of Cypress when they're released.
 
@@ -11659,7 +11659,7 @@ Note: we are still updating all of the docs to reflect all the 0.20.0 changes.
 - [New ".trigger()"](/api/commands/trigger)
 - [New "cy.scrollTo()"](/api/commands/scrollTo)
 - [New ".scrollIntoView()"](/api/commands/scrollIntoView)
-- [Updated "Installing Cypress"](/app/get-started/installing-cypress)
+- [Updated "Installing Cypress"](/app/get-started/install-cypress)
 - [Updated "Writing Your First Test"](/app/end-to-end-testing/writing-your-first-end-to-end-test)
 - [Updated "Testing Your App"](/app/end-to-end-testing/testing-your-app)
 - [Updated "Command Line"](/app/guides/command-line)
@@ -13170,7 +13170,7 @@ _Released 04/22/2016_
 
 - Better error handling of unauthorized users attempting to login to Cypress
   with improved
-  [Login documentation](/app/get-started/installing-cypress).
+  [Login documentation](/app/get-started/install-cypress).
 
 ## 0.15.3
 
@@ -13930,7 +13930,7 @@ _Released 11/29/2015_
 
 **Features:**
 
-- There are now [Getting Started](/app/get-started/installing-cypress)
+- There are now [Getting Started](/app/get-started/install-cypress)
   docs including [configuration](/app/references/configuration) for
   `cypress.json`
 - Cypress now silently restarts the server whenever it detects a change to

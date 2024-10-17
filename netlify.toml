@@ -645,13 +645,13 @@
 
 [[redirects]]
   from = "/guides/getting-started"
-  to = "/guides/getting-started/installing-cypress"
+  to = "/guides/getting-started/install-cypress"
   status = 301
   force = true
 
 [[redirects]]
-  from = "/getting-started/installing-cypress.md"
-  to = "/guides/getting-started/installing-cypress"
+  from = "/getting-started/install-cypress.md"
+  to = "/guides/getting-started/install-cypress"
   status = 301
   force = true
 
@@ -681,7 +681,7 @@
 
 [[redirects]]
   from = "/guides/installing-and-running"
-  to = "/guides/getting-started/installing-cypress"
+  to = "/guides/getting-started/install-cypress"
   status = 301
   force = true
 
@@ -740,8 +740,8 @@
   force = true
 
 [[redirects]]
-  from = "/zh-cn/guides/getting-started/installing-cypress"
-  to = "/guides/getting-started/installing-cypress"
+  from = "/zh-cn/guides/getting-started/install-cypress"
+  to = "/guides/getting-started/install-cypress"
   status = 301
   force = true
 

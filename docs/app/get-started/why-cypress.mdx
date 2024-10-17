@@ -33,11 +33,8 @@ We make it possible to:
 - [Integrate with CI](#Integrate-with-CI)
 - [Optimize your Test Suite](#Optimize-your-Test-Suite)
 - [Replay Tests](#Replay-Tests)
-- [Integrate into your workflow](#Integrate-into-your-workflow)
+- [Integrate test results into your workflow](#Integrate-into-your-workflow)
 - [Analyze Testing Trends](#Analyze-Testing-Trends)
-
-Cypress is most often compared to Selenium; however Cypress is both
-fundamentally and architecturally different. [See our comparison of Cypress vs Selenium](https://www.cypress.io/comparison/selenium).
 
 ## Who uses Cypress?
 
@@ -48,30 +45,11 @@ Cypress provides solutions for:
 
 - [End-to-end testing](/app/end-to-end-testing/writing-your-first-end-to-end-test)
 - [Component testing](/app/component-testing/overview)
-- Accessibility testing
-- UI Coverage
+- [Accessibility testing](accessibility/get-started/introduction)
+- [UI Coverage](/ui-coverage/get-started/introduction)
 
 Cypress can test anything that runs in a browser and surface insights into how to improve the health
 of your test suite and the quality of your application.
-
-## Cypress ecosystem
-
-Cypress consists of a free,
-[open source](https://github.com/cypress-io/cypress),
-[locally installed](/app/get-started/installing-cypress) app
-**and** [Cypress Cloud](/cloud/get-started/introduction) for recording tests, surfacing test results, and providing test analytics.
-Additionally, the Cypress Cloud provides add-ons for Cypress Accessibility and UI Coverage.
-
-- **First:** Cypress helps you set up and start writing tests every day while
-  you build your application locally. _TDD at its best!_
-- **Next:** After building up a suite of tests and
-  [integrating Cypress](/app/continuous-integration/introduction) with your
-  CI Provider, [Cypress Cloud](/cloud/get-started/introduction) can record your test
-  runs surfacing exactly what happened during the test in [Test Replay](/cloud/features/test-replay).
-  You'll never have to wonder: _Why did this fail?_
-- **Finally:** Add on Cypress Accessibility to ensure your application is
-  accessible to all users, and Cypress UI Coverage to ensure you have tested
-  every part of your application.
 
 ## Our mission
 
@@ -100,12 +78,28 @@ hardest pain points shared by every developer working on the web. We believe in
 this mission and hope that you will join us to make Cypress a lasting ecosystem
 that makes everyone happy.
 
-## Features
+## Products
 
-Cypress comes fully baked, batteries included. Here is a list of things it can
-do:
+Cypress consists of a free,
+[open source](https://github.com/cypress-io/cypress),
+[locally installed](/app/get-started/install-cypress) App
+**and** [Cypress Cloud](/cloud/get-started/introduction) for recording tests, surfacing test results, and providing test analytics.
+Additionally, the Cypress Cloud provides add-ons for [Cypress Accessibility](/accessibility/get-started/introduction) and [UI Coverage](/ui-coverage/get-started/introduction).
 
-#### Cypress App
+- **First:** Cypress helps you set up and start writing tests every day while
+  you build your application locally. _Test Driven Development at its best!_
+- **Next:** After building up a suite of tests and
+  [integrating Cypress](/app/continuous-integration/introduction) with your
+  CI Provider, [Cypress Cloud](/cloud/get-started/introduction) can record your test
+  runs surfacing exactly what happened during the test in [Test Replay](/cloud/features/test-replay).
+  You'll never have to wonder: _Why did this fail?_
+- **Finally:** Add on [Cypress Accessibility](/accessibility/get-started/introduction) to ensure your application is
+  accessible to all users and [UI Coverage](/ui-coverage/get-started/introduction) to ensure you've tested
+  every part of your application.
+
+**Below are listed some of the key features of each product.**
+
+### Cypress App
 
 - **Time Travel:** Cypress takes snapshots as your tests run. Hover over
   commands in the [Command Log](/app/core-concepts/cypress-app#Command-Log)
@@ -129,7 +123,7 @@ do:
   (including Edge and Electron) locally and
   [in a Continuous Integration pipeline](/app/guides/cross-browser-testing).
 
-#### Cypress Cloud
+### Cypress Cloud
 
 - **Test Replay:** Record to [Cypress Cloud](/cloud/get-started/introduction) and replay the test exactly as it executed during the run for zero-configuration debugging using [Test Replay](/cloud/features/test-replay).
 - **Smart Orchestration:** Once you're set up to record to Cypress Cloud, easily
@@ -146,174 +140,273 @@ do:
   [Slack](/cloud/integrations/slack), [Jira](/cloud/integrations/jira), and [Microsoft Teams](/cloud/integrations/teams) to keep your team in the loop.
 - **Test Analytics:** Track test results over time with [Test Analytics](/cloud/features/analytics/overview) to identify trends, regressions, and improvements in your test suite. Use our [Data Extract API](/cloud/integrations/data-extract-api) to extract the data that is important to your team.
 
-#### Add ons
+### UI Coverage
 
-- **Cypress Accessibility:** Ensure your application is accessible to all users
-  with Cypress Accessibility.
-- **Cypress UI Coverage:** Ensure you have tested every part of your application
-  with Cypress UI Coverage.
+- **Visualize Coverage:** [UI Coverage](/ui-coverage/get-started/introduction) provides a visual overview of test coverage across every page and component of your app, offering clear insights into uncovered areas that everyone can understand.
+- **Results API:** Use the UI Coverage [Results API](/ui-coverage/results-api) to programmatically access test coverage data and integrate it into your existing workflows.
+
+### Cypress Accessibility 
+
+- **Accessibility Checks:** Maximize the value of your existing Cypress tests by instantly adding thousands of [accessibility checks](/accessibility/get-started/introduction) with no setup, code changes, or performance penalty.
+- **Run-level reports:** Get a detailed report of accessibility issues found in your test runs with [Run-level reports](/accessibility/core-concepts/run-level-reports).
+- **Results API:** Use the Cypress Accessibility's [Results API](/accessibility/results-api) to programmatically access Accessibility results in a CI environment.
 
 ## Solutions
 
 Cypress can be used to ensure several different types of test. This can provide
 even more confidence that your application under test is working as intended and accessible to all users.
 
-### End-to-end
+### End-to-end Testing
 
-Cypress was originally designed to run end-to-end (E2E) tests on anything that
+Cypress was originally designed to run [end-to-end (E2E) tests](/app/end-to-end-testing/writing-your-first-end-to-end-test) on anything that
 runs in a browser. A typical E2E test visits the application in a browser and
 performs actions via the UI just like a real user would.
 
 ```js
 it('adds todos', () => {
   cy.visit('https://example.cypress.io/')
-  cy.get('[data-testid="new-todo"]')
-    .type('write code{enter}')
+  cy.get('[data-cy="new-todo"]')
     .type('write tests{enter}')
-  // confirm the application is showing two items
-  cy.get('[data-testid="todos"]').should('have.length', 2)
+  // confirm the application is showing one item
+  cy.get('[data-cy="todos"]').should('have.length', 1)
 })
 ```
 
-### Component
+### Component Testing
 
-You can also use Cypress to mount components from supported web frameworks and
-execute [component tests](/app/component-testing/overview).
+Cypress [Component Testing](/app/component-testing/overview) provides a component workbench for you to quickly
+build and test components from multiple front-end UI libraries — no matter how
+simple or complex. 
 
-```js
-import TodoList from './components/TodoList'
+Learn more about how to test components for
+[React](/app/component-testing/react/overview),
+[Angular](/app/component-testing/angular/overview),
+[Vue](/app/component-testing/vue/overview), and
+[Svelte](/app/component-testing/svelte/overview).
 
-it('contains the correct number of todos', () => {
-  const todos = [
-    { text: 'Buy milk', id: 1 },
-    { text: 'Learn Component Testing', id: 2 },
-  ]
+<Tabs>
+<TabItem value="React">
 
-  cy.mount(<TodoList todos={todos} />)
-  // the component starts running like a mini web app
-  cy.get('[data-testid="todos"]').should('have.length', todos.length)
+```ts
+import Button from './Button'
+
+it('uses custom text for the button label', () => {
+  cy.mount(<Button>Click me!</Button>)
+  // Assert that a button component has the correct text
+  cy.get('button').should('contains.text', 'Click me!')
 })
 ```
 
-### Accessibility
+</TabItem>
+<TabItem value="Angular">
 
-You can write Cypress tests to check the accessibility of your application.
-When combined with Cypress Accessibility, insights can be surfaced when
-accessibility standards are not met through your testing - with no configuration required.
+```ts
+import ButtonComponent from './button.component'
 
-```js
-it('adds todos', () => {
-  cy.visit('https://example.cypress.io/')
-  //..
+it('uses custom text for the button label', () => {
+  cy.mount('<app-button>Click me!</app-button>', {
+    declarations: [ButtonComponent],
+  })
+  // Assert that a button component has the correct text
+  cy.get('button').should('contains.text', 'Click me!')
 })
 ```
 
-### API
+</TabItem>
+<TabItem value="Vue">
+
+```ts
+import Button from './Button.vue'
+
+it('uses custom text for the button label', () => {
+  cy.mount(Button, {
+    slots: {
+      default: 'Click me!',
+    },
+  })
+  // Assert that a button component has the correct text
+  cy.get('button').should('contains.text', 'Click me!')
+})
+```
+
+</TabItem>
+<TabItem value="Svelte">
+
+```ts
+import Button from './Button.svelte'
+
+it('uses custom text for the button label', () => {
+  cy.mount(Button, { props: { msg: 'Click me!' } })
+  // Assert that a button component has the correct text
+  cy.get('button').should('contains.text', 'Click me!')
+})
+```
+
+</TabItem>
+</Tabs>
+
+### API Testing
 
 Cypress can perform arbitrary HTTP calls, thus you can use it for API testing.
 
 ```js
 it('adds a todo', () => {
-  cy.request({
-    url: '/todos',
-    method: 'POST',
-    body: {
-      title: 'Write REST API',
-    },
-  })
-    .its('body')
-    .should('deep.contain', {
-      title: 'Write REST API',
-      completed: false,
-    })
+  cy.request('POST', '/todos', { title: 'Write API Tests'})
+  .its('body')
+  .should('contain', { title: 'Write API Tests' })
 })
 ```
+
+### Accessibility Testing
+
+You can write Cypress tests to check the accessibility of your application.
+When combined with [Cypress Accessibility](/accessibility/get-started/introduction), insights can be surfaced when
+accessibility standards are not met through your testing - with no configuration required.
+
+```js
+it('adds todos', () => {
+  cy.visit('https://example.cypress.io/')
+  cy.get('img#logo')
+  // Assert that an image has the correct alt text
+  .should('have.attr', 'alt', 'Cypress Logo')
+})
+```
+
+<DocsImage
+  src="/img/accessibility/get-started/cypress-accessibility-overview.png"
+  alt="A graphic showing the Cypress Accessibility dashboard including list of rules, views, and the user interface showing how devtools can be used"
+/>
+
+
+### UI Coverage
+
+You can increase release confidence by closing testing gaps in critical app flows using [UI Coverage](/ui-coverage/get-started/introduction). Leverage data-driven insights to cover untested areas, reduce incidents, and improve app quality.
+
+<DocsImage
+  src="/img/ui-coverage/get-started/uicov-docs-1.gif"
+  alt="UI Coverage demo showing UI of Cloud product"
+/>
 
 ### Other
 
 Finally, through a large number of [official and 3rd party plugins](/plugins)
-you can write other types of tests.
+you can write many other types of tests!
+
+## Key Differences
+
+### Architecture
+
+Most testing tools (like Selenium) operate by running outside of the browser and
+executing remote commands across the network. _Cypress is the exact opposite._
+Cypress is executed in the same run loop as your application.
+
+Behind Cypress is a Node server process. Cypress and the Node process constantly
+communicate, synchronize, and perform tasks on behalf of each other. Having
+access to both parts (front and back) gives us the ability to respond to your
+application's events in real time, while at the same time work outside of the
+browser for tasks that require a higher privilege.
+
+Cypress ultimately controls the entire automation process from top to bottom,
+which puts it in the unique position of being able to understand everything
+happening in and outside of the browser. This means Cypress is capable of
+delivering more consistent results than any other testing tool.
+
+Because Cypress is
+[installed locally](/app/get-started/install-cypress) on your machine,
+it can additionally tap into the operating system for automation tasks. This
+makes performing tasks such as
+[taking screenshots, recording videos](/app/guides/screenshots-and-videos),
+general [file system operations](/api/commands/exec) and
+[network operations](/api/commands/request) possible.
+
+### Native access
+
+Because Cypress operates within your application, that means it has native
+access to every single object. Whether it is the `window`, the `document`, a DOM
+element, your application instance, a function, a timer, a service worker, or
+anything else - you have access to it in your Cypress tests.
+
+For instance you can:
+
+- [Stub](/api/commands/stub) the browser or your application's functions and
+  force them to behave as needed in your test case.
+- Expose data stores so you can programmatically alter the state
+  of your application directly from your test code.
+- Test edge cases like 'empty views' by forcing your server to send empty
+  responses.
+- Test how your application responds to errors on your server by modifying
+  response status codes to be 500.
+- Modify DOM elements directly - like forcing hidden elements to be shown.
+- Use 3rd party plugins programmatically. Instead of fussing with complex UI
+  widgets like multi selects, autocompletes, drop downs, tree views or
+  calendars, you can call methods directly from your test code to control them.
+- [Prevent Google Analytics from loading _before_ any of your application code executes](/app/references/configuration#blockHosts)
+  when testing.
+- Get synchronous notifications whenever your application transitions to a new
+  page or when it begins to unload.
+- [Control time by moving forward or backward](/api/commands/clock) so that
+  timers or polls automatically fire without having to wait for the required
+  time in your tests.
+- Add your own event listeners to respond to your application. You could update
+  your application code to behave differently when under tests in Cypress. You
+  can control WebSocket messages from within Cypress, conditionally load 3rd
+  party scripts, or call functions directly on your application.
+
+### Shortcuts
+
+Cypress allows for browser context to be cached with
+[`cy.session()`](/api/commands/session). This means as a user, you only need to
+perform authentication once for the entirety of your test suite, and restore the
+saved session between each test. That means you do not have to visit a login
+page, type in a username and password and wait for the page to load and/or
+redirect for every test you run. You can accomplish this once with
+[`cy.session()`](/api/commands/session) and if needed,
+[`cy.origin()`](/api/commands/origin).
+
+### Flake resistant
+
+Cypress knows and understands everything that happens in your application
+synchronously. It is notified the moment the page loads and the moment the page
+unloads. Cypress even knows how fast an element is animating and will
+[wait for it to stop animating](/app/core-concepts/interacting-with-elements#Animations).
+Additionally, it
+[automatically waits for elements to become visible](/app/core-concepts/interacting-with-elements#Visibility),
+to [become enabled](/app/core-concepts/interacting-with-elements#Disability),
+and to
+[stop being covered](/app/core-concepts/interacting-with-elements#Covering).
+When pages begin to transition, Cypress will pause command execution until the
+following page is fully loaded. You can also tell Cypress to
+[wait](/api/commands/wait) on specific network requests to finish.
+
+### Debuggability
+
+Above all else Cypress is built for usability.
+
+- There are hundreds of custom error messages describing the exact reason Cypress
+  failed your test.
+- There is a rich UI which visually shows you the command execution, assertions,
+  network requests, spies, stubs, page loads, or URL changes.
+- The Cypress App takes snapshots of your application and enables you to time travel back
+  to the state it was in when commands ran.
+- You can use the Developer Tools while your tests run to see every console
+  message or network request. You can inspect elements and use
+  debugger statements in your spec or application code - you can use all the tools you're already comfortable with. This
+  enables you to test and develop all at the same time.
+
+### Trade offs
+
+While there are many new and powerful capabilities of Cypress - there are also
+important trade-offs that we've made in making this possible.
+
+If you're interested in understanding more, we've written
+[an entire guide](/app/references/trade-offs) on this topic.
+
 
 ## Get Started
 
-### <Icon name="cog" /> Set up tests
-
-There are no servers, drivers, or any other dependencies to install or
-configure. You can quickly see your first passing test within minutes for
+[Install Cypress](/app/get-started/install-cypress) so you can quickly see your first passing test within minutes for
 [End-to-end tests](/app/end-to-end-testing/writing-your-first-end-to-end-test) or
-[Component tests](/app/component-testing/getting-started).
-
-### <Icon name="code" /> Write tests
-
-Tests written in Cypress are meant to be easy to read and understand. Our [API](/api/table-of-contents)
-comes fully baked, on top of tools you are familiar with already.
-
-<DocsVideo src="/img/snippets/writing-tests.mp4" title="Writing Tests" />
-
-### <Icon name="play-circle" /> Run tests
-
-Cypress runs as fast as your browser can render content. You can watch tests run
-in real time as you develop your applications and time travel to previous steps.
-
-<DocsVideo src="/img/snippets/running-tests.mp4" title="Running Tests" />
-
-### <Icon name="bug" /> Debug tests
-
-Readable error messages help you to debug quickly. You also have access to all
-the developer tools you know and love.
-
-<DocsVideo src="/img/snippets/debugging.mp4" title="Debugging Tests" />
-
-### <Icon name="bug" /> Integrate with CI
-
-Cypress can be easily integrated into your CI provider.
-We have guides for all the [popular CI providers](/app/continuous-integration/ci-provider-examples#Guides).
-You can also use [Cypress GitHub Action](/app/continuous-integration/github-actions#Cypress-GitHub-Action) to run your tests.
-
-<DocsVideo src="https://youtube.com/embed/USX6AntcPyg" />
-
-### <Icon name="bug" /> Optimize your Test Suite
-
-Cypress can run tests in parallel, and you can group test runs by browser or
-device. You can also run tests in a headless mode to speed up your test suite.
-
-<DocsImage
-  src="/img/app/parallelization/parallelization-diagram.png"
-  alt="Parallelization Diagram"
-/>
-
-### <Icon name="bug" /> Replay Tests
-
-With [Cypress Cloud](/cloud/get-started/introduction), you can record your tests, replay them exactly as they
-executed during the run, and then debug using [Test Replay](/cloud/features/test-replay).
-
-<DocsVideo
-  title="Test Replay Product Demo"
-  src="https://youtube.com/embed/vFLShoCM8pA"
-/>
-
-### <Icon name="bug" /> Integrate into your workflow
-
-Cypress Cloud integrates with GitHub, GitLab, and Bitbucket to see test results
-directly on every push or pull request. You can also integrate with Slack, Jira,
-and Microsoft Teams to keep your team in the loop.
-
-<DocsImage
-  src="/img/cloud/integrations/jira/dashboard-jira-integration-install.png"
-  alt="Cypress Cloud Integrations"
-/>
-
-### <Icon name="bug" /> Analyze Testing Trends
-
-Track test results over time with [Test Analytics](/cloud/features/analytics/overview) to
-identify trends, regressions, and improvements in your test suite. Use our [Data
-Extract API](/cloud/integrations/data-extract-api) to extract the data
-that is important to your team.
-
-<DocsImage
-  src="/img/cloud/features/analytics/dashboard-analytics-overview.png"
-  alt="Cloud Analytics Screenshot"
-/>
+[Component tests](/app/component-testing/get-started).
 
 ## Cypress in the Real World
 
