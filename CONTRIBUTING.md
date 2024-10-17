@@ -24,12 +24,6 @@ Thanks for taking the time to contribute! :smile:
     - [Pull Requests](#pull-requests)
     - [Contributor License Agreement](#contributor-license-agreement)
   - [Deployment](#deployment)
-    - [Trigger workflow build](#trigger-workflow-build)
-
-## Code of Conduct
-
-All contributors are expected to abide by our
-[Code of Conduct](https://github.com/cypress-io/cypress/blob/develop/CODE_OF_CONDUCT.md).
 
 ## Writing Documentation
 
@@ -55,11 +49,6 @@ If you are using VS Code, download the
 [MDX extension](https://marketplace.visualstudio.com/items?itemName=unifiedjs.vscode-mdx)
 to get full editor support for MDX files.
 
-#### Admonitions
-
-Use [Admonitions](https://docusaurus.io/docs/markdown-features/admonitions) to
-grab the reader's attention with a blurb.
-
 #### Images
 
 If you are starting a new page and want to add images, add a new folder to
@@ -76,8 +65,7 @@ include the image using the
 />
 ```
 
-Typically you should include the `alt` and `title` attributes to give the user
-more information about the image.
+You should always include the `alt` and `title` attributes to ensure the image is accessible and to give the user more information about the image.
 
 #### Videos
 
@@ -170,30 +158,6 @@ We also opened an [issue](https://github.com/facebook/docusaurus/issues/7946) to
 add this as a feature to Docusaurus, so if this gets implemented this patch can
 go away.
 
-### Writing the Changelog
-
-When adding to the [Changelog](/docs/app/references/changelog.mdx), create a
-new section with the title as the version number on top of the previous section.
-Be sure to follow the category structure defined below (in this order). Each
-bullet point in the list should _always_ be associated to an issue on the
-[`cypress`](https://github.com/cypress-io/cypress) repo and link to that issue
-(except for Documentation changes).
-
-#### Categories
-
-- **Summary** - If it is a large release, you may write a summary explaining
-  what the point of this release is (mostly used for breaking releases)
-- **Breaking Changes** - The users current implementation of Cypress may break
-  after updating.
-- **Deprecations** - Features have been deprecated, but will not break after
-  updating.
-- **Features** - A new feature
-- **Bugfixes** - A bug existed in Cypress and a PR fixed the issue
-- **Misc** - Not a feature or bugfix, but work that was done. May be internal
-  work that was done and associated with an issue
-- **Documentation Changes** - our docs were updated based on behavior changes in
-  release
-
 ## Committing Code
 
 ### Pull Requests
@@ -234,9 +198,7 @@ open a pull request (PR) from your repo to the
 ### Contributor License Agreement
 
 We use a [`cla-assistant.io`](https://cla-assistant.io/) web hook to make sure
-every contributor assigns the rights of their contribution to Cypress.io. If you
-want to read the CLA agreement, its text is in this
-[gist](https://gist.github.com/bahmutov/cf22bc6c6b55219d0f9a76d04981f7ae).
+every contributor assigns the rights of their contribution to Cypress.io.
 
 After making a [pull request](#pull-requests), the CLA assistant will add a
 review comment. Click on the link and accept the CLA. That's it!
@@ -246,20 +208,3 @@ review comment. Click on the link and accept the CLA. That's it!
 We will try to review and merge pull requests as fast as possible. After
 merging, the changes will be made available on the official
 [https://docs.cypress.io](https://docs.cypress.io) website.
-
-### Trigger workflow build
-
-Due to CircleCI API limitations, you cannot trigger a workflow build using the
-API. Thus if you need to build, test and deploy `your-branch` branch for
-example, your best bet is to create an empty GitHub commit in the
-[cypress-io/cypress-documentation](https://github.com/cypress-io/cypress-documentation)
-repository in the `your-branch` branch. We have added
-[make-empty-github-commit](https://github.com/bahmutov/make-empty-github-commit)
-as a dev dependency and set it as `make-empty-commit` NPM script in the
-[package.json](package.json).
-
-To trigger production rebuild and redeploy, use personal GitHub token and run:
-
-```shell
-GITHUB_TOKEN=<your token> npm run make-empty-commit -- --message "trigger deploy" --branch main
-```

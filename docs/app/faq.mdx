@@ -8,11 +8,14 @@ sidebar_label: FAQ
 
 ##### <Icon name="angle-right" /> Is Cypress free and open source?
 
-[Cypress](/app/core-concepts/open-mode) is a free, downloadable and open
+The [Cypress App](/app/get-started/why-cypress) is a free, downloadable and open
 source (MIT license) application. This is always free to use.
+
 [Cypress Cloud](/cloud/get-started/introduction) is a web application that offers a
 variety of billing plans (including a free, open source plan) for when you want
 to record your test runs in CI.
+
+Additionally, we have add-ons like [UI Coverage](/ui-coverage/get-started/introduction) and [Cypress Accessibility](/accessibility/get-started/introduction) which have separate pricing.
 
 Please see our [Pricing Page](https://www.cypress.io/pricing) for more details.
 
@@ -41,69 +44,13 @@ and see how we manage testing the mobile viewport in the
 
 ##### <Icon name="angle-right" /> How is this different from 'X' testing tool?
 
-Cypress is a hybrid application/framework/service all rolled into one. It takes
+The Cypress App is a hybrid application/framework/service all rolled into one. It takes
 a little bit of other testing tools, brings them together and improves on them.
 
-##### Mocha
+In addition to the App, Cypress offers solutions like the [Cypress Cloud](cloud/get-started/introduction),
+[UI Coverage](ui-coverage/get-started/introduction), and [Accessibility](/accessibility/get-started/introduction) to extend the value of your tests and gain insights into the health of your test suite.
 
-Mocha is a testing framework for JavaScript. [Mocha](http://mochajs.org/) gives
-you the `it`, `describe`, `beforeEach` methods. Cypress isn't **different** from
-Mocha, it actually **uses** Mocha under the hood. All of your tests will be
-written on top of Mocha's `bdd` interface.
-
-##### Karma
-
-A unit testing runner for JavaScript, [Karma](http://karma-runner.github.io/),
-works with either [Jasmine](https://jasmine.github.io/),
-[Mocha](http://mochajs.org/), or any other JavaScript testing framework.
-
-Karma also watches your JavaScript files, live reloads when they change, and is
-also the `reporter` for your tests failing / passing. It runs from the command
-line.
-
-Cypress essentially replaces Karma because it does all of this already and much
-more.
-
-##### Capybara
-
-The `Ruby` specific tool that allows you to write integration tests for your web
-application is [Capybara](http://teamcapybara.github.io/capybara/). In the Rails
-world, this is the _go-to_ tool for testing your application. It uses
-[Sauce Labs](https://SauceLabs.com/) (or another headless driver) to interact
-with browsers. Its API consists of commands that query for DOM elements, perform
-user actions, navigate around, etc.
-
-Cypress essentially replaces Capybara because it does all of these things and
-much more. The difference is that instead of testing your application in a
-GUI-less console, you would see your application at all times. You'd never have
-to take a screenshot to debug because all commands instantly provide you the
-state of your application while they run. Upon any command failing, you'll get a
-human-readable error explaining why it failed. There's no "guessing" when
-debugging.
-
-Oftentimes Capybara begins to not work as well in complex JavaScript
-applications. Additionally, trying to TDD your application is often difficult.
-You often have to resort to writing your application code first (typically
-manually refreshing your browser after changes) until you get it working. From
-there you write tests, but lose the entire value of TDD.
-
-##### Protractor
-
-Using [Protractor](http://www.protractortest.org/) provides a nice Promise-based
-interface on top of Selenium, which makes it less complicated to deal with
-asynchronous code. Protractor comes with all of the features of Capybara and
-essentially suffers from the same problems.
-
-Cypress replaces Protractor because it does all of these things and much more.
-One major difference is that Cypress enables you to write your unit tests and
-integration tests in the same tool, as opposed to splitting up this work across
-both Karma and Protractor.
-
-Also, Protractor is very much focused on `AngularJS`, whereas Cypress is
-designed to work with any JavaScript framework. Protractor, because it's based
-on Selenium, is still pretty slow, and is prohibitive when trying to TDD your
-application. Cypress, on the other hand, runs at the speed your browser and
-application are capable of serving and rendering; there is no additional bloat.
+You can see our evaluation of Cypress against some frameworks in our [Migrating from Selenium](/app/guides/migration/selenium-to-cypress) and [Migrating from Protractor](/app/guides/migration/protractor-to-cypress) guides.
 
 #### <Icon name="angle-right" /> Do you support X language or X framework?
 
@@ -111,12 +58,7 @@ Any and all. Ruby, Node, C#, PHP - none of that matters. Cypress tests anything
 that runs in the context of a browser. It is back end, front end, language and
 framework agnostic.
 
-You'll write your tests in JavaScript, but beyond that Cypress works everywhere.
-
-#### <Icon name="angle-right" /> Can I run Cypress on another browser other than Chrome?
-
-You can read about our currently available browsers
-[here](/app/guides/launching-browsers).
+You'll write your tests in JavaScript or TypeScript, but beyond that Cypress works everywhere.
 
 #### <Icon name="angle-right" /> Will Cypress work in my CI provider?
 
@@ -128,69 +70,9 @@ No. But if you're wanting to test parts of your application that are not easily
 testable, you'll want to refactor those situations (as you would for any
 testing).
 
-#### <Icon name="angle-right" /> Does Cypress use Selenium / Webdriver?
-
-No. In fact Cypress' architecture is very different from Selenium in a few
-critical ways:
-
-- Cypress runs in the context of the browser. With Cypress it's easier to
-  inspect what is running in the browser, but harder to talk to the outside
-  world. In Selenium it's the exact opposite. Selenium runs outside of the
-  browser where your application is running (though Cypress is adding more
-  commands every day that give you access to the outside world - like
-  [`cy.request()`](/api/commands/request), [`cy.exec()`](/api/commands/exec),
-  and [`cy.task()`](/api/commands/task)).
-- With Selenium you get either 100% simulated events (with Selenium RC) or 100%
-  native events (with Selenium WebDriver). With Cypress, you get both. For the
-  most part we use simulated events. However we do use automation APIs for
-  things like Cookies where we extend outside of the JavaScript sandbox and
-  interact with the underlying browser APIs. This gives us flexibility to
-  determine which type of event to use in specific situations. Native event
-  support is on our [roadmap](/app/references/roadmap).
-
-#### <Icon name="angle-right" /> If Cypress runs in the browser, doesn't that mean it's sandboxed?
-
-Yes, technically; it's sandboxed and has to follow the same rules as every other
-browser. That's actually a good thing because it doesn't require a browser
-extension, and it naturally will work across all browsers (which enables cross
-browser testing).
-
-But Cypress is actually way beyond a basic JavaScript application running in the
-browser. It is also a desktop application and communicates with back end web
-services.
-
-All of these technologies together are coordinated and enable Cypress to work,
-which extends its capabilities far outside of the browser sandbox. Without
-these, Cypress would not work at all. For the vast majority of your web
-development, Cypress will work fine, and already _does_ work.
-
 #### <Icon name="angle-right" /> We use WebSockets; will Cypress work with that?
 
 Yes.
-
-#### <Icon name="angle-right" /> We have the most complex most outrageous authentication system ever; will Cypress work with that?
-
-If you're using some complex thumb-print, retinal-scan, time-based,
-key-changing, microphone, audial, decoding mechanism to log in your users, then
-no, Cypress won't work with that. But seriously, Cypress is a _development_
-tool, which helps you test your web applications. If your application is doing
-100x things to make it extremely difficult to access, Cypress won't magically
-make it any easier.
-
-Because Cypress is a development tool, you can always make your application more
-accessible while in your development environment. If you want, disable complex
-steps in your authentication systems while you're in your testing environment.
-After all, that's why we have different environments! Normally you already have
-a development environment, a testing environment, a staging environment, and a
-production environment. So expose the parts of your system you want accessible
-in each appropriate environment.
-
-In doing so, Cypress may not be able to give you 100% coverage without you
-changing anything, but that's okay. Use different tools to test the less
-accessible parts of your application, and let Cypress test the other 99%.
-
-Remember, Cypress won't make a non-testable application suddenly testable. It's
-on your shoulders to architect your code in an accessible manner.
 
 #### <Icon name="angle-right" /> Is it possible to use cypress on `.jspa`?
 
@@ -198,7 +80,7 @@ Yes. Cypress works on anything rendered to a browser.
 
 #### <Icon name="angle-right" /> Can I use Cypress to script user-actions on an external site like `gmail.com`?
 
-No. There are already lots of tools to do that. Using Cypress to test against a
+Using Cypress to test against a
 3rd party application is not its intended use. It _may_ work but will defeat the
 purpose of why it was created. You use Cypress _while_ you develop your
 application, it helps you write your tests.
@@ -212,11 +94,6 @@ full stack code coverage.
 - Use the [@cypress/code-coverage](https://github.com/cypress-io/code-coverage)
   plugin
 
-You may also find the following resources helpful when writing end-to-end tests:
-
-- [element coverage](https://glebbahmutov.com/blog/element-coverage/)
-- [application state coverage](https://glebbahmutov.com/blog/hyperapp-state-machine/)
-
 #### <Icon name="angle-right" /> Are there driver bindings in my language?
 
 Cypress does _not_ utilize WebDriver for testing, so it does not use or have any
@@ -227,49 +104,6 @@ or
 [Cypress Browserify preprocessor](https://github.com/cypress-io/cypress-browserify-preprocessor)
 to transpile your tests to JavaScript that Cypress can run.
 
-#### <Icon name="angle-right" /> What resources do you recommend to learn JavaScript before writing Cypress tests?
-
-We hope that Cypress makes test writing simple and fun, even for people with a
-minimal knowledge of JavaScript. If you would like to develop your JS skills, we
-recommend the following free online resources:
-
-- Online tutorial [Learn Javascript](https://gitbookio.gitbooks.io/JavaScript)
-  with small exercises
-- Book [Eloquent JavaScript](https://eloquentjavascript.net/)
-- Book [Human JavaScript](http://read.humanjavascript.com/)
-- an entire collection of free JavaScript books at the
-  [Free Frontend](https://freefrontend.com/javascript-books/) site
-- [The Modern JavaScript Tutorial](https://javascript.info/) teaches you both
-  JavaScript and HTML programming, and is available in several translations
-
-You can also learn JavaScript by watching these videos:
-
-- [Learn JavaScript - Full Course for Beginners](https://www.youtube.com/watch?v=PkZNo7MFNFg)
-  from freeCodeCamp
-- [Learn JavaScript](https://www.codecademy.com/learn/introduction-to-javascript)
-  by CodeAcademy
-
-#### <Icon name="angle-right" /> So what benefits would one get for converting one's unit tests from Karma or Jest to Cypress?
-
-Unit tests are not something we are really trying to solve right now. Most of
-the `cy` API commands are useless in unit tests. The biggest benefit of writing
-unit tests in Cypress is that they run in a browser, which has debugger support
-built in.
-
-We have internally experimented at doing DOM based component unit testing in
-Cypress - and that has the possibility of being an excellent "sweet spot" for
-unit tests. You'd get full DOM support, screenshot support, snapshot testing,
-and you could then use other `cy` commands (if need be). But as I mentioned this
-isn't something we're actively pushing; it remains a thing that's possible if we
-wanted to go down that route.
-
-With that said - we actually believe the best form of testing in Cypress is a
-combination of a "unit test" mixed with an "e2e test". We don't believe in a
-"hands off" approach. We want you to modify the state of your application, take
-shortcuts as much as possible (because you have native access to all objects
-including your app). In other words, we want you to think in unit tests while
-you write integration tests.
-
 #### <Icon name="angle-right" /> What's the difference between a Spec, Test, and a Test Suite?
 
 The terms _spec_, _test_, and _test suite_ have specific meanings. Here's how they are differentiated in Cypress:
@@ -279,13 +113,6 @@ The terms _spec_, _test_, and _test suite_ have specific meanings. Here's how th
 **<u>Test</u>** An individual test case within a spec file. It represents a specific scenario or behavior that needs to be tested. A test typically consists of a series of actions performed on the application being tested, such as interacting with UI elements, submitting forms, or making assertions to validate the expected outcomes. Cypress provides a rich set of built-in commands and APIs to facilitate writing tests and interacting with the application in a declarative manner.
 
 **<u>Test Suite</u>** A collection of spec files that are grouped together. It allows you to organize your tests based on different criteria, such as functional areas, modules, or specific features. A test suite can include multiple spec files, each containing one or more tests. By grouping related tests together in a test suite, you can organize and manage your tests more effectively. Cypress provides options to run individual spec files, multiple spec files, or the entire test suite during test execution.
-
-Common examples are:
-
-- `Smoke`: Designed to quickly check if the basic functionalities of an application are working as expected. They are not exhaustive but aim to catch major issues early in the development process.
-- `Critical path`: Similar to smoke tests but are specifically focused on the critical paths or workflows within an application. They identify and test the most important user journeys or workflows that users frequently perform.
-- `UI`: Designed to simulate user interactions with the application's user interface. They cover a broad range of user scenarios, including navigating through different pages, interacting with UI elements, and validating the visual aspects of the application.
-- `API`: Focused on testing the backend or server-side of an application by making requests to its APIs (Application Programming Interfaces). These tests validate the functionality, reliability, and performance of the APIs that the application relies on.
 
 #### <Icon name="angle-right" /> When should I write a End-to-End tests and when should I write Component Tests?
 
@@ -341,34 +168,28 @@ engineers, then Cypress will likely be more quickly adopted.
 
 #### <Icon name="angle-right" /> How can I find out about new versions of Cypress?
 
-We publish our releases at GitHub and Npm, together with the releases we also
+We publish our releases at GitHub and npm, together with the releases we also
 publish a changelog with the principal changes, fixes, and updates. You can
 follow through these links:
 
 - [GitHub (Releases & changelog)](https://github.com/cypress-io/cypress/releases)
 - [npm (Releases)](https://www.npmjs.com/package/cypress)
-- [Changelog at Cypress Docs](/app/references/changelog)
+- [Changelog](/app/references/changelog)
 
 #### <Icon name="angle-right" /> How often are Cypress versions released?
 
-We schedule releases of Cypress on Monday every two weeks. This new version
-includes any bugfixes and/or features that have been completed by that time. You
-can see all issues merged into the default code branch but not yet released by
-looking at the issues with the label
-[stage: pending release](https://github.com/cypress-io/cypress/issues?q=label%3A%22stage%3A+pending+release%22+is%3Aclosed).
-
-We schedule major releases with breaking changes approximately every 3 months.
+We try to release the Cypress App every two weeks.
 
 If there is a significant bug outside of our release schedule then we release a
 patch as soon as possible.
 
-#### <Icon name="angle-right" /> What information is captured or transmitted when using Cypress?
+#### <Icon name="angle-right" /> What information is captured or transmitted when using the Cypress App?
 
-Cypress runs locally so no data is sent to Cypress aside from exception data,
+The Cypress App runs locally so no data is sent to Cypress aside from exception data,
 which can be disabled using the instructions
-[here](https://docs.cypress.io/app/references/advanced-installation#Opt-out-of-sending-exception-data-to-Cypress).
+[here](/app/references/advanced-installation#Opt-out-of-sending-exception-data-to-Cypress).
 
-#### <Icon name="angle-right" /> Can I write API tests using Cypress? <E2EOnlyBadge />
+#### <Icon name="angle-right" /> Can I write API tests using Cypress?
 
 Cypress is mainly designed to run end-to-end and component tests, but if you
 need to write a few tests that call the backend API using the
@@ -415,18 +236,10 @@ it('adds todos', () => {
 })
 ```
 
-Take a look at
-[Add GUI to your E2E API tests](https://www.cypress.io/blog/2017/11/07/add-gui-to-your-e2e-api-tests/)
-blog post, then at [cy-api](https://github.com/bahmutov/cy-api) plugin that
-pipes the request and response objects into Cypress GUI for easier debugging.
-
 A good strategy for writing targeted API tests is to use them to reach the
 hard-to-test code not covered by other tests. You can find such places in the
 code using the [code coverage](/app/tooling/code-coverage) as a guide. Watch
 the
-[Ship safer code with Cypress and Codecov](https://www.cypress.io/blog/2021/01/22/webcast-recording-ship-safer-code-with-cypress-and-codecov/)
-webinar where we show how to apply this strategy and reach the 100% fullstack
-code coverage via mostly E2E tests and a few targeted API and unit tests.
 
 ## "How-to" Cypress Questions
 
@@ -458,10 +271,6 @@ the non-breaking space entities
 ```javascript
 cy.contains('div', 'Hello world')
 ```
-
-**Tip:** watch the
-[Confirming the text with non breaking space entity](https://youtu.be/6CxZuolWlYM)
-video.
 
 If you'd like to work with the text prior to an assertion:
 
@@ -648,7 +457,7 @@ Cypress will log a verbose yet friendly error message.
 
 **_In CI, how do I make sure my server has started?_**
 
-We recommend these great modules for this use case:
+You can try these modules for this use case:
 
 - [`wait-on`](https://www.npmjs.com/package/wait-on)
 - [`start-server-and-test`](https://github.com/bahmutov/start-server-and-test)
@@ -673,16 +482,9 @@ Network panel. Additionally, you can add your own custom presets by selecting
 
 We do not currently offer any options to simulate this during `cypress run`.
 
-#### <Icon name="angle-right" /> Can I use the new ES7 async / await syntax?
+#### <Icon name="angle-right" /> Can I use ES7 async / await syntax?
 
-No. The Command API is not designed in a way that makes this possible. This is
-not a limitation of Cypress - it is a very conscious and important design
-decision.
-
-Async / await is sugar around promises and Cypress commands are a mixture of
-both promises and streams.
-
-If you're curious please read:
+No. The Command API is not designed in a way that makes this possible currently. To understand how Cypress commands work, please read:
 
 - Our
   [Introduction to Cypress guide](/app/core-concepts/introduction-to-cypress#Commands-Are-Asynchronous)
@@ -691,9 +493,6 @@ If you're curious please read:
   which talks about patterns dealing with async code
 
 #### <Icon name="angle-right" /> How do I select or query for elements if my application uses dynamic classes or dynamic IDs?
-
-Don't use classes or ID's. You add `data-*` attributes to your elements and
-target them that way.
 
 Read more about the
 [best practices for selecting elements here](/app/core-concepts/best-practices#Selecting-Elements).
@@ -716,9 +515,7 @@ Yes. Read more about the
 
 #### <Icon name="angle-right" /> Can I prevent Cypress from failing my test when my application throws an uncaught exception error?
 
-Yes.
-
-By default Cypress will automatically fail tests whenever an uncaught exception
+Yes. By default Cypress will automatically fail tests whenever an uncaught exception
 bubbles up out of your app.
 
 Cypress exposes an event for this (amongst many others) that you can listen for
@@ -837,18 +634,10 @@ Yes. You do it the
 
 Yes.
 
-The page object pattern isn't actually anything "special". If you're coming from
-Selenium you may be accustomed to creating instances of classes, but this is
-completely unnecessary and irrelevant.
-
-The "Page Object Pattern" should really be renamed to: "Using functions and
-creating custom commands".
-
 If you're looking to abstract behavior or roll up a series of actions you can
 create reusable
 [Custom Commands with our API](/api/cypress-api/custom-commands). You can also
-use regular ol' JavaScript functions without any of the ceremony typical with
-"Page Objects".
+use JavaScript functions to achieve this.
 
 For those wanting to use page objects, we've highlighted the
 [best practices ](/api/cypress-api/custom-commands#Best-Practices) for
@@ -873,9 +662,6 @@ simplest option will work:
 ```javascript
 cy.get('[data-cy="file-input"]').selectFile('cypress/fixtures/data.json')
 ```
-
-You can read more about uploading files in
-[this issue](https://github.com/cypress-io/cypress/issues/170).
 
 #### <Icon name="angle-right" /> How do I check that an email was sent out?
 
@@ -1068,11 +854,6 @@ If you want to detect if your Node.js code is running within Cypress, Cypress
 sets an OS level environment variable of `CYPRESS=true`. You could detect that
 you're running in Cypress by looking for `process.env.CYPRESS`.
 
-#### <Icon name="angle-right" /> Do you allow before, beforeEach, after, or afterEach hooks?
-
-Yes. You can read more
-[here](/app/core-concepts/writing-and-organizing-tests#Hooks).
-
 #### <Icon name="angle-right" /> Is there a way to test that a file got downloaded? I want to test that a button click triggers a download.
 
 There are a lot of ways to test this, so it depends. You'll need to be aware of
@@ -1110,7 +891,6 @@ You can modify the screenshot and video size when running headlessly with
 
 #### <Icon name="angle-right" /> Does Cypress support ES7?
 
-{/* prettier-ignore */}
 Yes. You can customize how specs are processed by using one of our [preprocessor plugins](/app/plugins/plugins-list)
 or by [writing your own custom preprocessor](/api/node-events/preprocessors-api).
 
@@ -1149,23 +929,9 @@ To start the server, run the tests and then shutdown the server we recommend
   it may already be reported!
 - Update Cypress. Your issue may have
   [already been fixed](/app/references/changelog).
-- [open an issue](https://github.com/cypress-io/cypress/issues/new/choose). Your
+- [Open an issue](https://github.com/cypress-io/cypress/issues/new/choose). Your
   best chance of getting a bug looked at quickly is to provide a repository with
   a reproducible bug that can be cloned and run.
-
-#### <Icon name="angle-right" /> What are your best practices for organizing tests?
-
-We see organizations _starting_ with Cypress by placing end-to-end tests in a
-separate repo. This is a great practice that allows someone on the team to
-prototype a few tests and evaluate Cypress within minutes. As the time passes
-and the number of tests grows, we _strongly suggest_ moving end-to-end tests to
-live right alongside your front end code. This brings many benefits:
-
-- engages developers in writing end-to-end tests sooner
-- keeps tests and the features they test in sync
-- tests can be run every time the code changes
-- allows code sharing between the application code and the tests (like
-  selectors)
 
 #### <Icon name="angle-right" /> What is the right balance between custom commands and utility functions?
 
@@ -1174,13 +940,6 @@ There is already a great section in
 talks about trade-offs between custom commands and utility functions. We feel
 reusable functions in general are a way to go. Plus they do not confuse
 [IntelliSense like custom commands do](https://github.com/cypress-io/cypress/issues/1065).
-
-#### <Icon name="angle-right" /> Can I print the list of commands from a test in the terminal?
-
-If a test fails, Cypress takes a screenshot image, but does not print the list
-of commands in the terminal, only the failed assertion. There is a user space
-plugin [cypress-failed-log](https://github.com/bahmutov/cypress-failed-log) that
-saves a JSON file with all commands from a failed test.
 
 #### <Icon name="angle-right" /> Can my tests interact with Redux / Vuex data store?
 
@@ -1196,9 +955,7 @@ store, and even drive the application via Redux actions.
 - see
   [Testing Redux Store](https://www.cypress.io/blog/2018/11/14/testing-redux-store/)
   blog post and [Redux Testing](/app/references/recipes#Blogs) recipe.
-- see
-  [Testing Vue web applications with Vuex data store & REST back end](https://www.cypress.io/blog/2017/11/28/testing-vue-web-application-with-vuex-data-store-and-rest-backend/)
-  blog post and [Vue + Vuex + REST Testing](/app/references/recipes#Blogs) recipe.
+- see [Vue + Vuex + REST Testing](/app/references/recipes#Blogs) recipe.
 
 For component testing, you have a bit more control on how you set up your
 providers and plugins for state stores. See the
@@ -1268,28 +1025,16 @@ Note that `cy.$$.escapeSelector()` doesn't work. `cy.$$` doesn't refer to
 
 #### <Icon name="angle-right" /> Why doesn't the `instanceof Event` work?
 
-It might be because of the 2 different windows in the Cypress Test Runner. For
+It might be because of the 2 different windows in the Cypress App. For
 more information, please check
 [the note here](/api/commands/window#Cypress-uses-2-different-windows).
-
-#### <Icon name="angle-right" /> How do I prevent the application from opening a new browser window?
-
-If the application is opening a second browser window or tab, the test can stop
-that action. Read the linked resources for to learn how to:
-
-- [deal with `<a target="_blank">` links](https://glebbahmutov.com/blog/cypress-tips-and-tricks/#deal-with-target_blank)
-- [deal with `window.open` calls](https://glebbahmutov.com/blog/cypress-tips-and-tricks/#deal-with-windowopen)
 
 #### <Icon name="angle-right" /> How do I prevent application redirecting to another URL?
 
 Sometimes, your application might redirect the browser to another domain, losing
 the Cypress's control. If the application is using `window.location.replace`
 method to set a _relative_ URL, try using the `experimentalSourceRewriting`
-option described in our [Experiments](/app/references/experiments) page. You
-can also try rewriting the problematic application code from the test using the
-`cy.intercept` command, as described in the
-[Deal with `window.location.replace`](https://glebbahmutov.com/blog/cypress-tips-and-tricks/#deal-with-windowlocationreplace)
-tip.
+option described in our [Experiments](/app/references/experiments) page.
 
 ## Continuous Integration (CI/CD)
 
@@ -1343,9 +1088,7 @@ commands and the application itself might allocate more memory than available,
 causing the crash. The exact risk of crashing depends on the application and the
 available hardware resources. While there is no single time limit that would
 solve this problem, in general we recommend splitting spec files to run in under
-one minute each. You can read the blog post
-[Make Cypress Run Faster by Splitting Specs](https://glebbahmutov.com/blog/split-spec/)
-to learn how to split a spec file.
+one minute each.
 
 You can further split individual long-running tests. For example, you can verify
 parts of the longer user feature in the separate tests as described in
@@ -1369,14 +1112,7 @@ your system or you may need to run `sudo npm install cypress`.
 #### <Icon name="angle-right" /> Is there an option to run Cypress in CI with Developer Tools open? We want to track network and console issues.
 
 No. There is not currently a way to run Cypress in `cypress run` with Developer
-Tools open. Refer to
-[this issue](https://github.com/cypress-io/cypress/issues/2024) if you'd like
-this feature.
-
-You may try running the tests locally and
-[select the Electron browser](/app/guides/launching-browsers#Electron-Browser),
-that is as close as you will get with Developer Tools open and replicating the
-environment that was run during `cypress run`.
+Tools open. You can use Cypress [Test Replay](/cloud/features/test-replay) to see browser requests and console logs of tests that ran in CI.
 
 ## Distinct Cypress Use Cases
 
@@ -1384,13 +1120,7 @@ environment that was run during `cypress run`.
 
 Yes. You can leverage visual testing tools to test that charts and graphs are
 rendering as expected. For more information, check out the
-[Visual Testing guide](/app/tooling/visual-testing) and the following blog
-posts.
-
-- see
-  [Testing a chart with Cypress and Applitools](https://glebbahmutov.com/blog/testing-a-chart/)
-- see
-  [Testing how an application renders a drawing with Cypress and Percy.io](https://glebbahmutov.com/blog/testing-visually/)
+[Visual Testing guide](/app/tooling/visual-testing).
 
 #### <Icon name="angle-right" /> Can I test a chrome extension? How do I load my chrome extension?
 
@@ -1409,7 +1139,7 @@ out
 
 #### <Icon name="angle-right" /> Can I test the HTML `<head>` element?
 
-Yes, you sure can. While executing tests, you can view the entire
+Yes, you can. While executing tests, you can view the entire
 `window.document` object in your open console using
 [cy.document()](/api/commands/document). You can even make assertions on the
 `<head>` element. Check out this example.
@@ -1510,31 +1240,10 @@ cy.get('[type="email"]').then(($input) => {
 })
 ```
 
-For more examples, read the blog post
-[HTML Form Validation in Cypress](https://glebbahmutov.com/blog/form-validation-in-cypress/).
-
-#### <Icon name="angle-right" /> Can I use Cypress to document my application?
-
-End-to-end tests are an excellent way to keep your application's documentation
-accurate and up-to-date. Read
-[Cypress Book](https://glebbahmutov.com/blog/cypress-book/) blog post, and take
-a look at [cypress-movie](https://github.com/bahmutov/cypress-movie) project.
-
 #### <Icon name="angle-right" /> Can Cypress be used for model-based testing?
 
-Yes, for example see [this webinar](https://www.youtube.com/watch?v=U30BKedA2CY)
-hosted by Curiosity Software. In addition, since our
-
 <Icon name="github" inline="true" contentType="rwa" /> is implemented using XState
-model state library, we are looking for ways to make model-based testing simpler
-and more powerful. Read [Access XState from Cypress Test](https://glebbahmutov.com/blog/cypress-and-xstate/)
-for our start.
-
-#### <Icon name="angle-right" /> Can Cypress test WASM code?
-
-Yes, read the blog post
-[Cypress WASM Example](https://glebbahmutov.com/blog/cypress-wasm-example/). We
-welcome more user feedback to make WASM testing simpler.
+model state library.
 
 #### <Icon name="angle-right" /> Can Cypress be used for performance testing?
 
@@ -1550,17 +1259,6 @@ via [cypress-audit](https://www.npmjs.com/package/cypress-audit) community
 plugin.
 
 ## Integrations with Other Tools/Frameworks/Libraries
-
-#### <Icon name="angle-right" /> Can I test Next.js sites using Cypress?
-
-For end-to-end tests, yes, absolutely. See an example in the
-[next-and-cypress-example](https://github.com/bahmutov/next-and-cypress-example)
-repository where we show how to instrument the application's source code to get
-[code coverage](/app/tooling/code-coverage) from tests.
-
-You can also test Next.js apps in component testing. See the
-[Framework Configuration Guide on Next.js](/app/component-testing/react/overview#Nextjs)
-for more info.
 
 #### <Icon name="angle-right" /> Can I test Gatsby.js sites using Cypress?
 
@@ -1626,11 +1324,6 @@ cy.findByRole('dialog').within(() => {
 })
 ```
 
-We have had a webinar with [Roman Sandler](https://twitter.com/RomanSndlr) where
-he has given practical advice on writing effective tests using the Testing
-Library. You can find the recording and the slides
-[here](https://www.cypress.io/blog/2020/07/15/webcast-recording-build-invincible-integration-tests-using-cypress-and-cypress-testing-library/).
-
 #### <Icon name="angle-right" /> Can I use Cucumber to write tests?
 
 Yes, you can.
@@ -1663,11 +1356,7 @@ scenarios, you might be interested in these articles:
 #### <Icon name="angle-right" /> Can I check the GraphQL network calls using Cypress?
 
 Yes, by using the newer API command [cy.intercept()](/api/commands/intercept) as
-described in the
-[Smart GraphQL Stubbing in Cypress](https://glebbahmutov.com/blog/smart-graphql-stubbing/)
-post or by utilizing the
-[cypress-graphql-mock](https://github.com/tgriesser/cypress-graphql-mock)
-plugin.
+described in the [Working with GraphQL](/app/guides/network-requests#Working-with-GraphQL)
 
 #### <Icon name="angle-right" /> Is there an ESLint plugin for Cypress or a list of globals?
 
@@ -1689,17 +1378,6 @@ Component testing is about testing an individual component in isolation from the
 rest of the app. This allows only having to worry about the component's
 functionality and not how it fits into an entire page.
 
-#### <Icon name="angle-right" /> What frameworks does component testing support?
-
-We support [Angular](/app/component-testing/angular/overview),
-[React](/app/component-testing/react/overview),
-[Svelte](/app/component-testing/svelte/overview), and
-[Vue](/app/component-testing/vue/overview) currently for component testing.
-
-We also support several meta-frameworks like Next.js, Create React App, and
-Nuxt, as well as Webpack and Vite for bundling. Check each framework's overview
-guide for more info.
-
 #### <Icon name="angle-right" /> How does Cypress do component testing?
 
 Cypress will take a component and mount it into a blank canvas. When doing so,
@@ -1709,23 +1387,6 @@ Cypress commands, selectors, and assertions to write your tests.
 
 Cypress supports multiple frameworks and development servers for component
 testing.
-
-#### <Icon name="angle-right" /> When should I use component testing vs end-to-end testing?
-
-The biggest difference between end-to-end testing and component testing is that
-an end-to-end test "visits" an entire page, and a component test "mounts"
-individual components. You set up a component test by passing any
-data/props/events to the component directly versus trying to manipulate a page
-UI. Because of this, component tests are typically easier to write, have less
-setup, and execute faster.
-
-Use component testing during development to help build out a component's
-functionality in a test-driven manner. Feel free to write many tests and cover
-all the edge cases.
-
-Use end-to-end testing to validate user journey's through your application as a
-whole. Don't repeat the same tests in the component tests; instead, focus on how
-an actual user will use the application.
 
 #### <Icon name="angle-right" /> How does Cypress component testing compare to other options?
 
@@ -1739,7 +1400,7 @@ Cypress Component Testing is built around the same tools and APIs that
 end-to-end testing uses. Anyone familiar with Cypress can immediately hop in and
 feel productive writing component tests without a large learning curve.
 Component tests can also use the vast Cypress ecosystem, plugins, and services
-(like [Cypress Cloud](https://www.cypress.io/cloud) already available to
+(like [Cypress Cloud](https://www.cypress.io/cloud)) already available to
 complement your component tests.
 
 #### <Icon name="angle-right" /> What is the Mount Function?

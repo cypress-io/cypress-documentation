@@ -357,13 +357,6 @@ cy.get('[data-testid="new-todo"]').type('Write tests{enter}')
 cy.get('[data-testid="todos"]').should('not.have.length', 2)
 ```
 
-:::info
-
-For more examples, please read the blog post
-[Be Careful With Negative Assertions](https://glebbahmutov.com/blog/negative-assertions/).
-
-:::
-
 ## Should callback
 
 If built-in assertions are not enough, you can write your own assertion function
@@ -431,5 +424,4 @@ cy.get('[data-testid="loading"]').should('not.be.visible')
 
 - [Guide: Introduction to Cypress](/app/core-concepts/introduction-to-cypress#Assertions)
 - [cypress-example-kitchensink Assertions](https://example.cypress.io/commands/assertions)
-- [Cypress should callback](https://glebbahmutov.com/blog/cypress-should-callback/)
-  blog post
+

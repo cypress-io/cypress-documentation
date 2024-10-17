@@ -355,16 +355,11 @@ If you are using both Jest and Cypress in the same project, the TypeScript types
 registered globally by the two test runners can clash. For example, both Jest
 and Cypress provide the clashing types for the `describe` and `it` functions.
 Both Jest and Expect (bundled inside Cypress) provide the clashing types for the
-`expect` assertion, etc. There are two solutions to disentangle the types:
+`expect` assertion, etc.
 
-1. Configure a separate `tsconfig.json` for E2E tests. See our example
+Configure a separate `tsconfig.json` for E2E tests to address the issue. See our example
    [cypress-io/cypress-and-jest-typescript-example](https://github.com/cypress-io/cypress-and-jest-typescript-example)
    repo.
-2. Remove Cypress global variables by using npm package
-   [local-cypress](https://github.com/bahmutov/local-cypress). Read the blog
-   post
-   [How to Avoid Using Global Cypress Variables](https://glebbahmutov.com/blog/local-cypress/)
-   for details.
 
 ## History
 
