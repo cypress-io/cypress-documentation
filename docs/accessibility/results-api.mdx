@@ -55,7 +55,7 @@ getAccessibilityResults({
   recordKey: '...', // optional if set from env
   runTags: [process.env.RUN_TAGS], // required if recording multiple runs
 }).then((results) => {
-  const { runNumber, accessibilityReportUrl, summary, rules, } = results
+  const { runNumber, accessibilityReportUrl, summary, rules } = results
   const { total } = summary.violationCounts
 
   console
@@ -69,7 +69,7 @@ getAccessibilityResults({
     console.log('No Accessibility violations detected!')
     return
   }
-  
+
   const { critical, serious, moderate, minor } = summary.violationCounts
 
   console.log(`${total} Accessibility violations were detected:`)
@@ -83,13 +83,19 @@ getAccessibilityResults({
   })
 
   if (newRuleViolations.length > 0) {
-    console.error('The following rules were violated that were previously passing:')
+    console.error(
+      'The following rules were violated that were previously passing:'
+    )
     console.error(newRuleViolations)
-    throw new Error(`${newRuleViolations.length} rule regressions were introduced and must be fixed.`)
+    throw new Error(
+      `${newRuleViolations.length} rule regressions were introduced and must be fixed.`
+    )
   }
 
   if (total < rulesWithExistingViolations.length) {
-    console.warn(`It seems you have resolved ${rulesWithExistingViolations.length - total} rule(s). Remove them from the list of problematic rules so regressions are not introduced.`)
+    console.warn(
+      `It seems you have resolved ${rulesWithExistingViolations.length - total} rule(s). Remove them from the list of problematic rules so regressions are not introduced.`
+    )
   }
 
   console.log('No new Accessibility violations detected!')
