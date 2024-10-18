@@ -75,7 +75,7 @@ cy.findByRole('img', { name: 'Cypress Logo' })
 ```
 #### Asserting the accessible name of a button
 
-A similar locator technique can be used with interactive elements like buttons:
+A similar accessibility-minded locator technique can be used with interactive elements like buttons:
 
 ```js
   // click the "Submit" button located with the `contains` Cypress command
@@ -93,7 +93,7 @@ There are some important differences to consider between locating specific HTML 
 
 #### Test IDs, Testing Library, and Accessibility
 
-The use of `data-cy`-style test ID attributes to help with test stability has been a longstanding [best practice recommendation](/app/core-concepts/best-practices#Selecting-Elements) from Cypress. Test IDs are resilient to non-functional functional UI changes because they don't specify anything about the nature of the code or content itself, only that some element with that data attribute is present. When code changes, as long as the `data-cy` attributes are preserved in the right places, all the tests using them should continue to pass.
+The use of `data-cy`-style test ID attributes to help with test stability has been a longstanding [best practice recommendation](/app/core-concepts/best-practices#Selecting-Elements) by Cypress. Test IDs are resilient to non-functional functional UI changes because they don't specify anything about the nature of the code or content itself, only that some element with that data attribute is present. When code changes, as long as the `data-cy` attributes are preserved in the right places, all the tests using them should continue to pass.
 
 This approach explicitly avoids testing accessibility - which is all about the nature and structure of the content being tested, and how well the implementation in code matches that content, to provide a functional experience in a range of assistive technologies and browser setups.
 
