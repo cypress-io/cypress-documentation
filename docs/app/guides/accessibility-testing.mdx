@@ -15,7 +15,7 @@ Here are the main ways to account for accessibility when testing with Cypress:
 ### Accessibility scans
 
 - [In-test plugins](#In-test-plugins)
-- Cypress Accessibility
+- [Cypress Accessibility](#Cypress-Accessibility)
 
 ### Explicit, application-specific tests
 
@@ -36,11 +36,11 @@ Note that while automated scans do a good job at detecting violations of a known
 
 ### In-test plugins
 
-The [`cypress-axe`](https://www.npmjs.com/package/cypress-axe) plugin integrates the popular [Axe Core® library by Deque Systems](https://github.com/dequelabs/axe-core/) into your Cypress tests.
+The [`cypress-axe`](https://www.npmjs.com/package/cypress-axe) plugin is a community plugin that integrates the popular [Axe Core® library by Deque Systems](https://github.com/dequelabs/axe-core/) into your Cypress tests.
 
-After setting up the plugin, command are added to your project to inject the library and use it to run an accessibility check. Running the included `checkA11y()` command performs a scan of the current state of the page or component that you are testing, and you can choose to fail the test in response to accessibility issues detected. Detailed configuration is available to scope this to the specific WCAG Success Criteria and related rules that you want to test.
+After setting up the plugin, commands are added to your project to inject the library and use it to run an accessibility check. Running the included `checkA11y()` command performs a scan of the current state of the page or component that you are testing, and you can choose to fail the test in response to accessibility issues detected. Detailed configuration is available to scope this to the specific WCAG Success Criteria and related rules that you want to test.
 
-There are also some newer plugins that are themselves built on top of `cypress-axe` and extend it in various ways, such as [`wick-a11y`](https://www.npmjs.com/package/wick-a11y) and [`cypress-a11y-report`](https://www.npmjs.com/package/cypress-a11y-report), as well as other accessibility testing libraries like the [IBM Equal Access Checker](https://www.npmjs.com/package/cypress-accessibility-checker). All of these tools have their own dedicated documentation for installation, setup, and executing the checks, which we won't repeat here.
+There are also some newer community plugins that are themselves built on top of `cypress-axe` and extend it in various ways, such as [`wick-a11y`](https://www.npmjs.com/package/wick-a11y) and [`cypress-a11y-report`](https://www.npmjs.com/package/cypress-a11y-report), as well as other accessibility testing libraries like the [IBM Equal Access Checker](https://www.npmjs.com/package/cypress-accessibility-checker). All of these tools have their own dedicated documentation for installation, setup, and executing the checks, which we won't repeat here.
 
 The general "add a command to trigger a scan" approach helps detect and prevent all-too-common issues like poor color contrast, missing labels for icons and buttons, images without alt text, and other errors in the implementation of a user interface that can be detected with generic checks.
 
