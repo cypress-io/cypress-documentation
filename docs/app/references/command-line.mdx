@@ -14,35 +14,7 @@ depends on the package manager you are using: npm, Yarn or pnpm.
 For example, you would prefix the command
 [cypress run](#cypress-run) as shown:
 
-<Tabs groupId="package-manager"
-  defaultValue="npm"
-  values={[
-    {label: 'npm', value: 'npm'},
-    {label: 'Yarn', value: 'yarn'},
-    {label: 'pnpm', value: 'pnpm'},
-  ]}>
-  <TabItem value="npm">
-
-```shell
-npx cypress run
-```
-
-  </TabItem>
-  <TabItem value="yarn">
-
-```shell
-yarn cypress run
-```
-
-  </TabItem>
-  <TabItem value="pnpm">
-
-```shell
-pnpm cypress run
-```
-
-  </TabItem>
-</Tabs>
+<CypressRunCommands />
 
 Add any required [options](#Options) to the end of the command line.
 As an example, if you want to run tests in headless mode from a single spec file

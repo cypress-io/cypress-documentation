@@ -2,11 +2,22 @@
 title: Test Retries
 ---
 
-End-to-end (E2E) tests excel at testing complex systems. However, there are
+:::info
+
+##### <Icon name="question-circle" color="#42a1c0" /> What you'll learn
+
+- How test retries work
+- How to configure test retries
+- How to use test retries with screenshots and videos
+- How to use test retries with Cypress Cloud
+
+:::
+
+Cypress excels at testing complex systems. However, there are
 still behaviors that are hard to verify and make tests flaky (i.e., unreliable)
-and fail sometimes due to unpredictable conditions (eg., temporary outages in
-external dependencies, random network errors, etc.). Some other common race
+and fail due to unpredictable conditions. Some common race
 conditions that could result in unreliable tests include:
+
 
 - Animations
 - API calls
@@ -23,18 +34,26 @@ to you.
 
 :::info
 
-You may want to use the [experimental test retries](/app/references/experiments#Experimental-Test-Retries) feature which offers more options for [detecting flaky tests](/cloud/features/flaky-test-management#Flake-Detection). This experimental feature is available as of Cypress `13.4.0`.
-
-Test retries were originally intended to give failing tests more chances to "pass" (for instance, if CI environments for testing are unreliable), while still being determined as flaky if they do eventually pass. However this may not be the desired result in all cases. Experimental retries give you control over the conditions of the pass or fail result.
+The [experimental test retries](/app/references/experiments#Experimental-Test-Retries) feature introduced in Cypress 13.4.0 offers more options for [detecting flaky tests](/cloud/features/flaky-test-management#Flake-Detection). Experimental retries give you control over the conditions of when a test should have a status of pass or fail.
 
 :::
 
-By default, tests will not retry when they fail. You will need to
+By default, tests will not retry when they fail. You'll need to
 [enable test retries in your configuration](#Configure-Test-Retries) to use this
 feature.
 
+:::cypress-config-example
+
+```ts
+{
+  retries: 2
+}
+```
+
+:::
+
 Once test retries are enabled, tests can be configured to have X number of retry
-attempts. For example, if test retries has been configured with `2` retry
+attempts. For example, if test retries have been configured with `2` retry
 attempts, Cypress will retry tests up to 2 additional times (for a total of 3
 attempts) before potentially being marked as a failed test.
 
@@ -45,36 +64,26 @@ also:
 - `beforeEach`
 - `afterEach`
 
-:::caution
-
 However, failures in `before` and `after` hooks will not trigger a retry.
 
-:::
+#### The following is a detailed step-by-step example of how test retries works:
 
-**The following is a detailed step-by-step example of how test retries works:**
-
-Assuming we have configured test retries with `2` retry attempts (for a total of
+Assuming we have configured test retries with **2** retry attempts (for a total of
 3 attempts), here is how the tests might run:
 
-1. A test runs for the first time. If the
-
-   <Icon name="check-circle" color="green" /> test passes, Cypress will move forward
+1. A test runs for the first time. If the test <Icon name="check-circle" color="green" /> passes, Cypress will move forward
    with any remaining tests as usual.
 
-2. If the <Icon name="times" color="red" /> test fails, Cypress will tell you
+2. If the test <Icon name="times" color="red" /> fails, Cypress will tell you
    that the first attempt failed and will attempt to run the test a second time.
 
-<DocsImage src="/img/app/test-retries/v10/attempt-2-start.png" />
-
-3. If the <Icon name="check-circle" color="green" /> test passes after the
+3. If the test <Icon name="check-circle" color="green" /> passes after the
    second attempt, Cypress will continue with any remaining tests.
 
-4. If the <Icon name="times" color="red" /> test fails a second time, Cypress
+4. If the test <Icon name="times" color="red" /> fails a second time, Cypress
    will make the final third attempt to re-run the test.
 
-<DocsImage src="/img/app/test-retries/v10/attempt-3-start.png" />
-
-5. If the <Icon name="times" color="red" /> test fails a third time, Cypress
+5. If the test <Icon name="times" color="red" /> fails a third time, Cypress
    will mark the test as failed and then move on to run any remaining tests.
 
 <DocsImage src="/img/app/test-retries/v10/attempt-3-fail.png" />
@@ -84,7 +93,7 @@ failed test when run via [cypress run](/app/references/command-line#cypress-run)
 
 <DocsImage src="/img/app/test-retries/cli-error-message.png" />
 
-During [cypress open](/app/references/command-line#cypress-open) you will be able
+During [cypress open](/app/references/command-line#cypress-open) you'll be able
 to see the number of attempts made in the
 [Command Log](/app/core-concepts/open-mode#Command-Log) and expand each
 attempt for review and debugging if desired.
@@ -103,7 +112,9 @@ by passing the `retries` option an object with the following options:
 - `openMode` allows you to define the number of test retries when running
   `cypress open`
 
-```jsx
+:::cypress-config-example
+
+```js
 {
   retries: {
     // Configure retry attempts for `cypress run`
@@ -116,6 +127,8 @@ by passing the `retries` option an object with the following options:
 }
 ```
 
+:::
+
 #### Configure retry attempts for all modes
 
 If you want to configure the retry attempts for all tests run in both
@@ -123,11 +136,15 @@ If you want to configure the retry attempts for all tests run in both
 [Cypress configuration](/app/references/configuration#Global)
 by defining the `retries` property and setting the desired number of retries.
 
+:::cypress-config-example
+
 ```jsx
 {
   retries: 1
 }
 ```
+
+:::
 
 ### Custom Configurations
 

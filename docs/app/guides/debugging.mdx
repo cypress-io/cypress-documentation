@@ -2,7 +2,19 @@
 title: Debugging
 ---
 
-## Using `debugger`
+:::info
+
+##### <Icon name="question-circle" color="#42a1c0" /> What you'll learn
+
+- How to use `debugger` and `.debug()` within Cypress tests
+- How to step through test commands with `.pause()`
+- How to use the Developer Tools to get console logs for command information
+- How errors are displayed and structured within Cypress
+- How to debug flaky tests
+
+:::
+
+## Using debugger
 
 Your Cypress test code runs in the same run loop as your application. This means
 you have access to the code running on the page, as well as the things the
@@ -198,7 +210,14 @@ for example, set
 
 While Cypress is
 [flake-resistant](/app/get-started/why-cypress#Flake-resistant), some users
-do experience flake, particularly when running in CI versus locally. Most often
+do experience flake, particularly when running in CI versus locally. 
+
+:::tip
+To debug flake in your recorded tests in CI, try out [Test Replay](/cloud/features/test-replay) in Cypress Cloud.
+It allows you to replay the test exactly as it ran in CI.
+:::
+
+Most often
 in cases of flaky tests, we see that there are not enough assertions surrounding
 test actions or network requests before moving on to the next assertion.
 
@@ -221,15 +240,14 @@ locally but fail in CI.
   [aliasing](/app/core-concepts/variables-and-aliases#Aliases) for this.
 
 Cypress Cloud also offers [Analytics](/cloud/features/analytics/overview) that illustrate
-trends in your tests and can help identify the tests that fail most often. This
+trends in your tests and can help identify the tests that flake or fail most often. This
 could help narrow down what is causing the flake -- for example, seeing
 increased failures after a change to the test environment could indicate issues
 with the new environment.
 
 For more advice on dealing with flake read a
 [series of our blog posts](https://cypress.io/blog/tag/flake/) and
-[Identifying Code Smells in Cypress](https://codingitwrong.com/2020/10/09/identifying-code-smells-in-cypress.html)
-by [Cypress Ambassador](https://www.cypress.io/ambassadors/) Josh Justice.
+[Identifying Code Smells in Cypress](https://codingitwrong.com/2020/10/09/identifying-code-smells-in-cypress.html).
 
 ## Log Cypress events
 
@@ -243,7 +261,7 @@ Cypress emits multiple events you can listen to as shown below.
 
 ## Troubleshooting Cypress
 
-There are times when you will encounter errors or unexpected behavior with
+There are times when you'll encounter errors or unexpected behavior with
 Cypress itself. In this situation, we recommend checking out our
 [Troubleshooting Guide](/app/references/troubleshooting).
 

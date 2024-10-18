@@ -2046,7 +2046,7 @@ _Released 10/25/2022_
 **Features:**
 
 - [`cy.session()`](/api/commands/session) is now supported when using
-  [WebKit (Experimental)](/app/guides/launching-browsers#WebKit-Experimental)
+  [WebKit (Experimental)](/app/references/launching-browsers#WebKit-Experimental)
   and `experimentalSessionAndOrigin` is enabled. Addresses
   [#24116](https://github.com/cypress-io/cypress/issues/24116),
   [#23832](https://github.com/cypress-io/cypress/issues/23832).
@@ -3011,7 +3011,7 @@ which explains some breaking changes in more detail.**
   Addressed in [#20515](https://github.com/cypress-io/cypress/pull/20515).
 - You will no longer be able to run your tests during `cypress run` or
   `cypress open` in
-  [browser versions that are not supported by Cypress](/app/guides/launching-browsers#Browser-versions-supported).
+  [browser versions that are not supported by Cypress](/app/references/launching-browsers#Browser-versions-supported).
 
 - Generated screenshots and videos will still be created inside their respective
   folders (`screenshotsFolder`, `videosFolder`). However, the paths of generated
@@ -7745,7 +7745,7 @@ _Released 12/12/2019_
   [#5871](https://github.com/cypress-io/cypress/issues/5871) and
   [#5892](https://github.com/cypress-io/cypress/issues/5892).
 - The Test Runner now shows a non-Chrome logo for
-  [browsers passed in via `config.browser`](/app/guides/launching-browsers#Customize-available-browsers)
+  [browsers passed in via `config.browser`](/app/references/launching-browsers#Customize-available-browsers)
   that are not of the Chrome family. It also supports showing the Firefox logo
   (in preparation for Firefox browser support). Fixes
   [#5745](https://github.com/cypress-io/cypress/issues/5745).
@@ -7780,7 +7780,7 @@ _Released 11/27/2019_
 
 - Cypress now includes the full list of browsers found and their properties
   within the Cypress configuration. This means that the `browsers` array is also
-  [editable within plugins by accessing `config.browsers`](/app/guides/launching-browsers#Customize-available-browsers)
+  [editable within plugins by accessing `config.browsers`](/app/references/launching-browsers#Customize-available-browsers)
   via the [Configuration API](/api/node-events/configuration-api). The currently
   available browsers are also displayed within the
   [configuration panel](/app/references/configuration#Resolved-Configuration)
@@ -7869,7 +7869,7 @@ _Released 11/27/2019_
 - Updated the [its()](/api/commands/its) and [invoke()](/api/commands/invoke)
   doc to allow for arguments of type Number for their first argument.
 - Documented
-  [how to pass in a custom list of browsers](/app/guides/launching-browsers#Customize-available-browsers)
+  [how to pass in a custom list of browsers](/app/references/launching-browsers#Customize-available-browsers)
   using `config.browsers`.
 
 **Dependency Updates:**
@@ -9230,7 +9230,7 @@ _Released 3/15/2019_
   [#1419](https://github.com/cypress-io/cypress-documentation/issues/1419)
 - Document how to accept or reject project transfers
   [#1474](https://github.com/cypress-io/cypress-documentation/issues/1474)
-- Updated [docs](/app/guides/launching-browsers) on explain how to run Chrome
+- Updated [docs](/app/references/launching-browsers) on explain how to run Chrome
   and Chromium browsers
   [#1339](https://github.com/cypress-io/cypress-documentation/issues/1339)
 - Added `{home}` and `{end}` character sequences to
@@ -10428,7 +10428,7 @@ _Released 5/29/2018_
 - [Updated `Writing and Organizing Tests` to include newly seeded `examples` folder](/app/core-concepts/writing-and-organizing-tests)
 - [Updated `cypress run` spec args](/app/references/command-line#cypress-run)
 - [Updated `Dashboard Service`](/cloud/get-started/introduction)
-- [Updated `Launching Browsers` to include our disabling of device discovery notifications](/app/guides/launching-browsers)
+- [Updated `Launching Browsers` to include our disabling of device discovery notifications](/app/references/launching-browsers)
 - [Updated `Preprocessors` to reflect all ways `close` event could be triggered](/cloud/get-started/introduction)
 - Updated use of "running headlessly" to more accurate "during `cypress run`"
 
@@ -11694,7 +11694,7 @@ _Released 04/16/2017_
 **Features:**
 
 - You can now run your tests in the
-  [Electron browser](/app/guides/launching-browsers#Electron-Browser) that
+  [Electron browser](/app/references/launching-browsers#Electron-Browser) that
   comes built with Cypress. You will see it as an option in the browser
   dropdown. This is the same browser that Cypress uses when running
   `cypress run`. This is useful for debugging issues that only occur during
@@ -13011,7 +13011,7 @@ _Released 05/17/2016_
   these APIs for Chrome, and therefore running on multiple browsers will no
   longer work. This is a temporary setback as we'll be adding driver support for
   all of the other browsers over a period of time. You can read more about our
-  browser management [here](/app/guides/launching-browsers).
+  browser management [here](/app/references/launching-browsers).
 
 **Breaking Changes:**
 
@@ -13045,7 +13045,7 @@ _Released 05/17/2016_
 - Browser sessions are spawned independently of your existing profiles and we've
   disabled things like password saving / prompting, JavaScript popup blocking,
   and other features which get in the way of testing. Read more
-  [here](/app/guides/launching-browsers)
+  [here](/app/references/launching-browsers)
 - We automatically spawn Chrome in a **custom theme** so you can visually
   distinguish the difference between browser sessions spawned with Cypress vs
   your normal sessions. We know this may feel a little jarring because you're

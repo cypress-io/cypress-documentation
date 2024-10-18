@@ -3,17 +3,24 @@ title: Introduction
 sidebar_position: 10
 ---
 
+:::info
+
+##### <Icon name="question-circle" color="#42a1c0" /> What you'll learn
+
+- How to set up Cypress in Continuous Integration (CI)
+- How to run Cypress in CI, record tests, and run tests in parallel
+- How to set up CI workflows to use Cypress Docker images
+- Advanced configuration for OS, dependencies, caching, and environment variables
+
+:::
+
 ## What is Continuous Integration?
 
 <DocsVideo src="https://youtube.com/embed/USX6AntcPyg" />
 
 ## Setting up CI
 
-{/* textlint-disable */}
-
 <DocsVideo src="https://youtube.com/embed/saYovXS9Llk" />
-
-{/* textlint-enable */}
 
 ### Basics
 
@@ -26,9 +33,7 @@ locally in your terminal. You generally only need to do two things:
 
 2. **Run Cypress**
 
-```shell
-cypress run
-```
+<CypressRunCommands />
 
 Depending on which CI provider you use, you may need a config file. You'll want
 to refer to your CI provider's documentation to know where to add the commands
@@ -588,9 +593,7 @@ export DISPLAY=:99
 
 Start Cypress as usual
 
-```shell
-npx cypress run
-```
+<CypressRunCommands />
 
 After all tests across all Cypress instances finish, kill the Xvfb background
 process using `pkill`
