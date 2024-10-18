@@ -42,13 +42,29 @@ After setting up the plugin, commands are added to your project to inject the li
 
 There are also some newer community plugins that are themselves built on top of `cypress-axe` and extend it in various ways, such as [`wick-a11y`](https://www.npmjs.com/package/wick-a11y) and [`cypress-a11y-report`](https://www.npmjs.com/package/cypress-a11y-report), as well as other accessibility testing libraries like the [IBM Equal Access Checker](https://www.npmjs.com/package/cypress-accessibility-checker). All of these tools have their own dedicated documentation for installation, setup, and executing the checks, which we won't repeat here.
 
-The general "add a command to trigger a scan" approach helps detect and prevent all-too-common issues like poor color contrast, missing labels for icons and buttons, images without alt text, and other errors in the implementation of a user interface that can be detected with generic checks.
+The general "add a command to trigger a scan" approach helps detect and prevent all-too-common issues like poor color contrast, missing labels for icons and buttons, images without alt text, and other errors in the implementation of a user interface that can be detected with generic checks. 
+
+#### Managing test performance
+
+In-test automated accessibility checks are so valuable because they bundle a large amount of assertions about all kinds of rules and criteria into one simple command. But this also means they come with some overhead: for example, each call to `cy.checkA11y()` evaluates DOM elements to see which accessibility rules apply to each element in the page, and then runs specific DOM checks for those elements for each of the rules, and computes the results, all of which takes time to complete. If other assets like screenshots are generated at the same time, the performance of this should also be considered, and assets should be generated only when needed.
+
+To avoid performance bloat, you will want to actively manage the tradeoff between test performance and how often tests are executed. This is sometimes solved by testing only the initial pageload, or the state at the end of a test, but this approach misses many important states like modals, multistep workflows, error states in forms, open states of menus, and more. And since many tests may begin or end at the same page state as other tests, there can be a lot of redundancy. So it pays to be more precise.
+
+Performance can also be managed by targeting the accessibility checks to only certain rules or certain parts of the page, or confining them to component tests. Testers should be trained on how and when to run accessibility checks to get the best feedback possible while eliminating redundant checks that don't add value, and minimizing the disruption to the test pipeline. It is best to actively manage this, because unnecessary flake, failures, or timeouts related to accessibility checks can cause frustration and lead to resistance in adopting this form of testing. 
+
+#### Summary
 
 A combination of automated checks to reveal mistakes in the implementation, and specific assertions about the important user flows can be extremely powerful and helps catch much more accessibility regressions than either approach taken alone.
 
 ### Cypress Accessibility
 
-In-test accessibility checks are the only kind available in typical testing platforms. They come with some limitations and tradeoffs that [Cypress Accessibility](/accessibility/get-started/introduction), available in Cypress Cloud, is designed to solve. By moving the checks outside of the test context and running them in Cypress Cloud as tests are recorded, Cypress Accessibility removes adoption, training, and test performance hurdles that can hinder the effective implementation of in-test checks. Cypress automatically detects all the steps within user flows, requiring no test code to be written to trigger the Axe Core® accessibility checks.
+<DocsImage
+  src="/img/accessibility/cy-a11y-detail.png"
+  width="60%"
+  alt="Cypress Accessibility UI displaying a 'Buttons must have discernible text' violation example"
+/>
+
+In-test accessibility checks are the only kind available in typical testing scenarios. They come with some limitations and tradeoffs that [Cypress Accessibility](/accessibility/get-started/introduction), available in Cypress Cloud, is designed to solve. By moving the checks outside of the test context and running them in Cypress Cloud as tests are recorded, Cypress Accessibility removes adoption, training, and test performance hurdles that can hinder the effective implementation of in-test checks. Cypress automatically detects all the steps within user flows, requiring no test code to be written to trigger Axe Core® accessibility checks.
 
 To learn more, you can read our [dedicated docs](/accessibility/get-started/introduction), or review a [public live example of an automatically-generated accessibility report](http://on.cypress.io/rwa-accessibility-views) in our Cypress Realworld App demo project.
 
@@ -87,7 +103,7 @@ cy.findByRole('img', { name: 'Cypress Logo' }).should('be.visible')
 A similar accessibility-minded locator technique can be used with interactive elements like buttons:
 
 ```js
-// click the "Submit" button located with the `contains` Cypress command
+// click the "Submit" button located by `cy.contains()`
 cy.contains('button', 'Submit').click()
 ```
 
@@ -102,7 +118,7 @@ There are some important differences to consider between locating specific HTML 
 
 ### Test IDs, Testing Library, and Accessibility
 
-The use of `data-cy`-style test ID attributes to help with test stability has been a longstanding [best practice recommendation](/app/core-concepts/best-practices#Selecting-Elements) by Cypress. Test IDs are resilient to non-functional functional UI changes because they don't specify anything about the nature of the code or content itself, only that some element with that data attribute is present. When code changes, as long as the `data-cy` attributes are preserved in the right places, all the tests using them should continue to pass.
+The use of `data-cy`-style test ID attributes to help with test stability has been a longstanding [best practice recommendation](/app/core-concepts/best-practices#Selecting-Elements) by Cypress. Test IDs are resilient to non-functional UI changes because they don't specify anything about the nature of the code or content itself, only that some element with that data attribute is present. When code changes, as long as the `data-cy` attributes are preserved in the right places, all the tests using them should continue to pass.
 
 This approach explicitly avoids testing accessibility - which is all about the nature and structure of the content being tested, and how well the implementation in code matches that content, to provide a functional experience in a range of assistive technologies and browser setups.
 
