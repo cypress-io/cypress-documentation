@@ -271,14 +271,13 @@ In the case where you cannot control it, you can still conditionally dismiss it
 
 ```js
 cy.visit('https://example.cypress.io')
-cy.getCookie('showWizard')
-  .then((val) => {
-    if (val) {
-      // dismiss the wizard conditionally by enqueuing these
-      // three additional commands
-      cy.get('#wizard').contains('Close').click()
-    }
-  })
+cy.getCookie('showWizard').then((val) => {
+  if (val) {
+    // dismiss the wizard conditionally by enqueuing these
+    // three additional commands
+    cy.get('#wizard').contains('Close').click()
+  }
+})
 ```
 
 #### Use your server or database:
@@ -310,13 +309,15 @@ in a way that the data is **always** present and query-able. The data would have
 to be present 100% of the time, otherwise this strategy would not work.
 
 ```js
-cy.get('html').should('have.attr', 'data-wizard').then((wizard) => {
-  if (wizard) {
-    // dismiss the wizard conditionally by enqueuing these
-    // three additional commands
-    cy.get('#wizard').contains('Close').click()
-  }
-})
+cy.get('html')
+  .should('have.attr', 'data-wizard')
+  .then((wizard) => {
+    if (wizard) {
+      // dismiss the wizard conditionally by enqueuing these
+      // three additional commands
+      cy.get('#wizard').contains('Close').click()
+    }
+  })
 ```
 
 ### Element existence

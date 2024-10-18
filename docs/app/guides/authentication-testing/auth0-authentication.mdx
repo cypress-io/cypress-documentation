@@ -348,9 +348,9 @@ informational.
 :::
 
 The
-<Icon name="github" inline="true" contentType="rwa" /> is
-used and provides configuration and runnable code for both the React SPA and the
-Express back end.
+
+<Icon name="github" inline="true" contentType="rwa" /> is used and provides configuration
+and runnable code for both the React SPA and the Express back end.
 
 The front end uses the [auth0-react SDK](https://github.com/auth0/auth0-react)
 for React Single Page Applications (SPA), which uses the
@@ -473,6 +473,7 @@ export default withAuthenticationRequired(AppAuth0)
 Note: The full
 [AppAuth0.tsx component](https://github.com/cypress-io/cypress-realworld-app/blob/develop/src/containers/AppAuth0.tsx)
 is in the
+
 <Icon name="github" inline="true" contentType="rwa" />.
 
 Next, we update our entry point (`index.tsx`) to wrap our application with the
@@ -546,7 +547,7 @@ const AppAuth0 = () => {
       })();
     }, [user, getAccessTokenSilently]);
 
-  // If under test in Cypress, get credentials from "auth0Cypress" 
+  // If under test in Cypress, get credentials from "auth0Cypress"
   // localstorage and send event to our state management to log the user into the SPA
   if (window.Cypress) {
     useEffect(() => {
@@ -580,7 +581,7 @@ const AppAuth0 = () => {
   );
 };
 
-// Conditional export wrapped with `withAuthenticationRequired` 
+// Conditional export wrapped with `withAuthenticationRequired`
 // if we aren't under test in Cypress.
 let appAuth0 = window.Cypress ? AppAuth0 : withAuthenticationRequired(AppAuth0);
 export default appAuth0
@@ -604,7 +605,9 @@ is a JSON Web Token (JWT) and it contains specific granted permissions for the
 API.
 
 Add this token as environment variable `AUTH0_MGMT_API_TOKEN` to our
-<Icon name="github" inline="true" contentType="rwa" /> `.env` file with your API token.
+
+<Icon name="github" inline="true" contentType="rwa" /> `.env` file with your API
+token.
 
 ```jsx title='.env'
 // ... additional keys

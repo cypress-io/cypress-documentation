@@ -301,43 +301,43 @@ is in the <Icon name="github" inline="true" contentType="rwa" />.
 
 ```tsx title='containers/AppGoogle.tsx'
 // initial imports ...
-import { GoogleLogin, useGoogleLogin } from "react-google-login"
+import { GoogleLogin, useGoogleLogin } from 'react-google-login'
 // ...
-const AppGoogle= () => {
+const AppGoogle = () => {
   // ...
   useGoogleLogin({
-      clientId: process.env.REACT_APP_GOOGLE_CLIENTID!,
-      onSuccess: (res) => {
-      authService.send("GOOGLE", { user: res.profileObj, token: res.tokenId });
+    clientId: process.env.REACT_APP_GOOGLE_CLIENTID!,
+    onSuccess: (res) => {
+      authService.send('GOOGLE', { user: res.profileObj, token: res.tokenId })
     },
-    cookiePolicy: "single_host_origin",
+    cookiePolicy: 'single_host_origin',
     isSignedIn: true,
-  });
+  })
   // ...
   const isLoggedIn =
     isAuthenticated &&
-    (authState.matches("authorized") ||
-      authState.matches("refreshing") ||
-      authState.matches("updating"));
+    (authState.matches('authorized') ||
+      authState.matches('refreshing') ||
+      authState.matches('updating'))
   return (
     <div className={classes.root}>
       // ...
-      {authState.matches("unauthorized") && (
+      {authState.matches('unauthorized') && (
         <Container component="main" maxWidth="xs">
           <CssBaseline />
           <div className={classes.paper}>
             <GoogleLogin
               clientId={process.env.REACT_APP_GOOGLE_CLIENTID!}
               buttonText="Login"
-              cookiePolicy={"single_host_origin"}
+              cookiePolicy={'single_host_origin'}
             />
           </div>
         </Container>
       )}
     </div>
-  );
-};
-export default AppGoogle;
+  )
+}
+export default AppGoogle
 ```
 
 Next, we update our entry point (`index.tsx`) to conditionally load the
