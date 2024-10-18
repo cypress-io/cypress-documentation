@@ -89,7 +89,7 @@ And using the Testing Library `ByRole` locator:
   cy.findByRole('button', { name: 'Submit' }).click()
 ```
 
-There are some important differences to consider between locating specific HTML elements themselves and locating those same elements only by their `role`, which is the main Testing Library recommendation.
+There are some important differences to consider between locating specific HTML elements themselves and locating those same elements only by their `role`, which is the main Testing Library recommendation. We'll discuss these in the next section.
 
 #### Test IDs, Testing Library, and Accessibility
 
@@ -128,14 +128,14 @@ So what should you do in your test automation to help confirm the UI is accessib
 
 Component tests are a fantastic place to do this centralized accessibility spec work, whether using [Cypress Component testing](/app/component-testing/get-started) or something else. Component tests are run locally during development, written by developers as they build UI, and can easily specify the specific HTML that is intended to be rendered, without being a distraction in an end-to-end test of a specific user flow.
 
-Accessibility should be tested at least once for a given component, area of the application, or workflow. Once that is achieved, there is no additional accessibility benefit to repeatedly asserting subsets of the same things in other tests.
+Accessibility should be tested at least once for a given component, area of the application, or workflow. Once that is achieved, there is no additional accessibility benefit to repeatedly asserting subsets of the same things in other tests, unless those tests introduce new combinations of components that have not been tested for accessibility anywhere else.
 
-#### Does locator choice make a difference?
+#### Choosing a locator approach
 
-Test IDs are the most resilient and are a good choice for maximizing the stability of your pipeline, especially if end-to-end tests are written by people who are less familiar with accessibility. You do not lose any accessibility "coverage", as long as accessibility is explicitly tested for with assertions, and a library like Axe Core® is in place to catch mistakes.
+Test IDs are the most resilient locator option and are a good choice for maximizing the stability of your pipeline, especially if end-to-end tests are written by people who are not familiar with accessibility, and don't already know the correct roles, elements, and behavior that should be expected. You do not lose any accessibility "coverage", as long as accessibility is explicitly tested for with assertions, and a library like Axe Core® is in place to catch mistakes.
 
 Testing Library locators are convenient and familiar to many React developers (due to its origins as "React Testing Library"), and they doesn't require any code changes, but may cause _many_ tests to fail when a label is missing, instead of just your explicit accessibility assertions, because they are a step closer to the implementation details. 
 
-Additionally, Testing Library locators can provide a false sense of confidence that something is accessible simply because it can be located by its role. Still, when understood correctly, teams can write effective tests using this approach, and some locators like [`findByLabelText`](https://testing-library.com/docs/queries/bylabeltext) stand out as being particularly pleasant to use.
+Additionally, Testing Library locators can provide a false sense of confidence that something is accessible simply because it can be located by its role. Still, when understood correctly, teams can write effective tests using this approach, and some locators like [`findByLabelText`](https://testing-library.com/docs/queries/bylabeltext) stand out as being particularly useful.
 
 What is most important in all accessibility automation discussions is this: how can your testing strategy best support your users with disabilities to independently understand and use your application? Cypress enables you to place the user at the center of your testing process, with a mix of automated scans and some specific intentional assertions, you can reach high levels of confidence that your application is free of known accessibility errors and let your test pipeline warn you if things are going off track.
