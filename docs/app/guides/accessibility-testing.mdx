@@ -4,19 +4,34 @@ title: Accessibility Testing
 
 Accessibility testing helps to confirm that an application works correctly for people with disabilities. 
 
-To set a good foundation for an accessible user experience, web sites and apps must conform to certain guidelines, known as the [Web Content Accessibility Guidelines](https://www.w3.org/WAI/standards-guidelines/wcag/)(WCAG). Meeting or exceeding these guidelines will help ensure your disabled users can independently perceive the content of your application, navigate through your pages and sections, and complete the available actions.
+To set a good foundation for an accessible user experience, web sites and apps must conform to certain guidelines, known as the [Web Content Accessibility Guidelines](https://www.w3.org/WAI/standards-guidelines/wcag/) (WCAG). Meeting or exceeding these guidelines will help ensure your disabled users can independently perceive the content of your application, navigate through your pages and sections, and complete the available actions.
 
-Cypress supports many kinds of accessibility testing, including through a rich plugin ecosystem, standard test practices, as well as a commercial, enterprise-ready solution in Cypress Cloud.
+Cypress supports many kinds of accessibility testing, through standard test practices, a rich plugin ecosystem, as well as a commercial, enterprise-ready solution in Cypress Cloud.
 
 ## Including accessibility in your Cypress tests
 
-There are three main ways to account for accessibility when testing with Cypress:
+Here are the main ways to account for accessibility when testing with Cypress:
 
+### Accessibility scans
 - In-test plugins
 - Cypress Accessibility 
-- Accessibility-focused assertions
+
+### Explicit, application-specific tests
+- Accessibility-focused assertions and locators
+- Tests for specific functionality relevant to assistive technology
 
 We will discuss each of these below.
+
+
+## Accessibility Scans
+
+:::info
+Automated scans are effective because many accessibility issues are caused by incorrect HTML structure or missing data that would be required by assistive technologies like screen readers, voice control systems, Braille displays, and more. Browsers transform the current HTML on the page into a standardized format that other technologies can hook into. Automated scans in your tests will alert you if specific items needed for this process are missing.
+:::
+
+:::warning
+Note that while automated scans do a good job at detecting violations of a known list of rules, no automated scan can prove that the interface is **fully** accessible and works well for users with disabilities. It is always necessary to understand the limitations and expected coverage provided by the library you choose, and then make a plan to cover the gaps with manual testing and/or traditional Cypress assertions about additional expected behavior, based on your knowledge of what is needed by your users.
+::: 
 
 ### In-test plugins
 
@@ -24,13 +39,9 @@ The [`cypress-axe`](https://www.npmjs.com/package/cypress-axe) plugin integrates
 
 After setting up the plugin, command are added to your project to inject the library and use it to run an accessibility check. Running the included `checkA11y()` command performs a scan of the current state of the page or component that you are testing, and you can choose to fail the test in response to accessibility issues detected. Detailed configuration is available to scope this to the specific WCAG Success Criteria and related rules that you want to test.
 
-There are further plugins that are themselves built on top of `cypress-axe` and extend it in various ways, such as [`wick-a11y`](https://www.npmjs.com/package/wick-a11y) and [`cypress-a11y-report`](https://www.npmjs.com/package/cypress-a11y-report), as well as other accessibility testing libraries like the [IBM Equal Access Checker](https://www.npmjs.com/package/cypress-accessibility-checker). All of these tools have their own dedicated documentation for installation, setup, and executing the checks, which we won't repeat here.
+There are also some newer plugins that are themselves built on top of `cypress-axe` and extend it in various ways, such as [`wick-a11y`](https://www.npmjs.com/package/wick-a11y) and [`cypress-a11y-report`](https://www.npmjs.com/package/cypress-a11y-report), as well as other accessibility testing libraries like the [IBM Equal Access Checker](https://www.npmjs.com/package/cypress-accessibility-checker). All of these tools have their own dedicated documentation for installation, setup, and executing the checks, which we won't repeat here.
 
 The general "add a command to trigger a scan" approach helps detect and prevent all-too-common issues like poor color contrast, missing labels for icons and buttons, images without alt text, and other errors in the implementation of a user interface that can be detected with generic checks.
-
-:::warning
-Note that no automated scan can prove that the interface is fully accessible and works well for users with disabilities, so it is always necessary to understand the limitations and expected coverage provided by the library you choose, and then make a plan to cover the gaps with manual testing and/or traditional Cypress assertions about additional expected behavior.
-::: 
 
 A combination of automated checks to reveal mistakes in the implementation, and specific assertions about the important user flows can be extremely powerful and helps catch much more accessibility regressions than either approach taken alone.
 
@@ -41,11 +52,11 @@ In-test accessibility checks are the only kind available in typical testing plat
 
 To learn more, you can read our [dedicated docs](/accessibility/get-started/introduction), or review a [public live example of an automatically-generated accessibility report](http://on.cypress.io/rwa-accessibility-views) in our Cypress Realworld App demo project.
 
-### Accessibility-focused assertions
+## Accessibility-specific tests
 
 While automation like Axe Core® can detect missing attributes and other aspects of code quality that impact the experience of people with disabilities using the web, this kind of automation doesn't know anything about your specific application and the expectations you have for your users. That's where including accessibility in your specs comes in.
 
-#### Asserting alt text of images
+### Asserting alt text of images
 
 To assert that the correct alternative text is present on your logo image, an explicit test can be written:
 
@@ -73,7 +84,7 @@ This kind of accessibility-friendly locator approach is also possible with the [
 cy.findByRole('img', { name: 'Cypress Logo' })
   .should('be.visible')
 ```
-#### Asserting the accessible name of a button
+### Asserting the accessible name of a button
 
 A similar accessibility-minded locator technique can be used with interactive elements like buttons:
 
@@ -91,7 +102,7 @@ And using the Testing Library `ByRole` locator:
 
 There are some important differences to consider between locating specific HTML elements themselves and locating those same elements only by their `role`, which is the main Testing Library recommendation. We'll discuss these in the next section.
 
-#### Test IDs, Testing Library, and Accessibility
+### Test IDs, Testing Library, and Accessibility
 
 The use of `data-cy`-style test ID attributes to help with test stability has been a longstanding [best practice recommendation](/app/core-concepts/best-practices#Selecting-Elements) by Cypress. Test IDs are resilient to non-functional functional UI changes because they don't specify anything about the nature of the code or content itself, only that some element with that data attribute is present. When code changes, as long as the `data-cy` attributes are preserved in the right places, all the tests using them should continue to pass.
 
@@ -105,7 +116,7 @@ Whether you primarily use Testing Library element locators, test IDs, or a diffe
 
 There is much more to this topic than we can cover here, but we will provide a small example, and a recommendation for what to do.
 
-#### Roles vs elements - button example
+### Roles vs elements - button example
 
 The native HTML `button` element has a complex accessibility contract implemented by the browser for keyboard and screen reader users:
 
@@ -122,7 +133,7 @@ On the other hand, a `div` with `role` of `button` does not get this default bro
 
 This means that, without some assertions about either the `button` element itself, or a full test of the accessibility "contract" of that element, it is not safe for a developer to refactor from from a `button` to a `div`, even though Testing Library will treat each as the same if located using the `ByRole` locator. This is because, much like test IDs, the `ByRole` approach is intended to _avoid_ testing the implementation directly, to keep tests resilient. 
 
-#### Where to test accessibility
+## Where to test accessibility
 
 So what should you do in your test automation to help confirm the UI is accessible? First of all, for known critical areas like forms or checkout flows, ensure that the accessibility behavior is tested explicitly in at least one place. The means verifying that form fields and buttons have the correct labels and use the expected HTML elements, and other aspects of the DOM that communicate necessary information. 
 
@@ -130,7 +141,7 @@ Component tests are a fantastic place to do this centralized accessibility spec 
 
 Accessibility should be tested at least once for a given component, area of the application, or workflow. Once that is achieved, there is no additional accessibility benefit to repeatedly asserting subsets of the same things in other tests, unless those tests introduce new combinations of components that have not been tested for accessibility anywhere else.
 
-#### Choosing a locator approach
+### Choosing a locator approach
 
 Test IDs are the most resilient locator option and are a good choice for maximizing the stability of your pipeline, especially if end-to-end tests are written by people who are not familiar with accessibility, and don't already know the correct roles, elements, and behavior that should be expected. You do not lose any accessibility "coverage", as long as accessibility is explicitly tested for with assertions, and a library like Axe Core® is in place to catch mistakes.
 
