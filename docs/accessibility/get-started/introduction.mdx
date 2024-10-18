@@ -1,7 +1,7 @@
 ---
 sidebar_label: Introduction
 title: 'Introduction'
-description: 'Cypress Accessibility provides organized, visual, and actionable accessibility reports, based completely on the tests you record to Cypress Cloud, and powered by Axe Core by Deque Systems.'
+description: 'Cypress Accessibility provides organized, visual, and actionable accessibility reports, based completely on the tests you record to Cypress Cloud, and powered by Axe Core® by Deque Systems.'
 sidebar_position: 10
 ---
 
@@ -9,7 +9,9 @@ sidebar_position: 10
 
 <AccessibilityAddon />
 
-Cypress Accessibility provides organized, visual, and actionable accessibility reports, based completely on the tests you record to Cypress Cloud, and powered by Axe Core by Deque Systems.
+Cypress Accessibility provides organized, visual, and actionable accessibility reports, based completely on the tests you record to Cypress Cloud, and powered by Axe Core® by Deque Systems.
+
+To learn about the general topic of accessibility testing using the Cypress App, see [our guide on this topic](/app/guides/accessibility-testing).
 
 <DocsImage
   src="/img/accessibility/get-started/cypress-accessibility-overview.png"
@@ -26,10 +28,20 @@ Reports are generated using the industry-standard open source [Axe Core](https:/
 
 ## Understanding what is tested
 
-Axe Core checks for accessibility violations in your website's user interface, based on common accessibility standards. A violation detected by Axe usually indicates that some users with disabilities would have a problem using or perceiving a feature. An example of a violation would be an image without alternative text provided in the markup, which means the content is not perceivable to visually-impaired users. [Learn more about Axe.](https://github.com/dequelabs/axe-core)
+Axe Core® checks for accessibility violations in your website's user interface, based on common accessibility standards. A violation detected by Axe usually indicates that some users with disabilities would have a problem using or perceiving a feature. An example of a violation would be an image without alternative text provided in the markup, which means the content is not perceivable to visually-impaired users. [Learn more about Axe.](https://github.com/dequelabs/axe-core)
 
 Axe reaches a high standard for automated testing, but cannot test every possible aspect of compliance, especially for heavily custom interfaces or aspects requiring human judgment. Please note that a 100% axe score does not mean all possible accessibility errors have been ruled out. [Axe typically detects up to 57% of the issues that would appear in a manual accessibility audit.](https://www.deque.com/blog/automated-testing-study-identifies-57-percent-of-digital-accessibility-issues/)
 
-##### Trademark notice
+## Highlights
+
+* All steps of all user flows tested in Cypress are captured automatically
+* Server-side execution means no disruption to existing test code or practices, and no performance impact
+* Reports are generated at the page or component level, as well as a combined report showing the outcome of all accessibility rules checked in the run
+* Debuggable full-page DOM snapshots with highlights are provided for every violation
+* Iframes and Shadow DOM are supported out-of-the-box
+* The Results API allows you to own how your CI pipeline reacts to the accessibility results of the run to implement a policy
+* "Ignored" elements are isolated and don't affect your score, but can still be reviewed
+
+### Trademark notice
 
 _Note: DEQUE, DEQUELABS, AXE®, and AXE-CORE® are trademarks of Deque Systems, Inc. in the US and other countries._

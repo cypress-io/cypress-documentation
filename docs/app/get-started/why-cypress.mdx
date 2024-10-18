@@ -29,10 +29,10 @@ of your test suite and the quality of your application.
 
 - [Cypress App](/app/core-concepts/open-mode), a free,
   [open source](https://github.com/cypress-io/cypress),
-  locally installed app.
+  locally installed app for writing and running tests.
 - [Cypress Cloud](/cloud/get-started/introduction), a paid service for recording tests, surfacing test results, and providing test analytics.
 - [UI Coverage](/ui-coverage/get-started/introduction), a paid add-on providing a visual overview of test coverage across every page and component of your app, offering clear insights into uncovered areas that everyone can understand.
-- [Cypress Accessibility](/accessibility/get-started/introduction), a paid add-on providing accessibility checks to ensure your application is accessible to all users.
+- [Cypress Accessibility](/accessibility/get-started/introduction), a paid add-on providing accessibility checks, which helps detect barriers for people with disabilities using your application.
 
 Cypress is a robust solution that can improve the quality of your application.
 
@@ -43,8 +43,7 @@ Cypress is a robust solution that can improve the quality of your application.
   CI Provider, [Cypress Cloud](/cloud/get-started/introduction) can record your test
   runs surfacing exactly what happened during the test in [Test Replay](/cloud/features/test-replay).
   You'll never have to wonder: _Why did this fail?_
-- **Finally:** Add on [Cypress Accessibility](/accessibility/get-started/introduction) to ensure your application is
-  accessible to all users and [UI Coverage](/ui-coverage/get-started/introduction) to ensure you've tested
+- **Finally:** Add on [Cypress Accessibility](/accessibility/get-started/introduction) to get continuous feedback on accessibility issues and regressions, and [UI Coverage](/ui-coverage/get-started/introduction) to ensure you've tested
   every part of your application.
 
 ## Features
@@ -210,8 +209,8 @@ it('adds a todo', () => {
 
 ### Accessibility Testing
 
-You can write Cypress tests to check the accessibility of your application.
-When combined with [Cypress Accessibility](/accessibility/get-started/introduction), insights can be surfaced when
+You can write Cypress tests to check the accessibility of your application, and use plugins to run broad accessibility checks.
+When combined with [Cypress Accessibility](/accessibility/get-started/introduction) in Cypress Cloud, insights can be surfaced when specific
 accessibility standards are not met through your testing - with no configuration required.
 
 ```js
