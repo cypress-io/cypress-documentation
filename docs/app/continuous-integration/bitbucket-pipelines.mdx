@@ -2,22 +2,27 @@
 title: Bitbucket Pipelines
 ---
 
-With its integrated
-[integrated CI/CD, Pipelines](https://bitbucket.org/product/features/pipelines),
-[Bitbucket](https://bitbucket.com) offers developers "CI/CD where it belongs,
-right next to your code. No servers to manage, repositories to synchronize, or
-user management to configure."
+:::info
+
+##### <Icon name="question-circle" color="#42a1c0" /> What you'll learn
+
+- How to set up Bitbucket Pipelines to run Cypress tests
+- How to cache dependencies and build artifacts
+- How to parallelize Cypress tests with Bitbucket Pipelines
+- How to use Cypress Cloud with Bitbucket Pipelines
+
+:::
+
+## Basic Setup
 
 Detailed documentation is available in the
 [Bitbucket Pipelines Documentation](https://support.atlassian.com/bitbucket-cloud/docs/get-started-with-bitbucket-pipelines/).
-
-## Basic Setup
 
 The example below shows a basic setup and job to use
 [Bitbucket Pipelines](https://bitbucket.org/product/features/pipelines) to run
 end-to-end tests with Cypress and Electron.
 
-```yaml
+```yaml title="bitbucket-pipelines.yml"
 image: node:latest
 
 pipelines:
@@ -47,11 +52,13 @@ pipelines:
 
 The Cypress team maintains the official
 [Docker Images](https://github.com/cypress-io/cypress-docker-images) for running
-Cypress locally and in CI, which are built with Google Chrome, Mozilla Firefox and Microsoft Edge. For
+Cypress locally and in CI, with some images including Chrome, Firefox and Edge. For
 example, this allows us to run the tests in Firefox by passing the
 `--browser firefox` attribute to `cypress run`.
 
-```yaml
+Read about [Cypress docker variants](/app/continuous-integration/overview#Cypress-Docker-variants) to decide which image is best for your project.
+
+```yaml title="bitbucket-pipelines.yml"
 image: cypress/browsers:node-20.14.0-chrome-126.0.6478.114-1-ff-127.0.1-edge-126.0.2592.61-1
 
 pipelines:
@@ -70,7 +77,7 @@ pipelines:
 
 Per the
 [Caches documentation](https://support.atlassian.com/bitbucket-cloud/docs/cache-dependencies/),
-[Bitbucket](https://bitbucket.com) offers options for caching dependencies and
+Bitbucket offers options for caching dependencies and
 build artifacts across many different workflows.
 
 To cache `node_modules`, the npm cache across builds, the `cache` attribute and
@@ -79,7 +86,7 @@ configuration has been added below.
 Artifacts from a job can be defined by providing paths to the `artifacts`
 attribute.
 
-```yaml
+```yaml title="bitbucket-pipelines.yml"
 image: cypress/browsers:node-20.14.0-chrome-126.0.6478.114-1-ff-127.0.1-edge-126.0.2592.61-1
 
 pipelines:
@@ -104,7 +111,7 @@ Using the
 [definitions](https://support.atlassian.com/bitbucket-cloud/docs/configure-bitbucket-pipelinesyml/#Global-configuration-options)
 block we can define additional caches for npm and Cypress.
 
-```yaml
+```yaml title="bitbucket-pipelines.yml"
 definitions:
   caches:
     npm: $HOME/.npm
@@ -143,7 +150,7 @@ recording test results to [Cypress Cloud](/cloud/get-started/introduction).
 
 :::
 
-```yaml
+```yaml title="bitbucket-pipelines.yml"
 image: cypress/base:20.14.0
 
 ## job definition for running E2E tests in parallel
@@ -172,7 +179,7 @@ in our definition of the pipeline to execute parallel jobs using the `parallel`
 attribute. This will allow us to run multiples instances of Cypress at same
 time.
 
-```yaml
+```yaml title="bitbucket-pipelines.yml"
 ## job definition for running E2E tests in parallel
 ## ...
 
@@ -202,7 +209,7 @@ definitions:
 
 The complete `bitbucket-pipelines.yml` is below:
 
-```yaml
+```yaml title="bitbucket-pipelines.yml"
 image: cypress/base:20.14.0
 
 ## job definition for running E2E tests in parallel
