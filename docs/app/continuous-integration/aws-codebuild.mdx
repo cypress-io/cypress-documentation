@@ -80,7 +80,7 @@ As of version 0.2, CodeBuild does not provide a way to specify a custom image
 for single build configurations. One way to solve this is using an
 [AWS CodeBuild batch build-list strategy](https://docs.aws.amazon.com/codebuild/latest/userguide/batch-build-buildspec.html#build-spec.batch.build-list).
 
-### Enabling batch builds in the CodeBuild UI
+### Enabling batch builds
 
 Per the
 [AWS CodeBuild batch build documentation](https://docs.aws.amazon.com/codebuild/latest/userguide/batch-build-buildspec.html),
@@ -127,7 +127,7 @@ Cypress locally and in CI are published to the
 - [Cypress 'browsers' Amazon ECR Public Gallery](https://gallery.ecr.aws/cypress-io/cypress/browsers)
 - [Cypress 'included' Amazon ECR Public Gallery](https://gallery.ecr.aws/cypress-io/cypress/included)
 
-Read about [Cypress docker variants](app/continuous-integration/overview#Cypress-Docker-variants) to decide which image is best for your project.
+Read about [Cypress docker variants](/app/continuous-integration/overview#Cypress-Docker-variants) to decide which image is best for your project.
 
 ```yaml title="buildspec.yml"
 version: 0.2
