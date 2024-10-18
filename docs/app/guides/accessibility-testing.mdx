@@ -64,11 +64,12 @@ To assert that the correct alternative text is present on your logo image, an ex
 it('adds todos', () => {
   cy.visit('https://example.cypress.io/')
   // explicitly check the alt text of an image
-  cy.get('img[data-cy="logo"]').should('have.attr', 'alt', 'Cypress Logo')
+  cy.get('img[data-cy="logo"]')
+    .should('have.attr', 'alt', 'Cypress Logo')
 })
 ```
 
-It's also possible to use a accessibility-aware locator approach to find the element while performing some other assertion. Here instead of using the element's test ID, we locate the image by its `alt` text. This is more concise, and the decision of which format to prefer is up to your team's preferences:
+It's also possible to use an accessibility-aware locator approach to find the element while performing some other assertion. Here instead of using the element's test ID, we locate the image by its `alt` text. This is more concise, and the decision of which format to prefer is up to your team's preferences:
 
 ```js
 // use the `alt` content to target the image
@@ -79,7 +80,8 @@ This kind of accessibility-friendly locator approach is also possible with the [
 
 ```js
 // use the recommended ByRole Testing Library locator
-cy.findByRole('img', { name: 'Cypress Logo' }).should('be.visible')
+cy.findByRole('img', { name: 'Cypress Logo' })
+  .should('be.visible')
 ```
 
 ### Asserting the accessible name of a button
@@ -118,33 +120,38 @@ There is much more to this topic than we can cover here, but we will provide a s
 
 The native HTML `button` element has a complex accessibility contract implemented by the browser for keyboard and screen reader users. Here is a partial list of ways a button element is automatically managed by the browser:
 
-- It has the implicit role of button so that users know what it is - a screen reader, for example, would announce it as a button
+- It has the implicit `role` of `button` so that users know what it is - a screen reader, for example, would announce it as a button
 - It has a default browser button style to visually distinguish it from surrounding content
 - It has default browser styles for hover and "pressed" states
 - It is placed in the tab order of the document and can be focused with the keyboard
 - When focused it receives a focus outline style
 - It can be activated with a mouse click, or the enter key, or the space bar
-- If placed inside a form element, activating the button by any of these methods will submit the form (because its default type is `submit`)
+- If placed inside a `form` element, activating the button by any of these methods will submit the form (because its default type is `submit`)
 - It will receive specific styling, customizable by the user, in Windows High Contrast Mode (used by people with certain visual disabilities)
 
 On the other hand, a `div` with `role` of `button` does not get this default browser accessibility behavior, and is not accessible without custom JavaScript and CSS replacing the browser contract.
 
-This means that, without some assertions about either the `button` element itself, or a full test of the accessibility "contract" of that element, it is not safe for a developer to refactor from from a `button` to a `<div role="button">`, even though Testing Library will treat each as the same if located using the `ByRole` locator. This is because, much like test IDs, the `ByRole` approach is intended to _avoid_ testing the implementation directly, to keep tests resilient.
+This means that, without some assertions about either the `button` element itself, or a full test of the accessibility "contract" of that element, it is not safe for a developer to refactor from a `button` to a `<div role="button">`, even though Testing Library will treat each as the same if located using the `ByRole` locator. This is because, much like test IDs, the `ByRole` approach is intended to _avoid_ testing the implementation directly, to keep tests resilient.
 
 ## Where to test accessibility
 
 So what should you do in your test automation to help confirm the UI is accessible? First of all, for known critical areas like forms or checkout flows, ensure that the accessibility behavior is tested explicitly in at least one place. The means verifying that form fields and buttons have the correct labels and use the expected HTML elements, and other aspects of the DOM that communicate necessary information.
 
-Component tests are a fantastic place to do this centralized accessibility spec work, whether using [Cypress Component testing](/app/component-testing/get-started) or something else. Component tests are run locally during development, written by developers as they build UI, and can easily specify the specific HTML that is intended to be rendered, without being a distraction in an end-to-end test of a specific user flow.
+Component tests are a fantastic place to do this centralized accessibility spec work, whether using [Cypress Component testing](/app/component-testing/get-started) or something else. Component tests are run locally during development, written by developers as they build the UI, and can easily specify the specific HTML that is intended to be rendered, without being a distraction in an end-to-end test of a specific user flow.
 
 Accessibility should be tested at least once for a given component, area of the application, or workflow. Once that is achieved, there is no additional accessibility benefit to repeatedly asserting subsets of the same things in other tests, unless those tests introduce new combinations of components that have not been tested for accessibility anywhere else.
 
 ### Choosing a locator approach
 
-Test IDs are the most resilient locator option and are a good choice for maximizing the stability of your pipeline, especially if end-to-end tests are written by people who are not familiar with accessibility, and don't already know the correct roles, elements, and behavior that should be expected. You do not lose any accessibility "coverage", as long as accessibility is explicitly tested for with assertions, and a library like Axe Core® is in place to catch mistakes.
+Test IDs are the most resilient locator option and are a good choice for maximizing the stability of your pipeline, especially if end-to-end tests are written by people who are not familiar with accessibility, and don't already know the correct roles, elements, and behavior that should be expected. You do not lose any accessibility "coverage", as long as accessibility is explicitly tested with assertions, and a library like Axe Core® is in place to catch mistakes.
 
-Testing Library locators are convenient and familiar to many React developers (due to its origins as "React Testing Library"), and they doesn't require any code changes, but may cause _many_ tests to fail when a label is missing, instead of just your explicit accessibility assertions, because they are a step closer to the implementation details.
+Testing Library locators are convenient and familiar to many React developers (due to its origins as "React Testing Library"), and they don't require any code changes, but may cause _many_ tests to fail when a label is missing, instead of just your explicit accessibility assertions, because they are a step closer to the implementation details.
 
 Additionally, Testing Library locators can provide a false sense of confidence that something is accessible simply because it can be located by its role. Still, when understood correctly, teams can write effective tests using this approach, and some locators like [`findByLabelText`](https://testing-library.com/docs/queries/bylabeltext) stand out as being particularly useful.
 
 What is most important in all accessibility automation discussions is this: how can your testing strategy best support your users with disabilities to independently understand and use your application? Cypress enables you to place the user at the center of your testing process, with a mix of automated scans and some specific intentional assertions, you can reach high levels of confidence that your application is free of known accessibility errors and let your test pipeline warn you if things are going off track.
+
+## See also
+
+- [Cypress Accessibility](/accessibility/get-started/introduction)
+- [Plugins](/app/plugins/plugins-list)
