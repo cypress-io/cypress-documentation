@@ -2,23 +2,26 @@
 title: AWS CodeBuild
 ---
 
-With [AWS CodeBuild](https://aws.amazon.com/codebuild/) Amazon Web Services
-(AWS) offers developers "...a fully managed build service that compiles your
-source code, runs unit tests, and produces artifacts that are ready to deploy"
-allowing teams to "pay only for the build time you use".
+:::info
 
-Detailed documentation is available in the
-[AWS CodeBuild Documentation](https://docs.aws.amazon.com/codebuild/).
+##### <Icon name="question-circle" color="#42a1c0" /> What you'll learn
+
+- How to set up Cypress tests in AWS CodeBuild
+- How to run Cypress tests in parallel with AWS CodeBuild
+
+:::
 
 ## Basic Setup
 
-The example below is basic CI setup and job using the
+The example below is a basic CI setup and job using the
 [AWS CodeBuild](https://aws.amazon.com/codebuild/) to run Cypress tests within
 the Electron browser. This AWS CodeBuild configuration is placed within
 `buildspec.yml`.
 
-```yaml
-## buildspec.yml
+Detailed documentation is available in the
+[AWS CodeBuild Documentation](https://docs.aws.amazon.com/codebuild/).
+
+```yaml title="buildspec.yml"
 version: 0.2
 
 phases:
@@ -27,7 +30,7 @@ phases:
       nodejs: latest
     commands:
       # Set COMMIT_INFO variables to send Git specifics to Cypress Cloud when recording
-      # https://docs.cypress.io//app/continuous-integration/introduction#Git-information
+      # https://docs.cypress.io/app/continuous-integration/overview#Git-information
       - export COMMIT_INFO_BRANCH="$(git rev-parse HEAD | xargs git name-rev |
         cut -d' ' -f2 | sed 's/remotes\/origin\///g')"
       - export COMMIT_INFO_MESSAGE="$(git log -1 --pretty=%B)"
@@ -73,17 +76,12 @@ example project and place the above
 
 ## Testing with Cypress Docker Images
 
-:::info
-
 As of version 0.2, CodeBuild does not provide a way to specify a custom image
 for single build configurations. One way to solve this is using an
 [AWS CodeBuild batch build-list strategy](https://docs.aws.amazon.com/codebuild/latest/userguide/batch-build-buildspec.html#build-spec.batch.build-list).
 
-:::
 
-:::info
-
-**Enabling batch builds in the CodeBuild UI for the project**
+### Enabling batch builds in the CodeBuild UI
 
 Per the
 [AWS CodeBuild batch build documentation](https://docs.aws.amazon.com/codebuild/latest/userguide/batch-build-buildspec.html),
@@ -104,8 +102,6 @@ projects:
 - Click "Update batch configuration"
 - Start the Build
 
-:::
-
 AWS CodeBuild offers a
 [build-list strategy](https://docs.aws.amazon.com/codebuild/latest/userguide/batch-build-buildspec.html#build-spec.batch.build-list)
 of different job configurations for a single job definition.
@@ -122,48 +118,19 @@ Cypress locally and in CI, which are built with Google Chrome, Mozilla Firefox a
 example, this allows us to run the tests in Firefox by passing the
 `--browser firefox` attribute to `cypress run`.
 
-:::tip
-
-<strong>Cypress Amazon Public ECR</strong>
+### Cypress Amazon Public ECR
 
 [Docker Images](https://github.com/cypress-io/cypress-docker-images) for running
 Cypress locally and in CI are published to the
-[Amazon ECR Public Gallery](https://gallery.ecr.aws).
-
-The images are available in the following
-[Amazon ECR Public Galleries](https://gallery.ecr.aws):
+[Amazon ECR Public Gallery](https://gallery.ecr.aws).:
 
 - [Cypress 'base' Amazon ECR Public Gallery](https://gallery.ecr.aws/cypress-io/cypress/base)
 - [Cypress 'browsers' Amazon ECR Public Gallery](https://gallery.ecr.aws/cypress-io/cypress/browsers)
 - [Cypress 'included' Amazon ECR Public Gallery](https://gallery.ecr.aws/cypress-io/cypress/included)
 
-:::
+Read about [Cypress docker variants](app/continuous-integration/overview#Cypress-Docker-variants) to decide which image is best for your project.
 
-:::info
-
-<strong>Choosing the right Docker Image</strong>
-
-For E2E Testing on a CI provider like AWS CodeBuild, the
-[Cypress 'browsers' Amazon ECR Public Gallery](https://gallery.ecr.aws/cypress-io/cypress/browsers)
-contains the images to use.
-
-What's the difference in the images?
-
-The `base` Docker images are used by the `browsers` and `included` images for
-the base operating system and set of initial dependencies, but do not install
-Cypress or additional browsers.
-
-The `browsers` images extend a `base` image and install Chrome, Firefox and Edge.
-
-The `included` images extend a `browsers` image and install a specific version
-of Cypress and add a Docker entrypoint for the `cypress run` command. These
-images are for testing a containerized version of Cypress in a project during
-local development and are less used in CI environments.
-
-:::
-
-```yaml
-## buildspec.yml
+```yaml title="buildspec.yml"
 version: 0.2
 
 ## AWS CodeBuild Batch configuration
@@ -184,7 +151,7 @@ phases:
       nodejs: latest
     commands:
       # Set COMMIT_INFO variables to send Git specifics to Cypress Cloud when recording
-      # https://docs.cypress.io//app/continuous-integration/introduction#Git-information
+      # https://docs.cypress.io//app/continuous-integration/overview#Git-information
       - export COMMIT_INFO_BRANCH="$(git rev-parse HEAD | xargs git name-rev |
         cut -d' ' -f2 | sed 's/remotes\/origin\///g')"
       - export COMMIT_INFO_MESSAGE="$(git log -1 --pretty=%B)"
@@ -333,7 +300,7 @@ phases:
   install:
     commands:
       # Set COMMIT_INFO variables to send Git specifics to Cypress Cloud when recording
-      # https://docs.cypress.io//app/continuous-integration/introduction#Git-information
+      # https://docs.cypress.io//app/continuous-integration/overview#Git-information
       - export COMMIT_INFO_BRANCH="$(git rev-parse HEAD | xargs git name-rev |
         cut -d' ' -f2 | sed 's/remotes\/origin\///g')"
       - export COMMIT_INFO_MESSAGE="$(git log -1 --pretty=%B)"
@@ -406,7 +373,7 @@ commit SHA data (typically via an environment variable) which is not always
 present by default. This is not a problem for most users, but if you are facing
 integration issues with your CodeBuild setup, please make sure the git
 information is being sent properly by following
-[these guidelines](//app/continuous-integration/introduction#Git-information),
+[these guidelines](//app/continuous-integration/overview#Git-information),
 or just see
 [the example `codebuild.yml` file at the top of this page](#Basic-Setup). If you
 are still facing issues after this, please

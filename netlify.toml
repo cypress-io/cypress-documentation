@@ -55,7 +55,7 @@
 
 [[redirects]]
   from = "/examples/app/continuous-integration/docker"
-  to = "/app/continuous-integration/docker"
+  to = "/app/continuous-integration/overview#Cypress-Docker-Images"
   status = 301
   force = true
 
@@ -645,7 +645,7 @@
 
 [[redirects]]
   from = "/guides/guides/continuous-integration"
-  to = "/guides/continuous-integration/introduction"
+  to = "/guides/continuous-integration/overview"
   status = 301
   force = true
 
