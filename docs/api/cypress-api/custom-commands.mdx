@@ -19,7 +19,7 @@ There are two API available for adding custom commands:
 :::info
 
 If you want your method to have builtin
-[retry-ability](/guides/core-concepts/retry-ability), and especially if you
+[retry-ability](/app/core-concepts/retry-ability), and especially if you
 return a DOM element for further commands to act on, consider writing a
 [custom query](/api/cypress-api/custom-queries) instead.
 
@@ -30,7 +30,7 @@ return a DOM element for further commands to act on, consider writing a
 We recommend defining queries is in your `cypress/support/commands.js` file,
 since it is loaded before any test files are evaluated via an import statement
 in the
-[supportFile](/guides/core-concepts/writing-and-organizing-tests#Support-file).
+[supportFile](/app/core-concepts/writing-and-organizing-tests#Support-file).
 
 :::
 
@@ -479,7 +479,7 @@ that all you're doing is swapping out base urls for `development` vs
 This is usually unnecessary because Cypress is already configured to swap out a
 `baseUrl` that both [cy.visit()](/api/commands/visit) and
 [cy.request()](/api/commands/request) use. Set the `baseUrl` configuration
-property in your [Cypress configuration](/guides/references/configuration) and
+property in your [Cypress configuration](/app/references/configuration) and
 override it with the `CYPRESS_BASE_URL` environment variable.
 
 For more complex use cases feel free to overwrite existing commands.
@@ -530,16 +530,6 @@ Now our sensitive password is not printed to the Cypress Command Log when
 `sensitive: true` is passed as an option to [.type()](/api/commands/type).
 
 <DocsImage src="/img/api/custom-commands/custom-command-type-masked-password.png" />
-
-:::info
-
-<strong>Keep passwords secret blog</strong>
-
-Check out
-[this blog](https://glebbahmutov.com/blog/keep-passwords-secret-in-e2e-tests/)
-to explore another way to keep passwords secret within your tests.
-
-:::
 
 #### Overwrite `screenshot` command
 
@@ -898,7 +888,7 @@ repository for a working example.
 
 #### 6. Create a function that adds the custom command
 
-Cypress [12.17.4](/guides/references/changelog#12-17-4) includes a Webpack upgrade (v4 to v5), which [tree shakes out](https://webpack.js.org/blog/2020-10-10-webpack-5-release/#inner-module-tree-shaking) any side-effects or files that _only_ include side-effects.
+Cypress [12.17.4](/app/references/changelog#12-17-4) includes a Webpack upgrade (v4 to v5), which [tree shakes out](https://webpack.js.org/blog/2020-10-10-webpack-5-release/#inner-module-tree-shaking) any side-effects or files that _only_ include side-effects.
 
 If you are using TypeScript and have Webpack's `sideEffects:false` set in your package.json, custom Cypress commands will not be registered by the common pattern of writing the commands in one file and having them be run as a side effect of importing the file. For example:
 
@@ -930,18 +920,16 @@ registerCommands()
 
 ## History
 
-| Version                                       | Changes                      |
-| --------------------------------------------- | ---------------------------- |
-| [0.20.0](/guides/references/changelog#0-20-0) | `Cypress.Commands` API added |
+| Version                                    | Changes                      |
+| ------------------------------------------ | ---------------------------- |
+| [0.20.0](/app/references/changelog#0-20-0) | `Cypress.Commands` API added |
 
 ## See also
 
 - See how to add
-  [TypeScript support for custom commands](/guides/tooling/typescript-support#Types-for-Custom-Commands)
-- Blog posts
-  [Writing a Custom Cypress Command](https://glebbahmutov.com/blog/writing-custom-cypress-command/)
-  and
-  [How to Publish Custom Cypress Command on NPM](https://glebbahmutov.com/blog/publishing-cypress-command/).
-- <a href="/plugins#custom-commands">Plugins using custom commands</a>
+  [TypeScript support for custom commands](/app/tooling/typescript-support#Types-for-Custom-Commands)
+- <a href="/app/plugins/plugins-list#custom-commands">
+    Plugins using custom commands
+  </a>
 - [Cypress.log()](/api/cypress-api/cypress-log)
-- [Recipe: Logging In](/examples/recipes#Logging-In)
+- [Recipe: Logging In](/app/references/recipes#Logging-In)

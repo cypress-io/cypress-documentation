@@ -37,11 +37,11 @@ range of time will be called.
 
 Pass in an options object to change the default behavior of `cy.tick()`.
 
-| Option | Default | Description                                                                              |
-| ------ | ------- | ---------------------------------------------------------------------------------------- |
-| `log`  | `true`  | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
+| Option | Default | Description                                                                         |
+| ------ | ------- | ----------------------------------------------------------------------------------- |
+| `log`  | `true`  | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log) |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
 
 `cy.tick()` yields a `clock` object with the following methods:
 
@@ -85,7 +85,7 @@ cy.get('#header').should('have.text', 'Hello, World')
 
 :::info
 
-[Check out our example recipe testing spying, stubbing and time](/examples/recipes#Stubbing-and-spying)
+[Check out our example recipe testing spying, stubbing and time](/app/references/recipes#Stubbing-and-spying)
 
 :::
 
@@ -118,18 +118,18 @@ cy.clock().invoke('restore')
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
+### Requirements [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
 
 - `cy.tick()` requires being chained off of `cy`.
 - `cy.tick()` requires that `cy.clock()` be called before it.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
+### Assertions [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
 
 - `cy.tick()` is a utility command.
 - `cy.tick()` will not run assertions. Assertions will pass through as if this
   command did not exist.
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
+### Timeouts [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
 
 - `cy.tick()` cannot time out.
 
@@ -159,15 +159,15 @@ the following:
 
 ## History
 
-| Version                                       | Changes                           |
-| --------------------------------------------- | --------------------------------- |
-| [7.0.0](/guides/references/changelog#7-0-0)   | `log` option added to `cy.tick()` |
-| [0.18.8](/guides/references/changelog#0-18-8) | `cy.tick()` command added         |
+| Version                                    | Changes                           |
+| ------------------------------------------ | --------------------------------- |
+| [7.0.0](/app/references/changelog#7-0-0)   | `log` option added to `cy.tick()` |
+| [0.18.8](/app/references/changelog#0-18-8) | `cy.tick()` command added         |
 
 ## See also
 
 - [`cy.clock()`](/api/commands/clock)
 - [`cy.spy()`](/api/commands/spy)
 - [`cy.stub()`](/api/commands/stub)
-- [Guide: Stubs, Spies and Clocks](/guides/guides/stubs-spies-and-clocks)
-- [Recipe: Stubbing, Spying](/examples/recipes#Stubbing-and-spying)
+- [Guide: Stubs, Spies and Clocks](/app/guides/stubs-spies-and-clocks)
+- [Recipe: Stubbing, Spying](/app/references/recipes#Stubbing-and-spying)

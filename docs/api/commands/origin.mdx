@@ -20,11 +20,11 @@ server on first party `.html` and `.js` files and replace code that matches
 patterns commonly found in framebusting. When using the `cy.origin()` command,
 the third party code may also need to be modified for framebusting techniques.
 This can be enabled by setting the
-[`experimentalModifyObstructiveThirdPartyCode`](/guides/references/experiments)
+[`experimentalModifyObstructiveThirdPartyCode`](/app/references/experiments)
 flag to `true` in the Cypress configuration. More information about this
 experimental flag can be found on our
-[Web Security](/guides/guides/web-security#Modifying-Obstructive-Third-Party-Code)
-page.
+[Cross Origin Testing](/app/guides/cross-origin-testing#Modifying-Obstructive-Third-Party-Code)
+doc.
 
 :::
 
@@ -92,7 +92,7 @@ This argument will be used in two ways:
    same-origin policy.
 
 2. It overrides the `baseUrl` configured in your
-   [global configuration](/guides/references/configuration#Global) while inside
+   [global configuration](/app/references/configuration#Global) while inside
    the callback. So `cy.visit()` and `cy.request()` will use this URL as a
    prefix, not the configured `baseUrl`.
 
@@ -125,7 +125,7 @@ There are a number of limitations placed on commands run inside the callback,
 please see [Callback restrictions](#Callback-restrictions) section below for a
 full list.
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
 
 - `cy.origin()` yields the value yielded by the last Cypress command in the
   callback function.
@@ -409,7 +409,7 @@ within the callback.
 :::caution
 
 Using `Cypress.require()` within the callback requires enabling the
-[`experimentalOriginDependencies`](/guides/references/experiments) option in the
+[`experimentalOriginDependencies`](/app/references/experiments) option in the
 Cypress configuration.
 
 :::
@@ -431,7 +431,7 @@ cy.origin('cypress.io', () => {
 
 This makes it possible to share custom commands between tests run in primary and
 secondary origins. We recommend this pattern for setting up your
-[support file](/guides/core-concepts/writing-and-organizing-tests#Support-file)
+[support file](/app/core-concepts/writing-and-organizing-tests#Support-file)
 and setting up custom commands to run within the `cy.origin()` callback:
 
 `cypress/support/commands.js`:
@@ -527,21 +527,21 @@ There are other testing scenarios which are not currently covered by
 `cy.origin()`:
 
 - It cannot run commands
-  [in a different browser window](/guides/references/trade-offs#Multiple-browsers-open-at-the-same-time)
+  [in a different browser window](/app/references/trade-offs#Multiple-browsers-open-at-the-same-time)
 - It cannot run commands in a different browser tab
 - It cannot run commands
-  [inside an `<iframe>` element](/faq/questions/using-cypress-faq#How-do-I-test-elements-inside-an-iframe)
+  [inside an `<iframe>` element](/app/faq#How-do-I-test-elements-inside-an-iframe)
 
-However, `<iframe>` support is on [our roadmap](/guides/references/roadmap) for
+However, `<iframe>` support is on [our roadmap](/app/references/roadmap) for
 inclusion in a future version of Cypress.
 
 ## History
 
-| Version                                        | Changes                                                                                                     |
-| ---------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
-| [12.6.0](/guides/references/changelog#10-7-0)  | Support for `Cypress.require()` added and support for CommonJS `require()` and ES module `import()` removed |
-| [10.11.0](/guides/references/changelog#10-7-0) | Support for CommonJS `require()` and ES module `import()` added and support for `Cypress.require()` removed |
-| [10.7.0](/guides/references/changelog#10-7-0)  | Support for `Cypress.require()` added                                                                       |
+| Version                                     | Changes                                                                                                     |
+| ------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| [12.6.0](/app/references/changelog#10-7-0)  | Support for `Cypress.require()` added and support for CommonJS `require()` and ES module `import()` removed |
+| [10.11.0](/app/references/changelog#10-7-0) | Support for CommonJS `require()` and ES module `import()` added and support for `Cypress.require()` removed |
+| [10.7.0](/app/references/changelog#10-7-0)  | Support for `Cypress.require()` added                                                                       |
 
 ## See also
 

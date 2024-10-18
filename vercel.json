@@ -1,33 +1,18 @@
 {
   "redirects": [
     {
-      "source": "/examples/examples/recipes",
-      "destination": "/examples/recipes",
+      "source": "/examples/app/references/recipes",
+      "destination": "/app/references/recipes",
       "permanent": true
     },
     {
-      "source": "/examples/examples/tutorials",
-      "destination": "/examples/tutorials",
-      "permanent": true
-    },
-    {
-      "source": "/examples/examples/applications",
-      "destination": "/examples/applications",
-      "permanent": true
-    },
-    {
-      "source": "/examples/examples/docker",
-      "destination": "/examples/docker",
-      "permanent": true
-    },
-    {
-      "source": "/examples/examples/projects-media",
-      "destination": "/examples/projects-media",
+      "source": "/examples/app/continuous-integration/docker",
+      "destination": "/app/continuous-integration/overview#Cypress-Docker-Images",
       "permanent": true
     },
     {
       "source": "/guides/references/bundled-tools.html",
-      "destination": "/guides/references/bundled-libraries",
+      "destination": "/app/references/bundled-libraries",
       "permanent": true
     }
   ]
