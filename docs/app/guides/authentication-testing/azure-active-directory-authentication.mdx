@@ -2,7 +2,14 @@
 title: Azure Active Directory Authentication
 ---
 
-:::caution
+:::info
+
+##### <Icon name="question-circle" color="#42a1c0" /> What you'll learn
+
+- How to set up Cypress to test against an Azure Active Directory web app
+- How to authenticate with Azure Active Directory using `cy.origin()`
+
+:::
 
 This guide is designed for testing against a Single Page Application (SPA) that
 uses
@@ -16,8 +23,6 @@ This guide can also serve as a foundation for testing other web apps with
 Cypress that use Azure Active Directory services with other frameworks, such as
 React, Angular, or Vue.
 
-:::
-
 ## Microsoft AAD Application Setup
 
 For this guide, we are mainly going to focus on setting up Cypress to test
@@ -25,7 +30,7 @@ against an Azure Active Directory web app. Please clone the
 [Microsoft Identity Javascript Tutorial](https://github.com/Azure-Samples/ms-identity-javascript-tutorial/tree/c1956b658efa331bb5df11a0038ad32d12dad3ce/1-Authentication/1-sign-in)
 and follow the steps to set up your application.
 
-Once set up, you will need to modify a few things in the `App/index.html` file:
+Once set up, you'll need to modify a few things in the `App/index.html` file:
 
 - Remove any
   [`integrity`](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity)
@@ -38,12 +43,12 @@ Once set up, you will need to modify a few things in the `App/index.html` file:
   [Pop ups](/app/references/trade-offs#Permanent-trade-offs) will not work
   inside of Cypress.
 
-Inside `server.js`, you will see a reference to `express-rate-limit`, which
+Inside `server.js`, you'll see a reference to `express-rate-limit`, which
 limits each window to 100 requests per 15 minutes. Under test, your application
 will likely exceed this as you will be reloading your application and making
 requests to broker/verify authentication. For this demo, you can either
 
-- remove the rate limiting code (recommended for demo purposes only).
+- Remove the rate limiting code (recommended for demo purposes only).
 - Implement a strategy to increase the rate limit under test.
 
 When finished, your SPA should be running on `http://localhost:3000` and be
@@ -57,7 +62,7 @@ Cypress to use the
 user credentials for a given user in your tenant. These user credentials should
 be set in the `cypress.env.json` file inside the root directory of your project.
 
-```json
+```json title="cypress.env.json"
 {
   "aad_username": "AAD_USERNAME",
   "aad_password": "AAD_PASSWORD",
@@ -65,8 +70,8 @@ be set in the `cypress.env.json` file inside the root directory of your project.
 }
 ```
 
-Also, to authenticate with Azure Active Directory, you will need to enable the
-[`experimentalModifyObstructiveThirdPartyCode`](/app/guides/web-security#Modifying-Obstructive-Third-Party-Code)
+Also, to authenticate with Azure Active Directory, you'll need to enable the
+[`experimentalModifyObstructiveThirdPartyCode`](/app/guides/cross-origin-testing#Modifying-Obstructive-Third-Party-Code)
 configuration option in the e2e configuration. If not enabled, your
 authentication workflow will enter an infinite redirect loop.
 
@@ -94,9 +99,7 @@ This command will use [`cy.origin()`](/api/commands/origin) to
 3. Sign in and redirect back to the demo application
 4. Cache the results with [`cy.session()`](/api/commands/session)
 
-```js
-// cypress/support/e2e.ts
-
+```js title="cypress/support/commands.ts"
 function loginViaAAD(username: string, password: string) {
   cy.visit('http://localhost:3000/')
   cy.get('button#signIn').click()
@@ -160,7 +163,7 @@ Cypress.Commands.add('loginToAAD', (username: string, password: string) => {
 Now, we can use our `loginToAAD` command in the test. Below is our test to login
 as a user via Azure Active Directory and run a basic sanity check.
 
-```js
+```js title="auth.cy.js"
 describe('Azure Active Directory Authentication', () => {
   beforeEach(() => {
     // log into Azure Active Directory through our sample SPA using our custom command
@@ -194,7 +197,7 @@ For this, we can refactor our login command to take advantage of
 [`cy.session()`](/api/commands/session) to store our logged in user's tokens
 and/or cookies so we don't have to reauthenticate before every test.
 
-```js
+```ts title="cypress/support/commands.ts"
 Cypress.Commands.add('loginToAAD', (username: string, password: string) => {
   cy.session(
     `aad-${username}`,

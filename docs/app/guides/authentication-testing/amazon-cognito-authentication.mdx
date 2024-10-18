@@ -91,10 +91,8 @@ with [Amazon Web Services (AWS)](https://aws.amazon.com).
 
 An [Amazon Cognito](https://aws.amazon.com/cognito) integration is available in
 the
-[Cypress Real World App](https://github.com/cypress-io/cypress-realworld-app).
-
-Clone the
-[Cypress Real World App](https://github.com/cypress-io/cypress-realworld-app)
+<Icon name="github" inline="true" contentType="rwa" />. Clone the
+Cypress Real World App
 and install the [AWS Amazon Amplify CLI](https://docs.amplify.aws/cli) as
 follows:
 
@@ -103,11 +101,10 @@ npm install @aws-amplify/cli --global
 ```
 
 The
-[Cypress Real World App](https://github.com/cypress-io/cypress-realworld-app) is
+<Icon name="github" inline="true" contentType="rwa" /> is
 configured with an optional [Amazon Cognito](https://aws.amazon.com/cognito)
 instance via the
 [AWS Amplify Framework Authentication Library](https://aws-amplify.github.io/amplify-js/api/classes/authclass.html).
-
 The [AWS Amazon Amplify CLI](https://docs.amplify.aws/cli) is used to provision
 the [Amazon Web Services (AWS)](https://aws.amazon.com) infrastructure needed to
 configure your environment and cloud resources.
@@ -115,7 +112,7 @@ configure your environment and cloud resources.
 First, run the
 [amplify init](https://docs.amplify.aws/cli/start/workflows#initialize-new-project)
 command to initialize the
-[Cypress Real World App](https://github.com/cypress-io/cypress-realworld-app).
+Real World App.
 This will provision the project with your [AWS](https://aws.amazon.com)
 credentials.
 
@@ -137,7 +134,7 @@ amplify push
 <strong>Note</strong>
 
 Use the `yarn dev:cognito` command when starting the
-[Cypress Real World App](https://github.com/cypress-io/cypress-realworld-app).
+Real World App.
 
 :::
 
@@ -178,18 +175,17 @@ There are two ways you can authenticate to AWS Cognito:
 
 ### Login with [`cy.origin()`](/api/commands/origin)
 
-Next, we'll write a custom command called `loginByCognito` to perform a login to
+We'll write a custom command called `loginByCognito` to perform a login to
 [Amazon Cognito](https://aws.amazon.com/cognito). This command will use
 [`cy.origin()`](/api/commands/origin) to
 
-1. navigate to the Cognito origin
-2. input user credentials
-3. sign in and redirect back to the
-   [Cypress Real World App](https://github.com/cypress-io/cypress-realworld-app)
-4. cache the results with [`cy.session()`](/api/commands/session)
+1. Navigate to the Cognito origin
+2. Input user credentials
+3. Sign in and redirect back to the
+   <Icon name="github" inline="true" contentType="rwa" />
+4. Cache the results with [`cy.session()`](/api/commands/session)
 
-```jsx
-// cypress/support/auth-provider-commands/cognito.ts
+```jsx title="cypress/support/auth-provider-commands/cognito.ts"
 // Amazon Cognito
 const loginToCognito = (username: string, password: string) => {
   Cypress.log({
@@ -238,16 +234,16 @@ Now, we can use our `loginByCognito` command in the test. Below is our test to
 login as a user via [Amazon Cognito](https://aws.amazon.com/cognito), complete
 the onboarding process and logout.
 
-:::tip
+:::info
 
 The
 [runnable version of this test](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/tests/ui-auth-providers/cognito.spec.ts)
 is in the
-[Cypress Real World App](https://github.com/cypress-io/cypress-realworld-app).
+<Icon name="github" inline="true" contentType="rwa" />.
 
 :::
 
-```jsx
+```jsx title="auth.spec.js"
 describe('Cognito, cy.origin() login', function () {
   beforeEach(function () {
     // Seed database with test data
@@ -268,12 +264,11 @@ describe('Cognito, cy.origin() login', function () {
 
 <DocsVideo src="https://vimeo.com/789093851" />
 
-Lastly, we can refactor our login command to take advantage of
+Now, we can refactor our login command to take advantage of
 [`cy.session()`](/api/commands/session) to store our logged in user so we don't
 have to reauthenticate with every test.
 
-```jsx
-// cypress/support/auth-provider-commands/cognito.ts
+```jsx title="cypress/support/auth-provider-commands/cognito.ts"
 // Amazon Cognito
 Cypress.Commands.add(
   'loginByCognito, cy.origin() login',
@@ -308,14 +303,11 @@ In this `loginByCognitoApi` command, we call `Auth.signIn`, then use that
 response to set the items inside of localStorage for the UI to know that our
 user is logged into the application.
 
-<!-- prettier-ignore-start -->
 <Tabs>
+
   <TabItem value="v5" label="Amplify v5.x.x" default>
-<!-- prettier-ignore-end -->
 
-```jsx
-// cypress/support/auth-provider-commands/cognito.ts
-
+```jsx title="cypress/support/auth-provider-commands/cognito.ts"
 import Amplify, { Auth } from 'aws-amplify'
 
 Amplify.configure(Cypress.env('awsConfig'))
@@ -370,14 +362,11 @@ Cypress.Commands.add('loginByCognitoApi', (username, password) => {
 })
 ```
 
-<!-- prettier-ignore-start -->
   </TabItem>
+
   <TabItem value="v6" label="Amplify v6.x.x">
-<!-- prettier-ignore-end -->
 
-```tsx
-// cypress/support/auth-provider-commands/cognito.ts
-
+```tsx title="cypress/support/auth-provider-commands/cognito.ts"
 import { Amplify } from 'aws-amplify'
 import { fetchAuthSession, signIn } from 'aws-amplify/auth'
 
@@ -433,21 +422,19 @@ Cypress.Commands.add(
 )
 ```
 
-<!-- prettier-ignore-start -->
   </TabItem>
+
 </Tabs>
-<!-- prettier-ignore-end -->
 
 Finally, we can use our `loginByCognitoApi` command in at test. Below is our
 test to login as a user via [Amazon Cognito](https://aws.amazon.com/cognito),
 complete the onboarding process and logout.
 
-:::tip
+:::info
 
 The
 [runnable version of this test](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/tests/ui-auth-providers/cognito.spec.ts)
-is in the
-[Cypress Real World App](https://github.com/cypress-io/cypress-realworld-app).
+is in the <Icon name="github" inline="true" contentType="rwa" />.
 
 :::
 
@@ -487,7 +474,7 @@ the Cognito JWTs to authorize the frontend's requests.
 :::
 
 The
-[Cypress Real World App](https://github.com/cypress-io/cypress-realworld-app) is
+<Icon name="github" inline="true" contentType="rwa" /> is
 used and provides configuration and runnable code for both the React SPA and the
 Express back end.
 
@@ -503,13 +490,11 @@ In order to validate API requests from the frontend, we install
 [jwks-rsa](https://github.com/auth0/node-jwks-rsa) and configure validation for
 JWT's from [Amazon Cognito](https://aws.amazon.com/cognito).
 
-<!-- prettier-ignore-start -->
 <Tabs>
-  <TabItem value="v5" label="Amplify v5.x.x" default>
-<!-- prettier-ignore-end -->
 
-```jsx
-// backend/helpers.ts
+  <TabItem value="v5" label="Amplify v5.x.x" default>
+
+```jsx title="backend/helpers.ts"
 // ... initial imports
 import jwt from 'express-jwt'
 import jwksRsa from 'jwks-rsa'
@@ -530,13 +515,11 @@ export const checkCognitoJwt = jwt(awsCognitoJwtConfig).unless({
 })
 ```
 
-<!-- prettier-ignore-start -->
   </TabItem>
-  <TabItem value="v6" label="Amplify v6.x.x">
-<!-- prettier-ignore-end -->
 
-```jsx
-// backend/helpers.ts
+  <TabItem value="v6" label="Amplify v6.x.x">
+
+```jsx title="backend/helpers.ts"
 // ... initial imports
 import jwt from 'express-jwt'
 import jwksRsa from 'jwks-rsa'
@@ -558,15 +541,13 @@ export const checkCognitoJwt = jwt(awsCognitoJwtConfig).unless({
 })
 ```
 
-<!-- prettier-ignore-start -->
   </TabItem>
+
 </Tabs>
-<!-- prettier-ignore-end -->
 
 Once this helper is defined, we can use globally to apply to all routes:
 
-```jsx
-// backend/app.ts
+```jsx title="backend/app.ts"
 // initial imports ...
 import { checkCognitoJwt } from './helpers'
 
@@ -594,8 +575,11 @@ layer (`authMachine.ts`). If no access token is yet available, we redirect the
 browser to the [Amazon Cognito](https://aws.amazon.com/cognito) User Pool Hosted UI
 to provide the login form.
 
-```jsx
-// src/containers/AppCognito.tsx, amplify v6
+<Tabs>
+  <TabItem value="v6" label="Amplify v6.x.x">
+
+```jsx title="src/containers/AppCognito.tsx"
+// amplify v6
 // initial imports ...
 import { Amplify, ResourcesConfig } from "aws-amplify";
 import { fetchAuthSession, signInWithRedirect, signOut } from "aws-amplify/auth";
@@ -637,22 +621,24 @@ const AppCognito: React.FC = () => {
 export default AppCognito;
 ```
 
+  </TabItem>
+
+</Tabs>
+
 :::tip
 
 <strong>Try it out</strong>
 
 The complete
 [AppCognito.tsx component](https://github.com/cypress-io/cypress-realworld-app/blob/develop/src/containers/AppCognito.tsx)
-is in the
-[Cypress Real World App](https://github.com/cypress-io/cypress-realworld-app).
+is in the <Icon name="github" inline="true" contentType="rwa" />.
 
 :::
 
 Next, we update our entry point (`index.tsx`) to use our `AppCognito.tsx`
 component.
 
-```jsx
-// src/index.tsx
+```jsx title="src/index.tsx"
 // ... initial imports
 import AppCognito from './containers/AppCognito'
 

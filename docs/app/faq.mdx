@@ -452,7 +452,7 @@ a remote page and does not resolve until all of the external resources complete
 their loading phase. Because we expect your applications to observe differing
 load times, this command's default timeout is set to 60000ms. If you visit an
 invalid url or a
-[second unique domain](/app/guides/web-security#Different-superdomain-per-test-requires-cyorigin-command),
+[second unique domain](/app/guides/cross-origin-testing#Different-superdomain-per-test-requires-cyorigin),
 Cypress will log a verbose yet friendly error message.
 
 **_In CI, how do I make sure my server has started?_**
@@ -916,7 +916,7 @@ application under test runs in any way, so you can safely ignore this warning.
 The network traffic between Cypress and the backend server still happens via
 HTTPS.
 
-See also the [Web Security](/app/guides/web-security) guide.
+See also the [Cross Origin Testing](/app/guides/cross-origin-testing) guide.
 
 #### <Icon name="angle-right" /> How do I run the server and tests together and then shutdown the server?
 

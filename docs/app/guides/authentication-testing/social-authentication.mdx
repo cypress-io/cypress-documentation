@@ -2,12 +2,22 @@
 title: Social Authentication
 ---
 
+
+:::info
+
+##### <Icon name="question-circle" color="#42a1c0" /> What you'll learn
+
+- How to authenticate with Auth0 for Tenant with `cy.origin()`
+- How to use `cy.session()` to cache authenticated users
+
+:::
+
 :::caution
 
 <Icon name="exclamation-triangle" /> **Not recommended in CI**
 
 Cypress does **not** recommend testing social connection authentication as a
-primary means of application authentication testing. This is due to the
+primary means of authentication testing. This is due to the
 [challenges](/app/core-concepts/best-practices#Potential-Challenges-Authenticating-with-Social-Platforms)
 mentioned in our
 [Best Practices Guide](/app/core-concepts/best-practices).
@@ -20,39 +30,40 @@ Service.
 
 ## Application Setup
 
-For this guide, we are going to set up an application that uses Auth0 for Tenant
-will have social connections set up for Google, Facebook, and Microsoft which
+For this guide, we're going to set up an application that uses Auth0 for Tenant
+that has social connections set up for Google, Facebook, and Microsoft which
 will authenticate users on our behalf to our application.
 
-### Setting up the Auth0 tenant
+### Set up the Auth0 tenant
 
-- To get started, first create your free [Auth0](https://auth0.com/signup)
-  account and select the `"I am a new Auth0 User"` flow. This will have 4 steps:
-  - Step 1: When configuring your Sample App, please select the
-    `Single-Page App` for you platform and`React` for the technology.
-  - Step 2: For `Social Connections`, please select Facebook, Microsoft, and
-    Google
-  - Step 3: Click try login and verify the connections are set up properly
-  - Step 4: You can either download the sample on the `Download Sample App`
-    button or clone it
-    [here](https://github.com/auth0-samples/auth0-react-samples/tree/d5848ed710db85d6ef060731b296603c0eca744b/Sample-01).
-    We will need this application in the next step. Select
-    `"I am Ready to Use Auth0"`. Your social connections on your Auth0 tenant
-    should now be configured correctly
+To get started, first create a free [Auth0](https://auth0.com/signup)
+account and select the **I am a new Auth0 User** flow. This will have 4 steps:
 
-### Setting up the application
+- **Step 1:** When configuring your Sample App, please select the
+  **Single-Page App** for you platform and **React** for the technology.
+- **Step 2:** For **Social Connections**, please select **Facebook**, **Microsoft**, and
+  **Google**
+- **Step 3:** Try login and verify the connections are set up properly
+- **Step 4:** You can either download the sample via the **Download Sample App**
+  button or clone it
+  [here](https://github.com/auth0-samples/auth0-react-samples/tree/d5848ed710db85d6ef060731b296603c0eca744b/Sample-01).
+  We'll need this application in the next step. Select
+  **I am Ready to Use Auth0**. Your social connections on your Auth0 tenant
+  should now be configured correctly
 
-On your Auth0 dashboard, visit the `Applications Dropdown` in the left menu.
-Select the dropdown and go to `Applications`
+### Set up the application
 
-- Select the `Default Application`
-- Visit the `Settings` tab
-  - Copy the `domain` and `client ID` fields inside `Basic Information`. These
+On your Auth0 dashboard, visit **Applications Dropdown** in the left menu.
+Select the dropdown and go to **Applications**.
+
+- Select the **Default Application**
+- Visit the **Settings** tab
+  - Copy the `domain` and `client ID` fields inside **Basic Information**. These
     will be needed shortly.
-  - The `Application Properties` should have `Single Page Application` selected
-    for `Application Type`,
-  - Inside `Application URIs`, please add `http://localhost:3000` to
-    `Allowed Callback URLs`, `Allowed Web Origins` and `Allowed Logout URLs`
+  - The **Application Properties** should have **Single Page Application** selected
+    for **Application Type**,
+  - Inside **Application URIs**, please add `http://localhost:3000` to
+    **Allowed Callback URLs**, **Allowed Web Origins** and **Allowed Logout URLs**.
 - Create the `src/auth_config.json` file from the
   [`src/auth_config.json.example`](https://github.com/auth0-samples/auth0-react-samples/blob/d5848ed710db85d6ef060731b296603c0eca744b/Sample-01/src/auth_config.json.example)
   file as described in the
@@ -61,27 +72,31 @@ Select the dropdown and go to `Applications`
   inside `src/auth_config.json`. The `audience` key can be removed. The
   login/callback URIs will default to `http://localhost:3000` which is the url
   of our test application.
-- [install](https://github.com/auth0-samples/auth0-react-samples/tree/d5848ed710db85d6ef060731b296603c0eca744b/Sample-01#project-setup)
+- [Install](https://github.com/auth0-samples/auth0-react-samples/tree/d5848ed710db85d6ef060731b296603c0eca744b/Sample-01#project-setup)
   the application dependencies and
   [start the dev server](https://github.com/auth0-samples/auth0-react-samples/tree/d5848ed710db85d6ef060731b296603c0eca744b/Sample-01#compile-and-hot-reload-for-development)
 - Verify the application is running correctly by visiting
-  `http://localhost:3000` and clicking the blue `Log in` button in the top right
+  `http://localhost:3000` and clicking the **Log in** button in the top right
   corner. Select one of our social connections and log in and make sure to
-  complete the `Authorize App` prompt. This only needs to be done once. This
+  complete the **Authorize App** prompt. This only needs to be done once. This
   should take you back to the sample app authenticated as the test user. When
-  finished, click the `Log Out` dropdown button. Repeat for Google, Microsoft,
+  finished, click the **Log Out** dropdown button. Repeat for Google, Microsoft,
   and Facebook or the accounts you would like to test.
 
 Here is what this process should look like for Facebook setup:
 
 <DocsVideo src="https://vimeo.com/789093604" />
 
-## Testing with Cypress
+## Test with Cypress
 
-Now that our application is set up and ready to go, we are ready to write our
-automated tests. For these social connections, the
-[`experimentalModifyObstructiveThirdPartyCode`](/app/guides/web-security#Modifying-Obstructive-Third-Party-Code)
+Now that our application is set up and ready to go, we're ready to write our
+automated tests. 
+
+:::caution
+For these social connections, the
+[`experimentalModifyObstructiveThirdPartyCode`](/app/guides/cross-origin-testing#Modifying-Obstructive-Third-Party-Code)
 configuration option must be enabled.
+:::
 
 ## Setting Auth0 app credentials in Cypress
 
@@ -90,9 +105,7 @@ Cypress to use the social username, password, and name environment variables set
 in the `cypress.env.json` file or by one of our
 [supported methods](/app/references/environment-variables#Setting).
 
-```json
-// cypress.env.json
-
+```json title='cypress.env.json'
 {
   "GOOGLE_USERNAME": "",
   "GOOGLE_PASSWORD": "",
@@ -106,24 +119,23 @@ in the `cypress.env.json` file or by one of our
 }
 ```
 
-### Login with [`cy.origin()`](/api/commands/origin)
+### Login with `cy.origin()`
 
-Next, we'll write a custom command called `loginToAuth0ViaSocial` to perform a
+We'll write a custom command called `loginToAuth0ViaSocial` to perform a
 login to either Facebook, Google, or Microsoft. This command will use
 [`cy.origin()`](/api/commands/origin) to:
 
 1. Navigate to the Auth0 login
-2. Select the `Continue with ...` button and sign in with social credentials
+2. Select the **Continue with ...** button and sign in with social credentials
 3. Sign in and redirect back to the
    [sample app](https://github.com/auth0-samples/auth0-react-samples/tree/d5848ed710db85d6ef060731b296603c0eca744b/Sample-01)
 4. Cache the results with [`cy.session()`](/api/commands/session)
 
-For demonstration, we will have a function for each provider.
+For demonstration, we'll have a function for each provider.
 
-The Facebook Login Function
+#### Facebook Login Function
 
-```js
-// cypress/support/commands.ts
+```js title="cypress/support/commands.ts"
 import { domain as Auth0Domain } from '../../src/auth_config.json'
 
 function logIntoFacebook(username: string, password: string, name: string) {
@@ -156,10 +168,9 @@ function logIntoFacebook(username: string, password: string, name: string) {
 }
 ```
 
-The Google Login Function
+#### Google Login Function
 
-```js
-// cypress/support/commands.ts
+```js title="cypress/support/commands.ts"
 import { domain as Auth0Domain } from '../../src/auth_config.json'
 
 function logIntoGoogle(username: string, password: string, name: string) {
@@ -209,10 +220,9 @@ function logIntoGoogle(username: string, password: string, name: string) {
 }
 ```
 
-And lastly, our Microsoft Login Function
+#### Microsoft Login Function
 
-```js
-// cypress/support/commands.ts
+```js title="cypress/support/commands.ts"
 import { domain as Auth0Domain } from '../../src/auth_config.json'
 
 function logIntoMicrosoft(username: string, password: string, name: string) {
@@ -247,11 +257,11 @@ function logIntoMicrosoft(username: string, password: string, name: string) {
 }
 ```
 
+#### Combined Login Command
+
 We can wire these functions together in a single command, like so:
 
-```js
-// cypress/support/commands.ts
-
+```ts title="cypress/support/commands.ts"
 Cypress.Commands.add(
   'loginToAuth0ViaSocial',
   (SOCIAL_PROVIDER: 'microsoft' | 'google' | 'facebook') => {
@@ -298,10 +308,10 @@ Cypress.Commands.add(
 Now, we can use our `loginToAuth0ViaSocial` command in the test. Below is our
 test to login as a user via Auth0 and run a basic check.
 
-```js
+```js title='auth.cy.js'
 describe('Social Logins Demo', () => {
   beforeEach(() => {
-    // can provide Facebook, Google, or Microsoft here
+    // can provide facebook, google, or microsoft here
     cy.loginToAuth0ViaSocial('facebook')
     cy.visit('http://localhost:3000/')
   })
@@ -312,7 +322,7 @@ describe('Social Logins Demo', () => {
 })
 ```
 
-Here is a sample of what all 3 should look like in order.
+Here's a sample of what all 3 should look like in order.
 
 <DocsVideo src="https://vimeo.com/789093473" />
 
@@ -322,7 +332,7 @@ have to reauthenticate before every test. This also largely cuts down on the
 likelihood your account is blocked for frequent authentication attempts. Feel
 free to DRY this up a bit!
 
-```js
+```ts title="cypress/support/commands.ts"
 Cypress.Commands.add(
   'loginToAuth0ViaSocial',
   (SOCIAL_PROVIDER: 'microsoft' | 'google' | 'facebook') => {

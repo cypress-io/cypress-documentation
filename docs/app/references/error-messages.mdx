@@ -456,7 +456,7 @@ multiple domains in a single test.
 
 :::
 
-See our [Web Security](/app/guides/web-security#Limitations) documentation.
+See our [Cross Origin Testing](/app/guides/cross-origin-testing#Limitations) documentation.
 
 ### <Icon name="exclamation-triangle" color="red" /> `cy.visit()` failed because you are attempting to visit a different origin domain
 
@@ -480,7 +480,7 @@ You can visit urls that are of different origin across different tests, so you
 may consider splitting your `cy.visit()` of different origin domains into
 separate tests.
 
-See our [Web Security](/app/guides/web-security#Limitations) documentation
+See our [Cross Origin Testing](/app/guides/cross-origin-testing#Limitations) documentation
 for more information and workarounds.
 
 ### <Icon name="exclamation-triangle" color="red" /> `cy.visit()` succeeded, but commands are timing out
@@ -528,7 +528,7 @@ it('navigates to example.cypress.io and runs additional commands', () => {
 })
 ```
 
-See our [Web Security](/app/guides/web-security#Limitations) documentation
+See our [Cross Origin Testing](/app/guides/cross-origin-testing#Limitations) documentation
 for more information and workarounds.
 
 ### <Icon name="exclamation-triangle" color="red" /> `Cypress.addParentCommand()` / `Cypress.addDualCommand()` / `Cypress.addChildCommand()` has been removed and replaced by `Cypress.Commands.add()`
@@ -878,8 +878,8 @@ precedent.
 
 :::info
 
-For a more thorough explanation of Cypress's Web Security model,
-[please read our dedicated guide to it](/app/guides/web-security).
+For a more thorough explanation of Cypress's Cross Origin Testing,
+[please read our dedicated guide to it](/app/guides/cross-origin-testing).
 
 :::
 
@@ -912,7 +912,7 @@ If you find yourself stuck and can't work around these issues you can set
 [Cypress configuration](/app/references/configuration) when running in Chrome
 family browsers (this setting will not work in other browsers). Before doing so
 you should really understand and
-[read about the reasoning here](/app/guides/web-security).
+[read about the reasoning here](/app/guides/cross-origin-testing).
 
 :::cypress-config-example
 

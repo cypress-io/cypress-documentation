@@ -6,15 +6,21 @@ description: 'Seamlessly implement Auth0 authentication with Cypress. Integrate 
 
 # Auth0 Authentication
 
-:::caution
+:::info
+
+##### <Icon name="question-circle" color="#42a1c0" /> What you'll learn
+
+- How to authenticate with Auth0 in Cypress tests
+- How to adapt an Auth0 app for testing
+- Caveats and considerations for Auth0 rate limiting
+
+:::
 
 This guide is setup for testing against an [Auth0](https://auth0.com) Single
 Page Application using the
 [Classic Universal Login Experience](https://auth0.com/docs/universal-login/classic).
 This configuration is recommended for a "Test Tenant" and/or "Test API" setup
 for automated end-to-end testing.
-
-:::
 
 ## Auth0 Application Setup
 
@@ -117,9 +123,7 @@ Next, we'll write a custom command called `loginToAuth0` to perform a login to
    [Cypress Real World App](https://github.com/cypress-io/cypress-realworld-app)
 4. Cache the results with [`cy.session()`](/api/commands/session)
 
-```js
-// cypress/support/auth-provider-commands/auth0.ts
-
+```js title="cypress/support/auth-provider-commands/auth0.ts"
 function loginViaAuth0Ui(username: string, password: string) {
   // App landing page redirects to Auth0.
   cy.visit('/')
@@ -158,16 +162,15 @@ Cypress.Commands.add('loginToAuth0', (username: string, password: string) => {
 Now, we can use our `loginToAuth0` command in the test. Below is our test to
 login as a user via Auth0 and run a basic sanity check.
 
-:::tip
+:::info
 
 The
 [runnable version of this test](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/tests/ui-auth-providers/auth0.spec.ts)
-is in the
-[Cypress Real World App](https://github.com/cypress-io/cypress-realworld-app).
+is in the <Icon name="github" inline="true" contentType="rwa" />.
 
 :::
 
-```js
+```js title='auth.cy.js'
 describe('Auth0', function () {
   beforeEach(function () {
     cy.task('db:seed')
@@ -191,7 +194,7 @@ Lastly, we can refactor our login command to take advantage of
 [`cy.session()`](/api/commands/session) to store our logged in user so we don't
 have to reauthenticate before every test.
 
-```js
+```js title="cypress/support/commands.js"
 Cypress.Commands.add('loginToAuth0', (username: string, password: string) => {
   const log = Cypress.log({
     displayName: 'AUTH0 LOGIN',
@@ -239,8 +242,7 @@ The `loginByAuth0Api` command will execute the following steps:
 2. Finally the `auth0Cypress` `localStorage` item is set with the
    `access token`, `id_token` and user profile.
 
-```jsx
-// cypress/support/commands.js
+```jsx title="cypress/support/commands.js"
 Cypress.Commands.add(
   'loginByAuth0Api',
   (username: string, password: string) => {
@@ -310,7 +312,7 @@ we will be able to authenticate with Auth0 while our app is under test. Below is
 a test to login as a user via [Auth0](https://auth0.com), complete the
 onboarding process and logout.
 
-```jsx
+```jsx title="auth.cy.js"
 describe('Auth0', function () {
   beforeEach(function () {
     cy.task('db:seed')
@@ -336,17 +338,17 @@ The previous sections focused on the recommended Auth0 authentication practice
 within Cypress tests. To use this practice it is assumed you are testing an app
 appropriately built or adapted to use Auth0.
 
-The following sections provides guidance on building or adapting an app to use
+The following sections provide guidance on building or adapting an app to use
 Auth0 authentication. Please note that if you are
 [logging in with `cy.origin()`](#Login-with-cyorigin) and your app is already
-successfully integrated with Auth0, you do not need to make any further changes
+successfully integrated with Auth0, you don't need to make any further changes
 to your app and the remainder of this guide should be regarded as purely
 informational.
 
 :::
 
 The
-[Cypress Real World App](https://github.com/cypress-io/cypress-realworld-app) is
+<Icon name="github" inline="true" contentType="rwa" /> is
 used and provides configuration and runnable code for both the React SPA and the
 Express back end.
 
@@ -372,8 +374,7 @@ In order to validate API requests from the frontend, we install
 [jwks-rsa](https://github.com/auth0/node-jwks-rsa) and configure validation for
 JWT's from [Auth0](https://auth0.com).
 
-```jsx
-// backend/helpers.ts
+```jsx title='backend/helpers.ts'
 import jwt from 'express-jwt'
 import jwksRsa from 'jwks-rsa'
 
@@ -398,9 +399,7 @@ Next, we'll define an Express middleware function to be use in our routes to
 verify the [Auth0](https://auth0.com) JWT sent by the front end API requests as
 the `Bearer` token.
 
-```jsx
-// backend/helpers.ts
-
+```jsx title='backend/helpers.ts'
 // ...
 
 export const checkJwt = jwt(auth0JwtConfig).unless({ path: ['/testData/*'] })
@@ -408,8 +407,7 @@ export const checkJwt = jwt(auth0JwtConfig).unless({ path: ['/testData/*'] })
 
 Once this helper is defined, we can use globally to apply to all routes:
 
-```jsx
-// backend/app.ts
+```jsx title='backend/app.ts'
 // initial imports ...
 import { checkJwt } from './helpers'
 
@@ -439,9 +437,7 @@ A `useEffect` hook is added to get the access token for the authenticated user
 and send an `AUTH0` event with the `user` and `token` objects to work with the
 existing authentication layer (`authMachine.ts`).
 
-```jsx
-// src/containers/AppAuth0.tsx
-
+```jsx title='containers/AppAuth0.tsx'
 // initial imports ...
 
 import { withAuthenticationRequired, useAuth0 } from '@auth0/auth0-react'
@@ -477,7 +473,7 @@ export default withAuthenticationRequired(AppAuth0)
 Note: The full
 [AppAuth0.tsx component](https://github.com/cypress-io/cypress-realworld-app/blob/develop/src/containers/AppAuth0.tsx)
 is in the
-[Cypress Real World App](https://github.com/cypress-io/cypress-realworld-app).
+<Icon name="github" inline="true" contentType="rwa" />.
 
 Next, we update our entry point (`index.tsx`) to wrap our application with the
 `<Auth0Provider>` from the
@@ -485,9 +481,7 @@ Next, we update our entry point (`index.tsx`) to wrap our application with the
 `onRedirectCallback`. We pass props for the Auth0 environment variables set in
 `.env` above, and render our `<AppAuth0>` component as the application.
 
-```jsx
-// src/index.tsx
-
+```jsx title='index.tsx'
 // initial imports ...
 
 import AppAuth0 from "./containers/AppAuth0";
@@ -533,9 +527,7 @@ In addition, we will update the export to be wrapped with
 our application to work with the [Auth0](https://auth0.com) redirect login flow
 in development/production but not when under test in Cypress.
 
-```jsx
-// src/containers/AppAuth0.tsx
-
+```jsx title='containers/AppAuth0.tsx'
 // initial imports ...
 
 import { withAuthenticationRequired, useAuth0 } from "@auth0/auth0-react";
@@ -554,7 +546,8 @@ const AppAuth0 = () => {
       })();
     }, [user, getAccessTokenSilently]);
 
-  // If under test in Cypress, get credentials from "auth0Cypress" localstorage item and send event to our state management to log the user into the SPA
+  // If under test in Cypress, get credentials from "auth0Cypress" 
+  // localstorage and send event to our state management to log the user into the SPA
   if (window.Cypress) {
     useEffect(() => {
       const auth0 = JSON.parse(localStorage.getItem("auth0Cypress")!);
@@ -587,39 +580,33 @@ const AppAuth0 = () => {
   );
 };
 
-// Conditional export wrapped with `withAuthenticationRequired` if we are not under test in Cypress.
+// Conditional export wrapped with `withAuthenticationRequired` 
+// if we aren't under test in Cypress.
 let appAuth0 = window.Cypress ? AppAuth0 : withAuthenticationRequired(AppAuth0);
 export default appAuth0
 ```
 
 ## Auth0 Rate Limiting Logins
 
-Be aware of the rate limit statement in the Auth0 documentation:
-
-[Auth0 Rate Limit](https://auth0.com/docs/connections/database/rate-limits) -
-"If a user attempts to login 20 times per minute as the same user from the same
-location, regardless of having the correct credentials, the rate limit will come
-into effect. When this happens, the user can make 10 attempts per minute."
+Be aware of the rate limit in [Auth0's documentation](https://auth0.com/docs/connections/database/rate-limits) -
 
 This limit can be reached as the size of a test suite grows along with enabling
-[parallelized runs](https://on.cypress.io/parallelization) to speed up test run
+[parallelized runs](/guides/cloud/smart-orchestration/parallelization) to speed up test run
 duration.
 
 If you run into this rate limit, a programmatic approach can be added to the
 `loginByAuth0` command to clear a blocked IP prior to the test run.
 
-Next you'll need to obtain a
+You'll need to obtain an
 [API token](https://auth0.com/docs/api/management/v2/tokens) to interact with
 the [Auth0 Management API](https://auth0.com/docs/api/management/v2). This token
 is a JSON Web Token (JWT) and it contains specific granted permissions for the
 API.
 
 Add this token as environment variable `AUTH0_MGMT_API_TOKEN` to our
-[Cypress Real World App](https://github.com/cypress-io/cypress-realworld-app)
-`.env` with your API token.
+<Icon name="github" inline="true" contentType="rwa" /> `.env` file with your API token.
 
-```jsx
-// .env
+```jsx title='.env'
 // ... additional keys
 AUTH0_MGMT_API_TOKEN = 'YOUR-MANAGEMENT-API-TOKEN'
 ```
@@ -632,14 +619,12 @@ endpoint to unblock an IP that may become blocked during the test run.
 
 :::info
 
-<strong>Tip</strong>
-
 [icanhazip.com](http://icanhazip.com/) is a free, hosted service to find a
 system's current external IP address.
 
 :::
 
-```jsx
+```jsx title='cypress/support/commands.js'
 Cypress.Commands.add('loginByAuth0Api', (username, password) => {
   // Useful when rate limited by Auth0
   cy.exec('curl -4 icanhazip.com')

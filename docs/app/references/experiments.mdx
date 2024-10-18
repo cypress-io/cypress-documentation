@@ -267,7 +267,7 @@ object:
 #### Experimental Skip Domain Injection
 
 Under the hood, Cypress
-[injects document.domain](/app/guides/web-security#Examples-of-what-Cypress-does-under-the-hood)
+[injects document.domain](/app/guides/cross-origin-testing#What-Cypress-does-under-the-hood)
 into your test application to lessen the burden of navigation. This is well
 described in our [Cross Origin Testing](/app/guides/cross-origin-testing)
 guide. However, some sites have compatibility issues with this feature.
@@ -283,7 +283,7 @@ Before enabling, verify your application is not implementing frame busting
 techniques, which you can mitigate with the
 [`modifyObstructiveCode`](/app/references/configuration#modifyObstructiveCode)
 and
-[`experimentalModifyObstructiveThirdPartyCode`](/app/guides/web-security#Modifying-Obstructive-Third-Party-Code)
+[`experimentalModifyObstructiveThirdPartyCode`](/app/guides/cross-origin-testing#Modifying-Obstructive-Third-Party-Code)
 flags.
 
 At this point in time, we are aware of the following sites that require the
