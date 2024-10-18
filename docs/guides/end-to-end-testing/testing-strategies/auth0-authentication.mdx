@@ -160,6 +160,7 @@ function loginViaAuth0Ui(username: string, password: string) {
     { args: { username, password } },
     ({ username, password }) => {
       cy.get('input#username').type(username)
+      cy.contains('button[value=default]', 'Continue').click()
       cy.get('input#password').type(password, { log: false })
       cy.contains('button[value=default]', 'Continue').click()
     }
