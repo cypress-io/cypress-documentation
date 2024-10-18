@@ -108,7 +108,7 @@ The use of `data-cy`-style test ID attributes to help with test stability has be
 
 This approach explicitly avoids testing accessibility - which is all about the nature and structure of the content being tested, and how well the implementation in code matches that content, to provide a functional experience in a range of assistive technologies and browser setups.
 
-Testing Library (introduced in 2018 and now widely popular) is sometimes seen as a "solution" to the fact that explicit Test IDs do not provide any accessibility testing benefit. While Testing Library's helpers can be convenient and useful in their own right, and they keep accessibility top-of-mind for testers, it's important to note that Testing Library locators do **not** guarantee the accessibility of the elements being tested.
+Testing Library (introduced in 2018 and now widely popular) is sometimes seen as a solution to the fact that explicit Test IDs do not provide any accessibility testing benefit. While Testing Library's helpers can be convenient and useful in their own right, and they keep accessibility top-of-mind for testers, it's important to note that Testing Library locators do **not** guarantee the accessibility of the elements being tested.
 
 :::warning
 Whether you primarily use Testing Library element locators, test IDs, or a different approach, testing for accessibility requires making specific assertions about the **implementation and behavior** of your application. 
