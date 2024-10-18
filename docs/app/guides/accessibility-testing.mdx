@@ -1,0 +1,403 @@
+---
+title: Accessibility Testing
+---
+
+Accessibility testing helps to confirm that applications work correctly for people with disabilities. 
+
+To set a good foundation for accessible user experience, the underlying code of the application being tested needs to comply with certain guidelines, known as the [Web Content Accessibility Guidelines](https://www.w3.org/WAI/standards-guidelines/wcag/) (WCAG). Meeting or exceeding these guidelines will help ensure your disabled users can independently perceive the content of your application, navigate through your pages and sections, and complete the available actions.
+
+Cypress supports a range of different kinds of accessibility testing. There is a rich plugin ecosystem around this, as well as a commercial, enterprise-ready solution in the Cypress Cloud.
+
+## Ways to include accessibility in your Cypress tests
+
+- In-test plugins
+- Cypress Accessibility 
+- Accessibility-focused assertions
+
+
+
+## In-test plugins
+
+The [`cypress-axe`](https://www.npmjs.com/package/cypress-axe) integrates the popular Axe Core library by Deque Systems into your Cypress tests.
+
+After setting up the plugin, a custom `cy.checkA11y()` command is available. Running this command performs a scan of the current state of the page or component that you are testing, and you can choose to fail the test in response to accessibility issues detected. Detailed configuration is available to scope this to the specific WCAG Success Criteria and related rules that you want to test.
+
+There are further plugins that are themselves built on top of `cypress-axe` and extend it in various ways, such as [`wick-a11y`](https://www.npmjs.com/package/wick-a11y) and [`cypress-a11y-report`](https://www.npmjs.com/package/cypress-a11y-report), as well as other accessibility testing libraries like the [IBM Equal Access Checker](https://www.npmjs.com/package/cypress-accessibility-checker).
+
+This general "add a command to trigger a scan" approach helps detect and prevent all-too-common issues like poor color contrast, missing labels for icons and buttons, images without alt text, and other errors in the implementation of a user interface that can be detected with generic checks. 
+
+:::warning
+Note that no automated scan can prove that the interface is fully accessible and works well for users with disabilities, so it is always necessary to understand the limitations and expected coverage provided by the library you choose, and then make a plan to cover the gaps with manual testing and/or traditional Cypress assertions about expected behavior.
+::: 
+
+A combination of automated checks to reveal mistakes in the implementation, and specific assertions about the important user flows can be extremely powerful and helps catch much more accessibility regressions than either approach taken alone.
+
+## Cypress Accessibility
+
+In-test accessibility checks are the only kind available in most testing platforms. They come with some limitations and tradeoffs that [Cypress Accessibility](/accessibility/get-started/introduction), available in Cypress Cloud, is designed to solve. By moving the checks outside of the test context and running them in Cypress Cloud as tests are recorded, Cypress Accessibility removes adoption, training, and test performance hurdles that can hinder the effective implementation of in-test checks. Cypress Accessibility automatically detects all the steps within user flows, requiring no test code to be written to trigger the Axe Core accessibility checks.
+
+To learn more, you can read our dedicated docs, or review a [public live example of an accessibility report](http://on.cypress.io/rwa-accessibility-views) in our Cypress Realworld App demo project.
+
+## Accessibility-focused assertions
+
+While automation like Axe Core can detect missing attributes and other aspects of code quality that impact the experience of people with disabilities using the web, it doesn't know anything about your specific application and the expectations you have for your users. That's where including accessibility in your specs comes in.
+
+To confirm that some specific accessibility feature is present in the application under test, you can write explicit tests like this, for example, to confirm that the correct alternative text is present on your logo image:
+
+```js
+it('adds todos', () => {
+  cy.visit('https://example.cypress.io/')
+  // explicitly check the alt text of an image
+  cy.get('img#logo')
+    .should('have.attr', 'alt', 'Cypress Logo')
+})
+```
+
+It's also possible to use a accessibility-aware locator approach to find the element while performing some other assertion. Here instead of using the element ID, we locate the image by its `alt` text: 
+
+```js
+// use the `alt` content to target the image
+cy.get('img[alt="Cypress Logo"]')
+  .should('be.visible')
+```
+
+This kind of accessibility-friendly locator approach is also possible with the [Cypress Testing Library](https://testing-library.com/docs/cypress-testing-library/intro) plugin, which provides some helpers for this purpose:
+
+```js
+// use the recommended ByRole Testing Library locator
+cy.findByRole('img', { name: 'Cypress Logo' })
+  .should('be.visible')
+```
+
+A similar technique can be used with interactive elements like buttons:
+
+```js
+  // click the "Submit" button located with the `contains` Cypress command
+  cy.contains('button', 'Submit').click()
+```
+
+And using the Testing Library `ByRole` locator:
+
+```js
+  // click any element with role `button` and an accessible name of `Submit`
+  cy.findByRole('button', { name: 'Submit' }).click()
+```
+
+However, there are some important differences to consider between locating specific HTML elements, and locating those same elements only by their role which is the main Testing Library recommendation. Also, it's worth pointing out that both strategies can be used in combination with other approaches like test IDs.
+
+### Test IDs, Testing Library, and Accessibility
+
+The use of `data-cy`-style test ID attributes to help with test stability has been a longstanding [best practice recommendation](/app/core-concepts/best-practices#Selecting-Elements) from Cypress. Test IDs are resilient to non-functional functional UI changes because they don't specify anything about the nature of the code or content itself, only that some element with that data attribute is present. When code changes, as long as the `data-cy` attributes are preserved in the right places, all the tests using them should continue to pass.
+
+This approach explicitly avoids testing accessibility - which is all about the nature and structure of the content being tested, and how well the implementation in code matches that content to provide a functional experience in a range of assistive technologies and browser setups.
+
+Testing Library is sometimes seen as a "solution" to the fact that explicit Test IDs do not provide any accessibility testing benefit. While Testing Library's locator helpers can be convenient and useful, and help keep accessibility top-of-mind for testers, it's important to note that Testing Library locators do not guarantee the accessibility of the elements being tested.
+
+:::warning
+Whether you use Testing Library element locators, or Test IDs, or a mix of both testing accessibility still requires **asserting about the implementation**.
+:::
+
+As an example: a real `button` element has a complex accessibility contract implemented by the browser for keyboard and screen reader users. On the other hand, a `div` with `role` of `button` does not get this default browser accessibility behavior, and is not accessible without custom JavaScript replacing the browser contract. It is not safe to refactor from one form to the other, even though Testing Library will treat each as the same if located using the `ByRole` locator. This is because, much like test IDs, the `ByRole` approach is intended to _avoid_ testing the implementation directly to keep tests resilient.
+
+So what should you do in your test automation to help confirm the UI is accessible? First of all, for known critical areas like forms or checkout flows, ensure that the accessibility behavior is tested explicitly in at least one place. The means verifying that form fields and buttons have the correct labels and use the expected HTML elements, and other aspects of the DOM that communicate necessary information. Component tests are a fantastic place to do this, whether using Cypress Component testing or something else. 
+
+Accessibility should be tested at least once for a given component, area of the application, or workflow. Once that is achieved, there is no additional accessibility benefit to repeated asserting the same things in all other tests. Test IDs are the most resilient and are a good choice for maximized stability, while Testing Library is convenient and familiar to many React developers, and it doesn't require any code changes, but may cause _many_ tests to fail when a label is missing, instead of just your explicit accessibility assertions.
+
+### Extending a Test
+
+You can extend any preexisting test or start by creating a new test with the
+following test scaffolding.
+
+```js
+// Code from Real World App (RWA)
+describe('Cypress Studio Demo', () => {
+  beforeEach(() => {
+    // Seed database with test data
+    cy.task('db:seed')
+
+    // Login test user
+    cy.database('find', 'users').then((user) => {
+      cy.login(user.username, 's3cret', true)
+    })
+  })
+
+  it('create new transaction', () => {
+    // Extend test with Cypress Studio
+  })
+})
+```
+
+:::info
+
+### <Icon name="graduation-cap" /> Real World Example
+
+Clone the <Icon name="github" inline="true" contentType="rwa" /> and refer to
+the
+[cypress/tests/demo/cypress-studio.cy.ts](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/tests/demo/cypress-studio.spec.ts)
+file.
+
+:::
+
+#### Step 1 - Run the spec
+
+We will use Cypress Studio to perform a "New Transaction" user journey. First,
+launch Cypress and select End To End testing, then choose a browser to run specs
+in.
+
+<DocsImage src="/img/app/cypress-studio/run-spec-1.png" alt="Cypress Studio" />
+
+Once the browser is open, run the spec created in the previous step.
+
+#### Step 2 - Launch Cypress Studio
+
+Once the tests complete their run, hover over a test in the Command Log to
+reveal an "Add Commands to Test" button.
+
+Clicking on "Add Commands to Test" will launch the Cypress Studio.
+
+:::info
+
+Cypress Studio is directly integrated with the
+[Command Log](/app/core-concepts/open-mode#Command-Log).
+
+:::
+
+<DocsImage
+  src="/img/app/cypress-studio/extend-activate-studio.png"
+  alt="Activate Cypress Studio"
+/>
+
+:::tip
+
+Cypress will automatically execute all hooks and currently present test code,
+and then the test can be extended from that point on (e.g. We are logged into
+the application inside the `beforeEach` block).
+
+:::
+
+Next, Cypress will execute the test in isolation and pause after the last
+command in the test.
+
+<DocsImage
+  src="/img/app/cypress-studio/extend-ready.png"
+  alt="Cypress Studio Ready"
+/>
+
+Now, we can begin updating the test to create a new transaction between users.
+
+#### Step 3 - Interact with the Application
+
+To record actions, begin interacting with the application. Here we will click on
+the "New" button on the right side of the header and as a result we will see our
+click recorded in the Command Log.
+
+<DocsImage
+  src="/img/app/cypress-studio/extend-click-new-transaction.png"
+  alt="Cypress Studio Recording Click"
+/>
+
+Next, we can start typing in the name of a user that we want to pay.
+
+<DocsImage
+  src="/img/app/cypress-studio/extend-type-user-name.png"
+  alt="Cypress Studio Recording Type"
+/>
+
+Once we see the name come up in the results, we want to add an assertion to
+ensure that our search function works correctly. Right clicking on the user's
+name will bring up a menu from which we can add an assertion to check that the
+element contains the correct text (the user's name).
+
+<DocsImage
+  src="/img/app/cypress-studio/extend-assert-user-name.png"
+  alt="Cypress Studio Add Assertion"
+/>
+
+We can then click on that user in order to progress to the next screen. We will
+complete the transaction form by clicking on and typing in the amount and
+description inputs.
+
+<DocsImage
+  src="/img/app/cypress-studio/extend-type-transaction-form.png"
+  alt="Cypress Studio Recording Type"
+/>
+
+:::tip
+
+Notice the commands generated in the Command Log.
+
+:::
+
+Now it's time to complete the transaction. You might have noticed that the "Pay"
+button was disabled before we typed into the inputs. To make sure that our form
+validation works properly, let's add an assertion to make sure the "Pay" button
+is enabled.
+
+<DocsImage
+  src="/img/app/cypress-studio/extend-assert-button-enabled.png"
+  alt="Cypress Studio Add Assertion"
+/>
+
+Finally, we will click the "Pay" button and get presented with a confirmation
+page of our new transaction.
+
+<DocsImage
+  src="/img/app/cypress-studio/extend-save-test.png"
+  alt="Cypress Studio Save Commands"
+/>
+
+To discard the interactions, click the "Cancel" button to exit Cypress Studio.
+If satisfied with the interactions with the application, click "Save Commands"
+and the test code will be saved to your spec file. Alternatively you can choose
+the "copy" button in order to copy the generated commands to your clipboard.
+
+#### Generated Test Code
+
+Viewing our test code, we can see that the test is updated after clicking "Save
+Commands" with the actions we recorded in Cypress Studio.
+
+```js
+// Code from Real World App (RWA)
+describe('Cypress Studio Demo', () => {
+  beforeEach(() => {
+    // Seed database with test data
+    cy.task('db:seed')
+
+    // Login test user
+    cy.database('find', 'users').then((user) => {
+      cy.login(user.username, 's3cret', true)
+    })
+  })
+
+  it('create new transaction', () => {
+    /* ==== Generated with Cypress Studio ==== */
+    cy.get('[data-test=nav-top-new-transaction]').click()
+    cy.get('[data-test=user-list-search-input]').clear()
+    cy.get('[data-test=user-list-search-input]').type('dev')
+    cy.get(
+      '[data-test=user-list-item-tsHF6_D5oQ] > .MuiListItemText-root > .MuiListItemText-primary'
+    ).should('have.text', 'Devon Becker')
+    cy.get('[data-test=user-list-item-tsHF6_D5oQ]').click()
+    cy.get('#amount').clear()
+    cy.get('#amount').type('$25')
+    cy.get('#transaction-create-description-input').clear()
+    cy.get('#transaction-create-description-input').type('Sushi dinner')
+    cy.get('[data-test=transaction-create-submit-payment]').should('be.enabled')
+    cy.get('[data-test=transaction-create-submit-payment]').click()
+    /* ==== End Cypress Studio ==== */
+  })
+})
+```
+
+The selectors are generated according to the
+[`Cypress.SelectorPlayground` selector priority](/api/cypress-api/selector-playground-api#Default-Selector-Priority).
+
+### Adding a New Test
+
+You can add a new test to any existing `describe` or `context` block, by
+clicking "Add New Test" on our defined `describe` block.
+
+<DocsImage
+  src="/img/app/cypress-studio/add-test-1.png"
+  alt="Cypress Studio Add Test"
+/>
+
+We are launched into Cypress Studio and can begin interacting with our
+application to generate the test.
+
+For this test, we will add a new bank account. Our interactions are as follows:
+
+1. Click "Bank Accounts" in left hand navigation
+   <DocsImage
+     src="/img/app/cypress-studio/add-test-2.png"
+     alt="Cypress Studio Begin Add Test"
+   />
+2. Click the "Create" button on Bank Accounts page
+   <DocsImage
+     src="/img/app/cypress-studio/add-test-create.png"
+     alt="Cypress Studio Add Test Create Bank Account"
+   />
+3. Fill out the bank account information
+   <DocsImage
+     src="/img/app/cypress-studio/add-test-form-complete.png"
+     alt="Cypress Studio Add Test Complete Bank Account Form"
+   />
+4. Click the "Save" button
+   <DocsImage
+     src="/img/app/cypress-studio/add-test-form-save.png"
+     alt="Cypress Studio Add Test Save Bank Account"
+   />
+
+To discard the interactions, click the "Cancel" button to exit Cypress Studio.
+
+If satisfied with the interactions with the application, click "Save Commands"
+and prompt will ask for the name of the test. Click "Save Test" and the test
+will be saved to the file.
+
+<DocsImage
+  src="/img/app/cypress-studio/add-test-save-test.png"
+  alt="Cypress Studio Add Test Completed Run"
+/>
+
+Once saved, the file will be run again in Cypress.
+
+<DocsImage
+  src="/img/app/cypress-studio/add-test-final.png"
+  alt="Cypress Studio Add Test Completed Run"
+/>
+
+Finally, viewing our test code, we can see that the test is updated after
+clicking "Save Commands" with the actions we recorded in Cypress Studio.
+
+```js
+// Code from Real World App (RWA)
+import { User } from 'models'
+
+describe('Cypress Studio Demo', () => {
+  beforeEach(() => {
+    cy.task('db:seed')
+
+    cy.database('find', 'users').then((user: User) => {
+      cy.login(user.username, 's3cret', true)
+    })
+  })
+
+  it('create new transaction', () => {
+    // Extend test with Cypress Studio
+  })
+
+  /* === Test Created with Cypress Studio === */
+  it('create bank account', function () {
+    /* ==== Generated with Cypress Studio ==== */
+    cy.get('[data-test=sidenav-bankaccounts]').click()
+    cy.get('[data-test=bankaccount-new] > .MuiButton-label').click()
+    cy.get('#bankaccount-bankName-input').click()
+    cy.get('#bankaccount-bankName-input').type('Test Bank Account')
+    cy.get('#bankaccount-routingNumber-input').click()
+    cy.get('#bankaccount-routingNumber-input').type('987654321')
+    cy.get('#bankaccount-accountNumber-input').click()
+    cy.get('#bankaccount-accountNumber-input').type('123456789')
+    cy.get('[data-test=bankaccount-submit] > .MuiButton-label').click()
+    /* ==== End Cypress Studio ==== */
+  })
+})
+```
+
+:::info
+
+### <Icon name="graduation-cap" /> Real World Example
+
+Clone the <Icon name="github" inline="true" contentType="rwa" /> and refer to
+the
+[cypress/tests/demo/cypress-studio.cy.ts](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/tests/demo/cypress-studio.spec.ts)
+file.
+
+:::
+
+## History
+
+| Version                                    | Changes                                      |
+| ------------------------------------------ | -------------------------------------------- |
+| [10.7.0](/app/references/changelog#10-7-0) | Re-introduced Cypress Studio into version 10 |
+| [8.1.0](/app/references/changelog#8-1-0)   | Added ability to generate assertions         |
+| [6.3.0](/app/references/changelog#6-3-0)   | Added Cypress Studio as experimental         |
