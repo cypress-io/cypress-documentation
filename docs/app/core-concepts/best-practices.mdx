@@ -206,21 +206,23 @@ If the answer is **no** because the text could be changed - then use
 
 Cypress loves the Testing Library project. We use Testing Library internally,
 and our philosophy aligns closely with Testing Library's ethos and approach to
-writing tests. We strongly endorse their best practices.
+writing tests. We strongly endorse their best practices for situations where,
+as with `cy.contains()`, you want to fail a test if a specific piece of content or 
+accessible role is not present.
 
 You can use the
 [Cypress Testing Library](https://testing-library.com/docs/cypress-testing-library/intro/)
 package to use the familiar testing library methods (like `findByRole`,
 `findByLabelText`, etc...) to select elements in Cypress specs.
 
-In particular, if you're looking for more resources to understand how we
+If you are coming from a React Testing Library background and looking for more resources to understand how we
 recommend you approach testing your components, look to: [Cypress Component Testing](/app/component-testing/get-started).
 
 ### Accessibility Testing
 
 Selecting elements with data attributes, text content, or Testing Library locators can each have some different implications for accessibility,
-but none of these approaches is a "complete" test, and you will always need additional, accessibility-specific testing to confirm
-your application is working as expected for people with disabilities. If accessibility testing is important you, [see our guide](/app/guides/accessibility-testing) for more details and comparisons of approaches.
+but none of these approaches is a "complete" accessibility test, and you will always need additional, accessibility-specific testing (including automated and manual tests) to confirm
+your application is working as expected for people with disabilities and the technology they use. See[our accessibility testing guide](/app/guides/accessibility-testing) for more details and comparisons of approaches.
 
 ## <Icon name="angle-right" /> Assigning Return Values
 
