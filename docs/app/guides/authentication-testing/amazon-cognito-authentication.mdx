@@ -6,36 +6,35 @@ description: 'Implement Amazon Cognito authentication in Cypress. Securely manag
 
 # Amazon Cognito Authentication
 
+:::info
+
+##### <Icon name="question-circle" color="#42a1c0" /> What you'll learn
+
+- How to implement Amazon Cognito authentication in Cypress
+- How to securely manage authentication processes for Cypress end-to-end testing scenarios
+
+:::
+
 Amazon [Cognito](https://aws.amazon.com/cognito) is an authentication provider
 apart of [Amazon Web Services (AWS)](https://aws.amazon.com).
-
-It "lets you add user sign-up, sign-in, and access control to your web and
-mobile apps quickly and easily" and "scales to millions of users and supports
-sign-in with social identity providers, such as Facebook, Google, and Amazon,
-and enterprise identity providers via SAML 2.0."
-
-## Authentication with Amazon Cognito
 
 The documentation for [Amazon Cognito](https://aws.amazon.com/cognito)
 recommends using the
 [AWS Amplify Framework Authentication Library](https://aws-amplify.github.io/amplify-js/api/classes/authclass.html)
 from the [AWS Amplify Framework](https://aws.amazon.com/amplify/framework/) to
 interact with a deployed [Amazon Cognito](https://aws.amazon.com/cognito)
-instance.
-
-Using the
+instance. Using the
 [AWS Amplify Framework Authentication Library](https://aws-amplify.github.io/amplify-js/api/classes/authclass.html),
 we are able to programmatically drive the creation and authentication of users
 against a fully deployed back end.
 
-This illustrates the limited code from the
+This guide illustrates the limited code from the
 [AWS Amplify Framework](https://aws.amazon.com/amplify/framework/) needed to
 programmatically log an existing a user into an application.
 
-<!-- prettier-ignore-start -->
 <Tabs>
+
   <TabItem value="v5" label="Amplify v5.x.x" default>
-<!-- prettier-ignore-end -->
 
 ```jsx
 // Add 'aws-amplify' library into your application
@@ -55,10 +54,9 @@ Auth.signIn(username, password)
   .catch((err) => console.log(err))
 ```
 
-<!-- prettier-ignore-start -->
   </TabItem>
+
   <TabItem value="v6" label="Amplify v6.x.x">
-<!-- prettier-ignore-end -->
 
 ```tsx
 import { Amplify } from "aws-amplify";
@@ -81,10 +79,9 @@ signIn({ username, password, { authFlowType: "USER_PASSWORD_AUTH" } })
   .catch((err) => console.log(err));
 ```
 
-<!-- prettier-ignore-start -->
   </TabItem>
+
 </Tabs>
-<!-- prettier-ignore-end -->
 
 ## Amazon Cognito Setup
 

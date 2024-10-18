@@ -3,37 +3,33 @@ title: Variables and Aliases
 sidebar_position: 40
 ---
 
-## Return Values
+:::info
+
+##### <Icon name="question-circle" color="#42a1c0" /> What you'll learn
+
+- Common patterns for handling asynchronous code in Cypress
+- When to assign variables and when not to
+- How to use aliases to share objects between hooks and tests
+- Pitfalls with using `this` and how to avoid them
+- How to alias DOM elements, intercepts, and requests
+
+:::
 
 New users to Cypress may initially find it challenging to work with the
-asynchronous nature of our APIs.
-
-:::tip
-
-<strong>Do not worry!</strong>
-
-There are many ways to reference, compare and utilize the objects that Cypress
-commands yield you.
-
-Once you get the hang of async code you'll realize you can do everything you
+asynchronous nature of our APIs.There are many ways to reference, compare and utilize the objects that Cypress
+commands yield you. Once you get the hang of async code you'll realize you can do everything you
 could do synchronously, without your code doing any backflips.
 
 This guide explores many common patterns for writing good Cypress code that can
 handle even the most complex situations.
 
-:::
-
 Asynchronous APIs are here to stay in JavaScript. They are found everywhere in
 modern code. In fact, most new browser APIs are asynchronous and many core Node
 modules are asynchronous as well.
 
-The patterns we'll explore below are useful in and outside of Cypress.
-
-The first and most important concept you should recognize is...
+The patterns we'll explore below are useful in and outside of Cypress. The first and most important concept you should recognize is...
 
 :::danger
-
-<strong>Return Values</strong>
 
 **You cannot assign or work with the return values** of any Cypress command.
 Commands are enqueued and run asynchronously.
