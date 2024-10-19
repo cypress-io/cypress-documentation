@@ -68,7 +68,7 @@ A combination of automated checks to reveal mistakes in the implementation, and 
   alt="Cypress Accessibility UI displaying a 'Buttons must have discernible text' violation example"
 />
 
-In-test accessibility checks are the only kind available in typical testing scenarios. They come with some limitations and tradeoffs that [Cypress Accessibility](/accessibility/get-started/introduction), available in Cypress Cloud, is designed to solve. By moving the checks outside of the test context and running them in Cypress Cloud as tests are recorded, Cypress Accessibility removes adoption, training, and test performance hurdles that can hinder the effective implementation of in-test checks. Cypress automatically detects all the steps within user flows, requiring no test code to be written to trigger Axe Core® accessibility checks.
+In-test accessibility checks are the only kind available in typical testing scenarios. They come with some limitations and tradeoffs that [Cypress Accessibility](/accessibility/get-started/introduction), available in Cypress Cloud, is designed to solve. By moving the checks outside of the test context and running them in Cypress Cloud as tests are recorded, Cypress Accessibility removes adoption, training, and test performance hurdles that can hinder the effective implementation of in-test checks. Cypress automatically detects all the steps within user flows, requiring no test code to be written.
 
 To learn more, you can read our [dedicated docs](/accessibility/get-started/introduction), or review a [public live example of an automatically-generated accessibility report](http://on.cypress.io/rwa-accessibility-views) in our Cypress Realworld App demo project.
 
@@ -169,9 +169,9 @@ Test IDs are the most resilient locator option and are a good choice for maximiz
 
 Testing Library locators are convenient and familiar to many React developers (due to its origins as "React Testing Library"), and they don't require any code changes, but may cause _many_ tests to fail when a label is missing, instead of just your explicit accessibility assertions, because they are a step closer to the implementation details.
 
-Additionally, Testing Library locators can provide a false sense of confidence that something is accessible simply because it can be located by its role. Still, when understood correctly, teams can write effective tests using this approach, and some locators like [`findByLabelText`](https://testing-library.com/docs/queries/bylabeltext) stand out as being particularly useful.
+Additionally, Testing Library locators can provide a false sense of confidence that something is accessible simply because it can be located by its role. Still, when understood correctly, teams can write effective tests using this approach, and some locators like [`findByLabelText`](https://testing-library.com/docs/queries/bylabeltext) stand out as being particularly useful. 
 
-What is most important in all accessibility automation discussions is this: how can your testing strategy best support your users with disabilities to independently understand and use your application? Cypress enables you to place the user at the center of your testing process, with a mix of automated scans and some specific intentional assertions, you can reach high levels of confidence that your application is free of known accessibility errors and let your test pipeline warn you if things are going off track.
+What is most important in all accessibility automation discussions is an this: how can your testing strategy best support your users with disabilities to independently understand and use your application? Cypress enables you to place the user at the center of your testing process. With a mix of automated scans and some specific intentional assertions, you can reach high levels of confidence that your application is free of known accessibility errors and let your test pipeline warn you if things are going off track.
 
 ## See also
 
