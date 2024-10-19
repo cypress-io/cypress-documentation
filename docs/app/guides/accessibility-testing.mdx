@@ -136,7 +136,7 @@ Whether you primarily use Testing Library element locators, test IDs, or a diffe
 
 There is much more to this topic than we can cover here, but we will provide a small example, and a recommendation for what to do.
 
-### Roles vs elements - button example
+### Asserting about roles vs elements - button example
 
 The native HTML `button` element has a complex accessibility contract implemented by the browser for keyboard and screen reader users. Here is a partial list of ways a button element is automatically managed by the browser:
 
@@ -149,9 +149,11 @@ The native HTML `button` element has a complex accessibility contract implemente
 - If placed inside a `form` element, activating the button by any of these methods will submit the form (because its default type is `submit`)
 - It will receive specific styling, customizable by the user, in Windows High Contrast Mode (used by people with certain visual disabilities)
 
-On the other hand, a `div` with `role` of `button` does not get this default browser accessibility behavior, and is not accessible without custom JavaScript and CSS replacing the browser contract.
+On the other hand, a `div` with `role` of `button` does not get any default browser accessibility behavior, and is **not accessible** without custom JavaScript and CSS replacing the browser contract.
 
-This means that, without some assertions about either the `button` element itself, or a full test of the accessibility "contract" of that element, it is not safe for a developer to refactor from a `button` to a `<div role="button">`, even though Testing Library will treat each as the same if located using the `ByRole` locator. This is because, much like test IDs, the `ByRole` approach is intended to _avoid_ testing the implementation directly, to keep tests resilient.
+This means that, without some assertions about either the `button` element itself, or a full test of the accessibility "contract" of that element, it is not safe for a developer to refactor from a `button` to a `<div role="button">`, even though Testing Library will treat each as the same if located using the `ByRole` locator. This is because, much like test IDs, the `ByRole` approach is intended to _avoid_ testing the implementation directly, to keep tests resilient when code is refactored. 
+
+Developers who are unfamiliar with accessibility may assume that if a Testing Library `ByRole` locator can be made to pass before and after a code change, there has been no functional or accessibility-related change in the underlying element. As we've seen, this is not actually the case, because of the extra behavior browsers only implement for native HTML elements. For more about this difference and why semantic HTML elements are preferred, see the [first rule of Accessible Rich Internet Applications (ARIA)](https://www.w3.org/TR/using-aria/#rule1).
 
 ## Where to test accessibility
 
