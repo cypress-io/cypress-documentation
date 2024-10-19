@@ -2,24 +2,22 @@
 title: Cross Browser Testing
 ---
 
-Cypress has the capability to run tests across multiple browsers. Currently,
-Cypress has support for
-[Chrome-family browsers](/app/guides/launching-browsers#Chrome-Browsers)
-(including Electron and Chromium-based Microsoft Edge),
-[WebKit](/app/guides/launching-browsers#WebKit-Experimental) (Safari's
-browser engine), and Firefox.
+:::info
 
-:::caution
+##### <Icon name="question-circle" color="#42a1c0" /> What you'll learn
 
-<strong>Web Security</strong>
-
-Tests that require the
-[`chromeWebSecurity` configuration option to be disabled](/app/guides/web-security#Disabling-Web-Security)
-may experience issues in non-Chromium based browsers.
+- How to run tests across multiple browsers
+- Strategies for incorporating cross-browser testing into your CI process
 
 :::
 
-Excluding [Electron](/app/guides/launching-browsers#Electron-Browser), any
+Cypress has the capability to run tests across multiple browsers. Currently,
+Cypress has support for
+Chrome-family browsers, Firefox, and
+WebKit (Safari's
+browser engine).
+
+Excluding [Electron](/app/references/launching-browsers#Electron-Browser), any
 browser you want to run Cypress tests in needs to be installed on your local
 system or CI environment. A full list of detected browsers is displayed within
 the browser selection menu of [Cypress](/app/core-concepts/open-mode).
@@ -30,18 +28,18 @@ the browser selection menu of [Cypress](/app/core-concepts/open-mode).
 />
 
 The desired browser can also specified via the
-[`--browser`](/app/references/command-line#Options) flag when using
+[`--browser`](/app/references/command-line#Options) flag when using the
 [`run`](/app/references/command-line#cypress-run) command to launch Cypress. For
-example, to run Cypress tests in Firefox:
+example, to run Cypress tests in Chrome:
 
 ```shell
-cypress run --browser firefox
+cypress run --browser chrome
 ```
 
 To make launching of Cypress with a specific browser even more convenient, npm
 scripts can be used as a shortcut:
 
-```json
+```json title='package.json'
 "scripts": {
   "cy:run:chrome": "cypress run --browser chrome",
   "cy:run:firefox": "cypress run --browser firefox"
@@ -53,7 +51,7 @@ scripts can be used as a shortcut:
 When incorporating testing of multiple browsers within your QA process, you must
 implement a CI strategy that provides an optimal level of confidence while
 taking into consideration test duration and infrastructure costs. This optimal
-strategy will vary by the type and needs of a particular project. This guide we
+strategy will vary by the needs of a particular project. This guide we
 present several strategies to consider when crafting the strategy for your
 project.
 
@@ -63,8 +61,6 @@ for its concise and readable configuration, but the same concepts apply for most
 CI providers.
 
 :::info
-
-<strong>Docker Images for Testing</strong>
 
 The CI configuration examples within this guide use
 [Cypress's Docker images](https://github.com/cypress-io/cypress-docker-images/tree/master/browsers)
@@ -97,7 +93,7 @@ and translation of cron expressions.
 The following example demonstrates a nightly CI schedule against production
 (`master` branch) for Firefox:
 
-```yaml
+```yaml title='.circleci/config.yml'
 version: 2.1
 orbs:
   cypress: cypress-io/cypress@3
@@ -127,7 +123,7 @@ The following example demonstrates only running Firefox tests when commits are
 merged into a specific branch (`develop` branch in this case) so any potential
 Firefox issues can be caught before a production release:
 
-```yaml
+```yaml title='.circleci/config.yml'
 version: 2.1
 orbs:
   cypress: cypress-io/cypress@3
@@ -148,7 +144,7 @@ workflows:
 
 We can choose to only run a subset of tests against a given browser. For
 example, we can execute only the happy or critical path related test files, or a
-directory of specific "smoke" test files. It is not always necessary to have
+directory of specific "smoke" test files. It's not always necessary to have
 both browsers always running _all_ tests.
 
 In the example below, the Chrome `cypress/run` job runs _all_ tests against
@@ -169,7 +165,7 @@ Circle CI workflow UI to distinguish the jobs.
 
 :::
 
-```yaml
+```yaml title='.circleci/config.yml'
 version: 2.1
 orbs:
   cypress: cypress-io/cypress@3
@@ -206,7 +202,7 @@ Firefox dedicated `cypress/run` job runs a _subset_ of tests in parallel, across
 reports results to [Cypress Cloud](https://on.cypress.io/cloud) under the group
 named `firefox`.
 
-```yaml
+```yaml title='.circleci/config.yml'
 version: 2.1
 orbs:
   cypress: cypress-io/cypress@3
@@ -238,9 +234,7 @@ running smoke-tests against Chrome and not Firefox. This type of granular
 selection of test execution depends on the type of tests and the level of
 confidence those specific tests provide to the overall project.
 
-:::tip
-
-<strong>Tip</strong>
+:::info
 
 When considering to ignore or only run a particular test within a given browser,
 assess the true need for the test to run on multiple browsers.
@@ -253,23 +247,20 @@ test within the
 `browser` option accepts the same arguments as
 [Cypress.isBrowser()](/api/cypress-api/isbrowser#Arguments).
 
-```js
+```js title='test.cy.js'
 // Run the test if Cypress is running
 // using the built-in Electron browser
 it('has access to clipboard', { browser: 'electron' }, () => {
-  ...
+  // ...
 })
 
 // Run the test if Cypress is run via Firefox
 it('Download extension in Firefox', { browser: 'firefox' }, () => {
-  cy.get('#dl-extension')
-    .should('contain', 'Download Firefox Extension')
+  cy.get('#dl-extension').should('contain', 'Download Firefox Extension')
 })
 
 // Run happy path tests if Cypress is run via Firefox
 describe('happy path suite', { browser: 'firefox' }, () => {
-  it('...')
-  it('...')
   it('...')
 })
 
@@ -288,5 +279,5 @@ it('Show warning outside Chrome', { browser: '!chrome' }, () => {
 - [Browser Launch API](/api/node-events/browser-launch-api)
 - [Cypress.browser](/api/cypress-api/browser)
 - [Cypress.isBrowser](/api/cypress-api/isbrowser)
-- [Launching Browsers](/app/guides/launching-browsers)
+- [Launching Browsers](/app/references/launching-browsers)
 - [Test Configuration](/app/references/configuration#Test-Configuration)

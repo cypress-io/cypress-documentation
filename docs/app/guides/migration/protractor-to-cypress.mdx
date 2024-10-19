@@ -2,23 +2,35 @@
 title: Migrating from Protractor
 ---
 
-Protractor has been a popular end-to-end testing tool for Angular and AngularJS
-apps. However, Protractor is
+:::info
+
+##### <Icon name="question-circle" color="#42a1c0" /> What you'll learn
+
+- How to migrate from Protractor to Cypress
+- The benefits of using Cypress for end-to-end testing
+- How to work with the DOM and write assertions in Cypress
+- Using the Angular schematic to configure Cypress
+
+:::
+
+Protractor was a popular end-to-end testing tool for Angular and AngularJS
+apps, but is
 [no longer included](https://blog.angular.io/angular-v12-is-now-available-32ed51fbfd49)
 in new Angular projects as of Angular 12. We've got you covered here with this
 migration guide to help you and your team transition from Protractor to Cypress.
 
-:::caution
-
-If you see any inaccuracies with this guide or feel like something has been
-misrepresented, please
-[start a discussion here](https://github.com/cypress-io/cypress/discussions/new?category=general).
-
-:::
-
 To start, let's look at a quick code sample to see how approachable Cypress is
 coming from Protractor. In this scenario, we have a test to validate that a user
 can sign up for a new account.
+
+:::tip
+
+To see how this conversion would work with some of your own test code, you can
+paste it into the interactive
+[Cypress Migrator tool](https://migrator.cypress.io/), which will generate the
+equivalent Cypress code.
+
+:::
 
 <Badge type="danger">Before: Protractor</Badge>
 
@@ -52,23 +64,15 @@ describe('Authorization Tests', () => {
 })
 ```
 
-:::info
-
-To see how this conversion would work with some of your own test code, you can
-paste it into the interactive
-[Cypress Migrator tool](https://migrator.cypress.io/), which will generate the
-equivalent Cypress code.
-
-:::
-
 ## Benefits of Using Cypress
 
-As many developers can attest to, end-to-end testing is one of those things that
-they know they _should_ do, but often do not. Or if they do run tests, the tests
-are often flaky and often very expensive due to how long it can take to run. And
+As many developers can attest, end-to-end testing is one of those things that
+they know they _should_ do, but often don't. Or if they do run tests, the tests
+are often flaky and often very expensive due to how long it takes to run. And
 while there are often ideals of complete code coverage, the realities of
 business and deadlines often take precedence and the tests are left unwritten,
-or worse, ignored when errors are being reported because they are not reliable.
+or worse, ignored when errors are being reported because they aren't reliable.
+
 Not only does Cypress make sure that your tests will be reliable, but it
 provides developers with tools that make e2e testing an asset to development
 rather than a hindrance.
@@ -94,8 +98,8 @@ scenario.
 
 Cypress also helps you to write your tests by making it as easy as possible to
 find the right CSS selectors for the DOM elements in your application with its
-[Selector Playground](https://docs.cypress.io/app/core-concepts/open-mode#Selector-Playground).
-The Selector Playground helps you cut down on time spent finding the right
+[Selector Playground](https://docs.cypress.io/app/core-concepts/open-mode#Selector-Playground) and [Cypress Studio](/app/guides/cypress-studio).
+These tools help you cut down on time spent finding the right
 selectors so you can focus on what's important: writing tests that verify your
 app's logic.
 
@@ -106,7 +110,7 @@ app's logic.
 
 ### Faster feedback loops
 
-When it comes to your end-to-end tests, being able to see your tests as they run
+When it comes to your end-to-end or component tests, being able to see your tests as they run
 is critical to allowing you to confidently iterate faster. With Cypress, your
 tests are automatically re-run upon file save as you are iterating on them.
 
@@ -261,8 +265,7 @@ yarn add concurrently --dev
 
 Then we will update our `package.json` with the following scripts:
 
-```json
-// Example package.json
+```json title="package.json"
 {
   "scripts": {
     "cy:open": "concurrently \"ng serve\" \"cypress open\"",
@@ -1054,7 +1057,7 @@ it('should display the username of a logged in user', () => {
 ## Continuous Integration
 
 Cypress makes it easy to
-[run your tests in all Continuous Integration environments](/app/continuous-integration/introduction).
+[run your tests in all Continuous Integration environments](/app/continuous-integration/overview).
 
 Check out our in-depth guides to run your Cypress tests in
 [GitHub Actions](/app/continuous-integration/github-actions),
@@ -1064,7 +1067,7 @@ Check out our in-depth guides to run your Cypress tests in
 [AWS CodeBuild](/app/continuous-integration/aws-codebuild).
 
 We also have code samples to get Cypress up and running in
-[many of the other popular CI environments](/app/continuous-integration/ci-provider-examples).
+[many of the other popular CI environments](/app/continuous-integration/overview#CI-Examples).
 Even if your CI provider isn't listed, you can still run Cypress in your CI
 environment.
 

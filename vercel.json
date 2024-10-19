@@ -7,7 +7,7 @@
     },
     {
       "source": "/examples/app/continuous-integration/docker",
-      "destination": "/app/continuous-integration/docker",
+      "destination": "/app/continuous-integration/overview#Cypress-Docker-Images",
       "permanent": true
     },
     {

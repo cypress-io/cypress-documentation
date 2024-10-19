@@ -456,7 +456,7 @@ multiple domains in a single test.
 
 :::
 
-See our [Web Security](/app/guides/web-security#Limitations) documentation.
+See our [Cross Origin Testing](/app/guides/cross-origin-testing#Limitations) documentation.
 
 ### <Icon name="exclamation-triangle" color="red" /> `cy.visit()` failed because you are attempting to visit a different origin domain
 
@@ -480,7 +480,7 @@ You can visit urls that are of different origin across different tests, so you
 may consider splitting your `cy.visit()` of different origin domains into
 separate tests.
 
-See our [Web Security](/app/guides/web-security#Limitations) documentation
+See our [Cross Origin Testing](/app/guides/cross-origin-testing#Limitations) documentation
 for more information and workarounds.
 
 ### <Icon name="exclamation-triangle" color="red" /> `cy.visit()` succeeded, but commands are timing out
@@ -528,7 +528,7 @@ it('navigates to example.cypress.io and runs additional commands', () => {
 })
 ```
 
-See our [Web Security](/app/guides/web-security#Limitations) documentation
+See our [Cross Origin Testing](/app/guides/cross-origin-testing#Limitations) documentation
 for more information and workarounds.
 
 ### <Icon name="exclamation-triangle" color="red" /> `Cypress.addParentCommand()` / `Cypress.addDualCommand()` / `Cypress.addChildCommand()` has been removed and replaced by `Cypress.Commands.add()`
@@ -607,7 +607,7 @@ if you've exhausted all other possibilities.
 ### <Icon name="exclamation-triangle" color="red" /> You passed the `--record` flag but did not provide us your Record Key.
 
 You may receive this error when trying to run Cypress tests in
-[Continuous Integration](/app/continuous-integration/introduction). This
+[Continuous Integration](/app/continuous-integration/overview). This
 means that you did not pass a specific record key to:
 [cypress run --record](/app/references/command-line#cypress-run).
 
@@ -618,7 +618,7 @@ You can get your project's record key by locating it in your settings tab in the
 Cypress app or in [Cypress Cloud](https://on.cypress.io/cloud).
 
 You will want to then
-[add the key to your config file or as an environment variable](/app/continuous-integration/introduction#Record-tests).
+[add the key to your config file or as an environment variable](/app/continuous-integration/overview#Record-tests).
 
 ### <Icon name="exclamation-triangle" color="red" /> The `cypress ci` command has been deprecated
 
@@ -657,7 +657,7 @@ This error occurs in CI when using `cypress run` without a valid Cypress binary
 cache installed on the system (on linux that's `~/.cache/Cypress`).
 
 To fix this error, follow instructions on
-[caching the cypress binary in CI](/app/continuous-integration/introduction#Caching),
+[caching the cypress binary in CI](/app/continuous-integration/overview#Caching),
 then bump the version of your CI cache to ensure a clean build.
 
 ### <Icon name="exclamation-triangle" color="red" /> Incorrect usage of `--ci-build-id` flag
@@ -701,7 +701,7 @@ not automatically determine or generate a `ciBuildId`.
 In order to use either of these parameters a `ciBuildId` must be determined.
 
 The `ciBuildId` is automatically detected if you are running Cypress in most
-[CI providers](/app/continuous-integration/ci-provider-examples). Please
+[CI providers](/app/continuous-integration/overview#CI-Examples). Please
 review the
 [natively recognized environment variables](/cloud/features/smart-orchestration/parallelization#CI-Build-ID-environment-variables-by-provider)
 for your CI provider.
@@ -878,8 +878,8 @@ precedent.
 
 :::info
 
-For a more thorough explanation of Cypress's Web Security model,
-[please read our dedicated guide to it](/app/guides/web-security).
+For a more thorough explanation of Cypress's Cross Origin Testing,
+[please read our dedicated guide to it](/app/guides/cross-origin-testing).
 
 :::
 
@@ -912,7 +912,7 @@ If you find yourself stuck and can't work around these issues you can set
 [Cypress configuration](/app/references/configuration) when running in Chrome
 family browsers (this setting will not work in other browsers). Before doing so
 you should really understand and
-[read about the reasoning here](/app/guides/web-security).
+[read about the reasoning here](/app/guides/cross-origin-testing).
 
 :::cypress-config-example
 
@@ -1026,7 +1026,7 @@ Here are some potential workarounds:
    with Chrome.
 2. Use the built-in Electron browser for tests, since it is not affected by
    these policies.
-   [See the guide to launching browsers for more information.](/app/guides/launching-browsers#Electron-Browser)
+   [See the guide to launching browsers for more information.](/app/references/launching-browsers#Electron-Browser)
 3. Try using Chromium instead of Google Chrome for your tests, since it may be
    unaffected by GPO. You can
    [download the latest Chromium build here.](https://download-chromium.appspot.com)

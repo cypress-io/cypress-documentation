@@ -62,7 +62,7 @@ You'll write your tests in JavaScript or TypeScript, but beyond that Cypress wor
 
 #### <Icon name="angle-right" /> Will Cypress work in my CI provider?
 
-Cypress works in any [CI provider](/app/continuous-integration/introduction).
+Cypress works in any [CI provider](/app/continuous-integration/overview).
 
 #### <Icon name="angle-right" /> Does Cypress require me to change any of my existing code?
 
@@ -149,7 +149,7 @@ features. Good tests:
 - Are flake-free and do not fail randomly.
 - Give you confidence to refactor code and add new features.
 - Are able to run both locally and on a
-  [continuous integration](/app/continuous-integration/introduction) server.
+  [continuous integration](/app/continuous-integration/overview) server.
 
 Certainly, unit and end-to-end tests are NOT in opposition to each other and are
 complementary tools in your toolbox.
@@ -452,7 +452,7 @@ a remote page and does not resolve until all of the external resources complete
 their loading phase. Because we expect your applications to observe differing
 load times, this command's default timeout is set to 60000ms. If you visit an
 invalid url or a
-[second unique domain](/app/guides/web-security#Different-superdomain-per-test-requires-cyorigin-command),
+[second unique domain](/app/guides/cross-origin-testing#Different-superdomain-per-test-requires-cyorigin),
 Cypress will log a verbose yet friendly error message.
 
 **_In CI, how do I make sure my server has started?_**
@@ -916,12 +916,12 @@ application under test runs in any way, so you can safely ignore this warning.
 The network traffic between Cypress and the backend server still happens via
 HTTPS.
 
-See also the [Web Security](/app/guides/web-security) guide.
+See also the [Cross Origin Testing](/app/guides/cross-origin-testing) guide.
 
 #### <Icon name="angle-right" /> How do I run the server and tests together and then shutdown the server?
 
 To start the server, run the tests and then shutdown the server we recommend
-[these npm tools](/app/continuous-integration/introduction#Boot-your-server).
+[these npm tools](/app/continuous-integration/overview#Boot-your-server).
 
 #### <Icon name="angle-right" /> I found a bug! What do I do?
 

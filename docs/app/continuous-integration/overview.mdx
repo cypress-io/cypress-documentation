@@ -1,7 +1,18 @@
 ---
-title: Introduction
+title: Overview
 sidebar_position: 10
 ---
+
+:::info
+
+##### <Icon name="question-circle" color="#42a1c0" /> What you'll learn
+
+- How to set up Cypress in Continuous Integration (CI)
+- How to run Cypress in CI, record tests, and run tests in parallel
+- How to set up CI workflows to use Cypress Docker images
+- Advanced configuration for OS, dependencies, caching, and environment variables
+
+:::
 
 ## What is Continuous Integration?
 
@@ -9,11 +20,7 @@ sidebar_position: 10
 
 ## Setting up CI
 
-{/* textlint-disable */}
-
 <DocsVideo src="https://youtube.com/embed/saYovXS9Llk" />
-
-{/* textlint-enable */}
 
 ### Basics
 
@@ -26,14 +33,12 @@ locally in your terminal. You generally only need to do two things:
 
 2. **Run Cypress**
 
-```shell
-cypress run
-```
+<CypressRunCommands />
 
 Depending on which CI provider you use, you may need a config file. You'll want
 to refer to your CI provider's documentation to know where to add the commands
 to install and run Cypress. For more configuration examples check out our
-[examples](/app/continuous-integration/ci-provider-examples).
+[examples](/app/continuous-integration/overview#CI-Examples).
 
 ### Boot your server
 
@@ -154,7 +159,7 @@ local certificate:
 Cypress can record your tests and make the results available in
 [Cypress Cloud](/cloud/get-started/introduction). Cloud gives you access to recorded
 tests - typically when running Cypress tests from your
-[CI provider](/app/continuous-integration/introduction) - and provides you
+[CI provider](/app/continuous-integration/overview) - and provides you
 insight into what happened when your tests ran.
 
 #### Recording tests allow you to:
@@ -197,7 +202,7 @@ cypress run --record --key=abc123 --parallel
 
 [Read the full guide on parallelization.](/cloud/features/smart-orchestration/parallelization)
 
-### Official Cypress Docker Images
+## Cypress Docker Images
 
 CI providers, such as [GitHub Actions](https://docs.github.com/en/actions/using-jobs/running-jobs-in-a-container) and
 [CircleCI](https://circleci.com/docs/executor-intro/#docker), allow workflows to run using
@@ -205,21 +210,24 @@ CI providers, such as [GitHub Actions](https://docs.github.com/en/actions/using-
 
 Cypress supports the use of [Docker](https://docs.docker.com/app/docker-overview/)
 through the provisioning of official [Cypress Docker images](https://github.com/cypress-io/cypress-docker-images).
-Images are Linux-based and support `Linux/amd64` and `Linux/arm64` platforms.
+Images are Linux-based and support the following platforms:
+
+- Linux/amd64
+- Linux/arm64
 
 Cypress Docker images provide a consistent environment tailored for use with Cypress.
 By choosing an appropriate Cypress Docker image, you determine the exact environment that your Cypress tests run in.
 This allows you to shield your workflows from version updates made by your CI provider,
 for instance if they update Node.js or browser versions.
 
-[Cypress Docker images](https://github.com/cypress-io/cypress-docker-images) are available from the repositories:
+Cypress Docker images are available from:
 
 - [Docker Hub](https://hub.docker.com/u/cypress)
 - [Amazon ECR (Elastic Container Registry) Public Gallery](https://gallery.ecr.aws/cypress-io)
 
-#### Cypress Docker variants
+### Cypress Docker variants
 
-- [cypress/base](https://github.com/cypress-io/cypress-docker-images/tree/master/base) is the entry-level Cypress Docker image.
+- [cypress/base](https://github.com/cypress-io/cypress-docker-images/tree/master/base) is the entry-level Cypress Docker image, allowing you to test in the Electron browser, built in to Cypress.
   It contains a complete Linux (Debian) operating system, together with the
   [prerequisite operating system packages](https://docs.cypress.io/app/get-started/install-cypress#UbuntuDebian) for Cypress,
   Node.js, npm and Yarn v1 Classic.
@@ -227,40 +235,97 @@ for instance if they update Node.js or browser versions.
 
 - [cypress/browsers](https://github.com/cypress-io/cypress-docker-images/tree/master/browsers) builds on the
   [cypress/base](https://github.com/cypress-io/cypress-docker-images/tree/master/base) image.
-  For `Linux/amd64` images it adds Google Chrome, Mozilla Firefox and Microsoft Edge browsers.
+  For `Linux/amd64` images it adds **Chrome**, **Firefox** and **Edge** browsers.
   A corresponding image `<tag>` allows selection of the combined Node.js and browser versions.
-  Currently `Linux/arm64` images do **not** contain browsers.
+  (Currently `Linux/arm64` images do **not** contain browsers.)
 
 - [cypress/included](https://github.com/cypress-io/cypress-docker-images/tree/master/included) builds on the
   [cypress/browsers](https://github.com/cypress-io/cypress-docker-images/tree/master/browsers) image.
-  It adds a fixed version of Cypress, globally installed by npm.
+  It adds a fixed version of **Cypress**, globally installed by npm.
   A short-form image `<tag>` selects the version of Cypress.
   A corresponding long-form `<tag>` selects the version of Cypress and documents the combined Node.js and browser versions.
-
-[cypress/base](https://github.com/cypress-io/cypress-docker-images/tree/master/base) allows testing in the Electron browser,
-built-in to Cypress. [cypress/browsers](https://github.com/cypress-io/cypress-docker-images/tree/master/browsers)
-adds the capability to test against Chrome, Firefox and Edge. These are the primary images for use in CI workflows.
-[cypress/included](https://github.com/cypress-io/cypress-docker-images/tree/master/included)
-is intended to support local testing. It can also be used in CI workflows.
 
 - [cypress/factory](https://github.com/cypress-io/cypress-docker-images/tree/master/factory)
   provides the base operating system image and allows individual selection of other components
   by version. It is used to generate customized Docker images.
 
-#### CI Docker examples
+### CI Docker examples
 
-You can find examples that use Cypress Docker images in CI on the documentation page
-[CI Provider Examples](ci-provider-examples) and in the example repository
-[cypress-example-kitchensink](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/README.md).
+You can find examples that use Cypress Docker images below
 
-The following individual workflows show Cypress Docker images being used in CircleCI
-
+- [cypress-docker-images examples](https://github.com/cypress-io/cypress-docker-images/blob/master/README.md#examples)
+- [cypress-example-kitchensink](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/README.md).
 - [Real World App - CircleCI](https://github.com/cypress-io/cypress-realworld-app/blob/develop/.circleci/config.yml)
-
-and in GitHub Actions
-
 - [Real World App - GitHub Actions](https://github.com/cypress-io/cypress-realworld-app/blob/develop/.github/workflows/main.yml)
 - [cypress-docker-images - GitHub Actions](https://github.com/cypress-io/cypress-docker-images/blob/master/.github/workflows/example-cypress-github-action.yml)
+
+## CI Examples
+
+### AppVeyor
+
+- [Basic Example (appveyor.yml)](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/appveyor.yml)
+
+### AWS Amplify Console
+
+- [Basic Example (amplify.yml)](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/amplify.yml)
+
+### AWS CodeBuild
+
+Read our extensive guide on how to set up Cypress in [AWS CodeBuild](/app/continuous-integration/aws-codebuild).
+
+### Azure Pipelines
+
+- [Basic Example (azure-ci.yml)](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/basic/azure-ci.yml)
+- [Parallelized Example (azure-ci.yml)](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/azure-ci.yml)
+
+### Bitbucket Pipelines
+
+Read our extensive guide on how to set up Cypress in [Bitbucket Pipelines](/app/continuous-integration/bitbucket-pipelines).
+
+### CircleCI
+
+Read our extensive guide on how to set up Cypress in [CircleCI](/app/continuous-integration/circleci).
+
+### Buildkite
+
+- [Parallel Example](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/.buildkite/pipeline.yml)
+
+### CodeShip Pro
+
+- [Basic](https://github.com/cypress-io/cypress-example-kitchensink/tree/master/basic/codeship-pro)
+- [Parallel codeship-steps.yml](https://github.com/cypress-io/cypress-example-kitchensink/tree/master/codeship-steps.yml)
+- [Parallel codeship-services.yml](https://github.com/cypress-io/cypress-example-kitchensink/tree/master/codeship-services.yml)
+
+### GitHub Actions
+
+Read our extensive guide on how to set up Cypress in [GitHub Actions](/app/continuous-integration/github-actions).
+
+### GitLab
+
+Read our extensive guide on how to set up Cypress in [GitLab](/app/continuous-integration/gitlab-ci).
+
+### Jenkins
+
+- [Basic Jenkinsfile](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/basic/Jenkinsfile)
+- [Parallel Jenkinsfile](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/Jenkinsfile)
+
+### Netlify
+
+We recommend using our official
+[netlify-plugin-cypress](https://github.com/cypress-io/netlify-plugin-cypress)
+to execute end-to-end tests before and after deployment to Netlify platform.
+Read our tutorial
+[Run Cypress Tests on Netlify Using a Single Line](https://cypress.io/blog/2020/03/30/run-cypress-tests-on-netlify-using-a-single-line/).
+
+### Semaphore
+
+- [Basic .semaphore.yml](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/basic/.semaphore.yml)
+- [Parallel .semaphore.yml](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/.semaphore/semaphore.yml)
+
+### TravisCI
+
+- [Basic .travis.yml](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/basic/.travis.yml)
+- [Parallel .travis.yml](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/.travis.yml)
 
 ## Advanced setup
 
@@ -588,9 +653,7 @@ export DISPLAY=:99
 
 Start Cypress as usual
 
-```shell
-npx cypress run
-```
+<CypressRunCommands />
 
 After all tests across all Cypress instances finish, kill the Xvfb background
 process using `pkill`

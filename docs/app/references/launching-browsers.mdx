@@ -2,21 +2,26 @@
 title: Launching Browsers
 ---
 
+:::info
+
+##### <Icon name="question-circle" color="#42a1c0" /> What you'll learn
+
+- How to launch browsers in Cypress
+- How to customize the list of available browsers
+- How to troubleshoot browser launching issues
+- Differences between Cypress browsers and regular browser environments
+
+:::
+
 When you run tests in Cypress, we launch a browser for you. This enables us to:
 
 1. Create a clean, pristine testing environment.
 2. Access the privileged browser APIs for automation.
 
-:::info
-
-<strong>Cross Browser Support</strong>
-
 Cypress currently supports Firefox and Chrome-family browsers (including Edge
 and Electron). To run tests optimally across these browsers in CI, check out the
 strategies demonstrated in the
 [cross browser Testing](/app/guides/cross-browser-testing) guide.
-
-:::
 
 ## Browsers
 
@@ -95,7 +100,7 @@ cypress run --browser chrome
 ```
 
 To use this command in CI, you need to install the browser you want - or use one
-of our [docker images](/app/continuous-integration/docker).
+of our [docker images](/app/continuous-integration/overview#Cypress-Docker-Images).
 
 By default, we will launch Chrome in headlessly during `cypress run`. To run
 Chrome headed, you can pass the `--headed` argument to `cypress run`.
@@ -164,7 +169,7 @@ cypress run --browser firefox:nightly
 ```
 
 To use this command in CI, you need to install these other browsers - or use one
-of our [docker images](/app/continuous-integration/docker).
+of our [docker images](/app/continuous-integration/overview#Cypress-Docker-Images).
 
 By default, we will launch Firefox headlessly during `cypress run`. To run
 Firefox headed, you can pass the `--headed` argument to `cypress run`.
