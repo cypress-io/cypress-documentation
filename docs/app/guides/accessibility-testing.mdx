@@ -2,6 +2,18 @@
 title: Accessibility Testing
 ---
 
+:::info
+
+##### <Icon name="question-circle" color="#42a1c0" /> What you'll learn
+
+- Strategies for ensuring your application works for users with disabilities
+- What accessibility scans are available via plugins vs [Cypress Accessibility](/accessibility/get-started/introduction)
+- Performance impacts of in-test accessibility checks
+- How to write accessibility-specific tests
+- The difference between Testing Library locators and Test IDs
+
+:::
+
 Accessibility testing helps to confirm that an application works correctly for people with disabilities.
 
 To set a good foundation for an accessible user experience, web sites and apps must conform to certain guidelines, known as the [Web Content Accessibility Guidelines](https://www.w3.org/WAI/standards-guidelines/wcag/) (WCAG). Meeting or exceeding these guidelines will help ensure your disabled users can independently perceive the content of your application, navigate through your pages and sections, and complete the available actions.
@@ -16,6 +28,8 @@ Here are the main ways to account for accessibility when testing with Cypress:
 
 - [In-test plugins](#In-test-plugins)
 - [Cypress Accessibility](#Cypress-Accessibility)
+
+<AccessibilityAddon />
 
 ### Explicit, application-specific tests
 
@@ -58,15 +72,16 @@ It is best to proactively manage this, because unnecessary flake, failures, or t
 
 ### Cypress Accessibility
 
-<DocsImage
-  src="/img/accessibility/cy-a11y-detail.png"
-  width="60%"
-  alt="Cypress Accessibility UI displaying a 'Buttons must have discernible text' violation example"
-/>
-
 In-test accessibility checks are the only kind available in typical testing scenarios. They come with some limitations and tradeoffs that [Cypress Accessibility](/accessibility/get-started/introduction), available in Cypress Cloud, is designed to solve. By moving the checks outside of the test context and running them in Cypress Cloud as tests are recorded, Cypress Accessibility removes adoption, training, and test performance hurdles that can hinder the effective implementation of in-test checks. Cypress automatically detects all the steps within user flows, requiring no test code to be written.
 
 To learn more, you can read our [dedicated docs](/accessibility/get-started/introduction), or review a [public live example of an automatically-generated accessibility report](http://on.cypress.io/rwa-accessibility-views) in our Cypress Realworld App demo project.
+
+<AccessibilityAddon />
+
+<DocsImage
+  src="/img/accessibility/cy-a11y-detail.png"
+  alt="Cypress Accessibility UI displaying a 'Buttons must have discernible text' violation example"
+/>
 
 ## Accessibility-specific tests
 
