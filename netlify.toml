@@ -763,6 +763,354 @@
   status = 301
   force = true
 
+[[redirects]]
+  from = "/guides/overview/why-cypress"
+  to = "/app/get-started/why-cypress"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/overview/key-differences"
+  to = "/app/get-started/why-cypress"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/getting-started/installing-cypress"
+  to = "/app/get-started/install-cypress"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/getting-started/opening-the-app"
+  to = "/app/get-started/open-the-app"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/end-to-end-testing/working-with-graphql"
+  to = "/app/guides/network-requests"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/end-to-end-testing/writing-your-first-end-to-end-test"
+  to = "/app/end-to-end-testing/writing-your-first-end-to-end-test"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/end-to-end-testing/testing-your-app"
+  to = "/app/end-to-end-testing/testing-your-app"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/end-to-end-testing/amazon-cognito-authentication"
+  to = "/app/guides/authentication-testing/amazon-cognito-authentication"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/end-to-end-testing/auth0-authentication"
+  to = "/app/guides/authentication-testing/auth0-authentication"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/end-to-end-testing/azure-active-directory-authentication"
+  to = "/app/guides/authentication-testing/azure-active-directory-authentication"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/end-to-end-testing/google-authentication"
+  to = "/app/guides/authentication-testing/google-authentication"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/end-to-end-testing/okta-authentication"
+  to = "/app/guides/authentication-testing/okta-authentication"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/end-to-end-testing/social-authentication"
+  to = "/app/guides/authentication-testing/social-authentication"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/end-to-end-testing/protractor-to-cypress"
+  to = "/app/guides/migration/protractor-to-cypress"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/end-to-end-testing/selenium-to-cypress"
+  to = "/app/guides/migration/selenium-to-cypress"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/component-testing/overview"
+  to = "/app/component-testing/get-started"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/component-testing/getting-started"
+  to = "/app/component-testing/get-started"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/component-testing/faq"
+  to = "/app/faq"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/component-testing/third-party-definitions"
+  to = "/app/component-testing/custom-frameworks"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/core-concepts/conditional-testing"
+  to = "/app/guides/conditional-testing"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/core-concepts/cypress-app"
+  to = "/app/core-concepts/open-mode"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/core-concepts/cypress-app"
+  to = "/app/core-concepts/open-mode"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/introduction"
+  to = "/cloud/get-started/introduction"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/free-trial"
+  to = "/cloud/get-started/free-trial"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/getting-started"
+  to = "/cloud/get-started/setup"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/recorded-runs"
+  to = "/cloud/features/recorded-runs"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/test-replay"
+  to = "/cloud/features/test-replay"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/branch-review"
+  to = "/cloud/features/branch-review"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/flaky-test-management"
+  to = "/cloud/features/flaky-test-management"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/smart-orchestration/overview"
+  to = "/cloud/features/smart-orchestration/overview"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/smart-orchestration/parallelization"
+  to = "/cloud/features/smart-orchestration/parallelization"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/smart-orchestration/load-balancing"
+  to = "/cloud/features/smart-orchestration/load-balancing"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/smart-orchestration/spec-prioritization"
+  to = "/cloud/features/smart-orchestration/spec-prioritization"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/smart-orchestration/run-cancellation"
+  to = "/cloud/features/smart-orchestration/run-cancellation"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/guides/command-line"
+  to = "/app/references/command-line"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/guides/content-security-policy"
+  to = "/app/references/content-security-policy"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/guides/environment-variables"
+  to = "/app/references/environment-variables"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/guides/launching-browsers"
+  to = "/app/references/launching-browsers"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/guides/module-api"
+  to = "/app/references/module-api"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/guides/module-api"
+  to = "/app/references/module-api"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/guides/web-security"
+  to = "/app/guides/cross-origin-testing"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/continuous-integration/introduction"
+  to = "/app/continuous-integration/overview"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/continuous-integration/introduction"
+  to = "/app/continuous-integration/overview"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/continuous-integration/ci-provider-examples"
+  to = "/app/continuous-integration/overview"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/tooling/plugins-guide"
+  to = "/api/node-events/overview"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/tooling/plugins-guide"
+  to = "/api/node-events/overview"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/references/best-practices"
+  to = "/app/core-concepts/best-practices"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/references/cypress-studio"
+  to = "/app/guides/cypress-studio"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/references/release-stages"
+  to = "/app/references/roadmap"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/faq/questions/cloud-faq"
+  to = "/cloud/faq"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/plugins"
+  to = "/app/plugins/plugins-list"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/examples/recipes"
+  to = "/app/references/recipes"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/api/plugins/writing-a-plugin"
+  to = "/api/node-events/overview"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/api/plugins/*"
+  to = "/api/node-events/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/examples/*"
+  to = "/app/get-started/why-cypress"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/faq/*"
+  to = "/app/faq"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/*"
+  to = "/cloud/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/*"
+  to = "/app/:splat"
+  status = 301
+  force = true
+
 [[plugins]]
 package = "@netlify/plugin-sitemap"
 
