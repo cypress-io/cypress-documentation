@@ -152,38 +152,20 @@ to see these Percy and Cypress in action.
 
 See [Happo's official docs](https://docs.happo.io/docs/cypress) and our [webinar](https://www.youtube.com/watch?v=C_p12IvN5HU) and [blog](https://www.cypress.io/blog/2020/05/27/webcast-recording-keep-your-ui-sharp/).
 
-{/* textlint-disable */}
-
 <DocsVideo src="https://youtube.com/embed/C_p12IvN5HU" />
-
-{/* textlint-enable */}
 
 ### Chromatic
 
-Chromatic leverages your existing Cypress setup—configuration, mocking, and tests—to enable visual testing of your application's UI. With the Chromatic plugin installed, Chromatic captures an archive of your UI while your Cypress tests are running.
+Chromatic leverages your existing Cypress setup—configuration, mocking, and tests—to enable visual testing of your application's UI. 
+With the Chromatic plugin installed, Chromatic captures an archive of your UI while your Cypress tests are running.
 
-{/* textlint-enable */}
-
-<Icon name="external-link-alt" url="https://chromatic.com" />
-
-| Resource                                                                                        | Description                                               |
-| ----------------------------------------------------------------------------------------------- | --------------------------------------------------------- |
-| [Official docs](https://www.chromatic.com/docs/cypress/setup/?utm_source=cypress_docs)          | Chromatic's Cypress documentation                         |
-| [Blog](https://www.chromatic.com/blog/how-to-visual-test-with-cypress/?utm_source=cypress_docs) | Chromatic’s Cypress integration announcement and tutorial |
+See [Chromatic's official docs](https://www.chromatic.com/docs/cypress/setup/?utm_source=cypress_docs) and their [blog](https://www.chromatic.com/blog/how-to-visual-test-with-cypress/?utm_source=cypress_docs).
 
 ### Wopee.io
 
 [Wopee.io](https://wopee.io) seamlessly integrates with Cypress to enhance test coverage, expedite maintenance, and ensure more resilient test runs. Aiming for autonomous visual testing, Wopee.io allows you to easily incorporate visual validation into your existing Cypress tests, adding an extra layer of quality assurance.
 
-{/* textlint-enable */}
-
-<Icon name="external-link-alt" url="https://wopee.io" />
-
-| Resource                                                                                                | Description                                                                          |
-| ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
-| [Official docs](https://docs.wopee.io/integrations/cypress/01-getting-started/?utm_source=cypress_docs) | Wopee.io's Cypress documentation                                                     |
-| [Blog](https://wopee.io/blog/autopilot-your-sw-testing/?utm_source=cypress_docs)                        | Wopee.io & Cypress integration and some AI-Augmentation ideas                        |
-| [Webinar](https://youtu.be/t008fYcBoi0)                                                                 | _Cypress + Wopee.io_, a webinar introducing integration between Cypress and Wopee.io |
+See [Wopee.io's official docs](https://docs.wopee.io/integrations/cypress/01-getting-started/?utm_source=cypress_docs), our [webinar](https://youtu.be/t008fYcBoi0)  and their [blog](https://wopee.io/blog/autopilot-your-sw-testing/?utm_source=cypress_docs) and [webinar](https://youtu.be/t008fYcBoi0).
 
 ## Best practices
 
@@ -191,7 +173,7 @@ As a general rule there are some best practices when visual testing.
 
 ### Recognize the need for visual testing
 
-<Icon name="exclamation-triangle" color="red" /> Assertions that verify style properties**
+<Icon name="exclamation-triangle" color="red" /> Assertions that verify style properties
 
 ```js
 cy.get('.completed').should('have.css', 'text-decoration', 'line-through')
