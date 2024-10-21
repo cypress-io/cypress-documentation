@@ -2,10 +2,24 @@
 title: TypeScript
 ---
 
+:::info
+
+##### <Icon name="question-circle" color="#42a1c0" /> What you'll learn
+
+- How to set up TypeScript in Cypress
+- How to configure TypeScript for custom commands, assertions, and plugins
+- How to use TypeScript with Cypress component testing
+- How to avoid clashing types with Jest
+- How to set up your development environment for TypeScript
+
+:::
+
 Cypress ships with
 [official type declarations](https://github.com/cypress-io/cypress/tree/develop/cli/types)
 for [TypeScript](https://www.typescriptlang.org/). This allows you to write your
 tests in TypeScript.
+
+## Get Started
 
 ### Install TypeScript
 
@@ -38,7 +52,7 @@ inside your
 [`cypress` folder](/app/core-concepts/writing-and-organizing-tests#Folder-structure)
 with the following configuration:
 
-```json
+```json title="tsconfig.json"
 {
   "compilerOptions": {
     "target": "es5",
@@ -91,18 +105,7 @@ To do this, Cypress overrides the following configuration values found inside yo
 
 This does not have an impact on your project or its TypeScript configuration settings. This override only happens within the context of the Cypress runtime.
 
-### Clashing Types with Jest
-
-You may want to consider configuring your app with separate `tsconfig.json` to solve
-[clashing types with jest](/app/tooling/typescript-support#Clashing-types-with-Jest).
-You will need to exclude `cypress.config.ts`, `cypress`, `node_modules` in your
-root `tsconfig.json` file.
-
-```json
-{
-  "exclude": ["cypress.config.ts", "cypress", "node_modules"]
-}
-```
+## Extending TypeScript Support
 
 ### Types for Custom Commands
 
@@ -357,9 +360,16 @@ and Cypress provide the clashing types for the `describe` and `it` functions.
 Both Jest and Expect (bundled inside Cypress) provide the clashing types for the
 `expect` assertion, etc.
 
-Configure a separate `tsconfig.json` for E2E tests to address the issue. See our example
-[cypress-io/cypress-and-jest-typescript-example](https://github.com/cypress-io/cypress-and-jest-typescript-example)
-repo.
+You may want to consider configuring your app with separate `tsconfig.json` to solve
+[clashing types with jest](/app/tooling/typescript-support#Clashing-types-with-Jest).
+You will need to exclude `cypress.config.ts`, `cypress`, `node_modules` in your
+root `tsconfig.json` file.
+
+```json title="tsconfig.json"
+{
+  "exclude": ["cypress.config.ts", "cypress", "node_modules"]
+}
+```
 
 ## History
 

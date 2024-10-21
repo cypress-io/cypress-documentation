@@ -2,6 +2,35 @@
 title: Reporters
 ---
 
+:::info
+
+##### <Icon name="question-circle" color="#42a1c0" /> What you'll learn
+
+- How to use custom reporters in Cypress
+- How to use multiple reporters
+- How to merge reports across spec files
+
+:::
+
+## Introduction
+
+After writing and running tests in Cypress, reviewing the results of those tests is crucial.
+Cypress provides several options to review results of a test run.
+
+- [Cypress Cloud](/cloud/get-started/introduction) - See test results, spec data, errors,
+  screenshots, videos, and Test Replay in Cypress Cloud.
+- Cypress App's open source built in and custom reporters.
+
+This document covers how to use [built in](#Built in reporter) and [custom](#Custom-reporters) reporters in Cypress App.
+
+:::tip
+
+<CloudFreePlan />
+
+:::
+
+## Built in reporters
+
 Because Cypress is built on top of Mocha, that means any reporter built for
 Mocha can be used with Cypress. Here is a list of built in Mocha reporters.
 
@@ -15,10 +44,10 @@ built into Cypress and you can use them without installing anything.
 - [`teamcity`](https://github.com/cypress-io/mocha-teamcity-reporter)
 - [`junit`](https://github.com/michaelleeallen/mocha-junit-reporter)
 
-Finally, we support creating your own custom reporters or using any kind of 3rd
-party reporter.
+## Custom reporters
 
-## Custom reporter
+Cypress supports creating your own custom reporters or using any kind of 3rd
+party reporter.
 
 ### Installed locally
 
@@ -54,7 +83,7 @@ You would specify the path to your custom reporter in either of the ways below.
 #### Command Line
 
 ```shell
-cypress run --reporter reporters/custom.js
+npx cypress run --reporter reporters/custom.js
 ```
 
 ### Installed via npm
@@ -76,7 +105,7 @@ When using custom reporters via npm, specify the package name.
 #### Command line
 
 ```shell
-cypress run --reporter mochawesome
+npx cypress run --reporter mochawesome
 ```
 
 ## Reporter Options
@@ -111,7 +140,7 @@ into an XML file.
 #### Command line
 
 ```shell
-cypress run --reporter junit \
+npx cypress run --reporter junit \
   --reporter-options "mochaFile=results/my-test-output.xml,toConsole=true"
 ```
 
@@ -145,7 +174,7 @@ the [mochawesome-merge](https://github.com/antontelesh/mochawesome-merge) tool.
 #### Command line
 
 ```shell
-cypress run --reporter junit \
+npx cypress run --reporter junit \
   --reporter-options "mochaFile=results/my-test-output-[hash].xml"
 ```
 
@@ -159,24 +188,7 @@ additional feedback while the tests are running!
 The solution here is to use multiple reporters. You will have the benefit of
 both worlds.
 
-We suggest using the npm module:
-
-<Icon
-  name="github"
-  inline="true"
-  url="https://github.com/you54f/cypress-multi-reporters"
-/>
-
-We use multiple reporters for every single one of our internal projects.
-
-The below examples were implemented in
-
-<Icon
-  name="github"
-  inline="true"
-  url="https://github.com/cypress-io/cypress-example-circleci-orb"
-/>
-.
+We suggest using the npm module, <Icon name="github" inline="true" url="https://github.com/you54f/cypress-multi-reporters" />
 
 ### Examples
 
@@ -218,7 +230,7 @@ the [command line](/app/references/command-line).
 #### Command line
 
 ```shell
-cypress run --reporter cypress-multi-reporters \
+npx cypress run --reporter cypress-multi-reporters \
   --reporter-options configFile=reporter-config.json
 ```
 
@@ -226,7 +238,7 @@ Then add the separate `reporter-config.json` file (defined in your
 configuration) to enable `spec` and `junit` reporters and direct the `junit`
 reporter to save separate XML files.
 
-```json
+```json title="reporter-config.json"
 {
   "reporterEnabled": "spec, mocha-junit-reporter",
   "mochaJunitReporterReporterOptions": {
@@ -239,7 +251,7 @@ We recommend deleting all files from the `cypress/results` folder before running
 this command, since each run will output new XML files. For example, you can add
 the npm script commands below to your `package.json` then call `npm run report`.
 
-```json
+```json title="package.json"
 {
   "scripts": {
     "delete:reports": "rm cypress/results/* || true",
@@ -254,7 +266,7 @@ In case you want to combine generated XML files into a single one,
 added. For example, to combine all files into
 `cypress/results/combined-report.xml` the `combine:reports` script can be added.
 
-```json
+```json title="package.json"
 {
   "scripts": {
     "delete:reports": "rm cypress/results/* || true",
@@ -305,7 +317,7 @@ folder.
 #### Command line
 
 ```shell
-cypress run --reporter mochawesome \
+npx cypress run --reporter mochawesome \
   --reporter-options reportDir="cypress/results",overwrite=false,html=false,json=true
 ```
 

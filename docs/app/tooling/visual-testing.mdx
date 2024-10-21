@@ -2,13 +2,32 @@
 title: Visual Testing
 ---
 
-## Functional vs. visual testing
+:::info
 
-Cypress is a _functional_ test runner. It drives the web application the way a
-user would, and checks if the app _functions_ as expected: if the expected
-message appears, an element is removed, or a CSS class is added after the
-appropriate user action. A typical Cypress test, for example, can check if a
-toggled "Todo" item gets a class of "completed" after the `.toggle` is checked:
+##### <Icon name="question-circle" color="#42a1c0" /> What you'll learn
+
+- The difference between functional and visual testing
+- How to use visual testing plugins
+- Best practices for visual testing
+
+:::
+
+## Introduction
+
+Cypress offers several solutions for testing an application including:
+
+- [End-to-end testing](/app/end-to-end-testing/writing-your-first-end-to-end-test)
+- [Component testing](/app/component-testing/get-started)
+- [Accessibility testing](/app/guides/accessibility-testing)
+- [UI Coverage](/ui-coverage/get-started/introduction)
+
+While many of our solutions, like [Test Replay](/cloud/features/test-replay), [Cypress Accessibility](/accessibility/get-started/introduction)
+and [UI Coverage](/ui-coverage/get-started/introduction), offer a visual display of the application, having an automated way to ensure your
+application visually looks as intended is crucial. This is
+where visual testing comes in.
+
+Visual testing is a type of testing that focuses on the appearance of the application.
+It is a way to ensure that the application looks the same to the user after changes are made.
 
 :::visit-mount-example
 
@@ -24,20 +43,6 @@ it('completes todo', () => {
 
 :::
 
-<DocsImage
-  src="/img/app/visual-testing/completed-test.gif"
-  alt="Passing Cypress functional test"
-/>
-
-Cypress does NOT see how the page actually looks though. For example, Cypress
-will not see if the CSS class `completed` grays out the label element and adds a
-strike-through line.
-
-<DocsImage
-  src="/img/app/visual-testing/completed-item.png"
-  alt="Completed item style"
-/>
-
 You could technically write a functional test asserting the CSS properties using
 the [`have.css` assertion](/app/references/assertions#CSS), but these may
 quickly become cumbersome to write and maintain, especially when visual styles
@@ -52,7 +57,7 @@ Your visual styles may also rely on more than CSS, perhaps you want to ensure an
 SVG or image has rendered correctly or shapes were correctly drawn to a canvas.
 
 Luckily, Cypress gives a stable platform for
-[writing plugins](/app/plugins/plugins-guide) that _can perform visual
+[including plugins](/app/plugins/plugins-guide) that _can perform visual
 testing_.
 
 Typically such plugins take an image snapshot of the entire application under
@@ -109,56 +114,26 @@ mouse hover:
 
 ## Tooling
 
-{/* prettier-ignore */}
-There are several published, open source plugins, listed in the
-
-<a href="/plugins#visual-testing">Visual Testing Plugins</a> section, and several
+There are several published, open source plugins, listed in the [Visual Testing Plugins](/plugins#visual-testing) section, and several
 commercial companies have developed visual testing solutions on top of Cypress listed
 below.
 
-### Open source
-
-Listed in the <a href="/plugins#visual-testing">Visual Testing Plugins</a> section.
-
 ### Applitools
 
-First joint webinar with Applitools
-
-{/* textlint-disable */}
+See [Applitools' official docs](https://applitools.com/cypress) and our [tutorial](https://applitools.com/tutorials/cypress.html).
 
 <DocsVideo src="https://youtube.com/embed/qVRjhABuyG0" />
-
-{/* textlint-enable */}
 
 Second joint webinar with Applitools with a focus on
 [Component Testing](/app/core-concepts/testing-types#What-is-Component-Testing)
 
-{/* textlint-disable */}
-
 <DocsVideo src="https://youtube.com/embed/Bxh_ebMk1aM" />
-
-{/* textlint-enable */}
-
-<Icon name="external-link-alt" url="https://applitools.com/" />
-
-| Resource                                                  | Description                       |
-| --------------------------------------------------------- | --------------------------------- |
-| [Official docs](https://applitools.com/cypress)           | Applitools' Cypress documentation |
-| [Tutorial](https://applitools.com/tutorials/cypress.html) | Applitools' Cypress tutorial      |
 
 ### Percy
 
-{/* textlint-disable */}
-
-<DocsVideo src="https://youtube.com/embed/MXfZeE9RQDw" />
-
-{/* textlint-enable */}
-
-<Icon name="external-link-alt" url="https://percy.io/" />
+See [Percy's official docs](https://docs.percy.io/docs/cypress) and our [tutorial](https://docs.percy.io/docs/cypress-tutorial).
 
 :::info
-
-### <Icon name="graduation-cap" /> Real World Example <Badge type="success">New</Badge>
 
 The Cypress <Icon name="github" inline="true" contentType="rwa" /> uses the
 `cy.percySnapshot()` command provided by the
@@ -171,26 +146,17 @@ to see these Percy and Cypress in action.
 
 :::
 
-| Resource                                                | Description                   |
-| ------------------------------------------------------- | ----------------------------- |
-| [Official docs](https://docs.percy.io/docs/cypress)     | Percy's Cypress documentation |
-| [Tutorial](https://docs.percy.io/docs/cypress-tutorial) | Percy's Cypress tutorial      |
+<DocsVideo src="https://youtube.com/embed/MXfZeE9RQDw" />
 
 ### Happo
+
+See [Happo's official docs](https://docs.happo.io/docs/cypress) and our [webinar](https://www.youtube.com/watch?v=C_p12IvN5HU) and [blog](https://www.cypress.io/blog/2020/05/27/webcast-recording-keep-your-ui-sharp/).
 
 {/* textlint-disable */}
 
 <DocsVideo src="https://youtube.com/embed/C_p12IvN5HU" />
 
 {/* textlint-enable */}
-
-<Icon name="external-link-alt" url="https://happo.io/" />
-
-| Resource                                                                             | Description                                                                                                                                 |
-| ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Official docs](https://docs.happo.io/docs/cypress)                                  | Happo's Cypress documentation                                                                                                               |
-| [Webinar](https://www.youtube.com/watch?v=C_p12IvN5HU)                               | _Keep your UI Sharp: Ensuring Functional and Visual Quality with Cypress.io + Happo.io_, a webinar recorded together with Cypress and Happo |
-| [Blog](https://www.cypress.io/blog/2020/05/27/webcast-recording-keep-your-ui-sharp/) | The companion blog for the Cypress + Happo webinar                                                                                          |
 
 ### Chromatic
 
@@ -337,7 +303,7 @@ tests.
 
 - [After Screenshot API](/api/node-events/after-screenshot-api)
 - [cy.screenshot()](/api/commands/screenshot)
-- [Cypress.Screenshot]api/node-events/s-api/screenshot-api)
+- [Cypress.Screenshot](/api/cypress-api/screenshot-api)
 - [Plugins](/app/plugins/plugins-guide)
 - <a href="/plugins#visual-testing">Visual Testing Plugins</a>
 - [Node Events Overview](/api/node-events/overview)
