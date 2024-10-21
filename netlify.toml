@@ -7,19 +7,19 @@
 
 [[redirects]]
   from = "/guides"
-  to = "/guides/overview/why-cypress/"
+  to = "/app/get-started/why-cypress"
   status = 301
   force = true
 
 [[redirects]]
   from = "/api/"
-  to = "/api/table-of-contents/"
+  to = "/api/table-of-contents"
   status = 301
   force = true
 
 [[redirects]]
   from = "/api/api/table-of-contents"
-  to = "/api/table-of-contents/"
+  to = "/api/table-of-contents"
   status = 301
   force = true
 
@@ -37,43 +37,43 @@
 
 [[redirects]]
   from = "/examples"
-  to = "/app/references/recipes/"
+  to = "/app/references/recipes"
   status = 301
   force = true
 
 [[redirects]]
   from = "/examples/examples"
-  to = "/app/references/recipes/"
+  to = "/app/references/recipes"
   status = 301
   force = true
 
 [[redirects]]
   from = "/examples/app/references/recipes"
-  to = "/app/references/recipes/"
+  to = "/app/references/recipes"
   status = 301
   force = true
 
 [[redirects]]
   from = "/examples/app/continuous-integration/docker"
-  to = "/app/continuous-integration/overview#Cypress-Docker-Images"
+  to = "/app/continuous-integration/overview"
   status = 301
   force = true
 
 [[redirects]]
   from = "/faq"
-  to = "/app/faq/"
+  to = "/app/faq"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/overview/choosing-testing-type"
-  to = "/guides/core-concepts/testing-types/"
+  to = "/guides/core-concepts/testing-types"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/dashboard/dashboard-introduction"
-  to = "/guides/dashboard/introduction/"
+  to = "/cloud/get-started/introduction"
   status = 301
   force = true
 
