@@ -97,7 +97,7 @@
 
 [[redirects]]
   from = "/guides/component-testing/framework-configuration"
-  to = "/guides/component-testing/component-framework-configuration/"
+  to = "/guides/component-testing/component-framework-configuration"
   status = 301
   force = true
 
