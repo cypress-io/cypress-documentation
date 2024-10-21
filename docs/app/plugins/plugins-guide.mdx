@@ -1,0 +1,66 @@
+---
+title: How to use Plugins
+sidebar_position: 10
+---
+
+:::info
+
+##### <Icon name="question-circle" color="#42a1c0" /> What you'll learn
+
+- How to install a plugin
+- How to use a plugin
+
+:::
+
+Cypress maintains a curated list of plugins created by us and the community.
+Plugins from our [official list](/app/plugins/plugins-list) are npm modules. This enables them to
+be versioned and updated separately without needing to update Cypress itself.
+
+You can install any published plugin using npm:
+
+<Tabs>
+  <TabItem value="npm">
+
+```shell
+npm install <plugin name> --save-dev
+```
+
+  </TabItem>
+
+  <TabItem value="yarn">
+
+```shell
+yarn add <plugin name> --dev
+```
+
+  </TabItem>
+
+  <TabItem value="pnpm">
+
+```shell
+pnpm add --save-dev <plugin name>
+```
+
+  </TabItem>
+</Tabs>
+
+## Using a plugin
+
+Add your plugin to the
+[`setupNodeEvents`](/app/references/configuration#setupNodeEvents)
+function in the [Cypress configuration](/app/references/configuration). Please follow any additional instructions provided by the plugin's documentation.
+Here's an example of what this might look like:
+
+:::cypress-config-plugin-example
+
+```ts
+// bind to the event we care about
+on('<event>', (arg1, arg2) => {
+  // plugin stuff here
+})
+```
+
+:::
+
+For information on writing plugins, please check out our
+[Node Events Overview](/api/node-events/overview).

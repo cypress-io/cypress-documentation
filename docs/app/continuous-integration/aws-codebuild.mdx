@@ -1,0 +1,353 @@
+---
+title: AWS CodeBuild
+---
+
+:::info
+
+##### <Icon name="question-circle" color="#42a1c0" /> What you'll learn
+
+- How to set up Cypress tests in AWS CodeBuild
+- How to cache dependencies and build artifacts
+- How to run Cypress tests in parallel with AWS CodeBuild
+- How to use Cypress Cloud with AWS CodeBuild
+
+:::
+
+## Basic Setup
+
+The example below is a basic CI setup and job using the
+[AWS CodeBuild](https://aws.amazon.com/codebuild/) to run Cypress tests within
+the Electron browser. This AWS CodeBuild configuration is placed within
+`buildspec.yml`.
+
+Detailed documentation is available in the
+[AWS CodeBuild Documentation](https://docs.aws.amazon.com/codebuild/).
+
+```yaml title="buildspec.yml"
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: latest
+    commands:
+      # Set COMMIT_INFO variables to send Git specifics to Cypress Cloud when recording
+      # https://docs.cypress.io/app/continuous-integration/overview#Git-information
+      - export COMMIT_INFO_BRANCH="$(git rev-parse HEAD | xargs git name-rev |
+        cut -d' ' -f2 | sed 's/remotes\/origin\///g')"
+      - export COMMIT_INFO_MESSAGE="$(git log -1 --pretty=%B)"
+      - export COMMIT_INFO_EMAIL="$(git log -1 --pretty=%ae)"
+      - export COMMIT_INFO_AUTHOR="$(git log -1 --pretty=%an)"
+      - export COMMIT_INFO_SHA="$(git log -1 --pretty=%H)"
+      - export COMMIT_INFO_REMOTE="$(git config --get remote.origin.url)"
+      - npm ci
+  pre_build:
+    commands:
+      - npm run cy:verify
+      - npm run cy:info
+  build:
+    commands:
+      - npm run start:ci &
+      - npx cypress run --record
+```
+
+**How this buildspec works:**
+
+- On _push_ to this repository, this job will provision and start AWS-hosted
+  Amazon Linux instance with Node.js for running the outlined `pre_build` and
+  `build` for the declared commands within the `commands` section of the
+  configuration.
+- [AWS CodeBuild](https://aws.amazon.com/codebuild/) will checkout our code from
+  our GitHub repository.
+- Finally, our `buildspec.yml` configuration will:
+  - Install npm dependencies
+  - Start the project web server (`npm start:ci`)
+  - Run the Cypress tests within our GitHub repository within Electron.
+
+:::tip
+
+<strong>Try it out</strong>
+
+To try out the example above yourself, fork the
+[Cypress Kitchen Sink](https://github.com/cypress-io/cypress-example-kitchensink)
+example project and place the above
+[AWS CodeBuild](https://aws.amazon.com/codebuild/) configuration in
+`buildspec.yml`.
+
+:::
+
+## Testing with Cypress Docker Images
+
+As of version 0.2, CodeBuild does not provide a way to specify a custom image
+for single build configurations. One way to solve this is using an
+[AWS CodeBuild batch build-list strategy](https://docs.aws.amazon.com/codebuild/latest/userguide/batch-build-buildspec.html#build-spec.batch.build-list).
+
+### Enabling batch builds
+
+Per the
+[AWS CodeBuild batch build documentation](https://docs.aws.amazon.com/codebuild/latest/userguide/batch-build-buildspec.html),
+AWS CodeBuild creates a separate build for each possible configuration
+combination for a
+[batch build-list strategy](https://docs.aws.amazon.com/codebuild/latest/userguide/batch-build-buildspec.html#build-spec.batch.build-list).
+Therefore, AWS CodeBuild projects must be created or updated to run batch
+configuration.
+
+Follow these steps to enable batch configuration for existing AWS CodeBuild
+projects:
+
+- Navigate to the AWS CodeBuild Console
+- Select the project
+- Click "Edit" **-->** "Batch Configuration"
+- Create "New service Role" and enter the name of the role
+- Leave all other options as optional
+- Click "Update batch configuration"
+- Start the Build
+
+### Cypress Amazon Public ECR
+
+AWS CodeBuild offers a
+[build-list strategy](https://docs.aws.amazon.com/codebuild/latest/userguide/batch-build-buildspec.html#build-spec.batch.build-list)
+of different job configurations for a single job definition.
+
+The
+[build-list strategy](https://docs.aws.amazon.com/codebuild/latest/userguide/batch-build-buildspec.html#build-spec.batch.build-list)
+offers a way to specify an image hosted on
+[Docker Hub](https://hub.docker.com/) or the
+[Amazon Elastic Container Registry (ECR)](https://aws.amazon.com/ecr/).
+
+[Docker Images](https://github.com/cypress-io/cypress-docker-images) for running
+Cypress locally and in CI are published to the
+[Amazon ECR Public Gallery](https://gallery.ecr.aws).:
+
+- [Cypress 'base' Amazon ECR Public Gallery](https://gallery.ecr.aws/cypress-io/cypress/base)
+- [Cypress 'browsers' Amazon ECR Public Gallery](https://gallery.ecr.aws/cypress-io/cypress/browsers)
+- [Cypress 'included' Amazon ECR Public Gallery](https://gallery.ecr.aws/cypress-io/cypress/included)
+
+Read about [Cypress docker variants](/app/continuous-integration/overview#Cypress-Docker-variants) to decide which image is best for your project.
+
+```yaml title="buildspec.yml"
+version: 0.2
+
+## AWS CodeBuild Batch configuration
+## https://docs.aws.amazon.com/codebuild/latest/userguide/batch-build-buildspec.html
+
+## Define build to run using the
+## "cypress/browsers:node-20.14.0-chrome-126.0.6478.114-1-ff-127.0.1-edge-126.0.2592.61-1" image
+## from the Cypress Amazon ECR Public Gallery
+batch:
+  fast-fail: false
+  build-list:
+    - identifier: cypress-e2e-tests
+      env:
+        image: public.ecr.aws/cypress-io/cypress/browsers:node-20.14.0-chrome-126.0.6478.114-1-ff-127.0.1-edge-126.0.2592.61-1
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: latest
+    commands:
+      # Set COMMIT_INFO variables to send Git specifics to Cypress Cloud when recording
+      # https://docs.cypress.io/app/continuous-integration/overview#Git-information
+      - export COMMIT_INFO_BRANCH="$(git rev-parse HEAD | xargs git name-rev |
+        cut -d' ' -f2 | sed 's/remotes\/origin\///g')"
+      - export COMMIT_INFO_MESSAGE="$(git log -1 --pretty=%B)"
+      - export COMMIT_INFO_EMAIL="$(git log -1 --pretty=%ae)"
+      - export COMMIT_INFO_AUTHOR="$(git log -1 --pretty=%an)"
+      - export COMMIT_INFO_SHA="$(git log -1 --pretty=%H)"
+      - export COMMIT_INFO_REMOTE="$(git config --get remote.origin.url)"
+      - npm ci
+  pre_build:
+    commands:
+      - npm run cy:verify
+      - npm run cy:info
+  build:
+    commands:
+      - npm run start:ci &
+      - npx cypress run --record --browser firefox
+```
+
+## Caching Dependencies and Build Artifacts
+
+Caching with [AWS CodeBuild](https://aws.amazon.com/codebuild/) directly can be
+challenging. The
+[Build caching in AWS CodeBuild](https://docs.aws.amazon.com/codebuild/latest/userguide/build-caching.html)
+document offers details on local or Amazon S3 caching.
+
+Per the documentation, "Local caching stores a cache locally on a build host
+that is available to that build host only". This will not be useful during
+parallel test runs.
+
+The "Amazon S3 caching stores the cache in an Amazon S3 bucket that is available
+across multiple build hosts". While this may sound useful, in practice the
+upload of cached dependencies can take some time. Furthermore, each worker will
+attempt to save it's dependency cache to Amazon S3, which increases build time
+significantly.
+
+Beyond the scope of this guide, but
+[AWS CodePipeline](https://aws.amazon.com/codepipeline) may be of use to cache
+the initial source, dependencies and build output for use in AWS CodeBuild jobs
+using
+[AWS CodePipeline Input and Output Artifacts](https://docs.aws.amazon.com/codepipeline/latest/userguide/welcome-introducing-artifacts.html).
+
+Reference the
+[AWS CodePipeline integration with CodeBuild and multiple input sources and output artifacts sample](https://docs.aws.amazon.com/codebuild/latest/userguide/sample-pipeline-multi-input-output.html)
+example for details on how to configure a CodePipeline with an output artifact.
+
+## Parallelization
+
+[Cypress Cloud](/cloud/get-started/introduction) offers the ability to
+[parallelize and group test runs](/cloud/features/smart-orchestration/parallelization)
+along with additional insights and [analytics](/cloud/features/analytics/overview) for
+Cypress tests.
+
+AWS CodeBuild offers a
+[batch build-matrix strategy](https://docs.aws.amazon.com/codebuild/latest/userguide/batch-build-buildspec.html#build-spec.batch.build-matrix)
+for declaring different job configurations for a single job definition. The
+[batch build-matrix strategy](https://docs.aws.amazon.com/codebuild/latest/userguide/batch-build-buildspec.html#build-spec.batch.build-matrix)
+provides an option to specify a container image for the job. Jobs declared
+within a build-matrix strategy can run in parallel which enables us run
+multiples instances of Cypress at same time as we will see later in this
+section.
+
+See [Enabling batch builds](#Enabling-batch-builds) for instructions on how to enable batch builds.
+
+:::info
+
+The following configuration using the `--parallel` and `--record` flags to
+[cypress run](//app//app/command-line#cypress-run) requires setting up
+recording test results to [Cypress Cloud](/cloud/get-started/introduction).
+
+:::
+
+### Parallelizing the build
+
+To setup multiple containers to run in parallel, the `build-matrix`
+configuration uses a set of variables (`CY_GROUP_SPEC` and `WORKERS`) with a
+list of items specific to each group for the build.
+
+The fields are delimited by a pipe (`|`) character as follows:
+
+```yaml
+## Group Name | Browser | Specs | Cypress Configuration options (optional)
+
+'UI-Chrome-Mobile|chrome|cypress/tests/ui/*|viewportWidth=375,viewportHeight=667'
+```
+
+The `build-matrix` will run all permutations delimited items.
+
+```yaml title="buildspec.yml"
+batch:
+  fast-fail: false
+  build-matrix:
+    # ...
+    dynamic:
+      env:
+        # ...
+        variables:
+          CY_GROUP_SPEC:
+            - 'UI-Chrome|chrome|cypress/tests/ui/*'
+            - 'UI-Chrome-Mobile|chrome|cypress/tests/ui/*|viewportWidth=375,viewportHeight=667'
+            - 'API|chrome|cypress/tests/api/*'
+            - 'UI-Firefox|firefox|cypress/tests/ui/*'
+            - 'UI-Firefox-Mobile|firefox|cypress/tests/ui/*|viewportWidth=375,viewportHeight=667'
+```
+
+During the install phase, we utilize shell scripting with the
+[cut command](<https://en.wikipedia.org/wiki/Cut_(Unix)>) to assign values from
+the delimited `CY_GROUP_SPEC` passed to the worker into shell variables that
+will be used in the `build` phase when running `cypress run`.
+
+```yaml title="buildspec.yml"
+batch:
+  # ...
+
+phases:
+  install:
+    commands:
+      # Set COMMIT_INFO variables to send Git specifics to Cypress Cloud when recording
+      # https://docs.cypress.io//app/continuous-integration/overview#Git-information
+      - export COMMIT_INFO_BRANCH="$(git rev-parse HEAD | xargs git name-rev |
+        cut -d' ' -f2 | sed 's/remotes\/origin\///g')"
+      - export COMMIT_INFO_MESSAGE="$(git log -1 --pretty=%B)"
+      - export COMMIT_INFO_EMAIL="$(git log -1 --pretty=%ae)"
+      - export COMMIT_INFO_AUTHOR="$(git log -1 --pretty=%an)"
+      - export COMMIT_INFO_SHA="$(git log -1 --pretty=%H)"
+      - export COMMIT_INFO_REMOTE="$(git config --get remote.origin.url)"
+      - CY_GROUP=$(echo $CY_GROUP_SPEC | cut -d'|' -f1)
+      - CY_BROWSER=$(echo $CY_GROUP_SPEC | cut -d'|' -f2)
+      - CY_SPEC=$(echo $CY_GROUP_SPEC | cut -d'|' -f3)
+      - CY_CONFIG=$(echo $CY_GROUP_SPEC | cut -d'|' -f4)
+      - npm ci
+## ...
+```
+
+To parallelize the runs, we need to add an additional variable to the
+[build-matrix strategy](https://docs.aws.amazon.com/codebuild/latest/userguide/batch-build-buildspec.html#build-spec.batch.build-matrix),
+`WORKERS`.
+
+```yaml title="buildspec.yml"
+batch:
+  fast-fail: false
+  build-matrix:
+    # ...
+    dynamic:
+      env:
+        # ...
+        variables:
+          CY_GROUP_SPEC:
+            # ...
+          WORKERS:
+            - 1
+            - 2
+            - 3
+            - 4
+            - 5
+```
+
+:::info
+
+<strong>Note</strong>
+
+The `WORKERS` array is filled with filler (or _dummy_) items to provision the
+desired number of CI machine instances within the
+[batch build-matrix strategy](https://docs.aws.amazon.com/codebuild/latest/userguide/batch-build-buildspec.html#build-spec.batch.build-matrix)
+and will provide 5 workers to each group defined in the `CY_GROUP_SPEC`.
+
+:::
+
+Finally, the script variables are passed to the call to `cypress run`.
+
+```yaml title="buildspec.yml"
+phases:
+  install:
+    # ...
+  build:
+    commands:
+      - npm start:ci &
+      - npx cypress run --record --parallel --browser $CY_BROWSER --ci-build-id
+        $CODEBUILD_INITIATOR --group "$CY_GROUP" --spec "$CY_SPEC" --config
+        "$CY_CONFIG"
+```
+
+## Using Cypress Cloud with AWS CodeBuild
+
+:::caution
+
+Dashboard analytics are dependent on your CI environment reliably providing
+commit SHA data (typically via an environment variable) which is not always
+present by default. This is not a problem for most users, but if you are facing
+integration issues with your CodeBuild setup, please make sure the git
+information is being sent properly by following
+[these guidelines](//app/continuous-integration/overview#Git-information),
+or just see
+[the example `codebuild.yml` file at the top of this page](#Basic-Setup). If you
+are still facing issues after this, please
+[contact us](mailto:hello@cypress.io).
+
+:::
+
+In the AWS CodeBuild configuration we have defined in the previous section, we
+are leveraging three useful features of
+[Cypress Cloud](/cloud/get-started/introduction):
+
+<CiProviderCloudSteps />

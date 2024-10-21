@@ -1,0 +1,116 @@
+---
+title: Setup
+sidebar_position: 20
+---
+
+:::info
+
+<CloudFreePlan />
+:::
+
+Once complete, come back here for information on how to integrate your app with
+Cypress Cloud.
+
+## Setup
+
+When you configure the open source Cypress app to record tests to Cypress Cloud,
+you'll see data from your project's latest recorded runs.
+
+You typically want to record when running tests in
+[Continuous Integration](/app/continuous-integration/overview), but you
+can also record your tests when running locally.
+
+:::tip
+
+<Icon name="check-circle" color="green" /> Make sure to [install](/app/get-started/install-cypress)
+and [open](/app/get-started/open-the-app) the Cypress app to get started recording!
+
+:::
+
+### Set up a project to record
+
+1. Click on the **Runs** tab of your project within
+   [Cypress](/app/core-concepts/open-mode).
+2. Click **Connect to Cypress Cloud**.
+3. You will need to log in to record your tests, so you'll be prompted to log in
+   to Cypress Cloud here if you haven't already done so.
+   <DocsImage
+     src="/img/cloud/projects/setup-a-project-1.jpg"
+     alt="Connect to Cloud"
+   />
+4. Choose who owns the project. You can personally own it or select an
+   organization you're a member of. If you don't have any organizations, click
+   **Manage organizations**. Organizations work just like they do in GitHub and
+   enable you to separate your personal and work projects.
+   [Read more about organizations](/cloud/account-management/organizations).
+   <DocsImage
+     src="/img/cloud/projects/setup-a-project-2.jpg"
+     alt="Choose an Organization"
+   />
+5. If you don't have any existing projects, you'll have the opportunity to
+   create a new one here. If you have existing projects and want to create a new
+   one, you can click **Create new** to make a new one.
+
+   - Fill in the name of your project (this is only for display purposes and can
+     be changed later).
+   - Choose whether this project is Public or Private. See more about
+     [Public-vs-Private project settings](/cloud/account-management/projects#Public-vs-Private).
+     <DocsImage
+       src="/img/cloud/projects/setup-a-project-3.jpg"
+       alt="Create a New Project"
+     />
+
+6. Alternatively, if you've already created a project in Cypress Cloud, you can
+   link your project by selecting it from the dropdown. Make sure to select a
+   clean project that has not previously been linked to an existing project.
+   <DocsImage
+     src="/img/cloud/projects/setup-a-project-4.jpg"
+     alt="Choose a Project"
+   />
+7. Click **Setup Project**.
+8. Now you should see a view explaining how to record your first run with your
+   record key.
+   <DocsImage
+     src="/img/cloud/projects/setup-a-project-5.jpg"
+     alt="Record Instructions"
+   />
+9. After setting up your project, Cypress inserts a unique
+   [projectId](/cloud/account-management/projects#Project-ID) into your Cypress configuration file. If you're
+   using source control, we recommend that you check your configuration file,
+   including the `projectId`, into source control.
+10. Within [Continuous Integration](/app/continuous-integration/overview)
+    or from your local computer's terminal, pass the displayed
+    [Record Key](/cloud/account-management/projects#Record-key) while running the
+    [cypress run](/app/references/command-line#cypress-run) command.
+
+    Provide record key directly:
+
+    ```shell
+    cypress run --record --key <record key>
+    ```
+
+    Or set record key as environment variable:
+
+    ```shell
+    export CYPRESS_RECORD_KEY=<record key>
+    ```
+
+    ```shell
+    cypress run --record
+    ```
+
+### View your recorded run
+
+🎉 Your tests are now recording! As soon as tests finish running, you will see
+them in [Cypress Cloud](https://on.cypress.io/cloud) and in the _Runs_ tab of
+[Cypress](/app/core-concepts/open-mode).
+
+<DocsImage
+  src="/img/cloud/projects/cloud-runs-list.jpg"
+  alt="Cloud Screenshot"
+/>
+
+<DocsImage
+  src="/img/cloud/projects/runs-list-in-desktop-gui.jpg"
+  alt="Runs List"
+/>

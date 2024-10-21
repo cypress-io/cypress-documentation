@@ -1,0 +1,416 @@
+---
+title: Advanced Installation
+---
+
+:::info
+
+##### <Icon name="question-circle" color="#42a1c0" /> What you'll learn
+
+- How to install Cypress with a custom binary
+- How to skip the installation of the Cypress binary
+- How to change the Cypress binary cache location or download URL
+- How to use a custom certificate authority (CA)
+- How to opt out of sending exception data to Cypress
+
+:::
+
+## Environment variables
+
+| Name                              | Description                                                                                    |
+| --------------------------------- | ---------------------------------------------------------------------------------------------- |
+| `CYPRESS_INSTALL_BINARY`          | [Destination of Cypress binary that's downloaded and installed](#Install-binary)               |
+| `CYPRESS_CONNECT_RETRY_THRESHOLD` | Overrides the maximum number of retries when connecting to a browser. The default value is 62. |
+| `CYPRESS_DOWNLOAD_MIRROR`         | [Downloads the Cypress binary through a mirror server](#Mirroring)                             |
+| `CYPRESS_DOWNLOAD_PATH_TEMPLATE`  | [Allows generating a custom URL to download the Cypress binary from](#Download-path-template)  |
+| `CYPRESS_CACHE_FOLDER`            | [Changes the Cypress binary cache location](#Binary-cache)                                     |
+| `CYPRESS_RUN_BINARY`              | [Location of Cypress binary at run-time](#Run-binary)                                          |
+| `CYPRESS_VERIFY_TIMEOUT`          | Overrides the timeout duration for the `verify` command. The default value is 30000.           |
+| `CYPRESS_SKIP_VERIFY`             | Skips the `verify` command (for stable CI environments)                                        |
+| ~~CYPRESS_SKIP_BINARY_INSTALL~~   | <Badge type="danger">removed</Badge> use `CYPRESS_INSTALL_BINARY=0` instead                    |
+| ~~CYPRESS_BINARY_VERSION~~        | <Badge type="danger">removed</Badge> use `CYPRESS_INSTALL_BINARY` instead                      |
+
+## Install binary
+
+Using the `CYPRESS_INSTALL_BINARY` environment variable, you can control how
+Cypress is installed. To override what is installed, you set
+`CYPRESS_INSTALL_BINARY` alongside the `npm install` command.
+
+**This is helpful if you want to:**
+
+- Install a version different than the default npm package.
+  ```shell
+  CYPRESS_INSTALL_BINARY=13.7.0 npm install cypress@13.7.1
+  ```
+- Specify an external URL (to bypass a corporate firewall).
+  ```shell
+  CYPRESS_INSTALL_BINARY=https://company.domain.com/cypress.zip npm install cypress
+  ```
+- Specify a file to install locally instead of using the internet.
+  ```shell
+  CYPRESS_INSTALL_BINARY=/local/path/to/cypress.zip npm install cypress
+  ```
+
+In all cases, the fact that the binary was installed from a custom location _is
+not saved in your `package.json` file_. Every repeated installation needs to use
+the same environment variable to install the same binary.
+
+### Skipping installation
+
+You can also force Cypress to skip the installation of the binary application by
+setting `CYPRESS_INSTALL_BINARY=0`. This could be useful if you want to prevent
+Cypress from downloading the Cypress binary at the time of `npm install`.
+
+```shell
+CYPRESS_INSTALL_BINARY=0 npm install
+```
+
+Now Cypress will skip its install phase once the npm module is installed.
+
+### Troubleshoot installation
+
+The Cypress [Life Cycle script](https://docs.npmjs.com/cli/using-npm/scripts) `postinstall` installs the Cypress binary after the [Cypress npm module](https://www.npmjs.com/package/cypress) has been installed. Package managers however execute the `postinstall` step in the background by default which hides the debug output. Execute `cypress install` separately with [debug logging](./troubleshooting#Log-sources) enabled to view the debug logs.
+
+<Tabs groupId="package-manager"
+  defaultValue="npm"
+  values={[
+    {label: 'npm', value: 'npm'},
+    {label: 'Yarn', value: 'yarn'},
+    {label: 'pnpm', value: 'pnpm'},
+  ]}>
+  <TabItem value="npm">
+
+```shell
+CYPRESS_INSTALL_BINARY=0 npm install cypress --save-dev
+DEBUG=cypress:cli* npx cypress install
+```
+
+  </TabItem>
+  <TabItem value="yarn">
+
+```shell
+CYPRESS_INSTALL_BINARY=0 yarn add cypress --dev
+DEBUG=cypress:cli* yarn cypress install
+```
+
+  </TabItem>
+  <TabItem value="pnpm">
+
+```shell
+CYPRESS_INSTALL_BINARY=0 pnpm add --save-dev cypress
+DEBUG=cypress:cli* pnpm cypress install
+```
+
+  </TabItem>
+</Tabs>
+
+To set environment variables `CYPRESS_INSTALL_BINARY` and `DEBUG` in Windows CMD or PowerShell terminals, refer to examples in [Print DEBUG Logs](./troubleshooting#Print-DEBUG-logs).
+
+In Continuous Integration (CI) use the following commands to display debug logs from the Cypress binary installation:
+
+<Tabs groupId="package-manager"
+  defaultValue="npm"
+  values={[
+    {label: 'npm', value: 'npm'},
+    {label: 'Yarn', value: 'yarn'},
+    {label: 'pnpm', value: 'pnpm'},
+  ]}>
+  <TabItem value="npm">
+
+```shell
+DEBUG=cypress:cli* npm ci --foreground-scripts
+```
+
+  </TabItem>
+  <TabItem value="yarn">
+
+```shell
+yarn install --frozen-lockfile --ignore-scripts # Yarn v1 Classic only
+DEBUG=cypress:cli* yarn cypress install
+```
+
+  </TabItem>
+  <TabItem value="pnpm">
+
+```shell
+pnpm install --frozen-lockfile --ignore-scripts
+DEBUG=cypress:cli* pnpm cypress install
+```
+
+  </TabItem>
+</Tabs>
+
+## Binary cache
+
+As of version `3.0`, Cypress downloads the matching Cypress binary to the global
+system cache, so that the binary can be shared between projects. By default,
+global cache folders are:
+
+- **MacOS**: `~/Library/Caches/Cypress`
+- **Linux**: `~/.cache/Cypress`
+- **Windows**: `/AppData/Local/Cypress/Cache`
+
+To override the default cache folder, set the environment variable
+`CYPRESS_CACHE_FOLDER`.
+
+```shell
+CYPRESS_CACHE_FOLDER=~/Desktop/cypress_cache npm install
+```
+
+```shell
+CYPRESS_CACHE_FOLDER=~/Desktop/cypress_cache npm run test
+```
+
+Cypress will automatically replace the `~` with the user's home directory. So
+you can pass `CYPRESS_CACHE_FOLDER` as a string from CI configuration files, for
+example:
+
+```yml
+environment:
+  CYPRESS_CACHE_FOLDER: '~/.cache/Cypress'
+```
+
+See also
+[Continuous Integration - Caching](/app/continuous-integration/overview#Caching)
+section in the documentation.
+
+:::caution
+
+`CYPRESS_CACHE_FOLDER` will need to exist every time cypress is launched. To
+ensure this, consider exporting this environment variable. For example, in a
+`.bash_profile` (MacOS, Linux), or using `RegEdit` (Windows).
+
+:::
+
+## Run binary
+
+Setting the environment variable `CYPRESS_RUN_BINARY` overrides where the npm
+module finds the Cypress binary.
+
+`CYPRESS_RUN_BINARY` should be a path to an already unzipped binary executable.
+The Cypress commands `open`, `run`, and `verify` will then launch the provided
+binary.
+
+### Mac
+
+```shell
+CYPRESS_RUN_BINARY=~/Downloads/Cypress.app/Contents/MacOS/Cypress cypress run
+```
+
+### Linux
+
+```shell
+CYPRESS_RUN_BINARY=~/Downloads/Cypress/Cypress cypress run
+```
+
+### Windows
+
+```shell
+CYPRESS_RUN_BINARY=~/Downloads/Cypress/Cypress.exe cypress run
+```
+
+:::caution
+
+We recommend **not exporting** the `CYPRESS_RUN_BINARY` environment variable,
+since it will affect every cypress module installed on your file system.
+
+:::
+
+## Download URLs
+
+If you want to download a specific Cypress version for a given platform
+(Operating System), you can get it from our CDN.
+
+The download server URL is `https://download.cypress.io`.
+
+We currently have the following downloads available:
+
+- Windows 64-bit (`?platform=win32&arch=x64`)
+- Linux 64-bit (`?platform=linux`)
+- macOS 64-bit (`?platform=darwin`)
+
+Here are the available download URLs:
+
+See
+[https://download.cypress.io/desktop.json](https://download.cypress.io/desktop.json)
+for all available platforms.
+
+| Method | URL                                   | Description                                                                |
+| ------ | ------------------------------------- | -------------------------------------------------------------------------- |
+| `GET`  | `/desktop`                            | Download Cypress at latest version (platform auto-detected)                |
+| `GET`  | `/desktop.json`                       | Returns JSON containing latest available CDN destinations                  |
+| `GET`  | `/desktop?platform=p&arch=a`          | Download Cypress for a specific platform and/or architecture               |
+| `GET`  | `/desktop/:version`                   | Download Cypress with a specified version                                  |
+| `GET`  | `/desktop/:version?platform=p&arch=a` | Download Cypress with a specified version and platform and/or architecture |
+
+**Example of downloading Cypress `12.17.4` for Windows 64-bit:**
+
+```text
+https://download.cypress.io/desktop/12.17.4?platform=win32&arch=x64
+```
+
+## Mirroring
+
+If you choose to mirror the entire Cypress download site, you can specify
+`CYPRESS_DOWNLOAD_MIRROR` to set the download server URL from
+`https://download.cypress.io` to your own mirror.
+
+For example:
+
+```shell
+CYPRESS_DOWNLOAD_MIRROR="https://www.example.com" cypress install
+```
+
+Cypress will then attempt to download a binary with this format:
+`https://www.example.com/desktop/:version?platform=p`
+
+## Download path template
+
+Starting with Cypress 9.3.0, you can use the `CYPRESS_DOWNLOAD_PATH_TEMPLATE`
+environment variable to download the Cypress binary from a custom URL that's
+generated based on endpoint, version, platform and architecture.
+
+**The following replacements are supported:**
+
+- `${endpoint}` is replaced with `https://download.cypress.io/desktop/:version`.
+  If `CYPRESS_DOWNLOAD_MIRROR` is set, its value is used instead of
+  `https://download.cypress.io` (note that the `/desktop` remains!)
+- `${platform}` is replaced with the platform the installation is running on
+  (e.g. `win32`, `linux`, `darwin`)
+- `${arch}` is replaced with the architecture the installation is running on
+  (e.g. `x64`, `arm64`)
+- Starting with Cypress 10.6.0, `${version}` is replaced with the version number
+  that's being installed (e.g. `10.11.0`)
+
+**Examples:**
+
+To install the binary from a download mirror that matches the exact file
+structure of `https://cdn.cypress.io` (works for Cypress 9.3.0 or newer):
+
+```shell
+export CYPRESS_DOWNLOAD_MIRROR=https://cypress-download.local
+export CYPRESS_DOWNLOAD_PATH_TEMPLATE='${endpoint}/${platform}-${arch}/cypress.zip'
+# Example of a resulting URL: https://cypress-download.local/desktop/10.11.0/linux-x64/cypress.zip
+```
+
+To install the binary from a download server with a custom file structure (works
+for Cypress 10.6.0 or newer):
+
+```shell
+export CYPRESS_DOWNLOAD_PATH_TEMPLATE='https://software.local/cypress/${platform}/${arch}/${version}/cypress.zip'
+# Example of a resulting URL: https://software.local/cypress/linux/x64/10.11.0/cypress.zip
+```
+
+To define `CYPRESS_DOWNLOAD_PATH_TEMPLATE` in `.npmrc`, put a backslash before
+every `$` (works for Cypress 9.5.3 or newer):
+
+```ini
+CYPRESS_DOWNLOAD_PATH_TEMPLATE=\${endpoint}/\${platform}-\${arch}/cypress.zip
+```
+
+## Using a custom certificate authority (CA)
+
+Cypress can be configured to use the `ca` and `cafile` options from your npm
+config file to download the Cypress binary.
+
+For example, to use the CA at `/home/person/certs/ca.crt` when downloading
+Cypress, add the following to your `.npmrc`:
+
+```shell
+cafile=/home/person/certs/ca.crt
+```
+
+If neither `cafile` nor `ca` are set, Cypress looks at the system environment
+variable `NODE_EXTRA_CA_CERTS` and uses the corresponding certificate(s) as an
+extension for the trusted certificate authority when downloading the Cypress
+binary.
+
+Note that the npm config is used as a replacement, and the node environment
+variable is used as an extension.
+
+## Opt out of sending exception data to Cypress
+
+When an exception is thrown regarding Cypress, we send along the exception data
+to `https://api.cypress.io`. We solely use this information to help develop a
+better product.
+
+If you would like to opt out of sending any exception data to Cypress, you can
+do so by setting `CYPRESS_CRASH_REPORTS=0` in your system environment variables.
+
+### Opt out on Linux or macOS
+
+To opt out of sending exception data on Linux or macOS, run the following
+command in a terminal before installing Cypress:
+
+```shell
+export CYPRESS_CRASH_REPORTS=0
+```
+
+To make these changes permanent, you can add this command to your shell's
+`~/.profile` (`~/.zsh_profile`, `~/.bash_profile`, etc.) to run them on every
+login.
+
+### Opt out on Windows
+
+To opt out of sending exception data on Windows, run the following command in
+the Command Prompt before installing Cypress:
+
+```shell
+set CYPRESS_CRASH_REPORTS=0
+```
+
+To accomplish the same thing in PowerShell:
+
+```shell
+$env:CYPRESS_CRASH_REPORTS = "0"
+```
+
+To save the `CYPRESS_CRASH_REPORTS` variable for use in all new shells, use
+`setx`:
+
+```shell
+setx CYPRESS_CRASH_REPORTS 0
+```
+
+## Opt out of Cypress commercial messaging
+
+Cypress may occasionally display messages in your CI logs related to our
+commercial offerings and how they could benefit you during your workflows.
+
+If you would like to opt out of all commercial messaging, you can do so by
+setting `CYPRESS_COMMERCIAL_RECOMMENDATIONS=0` in your system environment
+variables.
+
+## Install pre-release version
+
+If you would like to install a pre-release version of Cypress to test out
+functionality that has not yet been released, here is how:
+
+1. Open up the list of commits to `develop` on the Cypress repo:
+   [https://github.com/cypress-io/cypress/commits/develop](https://github.com/cypress-io/cypress/commits/develop)
+2. Find the commit that you would like to install the pre-release version of.
+   Click the comment icon (highlighted in red below):
+   <DocsImage
+     src="/img/app/install/develop-commit-comment-link.png"
+     alt="Example of a commit for which pre-releases are available. Comment link highlighted in red."
+   />
+3. You should see several comments from the `cypress-bot` user with instructions
+   for installing Cypress pre-releases. Pick the one that corresponds to your
+   operating system and CPU architecture, and follow the instructions there to
+   install the pre-release.
+
+Cypress pre-releases are only available for 60 days after they are built. Do not
+rely on these being available past 60 days.
+
+## Windows Subsystem for Linux
+
+Cypress requires an [X-server](https://en.wikipedia.org/wiki/X.Org_Server) (X11) to display the Cypress UI from a Windows Subsystem for Linux installation. This requirement is met by current versions of Windows Subsystem for Linux (WSL2) with X11 support being included through Windows Subsystem for Linux GUI (WSLg).
+
+Refer to [GitHub: Windows Subsystem for Linux GUI (WSLg)](https://github.com/microsoft/wslg) for installation instructions on Ubuntu and install the [prerequisite Linux packages](/app/get-started/install-cypress#Linux-Prerequisites) before running Cypress.
+
+Refer to Microsoft Learn [Windows Subsystem for Linux Documentation](https://learn.microsoft.com/en-us/windows/wsl/) for additional information.
+
+:::info
+
+Cypress.io does not specifically support the use of Cypress under Windows Subsystem for Linux (WSL). If you want to report an issue, please ensure that you can reproduce it without using WSL on one of the Cypress [supported operating systems](/app/get-started/install-cypress#Operating-System).
+
+:::
