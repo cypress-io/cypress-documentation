@@ -3,6 +3,16 @@ title: Branch Review
 sidebar_position: 50
 ---
 
+:::info
+
+##### <Icon name="question-circle" color="#42a1c0" /> What you'll learn
+
+- How Branch Review surfaces the impact of pull requests on your test suite
+- How to compare test results between branches in Cypress Cloud
+- Best practices for grouping test runs
+
+:::
+
 Cypress Branch Review is designed to elevate your pull request review workflow. It allows you to quickly identify the impact a pull request might have on your test suite in a single view. Compare which tests are failing, flaky, pending, added, or modified between the source and base branches and prevent the merging of low-quality code.
 
 A common scenario throughout the software development lifecycle (SDLC) is an engineer's **feature** branch that will be merged into the repo's **develop** or **main** branch.
@@ -10,8 +20,8 @@ A common scenario throughout the software development lifecycle (SDLC) is an eng
 <DocsImage
   src="/img/cloud/features/branch-review/branch-review.jpg"
   alt="Cypress Branch Review"
-/>
 
+/>
 Previously, pinpointing changes in your test suite's results required a manual side-by-side comparison between your newly-introduced branch's test runs and your base branch's test runs. This sub-optimal workflow often fails to answer the fundamental questions, _what changed_ and _why?_ You might be left wondering if the same tests are flaky between branches, when new failures were introduced, or if you added sufficient test coverage to your new branch.
 
 :::info
@@ -186,15 +196,11 @@ The following captures this scenario across both branches:
 
 ## Best Practices
 
-:::tip
-
 ### Grouping Test Runs
 
 Cypress Cloud allows for [grouping recorded tests](/cloud/features/smart-orchestration/parallelization#Grouping-test-runs) together under a single run. This means multiple `cypress run` calls can be labeled and associated to a single run in Cypress Cloud.
 
 Recording multiple test runs per commit without grouping will cause issues, as Branch Review relies on the _latest_ run. Therefore, recording one run per commit and utilizing grouping is essential to improving effectiveness and ensure an accurate comparison between branches.
-
-:::
 
 ## See Also
 

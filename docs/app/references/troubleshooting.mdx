@@ -2,85 +2,62 @@
 title: Troubleshooting
 ---
 
+:::info
+
+##### <Icon name="question-circle" color="#42a1c0" /> What you'll learn
+
+- Resources to help you troubleshoot Cypress App issues
+- Common steps to isolate and resolve problems
+
+:::
+
+## Start here
+
 There are times when you will encounter errors or unexpected behavior with
 Cypress itself. This guide recommends some resources and steps to take to
 troubleshoot those problems.
 
-## Update Cypress
+### Update Cypress
 
-We always recommend using the latest version of Cypress. If you're not using the
-latest version, upgrade to the latest version. Your issue may already be
+We always recommend using the latest version of the Cypress App. If you're not using the
+latest version, upgrade to the [latest version](/app/references/changelog). Your issue may already be
 resolved.
 
-## Support channels
+### Support channels
 
-Check these support resources:
+Check these support resources for Cypress App issues:
 
 - Connect with our community in [Discord](https://on.cypress.io/discord)
 - Search existing [GitHub issues](https://github.com/cypress-io/cypress/issues)
 - Search this documentation (search is in the top right) 😉
 - Search [Stack Overflow](https://stackoverflow.com/questions/tagged/cypress)
   for relevant answers
-- If your organization signs up for one of our
-  [paid plans](https://www.cypress.io/pricing/), you can get dedicated email
-  support, which gives you one-on-one help from our team.
 - If you still haven't found a solution,
   [open an issue](https://github.com/cypress-io/cypress/issues/new/choose) _with
   a reproducible example_.
 
-### Common GitHub issues
+If your organization signs up for one of our
+  [paid plans](https://www.cypress.io/pricing/), you can get dedicated email
+  support, which gives you one-on-one help from our team.
 
-Below are some of common problem topics users experience with a link to the main
-issue(s) and links to the open and closed issues in the topic. Maybe you can
-find an open or closed issue matching your problem. Even open issues might
-suggest a workaround or shed more information on the problem.
-
-| Label                 | Description                                                       | Issues                                                                                                                                                                                                                                                               |
-| --------------------- | ----------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| browser detection     | Local browser is not detected                                     | [open](https://github.com/cypress-io/cypress/labels/topic%3A%20browser%20detection), [closed](https://github.com/cypress-io/cypress/issues?q=label%3A%22topic%3A+browser+detection%22+is%3Aclosed)                                                                   |
-| cross-origin          | Getting cross-origin error                                        | [open](https://github.com/cypress-io/cypress/labels/topic%3A%20cross-origin%20%E2%A4%AD), [closed](https://github.com/cypress-io/cypress/issues?q=label%3A%22topic%3A+cross-origin+%E2%A4%AD%22+is%3Aclosed)                                                         |
-| cy.request            | Issues related to [`cy.request()`](/api/commands/request) command | [open](https://github.com/cypress-io/cypress/labels/topic%3A%20cy.request), [closed](https://github.com/cypress-io/cypress/issues?q=label%3A%22topic%3A+cy.request%22+is%3Aclosed)                                                                                   |
-| fixtures              | Fixture loading and usage                                         | [open](https://github.com/cypress-io/cypress/labels/topic%3A%20fixtures), [closed](https://github.com/cypress-io/cypress/issues?q=label%3A%22topic%3A+fixtures%22+is%3Aclosed)                                                                                       |
-| hooks                 | Issues related to hooks                                           | [open](https://github.com/cypress-io/cypress/labels/topic%3A%20hooks%20%E2%86%AA), [closed](https://github.com/cypress-io/cypress/issues?q=label%3A%22topic%3A+hooks+%E2%86%AA%22+is%3Aclosed)                                                                       |
-| iframes               | Working with iframes                                              | [open](https://github.com/cypress-io/cypress/labels/topic%3A%20iframes), [closed](https://github.com/cypress-io/cypress/issues?q=label%3A%22topic%3A+iframes%22+is%3Aclosed)                                                                                         |
-| installation          | Cypress cannot be downloaded or installed                         | [open](https://github.com/cypress-io/cypress/labels/topic%3A%20installation), [closed](https://github.com/cypress-io/cypress/issues?q=label%3A%22topic%3A+installation%22+is%3Aclosed)                                                                               |
-| network               | Controlling network requests                                      | [open](https://github.com/cypress-io/cypress/labels/topic%3A%20network), [closed](https://github.com/cypress-io/cypress/issues?q=label%3A%22topic%3A+network%22+is%3Aclosed)                                                                                         |
-| performance           | Slow loading, slow network, etc                                   | [open](https://github.com/cypress-io/cypress/labels/type%3A%20performance%20%F0%9F%8F%83%E2%80%8D%E2%99%80%EF%B8%8F), [closed](https://github.com/cypress-io/cypress/issues?q=label%3A%22type%3A+performance+%F0%9F%8F%83%E2%80%8D%E2%99%80%EF%B8%8F%22+is%3Aclosed) |
-| screenshots           | Taking image screenshots                                          | [open](https://github.com/cypress-io/cypress/labels/topic%3A%20screenshots%20%F0%9F%93%B8), [closed](https://github.com/cypress-io/cypress/issues?q=label%3A%22topic%3A+screenshots+%F0%9F%93%B8%22+is%3Aclosed)                                                     |
-| scrolling             | Scrolling elements into view                                      | [open](https://github.com/cypress-io/cypress/labels/topic%3A%20scrolling%20%E2%86%95%EF%B8%8F), [closed](https://github.com/cypress-io/cypress/issues?q=label%3A%22topic%3A+scrolling+%E2%86%95%EF%B8%8F%22+is%3Aclosed)                                             |
-| spec execution        | Running all or filtered specs                                     | [open](https://github.com/cypress-io/cypress/labels/topic%3A%20spec%20execution), [closed](https://github.com/cypress-io/cypress/issues?q=label%3A%22topic%3A+spec+execution%22+is%3Aclosed)                                                                         |
-| test execution        | Running tests inside a single spec                                | [open](https://github.com/cypress-io/cypress/labels/topic%3A%20test%20execution), [closed](https://github.com/cypress-io/cypress/issues?q=label%3A%22topic%3A+test+execution%22+is%3Aclosed)                                                                         |
-| TypeScript            | Transpiling or bundling TypeScript                                | [open](https://github.com/cypress-io/cypress/labels/topic%3A%20typescript), [closed](https://github.com/cypress-io/cypress/issues?q=label%3A%22topic%3A+typescript%22+is%3Aclosed)                                                                                   |
-| video                 | Problems with video recordings                                    | [open](https://github.com/cypress-io/cypress/labels/topic%3A%20video%20%F0%9F%93%B9), [closed](https://github.com/cypress-io/cypress/issues?q=label%3A%22topic%3A+video+%F0%9F%93%B9%22+is%3Aclosed)                                                                 |
-| file downloads        | File downloads are not working                                    | [open](https://github.com/cypress-io/cypress/labels/topic%3A%20downloads%20%E2%AC%87%EF%B8%8F), [closed](https://github.com/cypress-io/cypress/issues?q=label%3A%22topic%3A+downloads+%E2%AC%87%EF%B8%8F%22+is%3Aclosed)                                             |
-| intercept             | Network stubbing using [cy.intercept](/api/commands/intercept)    | [open](https://github.com/cypress-io/cypress/labels/pkg%2Fnet-stubbing), [closed](https://github.com/cypress-io/cypress/issues?q=label%3Apkg%2Fnet-stubbing+is%3Aclosed)                                                                                             |
-| SIG\* errors          | Crashes with errors like `SIGSEGV`                                | [open](https://github.com/cypress-io/cypress/labels/topic%3A%20SIG%20errors), [closed](https://github.com/cypress-io/cypress/issues?q=label%3A%22topic%3A+SIG+errors%22+is%3Aclosed)                                                                                 |
-| environment variables | Parsing and using environment variables                           | [open](https://github.com/cypress-io/cypress/labels/topic%3A%20environment%20variables), [closed](https://github.com/cypress-io/cypress/issues?q=label%3A%22topic%3A+environment+variables%22+is%3Aclosed)                                                           |
-
-## Isolate the Problem
+### Isolate the Problem
 
 When debugging a failing test, follow these general principles to isolate the
 problem:
 
-- Look at the
-  [video recordings and screenshots](/app/guides/screenshots-and-videos).
+- Look at the screenshots, video, or [Test Replay](/cloud/features/test-replay) of the test. Test Replay will show you the exact steps that were taken during the test including
+console logs and requests.
 - Split large spec files into smaller ones.
 - Split long tests into smaller tests.
-- Run the same test using
-  [--browser chrome](/app/references/command-line#cypress-run-browser-lt-browser-name-or-path-gt).
-  The problem might be isolated to the Electron browser.
-- If isolated to the Electron browser. Run the same tests in both Electron and
-  Chrome, then compare the screenshots/videos. Look for and isolate any
-  differences in the Command Log.
+- Run the same test in different browsers to isolate the problem to a specific browser.
+- Run the same test in different environments (local, CI, etc.) to isolate the problem to a specific environment.
+- Reduce the test to the smallest possible test that still reproduces the problem.
 
-## Download specific Chrome version
+## Troubleshooting Steps
 
-The Chrome browser is evergreen - meaning it will automatically update itself,
-sometimes causing a breaking change in your automated tests.
-You can use the information in [Download Chromium](https://on.cypress.io/chromium-downloads) to download a
-specific released version of Chromium for every platform.
+Below are some steps you can take to troubleshoot common issues with Cypress.
 
-## Clear Cypress cache
+### Clear Cypress cache
 
 If you're having an issue during installation of Cypress, try removing the
 contents of the Cypress cache.
@@ -97,104 +74,7 @@ running Cypress again.
 
 <CypressInstallCommands />
 
-## Launching browsers
-
-Cypress attempts to
-[automatically find installed Chrome versions for you](/app/references/launching-browsers).
-However, probing for browsers across different environments can be error-prone.
-If Cypress cannot find a browser but you know you have it installed, there are
-ways to ensure that Cypress can "see" it.
-
-:::info
-
-<strong>Using the `--browser` command line argument</strong>
-
-You can also supply the `--browser` command line argument to launch a browser
-from a known filesystem path to bypass browser auto detection.
-[See 'Launching Browsers' for more information](/app/references/launching-browsers#Launching-by-a-path)
-
-:::
-
-You can see the full list of found browsers and their properties within the
-[resolved configuration](/app/references/configuration#Resolved-Configuration)
-in the **Settings** tab of Cypress.
-
-Another way to log what is found by Cypress is to run Cypress with the
-[DEBUG environment variable](#Print-DEBUG-logs) set to `cypress:launcher:*`. This
-will print information about the found browsers and their properties to the
-terminal.
-
-**Tip:** use the [cypress info](/app/references/command-line#cypress-info)
-command to see all locally detected browsers.
-
-### Mac
-
-On Mac, Cypress attempts to find installed browsers by their bundle identifier.
-If this does not succeed, it will fall back to the Linux browser detection
-method.
-
-| Browser Name    | Expected Bundle Identifier | Expected Executable                   |
-| --------------- | -------------------------- | ------------------------------------- |
-| `chrome`        | `com.google.Chrome`        | `Contents/MacOS/Google Chrome`        |
-| `chromium`      | `org.chromium.Chromium`    | `Contents/MacOS/Chromium`             |
-| `chrome:canary` | `com.google.Chrome.canary` | `Contents/MacOS/Google Chrome Canary` |
-
-For the current list, see
-[packages/launcher](https://github.com/cypress-io/cypress/blob/develop/packages/launcher/lib/darwin/index.ts)
-files.
-
-### Linux
-
-On Linux, Cypress scans your `PATH` for a number of different binary names. If
-the browser you are trying to use does not exist under one of the expected
-binary names, Cypress will not be able to find it.
-
-| Browser Name    | Expected Binary Name(s)                              |
-| --------------- | ---------------------------------------------------- |
-| `chrome`        | `google-chrome`, `chrome`, or `google-chrome-stable` |
-| `chromium`      | `chromium-browser` or `chromium`                     |
-| `chrome:canary` | `google-chrome-canary`                               |
-
-These binary names should work for most Linux distributions. If your
-distribution packages browsers under a different binary name, you can add a
-symlink using the expected binary name so that Cypress can detect it.
-
-For example, if your distribution packages Google Chrome as `chrome`, you could
-add a symlink to `google-chrome` like this:
-
-```shell
-sudo ln `which chrome` /usr/local/bin/google-chrome
-```
-
-### Windows
-
-On Windows, Cypress scans the following locations to try to find each browser:
-
-| Browser Name    | Expected Path                                                 |
-| --------------- | ------------------------------------------------------------- |
-| `chrome`        | `C:/Program Files (x86)/Google/Chrome/Application/chrome.exe` |
-| `chromium`      | `C:/Program Files (x86)/Google/chrome-win32/chrome.exe`       |
-| `chrome:canary` | `%APPDATA%/../Local/Google/Chrome SxS/Application/chrome.exe` |
-
-For the current list, see
-[packages/launcher](https://github.com/cypress-io/cypress/blob/develop/packages/launcher/lib/windows/index.ts)
-files.
-
-To make a browser installed at a different path be auto-detected, create a
-symbolic link using `mklink` in the location that Cypress expects to find your
-browser.
-
-[Read more about creating symbolic links on Windows](https://www.howtogeek.com/howto/16226/complete-guide-to-symbolic-links-symlinks-on-windows-or-linux/)
-
-Occasionally Cypress will have issues detecting the type of browser in Windows
-environments. To manually detect the browser type, append the browser type to
-the end of the path:
-
-```shell
-cypress open --browser C:/User/Application/browser.exe:chrome
-```
-
-## Allow the Cypress Chrome extension
+### Allow the Cypress Chrome extension
 
 Cypress utilizes a Chrome extension in order to run properly. If you or your
 company block specific Chrome extensions, this may cause problems with running
@@ -207,7 +87,7 @@ caljajdfkjjjdehjdoimjkkakekklcck
 
 You can check the current company policies for your Chrome installation by typing `chrome://policy` into the address bar and pressing Enter.
 
-## Allow Cypress URLs on VPNs
+### Allow Cypress URLs on VPNs
 
 To send the data and results of your tests to
 [Cypress Cloud](https://on.cypress.io/cloud-introduction), Cypress needs free
@@ -215,13 +95,13 @@ access to some URLs.
 
 <UrlAllowList />
 
-## Clear App Data
+### Clear App Data
 
 Cypress maintains some local application data in order to save user preferences
 and more quickly start up. Sometimes this data can become corrupted. You may fix
 an issue you have by clearing this app data.
 
-### To clear App Data
+#### To clear App Data
 
 1. Open Cypress via `cypress open`
 2. Go to `Developer Tools` -> `View App Data`
@@ -243,7 +123,7 @@ an issue you have by clearing this app data.
 4. Delete everything in the `cy` folder
 5. Close Cypress and open it up again
 
-## Print DEBUG logs
+### Print DEBUG logs
 
 Cypress utilizes the [debug](https://github.com/debug-js/debug) module.
 That means you can receive helpful debugging output by running Cypress with a system-level environment variable `DEBUG` set to `cypress:*` prior to running `cypress run` or `cypress open`.
@@ -316,7 +196,7 @@ terminal in administrative mode or review your permission settings.
 
 [How to run Cypress CLI commands](/app/references/command-line#How-to-run-commands) provides background information on running Cypress from the command line and includes a reference of additional command line options.
 
-### Detailed Logs
+#### Detailed Logs
 
 There are several levels of `DEBUG` messages
 
@@ -331,7 +211,7 @@ DEBUG=cypress:server:project ...
 
 This allows you to isolate the problem a little better
 
-### Log sources
+#### Log sources
 
 Cypress is built from multiple packages, each responsible for its own logging:
 server, reporter, driver, command line, etc. Each package writes debug logs
@@ -416,7 +296,7 @@ DEBUG=cypress:net-stubbing:server:intercept-request \
   NODE_DEBUG=request npx cypress run
 ```
 
-### Debug logs in the browser
+#### Debug logs in the browser
 
 If the problem is seen during `cypress open` you can print debug logs in the
 browser too. Open the browser's Developer Tools and set a `localStorage`
@@ -435,7 +315,7 @@ that run in the browser, as you can see below.
 
 <DocsImage src="/img/api/debug/debug-driver.jpg" alt="Debug logs in browser" />
 
-## Log memory and CPU usage
+### Log memory and CPU usage
 
 You can tell Cypress to log out a summary of the memory and CPU usage of itself
 and any subprocesses at a regular interval by enabling the
@@ -463,7 +343,7 @@ in milliseconds.
 You can also obtain more detailed per-process information by enabling the
 verbose `cypress-verbose:server:util:process_profiler` debug stream.
 
-## Disable the Command Log
+### Disable the Command Log
 
 In some cases the [Command Log](/app/core-concepts/open-mode#Command-Log),
 responsible for displaying test commands, assertions, and statuses in the
@@ -490,19 +370,112 @@ and statuses as the test runs.
 **Note:** With this variable set, screenshots and videos will not include the
 Command Log.
 
-## Additional information
 
-### Write command log to the terminal
+### Download specific Chrome version
 
-You can include the plugin
-[cypress-failed-log](https://github.com/bahmutov/cypress-failed-log) in your
-tests. This plugin writes the list of Cypress commands to the terminal as well
-as a JSON file if a test fails.
+The Chrome browser is evergreen - meaning it will automatically update itself,
+sometimes causing a breaking change in your automated tests.
+You can use the information in [Download Chromium](https://on.cypress.io/chromium-downloads) to download a
+specific released version of Chromium for every platform.
 
-<DocsImage
-  src="/img/api/debug/failed-log.png"
-  alt="cypress-failed-log terminal output"
-/>
+## Specific Issues
+
+### Launching browsers
+
+Cypress attempts to
+[automatically find installed Chrome versions for you](/app/references/launching-browsers).
+However, probing for browsers across different environments can be error-prone.
+If Cypress cannot find a browser but you know you have it installed, there are
+ways to ensure that Cypress can "see" it.
+
+:::info
+
+<strong>Using the `--browser` command line argument</strong>
+
+You can also supply the `--browser` command line argument to launch a browser
+from a known filesystem path to bypass browser auto detection.
+[See 'Launching Browsers' for more information](/app/references/launching-browsers#Launching-by-a-path)
+
+:::
+
+You can see the full list of found browsers and their properties within the
+[resolved configuration](/app/references/configuration#Resolved-Configuration)
+in the **Settings** tab of Cypress.
+
+Another way to log what is found by Cypress is to run Cypress with the
+[DEBUG environment variable](#Print-DEBUG-logs) set to `cypress:launcher:*`. This
+will print information about the found browsers and their properties to the
+terminal.
+
+**Tip:** use the [cypress info](/app/references/command-line#cypress-info)
+command to see all locally detected browsers.
+
+#### Mac
+
+On Mac, Cypress attempts to find installed browsers by their bundle identifier.
+If this does not succeed, it will fall back to the Linux browser detection
+method.
+
+| Browser Name    | Expected Bundle Identifier | Expected Executable                   |
+| --------------- | -------------------------- | ------------------------------------- |
+| `chrome`        | `com.google.Chrome`        | `Contents/MacOS/Google Chrome`        |
+| `chromium`      | `org.chromium.Chromium`    | `Contents/MacOS/Chromium`             |
+| `chrome:canary` | `com.google.Chrome.canary` | `Contents/MacOS/Google Chrome Canary` |
+
+For the current list, see
+[packages/launcher](https://github.com/cypress-io/cypress/blob/develop/packages/launcher/lib/darwin/index.ts)
+files.
+
+#### Linux
+
+On Linux, Cypress scans your `PATH` for a number of different binary names. If
+the browser you are trying to use does not exist under one of the expected
+binary names, Cypress will not be able to find it.
+
+| Browser Name    | Expected Binary Name(s)                              |
+| --------------- | ---------------------------------------------------- |
+| `chrome`        | `google-chrome`, `chrome`, or `google-chrome-stable` |
+| `chromium`      | `chromium-browser` or `chromium`                     |
+| `chrome:canary` | `google-chrome-canary`                               |
+
+These binary names should work for most Linux distributions. If your
+distribution packages browsers under a different binary name, you can add a
+symlink using the expected binary name so that Cypress can detect it.
+
+For example, if your distribution packages Google Chrome as `chrome`, you could
+add a symlink to `google-chrome` like this:
+
+```shell
+sudo ln `which chrome` /usr/local/bin/google-chrome
+```
+
+#### Windows
+
+On Windows, Cypress scans the following locations to try to find each browser:
+
+| Browser Name    | Expected Path                                                 |
+| --------------- | ------------------------------------------------------------- |
+| `chrome`        | `C:/Program Files (x86)/Google/Chrome/Application/chrome.exe` |
+| `chromium`      | `C:/Program Files (x86)/Google/chrome-win32/chrome.exe`       |
+| `chrome:canary` | `%APPDATA%/../Local/Google/Chrome SxS/Application/chrome.exe` |
+
+For the current list, see
+[packages/launcher](https://github.com/cypress-io/cypress/blob/develop/packages/launcher/lib/windows/index.ts)
+files.
+
+To make a browser installed at a different path be auto-detected, create a
+symbolic link using `mklink` in the location that Cypress expects to find your
+browser.
+
+[Read more about creating symbolic links on Windows](https://www.howtogeek.com/howto/16226/complete-guide-to-symbolic-links-symlinks-on-windows-or-linux/)
+
+Occasionally Cypress will have issues detecting the type of browser in Windows
+environments. To manually detect the browser type, append the browser type to
+the end of the path:
+
+```shell
+cypress open --browser C:/User/Application/browser.exe:chrome
+```
 
 ## Hacking on Cypress
 

@@ -4,21 +4,23 @@ sidebar_position: 60
 sidebar_label: Flake Management
 ---
 
-By enabling [test retries](/app/guides/test-retries), Cypress Cloud can
-detect, flag, and track flaky tests from your recorded Cypress test runs in your
-CI/CD pipeline.
-
 :::info
 
-<strong>What is a flaky test?</strong>
+##### <Icon name="question-circle" color="#42a1c0" /> What you'll learn
 
-A test is considered to be **flaky** when it can pass and fail across multiple
-retry attempts without any code changes.
-
-For example, a test is executed and fails, then the test is executed again,
-without any change to the code, but this time it passes.
+- How to detect and manage flaky tests in Cypress Cloud
+- How to enable flake detection and alerting
+- The benefits of using flaky test management features
 
 :::
+
+By enabling [test retries](/app/guides/test-retries), Cypress Cloud can
+detect, flag, and track flaky tests from your recorded Cypress test runs in your
+CI/CD pipeline. 
+
+A test is considered to be **flaky** when it can pass and fail across multiple
+retry attempts without any code changes. For example, a test is executed and fails, then the test is executed again,
+without any change to the code, but this time it passes.
 
 :::info
 
@@ -45,17 +47,15 @@ One way to battle flaky tests is to detect and monitor them as they occur in an
 organized and methodical manner such that you can assess their severity to
 assist with prioritizing their fix.
 
-:::caution
-
-<strong>Test Retries & Flake Detection</strong>
+### Enable test retries
 
 Test retries is the _fundamental mechanism_ that enables the detection of flaky
 tests by Cypress Cloud. Therefore, **enabling
 [test retries](/app/guides/test-retries#Configure-Test-Retries) is required**
 to take advantage of any flaky test management feature.
 
+:::caution
 If you want more control over the pass/fail result of any test deemed flaky by test retries, you may want to use [experimental test retries](/app/references/experiments#Experimental-Flake-Detection-Features), which is available as of Cypress `13.4.0`.
-
 :::
 
 ### Flagging Flaky Tests
