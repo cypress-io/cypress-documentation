@@ -1,0 +1,27 @@
+---
+title: 'Uniquely identify test elements | Cypress UI Coverage'
+description: 'Elements are uniquely identified across views and snapshots by their HTML attributes, location, and other signals in the DOM.'
+sidebar_label: Element Identification
+sidebar_position: 20
+---
+
+# Element Identification
+
+<UICovAddon />
+
+Elements are uniquely identified across views and snapshots by their HTML attributes, location, and other signals in the DOM.
+
+It is important for elements to have unique and stable identifiers so that UI Coverage can track and de-duplicate them throughout the many different snapshots captured in your tests.
+
+UI Coverage considers the following attributes to have special significance for the purposes of identification and grouping:
+
+- `data-cy`
+- `data-test`
+- `data-testid`
+- `data-test-id`
+- `data-qa`
+- `row-id`
+- `id`
+- `name`
+
+Element identification can be configured via [attributefilters.md](/ui-coverage/configuration/attributefilters) and [significantattributes.md](/ui-coverage/configuration/significantattributes) configuration.

@@ -5,7 +5,7 @@ export default function ComponentOnlyBadge() {
   return (
     <Badge
       type="hint"
-      path="/guides/core-concepts/testing-types#What-is-Component-Testing"
+      path="/app/core-concepts/testing-types#What-is-Component-Testing"
     >
       Component Only
     </Badge>

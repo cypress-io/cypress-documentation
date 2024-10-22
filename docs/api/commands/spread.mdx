@@ -43,16 +43,16 @@ Pass a function that expands the array into its arguments.
 
 Pass in an options object to change the default behavior of `.spread()`.
 
-| Option    | Default                                                              | Description                                                            |
-| --------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------- |
-| `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.spread()` to resolve before [timing out](#Timeouts) |
+| Option    | Default                                                           | Description                                                            |
+| --------- | ----------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| `timeout` | [`defaultCommandTimeout`](/app/references/configuration#Timeouts) | Time to wait for `.spread()` to resolve before [timing out](#Timeouts) |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
 
 - `.spread()` yields the return value of your callback function.
 - `.spread()` wlll not change the subject if `null` or `undefined` is returned.
 - If the returned values are DOM elements, it is
-  [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried) to
+  [unsafe](/app/core-concepts/retry-ability#Only-queries-are-retried) to
   chain further commands that rely on the subject after `.spread()`.
 
 ## Examples
@@ -84,18 +84,18 @@ cy.getCookies().spread((cookie1, cookie2, cookie3) => {
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
+### Requirements [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
 
 - `.spread()` requires being chained off a previous command.
 - `.spread()` requires being chained off a command that yields an array-like
   structure.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
+### Assertions [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
 
 - `.spread()` will only run assertions you have chained once, and will not
-  [retry](/guides/core-concepts/retry-ability).
+  [retry](/app/core-concepts/retry-ability).
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
+### Timeouts [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
 
 - `.spread()` can time out waiting for a promise you've returned to resolve.
 
@@ -105,9 +105,9 @@ cy.getCookies().spread((cookie1, cookie2, cookie3) => {
 
 ## History
 
-| Version                                     | Changes                   |
-| ------------------------------------------- | ------------------------- |
-| [0.5.9](/guides/references/changelog#0-5-9) | `.spread()` command added |
+| Version                                  | Changes                   |
+| ---------------------------------------- | ------------------------- |
+| [0.5.9](/app/references/changelog#0-5-9) | `.spread()` command added |
 
 ## See also
 

@@ -1,0 +1,129 @@
+---
+title: 'Elements | Cypress UI Coverage'
+description: 'The `elements` configuration allows you to uniquely identify elements in UI Coverage using custom logic.'
+sidebar_label: elements
+---
+
+# elements
+
+<UICovAddon />
+
+UI Coverage has logic that automatically [identifies](/ui-coverage/core-concepts/element-identification) elements based on their appearance and structure in the DOM.
+
+Elements may have different attributes and/or attribute values across different snapshots, which can cause the same element to be identified as multiple different elements by UI Coverage. The `elements` configuration property allows users to specify selectors to uniquely identify elements, even when they lack stable identifiers across snapshots.
+
+For every element considered by UI Coverage, the first `elements` rule for which the `selector` property matches the element is used to identify the element. Elements that do not match any rules are identified by the default UI Coverage element identification rules.
+
+If multiple elements on the same snapshot match the same rule, then that rule cannot uniquely identify both of them. In this case, the rule is not used to identify either element, and the subsequent rules, and then the default rules, are used.
+
+## Syntax
+
+```json
+{
+  "uiCoverage": {
+    "elements": [
+      {
+        "selector": string,
+        "name": string
+      }
+    ]
+  }
+}
+```
+
+#### elements
+
+_Optional._ Object\[]
+
+An array of objects used to specify selectors in order to uniquely identify elements for UI Coverage. _**Each object can have the following properties:**_
+
+### selector
+
+_Required._ String (CSS Selector)
+
+Used to match and identify elements.
+
+#### name
+
+_Optional._ String
+
+A human-readable name for the element, shown in the elements list.
+
+## Examples
+
+### Identifies elements by selector
+
+#### Config
+
+```json
+{
+  "uiCoverage": {
+    "elements": [
+      {
+        "selector": "#my-form [id^='dropdown']"
+      }
+    ]
+  }
+}
+```
+
+#### HTML
+
+```xml
+<!-- Snapshot 1 -->
+<body>
+  <form id="my-form">
+    <input id="dropdown-1"></input>
+  </form>
+</body>
+
+<!-- Snapshot 2 -->
+<body>
+  <form id="my-form">
+    <input id="dropdown-2"></input>
+  </form>
+</body>
+```
+
+#### Elements shown in UI
+
+```
+#my-form [id^="dropdown"]
+```
+
+---
+
+### Does not identify elements when multiple match the selector
+
+#### Config
+
+```json
+{
+  "uiCoverage": {
+    "elements": [
+      {
+        "selector": "#my-form [id^='dropdown']"
+      }
+    ]
+  }
+}
+```
+
+#### HTML
+
+```xml
+<!-- Snapshot 1 -->
+<body>
+  <form id="my-form">
+    <input id="dropdown-1"></input>
+    <input id="dropdown-2"></input>
+  </form>
+</body>
+```
+
+#### Elements shown in UI
+
+```
+#my-form #dropdown-1
+#my-form #dropdown-2
+```

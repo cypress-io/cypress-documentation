@@ -1,0 +1,44 @@
+---
+title: 'Inspecting accessibility violation details | Cypress Documentation'
+description: 'Learn how to inspect the details of an accessibility violation and its severity in Cypress.'
+sidebar_label: Inspecting violation details
+sidebar_position: 20
+---
+
+# Inspecting violation details
+
+<AccessibilityAddon />
+
+After clicking through to specific Rule of View from a [Run-level report](/accessibility/core-concepts/run-level-reports), you will see the Violation Detail view.
+
+<DocsImage
+  src="/img/accessibility/core-concepts/cypress-accessibility-issue-detail-view.png"
+  alt="The detail view of an accessibility issue, containing a Rules area and s Snapshot area for a Buttons must have discernible text violation in the Cypress Realworld App project. Each section is described in detail later in the page."
+/>
+
+This page breaks the report down into two sections.
+
+### Rules
+
+On the left hand side is the main body of the report that lists all the Rules that match the current filters for this View - or for All Views, if no specific View was selected.&#x20;
+
+#### Rule details
+
+Each Rule can be expanded to see its related Elements. The expanded rule also has extra description text and a "Learn more" link that goes to Deque University to explain more about the rule itself, where it comes from, whose experience is affected by it, how to fix issues related to the rule.
+
+#### Element details
+
+Each element can be clicked to pin an example of that element in the UI and reveal more details about how to address the accessibility issues. There are two buttons associated with each element:
+
+- Copy selector
+  - This is a quick way to grab the CSS selector that uniquely identifies this element in the page or component
+- Print to console
+  - This will log a reference to the element in the JavaScript console and is the fastest way to debug something in devtools. In Chrome-base browsers for example, you can open your console, right click the logged element, and choose "Reveal in elements panel" to get to the exact right part of the live DOM in two clicks, every time, and debug from there.
+
+### Snapshots
+
+Note: these are not images or screenshots from the tests. They are fully hydrated HTML and CSS snapshots of your application. This makes it easy to see what each violation represents in context, as well as inspect the entire DOM, make adjustments and see how things appear in the browser's accessibility tree. This makes a big difference in understanding and debugging issues, because you don't have to run the application locally to reproduce the state, and with access to the full DOM you can understand even complex issues and idenfity solutions.
+
+This area also has the Test Replay button to provide access to any tests where this snapshot appeared, as well as the specific URL of the snapshot displayed at the bottom of the screen.
+
+It's also possible to cycle through the available snapshots to see all the states of the application that were captured, but this is usually not necessary. Think of snapshots more as examples and evidence relate to elements that are listed on the left hand side of the screen. The most useful way to go through the report is this way.

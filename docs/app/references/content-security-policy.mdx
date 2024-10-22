@@ -1,0 +1,45 @@
+---
+title: Content Security Policy
+e2eSpecific: true
+---
+
+:::info
+
+##### <Icon name="question-circle" color="#42a1c0" /> What you'll learn
+
+- How Cypress handles Content Security Policy (CSP)
+- How to configure Cypress to work with your application's CSP
+
+:::
+
+Content Security Policy (CSP) is a browser security feature that allows you to
+restrict the resources that can be loaded into your application. This can be
+problematic for Cypress, because it needs to inject JavaScript into your
+application in order to run tests and interact with the DOM. This page describes
+how Cypress handles CSP and how to configure it to work with your application.
+
+There are two ways to implement CSP:
+
+- [Meta tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta#http-equiv)
+- [HTTP header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy)
+
+The `<meta>` tag implementation is fully supported by Cypress without any
+configuration required. This is because Cypress loads the necessary `<script>`
+tags into your application before any `<meta>` tag is parsed. This prevents any
+CSP directives from being applied to the script loaded by Cypress.
+
+The second implementation requires you to configure Cypress to allow the headers
+to be sent to your application. By default, Cypress will remove any CSP headers
+from the response before it is sent to the browser. This is done to prevent
+Cypress from being blocked by the browser's CSP implementation.
+
+For most application tests, this should not cause any issues. However, if you
+are testing your application's CSP implementation, you will need to configure
+Cypress to allow the headers to be sent to the browser. You can do this by
+setting the
+[`experimentalCspAllowList`](/app/references/experiments#Experimental-CSP-Allow-List)
+configuration option.
+
+For more information on CSP, see the
+[Content Security Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP)
+documentation on MDN.

@@ -21,7 +21,7 @@ important rules:
 With these rules, queries are simple to write and extremely powerful. They are
 the building blocks on which Cypress' API is built. To learn more about the
 differences between commands and queries, see our
-[guide on Retry-ability](/guides/core-concepts/retry-ability#Only-queries-are-retried).
+[guide on Retry-ability](/app/core-concepts/retry-ability#Only-queries-are-retried).
 
 :::info
 
@@ -38,7 +38,7 @@ be asynchronous, or if it can be called only once.
 
 We recommend defining queries in your `cypress/support/commands.js` file, since
 it is loaded before any test files are evaluated via an import statement in the
-[supportFile](/guides/core-concepts/writing-and-organizing-tests#Support-file).
+[supportFile](/app/core-concepts/writing-and-organizing-tests#Support-file).
 
 :::
 
@@ -186,7 +186,7 @@ When defining `focused2()`, it's important to note that we used `function`,
 rather than an arrow function. This gives us access to `this`, where we can set
 the `timeout`. If you don't call `this.set('timeout')`, or call it with `null`
 or `undefined`, your query will use the
-[default timeout](/guides/core-concepts/introduction-to-cypress#Timeouts).
+[default timeout](/app/core-concepts/introduction-to-cypress#Timeouts).
 
 ```
   return () => { ... }
@@ -261,7 +261,7 @@ If `log` is defined (ie, the user did not pass in `{ log: false }`), and this
 query is the current command, we update the log message with new information,
 such as `$el` (the subject we're about to yield from this query), and the
 `consoleProps`, a function that
-[returns console output](/guides/core-concepts/cypress-app#Console-output) for
+[returns console output](/app/core-concepts/open-mode#Console-output) for
 the user.
 
 ```javascript
@@ -426,14 +426,16 @@ Try not to overcomplicate things and create too many abstractions.
 
 ## History
 
-| Version                                       | Changes                   |
-| --------------------------------------------- | ------------------------- |
-| [12.6.0](/guides/references/changelog#12-6-0) | `overrideQuery` API added |
-| [12.0.0](/guides/references/changelog#12-0-0) | `addQuery` API added      |
+| Version                                    | Changes                   |
+| ------------------------------------------ | ------------------------- |
+| [12.6.0](/app/references/changelog#12-6-0) | `overrideQuery` API added |
+| [12.0.0](/app/references/changelog#12-0-0) | `addQuery` API added      |
 
 ## See also
 
 - See how to add
-  [TypeScript support for custom commands](/guides/tooling/typescript-support#Types-for-Custom-Commands)
-- <a href="/plugins#custom-commands">Plugins using custom commands</a>
+  [TypeScript support for custom commands](/app/tooling/typescript-support#Types-for-Custom-Commands)
+- <a href="/app/plugins/plugins-list#custom-commands">
+    Plugins using custom commands
+  </a>
 - [Cypress.log()](/api/cypress-api/cypress-log)

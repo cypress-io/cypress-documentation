@@ -1,0 +1,32 @@
+---
+title: 'Axe Core® configuration | Cypress Accessibility'
+description: 'Configuration for Axe-Core® rules can be configured.'
+sidebar_label: 'Axe Core® configuration'
+---
+
+# Axe Core® configuration
+
+<AccessibilityAddon />
+
+Configuration for Axe-Core® rules is available through your Account Executive. We we are happy to have a call with you to dial in your report config to make sure you are getting the most useful reports possible, and we find this onboarding very effective.
+
+In most cases, configuration of these rules as they run in Cypress Cloud isn't needed, because your implementation of any policies about what should "fail a build" is handled using the [Accessibility Results API](/accessibility/results-api), where you have full control over how to parse the results and what rules need to be reacted to. Keeping the results in Cypress Cloud broad helps you to still be able to see and understand all of the accessibility information, even if only a subset of the results would be considered blocking.
+
+**Note.** Certain Axe Core® rules are off by default. Here are the rules that are currently either ignored by configuration, or for which results cannot be detected.
+
+- `Elements must meet minimum color contrast ratio thresholds`
+  - This is off by default. This is both the slowest rule in the Axe Core® ruleset, and the one that can have the highest percentage of false positives or incomplete checks.
+  - It does work perfectly in many projects, so we are happy to turn this on for you if requested, so that you can see the results.
+- `<video> or <audio> elements must not play automatically`
+  - Ignored because Test Replay does not yet capture the metadata to check this
+- `Delayed refresh under 20 hours must not be used`
+  - Ignored because Test Replay does not collect the metadata for this
+
+## Component Testing
+
+Cypress Accessibility works great with component testing. In addition the the rules that are off by default, "page-level" rules do not run for component tests, since a component is usually a fragment mounted in an empty page that would not be expected to have things like headings or a `main` element.
+
+## Updates to the Axe Core® library
+
+Updates to the Axe Core® library are released several times each year. While Cypress does not commit to updating our internal Axe Core® version within a specific timeframe, we will always wait at least 30 days before making an update.
+Since some updates introduce new rules or address bugs that change how issues are detected, this buffer is intended to give you time to make changes in your use of our [Results API](/accessibility/results-api) if needed. Axe Core® releases can be tracked [in GitHub](https://github.com/dequelabs/axe-core/releases).

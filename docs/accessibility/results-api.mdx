@@ -1,0 +1,381 @@
+---
+title: 'API of results | Cypress Accessibility'
+description: 'Programmatically fetch Accessibility results in a CI environment and fail your pipeline if your standards are not met.'
+sidebar_label: Results API
+sidebar_position: 100
+---
+
+# Results API
+
+<AccessibilityAddon />
+
+The `@cypress/extract-cloud-results` module provides the `getAccessibilityResults` utility which enables you to programmatically fetch your run's Accessibility results in a CI environment. It determines the Cypress run created for the given CI workflow and will return the Accessibility results associated with that run. The results will be returned once the Cypress run has finished and the Accessibility report has been processed.
+
+This allows you to review the results within CI and to determine if the results are acceptable or need to be addressed before code changes can merge.
+
+## Supported CI Providers
+
+Fetching Accessibility results for a run supports fetching results for the following CI providers. Please see the docs below for information on general setup.
+
+- [Azure](/app/continuous-integration/overview#Azure-Pipelines) (requires Cypress v13.13.1)
+- [CircleCI ](/app/continuous-integration/circleci)
+- [GitHub Actions](/app/continuous-integration/github-actions)
+- [GitLab](/app/continuous-integration/gitlab-ci)
+- [Jenkins](/app/continuous-integration/overview#Jenkins)
+
+Please reach out to Cypress Support to request support for a different provider.
+
+## Installation
+
+Install the `@cypress/extract-cloud-results` module in your install step in CI.
+
+```shell
+npm install --force https://cdn.cypress.io/extract-cloud-results/v1/extract-cloud-results.tgz
+```
+
+:::caution
+
+Do not check this module in as a dependency. You should install it separately outside of your normal module installation. Use `--force` to get the latest version.
+
+If you check this in as a dependency, your installation will fail when we update the package.
+
+:::
+
+## Usage
+
+### **1. Get the Results**
+
+Write a script using the `getAccessibilityResults` utility to retrieve the results and perform one or more assertions to verify if the changes are acceptable. This script will be executed in CI.
+
+The Cypress App [repository](https://github.com/cypress-io/cypress) uses the Results API to ensure no new violations have been introduced. You can reference [this script](https://github.com/cypress-io/cypress/blob/develop/scripts/verify-accessibility-results.js) as a real example.
+
+```javascript title="scripts/verifyAccessibilityResults.js"
+const { getAccessibilityResults } = require('@cypress/extract-cloud-results')
+
+getAccessibilityResults({
+  projectId: '...', // optional if set from env
+  recordKey: '...', // optional if set from env
+  runTags: [process.env.RUN_TAGS], // required if recording multiple runs
+}).then((results) => {
+  const { runNumber, accessibilityReportUrl, summary, rules } = results
+  const { total } = summary.violationCounts
+
+  console
+    .log(
+      `Received ${summary.isPartialReport ? 'partial' : ''} results for run #${runNumber}.`
+    )
+    .console.log(`See full report at ${accessibilityReportUrl}.`)
+
+  // write your logic to conditionally fail based on the results
+  if (total === 0) {
+    console.log('No Accessibility violations detected!')
+    return
+  }
+
+  const { critical, serious, moderate, minor } = summary.violationCounts
+
+  console.log(`${total} Accessibility violations were detected:`)
+  console.log(`  - ${critical} critical`)
+  console.log(`  - ${serious} serious`)
+  console.log(`  - ${moderate} moderate`)
+  console.log(`  - ${minor} minor.`)
+
+  const newRuleViolations = rules.filter((rule) => {
+    return !rulesWithExistingViolations.includes(rule.name)
+  })
+
+  if (newRuleViolations.length > 0) {
+    console.error(
+      'The following rules were violated that were previously passing:'
+    )
+    console.error(newRuleViolations)
+    throw new Error(
+      `${newRuleViolations.length} rule regressions were introduced and must be fixed.`
+    )
+  }
+
+  if (total < rulesWithExistingViolations.length) {
+    console.warn(
+      `It seems you have resolved ${rulesWithExistingViolations.length - total} rule(s). Remove them from the list of problematic rules so regressions are not introduced.`
+    )
+  }
+
+  console.log('No new Accessibility violations detected!')
+
+  /**
+   * The list of rules that currently have 1+ elements that have been flagged with
+   * violations within the Cypress Accessibility report that need to be addressed.
+   *
+   * Once the violation is fixed in the Accessibility report,
+   * the fixed rule should be removed from this list.
+   *
+   * View the Accessibility report for the Cypress run in the Cloud
+   * for more details on how to address these failures.
+   */
+  const rulesWithExistingViolations = [
+    'aria-required-children',
+    'empty-heading',
+    'aria-dialog-name',
+    'link-in-text-block',
+    'list',
+  ]
+})
+```
+
+#### `getAccessibilityResults` Arguments
+
+`getAccessibilityResults` uses the following attributes to identify the Cypress run and return the Accessibility results:
+
+```javascript
+getAccessibilityResults({
+  // The Cypress project ID.
+  // Optional if the CYPRESS_PROJECT_ID env is set
+  // Can be explicitly passed to override the env var
+  projectId: string
+
+  // The project's record key.
+  // Optional if the CYPRESS_RECORD_KEY env is set
+  // Can be explicitly passed to override the env var
+  recordKey: string
+
+  // The run tags associated with the run.
+  // Required IF you are recording multiple Cypress runs from a single CI build.
+  // Pass the run tags you used when recording in each run
+  // See below for more information
+  runTags: string[]
+})
+```
+
+#### Result Types
+
+The Accessibility results for the run are returned as an object containing the following data:
+
+```javascript
+{
+  // The run number of the identified build.
+  runNumber: number
+
+  // The run url for the identified build.
+  runUrl: 'https://cloud.cypress.io/projects/:project_id/runs/:run_number'
+
+  // The status of the identified build.
+  runStatus: 'passed' | 'failed' | 'errored' | 'timedOut' | 'cancelled' | 'noTests'
+
+   // The url that deep links into the summarized Accessibility report for the identified build.
+  accessibilityReportUrl: 'https://cloud.cypress.io/[...]'
+
+  // The axe-core library version used when generating the Accessibility report.
+  // See https://github.com/dequelabs/axe-core.
+  axeVersion: '4.9.1'
+
+  summary: {
+    // Indicates whether a complete Accessibility report was generated.
+    // For example, if a run was cancelled and the report expected to run
+    // for 20 specs, but only 10 ran, this would result in a partial report.
+    isPartialReport: boolean
+
+    // The total detected violations and the breakdown by rule severity.
+    violationCounts: {
+      // The count of unique rules that detected a violation.
+      total: number,
+      // The count of unique critical rules that detected a violation.
+      critical: number,
+      // The count of unique serious rules that detected a violation.
+      serious: number,
+      // The count of unique moderate rules that detected a violation.
+      moderate: number,
+      // The count of unique minor rules that detected a violation.
+      minor: number,
+    },
+  }
+
+  // The list of violated rules.
+  rules: [{
+    // The name of the rule. See https://github.com/dequelabs/axe-core/blob/develop/doc/rule-descriptions.md.
+    name: string
+    // The likely impact the rule has on a user with a disability.
+    severity: 'critical' | 'serious' | 'moderate' | 'minor'
+    // The status of the rule for the run.
+    status: 'violation'
+    // The url that deep links the report for this specific rule violation.
+    accessibilityReportUrl: 'https://cloud.cypress.io/[...]'
+  }]
+}
+```
+
+### **2. Add to CI Workflow**
+
+In your CI workflow that runs your Cypress tests,
+
+1. Update your install job to install the `@cypress/extract-cloud-results` module.
+2. Pass in the necessary arguments to `getAccessibilityResults`.
+3. Add a new step to the job that runs your Cypress tests to verify the Accessibility results.
+
+:::info
+
+If you record multiple runs in a single CI build, you must record these runs using the `--tag` parameter and then call `getAccessibilityResults`with the `runTags` argument for each run.&#x20;
+
+This is necessary to identify each unique run and return a corresponding set of results. The tags are how each run is uniquely identified.
+
+**Example**
+
+- Let's imagine that within a single CI build you call `cypress run --record` multiple times because you're running one set of tests against a `staging` environment, followed by a `production` environment.
+- In this scenario, you pass a different `--tag` to each cypress run
+  - `cypress run --record --tag staging`
+  - `cypress run --record --tag production`
+- When calling `getAccessibilityResults` you would then pass these same tags to get the unique set of results for each run
+  - `getAccessibilityResults({ runTags: ['staging']})`
+  - `getAccessibilityResults({ runTags: ['production']})`
+
+:::
+
+#### Example Job Workflow Update:
+
+<Tabs groupId="a11y-results-api">
+<TabItem value="GitHub Actions" active>
+
+```diff title="test_cypress.yaml"
+name: My Workflow
+on: push
+
+env:
+  CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+
+jobs:
+  run-cypress:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: install
+        run: npm install
+      - name: Run
+        run: npx cypress run --record
++     - name: Verify Accessibility Results
++       run: |
++          npm install --force https://cdn.cypress.io/extract-cloud-results/v1/extract-cloud-results.tgz
++          node ./scripts/verifyAccessibilityResults.js
+```
+
+</TabItem>
+
+<TabItem value="GitLab">
+
+```diff title=".git-ci.yml"
+name: Run Cypress Tests
+
+image: node:latest
+
+stages:
+  - test
+
+run-cypress:
+  stage: test
+  secrets:
+    CYPRESS_RECORD_KEY:
+      vault: vault/cypressRecordKey
+  script:
+    - npm install
+    - npx cypress run --record
++   - npm install --force https://cdn.cypress.io/extract-cloud-results/v1/extract-cloud-results.tgz
++   - node ./scripts/verifyAccessibilityResults.js
+```
+
+</TabItem>
+
+<TabItem value="Jenkins">
+
+```diff
+pipeline {
+  agent {
+    docker {
+      image 'cypress/base:latest'
+    }
+  }
+
+  environment {
+    CYPRESS_PROJECT_ID: 'xxxx'
+    CYPRESS_RECORD_KEY = credentials('cypress-record-key')
+  }
+
+  stages {
+    stage('build and test') {
+      steps {
+        sh 'npm ci'
+        sh 'npx cypress run --record'
+      }
+    }
+
++   stage('Verify Accessibility Results') {
++     steps {
++       sh 'npm install --force https://cdn.cypress.io/extract-cloud-results/v1/extract-cloud-results.tgz'
++       sh 'node ./scripts/verifyAccessibilityResults.js'
++     }
++   }
+  }
+}
+```
+
+</TabItem>
+
+<TabItem value="Azure">
+
+```diff
+jobs:
+  - job: run_tests
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+      - task: NodeTool@0
+        inputs:
+          versionSpec: '20.x'
+          displayName: 'Install Node.js'
+
+      - script: npm i
+        displayName: 'Install npm dependencies'
+
+      - script: npx cypress run --record
+        displayName: 'Run Cypress tests'
+        env:
+          # avoid warnings about terminal
+          TERM: xterm
+          CYPRESS_RECORD_KEY: $(CYPRESS_RECORD_KEY)
+
++     - script: |
++           npm install --force https://cdn.cypress.io/extract-cloud-results/v1/extract-cloud-results.tgz
++           node ./scripts/verifyAccessibilityResults.js
++       displayName: 'Verify Accessibility Results'
++       env:
++         CYPRESS_PROJECT_ID: $(CYPRESS_PROJECT_ID)
++         CYPRESS_RECORD_KEY: $(CYPRESS_RECORD_KEY)
+```
+
+</TabItem>
+
+<TabItem value="CircleCI">
+
+```diff
+version: 2.1
+
+jobs:
+  linux-test:
+    docker:
+      - image: cypress/base:latest
+
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - run: npm install
+      - run: npx run cypress:run --record
++     - run: npm install --force https://cdn.cypress.io/extract-cloud-results/v1/extract-cloud-results.tgz
++     - run: node ./scripts/verifyAccessibilityResults.js
+
+workflows:
+  version: 2
+  tests:
+    jobs:
+      - run-cypress
+```
+
+</TabItem>
+</Tabs>

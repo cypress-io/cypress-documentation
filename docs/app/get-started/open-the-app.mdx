@@ -1,0 +1,133 @@
+---
+title: 'Open the Cypress app: Step-by-Step Guide'
+description: 'Open the app in Cypress to visually see, review, and debug end-to-end and component tests.'
+sidebar_label: Open the App
+sidebar_position: 40
+---
+
+# Open the App
+
+:::info
+
+##### <Icon name="question-circle" color="#42a1c0" /> What you'll learn
+
+- How to open the Cypress app
+- How to add npm scripts for opening Cypress
+- How to choose a testing type, set up configuration, and launch a browser in Cypress
+  :::
+
+## `cypress open`
+
+You can open Cypress from your **project root** using one of the following commands,
+depending on the package manager (npm, Yarn or pnpm) you are using:
+
+<CypressOpenCommands />
+
+After a moment, the Cypress Launchpad will open.
+
+### Adding npm Scripts
+
+While there's nothing wrong with writing out the full path to the Cypress
+executable each time, it's much easier and clearer to add Cypress commands to
+the `scripts` field in your `package.json` file.
+
+```javascript
+{
+  "scripts": {
+    "cy:open": "cypress open"
+  }
+}
+```
+
+Now you can invoke the command from your project root like so:
+
+```shell
+npm run cy:open
+```
+
+...and Cypress will open right up for you.
+
+:::caution
+
+<strong>Best Practice</strong>
+
+Don't use `cypress` as the exact name of a script, especially if you use Yarn as package manager.
+When running commands on the Cypress binary (e.g. `yarn cypress verify`), Yarn will reference the
+script of the same name instead and [Cypress CLI commands](/app/references/command-line) may not work as expected.
+Use instead a descriptive and non-ambiguous script name such as `cy:open` or `cy:run`.
+
+:::
+
+### CLI tools
+
+By installing Cypress through `npm` you also get access to many other CLI
+commands. On top of that, Cypress is also a fully baked JavaScript library you
+can import into your Node scripts.
+
+You can [read more about the CLI here](/app/references/command-line).
+
+## The Launchpad
+
+<DocsImage
+  src="/img/app/core-concepts/open-mode/the-launchpad.png"
+  alt="The Launchpad window"
+/>
+
+On opening Cypress, your testing journey begins with the Launchpad. Its job is
+to guide you through the decisions and configuration tasks you need to complete
+before you start writing your first test.
+
+If this is your first time using Cypress it will take you through the following
+steps in order.
+
+### Choosing a Testing Type
+
+<DocsImage
+  src="/img/app/get-started/open-the-app/choose-testing-type.png"
+  alt="The Launchpad test type selector"
+/>
+
+The Launchpad presents you with your biggest decision first: What type of
+testing shall I do?
+[E2E Testing](/app/core-concepts/testing-types#What-is-E2E-Testing), where I
+run my whole application and visit pages to test them? Or
+[Component Testing](/app/core-concepts/testing-types#What-is-Component-Testing),
+where I mount individual components of my app and test them in isolation?
+
+For more background on this critical decision, read
+[Testing Types](/app/core-concepts/testing-types). Alternatively, if you're
+not sure which type you want and just want to get on with your testing journey,
+just choose **E2E** for now - you can always change this later!
+
+### Quick Configuration
+
+<DocsImage
+  src="/img/app/get-started/open-the-app/scaffolded-files.png"
+  alt="The Launchpad scaffolded files list"
+/>
+
+On the next step, the Launchpad will scaffold out a set of configuration files
+appropriate to your chosen testing type, and the changes will be listed for you
+to review. For more information about the generated config check out the
+[Cypress configuration reference](/app/references/configuration), or you can
+just scroll down and hit "Continue".
+
+### Launching a Browser
+
+<DocsImage
+  src="/img/app/get-started/open-the-app/select-browser.png"
+  alt="The Launchpad browser selector"
+/>
+
+Lastly, you're presented with the list of compatible browsers Cypress found on
+your system. To understand more about your options here, see
+[our guide on launching browsers](/app/references/launching-browsers). Again,
+don't sweat it, you can switch browsers whenever you want. Now **MASH THAT
+START BUTTON!**
+
+## Next Steps
+
+Time to get testing! If you chose
+[to start with E2E Testing, go here](/app/end-to-end-testing/writing-your-first-end-to-end-test).
+Alternatively, if you decided
+[to try Component Testing, go here](/app/component-testing/get-started).

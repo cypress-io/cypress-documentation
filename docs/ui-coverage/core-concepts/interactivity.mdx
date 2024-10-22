@@ -1,0 +1,38 @@
+---
+title: 'Testing interative elements | Cypress UI Coverage'
+description: 'UI Coverage uses a set of rules, based on HTML semantics, WHATWG standards, as well as some additional rules defined by Cypress, to determine which elements are interactive.'
+sidebar_label: Interactivity
+sidebar_position: 10
+---
+
+# Interactivity
+
+<UICovAddon />
+
+## Interactive Elements
+
+UI Coverage uses a set of rules, based on HTML semantics, [WHATWG standards](https://html.spec.whatwg.org/dev/dom.html#interactive-content), as well as some additional rules defined by Cypress, to determine which elements are interactive. Some examples of elements that are considered interactive and are thereby included in UI Coverage are:
+
+- **Elements with implicit interactive roles** such as elements with a tag of `a`, `button`, `input`, `select`, `textarea`, etc.
+- **Elements with explicit interactive roles** such as elements with a `role` attribute set to `button`, `checkbox`, `radio`, `tab`, `textbox`, etc.
+- **Elements with a `tabindex` attribute set to >= 0.**
+
+## Interaction Commands
+
+UI Coverage considers interactive elements "tested" if they are interacted with by a Cypress command. The commands that are considered interactions are:
+
+- `blur`
+- `check`
+- `clear`
+- `click`
+- `dblclick`
+- `focus`
+- `rightclick`
+- `scrollIntoView`
+- `scrollTo`
+- `select`
+- `selectFile`
+- `submit`
+- `trigger`
+- `type`
+- `uncheck`

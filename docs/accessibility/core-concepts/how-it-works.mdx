@@ -1,0 +1,34 @@
+---
+title: 'Cypress Accessibility | How it works'
+description: 'Accessibility checks are powered by Axe Core® from Deque Systems based on common accessibility standards.'
+sidebar_label: 'How it works'
+sidebar_position: 40
+---
+
+# How it works
+
+The stages of the Cypress Accessibility process are as follows:
+
+1. As your run is recorded and specs are uploaded to Cypress Cloud, accessibility checks begin, based on the incoming [Test Replay](/cloud/features/test-replay) data, on the Cypress Cloud servers.
+1. When your run completes, the final specs are processed for accessibility checks. All earlier specs have already entered processing and are likely completed by the end of the run.
+1. Cypress Cloud organizes all the the Views (pages and components) that were rendered during the run, merging and deduplicating across tests so that page-level results and live DOM snapshots can be grouped together.
+1. A combined "rule-level" report is created.
+1. The completed results are displayed in Cypress Cloud and are flagged in integrations such Slack as GitHub/Gitlab comments, and available CI via the Results API so that you can optionally fail your pipeline if your standards are not met.
+
+## About Axe Core®
+
+Axe Core® is an open source library for detecting accessibility violations. It is used widely in the industry and have over 1 billion total downloads on npm.
+The library may be familiar from other tools, such as Lighthouse, or tools used for code linting, mobile testing and more, and has also been used extensively in Cypress tests through open-source packages (discussed more our [accessibility testing guide](/app/guides/accessibility-testing)). This means that Cypress Accessibility's
+configuration can often be easily aligned with your existing accessibility standards across different teams and platforms.
+
+Axe Core® checks for accessibility violations in your website's user interface, based on common accessibility standards. A violation detected by Axe usually indicates that some users with disabilities would have a problem using or perceiving a feature. An example of a violation would be an image without alternative text provided in the markup, which means the content is not perceivable to visually-impaired users. [Learn more about Axe.](https://github.com/dequelabs/axe-core)
+
+While this process reaches a high standard for automated testing, it cannot test every possible aspect of compliance, especially for heavily custom interfaces or aspects requiring human judgment.
+
+This means that a 100% axe score does not mean all possible accessibility errors have been ruled out. Deque reports that [Axe Core® can detect up to 57% of the issues that would appear in a manual accessibility audit](https://www.deque.com/blog/automated-testing-study-identifies-57-percent-of-digital-accessibility-issues/).
+
+The value of this form of testing in Cypress Accessibility is to give you fast, reliable, easy-to-understand feedback about common accessibility mistakes that are found in most projects. Providing these results automatically as part of your test run means that you can find and fix these issues with minimal friction, shifting accessibility left in your software development lifecycle.
+
+## Test Replay limitations
+
+Because Cypress Accessibility uses data captured through the Test Replay protocol, it is subject to any [limitations of that protocol](https://docs.cypress.io/faq/questions/cloud-faq#Is-everything-captured-and-replayed-in-Test-Replay) related to data capture or browser support.

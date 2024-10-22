@@ -1,0 +1,37 @@
+---
+title: Load Balancing
+sidebar_position: 30
+---
+
+## Balance strategy
+
+Cypress will automatically balance your spec files across the available machines
+in your CI provider. Cypress calculates which spec file to run based on the data
+collected from previous runs. This ensures that your spec files run as fast as
+possible, with no need for manual configuration.
+
+As more and more tests are recorded to the Cloud, Cypress can better predict how
+long a given spec file will take to run. To prevent irrelevant data from
+affecting the duration prediction, Cypress doesn't use old historical run data
+regarding the spec file.
+
+### Spec duration history analysis
+
+<DocsImage
+  src="/img/app/parallelization/load-balancing.png"
+  alt="Spec duration forecasting"
+/>
+
+With a duration estimation for each spec file of a test run, Cypress can
+distribute spec files to available CI resources in descending order of spec run
+duration. In this manner, the most time-consuming specs start first which
+minimizes the overall test run duration.
+
+:::info
+
+Duration estimation is done separately for every browser the spec file is tested
+against. This is helpful since performance characteristics vary by browser, and
+therefore it is perfectly acceptable to see different duration estimates for
+each browser a spec file was tested against.
+
+:::

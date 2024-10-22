@@ -26,7 +26,7 @@ cy.writeFile('menu.json')
 <Icon name="angle-right" /> **filePath _(String)_**
 
 A path to a file within the project root (the directory that contains the
-[Cypress configuration file](/guides/references/configuration))
+[Cypress configuration file](/app/references/configuration))
 
 <Icon name="angle-right" /> **contents _(String, Array, Object or Buffer)_**
 
@@ -57,12 +57,12 @@ first encoding it as a string.
 
 Pass in an options object to change the default behavior of `cy.writeFile()`.
 
-| Option     | Default                                                              | Description                                                                                         |
-| ---------- | -------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
-| `log`      | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log)            |
-| `flag`     | `w`                                                                  | File system flag as used with [`fs.writeFile`](https://nodejs.org/api/fs.html#fs_file_system_flags) |
-| `encoding` | `utf8`                                                               | The encoding to be used when writing to the file                                                    |
-| `timeout`  | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.writeFile()` to resolve before [timing out](#Timeouts)                           |
+| Option     | Default                                                           | Description                                                                                         |
+| ---------- | ----------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| `log`      | `true`                                                            | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log)                 |
+| `flag`     | `w`                                                               | File system flag as used with [`fs.writeFile`](https://nodejs.org/api/fs.html#fs_file_system_flags) |
+| `encoding` | `utf8`                                                            | The encoding to be used when writing to the file                                                    |
+| `timeout`  | [`defaultCommandTimeout`](/app/references/configuration#Timeouts) | Time to wait for `.writeFile()` to resolve before [timing out](#Timeouts)                           |
 
 :::info
 
@@ -72,7 +72,7 @@ parameter and include encoding there. This is the same behavior as
 
 :::
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
 
 - `cy.writeFile()` yields `null`.
 
@@ -205,18 +205,18 @@ cy.readFile(filename, null).then((obj) => {
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
+### Requirements [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
 
 - `cy.writeFile()` requires being chained off of `cy`.
 - `cy.writeFile()` requires the file be successfully written to disk. Anything
   preventing this such as OS permission issues will cause it to fail.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
+### Assertions [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
 
 - `cy.writeFile()` will only run assertions you have chained once, and will not
-  [retry](/guides/core-concepts/retry-ability).
+  [retry](/app/core-concepts/retry-ability).
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
+### Timeouts [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
 
 - `cy.writeFile()` can time out when the content being written takes a
   significant amount of time to encode.
@@ -246,12 +246,12 @@ outputs the following:
 
 ## History
 
-| Version                                     | Changes                                                  |
-| ------------------------------------------- | -------------------------------------------------------- |
-| [9.2.0](/guides/references/changelog#9-2-0) | Added `timeout` option                                   |
-| [4.0.0](/guides/references/changelog#4-0-0) | `cy.writeFile()` now yields `null` instead of `contents` |
-| [3.1.1](/guides/references/changelog#3-1-1) | Added `flag` option and appending with `a+`              |
-| [1.0.0](/guides/references/changelog#1-0-0) | `cy.writeFile()` command added                           |
+| Version                                  | Changes                                                  |
+| ---------------------------------------- | -------------------------------------------------------- |
+| [9.2.0](/app/references/changelog#9-2-0) | Added `timeout` option                                   |
+| [4.0.0](/app/references/changelog#4-0-0) | `cy.writeFile()` now yields `null` instead of `contents` |
+| [3.1.1](/app/references/changelog#3-1-1) | Added `flag` option and appending with `a+`              |
+| [1.0.0](/app/references/changelog#1-0-0) | `cy.writeFile()` command added                           |
 
 ## See also
 
