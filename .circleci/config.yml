@@ -101,7 +101,8 @@ workflows:
       - run-tests-in-parallel:
           name: Run Tests in Parallel
           requires:
-            - install-and-persist      # Run Algolia scraper only on main.
+            - Install & Persist To Workspace      
+      # Run Algolia scraper only on main.
       - release:
           name: 'Run Algolia scraper'
           requires:
