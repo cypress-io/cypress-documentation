@@ -72,6 +72,7 @@ jobs:
       - attach_workspace:
           at: ~/
       - cypress/run-tests:
+          start-command: 'npm run start'
           cypress-command: "npx cypress run --parallel --record"
 
   release:
