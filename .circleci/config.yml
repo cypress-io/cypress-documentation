@@ -73,7 +73,7 @@ jobs:
           at: ~/
       - cypress/run-tests:
           start-command: 'npm run start'
-          cypress-command: "npx cypress run --parallel --record"
+          cypress-command: "npm ci"
 
   release:
     <<: *job-defaults

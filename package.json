@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "ci": "start-server-and-test start http://localhost:300 test",
     "docusaurus": "docusaurus",
     "postinstall": "patch-package",
     "prestart": "node ./scripts/checkRemarkPluginsBuild.js",
@@ -19,7 +20,7 @@
     "clear": "docusaurus clear",
     "preserve": "npm run build:plugins",
     "serve": "docusaurus serve --dir dist",
-    "test": "npm run cypress run",
+    "test": "npm run cypress run --parallel --record",
     "write-translations": "docusaurus write-translations",
     "write-heading-ids": "docusaurus write-heading-ids",
     "typecheck": "tsc"
@@ -54,6 +55,7 @@
     "node-fetch": "^3.3.2",
     "patch-package": "^8.0.0",
     "prettier": "^3.2.5",
+    "start-server-and-test": "^2.0.8",
     "typescript": "^5.3.3"
   },
   "browserslist": {
