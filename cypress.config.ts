@@ -20,7 +20,7 @@ export default defineConfig({
 
           function walk(dir) {
             return readdirSync(dir, { withFileTypes: true }).flatMap((file) => {
-              if (file.name.includes('_category_.json')) {
+              if (file.name.includes('_category_.json') || file.name.includes('.DS_Store')) {
                 return
               }
 
