@@ -67,7 +67,7 @@ jobs:
 
   run-tests-in-parallel:
     executor: cypress/default
-    parallelism: 5
+    parallelism: 6
     steps:
       - attach_workspace:
           at: ~/
