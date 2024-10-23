@@ -1,0 +1,133 @@
+---
+title: Having Tests Rely On The State Of Previous Tests
+sidebar_label: Shared Test State
+---
+
+:::danger
+
+&#8239;<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:**
+Coupling multiple tests together.
+
+:::
+
+:::tip
+
+&#8239;<Icon name="check-circle" color="green" /> **Best Practice:** Tests
+should always be able to be run independently from one another **and still
+pass**.
+
+:::
+
+You only need to do one thing to know whether you've coupled your tests
+incorrectly, or if one test is relying on the state of a previous one.
+
+Change `it` to [`it.only`](https://jestjs.io/docs/api#testonlyname-fn-timeout)
+on the test and refresh the browser.
+
+If this test can run **by itself** and pass - congratulations you have written a
+good test.
+
+If this is not the case, then you should refactor and change your approach.
+
+How to solve this:
+
+- Move repeated code in previous tests to `before` or `beforeEach` hooks.
+- Combine multiple tests into one larger test.
+
+Let's imagine the following test that is filling out the form.
+
+:::visit-mount-example
+
+```js
+// an example of what NOT TO DO
+describe('my form', () => {
+  it('visits the form', () => {
+    -{cy.visit('/users/new')::cy.mount(<UserForm />)}-
+  })
+
+  it('requires first name', () => {
+    cy.get('[data-testid="first-name"]').type('Johnny')
+  })
+
+  it('requires last name', () => {
+    cy.get('[data-testid="last-name"]').type('Appleseed')
+  })
+
+  it('can submit a valid form', () => {
+    cy.get('form').submit()
+  })
+})
+```
+
+:::
+
+What's wrong with the above tests? They are all coupled together!
+
+If you were to change `it` to
+[`it.only`](https://jestjs.io/docs/api#testonlyname-fn-timeout) on any of the
+last three tests, they would fail. Each test requires the previous to run in a
+specific order in order to pass.
+
+Here's 2 ways we can fix this:
+
+### 1. Combine into one test
+
+:::visit-mount-example
+
+```js
+// a bit better
+describe('my form', () => {
+  it('can submit a valid form', () => {
+    -{cy.visit('/users/new')::cy.mount(<NewUser />)}-
+
+    cy.log('filling out first name') // if you really need this
+    cy.get('[data-testid="first-name"]').type('Johnny')
+
+    cy.log('filling out last name') // if you really need this
+    cy.get('[data-testid="last-name"]').type('Appleseed')
+
+    cy.log('submitting form') // if you really need this
+    cy.get('form').submit()
+  })
+})
+```
+
+:::
+
+Now we can put an `.only` on this test and it will run successfully irrespective
+of any other test. The ideal Cypress workflow is writing and iterating on a
+single test at a time.
+
+### 2. Run shared code before each test
+
+:::visit-mount-example
+
+```js
+describe('my form', () => {
+  beforeEach(() => {
+    -{cy.visit('/users/new')::cy.mount(<NewUser />)}-
+    cy.get('[data-testid="first-name"]').type('Johnny')
+    cy.get('[data-testid="last-name"]').type('Appleseed')
+  })
+
+  it('displays form validation', () => {
+    // clear out first name
+    cy.get('[data-testid="first-name"]').clear()
+    cy.get('form').submit()
+    cy.get('[data-testid="errors"]').should('contain', 'First name is required')
+  })
+
+  it('can submit a valid form', () => {
+    cy.get('form').submit()
+  })
+})
+```
+
+:::
+
+This above example is ideal because now we are resetting the state between each
+test and ensuring nothing in previous tests leaks into subsequent ones.
+
+We're also paving the way to make it less complicated to write multiple tests
+against the "default" state of the form. That way each test stays lean but each
+can be run independently and pass.

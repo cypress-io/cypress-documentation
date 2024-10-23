@@ -1,0 +1,165 @@
+---
+title: Selecting Elements
+sidebar_position: 50
+---
+
+:::danger
+
+&#8239;<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Using
+highly brittle selectors that are subject to change.
+
+:::
+
+:::tip
+
+&#8239;<Icon name="check-circle" color="green" /> **Best Practice:** Use
+`data-*` attributes to provide context to your selectors and isolate them from
+CSS or JS changes.
+
+:::
+
+Every test you write will include selectors for elements. To save yourself a lot
+of headaches, you should write selectors that are resilient to changes.
+
+Oftentimes we see users run into problems targeting their elements because:
+
+- Your application may use dynamic classes or ID's that change
+- Your selectors break from development changes to CSS styles or JS behavior
+
+Luckily, it is possible to avoid both of these problems.
+
+1. Don't target elements based on CSS attributes such as: `id`, `class`, `tag`
+2. Don't target elements that may change their `textContent`
+3. Add `data-*` attributes to make it easier to target elements
+
+### How It Works:
+
+Given a button that we want to interact with:
+
+```html
+<button
+  id="main"
+  class="btn btn-large"
+  name="submission"
+  role="button"
+  data-cy="submit"
+>
+  Submit
+</button>
+```
+
+Let's investigate how we could target it:
+
+| Selector                                | Recommended                                                   | Notes                                                           |
+| --------------------------------------- | ------------------------------------------------------------- | --------------------------------------------------------------- |
+| `cy.get('button').click()`              | <Icon name="exclamation-triangle" color="red" /> Never        | Worst - too generic, no context.                                |
+| `cy.get('.btn.btn-large').click()`      | <Icon name="exclamation-triangle" color="red" /> Never        | Bad. Coupled to styling. Highly subject to change.              |
+| `cy.get('#main').click()`               | <Icon name="exclamation-triangle" color="orange" /> Sparingly | Better. But still coupled to styling or JS event listeners.     |
+| `cy.get('[name="submission"]').click()` | <Icon name="exclamation-triangle" color="orange" /> Sparingly | Coupled to the `name` attribute which has HTML semantics.       |
+| `cy.contains('Submit').click()`         | <Icon name="check-circle" color="green" /> Depends            | Much better. But still coupled to text content that may change. |
+| `cy.get('[data-cy="submit"]').click()`  | <Icon name="check-circle" color="green" /> Always             | Best. Isolated from all changes.                                |
+
+Targeting the element above by `tag`, `class` or `id` is very volatile and
+highly subject to change. You may swap out the element, you may refactor CSS and
+update ID's, or you may add or remove classes that affect the style of the
+element.
+
+Instead, adding the `data-cy` attribute to the element gives us a targeted
+selector that's only used for testing.
+
+The `data-cy` attribute will not change from CSS style or JS behavioral changes,
+meaning it's not coupled to the **behavior** or **styling** of an element.
+
+Additionally, it makes it clear to everyone that this element is used directly
+by test code.
+
+:::info
+
+<strong>Did you know?</strong>
+
+The [Selector Playground](/guides/core-concepts/cypress-app#Selector-Playground)
+automatically follows these best practices.
+
+When determining a unique selector, it will automatically prefer elements with:
+
+- `data-cy`
+- `data-test`
+- `data-testid`
+
+:::
+
+#### <Icon name="graduation-cap" /> Real World Example
+
+The <Icon name="github" inline="true" contentType="rwa" /> uses two useful
+custom commands for selecting elements for testing:
+
+- `getBySel` yields elements with a `data-test` attribute that **match** a
+  specified selector.
+- `getBySelLike` yields elements with a `data-test` attribute that **contains**
+  a specified selector.
+
+```ts
+// cypress/support/commands.ts
+
+Cypress.Commands.add('getBySel', (selector, ...args) => {
+  return cy.get(`[data-test=${selector}]`, ...args)
+})
+
+Cypress.Commands.add('getBySelLike', (selector, ...args) => {
+  return cy.get(`[data-test*=${selector}]`, ...args)
+})
+```
+
+:::note
+
+_<Icon name="github" /> Source:
+[cypress/support/commands.ts](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/support/commands.ts)_
+
+:::
+
+### Text Content:
+
+After reading the above rules you may be wondering:
+
+> If I should always use data attributes, then when should I use
+> `cy.contains()`?
+
+A rule of thumb is to ask yourself this:
+
+If the content of the element **changed** would you want the test to fail?
+
+- If the answer is yes: then use [`cy.contains()`](/api/commands/contains)
+- If the answer is no: then use a data attribute.
+
+**Example:**
+
+If we looked at the `<html>` of our button again...
+
+```html
+<button id="main" class="btn btn-large" data-cy="submit">Submit</button>
+```
+
+The question is: how important is the `Submit` text content to your test? If the
+text changed from `Submit` to `Save` - would you want the test to fail?
+
+If the answer is **yes** because the word `Submit` is critical and should not be
+changed - then use [`cy.contains()`](/api/commands/contains) to target the
+element. This way, if it is changed, the test will fail.
+
+If the answer is **no** because the text could be changed - then use
+[`cy.get()`](/api/commands/get) with data attributes. Changing the text to
+`Save` would then not cause a test failure.
+
+### Cypress and Testing Library
+
+Cypress loves the Testing Library project. We use Testing Library internally,
+and our philosophy aligns closely with Testing Library's ethos and approach to
+writing tests. We strongly endorse their best practices.
+
+You can use the
+[Cypress Testing Library](https://testing-library.com/docs/cypress-testing-library/intro/)
+package to use the familiar testing library methods (like `findByRole`,
+`findByLabelText`, etc...) to select elements in Cypress specs.
+
+In particular, if you're looking for more resources to understand how we
+recommend you approach testing your components, look to:

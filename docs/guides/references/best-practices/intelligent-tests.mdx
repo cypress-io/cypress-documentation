@@ -1,0 +1,22 @@
+---
+title: Running Tests Intelligently
+sidebar_label: CI/CD Bottlenecks
+sidebar_position: 30
+---
+
+As your test suite grows and takes longer to run, you may find yourself hitting
+performance bottlenecks on your CI system. We recommend integrating your source
+control system with your test suite such that merges are blocked until all your
+Cypress tests have passed. The downside of this is that longer test execution
+times slow the velocity at which branches may be merged and features may be
+shipped. This issue is compounded further if you have dependent chains of
+branches waiting to be merged.
+
+One solution to this problem is
+[Smart Orchestration with Cypress Cloud](/guides/cloud/smart-orchestration).
+Using a combination of [parallelization](/guides/guides/parallelization),
+[load balancing](/guides/guides/parallelization#Balance-strategy),
+[Auto Cancellation](/guides/cloud/smart-orchestration#Auto-Cancellation), and
+[Spec Prioritization](/guides/cloud/smart-orchestration#Spec-Prioritization),
+Smart Orchestration maximizes your available compute resources & minimizes
+waste.

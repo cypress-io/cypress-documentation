@@ -1,0 +1,89 @@
+---
+title: Creating "Tiny" Tests With A Single Assertion
+e2eSpecific: true
+sidebar_label: Single Responsibility Tests
+---
+
+:::danger
+
+&#8239;<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Acting
+like you're writing unit tests.
+
+:::
+
+:::tip
+
+&#8239;<Icon name="check-circle" color="green" /> **Best Practice:** Add
+multiple assertions and don't worry about it
+
+:::
+
+We've seen many users writing this kind of code:
+
+```js
+describe('my form', () => {
+  beforeEach(() => {
+    cy.visit('/users/new')
+    cy.get('[data-testid="first-name"]').type('johnny')
+  })
+
+  it('has validation attr', () => {
+    cy.get('[data-testid="first-name"]').should(
+      'have.attr',
+      'data-validation',
+      'required'
+    )
+  })
+
+  it('has active class', () => {
+    cy.get('[data-testid="first-name"]').should('have.class', 'active')
+  })
+
+  it('has formatted first name', () => {
+    cy.get('[data-testid="first-name"]')
+      // capitalized first letter
+      .should('have.value', 'Johnny')
+  })
+})
+```
+
+While technically this runs fine - this is really excessive, and not performant.
+
+Why you do this pattern in component and unit tests:
+
+- When assertions failed you relied on the test's title to know what failed
+- You were told that adding multiple assertions was bad and accepted this as
+  truth
+- There was no performance penalty splitting up multiple tests because they run
+  really fast
+
+Why you shouldn't do this in end-to-end tests:
+
+- Writing integration tests is not the same as unit tests
+- You will always know (and can visually see) which assertion failed in a large
+  test
+- Cypress runs a series of async lifecycle events that reset state between tests
+- Resetting tests is much slower than adding more assertions
+
+It is common for tests in Cypress to issue 30+ commands. Because nearly every
+command has a default assertion (and can therefore fail), even by limiting your
+assertions you're not saving yourself anything because **any single command
+could implicitly fail**.
+
+How you should rewrite those tests:
+
+```js
+describe('my form', () => {
+  beforeEach(() => {
+    cy.visit('/users/new')
+  })
+
+  it('validates and formats first name', () => {
+    cy.get('[data-testid="first-name"]')
+      .type('johnny')
+      .should('have.attr', 'data-validation', 'required')
+      .and('have.class', 'active')
+      .and('have.value', 'Johnny')
+  })
+})
+```
