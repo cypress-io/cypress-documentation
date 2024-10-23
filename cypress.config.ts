@@ -6,6 +6,7 @@ export default defineConfig({
   projectId: 'imown1',
   viewportHeight: 800,
   viewportWidth: 1200,
+  experimentalMemoryManagement: true,
   e2e: {
     baseUrl: "http://localhost:3000",
     setupNodeEvents(on, config) {
