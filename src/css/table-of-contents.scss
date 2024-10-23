@@ -24,6 +24,10 @@
 .table-of-contents > li > .table-of-contents__link {
   font-weight: 600;
   @apply my-3;
+
+  &.table-of-contents__link--active {
+    font-weight: 800;
+  }
 }
 
 .table-of-contents .table-of-contents__link--active {
@@ -31,6 +35,7 @@
   html[data-theme='dark'] & {
     @apply text-indigo-400;
   }
+  font-weight: 700;
 }
 
 .table-of-contents__left-border {
