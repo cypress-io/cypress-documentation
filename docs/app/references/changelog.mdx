@@ -6837,7 +6837,7 @@ _Released 5/20/2020_
 - We fixed a regression in [4.3.0](#4-3-0) where the message output during
   errors were not formatted correctly. Fixes
   [#6924](https://github.com/cypress-io/cypress/issues/6924).
-- Using [Cypress.\_.capitalize](/api/utilities/lodash) now correctly behaves the same
+- Using [Cypress.\_.capitalize](/api/utilities/_) now correctly behaves the same
   as Lodash's capitalize method. Fixes
   [#7222](https://github.com/cypress-io/cypress/issues/7222).
 - When `experimentalComponentTesting` is enabled, clicking on a component spec
@@ -11322,7 +11322,7 @@ _Released 09/10/2017_
 - We've removed the undocumented `cy.chain()` command. You should be able to
   safely remove this from your code. Fixes
   [#456](https://github.com/cypress-io/cypress/issues/456).
-- Updated [Cypress.\_](/api/utilities/lodash) to use [lodash](https://lodash.com)
+- Updated [Cypress.\_](/api/utilities/_) to use [lodash](https://lodash.com)
   instead of [Underscore](http://underscorejs.org). Fixes
   [#548](https://github.com/cypress-io/cypress/issues/548).
 - If any of an element's parent's overflow is 'hidden', we now calculate if the
@@ -13553,7 +13553,7 @@ _Released 01/28/2016_
 - [`.debug()`](/api/commands/debug) has been zipped up - it no longer logs
   confusing debugging information and now logs information about the previously
   run command.
-- [`Cypress._`](/api/lodash), [`Cypress.$`](/api/utilities/$),
+- [`Cypress._`](/api/utilities/_), [`Cypress.$`](/api/utilities/$),
   [`Cypress.Promise`](/api/utilities/promise),
   [`Cypress.Blob`](/api/utilities/blob), `Cypress.moment` utilities have been
   moved off of `cy` and are now attached to `Cypress`. This is much more
