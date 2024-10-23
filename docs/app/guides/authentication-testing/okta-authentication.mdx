@@ -128,7 +128,10 @@ describe('Okta', function () {
 })
 ```
 
-<DocsVideo src="https://vimeo.com/789093739" />
+<DocsVideo
+  src="https://vimeo.com/789093739"
+  title="Okta authentication with cy.origin()"
+/>
 
 Lastly, we can refactor our login command to take advantage of
 [`cy.session()`](/api/commands/session) to store our logged in user so we don't
@@ -151,7 +154,10 @@ Cypress.Commands.add('loginByOkta', (username: string, password: string) => {
 })
 ```
 
-<DocsVideo src="https://vimeo.com/789093688" />
+<DocsVideo
+  src="https://vimeo.com/789093688"
+  title="Okta authentication with cy.session()"
+/>
 
 ### Programmatic Login
 
