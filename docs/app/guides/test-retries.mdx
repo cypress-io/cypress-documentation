@@ -85,12 +85,18 @@ Assuming we have configured test retries with **2** retry attempts (for a total 
 5. If the test <Icon name="times" color="red" /> fails a third time, Cypress
    will mark the test as failed and then move on to run any remaining tests.
 
-<DocsImage src="/img/app/test-retries/v10/attempt-3-fail.png" />
+<DocsImage
+  src="/img/app/test-retries/v10/attempt-3-fail.png"
+  alt="Test retries attempt 3 fail"
+/>
 
 The following is a screen capture of what test retries looks like on the same
 failed test when run via [cypress run](/app/references/command-line#cypress-run).
 
-<DocsImage src="/img/app/test-retries/cli-error-message.png" />
+<DocsImage
+  src="/img/app/test-retries/cli-error-message.png"
+  alt="CLI error message with test retries printed"
+/>
 
 During [cypress open](/app/references/command-line#cypress-open) you'll be able
 to see the number of attempts made in the
