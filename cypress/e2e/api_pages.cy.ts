@@ -7,7 +7,7 @@ describe('Visit API pages', () => {
   })
 
   // Well, this number is hardcoded and should match the length of urls
-  Cypress._.range(0, 133).forEach(index => {
+  Cypress._.range(0, 132).forEach(index => {
     it(`Visit API page ${index} `, () => {
       cy.visit(Cypress.env().urls[index])
       cy.get('h1').should('be.visible')

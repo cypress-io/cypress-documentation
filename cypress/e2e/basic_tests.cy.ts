@@ -56,9 +56,9 @@ describe('Basic tests', () => {
   })
 
   describe('Search', () => {
-    it('search opens Algolia popup', () => {
+    it('search opens search popup', () => {
       cy.contains('Search ⌘K').click()
-      cy.get('DocSearch-Modal').should('be.visible')
+      cy.get('.DocSearch-Modal').should('be.visible')
     })
   })
 })
