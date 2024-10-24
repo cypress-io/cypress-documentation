@@ -1082,6 +1082,12 @@
   force = true
 
 [[redirects]]
+  from = "/installing-cypress"
+  to = "/app/get-started/install-cypress"
+  status = 301
+  force = true
+
+[[redirects]]
   from = "/api/plugins/*"
   to = "/api/node-events/:splat"
   status = 301
@@ -1090,6 +1096,12 @@
 [[redirects]]
   from = "/examples/*"
   to = "/app/get-started/why-cypress"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/faq"
+  to = "/app/faq"
   status = 301
   force = true
 
