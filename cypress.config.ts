@@ -4,6 +4,7 @@ import { join } from 'path'
 
 export default defineConfig({
   projectId: 'imown1',
+  fixturesFolder: false,
   viewportHeight: 800,
   viewportWidth: 1200,
   experimentalMemoryManagement: true,
