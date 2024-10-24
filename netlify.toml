@@ -67,7 +67,7 @@
 
 [[redirects]]
   from = "/guides/overview/choosing-testing-type"
-  to = "/guides/core-concepts/testing-types"
+  to = "/app/core-concepts/testing-types"
   status = 301
   force = true
 
@@ -97,31 +97,31 @@
 
 [[redirects]]
   from = "/guides/component-testing/framework-configuration"
-  to = "/guides/component-testing/component-framework-configuration"
+  to = "/app/component-testing/component-framework-configuration"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/core-concepts/test-runner"
-  to = "/guides/core-concepts/open-mode"
+  to = "/app/core-concepts/open-mode"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/core-concepts/cypress-studio"
-  to = "/guides/guides/cypress-studio"
+  to = "/app/guides/cypress-studio"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/getting-started/writing-your-first-test"
-  to = "/guides/end-to-end-testing/writing-your-first-end-to-end-test"
+  to = "/app/end-to-end-testing/writing-your-first-end-to-end-test"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/getting-started/testing-your-app"
-  to = "/guides/end-to-end-testing/testing-your-app"
+  to = "/app/end-to-end-testing/writing-your-first-end-to-end-test"
   status = 301
   force = true
 
@@ -175,37 +175,37 @@
 
 [[redirects]]
   from = "/guides/references/bundled-tools"
-  to = "/guides/references/bundled-libraries"
+  to = "/app/references/bundled-libraries"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/references/bundled-tools.html"
-  to = "/guides/references/bundled-libraries"
+  to = "/app/references/bundled-libraries"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/component-testing/quickstart-react"
-  to = "/guides/component-testing/react/quickstart"
+  to = "/app/component-testing/react/overview"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/component-testing/mounting-react"
-  to = "/guides/component-testing/react/quickstart"
+  to = "/app/component-testing/react/overview"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/component-testing/testing-react"
-  to = "/guides/component-testing/react/quickstart"
+  to = "/app/component-testing/react/overview"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/component-testing/events-react"
-  to = "/guides/component-testing/react/quickstart"
+  to = "/app/component-testing/react/overview"
   status = 301
   force = true
 
@@ -217,67 +217,67 @@
 
 [[redirects]]
   from = "/guides/component-testing/quickstart-angular"
-  to = "/guides/component-testing/angular/quickstart"
+  to = "/app/component-testing/angular/overview"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/component-testing/mounting-angular"
-  to = "/guides/component-testing/angular/quickstart"
+  to = "/app/component-testing/angular/overview"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/component-testing/testing-angular"
-  to = "/guides/component-testing/angular/quickstart"
+  to = "/app/component-testing/angular/overview"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/component-testing/events-angular"
-  to = "/guides/component-testing/angular/quickstart"
+  to = "/app/component-testing/angular/overview"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/component-testing/custom-mount-angular"
-  to = "/guides/component-testing/angular/examples"
+  to = "/app/component-testing/angular/examples"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/component-testing/slots-angular"
-  to = "/guides/component-testing/angular/overview"
+  to = "/app/component-testing/angular/overview"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/component-testing/quickstart-vue"
-  to = "/guides/component-testing/vue/quickstart"
+  to = "/app/component-testing/vue/overview"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/component-testing/mounting-vue"
-  to = "/guides/component-testing/vue/quickstart"
+  to = "/app/component-testing/vue/overview"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/component-testing/testing-vue"
-  to = "/guides/component-testing/vue/quickstart"
+  to = "/app/component-testing/vue/overview"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/component-testing/events-vue"
-  to = "/guides/component-testing/vue/quickstart"
+  to = "/app/component-testing/vue/overview"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/component-testing/custom-mount-vue"
-  to = "/guides/component-testing/vue/examples"
+  to = "/app/component-testing/vue/examples"
   status = 301
   force = true
 
@@ -289,31 +289,31 @@
 
 [[redirects]]
   from = "/guides/component-testing/quickstart-svelte"
-  to = "/guides/component-testing/svelte/quickstart"
+  to = "/app/component-testing/svelte/overview"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/component-testing/mounting-svelte"
-  to = "/guides/component-testing/svelte/quickstart"
+  to = "/app/component-testing/svelte/overview"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/component-testing/testing-svelte"
-  to = "/guides/component-testing/svelte/quickstart"
+  to = "/app/component-testing/svelte/overview"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/component-testing/events-svelte"
-  to = "/guides/component-testing/svelte/quickstart"
+  to = "/app/component-testing/svelte/overview"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/component-testing/custom-mount-svelte"
-  to = "/guides/component-testing/svelte/examples"
+  to = "/app/component-testing/svelte/examples"
   status = 301
   force = true
 
@@ -325,55 +325,55 @@
 
 [[redirects]]
   from = "/guides/dashboard/analytics"
-  to = "/guides/cloud/features/analytics/overview"
+  to = "/cloud/features/analytics/overview"
   status = 301
   force = true
 
  [[redirects]]
   from = "/guides/cloud/features/analytics"
-  to = "/guides/cloud/features/analytics/overview"
+  to = "/cloud/features/analytics/overview"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/dashboard/flaky-test-management"
-  to = "/guides/cloud/features/flaky-test-management"
+  to = "/cloud/features/flaky-test-management"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/dashboard/flaky-test-management"
-  to = "/guides/cloud/features/flaky-test-management"
+  to = "/cloud/features/flaky-test-management"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/dashboard/introduction"
-  to = "/guides/cloud/get-started/introduction"
+  to = "/cloud/get-started/introduction"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/dashboard/github-integration"
-  to = "/guides/cloud/integrations/github"
+  to = "/cloud/integrations/source-control/github"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/cloud/github-integration"
-  to = "/guides/cloud/integrations/github"
+  to = "/cloud/integrations/source-control/github"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/dashboard/gitlab-integration"
-  to = "/guides/cloud/integrations/gitlab"
+  to = "/cloud/integrations/source-control/gitlab"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/cloud/gitlab-integration"
-  to = "/guides/cloud/integrations/gitlab"
+  to = "/cloud/integrations/source-control/gitlab"
   status = 301
   force = true
 
@@ -403,43 +403,49 @@
 
 [[redirects]]
   from = "/guides/dashboard/bitbucket-integration"
-  to = "/guides/cloud/integrations/bitbucket"
+  to = "/cloud/integrations/source-control/bitbucket"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/cloud/bitbucket-integration"
-  to = "/guides/cloud/integrations/bitbucket"
+  to = "/cloud/integrations/source-control/bitbucket"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/dashboard/organizations"
-  to = "/guides/cloud/organizations"
+  to = "/cloud/account-management/organizations"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/dashboard/projects"
-  to = "/guides/cloud/projects"
+  to = "/cloud/account-management/projects"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/dashboard/runs"
-  to = "/guides/cloud/runs"
+  to = "/cloud/features/recorded-runs"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/dashboard/smart-orchestration"
-  to = "/guides/cloud/features/smart-orchestration"
+  to = "/cloud/features/smart-orchestration/overview"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/smart-orchestration"
+  to = "/cloud/features/smart-orchestration/overview"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/dashboard/users"
-  to = "/guides/cloud/users"
+  to = "/cloud/account-management/users"
   status = 301
   force = true
 
@@ -453,37 +459,37 @@
 
 [[redirects]]
   from = "/guides/cloud/projects"
-  to = "/guides/cloud/account-management/projects"
+  to = "/cloud/account-management/projects"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/cloud/organizations"
-  to = "/guides/cloud/account-management/organizations"
+  to = "/cloud/account-management/organizations"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/cloud/users"
-  to = "/guides/cloud/account-management/users"
+  to = "/cloud/account-management/users"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/cloud/features/smart-orchestration"
-  to = "/guides/cloud/features/smart-orchestration/overview"
+  to = "/cloud/features/smart-orchestration/overview"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/guides/parallelization"
-  to = "/guides/cloud/features/smart-orchestration/parallelization"
+  to = "/cloud/features/smart-orchestration/parallelization"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/cloud/runs"
-  to = "/guides/cloud/features/recorded-runs"
+  to = "/cloud/features/recorded-runs"
   status = 301
   force = true
 
@@ -495,25 +501,25 @@
 
 [[redirects]]
   from = "/guides/cloud/integrations/gitlab"
-  to = "/guides/cloud/integrations/source-control/gitlab"
+  to = "/cloud/integrations/source-control/gitlab"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/cloud/integrations/bitbucket"
-  to = "/guides/cloud/integrations/source-control/bitbucket"
+  to = "/cloud/integrations/source-control/bitbucket"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/cloud/debugging/test-replay"
-  to = "/guides/cloud/features/test-replay"
+  to = "/cloud/features/test-replay"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/cloud/debugging/recorded-runs"
-  to = "/guides/cloud/features/recorded-runs"
+  to = "/cloud/features/recorded-runs"
   status = 301
   force = true
 
@@ -567,85 +573,85 @@
 
 [[redirects]]
   from = "/api/utilities/moment"
-  to = "/guides/overview/why-cypress"
+  to = "/cloud/get-started/introduction"
   status = 301
   force = true
 
 [[redirects]]
   from = "/coverage"
-  to = "/guides/tooling/code-coverage"
+  to = "/app/tooling/code-coverage"
   status = 301
   force = true
 
 [[redirects]]
   from = "/dashboard-service"
-  to = "/guides/cloud/get-started/introduction"
+  to = "/cloud/get-started/introduction"
   status = 301
   force = true
 
 [[redirects]]
   from = "/dashboard/overview/runs-dashboard"
-  to = "/guides/cloud/features/recorded-runs"
+  to = "/cloud/features/recorded-runs"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/component-testing/angular/quickstart"
-  to = "/guides/component-testing/angular/overview"
+  to = "/app/component-testing/angular/overview"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/component-testing/react/quickstart"
-  to = "/guides/component-testing/react/overview"
+  to = "/app/component-testing/react/overview"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/component-testing/svelte/quickstart"
-  to = "/guides/component-testing/svelte/overview"
+  to = "/app/component-testing/svelte/overview"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/component-testing/vue/quickstart"
-  to = "/guides/component-testing/vue/overview"
+  to = "/app/component-testing/vue/overview"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/core-concepts/dashboard-service"
-  to = "/guides/cloud/get-started/introduction"
+  to = "/cloud/get-started/introduction"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/core-concepts/launching-browsers"
-  to = "/guides/guides/launching-browsers"
+  to = "/app/references/launching-browsers"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/getting-started"
-  to = "/guides/getting-started/install-cypress"
+  to = "/app/get-started/why-cypress"
   status = 301
   force = true
 
 [[redirects]]
   from = "/getting-started/install-cypress.md"
-  to = "/guides/getting-started/install-cypress"
+  to = "/app/get-started/install-cypress"
   status = 301
   force = true
 
 [[redirects]]
   from = "/getting-started/why-cypress"
-  to = "guides/overview/why-cypress"
+  to = "/app/get-started/why-cypress"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/guides/continuous-integration"
-  to = "/guides/continuous-integration/overview"
+  to = "/app/continuous-integration/overview"
   status = 301
   force = true
 
@@ -657,43 +663,43 @@
 
 [[redirects]]
   from = "/guides/guides/reporters"
-  to = "/guides/tooling/reporters"
+  to = "/app/tooling/reporters"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/installing-and-running"
-  to = "/guides/getting-started/install-cypress"
+  to = "/app/get-started/install-cypress"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/references/known-issues"
-  to = "/guides/references/trade-offs"
+  to = "/app/get-started/why-cypress"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/tooling/intelligent-code-completion"
-  to = "/guides/tooling/IDE-integration"
+  to = "/app/tooling/IDE-integration"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/web-security"
-  to = "/guides/guides/web-security"
+  to = "/app/guides/cross-origin-testing"
   status = 301
   force = true
 
 [[redirects]]
   from = "/intelligent-code-completion"
-  to = "/guides/tooling/IDE-integration"
+  to = "/app/tooling/IDE-integration"
   status = 301
   force = true
 
 [[redirects]]
   from = "/ja"
-  to = "/guides/overview/why-cypress"
+  to = "/app/get-started/why-cypress"
   status = 301
   force = true
 
@@ -705,7 +711,7 @@
 
 [[redirects]]
   from = "/why-cypress"
-  to = "/guides/overview/why-cypress"
+  to = "/app/get-started/why-cypress"
   status = 301
   force = true
 
@@ -723,25 +729,25 @@
 
 [[redirects]]
   from = "/zh-cn/guides/getting-started/install-cypress"
-  to = "/guides/getting-started/install-cypress"
+  to = "/app/get-started/install-cypress"
   status = 301
   force = true
 
 [[redirects]]
   from = "/zh-cn/guides/references/command-line"
-  to = "/guides/references/command-line"
+  to = "/app/references/command-line"
   status = 301
   force = true
 
 [[redirects]]
   from = "/zh-cn/guides/guides/module-api"
-  to = "/guides/guides/module-api"
+  to = "/app/references/module-api"
   status = 301
   force = true
 
 [[redirects]]
   from = "/zh-cn/guides/overview/why-cypress"
-  to = "/guides/overview/why-cypress"
+  to = "/app/get-started/why-cypress"
   status = 301
   force = true
 
@@ -753,13 +759,13 @@
 
 [[redirects]]
   from = "/zh-cn/guides/references/configuration"
-  to = "/guides/references/configuration"
+  to = "/app/references/configuration"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/references/legacy-configuration"
-  to = "/guides/references/configuration"
+  to = "/app/references/configuration"
   status = 301
   force = true
 
@@ -1082,6 +1088,12 @@
   force = true
 
 [[redirects]]
+  from = "/faq"
+  to = "/app/faq"
+  status = 301
+  force = true
+
+[[redirects]]
   from = "/installing-cypress"
   to = "/app/get-started/install-cypress"
   status = 301
@@ -1096,12 +1108,6 @@
 [[redirects]]
   from = "/examples/*"
   to = "/app/get-started/why-cypress"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/faq"
-  to = "/app/faq"
   status = 301
   force = true
 
