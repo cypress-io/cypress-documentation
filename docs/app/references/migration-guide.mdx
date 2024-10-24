@@ -27,6 +27,15 @@ This support is inline with Node.js's support for Linux in 18+.
 If you're using a Linux distribution based on glibc `<2.28`, for example, Ubuntu 14-18, RHEL 7, CentOS 7, Amazon Linux 2, you'll need to 
 update your system to a newer version to install Cypress.
 
+### Deprecation of `resourceType` on `cy.intercept`
+
+The `resourceType` option on `cy.intercept` has been deprecated in Cypress 14.0.0.
+We anticipate the types of the `resourceType` to change in the future or be completely removed
+from the API. The future implementation of `resourceType` is dependent on decisions made in the WebDriver BiDi specification for `resourceType`.
+
+If you're using `resourceType` in your tests, please leave feedback on which resourceType's are important to you 
+in this [GitHub issue](https://github.com/cypress-io/cypress/issues/30447).
+
 ### Just in Time Compile Changes for Component Testing 
 
 In Cypress 13.14.0, we released an experimental flag, `experimentalJustInTimeCompile`,
