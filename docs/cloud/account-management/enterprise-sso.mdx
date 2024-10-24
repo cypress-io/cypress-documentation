@@ -1,30 +1,31 @@
 ---
-title: Enterprise SSO
+title: 'Enterprise SSO | Cypress Cloud'
+description: 'Configure SSO with Okta, SAML, or Azure AD in Cypress for your Cloud organization.'
+sidebar_label: Enterprise SSO
 sidebar_position: 40
 ---
 
-:::tip
+# Enterprise SSO
 
-<Icon name="star" /> **Premium Cypress Cloud Feature**
+:::info
 
-Enterprise SSO is included in our
-[Business and Enterprise paid pricing plans](https://www.cypress.io/pricing).
+##### <Icon name="question-circle" color="#42a1c0" /> What you'll learn
 
-:::
-
-:::caution
-
-<strong>Requires Owner Permissions</strong>
-
-**All instructions below must be done by an Owner of the organization.** If you
-are not an Owner of the Organization, coordinate with an Owner of the
-Organization to set up SSO.
+- How to enable Enterprise SSO for your organization
+- How to configure SSO with Okta, SAML, or Azure AD
 
 :::
 
-#### Enable SSO
+## Getting Started
 
-1. Log in to Cypress Cloud and navigate to the **Integrations** page for your
+**You need two things to get started:**
+
+- A Cypress Cloud account with a [Business or Enterprise paid pricing plans](https://www.cypress.io/pricing)
+- You must be an **owner** of your Cypress Cloud organization.
+
+## Enable SSO
+
+1. Log in to [Cypress Cloud](https://cloud.cypess.io) and navigate to the **Integrations** page for your
    organization.
 2. Scroll down to the **Enterprise SSO** section. Select your SSO provider and
    take note of the information provided and required. Keep this window open and
@@ -32,7 +33,7 @@ Organization to set up SSO.
    [configuration instructions for your specific SSO provider](#SSO-Provider-Configuration)
    below.
 
-#### SSO Provider Configuration
+## SSO Provider Configuration
 
 Follow the instructions below for your specific SSO provider.
 
@@ -41,7 +42,7 @@ Follow the instructions below for your specific SSO provider.
 <strong>Smart Card Authentication</strong>
 
 For Smart Card implementation, please reach out to
-[Support](mailto:support@cypress.io) for assistance.
+support at support@cypress.io for assistance.
 
 :::
 
@@ -49,7 +50,7 @@ For Smart Card implementation, please reach out to
 - [SAML](#SAML)
 - [Azure AD](#Azure-AD)
 
-##### **Okta**
+### **Okta**
 
 Cypress Cloud can integrate with Okta via SAML. In addition to the documentation
 below, refer to
@@ -71,30 +72,22 @@ below, refer to
      width={600}
    />
 1. Supply the following information requested in the Okta setup wizard:
-
-- **App name:** `Cypress Cloud`
-- **App logo:** [Cypress logo download](https://on.cypress.io/logo)
-- **Single sign on URL:** The URL provided in Cypress Cloud
-- **Audience URI:** The URI provided in Cypress Cloud
-- **Attribute statements:** Add the attribute statements described in Cypress
-  Cloud
-
+   - **App name:** `Cypress Cloud`
+   - **App logo:** [Cypress logo download](https://on.cypress.io/logo)
+   - **Single sign on URL:** The URL provided in Cypress Cloud
+   - **Audience URI:** The URI provided in Cypress Cloud
+   - **Attribute statements:** Add the attribute statements described in Cypress
+     Cloud
 1. Click **Next** then select **I'm an Okta customer** and click **Finish**.
 1. Click the **View Setup Instructions** button in the middle of the page.
    Cypress Cloud needs the information provided here:
-
-- Copy the Identity Provider Single sign-on URL to Cypress Cloud.
-- Download the certificate and upload that to Cypress Cloud.
-  <DocsImage
-    src="/img/cloud/sso/okta-download-certificate-for-cypress-dashboard.png"
-    alt="Download Certificate"
-  />
-
+   - Copy the Identity Provider Single sign-on URL to Cypress Cloud.
+   - Download the certificate and upload that to Cypress Cloud.
 1. Navigate to the **Assignments** tab and grant your users access to Cypress
    Cloud.
 1. [Save Configuration](#Save-Configuration).
 
-##### **SAML**
+### **SAML**
 
 Cypress Cloud can integrate with your identity provider via SAML. In addition to
 the documentation below, refer to your provider's official documentation for
@@ -104,21 +97,19 @@ configuring a SAML integration.
 
 1. Log into the admin interface for your identity provider.
 1. Work through the setup wizard supplying the information requested:
-
-- **App name:** `Cypress Cloud`
-- **App logo:** [Cypress logo download](https://on.cypress.io/logo)
-- **Single sign on URL:** Collect the URL provided by Cypress Cloud
-- **Audience URI:** Collect the URI provided by Cypress Cloud
-- Add a custom mapping of **AttributeStatements** with the following:
-  - `User.Email`: User's email
-  - `User.FirstName`: User's first name
-  - `User.LastName`: User's last name
-
+   - **App name:** `Cypress Cloud`
+   - **App logo:** [Cypress logo download](https://on.cypress.io/logo)
+   - **Single sign on URL:** Collect the URL provided by Cypress Cloud
+   - **Audience URI:** Collect the URI provided by Cypress Cloud
+   - Add a custom mapping of **AttributeStatements** with the following:
+   - `User.Email`: User's email
+   - `User.FirstName`: User's first name
+   - `User.LastName`: User's last name
 1. Collect the sign-on URL and certificate from your identity provider. Supply
    that to Cypress Cloud.
 1. [Save Configuration](#Save-Configuration).
 
-##### **Azure AD**
+### **Azure AD**
 
 Cypress Cloud can integrate with your identity provider via Azure AD. In
 addition to the documentation below, refer to the Microsoft Guides for
@@ -127,11 +118,9 @@ addition to the documentation below, refer to the Microsoft Guides for
 1. Log into the Azure portal and create a new Application.
 1. Work through the application setup, supplying the following information when
    requested:
-
-- **App name:** `Cypress Cloud`
-- **App logo:** [Cypress logo download](https://on.cypress.io/logo)
-- **Login URL:** Collect the URL provided by Cypress Cloud
-
+   - **App name:** `Cypress Cloud`
+   - **App logo:** [Cypress logo download](https://on.cypress.io/logo)
+   - **Login URL:** Collect the URL provided by Cypress Cloud
 1. Collect the `Client ID` for your application provided in the Application
    overview page.
 1. Go to **Certificates and Secrets** in your Azure Application and create a new
@@ -144,7 +133,7 @@ addition to the documentation below, refer to the Microsoft Guides for
    is used for SSO discovery from the login screen.
 1. [Save Configuration](#Save-Configuration).
 
-#### Save Configuration
+## Save Configuration
 
 Return to Cypress Cloud and click **Save Configuration**. Cypress Cloud will
 attempt to authenticate.
@@ -152,7 +141,7 @@ attempt to authenticate.
 🎉 Your integration is now complete! You can invite all of the users in your
 organization to sign in through your SSO provider.
 
-#### Notes
+## Notes
 
 - Once SSO is successfully set up, users will need to be invited via your SSO
   provider, as the Cypress Cloud invitation option will be disabled.

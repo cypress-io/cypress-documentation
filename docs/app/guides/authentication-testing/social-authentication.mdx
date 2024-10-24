@@ -84,7 +84,10 @@ Select the dropdown and go to **Applications**.
 
 Here is what this process should look like for Facebook setup:
 
-<DocsVideo src="https://vimeo.com/789093604" />
+<DocsVideo
+  src="https://vimeo.com/789093604"
+  title="Facebook social application setup"
+/>
 
 ## Test with Cypress
 
@@ -323,7 +326,10 @@ describe('Social Logins Demo', () => {
 
 Here's a sample of what all 3 should look like in order.
 
-<DocsVideo src="https://vimeo.com/789093473" />
+<DocsVideo
+  src="https://vimeo.com/789093473"
+  title="Google, Microsoft, and Facebook social with cy.origin()"
+/>
 
 Lastly, we can refactor our login command to take advantage of
 [`cy.session()`](/api/commands/session) to store our logged in user so we don't
@@ -407,7 +413,10 @@ Cypress.Commands.add(
 )
 ```
 
-<DocsVideo src="https://vimeo.com/789093516" />
+<DocsVideo
+  src="https://vimeo.com/789093516"
+  title="Facebook social with cy.session()"
+/>
 
 With the use of [`cy.session()`](/api/commands/session), our tests should now
 run quicker!

@@ -16,11 +16,19 @@ UI Coverage is a visual test coverage report based on the interactive elements t
 
 ## How it Works
 
+:::caution
+
+UI Coverage generates reports using [Test Replay](/cloud/features/test-replay) data and requires Cypress v13+.
+
+:::
+
 UI Coverage creates a dynamic visual map of test coverage across every page of your application. Each interactive element is identified and highlighted as either tested or untested, providing a clear and actionable overview of your test coverage.
 
 UI Coverage captures "snapshots" of every page visited by your Cypress tests (and every component mounted in Component Testing). Snapshots represent all of the unique states found across your test run, and these states are analyzed to identify all of the unique elements that make up your application.
 
 As a result, a UI Coverage score is generated. This score quantifies coverage across your application by measuring the ratio of the unique elements that have been tested to the total unique elements that are found across your application.
+
+Because Cypress Accessibility uses data captured through Cypress Test Replay, it is subject to any [limitations of Test Replay](https://docs.cypress.io/faq/questions/cloud-faq#Is-everything-captured-and-replayed-in-Test-Replay) data captured and browser support.
 
 ## Getting Started
 

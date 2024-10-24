@@ -405,7 +405,7 @@ with an existing subject or without one.
 Examples of dual commands:
 
 - [`cy.screenshot()`](/api/commands/screenshot)
-- [`cy.scrollTo()`](/api/commands/scrollTo)
+- [`cy.scrollTo()`](/api/commands/scrollto)
 - [`cy.wait()`](/api/commands/wait)
 
 #### Custom Dual Command
@@ -497,7 +497,10 @@ cy.get('#username').type('username@email.com')
 cy.get('#password').type('superSecret123')
 ```
 
-<DocsImage src="/img/api/custom-commands/custom-command-type-no-masked-password.png" />
+<DocsImage
+  src="/img/api/custom-commands/custom-command-type-no-masked-password.png"
+  alt="Cypress Command Log showing password within type command"
+/>
 
 You may want to mask some values passed to the [.type()](/api/commands/type)
 command so that sensitive data does not display in screenshots or videos of your
@@ -529,7 +532,10 @@ cy.get('#password').type('superSecret123', { sensitive: true })
 Now our sensitive password is not printed to the Cypress Command Log when
 `sensitive: true` is passed as an option to [.type()](/api/commands/type).
 
-<DocsImage src="/img/api/custom-commands/custom-command-type-masked-password.png" />
+<DocsImage
+  src="/img/api/custom-commands/custom-command-type-masked-password.png"
+  alt="Cypress command log showing masked password as asterisks within type command"
+/>
 
 #### Overwrite `screenshot` command
 

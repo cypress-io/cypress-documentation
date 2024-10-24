@@ -1,5 +1,8 @@
 version: 2.1
 
+orbs:
+  cypress: cypress-io/cypress@3
+
 executors:
   node-executor:
     resource_class: medium+
@@ -51,7 +54,27 @@ jobs:
       - attach_workspace:
           at: ~/repo
       - run: npm run lint
-  
+
+  install-and-persist:
+    executor: cypress/default
+    steps:
+      - cypress/install
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - .cache/Cypress
+            - project
+
+  run-tests-in-parallel:
+    executor: cypress/default
+    parallelism: 6
+    steps:
+      - attach_workspace:
+          at: ~/
+      - cypress/run-tests:
+          start-command: 'npm run start'
+          cypress-command: 'npx wait-on http://localhost:3000 && npx cypress run --parallel --record'
+
   release:
     <<: *job-defaults
     steps:
@@ -67,7 +90,6 @@ jobs:
             node ./scripts/search/scrape-and-compare-algolia-index.mjs 
 
 workflows:
-  version: 2
   build-and-test:
     jobs:
       - build
@@ -75,7 +97,13 @@ workflows:
           name: "Lint JS/CSS/Markdown"
           requires:
             - build     
-
+      - install-and-persist:
+          name: Install & Persist To Workspace
+      - run-tests-in-parallel:
+          name: Run Tests in Parallel
+          requires:
+            - build
+            - Install & Persist To Workspace      
       # Run Algolia scraper only on main.
       - release:
           name: 'Run Algolia scraper'

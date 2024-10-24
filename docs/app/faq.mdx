@@ -6,7 +6,7 @@ sidebar_label: FAQ
 
 ## General Cypress Questions
 
-##### <Icon name="angle-right" /> Is Cypress free and open source?
+### <Icon name="angle-right" /> Is Cypress free and open source?
 
 The [Cypress App](/app/get-started/why-cypress) is a free, downloadable and open
 source (MIT license) application. This is always free to use.
@@ -19,13 +19,13 @@ Additionally, we have add-ons like [UI Coverage](/ui-coverage/get-started/introd
 
 Please see our [Pricing Page](https://www.cypress.io/pricing) for more details.
 
-##### <Icon name="angle-right" /> What operating systems do you support?
+### <Icon name="angle-right" /> What operating systems do you support?
 
 You can [install Cypress](/app/get-started/install-cypress) on Mac,
 Linux, and Windows. For additional information, please see our
 [System requirements](/app/get-started/install-cypress#System-requirements).
 
-##### <Icon name="angle-right" /> Do you support native mobile apps?
+### <Icon name="angle-right" /> Do you support native mobile apps?
 
 Cypress will never be able to run on a native mobile app, but we can test some
 functionality of mobile web browsers and test mobile applications that are
@@ -42,7 +42,7 @@ You can read about testing mobile applications with Ionic and Cypress
 and see how we manage testing the mobile viewport in the
 [Cypress Real World App](https://github.com/cypress-io/cypress-realworld-app).
 
-##### <Icon name="angle-right" /> How is this different from 'X' testing tool?
+### <Icon name="angle-right" /> How is this different from 'X' testing tool?
 
 The Cypress App is a hybrid application/framework/service all rolled into one. It takes
 a little bit of other testing tools, brings them together and improves on them.
@@ -52,7 +52,7 @@ In addition to the App, Cypress offers solutions like the [Cypress Cloud](/cloud
 
 You can see our evaluation of Cypress against some frameworks in our [Migrating from Selenium](/app/guides/migration/selenium-to-cypress) and [Migrating from Protractor](/app/guides/migration/protractor-to-cypress) guides.
 
-#### <Icon name="angle-right" /> Do you support X language or X framework?
+### <Icon name="angle-right" /> Do you support X language or X framework?
 
 Any and all. Ruby, Node, C#, PHP - none of that matters. Cypress tests anything
 that runs in the context of a browser. It is back end, front end, language and
@@ -60,32 +60,32 @@ framework agnostic.
 
 You'll write your tests in JavaScript or TypeScript, but beyond that Cypress works everywhere.
 
-#### <Icon name="angle-right" /> Will Cypress work in my CI provider?
+### <Icon name="angle-right" /> Will Cypress work in my CI provider?
 
 Cypress works in any [CI provider](/app/continuous-integration/overview).
 
-#### <Icon name="angle-right" /> Does Cypress require me to change any of my existing code?
+### <Icon name="angle-right" /> Does Cypress require me to change any of my existing code?
 
 No. But if you're wanting to test parts of your application that are not easily
 testable, you'll want to refactor those situations (as you would for any
 testing).
 
-#### <Icon name="angle-right" /> We use WebSockets; will Cypress work with that?
+### <Icon name="angle-right" /> We use WebSockets; will Cypress work with that?
 
 Yes.
 
-#### <Icon name="angle-right" /> Is it possible to use cypress on `.jspa`?
+### <Icon name="angle-right" /> Is it possible to use cypress on `.jspa`?
 
 Yes. Cypress works on anything rendered to a browser.
 
-#### <Icon name="angle-right" /> Can I use Cypress to script user-actions on an external site like `gmail.com`?
+### <Icon name="angle-right" /> Can I use Cypress to script user-actions on an external site like `gmail.com`?
 
 Using Cypress to test against a
 3rd party application is not its intended use. It _may_ work but will defeat the
 purpose of why it was created. You use Cypress _while_ you develop your
 application, it helps you write your tests.
 
-#### <Icon name="angle-right" /> Is there code coverage?
+### <Icon name="angle-right" /> Is there code coverage?
 
 There is a plugin and detailed documentation on how to get end-to-end, unit and
 full stack code coverage.
@@ -94,7 +94,7 @@ full stack code coverage.
 - Use the [@cypress/code-coverage](https://github.com/cypress-io/code-coverage)
   plugin
 
-#### <Icon name="angle-right" /> Are there driver bindings in my language?
+### <Icon name="angle-right" /> Are there driver bindings in my language?
 
 Cypress does _not_ utilize WebDriver for testing, so it does not use or have any
 notion of driver bindings. If your language can be somehow transpiled to
@@ -104,7 +104,7 @@ or
 [Cypress Browserify preprocessor](https://github.com/cypress-io/cypress-browserify-preprocessor)
 to transpile your tests to JavaScript that Cypress can run.
 
-#### <Icon name="angle-right" /> What's the difference between a Spec, Test, and a Test Suite?
+### <Icon name="angle-right" /> What's the difference between a Spec, Test, and a Test Suite?
 
 The terms _spec_, _test_, and _test suite_ have specific meanings. Here's how they are differentiated in Cypress:
 
@@ -114,11 +114,11 @@ The terms _spec_, _test_, and _test suite_ have specific meanings. Here's how th
 
 **<u>Test Suite</u>** A collection of spec files that are grouped together. It allows you to organize your tests based on different criteria, such as functional areas, modules, or specific features. A test suite can include multiple spec files, each containing one or more tests. By grouping related tests together in a test suite, you can organize and manage your tests more effectively. Cypress provides options to run individual spec files, multiple spec files, or the entire test suite during test execution.
 
-#### <Icon name="angle-right" /> When should I write a End-to-End tests and when should I write Component Tests?
+### <Icon name="angle-right" /> When should I write a End-to-End tests and when should I write Component Tests?
 
 For more information on how to choose a Cypress testing type, we recommend this [Testing Types Guide](/app/core-concepts/testing-types).
 
-#### <Icon name="angle-right" /> When should I write a unit test and when should I write an end-to-end test?
+### <Icon name="angle-right" /> When should I write a unit test and when should I write an end-to-end test?
 
 We believe unit tests and end-to-end tests have differences that should guide
 your choice.
@@ -154,7 +154,7 @@ features. Good tests:
 Certainly, unit and end-to-end tests are NOT in opposition to each other and are
 complementary tools in your toolbox.
 
-#### <Icon name="angle-right" /> How do I convince my company to use Cypress?
+### <Icon name="angle-right" /> How do I convince my company to use Cypress?
 
 First, be honest with yourself -
 [is Cypress the right tool](/app/get-started/why-cypress) for your company and
@@ -166,7 +166,7 @@ prototype to others before proceeding any further. If you can demonstrate the
 benefits of using Cypress as a developer tool for your project to other
 engineers, then Cypress will likely be more quickly adopted.
 
-#### <Icon name="angle-right" /> How can I find out about new versions of Cypress?
+### <Icon name="angle-right" /> How can I find out about new versions of Cypress?
 
 We publish our releases at GitHub and npm, together with the releases we also
 publish a changelog with the principal changes, fixes, and updates. You can
@@ -176,20 +176,20 @@ follow through these links:
 - [npm (Releases)](https://www.npmjs.com/package/cypress)
 - [Changelog](/app/references/changelog)
 
-#### <Icon name="angle-right" /> How often are Cypress versions released?
+### <Icon name="angle-right" /> How often are Cypress versions released?
 
 We try to release the Cypress App every two weeks.
 
 If there is a significant bug outside of our release schedule then we release a
 patch as soon as possible.
 
-#### <Icon name="angle-right" /> What information is captured or transmitted when using the Cypress App?
+### <Icon name="angle-right" /> What information is captured or transmitted when using the Cypress App?
 
 The Cypress App runs locally so no data is sent to Cypress aside from exception data,
 which can be disabled using the instructions
 [here](/app/references/advanced-installation#Opt-out-of-sending-exception-data-to-Cypress).
 
-#### <Icon name="angle-right" /> Can I write API tests using Cypress?
+### <Icon name="angle-right" /> Can I write API tests using Cypress?
 
 Cypress is mainly designed to run end-to-end and component tests, but if you
 need to write a few tests that call the backend API using the
@@ -243,7 +243,7 @@ the
 
 ## "How-to" Cypress Questions
 
-#### <Icon name="angle-right" /> How do I get an element's text contents?
+### <Icon name="angle-right" /> How do I get an element's text contents?
 
 Cypress commands yield jQuery objects, so you can call methods on them.
 
@@ -325,7 +325,7 @@ cy.get('div').should(($div) => {
 This is the equivalent of Selenium's `getText()` method, which returns the
 innerText of a visible element.
 
-#### <Icon name="angle-right" /> How do I get an input's value?
+### <Icon name="angle-right" /> How do I get an input's value?
 
 Cypress yields you jQuery objects, so you can call methods on them.
 
@@ -369,12 +369,12 @@ cy.get('input')
   })
 ```
 
-#### <Icon name="angle-right" /> How do I compare the value or state of one thing to another?
+### <Icon name="angle-right" /> How do I compare the value or state of one thing to another?
 
 Our [Variables and Aliases guide](/app/core-concepts/variables-and-aliases)
 gives you examples of doing exactly that.
 
-#### <Icon name="angle-right" /> Can I store an attribute's value in a constant or a variable for later use?
+### <Icon name="angle-right" /> Can I store an attribute's value in a constant or a variable for later use?
 
 Yes, and there are a couple of ways to do this. One way to hold a value or
 reference is with
@@ -386,7 +386,7 @@ change state).
 For examples how to do this, please read our
 [Variables and Aliases guide](/app/core-concepts/variables-and-aliases).
 
-#### <Icon name="angle-right" /> How do I get the native DOM reference of an element found using Cypress?
+### <Icon name="angle-right" /> How do I get the native DOM reference of an element found using Cypress?
 
 Cypress wraps elements in jQuery so you'd get the native element from there
 within a [.then()](/api/commands/then) command.
@@ -397,7 +397,7 @@ cy.get('button').then(($el) => {
 })
 ```
 
-#### <Icon name="angle-right" /> How do I do something different if an element doesn't exist?
+### <Icon name="angle-right" /> How do I do something different if an element doesn't exist?
 
 What you're asking about is conditional testing and control flow.
 
@@ -405,7 +405,7 @@ Please read our extensive
 [Conditional Testing Guide](/app/guides/conditional-testing) which
 explains this in detail.
 
-#### <Icon name="angle-right" /> How can I make Cypress wait until something is visible in the DOM?
+### <Icon name="angle-right" /> How can I make Cypress wait until something is visible in the DOM?
 
 :::info
 
@@ -437,7 +437,7 @@ you can pass to most action commands.
 This is the single most important guide for understanding how to test with
 Cypress.
 
-#### <Icon name="angle-right" /> How do I wait for my application to load? <E2EOnlyBadge />
+### <Icon name="angle-right" /> How do I wait for my application to load? <E2EOnlyBadge />
 
 We have seen many different iterations of this question. The answers can be
 varied depending on how your application behaves and the circumstances under
@@ -474,7 +474,7 @@ asynchronous nature of these requests, Cypress cannot intuitively know to wait
 for them. You must define these routes and be able to unambiguously tell Cypress
 which requests you want to wait on.
 
-#### <Icon name="angle-right" /> Can I throttle network speeds using Cypress?
+### <Icon name="angle-right" /> Can I throttle network speeds using Cypress?
 
 You can throttle your network connection by accessing your Developer Tools
 Network panel. Additionally, you can add your own custom presets by selecting
@@ -482,7 +482,7 @@ Network panel. Additionally, you can add your own custom presets by selecting
 
 We do not currently offer any options to simulate this during `cypress run`.
 
-#### <Icon name="angle-right" /> Can I use ES7 async / await syntax?
+### <Icon name="angle-right" /> Can I use ES7 async / await syntax?
 
 No. The Command API is not designed in a way that makes this possible currently. To understand how Cypress commands work, please read:
 
@@ -492,12 +492,12 @@ No. The Command API is not designed in a way that makes this possible currently.
 - Our [Variables and Aliases guide](/app/core-concepts/variables-and-aliases)
   which talks about patterns dealing with async code
 
-#### <Icon name="angle-right" /> How do I select or query for elements if my application uses dynamic classes or dynamic IDs?
+### <Icon name="angle-right" /> How do I select or query for elements if my application uses dynamic classes or dynamic IDs?
 
 Read more about the
 [best practices for selecting elements here](/app/core-concepts/best-practices#Selecting-Elements).
 
-#### <Icon name="angle-right" /> I want to run tests only within one specific folder. How do I do this?
+### <Icon name="angle-right" /> I want to run tests only within one specific folder. How do I do this?
 
 You can specify which test files to run during
 [cypress run](/app/references/command-line#cypress-run) by
@@ -508,12 +508,12 @@ the specific folder where the tests are you want to run.
 This feature is only available when using
 [cypress run](/app/references/command-line#cypress-run).
 
-#### <Icon name="angle-right" /> Is there a suggested way or best practice for how I should target elements or write element selectors?
+### <Icon name="angle-right" /> Is there a suggested way or best practice for how I should target elements or write element selectors?
 
 Yes. Read more about the
 [best practices for selecting elements here](/app/core-concepts/best-practices#Selecting-Elements).
 
-#### <Icon name="angle-right" /> Can I prevent Cypress from failing my test when my application throws an uncaught exception error?
+### <Icon name="angle-right" /> Can I prevent Cypress from failing my test when my application throws an uncaught exception error?
 
 Yes. By default Cypress will automatically fail tests whenever an uncaught exception
 bubbles up out of your app.
@@ -528,7 +528,7 @@ This is documented in detail on the
 [Catalog Of Events](/api/cypress-api/catalog-of-events) page and the recipe
 [Handling errors](/app/references/recipes#Fundamentals).
 
-#### <Icon name="angle-right" /> Will Cypress fail the test when an application has unhandled rejected promise?
+### <Icon name="angle-right" /> Will Cypress fail the test when an application has unhandled rejected promise?
 
 By default no, Cypress does not listen to the unhandled promise rejection event
 in your application, and thus does not fail the test. You can set up your own
@@ -581,14 +581,14 @@ it('fails on unhandled rejection', () => {
 })
 ```
 
-#### <Icon name="angle-right" /> Can I override environment variables or create configuration for different environments?
+### <Icon name="angle-right" /> Can I override environment variables or create configuration for different environments?
 
 Yes, you can pass configuration to Cypress via environment variables, CLI
 arguments, JSON files and other means.
 
 [Read the Environment Variables guide.](/app/references/environment-variables)
 
-#### <Icon name="angle-right" /> Can I override or change the default user agent the browser uses?
+### <Icon name="angle-right" /> Can I override or change the default user agent the browser uses?
 
 Yes.
 
@@ -601,7 +601,7 @@ Yes.
   in the options, but this will not propagate the `userAgent` in the browser and
   can lead to application rendering unexpectedly.
 
-#### <Icon name="angle-right" /> Can I block traffic going to specific domains? I want to block Google Analytics or other providers.
+### <Icon name="angle-right" /> Can I block traffic going to specific domains? I want to block Google Analytics or other providers.
 
 Yes.
 [You can set this with `blockHosts` in the Cypress configuration](/app/references/configuration#Browser).
@@ -609,28 +609,28 @@ Yes.
 Also, check out our
 [Stubbing Google Analytics Recipe](/app/references/recipes#Stubbing-and-spying).
 
-#### <Icon name="angle-right" /> How can I verify that calls to analytics like Google Analytics are being made correct?
+### <Icon name="angle-right" /> How can I verify that calls to analytics like Google Analytics are being made correct?
 
 You can stub their functions and then ensure they're being called.
 
 Check out our
 [Stubbing Google Analytics Recipe](/app/references/recipes#Stubbing-and-spying).
 
-#### <Icon name="angle-right" /> I'm trying to test a chat application. Can I run more than one browser at a time with Cypress?
+### <Icon name="angle-right" /> I'm trying to test a chat application. Can I run more than one browser at a time with Cypress?
 
 [We've answered this question in detail here.](/app/references/trade-offs#Multiple-browsers-open-at-the-same-time)
 
-#### <Icon name="angle-right" /> How can I modify or pass arguments used to launch the browser?
+### <Icon name="angle-right" /> How can I modify or pass arguments used to launch the browser?
 
 You use the [`before:browser:launch`](/api/node-events/browser-launch-api) plugin
 event.
 
-#### <Icon name="angle-right" /> Can I make cy.request() poll until a condition is met?
+### <Icon name="angle-right" /> Can I make cy.request() poll until a condition is met?
 
 Yes. You do it the
 [same way as any other recursive loop](/api/commands/request#Request-Polling).
 
-#### <Icon name="angle-right" /> Can I use the Page Object pattern?
+### <Icon name="angle-right" /> Can I use the Page Object pattern?
 
 Yes.
 
@@ -643,7 +643,7 @@ For those wanting to use page objects, we've highlighted the
 [best practices ](/api/cypress-api/custom-commands#Best-Practices) for
 replicating the page object pattern.
 
-#### <Icon name="angle-right" /> Can I run a single test or group of tests?
+### <Icon name="angle-right" /> Can I run a single test or group of tests?
 
 You can run a group of tests or a single test by placing an
 [`.only`](/app/core-concepts/writing-and-organizing-tests#Excluding-and-Including-Tests)
@@ -652,7 +652,7 @@ on a test suite or specific test.
 You can run a single test file or group of tests by passing the `--spec` flag to
 [cypress run](/app/references/command-line#cypress-run).
 
-#### <Icon name="angle-right" /> How do I test uploading a file?
+### <Icon name="angle-right" /> How do I test uploading a file?
 
 It is possible to upload files in your application but it's different based on
 how you've written your own upload code. The various options are detailed in the
@@ -663,7 +663,7 @@ simplest option will work:
 cy.get('[data-cy="file-input"]').selectFile('cypress/fixtures/data.json')
 ```
 
-#### <Icon name="angle-right" /> How do I check that an email was sent out?
+### <Icon name="angle-right" /> How do I check that an email was sent out?
 
 :::caution
 
@@ -700,7 +700,7 @@ email's functionality and visual style:
    for testing. Some of these services even offer a
    <a href="/app/plugins/plugins-list#email">Cypress plugin</a> to access emails.
 
-#### <Icon name="angle-right" /> How do I wait for multiple requests to the same url?
+### <Icon name="angle-right" /> How do I wait for multiple requests to the same url?
 
 You should set up an alias (using [`.as()`](/api/commands/as)) to a single
 [`cy.intercept()`](/api/commands/intercept) that matches all of the XHRs. You
@@ -716,7 +716,7 @@ cy.wait('@getUsers') // Wait for second GET to /users/
 cy.get('#list>li').should('have.length', 20)
 ```
 
-#### <Icon name="angle-right" /> How do I seed / reset my database?
+### <Icon name="angle-right" /> How do I seed / reset my database?
 
 You can use [`cy.request()`](/api/commands/request),
 [`cy.exec()`](/api/commands/exec), or [`cy.task()`](/api/commands/task) to talk
@@ -726,12 +726,12 @@ You could also stub requests directly using
 [`cy.intercept()`](/api/commands/intercept) which avoids ever even needing to
 fuss with your database.
 
-#### <Icon name="angle-right" /> How do I test elements inside an iframe?
+### <Icon name="angle-right" /> How do I test elements inside an iframe?
 
 We have an [open proposal](https://github.com/cypress-io/cypress/issues/136) to
 expand the APIs to support "switching into" an iframe and then back out of them.
 
-#### <Icon name="angle-right" /> How do I preserve cookies / localStorage in between my tests?
+### <Icon name="angle-right" /> How do I preserve cookies / localStorage in between my tests?
 
 By default, Cypress automatically
 [clears all cookies, local storage and session **before** each test](/app/core-concepts/test-isolation)
@@ -744,7 +744,7 @@ Alternatively, you can disable
 [`testIsolation`](/app/references/configuration#e2e) at the suite or e2e
 configuration-level to prevent the clearing of browser state.
 
-#### <Icon name="angle-right" /> Some of my elements animate in; how do I work around that?
+### <Icon name="angle-right" /> Some of my elements animate in; how do I work around that?
 
 Oftentimes you can usually account for animation by asserting
 [`.should('be.visible')`](/api/commands/should) or
@@ -776,7 +776,7 @@ not? Cypress will
 elements to stop animating prior to interacting with them via action commands
 like `.click()` or `.type()`.
 
-#### <Icon name="angle-right" /> Can I test anchor links that open in a new tab?
+### <Icon name="angle-right" /> Can I test anchor links that open in a new tab?
 
 Cypress does not have native multi-tab support, but new tabs can be tested with the [@cypress/puppeteer plugin](https://github.com/cypress-io/cypress/blob/develop/npm/puppeteer/README.md).
 
@@ -784,11 +784,11 @@ If you would like to test anchor links natively, there are lots of workarounds t
 
 [Read through the recipe on tab handling and links to see how to test anchor links.](/app/references/recipes#Testing-the-DOM)
 
-#### <Icon name="angle-right" /> Can I dynamically test multiple viewports?
+### <Icon name="angle-right" /> Can I dynamically test multiple viewports?
 
 Yes, you can. We provide an [example here](/api/commands/viewport#Width-Height).
 
-#### <Icon name="angle-right" /> Can I run the same tests on multiple subdomains? <E2EOnlyBadge />
+### <Icon name="angle-right" /> Can I run the same tests on multiple subdomains? <E2EOnlyBadge />
 
 Yes. In this example, we loop through an array of urls and make assertions on
 the logo.
@@ -811,7 +811,7 @@ describe('Logo', () => {
   alt="Command Log multiple urls"
 />
 
-#### <Icon name="angle-right" /> How do I require or import node modules in Cypress?
+### <Icon name="angle-right" /> How do I require or import node modules in Cypress?
 
 The code you write in Cypress is executed in the browser, so you can import or
 require JS modules, _but_ only those that work in a browser.
@@ -828,12 +828,12 @@ browser.
 
 [Check out the "Node Modules" example recipe.](/app/references/recipes#Fundamentals)
 
-#### <Icon name="angle-right" /> Is there a way to give a proper SSL certificate to your proxy so the page doesn't show up as "not secure"?
+### <Icon name="angle-right" /> Is there a way to give a proper SSL certificate to your proxy so the page doesn't show up as "not secure"?
 
 No, Cypress modifies network traffic in real time and therefore must sit between
 your server and the browser. There is no other way for us to achieve that.
 
-#### <Icon name="angle-right" /> Is there any way to detect if my app is running under Cypress?
+### <Icon name="angle-right" /> Is there any way to detect if my app is running under Cypress?
 
 You can check for the existence of `window.Cypress`, in your **application
 code**.
@@ -854,7 +854,7 @@ If you want to detect if your Node.js code is running within Cypress, Cypress
 sets an OS level environment variable of `CYPRESS=true`. You could detect that
 you're running in Cypress by looking for `process.env.CYPRESS`.
 
-#### <Icon name="angle-right" /> Is there a way to test that a file got downloaded? I want to test that a button click triggers a download.
+### <Icon name="angle-right" /> Is there a way to test that a file got downloaded? I want to test that a button click triggers a download.
 
 There are a lot of ways to test this, so it depends. You'll need to be aware of
 what actually causes the download, then think of a way to test that mechanism.
@@ -876,12 +876,12 @@ recipe.
 In the end, it's up to you to know your implementation and to test enough to
 cover everything.
 
-#### <Icon name="angle-right" /> Is it possible to catch the promise chain in Cypress?
+### <Icon name="angle-right" /> Is it possible to catch the promise chain in Cypress?
 
 No. You cannot add a `.catch` error handler to a failed command.
 [Read more about how the Cypress commands are not Promises](/app/core-concepts/introduction-to-cypress#The-Cypress-Command-Queue)
 
-#### <Icon name="angle-right" /> Is there a way to modify the screenshots/video resolution?
+### <Icon name="angle-right" /> Is there a way to modify the screenshots/video resolution?
 
 There is an [open issue](https://github.com/cypress-io/cypress/issues/587) for
 more easily configuring this.
@@ -889,14 +889,14 @@ more easily configuring this.
 You can modify the screenshot and video size when running headlessly with
 [this workaround](/api/node-events/browser-launch-api#Set-screen-size-when-running-headless).
 
-#### <Icon name="angle-right" /> Does Cypress support ES7?
+### <Icon name="angle-right" /> Does Cypress support ES7?
 
 Yes. You can customize how specs are processed by using one of our [preprocessor plugins](/app/plugins/plugins-list)
 or by [writing your own custom preprocessor](/api/node-events/preprocessors-api).
 
 Typically you'd reuse your existing Babel and webpack configurations.
 
-#### <Icon name="angle-right" /> How does one determine what the latest version of Cypress is?
+### <Icon name="angle-right" /> How does one determine what the latest version of Cypress is?
 
 There are a few ways.
 
@@ -906,7 +906,7 @@ There are a few ways.
   [here](https://download.cypress.io/desktop.json).
 - It's also always in our [repo](https://github.com/cypress-io/cypress).
 
-#### <Icon name="angle-right" /> When I visit my site directly, the certificate is verified, however the browser launched through Cypress is showing it as "Not Secure". Why?
+### <Icon name="angle-right" /> When I visit my site directly, the certificate is verified, however the browser launched through Cypress is showing it as "Not Secure". Why?
 
 When using Cypress to test an HTTPS site, you might see a browser warning next
 to the browser URL. This is normal. Cypress modifies the traffic between your
@@ -918,12 +918,12 @@ HTTPS.
 
 See also the [Cross Origin Testing](/app/guides/cross-origin-testing) guide.
 
-#### <Icon name="angle-right" /> How do I run the server and tests together and then shutdown the server?
+### <Icon name="angle-right" /> How do I run the server and tests together and then shutdown the server?
 
 To start the server, run the tests and then shutdown the server we recommend
 [these npm tools](/app/continuous-integration/overview#Boot-your-server).
 
-#### <Icon name="angle-right" /> I found a bug! What do I do?
+### <Icon name="angle-right" /> I found a bug! What do I do?
 
 - Search existing [open issues](https://github.com/cypress-io/cypress/issues),
   it may already be reported!
@@ -933,7 +933,7 @@ To start the server, run the tests and then shutdown the server we recommend
   best chance of getting a bug looked at quickly is to provide a repository with
   a reproducible bug that can be cloned and run.
 
-#### <Icon name="angle-right" /> What is the right balance between custom commands and utility functions?
+### <Icon name="angle-right" /> What is the right balance between custom commands and utility functions?
 
 There is already a great section in
 [Custom Commands](/api/cypress-api/custom-commands#Best-Practices) guide that
@@ -941,7 +941,7 @@ talks about trade-offs between custom commands and utility functions. We feel
 reusable functions in general are a way to go. Plus they do not confuse
 [IntelliSense like custom commands do](https://github.com/cypress-io/cypress/issues/1065).
 
-#### <Icon name="angle-right" /> Can my tests interact with Redux / Vuex data store?
+### <Icon name="angle-right" /> Can my tests interact with Redux / Vuex data store?
 
 Usually your end-to-end tests interact with the application through public
 browser APIs: DOM, network, storage, etc. But sometimes you might want to make
@@ -962,7 +962,7 @@ providers and plugins for state stores. See the
 [Mount API Guide](/api/commands/mount) for various examples on using stores with
 component testing.
 
-#### <Icon name="angle-right" /> How do I spy on console.log?
+### <Icon name="angle-right" /> How do I spy on console.log?
 
 To spy on `console.log` you should use [cy.stub()](/api/commands/stub).
 
@@ -989,7 +989,7 @@ cy.get('@consoleLog').should('be.calledWith', 'Hello World!')
 Also, check out our
 [Stubbing `console` Recipe](/app/references/recipes#Stubbing-and-spying).
 
-#### <Icon name="angle-right" /> How do I use special characters with `cy.get()`?
+### <Icon name="angle-right" /> How do I use special characters with `cy.get()`?
 
 Special characters like `/`, `.` are valid characters for ids
 [according to the CSS spec](https://www.w3.org/TR/html50/dom.html#the-id-attribute).
@@ -1023,13 +1023,13 @@ it('test', () => {
 Note that `cy.$$.escapeSelector()` doesn't work. `cy.$$` doesn't refer to
 `jQuery`. It only queries DOM. [Learn more about why](/api/utilities/$#Notes)
 
-#### <Icon name="angle-right" /> Why doesn't the `instanceof Event` work?
+### <Icon name="angle-right" /> Why doesn't the `instanceof Event` work?
 
 It might be because of the 2 different windows in the Cypress App. For
 more information, please check
 [the note here](/api/commands/window#Cypress-uses-2-different-windows).
 
-#### <Icon name="angle-right" /> How do I prevent application redirecting to another URL?
+### <Icon name="angle-right" /> How do I prevent application redirecting to another URL?
 
 Sometimes, your application might redirect the browser to another domain, losing
 the Cypress's control. If the application is using `window.location.replace`
@@ -1038,7 +1038,7 @@ option described in our [Experiments](/app/references/experiments) page.
 
 ## Continuous Integration (CI/CD)
 
-#### <Icon name="angle-right" /> Why do my Cypress tests pass locally but not in CI?
+### <Icon name="angle-right" /> Why do my Cypress tests pass locally but not in CI?
 
 There are many reasons why tests may fail in CI but pass locally. Some of these
 include:
@@ -1068,7 +1068,7 @@ these strategies:
 - Ensure video recording and/or screenshots are enabled for the CI run and
   compare the recording to the Command Log when running the test locally.
 
-#### <Icon name="angle-right" /> Why are my video recordings freezing or dropping frames when running in CI?
+### <Icon name="angle-right" /> Why are my video recordings freezing or dropping frames when running in CI?
 
 Videos recorded on Continuous Integration may have frozen or dropped frames if
 there are not enough resources available when running the tests in your CI
@@ -1080,7 +1080,7 @@ to identify and evaluate the resource utilization within your CI.
 If you are experiencing this issue, we recommend switching to a more powerful CI
 container or provider.
 
-#### <Icon name="angle-right" /> What can I do if my tests crash or hang on CI?
+### <Icon name="angle-right" /> What can I do if my tests crash or hang on CI?
 
 As some users have noted, a longer test has a higher chance of hanging or even
 crashing when running on CI. When a test runs for a long period of time, its
@@ -1094,12 +1094,12 @@ You can further split individual long-running tests. For example, you can verify
 parts of the longer user feature in the separate tests as described in
 [Split a very long Cypress test into shorter ones using App Actions](https://www.cypress.io/blog/2019/10/29/split-a-very-long-cypress-test-into-shorter-ones-using-app-actions/).
 
-#### <Icon name="angle-right" /> How can I parallelize my runs?
+### <Icon name="angle-right" /> How can I parallelize my runs?
 
 You can read more about parallelization
 [here](/cloud/features/smart-orchestration/parallelization).
 
-#### <Icon name="angle-right" /> I tried to install Cypress in my CI, but I get the error: `EACCES: permission denied`.
+### <Icon name="angle-right" /> I tried to install Cypress in my CI, but I get the error: `EACCES: permission denied`.
 
 First, make sure you have [Node](https://nodejs.org) installed on your system.
 `npm` is a Node package that is installed globally by default when you install
@@ -1109,25 +1109,25 @@ Node and is required to install our
 Next, you'd want to check that you have the proper permissions for installing on
 your system or you may need to run `sudo npm install cypress`.
 
-#### <Icon name="angle-right" /> Is there an option to run Cypress in CI with Developer Tools open? We want to track network and console issues.
+### <Icon name="angle-right" /> Is there an option to run Cypress in CI with Developer Tools open? We want to track network and console issues.
 
 No. There is not currently a way to run Cypress in `cypress run` with Developer
 Tools open. You can use Cypress [Test Replay](/cloud/features/test-replay) to see browser requests and console logs of tests that ran in CI.
 
 ## Distinct Cypress Use Cases
 
-#### <Icon name="angle-right" /> Can I use Cypress to test charts and graphs?
+### <Icon name="angle-right" /> Can I use Cypress to test charts and graphs?
 
 Yes. You can leverage visual testing tools to test that charts and graphs are
 rendering as expected. For more information, check out the
 [Visual Testing guide](/app/tooling/visual-testing).
 
-#### <Icon name="angle-right" /> Can I test a chrome extension? How do I load my chrome extension?
+### <Icon name="angle-right" /> Can I test a chrome extension? How do I load my chrome extension?
 
 Yes. You can test your extensions by
 [loading them when we launch the browser](/api/node-events/browser-launch-api).
 
-#### <Icon name="angle-right" /> Can I test my Electron app?
+### <Icon name="angle-right" /> Can I test my Electron app?
 
 Testing your Electron app will not 'just work', as Cypress is designed to test
 anything that runs in a browser and Electron is a browser + Node.
@@ -1137,7 +1137,7 @@ stubbing events from Electron. These tests are open source so you can check them
 out
 [here](https://github.com/cypress-io/cypress/tree/develop/packages/launchpad/cypress/e2e).
 
-#### <Icon name="angle-right" /> Can I test the HTML `<head>` element?
+### <Icon name="angle-right" /> Can I test the HTML `<head>` element?
 
 Yes, you can. While executing tests, you can view the entire
 `window.document` object in your open console using
@@ -1187,7 +1187,7 @@ describe('The Document Metadata', () => {
 })
 ```
 
-#### <Icon name="angle-right" /> Can I check that a form's HTML form validation is shown when an input is invalid?
+### <Icon name="angle-right" /> Can I check that a form's HTML form validation is shown when an input is invalid?
 
 You certainly can.
 
@@ -1240,12 +1240,12 @@ cy.get('[type="email"]').then(($input) => {
 })
 ```
 
-#### <Icon name="angle-right" /> Can Cypress be used for model-based testing?
+### <Icon name="angle-right" /> Can Cypress be used for model-based testing?
 
 <Icon name="github" inline="true" contentType="rwa" /> is implemented using XState
 model state library.
 
-#### <Icon name="angle-right" /> Can Cypress be used for performance testing?
+### <Icon name="angle-right" /> Can Cypress be used for performance testing?
 
 Cypress is not built for performance testing. Because Cypress instruments the
 page under test, proxies the network requests, and tightly controls the test
@@ -1260,7 +1260,7 @@ plugin.
 
 ## Integrations with Other Tools/Frameworks/Libraries
 
-#### <Icon name="angle-right" /> Can I test Gatsby.js sites using Cypress?
+### <Icon name="angle-right" /> Can I test Gatsby.js sites using Cypress?
 
 For end-to-end tests, yes, as you can read in the official
 [Gatsby docs](https://www.gatsbyjs.com/docs/end-to-end-testing/). You can also
@@ -1271,7 +1271,7 @@ For component testing, Gatsby is not currently supported out of the box, but it
 might be possible by
 [configuring a custom devServer](/app/references/configuration#devServer).
 
-#### <Icon name="angle-right" /> Can I test React applications using Cypress?
+### <Icon name="angle-right" /> Can I test React applications using Cypress?
 
 For end-to-end testing, yes, absolutely. A good example of a fully tested React
 application is our
@@ -1287,7 +1287,7 @@ App, Vite, and Next.js for React applications. See the
 [Framework Configuration Guide](/app/component-testing/component-framework-configuration)
 for more info.
 
-#### <Icon name="angle-right" /> Can I use Jest snapshots?
+### <Icon name="angle-right" /> Can I use Jest snapshots?
 
 While there is no built-in `snapshot` command in Cypress, you can make your own
 snapshot assertion command. Read how to do so in our blog post
@@ -1296,7 +1296,7 @@ We recommend using the 3rd-party module
 [cypress-plugin-snapshots](https://github.com/meinaart/cypress-plugin-snapshots).
 For other snapshot plugins, search the [Plugins](/app/plugins/plugins-list) page.
 
-#### <Icon name="angle-right" /> Can I use Testing Library?
+### <Icon name="angle-right" /> Can I use Testing Library?
 
 Absolutely! Feel free to add the
 [@testing-library/cypress](https://testing-library.com/docs/cypress-testing-library/intro/)
@@ -1324,7 +1324,7 @@ cy.findByRole('dialog').within(() => {
 })
 ```
 
-#### <Icon name="angle-right" /> Can I use Cucumber to write tests?
+### <Icon name="angle-right" /> Can I use Cucumber to write tests?
 
 Yes, you can.
 
@@ -1353,12 +1353,12 @@ scenarios, you might be interested in these articles:
   [BDD without Cucumber](https://filiphric.com/how-to-structure-a-big-project-in-cypress#bdd-without-cucumber)
   for recommendations for writing tests without using Cucumber.
 
-#### <Icon name="angle-right" /> Can I check the GraphQL network calls using Cypress?
+### <Icon name="angle-right" /> Can I check the GraphQL network calls using Cypress?
 
 Yes, by using the newer API command [cy.intercept()](/api/commands/intercept) as
 described in the [Working with GraphQL](/app/guides/network-requests#Working-with-GraphQL)
 
-#### <Icon name="angle-right" /> Is there an ESLint plugin for Cypress or a list of globals?
+### <Icon name="angle-right" /> Is there an ESLint plugin for Cypress or a list of globals?
 
 Yes! Check out our
 [ESLint plugin](https://github.com/cypress-io/eslint-plugin-cypress). It will
@@ -1367,7 +1367,7 @@ and [Mocha](https://mochajs.org/) globals.
 
 ## Component Testing
 
-#### <Icon name="angle-right" /> What is component testing?
+### <Icon name="angle-right" /> What is component testing?
 
 Many modern front-end UI libraries encourage writing applications using small,
 reusable building blocks known as components. Components start small (think
@@ -1378,7 +1378,7 @@ Component testing is about testing an individual component in isolation from the
 rest of the app. This allows only having to worry about the component's
 functionality and not how it fits into an entire page.
 
-#### <Icon name="angle-right" /> How does Cypress do component testing?
+### <Icon name="angle-right" /> How does Cypress do component testing?
 
 Cypress will take a component and mount it into a blank canvas. When doing so,
 you have direct access to the component's API, making it easier to pass in props
@@ -1388,7 +1388,7 @@ Cypress commands, selectors, and assertions to write your tests.
 Cypress supports multiple frameworks and development servers for component
 testing.
 
-#### <Icon name="angle-right" /> How does Cypress component testing compare to other options?
+### <Icon name="angle-right" /> How does Cypress component testing compare to other options?
 
 When Cypress mounts a component, it does so in an actual browser and not a
 simulated environment like jsdom. This allows you to visually see and interact
@@ -1403,7 +1403,7 @@ Component tests can also use the vast Cypress ecosystem, plugins, and services
 (like [Cypress Cloud](https://www.cypress.io/cloud)) already available to
 complement your component tests.
 
-#### <Icon name="angle-right" /> What is the Mount Function?
+### <Icon name="angle-right" /> What is the Mount Function?
 
 We ship a `mount` function for each UI library that is imported from the
 `cypress` package. It is responsible for rendering components within Cypress's
@@ -1430,26 +1430,26 @@ This allows you to use `cy.mount()` in any component test without having to
 your needs. See the examples guide for each framework for info on creating a
 custom `cy.mount()` command.
 
-#### <Icon name="angle-right" /> Why isn't my component rendering as it should?
+### <Icon name="angle-right" /> Why isn't my component rendering as it should?
 
 Any global styles and fonts must be imported and made available to your
 component, just like in the application. See our guide on
 [Styling Components](/app/component-testing/styling-components) for more
 information on doing so.
 
-#### <Icon name="angle-right" /> Why doesn't my spec show in the Specs page?
+### <Icon name="angle-right" /> Why doesn't my spec show in the Specs page?
 
 If something appears missing from the spec list, make sure the files have the
 [proper extension and the `specPattern` is correctly defined](/app/component-testing/component-framework-configuration#Spec-Pattern-for-Component-Tests).
 
-#### <Icon name="angle-right" /> How do I fix ESLint errors for things like using the global Cypress objects?
+### <Icon name="angle-right" /> How do I fix ESLint errors for things like using the global Cypress objects?
 
 If you experience ESLint errors in your code editor around Cypress globals,
 install the
 [`eslint-plugin-cypress`](https://www.npmjs.com/package/eslint-plugin-cypress)
 ESLint plugin.
 
-#### <Icon name="angle-right" /> Why isn't TypeScript recognizing the global Cypress objects or custom cypress commands (eg: `cy.mount`)?
+### <Icon name="angle-right" /> Why isn't TypeScript recognizing the global Cypress objects or custom cypress commands (eg: `cy.mount`)?
 
 In some instances, TypeScript might not recognize the custom `cy.mount()`
 command in Cypress spec files not located in the **cypress** directory. You will
@@ -1473,7 +1473,7 @@ file in your **tsconfig.json** file. See our
 [TypeScript Configuration](/app/tooling/typescript-support#Using-an-External-Typings-File)
 guide for more info on doing this.
 
-#### <Icon name="angle-right" /> How do I get TypeScript to recognize Cypress types and not Jest types?
+### <Icon name="angle-right" /> How do I get TypeScript to recognize Cypress types and not Jest types?
 
 For frameworks that include Jest out of the box (like Create React App), you
 might run into issues where the Cypress global types for TypeScript conflict

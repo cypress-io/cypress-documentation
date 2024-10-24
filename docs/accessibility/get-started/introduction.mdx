@@ -23,6 +23,12 @@ Cypress Accessibility generates a sortable, filterable report, to see scores and
 
 ## How are reports created?
 
+:::caution
+
+Cypress Accessibility generates reports using [Cypress Test Replay](/cloud/features/test-replay) data and requires Cypress v13+.
+
+:::
+
 Cypress Cloud generates an accessibility report for each unique state reached during your tests on a given Cypress run. This includes pages visited in end-to-end tests, as well as individual components rendered in component tests, and any states or pages that were encountered as a result of interactions performed during test execution.
 
 All of these page or component states are detected using the same protocol that powers [Test Replay](/cloud/features/test-replay), meaning no additional code or setup is needed anywhere in your tests.

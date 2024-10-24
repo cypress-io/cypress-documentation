@@ -187,7 +187,10 @@ describe('Azure Active Directory Authentication', () => {
 })
 ```
 
-<DocsVideo src="https://vimeo.com/789095126" />
+<DocsVideo
+  src="https://vimeo.com/789095126"
+  title="Azure Active Directory authentication with cy.origin()"
+/>
 
 We now have working authentication and tests! But we are logging in before every
 test, which is not only time consuming, but also can lead to API rate limiting
@@ -231,7 +234,10 @@ Cypress.Commands.add('loginToAAD', (username: string, password: string) => {
 })
 ```
 
-<DocsVideo src="https://vimeo.com/789095038" />
+<DocsVideo
+  src="https://vimeo.com/789095038"
+  title="Azure Active Directory authentication with cy.session()"
+/>
 
 With the use of [`cy.session()`](/api/commands/session), our tests should now
 run quicker!
