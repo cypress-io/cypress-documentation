@@ -2,6 +2,35 @@
 title: Migration Guide
 ---
 
+## Migrating to Cypress 14.0
+
+This guide details the changes and how to change your code to migrate to Cypress
+version 14.
+[See the full changelog for version v14.0](/app/references/changelog#14-0-0).
+
+### Node.js 18+ support
+
+Cypress comes bundled with its own
+[Node.js version](https://github.com/cypress-io/cypress/blob/develop/.node-version).
+However, installing the `cypress` npm package uses the Node.js version installed
+on your system.
+
+[See Node's release schedule](https://github.com/nodejs/Release). Node.js
+version 16 and 21 will no longer be supported when installing Cypress. The minimum Node.js
+version supported to install Cypress is Node.js 18+.
+
+### Unsupported Linux Distributions 
+
+Prebuilt binaries for Linux are no longer compatible with Linux distributions based on glibc `<2.28`.
+This support is inline with Node.js's support for Linux in 18+.
+
+If you're using a Linux distribution based on glibc `<2.28`, for example, Ubuntu 14-18, RHEL 7, CentOS 7, Amazon Linux 2, you'll need to 
+update your system to a newer version to install Cypress.
+
+### Just in Time Compile Changes for Component Testing 
+
+
+
 ## Migrating to Cypress 13.0
 
 This guide details the changes and how to change your code to migrate to Cypress
