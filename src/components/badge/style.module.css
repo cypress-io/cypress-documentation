@@ -21,6 +21,10 @@ p > .badge {
   background-color: #dc3545;
 }
 
+.caution {
+  background-color: #e6a700;
+}
+
 .info {
   background-color: #007bff;
 }
