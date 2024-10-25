@@ -1106,6 +1106,12 @@
   force = true
 
 [[redirects]]
+  from = "/accessibility"
+  to = "/accessibility/get-started/introduction"
+  status = 301
+  force = true
+
+[[redirects]]
   from = "/api/plugins/*"
   to = "/api/node-events/:splat"
   status = 301
