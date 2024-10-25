@@ -311,8 +311,8 @@ jobs:
           TERM: xterm
           CYPRESS_RECORD_KEY: $(CYPRESS_RECORD_KEY)
 
-<strong>+     - script: |
-</strong>+           npm install --force https://cdn.cypress.io/extract-cloud-results/v1/extract-cloud-results.tgz
++     - script: |
+=+           npm install --force https://cdn.cypress.io/extract-cloud-results/v1/extract-cloud-results.tgz
 +           node ./scripts/verifyUICoverageResults.js
 +       displayName: 'Verify UI Coverage Results'
 +       env:
