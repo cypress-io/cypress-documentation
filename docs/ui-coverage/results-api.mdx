@@ -52,41 +52,35 @@ getUICoverageResults({
   projectId: '...', // optional if set from env
   recordKey: '...', // optional if set from env
   runTags: [process.env.RUN_TAGS], // required if recording multiple runs
-})
-.then((results) => {
-  const {
-    runNumber,
-    uiCoverageReportUrl,
-    summary,
-    views
-  } = results
+}).then((results) => {
+  const { runNumber, uiCoverageReportUrl, summary, views } = results
 
-  console.log(`Received ${summary.isPartialReport ? 'partial' : ''} results for run #${runNumber}.`).
-  console.log(`See full report at ${uiCoverageReportUrl}.`)
+  console
+    .log(
+      `Received ${summary.isPartialReport ? 'partial' : ''} results for run #${runNumber}.`
+    )
+    .console.log(`See full report at ${uiCoverageReportUrl}.`)
 
   // verify project coverage
   if (summary.coverage < 80) {
-    throw new Error(`Project coverage is ${summary.coverage}, which does not meet the minimum coverage of 80%.`)
+    throw new Error(
+      `Project coverage is ${summary.coverage}, which does not meet the minimum coverage of 80%.`
+    )
   }
 
-  const criticalViews = [
-    /login/,
-    /checkout/
-  ]
+  const criticalViews = [/login/, /checkout/]
 
   // verify critical view coverage
   const criticalViewResults = views.forEach((view) => {
-    const {
-      displayName,
-      coverage,
-      uiCoverageReportUrl
-    } = view
+    const { displayName, coverage, uiCoverageReportUrl } = view
 
     const isCriticalView = criticalViews.some((rx) => rx.test(displayName))
     if (!isCriticalView) return
 
     if (coverage < 95) {
-      throw new Error(`The critical view ${displayName} has the coverage of ${coverage}, which does not meet the critical view coverage of 95%. See report at ${uiCoverageReportUrl}.`)
+      throw new Error(
+        `The critical view ${displayName} has the coverage of ${coverage}, which does not meet the critical view coverage of 95%. See report at ${uiCoverageReportUrl}.`
+      )
     }
   })
 
