@@ -65,7 +65,7 @@ getUICoverageResults({
   console.log(`See full report at ${uiCoverageReportUrl}.`)
 
   // verify project coverage
-  if (summary.coverage &#x3C; 80) {
+  if (summary.coverage < 80) {
     throw new Error(`Project coverage is ${summary.coverage}, which does not meet the minimum coverage of 80%.`)
   }
 
@@ -85,7 +85,7 @@ getUICoverageResults({
     const isCriticalView = criticalViews.some((rx) => rx.test(displayName))
     if (!isCriticalView) return
 
-    if (coverage &#x3C; 95) {
+    if (coverage < 95) {
       throw new Error(`The critical view ${displayName} has the coverage of ${coverage}, which does not meet the critical view coverage of 95%. See report at ${uiCoverageReportUrl}.`)
     }
   })
@@ -185,7 +185,7 @@ In your CI workflow that runs your Cypress tests,
 
 :::info
 
-If you record multiple runs in a single CI build, you must record these runs using the `--tag` parameter and then call `getUICoverageResults`with the `runTags` argument for each run.&#x20;
+If you record multiple runs in a single CI build, you must record these runs using the `--tag` parameter and then call `getUICoverageResults`with the `runTags` argument for each run.
 
 This is necessary to identify each unique run and return a corresponding set of results. The tags are how each run is uniquely identified.
 
