@@ -1,12 +1,24 @@
 :::caution
 
-<Icon name="exclamation-triangle" /> **Disabling document.domain Injection**
+<Icon name="exclamation-triangle" /> **Re-Enabling document.domain Injection**
 
-In some cases, `document.domain` injection may cause issues. As of Cypress
-[v12.4.0](https://on.cypress.io/changelog#12-4-0), disabling `document.domain`
-injection is available with the `experimentalSkipDomainInjection` option. Please
-read about this
-[experiment](/app/references/experiments#Experimental-Skip-Domain-Injection)
-for more information
+As of Cypress [v14.0.0], [`document.domain`](https://developer.mozilla.org/en-US/docs/Web/API/Document/domain)
+will no longer be injected into `text/html` pages by default.
 
+This means you must now use `cy.origin()` when navigating between different *origins*
+in the same test. Previously, `cy.origin()` was only necessary whe navigating between
+different [superdomains](/app/guides/cross-origin-testing#Parts-of-a-URL) in the same test.
+
+By setting the `injectDocumentDomain` configuration option to `true`, Cypress will
+attempt to inject `document.domain` into `text/html` pages.
+
+A superdomain is comprised of the trailing two elements of the hostname, delimited by
+a `.` (period). Given `https://www.cypress.io`, the superdomain is determined to be
+`cypress.io`. When this option is enabled, `cy.origin()` is not necessary when navigating
+between `https://www.cypress.io` and `https://docs.cypress.io`, but is necessary
+when navigating between `https://www.cypress.io` and `https://www.auth0.com`.
+
+- This will cause issues with certain sites, especially those that use
+[origin-keyed agent cluster](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Origin-Agent-Cluster)s.
+-  This option is deprecated, and will be removed in Cypress 15.
 :::
