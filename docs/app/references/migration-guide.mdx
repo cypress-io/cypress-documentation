@@ -19,12 +19,12 @@ on your system.
 version 16 and 21 will no longer be supported when installing Cypress. The minimum Node.js
 version supported to install Cypress is Node.js 18+.
 
-### Unsupported Linux Distributions 
+### Unsupported Linux Distributions
 
 Prebuilt binaries for Linux are no longer compatible with Linux distributions based on glibc `<2.28`.
 This support is inline with Node.js's support for Linux in 18+.
 
-If you're using a Linux distribution based on glibc `<2.28`, for example, Ubuntu 14-18, RHEL 7, CentOS 7, Amazon Linux 2, you'll need to 
+If you're using a Linux distribution based on glibc `<2.28`, for example, Ubuntu 14-18, RHEL 7, CentOS 7, Amazon Linux 2, you'll need to
 update your system to a newer version to install Cypress.
 
 ### Updated Browser Support
@@ -39,10 +39,10 @@ The `resourceType` option on `cy.intercept` has been deprecated in Cypress 14.0.
 We anticipate the types of the `resourceType` to change in the future or be completely removed
 from the API. The future implementation of `resourceType` is dependent on decisions made in the WebDriver BiDi specification for `resourceType`.
 
-If you're using `resourceType` in your tests, please leave feedback on which `resourceType` values are important to you 
+If you're using `resourceType` in your tests, please leave feedback on which `resourceType` values are important to you
 in this [GitHub issue](https://github.com/cypress-io/cypress/issues/30447).
 
-### Just in Time Compile Changes for Component Testing 
+### Just in Time Compile Changes for Component Testing
 
 In Cypress 13.14.0, we released an experimental flag, `experimentalJustInTimeCompile`,
 to enable Just in Time (JIT) compilation for Component Testing. The response from this change
@@ -72,38 +72,37 @@ For users with the existing `experimentalJustInTimeCompile` flag set, you can re
 
 To support sites that use [origin-keyed agent clusters](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Origin-Agent-Cluster), Cypress no longer injects `document.domain` into `text/html` content by default.
 
-Because of this, tests that visit more than one origin (defined as a composite of the URL *scheme*, *hostname*, and *port*) must now use `cy.origin()`.
+Because of this, tests that visit more than one origin (defined as a composite of the URL _scheme_, _hostname_, and _port_) must now use `cy.origin()`.
 Without `cy.origin()`, interacting with a second origin in the same test will cause the test to fail, even if the two origins
 are in the same superdomain. This means you must now use `cy.origin()` in more situations than before.
 
-<Icon name="exclamation-triangle" color="red" /> **Failing Test**
-```js
-cy.visit('https://www.cypress.io')
-cy.visit('https://docs.cypress.io')
-cy.get('[role="banner"]').should('be.visible') // Cypress will not be able to interact with the page, causing the test to fail
-```
+<Icon name="exclamation-triangle" color="red" /> **Failing Test** ```js cy.visit('https://www.cypress.io')
+cy.visit('https://docs.cypress.io') cy.get('[role="banner"]').should('be.visible')
+// Cypress will not be able to interact with the page, causing the test to fail ```
 
-<Icon name="check-circle" color="green" /> **Fixed Test**
-```js
-cy.visit('https://www.cypress.io')
-cy.visit('https://docs.cypress.io')
-cy.origin('https://docs.cypress.io', () => {
-  cy.get('[role="banner"]').should('be.visible')
-})
-```
+<Icon name="check-circle" color="green" /> **Fixed Test** ```js cy.visit('https://www.cypress.io')
+cy.visit('https://docs.cypress.io') cy.origin('https://docs.cypress.io', () => {cy
+  .get('[role="banner"]')
+  .should('be.visible')}
+) ```
 
 :::info
 
 To ease this transition, Cypress v14.0 introduced the ["injectDocumentDomain" configuration option](/app/references/configuration#injectDocumentDomain). When this option
 is set to true, `cy.origin()` will not be required to navigate between origins, as long as the superdomain matches.
 
-<Icon name="exclamation-triangle" /> If `injectDocumentDomain` is enabled, Cypress will warn that this option is deprecated.
+<Icon name="exclamation-triangle" /> If `injectDocumentDomain` is enabled, Cypress
+will warn that this option is deprecated.
 
-<Icon name="exclamation-triangle" /> `injectDocumentDomain` will be removed in Cypress 15.
+<Icon name="exclamation-triangle" /> `injectDocumentDomain` will be removed in Cypress
+15.
 
-<Icon name="exclamation-triangle" /> Enabling `injectDocumentDomain` may cause certain sites to stop working in Cypress. Please read the [configuration notes](/app/references/configuration#injectDocumentDomain) before use.
+<Icon name="exclamation-triangle" /> Enabling `injectDocumentDomain` may cause certain
+sites to stop working in Cypress. Please read the [configuration notes](/app/references/configuration#injectDocumentDomain)
+before use.
 
-<Icon name="exclamation-triangle" /> If your test suites require `experimentalWebKitSupport`, this `injectDocumentDomain` must be enabled.
+<Icon name="exclamation-triangle" /> If your test suites require `experimentalWebKitSupport`,
+this `injectDocumentDomain` must be enabled.
 
 :::
 

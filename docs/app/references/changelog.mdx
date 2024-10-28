@@ -9,8 +9,8 @@ _Released 12/3/2024 (PENDING)_
 **Breaking Changes:**
 
 - Removed support for Node.js 16 and Node.js 21. Addresses [#29930](https://github.com/cypress-io/cypress/issues/29930).
-- Prebuilt binaries for Linux are no longer compatible with Linux distributions based on glibc `<2.28`, 
-for example: Ubuntu 14-18, RHEL 7, CentOS 7, Amazon Linux 2. Addresses [#29601](https://github.com/cypress-io/cypress/issues/29601).  
+- Prebuilt binaries for Linux are no longer compatible with Linux distributions based on glibc `<2.28`,
+  for example: Ubuntu 14-18, RHEL 7, CentOS 7, Amazon Linux 2. Addresses [#29601](https://github.com/cypress-io/cypress/issues/29601).
 - To better adhere to security practices, `cy.origin()` is now required when navigating between two different origins in the same test. This behavior can be disabled via the `injectDocumentDomain` configuration option, which will be removed in Cypress 15. Addresses [#29590](https://github.com/cypress-io/cypress/issues/29590).
 - The
   `experimentalJustInTimeCompile`
@@ -22,7 +22,6 @@ for example: Ubuntu 14-18, RHEL 7, CentOS 7, Amazon Linux 2. Addresses [#29601](
 **Bugfixes:**
 
 - The CSS pseudo-class `:dir()` is now supported when testing in Electron. Addresses [#29766](https://github.com/cypress-io/cypress/issues/29766).
-
 
 **Dependency Updates:**
 
@@ -102,8 +101,8 @@ _Released 8/27/2024_
 
 - Added new
   [`experimentalJustInTimeCompile`](/app/references/experiments#Configuration)
-  configuration option for component testing. This option will only compile resources directly related to your spec, compiling 
-  them 'just-in-time' before spec execution. This should result in improved memory management and performance for component 
+  configuration option for component testing. This option will only compile resources directly related to your spec, compiling
+  them 'just-in-time' before spec execution. This should result in improved memory management and performance for component
   tests in `cypress open` and `cypress run` modes, in particular for large component testing suites. [`experimentalJustInTimeCompile`](/app/references/experiments#Configuration) is currently supported for [`webpack`](https://www.npmjs.com/package/webpack) and [`vite`](https://www.npmjs.com/package/vite). Addresses [#29244](https://github.com/cypress-io/cypress/issues/29244).
 - `.type({upArrow})` and `.type({downArrow})` now also works for date, month, week, time, datetime-local and range input types. Addresses [#29665](https://github.com/cypress-io/cypress/issues/29665).
 - Added a `CYPRESS_SKIP_VERIFY` flag to enable suppressing Cypress verification checks. Addresses [#22243](https://github.com/cypress-io/cypress/issues/22243).
@@ -1420,11 +1419,11 @@ _Released 1/24/2023_
   will help us make decisions to improve memory issues. Addresses
   [#23391](https://github.com/cypress-io/cypress/issues/23391).
 - Added new
-  [`experimentalSkipDomainInjection`](/app/references/experiments#Experimental-Skip-Domain-Injection)
+  `experimentalSkipDomainInjection`
   configuration option to disable Cypress from setting `document.domain` on
   injection, allowing users to test Salesforce domains. If you believe you are
   having `document.domain` issues, please see the
-  [`experimentalSkipDomainInjection`](/app/references/experiments#Experimental-Skip-Domain-Injection)
+  `experimentalSkipDomainInjection`
   guide. This config option is end-to-end only. Addresses
   [#2367](https://github.com/cypress-io/cypress/issues/2367),
   [#23958](https://github.com/cypress-io/cypress/issues/23958),
