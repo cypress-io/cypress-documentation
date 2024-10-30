@@ -130,21 +130,21 @@ glob-matched against the request using
 [`Cypress.minimatch`](/api/utilities/minimatch) with the `{ matchBase: true }`
 minimatch option applied.
 
-| Option       | Description                                                                                                                                       |
-| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| auth         | HTTP Basic Authentication (`object` with keys `username` and `password`)                                                                          |
-| headers      | HTTP request headers (`object`)                                                                                                                   |
-| hostname     | HTTP request hostname                                                                                                                             |
-| https        | `true`: only secure (https://) requests, `false`: only insecure (http://) requests                                                                |
-| method       | HTTP request method (matches any method by default)                                                                                               |
-| middleware   | `true`: match route first and in defined order, `false`: match route in reverse order (default)                                                   |
-| path         | HTTP request path after the hostname, including query parameters                                                                                  |
-| pathname     | Like `path`, but without query parameters                                                                                                         |
-| port         | HTTP request port(s) (`number` or `Array`)                                                                                                        |
-| query        | Parsed query string (`object`)                                                                                                                    |
+| Option                                                | Description                                                                                                                                       |
+| ----------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| auth                                                  | HTTP Basic Authentication (`object` with keys `username` and `password`)                                                                          |
+| headers                                               | HTTP request headers (`object`)                                                                                                                   |
+| hostname                                              | HTTP request hostname                                                                                                                             |
+| https                                                 | `true`: only secure (https://) requests, `false`: only insecure (http://) requests                                                                |
+| method                                                | HTTP request method (matches any method by default)                                                                                               |
+| middleware                                            | `true`: match route first and in defined order, `false`: match route in reverse order (default)                                                   |
+| path                                                  | HTTP request path after the hostname, including query parameters                                                                                  |
+| pathname                                              | Like `path`, but without query parameters                                                                                                         |
+| port                                                  | HTTP request port(s) (`number` or `Array`)                                                                                                        |
+| query                                                 | Parsed query string (`object`)                                                                                                                    |
 | resourceType <Badge type="caution">deprecated</Badge> | The resource type of the request. See ["Request object properties"](#Request-object-properties) for a list of possible values for `resourceType`. |
-| times        | Maximum number of times to match (`number`)                                                                                                       |
-| url          | Full HTTP request URL                                                                                                                             |
+| times                                                 | Maximum number of times to match (`number`)                                                                                                       |
+| url                                                   | Full HTTP request URL                                                                                                                             |
 
 See [examples](#With-RouteMatcher) below.
 
