@@ -59,7 +59,7 @@ example, this allows us to run the tests in Firefox by passing the
 Read about [Cypress docker variants](/app/continuous-integration/overview#Cypress-Docker-variants) to decide which image is best for your project.
 
 ```yaml title="bitbucket-pipelines.yml"
-image: cypress/browsers:node-20.14.0-chrome-126.0.6478.114-1-ff-127.0.1-edge-126.0.2592.61-1
+image: cypress/browsers:node-22.11.0-chrome-130.0.6723.69-1-ff-132.0-edge-130.0.2849.56-1
 
 pipelines:
   default:
@@ -87,7 +87,7 @@ Artifacts from a job can be defined by providing paths to the `artifacts`
 attribute.
 
 ```yaml title="bitbucket-pipelines.yml"
-image: cypress/browsers:node-20.14.0-chrome-126.0.6478.114-1-ff-127.0.1-edge-126.0.2592.61-1
+image: cypress/browsers:node-22.11.0-chrome-130.0.6723.69-1-ff-132.0-edge-130.0.2849.56-1
 
 pipelines:
   default:
@@ -151,7 +151,7 @@ recording test results to [Cypress Cloud](/cloud/get-started/introduction).
 :::
 
 ```yaml title="bitbucket-pipelines.yml"
-image: cypress/base:20.14.0
+image: cypress/base:22.11.0
 
 ## job definition for running E2E tests in parallel
 e2e: &e2e
@@ -210,7 +210,7 @@ definitions:
 The complete `bitbucket-pipelines.yml` is below:
 
 ```yaml title="bitbucket-pipelines.yml"
-image: cypress/base:20.14.0
+image: cypress/base:22.11.0
 
 ## job definition for running E2E tests in parallel
 e2e: &e2e
