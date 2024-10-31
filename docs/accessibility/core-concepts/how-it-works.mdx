@@ -29,6 +29,18 @@ This means that a 100% axe score does not mean all possible accessibility errors
 
 The value of this form of testing in Cypress Accessibility is to give you fast, reliable, easy-to-understand feedback about common accessibility mistakes that are found in most projects. Providing these results automatically as part of your test run means that you can find and fix these issues with minimal friction, shifting accessibility left in your software development lifecycle.
 
+## Axe Core® updates
+
+Axe Core® publishes new versions several times a year. Cypress will wait at least 30 days after an Axe Core® release before updating the library used in the Cloud. This gives you a known minimum amount of time to see the [changelog](https://github.com/dequelabs/axe-core/blob/develop/CHANGELOG.md) and make any necessary adjustments to your process in advance of Cypress Cloud bumping the version. Bug fixes or new rules in Axe Core® may cause previously-passing projects to fail.
+
+We will strive to update Axe Core® in a timely manner after that 30-day buffer, but set no specific expectation around when that will be. Each release is different, and some do not affect the way Axe Core® is executed in Cypress Cloud at all, so those releases may be skipped.
+
+The [Cypress Accessibility changelog](/accessibility/changelog) will reflect any Axe Core® updates that are made in Cypress Cloud, starting on December 1, 2025 (30 days after the publication of this policy).
+
+### Exceptions
+
+In rare cases - such as if an Axe Core® update contains a critical security patch - we may need to update sooner than the 30-day window. If this happens we will communicate with affected customers.
+
 ## Powered by Test Replay
 
 Because Cypress Accessibility uses data captured through Cypress Test Replay, it is subject [Test Replay limitations](https://docs.cypress.io/faq/questions/cloud-faq#Is-everything-captured-and-replayed-in-Test-Replay).
