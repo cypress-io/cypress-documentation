@@ -147,7 +147,7 @@ const config = {
             activeBasePath: 'accessibility',
           },
           {
-            to: 'https://learn.cypress.io',
+            to: 'https://learn.cypress.io?utm_medium=nav&utm_source=docs.cypress.io&utm_content=Learn',
             label: 'Learn',
           },
         ],
@@ -157,7 +157,7 @@ const config = {
       announcementBar: {
         //give id a unique value to get a new announcement bar to appear
         id: 'ga-ui-cov-a11y',
-        content: `📢 NEW! Improve app quality with instant insights using <a href="https://www.cypress.io/accessibility?utm_medium=website&utm_source=docs.cypress.io&utm_content=accouncement-banner">Cypress Accessibility</a> or <a href="https://www.cypress.io/ui-coverage?utm_medium=website&utm_source=docs.cypress.io&utm_content=accouncement-banner">UI Coverage</a>.`,
+        content: `📢 NEW! Improve app quality with instant insights using <a href="https://www.cypress.io/accessibility?utm_medium=accouncement-banner&utm_source=docs.cypress.io&utm_content=Cypress Accessibility">Cypress Accessibility</a> or <a href="https://www.cypress.io/ui-coverage?utm_medium=announcement-banner&utm_source=docs.cypress.io&utm_content=UI Coverage">UI Coverage</a>.`,
         isCloseable: true,
       },
       footer: {
@@ -168,19 +168,19 @@ const config = {
             items: [
               {
                 label: 'Cypress App',
-                href: 'https://www.cypress.io/features',
+                href: 'https://www.cypress.io/features?utm_medium=footer&utm_source=docs.cypress.io&utm_content=Cypress App',
               },
               {
                 label: 'Cypress Cloud',
-                href: 'https://www.cypress.io/cloud',
+                href: 'https://www.cypress.io/cloud?utm_medium=footer&utm_source=docs.cypress.io&utm_content=Cypress Cloud',
               },
               {
                 label: 'UI Coverage',
-                href: 'https://www.cypress.io/ui-coverage',
+                href: 'https://www.cypress.io/ui-coverage?utm_medium=footer&utm_source=docs.cypress.io&utm_content=UI Coverage',
               },
               {
                 label: 'Cypress Accessibility',
-                href: 'https://www.cypress.io/accessibility',
+                href: 'https://www.cypress.io/accessibility?utm_medium=footer&utm_source=docs.cypress.io&utm_content=Cypress Accessibility',
               },
             ],
           },
@@ -223,19 +223,19 @@ const config = {
             items: [
               {
                 label: 'About',
-                href: 'https://www.cypress.io/about-us',
+                href: 'https://www.cypress.io/about-us?utm_medium=footer&utm_source=docs.cypress.io&utm_content=About',
               },
               {
                 label: 'Cypress Blog',
-                href: 'https://www.cypress.io/blog',
+                href: 'https://www.cypress.io/blog?utm_medium=footer&utm_source=docs.cypress.io&utm_content=Cypress Blog',
               },
               {
                 label: 'Careers',
-                href: 'https://www.cypress.io/careers',
+                href: 'https://www.cypress.io/careers?utm_medium=footer&utm_source=docs.cypress.io&utm_content=Careers',
               },
               {
                 label: 'Support',
-                href: 'https://www.cypress.io/support',
+                href: 'https://www.cypress.io/support?utm_medium=footer&utm_source=docs.cypress.io&utm_content=Support',
               },
             ],
           },
