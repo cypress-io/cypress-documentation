@@ -45,12 +45,17 @@ in this [GitHub issue](https://github.com/cypress-io/cypress/issues/30447).
 ### Just in Time Compile Changes for Component Testing
 
 In Cypress 13.14.0, we released an experimental flag, `experimentalJustInTimeCompile`,
-to enable Just in Time (JIT) compilation for Component Testing. The response from this change
-was positive, and we have decided to make JIT compilation the default behavior for component tests.
+to enable Just in Time (JIT) compilation for Component Testing with `vite` and `webpack`. The response from this change
+was positive and we've made a few changes in response:
+
+- JIT compilation is the default behavior for component tests. This can be disabled using the `justInTimeCompile` configuration option.
+- JIT compilation no longer applies with `vite`, since there is no benefit to enabling this with `vite`.
 
 This option will only compile resources directly related to your spec, compiling them 'just-in-time'
 before spec execution. This should result in improved memory management and performance for component tests
-in `cypress open` and `cypress run` modes If you have any issues
+in `cypress open` and `cypress run` modes.
+
+If you have any issues
 with this change, you can disable JIT compilation by setting `justInTimeCompile` to `false`
 in your configuration.
 

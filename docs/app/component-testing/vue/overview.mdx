@@ -10,7 +10,7 @@ sidebar_label: Overview
 
 - How to set up component tests in Vue
 - How to configure Cypress for Vue projects
-- How to use Cypress with Vue CLI, Nuxt, Vite, and custom Webpack config
+- How to use Cypress with Vue CLI, Vite, and custom Webpack config
 
 :::
 
@@ -19,7 +19,6 @@ sidebar_label: Overview
 Cypress Component Testing supports Vue 2+ with the following frameworks:
 
 - [Vue CLI](#Vue-CLI)
-- [Nuxt](#Nuxt) <Badge type="info">Alpha</Badge>
 - [Vue with Vite](#Vue-with-Vite)
 - [Vue with Webpack](#Vue-with-Webpack)
 
@@ -60,7 +59,7 @@ For usage and examples, visit the
 ## Framework Configuration
 
 Cypress Component Testing works out of the box with
-[Vue CLI](https://cli.vuejs.org/), [Nuxt](https://nuxtjs.org/),
+[Vue CLI](https://cli.vuejs.org/),
 [Vite](https://vitejs.dev/), and a custom [Webpack](https://webpack.js.org/)
 config. Cypress will automatically detect one of these frameworks during setup
 and configure them properly. The examples below are for reference purposes.
@@ -101,37 +100,6 @@ for more information.
 
 - [Vue 3 CLI 5 with TypeScript](https://github.com/cypress-io/cypress-component-testing-apps/tree/main/vue3-cli5-ts)
 - [Vue 2 CLI 4 with JavaScript](https://github.com/cypress-io/cypress-component-testing-apps/tree/main/vue2-cli4-js)
-
-### Nuxt
-
-Cypress Component Testing works with Nuxt 2. Nuxt 3 is not yet supported.
-
-:::caution
-
-Nuxt is currently in alpha support for component testing.
-
-:::
-
-#### Nuxt Configuration
-
-:::cypress-config-example
-
-```ts
-{
-  component: {
-    devServer: {
-      framework: 'nuxt',
-      bundler: 'webpack',
-    },
-  },
-}
-```
-
-:::
-
-#### Nuxt Sample Apps
-
-- [Vue 2 Nuxt 2 with JavaScript](https://github.com/cypress-io/cypress-component-testing-apps/tree/main/vue2-nuxt2-js)
 
 ### Vue with Vite
 
