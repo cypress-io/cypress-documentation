@@ -208,10 +208,13 @@ in the future
 
 ### Signals
 
-With the releases of Angular versions [17.1](https://github.com/angular/angular/blob/main/CHANGELOG.md#1710-2024-01-17) and [17.2](https://github.com/angular/angular/blob/main/CHANGELOG.md#1720-2024-02-14), [input](https://github.com/angular/angular/pull/53521) and [model](https://github.com/angular/angular/pull/54252) signals were introduced into the `@angular/core` API.
-Since signals introduced new methods and types to the core API, Cypress introduced a new test harness, `@cypress/angular-signals`.
+With the releases of Angular versions [17.1](https://github.com/angular/angular/blob/main/CHANGELOG.md#1710-2024-01-17) and [17.2](https://github.com/angular/angular/blob/main/CHANGELOG.md#1720-2024-02-14), [input](https://github.com/angular/angular/pull/53521) and [model](https://github.com/angular/angular/pull/54252) signals were introduced into the `@angular/core` API. Though basic signals were introduced in Angular `16`, using all signals requires Angular `17.2` and above.
 
-Though basic signals were introduced in Angular `16`, this testing harness requires Angular `17.2` and above.
+:::info
+
+With Cypress 14, signal support is baked into the `cypress/angular` testing harness.
+
+:::
 
 For the below examples, we'll be working with a very simple component called `TestComponent`, which looks something like shown below:
 
@@ -268,7 +271,7 @@ cy.get('[data-cy="test-component-title-display"]').should(
 ```
 
 :::info
-Under the hood, Cypress wraps the generic value in a writable `signal()` and merges it into the prop. In other words, the `@cypress/angular-signals` test harness in this example is really:
+Under the hood, Cypress wraps the generic value in a writable `signal()` and merges it into the prop. In other words, this example is really:
 
 ```typescript
 cy.mount(TestComponent, {
