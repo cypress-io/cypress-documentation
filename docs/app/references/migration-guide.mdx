@@ -73,6 +73,41 @@ For users with the existing `experimentalJustInTimeCompile` flag set, you can re
 
 :::
 
+### Vue 2 / Nuxt 2 Component Testing is no longer supported
+
+[Vue 2 reached end-of-life on December 31st, 2023](https://v2.vuejs.org/eol/). With Cypress 14, Cypress no longer ships the Vue 2 component testing harness with the Cypress binary.
+
+However, if you have not been able to migrate away from Vue 2 and still need the Cypress Vue 2 test harness, it can be installed independently via the [@cypress/vue2](https://www.npmjs.com/package/@cypress/vue2) package.
+
+```sh
+npm install --save-dev @cypress/vue2
+```
+
+Note that this test harness is deprecated and no longer actively supported by Cypress and is intended to serve as a temporary work around until you are able to migrate your project to Vue 3. The Cypress launchpad will also warn against Component testing mismatched dependencies, but this will not stop you from running your component tests.
+
+To update, inside your support file (ex: `./cypress/support/component.(js|ts)`) or wherever your mount function is imported, change
+
+```ts
+import { mount } from `cypress/vue2`
+```
+
+to
+
+```ts
+import { mount } from `@cypress/vue2`
+```
+
+Your code should now look like this:
+
+```ts
+import MyVue2Component from './MyVue2Component'
+import { mount } from `@cypress/vue2`
+
+it('renders', () => {
+  cy.mount(MyVue2Component)
+})
+```
+
 ## Migrating to Cypress 13.0
 
 This guide details the changes and how to change your code to migrate to Cypress
