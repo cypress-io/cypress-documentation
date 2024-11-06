@@ -49,6 +49,11 @@ faster and more accurate debugging, and instilling confidence in handling test f
 Replacing video recordings with Test Replay provides a superior debugging experience that is
 sharable and supports team collaboration with efficient workflows.
 
+<DocsVideo
+  src="https://youtube.com/embed/hX9Br8QSYgc"
+  title="Unlocking the Power of Test Replay!"
+/>
+
 ## Get Started
 
 :::success
@@ -60,30 +65,32 @@ at no additional cost, subject to usage limits.
 
 :::
 
-All you need to do after [recording test runs](/cloud/get-started/setup) is log in to your Cypress Cloud
-account and leverage Test Replay's new debugging capabilities. No additional configuration
-or changes to the existing tests are required.
+### 1. Record Test Runs
 
-### Access Test Replay
+All you need to do is [record test runs](/cloud/get-started/setup) and log in to your Cypress Cloud
+account to leverage Test Replay's debugging capabilities. No additional configuration
+or changes to your existing tests are required.
+
+### 2. Access Test Replay
 
 Accessing the replay of your test is as simple as reviewing any other test artifact in Cypress Cloud.
 
-1. Hover on a [test for review](/cloud/features/recorded-runs#Tests-for-Review) under a run's **Overview**.
+Hover on a [test for review](/cloud/features/recorded-runs#Tests-for-Review) under a run's **Overview**.
 
-   <DocsImage
-     src="/img/cloud/features/test-replay/replay_row_magnified.jpg"
-     alt="Run overview row"
-   />
+<DocsImage
+  src="/img/cloud/features/test-replay/replay_row_magnified.jpg"
+  alt="Run overview row"
+/>
 
-2. Or navigate to the [test detail sidebar](/cloud/features/recorded-runs#Test-detail-sidebar) header or above each attempt in the errors panel. The header option will replay the first failing test while the option above each attempt will replay the affiliated test.
+Or navigate to the [test detail sidebar](/cloud/features/recorded-runs#Test-detail-sidebar) header or above each attempt in the errors panel. The header option will replay the first failing test while the option above each attempt will replay the affiliated test.
 
-   <DocsImage
-     src="/img/cloud/features/test-replay/replay_sidebar_magnified.jpg"
-     alt="Run sidebar"
-     width="60%"
-   />
+<DocsImage
+  src="/img/cloud/features/test-replay/replay_sidebar_magnified.jpg"
+  alt="Run sidebar"
+  width="60%"
+/>
 
-### Debug With Test Replay
+### 3. Debug With Test Replay
 
 Both options above display the Test Replay interface, which we'll unpack from top to bottom in more detail below.
 
@@ -129,7 +136,7 @@ Toggle each test attempt, play back errors at a variety of speeds or scrub throu
 
 Our aim is to create an impactful debugging experience that covers the most ground for users.
 Cypress captures a wide range of data during end-to-end and component test runs.
-This data is then stored in Cypress Cloud and replayed for debugging through Test Replay.
+This data is then uploaded and stored in Cypress Cloud and replayed for debugging through Test Replay.
 
 ### What is captured
 
@@ -167,14 +174,22 @@ Currently Test Replay does not support the following:
 
 #### Recording
 
-Capturing this additional data can use additional CPU while recording, but you can
+Capturing this additional data can use additional resources while recording, but you can
 expect an even performance exchange with Test Replay versus video recording.
-There is more activity to capture and replay tests but without the overhead of recording,
-compressing, and storing video assets. We recommend disabling video recording when using
-Test Replay to optimize performance even further.
+There is more activity to capture Test Replay data but without the overhead of recording,
+compressing, and storing video assets.
+
+:::info
+
+**Tip:** We recommend disabling video recording when recording with
+Test Replay enabled to optimize performance.
+
+:::
 
 You can inspect the size of the Test Replay data that is uploaded to the Cloud
 and the time spent uploading the Test Replay data by inspecting the standard output of the test run.
+
+The only assets stored to your file system are in a temporary directory and deleted after the run.
 
 ```shell
   (Uploading Cloud Artifacts)
@@ -241,16 +256,67 @@ If you do not want to capture test data for replay and debugging purposes, you c
 
 ## Troubleshooting
 
-**If Test Replay is not present or disabled in Cypress Cloud:**
+:::info
+
+**Tip:** Before troubleshooting further, please ensure you're using the latest version of Cypress. We fix bugs with Test Replay often,
+so your issue may already be fixed.
+
+:::
+
+If you're experiencing an issue and have already tried the troublshooting steps below,
+you can report an issue within the Test Replay window in the Cloud by clicking the **Report an Issue** button.
+
+<DocsImage
+  src="/img/cloud/features/test-replay/report-issue.png"
+  alt="Screenshot of top right corner of Test Replay window with a button that says 'Report an Issue'"
+/>
+
+### Test Replay is not available
+
+If the Test Replay button is disabled in Cypress Cloud, there are a few things to check:
 
 1. Confirm runs have been recorded to Cypress Cloud using Cypress `v13` or later.
 2. Ensure tests were recorded using a Chromium-based browser (Chrome, Edge, Electron).
 3. Check that Test Replay is enabled in Cypress Cloud project settings.
-4. Review the standard output of the test run to ensure there was not an error capturing Test Replay. If you encounter an error capturing Test Replay, please open an issue so that we can investigate.
+4. Review the standard output of the test run to ensure there was not an [error uploading Test Replay](#Test-Replay-errored-during-upload).
 
 **Safari 16.3 and under users may experience errors when _viewing_ Test Replay**
 
 Cypress Cloud relies on certain web APIs implemented by specific browsers. Safari versions older than 16.4 may be missing certain APIs required for rendering Test Replay. To view Test Replay in Safari, version 16.4 and above may be used. This does not affect running tests or recording to Cypress Cloud.
+
+### Test Replay errored during upload
+
+Sometimes, tracking down issues that prevent uploading Test Replay recordings can be difficult.
+We try to provide as much detail with our error messaging as possible to resolve the issue.
+
+Specs that have problems uploading a Test Replay recording may have a disabled "Test Replay" button in Cypress Cloud.
+
+<DocsImage
+  src="/img/cloud/features/test-replay/error-uploading-test-replay.png"
+  alt="Popover in Cypress Cloud on hover of disabled Test Replay button that reads 'There was an error uploading the Test Replay for this test. Learn more.'"
+/>
+
+The exact error message can be seen by viewing the spec's output.
+
+<DocsImage
+  src="/img/cloud/features/test-replay/view-spec-output.png"
+  alt="Spec row in Cypress Cloud showing number of passed tests, run time, group, test type, OS, browser, and a button that says 'View Output' which is higlighted with an arrow and rectangle"
+/>
+
+#### Common errors
+
+- **Failed to upload after X attempts error**: This error occurs when the Test Replay data is not uploaded to the Cloud
+  due to network issues. This could be due to a poor network connection or a network issue. To fix:
+  - Try recording the test again to see if the issue persists.
+- **Network or HTTP error**: These errors indicate that Cypress could not establish a connection to upload. To fix:
+  - Ensure the machine has access to the internet.
+  - Ensure that the network configuration of the machine recording the spec allows for [Cypress URLs](/guides/references/troubleshooting#Allow-Cypress-URLs-on-VPNs).
+  - Check if a firewall or proxy is blocking the connection. If a proxy is blocking connections, configure the proxy so that it does not block uploads to Cypress URLs.
+  - Check [cypress status](https://www.cypressstatus.com/) for any ongoing issues.
+- **Invalid or missing Test Replay upload URL**: Specs that take longer than the
+  [run timeout](/cloud/account-management/projects#Run-Timeout) will not successfully upload. To fix:
+  - Reduce the run time of the spec.
+  - Or increase the run timeout in the project settings.
 
 ## See also
 
