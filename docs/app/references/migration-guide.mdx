@@ -148,6 +148,30 @@ to
 import { mount } from `cypress/angular`
 ```
 
+### Create React App for Component Testing is no longer supported
+
+[create-react-app](https://create-react-app.dev/) is no longer actively maintained or supported (see [CRA issue #13393](https://github.com/facebook/create-react-app/issues/13393)).
+
+Your component tests will now need a bundler to run. If still using [create-react-app](https://create-react-app.dev/), you will either need to [eject](https://create-react-app.dev/docs/available-scripts/#npm-run-eject) the configuration to bundle with webpack or leverage [vite](https://vite.dev/guide/) (quick setup with [create-vite](https://github.com/vitejs/vite/tree/main/packages/create-vite)) to bundle your component tests.
+
+After selecting a bundler, you will need to change the `framework` option in your cypress config from `"create-react-app"` to `"react"`. If ejecting the `create-react-app` , you will need to change your cypress config to look something like this:
+
+```js
+process.env.NODE_ENV = 'development'
+const { defineConfig } = require('cypress')
+const webpackConfig = require('./config/webpack.config.js')
+
+module.exports = defineConfig({
+  component: {
+    devServer: {
+      framework: 'react',
+      bundler: 'webpack',
+      webpackConfig: webpackConfig('development'),
+    },
+  },
+})
+```
+
 ## Migrating to Cypress 13.0
 
 This guide details the changes and how to change your code to migrate to Cypress
