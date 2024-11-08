@@ -3,7 +3,7 @@ import MDXComponents from "@theme-original/MDXComponents";
 import AnatomyOfAnError from "@site/docs/partials/_anatomy-of-an-error.mdx";
 import AccessibilityAddon from "@site/docs/partials/_accessibility-addon.mdx";
 import Badge from "@site/src/components/badge";
-import Btn from "@site/src/components/Button";
+import Btn from "@site/src/components/button";
 import ComponentOnlyBadge from "@site/src/components/component-only-badge";
 import TestReplayInfo from "@site/docs/partials/_test-replay-info.mdx";
 import CypressConfigFileTabs from "@site/src/components/cypress-config-file-tabs";
