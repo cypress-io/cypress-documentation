@@ -277,6 +277,19 @@ html[data-theme='dark'] {
   }
 }
 
+h1>.success_src-components-badge-style-module {
+  vertical-align: middle;
+}
+
+.success_src-components-badge-style-module {
+  background-color: var(--ifm-color-jade-100) !important;
+  color: var(--ifm-color-jade-600) !important;
+
+  [data-theme='dark'] & {
+    background-color: var(--ifm-color-jade-1000);
+  }
+}
+
 div[class^='announcementBar'] {
   font-size: 1rem;
   font-weight: var(--ifm-font-weight-semibold);
