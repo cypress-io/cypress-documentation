@@ -172,6 +172,41 @@ module.exports = defineConfig({
 })
 ```
 
+### Svelte 3 for Component Testing is no longer supported
+
+With Cypress 14, Cypress no longer ships the Svelte 3 component testing harness with the Cypress binary.
+
+However, if you have not been able to upgrade Svelte and still need the Cypress Svelte 3 test harness, it can be installed independently via version 2.x.x of the [@cypress/svelte](https://www.npmjs.com/package/@cypress/svelte) package.
+
+```sh
+npm install --save-dev @cypress/svelte@2
+```
+
+Note that this version of the test harness is deprecated and no longer actively supported by Cypress and is intended to serve as a temporary work around until you are able to migrate your project to Svelte 4+. The Cypress launchpad will also warn against Component testing mismatched dependencies, but this will not stop you from running your component tests.
+
+To update, inside your support file (ex: `./cypress/support/component.(js|ts)`) or wherever your mount function is imported, change
+
+```ts
+import { mount } from `cypress/svelte`
+```
+
+to
+
+```ts
+import { mount } from `@cypress/svelte`
+```
+
+Your code should now look like this:
+
+```ts
+import MySvelteComponent from './MySvelteComponent'
+import { mount } from `@cypress/svelte`
+
+it('renders', () => {
+  cy.mount(MySvelteComponent)
+})
+```
+
 ## Migrating to Cypress 13.0
 
 This guide details the changes and how to change your code to migrate to Cypress
