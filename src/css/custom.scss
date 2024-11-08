@@ -32,6 +32,13 @@
   --ifm-color-primary-light: theme(colors.jade.200);
   --ifm-color-primary-lighter: theme(colors.jade.100);
   --ifm-color-primary-lightest: theme(colors.jade.50);
+  --ifm-color-secondary: theme(colors.indigo.500);
+  --ifm-color-secondary-dark: theme(colors.indigo.400);
+  --ifm-color-secondary-darker: theme(colors.indigo.500);
+  --ifm-color-secondary-darkest: theme(colors.indigo.600);
+  --ifm-color-secondary-light: theme(colors.indigo.200);
+  --ifm-color-secondary-lighter: theme(colors.indigo.100);
+  --ifm-color-secondary-lightest: theme(colors.indigo.50);
   --ifm-color-jade-50: theme(colors.jade.50);
   --ifm-color-jade-100: theme(colors.jade.100);
   --ifm-color-jade-200: theme(colors.jade.200);
@@ -200,6 +207,14 @@ html[data-theme='dark'] {
 /* using attribute selector for these dynamic classes */
 [class^='admonitionHeading'] {
   display: none;
+}
+
+.button.button--secondary {
+  color: var(--ifm-color-white);
+}
+
+.button.button--secondary.button--outline:not(.button--active):not(:hover) {
+  color: var(--ifm-color-secondary);
 }
 
 .alert.alert--info {
@@ -429,6 +444,9 @@ h6 {
 
 h1 {
   font-size: var(--ifm-h1-font-size);
+  svg {
+    display: inline;
+  }
 }
 
 h2 {
