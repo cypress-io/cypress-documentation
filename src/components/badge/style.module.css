@@ -13,22 +13,41 @@ p > .badge {
   display: inline;
 }
 
+h1 > .badge {
+  vertical-align: middle;
+}
+
 .success {
-  background-color: #28a745;
+  background-color: var(--ifm-color-jade-100);
+  color: var(--ifm-color-jade-600);
+
+  [data-theme='dark'] & {
+    background-color: var(--ifm-color-jade-1000);
+  }
 }
 
 .danger {
-  background-color: #dc3545;
+  background-color: var(--ifm-color-red-100);
+  color: var(--ifm-color-red-600);
+  
+  [data-theme='dark'] & {
+    background-color: var(--ifm-color-red-1000);
+  }
 }
 
 .info {
-  background-color: #007bff;
+  background-color: var(--ifm-color-teal-100);
+  color: var(--ifm-color-teal-600);
+
+  [data-theme='dark'] & {
+    background-color: var(--ifm-color-teal-1000);
+  }
 }
 
 /* large light-green badge in page/content titles */
 .hint {
   background-color: #cff1e6;
-  color: #127458;
+  color: var(--ifm-color-jade-600);
   padding: 0.125rem 0.75rem;
   font-size: 0.875rem;
   line-height: 1.25rem;
