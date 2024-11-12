@@ -4,7 +4,7 @@ title: Configuration
 
 :::info
 
-##### <Icon name="question-circle" color="#42a1c0" /> What you'll learn
+##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
 
 - How to configure Cypress to change the default behavior of Cypress
 - Configuration options available in Cypress
@@ -72,8 +72,8 @@ default values.
 
 | Option                 | Default                               | Description                                                                                                                                                                                                                                                                                               |
 | ---------------------- | ------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `clientCertificates`   | `[]`                                  | An optional array of [client certificates](/app/references/client-certificates).                    |                                     
-| `defaultBrowser`       | `null`                                | The default browser to launch if the "--browser" command line option is not provided.              
+| `clientCertificates`   | `[]`                                  | An optional array of [client certificates](/app/references/client-certificates).                                                                                                                                                                                                                          |
+| `defaultBrowser`       | `null`                                | The default browser to launch if the "--browser" command line option is not provided.                                                                                                                                                                                                                          |
 | `env`                  | `{}`                                  | Any values to be set as [environment variables](/app/references/environment-variables).                                                                                                                                                                                                                   |
 | `includeShadowDom`     | `false`                               | Whether to traverse shadow DOM boundaries and include elements within the shadow DOM in the results of query commands (e.g. [`cy.get()`](/api/commands/get)).                                                                                                                                             |
 | `numTestsKeptInMemory` | Default based on `run` or `open` mode | The number of tests for which snapshots and command data are kept in memory. `numTestsKeptInMemory` is set to `50` by default during `cypress open` and set to `0` by default during `cypress run`. Reduce this number if you are experiencing high memory consumption in your browser during a test run. |
@@ -307,7 +307,7 @@ especially useful in
 working locally. This gives you the ability to change configuration options
 without modifying any code or build scripts.
 
-For example, these enviroment variables in the command line will override any
+For example, these environment variables in the command line will override any
 `viewportWidth` or `viewportHeight` options set in the Cypress configuration:
 
 ```shell
