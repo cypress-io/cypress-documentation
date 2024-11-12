@@ -4,7 +4,7 @@ title: Advanced Installation
 
 :::info
 
-##### <Icon name="question-circle" color="#42a1c0" /> What you'll learn
+##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
 
 - How to install Cypress with a custom binary
 - How to skip the installation of the Cypress binary
@@ -414,3 +414,48 @@ Refer to Microsoft Learn [Windows Subsystem for Linux Documentation](https://lea
 Cypress.io does not specifically support the use of Cypress under Windows Subsystem for Linux (WSL). If you want to report an issue, please ensure that you can reproduce it without using WSL on one of the Cypress [supported operating systems](/app/get-started/install-cypress#Operating-System).
 
 :::
+
+## Uninstall Cypress
+
+To uninstall Cypress from a project, use the same package manager you used to [install Cypress](/app/get-started/install-cypress):
+
+<Tabs groupId="package-manager"
+  defaultValue="npm"
+  values={[
+    {label: 'npm', value: 'npm'},
+    {label: 'Yarn', value: 'yarn'},
+    {label: 'pnpm', value: 'pnpm'},
+  ]}>
+  <TabItem value="npm">
+
+```shell
+npm uninstall cypress
+```
+
+  </TabItem>
+  <TabItem value="yarn">
+
+```shell
+yarn remove cypress
+```
+
+  </TabItem>
+  <TabItem value="pnpm">
+
+```shell
+pnpm remove cypress
+```
+
+  </TabItem>
+</Tabs>
+
+To uninstall all cached Cypress binary versions, use the [cypress cache clear](./command-line#cypress-cache-clear) command with the appropriate package manager prefix described in [How to run commands](./command-line#How-to-run-commands).
+Alternatively, delete the [Cypress binary cache](#Binary-cache) (see above) manually.
+
+To delete cached [Cypress App Data](./troubleshooting#Clear-App-Data), manually delete the following directories / folders:
+
+- macOS: `~/Library/Application Support/Cypress`
+- Linux: `~/.config/Cypress`
+- Windows: `$APPDATA/Cypress` (POSIX-syntax) or `%APPDATA%\Cypress` (Windows-syntax)
+
+Refer to your package manager documentation for details of package manager `cache clean` commands to remove other packages cached by npm, Yarn or pnpm.
