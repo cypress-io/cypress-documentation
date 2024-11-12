@@ -70,6 +70,16 @@ div.markdown {
       color: white;
     }
 
+    &.border-purple-500:hover {
+      color: var(--ifm-color-purple-600);
+
+      &.bg-purple-500 {
+        color: white;
+      }
+    }
+
+    
+
     svg {
       display: inline;
       vertical-align: text-top;
