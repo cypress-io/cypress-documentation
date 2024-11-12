@@ -10,7 +10,6 @@ sidebar_label: Overview
 
 - How to set up component tests in Vue
 - How to configure Cypress for Vue projects
-- How to use Cypress with Vue CLI, Vite, and custom Webpack config
 
 :::
 
@@ -18,7 +17,6 @@ sidebar_label: Overview
 
 Cypress Component Testing supports Vue 3+ with the following frameworks:
 
-- [Vue CLI](#Vue-CLI)
 - [Vue with Vite](#Vue-with-Vite)
 - [Vue with Webpack](#Vue-with-Webpack)
 
@@ -59,46 +57,9 @@ For usage and examples, visit the
 ## Framework Configuration
 
 Cypress Component Testing works out of the box with
-[Vue CLI](https://cli.vuejs.org/),
 [Vite](https://vitejs.dev/), and a custom [Webpack](https://webpack.js.org/)
 config. Cypress will automatically detect one of these frameworks during setup
 and configure them properly. The examples below are for reference purposes.
-
-### Vue CLI
-
-Cypress Component Testing works with Vue CLI.
-
-#### Vue CLI Configuration
-
-:::cypress-config-example
-
-```ts
-{
-  component: {
-    devServer: {
-      framework: 'vue-cli',
-      bundler: 'webpack',
-    },
-  },
-}
-```
-
-:::
-
-:::caution
-
-<strong>PWA Caveat</strong>
-
-If you use the Vue CLI's PWA feature, there is a known caveat regarding
-configuration. See
-[here](https://github.com/cypress-io/cypress/issues/15968#issuecomment-819170918)
-for more information.
-
-:::
-
-#### Sample Vue CLI Apps
-
-- [Vue 3 CLI 5 with TypeScript](https://github.com/cypress-io/cypress-component-testing-apps/tree/main/vue3-cli5-ts)
 
 ### Vue with Vite
 

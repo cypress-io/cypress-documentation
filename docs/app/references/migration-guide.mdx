@@ -154,7 +154,7 @@ import { mount } from `cypress/angular`
 
 Your component tests will now need a bundler to run. If still using [create-react-app](https://create-react-app.dev/), you will either need to [eject](https://create-react-app.dev/docs/available-scripts/#npm-run-eject) the configuration to bundle with webpack or leverage [vite](https://vite.dev/guide/) (quick setup with [create-vite](https://github.com/vitejs/vite/tree/main/packages/create-vite)) to bundle your component tests.
 
-After selecting a bundler, you will need to change the `framework` option in your cypress config from `"create-react-app"` to `"react"`. If ejecting the `create-react-app` , you will need to change your cypress config to look something like this:
+After selecting a bundler, you will need to change the `framework` option in your Cypress config from `"create-react-app"` to `"react"`. If ejecting the `create-react-app` , you will need to change your cypress config to look something like this:
 
 ```js
 process.env.NODE_ENV = 'development'
@@ -167,6 +167,42 @@ module.exports = defineConfig({
       framework: 'react',
       bundler: 'webpack',
       webpackConfig: webpackConfig('development'),
+    },
+  },
+})
+```
+
+### `@vue/cli-service` for Component Testing is no longer supported
+
+`@vue/cli-service` is in [maintanence mode](https://cli.vuejs.org/guide/cli-service.html) and is no longer maintained by the Vue core team.
+
+Your component tests will now need a bundler to run. If still using [Vue CLI](https://cli.vuejs.org/), you will either need to migrate to webpack ([see example](https://github.com/cypress-io/cypress-component-testing-apps/tree/main/vue3-webpack-ts)) or leverage [vite](https://vite.dev/guide/). The Vue team recommends migrating to using `create-vue` to scaffold a [Vite](https://vite.dev/)-based project.
+
+After selecting a bundler, you will need to change the `framework` option in your Cypress config from `"vue-cli"` to `"vue"`. Your Cypress configuration should go from looking like:
+
+```ts
+const { defineConfig } = require('cypress')
+
+module.exports = defineConfig({
+  component: {
+    devServer: {
+      framework: 'vue-cli',
+      bundler: 'webpack',
+    },
+  },
+})
+```
+
+to looking something like this:
+
+```ts
+const { defineConfig } = require('cypress')
+
+module.exports = defineConfig({
+  component: {
+    devServer: {
+      framework: 'vue',
+      bundler: 'vite', // or 'webpack'
     },
   },
 })
