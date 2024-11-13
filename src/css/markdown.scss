@@ -50,7 +50,7 @@ div.markdown {
     margin-bottom: 1rem;
   }
 
-  a {
+  a:not(.cy-button-width) {
     text-decoration: none;
     font-weight: var(--ifm-font-weight-semibold);
     color: var(--ifm-link-color);
@@ -58,6 +58,31 @@ div.markdown {
 
     &:hover {
       border-bottom: 1px solid var(--ifm-link-color);
+      color: var(--ifm-link-hover-color);
+    }
+  }
+
+  a.cy-button-width {
+    display: inline-block;
+    margin-bottom: 2rem;
+
+    &.text-white:hover {
+      color: white;
+    }
+
+    &.border-purple-500:hover {
+      color: var(--ifm-color-purple-600);
+
+      &.bg-purple-500 {
+        color: white;
+      }
+    }
+
+    
+
+    svg {
+      display: inline;
+      vertical-align: text-top;
     }
   }
 
