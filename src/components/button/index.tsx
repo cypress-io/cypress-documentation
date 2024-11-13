@@ -22,7 +22,7 @@ interface BtnProps {
 // Build the Button component with the specified props
 const Btn: React.FC<BtnProps> = ({ 
     size = 32, // The size of the button
-    variant = 'outline-purple', // The variant of the button
+    variant = 'outline-indigo', // The variant of the button
     disabled = false, // Whether the button should be disabled
     target = '_self', // The target of the button link
     className, // Custom classes for the button
