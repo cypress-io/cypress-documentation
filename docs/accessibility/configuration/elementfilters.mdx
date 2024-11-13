@@ -1,0 +1,177 @@
+---
+title: 'Element Filters | Cypress Accessibility'
+description: 'The `elementFilters` property allows you to specify selectors for elements that should be excluded from Cypress Accessibility.'
+sidebar_label: elementFilters
+sidebar_position: 20
+---
+
+# elementFilters
+
+<AccessibilityAddon />
+
+:::info
+
+Note: setting `elementFilters` impacts both Accessibility and UI Coverage
+reports. Nesting this property under an `accessibility` or `uiCoverage` key is
+supported, if you need to split them up.
+:::
+
+The `elementFilters` property allows you to specify selectors for elements that should be excluded from Cypress Accessibility.
+
+The first `elementFilters` rule to match the `selector` property determines whether or not an element is included or excluded from the report. Elements that do not match any rules are included by default.
+
+## Syntax - globally applied to both UI Coverage and Cypress Accessibility
+
+```typescript
+{
+  "elementFilters": [
+    {
+      "selector": string,
+      "include": boolean
+    }
+  ]
+}
+```
+
+## Syntax - accessibility-specific
+
+```typescript
+{
+  "accessibility": {
+    "elementFilters": [
+      {
+        "selector": string,
+        "include": boolean
+      }
+    ]
+  }
+}
+```
+
+### elementFilters
+
+_Optional._ Object\[]
+
+An array of objects specifying the elements to exclude from Cypress Accessibility. _**Each object can have the following properties:**_
+
+### selector
+
+_Required._ String (CSS Selector)
+
+Used to match elements.
+
+### include
+
+_Optional._ Boolean
+
+_Default:_ `true`
+
+A boolean that represents whether or not a matched element should be included in Cypress Accessibility.
+
+## Examples
+
+### Excluding a specific element
+
+#### Config
+
+```json
+{
+  "elementFilters": [
+    {
+      "selector": "#button-2",
+      "include": false
+    }
+  ]
+}
+```
+
+#### HTML
+
+```xml
+<body>
+  <button id="button-1">Included</button>
+  <button id="button-2">Excluded</button>
+</body>
+```
+
+#### Elements shown in UI
+
+```
+#button-1
+```
+
+---
+
+### Excluding all elements in a container
+
+#### Config
+
+```json
+{
+  "elementFilters": [
+    {
+      "selector": "footer *",
+      "include": false
+    }
+  ]
+}
+```
+
+#### HTML
+
+```xml
+<body>
+  <main>
+    <button id="start">Included</button>
+  </main>
+  <footer>
+    <a href="#">Excluded</a>
+  </footer>
+</body>
+```
+
+#### Elements shown in UI
+
+```
+#start
+```
+
+---
+
+### Including only elements in a container
+
+#### Config
+
+```json
+{
+  "elementFilters": [
+    {
+      "selector": "#form *",
+      "include": true
+    },
+    {
+      "selector": "*",
+      "include": false
+    }
+  ]
+}
+```
+
+#### HTML
+
+```xml
+<body>
+  <form id="form">
+    <input id="name" />
+  </form>
+  <footer>
+    <a href="#">Excluded</a>
+  </footer>
+</body>
+```
+
+#### Elements shown in UI
+
+```
+#name
+```

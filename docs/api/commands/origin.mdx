@@ -13,20 +13,18 @@ limitation determined by standard web security features of the browser. The
 
 :::caution
 
-<strong>
-  <Icon name="exclamation-triangle" /> Obstructive Third Party Code
-</strong>
+<Icon name="exclamation-triangle" /> **Obstructive Third Party Code**
 
 By default Cypress will search through the response streams coming from your
 server on first party `.html` and `.js` files and replace code that matches
 patterns commonly found in framebusting. When using the `cy.origin()` command,
 the third party code may also need to be modified for framebusting techniques.
 This can be enabled by setting the
-[`experimentalModifyObstructiveThirdPartyCode`](/guides/references/experiments)
+[`experimentalModifyObstructiveThirdPartyCode`](/app/references/experiments)
 flag to `true` in the Cypress configuration. More information about this
 experimental flag can be found on our
-[Web Security](/guides/guides/web-security#Modifying-Obstructive-Third-Party-Code)
-page.
+[Cross Origin Testing](/app/guides/cross-origin-testing#Modifying-Obstructive-Third-Party-Code)
+doc.
 
 :::
 
@@ -39,7 +37,7 @@ cy.origin(url, options, callbackFn)
 
 ### Usage
 
-**<Icon name="check-circle" color="green" /> Correct Usage**
+<Icon name="check-circle" color="green" /> **Correct Usage**
 
 ```js
 const hits = getHits() // Defined elsewhere
@@ -59,7 +57,7 @@ cy.visit('/')
 cy.get('h1').contains('My cool site under test')
 ```
 
-**<Icon name="exclamation-triangle" color="red" /> Incorrect Usage**
+<Icon name="exclamation-triangle" color="red" /> **Incorrect Usage**
 
 ```js
 const hits = getHits()
@@ -79,7 +77,7 @@ cy.get('h1').contains('My cool site under test')
 
 ### Arguments
 
-**<Icon name="angle-right" /> url** **_(String)_**
+<Icon name="angle-right" /> **url _(String)_**
 
 A URL specifying the secondary origin in which the callback is to be executed.
 This should at the very least contain a hostname, and may also include the
@@ -94,11 +92,11 @@ This argument will be used in two ways:
    same-origin policy.
 
 2. It overrides the `baseUrl` configured in your
-   [global configuration](/guides/references/configuration#Global) while inside
+   [global configuration](/app/references/configuration#Global) while inside
    the callback. So `cy.visit()` and `cy.request()` will use this URL as a
    prefix, not the configured `baseUrl`.
 
-**<Icon name="angle-right" /> options** **_(Object)_**
+<Icon name="angle-right" /> **options _(Object)_**
 
 Pass in an options object to control the behavior of `cy.origin()`.
 
@@ -115,7 +113,7 @@ the JavaScript context in which it was declared. Values passed into `args`
 
 :::
 
-**<Icon name="angle-right" /> callbackFn** **_(Function)_**
+<Icon name="angle-right" /> **callbackFn _(Function)_**
 
 The function containing the commands to be executed in the secondary origin.
 
@@ -127,7 +125,7 @@ There are a number of limitations placed on commands run inside the callback,
 please see [Callback restrictions](#Callback-restrictions) section below for a
 full list.
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
 
 - `cy.origin()` yields the value yielded by the last Cypress command in the
   callback function.
@@ -167,7 +165,7 @@ Values returned or yielded from the callback function **must** be serializable
 or they will not be returned to the primary origin. For example, the following
 will not work:
 
-**<Icon name="exclamation-triangle" color="red" /> Incorrect Usage**
+<Icon name="exclamation-triangle" color="red" /> **Incorrect Usage**
 
 ```js
 cy.origin('https://example.cypress.io', () => {
@@ -178,7 +176,7 @@ cy.origin('https://example.cypress.io', () => {
 
 Instead, you must explicitly yield a serializable value:
 
-**<Icon name="check-circle" color="green" /> Correct Usage**
+<Icon name="check-circle" color="green" /> **Correct Usage**
 
 ```js
 cy.origin('https://example.cypress.io', () => {
@@ -204,10 +202,10 @@ cy.origin('example.cypress.io', () => {
 })
 ```
 
-Here the `baseUrl` inside the `cy.origin()` callback is set to `www.cypress.io`
+Here the `baseUrl` inside the `cy.origin()` callback is set to `example.cypress.io`
 and the protocol defaults to `https`. When `cy.visit()` is called with the path
 `/history/founder`, the three are concatenated to make
-`https://www.cypress.io/history/founder`.
+`https://example.cypress.io/history/founder`.
 
 #### Alternative navigation
 
@@ -282,7 +280,7 @@ this functionality in a `login`
 duplicate this login code in every test. Here's an idealized example of how to
 do this with `cy.origin()`.
 
-**<Icon name="exclamation-triangle" color="#f0ad4e" /> Inefficient Usage**
+<Icon name="exclamation-triangle" color="#f0ad4e" /> **Inefficient Usage**
 
 ```js
 Cypress.Commands.add('login', (username, password) => {
@@ -341,7 +339,10 @@ Cypress.Commands.add('login', (username, password) => {
 
 ### How to Test Multiple Origins
 
-<DocsVideo src="https://youtube.com/embed/Fohrq5GZSD8" />
+<DocsVideo
+  src="https://youtube.com/embed/Fohrq5GZSD8"
+  title="How to test multiple domains or origins with Cypress"
+/>
 
 In this video we walk through how to test multiple origins in a single test. We
 also look at how to use the `cy.session()` command to cache session information
@@ -360,7 +361,7 @@ for transmission. It is very important to understand that variables **inside**
 the callback are not shared with the scope **outside** the callback. For example
 this will not work:
 
-**<Icon name="exclamation-triangle" color="red" /> Incorrect Usage**
+<Icon name="exclamation-triangle" color="red" /> **Incorrect Usage**
 
 ```js
 const foo = 1
@@ -375,7 +376,7 @@ cy.origin('cypress.io', () => {
 Instead, the variable must be explicitly passed into the callback using the
 `args` option:
 
-**<Icon name="check-circle" color="green" /> Correct Usage**
+<Icon name="check-circle" color="green" /> **Correct Usage**
 
 ```js
 const foo = 1
@@ -399,11 +400,11 @@ Within the `cy.origin()` callback,
 [`Cypress.require()`](/api/cypress-api/require) can be utilized to include
 [npm](https://www.npmjs.com/) packages and other files. It is functionally the
 same as using
-[CommonJS `require()`](https://nodejs.org/en/knowledge/getting-started/what-is-require/)
+[CommonJS `require()`](https://nodejs.org/api/modules.html#requireid)
 in browser-targeted code.
 
 Note that it is not possible to use
-[CommonJS `require()`](https://nodejs.org/en/knowledge/getting-started/what-is-require/)
+[CommonJS `require()`](https://nodejs.org/api/modules.html#requireid)
 or
 [ES module `import()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import#dynamic_imports)
 within the callback.
@@ -411,7 +412,7 @@ within the callback.
 :::caution
 
 Using `Cypress.require()` within the callback requires enabling the
-[`experimentalOriginDependencies`](/guides/references/experiments) option in the
+[`experimentalOriginDependencies`](/app/references/experiments) option in the
 Cypress configuration.
 
 :::
@@ -433,7 +434,7 @@ cy.origin('cypress.io', () => {
 
 This makes it possible to share custom commands between tests run in primary and
 secondary origins. We recommend this pattern for setting up your
-[support file](/guides/core-concepts/writing-and-organizing-tests#Support-file)
+[support file](/app/core-concepts/writing-and-organizing-tests#Support-file)
 and setting up custom commands to run within the `cy.origin()` callback:
 
 `cypress/support/commands.js`:
@@ -529,22 +530,21 @@ There are other testing scenarios which are not currently covered by
 `cy.origin()`:
 
 - It cannot run commands
-  [in a different browser window](/guides/references/trade-offs#Multiple-browsers-open-at-the-same-time)
+  [in a different browser window](/app/references/trade-offs#Multiple-browsers-open-at-the-same-time)
+- It cannot run commands in a different browser tab
 - It cannot run commands
-  [in a different browser tab](/guides/references/trade-offs#Multiple-tabs)
-- It cannot run commands
-  [inside an `<iframe>` element](/faq/questions/using-cypress-faq#How-do-I-test-elements-inside-an-iframe)
+  [inside an `<iframe>` element](/app/faq#How-do-I-test-elements-inside-an-iframe)
 
-However, `<iframe>` support is on [our roadmap](/guides/references/roadmap) for
+However, `<iframe>` support is on [our roadmap](/app/references/roadmap) for
 inclusion in a future version of Cypress.
 
 ## History
 
-| Version                                        | Changes                                                                                                     |
-| ---------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
-| [12.6.0](/guides/references/changelog#10-7-0)  | Support for `Cypress.require()` added and support for CommonJS `require()` and ES module `import()` removed |
-| [10.11.0](/guides/references/changelog#10-7-0) | Support for CommonJS `require()` and ES module `import()` added and support for `Cypress.require()` removed |
-| [10.7.0](/guides/references/changelog#10-7-0)  | Support for `Cypress.require()` added                                                                       |
+| Version                                     | Changes                                                                                                     |
+| ------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| [12.6.0](/app/references/changelog#10-7-0)  | Support for `Cypress.require()` added and support for CommonJS `require()` and ES module `import()` removed |
+| [10.11.0](/app/references/changelog#10-7-0) | Support for CommonJS `require()` and ES module `import()` added and support for `Cypress.require()` removed |
+| [10.7.0](/app/references/changelog#10-7-0)  | Support for `Cypress.require()` added                                                                       |
 
 ## See also
 

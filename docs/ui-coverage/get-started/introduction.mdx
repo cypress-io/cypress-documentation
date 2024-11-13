@@ -1,0 +1,55 @@
+---
+title: 'Test coverage with UI Coverage | Cypress Documentation'
+description: 'Increase your test coverage with UI Coverage, a visual test coverage report based on the interactive elements that make up your application.'
+sidebar_label: Introduction
+sidebar_position: 10
+sidebar_custom_props: { 'new_label': true }
+---
+
+# UI Coverage <Badge type="success">+ Add-on</Badge>
+
+Easily track, monitor, and visualize the test coverage of your UI to prevent regressions by ensuring critical flows of your app are tested. Save CI resources by removing redundant tests and improve your team's productivity with a visual overview of UI coverage across every page and component.
+
+<Btn
+  label="Request trial ➜"
+  variant="purple-dark"
+  href="https://www.cypress.io/ui-coverage?utm_medium=intro-cta&utm_source=docs.cypress.io&utm_content=Request%20trial"
+/>
+<Btn
+  label="See a demo"
+  icon="action-play-small"
+  href="https://go.cypress.io/hubfs/App%20Quality%20Products/UI%20Coverage/ui_coverage__overview_and_demo%20(1080p).mp4"
+/>
+<Btn
+  label=" Explore an example project"
+  icon="object-tested-element"
+  href="https://on.cypress.io/rwa-ui-coverage-views?utm_source=docs.cypress.io&utm_medium=intro-cta&utm_content=Explore%20an%20example%20project"
+/>
+
+<DocsImage
+  src="/img/ui-coverage/get-started/Cypress_UI_Coverage_demo.gif"
+  alt="UI Coverage demo showing a mouse hovering and interacting with the UI of the Cloud product"
+  noBorder="true"
+/>
+
+## Get Started
+
+UI Coverage works instantly, with no setup or code instrumentation required. If you record test runs to the Cypress Cloud with Test Replay, you're ready to start using UI Coverage.
+You'll start your free trial with personalized support from our sales team and your existing test data to instantly see where testing gaps exist for all of your Cypress projects.
+From there, you can easily customize reports to fit your needs with flexible configuration options.
+
+## How it Works
+
+:::caution
+
+UI Coverage generates reports using [Test Replay](/cloud/features/test-replay) data and requires Cypress v13+.
+
+:::
+
+UI Coverage creates a dynamic visual map of test coverage across every page of your application. Each interactive element is identified and highlighted as either tested or untested, providing a clear and actionable overview of your test coverage.
+
+UI Coverage captures "snapshots" of every page visited by your Cypress tests (and every component mounted in Component Testing). Snapshots represent all of the unique states found across your test run, and these states are analyzed to identify all of the unique elements that make up your application.
+
+As a result, a UI Coverage score is generated. This score quantifies coverage across your application by measuring the ratio of the unique elements that have been tested to the total unique elements that are found across your application.
+
+Because Cypress Accessibility uses data captured through Cypress Test Replay, it is subject to any [limitations of Test Replay](https://docs.cypress.io/faq/questions/cloud-faq#Is-everything-captured-and-replayed-in-Test-Replay) data captured and browser support.

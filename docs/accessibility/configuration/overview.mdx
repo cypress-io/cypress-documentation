@@ -1,0 +1,61 @@
+---
+sidebar_label: Overview
+title: 'Configuration | Cypress Accessibility'
+description: 'Configuration allows you to customize and fine-tune Accessibility in Cypress.'
+sidebar_position: 10
+---
+
+# Configuration
+
+<AccessibilityAddon />
+
+Configuration allows you to customize and fine-tune Accessibility in Cypress. While Accessibility is designed to work seamlessly out of the box, there are instances where custom configuration may be necessary to address unique application structures, testing requirements, or edge cases. This section guides you through setting configuration to enhance the functionality and accuracy of Accessibility.
+
+**Note**: By default, setting configuration is limited to Admin users. At your request, this can be changed to allow setting config by all users. Reach out to your Cypress point-of-contact if you would like to change this.
+
+### Setting Configuration
+
+To add or modify the configuration for your project, navigate to the "App Quality" tab in your project settings.
+
+<DocsImage
+  src="/img/accessibility/configuration/cypress-accessibility-configuration-editor.png"
+  alt="The Cypress Cloud UI showing the configuration editor"
+/>
+
+You can use the provided editor to write configuration in JSON format. A complete configuration with all available options looks as follows:
+
+```typescript
+{
+  "elementFilters": [
+    {
+      "selector": string,
+      "include": boolean
+    }
+  ],
+  "views": [
+    {
+      "pattern": string,
+      "groupBy": [
+        string
+      ]
+    }
+  ],
+  "viewFilters": [
+    {
+      "pattern": string,
+      "include": boolean
+    }
+  ]
+}
+```
+
+Note that these root-level App Quality configuration properties (`elementFilters`, `views`, and `viewFilters`) impact both UI Coverage and Accessibility.
+
+### Viewing Configuration for a Run
+
+You can view configuration information for each run in the Properties tab, as shown below. This is the configuration set for the project at the start of the run.
+
+<DocsImage
+  src="/img/accessibility/configuration/cypress-cloud-properties-tab-application-quality-config.png"
+  alt="The properties tab for a run, with an Application Quality section at the bottom"
+/>

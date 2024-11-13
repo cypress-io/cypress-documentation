@@ -19,7 +19,7 @@ There are two API available for adding custom commands:
 :::info
 
 If you want your method to have builtin
-[retry-ability](/guides/core-concepts/retry-ability), and especially if you
+[retry-ability](/app/core-concepts/retry-ability), and especially if you
 return a DOM element for further commands to act on, consider writing a
 [custom query](/api/cypress-api/custom-queries) instead.
 
@@ -30,7 +30,7 @@ return a DOM element for further commands to act on, consider writing a
 We recommend defining queries is in your `cypress/support/commands.js` file,
 since it is loaded before any test files are evaluated via an import statement
 in the
-[supportFile](/guides/core-concepts/writing-and-organizing-tests#Support-file).
+[supportFile](/app/core-concepts/writing-and-organizing-tests#Support-file).
 
 :::
 
@@ -46,7 +46,7 @@ Cypress.Commands.overwrite(name, callbackFn)
 
 ### Usage
 
-**<Icon name="check-circle" color="green" /> Correct Usage**
+<Icon name="check-circle" color="green" /> **Correct Usage**
 
 ```javascript
 Cypress.Commands.add('login', (email, pw) => {})
@@ -59,19 +59,19 @@ Cypress.Commands.overwrite('visit', (orig, url, options) => {})
 
 ### Arguments
 
-**<Icon name="angle-right" /> name** **_(String)_**
+<Icon name="angle-right" /> **name _(String)_**
 
 The name of the command you're either adding or overwriting.
 
-**<Icon name="angle-right" /> callbackFn** **_(Function)_**
+<Icon name="angle-right" /> **callbackFn _(Function)_**
 
 Pass a function that receives the arguments passed to the command.
 
-**<Icon name="angle-right" /> callbackObj** **_(Object)_**
+<Icon name="angle-right" /> **callbackObj _(Object)_**
 
 An object with `callbackFn`s as properties.
 
-**<Icon name="angle-right" /> options** **_(Object)_**
+<Icon name="angle-right" /> **options _(Object)_**
 
 Pass in an options object to define the implicit behavior of the custom command.
 
@@ -479,7 +479,7 @@ that all you're doing is swapping out base urls for `development` vs
 This is usually unnecessary because Cypress is already configured to swap out a
 `baseUrl` that both [cy.visit()](/api/commands/visit) and
 [cy.request()](/api/commands/request) use. Set the `baseUrl` configuration
-property in your [Cypress configuration](/guides/references/configuration) and
+property in your [Cypress configuration](/app/references/configuration) and
 override it with the `CYPRESS_BASE_URL` environment variable.
 
 For more complex use cases feel free to overwrite existing commands.
@@ -497,7 +497,10 @@ cy.get('#username').type('username@email.com')
 cy.get('#password').type('superSecret123')
 ```
 
-<DocsImage src="/img/api/custom-commands/custom-command-type-no-masked-password.png" />
+<DocsImage
+  src="/img/api/custom-commands/custom-command-type-no-masked-password.png"
+  alt="Cypress Command Log showing password within type command"
+/>
 
 You may want to mask some values passed to the [.type()](/api/commands/type)
 command so that sensitive data does not display in screenshots or videos of your
@@ -529,17 +532,10 @@ cy.get('#password').type('superSecret123', { sensitive: true })
 Now our sensitive password is not printed to the Cypress Command Log when
 `sensitive: true` is passed as an option to [.type()](/api/commands/type).
 
-<DocsImage src="/img/api/custom-commands/custom-command-type-masked-password.png" />
-
-:::info
-
-<strong>Keep passwords secret blog</strong>
-
-Check out
-[this blog](https://glebbahmutov.com/blog/keep-passwords-secret-in-e2e-tests/)
-to explore another way to keep passwords secret within your tests.
-
-:::
+<DocsImage
+  src="/img/api/custom-commands/custom-command-type-masked-password.png"
+  alt="Cypress command log showing masked password as asterisks within type command"
+/>
 
 #### Overwrite `screenshot` command
 
@@ -616,13 +612,13 @@ Cypress.Commands.add(
 )
 ```
 
-**<Icon name="check-circle" color="green" /> Valid Usage**
+<Icon name="check-circle" color="green" /> **Valid Usage**
 
 ```javascript
 cy.get('button').click() // has subject, and is `element`
 ```
 
-**<Icon name="exclamation-triangle" color="red" /> Invalid Usage**
+<Icon name="exclamation-triangle" color="red" /> **Invalid Usage**
 
 ```javascript
 cy.click() // no subject, will error
@@ -649,7 +645,7 @@ Cypress.Commands.add(
 )
 ```
 
-**<Icon name="check-circle" color="green" /> Valid Usage**
+<Icon name="check-circle" color="green" /> **Valid Usage**
 
 ```javascript
 cy.get('button').trigger() // has subject, and is `element`
@@ -657,7 +653,7 @@ cy.document().trigger() // has subject, and is `document`
 cy.window().trigger() // has subject, and is `window`
 ```
 
-**<Icon name="exclamation-triangle" color="red" /> Invalid Usage**
+<Icon name="exclamation-triangle" color="red" /> **Invalid Usage**
 
 ```javascript
 cy.trigger() // no subject, will error
@@ -693,7 +689,7 @@ Cypress.Commands.add(
 )
 ```
 
-**<Icon name="check-circle" color="green" /> Valid Usage**
+<Icon name="check-circle" color="green" /> **Valid Usage**
 
 ```javascript
 cy.scrollTo() // no subject, but valid because it's optional
@@ -701,7 +697,7 @@ cy.get('#main').scrollTo() // has subject, and is `element`
 cy.visit().scrollTo() // has subject, and since visit yields `window` it's ok
 ```
 
-**<Icon name="exclamation-triangle" color="red" /> Invalid Usage**
+<Icon name="exclamation-triangle" color="red" /> **Invalid Usage**
 
 ```javascript
 cy.document().scrollTo() // has subject, but it's a `document`, will error
@@ -847,8 +843,8 @@ couple commands.
 
 Don't do things like:
 
-- **<Icon name="exclamation-triangle" color="red" />** `cy.clickButton(selector)`
-- **<Icon name="exclamation-triangle" color="red" />** `.shouldBeVisible()`
+- <Icon name="exclamation-triangle" color="red" /> `cy.clickButton(selector)`
+- <Icon name="exclamation-triangle" color="red" /> `.shouldBeVisible()`
 
 This first custom command is wrapping `cy.get(selector).click()`. Going down
 this route would lead to creating dozens or even hundreds of custom commands to
@@ -898,7 +894,7 @@ repository for a working example.
 
 #### 6. Create a function that adds the custom command
 
-Cypress [12.17.4](/guides/references/changelog#12-17-4) includes a Webpack upgrade (v4 to v5), which [tree shakes out](https://webpack.js.org/blog/2020-10-10-webpack-5-release/#inner-module-tree-shaking) any side-effects or files that _only_ include side-effects.
+Cypress [12.17.4](/app/references/changelog#12-17-4) includes a Webpack upgrade (v4 to v5), which [tree shakes out](https://webpack.js.org/blog/2020-10-10-webpack-5-release/#inner-module-tree-shaking) any side-effects or files that _only_ include side-effects.
 
 If you are using TypeScript and have Webpack's `sideEffects:false` set in your package.json, custom Cypress commands will not be registered by the common pattern of writing the commands in one file and having them be run as a side effect of importing the file. For example:
 
@@ -930,18 +926,16 @@ registerCommands()
 
 ## History
 
-| Version                                       | Changes                      |
-| --------------------------------------------- | ---------------------------- |
-| [0.20.0](/guides/references/changelog#0-20-0) | `Cypress.Commands` API added |
+| Version                                    | Changes                      |
+| ------------------------------------------ | ---------------------------- |
+| [0.20.0](/app/references/changelog#0-20-0) | `Cypress.Commands` API added |
 
 ## See also
 
 - See how to add
-  [TypeScript support for custom commands](/guides/tooling/typescript-support#Types-for-Custom-Commands)
-- Blog posts
-  [Writing a Custom Cypress Command](https://glebbahmutov.com/blog/writing-custom-cypress-command/)
-  and
-  [How to Publish Custom Cypress Command on NPM](https://glebbahmutov.com/blog/publishing-cypress-command/).
-- [Plugins using custom commands](/plugins#custom-commands)
+  [TypeScript support for custom commands](/app/tooling/typescript-support#Types-for-Custom-Commands)
+- <a href="/app/plugins/plugins-list#custom-commands">
+    Plugins using custom commands
+  </a>
 - [Cypress.log()](/api/cypress-api/cypress-log)
-- [Recipe: Logging In](/examples/recipes#Logging-In)
+- [Recipe: Logging In](/app/references/recipes#Logging-In)

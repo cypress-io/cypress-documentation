@@ -1,0 +1,93 @@
+---
+title: 'Manage organizations | Cypress Cloud'
+description: 'Learn how to create projects, manage users, access billing and usage information, leverage third party integrations, and apply org-level settings.'
+sidebar_label: Organizations
+sidebar_position: 20
+---
+
+# Organizations
+
+:::info
+
+##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
+
+- How to create and manage organizations
+- How to locate your Organization ID
+- How to integrate source control providers, issue management, and team communications with your org
+
+:::
+
+Organizations are used to group and manage projects. Here you can create
+projects, manage users, access billing and usage information, leverage third
+party integrations, and apply org-level settings.
+
+## Organization ID
+
+An Organization's ID is a unique identifier in
+[UUID](https://tools.ietf.org/html/rfc4122) format that can be found under the
+"Organization settings" section of Cypress Cloud. This ID is used frequently by
+the Support, Success, and Sales teams to reference an Organization.
+
+To locate your Organization's ID, go to "Organization settings" then
+Organization ID. Click on the clipboard icon to copy the ID for easy sharing
+with Cypress teams.
+
+<DocsImage
+  src="/img/cloud/organizations/cypress-organization-UUID.gif"
+  alt="Locate UUID gif"
+/>
+
+## Managing Organizations
+
+### Create Org
+
+You can create an organization from within
+[Cypress Cloud](https://on.cypress.io/cloud) by opening the organization
+switcher and clicking **<Icon name="plus" /> Create new organization**.
+
+<DocsImage
+  src="/img/cloud/organizations/create-org.jpg"
+  alt="Create new organization"
+/>
+
+### Delete Org
+
+You can delete organizations that you own as long as they do not have any
+projects in the organization. You must first
+[delete](/cloud/account-management/projects#Delete-Project) or
+[transfer ownership](/cloud/account-management/projects#Transfer-ownership)
+of your projects your projects to another organization before you can delete the
+organization.
+
+<DocsImage
+  src="/img/cloud/organizations/remove-organization-dialog.jpg"
+  alt="Delete Organization"
+  width="80%"
+/>
+
+## Integrations
+
+Owner and admin roles can integrate Cypress Cloud with many third party tools
+under **Organization > Integrations** and edit those settings from within the
+**Project settings** page.
+
+See our integration guides to learn more:
+
+### Source Control Providers
+
+{/* prettier-ignore-start */}
+
+- <Logo src="/img/logo/github.svg" alt="GitHub Logo"/> [GitHub integration guide](/cloud/integrations/source-control/github)
+- <Logo src="/img/logo/gitlab.svg" alt="GitLab Logo" /> [GitLab integration guide](/cloud/integrations/source-control/gitlab)
+- <Logo src="/img/logo/bitbucket.svg" alt="Bitbucket Logo" /> [Bitbucket integration guide](/cloud/integrations/source-control/bitbucket)
+
+### Issue Management
+
+- <Logo src="/img/logo/jira.svg" alt="Jira Logo" /> [Jira integration guide](/cloud/integrations/jira)
+
+### Team Communication
+
+- <Logo src="/img/logo/slack.svg" alt="Slack Logo" /> [Cypress integration for Slack guide](/cloud/integrations/slack)
+- <Logo src="/img/logo/ms-teams.svg" alt="Microsoft Teams Logo" /> [Cypress integration for Microsoft Teams guide](/cloud/integrations/teams)
+
+{/* prettier-ignore-end */}

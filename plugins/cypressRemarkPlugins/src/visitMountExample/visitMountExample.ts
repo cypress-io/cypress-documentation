@@ -1,21 +1,23 @@
-import type { Code, Content } from 'mdast'
+import type { Code } from 'mdast'
 import type { Node } from 'unist'
-import visit from 'unist-util-visit'
-import { createDirective } from '../utils/createDirective'
+import { visit } from 'unist-util-visit'
 import { isCode, isMatchedDirective } from '../utils/matchHelpers'
 import { hydrateVisitMountExample } from './hydrateVisitMountExample'
 
 export function visitMountExample(this: any) {
   const tagName = 'visit-mount-example'
-  createDirective(this, tagName)
   return (root) => {
-    visit(root, 'containerDirective', (node: Node) => {
+    visit(root, (node: Node) => {
       if (isMatchedDirective(node, tagName)) {
         let result: Node[] = []
         if (node.children.length === 1 && isCode(node.children[0])) {
           result = transformNode(node.children[0])
         } else {
-          result = node.children
+          return true
+        }
+
+        node.data = {
+          hName: 'E2EOrCtTabs',
         }
         node.children = result
       }
@@ -23,14 +25,10 @@ export function visitMountExample(this: any) {
   }
 }
 
-function transformNode(codeNode: Code) {
+function transformNode(codeNode: Code): Code[] {
   const { visitCode, mountCode } = hydrateVisitMountExample(codeNode.value)
 
   return [
-    {
-      type: 'jsx',
-      value: `<E2EOrCtTabs>\n`,
-    },
     {
       type: codeNode.type,
       lang: codeNode.lang,
@@ -43,9 +41,5 @@ function transformNode(codeNode: Code) {
       meta: codeNode.meta,
       value: mountCode,
     },
-    {
-      type: 'jsx',
-      value: `</E2EOrCtTabs>\n`,
-    },
-  ] as Content[]
+  ]
 }

@@ -1,8 +1,5 @@
 # Cypress Documentation [![Discord chat](https://img.shields.io/badge/chat-on%20Discord-brightgreen)](https://on.cypress.io/discord) [![first-timers-only](http://img.shields.io/badge/first--timers--only-friendly-blue.svg)](https://github.com/cypress-io/cypress-documentation/labels/first-timers-only)
 
-The code for Cypress Documentation including Guides, API, Examples, Cypress
-Cloud & FAQ found at https://docs.cypress.io.
-
 ![Cypress Documentation Preview](/static/img/cypress-docs.png)
 
 ## CI status
@@ -12,7 +9,7 @@ Cloud & FAQ found at https://docs.cypress.io.
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/dbf22ada-b50c-49b0-a933-bf02e87d25d1/deploy-status)](https://app.netlify.com/sites/cypress-docs/deploys)
 
-Our docs are built using [Docusaurus 2](https://docusaurus.io/).
+Our docs are built using [Docusaurus](https://docusaurus.io/).
 
 ### Installation
 

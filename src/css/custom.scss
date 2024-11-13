@@ -1,3 +1,8 @@
+/* https://dev.to/sajclarke_62/using-tailwindcss-v3-in-docusaurus-in-5-steps-5c26 */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /**
  * Any CSS included here will be global. The classic template
  * bundles Infima by default. Infima is a CSS framework designed to
@@ -17,65 +22,108 @@
 
 /* You can override the default Infima variables here. */
 :root {
-  --ifm-color-white: #fcfcfc;
+  --ifm-navbar-shadow: none;
+  --ifm-color-white: #ffffff;
   --ifm-color-black: #0a0a0a;
-  --cypress-color-gray-50: #f3f4fa;
-  --cypress-color-gray-100: #e1e3ed;
-  --cypress-color-gray-200: #d0d2e0;
-  --cypress-color-gray-300: #bfc2d4;
-  --cypress-color-gray-400: #afb3c7;
-  --cypress-color-gray-500: #9095ad;
-  --cypress-color-gray-600: #747994;
-  --cypress-color-gray-700: #5a5f7a;
-  --cypress-color-gray-800: #434861;
-  --cypress-color-gray-900: #2e3247;
-  --cypress-color-gray-1000: #1b1e2e;
-  --cypress-color-gray-1100: #131521;
-  --cypress-color-indigo-50: #f0f1ff;
-  --cypress-color-indigo-100: #daddfe;
-  --cypress-color-indigo-200: #c5c9fd;
-  --cypress-color-indigo-300: #9aa2fc;
-  --cypress-color-indigo-400: #6470f3;
-  --cypress-color-indigo-500: #4956e3;
-  --cypress-color-jade-50: #e4fbf2;
-  --cypress-color-jade-100: #c2f1de;
-  --cypress-color-jade-200: #a3e7cb;
-  --cypress-color-jade-300: #69d3a7;
-  --cypress-color-jade-400: #1fa971;
-  --cypress-color-jade-500: #00814d;
-  --cypress-color-jade-600: #005f39;
-  --cypress-color-jade-700: #00442a;
-  --cypress-color-jade-800: #003220;
-  --cypress-color-jade-900: #00291b;
-  --cypress-color-teal-300: #4bbfd2;
+  --ifm-color-primary: theme(colors.jade.300);
+  --ifm-color-primary-dark: theme(colors.jade.400);
+  --ifm-color-primary-darker: theme(colors.jade.500);
+  --ifm-color-primary-darkest: theme(colors.jade.600);
+  --ifm-color-primary-light: theme(colors.jade.200);
+  --ifm-color-primary-lighter: theme(colors.jade.100);
+  --ifm-color-primary-lightest: theme(colors.jade.50);
+  --ifm-color-secondary: theme(colors.indigo.500);
+  --ifm-color-secondary-dark: theme(colors.indigo.400);
+  --ifm-color-secondary-darker: theme(colors.indigo.500);
+  --ifm-color-secondary-darkest: theme(colors.indigo.600);
+  --ifm-color-secondary-light: theme(colors.indigo.200);
+  --ifm-color-secondary-lighter: theme(colors.indigo.100);
+  --ifm-color-secondary-lightest: theme(colors.indigo.50);
+  --ifm-color-jade-50: theme(colors.jade.50);
+  --ifm-color-jade-100: theme(colors.jade.100);
+  --ifm-color-jade-200: theme(colors.jade.200);
+  --ifm-color-jade-300: theme(colors.jade.300);
+  --ifm-color-jade-400: theme(colors.jade.400);
+  --ifm-color-jade-500: theme(colors.jade.500);
+  --ifm-color-jade-600: theme(colors.jade.600);
+  --ifm-color-jade-700: theme(colors.jade.700);
+  --ifm-color-jade-800: theme(colors.jade.800);
+  --ifm-color-jade-900: theme(colors.jade.900);
+  --ifm-color-jade-1000: theme(colors.jade.1000);
+  --ifm-color-gray-50: theme(colors.gray.50);
+  --ifm-color-gray-100: theme(colors.gray.100);
+  --ifm-color-gray-200: theme(colors.gray.200);
+  --ifm-color-gray-300: theme(colors.gray.300);
+  --ifm-color-gray-400: theme(colors.gray.400);
+  --ifm-color-gray-500: theme(colors.gray.500);
+  --ifm-color-gray-600: theme(colors.gray.600);
+  --ifm-color-gray-700: theme(colors.gray.700);
+  --ifm-color-gray-800: theme(colors.gray.800);
+  --ifm-color-gray-900: theme(colors.gray.900);
+  --ifm-color-gray-1000: theme(colors.gray.1000);
+  --ifm-color-teal-50: theme(colors.teal.50);
+  --ifm-color-teal-100: theme(colors.teal.100);
+  --ifm-color-teal-200: theme(colors.teal.200);
+  --ifm-color-teal-300: theme(colors.teal.300);
+  --ifm-color-teal-400: theme(colors.teal.400);
+  --ifm-color-teal-500: theme(colors.teal.500);
+  --ifm-color-teal-600: theme(colors.teal.600);
+  --ifm-color-teal-700: theme(colors.teal.700);
+  --ifm-color-teal-800: theme(colors.teal.800);
+  --ifm-color-teal-900: theme(colors.teal.900);
+  --ifm-color-teal-1000: theme(colors.teal.1000);
+  --ifm-color-orange-50: theme(colors.orange.50);
+  --ifm-color-orange-100: theme(colors.orange.100);
+  --ifm-color-orange-200: theme(colors.orange.200);
+  --ifm-color-orange-300: theme(colors.orange.300);
+  --ifm-color-orange-400: theme(colors.orange.400);
+  --ifm-color-orange-500: theme(colors.orange.500);
+  --ifm-color-orange-600: theme(colors.orange.600);
+  --ifm-color-orange-700: theme(colors.orange.700);
+  --ifm-color-orange-800: theme(colors.orange.800);
+  --ifm-color-orange-900: theme(colors.orange.900);
+  --ifm-color-orange-1000: theme(colors.orange.1000);
+  --ifm-color-red-50: theme(colors.red.50);
+  --ifm-color-red-100: theme(colors.red.100);
+  --ifm-color-red-200: theme(colors.red.200);
+  --ifm-color-red-300: theme(colors.red.300);
+  --ifm-color-red-400: theme(colors.red.400);
+  --ifm-color-red-500: theme(colors.red.500);
+  --ifm-color-red-600: theme(colors.red.600);
+  --ifm-color-red-700: theme(colors.red.700);
+  --ifm-color-red-800: theme(colors.red.800);
+  --ifm-color-red-900: theme(colors.red.900);
+  --ifm-color-red-1000: theme(colors.red.1000);
+  --ifm-color-indigo-50: theme(colors.indigo.50);
+  --ifm-color-indigo-100: theme(colors.indigo.100);
+  --ifm-color-indigo-200: theme(colors.indigo.200);
+  --ifm-color-indigo-300: theme(colors.indigo.300);
+  --ifm-color-indigo-400: theme(colors.indigo.400);
+  --ifm-color-indigo-500: theme(colors.indigo.500);
+  --ifm-color-indigo-600: theme(colors.indigo.600);
+  --ifm-color-indigo-700: theme(colors.indigo.700);
+  --ifm-color-indigo-800: theme(colors.indigo.800);
+  --ifm-color-indigo-900: theme(colors.indigo.900);
+  --ifm-color-indigo-1000: theme(colors.indigo.1000);
+  --ifm-color-indigo-50: theme(colors.indigo.50);
+  --ifm-color-purple-100: theme(colors.purple.100);
+  --ifm-color-purple-200: theme(colors.purple.200);
+  --ifm-color-purple-300: theme(colors.purple.300);
+  --ifm-color-purple-400: theme(colors.purple.400);
+  --ifm-color-purple-500: theme(colors.purple.500);
+  --ifm-color-purple-600: theme(colors.purple.600);
+  --ifm-color-purple-700: theme(colors.purple.700);
+  --ifm-color-purple-800: theme(colors.purple.800);
+  --ifm-color-purple-900: theme(colors.purple.900);
+  --ifm-color-purple-1000: theme(colors.purple.1000);
 
-  --ifm-color-gray-50: var(--cypress-color-gray-50);
-  --ifm-color-gray-100: var(--cypress-color-gray-100);
-  --ifm-color-gray-200: var(--cypress-color-gray-200);
-  --ifm-color-gray-300: var(--cypress-color-gray-300);
-  --ifm-color-gray-400: var(--cypress-color-gray-400);
-  --ifm-color-gray-500: var(--cypress-color-gray-500);
-  --ifm-color-gray-600: var(--cypress-color-gray-600);
-  --ifm-color-gray-700: var(--cypress-color-gray-700);
-  --ifm-color-gray-800: var(--cypress-color-gray-800);
-  --ifm-color-gray-900: var(--cypress-color-gray-900);
-  --ifm-color-gray-1000: var(--cypress-color-gray-1000);
-  --ifm-color-gray-1100: var(--cypress-color-gray-1100);
-  --ifm-color-primary: var(--cypress-color-jade-300);
-  --ifm-color-primary-dark: var(--cypress-color-jade-400);
-  --ifm-color-primary-darker: var(--cypress-color-jade-500);
-  --ifm-color-primary-darkest: var(--cypress-color-jade-600);
-  --ifm-color-primary-light: var(--cypress-color-jade-200);
-  --ifm-color-primary-lighter: var(--cypress-color-jade-100);
-  --ifm-color-primary-lightest: var(--cypress-color-jade-50);
 
   --ifm-font-family-base: ui-sans-serif, system-ui, -apple-system, Segoe UI,
     Roboto, Helvetica Neue, Arial;
   --ifm-heading-font-family: Poppins;
   --ifm-heading-font-weight: var(--ifm-font-weight-bold);
   --ifm-line-height-base: 1.6;
-
-  --ifm-code-font-size: 95%;
+  --ifm-heading-color: theme(colors.gray.1000) --ifm-code-font-size: 95%;
   --ifm-pre-line-height: 1.5em;
 
   --ifm-code-background-color: #282a36;
@@ -87,13 +135,20 @@
 
   // border color in current area of toc
   --toc-highlight: var(--ifm-color-primary);
+  --ifm-alert-shadow: none;
+}
+
+html[data-theme] {
+  --ifm-font-size-base: 16px;
+  --ifm-link-hover-color: theme(colors.indigo.500);
+  --ifm-link-hover-decoration: none;
+  --doc-sidebar-hidden-width: 0;
 }
 
 html[data-theme='light'] {
   --ifm-font-color-base: var(--ifm-color-gray-800);
   --ifm-background-color: var(--ifm-color-white);
 
-  --ifm-menu-color: var(--ifm-font-color-base);
   --ifm-menu-color-active: var(--ifm-color-primary-darkest);
   --ifm-menu-color-background: rgba(0, 0, 0, 0.02);
   --ifm-menu-color-background-active: var(--ifm-color-primary-lighter);
@@ -108,7 +163,7 @@ html[data-theme='light'] {
   --ifm-tabs-color: var(--ifm-color-gray-300);
   --ifm-tabs-hover-color: rgba(255, 255, 255, 0.08);
 
-  --ifm-link-color: var(--cypress-color-indigo-500);
+  --ifm-link-color: theme(colors.indigo.500);
 
   --ifm-toc-border-color: var(--ifm-color-gray-100);
 
@@ -118,13 +173,11 @@ html[data-theme='light'] {
 
 html[data-theme='dark'] {
   --ifm-font-color-base: var(--ifm-color-gray-50);
-  --ifm-background-color: var(--ifm-color-black);
-  --ifm-background-color: var(--ifm-color-gray-1100);
+  --ifm-background-color: var(--ifm-color-gray-1000);
 
   --ifm-menu-color: var(--ifm-color-gray-100);
   --ifm-menu-color-active: var(--ifm-color-primary);
-  --ifm-menu-color-background: rgba(255, 255, 255, 0.02);
-  --ifm-menu-color-background-active: var(--cypress-color-jade-900);
+  --ifm-menu-color-background-active: theme(colors.jade.900);
 
   --ifm-breadcrumb-color-active: var(--ifm-color-primary);
   --ifm-breadcrumb-item-background-active: var(--ifm-color-gray-900);
@@ -142,9 +195,11 @@ html[data-theme='dark'] {
 }
 
 /* prevent fonts from looking chunky, esp in Firefox */
-body {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@media (min-resolution: 2dppx) {
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
 }
 
 /* add a small gap to the main content area when the width
@@ -156,19 +211,8 @@ body {
   }
 }
 
-[data-theme='dark'] .alert.alert--info h2,
-h3,
-h4 {
-  border-bottom: none;
-  padding-bottom: 0;
-}
-
 [class^='toggle_'] button {
   margin-left: 0.15rem;
-}
-
-.alert.alert--info {
-  margin-bottom: 2rem;
 }
 
 /* using attribute selector for these dynamic classes */
@@ -176,10 +220,72 @@ h4 {
   display: none;
 }
 
-.alert.alert--info h2,
-h3 {
-  border-bottom: none;
-  padding-bottom: 0;
+.button.button--secondary {
+  color: var(--ifm-color-white);
+}
+
+.button.button--secondary.button--outline:not(.button--active):not(:hover) {
+  color: var(--ifm-color-secondary);
+}
+
+.alert.alert--info {
+  background-color: var(--ifm-color-teal-50);
+  color: var(--ifm-color-teal-1000);
+  --ifm-alert-border-color: var(--ifm-color-teal-400);
+
+  [data-theme='dark'] & {
+    background-color: var(--ifm-color-teal-1000);
+    color: var(--ifm-color-teal-50);
+    --ifm-alert-border-color: var(--ifm-color-teal-800);
+  }
+
+  [data-theme='dark'] &,
+  & {
+    margin-bottom: 2rem;
+    h2,
+    h3,
+    h4 {
+      border-bottom: none;
+      padding-bottom: 0;
+      margin-bottom: 4px;
+    }
+  }
+}
+
+.alert.alert--success {
+  background-color: var(--ifm-color-jade-50);
+  color: var(--ifm-color-jade-1000);
+  --ifm-alert-border-color: var(--ifm-color-jade-400);
+
+  [data-theme='dark'] & {
+    background-color: var(--ifm-color-jade-1000);
+    color: var(--ifm-color-jade-50);
+    --ifm-alert-border-color: var(--ifm-color-jade-800);
+  }
+}
+
+.alert.alert--warning {
+  background-color: var(--ifm-color-orange-50);
+  color: var(--ifm-color-orange-1000);
+  --ifm-alert-border-color: var(--ifm-color-orange-400);
+
+  [data-theme='dark'] & {
+    background-color: var(--ifm-color-orange-1000);
+    color: var(--ifm-color-orange-50);
+    --ifm-alert-border-color: var(--ifm-color-orange-800);
+  }
+}
+
+.alert.alert--danger {
+  background-color: var(--ifm-color-red-50);
+  color: var(--ifm-color-red-1000);
+  --ifm-alert-border-color: var(--ifm-color-red-400);
+
+  [data-theme='dark'] & {
+    background-color: var(--ifm-color-red-1000);
+    color: var(--ifm-color-red-50);
+    --ifm-alert-border-color: var(--ifm-color-red-800);
+  }
 }
 
 div[class^='announcementBar'] {
@@ -189,7 +295,7 @@ div[class^='announcementBar'] {
 }
 
 div[class^='announcementBar'] div[class^='content'] {
-  font-size: 16px;
+  font-size: 1rem;
   border-bottom: none;
 }
 
@@ -266,7 +372,7 @@ div[class^='codeBlockTitle'] {
   box-shadow: inset 0px -6px 0px -4px var(--ifm-code-background-color-light);
 }
 
-@media(min-width: 997px) and (max-width: 1180px) {
+@media (min-width: 997px) and (max-width: 1180px) {
   .tabs-container .tabs {
     max-width: 36rem;
   }
@@ -287,7 +393,7 @@ div[class^='codeBlockTitle'] {
   text-align: left;
   margin: 4px;
   font-weight: bold;
-  font-size: 18px;
+  font-size: 1.25rem;
 }
 
 .api-table thead td {
@@ -314,14 +420,6 @@ div[class^='codeBlockTitle'] {
   display: none;
 }
 
-/* adding this back after original Docusaurus
-   rules overwritten by .embedContainer
-   TODO: fix what causes this */
-[class^='mainContentHeader'] {
-  border-bottom: 1px solid var(--ifm-toc-border-color);
-  margin-bottom: 20px;
-}
-
 /* add some more spacing for main doc container */
 [class^='docItemContainer'] {
   margin: 0 10px;
@@ -340,4 +438,64 @@ div[class^='codeBlockTitle'] {
   width: 20px;
   display: inline-block;
   vertical-align: text-top;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--ifm-heading-color);
+  font-family: var(--ifm-heading-font-family);
+  font-weight: var(--ifm-heading-font-weight);
+  line-height: var(--ifm-heading-line-height);
+  margin: var(--ifm-heading-margin-top) 0 var(--ifm-heading-margin-bottom) 0;
+}
+
+h1 {
+  font-size: var(--ifm-h1-font-size);
+  svg {
+    display: inline;
+  }
+}
+
+h2 {
+  font-size: var(--ifm-h2-font-size);
+}
+
+h3 {
+  font-size: var(--ifm-h3-font-size);
+  margin-bottom: 0.75rem;
+}
+
+h4 {
+  font-size: var(--ifm-h4-font-size);
+}
+
+h5 {
+  font-size: var(--ifm-h5-font-size);
+}
+
+h6 {
+  font-size: var(--ifm-h6-font-size);
+}
+
+.theme-edit-this-page {
+  display: flex;
+}
+
+.card {
+  html[data-theme='dark'] & {
+    @apply bg-gray-900;
+  }
+}
+
+.navbar-sidebar__backdrop {
+  @apply bg-gray-900/[.80] backdrop-blur;
+}
+
+// @see https://github.com/cypress-io/cypress-documentation/issues/5771
+#__docusaurus_skipToContent_fallback {
+  scroll-margin-top: var(--ifm-navbar-height);
 }

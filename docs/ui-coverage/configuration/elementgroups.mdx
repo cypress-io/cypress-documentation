@@ -1,0 +1,154 @@
+---
+title: 'Element Groups | Cypress UI Coverage'
+description: 'The `elementGroups` configuration allows you to group elements in UI Coverage using custom logic.'
+sidebar_label: elementGroups
+---
+
+# elementGroups
+
+<UICovAddon />
+
+UI Coverage has logic that automatically [groups](/ui-coverage/core-concepts/element-grouping) elements based on their appearance and structure in the DOM.
+
+For every element considered by UI Coverage, the first `elementGroup` rule for which the `selector` property matches the element is used to group the element. Elements that do not match any rules are grouped by the default UI Coverage element grouping rules.
+
+## Syntax
+
+```json
+{
+  "uiCoverage": {
+    "elementGroups": [
+      {
+        "selector": string,
+        "name": string
+      }
+    ]
+  }
+}
+```
+
+### elementGroups
+
+_Optional._ Object\[]
+
+An array of objects used to group elements within UI Coverage. _**Each object can have the following properties:**_
+
+### selector
+
+_Required._ String (CSS Selector)
+
+Used to match and group elements.
+
+### name
+
+_Optional._ String
+
+A human-readable name for the group, shown in the elements list.
+
+## Examples
+
+### Groups elements by selector
+
+#### Config
+
+```json
+{
+  "uiCoverage": {
+    "elementGroups": [
+      {
+        "selector": "[data-cy^='item-']"
+      }
+    ]
+  }
+}
+```
+
+#### HTML
+
+```xml
+<body>
+  <button data-cy="item-1"></button> <!-- Group: [data-cy^='item-'] -->
+  <button data-cy="item-2"></button> <!-- Group: [data-cy^='item-'] -->
+  <button data-cy="item-3"></button> <!-- Group: [data-cy^='item-'] -->
+</body>
+```
+
+#### Elements shown in UI
+
+```
+[data-cy^='item-'] (3 instances)
+```
+
+---
+
+### Groups all elements in a container
+
+#### Config
+
+```json
+{
+  "uiCoverage": {
+    "elementGroups": [
+      {
+        "selector": "#calendar button"
+      }
+    ]
+  }
+}
+```
+
+#### HTML
+
+```xml
+<body>
+  <div id="calendar">
+    <button id="jan"></button>
+    <button id="feb"></button>
+    <button id="mar"></button>
+  </div>
+</body>
+```
+
+#### Elements shown in UI
+
+```
+#calendar button (3 instances)
+```
+
+---
+
+### Groups form controls by wrapped input
+
+#### Config
+
+```json
+{
+  "uiCoverage": {
+    "elementGroups": [
+      {
+        "selector": "input[name='animal'], label:has(input[name='animal'])",
+        "name": "Animal Option"
+      }
+    ]
+  }
+}
+```
+
+#### HTML
+
+```xml
+<body>
+  <label>
+    <input id="bear" name="animal"></input>
+  </label>
+  <label>
+    <input id="lion" name="animal"></input>
+  </label>
+</body>
+```
+
+#### Elements shown in UI
+
+```
+Animal Option (4 instances)
+```
