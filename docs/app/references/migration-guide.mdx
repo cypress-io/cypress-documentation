@@ -148,6 +148,44 @@ to
 import { mount } from `cypress/angular`
 ```
 
+### React versions under `18.x.x` are no longer supported in Component Testing.
+
+With [LTS ending](https://github.com/reactjs/react.dev/issues/1745#issuecomment-466767389) for React 16 and 17 several years ago, the minimum required React version for component testing is now `18.0.0`.
+
+If for any reason an older version of React must be used, please download [`@cypress/react`](https://www.npmjs.com/package/@cypress/angular) `8.x.x` from `npm`.
+
+```sh
+npm install --save-dev @cypress/react@8
+```
+
+Then, import the `mount` from this package in place of `cypress/react`.
+
+```ts
+import { mount } from `cypress/react`
+```
+
+to
+
+```ts
+import { mount } from `@cypress/react`
+```
+
+### `cypress/react` now supports React 18. The `cypress/react18` test harness has been removed from the binary.
+
+Now that the minimum version of React supported for Component Testing is `18.0.0`, Cypress is able to merge the `cypress/react18` test harness into the main `cypress/react` test harness. Because of this, the `@cypress/react18` harness is deprecated and no longer shipped with the binary. Support has been moved to `cypress/react`.
+
+To migrate, just change the test harness from `cypress/react18` to `cypress/react`:
+
+```ts
+import { mount } from `cypress/react18`
+```
+
+to
+
+```ts
+import { mount } from `cypress/react`
+```
+
 ### Create React App for Component Testing is no longer supported
 
 [create-react-app](https://create-react-app.dev/) is no longer actively maintained or supported (see [CRA issue #13393](https://github.com/facebook/create-react-app/issues/13393)).
