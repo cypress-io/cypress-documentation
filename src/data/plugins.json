@@ -856,7 +856,7 @@
         {
           "name": "Applitools",
           "description": "Fast, easy and reliable visual UI testing with Cypress.",
-          "link": "https://applitools.com/tutorials/cypress.html",
+          "link": "https://applitools.com/tutorials/sdks/cypress/quickstart/getting-started",
           "keyword": ["screenshots", "visual regression", "visual-ai"],
           "badge": "verified"
         },
