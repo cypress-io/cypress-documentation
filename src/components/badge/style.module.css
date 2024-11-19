@@ -35,6 +35,10 @@ h1 > .badge {
   }
 }
 
+.caution {
+  background-color: #e6a700;
+}
+
 .info {
   background-color: var(--ifm-color-teal-100);
   color: var(--ifm-color-teal-600);

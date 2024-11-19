@@ -781,13 +781,6 @@
           "badge": "official"
         },
         {
-          "name": "Cypress Vue2",
-          "description": "Test Vue 2 components using Cypress Test Runner. This package is bundled with the cypress package and should not need to be installed separately. See the <a target=\"_blank\" href=\"/app/component-testing/vue/overview\">Vue Component Testing Docs</a> for mounting Vue components.",
-          "link": "https://github.com/cypress-io/cypress/tree/develop/npm/vue2",
-          "keywords": ["component", "vue", "vue.js"],
-          "badge": "official"
-        },
-        {
           "name": "cypress-angular-unit-test",
           "description": "Test Angular component using Cypress Test Runner.",
           "link": "https://github.com/bahmutov/cypress-angular-unit-test",

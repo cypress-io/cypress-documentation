@@ -2,7 +2,27 @@
 title: Changelog
 ---
 
-## 13.15.2
+## 14.0.0
+
+_Released 12/3/2024_
+
+**Summary:**
+
+Cypress v14.0.0 expands our support for new component testing framework versions, a few bug fixes, and an update to Electron. We've removed support for older versions of Node.js,
+Linux distributions, browsers and component testing frameworks and dev servers. We've also removed some deprecated Cypress APIs. 14.0.0 also includes breaking changes to `cy.origin`
+that are necessary to handle Chrome's deprecation of document.domain injection - this should fix issues for some users in recent Chrome versions.
+
+Overall, we don't anticipate this release to be too disruptive for most users. We recommend bumping your version to see if your tests still run as expected.
+
+**Breaking Changes:**
+
+:::info
+
+Refer to the [v14 Migration Guide](/app/references/migration-guide#Migrating-to-Cypress-140) for help migrating your code.
+
+:::
+
+TBD!!!!!!!!!!!
 
 _Released 11/5/2024_
 
@@ -92,7 +112,9 @@ _Released 8/27/2024_
 
 - Added new
   [`experimentalJustInTimeCompile`](/app/references/experiments#Configuration)
-  configuration option for component testing. This option will only compile resources directly related to your spec, compiling them 'just-in-time' before spec execution. This should result in improved memory management and performance for component tests in `cypress open` and `cypress run` modes, in particular for large component testing suites. [`experimentalJustInTimeCompile`](/app/references/experiments#Configuration) is currently supported for [`webpack`](https://www.npmjs.com/package/webpack) and [`vite`](https://www.npmjs.com/package/vite). Addresses [#29244](https://github.com/cypress-io/cypress/issues/29244).
+  configuration option for component testing. This option will only compile resources directly related to your spec, compiling
+  them 'just-in-time' before spec execution. This should result in improved memory management and performance for component
+  tests in `cypress open` and `cypress run` modes, in particular for large component testing suites. [`experimentalJustInTimeCompile`](/app/references/experiments#Configuration) is currently supported for [`webpack`](https://www.npmjs.com/package/webpack) and [`vite`](https://www.npmjs.com/package/vite). Addresses [#29244](https://github.com/cypress-io/cypress/issues/29244).
 - `.type({upArrow})` and `.type({downArrow})` now also works for date, month, week, time, datetime-local and range input types. Addresses [#29665](https://github.com/cypress-io/cypress/issues/29665).
 - Added a `CYPRESS_SKIP_VERIFY` flag to enable suppressing Cypress verification checks. Addresses [#22243](https://github.com/cypress-io/cypress/issues/22243).
 - Updated the protocol to allow making Cloud API requests. Addressed in [#30066](https://github.com/cypress-io/cypress/pull/30066).
