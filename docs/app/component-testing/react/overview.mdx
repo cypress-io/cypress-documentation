@@ -15,12 +15,18 @@ sidebar_label: Overview
 
 ## Framework Support
 
-Cypress Component Testing currently supports React 18 with the following
+Cypress Component Testing currently supports React 18 and 19 with the following
 frameworks:
 
 - [React with Vite](#React-with-Vite)
 - [React with Webpack](#React-with-Webpack)
 - [Next.js](#Nextjs)
+
+:::caution
+
+Cypress currently supports the release candidate (rc) of React 19. Though unlikely, release candidates are subject to change and could cause unprecedented issues with the React 19 release candidate and Cypress Component Testing.
+
+:::
 
 ## Tutorial
 
@@ -146,7 +152,7 @@ it via the `webpackConfig` option.
 
 ### Next.js
 
-Cypress Component Testing works with Next.js 14+.
+Cypress Component Testing works with Next.js 14 and Next.js 15.
 
 #### Next.js Configuration
 
@@ -185,6 +191,7 @@ Next.js pages and Component Testing for individual components in a Next.js app.
 #### Sample Next.js Apps
 
 - [Next.js 14 with TypeScript](https://github.com/cypress-io/cypress-component-testing-apps/tree/main/react-next14-ts)
+- [Next.js 15 with TypeScript](https://github.com/cypress-io/cypress-component-testing-apps/tree/main/react-next15-ts)
 
 ## Community Resources
 
