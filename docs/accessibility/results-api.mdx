@@ -52,6 +52,24 @@ The Cypress App [repository](https://github.com/cypress-io/cypress) uses the Res
 ```javascript title="scripts/verifyAccessibilityResults.js"
 const { getAccessibilityResults } = require('@cypress/extract-cloud-results')
 
+/**
+ * The list of rules that currently have 1+ elements that have been flagged with
+ * violations within the Cypress Accessibility report that need to be addressed.
+ *
+ * Once the violation is fixed in the Accessibility report,
+ * the fixed rule should be removed from this list.
+ *
+ * View the Accessibility report for the Cypress run in the Cloud
+ * for more details on how to address these failures.
+ */
+const rulesWithExistingViolations = [
+  'aria-required-children',
+  'empty-heading',
+  'aria-dialog-name',
+  'link-in-text-block',
+  'list',
+]
+
 getAccessibilityResults({
   projectId: '...', // optional if set from env
   recordKey: '...', // optional if set from env
@@ -60,11 +78,10 @@ getAccessibilityResults({
   const { runNumber, accessibilityReportUrl, summary, rules } = results
   const { total } = summary.violationCounts
 
-  console
-    .log(
-      `Received ${summary.isPartialReport ? 'partial' : ''} results for run #${runNumber}.`
-    )
-    .console.log(`See full report at ${accessibilityReportUrl}.`)
+  console.log(
+    `Received ${summary.isPartialReport ? 'partial' : ''} results for run #${runNumber}.`
+  )
+  console.log(`See full report at ${accessibilityReportUrl}.`)
 
   // write your logic to conditionally fail based on the results
   if (total === 0) {
@@ -101,24 +118,6 @@ getAccessibilityResults({
   }
 
   console.log('No new Accessibility violations detected!')
-
-  /**
-   * The list of rules that currently have 1+ elements that have been flagged with
-   * violations within the Cypress Accessibility report that need to be addressed.
-   *
-   * Once the violation is fixed in the Accessibility report,
-   * the fixed rule should be removed from this list.
-   *
-   * View the Accessibility report for the Cypress run in the Cloud
-   * for more details on how to address these failures.
-   */
-  const rulesWithExistingViolations = [
-    'aria-required-children',
-    'empty-heading',
-    'aria-dialog-name',
-    'link-in-text-block',
-    'list',
-  ]
 })
 ```
 

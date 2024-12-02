@@ -55,11 +55,10 @@ getUICoverageResults({
 }).then((results) => {
   const { runNumber, uiCoverageReportUrl, summary, views } = results
 
-  console
-    .log(
-      `Received ${summary.isPartialReport ? 'partial' : ''} results for run #${runNumber}.`
-    )
-    .console.log(`See full report at ${uiCoverageReportUrl}.`)
+  console.log(
+    `Received ${summary.isPartialReport ? 'partial' : ''} results for run #${runNumber}.`
+  )
+  console.log(`See full report at ${uiCoverageReportUrl}.`)
 
   // verify project coverage
   if (summary.coverage < 80) {
