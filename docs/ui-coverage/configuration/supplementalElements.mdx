@@ -1,0 +1,145 @@
+---
+title: 'Supplemental Elements | Cypress UI Coverage'
+description: 'The `supplementalElements` configuration property allows users to specify additional elements that should be included in UI Coverage.'
+sidebar_label: supplementalElements
+---
+
+# supplementalElements
+
+<UICovAddon />
+
+UI Coverage has logic that automatically [identifies](/ui-coverage/core-concepts/element-identification) and [groups](/ui-coverage/core-concepts/element-grouping) elements based on their appearance and structure in the DOM.
+
+Sometimes, an element may not have enough information for Cypress's UI Coverage algorithm to accurately perform identification and grouping. This can cause the same element to be identified as multiple different elements, or multiple different elements to be identified as the same element.
+
+The `supplementalElements` configuration property allows users to specify selectors for parent elements that should be used to supply additional information for identifying and grouping elements, thereby allowing UI Coverage to find more suitable identifiers for elements nested within these supplemental elements.
+
+For every element considered interactive and visible by UI Coverage, each element above it in the DOM is run through the `supplementalElements` configuration. For each parent element that matches a `supplementalSelector`, its significant attributes will be used to help identify and group elements that match the corresponding `elementSelector`. If no `elementSelector` is specified, the supplemental information will be applied to all descendant elements.
+
+## Syntax
+
+```json
+{
+  "uiCoverage": {
+    "supplementalElements": [
+      {
+        "supplementalSelector": string,
+        "elementSelector": string
+      }
+    ]
+  }
+}
+```
+
+### supplementalElements
+
+_Optional._ Object\[]
+
+An array of objects used to determine which parent elements should be used to supply additional information for identifying and grouping elements. _**Each object can have the following properties:**_
+
+### supplementalSelector
+
+_Required._ String (CSS Selector)
+
+Used to match the parent elements that should be used to supply additional information for identifying and grouping elements.
+
+### elementSelector
+
+_Optional._ String (CSS Selector)
+
+_Default_: `*` (matches any value).
+
+Used to match elements that should receive supplemental information.
+
+## Examples
+
+### Using a parent element to provide supplemental data for all elements
+
+#### Config
+
+```json
+{
+  "uiCoverage": {
+    "supplementalElements": [
+      {
+        "supplementalSelector": ".page-container",
+        "elementSelector": "*"
+      }
+    ]
+  }
+}
+```
+
+#### HTML
+
+```xml
+<!-- Snapshot 1 -->
+<body>
+  <div id="login-page" class="page-wrapper">
+    <button id="submit">Login</button>
+    <button id="cancel">Cancel</button>
+  </div>
+</body>
+
+<!-- Snapshot 2 -->
+<body>
+  <div id="signup-page" class="page-wrapper">
+    <button id="submit">Signup</button>
+    <button id="cancel">Cancel</button>
+  </div>
+</body>
+```
+
+#### Elements shown in UI
+
+```
+#login-page #submit
+#login-page #cancel
+#signup-page #submit
+#signup-page #cancel
+```
+
+### Using a parent element to provide supplemental data for specific elements
+
+#### Config
+
+```json
+{
+  "uiCoverage": {
+    "supplementalElements": [
+      {
+        "supplementalSelector": ".page-container",
+        "elementSelector": "#submit"
+      }
+    ]
+  }
+}
+```
+
+#### HTML
+
+```xml
+<!-- Snapshot 1 -->
+<body>
+  <div id="login-page" class="page-wrapper">
+    <button id="submit">Login</button>
+    <button id="cancel">Cancel</button>
+  </div>
+</body>
+
+<!-- Snapshot 2 -->
+<body>
+  <div id="signup-page" class="page-wrapper">
+    <button id="submit">Signup</button>
+    <button id="cancel">Cancel</button>
+  </div>
+</body>
+```
+
+#### Elements shown in UI
+
+```
+#login-page #submit
+#signup-page #submit
+#cancel
+```
