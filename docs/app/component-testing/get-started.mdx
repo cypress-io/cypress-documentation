@@ -46,8 +46,8 @@ following development servers and frameworks:
 | [Vue with Vite](/app/component-testing/vue/overview#Vue-with-Vite)                                                 | Vue 3         | Vite 4-6    |
 | [Vue with Webpack](/app/component-testing/vue/overview#Vue-with-Webpack)                                           | Vue 3         | Webpack 4-5 |
 | [Angular](/app/component-testing/angular/overview#Framework-Configuration)                                         | Angular 17-19 | Webpack 5   |
-| [Svelte with Vite](/app/component-testing/svelte/overview#Svelte-with-Vite) <Badge type="info">Alpha</Badge>       | Svelte 4      | Vite 4-6    |
-| [Svelte with Webpack](/app/component-testing/svelte/overview#Svelte-with-Webpack) <Badge type="info">Alpha</Badge> | Svelte 4      | Webpack 4-5 |
+| [Svelte with Vite](/app/component-testing/svelte/overview#Svelte-with-Vite) <Badge type="info">Alpha</Badge>       | Svelte 5      | Vite 4-6    |
+| [Svelte with Webpack](/app/component-testing/svelte/overview#Svelte-with-Webpack) <Badge type="info">Alpha</Badge> | Svelte 5      | Webpack 4-5 |
 
 The following integrations are built and maintained by Cypress community members.
 
@@ -618,14 +618,10 @@ it('clicking + fires a change event with the incremented value', () => {
 
 ```js
 it('clicking + fires a change event with the incremented value', () => {
-  const changeSpy = cy.spy().as('changeSpy')
-  cy.mount(Stepper).then(({ component }) => {
-    component.$on('change', changeSpy)
-  })
+  const onChangeSpy = cy.spy().as('onChangeSpy')
+  cy.mount(Stepper, { props: { onChange: onChangeSpy } })
   cy.get('[data-cy=increment]').click()
-  cy.get('@changeSpy').should('have.been.calledWithMatch', {
-    detail: { count: 1 },
-  })
+  cy.get('@onChangeSpy').should('have.been.calledWith', 1)
 })
 ```
 
