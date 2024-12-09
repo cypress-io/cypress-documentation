@@ -1,5 +1,5 @@
 ---
-title: 'Microsoft Teams Integration | Cypress Documentation'
+title: 'Microsoft Teams Integration'
 description: 'Setup Microsoft Teams notifications for your Cypress Cloud organization and projects.'
 sidebar_position: 60
 sidebar_label: Microsoft Teams
@@ -12,13 +12,6 @@ sidebar_label: Microsoft Teams
 - How to enable the Cypress integration for Microsoft Teams
 - How to configure Microsoft Teams notifications for your Cypress Cloud organization and projects
 - How to manage Microsoft Teams notifications at the organization and project level
-
-:::
-
-:::caution
-
-<Icon name="exclamation-triangle" /> Microsoft Teams integration is currently in
-beta
 
 :::
 
@@ -224,3 +217,46 @@ needs. You can have Cypress Cloud post run results for a specific project.
    Once you've configured and added your webhooks, the installation is complete!
    Cypress Cloud will post run results for **this** project to the specified
    Microsoft Teams channel.
+
+## Notification preferences
+
+By default, Cypress Cloud will post a Teams message to each configured channel
+only for failing runs. However, you can select any combination of the followings preferences:
+
+- **Failed runs**: will notify on runs with a _failed_ status.
+- **Passed runs**: will notify on runs with a _passed_ status.
+- **Flaky tests**: will notify on runs that have an identified _flaky_ test.
+
+To set notification preferences:
+
+1. Navigate to Teams configuration page
+2. Select the notification preferences for each channel
+
+#### Filter notifications by tag or run group
+
+When configuring at the project-level, you can filter notifications posted to Teams based on a
+[tag](/app/references/command-line#cypress-run-tag-lt-tag-gt) or
+[group](/app/references/command-line#cypress-run-group-lt-name-gt) the run was
+recorded with. This can be helpful to only post notifications on certain runs,
+like those to a staging or release environment.
+
+1. Navigate to the **Teams** configuration page
+2. Under **Tags**, select the **Tag** dropdown for the desired integration and
+   select which tag(s) to filter. If more than one tag is selected the Teams message will be sent
+   if any of the tags were associated with the run.
+3. Under **Run Groups**, select the **Run Group** dropdown for the desired integration and
+   select which run group(s) to filter. If more than one run group is selected the Teams message will be
+   sent if any of the run groups were associated with the run.
+
+If both a tag and run group are selected, only a run associated with both criteria will
+trigger a message to be sent to Teams.
+
+### Mute a channel
+
+If you want Cypress Cloud to temporarily stop posting Teams messages to a
+certain channel, you can **Mute** that channel. This allows you to easily pause
+and resume notifications for a specific channel without losing the configuration
+you've put in place.
+
+1. Navigate to the **Teams** configuration page
+2. Toggle the **Active** selector for each Teams channel you want muted.
