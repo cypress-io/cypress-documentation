@@ -50,8 +50,9 @@ the ability to access your test data via API is already enabled.
 
 <br />A couple of things to note:
 
-- Data shown in Enterprise Reporting is not real-time. It is available as of midnight UTC of the current day.
-  I.e. - data will be populated through "end of day yesterday".
+- Data shown in Enterprise Reporting is not real-time. For aggregated data it is available as of midnight UTC of the current day.
+  I.e. - data will be populated through "end of day yesterday". However, individual result data is near real-time and is available
+  30 minutes after the run has completed. Endpoints that return near real-time data are specified below.
 - Historical data is available as specified by your data retention limit in Cypress Cloud.
 
 ## API endpoint details
@@ -79,6 +80,11 @@ The following query parameters are available for use:
   pass as many projects parameters as needed.
 
   For example, to request that the data be filtered for projects _Project e2e_ and _Phoenix_, use: `&projects=Project%20e2e&projects=Phoenix`
+
+- branch. Optional, and accepts the name of your commit branch. The branch name should be URL encoded. You can pass as many branch
+  parameters as needed.
+
+  For example, to request that the data be filtered for branches _develop_ and _commitBranch1_, use: `&branch=develop&branch=commitBranch1`
 
 - export_format. Specify the type of data format that will be returned in the response file. Valid options include: `csv`, `json`, `xlsx`
 
@@ -422,6 +428,8 @@ This data allows you to extract all spec results regardless of spec result statu
 returned is 500,000. Make multiple requests with different start_date and end_date parameter values if your volume of records will
 exceed 500k for a single request.
 
+Data is available near real-time, 30 minutes after the run has completed.
+
 The report_id is: `spec-details`
 
 Data returned includes:
@@ -455,6 +463,8 @@ This report allows you to extract all test result details for failed tests. The 
 returned is 500,000. Make multiple requests with different start_date and end_date parameter values if your volume of records will
 exceed 500k for a single request.
 
+Data is available near real-time, 30 minutes after the run has completed.
+
 The report_id is: `failed-test-details`
 
 Data returned includes:
@@ -472,6 +482,8 @@ Data returned includes:
 - error_name (string array)
 - error_message (string array)
 - test_replay_url
+- spec (path and filename)
+- test_name (the test name matches what is shown in Cypress Cloud and a '///' delimiter is used between fragments of the test name)
 
 Example:
 https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=failed-test-details&export_format=csv&start_date=2024-01-01
@@ -481,6 +493,8 @@ https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_i
 This report allows you to extract all test result details regardless of test result status. The maximum number of records
 returned is 500,000. Make multiple requests with different start_date and end_date parameter values if your volume of records will
 exceed 500k for a single request.
+
+Data is available near real-time, 30 minutes after the run has completed.
 
 The report_id is: `test-details`
 
@@ -500,6 +514,8 @@ Data returned includes:
 - error_name (string array)
 - error_message (string array)
 - test_replay_url
+- spec (path and filename)
+- test_name (the test name matches what is shown in Cypress Cloud and a '///' delimiter is used between fragments of the test name)
 
 Example:
 https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=test-details&export_format=csv&start_date=2024-01-01
@@ -609,6 +625,8 @@ https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_i
 This report allows you to extract all test result details of flaky tests. The maximum number of records
 returned is 500,000. Make multiple requests with different start_date and end_date parameter values if your volume of records will
 exceed 500k for a single request.
+
+Data is available near real-time, 30 minutes after the run has completed.
 
 The report_id is: `flaky-test-details`
 
