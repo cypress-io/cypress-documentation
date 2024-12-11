@@ -1,4 +1,4 @@
-import React , {useEffect} from 'react'
+import React, { useEffect } from 'react'
 import clsx from 'clsx'
 import {
   IconShapeSunLong,
@@ -7,12 +7,16 @@ import {
 import { useColorMode } from '@docusaurus/theme-common'
 
 export default function DarkModeSwitch() {
-   
   const { colorMode, setColorMode } = useColorMode(null)
-   useEffect(() => {
-    setColorMode(localStorage.getItem('theme'))
-  }, [])
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('theme')
+    if (savedTheme !== colorMode) {
+      setColorMode(savedTheme)
+    }
+  }, [colorMode, setColorMode])
+
   const isDark = colorMode === 'dark'
+
   return (
     <button
       className={clsx(
