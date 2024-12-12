@@ -415,20 +415,20 @@ On Mac, Cypress attempts to find installed browsers by their bundle identifier.
 If this does not succeed, it will fall back to the Linux browser detection
 method.
 
-| Browser Name         | Expected Bundle Identifier            | Expected Executable                        |
-| -------------------- | ------------------------------------- | ------------------------------------------ |
-| `chrome`             | `com.google.Chrome`                   | `Contents/MacOS/Google Chrome`             |
-| `chrome:beta`        | `com.google.Chrome.beta`              | `Contents/MacOS/Google Chrome Beta`        |
-| `chrome:canary`      | `com.google.Chrome.canary`            | `Contents/MacOS/Google Chrome Canary`      |
-| `chrome-for-testing` | `com.google.chrome.for.testing`       | `Contents/MacOS/Google Chrome for Testing` |
-| `chromium`           | `org.chromium.Chromium`               | `Contents/MacOS/Chromium`                  |
-| `firefox`            | `org.mozilla.firefox`                 | `Contents/MacOS/firefox`                   |
-| `firefox:dev`        | `org.mozilla.firefoxdeveloperedition` | `Contents/MacOS/firefox`                   |
-| `firefox:nightly`    | `org.mozilla.nightly`                 | `Contents/MacOS/firefox`                   |
-| `edge`               | `com.microsoft.Edge`                  | `Contents/MacOS/Microsoft Edge`            |
-| `edge:beta`          | `com.microsoft.Edge.Beta`             | `Contents/MacOS/Microsoft Edge Beta`       |
-| `edge:canary`        | `com.microsoft.Edge.Canary`           | `Contents/MacOS/Microsoft Edge Canary`     |
-| `edge:dev`           | `com.microsoft.Edge.Dev`              | `Contents/MacOS/Microsoft Edge Dev`        |
+| Browser Name         | Expected Bundle Identifier            | Expected Executable Path                                                               |
+| -------------------- | ------------------------------------- | -------------------------------------------------------------------------------------- |
+| `chrome`             | `com.google.Chrome`                   | `/Applications/Google Chrome.app/Contents/MacOS/Google Chrome`                         |
+| `chrome:beta`        | `com.google.Chrome.beta`              | `/Applications/Google Chrome Beta.app/Contents/MacOS/Google Chrome Beta`               |
+| `chrome:canary`      | `com.google.Chrome.canary`            | `/Applications/Google Chrome Canary.app/Contents/MacOS/Google Chrome Canary`           |
+| `chrome-for-testing` | `com.google.chrome.for.testing`       | `/Applications/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing` |
+| `chromium`           | `org.chromium.Chromium`               | `/Applications/Chromium.app/Contents/MacOS/Chromium`                                   |
+| `firefox`            | `org.mozilla.firefox`                 | `/Applications/Firefox.app/Contents/MacOS/firefox`                                     |
+| `firefox:dev`        | `org.mozilla.firefoxdeveloperedition` | `/Applications/Firefox Developer Edition.app/Contents/MacOS/firefox`                   |
+| `firefox:nightly`    | `org.mozilla.nightly`                 | `/Applications/Firefox Nightly.app/Contents/MacOS/firefox`                             |
+| `edge`               | `com.microsoft.Edge`                  | `/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge`                       |
+| `edge:beta`          | `com.microsoft.Edge.Beta`             | `/Applications/Microsoft Edge Beta.app/Contents/MacOS/Microsoft Edge Beta`             |
+| `edge:canary`        | `com.microsoft.Edge.Canary`           | `/Applications/Microsoft Edge Canary.app/Contents/MacOS/Microsoft Edge Canary`         |
+| `edge:dev`           | `com.microsoft.Edge.Dev`              | `/Applications/Microsoft Edge Dev.app/Contents/MacOS/Microsoft Edge Dev`               |
 
 For the current list, see
 [packages/launcher](https://github.com/cypress-io/cypress/blob/develop/packages/launcher/lib/darwin/index.ts)
@@ -470,20 +470,20 @@ sudo ln `which chrome` /usr/local/bin/google-chrome
 
 On Windows, Cypress scans the following locations to try to find each browser:
 
-| Browser Name         | Expected Path                                                                                                                                                                        |
-| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `chrome`             | `C:/Program Files (x86)/Google/Chrome/Application/chrome.exe`, `C:/Program Files/Google/Chrome/Application/chrome.exe`                                                               |
-| `chrome:beta`        | `C:/Program Files (x86)/Google/Chrome Beta/Application/chrome.exe`, `C:/Program Files/Google/Chrome Beta/Application/chrome.exe`                                                     |
-| `chrome:canary`      | `%APPDATA%/Local/Google/Chrome SxS/Application/chrome.exe`                                                                                                                           |
-| `chrome-for-testing` | `C:/Program Files/Google/Chrome for Testing/chrome.exe`, `C:/Program Files (x86)/Google/Chrome for Testing/chrome.exe`                                                               |
-| `chromium`           | `C:/Program Files (x86)/Google/chrome-win32/chrome.exe`                                                                                                                              |
-| `firefox`            | `C:/Program Files/Mozilla Firefox/firefox.exe`, `C:/Program Files (x86)/Mozilla Firefox/firefox.exe`, `%APPDATA%/Local/Mozilla Firefox/firefox.exe`                                  |
-| `firefox:dev`        | `C:/Program Files/Firefox Developer Edition/firefox.exe`, `C:/Program Files (x86)/Firefox Developer Edition/firefox.exe`, `%APPDATA%/Local/Firefox Developer Edition/firefox.exe`    |
-| `firefox:nightly`    | `C:/Program Files/Firefox Nightly/firefox.exe`, `C:/Program Files (x86)/Firefox Nightly/firefox.exe`, `%APPDATA%/Local/Firefox Nightly/firefox.exe`                                  |
-| `edge`               | `C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe`                                                                                                                       |
-| `edge:beta`          | `C:/Program Files (x86)/Microsoft/Edge Beta/Application/msedge.exe`                                                                                                                  |
-| `edge:canary`        | `%APPDATA%/Local/Microsoft/Edge SxS/Application/msedge.exe`                                                                                                                          |
-| `edge:dev`           | `C:/Program Files (x86)/Microsoft/Edge Dev/Application/msedge.exe`                                                                                                                   |
+| Browser Name         | Expected Executable Path                                                                                                                                                          |
+| -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `chrome`             | `C:/Program Files (x86)/Google/Chrome/Application/chrome.exe`, `C:/Program Files/Google/Chrome/Application/chrome.exe`                                                            |
+| `chrome:beta`        | `C:/Program Files (x86)/Google/Chrome Beta/Application/chrome.exe`, `C:/Program Files/Google/Chrome Beta/Application/chrome.exe`                                                  |
+| `chrome:canary`      | `%APPDATA%/Local/Google/Chrome SxS/Application/chrome.exe`                                                                                                                        |
+| `chrome-for-testing` | `C:/Program Files/Google/Chrome for Testing/chrome.exe`, `C:/Program Files (x86)/Google/Chrome for Testing/chrome.exe`                                                            |
+| `chromium`           | `C:/Program Files (x86)/Google/chrome-win32/chrome.exe`                                                                                                                           |
+| `firefox`            | `C:/Program Files/Mozilla Firefox/firefox.exe`, `C:/Program Files (x86)/Mozilla Firefox/firefox.exe`, `%APPDATA%/Local/Mozilla Firefox/firefox.exe`                               |
+| `firefox:dev`        | `C:/Program Files/Firefox Developer Edition/firefox.exe`, `C:/Program Files (x86)/Firefox Developer Edition/firefox.exe`, `%APPDATA%/Local/Firefox Developer Edition/firefox.exe` |
+| `firefox:nightly`    | `C:/Program Files/Firefox Nightly/firefox.exe`, `C:/Program Files (x86)/Firefox Nightly/firefox.exe`, `%APPDATA%/Local/Firefox Nightly/firefox.exe`                               |
+| `edge`               | `C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe`                                                                                                                    |
+| `edge:beta`          | `C:/Program Files (x86)/Microsoft/Edge Beta/Application/msedge.exe`                                                                                                               |
+| `edge:canary`        | `%APPDATA%/Local/Microsoft/Edge SxS/Application/msedge.exe`                                                                                                                       |
+| `edge:dev`           | `C:/Program Files (x86)/Microsoft/Edge Dev/Application/msedge.exe`                                                                                                                |
 
 For the current list, see
 [packages/launcher](https://github.com/cypress-io/cypress/blob/develop/packages/launcher/lib/windows/index.ts)
