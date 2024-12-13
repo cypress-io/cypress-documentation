@@ -117,8 +117,8 @@ Both headings will be marked as covered in UI Coverage reports.
   "uiCoverage": {
     "coverageRules": [
       {
-        "selector": "[data-testid='dropdown']",
-        "commands": ["select", "click"]
+        "selector": "[data-testid='custom-dropdown']",
+        "commands": ["click"]
       },
       {
         "selector": ".status-indicator",
@@ -133,10 +133,13 @@ Both headings will be marked as covered in UI Coverage reports.
 
 ```xml
 <body>
-  <select data-testid="dropdown">
-    <option value="1">One</option>
-    <option value="2">Two</option>
-  </select>
+  <div data-testid="custom-dropdown" class="dropdown">
+    <div class="dropdown-value">Select an option</div>
+    <div class="dropdown-options">
+      <div class="option">One</div>
+      <div class="option">Two</div>
+    </div>
+  </div>
   <div class="status-indicator">Active</div>
 </body>
 ```
@@ -144,8 +147,8 @@ Both headings will be marked as covered in UI Coverage reports.
 #### Test Code
 
 ```javascript
-cy.get('[data-testid="dropdown"]').select('One')
+cy.get('[data-testid="custom-dropdown"]').click()
 cy.get('.status-indicator').should('contain', 'Active')
 ```
 
-Both elements will be tracked and marked as covered when the specified commands are used. 
+Both elements will be tracked and marked as covered when the specified commands are used.
