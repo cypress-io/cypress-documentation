@@ -1,0 +1,151 @@
+---
+title: 'Coverage Rules | Cypress UI Coverage'
+description: 'The `coverageRules` configuration property allows you to customize which elements are tracked and what commands count as coverage in UI Coverage.'
+sidebar_label: coverageRules
+---
+
+# coverageRules
+
+<UICovAddon />
+
+UI Coverage has default rules for determining which elements are interactive and what commands count as interactions. The `coverageRules` configuration property allows you to define additional rules for what elements should be tracked and which commands constitute coverage for those elements.
+
+These rules augment (rather than replace) the default interactive element detection, which is based on HTML semantics and WHATWG standards. This allows you to extend UI Coverage to track custom components or count specific commands as coverage without modifying your application code.
+
+## Syntax
+
+```json
+{
+  "uiCoverage": {
+    "coverageRules": [
+      {
+        "selector": string,
+        "commands": string[]
+      }
+    ]
+  }
+}
+```
+
+### coverageRules
+
+_Optional._ Object[]
+
+An array of objects used to define custom coverage rules for UI Coverage. _**Each object can have the following properties:**_
+
+### selector
+
+_Required._ String (CSS Selector)
+
+A CSS selector that identifies elements that should be tracked for coverage. The selector can match any valid CSS selector syntax.
+
+### commands
+
+_Required._ String[]
+
+An array of Cypress command names that should count as coverage for elements matching the selector.
+
+## Examples
+
+### Track Custom Components
+
+#### Config
+
+```json
+{
+  "uiCoverage": {
+    "coverageRules": [
+      {
+        "selector": ".custom-button",
+        "commands": ["click"]
+      }
+    ]
+  }
+}
+```
+
+#### HTML
+
+```xml
+<body>
+  <div class="custom-button">Click Me</div>
+</body>
+```
+
+#### Elements tracked in UI Coverage
+
+```
+.custom-button
+```
+
+---
+
+### Count Assertions as Coverage
+
+#### Config
+
+```json
+{
+  "uiCoverage": {
+    "coverageRules": [
+      {
+        "selector": "h1, h2",
+        "commands": ["should"]
+      }
+    ]
+  }
+}
+```
+
+#### Test Code
+
+```javascript
+cy.get('h1').should('be.visible')
+cy.get('h2').should('contain', 'Welcome')
+```
+
+Both headings will be marked as covered in UI Coverage reports.
+
+---
+
+### Multiple Rules for Different Elements
+
+#### Config
+
+```json
+{
+  "uiCoverage": {
+    "coverageRules": [
+      {
+        "selector": "[data-testid='dropdown']",
+        "commands": ["select", "click"]
+      },
+      {
+        "selector": ".status-indicator",
+        "commands": ["should"]
+      }
+    ]
+  }
+}
+```
+
+#### HTML
+
+```xml
+<body>
+  <select data-testid="dropdown">
+    <option value="1">One</option>
+    <option value="2">Two</option>
+  </select>
+  <div class="status-indicator">Active</div>
+</body>
+```
+
+#### Test Code
+
+```javascript
+cy.get('[data-testid="dropdown"]').select('One')
+cy.get('.status-indicator').should('contain', 'Active')
+```
+
+Both elements will be tracked and marked as covered when the specified commands are used. 
