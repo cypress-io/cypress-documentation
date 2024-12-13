@@ -434,6 +434,8 @@ For the current list, see
 [packages/launcher](https://github.com/cypress-io/cypress/blob/develop/packages/launcher/lib/darwin/index.ts)
 files.
 
+**Note:** `chrome-for-testing` and `chromium` typically require the downloaded application file to be manually moved to the `/Applications` folder.
+
 #### Linux
 
 On Linux, Cypress scans your `PATH` for a number of different binary names. If
@@ -466,34 +468,38 @@ add a symlink to `google-chrome` like this:
 sudo ln `which chrome` /usr/local/bin/google-chrome
 ```
 
+**Note:** `chrome-for-testing` and `chromium` typically require the binary to be manually added to the `PATH` to be auto-detected.
+
 #### Windows
 
 On Windows, Cypress scans the following locations to try to find each browser:
 
-| Browser Name         | Expected Executable Path                                                                                                                                                          |
-| -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `chrome`             | `C:/Program Files (x86)/Google/Chrome/Application/chrome.exe`, `C:/Program Files/Google/Chrome/Application/chrome.exe`                                                            |
-| `chrome:beta`        | `C:/Program Files (x86)/Google/Chrome Beta/Application/chrome.exe`, `C:/Program Files/Google/Chrome Beta/Application/chrome.exe`                                                  |
-| `chrome:canary`      | `%APPDATA%/Local/Google/Chrome SxS/Application/chrome.exe`                                                                                                                        |
-| `chrome-for-testing` | `C:/Program Files/Google/Chrome for Testing/chrome.exe`, `C:/Program Files (x86)/Google/Chrome for Testing/chrome.exe`                                                            |
-| `chromium`           | `C:/Program Files (x86)/Google/chrome-win32/chrome.exe`                                                                                                                           |
-| `firefox`            | `C:/Program Files/Mozilla Firefox/firefox.exe`, `C:/Program Files (x86)/Mozilla Firefox/firefox.exe`, `%APPDATA%/Local/Mozilla Firefox/firefox.exe`                               |
-| `firefox:dev`        | `C:/Program Files/Firefox Developer Edition/firefox.exe`, `C:/Program Files (x86)/Firefox Developer Edition/firefox.exe`, `%APPDATA%/Local/Firefox Developer Edition/firefox.exe` |
-| `firefox:nightly`    | `C:/Program Files/Firefox Nightly/firefox.exe`, `C:/Program Files (x86)/Firefox Nightly/firefox.exe`, `%APPDATA%/Local/Firefox Nightly/firefox.exe`                               |
-| `edge`               | `C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe`                                                                                                                    |
-| `edge:beta`          | `C:/Program Files (x86)/Microsoft/Edge Beta/Application/msedge.exe`                                                                                                               |
-| `edge:canary`        | `%APPDATA%/Local/Microsoft/Edge SxS/Application/msedge.exe`                                                                                                                       |
-| `edge:dev`           | `C:/Program Files (x86)/Microsoft/Edge Dev/Application/msedge.exe`                                                                                                                |
+| Browser Name         | Expected Executable Path                                                                                                                                                                                     |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `chrome`             | `C:/Program Files (x86)/Google/Chrome/Application/chrome.exe`, `C:/Program Files/Google/Chrome/Application/chrome.exe`                                                                                       |
+| `chrome:beta`        | `C:/Program Files (x86)/Google/Chrome Beta/Application/chrome.exe`, `C:/Program Files/Google/Chrome Beta/Application/chrome.exe`                                                                             |
+| `chrome:canary`      | `%APPDATA%/Local/Google/Chrome SxS/Application/chrome.exe`                                                                                                                                                   |
+| `chrome-for-testing` | `C:/Program Files/Google/Chrome for Testing/chrome.exe`, `C:/Program Files (x86)/Google/Chrome for Testing/chrome.exe`                                                                                       |
+| `chromium`           | `C:/Program Files (x86)/Google/chrome-win32/chrome.exe`, `C:/Program Files/Google/chrome-win/chrome.exe`, `C:/Program Files/Google/Chromium/chrome.exe`, `C:/Program Files (x86)/Google/Chromium/chrome.exe` |
+| `firefox`            | `C:/Program Files/Mozilla Firefox/firefox.exe`, `C:/Program Files (x86)/Mozilla Firefox/firefox.exe`, `%APPDATA%/Local/Mozilla Firefox/firefox.exe`                                                          |
+| `firefox:dev`        | `C:/Program Files/Firefox Developer Edition/firefox.exe`, `C:/Program Files (x86)/Firefox Developer Edition/firefox.exe`, `%APPDATA%/Local/Firefox Developer Edition/firefox.exe`                            |
+| `firefox:nightly`    | `C:/Program Files/Firefox Nightly/firefox.exe`, `C:/Program Files (x86)/Firefox Nightly/firefox.exe`, `%APPDATA%/Local/Firefox Nightly/firefox.exe`                                                          |
+| `edge`               | `C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe`                                                                                                                                               |
+| `edge:beta`          | `C:/Program Files (x86)/Microsoft/Edge Beta/Application/msedge.exe`                                                                                                                                          |
+| `edge:canary`        | `%APPDATA%/Local/Microsoft/Edge SxS/Application/msedge.exe`                                                                                                                                                  |
+| `edge:dev`           | `C:/Program Files (x86)/Microsoft/Edge Dev/Application/msedge.exe`                                                                                                                                           |
 
 For the current list, see
 [packages/launcher](https://github.com/cypress-io/cypress/blob/develop/packages/launcher/lib/windows/index.ts)
 files.
 
 To make a browser installed at a different path be auto-detected, create a
-symbolic link using `mklink` in the location that Cypress expects to find your
+symlink using `mklink` in the location that Cypress expects to find your
 browser.
 
 [Read more about creating symbolic links on Windows](https://www.howtogeek.com/howto/16226/complete-guide-to-symbolic-links-symlinks-on-windows-or-linux/)
+
+**Note:** `chrome-for-testing` and `chromium` typically require the downloaded folder to either be moved and renamed to the location mentioned above or a symlink created as described above.
 
 Occasionally Cypress will have issues detecting the type of browser in Windows
 environments. To manually detect the browser type, append the browser type to
