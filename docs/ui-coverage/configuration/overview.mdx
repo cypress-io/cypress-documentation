@@ -67,7 +67,7 @@ You can use the provided editor to write configuration in JSON format. A complet
 }
 ```
 
-Note that the root-level App Quality configuration properties (`elementFilters`, `views`, and `viewFilters`) impact both UI Coverage and Accessibility.
+Note that the root-level properties `elementFilters` and `viewFilters` apply to both UI Coverage and Accessibility. These properties can also be nested under `uiCoverage` or `accessibility` to apply to only that feature, with nested configuration taking precedence over root-level configuration.
 
 ### Viewing Configuration for a Run
 
