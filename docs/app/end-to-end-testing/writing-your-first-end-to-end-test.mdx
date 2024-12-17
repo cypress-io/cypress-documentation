@@ -225,35 +225,6 @@ have failed.
   title="First test with cy.visit()"
 />
 
-:::danger
-
-<strong>Testing Apps You Don't Control</strong>
-
-In this guide we are testing our example application:
-[`https://example.cypress.io`](https://example.cypress.io). However you should
-think carefully about testing applications you **don't control**. Why?
-
-- They have the potential to change at any moment which will break tests.
-- They may do A/B testing which makes it impossible to get consistent results.
-- They may detect you are a script and block your access.
-- They may have security features enabled which prevent Cypress from working.
-
-Generally speaking, the point of Cypress is to be a tool you use every day to
-build and test your own applications, not a general purpose web automation tool.
-However, this is a guideline rather than a hard-and-fast rule and there are a
-number of good reasons to make exceptions for certain kinds of application:
-
-- They are specifically designed to integrate with third parties, e.g. SSO
-  providers.
-- They provide you with a complementary service, e.g. SaaS control panels or
-  analytics.
-- They reuse your content or provide plugins for an app you control.
-
-The key here is to carefully weigh the benefits of the tests in question against
-the possible disruption and flake these sorts of tests can introduce.
-
-:::
-
 ### <Icon name="search" /> Step 2: Query for an element
 
 Now that we've got a page loaded, we need to take some action on it. Why don't
@@ -510,6 +481,45 @@ If you want a minimal code approach to creating tests, you can use
 [Cypress Studio](/app/guides/cypress-studio) to record your browser
 interactions and generate tests. Visit our
 [guide](/app/guides/cypress-studio) for more information.
+
+## Testing Apps You Don't Control
+
+:::danger
+
+<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Trying to visit
+or interact with sites or servers you do not control.
+
+:::
+
+In this guide we are testing our example application:
+[https://example.cypress.io](https://example.cypress.io).
+However you should think carefully about testing applications you **don't control**
+or you haven't been invited to test by the owner.
+Why?
+
+- They may have security features enabled which prevent Cypress from working,
+  such as detecting Cypress script usage. This can block your access and make it
+  appear that the application website is unresponsive.
+- They have the potential to change at any moment which will break tests.
+- They may do A/B testing which makes it impossible to get consistent results.
+
+Generally speaking, the point of Cypress is to be a tool you use every day to
+build and test your own applications, not a general purpose web automation tool.
+However, this is a guideline rather than a hard-and-fast rule and there are a
+number of good reasons to make exceptions for certain kinds of application:
+
+- They are specifically designed to integrate with third parties, e.g. SSO
+  providers.
+- They provide you with a complementary service, e.g. SaaS control panels or
+  analytics.
+- They reuse your content or provide plugins for an app you control.
+
+The key here is to carefully weigh the benefits of the tests in question against
+the possible disruption and flake these sorts of tests can introduce.
+
+See also [Visiting External Sites](/app/core-concepts/best-practices#Visiting-External-Sites),
+on our [Best Practices](/app/core-concepts/best-practices) page,
+which discusses strategies when this is necessary.
 
 ## Next steps
 
