@@ -135,6 +135,10 @@
   // border color in current area of toc
   --toc-highlight: var(--ifm-color-primary);
   --ifm-alert-shadow: none;
+
+  .footer--dark {
+    --ifm-footer-link-color: theme(colors.gray.50);
+  }
 }
 
 html[data-theme] {
