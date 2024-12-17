@@ -1021,6 +1021,13 @@
           "link": "https://github.com/allure-framework/allure-js/tree/main/packages/allure-cypress",
           "keywords": ["reporter", "allure", "step", "screenshot"],
           "badge": "community"
+        },
+        {
+          "name": "cypress-xray-plugin",
+          "description": "A plugin for uploading Cypress test results to Xray, including evidence such as screenshots, videos or custom data. Fully compatible with Cucumber.",
+          "link": "https://github.com/Qytera-Gmbh/cypress-xray-plugin",
+          "keywords": ["reporter", "xray", "jira", "cucumber", "screenshot", "video"],
+          "badge": "community"
         }
       ]
     },
