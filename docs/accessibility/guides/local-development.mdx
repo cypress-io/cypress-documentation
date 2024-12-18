@@ -1,0 +1,29 @@
+---
+title: Feedback during local development
+sidebar_position: 50
+
+---
+
+# Feedback during local development
+
+Eventually, the Cypress App will support displaying accessibility feedback during local development. For now, the important thing to note is: you do *not* need to push your changes and wait for your entire build process to complete.
+
+The best solution is to record to Cypress Cloud from your local development machine. This allows you to run a small set of tests directly related to your changes and fully skip your build pipeline and CI processes. It can be run with a one line command:
+
+```
+npx cypress run --key <record_key> --record --spec "cypress/e2e/my-spec.cy.js" 
+```
+
+(You can skip the `--key` option by setting `CYPRESS_RECORD_KEY` as an environment variable. Learn more about recording in our [docs about recorded runs](https://docs.cypress.io/guides/cloud/recorded-runs)).  
+   
+This has 3 key benefits:
+
+* Accuracy \- you will see exactly what Cypress does with your new code changes, all config and software versions will match  
+* Speed \- since the application is already built locally, while you are working on it, it is ready to test immediately without your build pipeline  
+* Scope \- you can run only the tests you need, which can make results even faster, and helps you exclude issues unrelated to the area you are working on
+
+One other reason to get early feedback this way is to quickly know if, in fixing one accessibility problem, you’ve revealed or introduced another. Recording small runs locally is a big quality-of-life improvement when you are specifically looking for this kind of feedback. 
+
+If you expect your team to do a lot of runs this way and that this would producing clutter in your main Cypress projects, you can set up a dedicated Cloud project for “locally generated” runs to keep things organized.
+
+

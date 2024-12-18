@@ -1,0 +1,43 @@
+---
+title: Accessibility automation principles
+sidebar_position: 80
+
+---
+
+
+## What it means to fix all Axe Core® violations {#what-it-means-to-fix-all-axe-core-violations}
+
+Cypress Accessibility runs Axe Core® checks on every significant state and variation of the applications you test with Cypress. This kind of automation can catch up to [57% of issues that would appear in a manual audit](https://www.deque.com/blog/automated-testing-study-identifies-57-percent-of-digital-accessibility-issues/), but it does not replace the human judgment that is applied during an audit. Auditors test a wide variety of scenarios and technologies in a way that would be impossible to fully automate.
+
+It helps to think of accessibility at three levels. The first is “basic usability”. Paying attention to issues reported by Cypress and Axe Core® should help you to this point. This is the threshold at which a disabled user is likely to be able to make substantial progress through the application, but may still hit major barriers or usability issues. If your contact forms and issue reporting systems are accessible, you will be able to learn about these problems from actual users.
+
+The second level of accessibility is full conformance with all Web Content Accessibility Guidelines (WCAG) success criteria. As mentioned above, more than half of issues reported in manual audits can be reported and caught early with Axe Core ®automation. Conformance with the WCAG is often the standard set by legislation and regulation related to web accessibility. If your goal is regulatory compliance, this is the bar. No generic automation tool can “prove” compliance with this standard, it **requires** human assessment. 
+
+The third level, and the true goal of many accessibility programs, is a good user experience. This needs to be validated by actual disabled users who are daily users of assistive technology. It’s entirely possible to have a website that passes the first two levels, and still offers a poor user experience. 
+
+Accessibility is about communicating the nature and structure of the application, and the available actions and information, in a way that allows disabled users to independently understand the interface and complete all tasks. The foundational [POUR principles](https://www.24a11y.com/2019/pour-the-foundation-first/) of the WCAG \- that software must be Perceivable, Operable, Understandable and Robust \- are bigger than any specific set of test plans or static checks. While Axe Core® tell us about many genuine accessibility barriers, it is important to leverage that information into making good decisions about accessibility and providing a truly equal experience.
+
+## Dealing with false positives 
+
+False positives are always a risk in any automated scans. Both Cypress Accessibility and Axe Core® are designed in a way that minimizes them, but it’s always possible that there will be some violations in the report that you recognize as invalid and would rather exclude, or are genuinely incorrect.
+
+While false positives are rare, if in doubt, use the “provide feedback” button to alert us to something you see as a false positive and we can work on diagnosing and solving the issue from our side. 
+
+### Genuine false positives
+
+There are two main possible sources of genuine false positive results:
+
+1. The check was run on an **invalid** **state** \- for example a partially hydrated DOM \- that no user would ever see. These are scenarios that Cypress can account for in the product if they are reported.  
+2. The state tested was correct but Axe Core® reported a violation that it shouldn’t have, as a result of a bug or missing check. Since Axe Core® is an open-source product, if and when we encounter bugs, we can open issues in the project and even make pull requests if needed.
+
+### Loading states 
+
+There’s another scenario that can present as a potential false positive: legitimate user-facing loading states. These are situations where some data is pending in your application.
+
+It might be tempting to say “this state shouldn’t be captured, it’s not fully loaded” \- but in reality, these types of “pending” states are valid, and often contain visual information like loading spinners, UI skeletons, and progress bars which should be accessible themselves, so the user knows what data is loading. It’s also possible that the data doesn’t come in at all, or is very slow, and a user needs to figure out what is happening and what they can do, so the application needs to remain in a fully accessible, usable condition even if data is pending.
+
+In general it’s a good idea in front-end development to “make impossible states impossible”, and in doing so you can follow the accessibility principle of Robustness (the last of the 4 POUR principles mentioned above), while also making it much less likely that an invalid state is possible to reach in Cypress in the first place. This can also have a beneficial effect on the overall stability of your tests.
+
+### Assistive technology support
+
+Certain accessibility techniques are not fully supported by all assistive technologies like screen readers or voice control software. Axe Core® accounts for this. The software and operating systems tested against are listed in their [Accessibility Supported document](https://github.com/dequelabs/axe-core/blob/develop/doc/accessibility-supported.md). For example: it can seem like a false positive from Axe Core® if a failing technique used in your code appears to work correctly in a certain screen reader, browser and operating system combination that you test with. But if it does not have sufficient accessibility support in commonly used technology configurations, Axe Core® will intentionally fail that technique, allowing you to switch to something with better support.

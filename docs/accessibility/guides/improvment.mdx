@@ -1,0 +1,61 @@
+---
+title: Improving accessibility
+sidebar_position: 20
+
+---
+
+In this section we'll discuss how to break down the data in your accessibility report and make a plan for remediation.
+
+<DocsImage
+  src="/img/accessibility/guides/a11y-standards.png"
+  alt="A list of accessibility rules where some are passing and failing. Two major sections are identified - the passing rules as 'Your current standard', and the failing rules as 'Your issues to address'. Within the failing rules list, 2 rules are called out as 'Your next tasks' because they have the smallest count of elements failing the rule."
+  noBorder={true}
+/>
+
+## Starting from Scratch
+
+When you first start to use Cypress Accessibility, you may be testing a legacy application with many existing accessibility violations. The [Accessibility tab for a run](/accessibility/core-concepts/run-level-reports) can show multiple violations detected on dozens or hundreds of pages in your application. The number of failing elements and page or component snapshots available might be overwhelming, making it difficult to know where to start.
+
+In this situation, the first step is to understand some of the key variables and how they are related within your organization. The kinds of things to consider are:
+
+* your goals for the accessibility of the application   
+* your timeline for making it accessible   
+* the available resources for remediation   
+* what code is likely to change in the near future, where accessibility can be included in designs and requirements
+* the consequences, risks, and costs of remaining inaccessible
+
+These factors will help you find the right strategy for engaging with the results displayed in your accessibility reports. While incremental accessibility efforts by designers and engineers are never wasted, the best outcomes come from an overall organizational commitment to ship accessible software, which requires investment from all departments, so understanding your organization's stance on accessibility and who needs to be in the conversation is also helpful.
+
+If your organization or team is newer to accessibility, you are likely to find plenty of issues reported by Axe Core® in Cypress Cloud. Many of the issues in your first may relate to concepts that are new, such as [ARIA attributes](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA) or [invalid nesting of interactive controls](https://dequeuniversity.com/rules/axe/4.2/nested-interactive). Since it will be impossible to fix all issues overnight, we recommend finding some low-hanging fruit as a starting point. This can help your team build confidence by getting some wins on the board, and teach them the overall idea of how accessibility problems get fixed.
+
+### Good low-hanging fruit
+
+Some of the easiest, and most valuable issues to tackle first come from [WCAG SC 4.2.1 \- Name, role, value](https://www.w3.org/WAI/WCAG21/Understanding/name-role-value.html). This is the part of the Web Content Accessibility Guidelines that’s concerned with making sure interactive controls have appropriate labels for all users. In general, your app is likely to have some violations in this category, and Axe-Core® tends to flag these as Critical or Serious, because the lack of a label usually makes it difficult or impossible for some users to know what something does in a user interface.
+
+Within the “Name, role, value” success criterion, the [`button-name`](https://dequeuniversity.com/rules/axe/4.7/button-name) rule in Axe Core® (“Buttons must have discernible text”) is a great place to start. Icons being used as buttons are common in modern user interfaces and they are often missing descriptive text content for screen reader users, which directly impacts their ability to understand the purpose and effect of the button and independently complete tasks in your application.
+
+This rule, and others like it, are good starting points because the rule is easy to understand and easy to fix. Since the solution is purely a code update to add the missing label text to buttons, this category of rule requires little or no coordination across departments or teams to address. These types of issues are also straightforward to demonstrate and validate even for beginners with a screen reader.
+
+Existing code failing the button-name rule can usually be remediated pretty quickly, as long as it is clear what the correct text label is for a given control. And when it comes to new code, this text label content is also easy to add to discussions in the design and requirements stages of the development cycle, shifting the accessibility conversation left.
+
+Since every violation in Cypress is linked to a Deque University page with details about the nature of the problem and how to fix it, all the needed context is available, even to engineers who may be new to the topic of accessiblity in general, or to a specific violation.
+
+Even if your first rule is not “Buttons must have discernible text”, I suggest finding one with a similarly small amount of coordination or understanding needed to fix, so the team can experience success as quickly as possible.
+
+### Finding low-hanging fruit with Cypress
+
+Cypress Accessibility lists all pages and components tested in a run, providing reports scoped to these specific areas. It’s also possible to see all accessibility rules that failed across the entire run, and explore the report that way. The rules-first approach is useful when finding low-hanging fruit. The rules with the smallest element count are the closest to being fully fixed, and removed from the report. If, at the “All Views” level, there’s not a good rule with a low element count, the next step is to focus on just a single View in the report. You might not be able to fix all buttons across the application, for example, but maybe you can pick a single page and fix just the issues on that specific page.
+
+### Setting the goal
+
+Your goal is to get your target rule’s failing elements down to zero for the chosen scope. That scope can be a specific page, a set of pages, or the entire application. Seeing that rule disappear from a report provides a clear finish line for you and your team. It also provides a time to assess the impact of the changes. 
+
+Often, due to the componentized nature of modern web apps, fixing an issue in one place has knock-on benefits around the app. Even if you focused on a narrow scope, your changes may still have had a wider impact, so remember: it’s fine for these first goals to be small at first. In fact, it’s preferable.
+
+### Iterating towards success {#iterating-towards-success}
+
+By setting reasonable goals based on understanding and fixing specific rules, within defined areas of the application being tested, your team is able to make incremental progress on accessibility without ever becoming overwhelmed, and without having to learn every rule at once. With support from the Deque University “Learn More” links embedded into the reports, the team can specialize in one rule at a time, learning the related context only when needed, and then going deeper on more complicated or debatable topics.
+
+Given enough capacity, as dictated by the urgency of accessibility remediation combined with other business constraints, you will eventually solve all issues that are reported with Cypress Accessibility, and be well on your way to a more usable, accessible experience.
+
+If you are interested in using Cypress to detect and prevent regressions in the rules that you already have passing, you can learn how to use the Results API to do this in our [Blocking Pull Requests Section](/accessibility/guides/blocking-pull-requests).
