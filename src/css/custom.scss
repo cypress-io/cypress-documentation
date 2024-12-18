@@ -136,6 +136,8 @@
   --toc-highlight: var(--ifm-color-primary);
   --ifm-alert-shadow: none;
 
+  // override the default mapping of footer links to the `secondary` color,
+  // which is not good for dark backgrounds such as the footer
   .footer--dark {
     --ifm-footer-link-color: theme(colors.gray.50);
   }
