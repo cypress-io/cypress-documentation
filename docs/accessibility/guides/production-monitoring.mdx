@@ -1,7 +1,6 @@
 ---
 title: Production monitoring
 sidebar_position: 60
-
 ---
 
 Many organizations use Cypress automation in CI, and for local development, but also run scheduled tests against production or staging environments. This pattern works especially well for situations where a Content Management System is involved and content authors can add or modify things that affect the user interface, or anything else where the content being tested is not fully controlled by the testing environment. Since it can be impossible to write explicit assertions for ever-changing content like this, or for A/B tests of different UI variations implemented outside your codebase, production smoke tests tend to be more high-level health checks.
@@ -13,15 +12,16 @@ One common approach to this kind of monitoring, if the project does not already 
 ```js
 describe('accessibility scan', () => {
   it('checks accessibility with the sitemap.xml', () => {
-    cy.request('https://<YOUR_WEBSITE>/sitemap.xml')
-      .then((response) => {
-        const xmlString = response.body
-        const parser = new DOMParser()
-        const xmlDoc = parser.parseFromString(xmlString, 'application/xml')
-        const URLs = Array.from(xmlDoc.querySelectorAll('loc')).map((loc) => loc.textContent)
-        Cypress._.each(URLs, (URL) => {
-          cy.visit(URL)
-          cy.contains('<YOUR_FOOTER_CONTENT>').scrollIntoView()
+    cy.request('https://<YOUR_WEBSITE>/sitemap.xml').then((response) => {
+      const xmlString = response.body
+      const parser = new DOMParser()
+      const xmlDoc = parser.parseFromString(xmlString, 'application/xml')
+      const URLs = Array.from(xmlDoc.querySelectorAll('loc')).map(
+        (loc) => loc.textContent
+      )
+      Cypress._.each(URLs, (URL) => {
+        cy.visit(URL)
+        cy.contains('<YOUR_FOOTER_CONTENT>').scrollIntoView()
       })
     })
   })

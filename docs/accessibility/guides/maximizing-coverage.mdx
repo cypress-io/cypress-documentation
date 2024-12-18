@@ -1,12 +1,11 @@
 ---
 title: Maximizing coverage
 sidebar_position: 70
-
 ---
 
 As you gain more familiarity with the nature of accessibility violations and the underlying ideas behind them, you will see the connection between the generic, static checks offered by Axe Core®, and the specific user-facing behavior of your own applications. In many cases, you will be able to add new assertions to your tests, based on what you learned from Cypress Accessibility, but customized to your specific situation.
 
-An example of this is when Cypress Accessibility reports a button with a missing accessible name. The actual text that should go with the button depends upon your own application, and is unknown to Axe-Core, so a label check will pass for almost *any* text that is placed in the button. After you’ve added the required text to the codebase, you can write an assertion about that specific text in your Cypress tests, to make clear to future developers that it is part of the spec of the application. That’s a small example, but it applies in many larger situations too.
+An example of this is when Cypress Accessibility reports a button with a missing accessible name. The actual text that should go with the button depends upon your own application, and is unknown to Axe-Core, so a label check will pass for almost _any_ text that is placed in the button. After you’ve added the required text to the codebase, you can write an assertion about that specific text in your Cypress tests, to make clear to future developers that it is part of the spec of the application. That’s a small example, but it applies in many larger situations too.
 
 ## Accessibility “hotspots”
 
@@ -14,6 +13,6 @@ Another way to leverage the violations detected by Cypress Accessibility is to t
 
 ## Combining testing approaches
 
-Combining the always-on generic checks provided by Cypress Accessibility with regular Cypress assertions about specific details of your application can help accessibility quality stay high once things are fixed, regardless of whether problems were originally detected manually or automatically. This can take your accessibility confidence far beyond the 57% of issues detected, often cited when thinking about Axe Core® as a standalone library. 
+Combining the always-on generic checks provided by Cypress Accessibility with regular Cypress assertions about specific details of your application can help accessibility quality stay high once things are fixed, regardless of whether problems were originally detected manually or automatically. This can take your accessibility confidence far beyond the 57% of issues detected, often cited when thinking about Axe Core® as a standalone library.
 
 In the testing context, you are already specifying user-facing aspects of your application, and that means almost any findings from manual regression checks or user feedback, can be explicitly covered by your standard testing approach. So the overall potential of your automation pipeline to provide good feedback about accessibility regressions is very high, if you leverage explicit assertions on top of the static check "error detection" approach to find mistakes.
