@@ -13,7 +13,7 @@ The best solution is to record to Cypress Cloud from your local development mach
 npx cypress run --key <record_key> --record --spec "cypress/e2e/my-spec.cy.js"
 ```
 
-(You can skip the `--key` option by setting `CYPRESS_RECORD_KEY` as an environment variable. Learn more about recording in our [docs about recorded runs](https://docs.cypress.io/guides/cloud/recorded-runs)).
+(You can skip the `--key` option by setting `CYPRESS_RECORD_KEY` as an environment variable. Learn more about recording in our [docs about recorded runs](/guides/cloud/recorded-runs)).
 
 This has 3 key benefits:
 
@@ -23,4 +23,4 @@ This has 3 key benefits:
 
 One other reason to get early feedback this way is to quickly know if, in fixing one accessibility problem, you’ve revealed or introduced another. Recording small runs locally is a big quality-of-life improvement when you are specifically looking for this kind of feedback.
 
-If you expect your team to do a lot of runs this way and that this would producing clutter in your main Cypress projects, you can set up a dedicated Cloud project for “locally generated” runs to keep things organized.
+If you expect your team to do a lot of runs this way and that these partial results would clutter your Cypress project, you can set up a dedicated Cloud project for “locally generated” runs to keep things organized.
