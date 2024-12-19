@@ -75,7 +75,8 @@ For users with the existing `experimentalJustInTimeCompile` flag set, you can re
 
 ### Changes to `cy.origin()`
 
-To support sites that use [origin-keyed agent clusters](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Origin-Agent-Cluster), Cypress no longer injects `document.domain` into `text/html` content by default.
+To account for Chrome's [impending deprecation](https://developer.chrome.com/blog/document-domain-setter-deprecation) of setting `document.domain`, and to support sites that use [origin-keyed agent clusters](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Origin-Agent-Cluster),
+Cypress no longer injects `document.domain` into `text/html` content by default.
 
 Because of this, tests that visit more than one origin (defined as a composite of the URL _scheme_, _hostname_, and _port_) must now use `cy.origin()`.
 Without `cy.origin()`, interacting with a second origin in the same test will cause the test to fail, even if the two origins
@@ -96,18 +97,23 @@ cy.visit('https://docs.cypress.io') cy.origin('https://docs.cypress.io', () => {
 To ease this transition, Cypress v14.0 introduced the ["injectDocumentDomain" configuration option](/app/references/configuration#injectDocumentDomain). When this option
 is set to true, `cy.origin()` will not be required to navigate between origins, as long as the superdomain matches.
 
-<Icon name="exclamation-triangle" /> If `injectDocumentDomain` is enabled, Cypress
+<Icon name="exclamation-triangle" /> If `injectDocumentDomain` is set to `true`, Cypress
 will warn that this option is deprecated.
 
 <Icon name="exclamation-triangle" /> `injectDocumentDomain` will be removed in Cypress
 15.
 
-<Icon name="exclamation-triangle" /> Enabling `injectDocumentDomain` may cause certain
+<Icon name="exclamation-triangle" /> Setting `injectDocumentDomain` to `true` may cause certain
 sites to stop working in Cypress. Please read the [configuration notes](/app/references/configuration#injectDocumentDomain)
 before use.
 
 <Icon name="exclamation-triangle" /> If your test suites require `experimentalWebKitSupport`,
-this `injectDocumentDomain` must be enabled.
+ `injectDocumentDomain` must be set to `true`.
+
+<Icon name="exclamation-triangle" /> Chrome may remove support for `document.domain` at any time;
+if this configuration option is enabled, Cypress may cease to work in Chrome at any time. If this occurs, 
+Chrome will raise an issue in its developer tools indicating that the deprecated `document.domain` is in use.
+To resolve this issue, set the `injectDocumentDomain` option to `false` and issue any newly necessary `cy.origin()` commands. 
 
 :::
 

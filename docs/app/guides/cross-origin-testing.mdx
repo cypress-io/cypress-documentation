@@ -88,20 +88,18 @@ This is because the commands that were expected to run on the second domain are
 actually being run on the first domain.
 
 Without `cy.origin()`, you can visit different origins in _different_ tests,
-but not in the _same_ test. (ED: should this be removed, as it links to itself?) Please read our
-[Cross Origin Testing Guide](/app/guides/cross-origin-testing) for more
-information.
+but not in the _same_ test.
 
 #### Examples of test cases that will error without the use of `cy.origin`
 
 1. [`.click()`](/api/commands/click) an `<a>` with an `href` to a different
    origin with subsequent Cypress commands being run.
 2. [`.submit()`](/api/commands/submit) a `<form>` that causes your web server to
-   redirect you a different origin where additional Cypress commands are
+   redirect you to a different origin where additional Cypress commands are
    run.
 3. Issue a JavaScript redirect in your application, such as
-   `window.location.href = '...'`, to a different origin where additional
-   Cypress commands are run.
+   `window.location.href = '...'`, which navigates to a different origin
+   where additional Cypress commands are run.
 
 In each of these situations, Cypress will lose the ability to automate your
 application and will error via command timeout unless the `cy.origin` command is
@@ -148,7 +146,7 @@ the use of the [`cy.origin()`](/api/commands/origin) command.
 :::tip
 
 <Icon name="check-circle" color="green" /> You **can** [visit](/api/commands/visit)
-two or origins in **different** tests without needing [`cy.origin()`](/api/commands/origin).
+two or more origins in **different** tests without needing [`cy.origin()`](/api/commands/origin).
 :::
 
 For practical purposes, this means the following:
@@ -163,7 +161,7 @@ it('navigates', () => {
 ```
 
 ```javascript
-// this will error because https://docs.cypress.io doesn't match the https://www.cypress.io origin
+// this will error because the origin https://docs.cypress.io doesn't match the origin https://www.cypress.io
 it('navigates', () => {
   cy.visit('https://www.cypress.io')
   cy.visit('https://docs.cypress.io')
