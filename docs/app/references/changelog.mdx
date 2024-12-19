@@ -4,29 +4,42 @@ title: Changelog
 
 ## 14.0.0
 
-_Released 12/3/2024 (PENDING)_
+_Released 12/3/2024_
+
+**Summary:**
+
+Cypress v14.0.0 expands our support for new component testing framework versions, a few bug fixes, and an update to Electron. We've removed support for older versions of Node.js,
+Linux distributions, browsers and component testing frameworks and dev servers. We've also removed some deprecated Cypress APIs. 14.0.0 also includes breaking changes to `cy.origin`
+that are necessary to handle Chrome's deprecation of document.domain injection - this should fix issues for some users in recent Chrome versions.
+
+Overall, we don't anticipate this release to be too disruptive for most users. We recommend bumping your version to see if your tests still run as expected.
 
 **Breaking Changes:**
 
-- Removed support for Node.js 16 and Node.js 21. Addresses [#29930](https://github.com/cypress-io/cypress/issues/29930).
-- Prebuilt binaries for Linux are no longer compatible with Linux distributions based on glibc `<2.28`,
-  for example: Ubuntu 14-18, RHEL 7, CentOS 7, Amazon Linux 2. Addresses [#29601](https://github.com/cypress-io/cypress/issues/29601).
-- To better adhere to security practices, `cy.origin()` is now required when navigating between two different origins in the same test. This behavior can be disabled via the `injectDocumentDomain` configuration option, which will be removed in Cypress 15. Addresses [#29590](https://github.com/cypress-io/cypress/issues/29590).
-- The
-  `experimentalJustInTimeCompile`
-  configuration option for component testing has been replaced with a `justInTimeCompile` option that is `true` by default. This option will only compile resources directly related to your spec, compiling them 'just-in-time' before spec execution. This should result in improved memory management and performance for component tests in `cypress open` and `cypress run` modes, in particular for large component testing suites. `justInTimeCompile` is currently supported for [`webpack`](https://www.npmjs.com/package/webpack) and [`vite`](https://www.npmjs.com/package/vite). Addresses [#30234](https://github.com/cypress-io/cypress/issues/30234). Addressed in [#30402](https://github.com/cypress-io/cypress/pull/30402).
-- Upgraded bundled Node.js version from `18.17.0` to `20.18.0`. Addresses [#29547](https://github.com/cypress-io/cypress/issues/29547).
-- It is no longer possible to do things like `cy.window().then((win) => win.fetch('<some-url>')` without doing some form of initial navigation via `cy.visit()`. `cy.request` will still work in this scenario. Addressed in [#29547](https://github.com/cypress-io/cypress/pull/30394).
-- The undocumented methods `Cypress.backend('firefox:force:gc')` and `Cypress.backend('log:memory:pressure')` were removed. Addresses [#30222](https://github.com/cypress-io/cypress/issues/30222).
+:::info
+
+Refer to the [v14 Migration Guide](/app/references/migration-guide#Migrating-to-Cypress-140) for help migrating your code.
+
+:::
+
+TBD!!!!!!!!!!!
+
+## 13.15.2
+
+_Released 11/5/2024_
 
 **Bugfixes:**
 
-- The CSS pseudo-class `:dir()` is now supported when testing in Electron. Addresses [#29766](https://github.com/cypress-io/cypress/issues/29766).
+- Fixed an issue where the Cypress runner could hang in `after` or `afterEach` hooks that run Cypress commands after a page load timeout error occurs. Addresses [#30238](https://github.com/cypress-io/cypress/issues/30238).
+
+**Misc:**
+
+- Fixed a typo in CLI `global` option help text. Addresses [#30531](https://github.com/cypress-io/cypress/issues/30531).
 
 **Dependency Updates:**
 
-- Upgraded `electron` from `27.3.10` to `32.2.0`. Addresses [#29547](https://github.com/cypress-io/cypress/issues/29547).
-- Upgraded bundled Chromium version from `118.0.5993.159` to `128.0.6613.178`. Addresses [#29547](https://github.com/cypress-io/cypress/issues/29547).
+- Updated `mobx` from `5.15.4` to `6.13.5` and `mobx-react` from `6.1.8` to `9.1.1`. Addresses [#30509](https://github.com/cypress-io/cypress/issues/30509).
+- Updated `@cypress/request` from `3.0.4` to `3.0.6`. Addressed in [#30488](https://github.com/cypress-io/cypress/pull/30488).
 
 ## 13.15.1
 

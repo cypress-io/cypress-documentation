@@ -35,10 +35,6 @@ to start with for your commands:
 <TabItem value='React'>
 
 ```js
-// React 18
-import { mount } from 'cypress/react18'
-
-// React 16, 17
 import { mount } from 'cypress/react'
 
 Cypress.Commands.add('mount', (component, options) => {
@@ -49,33 +45,7 @@ Cypress.Commands.add('mount', (component, options) => {
 ```
 
 </TabItem>
-<TabItem value='Vue 2'>
-
-```js
-import { mount } from 'cypress/vue2'
-
-Cypress.Commands.add('mount', (component, options = {}) => {
-  // Setup options object
-  options.extensions = options.extensions || {}
-  options.extensions.plugins = options.extensions.plugins || []
-  options.extensions.components = options.extensions.components || {}
-
-  /* Add any global plugins */
-  // options.extensions.plugins.push({
-  //   install(app) {
-  //     app.use(MyPlugin);
-  //   },
-  // });
-
-  /* Add any global components */
-  // options.extensions.components['Button'] = Button;
-
-  return mount(component, options)
-})
-```
-
-</TabItem>
-<TabItem value='Vue 3'>
+<TabItem value='Vue'>
 
 ```js
 import { mount } from 'cypress/vue'
