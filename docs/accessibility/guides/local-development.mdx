@@ -5,19 +5,17 @@ sidebar_position: 50
 
 # Feedback during local development
 
-Eventually, the Cypress App will support displaying accessibility feedback during local development. For now, the important thing to note is: you do _not_ need to push your changes and wait for your entire build process to complete.
-
-The best solution is to record to Cypress Cloud from your local development machine. This allows you to run a small set of tests directly related to your changes and fully skip your build pipeline and CI processes. It can be run with a one line command:
+While there are some workarounds possible with browser extensions or Cypress plugins, the most reliable solution for local development is to record to Cypress Cloud from your local development machine. This allows you to run a small set of tests directly related to your changes and fully skip your build pipeline and CI processes. It can be run with a one line command:
 
 ```
 npx cypress run --key <record_key> --record --spec "cypress/e2e/my-spec.cy.js"
 ```
 
-(You can skip the `--key` option by setting `CYPRESS_RECORD_KEY` as an environment variable. Learn more about recording in our [docs about recorded runs](/guides/cloud/recorded-runs)).
+(You can skip the `--key` option by setting `CYPRESS_RECORD_KEY` as an environment variable. Learn more about recording in our [docs about recorded runs](/cloud/features/recorded-runs)).
 
 This has 3 key benefits:
 
-- Accuracy \- you will see exactly what Cypress does with your new code changes, all config and software versions will match
+- Accuracy \- you will see exactly what Cypress does with your new code changes, taking into account your project's configuration, and using the Cloud's version of Axe Core®. There will be no violations reports for rules, pages, or elements your team has chosen to ignore, for example.
 - Speed \- since the application is already built locally, while you are working on it, it is ready to test immediately without your build pipeline
 - Scope \- you can run only the tests you need, which can make results even faster, and helps you exclude issues unrelated to the area you are working on
 

@@ -7,7 +7,7 @@ Cypress Accessibility reports are generated on the server in Cypress Cloud, base
 
 ## Using the Results API
 
-The Cypress Accessibility Results API provides access to accessibility results after the run is completed, so that you can implement patterns like blocking a pull request or sending out alerts based on specific accessibility criteria. This is done by adding a separate accessibility verification step to your CI pipeline, and using a helper function provided by Cypress to automatically request the report for the appropriate Cypress run based on the build context. The example below shows how this can look in GitHub Actions when there is an accessibility failure based on your own chosen policy:
+The [Cypress Accessibility Results API](/accessibility/results-api) provides access to accessibility results after the run is completed, so that you can implement patterns like blocking a pull request or sending out alerts based on specific accessibility criteria. This is done by adding a separate accessibility verification step to your CI pipeline, and using a helper function provided by Cypress to automatically request the report for the appropriate Cypress run based on the build context. The example below shows how this can look in GitHub Actions when there is an accessibility failure based on your own chosen policy:
 
 <DocsImage
   src="/img/accessibility/guides/github-actions-a11y-block.png"

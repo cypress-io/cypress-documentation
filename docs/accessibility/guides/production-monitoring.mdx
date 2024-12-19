@@ -20,8 +20,10 @@ describe('accessibility scan', () => {
         (loc) => loc.textContent
       )
       Cypress._.each(URLs, (URL) => {
-        cy.visit(URL)
-        cy.contains('<YOUR_FOOTER_CONTENT>').scrollIntoView()
+        it(`visits ${URL}`, () => {
+          cy.visit(URL)
+          cy.contains('<YOUR_FOOTER_CONTENT>').scrollIntoView()
+        })
       })
     })
   })
