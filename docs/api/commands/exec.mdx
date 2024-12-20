@@ -10,7 +10,7 @@ Execute a system command.
 
 Don't try to start a web server from `cy.exec()`.
 
-Read about [best practices](/guides/references/best-practices#Web-Servers) here.
+Read about [best practices](/app/core-concepts/best-practices#Web-Servers) here.
 
 :::
 
@@ -34,20 +34,20 @@ cy.exec('npm run build')
 <Icon name="angle-right" /> **command _(String)_**
 
 The system command to be executed from the project root (the directory that
-contains the [Cypress configuration file](/guides/references/configuration)).
+contains the [Cypress configuration file](/app/references/configuration)).
 
 <Icon name="angle-right" /> **options _(Object)_**
 
 Pass in an options object to change the default behavior of `cy.exec()`.
 
-| Option              | Default                                                    | Description                                                                                                                                                  |
-| ------------------- | ---------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `log`               | `true`                                                     | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log)                                                                     |
-| `env`               | `{}`                                                       | Object of environment variables to set before the command executes (e.g. `{USERNAME: 'johndoe'}`). Will be merged with existing system environment variables |
-| `failOnNonZeroExit` | `true`                                                     | whether to fail if the command exits with a non-zero code                                                                                                    |
-| `timeout`           | [`execTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.exec()` to resolve before [timing out](#Timeouts)                                                                                       |
+| Option              | Default                                                 | Description                                                                                                                                                  |
+| ------------------- | ------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `log`               | `true`                                                  | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log)                                                                          |
+| `env`               | `{}`                                                    | Object of environment variables to set before the command executes (e.g. `{USERNAME: 'johndoe'}`). Will be merged with existing system environment variables |
+| `failOnNonZeroExit` | `true`                                                  | whether to fail if the command exits with a non-zero code                                                                                                    |
+| `timeout`           | [`execTimeout`](/app/references/configuration#Timeouts) | Time to wait for `cy.exec()` to resolve before [timing out](#Timeouts)                                                                                       |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
 
 `cy.exec()` yields an object with the following properties:
 
@@ -170,7 +170,7 @@ Cypress.config('execTimeout') // => 30000
 
 You can configure the `cy.exec()` timeout within a suite or test by passing the
 new configuration value within the
-[test configuration](/guides/references/configuration#Test-Configuration).
+[test configuration](/app/references/configuration#Test-Configuration).
 
 This will set the timeout throughout the duration of the tests, then return it
 to the default `execTimeout` when complete.
@@ -191,19 +191,19 @@ describe('has data available from database', { execTimeout: 90000 }, () => {
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
+### Requirements [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
 
 - `cy.exec()` requires being chained off of `cy`.
 - `cy.exec()` requires the executed system command to eventually exit.
 - `cy.exec()` requires that the exit code be `0` when `failOnNonZeroExit` is
   `true`.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
+### Assertions [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
 
 - `cy.exec()` will only run assertions you have chained once, and will not
-  [retry](/guides/core-concepts/retry-ability).
+  [retry](/app/core-concepts/retry-ability).
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
+### Timeouts [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
 
 - `cy.exec()` can time out waiting for the system command to exist.
 

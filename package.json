@@ -19,14 +19,16 @@
     "clear": "docusaurus clear",
     "preserve": "npm run build:plugins",
     "serve": "docusaurus serve --dir dist",
+    "test": "cypress run",
     "write-translations": "docusaurus write-translations",
     "write-heading-ids": "docusaurus write-heading-ids",
     "typecheck": "tsc"
   },
   "dependencies": {
-    "@cypress-design/css": "^0.18.0",
-    "@cypress-design/react-docmenu": "^0.7.1",
-    "@cypress-design/react-tag": "^0.3.3",
+    "@cypress-design/css": "^1.0.0",
+    "@cypress-design/react-button": "^1.0.1",
+    "@cypress-design/react-docmenu": "^1.0.2",
+    "@cypress-design/react-tag": "^1.0.3",
     "@docusaurus/core": "^3.1.1",
     "@docusaurus/preset-classic": "^3.1.1",
     "@fortawesome/fontawesome-svg-core": "^6.5.1",
@@ -49,10 +51,12 @@
     "@docusaurus/module-type-aliases": "^3.1.1",
     "@docusaurus/tsconfig": "3.1.1",
     "@prettier/sync": "^0.5.1",
+    "cypress": "^13.15.0",
     "node-fetch": "^3.3.2",
     "patch-package": "^8.0.0",
     "prettier": "^3.2.5",
-    "typescript": "^5.3.3"
+    "typescript": "^5.3.3",
+    "wait-on": "^8.0.1"
   },
   "browserslist": {
     "production": [

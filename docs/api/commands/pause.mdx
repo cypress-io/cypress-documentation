@@ -6,7 +6,7 @@ Stop `cy` commands from running and allow interaction with the application under
 test. You can then "resume" running all commands or choose to step through the
 "next" commands from the Command Log.
 
-It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried) to
+It is [unsafe](/app/core-concepts/retry-ability#Only-queries-are-retried) to
 chain further commands that rely on a DOM element as the subject after
 `.pause()`.
 
@@ -42,14 +42,14 @@ cy.get('nav').pause() // Pause after the 'get' commands yield
 
 Pass in an options object to change the default behavior of `.pause()`.
 
-| Option | Default | Description                                                                              |
-| ------ | ------- | ---------------------------------------------------------------------------------------- |
-| `log`  | `true`  | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
+| Option | Default | Description                                                                         |
+| ------ | ------- | ----------------------------------------------------------------------------------- |
+| `log`  | `true`  | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log) |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
 
 - `.pause()` yields the same subject it was given.
-- It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried)
+- It is [unsafe](/app/core-concepts/retry-ability#Only-queries-are-retried)
   to chain further commands that rely on a DOM element as the subject after
   `.pause()`.
 
@@ -69,17 +69,17 @@ cy.get('button').should('not.be.disabled')
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
+### Requirements [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
 
 - `.pause()` can be chained off of `cy` or off another command.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
+### Assertions [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
 
 - `.pause()` is a utility command.
 - `.pause()` will not run assertions. Assertions will pass through as if this
   command did not exist.
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
+### Timeouts [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
 
 - `.pause()` cannot time out.
 

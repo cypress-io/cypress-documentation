@@ -5,4 +5,5 @@ export interface DocsImageProps {
   title: string
   width: number;
   noBorder: boolean
+  style: string
 }

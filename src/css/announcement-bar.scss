@@ -25,9 +25,10 @@ div [class^='announcementBar'] {
   a {
     text-decoration: none;
     @apply text-indigo-500;
+    border-bottom: 1px dotted var(--ifm-color-gray-500);
 
     &:hover {
-      border-bottom: 1px dotted var(--ifm-color-gray-500);
+      border-bottom: 1px solid var(--ifm-color-gray-500);
       @apply border-b-indigo-500;
     }
   }

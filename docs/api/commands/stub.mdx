@@ -10,7 +10,7 @@ assertion. It is not retryable, chainable, or timeout-able.
 :::info
 
 **Note:** `.stub()` assumes you are already familiar with our guide:
-[Stubs, Spies, and Clocks](/guides/guides/stubs-spies-and-clocks)
+[Stubs, Spies, and Clocks](/app/guides/stubs-spies-and-clocks)
 
 :::
 
@@ -19,7 +19,6 @@ assertion. It is not retryable, chainable, or timeout-able.
 ```javascript
 cy.stub()
 cy.stub(object, method)
-cy.stub(object, method, replacerFn)
 ```
 
 ### Usage
@@ -41,11 +40,7 @@ The `object` that has the `method` to be replaced.
 
 The name of the `method` on the `object` to be wrapped.
 
-<Icon name="angle-right" /> **replacerFn _(Function)_**
-
-The function used to replace the `method` on the `object`.
-
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
 
 - `cy.stub()` is _synchronous_ and returns a value (the stub) instead of a
   Promise-like chain-able object. It can be aliased.
@@ -82,7 +77,7 @@ expect(util.addListeners).to.be.called
 // assume App.start calls util.addListeners
 let listenersAdded = false
 
-cy.stub(util, 'addListeners', () => {
+cy.stub(util, 'addListeners').callsFake(() => {
   listenersAdded = true
 })
 
@@ -154,7 +149,7 @@ const stub = cy.stub(obj, 'foo').log(false)
 
 :::info
 
-[Check out our example recipe testing spying, stubbing and time](/examples/recipes#Stubbing-and-spying)
+[Check out our example recipe testing spying, stubbing and time](/app/references/recipes#Stubbing-and-spying)
 
 :::
 
@@ -233,17 +228,16 @@ outputs the following:
 
 ## History
 
-| Version                                       | Changes                   |
-| --------------------------------------------- | ------------------------- |
-| [0.20.0](/guides/references/changelog#0-20-0) | Added `.log(bool)` method |
-| [0.18.8](/guides/references/changelog#0-18-8) | `cy.stub()` command added |
+| Version                                    | Changes                   |
+| ------------------------------------------ | ------------------------- |
+| [0.20.0](/app/references/changelog#0-20-0) | Added `.log(bool)` method |
+| [0.18.8](/app/references/changelog#0-18-8) | `cy.stub()` command added |
 
 ## See also
 
 - [`.as()`](/api/commands/as)
 - [`cy.clock()`](/api/commands/clock)
 - [`cy.spy()`](/api/commands/spy)
-- [Guide: Stubs, Spies and Clocks](/guides/guides/stubs-spies-and-clocks)
-- [Recipe: Stubbing, Spying](/examples/recipes#Stubbing-and-spying)
-- [Recipe: Unit Test - Stubbing Dependencies](/examples/recipes)
-- [Stub navigator API in end-to-end tests](https://glebbahmutov.com/blog/stub-navigator-api/)
+- [Guide: Stubs, Spies and Clocks](/app/guides/stubs-spies-and-clocks)
+- [Recipe: Stubbing, Spying](/app/references/recipes#Stubbing-and-spying)
+- [Recipe: Unit Test - Stubbing Dependencies](/app/references/recipes)

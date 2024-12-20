@@ -1,0 +1,139 @@
+---
+title: 'Manage users | Cypress Cloud'
+description: 'Learn how to manage user logins in Cypress Cloud, manage user roles, and accept user requests.'
+sidebar_position: 30
+sidebar_label: Users
+---
+
+:::info
+
+##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
+
+- How to invite users to Cypress Cloud
+- How to manage user roles and updates
+- How to accept user requests
+
+:::
+
+A user is anyone who logs in to Cypress Cloud.
+
+## Invite users
+
+Organization [owner or admin](#User-roles) roles can invite
+[Cypress Cloud](https://on.cypress.io/cloud) users. Those invited will see all
+projects and tests run for the organization.
+
+_Note: only owners can give other users 'owner' access._
+
+### Invite a user to an organization:
+
+1. Select the [organization](/cloud/account-management/organizations) you
+   want to invite a user to.
+2. Click **Users**, then **Invite User**.
+3. Fill in their email and select their [role](#User-roles), then click **Invite
+   User**.
+4. The user will receive an invitation email with a link to accept the
+   invitation.
+
+<DocsImage
+  src="/img/cloud/users/invite-user-dialog.jpg"
+  alt="Invite User dialog"
+/>
+
+### Sign Up with an Invitation:
+
+Upon receiving the email, click **"Accept Invitation"** to be redirected to
+Cypress Cloud. From there, you will have the choice of authentication type:
+
+- **Basic** (Email and Password)
+- **Social** (Google or GitHub)
+- **Single Sign On**
+
+#### **Sign Up with Basic Authentication**
+
+1. Click **"Don't have an account? Sign Up"**
+2. Click **"Sign up with Email"**
+3. Type your **email address** and make a **password**
+4. Click **"Sign Up"**
+
+#### **Sign Up with Social Authentication**
+
+1. Click **"Don't have an account? Sign Up"**
+2. Click **"Sign up with Google"** or **"Sign up with GitHub"**
+3. You may need to verify via your Social provider depending on your personal
+   settings
+
+#### **Sign Up with Single Sign On (SSO) Authentication**
+
+Refer to our
+[Enterprise SSO Guide](/cloud/account-management/enterprise-sso).
+
+#### Locked Out or Forgot Password
+
+See
+[What if I can't access my Cypress Cloud account](/cloud/faq#What-if-I-cant-access-my-Cypress-Cloud-account).
+
+## User roles
+
+Users can be assigned roles that affect their access to certain features of
+[Cypress Cloud](https://on.cypress.io/cloud).
+
+- **Member:** Can see projects, runs, and keys.
+- **Admin:** Can also invite, edit and delete users.
+- **Owner:** Can also transfer or delete projects. Can delete and edit the
+  organization.
+
+The permissions for each user role for Cypress Cloud:
+
+| Permission                                      | Member | Admin | Owner |
+| ----------------------------------------------- | ------ | ----- | ----- |
+| See test results of private projects            | ✅     | ✅    | ✅    |
+| See record keys of projects                     | ✅     | ✅    | ✅    |
+| See billing and usage information               |        | ✅    | ✅    |
+| Edit billing information                        |        | ✅    | ✅    |
+| See users invited to organization               |        | ✅    | ✅    |
+| Resend invitation to invited user               |        | ✅    | ✅    |
+| Invite 'member' to organization                 |        | ✅    | ✅    |
+| Invite 'admin' to organization                  |        | ✅    | ✅    |
+| See user requests to join organization          |        | ✅    | ✅    |
+| Accept user requests to join organization       |        | ✅    | ✅    |
+| Remove 'member' from organization               |        | ✅    | ✅    |
+| Remove 'admin' from organization                |        | ✅    | ✅    |
+| Edit 'member' in organization                   |        | ✅    | ✅    |
+| Edit 'admin' in organization                    |        | ✅    | ✅    |
+| Edit project name                               |        | ✅    | ✅    |
+| Edit project status (private/public)            |        | ✅    | ✅    |
+| Add or delete record keys                       |        | ✅    | ✅    |
+| Set up GitHub Integration                       |        | ✅    | ✅    |
+| Set up Slack Integration                        |        | ✅    | ✅    |
+| Invite 'owner' to organization                  |        |       | ✅    |
+| Edit 'owner' in organization                    |        |       | ✅    |
+| Remove 'owner' from organization                |        |       | ✅    |
+| Add, edit, remove user in personal organization |        |       | ✅    |
+| Edit organization name                          |        |       | ✅    |
+| Delete organization                             |        |       | ✅    |
+| Transfer project to another organization        |        |       | ✅    |
+| Delete project                                  |        |       | ✅    |
+| Set up SSO                                      |        |       | ✅    |
+
+## User requests
+
+Users can "request" access to a given organization. If a developer on your team
+has access to Cypress and your project's source code - they can request to be
+given access to your organization. This means instead of you having to invite
+team members up front, they can request access and you can choose to accept or
+deny them access.
+
+<DocsImage
+  src="/img/cloud/users/request-access-to-organization.png"
+  alt="Request access to project"
+/>
+
+## User updates
+
+To change a user email, an **Owner** or **Admin** can invite the new user/email
+address and delete the previous user/email address.
+
+Update the billing email address via the **Billing & Usage** page within
+[Cypress Cloud](https://on.cypress.io/cloud) or by contacting
+[billing@cypress.io](mailto:billing@cypress.io) directly.

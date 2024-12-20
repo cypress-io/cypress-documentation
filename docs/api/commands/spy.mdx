@@ -11,7 +11,7 @@ assertion. It is not retryable, chainable, or timeout-able.
 :::info
 
 **Note:** `.spy()` assumes you are already familiar with our guide:
-[Stubs, Spies, and Clocks](/guides/guides/stubs-spies-and-clocks)
+[Stubs, Spies, and Clocks](/app/guides/stubs-spies-and-clocks)
 
 :::
 
@@ -40,7 +40,7 @@ The `object` that has the `method` to be wrapped.
 
 The name of the `method` on the `object` to be wrapped.
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
 
 - `cy.spy()` is _synchronous_ and returns a value (the spy) instead of a
   Promise-like chain-able object. It can be aliased.
@@ -78,7 +78,7 @@ const spy = cy.spy(obj, 'foo').log(false)
 
 :::info
 
-[Check out our example recipe testing spying, stubbing and time](/examples/recipes#Stubbing-and-spying)
+[Check out our example recipe testing spying, stubbing and time](/app/references/recipes#Stubbing-and-spying)
 
 :::
 
@@ -134,8 +134,8 @@ is being called by your test and still have the original method action invoked.
 #### Assertion Support
 
 Cypress has also built-in
-[Sinon-Chai](/guides/references/bundled-libraries#Sinon-Chai) support, so any
-[assertions supported by `Sinon-Chai`](/guides/references/assertions#Sinon-Chai)
+[Sinon-Chai](/app/references/bundled-libraries#Sinon-Chai) support, so any
+[assertions supported by `Sinon-Chai`](/app/references/assertions#Sinon-Chai)
 can be used without any configuration.
 
 ## Command Log
@@ -169,15 +169,15 @@ the following:
 
 ## History
 
-| Version                                       | Changes                   |
-| --------------------------------------------- | ------------------------- |
-| [0.20.0](/guides/references/changelog#0-20-0) | Added `.log(bool)` method |
-| [0.18.8](/guides/references/changelog#0-18-8) | `cy.spy()` command added  |
+| Version                                    | Changes                   |
+| ------------------------------------------ | ------------------------- |
+| [0.20.0](/app/references/changelog#0-20-0) | Added `.log(bool)` method |
+| [0.18.8](/app/references/changelog#0-18-8) | `cy.spy()` command added  |
 
 ## See also
 
 - [`.as()`](/api/commands/as)
 - [`cy.clock()`](/api/commands/clock)
-- [Guide: Stubs, Spies and Clocks](/guides/guides/stubs-spies-and-clocks)
-- [Recipe: Stubbing, Spying](/examples/recipes#Stubbing-and-spying)
+- [Guide: Stubs, Spies and Clocks](/app/guides/stubs-spies-and-clocks)
+- [Recipe: Stubbing, Spying](/app/references/recipes#Stubbing-and-spying)
 - [`cy.stub()`](/api/commands/stub)

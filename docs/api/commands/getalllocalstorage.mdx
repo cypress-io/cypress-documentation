@@ -28,11 +28,11 @@ cy.getAllLocalStorage()
 Pass in an options object to change the default behavior of
 `cy.getAllLocalStorage()`.
 
-| Option | Default | Description                                                                              |
-| ------ | ------- | ---------------------------------------------------------------------------------------- |
-| `log`  | `true`  | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
+| Option | Default | Description                                                                         |
+| ------ | ------- | ----------------------------------------------------------------------------------- |
+| `log`  | `true`  | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log) |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
 
 `cy.getAllLocalStorage()` yields an object where the keys are origins and the
 values are key-value pairs of `localStorage` data.
@@ -74,16 +74,16 @@ cy.getAllLocalStorage().then((result) => {
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
+### Requirements [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
 
 - `cy.getAllLocalStorage()` requires being chained off of `cy`.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
+### Assertions [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
 
 - `cy.getAllLocalStorage()` will only run assertions you have chained once, and
-  will not [retry](/guides/core-concepts/retry-ability).
+  will not [retry](/app/core-concepts/retry-ability).
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
+### Timeouts [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
 
 - `cy.getAllLocalStorage()` cannot time out.
 

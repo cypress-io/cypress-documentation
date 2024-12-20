@@ -8,7 +8,7 @@ Clear data in localStorage for current domain and subdomain.
 
 Cypress automatically clears all local storage _before_ each test to prevent
 state from being shared across tests when
-[test isolation](/guides/core-concepts/writing-and-organizing-tests#Test-Isolation)
+[test isolation](/app/core-concepts/writing-and-organizing-tests#Test-Isolation)
 is enabled. You shouldn't need to use this command unless you're using it to
 clear localStorage inside a single test or test isolation is disabled.
 
@@ -42,11 +42,11 @@ Specify key to be cleared in localStorage.
 Pass in an options object to change the default behavior of
 `cy.clearLocalStorage()`.
 
-| Option | Default | Description                                                                              |
-| ------ | ------- | ---------------------------------------------------------------------------------------- |
-| `log`  | `true`  | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
+| Option | Default | Description                                                                         |
+| ------ | ------- | ----------------------------------------------------------------------------------- |
+| `log`  | `true`  | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log) |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
 
 - `cy.clearLocalStorage()` yields the localStorage for the current domain.
 
@@ -76,16 +76,16 @@ cy.clearLocalStorage(/app-/)
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
+### Requirements [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
 
 - `cy.clearLocalStorage()` requires being chained off of `cy`.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
+### Assertions [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
 
 - `cy.clearLocalStorage()` will only run assertions you have chained once, and
-  will not [retry](/guides/core-concepts/retry-ability).
+  will not [retry](/app/core-concepts/retry-ability).
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
+### Timeouts [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
 
 - `cy.clearLocalStorage()` cannot time out.
 

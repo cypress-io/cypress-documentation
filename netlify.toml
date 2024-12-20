@@ -7,19 +7,19 @@
 
 [[redirects]]
   from = "/guides"
-  to = "/guides/overview/why-cypress/"
+  to = "/app/get-started/why-cypress"
   status = 301
   force = true
 
 [[redirects]]
   from = "/api/"
-  to = "/api/table-of-contents/"
+  to = "/api/table-of-contents"
   status = 301
   force = true
 
 [[redirects]]
   from = "/api/api/table-of-contents"
-  to = "/api/table-of-contents/"
+  to = "/api/table-of-contents"
   status = 301
   force = true
 
@@ -31,181 +31,181 @@
 
 [[redirects]]
   from = "/plugins/directory"
-  to = "/plugins"
+  to = "/app/plugins/plugins-list"
   status = 301
   force = true
 
 [[redirects]]
   from = "/examples"
-  to = "/examples/recipes/"
+  to = "/app/references/recipes"
   status = 301
   force = true
 
 [[redirects]]
   from = "/examples/examples"
-  to = "/examples/recipes/"
+  to = "/app/references/recipes"
   status = 301
   force = true
 
 [[redirects]]
-  from = "/examples/examples/recipes"
-  to = "/examples/recipes/"
+  from = "/examples/app/references/recipes"
+  to = "/app/references/recipes"
   status = 301
   force = true
 
 [[redirects]]
-  from = "/examples/examples/docker"
-  to = "/examples/docker"
+  from = "/examples/app/continuous-integration/docker"
+  to = "/app/continuous-integration/overview"
   status = 301
   force = true
 
 [[redirects]]
   from = "/faq"
-  to = "/faq/questions/using-cypress-faq/"
+  to = "/app/faq"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/overview/choosing-testing-type"
-  to = "/guides/core-concepts/testing-types/"
+  to = "/app/core-concepts/testing-types"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/dashboard/dashboard-introduction"
-  to = "/guides/dashboard/introduction/"
+  to = "/cloud/get-started/introduction"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/component-testing"
-  to = "/guides/component-testing/overview"
+  to = "/app/component-testing/get-started"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/component-testing/introduction"
-  to = "/guides/component-testing/overview"
+  to = "/app/component-testing/get-started"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/component-testing/writing-your-first-component-test"
-  to = "/guides/component-testing/overview"
+  to = "/app/component-testing/get-started"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/component-testing/framework-configuration"
-  to = "/guides/component-testing/component-framework-configuration/"
+  to = "/app/component-testing/component-framework-configuration"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/core-concepts/test-runner"
-  to = "/guides/core-concepts/cypress-app"
+  to = "/app/core-concepts/open-mode"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/core-concepts/cypress-studio"
-  to = "/guides/references/cypress-studio"
+  to = "/app/guides/cypress-studio"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/getting-started/writing-your-first-test"
-  to = "/guides/end-to-end-testing/writing-your-first-end-to-end-test"
+  to = "/app/end-to-end-testing/writing-your-first-end-to-end-test"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/getting-started/testing-your-app"
-  to = "/guides/end-to-end-testing/testing-your-app"
+  to = "/app/end-to-end-testing/writing-your-first-end-to-end-test"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/getting-started/component-testing"
-  to = "/guides/component-testing/overview"
+  to = "/app/component-testing/get-started"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/testing-strategies/auth0-authentication"
-  to = "/guides/end-to-end-testing/auth0-authentication"
+  to = "/app/guides/authentication-testing/auth0-authentication"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/testing-strategies/amazon-cognito-authentication"
-  to = "/guides/end-to-end-testing/amazon-cognito-authentication"
+  to = "/app/guides/authentication-testing/amazon-cognito-authentication"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/testing-strategies/okta-authentication"
-  to = "/guides/end-to-end-testing/okta-authentication"
+  to = "/app/guides/authentication-testing/okta-authentication"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/testing-strategies/google-authentication"
-  to = "/guides/end-to-end-testing/google-authentication"
+  to = "/app/guides/authentication-testing/google-authentication"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/testing-strategies/working-with-graphql"
-  to = "/guides/end-to-end-testing/working-with-graphql"
+  to = "/app/guides/network-requests"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/migrating-to-cypress/protractor"
-  to = "/guides/end-to-end-testing/protractor-to-cypress"
+  to = "/app/guides/migration/protractor-to-cypress"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/migrating-to-cypress/selenium"
-  to = "/guides/end-to-end-testing/selenium-to-cypress"
+  to = "/app/guides/migration/selenium-to-cypress"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/references/bundled-tools"
-  to = "/guides/references/bundled-libraries"
+  to = "/app/references/bundled-libraries"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/references/bundled-tools.html"
-  to = "/guides/references/bundled-libraries"
+  to = "/app/references/bundled-libraries"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/component-testing/quickstart-react"
-  to = "/guides/component-testing/react/quickstart"
+  to = "/app/component-testing/react/overview"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/component-testing/mounting-react"
-  to = "/guides/component-testing/react/quickstart"
+  to = "/app/component-testing/react/overview"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/component-testing/testing-react"
-  to = "/guides/component-testing/react/quickstart"
+  to = "/app/component-testing/react/overview"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/component-testing/events-react"
-  to = "/guides/component-testing/react/quickstart"
+  to = "/app/component-testing/react/overview"
   status = 301
   force = true
 
@@ -217,67 +217,67 @@
 
 [[redirects]]
   from = "/guides/component-testing/quickstart-angular"
-  to = "/guides/component-testing/angular/quickstart"
+  to = "/app/component-testing/angular/overview"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/component-testing/mounting-angular"
-  to = "/guides/component-testing/angular/quickstart"
+  to = "/app/component-testing/angular/overview"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/component-testing/testing-angular"
-  to = "/guides/component-testing/angular/quickstart"
+  to = "/app/component-testing/angular/overview"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/component-testing/events-angular"
-  to = "/guides/component-testing/angular/quickstart"
+  to = "/app/component-testing/angular/overview"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/component-testing/custom-mount-angular"
-  to = "/guides/component-testing/angular/examples"
+  to = "/app/component-testing/angular/examples"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/component-testing/slots-angular"
-  to = "/guides/component-testing/angular/overview"
+  to = "/app/component-testing/angular/overview"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/component-testing/quickstart-vue"
-  to = "/guides/component-testing/vue/quickstart"
+  to = "/app/component-testing/vue/overview"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/component-testing/mounting-vue"
-  to = "/guides/component-testing/vue/quickstart"
+  to = "/app/component-testing/vue/overview"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/component-testing/testing-vue"
-  to = "/guides/component-testing/vue/quickstart"
+  to = "/app/component-testing/vue/overview"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/component-testing/events-vue"
-  to = "/guides/component-testing/vue/quickstart"
+  to = "/app/component-testing/vue/overview"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/component-testing/custom-mount-vue"
-  to = "/guides/component-testing/vue/examples"
+  to = "/app/component-testing/vue/examples"
   status = 301
   force = true
 
@@ -289,91 +289,91 @@
 
 [[redirects]]
   from = "/guides/component-testing/quickstart-svelte"
-  to = "/guides/component-testing/svelte/quickstart"
+  to = "/app/component-testing/svelte/overview"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/component-testing/mounting-svelte"
-  to = "/guides/component-testing/svelte/quickstart"
+  to = "/app/component-testing/svelte/overview"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/component-testing/testing-svelte"
-  to = "/guides/component-testing/svelte/quickstart"
+  to = "/app/component-testing/svelte/overview"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/component-testing/events-svelte"
-  to = "/guides/component-testing/svelte/quickstart"
+  to = "/app/component-testing/svelte/overview"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/component-testing/custom-mount-svelte"
-  to = "/guides/component-testing/svelte/examples"
+  to = "/app/component-testing/svelte/examples"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/component-testing/component-test-troubleshooting"
-  to = "/guides/component-testing/faq"
+  to = "/app/faq"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/dashboard/analytics"
-  to = "/guides/cloud/analytics/overview"
+  to = "/cloud/features/analytics/overview"
   status = 301
   force = true
 
  [[redirects]]
-  from = "/guides/cloud/analytics"
-  to = "/guides/cloud/analytics/overview"
+  from = "/guides/cloud/features/analytics"
+  to = "/cloud/features/analytics/overview"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/dashboard/flaky-test-management"
-  to = "/guides/cloud/flaky-test-management"
+  to = "/cloud/features/flaky-test-management"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/dashboard/flaky-test-management"
-  to = "/guides/cloud/flaky-test-management"
+  to = "/cloud/features/flaky-test-management"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/dashboard/introduction"
-  to = "/guides/cloud/introduction"
+  to = "/cloud/get-started/introduction"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/dashboard/github-integration"
-  to = "/guides/cloud/integrations/github"
+  to = "/cloud/integrations/source-control/github"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/cloud/github-integration"
-  to = "/guides/cloud/integrations/github"
+  to = "/cloud/integrations/source-control/github"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/dashboard/gitlab-integration"
-  to = "/guides/cloud/integrations/gitlab"
+  to = "/cloud/integrations/source-control/gitlab"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/cloud/gitlab-integration"
-  to = "/guides/cloud/integrations/gitlab"
+  to = "/cloud/integrations/source-control/gitlab"
   status = 301
   force = true
 
@@ -403,49 +403,55 @@
 
 [[redirects]]
   from = "/guides/dashboard/bitbucket-integration"
-  to = "/guides/cloud/integrations/bitbucket"
+  to = "/cloud/integrations/source-control/bitbucket"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/cloud/bitbucket-integration"
-  to = "/guides/cloud/integrations/bitbucket"
+  to = "/cloud/integrations/source-control/bitbucket"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/dashboard/organizations"
-  to = "/guides/cloud/organizations"
+  to = "/cloud/account-management/organizations"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/dashboard/projects"
-  to = "/guides/cloud/projects"
+  to = "/cloud/account-management/projects"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/dashboard/runs"
-  to = "/guides/cloud/runs"
+  to = "/cloud/features/recorded-runs"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/dashboard/smart-orchestration"
-  to = "/guides/cloud/smart-orchestration"
+  to = "/cloud/features/smart-orchestration/overview"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/smart-orchestration"
+  to = "/cloud/features/smart-orchestration/overview"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/dashboard/users"
-  to = "/guides/cloud/users"
+  to = "/cloud/account-management/users"
   status = 301
   force = true
 
 [[redirects]]
   from = "/faq/questions/dashboard-faq"
-  to = "/faq/questions/cloud-faq"
+  to = "/cloud/faq"
   status = 301
   force = true
 
@@ -453,37 +459,37 @@
 
 [[redirects]]
   from = "/guides/cloud/projects"
-  to = "/guides/cloud/account-management/projects"
+  to = "/cloud/account-management/projects"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/cloud/organizations"
-  to = "/guides/cloud/account-management/organizations"
+  to = "/cloud/account-management/organizations"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/cloud/users"
-  to = "/guides/cloud/account-management/users"
+  to = "/cloud/account-management/users"
   status = 301
   force = true
 
 [[redirects]]
-  from = "/guides/cloud/smart-orchestration"
-  to = "/guides/cloud/smart-orchestration/overview"
+  from = "/guides/cloud/features/smart-orchestration"
+  to = "/cloud/features/smart-orchestration/overview"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/guides/parallelization"
-  to = "/guides/cloud/smart-orchestration/parallelization"
+  to = "/cloud/features/smart-orchestration/parallelization"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/cloud/runs"
-  to = "/guides/cloud/recorded-runs"
+  to = "/cloud/features/recorded-runs"
   status = 301
   force = true
 
@@ -495,25 +501,25 @@
 
 [[redirects]]
   from = "/guides/cloud/integrations/gitlab"
-  to = "/guides/cloud/integrations/source-control/gitlab"
+  to = "/cloud/integrations/source-control/gitlab"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/cloud/integrations/bitbucket"
-  to = "/guides/cloud/integrations/source-control/bitbucket"
+  to = "/cloud/integrations/source-control/bitbucket"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/cloud/debugging/test-replay"
-  to = "/guides/cloud/test-replay"
+  to = "/cloud/features/test-replay"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/cloud/debugging/recorded-runs"
-  to = "/guides/cloud/recorded-runs"
+  to = "/cloud/features/recorded-runs"
   status = 301
   force = true
 
@@ -555,7 +561,7 @@
 
 [[redirects]]
   from = "/api/cypress-api/guides/component-testing/introduction"
-  to = "/guides/component-testing/overview"
+  to = "/app/component-testing/get-started"
   status = 301
   force = true
 
@@ -567,163 +573,145 @@
 
 [[redirects]]
   from = "/api/utilities/moment"
-  to = "/guides/overview/why-cypress"
+  to = "/cloud/get-started/introduction"
   status = 301
   force = true
 
 [[redirects]]
   from = "/coverage"
-  to = "/guides/tooling/code-coverage"
+  to = "/app/tooling/code-coverage"
   status = 301
   force = true
 
 [[redirects]]
   from = "/dashboard-service"
-  to = "/guides/cloud/introduction"
+  to = "/cloud/get-started/introduction"
   status = 301
   force = true
 
 [[redirects]]
   from = "/dashboard/overview/runs-dashboard"
-  to = "/guides/cloud/recorded-runs"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/docs/all-example-apps"
-  to = "/examples/applications"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/examples/examples/applications"
-  to = "/examples/applications"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/examples/examples/tutorials"
-  to = "/examples/tutorials"
+  to = "/cloud/features/recorded-runs"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/component-testing/angular/quickstart"
-  to = "/guides/component-testing/angular/overview"
+  to = "/app/component-testing/angular/overview"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/component-testing/react/quickstart"
-  to = "/guides/component-testing/react/overview"
+  to = "/app/component-testing/react/overview"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/component-testing/svelte/quickstart"
-  to = "/guides/component-testing/svelte/overview"
+  to = "/app/component-testing/svelte/overview"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/component-testing/vue/quickstart"
-  to = "/guides/component-testing/vue/overview"
+  to = "/app/component-testing/vue/overview"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/core-concepts/dashboard-service"
-  to = "/guides/cloud/introduction"
+  to = "/cloud/get-started/introduction"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/core-concepts/launching-browsers"
-  to = "/guides/guides/launching-browsers"
+  to = "/app/references/launching-browsers"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/getting-started"
-  to = "/guides/getting-started/installing-cypress"
+  to = "/app/get-started/why-cypress"
   status = 301
   force = true
 
 [[redirects]]
-  from = "/getting-started/installing-cypress.md"
-  to = "/guides/getting-started/installing-cypress"
+  from = "/getting-started/install-cypress.md"
+  to = "/app/get-started/install-cypress"
   status = 301
   force = true
 
 [[redirects]]
   from = "/getting-started/why-cypress"
-  to = "guides/overview/why-cypress"
+  to = "/app/get-started/why-cypress"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/guides/continuous-integration"
-  to = "/guides/continuous-integration/introduction"
+  to = "/app/continuous-integration/overview"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/guides/plugins-guide"
-  to = "/api/plugins/writing-a-plugin"
+  to = "/api/node-events/overview"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/guides/reporters"
-  to = "/guides/tooling/reporters"
+  to = "/app/tooling/reporters"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/installing-and-running"
-  to = "/guides/getting-started/installing-cypress"
+  to = "/app/get-started/install-cypress"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/references/known-issues"
-  to = "/guides/references/trade-offs"
+  to = "/app/get-started/why-cypress"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/tooling/intelligent-code-completion"
-  to = "/guides/tooling/IDE-integration"
+  to = "/app/tooling/IDE-integration"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/web-security"
-  to = "/guides/guides/web-security"
+  to = "/app/guides/cross-origin-testing"
   status = 301
   force = true
 
 [[redirects]]
   from = "/intelligent-code-completion"
-  to = "/guides/tooling/IDE-integration"
+  to = "/app/tooling/IDE-integration"
   status = 301
   force = true
 
 [[redirects]]
   from = "/ja"
-  to = "/guides/overview/why-cypress"
+  to = "/app/get-started/why-cypress"
   status = 301
   force = true
 
 [[redirects]]
   from = "/test-runner"
-  to = "/guides/core-concepts/cypress-app"
+  to = "/guides/core-concepts/open-mode"
   status = 301
   force = true
 
 [[redirects]]
   from = "/why-cypress"
-  to = "/guides/overview/why-cypress"
+  to = "/app/get-started/why-cypress"
   status = 301
   force = true
 
@@ -740,26 +728,26 @@
   force = true
 
 [[redirects]]
-  from = "/zh-cn/guides/getting-started/installing-cypress"
-  to = "/guides/getting-started/installing-cypress"
+  from = "/zh-cn/guides/getting-started/install-cypress"
+  to = "/app/get-started/install-cypress"
   status = 301
   force = true
 
 [[redirects]]
-  from = "/zh-cn/guides/guides/command-line"
-  to = "/guides/guides/command-line"
+  from = "/zh-cn/guides/references/command-line"
+  to = "/app/references/command-line"
   status = 301
   force = true
 
 [[redirects]]
   from = "/zh-cn/guides/guides/module-api"
-  to = "/guides/guides/module-api"
+  to = "/app/references/module-api"
   status = 301
   force = true
 
 [[redirects]]
   from = "/zh-cn/guides/overview/why-cypress"
-  to = "/guides/overview/why-cypress"
+  to = "/app/get-started/why-cypress"
   status = 301
   force = true
 
@@ -771,7 +759,385 @@
 
 [[redirects]]
   from = "/zh-cn/guides/references/configuration"
-  to = "/guides/references/configuration"
+  to = "/app/references/configuration"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/references/legacy-configuration"
+  to = "/app/references/configuration"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/overview/why-cypress"
+  to = "/app/get-started/why-cypress"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/overview/key-differences"
+  to = "/app/get-started/why-cypress"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/getting-started/installing-cypress"
+  to = "/app/get-started/install-cypress"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/getting-started/opening-the-app"
+  to = "/app/get-started/open-the-app"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/end-to-end-testing/working-with-graphql"
+  to = "/app/guides/network-requests"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/end-to-end-testing/writing-your-first-end-to-end-test"
+  to = "/app/end-to-end-testing/writing-your-first-end-to-end-test"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/end-to-end-testing/testing-your-app"
+  to = "/app/end-to-end-testing/testing-your-app"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/end-to-end-testing/amazon-cognito-authentication"
+  to = "/app/guides/authentication-testing/amazon-cognito-authentication"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/end-to-end-testing/auth0-authentication"
+  to = "/app/guides/authentication-testing/auth0-authentication"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/end-to-end-testing/azure-active-directory-authentication"
+  to = "/app/guides/authentication-testing/azure-active-directory-authentication"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/end-to-end-testing/google-authentication"
+  to = "/app/guides/authentication-testing/google-authentication"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/end-to-end-testing/okta-authentication"
+  to = "/app/guides/authentication-testing/okta-authentication"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/end-to-end-testing/social-authentication"
+  to = "/app/guides/authentication-testing/social-authentication"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/end-to-end-testing/protractor-to-cypress"
+  to = "/app/guides/migration/protractor-to-cypress"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/end-to-end-testing/selenium-to-cypress"
+  to = "/app/guides/migration/selenium-to-cypress"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/component-testing/overview"
+  to = "/app/component-testing/get-started"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/component-testing/getting-started"
+  to = "/app/component-testing/get-started"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/component-testing/faq"
+  to = "/app/faq"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/component-testing/third-party-definitions"
+  to = "/app/component-testing/custom-frameworks"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/core-concepts/conditional-testing"
+  to = "/app/guides/conditional-testing"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/core-concepts/cypress-app"
+  to = "/app/core-concepts/open-mode"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/core-concepts/cypress-app"
+  to = "/app/core-concepts/open-mode"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/introduction"
+  to = "/cloud/get-started/introduction"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/free-trial"
+  to = "/cloud/get-started/free-trial"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/getting-started"
+  to = "/cloud/get-started/setup"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/recorded-runs"
+  to = "/cloud/features/recorded-runs"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/test-replay"
+  to = "/cloud/features/test-replay"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/branch-review"
+  to = "/cloud/features/branch-review"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/flaky-test-management"
+  to = "/cloud/features/flaky-test-management"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/smart-orchestration/overview"
+  to = "/cloud/features/smart-orchestration/overview"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/smart-orchestration/parallelization"
+  to = "/cloud/features/smart-orchestration/parallelization"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/smart-orchestration/load-balancing"
+  to = "/cloud/features/smart-orchestration/load-balancing"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/smart-orchestration/spec-prioritization"
+  to = "/cloud/features/smart-orchestration/spec-prioritization"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/smart-orchestration/run-cancellation"
+  to = "/cloud/features/smart-orchestration/run-cancellation"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/guides/command-line"
+  to = "/app/references/command-line"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/guides/content-security-policy"
+  to = "/app/references/content-security-policy"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/guides/environment-variables"
+  to = "/app/references/environment-variables"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/guides/launching-browsers"
+  to = "/app/references/launching-browsers"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/guides/module-api"
+  to = "/app/references/module-api"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/guides/module-api"
+  to = "/app/references/module-api"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/guides/web-security"
+  to = "/app/guides/cross-origin-testing"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/continuous-integration/introduction"
+  to = "/app/continuous-integration/overview"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/continuous-integration/introduction"
+  to = "/app/continuous-integration/overview"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/continuous-integration/ci-provider-examples"
+  to = "/app/continuous-integration/overview"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/tooling/plugins-guide"
+  to = "/api/node-events/overview"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/tooling/plugins-guide"
+  to = "/api/node-events/overview"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/references/best-practices"
+  to = "/app/core-concepts/best-practices"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/references/cypress-studio"
+  to = "/app/guides/cypress-studio"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/references/release-stages"
+  to = "/app/references/roadmap"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/faq/questions/cloud-faq"
+  to = "/cloud/faq"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/plugins"
+  to = "/app/plugins/plugins-list"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/examples/recipes"
+  to = "/app/references/recipes"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/api/plugins/writing-a-plugin"
+  to = "/api/node-events/overview"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/faq"
+  to = "/app/faq"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/installing-cypress"
+  to = "/app/get-started/install-cypress"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/ui-coverage"
+  to = "/ui-coverage/get-started/introduction"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/accessibility"
+  to = "/accessibility/get-started/introduction"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/api/plugins/*"
+  to = "/api/node-events/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/examples/*"
+  to = "/app/get-started/why-cypress"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/faq/*"
+  to = "/app/faq"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/*"
+  to = "/cloud/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/*"
+  to = "/app/:splat"
   status = 301
   force = true
 

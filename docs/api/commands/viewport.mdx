@@ -8,7 +8,7 @@ Control the size and orientation of the screen for your application.
 
 You can set the viewport's width and height globally by defining `viewportWidth`
 and `viewportHeight` in the
-[Cypress configuration](/guides/references/configuration).
+[Cypress configuration](/app/references/configuration).
 
 :::
 
@@ -74,11 +74,11 @@ The orientation of the screen. The _default orientation_ is `portrait`. Pass
 
 Pass in an options object to change the default behavior of `cy.viewport()`.
 
-| Option | Default | Description                                                                              |
-| ------ | ------- | ---------------------------------------------------------------------------------------- |
-| `log`  | `true`  | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
+| Option | Default | Description                                                                         |
+| ------ | ------- | ----------------------------------------------------------------------------------- |
+| `log`  | `true`  | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log) |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
 
 - `cy.viewport()` yields `null`.
 
@@ -203,7 +203,7 @@ By default, until you issue a `cy.viewport()` command, Cypress sets the width to
 `1000px` and the height to `660px` by default.
 
 You can
-[change these default dimensions](/guides/references/configuration#Viewport) by
+[change these default dimensions](/app/references/configuration#Viewport) by
 adding the following to your Cypress configuration:
 
 :::cypress-config-example
@@ -250,7 +250,7 @@ Cypress.config('viewportWidth') // => 800
 
 You can configure the size of the viewport height and width within a suite or
 test by passing the new configuration value within the
-[test configuration](/guides/references/configuration#Test-Configuration).
+[test configuration](/app/references/configuration#Test-Configuration).
 
 This will set the height and width throughout the duration of the tests, then
 return it to the default `viewportHeight` and `viewportWidth` when complete.
@@ -276,15 +276,15 @@ describe(
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
+### Requirements [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
 
 - `cy.viewport()` requires being chained off of `cy`.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
+### Assertions [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
 
 - `cy.viewport()` cannot have any assertions chained.
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
+### Timeouts [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
 
 - `cy.viewport()` cannot time out.
 
@@ -320,14 +320,14 @@ following:
 
 ## History
 
-| Version                                     | Changes                                                                               |
-| ------------------------------------------- | ------------------------------------------------------------------------------------- |
-| [5.5.0](/guides/references/changelog#5-5-0) | Added support for `macbook-16` preset.                                                |
-| [5.4.0](/guides/references/changelog#5-4-0) | Added support for presets `iphone-7`, `iphone-8`, and `iphone-se2`.                   |
-| [3.8.0](/guides/references/changelog#3-8-0) | Removed max viewport size and lowered min viewport size to `0`.                       |
-| [3.5.0](/guides/references/changelog#3-5-0) | Added support for presets `iphone-xr`, `iphone-x`, `samsung-s10`, and `samsung-note9` |
-| [3.5.0](/guides/references/changelog#3-5-0) | Increased max viewport size to `4000`                                                 |
-| [0.9.0](/guides/references/changelog#0-9-0) | `cy.viewport()` command added                                                         |
+| Version                                  | Changes                                                                               |
+| ---------------------------------------- | ------------------------------------------------------------------------------------- |
+| [5.5.0](/app/references/changelog#5-5-0) | Added support for `macbook-16` preset.                                                |
+| [5.4.0](/app/references/changelog#5-4-0) | Added support for presets `iphone-7`, `iphone-8`, and `iphone-se2`.                   |
+| [3.8.0](/app/references/changelog#3-8-0) | Removed max viewport size and lowered min viewport size to `0`.                       |
+| [3.5.0](/app/references/changelog#3-5-0) | Added support for presets `iphone-xr`, `iphone-x`, `samsung-s10`, and `samsung-note9` |
+| [3.5.0](/app/references/changelog#3-5-0) | Increased max viewport size to `4000`                                                 |
+| [0.9.0](/app/references/changelog#0-9-0) | `cy.viewport()` command added                                                         |
 
 ## See also
 
@@ -338,5 +338,5 @@ following:
   [Generate High-Resolution Videos and Screenshots](https://www.cypress.io/blog/2021/03/01/generate-high-resolution-videos-and-screenshots/)
   to learn how to change the browser's window size to capture screenshots and
   videos with more detail
-- [Configuration](/guides/references/configuration)
+- [Configuration](/app/references/configuration)
 - [Cypress.config()](/api/cypress-api/config)

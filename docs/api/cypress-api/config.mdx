@@ -8,7 +8,7 @@ title: Cypress.config
 
 <strong>New to Cypress?</strong>
 
-[Read about configuration first.](/guides/references/configuration)
+[Read about configuration first.](/app/references/configuration)
 
 :::
 
@@ -60,7 +60,7 @@ Set multiple configuration options with an object literal.
 
 ### No Arguments
 
-#### Get all configuration options from the [Cypress configuration](/guides/references/configuration)
+#### Get all configuration options from the [Cypress configuration](/app/references/configuration)
 
 :::cypress-config-example
 
@@ -82,7 +82,7 @@ Cypress.config() // => {defaultCommandTimeout: 10000, pageLoadTimeout: 30000, ..
 
 ### Name
 
-#### Return a single configuration option from the [Cypress configuration](/guides/references/configuration)
+#### Return a single configuration option from the [Cypress configuration](/app/references/configuration)
 
 :::cypress-config-example
 
@@ -100,7 +100,7 @@ Cypress.config('pageLoadTimeout') // => 60000
 
 ### Name and Value
 
-#### Change the values of configuration options from the [Cypress configuration](/guides/references/configuration) from within your tests
+#### Change the values of configuration options from the [Cypress configuration](/app/references/configuration) from within your tests
 
 :::caution
 
@@ -130,7 +130,7 @@ Cypress.config('viewportWidth') // => 800
 
 ### Object
 
-#### Override multiple options from the [Cypress configuration](/guides/references/configuration) by passing an object
+#### Override multiple options from the [Cypress configuration](/app/references/configuration) by passing an object
 
 :::cypress-config-example
 
@@ -160,12 +160,12 @@ Some configuration values are readonly and cannot be changed while running a
 test. Anything that's not directly under Cypress's control - like timeouts or
 environment variables - will be ignored at run-time. Be sure to review the list
 of
-[test configuration options](/guides/references/configuration#Test-Configuration).
+[test configuration options](/app/references/configuration#Test-Configuration).
 
 ### Test Configuration vs `Cypress.config()`
 
 To apply specific Cypress configuration values to a suite or test, you can pass
-a [test configuration](/guides/references/configuration#Test-Configuration)
+a [test configuration](/app/references/configuration#Test-Configuration)
 object to the test or suite function.
 
 While `Cypress.config()` changes configuration values through the entire spec
@@ -174,14 +174,14 @@ suite or test where they are set. The values will then reset to the previous
 default values after the suite or test is complete.
 
 See the full guide on
-[test configuration](/guides/references/configuration#Test-Configuration).
+[test configuration](/app/references/configuration#Test-Configuration).
 
 ### `Cypress.config()` executes Synchronously
 
 It's important to note that `Cypress.config()` executes synchronously and will
 not wait for the Cypress commands above it to execute. If you need to update
 your configuration mid-test, be sure to chain the
-[asynchronously Cypress command](/guides/core-concepts/introduction-to-cypress#Commands-Are-Asynchronous).
+[asynchronously Cypress command](/app/core-concepts/introduction-to-cypress#Commands-Are-Asynchronous).
 
 ```javascript
 it('using cy.then', () => {
@@ -204,7 +204,7 @@ for the current spec file, you'd think that it should be `cy.config` and not
 affects local state is an artifact of the API evolving over time:
 `Cypress.config` used to affect global state&mdash;configuration added in one
 test spec file was available in other specs&mdash;but the Cypress team wisely
-made each spec run in isolation in [`3.0.0`](/guides/references/changelog#3-0-0)
+made each spec run in isolation in [`3.0.0`](/app/references/changelog#3-0-0)
 and by that time `Cypress.config` was public API.
 
 ## History
@@ -215,6 +215,6 @@ and by that time `Cypress.config` was public API.
 
 ## See also
 
-- [Cypress configuration](/guides/references/configuration)
-- The [Environment Variable](/guides/guides/environment-variables) guide
-- [Test Configuration](/guides/references/configuration#Test-Configuration)
+- [Cypress configuration](/app/references/configuration)
+- The [Environment Variable](/app/references/environment-variables) guide
+- [Test Configuration](/app/references/configuration#Test-Configuration)
