@@ -248,9 +248,29 @@ the encoding in order to read the file as a
 
 ### `this` context
 
-If you store and access the fixture data using `this` test context object, make
-sure to use `function () { ... }` callbacks. Otherwise the test engine will NOT
-have `this` pointing at the test context.
+To store and access the fixture data, prefer to use the global `globalThis`
+property over directly the `this` keyword.
+
+```javascript
+describe('User page', () => {
+  beforeEach(() => {
+    cy.fixture('user').then((user) => {
+      // "globalThis" points at global this value
+      globalThis.user = user
+    })
+  })
+
+  // the test callback is in "() => { ... }" form
+  it('has user', () => {
+    // globalThis.user exists
+    expect(globalThis.user.firstName).to.equal('Jane')
+  })
+})
+```
+
+If you store and access the fixture data using directly `this` keyword in test
+context object, make sure to use `function () { ... }` callbacks. Otherwise
+the test engine will NOT have `this` pointing at the test context.
 
 ```javascript
 describe('User page', () => {
