@@ -18,35 +18,13 @@ title: Bitbucket Pipelines
 Detailed documentation is available in the
 [Bitbucket Pipelines Documentation](https://support.atlassian.com/bitbucket-cloud/docs/get-started-with-bitbucket-pipelines/).
 
-The example below shows a basic setup and job to use
-[Bitbucket Pipelines](https://bitbucket.org/product/features/pipelines) to run
-end-to-end tests with Cypress and Electron.
+Bitbucket runs most builds in Docker containers as described in [Docker image options](https://support.atlassian.com/bitbucket-cloud/docs/docker-image-options/).
 
-```yaml title="bitbucket-pipelines.yml"
-image: node:latest
+If you use the currently available default Bitbucket / Atlassian Linux images listed in the
+"Default build environment" of the Bitbucket Cloud documentation
+[Use Docker images as build environments](https://support.atlassian.com/bitbucket-cloud/docs/use-docker-images-as-build-environments/) you must additionally install [Cypress Linux prerequisites](/app/get-started/install-cypress#Linux-Prerequisites).
 
-pipelines:
-  default:
-    - step:
-        script:
-          # install dependencies
-          - npm ci
-          # start the server in the background
-          - npm run start &
-          # run Cypress tests
-          - npm run e2e
-```
-
-**How this `bitbucket-pipelines.yml` works:**
-
-- On _push_ to this repository, this job will provision and start Bitbucket
-  Pipelines-hosted Linux instance for running the pipelines defined in the
-  `pipelines` section of the configuration.
-- The code is checked out from our GitHub/Bitbucket repository.
-- Finally, our scripts will:
-  - Install npm dependencies
-  - Start the project web server (`npm start`)
-  - Run the Cypress tests within our GitHub/Bitbucket repository within Electron
+For a simpler setup, use a Cypress Docker image, as described in the following section.
 
 ## Testing with Cypress Docker Images
 
@@ -56,10 +34,10 @@ Cypress locally and in CI, with some images including Chrome, Firefox and Edge. 
 example, this allows us to run the tests in Firefox by passing the
 `--browser firefox` attribute to `cypress run`.
 
-Read about [Cypress docker variants](/app/continuous-integration/overview#Cypress-Docker-variants) to decide which image is best for your project.
+Read about [Cypress Docker variants](/app/continuous-integration/overview#Cypress-Docker-variants) to decide which image is best for your project.
 
 ```yaml title="bitbucket-pipelines.yml"
-image: cypress/browsers:node-22.11.0-chrome-130.0.6723.69-1-ff-132.0-edge-130.0.2849.56-1
+image: cypress/browsers:22.12.0
 
 pipelines:
   default:
@@ -72,6 +50,17 @@ pipelines:
           # run Cypress tests in Firefox
           - npx cypress run --browser firefox
 ```
+
+**How this `bitbucket-pipelines.yml` works:**
+
+- On _push_ to this repository, this job will provision and start Bitbucket
+  Pipelines using the Cypress Docker image. It will run the pipelines defined in the
+  `pipelines` section of the configuration.
+- The code is checked out from the Bitbucket repository.
+- Finally, our scripts will:
+  - Install npm dependencies
+  - Start the project web server (`npm start`)
+  - Run the Cypress tests within the Bitbucket repository using Firefox
 
 ## Caching Dependencies and Build Artifacts
 
@@ -87,7 +76,7 @@ Artifacts from a job can be defined by providing paths to the `artifacts`
 attribute.
 
 ```yaml title="bitbucket-pipelines.yml"
-image: cypress/browsers:node-22.11.0-chrome-130.0.6723.69-1-ff-132.0-edge-130.0.2849.56-1
+image: cypress/browsers:22.12.0
 
 pipelines:
   default:
@@ -151,7 +140,7 @@ recording test results to [Cypress Cloud](/cloud/get-started/introduction).
 :::
 
 ```yaml title="bitbucket-pipelines.yml"
-image: cypress/base:22.11.0
+image: cypress/base:22.12.0
 
 ## job definition for running E2E tests in parallel
 e2e: &e2e
@@ -210,7 +199,7 @@ definitions:
 The complete `bitbucket-pipelines.yml` is below:
 
 ```yaml title="bitbucket-pipelines.yml"
-image: cypress/base:22.11.0
+image: cypress/base:22.12.0
 
 ## job definition for running E2E tests in parallel
 e2e: &e2e

@@ -25,7 +25,7 @@ title: Advanced Installation
 | `CYPRESS_CACHE_FOLDER`            | [Changes the Cypress binary cache location](#Binary-cache)                                     |
 | `CYPRESS_RUN_BINARY`              | [Location of Cypress binary at run-time](#Run-binary)                                          |
 | `CYPRESS_VERIFY_TIMEOUT`          | Overrides the timeout duration for the `verify` command. The default value is 30000.           |
-| `CYPRESS_SKIP_VERIFY`             | Skips the `verify` command (for stable CI environments)                                        |
+| `CYPRESS_SKIP_VERIFY`             | Skips the [`verify` command](command-line#cypress-verify) when `true`                          |
 | ~~CYPRESS_SKIP_BINARY_INSTALL~~   | <Badge type="danger">removed</Badge> use `CYPRESS_INSTALL_BINARY=0` instead                    |
 | ~~CYPRESS_BINARY_VERSION~~        | <Badge type="danger">removed</Badge> use `CYPRESS_INSTALL_BINARY` instead                      |
 
@@ -186,32 +186,56 @@ ensure this, consider exporting this environment variable. For example, in a
 Setting the environment variable `CYPRESS_RUN_BINARY` overrides where the npm
 module finds the Cypress binary.
 
-`CYPRESS_RUN_BINARY` should be a path to an already unzipped binary executable.
-The Cypress commands `open`, `run`, and `verify` will then launch the provided
-binary.
+`CYPRESS_RUN_BINARY` should be a path to an already unzipped Cypress binary executable.
+The Cypress commands [open](./command-line#cypress-open), [run](./command-line#cypress-run) and [verify](command-line#cypress-verify)
+will then launch the provided binary.
+
+The following example [cypress run](./command-line#cypress-run) commands assume that you have first
+downloaded the Cypress binary to the default `Downloads` directory of your operating system.
+
+Depending on how you then unzip the downloaded Cypress binary `cypress.zip` file,
+using a CLI command or alternatively a GUI interface,
+the directory structure may include one additional top-level directory named `cypress`,
+which you may need to add to the path defined by `CYPRESS_RUN_BINARY`.
+
+If available, use the following to avoid the additional top-level directory level:
+
+```shell
+unzip -q cypress
+```
+
+:::note
+
+The examples below are for npm.
+If you are using Yarn or pnpm as package manager, replace `npx` with `yarn` or `pnpm` as appropriate.
+See [How to run commands](./command-line.mdx#How-to-run-commands).
+
+:::
 
 ### Mac
 
 ```shell
-CYPRESS_RUN_BINARY=~/Downloads/Cypress.app/Contents/MacOS/Cypress cypress run
+CYPRESS_RUN_BINARY=~/Downloads/Cypress.app/Contents/MacOS/Cypress npx cypress run
 ```
 
 ### Linux
 
 ```shell
-CYPRESS_RUN_BINARY=~/Downloads/Cypress/Cypress cypress run
+CYPRESS_RUN_BINARY=~/Downloads/Cypress/Cypress npx cypress run
 ```
 
 ### Windows
 
 ```shell
-CYPRESS_RUN_BINARY=~/Downloads/Cypress/Cypress.exe cypress run
+CYPRESS_RUN_BINARY=~/Downloads/Cypress/Cypress.exe npx cypress run
 ```
 
-:::caution
+:::tip
 
-We recommend **not exporting** the `CYPRESS_RUN_BINARY` environment variable,
-since it will affect every cypress module installed on your file system.
+Cypress assumes that `CYPRESS_RUN_BINARY` points to a writeable directory structure so that it can save and re-use
+the results of verifying the Cypress binary.
+If you encounter a `permission denied` failure message from [cypress verify](./command-line.mdx#cypress-verify),
+you may be able to work around the failure by setting the environment variable `CYPRESS_SKIP_VERIFY` to `true`.
 
 :::
 

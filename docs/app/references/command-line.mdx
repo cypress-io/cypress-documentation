@@ -204,7 +204,7 @@ cypress run [options]
 | `--parallel`                   | [Run recorded specs in parallel across multiple machines](#cypress-run-parallel)                                                                                                              |
 | `--port`,`-p`                  | [Override default port](#cypress-run-port-lt-port-gt)                                                                                                                                         |
 | `--project`, `-P`              | [Path to a specific project](#cypress-run-project-lt-project-path-gt)                                                                                                                         |
-| `--quiet`, `-q`                | If passed, Cypress output will not be printed to `stdout`. Only output from the configured [Mocha reporter](/app/tooling/reporters) will print.                                               |
+| `--quiet`, `-q`                | [Reduce output to `stdout`](#cypress-run-quiet)                                                                                                                                               |
 | `--record`                     | [Whether to record the test run](#cypress-run-record-key-lt-record-key-gt)                                                                                                                    |
 | `--reporter`, `-r`             | [Specify a Mocha reporter](#cypress-run-reporter-lt-reporter-gt)                                                                                                                              |
 | `--reporter-options`, `-o`     | [Specify Mocha reporter options](#cypress-run-reporter-lt-reporter-gt)                                                                                                                        |
@@ -433,6 +433,17 @@ To see this in action we've set up an
 ```shell
 cypress run --project ./some/nested/folder
 ```
+
+#### `cypress run --quiet` {#cypress-run-quiet}
+
+To reduce the output from Cypress printed to `stdout`, use
+`--quiet`.
+
+```shell
+cypress run --quiet
+```
+
+If passed, Cypress will only print output to `stdout` from the [built-in](/app/tooling/reporters#Built-in-reporters) default [Mocha spec reporter](https://mochajs.org/#spec), or from any other configured [Mocha reporter](/app/tooling/reporters).
 
 #### `cypress run --record --key <record-key>` {#cypress-run-record-key-lt-record-key-gt}
 
@@ -822,6 +833,8 @@ Note that the `cypress verify` command is executed as part of the `cypress open`
 and `cypress run` commands. The `CYPRESS_VERIFY_TIMEOUT` environment variable
 should be provided for those commands if you wish to modify the timeout
 duration.
+
+You can disable verification by setting the `CYPRESS_SKIP_VERIFY` environment variable to `true`.
 
 ### `cypress version`
 

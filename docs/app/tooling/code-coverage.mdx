@@ -20,24 +20,22 @@ As you write more and more end-to-end tests, you will find yourself wondering -
 do I need to write more tests? Are there parts of the application still
 untested? Are there parts of the application that perhaps are tested too much?
 
-Cypress offers a couple of solutions to help answer these questions.
+Cypress offers a couple of solutions to help answer these questions:
 
-- **[Code coverage](#Code-Coverage)** - find out which lines of the application's source code were
+- **[Code coverage](#Code-Coverage)** - find out which lines of the application's source code were executed
 - **[UI coverage](#UI-Coverage)** - find out which parts of the UI were tested
-  executed
 
 ### Code Coverage
 
 Code coverage is a metric that helps you understand how much of your application
 code is covered by your tests. If there are important
 sections of the application's logic that **were not** executed from the tests,
-then a new test can be added to ensure that part of our application logic is
-tested.
+then a new test can be added to ensure that the application logic for these sections is
+also tested.
 
 Computing the source code lines that were executed during the test is done
 through **code coverage**. Code coverage requires inserting additional counters
 into your source code before running it using **instrumentation**.
-.
 This document will be focused on code coverage and the instrumentation required to set it up.
 
 ### UI Coverage
@@ -149,7 +147,7 @@ achieving 100% code coverage requires multiple tests.
 
 Once the tests finish, the coverage object can be serialized and saved to disk
 so that a human-friendly report can be generated. The collected coverage
-information can also be sent to external services and help during pull request
+information can also be sent to external services and can help during pull request
 reviews.
 
 :::info
@@ -164,14 +162,14 @@ and
 
 Cypress does not instrument your code - you need to do it yourself. The golden
 standard for JavaScript code instrumentation is the battle-hardened
-[Istanbul](https://istanbul.js.org) and, luckily, it plays very nicely with the
-Cypress. You can instrument the code as a build step through one of two ways:
+[Istanbul](https://istanbul.js.org) and, luckily, it plays very nicely with Cypress.
+You can instrument the code as a build step through one of two ways:
 
 - Using the [nyc](https://github.com/istanbuljs/nyc) module - a command-line
   interface for the [Istanbul](https://istanbul.js.org) library
 - As part of your code transpilation pipeline using the
   [`babel-plugin-istanbul`](https://github.com/istanbuljs/babel-plugin-istanbul)
-  tool.
+  tool
 
 ### Using NYC
 
@@ -213,7 +211,7 @@ render(
 
 Notice the calls to `cov_18hmhptych.s[0]++` and `cov_18hmhptych.s[1]++` that
 increment the statement counters. All counters and additional book-keeping
-information is stored in a single object attached to the browser's `window`
+information are stored in a single object attached to the browser's `window`
 object. We can see the counters if we serve the `instrumented` folder instead of
 `src` and open the application.
 
@@ -271,7 +269,7 @@ A really nice feature of both [nyc](https://github.com/istanbuljs/nyc) and
 [`babel-plugin-istanbul`](https://github.com/istanbuljs/babel-plugin-istanbul)
 is that the source maps are generated automatically, allowing us to collect code
 coverage information, but also interact with the original, non-instrumented code
-in the Developer Tools. In the screenshot above the bundle (green arrow) has
+in the Developer Tools. In the screenshot above, the bundle (green arrow) has
 coverage counters, but the source mapped files in the green rectangle show the
 original code.
 
@@ -420,7 +418,7 @@ Notice how the **ADD_TODO** action was executed 3 times - because our test has
 added 3 todo items, and the **COMPLETE_TODO** action was executed just once -
 because our test has marked 1 todo item as completed.
 
-The source lines not covered marked in yellow (the switch cases the test missed)
+The source lines not covered, marked in yellow (the switch cases the test missed)
 and red (regular statements) are a great guide for writing more end-to-end
 tests. We need tests that delete todo items, edit them, mark all of them as
 completed at once and clear completed items. When we cover every switch
@@ -442,7 +440,7 @@ The produced HTML report shows 99% code coverage
   alt="99 percent code coverage"
 />
 
-Every source file but 1 is covered at 100%. We can have great confidence in our
+Every source file but one is covered at 100%. We can have great confidence in our
 application, and safely refactor the code knowing that we have a robust set of
 end-to-end tests.
 
@@ -460,7 +458,7 @@ you. If you do want to merge the reports yourself:
 
 - on every machine running Cypress tests, copy the produced code coverage report
   into a common folder under a unique name to avoid overwriting it
-- after all E2E tests finish, combine the reports yourself using `nyc merge`
+- after all E2E tests finish, combine the reports yourself using the `nyc merge`
   command
 
 You can find an example of merging partial reports in our

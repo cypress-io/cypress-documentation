@@ -1,0 +1,52 @@
+---
+title: Maintaining accessibility
+sidebar_position: 30
+---
+
+This section discusses the different mindset and success metrics you may have when a project moves from remediating known issues, to long term accessibility maintenance.
+
+## Switching from “improving” to “maintaining”
+
+As soon as a given accessibility rule reaches zero violations for a given page, component, or application, you enter “maintenance mode” for that rule. If the content being tested is stable, any time a failure of that rule shows back up in the reports for that area on a feature branch, it will be clear that changes on that feature branch are the reason for the failure. These changes could be changes in the application code that made it less accessible, **or** changes in the tests to cover new parts of the application.
+
+If a previously-passing rule starts failing on your main branch after not being fixed in a pull request, you can trace back to the re-introduction of the failure and understand what code or test change is responsible. This allows for follow-up and training with developers who introduce issues and gives you the needed information to know about and fix the problem itself.
+
+Your overall goal should be to reach a fully-passing state on every rule. Cypress provides you a lot of flexibility to manage large amounts of accessibility violations and make incremental progress towards well-defined targets. Through a combination of fixing accessibility problems, and configuring Cypress to focus on a tight scope of rules, standards, and application areas that matter most to you, you might be closer than you think to a “clean” main branch, from which you can expand your standards over time.
+
+## Maintaining accessibility
+
+Once you reach the state of a report that contains no violations, your organization’s usage of Cypress Accessibility will change dramatically, and start to focus mainly on detecting and preventing accessibility problems before they merge. This can be a big adjustment. Chipping away at a large backlog of known issues, and fixing things rule-by-rule, provides a clear measure of progress to your team and a sense of momentum. It’s likely you will have been able to measure success and set goals in relation to the accessibility violations present on your main branch up to now.
+
+When those violations are all fixed, what exactly is Cypress Accessibility “doing” in your pipeline? And how should you measure success?
+
+### What Cypress Accessibility is doing when a project is in maintenance mode {#what-cypress-accessibility-is-doing-when-a-project-is-in-maintenance-mode}
+
+The short answer is: providing **pre-merge insights**, and **post-merge monitoring**, that supports you in maintaining accessibility. Accessibility debt tends to accumulate silently over time, leading to large, problematic backlogs that are difficult to work through, and land on your desk all at once after an audit. As you will have learned by going through the remediation process to get to a clean report in the first place: it’s not always easy to fix an already-inaccessible experience. Sometimes you have to start a whole feature or component over, because you’ve built multiple structures on top of an inaccessible foundation.
+
+Early feedback about accessibility on feature branches will allow developers to review small, precise reports, and get all the context they need to either fix issues immediately, or raise problematic patterns for wider discussion. This is especially helpful when a new team member joins, who isn’t as familiar with accessibility practices, or when a well-meaning full-stack developer – somebody who can “get by” in the front-end – unintentionally makes a minor change with major accessibility implications.
+
+Detecting problems before code merges allows the training, awareness-building, discussion, and remediation to all happen in the same cycle as regular code review, when everybody has all the context they need, not weeks or months later when it will be difficult to inject a ticket into the backlog to untangle what might have become a “load-bearing” accessibility problem.
+
+### How to measure success in maintenance mode {#how-to-measure-success-in-maintenance-mode}
+
+The issues surfaced in Cypress Accessibility should follow certain patterns, allowing you to get a good “pulse” on your team’s effectiveness with accessibility and time spent dealing with issues. The best-case scenario is that, with a stable team of front-end developers working on the product, the total number of violations on the main branch, as well as the number of violations identified and corrected on feature branches, should trend downwards over time. This driven by a buildup of education as a result of the continuous feedback. The presence of the feedback should _change developer behavior_ and truly help shift accessibility left, into questions that get asked and answered even before development, when a ticket is created or a design is handed off. At that point, mistakes are avoided, instead of corrected.
+
+We don’t expect most teams to reach a state where they always get everything right in the first code commit: there will always be some issues surfacing in Cypress Cloud – but as teams mature, it’s reasonable to expect the reports to contain less and less violations. This state is ideal \- your development teams should be focused on adding value to your company by making changes to the product.
+
+For most of you reading this, accessibility problems are quality issues, just like bugs and UI issues, and they are important and need to be addressed. This is why optimizing and minimizing the effort related to accessibility is so valuable in a literal sense \- your team is going to spend time on accessibility anyway, every cycle saved on dealing with accessibility is freed up for feature work, quality improvements, and other important activities.
+
+### Ideal conditions never last forever
+
+The main thing that would disrupt the downward trend of pre-merge violations is plain old reality. Teams change, priorities change, people move around an organization, they get hired, they leave, they go on vacation. All of this can be disruptive to an accessibility program – sometimes it’s a specific person or small group that is keeping standards up and providing guidance to their peers. When that person moves out of their team, a previously stable accessibility situation can start to regress.
+
+Cypress Accessibility will help you see this kind of disruption in real time and help you take action as needed. One of the biggest pain points that has been described to us by customers is unexpectedly having a large backlog of high-priority accessibility issues surfaced in an annual audit, even when they had fixed everything from the previous audit. This happens for a few reasons: sometimes the fixes introduce new problems, sometimes net-new work is added that includes new accessibility violations, or design changes lead to front-end modifications with unexpected accessibility implications.
+
+With Cypress Accessibility, you have an early warning system for these situations. They will show up as an increase in violations reported during code reviews, and there will be no chance for this accessibility debt to accumulate silently. Your team has an opportunity to “self-correct” when this happens, or if accessibility is disregarded and violations do get merged, you will be able to track that on your main branch.
+
+## Summary
+
+Accessibility is an ongoing process that affects the whole organization, not a single project of fixing a known list of issues and “completing” accessibility. The automation layer of accessibility tests offered by Cypress Accessibility maximizes the amount of information you can have at your fingertips to improve your accessibility status and maintain an accessible application over the long term, in a software development environment where both expected and unexpected changes create constant challenges for quality.
+
+Cypress Accessibility provides a consolidated report with page- and component-level breakdowns and interactive, visual DOM snapshots to understand exactly what every violation relates to in your application. With filtering and configuration you can create a manageable series of goals to solve every accessibility issue that Axe Core® can detect. Once your accessibility report is fully passing for the rules and pages that make sense for your business and project, Cypress Accessibility supports continuous feedback on new code changes before they merge, and gives you an early warning system if things are getting off track.
+
+The clarity and efficiency from using Cypress Accessibility will optimize your team’s time spent managing and fixing accessibility issues that are detectable by automation, helping them focus more on building great things that create value for your organization, without sacrificing this critical aspect of quality software development and building up debt over time to do so.
