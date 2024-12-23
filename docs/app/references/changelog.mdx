@@ -10,10 +10,7 @@ _Released 1/7/2024_
 
 Cypress v14.0.0 improves performance of component testing and adds support for new framework and dev server versions.
 v14.0.0 also includes breaking changes to `cy.origin` that are necessary to handle
-[Chrome's deprecation of `document.domain` injection](https://developer.chrome.com/blog/document-domain-setter-deprecation)
-
-- this should fix issues for some users in recent Chrome versions.
-  Support for older versions of Node.js, Linux distributions, browsers and component testing frameworks and dev servers is removed.
+[Chrome's deprecation of `document.domain` injection](https://developer.chrome.com/blog/document-domain-setter-deprecation), this should fix issues for some users in recent Chrome versions. Support for older versions of Node.js, Linux distributions, browsers and component testing frameworks and dev servers is removed.
 
 Overall, we don't anticipate this release to be too disruptive for most users. We recommend bumping your version to see if your
 tests still run as expected. As always, open any issues you find [here](https://github.com/cypress-io/cypress/issues/new?assignees=&labels=&projects=&template=1-bug-report.yml).
@@ -64,11 +61,11 @@ Refer to the [v14 Migration Guide](/app/references/migration-guide#Migrating-to-
 
 - `injectDocumentDomain`, a new configuration option, can be set to `true` in order to re-enable the injection of `document.domain` setters in Cypress. Addressed in [#30770](https://github.com/cypress-io/cypress/pull/30770).
 - Cypress Component Testing now supports:
-  - `Next.js` version >=15.0.4. Versions 15.0.0 - 15.0.3 depend on the React 19 Release Candidate and are not officially supported by Cypress, but should still work. Addresses [#30445](https://github.com/cypress-io/cypress/issues/30445).
   - `React` version 19. Addresses [#29470](https://github.com/cypress-io/cypress/issues/29470).
   - `Angular` version 19. Addresses [#30175](https://github.com/cypress-io/cypress/issues/30175).
-  - `Vite` version 6. Addresses [#30591](https://github.com/cypress-io/cypress/issues/30591).
+  - `Next.js` version >=15.0.4. Versions 15.0.0 - 15.0.3 depend on the React 19 Release Candidate and are not officially supported by Cypress, but should still work. Addresses [#30445](https://github.com/cypress-io/cypress/issues/30445).
   - `Svelte` version 5. Addresses [#29641](https://github.com/cypress-io/cypress/issues/29641).
+  - `Vite` version 6. Addresses [#30591](https://github.com/cypress-io/cypress/issues/30591).
 
 **Bugfixes:**
 
