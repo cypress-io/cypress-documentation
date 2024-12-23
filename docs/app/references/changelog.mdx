@@ -8,11 +8,13 @@ _Released 12/3/2024_
 
 **Summary:**
 
-Cypress v14.0.0 expands our support for new component testing framework versions, a few bug fixes, and an update to Electron. We've removed support for older versions of Node.js,
-Linux distributions, browsers and component testing frameworks and dev servers. We've also removed some deprecated Cypress APIs. 14.0.0 also includes breaking changes to `cy.origin`
-that are necessary to handle Chrome's deprecation of document.domain injection - this should fix issues for some users in recent Chrome versions.
+Cypress v14.0.0 expands support for new component testing framework and dev server versions and improves performance for component testing. 
+Support for older versions of Node.js, Linux distributions, browsers and component testing frameworks and dev servers is removed. 
+v14.0.0 also includes breaking changes to `cy.origin` that are necessary to handle Chrome's deprecation of document.domain injection 
+- this should fix issues for some users in recent Chrome versions.
 
-Overall, we don't anticipate this release to be too disruptive for most users. We recommend bumping your version to see if your tests still run as expected.
+Overall, we don't anticipate this release to be too disruptive for most users. We recommend bumping your version to see if your 
+tests still run as expected. As always, open any issues you find [here](https://github.com/cypress-io/cypress/issues/new?assignees=&labels=&projects=&template=1-bug-report.yml).
 
 **Breaking Changes:**
 
@@ -23,6 +25,54 @@ Refer to the [v14 Migration Guide](/app/references/migration-guide#Migrating-to-
 :::
 
 TBD!!!!!!!!!!!
+
+## 13.17.0
+
+_Released 12/17/2024_
+
+**Features:**
+
+- Added official support for the [Google Chrome for Testing](https://github.com/GoogleChromeLabs/chrome-for-testing) browser. Assuming the browser is in a location where it can be [auto-detected](/app/references/troubleshooting#Launching-browsers), it can be launched by providing the `--browser chrome-for-testing` option. If it can't be auto-detected, the path to the browser can also be provided. Previously [customizing the available browsers](/app/references/launching-browsers#Customize-available-browsers) was required. Addresses [#28123](https://github.com/cypress-io/cypress/issues/28123) and [#28554](https://github.com/cypress-io/cypress/issues/28554).
+
+**Bugfixes:**
+
+- Fixed an issue where targets may hang if `Network.enable` is not implemented for the target. Addresses [#29876](https://github.com/cypress-io/cypress/issues/29876).
+- Updated Firefox `userChrome.css` to correctly hide the toolbox during headless mode. Addresses [#30721](https://github.com/cypress-io/cypress/issues/30721).
+- Fixed an issue loading the `cypress.config.ts` file with Node.js version `22.12.0` if it is loaded as an ESM. Addresses [#30715](https://github.com/cypress-io/cypress/issues/30715).
+
+**Misc:**
+
+- Removed a comment from the scaffolded `supportFile` for component tests around CommonJS syntax. Addresses [#23287](https://github.com/cypress-io/cypress/issues/23287).
+
+**Dependency Updates:**
+
+- Updated `chai` from `4.2.0` to `4.5.0`. Addressed in [#30737](https://github.com/cypress-io/cypress/pull/30737).
+
+## 13.16.1
+
+_Released 12/04/2024_
+
+**Bugfixes:**
+
+- During recorded or parallel runs, execution will fail if Cypress is unable to confirm the creation of an instance instead of skipping the spec. Addresses [#30628](https://github.com/cypress-io/cypress/issues/30628).
+
+## 13.16.0
+
+_Released 11/19/2024_
+
+**Features:**
+
+- Added new [`defaultBrowser`](/app/references/configuration#Browser) configuration option to specify the default browser to launch. This option only affects the first browser launch; changing this option after the browser is already launched will have no effect. Addresses [#6646](https://github.com/cypress-io/cypress/issues/6646).
+
+**Bugfixes:**
+
+- Fixed an issue where some JS assets were not properly getting sourcemaps included with the vite dev server if they had a cache busting query parameter in the URL. Fixed some scenarios to ensure that the sourcemaps that were included by the vite dev server were inlined. Addressed in [#30606](https://github.com/cypress-io/cypress/pull/30606).
+
+**Misc:**
+
+- Updated the protocol to be able to flex logic based on project config. Addresses [#30560](https://github.com/cypress-io/cypress/issues/30560).
+
+## 13.15.2
 
 _Released 11/5/2024_
 
@@ -735,7 +785,7 @@ Refer to the [v13 Migration Guide](/app/references/migration-guide#Migrating-to-
 
 **Features:**
 
-- Added [`--runner-ui`](/app/references/command-line#cypress-run-runner-ui) and [`--no-runner-ui`](https://docs.cypress.io/app/references/command-line#cypress-run-no-runner-ui) CLI flags to control whether the Cypress Runner UI is visible during a run. Addressed in [#27582](https://github.com/cypress-io/cypress/pull/27582).
+- Added [`--runner-ui`](/app/references/command-line#cypress-run-runner-ui) and [`--no-runner-ui`](/app/references/command-line#cypress-run-no-runner-ui) CLI flags to control whether the Cypress Runner UI is visible during a run. Addressed in [#27582](https://github.com/cypress-io/cypress/pull/27582).
 - Consolidates and improves terminal output when uploading test artifacts to Cypress Cloud. Addressed in [#27402](https://github.com/cypress-io/cypress/pull/27402)
 
 **Bugfixes:**
@@ -1487,7 +1537,7 @@ _Released 1/03/2023_
 
 - Added support for mapping the `CYPRESS_PULL_REQUEST_ID`,
   `CYPRESS_PULL_REQUEST_URL`, and/or `CYPRESS_CI_BUILD_URL` environment
-  variables to the the corresponding Cloud run. This provides workarounds when
+  variables to the corresponding Cloud run. This provides workarounds when
   supported CI provider mappings are incorrect or unsupported CI providers are
   used. Addressed in [#25036](https://github.com/cypress-io/cypress/pull/25036).
 - Added new Cypress API,

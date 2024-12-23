@@ -106,15 +106,15 @@ need prebuilt.
 
 ### Operating System
 
-Cypress is a desktop application that is installed on your computer. The desktop
-application supports these operating systems:
+Cypress supports running under these operating systems:
 
 - **macOS** 10.15 and above _(Intel or Apple Silicon 64-bit (x64 or arm64))_.
-- **Linux** Ubuntu 20.04 and above, Fedora 39 and above, and Debian 11 and above _(x64 or arm64)_ (see [Linux Prerequisites](#Linux-Prerequisites) down
+- **Linux** Ubuntu 20.04 and above, Fedora 40 and above, and Debian 11 and above _(x64 or arm64)_ (see [Linux Prerequisites](#Linux-Prerequisites) down
   below).
   - Cypress deprecated the use of Node.js `16.x` in Cypress [`13.0.0`](/app/references/changelog#13-0-0). We recommend that users update to at least Node.js `18.x`.
     For related reasons, Cypress deprecates the use of Linux operating systems with library [`glibc`](https://www.gnu.org/software/libc/) versions `2.17` - `2.27`. The Linux CLI command `ldd --version` displays your glibc version.
 - **Windows** 10 and above _(x64)_.
+- **Windows Server** 2019 and 2022 _(x64)_.
 
 ### Node.js
 
@@ -189,7 +189,7 @@ It is worth noting that Cypress on Linux requires a minimum [`glibc`](https://ww
 apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libnss3 libxss1 libasound2 libxtst6 xauth xvfb
 ```
 
-For Ubuntu 24.04 use the following command:
+For Ubuntu 24.04, and above, use the following command:
 
 ```shell
 apt-get install libgtk2.0-0t64 libgtk-3-0t64 libgbm-dev libnotify-dev libnss3 libxss1 libasound2t64 libxtst6 xauth xvfb
