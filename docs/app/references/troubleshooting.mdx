@@ -415,15 +415,26 @@ On Mac, Cypress attempts to find installed browsers by their bundle identifier.
 If this does not succeed, it will fall back to the Linux browser detection
 method.
 
-| Browser Name    | Expected Bundle Identifier | Expected Executable                   |
-| --------------- | -------------------------- | ------------------------------------- |
-| `chrome`        | `com.google.Chrome`        | `Contents/MacOS/Google Chrome`        |
-| `chromium`      | `org.chromium.Chromium`    | `Contents/MacOS/Chromium`             |
-| `chrome:canary` | `com.google.Chrome.canary` | `Contents/MacOS/Google Chrome Canary` |
+| Browser Name         | Expected Bundle Identifier            | Expected Executable Path                                                               |
+| -------------------- | ------------------------------------- | -------------------------------------------------------------------------------------- |
+| `chrome`             | `com.google.Chrome`                   | `/Applications/Google Chrome.app/Contents/MacOS/Google Chrome`                         |
+| `chrome:beta`        | `com.google.Chrome.beta`              | `/Applications/Google Chrome Beta.app/Contents/MacOS/Google Chrome Beta`               |
+| `chrome:canary`      | `com.google.Chrome.canary`            | `/Applications/Google Chrome Canary.app/Contents/MacOS/Google Chrome Canary`           |
+| `chrome-for-testing` | `com.google.chrome.for.testing`       | `/Applications/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing` |
+| `chromium`           | `org.chromium.Chromium`               | `/Applications/Chromium.app/Contents/MacOS/Chromium`                                   |
+| `firefox`            | `org.mozilla.firefox`                 | `/Applications/Firefox.app/Contents/MacOS/firefox`                                     |
+| `firefox:dev`        | `org.mozilla.firefoxdeveloperedition` | `/Applications/Firefox Developer Edition.app/Contents/MacOS/firefox`                   |
+| `firefox:nightly`    | `org.mozilla.nightly`                 | `/Applications/Firefox Nightly.app/Contents/MacOS/firefox`                             |
+| `edge`               | `com.microsoft.Edge`                  | `/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge`                       |
+| `edge:beta`          | `com.microsoft.Edge.Beta`             | `/Applications/Microsoft Edge Beta.app/Contents/MacOS/Microsoft Edge Beta`             |
+| `edge:canary`        | `com.microsoft.Edge.Canary`           | `/Applications/Microsoft Edge Canary.app/Contents/MacOS/Microsoft Edge Canary`         |
+| `edge:dev`           | `com.microsoft.Edge.Dev`              | `/Applications/Microsoft Edge Dev.app/Contents/MacOS/Microsoft Edge Dev`               |
 
 For the current list, see
 [packages/launcher](https://github.com/cypress-io/cypress/blob/develop/packages/launcher/lib/darwin/index.ts)
 files.
+
+**Note:** `chrome-for-testing` and `chromium` typically require the downloaded application file to be manually moved to the `/Applications` folder to be auto-detected.
 
 #### Linux
 
@@ -431,42 +442,67 @@ On Linux, Cypress scans your `PATH` for a number of different binary names. If
 the browser you are trying to use does not exist under one of the expected
 binary names, Cypress will not be able to find it.
 
-| Browser Name    | Expected Binary Name(s)                              |
-| --------------- | ---------------------------------------------------- |
-| `chrome`        | `google-chrome`, `chrome`, or `google-chrome-stable` |
-| `chromium`      | `chromium-browser` or `chromium`                     |
-| `chrome:canary` | `google-chrome-canary`                               |
+| Browser Name         | Expected Binary Name(s)                              |
+| -------------------- | ---------------------------------------------------- |
+| `chrome`             | `google-chrome`, `chrome`, or `google-chrome-stable` |
+| `chrome:beta`        | `google-chrome-beta`                                 |
+| `chrome:canary`      | `google-chrome-canary`                               |
+| `chrome-for-testing` | `chrome`                                             |
+| `chromium`           | `chromium-browser` or `chromium`                     |
+| `firefox`            | `firefox`                                            |
+| `firefox:dev`        | `firefox-developer-edition`, `firefox`               |
+| `firefox:nightly`    | `firefox-nightly`, `firefox-trunk`                   |
+| `edge`               | `edge`, `microsoft-edge`                             |
+| `edge:beta`          | `edge-beta`, `microsoft-edge-beta`                   |
+| `edge:canary`        | `edge-canary`, `microsoft-edge-canary`               |
+| `edge:dev`           | `edge-dev`, `microsoft-edge-dev`                     |
 
 These binary names should work for most Linux distributions. If your
 distribution packages browsers under a different binary name, you can add a
 symlink using the expected binary name so that Cypress can detect it.
 
-For example, if your distribution packages Google Chrome as `chrome`, you could
-add a symlink to `google-chrome` like this:
+For example, to create a symlink for the `chrome-for-testing` browser:
 
 ```shell
-sudo ln `which chrome` /usr/local/bin/google-chrome
+sudo ln -s /path/to/binary/chrome /usr/local/bin/chrome
 ```
+
+**Note:** `chrome-for-testing` and `chromium` typically require the binary to be manually added to the `PATH` or a symlink created to be auto-detected.
 
 #### Windows
 
 On Windows, Cypress scans the following locations to try to find each browser:
 
-| Browser Name    | Expected Path                                                 |
-| --------------- | ------------------------------------------------------------- |
-| `chrome`        | `C:/Program Files (x86)/Google/Chrome/Application/chrome.exe` |
-| `chromium`      | `C:/Program Files (x86)/Google/chrome-win32/chrome.exe`       |
-| `chrome:canary` | `%APPDATA%/../Local/Google/Chrome SxS/Application/chrome.exe` |
+| Browser Name         | Expected Executable Path                                                                                                                                                                                     |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `chrome`             | `C:/Program Files (x86)/Google/Chrome/Application/chrome.exe`, `C:/Program Files/Google/Chrome/Application/chrome.exe`                                                                                       |
+| `chrome:beta`        | `C:/Program Files (x86)/Google/Chrome Beta/Application/chrome.exe`, `C:/Program Files/Google/Chrome Beta/Application/chrome.exe`                                                                             |
+| `chrome:canary`      | `%APPDATA%/Local/Google/Chrome SxS/Application/chrome.exe`                                                                                                                                                   |
+| `chrome-for-testing` | `C:/Program Files/Google/Chrome for Testing/chrome.exe`, `C:/Program Files (x86)/Google/Chrome for Testing/chrome.exe`                                                                                       |
+| `chromium`           | `C:/Program Files (x86)/Google/chrome-win32/chrome.exe`, `C:/Program Files/Google/chrome-win/chrome.exe`, `C:/Program Files/Google/Chromium/chrome.exe`, `C:/Program Files (x86)/Google/Chromium/chrome.exe` |
+| `firefox`            | `C:/Program Files/Mozilla Firefox/firefox.exe`, `C:/Program Files (x86)/Mozilla Firefox/firefox.exe`, `%APPDATA%/Local/Mozilla Firefox/firefox.exe`                                                          |
+| `firefox:dev`        | `C:/Program Files/Firefox Developer Edition/firefox.exe`, `C:/Program Files (x86)/Firefox Developer Edition/firefox.exe`, `%APPDATA%/Local/Firefox Developer Edition/firefox.exe`                            |
+| `firefox:nightly`    | `C:/Program Files/Firefox Nightly/firefox.exe`, `C:/Program Files (x86)/Firefox Nightly/firefox.exe`, `%APPDATA%/Local/Firefox Nightly/firefox.exe`                                                          |
+| `edge`               | `C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe`                                                                                                                                               |
+| `edge:beta`          | `C:/Program Files (x86)/Microsoft/Edge Beta/Application/msedge.exe`                                                                                                                                          |
+| `edge:canary`        | `%APPDATA%/Local/Microsoft/Edge SxS/Application/msedge.exe`                                                                                                                                                  |
+| `edge:dev`           | `C:/Program Files (x86)/Microsoft/Edge Dev/Application/msedge.exe`                                                                                                                                           |
 
 For the current list, see
 [packages/launcher](https://github.com/cypress-io/cypress/blob/develop/packages/launcher/lib/windows/index.ts)
 files.
 
 To make a browser installed at a different path be auto-detected, create a
-symbolic link using `mklink` in the location that Cypress expects to find your
+symlink using `mklink` in the location that Cypress expects to find your
 browser.
 
-[Read more about creating symbolic links on Windows](https://www.howtogeek.com/howto/16226/complete-guide-to-symbolic-links-symlinks-on-windows-or-linux/)
+For example, to create a symlink for the `chrome-for-testing` browser:
+
+```shell
+mklink /d "C:\Program Files\Google\Chrome for Testing" "C:\path\to\chrome\executable\folder"
+```
+
+**Note:** `chrome-for-testing` and `chromium` typically require the downloaded folder to either be moved and renamed to the location mentioned above or a symlink created as described above to be auto-detected.
 
 Occasionally Cypress will have issues detecting the type of browser in Windows
 environments. To manually detect the browser type, append the browser type to

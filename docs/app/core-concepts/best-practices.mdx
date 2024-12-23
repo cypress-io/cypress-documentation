@@ -236,7 +236,7 @@ recommend you approach testing your components, look to: [Cypress Component Test
 
 Selecting elements with data attributes, text content, or Testing Library locators can each have some different implications for accessibility,
 but none of these approaches is a "complete" accessibility test, and you will always need additional, accessibility-specific testing (including automated and manual tests) to confirm
-your application is working as expected for people with disabilities and the technology they use. See[our accessibility testing guide](/app/guides/accessibility-testing) for more details and comparisons of approaches.
+your application is working as expected for people with disabilities and the technology they use. See [our accessibility testing guide](/app/guides/accessibility-testing) for more details and comparisons of approaches.
 
 ## <Icon name="angle-right" /> Assigning Return Values
 
@@ -312,7 +312,7 @@ or interact with sites or servers you do not control.
 that you control. Try to avoid visiting or requiring a 3rd party server. If you choose,
 you may use [`cy.request()`](/api/commands/request) to talk to 3rd party servers
 via their APIs. If possible, cache results via [`cy.session()`](/api/commands/session)
-to avoid repeat visits.
+to avoid repeat visits. See also reasons against [Testing Apps You Don't Control](/app/end-to-end-testing/writing-your-first-end-to-end-test#Testing-Apps-You-Dont-Control).
 
 :::
 

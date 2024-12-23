@@ -117,7 +117,6 @@
   --ifm-color-purple-900: theme(colors.purple.900);
   --ifm-color-purple-1000: theme(colors.purple.1000);
 
-
   --ifm-font-family-base: ui-sans-serif, system-ui, -apple-system, Segoe UI,
     Roboto, Helvetica Neue, Arial;
   --ifm-heading-font-family: Poppins;
@@ -136,6 +135,12 @@
   // border color in current area of toc
   --toc-highlight: var(--ifm-color-primary);
   --ifm-alert-shadow: none;
+
+  // override the default mapping of footer links to the `secondary` color,
+  // which is not good for dark backgrounds such as the footer
+  .footer--dark {
+    --ifm-footer-link-color: theme(colors.gray.50);
+  }
 }
 
 html[data-theme] {
@@ -427,6 +432,7 @@ div[class^='codeBlockTitle'] {
 
 [class^='docItemContainer'] [class^='codeBlockLines'] {
   max-width: 0;
+  word-spacing: 0;
 }
 
 /* hides the osano widget */

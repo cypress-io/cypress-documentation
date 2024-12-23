@@ -36,3 +36,23 @@ UI Coverage considers interactive elements "tested" if they are interacted with 
 - `trigger`
 - `type`
 - `uncheck`
+
+## Untested Links
+
+UI Coverage tracks links (`<a>` elements) that haven't been visited during testing. For each untested link, you can see:
+
+### Referrers
+
+The Views containing links to this untested destination. This helps you understand:
+
+- Where these untested areas are referenced from
+- The navigation paths that could lead to this untested area
+- The context in which these links appear
+
+### URLs
+
+Shows how similar URLs are grouped together. For example, if you have links to `/users/1`, `/users/2`, and `/users/3`, they'll be grouped as `/users/*`. The URLs section shows all the actual URLs that were grouped together. This is particularly useful for:
+
+- Understanding the scope of dynamic routes in your application
+- Seeing how many variations of a URL pattern exist
+- Writing configuration rules to handle URL patterns appropriately
