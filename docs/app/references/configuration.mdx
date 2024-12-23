@@ -185,16 +185,17 @@ creating `e2e` and `component` objects inside your Cypress configuration.
 These options are available to be specified inside the `e2e` configuration
 object:
 
-| Option                    | Default                                               | Description                                                                                                                                                                                           |
-| ------------------------- | ----------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `baseUrl`                 | `null`                                                | URL used as prefix for [`cy.visit()`](/api/commands/visit) or [`cy.request()`](/api/commands/request) command's URL.                                                                                  |
-| `setupNodeEvents`         | `null`                                                | Function in which node events can be registered and config can be modified. Takes the place of the (removed) pluginFile option. [Please read the notes for examples on using this.](#setupNodeEvents) |
-| `supportFile`             | `cypress/support/e2e.{js,jsx,ts,tsx}`                 | Path to file to load before spec files load. This file is compiled and bundled. (Pass `false` to disable)                                                                                             |
-| `specPattern`             | <code>cypress/e2e/\*\*/\*.cy.\{js,jsx,ts,tsx\}</code> | A String or Array of glob patterns of the test files to load.                                                                                                                                         |
-| `excludeSpecPattern`      | `*.hot-update.js`                                     | A String or Array of glob patterns used to ignore test files that would otherwise be shown in your list of tests. [Please read the notes on using this.](#excludeSpecPattern)                         |
-| `experimentalRunAllSpecs` | `false`                                               | Enables the "Run All Specs" UI feature, allowing the execution of multiple specs sequentially.                                                                                                        |
-| `slowTestThreshold`       | `10000`                                               | Time, in milliseconds, to consider a test "slow" during `cypress run`. A slow test will display in orange text in the default reporter.                                                               |
-| `testIsolation`           | `true`                                                | Whether or not [test isolation](/app/core-concepts/writing-and-organizing-tests#Test-Isolation) is enabled to ensure a clean browser context between tests.                                           |
+| Option                                                          | Default                                               | Description                                                                                                                                                                                           |
+| --------------------------------------------------------------- | ----------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `baseUrl`                                                       | `null`                                                | URL used as prefix for [`cy.visit()`](/api/commands/visit) or [`cy.request()`](/api/commands/request) command's URL.                                                                                  |
+| `setupNodeEvents`                                               | `null`                                                | Function in which node events can be registered and config can be modified. Takes the place of the (removed) pluginFile option. [Please read the notes for examples on using this.](#setupNodeEvents) |
+| `supportFile`                                                   | `cypress/support/e2e.{js,jsx,ts,tsx}`                 | Path to file to load before spec files load. This file is compiled and bundled. (Pass `false` to disable)                                                                                             |
+| `specPattern`                                                   | <code>cypress/e2e/\*\*/\*.cy.\{js,jsx,ts,tsx\}</code> | A String or Array of glob patterns of the test files to load.                                                                                                                                         |
+| `excludeSpecPattern`                                            | `*.hot-update.js`                                     | A String or Array of glob patterns used to ignore test files that would otherwise be shown in your list of tests. [Please read the notes on using this.](#excludeSpecPattern)                         |
+| `experimentalRunAllSpecs`                                       | `false`                                               | Enables the "Run All Specs" UI feature, allowing the execution of multiple specs sequentially.                                                                                                        |
+| `slowTestThreshold`                                             | `10000`                                               | Time, in milliseconds, to consider a test "slow" during `cypress run`. A slow test will display in orange text in the default reporter.                                                               |
+| `testIsolation`                                                 | `true`                                                | Whether or not [test isolation](/app/core-concepts/writing-and-organizing-tests#Test-Isolation) is enabled to ensure a clean browser context between tests.                                           |
+| `injectDocumentDomain` <Badge type="caution">deprecated</Badge> | `false`                                               | Instructs Cypress to use the `document.domain` property to reduce the need for [`cy.origin`](/api/commands/origin). [Please read the notes on using this.](#injectDocumentDomain)                     |
 
 :::cypress-config-example
 
@@ -590,6 +591,54 @@ The `**/node_modules/**` pattern is automatically added to `excludeSpecPattern`
 and does not need to be specified (and can't be overridden). See [`e2e`](#e2e)
 or [`component`](#component) testing-specific options.
 
+### injectDocumentDomain
+
+This option is <Badge type="caution">deprecated</Badge>, and will be removed in Cypress. 15
+
+Set this configuration option to `true` to instruct Cypress to
+[inject document.domain](/app/guides/cross-origin-testing#What-Cypress-does-under-the-hood)
+into your test application. This can reduce the need for `cy.origin()` when [navigating
+between subdomains](/app/guides/cross-origin-testing), but comes with compatibility
+caveats for some sites.
+
+This configuration option is provided to ease the transition between `cy.origin()`'s behavior
+in Cypress 13 and the default behavior in Cypress 14. It will be removed in Cypress 15.
+[Read the Cypress 14 migration guide](/app/references/migration-guide#Migrating-to-Cypress-140) to understand how to update your tests to remove
+the need to set this flag.
+
+This configuration value _must_ be set to true if you are running tests with experimental
+WebKit support, as `cy.origin` is not yet supported in WebKit.
+
+:::caution
+
+#### Known Incompatibilities
+
+Setting this configuration value to `true` can cause the application you are testing
+to behave in unexpected ways. This is especially true if a site your tests visit
+sets the [`Origin-Agent-Cluster`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Origin-Agent-Cluster)
+header.
+
+At this point in time, we are aware of the following sites that cannot be tested properly
+if this option is set to `true`:
+
+- Azure AD B2C authentication workflows
+- Salesforce
+- Google
+
+:::
+
+:::cypress-config-example
+
+```js
+{
+  e2e: {
+    injectDocumentDomain: true
+  }
+}
+```
+
+:::
+
 ### isInteractive
 
 You can open Cypress in the interactive mode via the `cypress open` command, and
@@ -714,26 +763,27 @@ DEBUG=cypress:cli,cypress:data-context:sources:FileDataSource,cypress:data-conte
 
 ## History
 
-| Version                                      | Changes                                                                                                                                       |
-| -------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
-| [13.16.0](/app/references/changelog#13-16-0) | Added `defaultBrowser` option.                                                                                                                |
-| [13.4.0](/app/references/changelog#13-4-0)   | Added support for configuring the Experimental Flake Detection strategy via `retries.experimentalStrategy` and `retries.experimentalOptions`. |
-| [13.0.0](/app/references/changelog#13-0-0)   | Removed `nodeVersion` option.                                                                                                                 |
-| [13.0.0](/app/references/changelog#13-0-0)   | Removed `videoUploadOnPasses` option.                                                                                                         |
-| [11.0.0](/app/references/changelog#11-0-0)   | Removed `e2e.experimentalSessionAndOrigin` option.                                                                                            |
-| [10.4.0](/app/references/changelog#10-4-0)   | Added `e2e.testIsolation` option.                                                                                                             |
-| [10.0.0](/app/references/changelog#10-0-0)   | Reworked page to support new `cypress.config.js` and deprecated `cypress.json` files.                                                         |
-| [8.7.0](/app/references/changelog#8-7-0)     | Added `slowTestThreshold` option.                                                                                                             |
-| [8.0.0](/app/references/changelog#8-0-0)     | Added `clientCertificates` option and removed `firefoxGcInterval` configuration.                                                              |
-| [7.0.0](/app/references/changelog#7-0-0)     | Added `e2e` and `component` options.                                                                                                          |
-| [7.0.0](/app/references/changelog#7-0-0)     | Added `redirectionLimit` option.                                                                                                              |
-| [6.1.0](/app/references/changelog#6-1-0)     | Added `scrollBehavior` option.                                                                                                                |
-| [5.2.0](/app/references/changelog#5-2-0)     | Added `includeShadowDom` option.                                                                                                              |
-| [5.0.0](/app/references/changelog#5-0-0)     | Added `retries` configuration.                                                                                                                |
-| [5.0.0](/app/references/changelog#5-0-0)     | Renamed `blacklistHosts` configuration to `blockHosts`.                                                                                       |
-| [4.1.0](/app/references/changelog#4-12-0)    | Added `screenshotOnRunFailure` configuration.                                                                                                 |
-| [4.0.0](/app/references/changelog#4-0-0)     | Added `firefoxGcInterval` configuration.                                                                                                      |
-| [3.5.0](/app/references/changelog#3-5-0)     | Added `nodeVersion` configuration.                                                                                                            |
+| Version                                    | Changes                                                                                                                                       |
+| ------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| [14.0.0](/app/references/changelog#14-0-0) | Added support for re-enabling superdomain navigation with the `injectDocumentDomain` configuration option                                     |
+| [13.16.0](/app/references/changelog#13-16-0) | Added `defaultBrowser` option.     
+| [13.4.0](/app/references/changelog#13-4-0) | Added support for configuring the Experimental Flake Detection strategy via `retries.experimentalStrategy` and `retries.experimentalOptions`. |
+| [13.0.0](/app/references/changelog#13-0-0) | Removed `nodeVersion` option.                                                                                                                 |
+| [13.0.0](/app/references/changelog#13-0-0) | Removed `videoUploadOnPasses` option.                                                                                                         |
+| [11.0.0](/app/references/changelog#11-0-0) | Removed `e2e.experimentalSessionAndOrigin` option.                                                                                            |
+| [10.4.0](/app/references/changelog#10-4-0) | Added `e2e.testIsolation` option.                                                                                                             |
+| [10.0.0](/app/references/changelog#10-0-0) | Reworked page to support new `cypress.config.js` and deprecated `cypress.json` files.                                                         |
+| [8.7.0](/app/references/changelog#8-7-0)   | Added `slowTestThreshold` option.                                                                                                             |
+| [8.0.0](/app/references/changelog#8-0-0)   | Added `clientCertificates` option and removed `firefoxGcInterval` configuration.                                                              |
+| [7.0.0](/app/references/changelog#7-0-0)   | Added `e2e` and `component` options.                                                                                                          |
+| [7.0.0](/app/references/changelog#7-0-0)   | Added `redirectionLimit` option.                                                                                                              |
+| [6.1.0](/app/references/changelog#6-1-0)   | Added `scrollBehavior` option.                                                                                                                |
+| [5.2.0](/app/references/changelog#5-2-0)   | Added `includeShadowDom` option.                                                                                                              |
+| [5.0.0](/app/references/changelog#5-0-0)   | Added `retries` configuration.                                                                                                                |
+| [5.0.0](/app/references/changelog#5-0-0)   | Renamed `blacklistHosts` configuration to `blockHosts`.                                                                                       |
+| [4.1.0](/app/references/changelog#4-12-0)  | Added `screenshotOnRunFailure` configuration.                                                                                                 |
+| [4.0.0](/app/references/changelog#4-0-0)   | Added `firefoxGcInterval` configuration.                                                                                                      |
+| [3.5.0](/app/references/changelog#3-5-0)   | Added `nodeVersion` configuration.                                                                                                            |
 
 ## See also
 

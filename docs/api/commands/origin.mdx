@@ -3,8 +3,8 @@ title: origin
 e2eSpecific: true
 ---
 
-Visit multiple domains of different
-[origin](https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy#definition_of_an_origin)
+Visit multiple different
+[origins](https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy#definition_of_an_origin)
 in a single test.
 
 In normal use, a single Cypress test may only run commands in a single origin, a
@@ -25,6 +25,18 @@ flag to `true` in the Cypress configuration. More information about this
 experimental flag can be found on our
 [Cross Origin Testing](/app/guides/cross-origin-testing#Modifying-Obstructive-Third-Party-Code)
 doc.
+
+:::
+
+:::info
+
+<strong>Changes in Cypress [v14.0.0](/app/references/changelog#14-0-0)</strong>
+
+Cypress no longer injects `document.domain` by default, which means `cy.origin()`
+must now be used to navigate between any two origins in the same test, even if
+the two origins are in the same superdomain. This behavior can be disabled by setting
+the `injectDocumentDomain` configuration option to `true`, to allow a smooth transition
+of tests to the new behavior. In Cypress 15, this configuration option will be removed.
 
 :::
 
@@ -63,26 +75,28 @@ cy.get('h1').contains('My cool site under test')
 const hits = getHits()
 cy.visit('https://example.cypress.io/history/founder')
 // To interact with cross-origin content, move this inside cy.origin() callback
-cy.get('h1').contains('About our Founder')
-// Domain must be a precise match including subdomain, i.e. example.cypress.io
-cy.origin('cypress.io', () => {
-  cy.visit('/history/founder')
-  cy.get('h1').contains('About our Founder')
-  // Fails because hits is not passed in via args
-  cy.get('#hitcounter').contains(hits)
+cy.get('h1').contains('Kitchen Sink')
+// Origin must be a precise match including scheme, subdomain and port, i.e. https://www.cypress.io
+cy.origin('https://www.cypress.io', () => {
+  cy.visit('/about-us')
+  cy.get('h1').contains('About us')
+  // Fails because doanloads is not passed in via args
+  cy.contains(downloads)
 })
-// Won't work because still on cypress.io
-cy.get('h1').contains('My cool site under test')
+// Won't work because still on www.cypress.io
+cy.get('h1').contains('Kitchen Sink')
 ```
 
 ### Arguments
 
-<Icon name="angle-right" /> **url _(String)_**
+<Icon name="angle-right" /> **origin _(String)_**
 
-A URL specifying the secondary origin in which the callback is to be executed.
-This should at the very least contain a hostname, and may also include the
-protocol, port number & path. The hostname must precisely match that of the
-secondary origin, including all subdomains. Query params are not supported.
+A string specifying the origin in which the callback is to be executed.
+This should at the very least contain a hostname. It may also include the
+scheme and port number. The path may be included, but is not necessary.
+The hostname must precisely match that of the secondary origin, including
+all subdomains. Query params are not supported. If no scheme is provided,
+the scheme defaults to `https`.
 
 This argument will be used in two ways:
 
@@ -542,6 +556,7 @@ inclusion in a future version of Cypress.
 
 | Version                                     | Changes                                                                                                     |
 | ------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| [14.0.0](/app/references/changelog#14-0-0)  | `cy.origin()` is now required when navigating between origins in the same test, rather than superdomains.   |
 | [12.6.0](/app/references/changelog#10-7-0)  | Support for `Cypress.require()` added and support for CommonJS `require()` and ES module `import()` removed |
 | [10.11.0](/app/references/changelog#10-7-0) | Support for CommonJS `require()` and ES module `import()` added and support for `Cypress.require()` removed |
 | [10.7.0](/app/references/changelog#10-7-0)  | Support for `Cypress.require()` added                                                                       |
