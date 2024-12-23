@@ -9,14 +9,30 @@ sidebar_position: 100
 
 <UICovAddon />
 
-UI Coverage is organized into views, which are the unique URLs across all snapshots from end-to-end tests and the unique mounted components from component tests.
+UI Coverage organizes all unique URLs across snapshots from end-to-end tests and mounted components from component tests into "Views". A View represents a distinct page or state in your application.
 
-### Grouping
+## View Creation & Grouping
 
-UI Coverage uses certain default rules to generate a single view from dynamic URLs that represent the same page:
+By default, UI Coverage uses certain rules to generate a single View from dynamic URLs that represent the same page:
 
-- All search parameters are removed.
-- All hash parameters are removed, unless the hash parameter starts with a `/`, such as `#/admin`.
-- If there are multiple URLs that are exactly the same except for a different integer or UUID value in the same path parameter, then that path parameter is replaced with a wildcard (`*`).
+- All search parameters are removed
+- Hash parameters are removed (unless they start with `/`, such as `#/admin`)
+- If multiple URLs differ only by an integer or UUID in the same path parameter, that parameter is replaced with a wildcard (`*`)
 
-These rules can be overridden via [views](/ui-coverage/configuration/views) configuration.
+For example:
+
+- `/users/123/profile` and `/users/456/profile` would be grouped into `/users/*/profile`
+- `/dashboard?tab=overview` and `/dashboard?tab=settings` would be grouped into `/dashboard`
+- `/app#settings` and `/app#profile` would be grouped into `/app`
+- `/app#/admin` and `/app#/settings` would remain separate Views
+
+## Using Views
+
+In the UI Coverage interface, Views are listed with their coverage scores, helping you:
+
+- See which areas of your application have been tested
+- Identify untested pages and components
+- Track changes in coverage across different parts of your application
+- Focus testing efforts on critical paths and flows
+
+You can customize how URLs are grouped into Views using [views](/ui-coverage/configuration/views) and [viewFilters](/ui-coverage/configuration/viewfilters) configuration options.
