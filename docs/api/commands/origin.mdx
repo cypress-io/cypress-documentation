@@ -75,16 +75,16 @@ cy.get('h1').contains('My cool site under test')
 const hits = getHits()
 cy.visit('https://example.cypress.io/history/founder')
 // To interact with cross-origin content, move this inside cy.origin() callback
-cy.get('h1').contains('About our Founder')
-// Origin must be a precise match including scheme, subdomain and port, i.e. https://example.cypress.io
-cy.origin('cypress.io', () => {
-  cy.visit('/history/founder')
-  cy.get('h1').contains('About our Founder')
-  // Fails because hits is not passed in via args
-  cy.get('#hitcounter').contains(hits)
+cy.get('h1').contains('Kitchen Sink')
+// Origin must be a precise match including scheme, subdomain and port, i.e. https://www.cypress.io
+cy.origin('https://www.cypress.io', () => {
+  cy.visit('/about-us')
+  cy.get('h1').contains('About us')
+  // Fails because doanloads is not passed in via args
+  cy.contains(downloads)
 })
-// Won't work because still on cypress.io
-cy.get('h1').contains('My cool site under test')
+// Won't work because still on www.cypress.io
+cy.get('h1').contains('Kitchen Sink')
 ```
 
 ### Arguments
