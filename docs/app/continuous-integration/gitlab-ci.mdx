@@ -68,7 +68,7 @@ stages:
   - test
 
 test:
-  image: cypress/browsers:node-22.11.0-chrome-130.0.6723.69-1-ff-132.0-edge-130.0.2849.56-1
+  image: cypress/browsers:22.12.0
   stage: test
   script:
     # install dependencies
@@ -99,7 +99,7 @@ cache:
     - .npm/
 
 test:
-  image: cypress/browsers:node-22.11.0-chrome-130.0.6723.69-1-ff-132.0-edge-130.0.2849.56-1
+  image: cypress/browsers:22.12.0
   stage: test
   script:
     # install dependencies
@@ -166,7 +166,7 @@ cache:
 
 ## Install npm dependencies and Cypress
 install:
-  image: cypress/browsers:node-22.11.0-chrome-130.0.6723.69-1-ff-132.0-edge-130.0.2849.56-1
+  image: cypress/browsers:22.12.0
   stage: build
   script:
     - npm ci
@@ -211,13 +211,13 @@ cache:
 
 ## Install npm dependencies and Cypress
 install:
-  image: cypress/browsers:node-22.11.0-chrome-130.0.6723.69-1-ff-132.0-edge-130.0.2849.56-1
+  image: cypress/browsers:22.12.0
   stage: build
   script:
     - npm ci
 
 ui-chrome-tests:
-  image: cypress/browsers:node-22.11.0-chrome-130.0.6723.69-1-ff-132.0-edge-130.0.2849.56-1
+  image: cypress/browsers:22.12.0
   stage: test
   parallel: 5
   script:

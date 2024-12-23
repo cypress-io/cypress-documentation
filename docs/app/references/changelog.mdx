@@ -2,6 +2,28 @@
 title: Changelog
 ---
 
+## 13.17.0
+
+_Released 12/17/2024_
+
+**Features:**
+
+- Added official support for the [Google Chrome for Testing](https://github.com/GoogleChromeLabs/chrome-for-testing) browser. Assuming the browser is in a location where it can be [auto-detected](/app/references/troubleshooting#Launching-browsers), it can be launched by providing the `--browser chrome-for-testing` option. If it can't be auto-detected, the path to the browser can also be provided. Previously [customizing the available browsers](/app/references/launching-browsers#Customize-available-browsers) was required. Addresses [#28123](https://github.com/cypress-io/cypress/issues/28123) and [#28554](https://github.com/cypress-io/cypress/issues/28554).
+
+**Bugfixes:**
+
+- Fixed an issue where targets may hang if `Network.enable` is not implemented for the target. Addresses [#29876](https://github.com/cypress-io/cypress/issues/29876).
+- Updated Firefox `userChrome.css` to correctly hide the toolbox during headless mode. Addresses [#30721](https://github.com/cypress-io/cypress/issues/30721).
+- Fixed an issue loading the `cypress.config.ts` file with Node.js version `22.12.0` if it is loaded as an ESM. Addresses [#30715](https://github.com/cypress-io/cypress/issues/30715).
+
+**Misc:**
+
+- Removed a comment from the scaffolded `supportFile` for component tests around CommonJS syntax. Addresses [#23287](https://github.com/cypress-io/cypress/issues/23287).
+
+**Dependency Updates:**
+
+- Updated `chai` from `4.2.0` to `4.5.0`. Addressed in [#30737](https://github.com/cypress-io/cypress/pull/30737).
+
 ## 13.16.1
 
 _Released 12/04/2024_
@@ -737,7 +759,7 @@ Refer to the [v13 Migration Guide](/app/references/migration-guide#Migrating-to-
 
 **Features:**
 
-- Added [`--runner-ui`](/app/references/command-line#cypress-run-runner-ui) and [`--no-runner-ui`](https://docs.cypress.io/app/references/command-line#cypress-run-no-runner-ui) CLI flags to control whether the Cypress Runner UI is visible during a run. Addressed in [#27582](https://github.com/cypress-io/cypress/pull/27582).
+- Added [`--runner-ui`](/app/references/command-line#cypress-run-runner-ui) and [`--no-runner-ui`](/app/references/command-line#cypress-run-no-runner-ui) CLI flags to control whether the Cypress Runner UI is visible during a run. Addressed in [#27582](https://github.com/cypress-io/cypress/pull/27582).
 - Consolidates and improves terminal output when uploading test artifacts to Cypress Cloud. Addressed in [#27402](https://github.com/cypress-io/cypress/pull/27402)
 
 **Bugfixes:**
@@ -1489,7 +1511,7 @@ _Released 1/03/2023_
 
 - Added support for mapping the `CYPRESS_PULL_REQUEST_ID`,
   `CYPRESS_PULL_REQUEST_URL`, and/or `CYPRESS_CI_BUILD_URL` environment
-  variables to the the corresponding Cloud run. This provides workarounds when
+  variables to the corresponding Cloud run. This provides workarounds when
   supported CI provider mappings are incorrect or unsupported CI providers are
   used. Addressed in [#25036](https://github.com/cypress-io/cypress/pull/25036).
 - Added new Cypress API,
