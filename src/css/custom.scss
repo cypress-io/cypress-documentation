@@ -374,7 +374,7 @@ div[class^='codeBlockTitle'] {
 .tabs-container .tabs {
   background-color: #1f2937;
   border-radius: 0.4rem 0.4rem 0 0;
-  box-shadow: inset 0px -6px 0px -4px var(--ifm-code-background-color-light);
+  box-shadow: inset 0 -6px 0 -4px var(--ifm-code-background-color-light);
 }
 
 @media (min-width: 997px) and (max-width: 1180px) {
@@ -504,4 +504,49 @@ h6 {
 // @see https://github.com/cypress-io/cypress-documentation/issues/5771
 #__docusaurus_skipToContent_fallback {
   scroll-margin-top: var(--ifm-navbar-height);
+}
+
+ul.guidesList {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 1.5rem;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+body ul.guidesList li {
+  box-sizing: border-box;
+  list-style: none;
+  margin: 0 !important;
+
+  a {
+    display: block;
+    height: 100%;
+    padding: 20px 30px;
+    border-bottom: none !important;
+
+    svg {
+      height: 26px;
+      width: 26px;
+    }
+  }
+
+  h3 {
+      padding: 6px 0 4px;
+      font-size: 1.2rem;
+      color: var(--ifm-color-indigo-500);
+      background-size: 0 2px;
+      transition: all 0.3s ease-in-out;
+      @apply bg-gradient-to-r bg-bottom bg-no-repeat;
+  }
+
+  &:hover h3 {
+      background-size: 100% 2px;
+      @apply from-indigo-300 to-indigo-300;
+  }
+
+  p {
+    margin-bottom: 0.5em;
+    color: var(--ifm-color-gray-800);
+  }
 }

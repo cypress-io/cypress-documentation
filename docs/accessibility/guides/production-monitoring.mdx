@@ -1,7 +1,11 @@
 ---
-title: Production monitoring
+sidebar_label: Production monitoring
+title: 'Production monitoring | Cypress Accessibility Documentation'
+description: "Monitor accessibility issues in production by running scheduled Cypress tests against live environments, capturing dynamic content changes, and generating automated reports for a comprehensive accessibility overview."
 sidebar_position: 60
 ---
+
+# Production monitoring
 
 Many organizations use Cypress automation in CI, and for local development, but also run scheduled tests against production or staging environments. This pattern works especially well for situations where a Content Management System is involved and content authors can add or modify things that affect the user interface, or anything else where the content being tested is not fully controlled by the testing environment. Since it can be impossible to write explicit assertions for ever-changing content like this, or for A/B tests of different UI variations implemented outside your codebase, production smoke tests tend to be more high-level health checks.
 

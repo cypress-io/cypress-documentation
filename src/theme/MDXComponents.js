@@ -69,12 +69,21 @@ import {
   faPlus,
   faQuestionCircle,
   faSearch,
+  faLaptopCode,
   faStar,
   faSyncAlt,
   faTerminal,
   faTimes,
   faTree,
   faVideo,
+  faMagnifyingGlassChart,
+  faComputer,
+  faBugSlash,
+  faChartLine,
+  faClock,
+  faBookOpenReader,
+  faUserShield,
+  faCircleHalfStroke,
 } from '@fortawesome/free-solid-svg-icons'
 
 library.add(
@@ -111,12 +120,21 @@ library.add(
   faPlus,
   faQuestionCircle,
   faSearch,
+  faLaptopCode,
   faStar,
   faSyncAlt,
   faTerminal,
   faTimes,
   faTree,
-  faVideo
+  faVideo,
+  faMagnifyingGlassChart,
+  faComputer,
+  faBugSlash,
+  faChartLine,
+  faClock,
+  faBookOpenReader,
+  faUserShield,
+  faCircleHalfStroke,
 )
 
 export default {
