@@ -7,15 +7,21 @@ sidebar_position: 60
 
 # Production monitoring
 
-Many organizations use Cypress automation in CI, and for local development, but also run scheduled tests against production or staging environments. This pattern works especially well for situations where a Content Management System is involved and content authors can add or modify things that affect the user interface, or anything else where the content being tested is not fully controlled by the testing environment. Since it can be impossible to write explicit assertions for ever-changing content like this, or for A/B tests of different UI variations implemented outside your codebase, production smoke tests tend to be more high-level health checks.
+Cypress is commonly used in CI and local development workflows. It can also be leveraged to monitor production or staging environments through scheduled tests. This approach is particularly useful for environments involving dynamic content, such as those managed by Content Management Systems (CMS), where content changes can impact accessibility.
 
-Cypress Accessibility makes this kind of testing even more useful, as it will be able to run just fine against that dynamic set of content. Just by visiting a production URL in your Cypress tests, and taking one or two light actions in the UI, that page will be captured in your accessibility report, and alert you about content changes outside of your development lifecycle that introduce accessibility issues.
+Dynamic or externally controlled content, such as A/B tests or user-generated content, often makes it challenging to write explicit assertions. For these cases, production smoke tests can serve as high-level health checks, ensuring the accessibility of dynamic UI variations without requiring full test coverage.
 
-One common approach to this kind of monitoring, if the project does not already have Cypress tests, is to use something like a site map, or just an array of target URLs, to quickly spin up a lot of coverage without writing new tests for every page, and then run that Cypress test on a schedule to get daily updated accessibility reports. Here is an example of doing this by requesting the `sitemap.xml` file from a website and scrolling to the footer on each page.
+## Using Cypress for Production Monitoring
+
+Cypress Accessibility enables you to test dynamic content seamlessly. By visiting a production URL within your Cypress tests and performing minimal UI interactions, you can capture the page's accessibility state in reports. This allows teams to detect accessibility issues introduced outside the regular development lifecycle.
+
+## Example: Automated Sitemap-Based Testing
+
+If your project lacks existing Cypress tests, a common approach is to generate test coverage from a sitemap or an array of target URLs. These URLs can be used to perform light interactions and capture accessibility reports. Below is an example of how to automate this process by using a sitemap and scrolling to the footer on each page:
 
 ```js
-describe('accessibility scan', () => {
-  it('checks accessibility with the sitemap.xml', () => {
+describe('Accessibility Scan', () => {
+  it('Checks accessibility with the sitemap.xml', () => {
     cy.request('https://<YOUR_WEBSITE>/sitemap.xml').then((response) => {
       const xmlString = response.body
       const parser = new DOMParser()
@@ -24,10 +30,8 @@ describe('accessibility scan', () => {
         (loc) => loc.textContent
       )
       Cypress._.each(URLs, (URL) => {
-        it(`visits ${URL}`, () => {
-          cy.visit(URL)
-          cy.contains('<YOUR_FOOTER_CONTENT>').scrollIntoView()
-        })
+        cy.visit(URL)
+        cy.contains('<YOUR_FOOTER_CONTENT>').scrollIntoView()
       })
     })
   })
