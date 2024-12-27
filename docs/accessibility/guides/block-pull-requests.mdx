@@ -45,14 +45,13 @@ const rulesWithExistingViolations = [
 ]
 
 // Fetch accessibility results
-getAccessibilityResults()
-  .then((results) => {
-    // Identify new rule violations
-    const newRuleViolations = results.rules.filter((rule) => {
-      return !rulesWithExistingViolations.includes(rule.name)
-    })
+getAccessibilityResults().then((results) => {
+  // Identify new rule violations
+  const newRuleViolations = results.rules.filter((rule) => {
+    return !rulesWithExistingViolations.includes(rule.name)
+  })
 
-   if (newRuleViolations.length > 0) {
+  if (newRuleViolations.length > 0) {
     // Trigger appropriate action if new violations are detected
     throw new Error(
       `${newRuleViolations.length} new rule violations detected. These must be resolved.`

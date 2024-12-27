@@ -19,16 +19,16 @@ For example, Cypress Accessibility might flag a button with a missing accessible
 describe('Button Accessibility Test', () => {
   it('should have the correct accessible name for the button', () => {
     // Visit the page containing the button
-    cy.visit('/your-page-url');
+    cy.visit('/your-page-url')
 
     // Select the button by its identifier
     cy.get('[data-test-id="submit-button"]')
       // Ensure the button has an accessible name
       .should('have.attr', 'aria-label', 'Submit Form')
       // Optionally, assert the button contains the visible text
-      .and('contain', 'Submit');
-  });
-});
+      .and('contain', 'Submit')
+  })
+})
 ```
 
 This principle can extend to larger and more complex scenarios.
