@@ -15,7 +15,7 @@ Cypress provides a top-line percentage score to give a general sense of accessib
 
 Severity levels in Cypress Accessibility align with the Axe Core® impact classification. Developed by Deque Systems, this classification helps prioritize accessibility issues by highlighting those likely to create the most substantial barriers for users (such as missing label text) so they can be addressed first. You can learn more about the Axe Core® impact classification in the [Axe Core® documentation](https://github.com/dequelabs/axe-core/blob/develop/doc/issue_impact.md).
 
-*Note: WCAG standards do not categorize Success Criteria by severity; all failures require resolution for compliance. However, Axe Core® impact levels are helpful for prioritizing fixes to maximize usability improvements quickly.*
+_Note: WCAG standards do not categorize Success Criteria by severity; all failures require resolution for compliance. However, Axe Core® impact levels are helpful for prioritizing fixes to maximize usability improvements quickly._
 
 ## Scoring algorithm
 
@@ -31,12 +31,17 @@ The accessibility score calculation applies the following weights:
 ### Score Calculation Process
 
 1. **Snapshot Score:**
+
 - Calculate the total weight of passed checks.
 - Calculate the total weight of failed checks.
 - Compute the score as: `Score = (Passed Weights) / (Passed Weights + Failed Weights)`
+
 2. **View Score:**
+
 - Average the scores of all snapshots within the View.
+
 3. **Run Score:**
+
 - Average the scores of all snapshots in the run.
 
 ## Interpreting your scores
