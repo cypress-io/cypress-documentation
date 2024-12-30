@@ -9,7 +9,7 @@ sidebar_position: 10
 
 Understanding your application's test coverage is crucial for ensuring quality and reliability. Cypress's UI Coverage tool provides insights into which parts of your application are tested and highlights untested areas. This guide will help you get started with UI Coverage to identify and address coverage gaps effectively.
 
-## Step 1: Run Tests
+## Run Tests
 
 To identify coverage gaps, you need to first run and record Cypress tests to the Cloud. If you're new to Cypress, refer to the [Cypress documentation](/app/end-to-end-testing/writing-your-first-end-to-end-test) to get started with writing tests.
 
@@ -32,7 +32,7 @@ describe('UI Coverage Scan', () => {
 })
 ```
 
-## Step 2: Review Coverage Reports
+## Review Coverage Reports
 
 Once your tests have recorded to Cypress Cloud, you can analyze the coverage reports to identify gaps. Click on the runs in your project in [Cypress Cloud](https://on.cypress.io/cloud) to access the UI Coverage reports. This report provides a visual representation of your application's test coverage, highlighting tested and untested elements.
 
@@ -107,7 +107,7 @@ Clicking into an untested element's view shows a detailed breakdown of the eleme
   alt="Cypress Cloud screenshot cropping a single untested element showing the element's selector, the number of times the element was interacted with, the views without interactions, and a full DOM snapshot of the view"
 />
 
-## Step 3: Configure UI Coverage
+## Configure UI Coverage
 
 While UI Coverage is designed to work seamlessly out of the box, there are instances where custom configuration may be necessary to address unique application structures, testing requirements, or edge cases. Refer to the [Configuration Guide](/ui-coverage/configuration/overview) to learn how to customize UI Coverage to address these common needs:
 

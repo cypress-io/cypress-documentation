@@ -9,7 +9,7 @@ sidebar_position: 20
 
 After [identifying test coverage gaps](/ui-coverage/guides/identify-coverage-gaps) using Cypress UI Coverage, the next step is to address these gaps to ensure your application is comprehensively tested. This guide outlines best practices and strategies for improving coverage and closing the identified gaps effectively.
 
-## Step 1: Prioritize Gaps
+## Prioritize Gaps
 
 Not all coverage gaps are equally critical. Use the information provided in the UI Coverage reports to prioritize testing efforts based on:
 
@@ -18,7 +18,7 @@ Not all coverage gaps are equally critical. Use the information provided in the 
 
 By prioritizing based on application context and business impact, you can address the most significant gaps first.
 
-## Step 2: Enhance Test Coverage
+## Enhance Test Coverage
 
 Once you've identified priority areas, create or update tests to cover these gaps.
 
@@ -59,7 +59,7 @@ describe('Cover Untested Links', () => {
 })
 ```
 
-## Step 3: Refine Tests
+## Refine Tests
 
 ### Ensure Element Visibility
 
@@ -80,7 +80,7 @@ cy.get('[data-cy="login-button"]').click()
 cy.get('[data-cy="user-profile"]')
 ```
 
-## Step 4: Optimize Configuration
+## Optimize Configuration
 
 To maximize the effectiveness of UI Coverage, consider refining your configuration:
 
@@ -101,7 +101,7 @@ Refer to the [Configuration Guide](/ui-coverage/configuration/overview) to learn
   - [Attribute Filters](/ui-coverage/configuration/attributefilters): Specify patterns for attributes and their values that should not be used for identifying and grouping elements.
   - [Significant Attributes](/ui-coverage/configuration/significantattributes): Define selectors to prioritize above the default attributes Cypress uses for the purpose of identification and grouping.
 
-## Step 5: Iterate and Monitor
+## Iterate and Monitor
 
 ### Review Coverage Reports
 
@@ -114,7 +114,7 @@ After updating your tests, record them again to Cypress Cloud and review the new
 
 Use the [Results API](/ui-coverage/results-api) to integrate coverage checks into your CI/CD pipeline. Set thresholds for coverage scores to enforce quality standards. This ensures your application maintains high test coverage over time.
 
-## Step 6: Collaborate with Your Team
+#Collaborate with Your Team
 
 Improving test coverage often requires collaboration. Share insights from the UI Coverage reports with your team to:
 
