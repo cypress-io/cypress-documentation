@@ -29,14 +29,14 @@ Focus on creating tests that interact with the specific untested elements or pag
 describe('Dashboard', () => {
   it('Submits form on landing page', () => {
     cy.visit('/request-trial')
-    
+
     // Interact with previously untested elements
     cy.get('[data-cy="email"]').type('test@email.com')
     cy.contain('Request Trial').click()
     // UI Coverage will now surface the coverage of the thank you page
     cy.url().should('include', '/thank-you')
-  });
-});
+  })
+})
 ```
 
 ### Cover Untested Links
@@ -46,13 +46,9 @@ Use the **Untested Links** section of the UI Coverage report to identify pages y
 ```js
 describe('Cover Untested Links', () => {
   it('Visits untested pages', () => {
-    const untestedLinks = [
-      '/about-us',
-      '/contact',
-      '/pricing'
-    ];
+    const untestedLinks = ['/about-us', '/contact', '/pricing']
 
-    untestedLinks.forEach(link => {
+    untestedLinks.forEach((link) => {
       cy.visit(link)
       // Perform basic checks to ensure the page loads correctly
       cy.get('h1').should('exist')
@@ -128,4 +124,3 @@ Improving test coverage often requires collaboration. Share insights from the UI
 ## Next Steps
 
 You can also leverage UI Coverage to reduce test duplication to optimize your test suite further. Learn how to [reduce test duplication](/ui-coverage/guides/reduce-test-duplication) with UI Coverage to streamline your testing process.
-
