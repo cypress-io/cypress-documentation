@@ -42,16 +42,14 @@ From there, you can easily customize reports to fit your needs with flexible con
 
 ## How it Works
 
-:::caution
+UI Coverage provides an interactive, visual map of test coverage for your application, powered by Cypress [Test Replay](/cloud/features/test-replay) (requires Cypress v13+). These reports are automatically generated for every unique state reached during your Cypress tests, whether in end-to-end or component testing.
 
-UI Coverage generates reports using [Test Replay](/cloud/features/test-replay) data and requires Cypress v13+.
+- **Effortless Setup**: No extra configuration is required. UI Coverage uses the same capture protocol as Test Replay, so no additional code or configuration is needed.
+- **Dynamic Coverage Mapping**: Each interactive element is identified and highlighted as tested or untested, giving you a clear view of your test coverage across all pages and components.
+- **DOM Snapshots**: Each tested and untested element is accompanied by a full-page, inspectable DOM snapshot, highlighting the exact location and context of element.
+- **Comprehensive Scoring**: A UI Coverage score is calculated by comparing tested elements to the total interactable elements in your application.
+- **Actionable Reports**: Sortable and filterable views provide insights into which areas are tested and which need improvement.
+- **Flexible configuration**: Customize and fine-tune UI Coverage to suit specific needs and scenarios like ignoring views or elements or grouping similar elements together.
+- **Configurable CI Integration**: The [Results API](/ui-coverage/results-api) allows you to programmatically control your CI pipeline's behavior based on UI Coverage scores.
 
-:::
-
-UI Coverage creates a dynamic visual map of test coverage across every page of your application. Each interactive element is identified and highlighted as either tested or untested, providing a clear and actionable overview of your test coverage.
-
-UI Coverage captures "snapshots" of every page visited by your Cypress tests (and every component mounted in Component Testing). Snapshots represent all of the unique states found across your test run, and these states are analyzed to identify all of the unique elements that make up your application.
-
-As a result, a UI Coverage score is generated. This score quantifies coverage across your application by measuring the ratio of the unique elements that have been tested to the total unique elements that are found across your application.
-
-Because Cypress UI Coverage uses data captured through Cypress Test Replay, it is subject to Test Replay limitations. Read [How Test Replay Works](/cloud/features/test-replay#How-Test-Replay-Works) to discover which data is captured and which browsers are supported.
+Read more about how it works in the [Core Concepts](/ui-coverage/core-concepts/interactivity) section.
