@@ -13,7 +13,7 @@ Accessibility isn't a one-time project—it's a continuous process. This guide e
 
 When a specific accessibility rule reaches zero violations for a page, component, or application, you enter _maintenance mode_ for that rule. From this point a few areas are imprortant to focus on:
 
-- **Pre-Merge Insights**: Any new violations detected on feature branches are clear indicators that recent changes introduced the issue. This could stem from updates in application code that impact accessibility or expanded test coverage revealing new issues.
+- **Pre-Merge Insights**: Any new violations detected on a feature branch are clear indicators that changes on that branch introduced the issue. This could stem from updates in application code that impact accessibility or expanded test coverage revealing new issues.
 - **Post-Merge Monitoring**: If violations resurface on the main branch, tracing their introduction to specific pull requests helps pinpoint code or test changes causing the problem and facilitate follow-ups and training for developers.
 
 Your ultimate goal is to achieve a fully passing state across all rules. Cypress provides you a lot of flexibility to manage large amounts of accessibility violations and make incremental progress towards well-defined targets. Through a combination of fixing accessibility problems, and configuring Cypress to focus on a tight scope of rules, standards, and application areas that matter most to you, you might be closer than you think to a "clean" main branch, from which you can expand your standards over time.
