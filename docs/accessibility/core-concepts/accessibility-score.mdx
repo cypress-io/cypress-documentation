@@ -51,7 +51,7 @@ Accessibility scores should be viewed in the context of your specific project an
 - A score of 99% may indicate progress if the previous score was lower, but a single failure could represent a significant barrier (e.g., an inaccessible login page).
 - Even a 100% score does not guarantee full compliance or user-friendliness but indicates that Axe Core® detected no violations in the tested scope.
 
-The key value of the score is its consistency across runs. Changes in the score reliably reflect accessibility improvements or regressions.
+The key value of the score is that the calculation is repeated consistently across runs - Cypress is not trying to catch anything "in the moment" during test execution. This means that changes in the score reliably reflect accessibility improvements or regressions.
 
 In general, the ideal state is a clean 100% score in your Cypress Accessibility report, which you can achieve with a combination of fixing existing issues and ignoring things you know you won't fix.
 
