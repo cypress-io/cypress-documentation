@@ -8,13 +8,17 @@ sidebar_label: elements
 
 <UICovAddon />
 
-UI Coverage has logic that automatically [identifies](/ui-coverage/core-concepts/element-identification) elements based on their appearance and structure in the DOM.
+UI Coverage provides automatic logic to [identify](/ui-coverage/core-concepts/element-identification) elements based on their DOM structure. However, in complex applications, elements may lack stable identifiers or have dynamic attributes that vary across snapshots, leading to incorrect identification. The `elements` configuration allows you to specify selectors to uniquely identify elements, ensuring consistency across snapshots and simplifying your coverage reports.
 
-Elements may have different attributes and/or attribute values across different snapshots, which can cause the same element to be identified as multiple different elements by UI Coverage. The `elements` configuration property allows users to specify selectors to uniquely identify elements, even when they lack stable identifiers across snapshots.
+The `elements` configuration is used as the element's identity if **only one element** per snapshot matches. If there are multiple matches in the same snapshot, this configuration is ignored and the default [identify](/ui-coverage/core-concepts/element-identification) strategy is used.
 
-For every element considered by UI Coverage, the first `elements` rule for which the `selector` property matches the element is used to identify the element. Elements that do not match any rules are identified by the default UI Coverage element identification rules.
+## Why use elements configuration?
 
-If multiple elements on the same snapshot match the same rule, then that rule cannot uniquely identify both of them. In this case, the rule is not used to identify either element, and the subsequent rules, and then the default rules, are used.
+**Common use cases**
+
+- **Handle Dynamic Attributes**: Ensure elements are consistently identified across snapshots, even when attributes change.
+- **Ensure Unique Identification**: Use custom selectors to uniquely identify elements across snapshots that lack unique attributes or have dynamic values, avoiding misclassification.
+- **Simplify Debugging**: Assign human-readable names to elements to make reports more interpretable and debugging easier.
 
 ## Syntax
 
@@ -31,27 +35,14 @@ If multiple elements on the same snapshot match the same rule, then that rule ca
 }
 ```
 
-#### elements
+### Properties
 
-_Optional._ Object\[]
-
-An array of objects used to specify selectors in order to uniquely identify elements for UI Coverage. _**Each object can have the following properties:**_
-
-### selector
-
-_Required._ String (CSS Selector)
-
-Used to match and identify elements.
-
-#### name
-
-_Optional._ String
-
-A human-readable name for the element, shown in the elements list.
+- `selector` (Required): A CSS selector to identify elements. Supports standard CSS selector syntax, including IDs, classes, attributes, and combinators.
+- `name` (Optional): A human-readable name for the element, displayed in UI Coverage reports. The selector is used as the element name if no name is provided.
 
 ## Examples
 
-### Identifies elements by selector
+### Identify elements by dynamic selector across snapshots
 
 #### Config
 
@@ -73,19 +64,19 @@ A human-readable name for the element, shown in the elements list.
 <!-- Snapshot 1 -->
 <body>
   <form id="my-form">
-    <input id="dropdown-1"></input>
+    <input id="dropdown-142"></input>
   </form>
 </body>
 
 <!-- Snapshot 2 -->
 <body>
   <form id="my-form">
-    <input id="dropdown-2"></input>
+    <input id="dropdown-980"></input>
   </form>
 </body>
 ```
 
-#### Elements shown in UI
+#### Elements shown in UI Coverage
 
 ```
 #my-form [id^="dropdown"]
@@ -93,7 +84,7 @@ A human-readable name for the element, shown in the elements list.
 
 ---
 
-### Does not identify elements when multiple match the selector
+### Identify elements with human-readable names
 
 #### Config
 
@@ -102,7 +93,8 @@ A human-readable name for the element, shown in the elements list.
   "uiCoverage": {
     "elements": [
       {
-        "selector": "#my-form [id^='dropdown']"
+        "selector": "#ui-popover-button",
+        "name": "Help Popover"
       }
     ]
   }
@@ -112,18 +104,13 @@ A human-readable name for the element, shown in the elements list.
 #### HTML
 
 ```xml
-<!-- Snapshot 1 -->
 <body>
-  <form id="my-form">
-    <input id="dropdown-1"></input>
-    <input id="dropdown-2"></input>
-  </form>
+  <button id="ui-popover-button">Help</button>
 </body>
 ```
 
-#### Elements shown in UI
+#### Elements shown in UI Coverage
 
 ```
-#my-form #dropdown-1
-#my-form #dropdown-2
+Help Popover
 ```

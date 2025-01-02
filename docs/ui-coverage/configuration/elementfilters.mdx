@@ -14,9 +14,18 @@ reports. Nesting this property under an `accessibility` or `uiCoverage` key is
 supported, if you need to split them up.
 :::
 
-By default, every interactive and visible element is included in UI Coverage. The `elementFilters` property allows you to specify selectors for elements that should be excluded from UI Coverage.
+By default, every interactive and visible element is included in UI Coverage. The `elementFilters` property allows you to specify selectors for elements that should be excluded from these reports. This configuration is particularly useful for removing irrelevant or non-actionable elements to streamline coverage analysis.
 
-For every element considered interactive and visible by UI Coverage, the first `elementFilters` rule for which the `selector` property matches the element is used to either include or exclude the element based on the `include` value. Elements that do not match any rules are included by default.
+## Why use element filters?
+
+**Common use cases**
+
+- **Excluding Irrelevant Elements**: Decorative icons, marketing banners, or tooltips that do not require testing can clutter reports. Use elementFilters to exclude them.
+- **Streamlining Reports**: Reducing noise by filtering out non-essential elements makes coverage reports more actionable.
+- \*\*Improving Grouping Accuracy:
+  Avoid incorrectly grouping elements that share attributes but serve different purposes.
+
+Example: Ensure buttons with different actions are not grouped together due to generic data-\* attributes.
 
 ## Syntax
 
@@ -31,28 +40,10 @@ For every element considered interactive and visible by UI Coverage, the first `
 }
 ```
 
-### elementFilters
+### Properties
 
-_Optional._ Object\[]
-
-An array of objects used to specify elements to exclude from UI Coverage. _**Each object can have the following properties:**_
-
-### selector
-
-_Required._ String (CSS Selector)
-
-A CSS selector used to identify elements.
-
-- Supports all standard CSS selector syntax including IDs, classes, attributes, and combinators
-- The selector matches exactly what is specified - for example, `#container` matches the container element itself, while `#container *` matches all elements within the container
-
-### include
-
-_Optional._ Boolean
-
-_Default:_ `true`
-
-A boolean that represents whether or not a matched element should be included in UI Coverage.
+- `selector` (Required): A CSS selector to identify elements. Supports standard CSS selector syntax, including IDs, classes, attributes, and combinators.
+- `include` (Optional): A boolean indicating whether the matched elements should be included in UI Coverage. Default to `true` (elements are included by default).
 
 ## Examples
 
@@ -80,7 +71,7 @@ A boolean that represents whether or not a matched element should be included in
 </body>
 ```
 
-#### Elements shown in UI
+#### Elements shown in UI Coverage
 
 ```
 #button-1
@@ -116,7 +107,7 @@ A boolean that represents whether or not a matched element should be included in
 </body>
 ```
 
-#### Elements shown in UI
+#### Elements shown in UI Coverage
 
 ```
 #start
@@ -124,7 +115,7 @@ A boolean that represents whether or not a matched element should be included in
 
 ---
 
-### Including only elements in a container
+### Including only elements in a specific container
 
 #### Config
 
@@ -160,4 +151,68 @@ A boolean that represents whether or not a matched element should be included in
 
 ```
 #name
+```
+
+---
+
+### Excluding Elements by Attribute
+
+#### Config
+
+```json
+{
+  "elementFilters": [
+    {
+      "selector": "[data-role='decorative']",
+      "include": false
+    }
+  ]
+}
+```
+
+```xml
+<body>
+  <button data-role="decorative">
+    <img src="icon.png" />
+  </button>
+  <button data-role="primary">
+    View
+  </button>
+</body>
+```
+
+#### Elements shown in UI Coverage
+
+```
+[data-role="primary"]
+```
+
+### Excluding dynamic elements by pattern
+
+#### Config
+
+```json
+{
+  "elementFilters": [
+    {
+      "selector": "[class^='auth']",
+      "include": false
+    }
+  ]
+}
+```
+
+#### HTML
+
+```xml
+<body>
+  <iframe class="auth908283794"></iframe>
+  <iframe class="map"></iframe>
+</body>
+```
+
+#### Elements shown in UI Coverage
+
+```
+.map
 ```

@@ -9,16 +9,21 @@ sidebar_label: views
 <UICovAddon />
 
 :::info
-Note: setting views impacts both Accessibility and UI Coverage reports.
+Note: setting `views` impacts both Accessibility and UI Coverage reports.
 Nesting this property under an `accessibility` or `uiCoverage` key is
 supported, if you need to split them up.
 :::
 
-UI Coverage automatically groups certain URL patterns to create [views](/ui-coverage/core-concepts/views). For URLs that are not automatically grouped (e.g. `/users/alice` and `/users/bob` are not automatically grouped into `/users/*`), the `views` property allows you to specify URL patterns that represent views.
-
-Each URL pattern provided defines a view that is made up of all URLs that match the pattern. The first pattern that a given URL matches is used as its view. If a URL doesn't match any of the patterns, it is grouped by the default UI Coverage grouping rules, if possible.
+UI Coverage automatically groups certain URL patterns to create [views](/ui-coverage/core-concepts/views). However, for URLs that are not automatically grouped (e.g., `/users/alice` and `/users/bob` are not automatically grouped into `/users/*`), the `views` property allows you to specify custom URL patterns to define views. This configuration enhances the clarity and organization of your coverage reports.
 
 The `groupBy` property of a view definition allows you to create multiple views with a single URL pattern, grouping URLs by the specified named parameter(s).
+
+## Why use views?
+
+**Common use cases**
+
+- **Group Dynamic URLs**: Group URLs with dynamic path parameters (e.g., `/users/alice` and `/users/bob`) that are not ids or uuids into a single view.
+- **Organize by Query Parameters**: Create views based on query parameters to group URLs where query strings are important to the context of the page.
 
 ## Syntax
 
@@ -35,23 +40,10 @@ The `groupBy` property of a view definition allows you to create multiple views 
 }
 ```
 
-### views
+### Properties
 
-_Optional._ Object\[]
-
-An array of objects used to define views within UI Coverage. _**Each object can have the following properties:**_
-
-### pattern
-
-_Required._ String (URL Pattern)
-
-A URL pattern that groups matching URLs into a single view. This utilizes the [URL Pattern API](https://developer.mozilla.org/en-US/docs/Web/API/URL_Pattern_API) syntax for matching.
-
-### groupBy
-
-_Optional._ String\[]
-
-An array of named URL parameters used to further subdivide the URLs into multiple views within the same pattern. When `groupBy` is defined, each URL that matches the specified `pattern` is further analyzed to create separate views based on the specified parameters. This is particularly useful in dynamic applications where URLs represent different user interactions or data segments.
+- `pattern` (Required): A URL pattern to group matching URLs into a single view. Uses [URL Pattern API](https://developer.mozilla.org/en-US/docs/Web/API/URL_Pattern_API) syntax.
+- `groupBy` (Optional): An array of named URL parameters used to further subdivide the URLs into multiple views within the same pattern. This is useful for dynamic applications where URLs represent different user interactions or data segments.
 
 ## Examples
 
@@ -63,7 +55,7 @@ An array of named URL parameters used to further subdivide the URLs into multipl
 {
   "views": [
     {
-      "pattern": "https://cypress.io/users/*"
+      "pattern": "https://www.my-app.com/users/*"
     }
   ]
 }
@@ -72,29 +64,30 @@ An array of named URL parameters used to further subdivide the URLs into multipl
 #### Visited URLs
 
 ```
-https://cypress.io/users/alice
-https://cypress.io/users/alice?foo=bar
-https://cypress.io/users/bob
-https://cypress.io/users/bob#baz
+https://www.my-app.com/users/alice
+https://www.my-app.com/users/bob
+https://www.my-app.com/users/bob#settings
+https://www.my-app.com/users?assigned=true
 ```
 
 #### Views shown in UI
 
 ```
-https://cypress.io/users/*
+my-app.com/users
+my-app.com/users/*
 ```
 
 ---
 
-### Using named path parameters
+### Usin named path parameters
 
 #### Config
 
-```json
+```typescript
 {
   "views": [
     {
-      "pattern": "https://cypress.io/users/:name"
+      "pattern": "https://www.my-app.com/users/:name"
     }
   ]
 }
@@ -103,21 +96,22 @@ https://cypress.io/users/*
 #### Visited URLs
 
 ```
-https://cypress.io/users/alice
-https://cypress.io/users/alice?foo=bar
-https://cypress.io/users/bob
-https://cypress.io/users/bob#baz
+https://www.my-app.com/users/alice
+https://www.my-app.com/users/bob
+https://www.my-app.com/users/bob#settings
+https://www.my-app.com/users?assigned=true
 ```
 
 #### Views shown in UI
 
 ```
-https://cypress.io/users/:name
+my-app.com/users
+my-app.com/users/:name
 ```
 
 ---
 
-### Grouping URLs by named path parameters
+### Group URLs by named parameters
 
 #### Config
 
@@ -125,7 +119,7 @@ https://cypress.io/users/:name
 {
   "views": [
     {
-      "pattern": "https://cypress.io/analytics/:type/:id",
+      "pattern": "https://www.my-app.com/analytics/:type/:id",
       "groupBy": ["type"]
     }
   ]
@@ -135,22 +129,22 @@ https://cypress.io/users/:name
 #### Visited URLs
 
 ```
-https://cypress.io/analytics/performance/foo
-https://cypress.io/analytics/performance/bar
-https://cypress.io/analytics/usage/foo
-https://cypress.io/analytics/usage/bar
+https://www.my-app.com/analytics/performance/amara
+https://www.my-app.com/analytics/performance/harper
+https://www.my-app.com/analytics/usage/amara
+https://www.my-app.com/analytics/usage/harper
 ```
 
 #### Views shown in UI
 
 ```
-https://cypress.io/analytics/performance/:id
-https://cypress.io/analytics/usage/:id
+my-app.com/analytics/performance/:id
+my-app.com/analytics/usage/:id
 ```
 
 ---
 
-### Grouping URLs by named query parameters
+### Group URLs by named query parameters
 
 #### Config
 
@@ -158,8 +152,8 @@ https://cypress.io/analytics/usage/:id
 {
   "views": [
     {
-      "pattern": "https://cypress.io/app?*name=:name{&*}?#*",
-      "groupBy": ["name"]
+      "pattern": "https://www.my-app.com/home?*status=:status{&*}?#*",
+      "groupBy": ["status"]
     }
   ]
 }
@@ -168,22 +162,22 @@ https://cypress.io/analytics/usage/:id
 #### Visited URLs
 
 ```
-https://cypress.io/app?foo=1&name=hello
-https://cypress.io/app?name=hello&bar=2
-https://cypress.io/app?foo=3&name=world&bar=4
-https://cypress.io/app?foo=5&name=world#baz
+https://www.my-app.com/home?page=1&status=done
+https://www.my-app.com/home?status=done&group=2
+https://www.my-app.com/home?tag=trip&status=new&group=4
+https://www.my-app.com/home?tag=trip&status=new#statusView
 ```
 
 #### Views shown in UI
 
 ```
-https://cypress.io/app?name=hello
-https://cypress.io/app?name=world
+my-app.com/home?status=done
+my-app.com/home?status=new
 ```
 
 ---
 
-### Grouping URLs by path parameters to ignore dynamic hosts
+### Grouping URLs across subdomains
 
 #### Config
 
@@ -191,7 +185,7 @@ https://cypress.io/app?name=world
 {
   "views": [
     {
-      "pattern": "https://*.cypress.io/:path*",
+      "pattern": "https://*.my-app.com/:path*",
       "groupBy": ["path"]
     }
   ]
@@ -201,16 +195,17 @@ https://cypress.io/app?name=world
 #### Visited URLs
 
 ```
-https://sub1.cypress.io/home
-https://sub2.cypress.io/home
-https://sub3.cypress.io/profile
-https://sub4.cypress.io/profile/edit
+https://staging1.my-app.com/home
+https://staging2.my-app.com/home
+https://www.my-app.com/home
+https://staging1.my-app.com/profile
+https://www.my-app.com/profile/edit
 ```
 
 #### Views shown in UI
 
 ```
-https://*.cypress.io/home
-https://*.cypress.io/profile
-https://*.cypress.io/profile/edit
+https://*.my-app.com/home
+https://*.my-app.com/profile
+https://*.my-app.com/profile/edit
 ```
