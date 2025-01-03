@@ -40,10 +40,10 @@ By default, every URL visited within a test run is included in UI Coverage. Howe
 
 For every URL visited and link element found, the first `viewFilters` rule for which the `pattern` matches the URL is used to either include or exclude the URL based on the `include` value. URLs that do not match any rules are included by default.
 
-Option | Required | Default | Description
--- | -- | -- | --
-`pattern` | Required | | A string that matches URLs using [URL Pattern API](https://developer.mozilla.org/en-US/docs/Web/API/URL_Pattern_API) syntax.
-`include` | Optional | `true` | A boolean that determines whether matching URLs should be included in coverage.
+| Option    | Required | Default | Description                                                                                                                  |
+| --------- | -------- | ------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| `pattern` | Required |         | A string that matches URLs using [URL Pattern API](https://developer.mozilla.org/en-US/docs/Web/API/URL_Pattern_API) syntax. |
+| `include` | Optional | `true`  | A boolean that determines whether matching URLs should be included in coverage.                                              |
 
 ## Examples
 

@@ -41,10 +41,10 @@ For every element considered by UI Coverage, the first applicable rule, determin
 
 If multiple elements within the same snapshot satisfy the same rule, the rule cannot uniquely identify these elements. In such cases, the rule is bypassed, and either subsequent rules or the default element identification logic are applied.
 
-Option | Required | Default | Description
--- | -- | -- | --
-`selector` | Required | | A CSS selector to identify elements. Supports standard CSS selector syntax, including IDs, classes, attributes, and combinators.
-`name` | Optional | `selector` | A human-readable name for the element, displayed in UI Coverage reports.
+| Option     | Required | Default    | Description                                                                                                                      |
+| ---------- | -------- | ---------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| `selector` | Required |            | A CSS selector to identify elements. Supports standard CSS selector syntax, including IDs, classes, attributes, and combinators. |
+| `name`     | Optional | `selector` | A human-readable name for the element, displayed in UI Coverage reports.                                                         |
 
 ## Examples
 

@@ -10,7 +10,6 @@ sidebar_label: significantAttributes
 
 UI Coverage provides logic to automatically [identify](/ui-coverage/core-concepts/element-identification) and [group](/ui-coverage/core-concepts/element-grouping) elements based on their attributes and DOM structure. However, your application may rely on custom attributes for identification that are not prioritized by default in UI Coverage. The `significantAttributes` configuration allows you to specify these attributes, ensuring accurate identification and grouping.
 
-
 ## Why use significantAttributes?
 
 ## Common use cases
@@ -35,9 +34,9 @@ UI Coverage provides logic to automatically [identify](/ui-coverage/core-concept
 
 The attributes listed in `significantAttributes` are considered "significant" and are prioritized above the default significant attributes, but below `data-cy-ui-id` and `data-cy-ui-group`, for the purpose of identification and grouping.
 
-Option | Required | Default | Description
--- | -- | -- | --
-`significantAttributes` | Required | | An array of attribute names to prioritize for element identification and grouping.Supports any valid HTML attribute names.
+| Option                  | Required | Default | Description                                                                                                                |
+| ----------------------- | -------- | ------- | -------------------------------------------------------------------------------------------------------------------------- |
+| `significantAttributes` | Required |         | An array of attribute names to prioritize for element identification and grouping.Supports any valid HTML attribute names. |
 
 ## Examples
 

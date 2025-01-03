@@ -8,8 +8,6 @@ sidebar_label: elementFilters
 
 <UICovAddon />
 
-
-
 By default, every interactive and visible element is included in UI Coverage. The `elementFilters` property allows you to specify selectors for elements that should be excluded from these reports. This configuration is particularly useful for removing irrelevant or non-actionable elements to streamline coverage analysis.
 
 ## Why use element filters?
@@ -43,10 +41,10 @@ supported, if you need to split them up.
 
 For every element considered interactive and visible by UI Coverage, the first `elementFilters` rule for which the selector property matches the element is used to either include or exclude the element based on the `include` value. Elements that do not match any rules are included by default.
 
-Option | Required | Default | Description
--- | -- | -- | --
-`selector` | Required | | A CSS selector to identify elements. Supports standard CSS selector syntax, including IDs, classes, attributes, and combinators.
-`include` | Optional | `true` | A boolean indicating whether the matched elements should be included in UI Coverage.
+| Option     | Required | Default | Description                                                                                                                      |
+| ---------- | -------- | ------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| `selector` | Required |         | A CSS selector to identify elements. Supports standard CSS selector syntax, including IDs, classes, attributes, and combinators. |
+| `include`  | Optional | `true`  | A boolean indicating whether the matched elements should be included in UI Coverage.                                             |
 
 ## Examples
 
