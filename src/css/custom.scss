@@ -523,7 +523,6 @@ body ul.guidesList li.card {
     display: block;
     height: 100%;
     padding: 20px 30px;
-    // border-bottom: none;
     border-radius: 4px;
     border-width: 1px;
     border-color: transparent;
@@ -539,6 +538,10 @@ body ul.guidesList li.card {
       color: var(--ifm-color-jade-400);
       height: 26px;
       width: 26px;
+
+      html[data-theme='dark'] & {
+        color: var(--ifm-color-jade-300);
+      }
     }
   }
 
@@ -547,10 +550,18 @@ body ul.guidesList li.card {
       font-size: 1.2rem;
       color: var(--ifm-color-indigo-500);
       background-size: 0 2px;
+
+      html[data-theme='dark'] & {
+        color: var(--ifm-color-indigo-50);
+      }
   }
 
   p {
     margin-bottom: 0.5em;
     color: var(--ifm-color-gray-800);
+
+    html[data-theme='dark'] & {
+      color: var(--ifm-color-gray-50);
+    }
   }
 }

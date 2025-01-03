@@ -66,8 +66,11 @@ div.markdown {
     display: inline-block;
     margin-bottom: 2rem;
 
-    &.text-white:hover {
-      color: white;
+    &.border-indigo-500 {
+      html[data-theme='dark'] & {
+          color: var(--ifm-color-jade-100);
+          border-color:var(--ifm-color-jade-100);
+      }
     }
 
     &.border-indigo-500:hover {
@@ -78,7 +81,16 @@ div.markdown {
       }
     }
 
-    
+    &.text-white {
+      html[data-theme='dark'] & {
+        color: white;
+        border-color: white;
+      }
+    }
+
+    &.text-white:hover {
+      color: white;
+    }
 
     svg {
       display: inline;
