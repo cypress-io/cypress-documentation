@@ -84,7 +84,7 @@ commands.{' '}
 The `resourceType` option on [`cy.intercept`](/api/commands/intercept) has been deprecated in Cypress 14.0.0. We anticipate the types of the `resourceType` to change in the future or be completely removed
 from the API.
 
- Our intention is to replace essential functionality dependent on the `resourceType` within Cypress in a future version (like [hiding network logs that are not fetch/xhr](api/commands/intercept#Disabling-logs-for-a-request)). If you're using `resourceType` in your tests, please leave feedback on which `resourceType` values are important to you in this [GitHub issue](https://github.com/cypress-io/cypress/issues/30447).
+Our intention is to replace essential functionality dependent on the `resourceType` within Cypress in a future version (like [hiding network logs that are not fetch/xhr](/api/commands/intercept#Disabling-logs-for-a-request)). If you're using `resourceType` in your tests, please leave feedback on which `resourceType` values are important to you in this [GitHub issue](https://github.com/cypress-io/cypress/issues/30447).
 
 ### CT Just in Time Compile changes
 
@@ -122,7 +122,7 @@ Now that the minimum version of React supported for Component Testing is `18.0.0
 
 To migrate, change the test harness from `cypress/react18` to `cypress/react`.
 
-<Badge type="danger">Before</Badge> 
+<Badge type="danger">Before</Badge>{' '}
 
 ```ts
 import { mount } from `cypress/react18`
@@ -146,7 +146,7 @@ npm install --save-dev @cypress/react@8
 
 Inside your support file (ex: `./cypress/support/component.(js|ts)`), or wherever your mount function is imported, make the following update to add `@`.
 
-<Badge type="danger">Before</Badge> 
+<Badge type="danger">Before</Badge>{' '}
 
 ```ts
 import { mount } from `cypress/react`
@@ -166,7 +166,7 @@ Now that the minimum version of Angular supported for Component Testing is `17.2
 
 To migrate, just change the test harness from `cypress/angular-signals` to `cypress/angular`.
 
-<Badge type="danger">Before</Badge> 
+<Badge type="danger">Before</Badge>{' '}
 
 ```ts
 import { mount } from `cypress/angular-signals`
@@ -190,7 +190,7 @@ npm install --save-dev @cypress/angular@2
 
 Inside your support file (ex: `./cypress/support/component.(js|ts)`), or wherever your mount function is imported, make the following update to add `@`.
 
-<Badge type="danger">Before</Badge> 
+<Badge type="danger">Before</Badge>{' '}
 
 ```ts
 import { mount } from `cypress/angular`
@@ -218,7 +218,7 @@ npm install --save-dev @cypress/vue2
 
 Inside your support file (ex: `./cypress/support/component.(js|ts)`), or wherever your mount function is imported, make the following update to add `@`.
 
-<Badge type="danger">Before</Badge> 
+<Badge type="danger">Before</Badge>{' '}
 
 ```ts
 import { mount } from `cypress/vue2`
@@ -233,6 +233,7 @@ import { mount } from `@cypress/vue2`
 ### Create React App CT no longer supported
 
 [create-react-app](https://create-react-app.dev/) is no longer actively maintained or supported (see [CRA issue #13393](https://github.com/facebook/create-react-app/issues/13393)). Your component tests will now need a bundler to run. If still using [create-react-app](https://create-react-app.dev/), you'll either need to:
+
 - [Eject](https://create-react-app.dev/docs/available-scripts/#npm-run-eject) the configuration to bundle with webpack.
 - Leverage [vite](https://vite.dev/guide/) to bundle your component tests (quick setup with [create-vite](https://github.com/vitejs/vite/tree/main/packages/create-vite)).
 
@@ -256,7 +257,8 @@ module.exports = defineConfig({
 
 ### `@vue/cli-service` CT no longer supported
 
-`@vue/cli-service` is in [maintenance mode](https://cli.vuejs.org/guide/cli-service.html) and is no longer maintained by the Vue core team. Your component tests will now need a bundler to run. If still using [Vue CLI](https://cli.vuejs.org/), you will either need to: 
+`@vue/cli-service` is in [maintenance mode](https://cli.vuejs.org/guide/cli-service.html) and is no longer maintained by the Vue core team. Your component tests will now need a bundler to run. If still using [Vue CLI](https://cli.vuejs.org/), you will either need to:
+
 - Migrate to webpack ([see example](https://github.com/cypress-io/cypress-component-testing-apps/tree/main/vue3-webpack-ts)).
 - Leverage [vite](https://vite.dev/guide/). The Vue team recommends migrating to using `create-vue` to scaffold a [Vite](https://vite.dev/)-based project.
 
