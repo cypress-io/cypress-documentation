@@ -27,6 +27,9 @@ export default defineConfig({
           }
 
           if (file.isDirectory()) {
+            if(file.name === 'partials') {
+              return []
+            }
             return walk(join(dir, file.name))
           } else {
             return [join(dir, file.name)]
