@@ -3,7 +3,8 @@ export interface DocsImageProps {
   caption: string
   src: string
   title: string
-  width: number;
+  width: number
   noBorder: boolean
   style: string
+  className: string
 }

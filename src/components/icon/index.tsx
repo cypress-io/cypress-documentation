@@ -1,8 +1,16 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-// TODO: refactor this component to be more efficient
-export default function Icon({ name, color, inline, url, callout, contentType }) {
+interface IconProps {
+  name: string;
+  color?: string;
+  inline?: boolean;
+  url?: string;
+  callout?: string;
+  contentType?: string;
+}
+
+export default function Icon({ name, color, inline, url, callout, contentType }: IconProps) {
   const iconName = name === "github" ? ["fab", "github"] : name;
   const space = inline ? '.25rem' : '0.5rem'
 
@@ -21,7 +29,7 @@ export default function Icon({ name, color, inline, url, callout, contentType })
 
   return (
     <>
-      <FontAwesomeIcon icon={iconName} color={color} />
+      <FontAwesomeIcon icon={iconName} color={color}/>
       { url ? <a href={url} style={{ marginLeft: space }}>{ content }</a> : null}
     </>
   )
