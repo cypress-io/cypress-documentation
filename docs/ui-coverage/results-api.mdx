@@ -9,13 +9,11 @@ sidebar_position: 100
 
 <UICovAddon />
 
-The `@cypress/extract-cloud-results` module provides the `getUICoverageResults` utility which enables you to programmatically fetch your run's UI Coverage results in a CI environment. It determines the Cypress run created for the given CI workflow and will return the UI Coverage results associated with that run. The results will be returned once the Cypress run has finished and the UI Coverage report has been processed.
-
-This allows you to review the results within CI and to determine if the results are acceptable or need to be addressed before code changes can merge.
+The `@cypress/extract-cloud-results` module provides the `getUICoverageResults` utility to programmatically fetch UI Coverage results for a run in a CI environment. This allows you to determine if test coverage meets your requirements before merging code changes.
 
 ## Supported CI Providers
 
-Fetching UI Coverage results for a run supports fetching results for the following CI providers. Please see the docs below for information on general setup.
+The utility supports the following CI providers. Refer to the linked guides for setup details:
 
 - [Azure](/app/continuous-integration/overview#Azure-Pipelines) (requires Cypress v13.13.1)
 - [CircleCI ](/app/continuous-integration/circleci)
@@ -23,7 +21,7 @@ Fetching UI Coverage results for a run supports fetching results for the followi
 - [GitLab](/app/continuous-integration/gitlab-ci)
 - [Jenkins](/app/continuous-integration/overview#Jenkins)
 
-Please reach out to Cypress Support to request support for a different provider.
+For other CI providers, contact Cypress Support to request support.
 
 ## Installation
 
@@ -43,15 +41,17 @@ If you check this in as a dependency, your installation will fail when we update
 
 ## Usage
 
-### **1. Get the Results**
+### **1. Fetch UI Coverage Results**
 
-Write a script using the `getUICoverageResults` utility to retrieve the results and perform one or more assertions to verify if the changes are acceptable. This script will be executed in CI.
+Write a script to fetch UI Coverage results and assert test coverage criteria. This script will be executed in CI.
 
 ```javascript title="scripts/verifyUICoverageResults.js"
+const { getUICoverageResults } = require('@cypress/extract-cloud-results')
+
 getUICoverageResults({
-  projectId: '...', // optional if set from env
-  recordKey: '...', // optional if set from env
-  runTags: [process.env.RUN_TAGS], // required if recording multiple runs
+  projectId: process.env.CYPRESS_PROJECT_ID, // Optional if set from env
+  recordKey: process.env.CYPRESS_RECORD_KEY, // Optional if set from env
+  runTags: [process.env.RUN_TAGS], // Required if recording multiple runs
 }).then((results) => {
   const { runNumber, uiCoverageReportUrl, summary, views } = results
 
@@ -60,139 +60,55 @@ getUICoverageResults({
   )
   console.log(`See full report at ${uiCoverageReportUrl}.`)
 
-  // verify project coverage
+  // Verify overall coverage
   if (summary.coverage < 80) {
     throw new Error(
-      `Project coverage is ${summary.coverage}, which does not meet the minimum coverage of 80%.`
+      `Project coverage is ${summary.coverage}, below the minimum threshold of 80%.`
     )
   }
 
   const criticalViews = [/login/, /checkout/]
 
-  // verify critical view coverage
-  const criticalViewResults = views.forEach((view) => {
+  // Verify critical view coverage
+  views.forEach((view) => {
     const { displayName, coverage, uiCoverageReportUrl } = view
 
-    const isCriticalView = criticalViews.some((rx) => rx.test(displayName))
-    if (!isCriticalView) return
-
-    if (coverage < 95) {
+    if (
+      criticalViews.some((pattern) => pattern.test(displayName)) &&
+      coverage < 95
+    ) {
       throw new Error(
-        `The critical view ${displayName} has the coverage of ${coverage}, which does not meet the critical view coverage of 95%. See report at ${uiCoverageReportUrl}.`
+        `Critical view "${displayName}" coverage is ${coverage}%, below the required 95%. See: ${uiCoverageReportUrl}`
       )
     }
   })
 
-  console.log('Your UI Coverage looks great!')
+  console.log('UI Coverage is above minimum thresholds.')
 })
 ```
 
-#### `getUICoverageResults` Arguments
+#### `getUICoverageResults` arguments
 
-`getUICoverageResults` uses the following attributes to identify the Cypress run and return the UI Coverage results:
+`getUICoverageResults` accpets the following arguments:
 
 ```javascript
 getUICoverageResults({
   // The Cypress project ID.
   // Optional if the CYPRESS_PROJECT_ID env is set
-  // Can be explicitly passed to override the env var
   projectId: string
-
   // The project's record key.
   // Optional if the CYPRESS_RECORD_KEY env is set
-  // Can be explicitly passed to override the env var
   recordKey: string
-
   // The run tags associated with the run.
   // Required IF you are recording multiple Cypress runs from a single CI build.
   // Pass the run tags you used when recording in each run
-  // See below for more information
   runTags: string[]
 })
 ```
 
-#### Result Types
+## 2. Integrate into CI workflow
 
-The UI Coverage results for the run are returned as an object containing the following data:
-
-```javascript
-{
-  // The run number of the identified build.
-  runNumber: number
-
-  // The run url for the identified build.
-  runUrl: 'https://cloud.cypress.io/projects/:project_id/runs/:run_number'
-
-  // The status of the identified build.
-  runStatus: 'passed' | 'failed' | 'errored' | 'timedOut' | 'cancelled' | 'noTests'
-
-   // The url that links to UI Coverage report for the identified build.
-  uiCoverageReportUrl: 'https://cloud.cypress.io/[...]'
-
-  summary: {
-    // Indicates whether a complete UI Coverage report was generated.
-    // For example, if a run was cancelled and the report expected to run
-    // for 20 specs, but only 10 ran, this would result in a partial report.
-    isPartialReport: boolean
-
-    // The report coverage from 0-100 with 2 decimal precision (e.g 92.45).
-    coverage: float
-
-    // The number of views tested and analyzed.
-    viewCount: number
-
-    // The number of interactive elements that were tested.
-    testedElementsCount:number
-
-    // The number of interactive elements that were not tested.
-    untestedElementsCount: number
-  }
-
-  // The list of tested views and the coverage of each page.
-  views: [{
-    // The sanatized URL pattern shown in the report.
-    displayName: string
-
-    // The view coverage from 0-100 with 2 decimal precision (e.g 92.45).
-    coverage: float
-
-    // The number of interactive elements that were tested on this view.
-    testedElementsCount:number
-
-    // The number of interactive elements that were not tested on this view.
-    untestedElementsCount: number
-
-    // The url that links the report for this view.
-    uiCoverageReportUrl: 'https://cloud.cypress.io/[...]'
-  }]
-}
-```
-
-### **2. Add to CI Workflow**
-
-In your CI workflow that runs your Cypress tests,
-
-1. Update your install job to install the `@cypress/extract-cloud-results` module.
-2. Pass in the necessary arguments to `getUICoverageResults`.
-3. Add a new step to the job that runs your Cypress tests to verify the UI Coverage results.
-
-:::info
-
-If you record multiple runs in a single CI build, you must record these runs using the `--tag` parameter and then call `getUICoverageResults` with the `runTags` argument for each run.
-
-This is necessary to identify each unique run and return a corresponding set of results. The tags are how each run is uniquely identified.
-
-**Example**
-
-- Let's imagine that within a single CI build you call `cypress run --record` multiple times because you're running one set of tests against a `staging` environment, followed by a `production` environment.
-- In this scenario, you pass a different `--tag` to each cypress run
-  - `cypress run --record --tag staging`
-  - `cypress run --record --tag production`
-- When calling `getUICoverageResults` you would then pass these same tags to get the unique set of results for each run
-  - `getUICoverageResults({ runTags: ['staging']})`
-  - `getUICoverageResults({ runTags: ['production']})`
-
-:::
+Add steps to your CI configuration to install the module, fetch results, and verify coverage:
 
 <Tabs groupId="ui-cov-results-api">
 <TabItem value="GitHub Actions" active>
@@ -342,3 +258,73 @@ workflows:
 
 </TabItem>
 </Tabs>
+
+#### Result Details
+
+The `getUICoverageResults` utility returns the following data:
+
+```javascript
+{
+  // The run number of the identified build.
+  runNumber: number
+  // The run url for the identified build.
+  runUrl: 'https://cloud.cypress.io/projects/:project_id/runs/:run_number'
+  // The status of the identified build.
+  runStatus: 'passed' | 'failed' | 'errored' | 'timedOut' | 'cancelled' | 'noTests'
+   // The url that links to UI Coverage report for the identified build.
+  uiCoverageReportUrl: 'https://cloud.cypress.io/[...]'
+  summary: {
+    // Indicates whether a complete UI Coverage report was generated.
+    // For example, if a run was cancelled and the report expected to run
+    // for 20 specs, but only 10 ran, this would result in a partial report.
+    isPartialReport: boolean
+    // The report coverage from 0-100 with 2 decimal precision (e.g 92.45).
+    coverage: float
+    // The number of views tested and analyzed.
+    viewCount: number
+    // The number of interactive elements that were tested.
+    testedElementsCount:number
+    // The number of interactive elements that were not tested.
+    untestedElementsCount: number
+  }
+  // The list of tested views and the coverage of each page.
+  views: [{
+    // The sanatized URL pattern shown in the report.
+    displayName: string
+    // The view coverage from 0-100 with 2 decimal precision (e.g 92.45).
+    coverage: float
+    // The number of interactive elements that were tested on this view.
+    testedElementsCount:number
+    // The number of interactive elements that were not tested on this view.
+    untestedElementsCount: number
+    // The url that links the report for this view.
+    uiCoverageReportUrl: 'https://cloud.cypress.io/[...]'
+  }]
+}
+```
+
+### **2. Add to CI Workflow**
+
+In your CI workflow that runs your Cypress tests,
+
+1. Update your install job to install the `@cypress/extract-cloud-results` module.
+2. Pass in the necessary arguments to `getUICoverageResults`.
+3. Add a new step to the job that runs your Cypress tests to verify the UI Coverage results.
+
+:::info
+
+If you record multiple runs in a single CI build, you must record these runs using the `--tag` parameter and then call `getUICoverageResults` with the `runTags` argument for each run.
+
+This is necessary to identify each unique run and return a corresponding set of results. The tags are how each run is uniquely identified.
+
+**Example**
+
+- Let's imagine that within a single CI build you call `cypress run --record` multiple times because you're running one set of tests against a `staging` environment, followed by a `production` environment.
+- In this scenario, you pass a different `--tag` to each cypress run
+  - `cypress run --record --tag staging`
+  - `cypress run --record --tag production`
+- When calling `getUICoverageResults` you would then pass these same tags to get the unique set of results for each run
+  - `getUICoverageResults({ runTags: ['staging']})`
+  - `getUICoverageResults({ runTags: ['production']})`
+
+:::

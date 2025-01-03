@@ -9,15 +9,44 @@ sidebar_position: 20
 
 <UICovAddon />
 
-When multiple elements on a page have the same behavior, testing each element individually is not always required to ensure confidence and coverage. In many cases, interacting with just one of these elements is sufficient to verify their collective behavior. For example, options in a dropdown may be grouped if only one of the options should be tested in order to verify their behavior.
+Testing every element on a page is not always necessary when multiple elements share the same behavior. UI Coverage simplifies this by grouping related elements, allowing interactions with any element in the group to count as testing the entire group. This reduces redundancy and ensures efficient and accurate coverage. For example, options in a dropdown menu can be grouped if interacting with one option verifies the behavior of the entire set.
 
-UI Coverage groups elements that are related to one another through structural or behavioral hints. A group of elements is considered one element when it comes to scoring, and interacting with any element in the group will cause all elements in the group to be considered tested (e.g. clicking one treats all of them as having been clicked).
+## How element grouping works
+
+UI Coverage groups elements using structural and behavioral hints, along with user-defined configurations. When grouped, interacting with one element is considered equivalent to testing all elements in the group.
 
 ### Grouping Rules
 
-- Elements are grouped by [elementgroups](/ui-coverage/configuration/elementgroups) configuration if defined.
-- `label` elements are grouped with the form elements with which they are associated.
-- Elements within table rows are grouped with elements that share common attributes or are in the same position in other rows of the table.
-- Elements that are repeated in the DOM and share common attributes.
-- Elements that are repeated in the DOM and have parent elements that share common attributes.
-- Links with similar href patterns are resolved to [views](/ui-coverage/configuration/views) and grouped by their corresponding view.
+- **User-Defined Groups**: Elements are grouped by [Element Groups](/ui-coverage/configuration/elementgroups) configuration if specified.
+- **Labels and Form Elements**: `label` elements are automatically grouped with the form elements they are associated with.
+- **Table Row Grouping**: Elements within table rows are grouped with elements sharing common attributes or the same position across rows.
+- **Repeated Elements**: Duplicate elements in the DOM with shared attributes are grouped.
+- **Parent-Shared Attributes**: Duplicate elements with parents that share common attributes are grouped.
+- **Dynamic Links**: Links with similar `href` patterns are resolved into [views](/ui-coverage/configuration/views) and grouped by their `href` pattern.
+
+### Example
+
+Consider a table where each row contains a delete button:
+
+```html
+<table>
+  <tr>
+    <td>John Doe</td>
+    <td>
+      <button>Delete</button>
+    </td>
+  </tr>
+  <tr>
+    <td>Jane Smith</td>
+    <td>
+      <button>Delete</button>
+    </td>
+  </tr>
+</table>
+```
+
+In this case, UI Coverage groups the delete buttons together in accordance with our grouping rules. Interacting with one delete button is equivalent to testing all delete buttons in the table.
+
+## Customizing element grouping
+
+You can customize element grouping to suit your application's structure and behavior. Refer to the [Element Groups](/ui-coverage/configuration/elementgroups) configuration guide to learn how to define custom groups and group elements based on specific attributes or selectors.

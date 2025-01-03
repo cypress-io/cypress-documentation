@@ -84,6 +84,11 @@ import {
   faBookOpenReader,
   faUserShield,
   faCircleHalfStroke,
+  faCheckDouble,
+  faLinkSlash,
+  faListCheck,
+  faClipboardCheck,
+  faFilter,
 } from '@fortawesome/free-solid-svg-icons'
 
 library.add(
@@ -135,6 +140,11 @@ library.add(
   faBookOpenReader,
   faUserShield,
   faCircleHalfStroke,
+  faCheckDouble,
+  faLinkSlash,
+  faListCheck,
+  faClipboardCheck,
+  faFilter,
 )
 
 export default {
