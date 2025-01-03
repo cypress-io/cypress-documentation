@@ -1,24 +1,48 @@
 ---
-title: Feedback during local development
+sidebar_label: Feedback during local development
+title: 'Feedback during local development | Cypress Accessibility Documentation'
+description: 'Get precise, fast, and scoped accessibility feedback during local development by recording Cypress tests directly to Cypress Cloud—bypassing CI pipelines and ensuring accurate insights with minimal effort.'
 sidebar_position: 50
 ---
 
 # Feedback during local development
 
-While there are some workarounds possible with browser extensions or Cypress plugins, the most reliable solution for local development is to record to Cypress Cloud from your local development machine. This allows you to run a small set of tests directly related to your changes and fully skip your build pipeline and CI processes. It can be run with a one line command:
+For reliable accessibility feedback during local development, the best approach is recording your tests directly to Cypress Cloud. By running tests related to your changes locally, you can bypass build pipelines and CI processes entirely. This can be achieved with a single command:
 
-```
+<Tabs>
+  <TabItem value="npm">
+
+```shell
 npx cypress run --key <record_key> --record --spec "cypress/e2e/my-spec.cy.js"
 ```
 
-(You can skip the `--key` option by setting `CYPRESS_RECORD_KEY` as an environment variable. Learn more about recording in our [docs about recorded runs](/cloud/features/recorded-runs)).
+  </TabItem>
+  <TabItem value="yarn">
 
-This has 3 key benefits:
+```shell
+yarn cypress run --key <record_key> --record --spec "cypress/e2e/my-spec.cy.js"
+```
 
-- Accuracy \- you will see exactly what Cypress does with your new code changes, taking into account your project's configuration, and using the Cloud's version of Axe Core®. There will be no violations reports for rules, pages, or elements your team has chosen to ignore, for example.
-- Speed \- since the application is already built locally, while you are working on it, it is ready to test immediately without your build pipeline
-- Scope \- you can run only the tests you need, which can make results even faster, and helps you exclude issues unrelated to the area you are working on
+  </TabItem>
+  <TabItem value="pnpm">
 
-One other reason to get early feedback this way is to quickly know if, in fixing one accessibility problem, you’ve revealed or introduced another. Recording small runs locally is a big quality-of-life improvement when you are specifically looking for this kind of feedback.
+```shell
+pnpm cypress run --key <record_key> --record --spec "cypress/e2e/my-spec.cy.js"
+```
 
-If you expect your team to do a lot of runs this way and that these partial results would clutter your Cypress project, you can set up a dedicated Cloud project for “locally generated” runs to keep things organized.
+  </TabItem>
+</Tabs>
+
+(You can skip the `--key` option by setting `CYPRESS_RECORD_KEY` as an environment variable. Learn more about recording in our [Recorded Runs documentation](/cloud/features/recorded-runs)).
+
+## Key benefits
+
+- **Accuracy:** See how Cypress processes your new code changes, taking into account your project's configuration, and using the Cloud's version of Axe Core®. There will be no violation reports for rules, pages, or elements your team has chosen to ignore, for example.
+- **Speed:** With the application already built locally, tests can run immediately without requiring your build pipeline.
+- **Scope:** Execute only the tests you need to focus on your changes, ensuring faster results and excluding unrelated issues.
+
+Recording tests locally offers early feedback, helping you quickly detect if resolving one accessibility issue introduces another. This targeted testing workflow can significantly enhance development efficiency and quality.
+
+## Organizing Local Runs
+
+If your team frequently records local runs and you're concerned about cluttering your Cypress Cloud project, consider setting up a dedicated Cloud project for "local runs". This keeps your main project organized while supporting local testing workflows.

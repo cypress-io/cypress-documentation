@@ -1118,7 +1118,7 @@ _Released 04/26/2023_
 - Added Component Testing support for Angular 16. Addresses
   [#26044](https://github.com/cypress-io/cypress/issues/26044).
 - The run navigation component on the
-  [Debug page](https://on.cypress.io/debug-page) will now display a warning
+  [Debug page](/app/core-concepts/open-mode#Debug) will now display a warning
   message if there are more relevant runs than can be displayed in the list.
   Addresses [#26288](https://github.com/cypress-io/cypress/issues/26288).
 
@@ -1128,7 +1128,7 @@ _Released 04/26/2023_
   output to be broken. `0` is now treated as false. Addresses
   [#5191](https://github.com/cypress-io/cypress/issues/5191) and
   [#24595](https://github.com/cypress-io/cypress/issues/24595).
-- Fixed an issue on the [Debug page](https://on.cypress.io/debug-page) where the
+- Fixed an issue on the [Debug page](/app/core-concepts/open-mode#Debug) where the
   passing run status would appear even if the Cypress Cloud organization was
   over its monthly test result limit. Addresses
   [#26528](https://github.com/cypress-io/cypress/issues/26528).
@@ -1152,7 +1152,7 @@ _Released 04/17/2023_
 
 - The Component Testing setup wizard will now show a warning message if an issue
   is encountered with an installed
-  [third party framework definition](https://on.cypress.io/component-integrations).
+  [third party framework definition](/app/component-testing/custom-frameworks).
   Addresses [#25838](https://github.com/cypress-io/cypress/issues/25838).
 
 **Bugfixes:**
@@ -1398,7 +1398,7 @@ _Released 02/15/2023_
   Enterprise plans the flexibility to alter the auto-cancellation value per run.
   Addressed in [#25237](https://github.com/cypress-io/cypress/pull/25237).
 - It is now possible to overwrite query commands using
-  [`Cypress.Commands.overwriteQuery`](https://on.cypress.io/api/custom-queries).
+  [`Cypress.Commands.overwriteQuery`](/api/cypress-api/custom-queries).
   Addressed in [#25078](https://github.com/cypress-io/cypress/issues/25078).
 - Added [`Cypress.require()`](/api/cypress-api/require) for including
   dependencies within the [`cy.origin()`](/api/commands/origin) callback. This
@@ -4574,9 +4574,9 @@ _Released 06/23/2021_
 **Features:**
 
 - You can now override the default delay between typing characters for `.type()`
-  with [`Cypress.Keyboard.defaults()`](https://on.cypress.io/keyboard-api) or
+  with [`Cypress.Keyboard.defaults()`](/api/cypress-api/keyboard-api) or
   via
-  [test configuration](https://on.cypress.io/writing-and-organizing-tests#Allowed-config-values).
+  [test configuration](/app/core-concepts/writing-and-organizing-tests#Allowed-config-values).
   Addresses [#566](https://github.com/cypress-io/cypress/issues/566).
 - The experience when opening a new project via `cypress open` has been
   improved. Addressed in

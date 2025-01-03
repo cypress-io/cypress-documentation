@@ -7,15 +7,18 @@ export default function DocsImage({
   caption,
   src,
   title,
-  width
+  width,
+  noBorder,
+  style,
 }: DocsImageProps) {
   return (
-    <div className={s.docsImage}>
+    <div style={style} className={s.docsImageContainer}>
       <img
         src={src}
         alt={alt || title || caption}
         title={title}
         style={width && { width }}
+        className={noBorder ? s.noBorder : s.docsImage}
       />
       {caption && (
         <p className={s.caption} style={width && { width, maxWidth: '100%' }}>
