@@ -31,9 +31,6 @@ and we are _mostly_ able to do this.
 
 ### What Cypress does under the hood
 
-- Injects
-  [`document.domain`](https://developer.mozilla.org/en-US/docs/Web/API/Document/domain)
-  into `text/html` pages.
 - Proxies all HTTP / HTTPS traffic.
 - Changes the hosted URL to match that of the application under test.
 - Uses the browser's internal APIs for network level traffic.
@@ -55,7 +52,7 @@ Cypress must assign and manage browser certificates to be able to
 modify the traffic in real time. You'll notice Chrome display a warning that the 'SSL certificate does not
 match'. This is expected behavior. Under the hood we act as our own CA
 authority and issue certificates dynamically in order to intercept requests
-otherwise impossible to access. We only do this for the superdomain currently
+otherwise impossible to access. We only do this for the origin currently
 under test, and bypass other traffic.
 
 Note, that Cypress allows you to optionally specify CA / client certificate
@@ -72,39 +69,37 @@ It's important to note that although we do our **very best** to ensure your
 application works normally inside of Cypress, there _are_ some limitations you
 need to be aware of.
 
-- [Different superdomain per test requires cy.origin command](#Different-superdomain-per-test-requires-cyorigin)
+- [Different origins per test require cy.origin()](#Different-origins-per-test-require-cyorigin)
 - [Cross-origin iframes are not supported](#Cross-origin-iframes)
 - [Navigating from HTTPS to HTTP will error](#Insecure-Content)
 - [Cypress requires that the URLs navigated to have the same port](#Same-port-per-test)
 
-### Different superdomain per test requires cy.origin
+### Different origins per test require `cy.origin()`
 
 Cypress changes its own host URL to match that of your applications. With the
 exception of `cy.origin`, Cypress requires that the URLs navigated to have the
-[same superdomain](/app/guides/cross-origin-testing#Parts-of-a-URL) for the
+[origin](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Origin) for the
 entirety of a single test.
 
-If you attempt to visit two different superdomains, the `cy.origin` command must
+If you attempt to visit two different origins, the `cy.origin` command must
 be used to wrap Cypress commands of the second visited domain. Otherwise,
 Cypress commands will timeout after the navigation and will eventually error.
 This is because the commands that were expected to run on the second domain are
 actually being run on the first domain.
 
-Without `cy.origin`, you can visit different superdomains in _different_ tests,
-but not in the _same_ test. Please read our
-[Cross Origin Testing Guide](/app/guides/cross-origin-testing) for more
-information.
+Without `cy.origin()`, you can visit different origins in _different_ tests,
+but not in the _same_ test.
 
 #### Examples of test cases that will error without the use of `cy.origin`
 
 1. [`.click()`](/api/commands/click) an `<a>` with an `href` to a different
-   superdomain with subsequent Cypress commands being run.
+   origin with subsequent Cypress commands being run.
 2. [`.submit()`](/api/commands/submit) a `<form>` that causes your web server to
-   redirect you a different superdomain where additional Cypress commands are
+   redirect you to a different origin where additional Cypress commands are
    run.
 3. Issue a JavaScript redirect in your application, such as
-   `window.location.href = '...'`, to a different superdomain where additional
-   Cypress commands are run.
+   `window.location.href = '...'`, which navigates to a different origin
+   where additional Cypress commands are run.
 
 In each of these situations, Cypress will lose the ability to automate your
 application and will error via command timeout unless the `cy.origin` command is
@@ -112,17 +107,6 @@ used.
 
 Read on to learn about
 [working around these common problems](#Common-Workarounds).
-
-#### What is a superdomain?
-
-But what is same superdomain? It's actually very similar to that of same
-origin! Two URLs have the same origin if the **protocol**, **port** (if specified), and
-**host** match. Cypress automatically handles hosts of the same superdomain by
-injecting the
-[`document.domain`](https://developer.mozilla.org/en-US/docs/Web/API/Document/domain)
-property into the visited `text/html` pages. This is why navigations without the
-use of the [`cy.origin()`](/api/commands/origin) command are solely scoped to the
-same superdomain.
 
 <DocumentDomainWorkaround />
 
@@ -136,38 +120,33 @@ chart to help clarify the differences!
   alt="Diagram showing the parts of a URL including href broken into protocol, host, pathname, hash and smaller components of hostname, port, path, and search with and example URL"
 />
 
-Given the URLs below, all have the same superdomain compared to
-`https://www.cypress.io`.
+##### Origin
 
-- `https://cypress.io`
-- `https://docs.cypress.io`
-- `https://example.cypress.io/commands/querying`
+An `origin` is comprised of a URL's `scheme`, `hostname`, _and_ `port`. Given the URLs
+below, all have the same origin compared to `https://www.cypress.io`:
 
-The URLs below, however, will have different superdomains/origins compared to
-`https://www.cypress.io`.
+- `https://www.cypress.io/cloud`
+- `https://www.cypress.io/app`
 
-- `http://www.cypress.io` (Different protocol)
-- `https://docs.cypress.io:81` (Different port)
-- `https://www.auth0.com/` (Different host of different superdomain)
+But the following have different origins compared to `https://www.cypress.io`:
 
-The `http://localhost` URLs differ if their ports are different. For example,
-the `http://localhost:3000` URL is considered to be a different origin from the
-`http://localhost:8080` URL.
-
-The rules are:
+- `http://www.cypress.io` (different `scheme`)
+- `https://docs.cypress.io` (different `hostname` due to the subdomain)
+- `https://www.auth0.com` (different `hostname`)
+- `https://www.cypress.io:81` (different `port`)
 
 :::danger
 
 <Icon name="exclamation-triangle" color="red" /> You **cannot** [visit](/api/commands/visit)
-two domains of different superdomains in the same test and continue to interact with
-the page without the use of the [`cy.origin()`](/api/commands/origin) command.
+two different origins in the same test and continue to interact with the page without
+the use of the [`cy.origin()`](/api/commands/origin) command.
 
 :::
 
 :::tip
 
 <Icon name="check-circle" color="green" /> You **can** [visit](/api/commands/visit)
-two or more domains of different origin in **different** tests without needing [`cy.origin()`](/api/commands/origin).
+two or more origins in **different** tests without needing [`cy.origin()`](/api/commands/origin).
 :::
 
 For practical purposes, this means the following:
@@ -176,16 +155,16 @@ For practical purposes, this means the following:
 // This test will run without error
 it('navigates', () => {
   cy.visit('https://www.cypress.io')
-  cy.visit('https://docs.cypress.io')
+  cy.visit('https://www.cypress.io/app')
   cy.get('selector') // yup all good
 })
 ```
 
 ```javascript
-// this will error because cypress-dx.com doesn't match the cypress.io superdomain
+// this will error because the origin https://docs.cypress.io doesn't match the origin https://www.cypress.io
 it('navigates', () => {
   cy.visit('https://www.cypress.io')
-  cy.visit('https://www.cypress-dx.com')
+  cy.visit('https://docs.cypress.io')
   cy.get('selector')
 })
 ```
@@ -196,8 +175,8 @@ the sequential command should run against:
 ```javascript
 it('navigates', () => {
   cy.visit('https://example.cypress.io')
-  cy.visit('https://www.cypress-dx.com')
-  cy.origin('https://www.cypress-dx.com', () => {
+  cy.visit('https://docs.cypress.io')
+  cy.origin('https://docs.cypress.io', () => {
     cy.get('selector') // yup all good
   })
 })
@@ -306,7 +285,7 @@ and break down how to work around them in Cypress.
 ### External Navigation
 
 The most common situation where you might encounter this error is when you click
-on an `<a>` that navigates to another superdomain.
+on an `<a>` that navigates to another origin.
 
 ```html title="index.html"
 <html>
@@ -322,14 +301,14 @@ cy.get('selector').should('exist') // Cypress errors
 
 :::warning
 
-We don't recommend visiting a superdomain that you don't control in your tests
+We don't recommend visiting an origin that you don't control in your tests
 which you can read more about
 [here](/app/core-concepts/best-practices#Visiting-External-Sites)
 
 :::
 
-If you control this superdomain, either by owning the hosted instance
-or by other means, we recommend testing this superdomain with `cy.origin`.
+If you control this origin, either by owning the hosted instance
+or by other means, we recommend testing this origin with `cy.origin`.
 
 ```javascript title="test.cy.js"
 cy.visit('http://localhost:8080') // where your web server + HTML is hosted
@@ -340,7 +319,7 @@ cy.origin('https://example.cypress.io', () => {
 })
 ```
 
-If you're not in control of this superdomain, we recommend you test that the `href`
+If you're not in control of this origin, we recommend you test that the `href`
 property is correct instead of performing the navigation. This will help lead to
 more deterministic tests.
 
@@ -385,7 +364,7 @@ cy.get('form').submit() // submit the form!
 ```
 
 If your back end server handling the `/submit` route does a `30x` redirect to a
-different superdomain, you'll need to use the `cy.origin` command if running
+different origin, you'll need to use the `cy.origin` command if running
 additional Cypress commands after submitting the form.
 
 ```javascript title="routes.js"
@@ -533,7 +512,7 @@ Setting `chromeWebSecurity` to `false` in Chrome-based browsers allows you to do
 the following:
 
 - Display insecure content
-- Navigate to any superdomain without cross-origin errors with or without
+- Navigate to any origin without cross-origin errors with or without
   `cy.origin`
 - Access cross-origin iframes that are embedded in your application
 
@@ -586,7 +565,7 @@ Want to enable `experimentalModifyObstructiveThirdPartyCode`? Let's do it!
 
 ## Other workarounds
 
-There are other ways of testing the interaction between two superdomains. The
+There are other ways of testing the interaction between two origins. The
 browser has a natural security barrier called `origin policy` this means that
 state like `localStorage`, `cookies`, `service workers` and many other APIs are
 not shared between them anyways. Cypress does offer APIs around `localStorage`,
@@ -596,7 +575,7 @@ As a best practice, you should not visit or interact with any website not under
 your control.
 
 If your organization uses Single Sign On (SSO) or OAuth then you might choose to
-test a 3rd party service other than your superdomain, which can be tested with
+test a 3rd party service other than your origin, which can be tested with
 [`cy.origin()`](/api/commands/origin).
 
 We've written several other guides specifically about handling this situation.
