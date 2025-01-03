@@ -21,6 +21,11 @@ export default defineConfig({
             return []
           }
 
+          if (file.name.includes('lodash')) {
+            // lodash file actually goes to _ URL
+            file.name = file.name.replace('lodash', '_')
+          }
+
           if (file.name.includes('.mdx')) {
             // remove the .mdx file extension
             file.name = file.name.slice(0, -4)
