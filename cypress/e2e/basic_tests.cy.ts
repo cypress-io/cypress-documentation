@@ -49,9 +49,11 @@ describe('Basic tests', () => {
 
   describe('Dark mode', () => {
     it('switch to dark mode when clicked', () => {
-      cy.get('[data-theme=light]').should('have.css', 'background-color', 'rgb(255, 255, 255)')  // white
+      cy.get('[data-theme=light]')
+        .should('have.css', 'background-color', 'rgb(255, 255, 255)')  // white
       cy.get('[aria-label="Switch to dark mode"]').click()
-      cy.get('[data-theme=dark]').should('have.css', 'background-color', 'rgb(27, 30, 46)') // dark gray
+      cy.get('[data-theme=dark]')
+        .should('have.css', 'background-color', 'rgb(27, 30, 46)') // dark gray
     })
   })
 
@@ -59,6 +61,15 @@ describe('Basic tests', () => {
     it('search opens search popup', () => {
       cy.contains('Search ⌘K').click()
       cy.get('.DocSearch-Modal').should('be.visible')
+    })
+  })
+
+  describe('404', () => {
+    it('displays 404 page', () => {
+      cy.visit('/foo/bar/baz')
+      cy.get('h1')
+        .should('be.visible')
+        .and('have.text', 'Page Not Found')
     })
   })
 })
