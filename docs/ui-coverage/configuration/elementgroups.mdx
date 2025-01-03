@@ -12,7 +12,7 @@ UI Coverage provides logic to automatically [group](/ui-coverage/core-concepts/e
 
 ## Why use element groups?
 
-**Common use cases**
+### Common use cases
 
 - **Improve Grouping Accuracy**: Ensure elements with shared attributes but different roles are correctly grouped, avoiding misclassification.
 - **Simplify Test Coverage Reports**: Grouping similar elements, like navigation buttons or list items, reduces clutter in reports and provides a more concise view of test coverage.
@@ -34,10 +34,14 @@ UI Coverage provides logic to automatically [group](/ui-coverage/core-concepts/e
 }
 ```
 
-### Properties
+### Options
 
-- `selector` (Required): A CSS selector to identify elements. Supports standard CSS selector syntax, including IDs, classes, attributes, and combinators.
-- name (Optional): A human-readable name for the group, displayed in UI Coverage reports. The selector is used as the group name if no name is provided.
+For every element considered by UI Coverage, the first `elementGroup` rule for which the `selector` property matches the element is used to group the element. Elements that do not match any rules are grouped by the default UI Coverage [element grouping rules](/ui-coverage/core-concepts/element-grouping).
+
+Option | Required | Default | Description
+-- | -- | -- | --
+`selector` | Required | | A CSS selector to identify elements. Supports standard CSS selector syntax, including IDs, classes, attributes, and combinators.
+`name` | Optional | `selector` | A human-readable name for the group, displayed in UI Coverage reports.
 
 ## Examples
 

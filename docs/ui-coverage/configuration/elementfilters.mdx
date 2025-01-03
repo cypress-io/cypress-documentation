@@ -8,24 +8,23 @@ sidebar_label: elementFilters
 
 <UICovAddon />
 
-:::info
-Note: setting `elementFilters` impacts both Accessibility and UI Coverage
-reports. Nesting this property under an `accessibility` or `uiCoverage` key is
-supported, if you need to split them up.
-:::
+
 
 By default, every interactive and visible element is included in UI Coverage. The `elementFilters` property allows you to specify selectors for elements that should be excluded from these reports. This configuration is particularly useful for removing irrelevant or non-actionable elements to streamline coverage analysis.
 
 ## Why use element filters?
 
-**Common use cases**
+:::info
+**Note:** setting `elementFilters` impacts both Accessibility and UI Coverage
+reports. Nesting this property under an `accessibility` or `uiCoverage` key is
+supported, if you need to split them up.
+:::
+
+### Common use cases
 
 - **Excluding Irrelevant Elements**: Decorative icons, marketing banners, or tooltips that do not require testing can clutter reports. Use elementFilters to exclude them.
 - **Streamlining Reports**: Reducing noise by filtering out non-essential elements makes coverage reports more actionable.
-- \*\*Improving Grouping Accuracy:
-  Avoid incorrectly grouping elements that share attributes but serve different purposes.
-
-Example: Ensure buttons with different actions are not grouped together due to generic data-\* attributes.
+- **Improving Grouping Accuracy**: Avoid incorrectly grouping elements that share attributes but serve different purposes.
 
 ## Syntax
 
@@ -40,10 +39,14 @@ Example: Ensure buttons with different actions are not grouped together due to g
 }
 ```
 
-### Properties
+### Options
 
-- `selector` (Required): A CSS selector to identify elements. Supports standard CSS selector syntax, including IDs, classes, attributes, and combinators.
-- `include` (Optional): A boolean indicating whether the matched elements should be included in UI Coverage. Default to `true` (elements are included by default).
+For every element considered interactive and visible by UI Coverage, the first `elementFilters` rule for which the selector property matches the element is used to either include or exclude the element based on the `include` value. Elements that do not match any rules are included by default.
+
+Option | Required | Default | Description
+-- | -- | -- | --
+`selector` | Required | | A CSS selector to identify elements. Supports standard CSS selector syntax, including IDs, classes, attributes, and combinators.
+`include` | Optional | `true` | A boolean indicating whether the matched elements should be included in UI Coverage.
 
 ## Examples
 

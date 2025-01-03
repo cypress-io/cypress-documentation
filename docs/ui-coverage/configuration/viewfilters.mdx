@@ -8,16 +8,15 @@ sidebar_label: viewFilters
 
 <UICovAddon />
 
-:::info
-Note: setting `viewFilters` impacts both Accessibility and UI Coverage reports.
-This cannot be nested.
-:::
-
 By default, every URL visited within a test run is included in UI Coverage. However, not all URLs are relevant for your coverage analysis. The `viewFilters` property allows you to specify patterns for URLs that should be excluded, ensuring your coverage reports focus on meaningful parts of your application. Excluding a URL also excludes all links pointing to that URL.
 
 ## Why use view filters?
 
-**Common use cases**
+:::info
+**Note:** setting `viewFilters` impacts both Accessibility and UI Coverage reports. This cannot be nested.
+:::
+
+## Common use cases
 
 - **Exclude Third-Party URLs**: If your application integrates with third-party services, you might want to exclude their URLs from coverage analysis.
 - **Exclude Admin Pages**: URLs that are not part of the user-facing application, such as admin pages, could be excluded from coverage reports.
@@ -37,12 +36,14 @@ By default, every URL visited within a test run is included in UI Coverage. Howe
 }
 ```
 
-### Properties
+### Options
 
-### pattern
+For every URL visited and link element found, the first `viewFilters` rule for which the `pattern` matches the URL is used to either include or exclude the URL based on the `include` value. URLs that do not match any rules are included by default.
 
-- `pattern` (Required): A string that matches URLs using [URL Pattern API](https://developer.mozilla.org/en-US/docs/Web/API/URL_Pattern_API) syntax.
-- `include` (Optional): A boolean that determines whether matching URLs should be included in coverage. Defaults to `true`.
+Option | Required | Default | Description
+-- | -- | -- | --
+`pattern` | Required | | A string that matches URLs using [URL Pattern API](https://developer.mozilla.org/en-US/docs/Web/API/URL_Pattern_API) syntax.
+`include` | Optional | `true` | A boolean that determines whether matching URLs should be included in coverage.
 
 ## Examples
 

@@ -8,19 +8,19 @@ sidebar_label: views
 
 <UICovAddon />
 
-:::info
-Note: setting `views` impacts both Accessibility and UI Coverage reports.
-Nesting this property under an `accessibility` or `uiCoverage` key is
-supported, if you need to split them up.
-:::
-
 UI Coverage automatically groups certain URL patterns to create [views](/ui-coverage/core-concepts/views). However, for URLs that are not automatically grouped (e.g., `/users/alice` and `/users/bob` are not automatically grouped into `/users/*`), the `views` property allows you to specify custom URL patterns to define views. This configuration enhances the clarity and organization of your coverage reports.
 
 The `groupBy` property of a view definition allows you to create multiple views with a single URL pattern, grouping URLs by the specified named parameter(s).
 
 ## Why use views?
 
-**Common use cases**
+:::info
+**Note:** setting `views` impacts both Accessibility and UI Coverage reports.
+Nesting this property under an `accessibility` or `uiCoverage` key is
+supported, if you need to split them up.
+:::
+
+## Common use cases
 
 - **Group Dynamic URLs**: Group URLs with dynamic path parameters (e.g., `/users/alice` and `/users/bob`) that are not ids or uuids into a single view.
 - **Organize by Query Parameters**: Create views based on query parameters to group URLs where query strings are important to the context of the page.
@@ -40,10 +40,14 @@ The `groupBy` property of a view definition allows you to create multiple views 
 }
 ```
 
-### Properties
+### Options
 
-- `pattern` (Required): A URL pattern to group matching URLs into a single view. Uses [URL Pattern API](https://developer.mozilla.org/en-US/docs/Web/API/URL_Pattern_API) syntax.
-- `groupBy` (Optional): An array of named URL parameters used to further subdivide the URLs into multiple views within the same pattern. This is useful for dynamic applications where URLs represent different user interactions or data segments.
+The first pattern that a given URL matches is used as its view. If a URL doesn't match any of the patterns, it is grouped by the default [view grouping rules](/ui-coverage/core-concepts/views), if possible.
+
+Option | Required | Default | Description
+-- | -- | -- | --
+`pattern` | Required | | A URL pattern to group matching URLs into a single view. Uses [URL Pattern API](https://developer.mozilla.org/en-US/docs/Web/API/URL_Pattern_API) syntax.
+`groupBy` | Optional | | An array of named URL parameters used to further subdivide the URLs into multiple views within the same pattern. This is useful for dynamic applications where URLs represent different user interactions or data segments.
 
 ## Examples
 

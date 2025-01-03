@@ -14,7 +14,7 @@ The `elements` configuration is used as the element's identity if **only one ele
 
 ## Why use elements configuration?
 
-**Common use cases**
+### Common use cases
 
 - **Handle Dynamic Attributes**: Ensure elements are consistently identified across snapshots, even when attributes change.
 - **Ensure Unique Identification**: Use custom selectors to uniquely identify elements across snapshots that lack unique attributes or have dynamic values, avoiding misclassification.
@@ -35,10 +35,16 @@ The `elements` configuration is used as the element's identity if **only one ele
 }
 ```
 
-### Properties
+### Options
 
-- `selector` (Required): A CSS selector to identify elements. Supports standard CSS selector syntax, including IDs, classes, attributes, and combinators.
-- `name` (Optional): A human-readable name for the element, displayed in UI Coverage reports. The selector is used as the element name if no name is provided.
+For every element considered by UI Coverage, the first applicable rule, determined by a match with the `selector` property, is used for identification. Elements that do not match any rules are identified by the default UI Coverage [element identification rules](/ui-coverage/core-concepts/element-identification).
+
+If multiple elements within the same snapshot satisfy the same rule, the rule cannot uniquely identify these elements. In such cases, the rule is bypassed, and either subsequent rules or the default element identification logic are applied.
+
+Option | Required | Default | Description
+-- | -- | -- | --
+`selector` | Required | | A CSS selector to identify elements. Supports standard CSS selector syntax, including IDs, classes, attributes, and combinators.
+`name` | Optional | `selector` | A human-readable name for the element, displayed in UI Coverage reports.
 
 ## Examples
 
