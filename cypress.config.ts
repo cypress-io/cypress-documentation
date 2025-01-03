@@ -9,6 +9,7 @@ export default defineConfig({
   viewportWidth: 1200,
   experimentalMemoryManagement: true,
   e2e: {
+    supportFile: false,
     baseUrl: "http://localhost:3000",
     setupNodeEvents(on, config) {
       const path = 'docs';
