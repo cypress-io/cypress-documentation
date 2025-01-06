@@ -62,7 +62,7 @@ Pass in an options object to change the default behavior of `.parentsUntil()`.
 | `log`     | `true`                                                            | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/app/references/configuration#Timeouts) | Time to wait for `.parentsUntil()` to resolve before [timing out](#Timeouts)        |
 
-<HeaderYields/>
+<HeaderYields />
 
 - `.parentsUntil()` yields the new DOM element(s) it found.
 - `.parentsUntil()` is a query, and it is _safe_ to chain further commands.
@@ -96,12 +96,12 @@ cy.get('.active').parentsUntil('.nav')
 
 ## Rules
 
-<HeaderRequirements/>
+<HeaderRequirements />
 
 - `.parentsUntil()` requires being chained off a command that yields DOM
   element(s).
 
-<HeaderAssertions/>
+<HeaderAssertions />
 
 - `.parentsUntil()` will automatically
   [retry](/app/core-concepts/retry-ability) until the element(s)
@@ -110,7 +110,7 @@ cy.get('.active').parentsUntil('.nav')
   [retry](/app/core-concepts/retry-ability) until all chained assertions have
   passed.
 
-<HeaderTimeouts/>
+<HeaderTimeouts />
 
 - `.parentsUntil()` can time out waiting for the element(s) to
   [exist in the DOM](/app/core-concepts/introduction-to-cypress#Implicit-Assertions).

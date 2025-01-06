@@ -41,7 +41,7 @@ Pass a function that is invoked with the following arguments:
 - `index`
 - `collection`
 
-<HeaderYields/>
+<HeaderYields />
 
 - `.each()` yields the same subject it was given.
 - It is [unsafe](/app/core-concepts/retry-ability#Only-queries-are-retried)
@@ -110,16 +110,16 @@ function.
 
 ## Rules
 
-<HeaderRequirements/>
+<HeaderRequirements />
 
 - `.each()` requires being chained off a previous command.
 
-<HeaderAssertions/>
+<HeaderAssertions />
 
 - `.each()` will only run assertions you have chained once, and will not
   [retry](/app/core-concepts/retry-ability).
 
-<HeaderTimeouts/>
+<HeaderTimeouts />
 
 - `.each()` can time out waiting for a promise you've returned to resolve.
 

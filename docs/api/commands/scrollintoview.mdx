@@ -43,7 +43,7 @@ Pass in an options object to change the default behavior of `.scrollIntoView()`.
 | `offset`   | `{top: 0, left: 0}`                                               | Amount to scroll after the element has been scrolled into view                      |
 | `timeout`  | [`defaultCommandTimeout`](/app/references/configuration#Timeouts) | Time to wait for `.scrollIntoView()` to resolve before [timing out](#Timeouts)      |
 
-<HeaderYields/>
+<HeaderYields />
 
 - `.scrollIntoView()` yields the same subject it was given.
 - It is [unsafe](/app/core-concepts/retry-ability#Only-queries-are-retried)
@@ -91,17 +91,17 @@ or
 
 ## Rules
 
-<HeaderRequirements/>
+<HeaderRequirements />
 
 - `.scrollIntoView()` requires being chained off a command that yields DOM
   element(s).
 
-<HeaderAssertions/>
+<HeaderAssertions />
 
 - `.scrollIntoView()` will automatically wait for assertions you have chained to
   pass
 
-<HeaderTimeouts/>
+<HeaderTimeouts />
 
 - `.scrollIntoView()` can time out waiting for assertions you've added to pass.
 

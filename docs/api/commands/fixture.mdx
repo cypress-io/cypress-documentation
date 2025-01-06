@@ -69,7 +69,7 @@ Pass in an options object to change the default behavior of `cy.fixture()`.
 | --------- | ----------------------------------------------------------- | ------------------------------------------------------------------------- |
 | `timeout` | [`responseTimeout`](/app/references/configuration#Timeouts) | Time to wait for `cy.fixture()` to resolve before [timing out](#Timeouts) |
 
-<HeaderYields/>
+<HeaderYields />
 
 - `cy.fixture()` yields the contents of the file. Formatting is determined by
   its file extension.
@@ -317,16 +317,16 @@ cy.fixture('todo.json').then((todo) => {
 
 ## Rules
 
-<HeaderRequirements/>
+<HeaderRequirements />
 
 - `cy.fixture()` requires being chained off of `cy`.
 
-<HeaderAssertions/>
+<HeaderAssertions />
 
 - `cy.fixture()` will only run assertions you have chained once, and will not
   [retry](/app/core-concepts/retry-ability).
 
-<HeaderTimeouts/>
+<HeaderTimeouts />
 
 - `cy.fixture()` should never time out.
 

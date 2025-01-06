@@ -50,7 +50,7 @@ Pass in an options object to change the default behavior of `.closest()`.
 | `log`     | `true`                                                            | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/app/references/configuration#Timeouts) | Time to wait for `.closest()` to resolve before [timing out](#Timeouts)             |
 
-<HeaderYields/>
+<HeaderYields />
 
 - `.closest()` yields the new DOM element(s) it found.
 - `.closest()` is a query, and it is _safe_ to chain further commands.
@@ -67,11 +67,11 @@ cy.get('p.error').closest('.banner')
 
 ## Rules
 
-<HeaderRequirements/>
+<HeaderRequirements />
 
 - `.closest()` requires being chained off a command that yields DOM element(s).
 
-<HeaderAssertions/>
+<HeaderAssertions />
 
 - `.closest()` will automatically [retry](/app/core-concepts/retry-ability)
   until the element(s)
@@ -79,7 +79,7 @@ cy.get('p.error').closest('.banner')
 - `.closest()` will automatically [retry](/app/core-concepts/retry-ability)
   until all chained assertions have passed.
 
-<HeaderTimeouts/>
+<HeaderTimeouts />
 
 - `.closest()` can time out waiting for the element(s) to
   [exist in the DOM](/app/core-concepts/introduction-to-cypress#Implicit-Assertions).

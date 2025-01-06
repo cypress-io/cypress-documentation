@@ -62,7 +62,7 @@ For more details on these options and to set some as defaults across all uses of
 `.screenshot()`, see the
 [Cypress.Screenshot API doc](/api/cypress-api/screenshot-api).
 
-<HeaderYields/>
+<HeaderYields />
 
 - `.screenshot()` yields the same subject it was given.
 - It is [unsafe](/app/core-concepts/retry-ability#Only-queries-are-retried)
@@ -313,17 +313,17 @@ stealing focus, [ensure that the extension is enabled](/app/references/troublesh
 
 ## Rules
 
-<HeaderRequirements/>
+<HeaderRequirements />
 
 - `cy.screenshot()` can be chained off of `cy` or off a command that yields a
   single DOM element.
 
-<HeaderAssertions/>
+<HeaderAssertions />
 
 - `cy.screenshot()` will only run assertions you have chained once, and will not
   [retry](/app/core-concepts/retry-ability).
 
-<HeaderTimeouts/>
+<HeaderTimeouts />
 
 - `cy.screenshot()` should never time out.
 

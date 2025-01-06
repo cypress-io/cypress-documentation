@@ -32,7 +32,7 @@ Pass in an options object to change the default behavior of
 | ------ | ------- | ----------------------------------------------------------------------------------- |
 | `log`  | `true`  | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log) |
 
-<HeaderYields/>
+<HeaderYields />
 
 `cy.getAllSessionStorage()` yields an object where the keys are origins and the
 values are key-value pairs of `sessionStorage` data.
@@ -74,16 +74,16 @@ cy.getAllSessionStorage().then((result) => {
 
 ## Rules
 
-<HeaderRequirements/>
+<HeaderRequirements />
 
 - `cy.getAllSessionStorage()` requires being chained off of `cy`.
 
-<HeaderAssertions/>
+<HeaderAssertions />
 
 - `cy.getAllSessionStorage()` will only run assertions you have chained once,
   and will not [retry](/app/core-concepts/retry-ability).
 
-<HeaderTimeouts/>
+<HeaderTimeouts />
 
 - `cy.getAllSessionStorage()` cannot time out.
 

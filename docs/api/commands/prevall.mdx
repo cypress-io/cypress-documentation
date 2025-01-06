@@ -51,7 +51,7 @@ Pass in an options object to change the default behavior of `.prevAll()`.
 | `log`     | `true`                                                            | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/app/references/configuration#Timeouts) | Time to wait for `.prevAll()` to resolve before [timing out](#Timeouts)             |
 
-<HeaderYields/>
+<HeaderYields />
 
 - `.prevAll()` yields the new DOM element(s) it found.
 - `.prevAll()` is a query, and it is _safe_ to chain further commands.
@@ -98,11 +98,11 @@ cy.get('li').prevAll('.selected')
 
 ## Rules
 
-<HeaderRequirements/>
+<HeaderRequirements />
 
 - `.prevAll()` requires being chained off a command that yields DOM element(s).
 
-<HeaderAssertions/>
+<HeaderAssertions />
 
 - `.prevAll()` will automatically [retry](/app/core-concepts/retry-ability)
   until the element(s)
@@ -110,7 +110,7 @@ cy.get('li').prevAll('.selected')
 - `.prevAll()` will automatically [retry](/app/core-concepts/retry-ability)
   until all chained assertions have passed.
 
-<HeaderTimeouts/>
+<HeaderTimeouts />
 
 - `.prevAll()` can time out waiting for the element(s) to
   [exist in the DOM](/app/core-concepts/introduction-to-cypress#Implicit-Assertions).

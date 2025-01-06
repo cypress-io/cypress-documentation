@@ -31,7 +31,7 @@ Pass in an options object to change the default behavior of `cy.title()`.
 | `log`     | `true`                                                            | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/app/references/configuration#Timeouts) | Time to wait for `cy.title()` to resolve before [timing out](#Timeouts)             |
 
-<HeaderYields/>
+<HeaderYields />
 
 - `cy.title()` 'yields the `document.title` property of the current page.
 - `cy.title()` is a query, and it is _safe_ to chain further commands.
@@ -48,16 +48,16 @@ cy.title().should('eq', 'My Awesome Application')
 
 ## Rules
 
-<HeaderRequirements/>
+<HeaderRequirements />
 
 - `cy.title()` requires being chained off of `cy`.
 
-<HeaderAssertions/>
+<HeaderAssertions />
 
 - `cy.title()` will automatically [retry](/app/core-concepts/retry-ability)
   until all chained assertions have passed
 
-<HeaderTimeouts/>
+<HeaderTimeouts />
 
 - `cy.title()` can time out waiting for assertions you've added to pass.
 

@@ -40,7 +40,7 @@ Pass in an options object to change the default behavior of `cy.hash()`.
 | `log`     | `true`                                                            | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/app/references/configuration#Timeouts) | Time to wait for `cy.hash()` to resolve before [timing out](#Timeouts)              |
 
-<HeaderYields/>
+<HeaderYields />
 
 - When the current URL contains a hash, `cy.hash()` yields the current URL's
   hash (including the `#` character).
@@ -76,16 +76,16 @@ cy.hash().should('match', /users\/.+$/) // => true
 
 ## Rules
 
-<HeaderRequirements/>
+<HeaderRequirements />
 
 - `cy.hash()` requires being chained off of `cy`.
 
-<HeaderAssertions/>
+<HeaderAssertions />
 
 - `cy.hash()` will automatically [retry](/app/core-concepts/retry-ability)
   until all chained assertions have passed
 
-<HeaderTimeouts/>
+<HeaderTimeouts />
 
 - `cy.hash()` can time out waiting for assertions you've added to pass.
 

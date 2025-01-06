@@ -53,7 +53,7 @@ Pass in an options object to change the default behavior of `.select()`.
 | `log`     | `true`                                                            | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/app/references/configuration#Timeouts) | Time to wait for `.select()` to resolve before [timing out](#Timeouts)              |
 
-<HeaderYields/>
+<HeaderYields />
 
 - `.select()` yields the same subject it was given.
 - It is [unsafe](/app/core-concepts/retry-ability#Only-queries-are-retried)
@@ -253,19 +253,19 @@ disabled `<optgroup>`. See
 
 ## Rules
 
-<HeaderRequirements/>
+<HeaderRequirements />
 
 - `.select()` requires being chained off a command that yields DOM element(s).
 - `.select()` requires the element to be a `select`.
 
-<HeaderAssertions/>
+<HeaderAssertions />
 
 - `.select()` will automatically wait for the element to reach an
   [actionable state](/app/core-concepts/interacting-with-elements).
 - `.select()` will automatically [retry](/app/core-concepts/retry-ability)
   until all chained assertions have passed.
 
-<HeaderTimeouts/>
+<HeaderTimeouts />
 
 - `.select()` can time out waiting for the element to reach an
   [actionable state](/app/core-concepts/interacting-with-elements).

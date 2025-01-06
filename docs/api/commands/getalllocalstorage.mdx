@@ -32,7 +32,7 @@ Pass in an options object to change the default behavior of
 | ------ | ------- | ----------------------------------------------------------------------------------- |
 | `log`  | `true`  | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log) |
 
-<HeaderYields/>
+<HeaderYields />
 
 `cy.getAllLocalStorage()` yields an object where the keys are origins and the
 values are key-value pairs of `localStorage` data.
@@ -74,16 +74,16 @@ cy.getAllLocalStorage().then((result) => {
 
 ## Rules
 
-<HeaderRequirements/>
+<HeaderRequirements />
 
 - `cy.getAllLocalStorage()` requires being chained off of `cy`.
 
-<HeaderAssertions/>
+<HeaderAssertions />
 
 - `cy.getAllLocalStorage()` will only run assertions you have chained once, and
   will not [retry](/app/core-concepts/retry-ability).
 
-<HeaderTimeouts/>
+<HeaderTimeouts />
 
 - `cy.getAllLocalStorage()` cannot time out.
 

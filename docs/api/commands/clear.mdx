@@ -54,7 +54,7 @@ Pass in an options object to change the default behavior of `.clear()`.
 | `timeout`                    | [`defaultCommandTimeout`](/app/references/configuration#Timeouts)           | Time to wait for `.clear()` to resolve before [timing out](#Timeouts)                                                                           |
 | `waitForAnimations`          | [`waitForAnimations`](/app/references/configuration#Actionability)          | Whether to wait for elements to [finish animating](/app/core-concepts/interacting-with-elements#Animations) before executing the command.       |
 
-<HeaderYields/>
+<HeaderYields />
 
 - `.clear()` yields the same subject it was given.
 - It is [unsafe](/app/core-concepts/retry-ability#Only-queries-are-retried)
@@ -88,19 +88,19 @@ Please read the [`.type()`](/api/commands/type) documentation for more details.
 
 ## Rules
 
-<HeaderRequirements/>
+<HeaderRequirements />
 
 - `.clear()` requires being chained off a command that yields DOM element(s).
 - `.clear()` requires the element to be an `input` or `textarea`.
 
-<HeaderAssertions/>
+<HeaderAssertions />
 
 - `.clear()` will automatically wait for the element to reach an
   [actionable state](/app/core-concepts/interacting-with-elements)
 - `.clear()` will automatically [retry](/app/core-concepts/retry-ability)
   until all chained assertions have passed
 
-<HeaderTimeouts/>
+<HeaderTimeouts />
 
 - `.clear()` can time out waiting for the element to reach an
   [actionable state](/app/core-concepts/interacting-with-elements).

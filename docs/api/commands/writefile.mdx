@@ -72,7 +72,7 @@ parameter and include encoding there. This is the same behavior as
 
 :::
 
-<HeaderYields/>
+<HeaderYields />
 
 - `cy.writeFile()` yields `null`.
 
@@ -205,18 +205,18 @@ cy.readFile(filename, null).then((obj) => {
 
 ## Rules
 
-<HeaderRequirements/>
+<HeaderRequirements />
 
 - `cy.writeFile()` requires being chained off of `cy`.
 - `cy.writeFile()` requires the file be successfully written to disk. Anything
   preventing this such as OS permission issues will cause it to fail.
 
-<HeaderAssertions/>
+<HeaderAssertions />
 
 - `cy.writeFile()` will only run assertions you have chained once, and will not
   [retry](/app/core-concepts/retry-ability).
 
-<HeaderTimeouts/>
+<HeaderTimeouts />
 
 - `cy.writeFile()` can time out when the content being written takes a
   significant amount of time to encode.

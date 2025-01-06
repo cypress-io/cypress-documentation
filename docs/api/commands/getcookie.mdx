@@ -35,7 +35,7 @@ Pass in an options object to change the default behavior of `cy.getCookie()`.
 | `log`     | `true`                                                      | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log) |
 | `timeout` | [`responseTimeout`](/app/references/configuration#Timeouts) | Time to wait for `cy.getCookie()` to resolve before [timing out](#Timeouts)         |
 
-<HeaderYields/>
+<HeaderYields />
 
 `cy.getCookie()` yields a cookie object with the following properties:
 
@@ -123,16 +123,16 @@ Check out our example recipes using `cy.getCookie()` to test
 
 ## Rules
 
-<HeaderRequirements/>
+<HeaderRequirements />
 
 - `cy.getCookie()` requires being chained off of `cy`.
 
-<HeaderAssertions/>
+<HeaderAssertions />
 
 - `cy.getCookie()` will only run assertions you have chained once, and will not
   [retry](/app/core-concepts/retry-ability).
 
-<HeaderTimeouts/>
+<HeaderTimeouts />
 
 - `cy.getCookie()` should never time out.
 

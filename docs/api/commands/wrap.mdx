@@ -35,7 +35,7 @@ Pass in an options object to change the default behavior of `cy.wrap()`.
 | `log`     | `true`                                                            | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/app/references/configuration#Timeouts) | Time to wait for `cy.wrap()` to resolve before [timing out](#Timeouts)              |
 
-<HeaderYields/>
+<HeaderYields />
 
 - `cy.wrap()` yields the object it was called with.
 
@@ -190,18 +190,18 @@ cy.get('some-submit-button')
 
 ## Rules
 
-<HeaderRequirements/>
+<HeaderRequirements />
 
 - `cy.wrap()` requires being chained off of `cy`.
 
-<HeaderAssertions/>
+<HeaderAssertions />
 
 - `cy.wrap()`, when its argument is a promise, will automatically wait until the
   promise resolves. If the promise is rejected, `cy.wrap()` will fail the test.
 - `cy.wrap()` will automatically [retry](/app/core-concepts/retry-ability)
   until all chained assertions have passed.
 
-<HeaderTimeouts/>
+<HeaderTimeouts />
 
 - `cy.wrap()` can time out waiting for assertions you've added to pass.
 

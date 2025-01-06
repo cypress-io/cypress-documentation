@@ -42,7 +42,7 @@ Pass in an options object to change the default behavior of `.debug()`.
 | ------ | ------- | ----------------------------------------------------------------------------------- |
 | `log`  | `true`  | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log) |
 
-<HeaderYields/>
+<HeaderYields />
 
 - `.debug()` yields the same subject it was given from the previous command.
 - `.debug()` is a query, and it is _safe_ to chain further commands.
@@ -59,17 +59,17 @@ cy.get('a').debug().should('have.attr', 'href')
 
 ## Rules
 
-<HeaderRequirements/>
+<HeaderRequirements />
 
 - `.debug()` can be chained off of `cy` or off another command.
 
-<HeaderAssertions/>
+<HeaderAssertions />
 
 - `.debug()` is a utility command.
 - `.debug()` will not run assertions. Assertions will pass through as if this
   command did not exist.
 
-<HeaderTimeouts/>
+<HeaderTimeouts />
 
 - `.debug()` cannot time out.
 

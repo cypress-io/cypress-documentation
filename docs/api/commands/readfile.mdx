@@ -60,7 +60,7 @@ Pass in an options object to change the default behavior of `cy.readFile()`.
 | `log`     | `true`                                                            | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/app/references/configuration#Timeouts) | Time to wait for `cy.readFile()` to resolve before [timing out](#Timeouts)          |
 
-<HeaderYields/>
+<HeaderYields />
 
 - `cy.readFile()` yields the contents of the file.
 - The file will be read from disk again if any upcoming command (such as an
@@ -207,19 +207,19 @@ cy.readFile('users.json').its('users.123.name').should('eq', 'John Doe')
 
 ## Rules
 
-<HeaderRequirements/>
+<HeaderRequirements />
 
 - `cy.readFile()` requires being chained off of `cy`.
 - `cy.readFile()` requires the file must exist.
 - `cy.readFile()` requires the file be successfully read from disk.
 
-<HeaderAssertions/>
+<HeaderAssertions />
 
 - `cy.readFile()` will automatically
   [retry](/app/core-concepts/retry-ability) until all chained assertions have
   passed.
 
-<HeaderTimeouts/>
+<HeaderTimeouts />
 
 - `cy.readFile()` can time out waiting for assertions you've added to pass.
 - `cy.readFile()` can time out when the content being read takes a significant

@@ -54,7 +54,7 @@ Pass in an options object to change the default behavior of `.parent()`.
 | `log`     | `true`                                                            | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/app/references/configuration#Timeouts) | Time to wait for `.parent()` to resolve before [timing out](#Timeouts)              |
 
-<HeaderYields/>
+<HeaderYields />
 
 - `.parent()` yields the new DOM element(s) it found.
 - `.parent()` is a query, and it is _safe_ to chain further commands.
@@ -109,11 +109,11 @@ cy.get('li').parent('.sub-nav')
 
 ## Rules
 
-<HeaderRequirements/>
+<HeaderRequirements />
 
 - `.parent()` requires being chained off a command that yields DOM element(s).
 
-<HeaderAssertions/>
+<HeaderAssertions />
 
 - `.parent()` will automatically [retry](/app/core-concepts/retry-ability)
   until the element(s)
@@ -121,7 +121,7 @@ cy.get('li').parent('.sub-nav')
 - `.parent()` will automatically [retry](/app/core-concepts/retry-ability)
   until all chained assertions have passed.
 
-<HeaderTimeouts/>
+<HeaderTimeouts />
 
 - `.parent()` can time out waiting for the element(s) to
   [exist in the DOM](/app/core-concepts/introduction-to-cypress#Implicit-Assertions).

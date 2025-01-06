@@ -73,7 +73,7 @@ Pass in an options object to change the default behavior of `cy.scrollTo()`.
 | `log`              | `true`                                                            | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log) |
 | `timeout`          | [`defaultCommandTimeout`](/app/references/configuration#Timeouts) | Time to wait for `.scrollTo()` to resolve before [timing out](#Timeouts)            |
 
-<HeaderYields/>
+<HeaderYields />
 
 - `.scrollTo()` yields the same subject it was given.
 - It is [unsafe](/app/core-concepts/retry-ability#Only-queries-are-retried)
@@ -182,12 +182,12 @@ or
 
 ## Rules
 
-<HeaderRequirements/>
+<HeaderRequirements />
 
 - `.scrollTo()` requires being chained off a command that yields DOM element(s).
 - `.scrollTo()` requires the element to be scrollable.
 
-<HeaderTimeouts/>
+<HeaderTimeouts />
 
 - `.scrollTo()` can time out waiting for assertions you've added to pass.
 

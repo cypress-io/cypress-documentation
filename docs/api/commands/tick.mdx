@@ -41,7 +41,7 @@ Pass in an options object to change the default behavior of `cy.tick()`.
 | ------ | ------- | ----------------------------------------------------------------------------------- |
 | `log`  | `true`  | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log) |
 
-<HeaderYields/>
+<HeaderYields />
 
 `cy.tick()` yields a `clock` object with the following methods:
 
@@ -118,18 +118,18 @@ cy.clock().invoke('restore')
 
 ## Rules
 
-<HeaderRequirements/>
+<HeaderRequirements />
 
 - `cy.tick()` requires being chained off of `cy`.
 - `cy.tick()` requires that `cy.clock()` be called before it.
 
-<HeaderAssertions/>
+<HeaderAssertions />
 
 - `cy.tick()` is a utility command.
 - `cy.tick()` will not run assertions. Assertions will pass through as if this
   command did not exist.
 
-<HeaderTimeouts/>
+<HeaderTimeouts />
 
 - `cy.tick()` cannot time out.
 

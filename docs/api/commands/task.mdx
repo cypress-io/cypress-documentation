@@ -98,7 +98,7 @@ Pass in an options object to change the default behavior of `cy.task()`.
 | `log`     | `true`                                                  | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log) |
 | `timeout` | [`taskTimeout`](/app/references/configuration#Timeouts) | Time to wait for `cy.task()` to resolve before [timing out](#Timeouts)              |
 
-<HeaderYields/>
+<HeaderYields />
 
 `cy.task()` yields the value returned or resolved by the `task` event in
 [setupNodeEvents](/app/plugins/plugins-guide#Using-a-plugin).
@@ -503,17 +503,17 @@ on('task', {
 
 ## Rules
 
-<HeaderRequirements/>
+<HeaderRequirements />
 
 - `cy.task()` requires being chained off of `cy`.
 - `cy.task()` requires the task to eventually end.
 
-<HeaderAssertions/>
+<HeaderAssertions />
 
 - `cy.task()` will only run assertions you have chained once, and will not
   [retry](/app/core-concepts/retry-ability).
 
-<HeaderTimeouts/>
+<HeaderTimeouts />
 
 - `cy.task()` can time out waiting for the task to end.
 

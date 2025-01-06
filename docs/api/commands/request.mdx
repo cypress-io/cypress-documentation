@@ -128,7 +128,7 @@ globally in [configuration](/app/references/configuration).
 You can also set options for `cy.request()`'s `baseUrl` and `responseTimeout`
 globally in the [Cypress configuration](/app/references/configuration).
 
-<HeaderYields/>
+<HeaderYields />
 
 `cy.request()` yields the `response` as an object literal containing properties
 such as:
@@ -373,19 +373,19 @@ See
 
 ## Rules
 
-<HeaderRequirements/>
+<HeaderRequirements />
 
 - `cy.request()` requires being chained off of `cy`.
 - `cy.request()` requires that the server sends a response.
 - `cy.request()` requires that the response status code be `2xx` or `3xx` when
   `failOnStatusCode` is `true`.
 
-<HeaderAssertions/>
+<HeaderAssertions />
 
 - `cy.request()` will only run assertions you have chained once, and will not
   [retry](/app/core-concepts/retry-ability).
 
-<HeaderTimeouts/>
+<HeaderTimeouts />
 
 - `cy.request()` can time out waiting for the server to respond.
 

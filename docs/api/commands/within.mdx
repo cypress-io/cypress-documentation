@@ -47,7 +47,7 @@ Pass in an options object to change the default behavior of `.within()`.
 | ------ | ------- | ----------------------------------------------------------------------------------- |
 | `log`  | `true`  | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log) |
 
-<HeaderYields/>
+<HeaderYields />
 
 - `.within()` yields the same subject it was given.
 - It is [unsafe](/app/core-concepts/retry-ability#Only-queries-are-retried)
@@ -180,17 +180,17 @@ cy.get('form').within(($form) => {
 
 ## Rules
 
-<HeaderRequirements/>
+<HeaderRequirements />
 
 - `.within()` requires being chained off a previous command that yields exactly
   one DOM element.
 
-<HeaderAssertions/>
+<HeaderAssertions />
 
 - `.within()` will only run assertions you have chained once, and will not
   [retry](/app/core-concepts/retry-ability).
 
-<HeaderTimeouts/>
+<HeaderTimeouts />
 
 - `.within()` cannot time out.
 
