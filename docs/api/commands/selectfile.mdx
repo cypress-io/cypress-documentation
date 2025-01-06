@@ -89,7 +89,7 @@ Pass in an options object to change the default behavior of `.selectFile()`.
 | `timeout`                    | [`defaultCommandTimeout`](/app/references/configuration#Timeouts)           | Time to wait for `.selectFile()` to resolve before [timing out](#Timeouts).                                                                    |
 | `waitForAnimations`          | [`waitForAnimations`](/app/references/configuration#Actionability)          | Whether to wait for elements to [finish animating](/app/core-concepts/interacting-with-elements#Animations) before executing the command.      |
 
-### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+<HeaderYields/>
 
 - `.selectFile()` yields the same subject it was given.
 - It is [unsafe](/app/core-concepts/retry-ability#Only-queries-are-retried)
@@ -261,7 +261,7 @@ cy.get('input[type=file]').selectFile('does-not-exist.yaml')
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
+<HeaderRequirements/>
 
 - `.selectFile()` requires being chained off a command that yields DOM
   element(s). With the `input` action (default), it further requires a single
@@ -270,12 +270,12 @@ cy.get('input[type=file]').selectFile('does-not-exist.yaml')
 - If given an alias, `.selectFile()` requires that the subject of the alias must
   not be `null` or `undefined`.
 
-### Assertions [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
+<HeaderAssertions/>
 
 - `.selectFile()` will automatically wait for the element to reach an
   [actionable state](/app/core-concepts/interacting-with-elements).
 
-### Timeouts [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
+<HeaderTimeouts/>
 
 - `.selectFile()` can time out waiting for the element to reach an
   [actionable state](/app/core-concepts/interacting-with-elements).

@@ -31,7 +31,7 @@ Pass in an options object to change the default behavior of `cy.window()`.
 | `log`     | `true`                                                            | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/app/references/configuration#Timeouts) | Time to wait for `cy.window()` to resolve before [timing out](#Timeouts)            |
 
-### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+<HeaderYields/>
 
 - `cy.window()` yields the `window` object.
 - `cy.window()` is a query, and it is _safe_ to chain further commands.
@@ -199,16 +199,16 @@ it('should trigger KeyboardEvent with .type inside Cypress event listener', (don
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
+<HeaderRequirements/>
 
 - `cy.window()` requires being chained off of `cy`.
 
-### Assertions [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
+<HeaderAssertions/>
 
 - `cy.window()` will automatically [retry](/app/core-concepts/retry-ability)
   until all chained assertions have passed
 
-### Timeouts [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
+<HeaderTimeouts/>
 
 - `cy.window()` can time out waiting for assertions you've added to pass.
 

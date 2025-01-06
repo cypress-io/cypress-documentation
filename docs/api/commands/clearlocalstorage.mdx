@@ -46,7 +46,7 @@ Pass in an options object to change the default behavior of
 | ------ | ------- | ----------------------------------------------------------------------------------- |
 | `log`  | `true`  | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log) |
 
-### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+<HeaderYields/>
 
 - `cy.clearLocalStorage()` yields the localStorage for the current domain.
 
@@ -76,16 +76,16 @@ cy.clearLocalStorage(/app-/)
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
+<HeaderRequirements/>
 
 - `cy.clearLocalStorage()` requires being chained off of `cy`.
 
-### Assertions [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
+<HeaderAssertions/>
 
 - `cy.clearLocalStorage()` will only run assertions you have chained once, and
   will not [retry](/app/core-concepts/retry-ability).
 
-### Timeouts [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
+<HeaderTimeouts/>
 
 - `cy.clearLocalStorage()` cannot time out.
 
