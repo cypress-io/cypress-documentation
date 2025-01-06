@@ -20,10 +20,6 @@ h1 > .badge {
 .success {
   background-color: var(--ifm-color-jade-100);
   color: var(--ifm-color-jade-600);
-
-  [data-theme='dark'] & {
-    background-color: var(--ifm-color-jade-1000);
-  }
 }
 
 .danger {
