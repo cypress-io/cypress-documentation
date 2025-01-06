@@ -5,7 +5,7 @@
 body .theme-doc-sidebar-container {
   @apply border-r border-gray-1000/[0.07];
   html[data-theme='dark'] & {
-    @apply border-gray-900;
+    @apply border-gray-800;
   }
 }
 
