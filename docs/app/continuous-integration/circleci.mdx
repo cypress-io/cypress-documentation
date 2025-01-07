@@ -90,7 +90,7 @@ Check out the full <Icon name="github" inline="true" callout="RWA Circle CI conf
 
 ## Additional Examples
 
-#### Component Testing Example
+### Component Testing Example
 
 ```yaml title=".circleci/config.yml"
 version: 2.1
@@ -103,7 +103,7 @@ workflows:
           cypress-command: 'npx cypress run --component'
 ```
 
-#### Yarn Example
+### Yarn Example
 
 ```yaml title=".circleci/config.yml"
 version: 2.1
@@ -117,7 +117,7 @@ workflows:
           start-command: 'yarn start'
 ```
 
-#### Chrome Example
+### Chrome Example
 
 Cypress uses Electron by default to run your tests. The `install-browsers` flag
 is used to install Firefox and Chrome to run your tests. This is only needed if

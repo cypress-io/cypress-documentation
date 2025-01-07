@@ -173,7 +173,7 @@ send a response, access the real response, and more.
 See ["Intercepted requests"][req] and
 [Request/Response Modification with `routeHandler`](#RequestResponse-Modification-with-routeHandler).
 
-### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+<HeaderYields />
 
 - `cy.intercept()` yields `null`, but can be aliased.
 - Waiting on an aliased `cy.intercept()` route using
@@ -1564,14 +1564,17 @@ are some workarounds:
 
 ## Command Log
 
+**_Routes Instrument Panel_**
+
+When you create `cy.intercept()` rules, Cypress will display a new Instrument called _Routes_.
+
 ```javascript
 cy.intercept('/accounts*').as('accountsGet')
 cy.intercept('/company', { companyId: 1 }).as('companyGet')
 cy.intercept('/teams*', [{ teamId: 2 }]).as('teamsGet')
 ```
 
-Whenever you create `cy.intercept()` rules, Cypress will display a new
-Instrument Panel called _Routes_. It will list the routing table in the
+It will list the routing table in the
 Instrument Panel, including the `method`, `RouteMatcher`, if the route is
 stubbed, any alias, and number of matched requests:
 

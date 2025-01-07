@@ -64,7 +64,7 @@ Pass in an options object to change the default behavior of `.check()`.
 | `timeout`                    | [`defaultCommandTimeout`](/app/references/configuration#Timeouts)           | Time to wait for `.check()` to resolve before [timing out](#Timeouts)                                                                           |
 | `waitForAnimations`          | [`waitForAnimations`](/app/references/configuration#Actionability)          | Whether to wait for elements to [finish animating](/app/core-concepts/interacting-with-elements#Animations) before executing the command.       |
 
-### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+<HeaderYields />
 
 - `.check()` yields the same subject it was given.
 - It is [unsafe](/app/core-concepts/retry-ability#Only-queries-are-retried)
@@ -168,19 +168,19 @@ cy.get('#pick-fruit :checked').should('be.checked').and('have.value', 'apple')
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
+<HeaderRequirements />
 
 - `.check()` requires being chained off a command that yields DOM element(s).
 - `.check()` requires the element to have type `checkbox` or `radio`.
 
-### Assertions [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
+<HeaderAssertions />
 
 - `.check()` will automatically wait for the element to reach an
   [actionable state](/app/core-concepts/interacting-with-elements).
 - `.check()` will automatically [retry](/app/core-concepts/retry-ability)
   until all chained assertions have passed.
 
-### Timeouts [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
+<HeaderTimeouts />
 
 - `.check()` can time out waiting for the element to reach an
   [actionable state](/app/core-concepts/interacting-with-elements).

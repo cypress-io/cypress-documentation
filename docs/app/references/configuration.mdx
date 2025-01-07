@@ -354,7 +354,7 @@ readonly and cannot be changed at run time.
 - `viewportWidth`
 - `waitForAnimations`
 
-#### `Cypress.config()`
+### `Cypress.config()`
 
 You can also override configuration values within your test using
 [`Cypress.config()`](/api/cypress-api/config).
@@ -369,7 +369,7 @@ Cypress.config('pageLoadTimeout', 100000)
 Cypress.config('pageLoadTimeout') // => 100000
 ```
 
-#### Test-specific Configuration
+### Test-specific Configuration
 
 To apply specific Cypress [configuration](/app/references/configuration)
 values to a suite or test, pass a configuration object to the test or suite
@@ -379,7 +379,7 @@ The configuration values passed in will only take effect during the suite or
 test where they are set. The values will then reset to the previous default
 values after the suite or test is complete.
 
-##### Syntax
+#### Syntax
 
 ```javascript
 describe(name, config, fn)
@@ -388,7 +388,7 @@ it(name, config, fn)
 specify(name, config, fn)
 ```
 
-##### Suite configuration
+#### Suite configuration
 
 If you want to target a suite of tests to run or be excluded when run in a
 specific browser, you can override the `browser` configuration within the suite
@@ -419,7 +419,7 @@ describe(
 )
 ```
 
-##### Single test configuration
+#### Single test configuration
 
 If you want to target a test to run or be excluded when run in a specific
 browser, you can override the `browser` configuration within the test
@@ -659,7 +659,7 @@ See the [plugins guide](/app/plugins/plugins-guide) for more information.
 
 ## Common problems
 
-#### <Icon name="angle-right" /> `baseUrl` is not set
+### <Icon name="angle-right" /> `baseUrl` is not set
 
 Make sure you do not accidentally place the `baseUrl` config option into the
 `env` object. The following configuration is _incorrect_ and will not work:
@@ -700,7 +700,7 @@ Solution: place the `baseUrl` property outside the `env` object and inside the
 You can also find a few tips on setting the `baseUrl` in this
 [short video](https://www.youtube.com/watch?v=f5UaXuAc52c).
 
-#### <Icon name="angle-right" /> Test files not found when using `spec` parameter
+### <Icon name="angle-right" /> Test files not found when using `spec` parameter
 
 When using the `--spec <path or mask>` argument, make it relative to the
 project's folder. If the specs are still missing, run Cypress with
