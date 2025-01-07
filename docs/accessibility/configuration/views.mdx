@@ -36,27 +36,27 @@ The `groupBy` property of a view definition allows you to create multiple views 
 }
 ```
 
-### views <a href="#views" id="views"></a>
+### views
 
 _Optional._ Object\[]
 
 An array of objects used to define views within Accessibility. _**Each object can have the following properties:**_
 
-### pattern <a href="#pattern" id="pattern"></a>
+### pattern
 
 _Required._ String (URL Pattern)
 
 A URL pattern that is used to group matching URLs into a view. Uses [URL Pattern API](https://developer.mozilla.org/en-US/docs/Web/API/URL_Pattern_API) syntax.
 
-### groupBy <a href="#groupby" id="groupby"></a>
+### groupBy
 
 _Optional._ String\[]
 
 The URL parameters that should be used to subdivide the URLs into multiple views, rather than being grouped into a single view.
 
-## Examples <a href="#examples" id="examples"></a>
+## Examples 
 
-### Grouping dynamic path parameters <a href="#grouping-dynamic-path-parameters" id="grouping-dynamic-path-parameters"></a>
+### Grouping dynamic path parameters
 
 **Config**
 
@@ -85,7 +85,7 @@ https://cypress.io/users/bob#baz
 https://cypress.io/users/*
 ```
 
-### Using named path parameters <a href="#using-named-path-parameters" id="using-named-path-parameters"></a>
+### Using named path parameters
 
 **Config**
 
@@ -116,7 +116,7 @@ https://cypress.io/users/bob#baz
 https://cypress.io/users/:name
 ```
 
-### Grouping URLs by named path parameters <a href="#grouping-urls-by-named-path-parameters" id="grouping-urls-by-named-path-parameters"></a>
+### Grouping URLs by named path parameters
 
 **Config**
 
@@ -149,7 +149,7 @@ https://cypress.io/analytics/performance/:id
 https://cypress.io/analytics/usage/:id
 ```
 
-### Grouping URLs by named query parameters <a href="#grouping-urls-by-named-query-parameters" id="grouping-urls-by-named-query-parameters"></a>
+### Grouping URLs by named query parameters
 
 **Config**
 
@@ -180,7 +180,7 @@ https://cypress.io/app?name=hello
 https://cypress.io/app?name=world
 ```
 
-### Grouping URLs by path parameters to ignore dynamic hosts <a href="#grouping-urls-by-path-parameters-to-ignore-dynamic-hosts" id="grouping-urls-by-path-parameters-to-ignore-dynamic-hosts"></a>
+### Grouping URLs by path parameters to ignore dynamic hosts
 
 **Config**
 
