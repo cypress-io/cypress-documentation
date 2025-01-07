@@ -41,7 +41,7 @@ Pass in an options object to change the default behavior of `cy.location()`.
 | `log`     | `true`                                                            | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/app/references/configuration#Timeouts) | Time to wait for `cy.location()` to resolve before [timing out](#Timeouts)          |
 
-### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+<HeaderYields />
 
 `cy.location()` is a query, and it is _safe_ to chain further commands.
 
@@ -158,17 +158,17 @@ cy.location().then((loc) => {
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
+<HeaderRequirements />
 
 - `cy.location()` requires being chained off of `cy`.
 
-### Assertions [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
+<HeaderAssertions />
 
 - `cy.location()` will automatically
   [retry](/app/core-concepts/retry-ability) until all chained assertions have
   passed
 
-### Timeouts [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
+<HeaderTimeouts />
 
 - `cy.location()` can time out waiting for assertions you've added to pass.
 

@@ -75,7 +75,7 @@ Pass in an options object to change the default behavior of `.click()`.
 | `timeout`                    | [`defaultCommandTimeout`](/app/references/configuration#Timeouts)           | Time to wait for `.click()` to resolve before [timing out](#Timeouts)                                                                           |
 | `waitForAnimations`          | [`waitForAnimations`](/app/references/configuration#Actionability)          | Whether to wait for elements to [finish animating](/app/core-concepts/interacting-with-elements#Animations) before executing the command.       |
 
-### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+<HeaderYields />
 
 - `.click()` yields the same subject it was given.
 - It is [unsafe](/app/core-concepts/retry-ability#Only-queries-are-retried)
@@ -209,18 +209,18 @@ then the element will not receive focus as per the spec.
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
+<HeaderRequirements />
 
 - `.click()` requires being chained off a command that yields DOM element(s).
 
-### Assertions [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
+<HeaderAssertions />
 
 - `.click()` will automatically wait for the element to reach an
   [actionable state](/app/core-concepts/interacting-with-elements).
 - `.click()`will automatically [retry](/app/core-concepts/retry-ability)
   until all chained assertions have passed.
 
-### Timeouts [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
+<HeaderTimeouts />
 
 - `.click()` can time out waiting for the element to reach an
   [actionable state](/app/core-concepts/interacting-with-elements).
@@ -228,7 +228,7 @@ then the element will not receive focus as per the spec.
 
 ## Command Log
 
-**Click the button**
+**_Click the button_**
 
 ```javascript
 cy.get('.action-btn').click()

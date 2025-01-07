@@ -46,7 +46,7 @@ Pass in an options object to change the default behavior of `.pause()`.
 | ------ | ------- | ----------------------------------------------------------------------------------- |
 | `log`  | `true`  | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log) |
 
-### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+<HeaderYields />
 
 - `.pause()` yields the same subject it was given.
 - It is [unsafe](/app/core-concepts/retry-ability#Only-queries-are-retried)
@@ -69,23 +69,23 @@ cy.get('button').should('not.be.disabled')
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
+<HeaderRequirements />
 
 - `.pause()` can be chained off of `cy` or off another command.
 
-### Assertions [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
+<HeaderAssertions />
 
 - `.pause()` is a utility command.
 - `.pause()` will not run assertions. Assertions will pass through as if this
   command did not exist.
 
-### Timeouts [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
+<HeaderTimeouts />
 
 - `.pause()` cannot time out.
 
 ## Command Log
 
-### Pause and step through each `.click()` command
+**_Pause and step through each `.click()` command_**
 
 ```javascript
 cy.get('#action-canvas')

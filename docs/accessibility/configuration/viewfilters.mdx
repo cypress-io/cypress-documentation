@@ -18,7 +18,7 @@ By default, every URL that is visited within a run is included in the Accessibil
 
 For every URL visited by Cypress in a run and every link element found, the first `viewFilters` rule for which the `pattern` property matches the URL is used to either include or exclude the URL based on the `include` value. URLs that do not match any rules are included by default.
 
-## Syntax <a href="#syntax" id="syntax"></a>
+## Syntax
 
 ```typescript
 {
@@ -31,19 +31,19 @@ For every URL visited by Cypress in a run and every link element found, the firs
 }
 ```
 
-### viewFilters <a href="#viewfilters" id="viewfilters"></a>
+### viewFilters
 
 _Optional._ Object\[]
 
 An array of objects used to specify URLs to exclude from Accessibility. _**Each object can have the following properties:**_
 
-### pattern <a href="#pattern" id="pattern"></a>
+### pattern
 
 _Required._ String (URL Pattern)
 
 Used to match URLs. Uses [URL Pattern API](https://developer.mozilla.org/en-US/docs/Web/API/URL_Pattern_API) syntax.
 
-### include <a href="#include" id="include"></a>
+### include
 
 _Optional._ Boolean
 
@@ -51,9 +51,9 @@ _Default:_ `true`
 
 A boolean that represents whether or not a matched URL should be included in Accessibility.
 
-## Examples <a href="#examples" id="examples"></a>
+## Examples
 
-### Excluding URLs by hostname <a href="#excluding-urls-by-hostname" id="excluding-urls-by-hostname"></a>
+### Excluding URLs by hostname
 
 **Config**
 
@@ -83,7 +83,7 @@ https://cypress.io/home
 https://cypress.io/about
 ```
 
-### Including only specific URLs <a href="#including-only-specific-urls" id="including-only-specific-urls"></a>
+### Including only specific URLs
 
 **Config**
 

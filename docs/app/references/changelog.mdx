@@ -2116,7 +2116,7 @@ to 84% faster startup times!
 [Migration Guide](/app/references/migration-guide#Migrating-to-Cypress-110)
 which explains the breaking changes in more detail.**
 
-###### Component Testing:
+**Component Testing:**
 
 - Removed `cssFile`, `cssFiles`, `style`, `styles`, `stylesheet`, and
   `stylesheets` from the `options` argument to the `cy.mount()` function. We
@@ -2159,14 +2159,14 @@ which explains the breaking changes in more detail.**
   Addresses [#24047](https://github.com/cypress-io/cypress/issues/24047) and
   [#23427](https://github.com/cypress-io/cypress/issues/23427).
 
-###### General:
+**General:**
 
 - Communication with the Cypress Dashboard will now verify CAs and reject any
   unauthorized calls. If you use a self-signed CA you will need to set
   `npm_config_ca`, `npm_config_cafile`, or `NODE_EXTRA_CA_CERTS`. Addresses
   [#23980](https://github.com/cypress-io/cypress/issues/23980).
 
-###### Experimental:
+**Experimental:**
 
 - [`cy.session()`](/api/commands/session) now requires a setup command to use
   the command. Addresses
