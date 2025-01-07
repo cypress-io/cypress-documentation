@@ -91,6 +91,8 @@ cy.clearLocalStorage(/app-/)
 
 ## Command Log
 
+**_Clear all localStorage_**
+
 ```javascript
 cy.clearLocalStorage(/prop1|2/).then((ls) => {
   expect(ls.getItem('prop1')).to.be.null
