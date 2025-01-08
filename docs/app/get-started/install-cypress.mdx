@@ -23,7 +23,15 @@ First, make sure you have all the [system requirements](#System-requirements).
 
 ## Install
 
-Install Cypress via your preferred package manager. This will install Cypress locally as a dev dependency for your project. For pnpm, make sure that you have the `pnpm` environment installed: `npm install pnpm@latest --global`.
+Install Cypress via your preferred package manager. This will install Cypress locally as a dev dependency for your project.
+
+For `pnpm`, make sure that you have the `pnpm` environment installed.
+Use `npm install pnpm@latest --global` or refer to [pnpm installation](https://pnpm.io/installation) for alternate `pnpm` installation instructions.
+Starting with `pnpm` `v10` you must explicitly allow `pnpm` to execute the `postinstall` script of `cypress` to install the Cypress binary.
+See the [pnpm package.json](https://pnpm.io/package_json) documentation for
+[pnpm.onlyBuiltDependencies](https://pnpm.io/package_json#pnpmonlybuiltdependencies) or
+[pnpm.onlyBuiltDependenciesFile](https://pnpm.io/package_json#pnpmonlybuiltdependenciesfile)
+configuration options and use one of these to add `cypress` to the list of packages that are allowed to run install scripts.
 
 <CypressInstallCommands />
 
