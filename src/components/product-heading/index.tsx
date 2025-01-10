@@ -16,6 +16,14 @@ const ProductHeading: React.FC<ProductHeadingProps> = ({
     plan, // The plan to display for Cloud product
 }) => {
     const iconName = product === 'ui-coverage' ? 'technology-ui-coverage' : product === 'accessibility' ? 'cypress-accessibility-outline' : 'technology-cypress'
+    const linkPath  = product === 'ui-coverage' ? 'ui-coverage' : product === 'accessibility' ? 'accessibility' : 'pricing'
+    
+    let badgeContent = product === 'cloud' ? 'Free Trial' : '+ Add-on'
+
+    if (product === 'cloud' && plan) {
+        badgeContent = plan === 'team' ? 'Team Plan' : plan === 'business' ? 'Business Plan' : 'Enterprise Plan'
+    }
+
     return (
     <div className={s.productHeading}>
         <Icon 
@@ -29,19 +37,12 @@ const ProductHeading: React.FC<ProductHeadingProps> = ({
         </span>
 
         <a 
-          href="https://www.cypress.io/pricing"
+          href={`https://www.cypress.io/${linkPath}?utm_source=docs&utm_medium=product-heading-${product}&utm_content=${badgeContent}`}
           target="_blank"
-          title="See our pricing"
+          title="Learn more"
           className={s.productHeadingLink}
           >
-          <Badge type="success">
-              {product === 'cloud' && !plan && '➜ Free Trial'}
-              {product === 'cloud' && plan && plan === 'team' && '➜ Team Plan'}
-              {product === 'cloud' && plan && plan === 'business' && '➜ Business Plan'}
-              {product === 'cloud' && plan && plan === 'enterprise' && '➜ Enterprise Plan'}
-              {product === 'ui-coverage' && '+ Add-on' }
-              {product === 'accessibility' && '+ Add-on'}
-          </Badge>
+          <Badge type="success">{badgeContent}</Badge>
         </a>
 
     </div>
