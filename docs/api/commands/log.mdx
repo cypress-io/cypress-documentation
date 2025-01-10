@@ -31,7 +31,7 @@ message.
 Additional arguments to be printed to the Cypress Command Log. There is no limit
 to the number of arguments.
 
-### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+<HeaderYields />
 
 - `cy.log()` yields `null`.
 
@@ -56,21 +56,21 @@ cy.log('events triggered', events)
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
+<HeaderRequirements />
 
 - `cy.log()` requires being chained off of `cy`.
 
-### Assertions [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
+<HeaderAssertions />
 
 - `cy.log()` cannot have any assertions chained.
 
-### Timeouts [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
+<HeaderTimeouts />
 
 - `cy.log()` cannot time out.
 
 ## Command Log
 
-#### Print messages with arguments to the Command Log.
+**_Print messages with arguments to the Command Log._**
 
 ```javascript
 cy.log('log out any message we want here')

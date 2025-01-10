@@ -41,7 +41,7 @@ Pass in an options object to change the default behavior of `cy.tick()`.
 | ------ | ------- | ----------------------------------------------------------------------------------- |
 | `log`  | `true`  | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log) |
 
-### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+<HeaderYields />
 
 `cy.tick()` yields a `clock` object with the following methods:
 
@@ -118,18 +118,18 @@ cy.clock().invoke('restore')
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
+<HeaderRequirements />
 
 - `cy.tick()` requires being chained off of `cy`.
 - `cy.tick()` requires that `cy.clock()` be called before it.
 
-### Assertions [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
+<HeaderAssertions />
 
 - `cy.tick()` is a utility command.
 - `cy.tick()` will not run assertions. Assertions will pass through as if this
   command did not exist.
 
-### Timeouts [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
+<HeaderTimeouts />
 
 - `cy.tick()` cannot time out.
 

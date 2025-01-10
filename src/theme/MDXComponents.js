@@ -17,6 +17,10 @@ import DocumentDomainWorkaround from "@site/docs/partials/_document-domain-worka
 import E2EOnlyBadge from "@site/src/components/e2e-only-badge";
 import E2EOrCtTabs from "@site/src/components/e2e-or-ct-tabs";
 import VueSyntaxTabs from "@site/src/components/vue-syntax-tabs";
+import HeaderAssertions from "@site/docs/partials/_header-assertions.mdx";
+import HeaderRequirements from "@site/docs/partials/_header-requirements.mdx";
+import HeaderTimeouts from "@site/docs/partials/_header-timeouts.mdx";
+import HeaderYields from "@site/docs/partials/_header-yields.mdx";
 import Icon from "@site/src/components/icon";
 import ImportMountFunctions from "@site/docs/partials/_import-mount-functions.mdx";
 import IntellisenseCodeCompletion from "@site/docs/partials/_intellisense-code-completion.mdx";
@@ -166,6 +170,10 @@ export default {
   E2EOnlyBadge,
   E2EOrCtTabs,
   VueSyntaxTabs,
+  HeaderAssertions,
+  HeaderRequirements,
+  HeaderTimeouts,
+  HeaderYields,
   Icon,
   ImportMountFunctions,
   IntellisenseCodeCompletion,
