@@ -56,11 +56,6 @@ For every attribute that an element has, the first `attributeFilters` rule for w
     "attributeFilters": [
       {
         "attribute": "id",
-        "value": "sizzle.*",
-        "include": false
-      },
-      {
-        "attribute": "id",
         "value": ":r.*:",
         "include": false
       }
@@ -73,8 +68,8 @@ For every attribute that an element has, the first `attributeFilters` rule for w
 
 ```xml
 <body>
-  <button id="sizzle123" name="my-button">Button 1</button>
-  <button id=":r10:" name="other-button">Button 2</button>
+  <button id=":r11:" name="my-button">Button 1</button>
+  <button id=":r12:" name="other-button">Button 2</button>
 </body>
 ```
 
@@ -131,8 +126,8 @@ For every attribute that an element has, the first `attributeFilters` rule for w
   "uiCoverage": {
     "attributeFilters": [
       {
-        "attribute": "data-id",
-        "value": ".*",
+        "attribute": "data-cy",
+        "value": "user-\\d+",
         "include": false
       }
     ]
@@ -143,12 +138,12 @@ For every attribute that an element has, the first `attributeFilters` rule for w
 #### HTML
 
 ```xml
-<button data-id="852143838" data-cy="user">Harper</button>
-<button data-id="989820493" data-cy="user">Amara</button>
+<button data-cy="user-123" class="user">Harper</button>
+<button data-cy="user-456" class="user">Amara</button>
 ```
 
 #### Elements shown in UI Coverage
 
 ```
-[data-cy="user"] (2 instances)
+.user (2 instances)
 ```
