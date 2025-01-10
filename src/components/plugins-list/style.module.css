@@ -82,22 +82,22 @@ ul.pluginsList li p {
 }
 
 .badgePill.badgeOfficial {
-  background-color: #11d3d7;
+  background-color: var(--ifm-color-teal-500);
 }
 
 .badgePill.badgeVerified {
-  background-color: #25bd4d;
+  background-color: var(--ifm-color-jade-500);
 }
 
 .badgePill.badgeCommunity {
-  background-color: #9d44eb;
+  background-color: var(--ifm-color-indigo-500);
 }
 
 .badgePill.badgeDeprecated {
-  background-color: #7f112c;
+  background-color: var(--ifm-color-red-600);
 }
 
 .keyword {
   font-weight: 300;
-  color: #777;
+  color: var(--ifm-color-gray-800);
 }
