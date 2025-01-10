@@ -14,15 +14,15 @@ By default, every interactive and visible element is included in UI Coverage. Th
 
 :::info
 **Note:** setting `elementFilters` impacts both Accessibility and UI Coverage
-reports. Nesting this property under an `accessibility` or `uiCoverage` key is
+reports if set at the root of the configuration. Nesting this property under an `accessibility` or `uiCoverage` key is
 supported, if you need to split them up.
 :::
 
 ### Common use cases
 
 - **Excluding Irrelevant Elements**: Decorative icons, marketing banners, or tooltips that do not require testing can clutter reports. Use elementFilters to exclude them.
+- **Ignoring 3rd Party Components**: Libraries or widgets that are not part of your application logic can be excluded from coverage reports.
 - **Streamlining Reports**: Reducing noise by filtering out non-essential elements makes coverage reports more actionable.
-- **Improving Grouping Accuracy**: Avoid incorrectly grouping elements that share attributes but serve different purposes.
 
 ## Syntax
 
@@ -207,13 +207,13 @@ For every element considered interactive and visible by UI Coverage, the first `
 
 ```xml
 <body>
-  <iframe class="auth908283794"></iframe>
-  <iframe class="map"></iframe>
+  <button class="cancel">Cancel</button>
+  <button class="auth908283794">Login</button>
 </body>
 ```
 
 #### Elements shown in UI Coverage
 
 ```
-.map
+.cancel
 ```
