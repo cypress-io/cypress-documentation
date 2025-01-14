@@ -6,7 +6,7 @@ import React from 'react';
 
 // Define the types for the props
 interface ProductHeadingProps {
-    product: 'cloud' | 'accessibility' | 'ui-coverage'
+    product: 'app' | 'cloud' | 'accessibility' | 'ui-coverage'
     plan?: 'team' | 'business' | 'enterprise'
 }
 
@@ -15,9 +15,10 @@ const ProductHeading: React.FC<ProductHeadingProps> = ({
     product, // The product to display
     plan, // The plan to display for Cloud product
 }) => {
+    const productName = product === 'ui-coverage' ? 'UI Coverage' : product === 'accessibility' ? 'Cypress Accessibility' : product === 'cloud' ? 'Cypress Cloud' : 'Cypress App'
     const iconName = product === 'ui-coverage' ? 'technology-ui-coverage' : product === 'accessibility' ? 'cypress-accessibility-outline' : 'technology-cypress'
-    const linkPath  = product === 'ui-coverage' ? 'ui-coverage' : product === 'accessibility' ? 'accessibility' : 'pricing'
-    
+    const linkPath  = product === 'cloud' ? 'pricing' : product
+
     let badgeContent = product === 'cloud' ? 'Free Trial' : '+ Add-on'
 
     if (product === 'cloud' && plan) {
@@ -31,9 +32,7 @@ const ProductHeading: React.FC<ProductHeadingProps> = ({
             className={s.productHeadingIcon}
         />
         <span className={s.productHeadingText}>
-          {product === 'ui-coverage' && 'UI Coverage'}
-          {product === 'accessibility' && 'Cypress Accessibility'}
-          {product === 'cloud' && 'Cypress Cloud'}
+          {productName}
         </span>
 
         <a 
@@ -42,7 +41,7 @@ const ProductHeading: React.FC<ProductHeadingProps> = ({
           title="Learn more"
           className={s.productHeadingLink}
           >
-          <Badge type="success">{badgeContent}</Badge>
+            { product !== 'app' &&  <Badge type="success">{badgeContent}</Badge>}
         </a>
 
     </div>
