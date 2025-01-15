@@ -9,11 +9,11 @@ sidebar_position: 20
 
 # Element Identification
 
-Elements are uniquely identified across views and snapshots by their HTML attributes, location, and other signals in the DOM.
+UI Coverage uniquely identifies elements across views and snapshots using a combination of HTML attributes, location, and other signals in the DOM. Stable and unique identifiers are crucial for accurately tracking and de-duplicating elements throughout the various snapshots captured in your tests.
 
-It is important for elements to have unique and stable identifiers so that UI Coverage can track and de-duplicate them throughout the many different snapshots captured in your tests.
+## Significant attributes for identification
 
-UI Coverage considers the following attributes to have special significance for the purposes of identification and grouping:
+Certain attributes are prioritized by UI Coverage for element identification and grouping. These include:
 
 - `data-cy`
 - `data-test`
@@ -24,4 +24,40 @@ UI Coverage considers the following attributes to have special significance for 
 - `id`
 - `name`
 
-Element identification can be configured via [attributefilters](/ui-coverage/configuration/attributefilters) and [significantattributes](/ui-coverage/configuration/significantattributes) configuration.
+By using these attributes consistently in your application, you can improve the accuracy of UI Coverage tracking.
+
+## Configuring element identification
+
+### Attribute filters
+
+Exclude irrelevant or dynamically generated attributes to reduce noise in UI Coverage reports. For example:
+
+```json
+{
+  "uiCoverage": {
+    "attributeFilters": [
+      {
+        "attribute": "id",
+        "value": ":r.*:",
+        "include": false
+      }
+    ]
+  }
+}
+```
+
+Learn more about attribute filtering in the [Attribute Filters](/ui-coverage/configuration/attributefilters) guide.
+
+### Significant attributes
+
+Define custom significant attributes to prioritize specific selectors that align with your application’s structure. For example:
+
+```json
+{
+  "uiCoverage": {
+    "significantAttributes": ["data-custom-id"]
+  }
+}
+```
+
+Refer to the [Significant Attributes](/ui-coverage/configuration/significantattributes) guide for detailed instructions.

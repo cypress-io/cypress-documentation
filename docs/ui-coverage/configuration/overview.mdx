@@ -9,20 +9,25 @@ sidebar_position: 10
 
 # Configuration
 
-Configuration allows you to customize and fine-tune UI Coverage in Cypress to suit specific needs and scenarios. While UI Coverage is designed to work seamlessly out of the box, there are instances where custom configuration may be necessary to address unique application structures, testing requirements, or edge cases. This section guides you through setting configuration to enhance the functionality and accuracy of UI Coverage.
+Configuration enables you to customize and fine-tune UI Coverage in Cypress to suit the unique needs of your application. While UI Coverage is designed to work seamlessly out of the box, there are scenarios where fine-tuning may be necessary—such as dealing with dynamic attributes, filtering out irrelevant elements, or grouping related components. These guides explain how to configure UI Coverage effectively to improve accuracy and usability.
 
 **Note**: By default, setting configuration is limited to Admin users. At your request, this can be changed to allow setting config by all users. Reach out to your Cypress point-of-contact if you would like to change this.
 
-## Setting Configuration
+## Setting configuration
 
-To add or modify the configuration for your project, navigate to the "App Quality" tab in your project settings.
+To add or modify the configuration for your project:
+
+1. Navigate to the **App Quality** tab in your project settings on Cypress Cloud.
+2. Use the configuration editor to add or edit confiuration in JSON format.
 
 <DocsImage
   src="/img/ui-coverage/configuration/cypress-ui-coverage-configuration-editor.png"
   alt="The Cypress Cloud UI showing the configuration editor"
 />
 
-You can use the provided editor to write configuration in JSON format. A complete configuration with all available options looks as follows:
+## Configuration options
+
+A complete configuration with all available options looks as follows:
 
 ```json
 {
@@ -67,13 +72,29 @@ You can use the provided editor to write configuration in JSON format. A complet
 }
 ```
 
-Note that the root-level properties `elementFilters` and `viewFilters` apply to both UI Coverage and Accessibility. These properties can also be nested under `uiCoverage` or `accessibility` to apply to only that product, with nested configuration taking precedence over root-level configuration. The `views` property also applies to both products but cannot be nested.
+## Configuration scope
+
+The root-level properties `elementFilters` and `viewFilters` apply to both UI Coverage and Accessibility. These properties can also be nested under `uiCoverage` or `accessibility` to apply to only that product, with nested configuration taking precedence over root-level configuration.
+
+The `views` property applies to UI Coverage and Accessibility but cannot be nested.
 
 ## Viewing Configuration for a Run
 
-You can view configuration information for each run in the Properties tab, as shown below. This is the configuration set for the project at the start of the run.
+You can review the configuration used during a specific run by checking the **Properties** tab, as shown below. This displays the configuration as it was applied at the start of the run.
 
 <DocsImage
   src="/img/accessibility/configuration/cypress-cloud-properties-tab-application-quality-config.png"
   alt="The properties tab for a run, with an Application Quality section at the bottom"
 />
+
+## Next steps
+
+Check out the following configuration guides.
+
+- [Attribute Filters](/ui-coverage/configuration/attributefilters)
+- [Element Filters](/ui-coverage/configuration/elementfilters)
+- [Element Groups](/ui-coverage/configuration/elementgroups)
+- [Elements](/ui-coverage/configuration/elements)
+- [Significant Attributes](/ui-coverage/configuration/significantattributes)
+- [View Filters](/ui-coverage/configuration/viewfilters)
+- [Views](/ui-coverage/configuration/views)

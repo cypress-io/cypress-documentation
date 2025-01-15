@@ -8,14 +8,18 @@ sidebar_label: viewFilters
 
 # viewFilters
 
+By default, every URL visited within a test run is included in UI Coverage. However, not all URLs are relevant for your coverage analysis. The `viewFilters` property allows you to specify patterns for URLs that should be excluded, ensuring your coverage reports focus on meaningful parts of your application. Excluding a URL also excludes all links pointing to that URL.
+
+## Why use view filters?
+
 :::info
-Note: setting `viewFilters` impacts both Accessibility and UI Coverage reports.
-This cannot be nested.
+**Note:** setting `viewFilters` impacts both Accessibility and UI Coverage reports. This cannot be nested.
 :::
 
-By default, every URL that is visited within a run is included in UI Coverage. The `viewFilters` property allows you to specify URL patterns for URLs that should be excluded from UI Coverage. Excluding a URL also excludes all links to that URL.
-
-For every URL visited by Cypress in a run and every link element found, the first `viewFilters` rule for which the `pattern` property matches the URL is used to either include or exclude the URL based on the `include` value. URLs that do not match any rules are included by default.
+- **Exclude Third-Party URLs**: If your application integrates with third-party services, you might want to exclude their URLs from coverage analysis.
+- **Exclude Admin Pages**: URLs that are not part of the user-facing application, such as admin pages, could be excluded from coverage reports.
+- **Reduce Noise**: Certain URLs visited during tests (e.g., error pages or redirects) may not represent meaningful user flows. Exclude these to clean up your reports.
+- **Optimize Performance**: Filtering out irrelevant URLs reduces the amount of data processed, speeding up analysis and improving report readability.
 
 ## Syntax
 
@@ -30,25 +34,14 @@ For every URL visited by Cypress in a run and every link element found, the firs
 }
 ```
 
-### viewFilters
+### Options
 
-_Optional._ Object\[]
+For every URL visited and link element found, the first `viewFilters` rule for which the `pattern` matches the URL is used to either include or exclude the URL based on the `include` value. URLs that do not match any rules are included by default.
 
-An array of objects used to specify URLs to exclude from UI Coverage. _**Each object can have the following properties:**_
-
-### pattern
-
-_Required._ String (URL Pattern)
-
-Used to match URLs. Uses [URL Pattern API](https://developer.mozilla.org/en-US/docs/Web/API/URL_Pattern_API) syntax.
-
-### include
-
-_Optional._ Boolean
-
-_Default:_ `true`
-
-A boolean that represents whether or not a matched URL should be included in UI Coverage.
+| Option    | Required | Default | Description                                                                                                                  |
+| --------- | -------- | ------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| `pattern` | Required |         | A string that matches URLs using [URL Pattern API](https://developer.mozilla.org/en-US/docs/Web/API/URL_Pattern_API) syntax. |
+| `include` | Optional | `true`  | A boolean that determines whether matching URLs should be included in coverage.                                              |
 
 ## Examples
 
@@ -75,7 +68,7 @@ https://cypress.io/home
 https://cypress.io/about
 ```
 
-#### Views shown in UI
+#### Views shown in UI Coverage
 
 ```
 https://cypress.io/home
@@ -118,4 +111,37 @@ https://cypress.io/login
 ```
 https://cypress.io/dashboards
 https://cypress.io/dashboards/*
+```
+
+### Excluding error pages
+
+#### Config
+
+```json
+{
+  "viewFilters": [
+    {
+      "pattern": "http*://*/404",
+      "include": false
+    },
+    {
+      "pattern": "http*://*/error/*",
+      "include": false
+    }
+  ]
+}
+```
+
+#### Visited URLs
+
+```
+https://cypress.io/home
+https://cypress.io/404
+https://cypress.io/error/500
+```
+
+#### Views shown in UI Coverage
+
+```
+https://cypress.io/home
 ```
