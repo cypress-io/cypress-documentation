@@ -84,7 +84,7 @@ need to be aware of.
 
 Cypress changes its own host URL to match that of your applications. With the
 exception of `cy.origin`, Cypress requires that the URLs navigated to have the
-[origin](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Origin) for the
+same [origin](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Origin) for the
 entirety of a single test.
 
 If you attempt to visit two different origins, the `cy.origin` command must
