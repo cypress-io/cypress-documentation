@@ -16,6 +16,7 @@ import DocsVideo from "@site/src/components/docs-video";
 import DocumentDomainWorkaround from "@site/docs/partials/_document-domain-workaround.mdx";
 import E2EOnlyBadge from "@site/src/components/e2e-only-badge";
 import E2EOrCtTabs from "@site/src/components/e2e-or-ct-tabs";
+import ElementFilters from "@site/docs/partials/_elementfilters.mdx";
 import VueSyntaxTabs from "@site/src/components/vue-syntax-tabs";
 import HeaderAssertions from "@site/docs/partials/_header-assertions.mdx";
 import HeaderRequirements from "@site/docs/partials/_header-requirements.mdx";
@@ -31,6 +32,8 @@ import TabItem from "@theme/TabItem";
 import ThenShouldAndDifference from "@site/docs/partials/_then-should-and-difference.mdx";
 import WarningSetupNodeEvents from "@site/docs/partials/_warning-setup-node-events.mdx";
 import VideoRecordingSupportedBrowsers from "@site/docs/partials/_video-recording-supported-browsers.mdx"
+import ViewFilters from "@site/docs/partials/_viewfilters.mdx";
+import Views from "@site/docs/partials/_views.mdx";
 import LineBreak from "@site/src/components/line-break";
 import Logo from "@site/src/components/logo";
 import CloudFreePlan from "@site/docs/partials/_cloud_free_plan.mdx";
@@ -170,6 +173,7 @@ export default {
   DocumentDomainWorkaround,
   E2EOnlyBadge,
   E2EOrCtTabs,
+  ElementFilters,
   VueSyntaxTabs,
   HeaderAssertions,
   HeaderRequirements,
@@ -186,6 +190,8 @@ export default {
   ThenShouldAndDifference,
   WarningSetupNodeEvents,
   VideoRecordingSupportedBrowsers,
+  ViewFilters,
+  Views,
   Logo,
   LineBreak,
   CloudFreePlan,
