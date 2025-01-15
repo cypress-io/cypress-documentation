@@ -24,6 +24,7 @@ import HeaderYields from "@site/docs/partials/_header-yields.mdx";
 import Icon from "@site/src/components/icon";
 import ImportMountFunctions from "@site/docs/partials/_import-mount-functions.mdx";
 import IntellisenseCodeCompletion from "@site/docs/partials/_intellisense-code-completion.mdx";
+import ProductHeading from "@site/src/components/product-heading";
 import SupportFileConfiguration from "@site/docs/partials/_support-file-configuration.mdx";
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
@@ -167,6 +168,7 @@ export default {
   Icon,
   ImportMountFunctions,
   IntellisenseCodeCompletion,
+  ProductHeading,
   SupportFileConfiguration,
   Tabs,
   TabItem,
