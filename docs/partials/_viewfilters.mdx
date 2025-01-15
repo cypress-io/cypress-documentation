@@ -12,7 +12,6 @@ This cannot be nested.
 - **Reduce Noise**: Certain URLs visited during tests (e.g., error pages or redirects) may not represent meaningful user flows. Exclude these to clean up your reports.
 - **Optimize Performance**: Filtering out irrelevant URLs reduces the amount of data processed, speeding up analysis and improving report readability.
 
-
 ## Syntax
 
 ```json
@@ -33,7 +32,7 @@ For every URL visited and link element found, the first `viewFilters` rule for w
 | Option    | Required | Default | Description                                                                                                                  |
 | --------- | -------- | ------- | ---------------------------------------------------------------------------------------------------------------------------- |
 | `pattern` | Required |         | A string that matches URLs using [URL Pattern API](https://developer.mozilla.org/en-US/docs/Web/API/URL_Pattern_API) syntax. |
-| `include` | Optional | `true`  | A boolean that determines whether matching URLs should be included in the report.                                              |
+| `include` | Optional | `true`  | A boolean that determines whether matching URLs should be included in the report.                                            |
 
 ## Examples
 
