@@ -1,0 +1,204 @@
+The `elementFilters` property allows you to specify selectors for elements that should be excluded from reports.
+
+## Why use element filters?
+
+:::info
+**Note:** setting `elementFilters` impacts both Accessibility and UI Coverage
+reports if set at the root of the configuration. Nesting this property under an `accessibility` or `uiCoverage` key is
+supported, if you need to split them up.
+:::
+
+- **Ignoring 3rd Party Components**: Libraries or widgets that are not part of your application logic may be excluded from reports.
+- **Streamlining Reports**: Reducing noise by filtering out non-essential elements makes reports more actionable.
+
+## Syntax
+
+```json
+{
+  "elementFilters": [
+    {
+      "selector": string,
+      "include": boolean
+    }
+  ]
+}
+```
+
+### Options
+
+The first `elementFilters` rule for which the selector property matches the element is used to either include or exclude the element based on the `include` value. Elements that do not match any rules are included by default.
+
+| Option     | Required | Default | Description                                                                                                                      |
+| ---------- | -------- | ------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| `selector` | Required |         | A CSS selector to identify elements. Supports standard CSS selector syntax, including IDs, classes, attributes, and combinators. |
+| `include`  | Optional | `true`  | A boolean indicating whether the matched elements should be included in the report.                                              |
+
+## Examples
+
+### Excluding a specific element
+
+#### Config
+
+```json
+{
+  "elementFilters": [
+    {
+      "selector": "#button-2",
+      "include": false
+    }
+  ]
+}
+```
+
+#### HTML
+
+```xml
+<body>
+  <button id="button-1">Included</button>
+  <button id="button-2">Excluded</button>
+</body>
+```
+
+#### Elements shown in UI
+
+```
+#button-1
+```
+
+---
+
+### Excluding all elements in a container
+
+#### Config
+
+```json
+{
+  "elementFilters": [
+    {
+      "selector": "footer *",
+      "include": false
+    }
+  ]
+}
+```
+
+#### HTML
+
+```xml
+<body>
+  <main>
+    <button id="start">Included</button>
+  </main>
+  <footer>
+    <a href="#">Excluded</a>
+  </footer>
+</body>
+```
+
+#### Elements shown in UI
+
+```
+#start
+```
+
+---
+
+### Including only elements in a specific container
+
+#### Config
+
+```json
+{
+  "elementFilters": [
+    {
+      "selector": "#form *",
+      "include": true
+    },
+    {
+      "selector": "*",
+      "include": false
+    }
+  ]
+}
+```
+
+#### HTML
+
+```xml
+<body>
+  <form id="form">
+    <input id="name" />
+  </form>
+  <footer>
+    <a href="#">Excluded</a>
+  </footer>
+</body>
+```
+
+#### Elements shown in UI
+
+```
+#name
+```
+
+### Excluding Elements by Attribute
+
+#### Config
+
+```json
+{
+  "elementFilters": [
+    {
+      "selector": "[data-role='decorative']",
+      "include": false
+    }
+  ]
+}
+```
+
+```xml
+<body>
+  <button data-role="decorative">
+    <img src="icon.png" />
+  </button>
+  <button data-role="primary">
+    View
+  </button>
+</body>
+```
+
+#### Elements shown in UI
+
+```
+[data-role="primary"]
+```
+
+### Excluding dynamic elements by pattern
+
+#### Config
+
+```json
+{
+  "elementFilters": [
+    {
+      "selector": "[class^='auth']",
+      "include": false
+    }
+  ]
+}
+```
+
+#### HTML
+
+```xml
+<body>
+  <button class="cancel">Cancel</button>
+  <button class="auth908283794">Login</button>
+</body>
+```
+
+#### Elements shown in UI
+
+```
+.cancel
+```
