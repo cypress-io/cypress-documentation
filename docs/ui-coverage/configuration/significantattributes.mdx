@@ -10,9 +10,7 @@ sidebar_label: significantAttributes
 
 UI Coverage provides logic to automatically [identify](/ui-coverage/core-concepts/element-identification) and [group](/ui-coverage/core-concepts/element-grouping) elements based on their attributes and DOM structure. However, your application may rely on custom attributes for identification that are not prioritized by default in UI Coverage. The `significantAttributes` configuration allows you to specify these attributes, ensuring accurate identification and grouping.
 
-## Why use significantAttributes?
-
-## Common use cases
+## Why use significant attributes?
 
 - **Handle Custom Identifiers**: Prioritize custom attributes like `data-custom-id` that are essential for identifying elements in your application.
 - **Avoid Misclassification**: In cases where elements share generic attributes like class or name, prioritizing more specific attributes prevents incorrect grouping.
