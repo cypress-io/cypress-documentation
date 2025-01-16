@@ -48,15 +48,25 @@ Because of this, tests that visit more than one origin (defined as a composite o
 Without `cy.origin()`, interacting with a second origin in the same test will cause the test to fail, even if the two origins
 are in the same superdomain. This means you must now use `cy.origin()` in more situations than before.
 
-<Icon name="exclamation-triangle" color="red" /> **Failing Test** ```js cy.visit('https://www.cypress.io')
-cy.visit('https://docs.cypress.io') cy.get('[role="banner"]').should('be.visible')
-// Cypress will not be able to interact with the page, causing the test to fail ```
+{/* prettier-ignore-start */}
+<Icon name="exclamation-triangle" color="red" /> **Failing Test**
+```js 
+cy.visit('https://www.cypress.io')
+cy.visit('https://docs.cypress.io')
+// Cypress will not be able to interact with the page, causing the test to fail 
+cy.get('[role="banner"]').should('be.visible')
+```
 
-<Icon name="check-circle" color="green" /> **Fixed Test** ```js cy.visit('https://www.cypress.io')
-cy.visit('https://docs.cypress.io') cy.origin('https://docs.cypress.io', () => {cy
-  .get('[role="banner"]')
-  .should('be.visible')}
-) ```
+<Icon name="check-circle" color="green" /> **Fixed Test** 
+
+```js 
+cy.visit('https://www.cypress.io')
+cy.visit('https://docs.cypress.io')
+cy.origin('https://docs.cypress.io', () => {
+  cy.get('[role="banner"]').should('be.visible')
+}) 
+```
+{/* prettier-ignore-end */}
 
 :::info
 
