@@ -20,13 +20,12 @@ sidebar_label: Overview
 
 ## Framework Support
 
-Cypress Component Testing currently supports React 16+ with the following
+Cypress Component Testing currently supports React 18 and 19 with the following
 frameworks:
 
-- [Create React App](#Create-React-App-CRA)
-- [Next.js](#Nextjs)
 - [React with Vite](#React-with-Vite)
 - [React with Webpack](#React-with-Webpack)
+- [Next.js](#Nextjs)
 
 ## Tutorial
 
@@ -64,84 +63,14 @@ For usage and examples, visit the
 
 ## Framework Configuration
 
-Cypress Component Testing works out of the box with
-[Create React App](https://create-react-app.dev/),
-[Next.js](https://nextjs.org/), [Vite](https://vitejs.dev/), and a custom
+Cypress Component Testing works out of the box with [Vite](https://vitejs.dev/), [Next.js](https://nextjs.org/), and a custom
 [Webpack](https://webpack.js.org/) config. Cypress will automatically detect one
 of these frameworks during setup and configure them properly. The examples below
 are for reference purposes.
 
-### Create React App (CRA)
-
-Cypress Component Testing works with CRA 4+.
-
-#### CRA Configuration
-
-:::cypress-config-example
-
-```ts
-{
-  component: {
-    devServer: {
-      framework: 'create-react-app',
-      bundler: 'webpack',
-    },
-  },
-}
-```
-
-:::
-
-#### Sample Create React Apps
-
-- [CRA 4 with JavaScript](https://github.com/cypress-io/cypress-component-testing-apps/tree/main/react-cra4-js)
-- [CRA 5 with TypeScript](https://github.com/cypress-io/cypress-component-testing-apps/tree/main/react-cra5-ts)
-
-### Next.js
-
-Cypress Component Testing works with Next.js 11+.
-
-#### Next.js Configuration
-
-:::cypress-config-example
-
-```ts
-{
-  component: {
-    devServer: {
-      framework: 'next',
-      bundler: 'webpack',
-    },
-  },
-}
-```
-
-:::
-
-#### Next.js Caveats
-
-There are some specific caveats to consider when testing Next.js
-[Pages](https://nextjs.org/docs/basic-features/pages) in component testing.
-
-A page component could have additional logic in its `getServerSideProps` or
-`getStaticProps` methods. These methods only run on the server, so they are not
-available to run inside a component test. Trying to test a page in a component
-test would result in the props being passed into the page to be undefined.
-
-While you could pass in props directly to the page component in a component
-test, that would leave these server-side methods untested. However, an
-end-to-end test would execute and test a page entirely.
-
-Because of this, we recommend using E2E Testing over Component Testing for
-Next.js pages and Component Testing for individual components in a Next.js app.
-
-#### Sample Next.js Apps
-
-- [Next.js 13 with TypeScript](https://github.com/cypress-io/cypress-component-testing-apps/tree/main/react-next13-ts)
-
 ### React with Vite
 
-Cypress Component Testing works with React apps that use Vite 2+ as the bundler.
+Cypress Component Testing works with React apps that use Vite 4+ as the bundler.
 
 #### Vite Configuration
 
@@ -219,6 +148,49 @@ it via the `webpackConfig` option.
 #### Sample React Webpack Apps
 
 - [React Webpack 5 with JavaScript](https://github.com/cypress-io/cypress-component-testing-apps/tree/main/react-webpack5-js)
+
+### Next.js
+
+Cypress Component Testing works with Next.js 14 and Next.js 15.
+
+#### Next.js Configuration
+
+:::cypress-config-example
+
+```ts
+{
+  component: {
+    devServer: {
+      framework: 'next',
+      bundler: 'webpack',
+    },
+  },
+}
+```
+
+:::
+
+#### Next.js Caveats
+
+There are some specific caveats to consider when testing Next.js
+[Pages](https://nextjs.org/docs/basic-features/pages) in component testing.
+
+A page component could have additional logic in its `getServerSideProps` or
+`getStaticProps` methods. These methods only run on the server, so they are not
+available to run inside a component test. Trying to test a page in a component
+test would result in the props being passed into the page to be undefined.
+
+While you could pass in props directly to the page component in a component
+test, that would leave these server-side methods untested. However, an
+end-to-end test would execute and test a page entirely.
+
+Because of this, we recommend using E2E Testing over Component Testing for
+Next.js pages and Component Testing for individual components in a Next.js app.
+
+#### Sample Next.js Apps
+
+- [Next.js 14 with TypeScript](https://github.com/cypress-io/cypress-component-testing-apps/tree/main/react-next14-ts)
+- [Next.js 15 with TypeScript](https://github.com/cypress-io/cypress-component-testing-apps/tree/main/react-next15-ts)
 
 ## Community Resources
 

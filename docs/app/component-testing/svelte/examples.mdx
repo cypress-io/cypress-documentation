@@ -47,21 +47,18 @@ it('mounts', () => {
 
 ### Testing Event Handlers
 
-To test emitted events from a Svelte component, we can use access the component
-instances and use `$on` method to listen to events raised. We can also pass in a
+To test emitted events from a Svelte component, we need to pass in a callback
+for when we increment the stepper. The Stepper component
+will need to invoke this callback for us. We can also pass in a
 Cypress spy so we can query the spy later for results. In the example below, we
-listen to the `change` event and validate it was called as expected:
+pass in the `onChange` callback handler and validate it was called as expected:
 
 ```js
 it('clicking + fires a change event with the incremented value', () => {
-  const changeSpy = cy.spy().as('changeSpy')
-  cy.mount(Stepper).then(({ component }) => {
-    component.$on('change', changeSpy)
-  })
+  const onChangeSpy = cy.spy().as('onChangeSpy')
+  cy.mount(Stepper, { props: { onChange: onChangeSpy } })
   cy.get('[data-cy=increment]').click()
-  cy.get('@changeSpy').should('have.been.calledWithMatch', {
-    detail: { count: 1 },
-  })
+  cy.get('@onChangeSpy').should('have.been.calledWith', 1)
 })
 ```
 
