@@ -3,8 +3,9 @@ By default, every URL visited within a test run is included in reports. However,
 ## Why use view filters?
 
 :::info
-Note: setting `viewFilters` impacts both Accessibility and UI Coverage reports.
-This cannot be nested.
+**Note:** setting `viewFilters` impacts both Accessibility and UI Coverage reports.
+Nesting this property under an `accessibility` or `uiCoverage` key is
+supported, if you need to split them up.
 :::
 
 - **Exclude Third-Party URLs**: If your application integrates with third-party services, you might want to exclude their URLs from analysis.
