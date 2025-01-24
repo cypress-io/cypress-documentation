@@ -136,21 +136,21 @@ glob-matched against the request using
 [`Cypress.minimatch`](/api/utilities/minimatch) with the `{ matchBase: true }`
 minimatch option applied.
 
-| Option       | Description                                                                                                                                       |
-| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| auth         | HTTP Basic Authentication (`object` with keys `username` and `password`)                                                                          |
-| headers      | HTTP request headers (`object`)                                                                                                                   |
-| hostname     | HTTP request hostname                                                                                                                             |
-| https        | `true`: only secure (https://) requests, `false`: only insecure (http://) requests                                                                |
-| method       | HTTP request method (matches any method by default)                                                                                               |
-| middleware   | `true`: match route first and in defined order, `false`: match route in reverse order (default)                                                   |
-| path         | HTTP request path after the hostname, including query parameters                                                                                  |
-| pathname     | Like `path`, but without query parameters                                                                                                         |
-| port         | HTTP request port(s) (`number` or `Array`)                                                                                                        |
-| query        | Parsed query string (`object`)                                                                                                                    |
-| resourceType | The resource type of the request. See ["Request object properties"](#Request-object-properties) for a list of possible values for `resourceType`. |
-| times        | Maximum number of times to match (`number`)                                                                                                       |
-| url          | Full HTTP request URL                                                                                                                             |
+| Option                                                | Description                                                                                                                                       |
+| ----------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| auth                                                  | HTTP Basic Authentication (`object` with keys `username` and `password`)                                                                          |
+| headers                                               | HTTP request headers (`object`)                                                                                                                   |
+| hostname                                              | HTTP request hostname                                                                                                                             |
+| https                                                 | `true`: only secure (https://) requests, `false`: only insecure (http://) requests                                                                |
+| method                                                | HTTP request method (matches any method by default)                                                                                               |
+| middleware                                            | `true`: match route first and in defined order, `false`: match route in reverse order (default)                                                   |
+| path                                                  | HTTP request path after the hostname, including query parameters                                                                                  |
+| pathname                                              | Like `path`, but without query parameters                                                                                                         |
+| port                                                  | HTTP request port(s) (`number` or `Array`)                                                                                                        |
+| query                                                 | Parsed query string (`object`)                                                                                                                    |
+| resourceType <Badge type="caution">deprecated</Badge> | The resource type of the request. See ["Request object properties"](#Request-object-properties) for a list of possible values for `resourceType`. |
+| times                                                 | Maximum number of times to match (`number`)                                                                                                       |
+| url                                                   | Full HTTP request URL                                                                                                                             |
 
 See [examples](#With-RouteMatcher) below.
 
@@ -1628,6 +1628,7 @@ information about the request and response to the console:
 
 | Version                                    | Changes                                                                                                                                                                                                                                                                                              |
 | ------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [14.0.0](/app/references/changelog#14-0-0) | Deprecated `resourceType` property                                                                                                                                                                                                                                                                   |
 | [12.2.0](/app/references/changelog#12-2-0) | Added `resourceType` property to `req` and `RouteMatcher`.                                                                                                                                                                                                                                           |
 | [7.6.0](/app/references/changelog#7-0-0)   | Added `query` option to `req` (The incoming request object yielded to request handler functions).                                                                                                                                                                                                    |
 | [7.0.0](/app/references/changelog#7-0-0)   | Removed `matchUrlAgainstPath` option from `RouteMatcher`, reversed handler ordering, added request events, removed substring URL matching, removed `cy.route2` alias, added `middleware` RouteMatcher option, renamed `res.delay()` to `res.setDelay()` and `res.throttle()` to `res.setThrottle()`. |

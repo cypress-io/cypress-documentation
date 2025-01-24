@@ -5,9 +5,8 @@ The `groupBy` property of a view definition allows you to create multiple views 
 ## Why use views?
 
 :::info
-**Note:** setting `views` impacts both Accessibility and UI Coverage reports.
-Nesting this property under an `accessibility` or `uiCoverage` key is
-supported, if you need to split them up.
+**Note**: setting `views` impacts both Accessibility and UI Coverage reports.
+This cannot be nested.
 :::
 
 - **Group Dynamic URLs**: Group URLs with dynamic path parameters (e.g., `/users/alice` and `/users/bob`) that are not ids or uuids into a single view.
