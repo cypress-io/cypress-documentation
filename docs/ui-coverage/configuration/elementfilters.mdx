@@ -9,3 +9,35 @@ sidebar_label: elementFilters
 # elementFilters
 
 <ElementFilters />
+
+### Excluding disabled elements
+
+UI Coverage highlights disabled elements by default to reveal potential untested paths in your app, in case those elements become enabled later. If needed, you can exclude them from the report using the `elementFilters` configuration.
+
+#### Config
+
+```json
+{
+  "elementFilters": [
+    {
+      "selector": "[disabled]",
+      "include": false
+    }
+  ]
+}
+```
+
+#### HTML
+
+```xml
+<body>
+  <button data-cy='cancel'>Cancel</button>
+  <button disabled data-cy='submit'>Submit</button>
+</body>
+```
+
+#### Elements shown in UI
+
+```
+[data-cy='cancel']
+```
