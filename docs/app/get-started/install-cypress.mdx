@@ -40,18 +40,6 @@ for the download of the Cypress binary. You can also use the npm properties
 they will only be used if the system properties are being resolved to not use a
 proxy.
 
-:::info
-
-<strong>snap</strong>
-
-The [Node.js Snap for Linux](https://github.com/nodejs/snap) package manager has constrained operating system access. Install using:
-
-```shell
-npm install cypress --save-dev --foreground-scripts
-```
-
-:::
-
 ### <Icon name="download" /> Direct download
 
 The recommended approach is to install Cypress with `npm` because:
@@ -131,17 +119,22 @@ Cypress generally aligns with
 
 Follow the instructions on [Download Node.js](https://nodejs.org/en/download/) to download and install [Node.js](https://nodejs.org/).
 
-If you are using a [Cypress Docker image](../continuous-integration/overview#Cypress-Docker-variants), you will find a fixed version of Node.js is pre-installed in the image.
-You select the Node.js version using the Docker image tag.
-
 :::tip
 
 <strong>Best Practice</strong>
 
-Use a [Node.js package manager](https://nodejs.org/en/download/package-manager/all) to install Node.js.
-Package managers for Node.js allow you to switch between different versions easily.
+Use a Node.js version manager as suggested on [Download Node.js](https://nodejs.org/en/download/) to install Node.js,
+or use an alternate Node.js version manager of your choice.
+This allows you to switch between different versions of Node.js easily.
+
+Note that the [Node.js Snap for Linux](https://github.com/nodejs/snap) version manager is not recommended for use with Cypress.
+Attempting to use it as a non-root user may result in permissions errors.
 
 :::
+
+If you are using a [Cypress Docker image](../continuous-integration/overview#Cypress-Docker-variants),
+you will find a fixed version of Node.js is pre-installed in the image.
+You select the Node.js version using the Docker image tag.
 
 ### Hardware
 
