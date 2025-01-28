@@ -1,5 +1,5 @@
 ---
-title: 'Install using npm, yarn, or pnpm | Cypress Documentation'
+title: 'Install using npm, Yarn, or pnpm | Cypress Documentation'
 description: 'A step-by-step guide on how to install Cypress. Learn the requirements, installation process, and get started with Cypress for end-to-end and component testing'
 sidebar_label: Install Cypress
 sidebar_position: 30
@@ -13,32 +13,37 @@ sidebar_position: 30
 
 ##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
 
-- How to install Cypress using npm, yarn, or pnpm
+- How to install Cypress using npm, Yarn, or pnpm
 - System requirements for Cypress
 - How to install Cypress using direct download
 - Advanced installation options
-  :::
+
+:::
 
 # Installing Cypress
 
-First, make sure you have all the [system requirements](#System-requirements).
+First, make sure you meet the [system requirements](#System-requirements) including
+[operating system](#Operating-System),
+installation of [Node.js](#Nodejs) and
+a supported [package manager](#Package-Manager).
 
 ## Install
 
-Install Cypress via your preferred package manager. This will install Cypress locally as a dev dependency for your project. For pnpm, make sure that you have the `pnpm` environment installed: `npm install pnpm@latest --global`.
+Install Cypress via your preferred [package manager](#Package-Manager).
+This will install Cypress locally as a dev dependency for your project.
 
 <CypressInstallCommands />
 
-Make sure you have [Node.js installed](#Installing-Nodejs) and that you have already run
-[`npm init`](https://docs.npmjs.com/cli/init) or have a `node_modules` folder or
-`package.json` file in the root of your project to ensure Cypress is installed
-in the correct directory.
+Before installing Cypress, ensure you have a `package.json` file in the root of your project.
+If you need to create the file,
+you can run the `init` command for your [package manager](#Package-Manager).
 
 System [proxy properties](/app/references/proxy-configuration) `http_proxy`, `https_proxy` and `no_proxy` are respected
-for the download of the Cypress binary. You can also use the npm properties
-`npm_config_proxy` and `npm_config_https_proxy`. Those have lower priority, so
-they will only be used if the system properties are being resolved to not use a
-proxy.
+for the download of the Cypress binary.
+You can also use the npm properties
+`npm_config_proxy` and `npm_config_https_proxy`.
+Those have lower priority, so
+they will only be used if the system properties are being resolved to not use a proxy.
 
 ### <Icon name="download" /> Direct download
 
@@ -127,6 +132,26 @@ This allows you to switch between different versions of Node.js easily.
 
 Note that the [Node.js Snap for Linux](https://github.com/nodejs/snap) version manager is not recommended for use with Cypress.
 Attempting to use it as a non-root user may result in permissions errors.
+
+:::
+
+### Package Manager
+
+Cypress is [installed](#Install) using one of the following supported package managers:
+
+| Package Manager                                  | Version             | Installation instructions                                                                                       |
+| ------------------------------------------------ | ------------------- | --------------------------------------------------------------------------------------------------------------- |
+| [npm](https://docs.npmjs.com/)                   | `8.6.0` and above   | [Downloading and installing Node.js and npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) |
+| [Yarn 1 (Classic)](https://classic.yarnpkg.com/) | `1.22.22` and above | [Yarn 1 (Classic) Installation](https://classic.yarnpkg.com/en/docs/install)                                    |
+| [Yarn (Modern aka berry)](https://yarnpkg.com/)  | `4.x` and above     | [Yarn Installation](https://yarnpkg.com/getting-started/install)                                                |
+| [pnpm](https://pnpm.io/)                         | `8.x` and above     | [pnpm Installation](https://pnpm.io/installation)                                                               |
+
+:::caution
+
+<strong>Yarn Configuration</strong>
+
+[Yarn (Modern)](https://yarnpkg.com/) configuration using [`nodeLinker: "node-modules"`](https://yarnpkg.com/configuration/yarnrc#nodeLinker)
+is preferred. Cypress [Component Testing](/app/core-concepts/testing-types#What-is-Component-Testing) is not currently compatible with the default setting [`nodeLinker: "pnp"`](https://yarnpkg.com/configuration/yarnrc#nodeLinker) which uses [Yarn Plug'n'Play](https://yarnpkg.com/features/pnp).
 
 :::
 
