@@ -86,7 +86,7 @@ cy.get('h1').contains('Kitchen Sink')
 cy.origin('https://www.cypress.io', () => {
   cy.visit('/about-us')
   cy.get('h1').contains('About us')
-  // Fails because doanloads is not passed in via args
+  // Fails because downloads is not passed in via args
   cy.contains(downloads)
 })
 // Won't work because still on www.cypress.io
