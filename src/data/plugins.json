@@ -1086,7 +1086,7 @@
         {
           "name":"cypress-sql",
           "description":"The @dankieu/cypress-sql package supports the following database connections Sql server, Mysql, OracleDB, Postgress",
-          "link":"https://www.npmjs.com/package/@dankieu/cypress-sql?activeTab=readme",
+          "link":"https://github.com/testervippro/cypress-sql",
           "keywords":["sql", "database", "test", "commands", "oracle"],
           "badge":"community"
         }
