@@ -52,6 +52,13 @@
           "link": "https://github.com/mammadataei/cypress-vite",
           "keywords": ["vite"],
           "badge": "community"
+        },
+        {
+          "name": "cypress-laravel",
+          "description": "Add commands and hooks to test Laravel applications.",
+          "link": "https://github.com/noeldemartin/cypress-laravel",
+          "keywords": ["php", "laravel"],
+          "badge": "community"
         }
       ]
     },
