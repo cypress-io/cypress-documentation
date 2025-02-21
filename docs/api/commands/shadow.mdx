@@ -34,6 +34,17 @@ cy.exec('npm start').shadow() // Errors, 'exec' does not yield DOM element
 cy.get('.not-a-shadow-host').shadow() // Errors, subject must host a shadow root
 ```
 
+### Arguments
+
+<Icon name="angle-right" /> **options _(Object)_**
+
+Pass in an options object to change the default behavior of `.shadow()`.
+
+| Option             | Default                                                                        | Description                                                                                                  |
+| ------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------ |
+| `log`              | `true`                                                                         | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log)                          |
+| `timeout`          | [`defaultCommandTimeout`](/app/references/configuration#Timeouts)              | Time to wait for `cy.get()` to resolve before [timing out](#Timeouts)                                        |
+
 <HeaderYields />
 
 - `.shadow()` yields the new DOM element(s) it found.
