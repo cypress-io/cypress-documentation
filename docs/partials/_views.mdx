@@ -1,6 +1,6 @@
 Cypress automatically groups certain URL patterns to create views. However, for URLs that are not automatically grouped (e.g., `/users/alice` and `/users/bob` are not automatically grouped into `/users/*`), the `views` property allows you to specify custom URL patterns to define views. This configuration enhances the clarity and organization of your coverage reports.
 
-The `groupBy` property of a view definition allows you to create multiple views with a single URL pattern, grouping URLs by the specified named parameter(s).
+The `groupBy` property allows you to create multiple views from a single URL pattern by specifying which parts of the URL should create distinct groupings.
 
 ## Why use views?
 
@@ -11,6 +11,19 @@ This cannot be nested.
 
 - **Group Dynamic URLs**: Group URLs with dynamic path parameters (e.g., `/users/alice` and `/users/bob`) that are not ids or uuids into a single view.
 - **Organize by Query Parameters**: Create views based on query parameters to group URLs where query strings are important to the context of the page.
+- **Create Distinct View Groups**: Use `groupBy` to maintain separate views for meaningful URL parameters while still grouping dynamic content.
+
+## Using groupBy
+
+The `groupBy` property creates distinct views based on named parameters in your URL pattern. For example, if your pattern is `/analytics/:type/:id`, using `groupBy: ["type"]` would create separate views for each unique value of `type` (like `/analytics/performance/:id` and `/analytics/usage/:id`).
+
+This is particularly useful when:
+
+- Different parameter values represent distinct functional areas
+- You want to track coverage separately for different categories of content
+- URL parameters determine significant UI changes
+
+URLs with the same values for the specified parameters will be grouped together, while different values create distinct views.
 
 ## Syntax
 
@@ -31,10 +44,10 @@ This cannot be nested.
 
 The first pattern that a given URL matches is used as its view. If a URL doesn't match any of the patterns, it is grouped by the default view grouping rules, if possible.
 
-| Option    | Required | Default | Description                                                                                                                                                                                                                 |
-| --------- | -------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `pattern` | Required |         | A URL pattern to group matching URLs into a single view. Uses [URL Pattern API](https://developer.mozilla.org/en-US/docs/Web/API/URL_Pattern_API) syntax.                                                                   |
-| `groupBy` | Optional |         | An array of named URL parameters used to further subdivide the URLs into multiple views within the same pattern. This is useful for dynamic applications where URLs represent different user interactions or data segments. |
+| Option    | Required | Default | Description                                                                                                                                               |
+| --------- | -------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `pattern` | Required |         | A URL pattern to group matching URLs into a single view. Uses [URL Pattern API](https://developer.mozilla.org/en-US/docs/Web/API/URL_Pattern_API) syntax. |
+| `groupBy` | Optional |         | An array of named parameters from your pattern that should create separate views.                                                                         |
 
 ## Examples
 
