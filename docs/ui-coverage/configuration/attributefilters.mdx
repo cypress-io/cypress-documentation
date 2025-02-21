@@ -149,6 +149,7 @@ For every attribute that an element has, the first `attributeFilters` rule for w
 ### Filtering related dynamic attributes
 
 When filtering dynamic `id` attributes, you should also filter attributes that reference those IDs to prevent elements from being identified by these related dynamic values. Common relationships include:
+
 - Form associations (`for` attributes on labels)
 - ARIA relationships (`aria-labelledby`, `aria-describedby`, `aria-controls`, `aria-owns`, `aria-details`)
 - Name attributes that may mirror IDs in certain frameworks
