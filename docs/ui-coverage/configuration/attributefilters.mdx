@@ -145,3 +145,43 @@ For every attribute that an element has, the first `attributeFilters` rule for w
 ```
 .user (2 instances)
 ```
+
+### Filtering related dynamic attributes
+
+When filtering dynamic `id` attributes, you should also filter attributes that reference those IDs to prevent elements from being identified by these related dynamic values. Common relationships include:
+
+- Form associations (`for` attributes on labels)
+- ARIA relationships (`aria-labelledby`, `aria-describedby`, `aria-controls`, `aria-owns`, `aria-details`)
+- Name attributes that may mirror IDs in certain frameworks
+
+```json
+{
+  "uiCoverage": {
+    "attributeFilters": [
+      {
+        "attribute": "id|for|name|aria-.*",
+        "value": "dynamic-.*",
+        "include": false
+      }
+    ]
+  }
+}
+```
+
+#### HTML
+
+```xml
+<div>
+  <label for="dynamic-input-1">First Name</label>
+  <input id="dynamic-input-1" name="dynamic-input-1" aria-describedby="dynamic-help-1" />
+  <p id="dynamic-help-1">Enter your first name</p>
+</div>
+```
+
+#### Elements shown in UI Coverage
+
+```
+label
+input
+p
+```
