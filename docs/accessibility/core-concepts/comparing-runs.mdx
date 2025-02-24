@@ -9,7 +9,13 @@ sidebar_label: Comparing runs
 
 # Comparing runs
 
-Accessibility reports from different runs can be compared in the Branch Review area of Cypress Cloud. This allows you to instantly see if any new issues have been introduced, and drill in to see full-page HTML and CSS snapshots showing only the new issues.
+Accessibility reports from different runs can be compared in the [Branch Review](/cloud/features/branch-review#Getting-Started) area of Cypress Cloud. This allows you to instantly see if any new issues have been introduced, and drill in to see full-page HTML and CSS snapshots showing only the new issues.
+
+<DocsImage
+  src="/img/accessibility/core-concepts/branch-review-example-diff.png"
+  alt="An example of a Cypress Accessibility report comparison in the Branch Review area. The example shows no new failed rules, no resolved rules, and one failed rule with changes - the 'form elements must have labels' rule, which has two new failures on the `/contact` route."
+/>
+
 
 ## Use cases
 
@@ -24,6 +30,12 @@ Comparing runs can be useful in various scenarios.
 
 
 ## Content of the report
+
+<DocsImage
+  src="/img/accessibility/core-concepts/branch-review-intro.png"
+  alt="Cypress Accessibility Branch Review with arrows calling out the sections for new failed rules, resolved rules, and failed rules with changes. New failed rules are defined as rules that just started failing on the new branch. Resolved rules are defined as rules that got fully fixed in the new branch. Failed rules with changes are defined as rules that failed on both branches, but with different element counts or different related pages."
+/>
+
 
 The Branch Review report is prioritized into three sections:
 
@@ -41,17 +53,43 @@ There are a number of ways to get to Branch Review depending on where you are lo
 
 ### From a Pull Request
 
+<DocsImage
+  src="/img/accessibility/core-concepts/branch-review-pull-request.png"
+  alt="A pull request comment from Cypress with an arrow pointing to the 'View all changes introduced in this branch' link. Test results and some accessibility score and violation information is also visible in the comment. The project has an 86.86% accessibility score, with  9 failed elements. Failed rule counts are 1 critical, 1 serious, 3 moderate, and 0 minor."
+/>
+
+
 Click the "View all changes introduced in this branch" link at the bottom of the Test Results table. You will enter branch review with the current PR's branch and latest run pre-selected as the "changed" run.
 
 ### From the run list
 
 Click the branch name associated with the run. This will take you to Branch Review with that branch's newest run pre-selected as the `changed` run.
 
+<DocsImage
+  src="/img/accessibility/core-concepts/branch-review-run-card.png"
+  alt="A couple of cards showing various details about Cypress test runs, including pass/fail counts and metadata. An arrow points to the branch name."
+/>
+
+
 ### From the project list
+
+<DocsImage
+  src="/img/accessibility/core-concepts/branch-review-project-card.png"
+  width="40%"
+  alt="A card showing the name of an example project and related branches to choose."
+/>
+
 
 The project card shows three active branches for the project. You can click through to any of these to enter Branch Review with the newest run on that branch pre-selected as the `changed` run.
 
 ### From the main navigation
+
+<DocsImage
+  src="/img/accessibility/core-concepts/branch-review-side-nav.png"
+  width="40%"
+  alt="The main Cypress Cloud navigation showing Latest Runs, Branches, and Analytics menu items. An arrow points to Branches."
+/>
+
 
 When inside of a project, you can select "Branches" in the main navigation to see a full, filterable list of available branches and choose one to set as the `changed` run.
 
