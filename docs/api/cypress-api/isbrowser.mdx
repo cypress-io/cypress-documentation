@@ -38,17 +38,17 @@ Filter one or multiple browsers by the browser properties. You can inspect the
 current browser's properties by using the
 [Cypress.browser](/api/cypress-api/browser). Supported properties are:
 
-| Property       | Type      | Description                                                           |
-| -------------- | --------- | --------------------------------------------------------------------- |
-| `name`         | `string`  | Machine-friendly name, like `chrome`, `electron`, or `firefox`.       |
-| `family`       | `string`  | Rendering engine being used. `chromium` or `firefox`.                 |
-| `channel`      | `string`  | Release channel of the browser, such as `stable`, `dev`, or `canary`. |
-| `displayName`  | `string`  | Human-readable display name for the browser.                          |
-| `version`      | `string`  | Full version.                                                         |
-| `path`         | `string`  | Path to the browser on disk. Blank for Electron.                      |
-| `majorVersion` | `number`  | The major version number of the browser.                              |
-| `isHeadless`   | `boolean` | Whether the browser is running headlessly.                            |
-| `isHeaded`     | `boolean` | Whether the browser displays headed.                                  |
+| Property       | Type                 | Description                                                           |
+| -------------- | -------------------- | --------------------------------------------------------------------- |
+| `name`         | `string`             | Machine-friendly name, like `chrome`, `electron`, or `firefox`.       |
+| `family`       | `string`             | Rendering engine being used. `chromium` or `firefox`.                 |
+| `channel`      | `string`             | Release channel of the browser, such as `stable`, `dev`, or `canary`. |
+| `displayName`  | `string`             | Human-readable display name for the browser.                          |
+| `version`      | `string`             | Full version.                                                         |
+| `path`         | `string`             | Path to the browser on disk. Blank for Electron.                      |
+| `majorVersion` | `number` \| `string` | The major version number of the browser.                              |
+| `isHeadless`   | `boolean`            | Whether the browser is running headlessly.                            |
+| `isHeaded`     | `boolean`            | Whether the browser displays headed.                                  |
 
 ## Examples
 
