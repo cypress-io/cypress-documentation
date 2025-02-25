@@ -29,6 +29,7 @@ Comparing the results from different runs is useful in multiple scenarios.
 - **Detecting content issues**: Sometimes content editors can introduce accessibility issues unrelated to code changes. Seeing the example issues presented visually, in context, helps you quickly triage whether you are dealing with a recent code change issue, or a content authorship problem.
 - **Reviewing AI-generated code changes**: The increased use of AI to generate and/or review front-end code creates some increased risks of accessibility regressions making it to production. The increase or decrease of accessibility issues when reviewing a pull request helps you understand the impact of the change.
 - **Tracing the introduction of issues**: With dropdowns for each run, it's easy to rapidly compare different A and B runs to find the exact commit that introduced a problem.
+- **Demonstrating the resolution of issues**: Confirm the effect of your improvements, and share overview with your team to more quickly review code changes.
 
 ## Content of the report
 
@@ -44,11 +45,11 @@ The Branch Review report is prioritized into three sections:
 - **Resolved rules**: Rules that had some failures detected in the `base` run but have no failures on the `changed` run. This helps you celebrate the wins and recognize when a new run has gone green.
 - **Failed rules with changes**: Rules that were failing in both runs, where the elements with failures detected have increased, decreased, or changed in some way.
 
-This organization of the report brings the most significant results to the top - regressions of rules that had been fully passing in the `base` run. Increases or decreased in the element counts for rules that already have some failures provide a good sense of progress, but can tend to be noisier, especially if the runs have different content or other conditions that changed in between.
+This organization of the report brings the most significant results to the top - regressions of rules that had been fully passing in the `base` run. Increases or decreases in the element counts for rules that already have some failures provide a good sense of progress, but can tend to be noisier, especially if the runs have different content or other conditions have changed in between.
 
 ## How to compare runs
 
-The first step is to get to the Branch Review area of Cypress Cloud, which will let you compare one branch against another - or different runs on the same branch, if needed. We refer to the baseline run for comparison as the `base` run, and the changes we are comparing as the `changed` run.
+The first step is to get to the Branch Review area of Cypress Cloud, which will let you compare one branch against another - or different runs on the same branch, if needed. We refer to be baseline fun for comparison as the `base` run, and the changes we are comparing with as the `changed` run.
 
 There are a number of ways to get to Branch Review depending on where you are looking at your Cypress results. In all cases, once you've picked a `changed` run, you can adjust the automatically-selected `base` run to any branch or run in the project.
 
@@ -94,9 +95,9 @@ When inside of a project, you can select "Branches" in the main navigation to se
 
 ### How to I ensure a good comparison?
 
-The best subjects to compare are passing runs that ran similar tests on the same set of content. This means that each run visited roughly the same pages and completed the same kinds of workflows. In this situation, any diff in the results is likely the result of changes present in the newer run. This is usually what happens out-of-the box when comparing a pull-request branch with your main brach. Test failures or errors on either run
+The best subjects to compare are passing runs that ran similar tests on the same set of content. This means that each run visited roughly the same pages and completed the same kinds of workflows. In this situation, any diff in the results is likely the result of changes present in the newer run. This is usually what happens out-of-the box when comparing a pull-request branch with your main branch.
 
-That said, it is still possible and valid to compare runs from different points in time with different sets of test results, as long as you bear in mind all the potential sources of differences between the two runs, which you can evaluate for yourself as you explore the results.
+That said, it still possible and valid to compare runs from different points in time with different sets of test results, as long as you bear in mind all the potential sources of difference between the two runs, which you can evaluate for yourself as you explore the results.
 
 ### What is the purpose of the Beta label?
 
@@ -104,4 +105,4 @@ This indicates the feature is ready for use and actively seeking feedback based 
 
 ### Why do I see some views (pages or components) changing from run-to-run?
 
-URLs with dynamic slugs in them can appear as "new" pages in some situations. This behavior can be adjusted with [View configuration] to make sure page names match across runs by wildcarding parts of the URL as needed.
+URLs with dynamic slugs in them can appear as "new" pages in some situations. This behavior can be adjusted with [View configuration](/accessibility/configuration/views) to make sure page names will match across runs by wildcarding parts of the URL as needed.
