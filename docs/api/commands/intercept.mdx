@@ -1,6 +1,12 @@
 ---
-title: intercept
+title: 'intercept | Cypress Documentation'
+description: Spy and stub network requests and responses.
+sidebar_label: intercept
 ---
+
+<ProductHeading product="app" />
+
+# intercept
 
 Spy and stub network requests and responses.
 
@@ -130,21 +136,21 @@ glob-matched against the request using
 [`Cypress.minimatch`](/api/utilities/minimatch) with the `{ matchBase: true }`
 minimatch option applied.
 
-| Option       | Description                                                                                                                                       |
-| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| auth         | HTTP Basic Authentication (`object` with keys `username` and `password`)                                                                          |
-| headers      | HTTP request headers (`object`)                                                                                                                   |
-| hostname     | HTTP request hostname                                                                                                                             |
-| https        | `true`: only secure (https://) requests, `false`: only insecure (http://) requests                                                                |
-| method       | HTTP request method (matches any method by default)                                                                                               |
-| middleware   | `true`: match route first and in defined order, `false`: match route in reverse order (default)                                                   |
-| path         | HTTP request path after the hostname, including query parameters                                                                                  |
-| pathname     | Like `path`, but without query parameters                                                                                                         |
-| port         | HTTP request port(s) (`number` or `Array`)                                                                                                        |
-| query        | Parsed query string (`object`)                                                                                                                    |
-| resourceType | The resource type of the request. See ["Request object properties"](#Request-object-properties) for a list of possible values for `resourceType`. |
-| times        | Maximum number of times to match (`number`)                                                                                                       |
-| url          | Full HTTP request URL                                                                                                                             |
+| Option                                                | Description                                                                                                                                       |
+| ----------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| auth                                                  | HTTP Basic Authentication (`object` with keys `username` and `password`)                                                                          |
+| headers                                               | HTTP request headers (`object`)                                                                                                                   |
+| hostname                                              | HTTP request hostname                                                                                                                             |
+| https                                                 | `true`: only secure (https://) requests, `false`: only insecure (http://) requests                                                                |
+| method                                                | HTTP request method (matches any method by default)                                                                                               |
+| middleware                                            | `true`: match route first and in defined order, `false`: match route in reverse order (default)                                                   |
+| path                                                  | HTTP request path after the hostname, including query parameters                                                                                  |
+| pathname                                              | Like `path`, but without query parameters                                                                                                         |
+| port                                                  | HTTP request port(s) (`number` or `Array`)                                                                                                        |
+| query                                                 | Parsed query string (`object`)                                                                                                                    |
+| resourceType <Badge type="caution">deprecated</Badge> | The resource type of the request. See ["Request object properties"](#Request-object-properties) for a list of possible values for `resourceType`. |
+| times                                                 | Maximum number of times to match (`number`)                                                                                                       |
+| url                                                   | Full HTTP request URL                                                                                                                             |
 
 See [examples](#With-RouteMatcher) below.
 
@@ -173,7 +179,7 @@ send a response, access the real response, and more.
 See ["Intercepted requests"][req] and
 [Request/Response Modification with `routeHandler`](#RequestResponse-Modification-with-routeHandler).
 
-### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+<HeaderYields />
 
 - `cy.intercept()` yields `null`, but can be aliased.
 - Waiting on an aliased `cy.intercept()` route using
@@ -1564,14 +1570,17 @@ are some workarounds:
 
 ## Command Log
 
+**_Routes Instrument Panel_**
+
+When you create `cy.intercept()` rules, Cypress will display a new Instrument called _Routes_.
+
 ```javascript
 cy.intercept('/accounts*').as('accountsGet')
 cy.intercept('/company', { companyId: 1 }).as('companyGet')
 cy.intercept('/teams*', [{ teamId: 2 }]).as('teamsGet')
 ```
 
-Whenever you create `cy.intercept()` rules, Cypress will display a new
-Instrument Panel called _Routes_. It will list the routing table in the
+It will list the routing table in the
 Instrument Panel, including the `method`, `RouteMatcher`, if the route is
 stubbed, any alias, and number of matched requests:
 
@@ -1619,6 +1628,7 @@ information about the request and response to the console:
 
 | Version                                    | Changes                                                                                                                                                                                                                                                                                              |
 | ------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [14.0.0](/app/references/changelog#14-0-0) | Deprecated `resourceType` property                                                                                                                                                                                                                                                                   |
 | [12.2.0](/app/references/changelog#12-2-0) | Added `resourceType` property to `req` and `RouteMatcher`.                                                                                                                                                                                                                                           |
 | [7.6.0](/app/references/changelog#7-0-0)   | Added `query` option to `req` (The incoming request object yielded to request handler functions).                                                                                                                                                                                                    |
 | [7.0.0](/app/references/changelog#7-0-0)   | Removed `matchUrlAgainstPath` option from `RouteMatcher`, reversed handler ordering, added request events, removed substring URL matching, removed `cy.route2` alias, added `middleware` RouteMatcher option, renamed `res.delay()` to `res.setDelay()` and `res.throttle()` to `res.setThrottle()`. |

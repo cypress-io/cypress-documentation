@@ -1,7 +1,13 @@
 ---
-title: session
+title: 'session | Cypress Documentation'
+description: Cache and restore cookies, localStorage, and sessionStorage in order to recreate a consistent browser context between tests in Cypress.
+sidebar_label: session
 e2eSpecific: true
 ---
+
+<ProductHeading product="app" />
+
+# session
 
 Cache and restore [cookies](/api/cypress-api/cookies),
 [`localStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage),
@@ -116,7 +122,7 @@ before `setup` runs, regardless of the `testIsolation` configuration.
 | `validate`         | `undefined` | Validates the newly-created or restored session. Function to run immediately after the session is created and `setup` function runs or after a session is restored and the page is cleared. If it throws an exception, contains any failing Cypress command, returns a Promise which rejects or resolves to `false`, or the last Cypress command yielded `false`, the session is considered invalid.<br/><br/>- If validation fails immediately after `setup`, the test will fail.<br/>- If validation fails after restoring a session, `setup` will re-run. |
 | `cacheAcrossSpecs` | `false`     | When enabled, the newly created session is considered "global" and can be restored in any spec during the test execution in the same Cypress run on the same machine. Use this option for a session that will be used multiple times, across many specs.                                                                                                                                                                                                                                                                                                     |
 
-### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+<HeaderYields />
 
 - `cy.session()` yields `null`.
 
@@ -788,8 +794,6 @@ and global sessions and re-run the spec file (see
   alt="Sessions Instrument Panel"
 />
 
-### The command log
-
 Whenever `cy.session()` is called, the command log will show one of the
 following lines, which includes the status of the session call along with the
 session `id` value:
@@ -831,8 +835,6 @@ remainder of the test.
   src="/img/api/session/session-expanded.png"
   alt="Recreated session (expanded)"
 />
-
-### Printing to the console
 
 Clicking a session `id` in the Instrument Panel or clicking the first line under
 an expanded session group in the command log will print that session's details

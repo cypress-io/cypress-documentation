@@ -1,6 +1,12 @@
 ---
-title: Environment Variables
+title: 'Cypress Environment Variables'
+description: 'Set and use environment variables in Cypress to manage dynamic values across different environments.'
+sidebar_label: 'Environment Variables'
 ---
+
+<ProductHeading product="app" />
+
+# Cypress Environment Variables
 
 :::caution
 
@@ -21,13 +27,13 @@ Environment variables are useful when:
 
 Environment variables can be changed easily - especially when running in CI.
 
-#### Instead of hard coding this in your tests:
+### Instead of hard coding this in your tests:
 
 ```javascript
 cy.request('https://api.acme.corp') // this will break on other environments
 ```
 
-#### We can move this into a Cypress environment variable:
+### We can move this into a Cypress environment variable:
 
 ```javascript
 cy.request(Cypress.env('EXTERNAL_API')) // points to a dynamic env var

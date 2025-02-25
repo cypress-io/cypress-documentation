@@ -1,6 +1,12 @@
 ---
-title: end
+title: 'end | Cypress Documentation'
+description: End a chain of commands in Cypress.
+sidebar_label: end
 ---
+
+<ProductHeading product="app" />
+
+# end
 
 End a chain of commands.
 
@@ -24,7 +30,7 @@ cy.contains('ul').end() // Yield 'null' instead of 'ul' element
 cy.end()
 ```
 
-### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+<HeaderYields />
 
 - `.end()` yields `null`.
 
@@ -50,15 +56,15 @@ cy.contains('User: Charles').click() // contains looks for content in document n
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
+<HeaderRequirements />
 
 - `.end()` requires being chained off a previous command.
 
-### Assertions [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
+<HeaderAssertions />
 
 - `.end()` cannot have any assertions chained.
 
-### Timeouts [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
+<HeaderTimeouts />
 
 - `.end()` cannot time out.
 

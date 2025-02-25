@@ -1,6 +1,12 @@
 ---
-title: Migrating from Selenium
+title: 'Migrating from Selenium to Cypress: A Guide'
+description: Learn the advantages and limitations of Selenium and Cypress, strategies for migration, and how to integrate Cypress with your CI/CD pipeline.
+sidebar_label: Migrating from Selenium
 ---
+
+<ProductHeading product="app" />
+
+# Migrating from Selenium to Cypress
 
 :::info
 
@@ -230,20 +236,20 @@ Considering the easy and clear syntax of Cypress, transferring all the selectors
 might take the longest. And while copying and pasting the selectors is definitely
 an option, rewriting the selectors might be required to conform to the best practices.
 
-##### Multiple tabs
+### Multiple tabs
 
 When you have the need to interact with multiple browser tabs in Cypress, an official plugin has been provided to accomplish this
 goal. The [Puppeteer plugin](https://github.com/cypress-io/cypress/tree/develop/npm/puppeteer) utilizes Puppeteer's browser API
 with one command within Cypress.
 
-##### File upload
+### File upload
 
 Because Selenium cannot interact with the file upload dialog, it provides a way to upload files without opening the dialog. Cypress
 provides support uploading files through the built-in [`.selectFile()`](/api/commands/selectfile) command. There are
 [many options](https://www.cypress.io/blog/2022/01/19/uploading-files-with-selectfile) available to allow you to upload a single
 file, multiple files, and even drag and drop in Cypress.
 
-##### GraphQL
+### GraphQL
 
 Given the increasing prominence of GraphQL, the community has responded accordingly. Validating the contents of GraphQL
 requests or responses is entirely feasible using Cypress's native intercept functionality. This plugin enhances both
@@ -324,7 +330,7 @@ it would be remiss not to explore the potential benefits afforded by its feature
 
 Some of the core features include:
 
-##### [Test Replay](/cloud/features/test-replay)
+#### [Test Replay](/cloud/features/test-replay)
 
 One of the major difficulties in troubleshooting headless testing is having to reproduce the failure in your local
 environment in order to debug failures in CI. Cypress Cloud resolves this issue with Test Replay. Test Replay's
@@ -334,7 +340,7 @@ locally so you can swiftly get back to shipping valuable software for your users
 leading up to crashes or failures by inspecting the DOM, network events, and console logs of your application under
 test exactly as they ran in CI.
 
-##### [Parallelization](/cloud/features/smart-orchestration/parallelization)
+#### [Parallelization](/cloud/features/smart-orchestration/parallelization)
 
 To enhance testing efficiency further, Cypress Cloud offers a built-in solution for test parallelization. With a simple
 toggle, tests can run in parallel, eliminating the need for complex configurations to run tests concurrently.

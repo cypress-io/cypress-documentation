@@ -1,0 +1,215 @@
+Cypress automatically groups certain URL patterns to create views. However, for URLs that are not automatically grouped (e.g., `/users/alice` and `/users/bob` are not automatically grouped into `/users/*`), the `views` property allows you to specify custom URL patterns to define views. This configuration enhances the clarity and organization of your coverage reports.
+
+The `groupBy` property allows you to create multiple views from a single URL pattern by specifying which parts of the URL should create distinct groupings.
+
+## Why use views?
+
+:::info
+**Note**: setting `views` impacts both Accessibility and UI Coverage reports.
+This cannot be nested.
+:::
+
+- **Group Dynamic URLs**: Group URLs with dynamic path parameters (e.g., `/users/alice` and `/users/bob`) that are not ids or uuids into a single view.
+- **Organize by Query Parameters**: Create views based on query parameters to group URLs where query strings are important to the context of the page.
+- **Create Distinct View Groups**: Use `groupBy` to maintain separate views for meaningful URL parameters while still grouping dynamic content.
+
+## Using groupBy
+
+The `groupBy` property creates distinct views based on named parameters in your URL pattern. For example, if your pattern is `/analytics/:type/:id`, using `groupBy: ["type"]` would create separate views for each unique value of `type` (like `/analytics/performance/:id` and `/analytics/usage/:id`).
+
+This is particularly useful when:
+
+- Different parameter values represent distinct functional areas
+- You want to track coverage separately for different categories of content
+- URL parameters determine significant UI changes
+
+URLs with the same values for the specified parameters will be grouped together, while different values create distinct views.
+
+## Syntax
+
+```json
+{
+  "views": [
+    {
+      "pattern": string,
+      "groupBy": [
+        string
+      ]
+    }
+  ]
+}
+```
+
+### Options
+
+The first pattern that a given URL matches is used as its view. If a URL doesn't match any of the patterns, it is grouped by the default view grouping rules, if possible.
+
+| Option    | Required | Default | Description                                                                                                                                               |
+| --------- | -------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `pattern` | Required |         | A URL pattern to group matching URLs into a single view. Uses [URL Pattern API](https://developer.mozilla.org/en-US/docs/Web/API/URL_Pattern_API) syntax. |
+| `groupBy` | Optional |         | An array of named parameters from your pattern that should create separate views.                                                                         |
+
+## Examples
+
+### Grouping dynamic path parameters
+
+#### Config
+
+```typescript
+{
+  "views": [
+    {
+      "pattern": "https://www.my-app.com/users/*"
+    }
+  ]
+}
+```
+
+#### Visited URLs
+
+```
+https://www.my-app.com/users/alice
+https://www.my-app.com/users/bob
+https://www.my-app.com/users/bob#settings
+https://www.my-app.com/users?assigned=true
+```
+
+#### Views shown in UI
+
+```
+www.my-app.com/users
+www.my-app.com/users/*
+```
+
+---
+
+### Using named path parameters
+
+#### Config
+
+```json
+{
+  "views": [
+    {
+      "pattern": "https://www.my-app.com/users/:name"
+    }
+  ]
+}
+```
+
+#### Visited URLs
+
+```
+https://www.my-app.com/users/alice
+https://www.my-app.com/users/bob
+https://www.my-app.com/users/bob#settings
+https://www.my-app.com/users?assigned=true
+```
+
+#### Views shown in UI
+
+```
+www.my-app.com/users
+www.my-app.com/users/:name
+```
+
+---
+
+### Group URLs by named parameters
+
+#### Config
+
+```json
+{
+  "views": [
+    {
+      "pattern": "https://www.my-app.com/analytics/:type/:id",
+      "groupBy": ["type"]
+    }
+  ]
+}
+```
+
+#### Visited URLs
+
+```
+https://www.my-app.com/analytics/performance/amara
+https://www.my-app.com/analytics/performance/harper
+https://www.my-app.com/analytics/usage/amara
+https://www.my-app.com/analytics/usage/harper
+```
+
+#### Views shown in UI
+
+```
+www.my-app.com/analytics/performance/:id
+www.my-app.com/analytics/usage/:id
+```
+
+---
+
+### Group URLs by named query parameters
+
+#### Config
+
+```json
+{
+  "views": [
+    {
+      "pattern": "https://www.my-app.com/home?*status=:status{&*}?#*",
+      "groupBy": ["status"]
+    }
+  ]
+}
+```
+
+#### Visited URLs
+
+```
+https://www.my-app.com/home?page=1&status=done
+https://www.my-app.com/home?status=done&group=2
+https://www.my-app.com/home?tag=trip&status=new&group=4
+https://www.my-app.com/home?tag=trip&status=new#statusView
+```
+
+#### Views shown in UI
+
+```
+www.my-app.com/home?status=done
+www.my-app.com/home?status=new
+```
+
+---
+
+### Grouping URLs across subdomains
+
+#### Config
+
+```json
+{
+  "views": [
+    {
+      "pattern": "https://*.my-app.com/:path*",
+      "groupBy": ["path"]
+    }
+  ]
+}
+```
+
+#### Visited URLs
+
+```
+https://staging1.my-app.com/home
+https://staging2.my-app.com/home
+https://www.my-app.com/home
+https://staging1.my-app.com/profile
+https://www.my-app.com/profile/edit
+```
+
+#### Views shown in UI
+
+```
+https://*.my-app.com/home
+https://*.my-app.com/profile
+https://*.my-app.com/profile/edit
+```

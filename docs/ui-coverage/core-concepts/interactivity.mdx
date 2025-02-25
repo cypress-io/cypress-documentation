@@ -5,21 +5,23 @@ sidebar_label: Interactivity
 sidebar_position: 10
 ---
 
-# Interactivity
+<ProductHeading product="ui-coverage" />
 
-<UICovAddon />
+# Interactivity
 
 ## Interactive Elements
 
-UI Coverage uses a set of rules, based on HTML semantics, [WHATWG standards](https://html.spec.whatwg.org/dev/dom.html#interactive-content), as well as some additional rules defined by Cypress, to determine which elements are interactive. Some examples of elements that are considered interactive and are thereby included in UI Coverage are:
+UI Coverage determines interactivity based on a combination of HTML semantics, [WHATWG standards](https://html.spec.whatwg.org/dev/dom.html#interactive-content), and Cypress-specific rules. Interactive elements included in UI Coverage are:
 
-- **Elements with implicit interactive roles** such as elements with a tag of `a`, `button`, `input`, `select`, `textarea`, etc.
-- **Elements with explicit interactive roles** such as elements with a `role` attribute set to `button`, `checkbox`, `radio`, `tab`, `textbox`, etc.
-- **Elements with a `tabindex` attribute set to >= 0.**
+- **Implicit interactive roles**: Elements with a tag of `a`, `button`, `input`, `select`, `textarea`, etc.
+- **Explicit interactive roles**: Elements with a `role` attribute set to values like `button`, `checkbox`, `radio`, `tab`, `textbox`, etc.
+- **Tab-navigable elements**: Elements with a `tabindex` attribute set to `>= 0`.
+
+These elements are tracked for interaction to provide actionable insights into test coverage.
 
 ## Interaction Commands
 
-UI Coverage considers interactive elements "tested" if they are interacted with by a Cypress command. The commands that are considered interactions are:
+Interactive elements are marked as "tested" when they are interacted with using specific Cypress commands. These include:
 
 - `blur`
 - `check`
@@ -37,22 +39,24 @@ UI Coverage considers interactive elements "tested" if they are interacted with 
 - `type`
 - `uncheck`
 
+By ensuring these commands interact with the appropriate elements, UI Coverage accurately reflects your test coverage.
+
 ## Untested Links
 
-UI Coverage tracks links (`<a>` elements) that haven't been visited during testing. For each untested link, you can see:
+UI Coverage tracks `<a>` elements (links) that are not visited during testing. For each untested link, detailed information is available:
 
 ### Referrers
 
-The Views containing links to this untested destination. This helps you understand:
+The **Referrers** section identifies views that contain links to the untested destination, helping you:
 
-- Where these untested areas are referenced from
-- The navigation paths that could lead to this untested area
-- The context in which these links appear
+- Pinpoint untested areas referenced from these links.
+- Understand navigation paths leading to untested sections.
+- Gain context on where these links appear within your application.
 
 ### URLs
 
-Shows how similar URLs are grouped together. For example, if you have links to `/users/1`, `/users/2`, and `/users/3`, they'll be grouped as `/users/*`. The URLs section shows all the actual URLs that were grouped together. This is particularly useful for:
+The **URLs** section groups similar patterns for dynamic routing. For instance, links to `/users/1`, `/users/2`, and `/users/3` are grouped as /users/\*. This grouping aids in:
 
 - Understanding the scope of dynamic routes in your application
-- Seeing how many variations of a URL pattern exist
-- Writing configuration rules to handle URL patterns appropriately
+- Viewing the count and variations of a URL pattern.
+- Writing configuration rules to handle these patterns effectively.

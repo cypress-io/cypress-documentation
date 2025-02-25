@@ -1,7 +1,13 @@
 ---
-title: children
+title: 'children | Cypress Documentation'
+description: Get the children of each DOM element within a set of DOM elements in Cypress.
+sidebar_label: children
 slug: /api/commands/children
 ---
+
+<ProductHeading product="app" />
+
+# children
 
 Get the children of each DOM element within a set of DOM elements.
 
@@ -51,7 +57,7 @@ Pass in an options object to change the default behavior of `.children()`.
 | `log`     | `true`                                                            | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/app/references/configuration#Timeouts) | Time to wait for `.children()` to resolve before [timing out](#Timeouts)            |
 
-### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+<HeaderYields />
 
 - `.children()` yields the new DOM element(s) it found.
 - `.children()` is a query, and it is _safe_ to chain further commands.
@@ -115,11 +121,11 @@ cy.get('ul').children('.active')
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
+<HeaderRequirements />
 
 - `.children()` requires being chained off a command that yields DOM element(s).
 
-### Assertions [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
+<HeaderAssertions />
 
 - `.children()` will automatically [retry](/app/core-concepts/retry-ability)
   until the element(s)
@@ -127,7 +133,7 @@ cy.get('ul').children('.active')
 - `.children()` will automatically [retry](/app/core-concepts/retry-ability)
   until all chained assertions have passed.
 
-### Timeouts [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
+<HeaderTimeouts />
 
 - `.children()` can time out waiting for the element(s) to
   [exist in the DOM](/app/core-concepts/introduction-to-cypress#Implicit-Assertions).

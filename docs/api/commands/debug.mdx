@@ -1,7 +1,13 @@
 ---
-title: debug
+title: 'debug | Cypress Documentation'
+description: Set a `debugger` in Cypress and log what the previous command yields.
+sidebar_label: debug
 slug: /api/commands/debug
 ---
+
+<ProductHeading product="app" />
+
+# debug
 
 Set a `debugger` and log what the previous command yields.
 
@@ -42,7 +48,7 @@ Pass in an options object to change the default behavior of `.debug()`.
 | ------ | ------- | ----------------------------------------------------------------------------------- |
 | `log`  | `true`  | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log) |
 
-### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+<HeaderYields />
 
 - `.debug()` yields the same subject it was given from the previous command.
 - `.debug()` is a query, and it is _safe_ to chain further commands.
@@ -59,17 +65,17 @@ cy.get('a').debug().should('have.attr', 'href')
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
+<HeaderRequirements />
 
 - `.debug()` can be chained off of `cy` or off another command.
 
-### Assertions [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
+<HeaderAssertions />
 
 - `.debug()` is a utility command.
 - `.debug()` will not run assertions. Assertions will pass through as if this
   command did not exist.
 
-### Timeouts [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
+<HeaderTimeouts />
 
 - `.debug()` cannot time out.
 

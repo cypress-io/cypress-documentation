@@ -1,7 +1,13 @@
 ---
-title: next
+title: 'next | Cypress Documentation'
+description: Get the immediately following sibling of each DOM element within a set of DOM elements in Cypress.
+sidebar_label: next
 slug: /api/commands/next
 ---
+
+<ProductHeading product="app" />
+
+# next
 
 Get the immediately following sibling of each DOM element within a set of DOM
 elements.
@@ -52,7 +58,7 @@ Pass in an options object to change the default behavior of `.next()`.
 | `log`     | `true`                                                            | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/app/references/configuration#Timeouts) | Time to wait for `.next()` to resolve before [timing out](#Timeouts)                |
 
-### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+<HeaderYields />
 
 - `.next()` yields the new DOM element(s) it found.
 - `.next()` is a query, and it is _safe_ to chain further commands.
@@ -117,11 +123,11 @@ cy.get('li').next('.selected')
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
+<HeaderRequirements />
 
 - `.next()` requires being chained off a command that yields DOM element(s).
 
-### Assertions [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
+<HeaderAssertions />
 
 - `.next()` will automatically [retry](/app/core-concepts/retry-ability)
   until the element(s)
@@ -129,7 +135,7 @@ cy.get('li').next('.selected')
 - `.next()` will automatically [retry](/app/core-concepts/retry-ability)
   until all chained assertions have passed.
 
-### Timeouts [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
+<HeaderTimeouts />
 
 - `.next()` can time out waiting for the element(s) to
   [exist in the DOM](/app/core-concepts/introduction-to-cypress#Implicit-Assertions).

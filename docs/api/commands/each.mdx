@@ -1,6 +1,12 @@
 ---
-title: each
+title: 'each | Cypress Documentation'
+description: Iterate through an array like structure in Cypress (arrays or objects with a `length` property).
+sidebar_label: each
 ---
+
+<ProductHeading product="app" />
+
+# each
 
 Iterate through an array like structure (arrays or objects with a `length`
 property).
@@ -41,7 +47,7 @@ Pass a function that is invoked with the following arguments:
 - `index`
 - `collection`
 
-### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+<HeaderYields />
 
 - `.each()` yields the same subject it was given.
 - It is [unsafe](/app/core-concepts/retry-ability#Only-queries-are-retried)
@@ -110,16 +116,16 @@ function.
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
+<HeaderRequirements />
 
 - `.each()` requires being chained off a previous command.
 
-### Assertions [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
+<HeaderAssertions />
 
 - `.each()` will only run assertions you have chained once, and will not
   [retry](/app/core-concepts/retry-ability).
 
-### Timeouts [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
+<HeaderTimeouts />
 
 - `.each()` can time out waiting for a promise you've returned to resolve.
 

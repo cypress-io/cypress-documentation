@@ -1,6 +1,12 @@
 ---
-title: then
+title: 'then | Cypress Documentation'
+description: Enables you to work with the subject yielded from the previous command in Cypress.
+sidebar_label: then
 ---
+
+<ProductHeading product="app" />
+
+# then
 
 Enables you to work with the subject yielded from the previous command.
 
@@ -49,7 +55,7 @@ Pass in an options object to change the default behavior of `.then()`.
 
 Pass a function that takes the previously yielded subject as its first argument.
 
-### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+<HeaderYields />
 
 Whatever is returned from the callback function becomes the new subject and will
 flow into the next command (with the exception of `undefined` or `null`).
@@ -226,16 +232,16 @@ cy.get('button')
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
+<HeaderRequirements />
 
 - `.then()` requires being chained off a previous command.
 
-### Assertions [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
+<HeaderAssertions />
 
 - `.then()` will only run assertions you have chained once, and will not
   [retry](/app/core-concepts/retry-ability).
 
-### Timeouts [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
+<HeaderTimeouts />
 
 - `.then()` can time out waiting for a promise you've returned to resolve.
 

@@ -1,0 +1,81 @@
+---
+sidebar_label: Reduce test duplication
+title: 'Reduce test duplication | Cypress UI Coverage Documentation'
+description: 'Optimize your test suite by identifying and consolidating duplicate tests with Cypress UI Coverage.'
+sidebar_position: 30
+---
+
+<ProductHeading product="ui-coverage" />
+
+# Reduce test duplication
+
+Efficient test suites not only maximize coverage but also avoid redundant tests that slow down development and CI pipelines. Cypress UI Coverage provides insights into areas where elements have been tested multiple times, helping you optimize your test strategy and reduce duplication. This guide explains how to identify and address test duplication for streamlined and effective testing.
+
+## Identify & Consolidate Duplicate Tests
+
+UI Coverage reports in Cypress Cloud highlight elements that have been tested multiple times across a run. To identify duplication:
+
+1. Navigate to the **Tested elements** section within the **UI Coverage** tab in your test run.
+1. Locate tested elements that have a large number of interactions.
+1. Review the Snapshots within the view to identify duplicate tests that interact with the tested element.
+
+<DocsImage
+  src="/img/ui-coverage/guides/cypress-ui-coverage-tested-elements-with-high-interactions.png"
+  alt="Cypress Cloud screenshot showing the Welcome Screen of the Cypress App with the Continue button highlighted and the number of snapshots it appears in"
+/>
+
+### Common Signs of Duplication
+
+- **Repeated Interactions**: Elements interacted with in multiple snapshots or across different tests.
+- **Overlapping Tests**: Multiple tests cover the same workflows or user journeys.
+- **Excessive Setup Steps**: Repeated setup steps across tests that interact with the same elements.
+
+### Example: Welcome Screen Duplication
+
+In the example below, the launchpad within Cypress App shows that the **Continue** button on the Welcome Screen has been interacted with **184 times** in **327 snapshots**. This indicates that many tests interact with this element. Clicking through to some of the Test Replay's of the snapshots however reveal that most of our tests are not concerned with the behavior of the Welcome Screen - we're just passing through to get to our other tests. This highlights an opportunity to reduce test duplication.
+
+<DocsImage
+  src="/img/ui-coverage/guides/cypress-ui-coverage-test-duplication-welcome-screen-example.png"
+  alt="Cypress Cloud screenshot showing the snapshots and interactions of a button with many snapshots and interactions"
+/>
+
+Now we can focus on consolidating tests and optimizing our test suite to avoid unnecessary duplication.
+
+```js
+// This example is simplified for demonstration purposes
+// In a real-world scenario, you would change the properties that are checked
+// to hide or display the welcome screen for first-time users
+Cypress.Commands.add('skipWelcome', () => {
+  cy.setCookie('welcome', 'dismissed')
+})
+
+it('shows welcome page', () => {
+  cy.visit('/')
+  cy.contains('Welcome')
+  cy.get('[data-cy="continue"]').click()
+  cy.contains('Projects')
+})
+
+it('shows projects page', () => {
+  cy.skipWelcome()
+  cy.visit('/')
+  cy.contains('Projects')
+})
+```
+
+After updating our tests and recording a new run, we can visit the **Tested elements** section to see the impact of our changes. The **Continue** button now appears in fewer snapshots and less interactions, indicating that we've successfully reduced duplication.
+
+<DocsImage
+  src="/img/ui-coverage/guides/cypress-ui-coverage-test-duplication-example-after.png"
+  alt="Cypress Cloud screenshot showing the snapshots and interactions of a tested element after reducing test duplication"
+/>
+
+## Monitor and Prevent Duplication
+
+### Document Your Testing Strategy
+
+Maintain a clear testing strategy that outlines:
+
+- The scope and purpose of each test suite.
+- Which workflows and components each test covers.
+- Guidelines for avoiding overlap in new tests.

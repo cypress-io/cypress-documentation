@@ -1,6 +1,12 @@
 ---
-title: getAllSessionStorage
+title: 'getAllSessionStorage | Cypress Documentation'
+description: Get sessionStorage data for all origins with which the test has interacted in Cypress.
+sidebar_label: getAllSessionStorage
 ---
+
+<ProductHeading product="app" />
+
+# getAllSessionStorage
 
 Get
 [`sessionStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage)
@@ -32,7 +38,7 @@ Pass in an options object to change the default behavior of
 | ------ | ------- | ----------------------------------------------------------------------------------- |
 | `log`  | `true`  | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log) |
 
-### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+<HeaderYields />
 
 `cy.getAllSessionStorage()` yields an object where the keys are origins and the
 values are key-value pairs of `sessionStorage` data.
@@ -74,16 +80,16 @@ cy.getAllSessionStorage().then((result) => {
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
+<HeaderRequirements />
 
 - `cy.getAllSessionStorage()` requires being chained off of `cy`.
 
-### Assertions [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
+<HeaderAssertions />
 
 - `cy.getAllSessionStorage()` will only run assertions you have chained once,
   and will not [retry](/app/core-concepts/retry-ability).
 
-### Timeouts [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
+<HeaderTimeouts />
 
 - `cy.getAllSessionStorage()` cannot time out.
 

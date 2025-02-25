@@ -1,6 +1,12 @@
 ---
-title: Assertions
+title: 'Assertions in Cypress: A Guide'
+description: 'Assertions available in Cypress with Chai, Chai-jQuery, and Sinon-Chai assertions'
+sidebar_label: 'Assertions'
 ---
+
+<ProductHeading product="app" />
+
+# Assertions
 
 :::info
 
@@ -320,7 +326,7 @@ cy.contains('first todo').should('not.have.class', 'completed')
 cy.get('[data-testid="loading"]').should('not.be.visible')
 ```
 
-#### <Icon name="exclamation-triangle" color="red"/> False passing tests
+### <Icon name="exclamation-triangle" color="red"/> False passing tests
 
 Negative assertions may pass for reasons you weren't expecting. Let's say we
 want to test that a Todo list app adds a new Todo item after typing the Todo and

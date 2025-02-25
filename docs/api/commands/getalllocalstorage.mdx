@@ -1,6 +1,12 @@
 ---
-title: getAllLocalStorage
+title: 'getAllLocalStorage | Cypress Documentation'
+description: Get localStorage data for all origins with which the test has interacted in Cypress.
+sidebar_label: getAllLocalStorage
 ---
+
+<ProductHeading product="app" />
+
+# getAllLocalStorage
 
 Get
 [`localStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)
@@ -32,7 +38,7 @@ Pass in an options object to change the default behavior of
 | ------ | ------- | ----------------------------------------------------------------------------------- |
 | `log`  | `true`  | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log) |
 
-### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+<HeaderYields />
 
 `cy.getAllLocalStorage()` yields an object where the keys are origins and the
 values are key-value pairs of `localStorage` data.
@@ -74,16 +80,16 @@ cy.getAllLocalStorage().then((result) => {
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
+<HeaderRequirements />
 
 - `cy.getAllLocalStorage()` requires being chained off of `cy`.
 
-### Assertions [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
+<HeaderAssertions />
 
 - `cy.getAllLocalStorage()` will only run assertions you have chained once, and
   will not [retry](/app/core-concepts/retry-ability).
 
-### Timeouts [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
+<HeaderTimeouts />
 
 - `cy.getAllLocalStorage()` cannot time out.
 

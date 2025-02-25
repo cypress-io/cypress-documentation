@@ -1,7 +1,13 @@
 ---
-title: and
+title: 'and | Cypress Documentation'
+description: 'Create an assertion. Assertions are automatically retried as part of the previous command until they pass or time out.'
+sidebar_label: and
 slug: /api/commands/and
 ---
+
+<ProductHeading product="app" />
+
+# and
 
 Create an assertion. Assertions are automatically retried as part of the
 previous command until they pass or time out.
@@ -72,7 +78,7 @@ A method to be called on the chainer.
 Pass a function that can have any number of explicit assertions within it.
 Whatever was passed to the function is what is yielded.
 
-### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+<HeaderYields />
 
 - In most cases, `.and()` yields the same subject it was given.
 - `.and()` is an assertion, and it is _safe_ to chain further commands that use
@@ -238,11 +244,11 @@ cy.get('button')
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
+<HeaderRequirements />
 
 - `.and()` requires being chained off a previous command.
 
-### Timeouts [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
+<HeaderTimeouts />
 
 - `.and()` will continue to [retry](/app/core-concepts/retry-ability) its
   specified assertions until it times out.

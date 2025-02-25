@@ -52,6 +52,13 @@
           "link": "https://github.com/mammadataei/cypress-vite",
           "keywords": ["vite"],
           "badge": "community"
+        },
+        {
+          "name": "cypress-laravel",
+          "description": "Add commands and hooks to test Laravel applications.",
+          "link": "https://github.com/noeldemartin/cypress-laravel",
+          "keywords": ["php", "laravel"],
+          "badge": "community"
         }
       ]
     },
@@ -149,9 +156,23 @@
         },
         {
           "name": "cypress-plugin-last-failed",
-          "description": "A companion Cypress plugin for `cy-grep` that re-runs the last failed test(s).",
+          "description": "A companion Cypress plugin for `cy-grep` that re-runs the last failed test(s).",
           "link": "https://github.com/dennisbergevin/cypress-plugin-last-failed",
           "keywords": ["grep", "ui", "failure", "results"],
+          "badge": "community"
+        },
+        {
+          "name": "cypress-plugin-grep-boxes",
+          "description": "A companion Cypress plugin for `cy-grep` that allows users to run specific test(s) in open mode.",
+          "link": "https://github.com/dennisbergevin/cypress-plugin-grep-boxes",
+          "keywords": ["grep", "ui"],
+          "badge": "community"
+        },
+        {
+          "name": "cypress-cli-select",
+          "description": "Cypress interactive cli prompt to select and run specific specs, tests or tags",
+          "link": "https://github.com/dennisbergevin/cypress-cli-select",
+          "keywords": ["grep", "cli", "tags"],
           "badge": "community"
         },
         {
@@ -781,13 +802,6 @@
           "badge": "official"
         },
         {
-          "name": "Cypress Vue2",
-          "description": "Test Vue 2 components using Cypress Test Runner. This package is bundled with the cypress package and should not need to be installed separately. See the <a target=\"_blank\" href=\"/app/component-testing/vue/overview\">Vue Component Testing Docs</a> for mounting Vue components.",
-          "link": "https://github.com/cypress-io/cypress/tree/develop/npm/vue2",
-          "keywords": ["component", "vue", "vue.js"],
-          "badge": "official"
-        },
-        {
           "name": "cypress-angular-unit-test",
           "description": "Test Angular component using Cypress Test Runner.",
           "link": "https://github.com/bahmutov/cypress-angular-unit-test",
@@ -1089,7 +1103,15 @@
           "link":"https://github.com/pushpak1300/cypress-mailpit",
           "keywords":["mailpit", "email", "test", "commands", "email"],
           "badge":"community"
+        }, 
+        {
+          "name":"cypress-sql",
+          "description":"The @dankieu/cypress-sql package supports the following database connections Sql server, Mysql, OracleDB, Postgress",
+          "link":"https://github.com/testervippro/cypress-sql",
+          "keywords":["sql", "database", "test", "commands", "oracle"],
+          "badge":"community"
         }
+
       ]
     },
     {

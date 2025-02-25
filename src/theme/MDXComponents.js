@@ -16,16 +16,24 @@ import DocsVideo from "@site/src/components/docs-video";
 import DocumentDomainWorkaround from "@site/docs/partials/_document-domain-workaround.mdx";
 import E2EOnlyBadge from "@site/src/components/e2e-only-badge";
 import E2EOrCtTabs from "@site/src/components/e2e-or-ct-tabs";
+import ElementFilters from "@site/docs/partials/_elementfilters.mdx";
 import VueSyntaxTabs from "@site/src/components/vue-syntax-tabs";
+import HeaderAssertions from "@site/docs/partials/_header-assertions.mdx";
+import HeaderRequirements from "@site/docs/partials/_header-requirements.mdx";
+import HeaderTimeouts from "@site/docs/partials/_header-timeouts.mdx";
+import HeaderYields from "@site/docs/partials/_header-yields.mdx";
 import Icon from "@site/src/components/icon";
 import ImportMountFunctions from "@site/docs/partials/_import-mount-functions.mdx";
 import IntellisenseCodeCompletion from "@site/docs/partials/_intellisense-code-completion.mdx";
+import ProductHeading from "@site/src/components/product-heading";
 import SupportFileConfiguration from "@site/docs/partials/_support-file-configuration.mdx";
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 import ThenShouldAndDifference from "@site/docs/partials/_then-should-and-difference.mdx";
 import WarningSetupNodeEvents from "@site/docs/partials/_warning-setup-node-events.mdx";
 import VideoRecordingSupportedBrowsers from "@site/docs/partials/_video-recording-supported-browsers.mdx"
+import ViewFilters from "@site/docs/partials/_viewfilters.mdx";
+import Views from "@site/docs/partials/_views.mdx";
 import LineBreak from "@site/src/components/line-break";
 import Logo from "@site/src/components/logo";
 import CloudFreePlan from "@site/docs/partials/_cloud_free_plan.mdx";
@@ -69,12 +77,26 @@ import {
   faPlus,
   faQuestionCircle,
   faSearch,
+  faLaptopCode,
   faStar,
   faSyncAlt,
   faTerminal,
   faTimes,
   faTree,
   faVideo,
+  faMagnifyingGlassChart,
+  faComputer,
+  faBugSlash,
+  faChartLine,
+  faClock,
+  faBookOpenReader,
+  faUserShield,
+  faCircleHalfStroke,
+  faCheckDouble,
+  faLinkSlash,
+  faListCheck,
+  faClipboardCheck,
+  faFilter,
 } from '@fortawesome/free-solid-svg-icons'
 
 library.add(
@@ -111,12 +133,26 @@ library.add(
   faPlus,
   faQuestionCircle,
   faSearch,
+  faLaptopCode,
   faStar,
   faSyncAlt,
   faTerminal,
   faTimes,
   faTree,
-  faVideo
+  faVideo,
+  faMagnifyingGlassChart,
+  faComputer,
+  faBugSlash,
+  faChartLine,
+  faClock,
+  faBookOpenReader,
+  faUserShield,
+  faCircleHalfStroke,
+  faCheckDouble,
+  faLinkSlash,
+  faListCheck,
+  faClipboardCheck,
+  faFilter,
 )
 
 export default {
@@ -137,10 +173,16 @@ export default {
   DocumentDomainWorkaround,
   E2EOnlyBadge,
   E2EOrCtTabs,
+  ElementFilters,
   VueSyntaxTabs,
+  HeaderAssertions,
+  HeaderRequirements,
+  HeaderTimeouts,
+  HeaderYields,
   Icon,
   ImportMountFunctions,
   IntellisenseCodeCompletion,
+  ProductHeading,
   SupportFileConfiguration,
   Tabs,
   TabItem,
@@ -148,6 +190,8 @@ export default {
   ThenShouldAndDifference,
   WarningSetupNodeEvents,
   VideoRecordingSupportedBrowsers,
+  ViewFilters,
+  Views,
   Logo,
   LineBreak,
   CloudFreePlan,

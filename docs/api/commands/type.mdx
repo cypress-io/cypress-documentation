@@ -1,7 +1,13 @@
 ---
-title: type
+title: 'type | Cypress Documentation'
+description: Type into a DOM element in Cypress.
+sidebar_label: type
 slug: /api/commands/type
 ---
+
+<ProductHeading product="app" />
+
+# type
 
 Type into a DOM element.
 
@@ -95,7 +101,7 @@ Pass in an options object to change the default behavior of `.type()`.
 | `timeout`                    | [`defaultCommandTimeout`](/app/references/configuration#Timeouts)           | Time to wait for `.type()` to resolve before [timing out](#Timeouts)                                                                            |
 | `waitForAnimations`          | [`waitForAnimations`](/app/references/configuration#Actionability)          | Whether to wait for elements to [finish animating](/app/core-concepts/interacting-with-elements#Animations) before executing the command.       |
 
-### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management)
+<HeaderYields />
 
 - `.type()` yields the same subject it was given.
 - It is [unsafe](/app/core-concepts/retry-ability#Only-queries-are-retried)
@@ -592,18 +598,18 @@ submitted.
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Chains-of-Commands)
+<HeaderRequirements />
 
 - `.type()` requires being chained off a command that yields DOM element(s).
 
-### Assertions [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Assertions)
+<HeaderAssertions />
 
 - `.type()` will automatically wait for the element to reach an
   [actionable state](/app/core-concepts/interacting-with-elements).
 - `.type()` will automatically [retry](/app/core-concepts/retry-ability)
   until all chained assertions have passed.
 
-### Timeouts [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Timeouts)
+<HeaderTimeouts />
 
 - `.type()` can time out waiting for the element to reach an
   [actionable state](/app/core-concepts/interacting-with-elements).
@@ -611,7 +617,7 @@ submitted.
 
 ## Command Log
 
-**Type into the input**
+**_Type into the input_**
 
 ```javascript
 cy.get('input[name=firstName]').type('Jane Lane')

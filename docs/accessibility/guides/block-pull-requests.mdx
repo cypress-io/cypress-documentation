@@ -1,0 +1,65 @@
+---
+sidebar_label: Block pull requests and set policies
+title: 'Block pull requests and set policies | Cypress Accessibility Documentation'
+description: "Set policies and block pull requests automatically with Cypress Accessibility's Results API, enabling custom CI workflows to enforce accessibility standards and prevent regressions."
+sidebar_position: 40
+---
+
+<ProductHeading product="accessibility" />
+
+# Block pull requests and set policies
+
+Cypress Accessibility reports are generated server-side in Cypress Cloud, based on test artifacts uploaded during execution. This ensures there is no performance impact on your Cypress test runs.
+
+## Using the Results API
+
+The [Cypress Accessibility Results API](/accessibility/results-api) allows you to access accessibility results post-test run, enabling workflows like blocking pull requests or triggering alerts based on specific accessibility criteria. This involves adding a dedicated accessibility verification step to your CI pipeline. With a Cypress helper function, you can automatically fetch the report for the relevant test run within the CI build context. Below is an example of how to block a pull request in GitHub Actions if accessibility violations occur:
+
+<DocsImage
+  src="/img/accessibility/guides/github-actions-a11y-block.png"
+  width="75%"
+  alt="On the left hand side, a list of Github Actions jobs is presented related to building, testing and deploying a website. Everything has a green checkmark except the `verify-accessibility-results` job, and the 'test' job that is its parents. On the right hand side we see the terminal output for that job which warns us that the 'button-name' rule has been broken, and that it was previously passing."
+  noBorder={true}
+/>
+
+## Implementing a status check
+
+The Results API offers full flexibility to analyze results and take tailored actions. It can also integrate with status checks on pull requests. Below is an example of a passing accessibility verification step:
+
+<DocsImage
+  src="/img/accessibility/guides/status-check.png"
+  width="75%"
+  alt="An example list of GitHub Status Checks including a passing `verify-accessibility-results` check"
+  noBorder={true}
+/>
+
+## Defining policies in the verification step
+
+The [Results API Documentation](/accessibility/results-api) provides detailed guidance on the API's capabilities. Here's a simplified example demonstrating how to enforce a "no new failing accessibility rules" policy:
+
+```js
+const { getAccessibilityResults } = require('@cypress/extract-cloud-results')
+
+// List of known failing rules
+const rulesWithExistingViolations = [
+  'button-name',
+  // Add more rules as needed
+]
+
+// Fetch accessibility results
+getAccessibilityResults().then((results) => {
+  // Identify new rule violations
+  const newRuleViolations = results.rules.filter((rule) => {
+    return !rulesWithExistingViolations.includes(rule.name)
+  })
+
+  if (newRuleViolations.length > 0) {
+    // Trigger appropriate action if new violations are detected
+    throw new Error(
+      `${newRuleViolations.length} new rule violations detected. These must be resolved.`
+    )
+  }
+})
+```
+
+By examining the results and customizing your response, you gain maximum control over how to handle accessibility violations. Leverage CI environment context, such as tags, to fine-tune responses to specific accessibility outcomes.

@@ -1,6 +1,12 @@
 ---
-title: clearAllCookies
+title: 'clearAllCookies | Cypress Documentation'
+description: Clear all browser cookies in Cypress.
+sidebar_label: clearAllCookies
 ---
+
+<ProductHeading product="app" />
+
+# clearAllCookies
 
 Clear all browser cookies.
 
@@ -41,21 +47,21 @@ Pass in an options object to change the default behavior of
 | `log`     | `true`                                                      | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log) |
 | `timeout` | [`responseTimeout`](/app/references/configuration#Timeouts) | Time to wait for `cy.clearAllCookies()` to resolve before [timing out](#Timeouts)   |
 
-### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+<HeaderYields />
 
 - `cy.clearAllCookies()` yields `null`.
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
+<HeaderRequirements />
 
 - `cy.clearAllCookies()` requires being chained off of `cy`.
 
-### Assertions [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
+<HeaderAssertions />
 
 - `cy.clearAllCookies()` cannot have any assertions chained.
 
-### Timeouts [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
+<HeaderTimeouts />
 
 - `cy.clearAllCookies()` should never time out.
 

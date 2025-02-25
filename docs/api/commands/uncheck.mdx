@@ -1,7 +1,13 @@
 ---
-title: uncheck
+title: 'uncheck | Cypress Documentation'
+description: Uncheck checkbox(es) in Cypress.
+sidebar_label: uncheck
 slug: /api/commands/uncheck
 ---
+
+<ProductHeading product="app" />
+
+# uncheck
 
 Uncheck checkbox(es).
 
@@ -57,7 +63,7 @@ Pass in an options object to change the default behavior of `.uncheck()`.
 | `timeout`                    | [`defaultCommandTimeout`](/app/references/configuration#Timeouts)           | Time to wait for `.uncheck()` to resolve before [timing out](#Timeouts)                                                                         |
 | `waitForAnimations`          | [`waitForAnimations`](/app/references/configuration#Actionability)          | Whether to wait for elements to [finish animating](/app/core-concepts/interacting-with-elements#Animations) before executing the command.       |
 
-### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+<HeaderYields />
 
 - `.uncheck()` yields the same subject it was given.
 - It is [unsafe](/app/core-concepts/retry-ability#Only-queries-are-retried)
@@ -106,19 +112,19 @@ cy.get('[type="checkbox"]').uncheck(['ga', 'ca'])
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
+<HeaderRequirements />
 
 - `.uncheck()` requires being chained off a command that yields DOM element(s).
 - `.uncheck()` requires the element to have type `checkbox`.
 
-### Assertions [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
+<HeaderAssertions />
 
 - `.uncheck()` will automatically wait for the element to reach an
   [actionable state](/app/core-concepts/interacting-with-elements).
 - `.uncheck()` will automatically [retry](/app/core-concepts/retry-ability)
   until all chained assertions have passed.
 
-### Timeouts [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
+<HeaderTimeouts />
 
 - `.uncheck()` can time out waiting for the element to reach an
   [actionable state](/app/core-concepts/interacting-with-elements).

@@ -1,7 +1,13 @@
 ---
-title: prevUntil
+title: 'prevUntil | Cypress Documentation'
+description: Get all previous siblings of each DOM element in a set of matched DOM elements up to, but not including, the element provided in Cypress.
+sidebar_label: prevUntil
 slug: /api/commands/prevuntil
 ---
+
+<ProductHeading product="app" />
+
+# prevUntil
 
 Get all previous siblings of each DOM element in a set of matched DOM elements
 up to, but not including, the element provided.
@@ -62,7 +68,7 @@ Pass in an options object to change the default behavior of `.prevUntil()`.
 | `log`     | `true`                                                            | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/app/references/configuration#Timeouts) | Time to wait for `.prevUntil()` to resolve before [timing out](#Timeouts)           |
 
-### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+<HeaderYields />
 
 - `.prevUntil()` yields the new DOM element(s) it found.
 - `.prevUntil()` is a query, and it is _safe_ to chain further commands.
@@ -97,12 +103,12 @@ cy.get('#nuts').prevUntil('#veggies')
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
+<HeaderRequirements />
 
 - `.prevUntil()` requires being chained off a command that yields DOM
   element(s).
 
-### Assertions [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
+<HeaderAssertions />
 
 - `.prevUntil()` will automatically [retry](/app/core-concepts/retry-ability)
   until the element(s)
@@ -110,7 +116,7 @@ cy.get('#nuts').prevUntil('#veggies')
 - `.prevUntil()` will automatically [retry](/app/core-concepts/retry-ability)
   until all chained assertions have passed.
 
-### Timeouts [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
+<HeaderTimeouts />
 
 - `.prevUntil()` can time out waiting for the element(s) to
   [exist in the DOM](/app/core-concepts/introduction-to-cypress#Implicit-Assertions).

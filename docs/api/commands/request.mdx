@@ -1,6 +1,13 @@
 ---
-title: request
+title: 'request | Cypress Documentation'
+description: Make an HTTP request in Cypress.
+sidebar_label: request
+slug: /api/commands/request
 ---
+
+<ProductHeading product="app" />
+
+# request
 
 Make an HTTP request.
 
@@ -128,7 +135,7 @@ globally in [configuration](/app/references/configuration).
 You can also set options for `cy.request()`'s `baseUrl` and `responseTimeout`
 globally in the [Cypress configuration](/app/references/configuration).
 
-### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+<HeaderYields />
 
 `cy.request()` yields the `response` as an object literal containing properties
 such as:
@@ -373,19 +380,19 @@ See
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
+<HeaderRequirements />
 
 - `cy.request()` requires being chained off of `cy`.
 - `cy.request()` requires that the server sends a response.
 - `cy.request()` requires that the response status code be `2xx` or `3xx` when
   `failOnStatusCode` is `true`.
 
-### Assertions [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
+<HeaderAssertions />
 
 - `cy.request()` will only run assertions you have chained once, and will not
   [retry](/app/core-concepts/retry-ability).
 
-### Timeouts [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
+<HeaderTimeouts />
 
 - `cy.request()` can time out waiting for the server to respond.
 

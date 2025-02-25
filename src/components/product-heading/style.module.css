@@ -1,0 +1,19 @@
+.productHeading {
+  margin-bottom: 1rem;
+}
+
+.productHeadingIcon {
+  display: inline;
+  margin-right: 0.5rem;
+  vertical-align: text-top;
+}
+
+.productHeadingLink {
+  border-bottom: none !important;
+  outline: none;
+}
+
+.productHeadingText {
+  font-size: 1.2rem;
+  margin-right: 0.5rem;
+}

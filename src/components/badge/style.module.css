@@ -20,28 +20,26 @@ h1 > .badge {
 .success {
   background-color: var(--ifm-color-jade-100);
   color: var(--ifm-color-jade-600);
-
-  [data-theme='dark'] & {
-    background-color: var(--ifm-color-jade-1000);
-  }
 }
 
 .danger {
   background-color: var(--ifm-color-red-100);
   color: var(--ifm-color-red-600);
-  
-  [data-theme='dark'] & {
-    background-color: var(--ifm-color-red-1000);
-  }
+}
+
+.caution {
+  background-color: #e6a700;
 }
 
 .info {
   background-color: var(--ifm-color-teal-100);
   color: var(--ifm-color-teal-600);
+}
 
-  [data-theme='dark'] & {
-    background-color: var(--ifm-color-teal-1000);
-  }
+a:hover > .success,
+a:focus > .success {
+  background-color: var(--ifm-color-jade-200);
+  color: var(--ifm-color-jade-800);
 }
 
 /* large light-green badge in page/content titles */

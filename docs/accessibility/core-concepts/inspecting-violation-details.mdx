@@ -5,39 +5,51 @@ sidebar_label: Inspecting violation details
 sidebar_position: 20
 ---
 
+<ProductHeading product="accessibility" />
+
 # Inspecting violation details
 
-<AccessibilityAddon />
-
-After clicking through to specific Rule of View from a [Run-level report](/accessibility/core-concepts/run-level-reports), you will see the Violation Detail view.
+After navigating to a specific Rule of View from a [Run-level report](/accessibility/core-concepts/run-level-reports), you'll land on the Violation Detail view.
 
 <DocsImage
   src="/img/accessibility/core-concepts/cypress-accessibility-issue-detail-view.png"
   alt="The detail view of an accessibility issue, containing a Rules area and s Snapshot area for a Buttons must have discernible text violation in the Cypress Realworld App project. Each section is described in detail later in the page."
 />
 
-This page breaks the report down into two sections.
+This page is divided into two main sections: **Rules** and **Snapshots**.
 
-### Rules
+## Rules
 
-On the left hand side is the main body of the report that lists all the Rules that match the current filters for this View - or for All Views, if no specific View was selected.&#x20;
+The left-hand side of the detail view lists all Rules that match the current filters for the selected View. If no specific View is selected, the list applies to all Views in the run.
 
-#### Rule details
+### Rule details
 
-Each Rule can be expanded to see its related Elements. The expanded rule also has extra description text and a "Learn more" link that goes to Deque University to explain more about the rule itself, where it comes from, whose experience is affected by it, how to fix issues related to the rule.
+Each Rule can be expanded to reveal related elements and additional information:
 
-#### Element details
+- **Description**: Text explaining the rule, its origin, the affected user experiences, and how to fix the issue.
+- **Learn More**: A link to Deque University for in-depth guidance.
 
-Each element can be clicked to pin an example of that element in the UI and reveal more details about how to address the accessibility issues. There are two buttons associated with each element:
+### Element details
 
-- Copy selector
-  - This is a quick way to grab the CSS selector that uniquely identifies this element in the page or component
-- Print to console
-  - This will log a reference to the element in the JavaScript console and is the fastest way to debug something in devtools. In Chrome-base browsers for example, you can open your console, right click the logged element, and choose "Reveal in elements panel" to get to the exact right part of the live DOM in two clicks, every time, and debug from there.
+Clicking on an element in the expanded Rule section provides:
 
-### Snapshots
+- **Pinned Element**: Highlights the element in the UI for easier identification.
+- **Copy Selector**: A button to copy the CSS selector uniquely identifying the element.
+- **Print to Console**: Logs the element reference to the browser's console for debugging. In Chrome-based browsers, you can right-click the logged element and select "Reveal in elements panel" to navigate directly to the live DOM.
+- **Share issue**: A button to copy markdown or plain text snippet to share the issue with your team or collaborators.
+- **Solutions**: A list of potential solutions to address the issue.
 
-Note: these are not images or screenshots from the tests. They are fully hydrated HTML and CSS snapshots of your application. This makes it easy to see what each violation represents in context, as well as inspect the entire DOM, make adjustments and see how things appear in the browser's accessibility tree. This makes a big difference in understanding and debugging issues, because you don't have to run the application locally to reproduce the state, and with access to the full DOM you can understand even complex issues and identify solutions.
+<DocsImage
+  src="/img/accessibility/core-concepts/cypress-accessibility-element-details-on-click.png"
+  alt="Details displayed after clicking on an element in the Rules section of the Cypress Accessibility issue detail view. Options to copy the selector, print to console, share the issue, and solutions are available."
+/>
+
+## Snapshots
+
+Snapshots are fully hydrated HTML and CSS representations of your application's state during the test. Unlike screenshots or video, these snapshots allow you to:
+
+- Inspect the DOM and accessibility tree without running the application locally.
+- Understand the context of each violation and debug directly from the snapshot.
 
 This area also has the Test Replay button to provide access to any tests where this snapshot appeared, as well as the specific URL of the snapshot displayed at the bottom of the screen.
 

@@ -1,0 +1,120 @@
+---
+sidebar_label: Reduce noise
+title: 'Reduce noise | Cypress UI Coverage Documentation'
+description: 'Learn how to exclude irrelevant elements from your UI Coverage reports to focus on meaningful insights.'
+sidebar_position: 60
+---
+
+<ProductHeading product="ui-coverage" />
+
+# Reduce noise
+
+A clean and focused UI Coverage report enables you to make informed decisions about your testing strategy. Cypress UI Coverage provides tools to reduce noise in your reports by properly grouping elements, special attribute handling, and grouping views that share common URL patterns. This guide explains how and why to create a streamlined report.
+
+## Group views by URL patterns
+
+Cypress attempts to groups views with similar URL patterns (like when a URL contains a user ID) to provide a more consolidated view of coverage metrics.
+
+Customozing views with similar URL patterns allows you to consolidate coverage metrics for pages you know are related. To add or modify the configuration for your project, navigate to the **App Quality** tab in your project settings and add an **viewGroups** configuration.
+
+### Example: Grouping user profiles
+
+```
+https://cypress.io/users/alice
+https://cypress.io/users/alice?foo=bar
+https://cypress.io/users/bob
+https://cypress.io/users/bob#baz
+```
+
+```json
+{
+  "views": [
+    {
+      "pattern": "https://cypress.io/users/*"
+    }
+  ]
+}
+```
+
+To learn more about the configuration options, refer to the [Views](/ui-coverage/configuration/views) documentation.
+
+## Group similar elements
+
+Grouping elements improves clarity by reducing repetitive entries for elements with the same functionality. This is especially useful for elements like buttons, links, or form fields that appear across multiple views. By grouping similar elements, you can focus on the overall coverage of a specific element type rather than individual instances.
+
+### Example: Grouping dynamic IDs
+
+In the example below, the UI Coverage report shows multiple buttons that represent the same button due to a dynamically generated ID. By grouping these buttons, you can reduce noise and see the total coverage for the buttons with similar functionality in your application.
+
+```html
+<nav>
+  <button id="nav-button819230">Page 1</button>
+  <button id="nav-button819231">Page 2</button>
+  <button id="nav-button819232">Page 3</button>
+</nav>
+```
+
+To add or modify the configuration for your project, navigate to the **App Quality** tab in your project settings and add an **elementGroups** configuration under **uiCoverage**.
+
+```json
+{
+  "uiCoverage": {
+    "elementGroups": [
+      {
+        "selector": "nav [id^=nav-button]"
+      }
+    ]
+  }
+}
+```
+
+Now instead of 3 separate elements in the UI Coverage report, the report will show a single entry for all buttons with the `nav-button` ID prefix, simplifying the view and providing a clearer picture of the coverage.
+
+```
+nav [id^=nav-button] (3 instances)
+```
+
+To learn more about the configuration options, refer to the [Element Groups](/ui-coverage/configuration/elementgroups) documentation.
+
+## Configure attribute handling
+
+Attribute configuration ensures that Cypress surfaces element attributes that are most meaningful to your project.
+
+### Define significant attributes
+
+Specify which attributes Cypress should prioritize when identifying elements. To add or modify the configuration for your project, navigate to the **App Quality** tab in your project settings and add an **significantAttributes** configuration under **uiCoverage**.
+
+```json
+{
+  "uiCoverage": {
+    "significantAttributes": ["data-custom-id"]
+  }
+}
+```
+
+To learn more about the configuration options, refer to the [Significant Attributes](/ui-coverage/configuration/significantattributes) documentation.
+
+### Use Attribute Filters
+
+Exclude auto-generated or irrelevant attributes that add unnecessary noise. To add or modify the configuration for your project, navigate to the **App Quality** tab in your project settings and add an **attributeFilters** configuration under **uiCoverage**.
+
+```json
+{
+  "uiCoverage": {
+    "attributeFilters": [
+      {
+        "attribute": "id",
+        "value": "sizzle.*",
+        "include": false
+      },
+      {
+        "attribute": "ng-.*",
+        "value": ".*",
+        "include": false
+      }
+    ]
+  }
+}
+```
+
+To learn more about the configuration options, refer to the [Attribute Filters](/ui-coverage/configuration/attributefilters) documentation.

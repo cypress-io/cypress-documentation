@@ -1,0 +1,139 @@
+By default, every URL visited within a test run is included in reports. However, not all URLs are relevant for your analysis. The `viewFilters` property allows you to specify patterns for URLs that should be excluded, ensuring your reports focus on meaningful parts of your application. Excluding a URL also excludes all links pointing to that URL.
+
+## Why use view filters?
+
+:::info
+**Note:** setting `viewFilters` impacts both Accessibility and UI Coverage reports.
+Nesting this property under an `accessibility` or `uiCoverage` key is
+supported, if you need to split them up.
+:::
+
+- **Exclude Third-Party URLs**: If your application integrates with third-party services, you might want to exclude their URLs from analysis.
+- **Exclude Admin Pages**: URLs that are not part of the user-facing application, such as admin pages, could be excluded from reports.
+- **Reduce Noise**: Certain URLs visited during tests (e.g., error pages or redirects) may not represent meaningful user flows. Exclude these to clean up your reports.
+- **Optimize Performance**: Filtering out irrelevant URLs reduces the amount of data processed, speeding up analysis and improving report readability.
+
+## Syntax
+
+```json
+{
+  "viewFilters": [
+    {
+      "pattern": string,
+      "include": boolean
+    }
+  ]
+}
+```
+
+### Options
+
+For every URL visited and link element found, the first `viewFilters` rule for which the `pattern` matches the URL is used to either include or exclude the URL based on the `include` value. URLs that do not match any rules are included by default.
+
+| Option    | Required | Default | Description                                                                                                                  |
+| --------- | -------- | ------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| `pattern` | Required |         | A string that matches URLs using [URL Pattern API](https://developer.mozilla.org/en-US/docs/Web/API/URL_Pattern_API) syntax. |
+| `include` | Optional | `true`  | A boolean that determines whether matching URLs should be included in the report.                                            |
+
+## Examples
+
+### Excluding URLs by hostname
+
+#### Config
+
+```json
+{
+  "viewFilters": [
+    {
+      "pattern": "https://app.okta.com/*",
+      "include": false
+    }
+  ]
+}
+```
+
+#### Visited URLs
+
+```
+https://app.okta.com/login
+https://cypress.io/home
+https://cypress.io/about
+```
+
+#### Views shown in UI
+
+```
+https://cypress.io/home
+https://cypress.io/about
+```
+
+---
+
+### Including only specific URLs
+
+#### Config
+
+```json
+{
+  "viewFilters": [
+    {
+      "pattern": "https://cypress.io/dashboards*",
+      "include": true
+    },
+    {
+      "pattern": "*",
+      "include": false
+    }
+  ]
+}
+```
+
+#### Visited URLs
+
+```
+https://cypress.io/dashboards
+https://cypress.io/dashboards/1
+https://cypress.io/dashboards/2
+https://cypress.io/home
+https://cypress.io/login
+```
+
+#### Views shown in UI
+
+```
+https://cypress.io/dashboards
+https://cypress.io/dashboards/*
+```
+
+### Excluding error pages
+
+#### Config
+
+```json
+{
+  "viewFilters": [
+    {
+      "pattern": "http*://*/404",
+      "include": false
+    },
+    {
+      "pattern": "http*://*/error/*",
+      "include": false
+    }
+  ]
+}
+```
+
+#### Visited URLs
+
+```
+https://cypress.io/home
+https://cypress.io/404
+https://cypress.io/error/500
+```
+
+#### Views shown in UI
+
+```
+https://cypress.io/home
+```

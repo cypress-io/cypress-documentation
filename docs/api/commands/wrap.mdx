@@ -1,6 +1,12 @@
 ---
-title: wrap
+title: 'wrap | Cypress Documentation'
+description: Yield the object passed into .wrap() in Cypress
+sidebar_label: wrap
 ---
+
+<ProductHeading product="app" />
+
+# wrap
 
 Yield the object passed into `.wrap()`. If the object is a promise, yield its
 resolved value.
@@ -35,7 +41,7 @@ Pass in an options object to change the default behavior of `cy.wrap()`.
 | `log`     | `true`                                                            | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/app/references/configuration#Timeouts) | Time to wait for `cy.wrap()` to resolve before [timing out](#Timeouts)              |
 
-### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+<HeaderYields />
 
 - `cy.wrap()` yields the object it was called with.
 
@@ -190,24 +196,24 @@ cy.get('some-submit-button')
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
+<HeaderRequirements />
 
 - `cy.wrap()` requires being chained off of `cy`.
 
-### Assertions [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
+<HeaderAssertions />
 
 - `cy.wrap()`, when its argument is a promise, will automatically wait until the
   promise resolves. If the promise is rejected, `cy.wrap()` will fail the test.
 - `cy.wrap()` will automatically [retry](/app/core-concepts/retry-ability)
   until all chained assertions have passed.
 
-### Timeouts [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
+<HeaderTimeouts />
 
 - `cy.wrap()` can time out waiting for assertions you've added to pass.
 
 ## Command Log
 
-**Make assertions about object**
+**_Make assertions about object_**
 
 ```javascript
 cy.wrap({ amount: 10 }).should('have.property', 'amount').and('eq', 10)

@@ -1,6 +1,12 @@
 ---
-title: writeFile
+title: 'writeFile | Cypress Documentation'
+description: Write to a file with the specified contents in Cypress.
+sidebar_label: writeFile
 ---
+
+<ProductHeading product="app" />
+
+# writeFile
 
 Write to a file with the specified contents.
 
@@ -72,7 +78,7 @@ parameter and include encoding there. This is the same behavior as
 
 :::
 
-### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+<HeaderYields />
 
 - `cy.writeFile()` yields `null`.
 
@@ -205,18 +211,18 @@ cy.readFile(filename, null).then((obj) => {
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
+<HeaderRequirements />
 
 - `cy.writeFile()` requires being chained off of `cy`.
 - `cy.writeFile()` requires the file be successfully written to disk. Anything
   preventing this such as OS permission issues will cause it to fail.
 
-### Assertions [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
+<HeaderAssertions />
 
 - `cy.writeFile()` will only run assertions you have chained once, and will not
   [retry](/app/core-concepts/retry-ability).
 
-### Timeouts [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
+<HeaderTimeouts />
 
 - `cy.writeFile()` can time out when the content being written takes a
   significant amount of time to encode.

@@ -1,6 +1,12 @@
 ---
-title: scrollTo
+title: 'scrollTo | Cypress Documentation'
+description: Scroll to a specific position in the window or element in Cypress.
+sidebar_label: scrollTo
 ---
+
+<ProductHeading product="app" />
+
+# scrollTo
 
 Scroll to a specific position.
 
@@ -73,7 +79,7 @@ Pass in an options object to change the default behavior of `cy.scrollTo()`.
 | `log`              | `true`                                                            | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log) |
 | `timeout`          | [`defaultCommandTimeout`](/app/references/configuration#Timeouts) | Time to wait for `.scrollTo()` to resolve before [timing out](#Timeouts)            |
 
-### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+<HeaderYields />
 
 - `.scrollTo()` yields the same subject it was given.
 - It is [unsafe](/app/core-concepts/retry-ability#Only-queries-are-retried)
@@ -182,12 +188,12 @@ or
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
+<HeaderRequirements />
 
 - `.scrollTo()` requires being chained off a command that yields DOM element(s).
 - `.scrollTo()` requires the element to be scrollable.
 
-### Timeouts [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
+<HeaderTimeouts />
 
 - `.scrollTo()` can time out waiting for assertions you've added to pass.
 

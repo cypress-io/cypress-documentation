@@ -1,0 +1,129 @@
+---
+sidebar_label: Address coverage gaps
+title: 'Address coverage gaps | Cypress UI Coverage Documentation'
+description: 'Learn how to address test coverage gaps with Cypress UI Coverage to ensure quality of your application.'
+sidebar_position: 20
+---
+
+<ProductHeading product="ui-coverage" />
+
+# Address coverage gaps
+
+After [identifying test coverage gaps](/ui-coverage/guides/identify-coverage-gaps) using Cypress UI Coverage, the next step is to address these gaps to ensure your application is comprehensively tested. This guide outlines best practices and strategies for improving coverage and closing the identified gaps effectively.
+
+## Prioritize Gaps
+
+Not all coverage gaps are equally critical. Use the information provided in the UI Coverage reports to prioritize testing efforts based on:
+
+- **Critical Views**: Focus on views or components that represent high-priority user journeys, such as checkout pages, login screens, or submission forms.
+- **Untested Links**: Address testing pages that are not being visited by your current test suite. You won't get insight into the untested elements on these pages until you visit them.
+
+By prioritizing based on application context and business impact, you can address the most significant gaps first.
+
+## Enhance Test Coverage
+
+Once you've identified priority areas, create or update tests to cover these gaps.
+
+### Write Targeted Tests
+
+Focus on creating tests that interact with the specific untested elements or pages identified in the coverage reports. For example:
+
+```js
+describe('Dashboard', () => {
+  it('Submits form on landing page', () => {
+    cy.visit('/request-trial')
+
+    // Interact with previously untested elements
+    cy.get('[data-cy="email"]').type('test@email.com')
+    cy.contain('Request Trial').click()
+    // UI Coverage will now surface the coverage of the thank you page
+    cy.url().should('include', '/thank-you')
+  })
+})
+```
+
+### Cover Untested Links
+
+Use the **Untested Links** section of the UI Coverage report to identify pages your tests haven't visited. Add navigation steps to your tests to include these pages:
+
+```js
+describe('Cover Untested Links', () => {
+  it('Visits untested pages', () => {
+    const untestedLinks = ['/about-us', '/contact', '/pricing']
+
+    untestedLinks.forEach((link) => {
+      cy.visit(link)
+      // Perform basic checks to ensure the page loads correctly
+      cy.get('h1').should('exist')
+      // UI Coverage will now surface the coverage of these pages
+    })
+  })
+})
+```
+
+## Refine Tests
+
+### Ensure Element Visibility
+
+Some gaps occur because elements are hidden or not rendered during tests. Update your tests to reveal these elements:
+
+```js
+cy.get('[data-cy="dropdown-toggle"]').click() // Reveal hidden elements
+cy.get('[data-cy="dropdown-item"]').should('be.visible').click()
+```
+
+### Handle Dynamic Content
+
+If coverage gaps are caused by dynamic or conditional rendering, ensure your tests account for various application states:
+
+```js
+// Login to render elements that only display after login
+cy.get('[data-cy="login-button"]').click()
+cy.get('[data-cy="user-profile"]')
+```
+
+## Optimize Configuration
+
+To maximize the effectiveness of UI Coverage, consider refining your configuration:
+
+- Element Filters: Exclude irrelevant elements (e.g., placeholders, ads) from coverage reports.
+- Significant Attributes: Define custom attributes that accurately identify elements.
+- Attribute Filters: Remove auto-generated attributes to prevent redundant element identification.
+
+Refer to the [Configuration Guide](/ui-coverage/configuration/overview) to learn how to customize UI Coverage to address these common needs:
+
+- **Filtering**: Exclude specific elements or views from coverage reports.
+  - [Element Filters](/ui-coverage/configuration/elementfilters): Exclude specific elements from coverage reports.
+  - [View Filters](/ui-coverage/configuration/viewfilters): Exclude specific views from coverage reports.
+- **Grouping**: Group similar elements together for easier analysis.
+  - [Elements](/ui-coverage/configuration/elements): Specify selectors to uniquely identify elements, even when they lack stable identifiers across snapshots.
+  - [Element Grouping](/ui-coverage/configuration/elementgroups): Group similar elements together for easier analysis.
+  - [Views](/ui-coverage/configuration/views): Group views together based on defined URL patterns.
+- **Defining Attribute Patterns**: Define patterns for identifying and grouping elements by attributes.
+  - [Attribute Filters](/ui-coverage/configuration/attributefilters): Specify patterns for attributes and their values that should not be used for identifying and grouping elements.
+  - [Significant Attributes](/ui-coverage/configuration/significantattributes): Define selectors to prioritize above the default attributes Cypress uses for the purpose of identification and grouping.
+
+## Iterate and Monitor
+
+### Review Coverage Reports
+
+After updating your tests, record them again to Cypress Cloud and review the new coverage reports. Verify that:
+
+- Untested elements and links have been addressed.
+- Overall coverage score has improved.
+
+### Automate Coverage Enforcement
+
+Use the [Results API](/ui-coverage/results-api) to integrate coverage checks into your CI/CD pipeline. Set thresholds for coverage scores to enforce quality standards. This ensures your application maintains high test coverage over time.
+
+#Collaborate with Your Team
+
+Improving test coverage often requires collaboration. Share insights from the UI Coverage reports with your team to:
+
+- Prioritize testing efforts collectively.
+- Align on critical areas that require attention.
+- Distribute tasks for writing or updating tests.
+
+## Next Steps
+
+You can also leverage UI Coverage to reduce test duplication to optimize your test suite further. Learn how to [reduce test duplication](/ui-coverage/guides/reduce-test-duplication) with UI Coverage to streamline your testing process.

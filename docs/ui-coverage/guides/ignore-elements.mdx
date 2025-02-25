@@ -1,0 +1,60 @@
+---
+sidebar_label: Ignore elements
+title: 'Ignore elements | Cypress UI Coverage Documentation'
+description: 'Learn how to exclude irrelevant elements from your UI Coverage reports to focus on meaningful insights.'
+sidebar_position: 50
+---
+
+<ProductHeading product="ui-coverage" />
+
+# Ignore elements
+
+Not all elements in your application are relevant to your test coverage. Cypress UI Coverage allows you to exclude specific elements from coverage reports, helping you focus on meaningful insights and avoid unnecessary noise. This guide explains why and how to ignore elements in your UI Coverage reports.
+
+## Why ignore elements?
+
+Ignoring elements can be beneficial in the following scenarios:
+
+- **Transitional Elements**: Exclude elements that are still in a loading state or undergoing changes, as they may not represent the final state of the element.
+- **Third-Party Widgets**: Exclude elements controlled by external libraries or third-party integrations.
+
+By ignoring irrelevant elements, you can maintain clean and actionable coverage metrics.
+
+## Identify Elements to Ignore
+
+After recording your tests to Cypress Cloud, review the UI Coverage reports:
+
+1. Navigate to the **UI Coverage** tab in your test run.
+1. Look for elements that consistently appear but don't require testing.
+1. Note down the selectors, attributes, or patterns for these elements.
+
+## Configure Ignored Elements
+
+[Element Filters](/ui-coverage/configuration/elementfilters) in the **App Quality** configuration are used to exclude elements based on their selectors or attributes. To add or modify the configuration for your project, navigate to the **App Quality** tab in your project settings and add an **elementFilters** configuration.
+
+```json
+{
+  "elementFilters": [
+    {
+      "selector": "[data-external*]",
+      "include": false
+    },
+    {
+      "selector": "iframe[title='Login']",
+      "include": false
+    },
+    {
+      "selector": ".rdrDateRangePicker, .rdrDateRangePicker *",
+      "include": false
+    }
+  ]
+}
+```
+
+To learn more about the configuration options, refer to the [Element Filters](/ui-coverage/configuration/elementfilters) documentation.
+
+## Validate Ignored Elements
+
+After updating the configuration, record your tests again and review the UI Coverage report. The ignored elements should no longer appear in the coverage reports, streamlining the data and focusing on the critical areas of your application.
+
+If new unnecessary elements appear in future reports, update your filters accordingly to keep reports clean and actionable.

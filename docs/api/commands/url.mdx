@@ -1,8 +1,14 @@
 ---
-title: url
+title: 'url | Cypress Documentation'
+description: Get the current URL of the page that is currently active in Cypress.
+sidebar_label: url
 e2eSpecific: true
 slug: /api/commands/url
 ---
+
+<ProductHeading product="app" />
+
+# url
 
 Get the current URL of the page that is currently active.
 
@@ -41,7 +47,7 @@ Pass in an options object to change the default behavior of `cy.url()`.
 | `log`     | `true`                                                            | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/app/references/configuration#Timeouts) | Time to wait for `cy.url()` to resolve before [timing out](#Timeouts)               |
 
-### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+<HeaderYields />
 
 - `cy.url()` yields the current URL as a string.
 - `cy.url()` is a query, and it is _safe_ to chain further commands.
@@ -128,16 +134,16 @@ cy.url().should('contain', '#users/new')
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
+<HeaderRequirements />
 
 - `cy.url()` requires being chained off of `cy`.
 
-### Assertions [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
+<HeaderAssertions />
 
 - `cy.url()` will automatically [retry](/app/core-concepts/retry-ability)
   until all chained assertions have passed
 
-### Timeouts [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
+<HeaderTimeouts />
 
 - `cy.url()` can time out waiting for assertions you've added to pass.
 

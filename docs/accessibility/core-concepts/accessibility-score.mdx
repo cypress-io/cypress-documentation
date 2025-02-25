@@ -5,19 +5,21 @@ sidebar_label: Accessibility score
 sidebar_position: 30
 ---
 
+<ProductHeading product="accessibility" />
+
 # Accessibility score
 
-<AccessibilityAddon />
+Cypress provides a top-line percentage score to give a general sense of accessibility for your project. This score, calculated for a run, reflects the **average score** of **all application snapshots** captured during the run. It is based on the ratio of passing versus failing accessibility checks for each snapshot, with results weighted by the severity of the issues.
 
-Cypress produces a top-line percentage score that indicates a general sense of accessibility for a project. This overall score for a run is based on the **average score of** **all application snapshots** that were captured during the run, and is rooted in the ratio of passing and failing accessibility checks performed on each snapshot, weighted according to the severity of the issues.&#x20;
+## Severity levels
 
-The severity levels presented in Cypress Cloud match the Axe Core® `impact` level for each rule. This impact classification was developed by the creators of Axe, Deque Systems, to aid in prioritization of accessibility results, by highlighting rules that are likely to reveal the most substantial barriers (such as missing label text) so they can be addressed first.
+Severity levels in Cypress Accessibility align with the Axe Core® impact classification. Developed by Deque Systems, this classification helps prioritize accessibility issues by highlighting those likely to create the most substantial barriers for users (such as missing label text) so they can be addressed first. You can learn more about the Axe Core® impact classification in the [Axe Core® documentation](https://github.com/dequelabs/axe-core/blob/develop/doc/issue_impact.md).
 
-It's important to note that the Web Content Accessibility Guidelines (WCAG) standards do not have a concept of relative severity of the Success Criteria. For **compliance** purposes, all failures of the Success Criteria count and must be addressed. For **usability** purposes, however, the impact values provided by Axe Core® provide excellent guidance about which issues to take up first to bring the most benefit to disabled users of your platform as quickly as possible.
+_Note: WCAG standards do not categorize Success Criteria by severity; all failures require resolution for compliance. However, Axe Core® impact levels are helpful for prioritizing fixes to maximize usability improvements quickly._
 
-## Algorithm
+## Scoring algorithm
 
-The following weights are applied to the accessibility report data:
+The accessibility score calculation applies the following weights:
 
 | Severity of Issue | Weight |
 | ----------------- | ------ |
@@ -26,34 +28,53 @@ The following weights are applied to the accessibility report data:
 | Moderate          | 3      |
 | Minor             | 1      |
 
-In order to create scores for each snapshot, View, and the entire run, we use the following process:
+### Score Calculation Process
 
-- For each Snapshot
-  - Sum the weights of each passed check
-  - Sum the weights of each failed check
-  - Score equals ratio of passed weight over total weight
-    - [Sum of weights from passed checks] / [Sum of weights from passed checks + Sum of weights from failed checks]
-- For each View
-  - Score equals the average of all Snapshot scores found in the View
-- For the Run
-  - Score equals the average of all Snapshots in the Run
+1. **Snapshot Score:**
+
+- Calculate the total weight of passed checks.
+- Calculate the total weight of failed checks.
+- Compute the score as: `Score = (Passed Weights) / (Passed Weights + Failed Weights)`
+
+2. **View Score:**
+
+- Average the scores of all snapshots within the View.
+
+3. **Run Score:**
+
+- Average the scores of all snapshots in the run.
 
 ## Interpreting your scores
 
-Whether a score is good or bad for you depends on context. There is no single number that can tell you the accessibility of your application. A 99% score may be good for your goals if the score was 90% before and you are making progress, or it might be bad if you previously had no problems.
+Accessibility scores should be viewed in the context of your specific project and your goals. There is no single number that can tell you the accessibility of your application. For example:
 
-Even if 1000 checks pass, if there is 1 check that fails, that may happen to have a huge impact on accessibility. For example, if your login page is not accessible, disabled users may not be able to enter your application at all, even if after the login step all the scores are 100%. So even a single issue requires human judgment as to how much of a barrier it represents.
+- A score of 99% may indicate progress if the previous score was lower, but a single failure could represent a significant barrier (e.g., an inaccessible login page).
+- Even a 100% score does not guarantee full compliance or user-friendliness but indicates that Axe Core® detected no violations in the tested scope.
 
-The most important thing about the score is that it is deterministic and consistent across runs, so that when changes in the application do bubble up to show an increase or decrease in the score, that is going be meaningful, and not noise.
+The key value of the score is that the calculation is repeated consistently across runs - Cypress is not trying to catch anything "in the moment" during test execution. This means that changes in the score reliably reflect accessibility improvements or regressions.
 
-In general, the ideal state is a clean 100% score in your Cypress Accessibility report, which you can achieve with a combination of fixing existing issues and ignoring things you know you will not fix.
+In general, the ideal state is a clean 100% score in your Cypress Accessibility report, which you can achieve with a combination of fixing existing issues and ignoring things you know you won't fix.
 
 ## What a 100% score means
 
-If there are no axe-core violations detected in what you test with Cypress, you can be confident that up to 57% of the issues ([source](https://www.deque.com/blog/automated-testing-study-identifies-57-percent-of-digital-accessibility-issues/)) that a manual audit would detect have already been addressed. This does not mean you have a fully compliant, accessible, or user-friendly application, but it does mean your team has considered the experience and needs of disabled users in the application's development process. This often means the team is well placed to understand and fix any issues that are reported by users or revealed in manual testing.&#x20;
+A 100% score with Cypress Accessibility means:
 
-Reaching this "Axe-clean" status is a good sign that basic usability needs are likely met for disabled users well enough that they can experience your application and provide you more general usability feedback as needed.&#x20;
+- No Axe Core® violations were detected in the tested scope.
+- Up to 57% of issues typically identified in manual audits have been addressed ([source](https://www.deque.com/blog/automated-testing-study-identifies-57-percent-of-digital-accessibility-issues/)).
+- While not a guarantee of full compliance, it reflects that the team has actively considered accessibility and is well-positioned to address user-reported issues or findings from manual audits.
+
+Reaching a 100% score, also known as "Axe-clean," signals that the application likely meets basic usability needs for disabled users, providing a foundation for further usability enhancements.
 
 ## Improving Accessibility scores
 
-Many violations are easily addressed by HTML and CSS changes that can be made in your application's code. Click the "Learn More" link for any violation to understand the impact of this violation on users and how to fix it. More details about this are available in the [Inspecting Violation Details section](/accessibility/core-concepts/inspecting-violation-details).
+### Address Violations
+
+Most accessibility violations can be resolved through HTML and CSS adjustments. Each violation in Cypress Accessibility includes a "Learn More" link to understand the impact of the issue on users and get step-by-step guidance to fix it.
+
+Refer to the [Inspecting Violation Details section](/accessibility/core-concepts/inspecting-violation-details) for more information on understanding and addressing violations.
+
+### Ignore Non-relevant Issues
+
+For issues you decide not to fix, update your [configuration](/accessibility/configuration/overview) to ignore them. This keeps the score focused on actionable issues while maintaining visibility into ignored elements for transparency.
+
+By actively addressing violations and maintaining a clean score, your team can ensure consistent progress towards a more accessible application.

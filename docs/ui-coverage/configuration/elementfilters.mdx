@@ -4,59 +4,15 @@ description: 'The `elementFilters` property allows you to specify selectors for 
 sidebar_label: elementFilters
 ---
 
+<ProductHeading product="ui-coverage" />
+
 # elementFilters
 
-<UICovAddon />
+<ElementFilters />
 
-:::info
-Note: setting `elementFilters` impacts both Accessibility and UI Coverage
-reports. Nesting this property under an `accessibility` or `uiCoverage` key is
-supported, if you need to split them up.
-:::
+### Excluding disabled elements
 
-By default, every interactive and visible element is included in UI Coverage. The `elementFilters` property allows you to specify selectors for elements that should be excluded from UI Coverage.
-
-For every element considered interactive and visible by UI Coverage, the first `elementFilters` rule for which the `selector` property matches the element is used to either include or exclude the element based on the `include` value. Elements that do not match any rules are included by default.
-
-## Syntax
-
-```json
-{
-  "elementFilters": [
-    {
-      "selector": string,
-      "include": boolean
-    }
-  ]
-}
-```
-
-### elementFilters
-
-_Optional._ Object\[]
-
-An array of objects used to specify elements to exclude from UI Coverage. _**Each object can have the following properties:**_
-
-### selector
-
-_Required._ String (CSS Selector)
-
-A CSS selector used to identify elements.
-
-- Supports all standard CSS selector syntax including IDs, classes, attributes, and combinators
-- The selector matches exactly what is specified - for example, `#container` matches the container element itself, while `#container *` matches all elements within the container
-
-### include
-
-_Optional._ Boolean
-
-_Default:_ `true`
-
-A boolean that represents whether or not a matched element should be included in UI Coverage.
-
-## Examples
-
-### Excluding a specific element
+UI Coverage highlights disabled elements by default to reveal potential untested paths in your app, in case those elements become enabled later. If needed, you can exclude them from the report using the `elementFilters` configuration.
 
 #### Config
 
@@ -64,7 +20,7 @@ A boolean that represents whether or not a matched element should be included in
 {
   "elementFilters": [
     {
-      "selector": "#button-2",
+      "selector": "[disabled]",
       "include": false
     }
   ]
@@ -75,89 +31,13 @@ A boolean that represents whether or not a matched element should be included in
 
 ```xml
 <body>
-  <button id="button-1">Included</button>
-  <button id="button-2">Excluded</button>
+  <button data-cy='cancel'>Cancel</button>
+  <button disabled data-cy='submit'>Submit</button>
 </body>
 ```
 
 #### Elements shown in UI
 
 ```
-#button-1
-```
-
----
-
-### Excluding all elements in a container
-
-#### Config
-
-```json
-{
-  "elementFilters": [
-    {
-      "selector": "footer *",
-      "include": false
-    }
-  ]
-}
-```
-
-#### HTML
-
-```xml
-<body>
-  <main>
-    <button id="start">Included</button>
-  </main>
-  <footer>
-    <a href="#">Excluded</a>
-  </footer>
-</body>
-```
-
-#### Elements shown in UI
-
-```
-#start
-```
-
----
-
-### Including only elements in a container
-
-#### Config
-
-```json
-{
-  "elementFilters": [
-    {
-      "selector": "#form *",
-      "include": true
-    },
-    {
-      "selector": "*",
-      "include": false
-    }
-  ]
-}
-```
-
-#### HTML
-
-```xml
-<body>
-  <form id="form">
-    <input id="name" />
-  </form>
-  <footer>
-    <a href="#">Excluded</a>
-  </footer>
-</body>
-```
-
-#### Elements shown in UI
-
-```
-#name
+[data-cy='cancel']
 ```

@@ -1,15 +1,21 @@
 ---
-title: shadow
+title: 'shadow | Cypress Documentation'
+description: Traverse into the shadow DOM of an element in Cypress.
+sidebar_label: shadow
 slug: /api/commands/shadow
 ---
+
+<ProductHeading product="app" />
+
+# shadow
 
 Traverse into the shadow DOM of an element.
 
 ## Syntax
 
 ```javascript
-.shadow(selector)
-.shadow(selector, options)
+.shadow()
+.shadow(options)
 ```
 
 ### Usage
@@ -28,7 +34,18 @@ cy.exec('npm start').shadow() // Errors, 'exec' does not yield DOM element
 cy.get('.not-a-shadow-host').shadow() // Errors, subject must host a shadow root
 ```
 
-### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+### Arguments
+
+<Icon name="angle-right" /> **options _(Object)_**
+
+Pass in an options object to change the default behavior of `.shadow()`.
+
+| Option    | Default                                                           | Description                                                                         |
+| --------- | ----------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| `log`     | `true`                                                            | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log) |
+| `timeout` | [`defaultCommandTimeout`](/app/references/configuration#Timeouts) | Time to wait for `cy.get()` to resolve before [timing out](#Timeouts)               |
+
+<HeaderYields />
 
 - `.shadow()` yields the new DOM element(s) it found.
 - `.shadow()` is a query, and it is _safe_ to chain further commands.
@@ -51,12 +68,12 @@ cy.get('.shadow-host').shadow().find('.my-button').click()
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
+<HeaderRequirements />
 
 - `.shadow()` requires being chained off a command that yields a DOM element
   that is a shadow host (i.e. has a shadow root directly attached to it).
 
-### Assertions [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
+<HeaderAssertions />
 
 - `.shadow()` will automatically [retry](/app/core-concepts/retry-ability)
   until the element(s)
@@ -66,7 +83,7 @@ cy.get('.shadow-host').shadow().find('.my-button').click()
 - `.shadow()` will automatically [retry](/app/core-concepts/retry-ability)
   until all chained assertions have passed.
 
-### Timeouts [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
+<HeaderTimeouts />
 
 - `.shadow()` can time out waiting for the element(s) to
   [exist in the DOM](/app/core-concepts/introduction-to-cypress#Implicit-Assertions).

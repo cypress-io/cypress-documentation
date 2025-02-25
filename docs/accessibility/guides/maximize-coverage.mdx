@@ -1,0 +1,48 @@
+---
+sidebar_label: Maximize coverage
+title: 'Maximize coverage | Cypress Accessibility Documentation'
+description: "Expand accessibility testing by combining Cypress Accessibility's automated checks with custom assertions tailored to your application."
+sidebar_position: 70
+---
+
+<ProductHeading product="accessibility" />
+
+# Maximize coverage
+
+As you become more familiar with accessibility violations and their underlying principles, you'll notice the connection between generic, automated checks (e.g., Axe Core®) and the specific user-facing behaviors of your application. Often, the insights gained from Cypress Accessibility's automated checks can guide you to create custom assertions tailored to your application's unique requirements.
+
+## Examples
+
+### Button Accessibility Test
+
+For example, Cypress Accessibility might flag a button with a missing accessible name. While adding any text might satisfy Axe Core's rule, the actual text should align with your application's context. Once you address the issue in your codebase, you can enhance your Cypress tests by asserting the specific text, ensuring that future developers understand its importance as part of the application's specification.
+
+```js
+describe('Button Accessibility Test', () => {
+  it('should have the correct accessible name for the button', () => {
+    // Visit the page containing the button
+    cy.visit('/your-page-url')
+
+    // Select the button by its identifier
+    cy.get('[data-test-id="submit-button"]')
+      // Ensure the button has an accessible name
+      .should('have.attr', 'aria-label', 'Submit Form')
+      // Optionally, assert the button contains the visible text
+      .and('contain', 'Submit')
+  })
+})
+```
+
+This principle can extend to larger and more complex scenarios.
+
+## Accessibility "hotspots"
+
+Each violation detected by Cypress Accessibility serves as a signal that accessibility might not have been adequately considered in a specific area of your application. Since Cypress Accessibility provides full DOM visibility for every violation, you can efficiently perform manual checks on related patterns in the UI. This approach often reveals accessibility "hotspots", where usability issues may exist that automated tools cannot detect.
+
+Conducting manual audits in these areas can uncover deeper usability challenges. These findings can then be cataloged, addressed, and regression-tested using Cypress automation.
+
+## Combining testing approaches
+
+A hybrid approach that combines Cypress Accessibility's always-on automated checks with custom assertions can significantly improve long-term accessibility quality. This approach ensures accessibility regressions are caught and fixed, regardless of whether they were initially detected automatically or through manual review.
+
+Automated tools like Axe Core® are estimated to detect approximately 57% of common accessibility issues. By incorporating manual insights and user feedback into your Cypress test suite, you can achieve far greater coverage. Explicit assertions on top of automated error detection empower your pipeline to deliver consistent, actionable feedback about accessibility regressions.

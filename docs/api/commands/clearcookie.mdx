@@ -1,6 +1,12 @@
 ---
-title: clearCookie
+title: 'clearCookie | Cypress Documentation'
+description: Clear a specific browser cookie in Cypress.
+sidebar_label: clearCookie
 ---
+
+<ProductHeading product="app" />
+
+# clearCookie
 
 Clear a specific browser cookie.
 
@@ -45,7 +51,7 @@ Pass in an options object to change the default behavior of `cy.clearCookie()`.
 | `log`     | `true`                                                      | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log) |
 | `timeout` | [`responseTimeout`](/app/references/configuration#Timeouts) | Time to wait for `cy.clearCookie()` to resolve before [timing out](#Timeouts)       |
 
-### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+<HeaderYields />
 
 - `cy.clearCookie()` yields `null`.
 
@@ -71,15 +77,15 @@ cy.url().should('include', 'login')
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
+<HeaderRequirements />
 
 - `cy.clearCookie()` requires being chained off of `cy`.
 
-### Assertions [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
+<HeaderAssertions />
 
 - `cy.clearCookie()` cannot have any assertions chained.
 
-### Timeouts [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
+<HeaderTimeouts />
 
 - `cy.clearCookie()` should never time out.
 

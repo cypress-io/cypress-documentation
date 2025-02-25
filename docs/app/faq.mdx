@@ -1,8 +1,13 @@
 ---
-title: Cypress App FAQ
+title: 'Frequently Asked Questions | Cypress Documentation'
+description: 'Get answers to common questions about Cypress, including general questions, how-to questions, and more.'
 sidebar_position: 200
 sidebar_label: FAQ
 ---
+
+<ProductHeading product="app" />
+
+# Frequently Asked Questions
 
 ## General Cypress Questions
 
@@ -452,7 +457,7 @@ a remote page and does not resolve until all of the external resources complete
 their loading phase. Because we expect your applications to observe differing
 load times, this command's default timeout is set to 60000ms. If you visit an
 invalid url or a
-[second unique domain](/app/guides/cross-origin-testing#Different-superdomain-per-test-requires-cyorigin),
+[second unique domain](/app/guides/cross-origin-testing#Different-origins-per-test-require-cyorigin),
 Cypress will log a verbose yet friendly error message.
 
 **_In CI, how do I make sure my server has started?_**
@@ -1268,8 +1273,7 @@ If you really need to select React components by their name, props, or state,
 check out
 [cypress-react-selector](https://github.com/abhinaba-ghosh/cypress-react-selector).
 
-For component testing, we support various different frameworks like Create React
-App, Vite, and Next.js for React applications. See the
+For component testing, we support various different frameworks like Vite, Webpack, and Next.js for React applications. See the
 [Framework Configuration Guide](/app/component-testing/component-framework-configuration)
 for more info.
 

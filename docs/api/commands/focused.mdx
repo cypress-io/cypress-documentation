@@ -1,7 +1,13 @@
 ---
-title: focused
+title: 'focused | Cypress Documentation'
+description: Get the DOM element that is currently focused in Cypress.
+sidebar_label: focused
 slug: /api/commands/focused
 ---
+
+<ProductHeading product="app" />
+
+# focused
 
 Get the DOM element that is currently focused.
 
@@ -31,7 +37,7 @@ Pass in an options object to change the default behavior of `cy.focused()`.
 | `log`     | `true`                                                            | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/app/references/configuration#Timeouts) | Time to wait for `cy.focused()` to resolve before [timing out](#Timeouts)           |
 
-### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+<HeaderYields />
 
 - `cy.focused()` yields the DOM element it found.
 - `cy.focused()` is a query, and it is _safe_ to chain further commands.
@@ -62,12 +68,12 @@ cy.focused().should('have.attr', 'name', 'username')
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
+<HeaderRequirements />
 
 - `cy.focused()` requires being chained off a command that yields DOM
   element(s).
 
-### Assertions [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
+<HeaderAssertions />
 
 - `cy.focused()` will automatically [retry](/app/core-concepts/retry-ability)
   until the element(s)
@@ -75,7 +81,7 @@ cy.focused().should('have.attr', 'name', 'username')
 - `cy.focused()` will automatically [retry](/app/core-concepts/retry-ability)
   until all chained assertions have passed.
 
-### Timeouts [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
+<HeaderTimeouts />
 
 - `cy.focused()` can time out waiting for the element(s) to
   [exist in the DOM](/app/core-concepts/introduction-to-cypress#Implicit-Assertions).

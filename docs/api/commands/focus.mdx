@@ -1,6 +1,12 @@
 ---
-title: focus
+title: 'focus | Cypress Documentation'
+description: Focus on a DOM element in Cypress.
+sidebar_label: focus
 ---
+
+<ProductHeading product="app" />
+
+# focus
 
 Focus on a DOM element.
 
@@ -40,7 +46,7 @@ Pass in an options object to change the default behavior of `.focus()`.
 | `log`     | `true`                                                            | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/app/references/configuration#Timeouts) | Time to wait for `.focus()` to resolve before [timing out](#Timeouts)               |
 
-### Yields [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Subject-Management) {#Yields}
+<HeaderYields />
 
 - `.focus()` yields the same subject it was given.
 - It is [unsafe](/app/core-concepts/retry-ability#Only-queries-are-retried)
@@ -112,16 +118,16 @@ events. Your best bet here is to keep Cypress focused when working on a test.
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements}
+<HeaderRequirements />
 
 - `.focus()` requires being chained off a command that yields DOM element(s).
 - `.focus()` requires the element to be able to receive focus.
 
-### Assertions [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Assertions) {#Assertions}
+<HeaderAssertions />
 
 - `.focus()` will automatically wait for assertions you have chained to pass.
 
-### Timeouts [<Icon name="question-circle"/>](/app/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts}
+<HeaderTimeouts />
 
 - `.focus()` can time out waiting for assertions you've added to pass.
 
