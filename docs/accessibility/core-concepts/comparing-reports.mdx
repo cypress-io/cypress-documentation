@@ -2,16 +2,16 @@
 title: 'Comparing Accessibility Reports | Cypress Documentation'
 description: 'Review the main areas to pay attention to when first reviewing an accessibility report for a Cypress run.'
 sidebar_position: 40
-sidebar_label: Comparing reports
+sidebar_label: Compare reports
 ---
 
 <ProductHeading product="accessibility" />
 
-# Comparing runs
+# Compare reports
 
 Accessibility reports from different runs can be compared in the [Branch Review](/cloud/features/branch-review#Getting-Started) area of Cypress Cloud. This allows you to instantly see if any new issues have been introduced, and drill in to see full-page HTML and CSS snapshots showing only the new issues.
 
-See the video below for an example of using Branch Review in a Pull Request: 
+See the video below for an example of using Branch Review in a Pull Request:
 
 <DocsVideo
   src="https://www.youtube.com/embed/k3vq57O4P4M"
@@ -20,7 +20,7 @@ See the video below for an example of using Branch Review in a Pull Request:
 
 ## Use cases
 
-Comparing runs can be useful in various scenarios.
+Comparing the results from different runs is useful in multiple scenarios.
 
 **Key use cases:**
 
@@ -28,15 +28,15 @@ Comparing runs can be useful in various scenarios.
 - **Monitoring changes**: Compare nightly monitoring runs and track down the introduction of new problems caused by underlying changes in the application.
 - **Detecting content issues**: Sometimes content editors can introduce accessibility issues unrelated to code changes. Seeing the example issues presented visually, in context, helps you quickly triage whether you are dealing with a recent code change issue, or a content authorship problem.
 - **Reviewing AI-generated code changes**: The increased use of AI to generate and/or review front-end code creates some increased risks of accessibility regressions making it to production. Seeing the increase or decrease of accessibility issues when reviewing a pull request.
-
+- **Tracing the introduction of issues**: With dropdowns for each run, it's easy to rapidly compare different A and B runs to find the exact commit that introduced a problem.
 
 ## Content of the report
 
 <DocsImage
   src="/img/accessibility/core-concepts/branch-review-intro.png"
   alt="Cypress Accessibility Branch Review with arrows calling out the sections for new failed rules, resolved rules, and failed rules with changes. New failed rules are defined as rules that just started failing on the new branch. Resolved rules are defined as rules that got fully fixed in the new branch. Failed rules with changes are defined as rules that failed on both branches, but with different element counts or different related pages."
+  noBorder={true}
 />
-
 
 The Branch Review report is prioritized into three sections:
 
@@ -59,7 +59,6 @@ There are a number of ways to get to Branch Review depending on where you are lo
   alt="A pull request comment from Cypress with an arrow pointing to the 'View all changes introduced in this branch' link. Test results and some accessibility score and violation information is also visible in the comment. The project has an 86.86% accessibility score, with  9 failed elements. Failed rule counts are 1 critical, 1 serious, 3 moderate, and 0 minor."
 />
 
-
 Click the "View all changes introduced in this branch" link at the bottom of the Test Results table. You will enter branch review with the current PR's branch and latest run pre-selected as the "changed" run.
 
 ### From the run list
@@ -71,7 +70,6 @@ Click the branch name associated with the run. This will take you to Branch Revi
   alt="A couple of cards showing various details about Cypress test runs, including pass/fail counts and metadata. An arrow points to the branch name."
 />
 
-
 ### From the project list
 
 <DocsImage
@@ -79,7 +77,6 @@ Click the branch name associated with the run. This will take you to Branch Revi
   width="40%"
   alt="A card showing the name of an example project and related branches to choose."
 />
-
 
 The project card shows three active branches for the project. You can click through to any of these to enter Branch Review with the newest run on that branch pre-selected as the `changed` run.
 
@@ -91,21 +88,20 @@ The project card shows three active branches for the project. You can click thro
   alt="The main Cypress Cloud navigation showing Latest Runs, Branches, and Analytics menu items. An arrow points to Branches."
 />
 
-
 When inside of a project, you can select "Branches" in the main navigation to see a full, filterable list of available branches and choose one to set as the `changed` run.
 
 ## FAQ
 
 ### How to I ensure a good comparison?
-The more similar the runs being compared are in terms of content that was rendered during the test runs, the more precise the diff will be. For this reason, it's ideal to compare passing runs that were fairly close to each other in time. If either run being compared has failing tests, this can introduce noise because certain pages or elements might not have been rendered in both runs and will appear as new or missing.
+
+The best subjects to compare are passing runs that ran similar tests on the same set of content. This means that each run visited roughly the same pages and completed the same kinds of workflows. In this situation, any diff in the results is likely the result of changes present in the newer run. This is usually what happens out-of-the box when comparing a pull-request branch with your main brach. Test failures or errors on either run
 
 That said, it still possible and valid to compare runs from different points in time with different sets of test results, as long as you bear in mind all the potential sources of difference between the two runs, which you can evaluate for yourself as you explore the results.
 
 ### What is the purpose of the Beta label?
+
 This indicates the feature is ready for use and actively seeking feedback based on real usage of the current implementation. We have a few known issues to work through on our side before we consider this fully production-ready and remove the beta label. These issues only affect a subset of projects -- in most cases everything is working as intended. If you see anything unexpected, please hit the feedback button and let us know.
 
 ### Why do I see some views (pages or components) changing from run-to-run?
-URLs with dynamic slugs in them can appear as "new" pages in some situations. This behavior can be adjusted with View configuration.
 
-### Can we fail runs automatically based on new violations?
-While it is possible to establish a baseline for comparison in the Results API, this is not wired up directly to the branch review.
+URLs with dynamic slugs in them can appear as "new" pages in some situations. This behavior can be adjusted with [View configuration] to make sure page names match across runs by wildcarding parts of the URL as needed.
