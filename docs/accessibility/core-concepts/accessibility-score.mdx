@@ -2,7 +2,7 @@
 title: 'Accessibility score | Cypress Documentation'
 description: 'Cypress produces a top-line percentage score that indicates a general sense of accessibility for a project.'
 sidebar_label: Accessibility score
-sidebar_position: 30
+sidebar_position: 40
 ---
 
 <ProductHeading product="accessibility" />
@@ -19,7 +19,7 @@ _Note: WCAG standards do not categorize Success Criteria by severity; all failur
 
 ## Scoring algorithm
 
-The accessibility score calculation applies the following weights:
+The accessibility score calculation applies the following weights to failed accessibility checks in a snapshot.
 
 | Severity of Issue | Weight |
 | ----------------- | ------ |
@@ -35,6 +35,8 @@ The accessibility score calculation applies the following weights:
 - Calculate the total weight of passed checks.
 - Calculate the total weight of failed checks.
 - Compute the score as: `Score = (Passed Weights) / (Passed Weights + Failed Weights)`
+
+**Note**: Incomplete and Ignored element statuses do not have any effect on your score. Only clear failures of a rule are counted.
 
 2. **View Score:**
 

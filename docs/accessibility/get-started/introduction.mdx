@@ -13,7 +13,7 @@ sidebar_custom_props: { 'new_label': true }
 Instantly visualize, triage, and fix accessibility violations without any additional code or configuration.
 Dive deep into each violation with live, fully-rendered DOM snapshots of your application as it appeared during your tests.
 Track your team's progress over time with historical scores to monitor improvements and identify regressions.
-Looking for a general guide for Accessibility testing in Cypress App? [Go here](/app/guides/accessibility-testing).
+Looking for a general guide for accessibility testing concepts in Cypress App? Go to the [accessibility testing guide](/app/guides/accessibility-testing).
 
 <Btn
   label="Request trial ➜"
@@ -152,18 +152,18 @@ From there, you can integrate with CI to set your own standards for handling the
   </li>
 </ul>
 
-## How it Works
+## What to expect
 
 Cypress Accessibility delivers detailed, actionable accessibility reports directly from your tests, powered by the industry-leading Axe Core® library by Deque Systems. These reports require no extra setup and are automatically generated for every unique state reached during your Cypress tests, whether in end-to-end or component testing.
 
-- **Effortless Setup**: Cypress Accessibility utilizes the same capture protocol as [Test Replay](/cloud/features/test-replay) (requires Cypress v13+), so no additional code or configuration is needed.
-- **Performance-Friendly**: Server-side execution ensures no impact on test performance or existing code.
-- **Comprehensive Reporting**: During test execution, unique states—defined by distinct DOM structures—are recorded for end-to-end views and components.
-- **DOM Snapshots**: Each detected violation is accompanied by a full-page, inspectable DOM snapshot, highlighting the exact location and context of the violation.
-- **Rule Compliance**: Violations are mapped directly to WCAG 2.1 criteria, making it easier to prioritize and remediate issues.
-- **Report Generation**: [Detailed reports](/accessibility/core-concepts/run-level-reports) are generated, offering sortable and filterable views by page, component, or the entire test run. Rule-based summaries for an aggregated view of accessibility outcomes for the entire run are also available.
-- **Selective Element Handling**: Elements marked as "ignored" in tests are excluded from scoring but remain visible for manual review, ensuring flexibility via [configuration](/accessibility/configuration/overview).
-- **Configurable CI Integration**: The [Results API](/accessibility/results-api) allows you to programmatically control your CI pipeline's behavior based on accessibility outcomes, enabling enforcement of accessibility policies.
+- **Effortless setup**: Cypress Accessibility utilizes the same capture protocol as [Test Replay](/cloud/features/test-replay) (requires Cypress v13+), so no additional code or configuration is needed.
+- **No test slowdown or flakiness**: Server-side execution ensures no impact on test performance or existing code.
+- **Comprehensive reporting**: During test execution, unique states—defined by distinct DOM structures—are recorded for end-to-end views and components.
+- **DOM snapshots**: Each detected violation is accompanied by a [full-page, inspectable DOM snapshot](/accessibility/core-concepts/inspecting-violation-details), highlighting the exact location and context of the violation.
+- **Report generation**: [Detailed reports](/accessibility/core-concepts/run-level-reports) are generated, offering sortable and filterable views by page, component, or the entire test run. Rule-based summaries for an aggregated view of accessibility outcomes for the entire run are also available.
+- **Run comparison**: Compare the results from two runs and see only the new issues. Know before you merge if a code change is going to cause new accessibility problems.
+- **Selective element handling**: Elements marked as "ignored" in tests are excluded from scoring but remain visible for manual review, ensuring flexibility via [configuration](/accessibility/configuration/overview).
+- **Flexible pipeline integration**: The [Results API](/accessibility/results-api) allows you to programmatically control your CI pipeline's behavior based on accessibility outcomes, enabling enforcement of accessibility policies.
 
 Learn more about [how it works](/accessibility/core-concepts/how-it-works).
 
