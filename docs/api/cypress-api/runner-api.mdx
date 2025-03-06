@@ -12,7 +12,7 @@ The `Cypress.runner` API allows you to stop the Cypress App while tests are runn
 
 :::tip
 
-**Auto Cancellation**: If you're looking to automatically stop *all tests* across *multiple machines* when a test fails, consider using the [Auto Cancellation feature](/cloud/features/smart-orchestration/run-cancellation) in Cypress Cloud.
+**Auto Cancellation**: If you're looking to automatically stop _all tests_ across _multiple machines_ when a test fails, consider using the [Auto Cancellation feature](/cloud/features/smart-orchestration/run-cancellation) in Cypress Cloud.
 
 <AutoCancellationBenefits />
 
@@ -31,7 +31,7 @@ Cypress.runner.stop
 To ensure tests stop immediately after a failure across any spec file, add the following snippet to your `support/index.js` file:
 
 ```javascript
-afterEach(function() {
+afterEach(function () {
   if (this.currentTest.state === 'failed') {
     Cypress.runner.stop()
   }
