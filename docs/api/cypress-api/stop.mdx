@@ -51,7 +51,17 @@ beforeEach(() => {
 
 ## Notes
 
-### Why Choose Auto Cancellation?
+### `cypress run` vs `cypress open` behavior
+
+Calling `Cypress.stop()` during `cypress run` will skip any remaining tests in the current specfile. If recording to Cypress Cloud, all screenshots, videos, and [Test Replay](/cloud/features/test-replay) will still successfully upload.
+
+![Terminal output of a Cypress run displays running an `example.cy.ts` file with 1 test passing in green and 1 test passing in red with an error message. The Results table shows 4 tests, 1 passing, 1 failing, and 2 skipped.](/img/api/stop/cypress-stop-during-run-mode.png)
+
+Calling `Cypress.stop()` during `cypress open` will stop execution of the Cypress App, but remain open for inspection. The remaining tests will not run.
+
+![Cypress App shows an example.cy.ts file as running with 1 passing test collapsed, 1 failing test expanded with the assertion error and the remaining tests having not run, showing square neutral icons for their status.](/img/api/stop/cypress-stop-during-open-mode.png)
+
+### Why choose Auto Cancellation?
 
 [Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation) is available with Cypress Cloud's Business+ plan. It offers several advantages over `Cypress.stop` for stopping tests on **failure**:
 
