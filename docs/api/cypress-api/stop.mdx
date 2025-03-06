@@ -1,14 +1,14 @@
 ---
-title: 'Cypress.runner | Cypress Documentation'
-description: Stop Cypress on failure or other conditions
+title: 'Cypress.stop() | Cypress Documentation'
+description: Stop Cypress on failure or any other conditions
 sidebar_label: runner
 ---
 
 <ProductHeading product="app" />
 
-# Cypress.runner
+# Cypress.stop
 
-The `Cypress.runner` API allows you to stop the Cypress App while tests are running. This can be useful for stopping test execution upon failures or other predefined conditions.
+Stop the Cypress App on the current machine while tests are running. This can be useful for stopping test execution upon failures or other predefined conditions.
 
 :::tip
 
@@ -21,7 +21,7 @@ The `Cypress.runner` API allows you to stop the Cypress App while tests are runn
 ## Syntax
 
 ```javascript
-Cypress.runner.stop
+Cypress.stop()
 ```
 
 ## Examples
@@ -33,7 +33,7 @@ To ensure tests stop immediately after a failure across any spec file, add the f
 ```javascript
 afterEach(function () {
   if (this.currentTest.state === 'failed') {
-    Cypress.runner.stop()
+    Cypress.stop()
   }
 })
 ```
@@ -44,7 +44,7 @@ afterEach(function () {
 beforeEach(() => {
   if (env !== 'expected-condition') {
     cy.log('Stop tests - environment is not setup correctly')
-    Cypress.runner.stop()
+    Cypress.stop()
   }
 })
 ```
@@ -53,11 +53,11 @@ beforeEach(() => {
 
 ### Why Choose Auto Cancellation?
 
-[Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation) is available with Cypress Cloud's Business+ plan. It offers several advantages over `Cypress.runner.stop` for stopping tests on **failure**:
+[Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation) is available with Cypress Cloud's Business+ plan. It offers several advantages over `Cypress.stop` for stopping tests on **failure**:
 
-1. **Scope of Cancellation:** `Cypress.runner.stop` halts only the current spec file, skipping remaining tests within it. Auto Cancellation, however, stops all tests across all machines and marks the entire run as **cancelled** in Cypress Cloud for better visibility.
-2. **Configurable Thresholds:** Auto Cancellation allows you to define failure thresholds. `Cypress.runner.stop` executes immediately when the specified condition is met.
-3. **Simplified Configuration**: Auto Cancellation settings can be managed in Cypress Cloud, whereas `Cypress.runner.stop` requires manual code changes.
+1. **Scope of Cancellation:** `Cypress.stop` halts only the current spec file, skipping remaining tests within it. Auto Cancellation, however, stops all tests across all machines and marks the entire run as **cancelled** in Cypress Cloud for better visibility.
+2. **Configurable Thresholds:** Auto Cancellation allows you to define failure thresholds. `Cypress.stop` executes immediately when the specified condition is met.
+3. **Simplified Configuration**: Auto Cancellation settings can be managed in Cypress Cloud, whereas `Cypress.stop` requires manual code changes.
 4. **Optimization with Spec Prioritization**: Combined with [Spec Prioritization](/cloud/features/smart-orchestration/spec-prioritization) (another Business+ feature), Auto Cancellation helps efficiently allocate resources by running previously failing specs first in a new run.
 
 <CloudFreePlan />
