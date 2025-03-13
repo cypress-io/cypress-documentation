@@ -1,0 +1,82 @@
+---
+title: 'Cypress.stop() | Cypress Documentation'
+description: Stop Cypress on failure or any other conditions
+sidebar_label: stop
+---
+
+<ProductHeading product="app" />
+
+# Cypress.stop
+
+Stop the Cypress App on the current machine while tests are running. This can be useful for stopping test execution upon failures or other predefined conditions.
+
+:::tip
+
+**Auto Cancellation**: If you're looking to automatically stop _all tests_ across _multiple machines_ when a test fails, consider using the [Auto Cancellation feature](/cloud/features/smart-orchestration/run-cancellation) in Cypress Cloud.
+
+<AutoCancellationBenefits />
+
+:::
+
+## Syntax
+
+```javascript
+Cypress.stop()
+```
+
+## Examples
+
+### Stop tests when a test fails
+
+To ensure tests stop immediately after a failure across any spec file, add the following snippet to your `support/index.js` file:
+
+```javascript
+afterEach(function () {
+  if (this.currentTest.state === 'failed') {
+    Cypress.stop()
+  }
+})
+```
+
+### Abort tests when a condition is met
+
+```javascript
+beforeEach(() => {
+  if (env !== 'expected-condition') {
+    cy.log('Stop tests - environment is not setup correctly')
+    Cypress.stop()
+  }
+})
+```
+
+## Notes
+
+### `cypress run` vs `cypress open` behavior
+
+Calling `Cypress.stop()` during `cypress run` will skip any remaining tests in the current specfile. If recording to Cypress Cloud, all screenshots, videos, and [Test Replay](/cloud/features/test-replay) will still successfully upload.
+
+![Terminal output of a Cypress run displays running an `example.cy.ts` file with 1 test passing in green and 1 test passing in red with an error message. The Results table shows 4 tests, 1 passing, 1 failing, and 2 skipped.](/img/api/stop/cypress-stop-during-run-mode.png)
+
+Calling `Cypress.stop()` during `cypress open` will stop execution of the Cypress App, but remain open for inspection. The remaining tests will not run.
+
+![Cypress App shows an example.cy.ts file as running with 1 passing test collapsed, 1 failing test expanded with the assertion error and the remaining tests having not run, showing square neutral icons for their status.](/img/api/stop/cypress-stop-during-open-mode.png)
+
+### Why choose Auto Cancellation?
+
+[Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation) is available with Cypress Cloud's Business+ plan. It offers several advantages over `Cypress.stop` for stopping tests on **failure**:
+
+1. **Scope of Cancellation:** `Cypress.stop` halts only the current spec file, skipping remaining tests within it. Auto Cancellation, however, stops all tests across all machines and marks the entire run as **cancelled** in Cypress Cloud for better visibility.
+2. **Configurable Thresholds:** Auto Cancellation allows you to define failure thresholds. `Cypress.stop` executes immediately when the specified condition is met.
+3. **Simplified Configuration**: Auto Cancellation settings can be managed in Cypress Cloud, whereas `Cypress.stop` requires manual code changes.
+4. **Optimization with Spec Prioritization**: Combined with [Spec Prioritization](/cloud/features/smart-orchestration/spec-prioritization) (another Business+ feature), Auto Cancellation helps efficiently allocate resources by running previously failing specs first in a new run.
+
+<CloudFreePlan />
+
+## See also
+
+- [Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation)
+- [`Cypress.currentTest`](/api/cypress-api/currenttest)
+- [`Cypress.currentRetry`](/api/cypress-api/currentretry)
+- [Load Balancing](/cloud/features/smart-orchestration/load-balancing)
+- [Parallelization](/cloud/features/smart-orchestration/parallelization)
+- [Spec Prioritization](/cloud/features/smart-orchestration/spec-prioritization)
