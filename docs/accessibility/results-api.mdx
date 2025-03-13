@@ -13,7 +13,16 @@ The `@cypress/extract-cloud-results` module provides the `getAccessibilityResult
 
 This allows you to review the results within CI and to determine if the results are acceptable or need to be addressed before code changes can merge. It provides overall accessibility scores and violation details for the runs, as well as page- or component-level feedback. This supports a wide variety of needs related to alerting about failures in specific focus areas of the application or creating fine-grained regression monitoring according to the current standards being met by each page.
 
-See the [related guide](/accessibility/guides/block-pull-requests) for a higher level examples of what it looks like to use the Results API to set a policy and fail a pull request.
+
+:::info
+
+##### <Icon name="question-circle" color="#0097A8" /> Examples and use cases
+This page focuses on how the Results API works and what kinds of information can be accessed. For examples of how this can be used, see our higher-level guides:
+* The [pull requests and policies guide](/accessibility/guides/block-pull-requests) shows what it looks like to use the Results API to set a policy and fail a pull request.
+* The guide for [detecting and managing changes](/accessibility/guides/detect-changes#Results-API) shows some other common use cases.
+
+:::
+
 
 ## Supported CI Providers
 
