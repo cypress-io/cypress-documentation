@@ -39,7 +39,7 @@ See the main [Accessibility Branch Review docs](/accessibility/core-concepts/com
 
 You might expect that every Cypress Accessibility report requires a full standard Cypress test run in your Continuous Integration (CI) pipeline.
 
-A common accessibility workflow is to [create small Cypress Cloud recordings from your local development environment](/accessibility/guides/local-development) to preview the effects of any code changes. This allows for fast analysis of just a single test or two, or as much as you need to have confidence your changes are working -- especially if you are actively remediating accessibility issues. 
+A common accessibility workflow is to [create small Cypress Cloud recordings from your local development environment](/accessibility/guides/local-development) to preview the effects of any code changes. This allows for fast analysis of just a single test or two, or as much as you need to have confidence your changes are working -- especially if you are actively remediating accessibility issues.
 
 To get a high-quality comparison for a small set of tests, record the tests locally from your main branch, and then on the branch with changes. In Cypress Cloud, you will be able to compare these two runs knowing they cover exactly the same scope.
 
@@ -49,7 +49,7 @@ This completely sidesteps the usual "push, build, run tests, report" cycle you m
 
 Many teams have some Cypress projects that run on a schedule and target a QA, staging, or production environment. These runs produce Cypress Accessibility reports but are not connected to specific pull requests with code changes. Branch Review works perfectly in these situations, even if all runs are on the same branch.
 
-Comparing reports on a regular schedule can let you see if accessibility issues have been introduced between this week and last week, for example, and then find the specific run where the changes happened. That "diff  report" can can be forwarded to engineering or product teams as the basis of a ticket.
+Comparing reports on a regular schedule can let you see if accessibility issues have been introduced between this week and last week, for example, and then find the specific run where the changes happened. That "diff report" can can be forwarded to engineering or product teams as the basis of a ticket.
 
 ### Note
 
