@@ -11,7 +11,7 @@ sidebar_position: 70
 
 Cypress Accessibility supports three main paths to observing and acting on changes in the accessibility report for your projects: 
 
-* Run comparisons with[Branch Review](/accessibility/core-concepts/comparing-reports)
+* Run comparisons with [Branch Review](/accessibility/core-concepts/comparing-reports)
 * The [Results API](/accessibility/results-api) to fail builds or trigger alerts when results don't meet your standards
 * [Analytics](/cloud/features/analytics/enterprise-reporting#Cypress-Accessibility) for high-level trend-spotting and analysis
 
@@ -27,12 +27,16 @@ Branch Review helps you spot new issues quickly by comparing accessibility resul
 
 ### Branch Review use cases
 
-#### Speed up pull request reviews
-Use Branch review when reviewing a pull request made by another developer or before you create your own. You can compare the report from your changed branch with the equivalent reports on the main branch. The diff allows you to see any issues that your changes have improved or fixed completely, as well as net-new issues introduced, and any new instances of existing failures.
+#### Speed up code reviews and deployments
 
-Since this reduces the amount of violations to review to just what was affected by the PR code changes, you won't spend any time looking for what's relevant -- and if there is no diff, you'll know your PR does not affect the accessibility score.
+Use Branch review when reviewing a pull request made by another developer or before you create one of your own. You can compare the report from your changed branch with the equivalent report on the main branch. The diff allows you to see any issues that your changes have improved or fixed completely, as well as net-new issues introduced, and any new instances of existing failures.
 
-#### Compare during local development (without waiting for CI)
+Since this reduces the amount of violations to review to just what was affected by the PR code changes, you won't spend any time looking for what's relevant -- and if there is no diff, you'll know your PR does not affect the accessibility score and is safe to merge.
+
+See the main [Accessibility Branch Review docs](/accessibility/core-concepts/comparing-reports) for a video demo of this workflow.
+
+#### Compare reports during local development (without waiting for CI)
+
 A common accessibility workflow is to [create small Cypress Cloud recordings from your local development environment](/accessibility/guides/local-development) to preview the effects of any code changes. This allows for fast analysis of just a single test or two, or as much as you need to have confidence your changes are working -- especially if you are actively remediating accessibility issues. 
 
 To get a high-quality diff for a small set of tests, record the tests locally from your main branch, and then on the branch with changes. In Cypress Cloud, you will be able to compare these two runs knowing the cover exactly the same surface area and see only the diff in that area.
@@ -40,6 +44,7 @@ To get a high-quality diff for a small set of tests, record the tests locally fr
 This completely sidesteps the usual "push, build, run tests, report" cycle you might be used to, and is great when you need fast feedback.
 
 #### See what's changing between scheduled runs
+
 Many teams have some Cypress projects that run on a schedule and target a QA, staging, or production environment. These runs produce Cypress Accessibility reports but are not connected to specific pull requests with code changes. Branch Review works perfectly in these situations, even if all runs are on the same branch.
 
 Comparing reports on a regular schedule can let you see if accessibility issues have been introduced between this week and last week, for example, and then find the specific run where the changes happened. That diff can can be forwarded to engineering or product teams as the basis of a ticket.
@@ -53,6 +58,7 @@ Once you receive the results, you can perform any action you need to. Below are 
 ### Results API use cases
 
 #### Fail a build based on new failed accessibility rules
+
 The Results API provides a combined report with all the failing rules included. This means you can easily prepare a list of known, permitted failing rules to compare with the results from any run, and choose to fail only if a rule that used to be fully passing has started to fail. This is described in detail in the guide related to [blocking pull requests and setting policies](/accessibility/guides/block-pull-requests).
 
 This concept is simple but powerful because it provides extremely high confidence that any failed build is related to a specific recent code, content, or testing change. Especially if there are a high number of existing failures, the actual number of failed elements detected can vary from run-to-run, especially if existing broken components are reused in new ways.
@@ -60,21 +66,35 @@ This concept is simple but powerful because it provides extremely high confidenc
 Rules that are fully passing do not have any of these problems, and for an extreme action like failing a pipeline, it's important to have high confidence that a problem is actually a new issues and can be traced to a specific build. With this confidence in place, the existing failed rules can be addressed one by one to get fully passing.
 
 #### Fail a build based on deviation from a desired score
+
 The Results API includes the specific failed element count and accessibility percentage score for the accessibility report. This makes it easy to set a score threshold and fail a build if the score falls below that expectation. This is especially useful when taking a monitoring approach, or wanting a broader, less specific standard than one based on specific rules.
 
-Changes in percentage score are directly related to changes in the number of elements detected failing accessibility rules throughout the run. **Alerting or failing a pipeline for scores going down is a great way to know when you need to jump into Branch Review to understand the underlying causes of the change in score.**
+Changes in percentage score are directly related to changes in the number of elements detected failing accessibility rules throughout the run. Alerting or failing a pipeline for scores going down is a great way to know when you need to jump into Branch Review to understand the underlying causes of the change in score.
 
 #### Alert specific teams about failures they own
+
 In addition to the consolidated accessibility report, accessibility failures are listed per View in the results API. A View is always related to a specific URL pattern or component test, which means in many projects it is possible to connect accessibility issues in the Results API with the team responsible for solving issues in that part of the application. 
 
 As an example, customers can use this functionality to trigger Slack webhooks that notify a particular channel of the issues in specific areas. The Results API provides direct links to the Views and to each failed rule within that View, making it easy to forward useful links to the correct places.
 
+## Analytics 
 
-#### Analytics 
-The analytics for Cypress Accessibility are located within the Enterprise Reporting area of Cypress Cloud.
+Analytics are located within the [Cypress Accessibility tab of Enterprise Reporting](/cloud/features/analytics/enterprise-reporting#Cypress-Accessibility) of Cypress Cloud. This provides an overview of accessibility trends across projects, and also supports filtering down to a single project and branch to see where scores have changed over time.
 
+### Analytics use cases
 
+#### Track progress and spot trends
 
+This level of reporting is ideal for documenting progress and spotting unexpected trends. When you see a project's score dropping over the long term, you can dig in further with Branch Review to understand what changes are driving the score. You can compare reports before and after any shifts in scores to determine which accessibility issues were introduced.
 
+#### Set goals and minimum standards
 
+Seeing all projects in one place gives a good sense of each project's relative level and helps inform what values you might want to use for comparison when implementing a policy using the Results API.
 
+This also provides useful planning insights, because you can see your historical pace of improvements. If some projects are improving faster than others, you will be able to recognize this and understand how to replicate that success, or create realistic OKRs on a project basis.
+
+## Combining approaches
+
+There are no one-size-fits all solutions in accessibility. The level of detail you need and the kind of action you will want to take depend on the situation at hand.
+
+Cypress Accessibility supports multiple workflows and levels of detail to react to and manage changes in accessibility, all of which can work together to make it easier and faster to untangle accessibility issues and shift their detection as far to the left of the development lifecycle as the rest of your tests. When changes are easy to discover and understand, your team will be able to focus on dealing with the issues that matter most. 
