@@ -27,6 +27,7 @@ import Icon from "@site/src/components/icon";
 import ImportMountFunctions from "@site/docs/partials/_import-mount-functions.mdx";
 import IntellisenseCodeCompletion from "@site/docs/partials/_intellisense-code-completion.mdx";
 import ProductHeading from "@site/src/components/product-heading";
+import SourceMaps from "@site/docs/partials/_source-maps.mdx";
 import SupportFileConfiguration from "@site/docs/partials/_support-file-configuration.mdx";
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
@@ -185,6 +186,7 @@ export default {
   ImportMountFunctions,
   IntellisenseCodeCompletion,
   ProductHeading,
+  SourceMaps,
   SupportFileConfiguration,
   Tabs,
   TabItem,
