@@ -49,6 +49,10 @@ Many teams have some Cypress projects that run on a schedule and target a QA, st
 
 Comparing reports on a regular schedule can let you see if accessibility issues have been introduced between this week and last week, for example, and then find the specific run where the changes happened. That diff can can be forwarded to engineering or product teams as the basis of a ticket.
 
+### Note
+
+Comparing two runs in detail with Branch Review requires a good understanding of the runs themselves. The diff is most useful if the runs are testing the same pages and workflows, and if each run fully passed all tests. This means that Cypress saw all the same states and variations of the application in both contexts. Your runs will likely never be 100% perfectly matching, but the closer they are, the better.
+
 ## Results API
 
 Cypress Accessibility's [Results API](/accessibility/results-api) provides rich data related to the outcome of any accessibility report for a Cypress run. It supports adding a step in CI to block pull requests or trigger other side effects. To use the Results API, you'll need to [add a step in your CI process](/accessibility/results-api#Installation). This comes with a helper function which will automatically match your CI build with the related run in Cypress Cloud.
@@ -75,7 +79,7 @@ Changes in percentage score are directly related to changes in the number of ele
 
 In addition to the consolidated accessibility report, accessibility failures are listed per View in the results API. A View is always related to a specific URL pattern or component test, which means in many projects it is possible to connect accessibility issues in the Results API with the team responsible for solving issues in that part of the application.
 
-As an example, customers can use this functionality to trigger Slack webhooks that notify a particular channel of the issues in specific areas. The Results API provides direct links to the Views and to each failed rule within that View, making it easy to forward useful links to the correct places.
+As an example, customers can use this functionality to trigger Slack webhooks that notify a particular channel of the issues in specific areas. The Results API provides direct links to the Views and to each failed rule within that View, making it easy to forward useful links to the correct places, or jump right into debugging from the CI output.
 
 ## Analytics
 
@@ -95,8 +99,6 @@ This also provides useful planning insights, because you can see your historical
 
 ## Combine approaches
 
-There are no one-size-fits all solutions in accessibility. The level of detail you need and the kind of action you will want to take depend on the situation at hand.
+As you can see above, there are times you may want to move between multiple systems to track down an issue. For example, if the Results API signals that a build on a feature branch has failed your accessibility standard, you might click through to the run itself, and then compare it with the main branch in Branch Review. That might be the end of the journey, but if the main branch is _also_ failing your policy, you can use high-level analytics to see when the score originally changed, and find the specific cause by comparing two runs from around that time. This helps detect where code was force merged, or when content served in the application had accessibility regression unrelated to code changes.
 
-Cypress Accessibility supports multiple workflows and levels of detail to react to and manage changes in accessibility, and shift the detection of problems as far to the left of the development lifecycle as the rest of your tests.
-
-When changes are easy to discover and understand, your team will be able to focus on dealing with the issues that matter most, and not become frustrated by having their attention called to problems their work did not introduce. As well as finding new problems, seeing progress and celebrating the wins fosters the sense of momentum and collective ownership that is essential for large scale accessibility programs to succeed.
+As you use these tools, remember to hit the "Submit Feedback" button any time you see something that could be improved to help you understand what's important and what's changing.
