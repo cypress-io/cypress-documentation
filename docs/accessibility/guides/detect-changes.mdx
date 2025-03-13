@@ -2,18 +2,18 @@
 sidebar_label: Detect and manage changes
 title: 'Detect changes | Cypress Accessibility Documentation'
 description: 'Monitor accessibility issues in production by running scheduled Cypress tests against live environments, capturing dynamic content changes, and generating automated reports for a comprehensive accessibility overview.'
-sidebar_position: 70 
+sidebar_position: 70
 ---
 
 <ProductHeading product="accessibility" />
 
 # Detect and manage changes
 
-Cypress Accessibility supports three main paths to observing and acting on changes in the accessibility report for your projects: 
+Cypress Accessibility supports three main paths to observing and acting on changes in the accessibility report for your projects:
 
-* Run comparisons with [Branch Review](/accessibility/core-concepts/comparing-reports)
-* The [Results API](/accessibility/results-api) to fail builds or trigger alerts when results don't meet your standards
-* [Analytics](/cloud/features/analytics/enterprise-reporting#Cypress-Accessibility) for high-level trend-spotting and analysis
+- Run comparisons with [Branch Review](/accessibility/core-concepts/comparing-reports)
+- The [Results API](/accessibility/results-api) to fail builds or trigger alerts when results don't meet your standards
+- [Analytics](/cloud/features/analytics/enterprise-reporting#Cypress-Accessibility) for high-level trend-spotting and analysis
 
 In this guide we'll discuss how these work and some common situations where we might use them together.
 
@@ -21,9 +21,9 @@ In this guide we'll discuss how these work and some common situations where we m
 
 Branch Review helps you spot new issues quickly by comparing accessibility results from two Cypress runs.
 
-* Pinpoint when and where problems have been introduced
-* Understand and debug easily with fully rendered page snapshots
-* Share links to specific new issues with all the context needed to dive in
+- Pinpoint when and where problems have been introduced
+- Understand and debug easily with fully rendered page snapshots
+- Share links to specific new issues with all the context needed to dive in
 
 ### Branch Review use cases
 
@@ -37,7 +37,7 @@ See the main [Accessibility Branch Review docs](/accessibility/core-concepts/com
 
 #### Compare reports during local development (without waiting for CI)
 
-A common accessibility workflow is to [create small Cypress Cloud recordings from your local development environment](/accessibility/guides/local-development) to preview the effects of any code changes. This allows for fast analysis of just a single test or two, or as much as you need to have confidence your changes are working -- especially if you are actively remediating accessibility issues. 
+A common accessibility workflow is to [create small Cypress Cloud recordings from your local development environment](/accessibility/guides/local-development) to preview the effects of any code changes. This allows for fast analysis of just a single test or two, or as much as you need to have confidence your changes are working -- especially if you are actively remediating accessibility issues.
 
 To get a high-quality diff for a small set of tests, record the tests locally from your main branch, and then on the branch with changes. In Cypress Cloud, you will be able to compare these two runs knowing the cover exactly the same surface area and see only the diff in that area.
 
@@ -51,7 +51,7 @@ Comparing reports on a regular schedule can let you see if accessibility issues 
 
 ## Results API
 
-Cypress Accessibility's [Results API](/accessibility/results-api) provides rich data related to the outcome of any accessibility report for a Cypress run. It supports adding a step in CI to block pull requests or trigger other side effects. To use the Results API, you'll need to [add a step in your CI process](/accessibility/results-api#Installation). This comes with a helper function which will automatically match your CI build with the related run in Cypress Cloud. 
+Cypress Accessibility's [Results API](/accessibility/results-api) provides rich data related to the outcome of any accessibility report for a Cypress run. It supports adding a step in CI to block pull requests or trigger other side effects. To use the Results API, you'll need to [add a step in your CI process](/accessibility/results-api#Installation). This comes with a helper function which will automatically match your CI build with the related run in Cypress Cloud.
 
 Once you receive the results, you can perform any action you need to. Below are some of the common ones customers have told us about, where the results are compared with expectations.
 
@@ -73,11 +73,11 @@ Changes in percentage score are directly related to changes in the number of ele
 
 #### Alert specific teams about failures they own
 
-In addition to the consolidated accessibility report, accessibility failures are listed per View in the results API. A View is always related to a specific URL pattern or component test, which means in many projects it is possible to connect accessibility issues in the Results API with the team responsible for solving issues in that part of the application. 
+In addition to the consolidated accessibility report, accessibility failures are listed per View in the results API. A View is always related to a specific URL pattern or component test, which means in many projects it is possible to connect accessibility issues in the Results API with the team responsible for solving issues in that part of the application.
 
 As an example, customers can use this functionality to trigger Slack webhooks that notify a particular channel of the issues in specific areas. The Results API provides direct links to the Views and to each failed rule within that View, making it easy to forward useful links to the correct places.
 
-## Analytics 
+## Analytics
 
 Analytics are located within the [Cypress Accessibility tab of Enterprise Reporting](/cloud/features/analytics/enterprise-reporting#Cypress-Accessibility) of Cypress Cloud. This provides an overview of accessibility trends across projects, and also supports filtering down to a single project and branch to see where scores have changed over time.
 
@@ -97,6 +97,6 @@ This also provides useful planning insights, because you can see your historical
 
 There are no one-size-fits all solutions in accessibility. The level of detail you need and the kind of action you will want to take depend on the situation at hand.
 
-Cypress Accessibility supports multiple workflows and levels of detail to react to and manage changes in accessibility, and shift the detection of problems as far to the left of the development lifecycle as the rest of your tests. 
+Cypress Accessibility supports multiple workflows and levels of detail to react to and manage changes in accessibility, and shift the detection of problems as far to the left of the development lifecycle as the rest of your tests.
 
 When changes are easy to discover and understand, your team will be able to focus on dealing with the issues that matter most, and not become frustrated by having their attention called to problems their work did not introduce. As well as finding new problems, seeing progress and celebrating the wins fosters the sense of momentum and collective ownership that is essential for large scale accessibility programs to succeed.
