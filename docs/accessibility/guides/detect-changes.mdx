@@ -29,17 +29,19 @@ Branch Review helps you spot new issues quickly by comparing accessibility resul
 
 #### Speed up code reviews and deployments
 
-Use Branch review when reviewing a pull request made by another developer or before you create one of your own. You can compare the report from your changed branch with the equivalent report on the main branch. The diff allows you to see any issues that your changes have improved or fixed completely, as well as net-new issues introduced, and any new instances of existing failures.
+Use Branch review when reviewing a pull request made by another developer or before you create one of your own. You can compare the report from your changed branch with the equivalent report on the main branch. The comparison allows you to see any issues that your changes have improved or fixed completely, as well as net-new issues introduced, and any new instances of existing failures.
 
-Since this reduces the amount of violations to review to just what was affected by the PR code changes, you won't spend any time looking for what's relevant -- and if there is no diff, you'll know your PR does not affect the accessibility score and is safe to merge.
+Since this reduces the amount of violations to review to just what was affected by the PR code changes, you won't spend any time looking for what's relevant -- and if there is no difference, you'll know your PR does not affect the accessibility score and is safe to merge.
 
 See the main [Accessibility Branch Review docs](/accessibility/core-concepts/comparing-reports) for a video demo of this workflow.
 
 #### Compare reports during local development (without waiting for CI)
 
-A common accessibility workflow is to [create small Cypress Cloud recordings from your local development environment](/accessibility/guides/local-development) to preview the effects of any code changes. This allows for fast analysis of just a single test or two, or as much as you need to have confidence your changes are working -- especially if you are actively remediating accessibility issues.
+You might expect that every Cypress Accessibility report requires a full standard Cypress test run in your Continuous Integration (CI) pipeline.
 
-To get a high-quality diff for a small set of tests, record the tests locally from your main branch, and then on the branch with changes. In Cypress Cloud, you will be able to compare these two runs knowing the cover exactly the same surface area and see only the diff in that area.
+A common accessibility workflow is to [create small Cypress Cloud recordings from your local development environment](/accessibility/guides/local-development) to preview the effects of any code changes. This allows for fast analysis of just a single test or two, or as much as you need to have confidence your changes are working -- especially if you are actively remediating accessibility issues. 
+
+To get a high-quality comparison for a small set of tests, record the tests locally from your main branch, and then on the branch with changes. In Cypress Cloud, you will be able to compare these two runs knowing they cover exactly the same scope.
 
 This completely sidesteps the usual "push, build, run tests, report" cycle you might be used to, and is great when you need fast feedback.
 
@@ -47,11 +49,11 @@ This completely sidesteps the usual "push, build, run tests, report" cycle you m
 
 Many teams have some Cypress projects that run on a schedule and target a QA, staging, or production environment. These runs produce Cypress Accessibility reports but are not connected to specific pull requests with code changes. Branch Review works perfectly in these situations, even if all runs are on the same branch.
 
-Comparing reports on a regular schedule can let you see if accessibility issues have been introduced between this week and last week, for example, and then find the specific run where the changes happened. That diff can can be forwarded to engineering or product teams as the basis of a ticket.
+Comparing reports on a regular schedule can let you see if accessibility issues have been introduced between this week and last week, for example, and then find the specific run where the changes happened. That "diff  report" can can be forwarded to engineering or product teams as the basis of a ticket.
 
 ### Note
 
-Comparing two runs in detail with Branch Review requires a good understanding of the runs themselves. The diff is most useful if the runs are testing the same pages and workflows, and if each run fully passed all tests. This means that Cypress saw all the same states and variations of the application in both contexts. Your runs will likely never be 100% perfectly matching, but the closer they are, the better.
+Comparing two runs in detail with Branch Review requires a good understanding of the runs themselves. The comparison is most useful if the runs are testing the same pages and workflows, and if each run fully passed all tests. This means that Cypress saw all the same states and variations of the application in both contexts. Your runs will likely never be 100% perfectly matching, but the closer they are, the better.
 
 ## Results API
 
@@ -63,7 +65,7 @@ Once you receive the results, you can perform any action you need to. Below are 
 
 #### Fail a build based on new failed accessibility rules
 
-The Results API provides a combined report with all the failing rules included. This means you can easily prepare a list of known, permitted failing rules to compare with the results from any run, and choose to fail only if a rule that used to be fully passing has started to fail. This is described in detail in the guide related to [blocking pull requests and setting policies](/accessibility/guides/block-pull-requests).
+The Results API provides a combined report with all the failing rules included. This means you can easily prepare a list of known, permitted failing rules to compare with the results from any run, and choose to fail only if a previously passing rule has started to fail. This is described in detail in the guide related to [blocking pull requests and setting policies](/accessibility/guides/block-pull-requests).
 
 This concept is simple but powerful because it provides extremely high confidence that any failed build is related to a specific recent code, content, or testing change. Especially if there are a high number of existing failures, the actual number of failed elements detected can vary from run-to-run, especially if existing broken components are reused in new ways.
 
@@ -89,7 +91,7 @@ Analytics are located within the [Cypress Accessibility tab of Enterprise Report
 
 #### Track progress and spot trends
 
-This level of reporting is ideal for documenting progress and spotting unexpected trends. When you see a project's score dropping over the long term, you can dig in further with Branch Review to understand what changes are driving the score. You can compare reports before and after any shifts in scores to determine which accessibility issues were introduced.
+This level of reporting is ideal for documenting progress and spotting unexpected trends. When you see a project's score dropping over the long term, you can explore further with Branch Review to understand what changes are driving the score. You can compare reports before and after any shifts in scores to determine which accessibility issues were introduced.
 
 #### Set goals and minimum standards
 
