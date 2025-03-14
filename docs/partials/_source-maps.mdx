@@ -27,3 +27,8 @@ source maps are enabled to get the same experience. Some examples of this includ
     option: `prettySourceMaps`, but this option is buggy and setting source maps on the esbuild
     bundler directly works better.
   - The other bundlers all default their source maps appropriately.
+
+If using [TypeScript](https://www.typescriptlang.org/) with any custom preprocessor, you will want to make sure that the [TypeScript](https://www.typescriptlang.org/)
+compiler is generating source maps. This can be done by setting the [`sourceMap`](https://www.typescriptlang.org/tsconfig/#sourceMap) option in your
+`tsconfig.json` to `true`. The [`inlineSourceMap`](https://www.typescriptlang.org/tsconfig/#inlineSourceMap) option is **not** recommended as it does not provide an accurate code frame.
+Please see our recommended [tsconfig.json](/app/tooling/typescript-support#Configure-tsconfigjson) as a reference.
