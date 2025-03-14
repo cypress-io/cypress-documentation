@@ -11,7 +11,18 @@ sidebar_position: 100
 
 The `@cypress/extract-cloud-results` module provides the `getAccessibilityResults` utility which enables you to programmatically fetch your run's Accessibility results in a CI environment. It determines the Cypress run created for the given CI workflow and will return the Accessibility results associated with that run. The results will be returned once the Cypress run has finished and the Accessibility report has been processed.
 
-This allows you to review the results within CI and to determine if the results are acceptable or need to be addressed before code changes can merge.
+This allows you to review the results within CI and to determine if the results are acceptable or need to be addressed before code changes can merge. It provides overall accessibility scores and violation details for the runs, as well as page- or component-level feedback. This supports a wide variety of needs related to alerting about failures in specific focus areas of the application or creating fine-grained regression monitoring according to the current standards being met by each page.
+
+:::info
+
+##### <Icon name="question-circle" color="#0097A8" /> Examples and use cases
+
+This page focuses on how the Results API works and what kinds of information can be accessed. For examples of how this can be used, see our higher-level guides:
+
+- The [pull requests and policies guide](/accessibility/guides/block-pull-requests) shows what it looks like to use the Results API to set a policy and fail a pull request.
+- The guide for [detecting and managing changes](/accessibility/guides/detect-changes#Results-API) shows some other common use cases.
+
+:::
 
 ## Supported CI Providers
 
@@ -164,8 +175,8 @@ The Accessibility results for the run are returned as an object containing the f
   accessibilityReportUrl: 'https://cloud.cypress.io/[...]'
 
   // The axe-core library version used when generating the Accessibility report.
-  // See https://github.com/dequelabs/axe-core.
-  axeVersion: '4.9.1'
+  // See https://github.com/dequelabs/axe-core. Example: 4.10.0
+  axeVersion: string
 
   summary: {
     // Indicates whether a complete Accessibility report was generated.
@@ -186,6 +197,13 @@ The Accessibility results for the run are returned as an object containing the f
       // The count of unique minor rules that detected a violation.
       minor: number,
     },
+
+    // The accessibility score for the run as a whole, to two decimal places
+    score: number,
+
+    // The count of distinct failed elements detected during the run, across all views
+    failedElements: number
+
   }
 
   // The list of violated rules.
@@ -199,6 +217,22 @@ The Accessibility results for the run are returned as an object containing the f
     // The url that deep links the report for this specific rule violation.
     accessibilityReportUrl: 'https://cloud.cypress.io/[...]'
   }]
+
+  // This list of views with accessibility violations detected,
+  // and details of failed rules on each view
+  views: [
+      {
+        // The url that deep links the report for this view, with no rule-preselected
+        accessibilityReportUrl: 'https://cloud.cypress.io/[...]'
+        // The name of the view as it appears in the accessibility report
+        displayName: "/app/get-started/why-cypress",
+        // The accessibility score for this particular view
+        score: number
+        // The list of violated rules for this specific view
+        rules: Rule[]
+      }
+    ]
+
 }
 ```
 
