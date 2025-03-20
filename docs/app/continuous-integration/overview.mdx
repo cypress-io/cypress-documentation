@@ -260,8 +260,11 @@ Cypress Docker images are available from:
 - [cypress/browsers](https://github.com/cypress-io/cypress-docker-images/tree/master/browsers) builds on the
   [cypress/base](https://github.com/cypress-io/cypress-docker-images/tree/master/base) image.
   For `Linux/amd64` images it adds **Chrome**, **Firefox** and **Edge** browsers.
+  For `Linux/arm64` images it adds only **Firefox** browsers from version `136.0.2` and above.
+  Chrome and Edge browsers are currently not available for `Linux/arm64`.
   A corresponding image `<tag>` allows selection of the combined Node.js and browser versions.
-  (Currently `Linux/arm64` images do **not** contain browsers.)
+  The version tags for the unavailable Chrome and Edge browsers on the `Linux/arm64` platform are empty place-holders only,
+  required for multi-platform support compatibility.
 
 - [cypress/included](https://github.com/cypress-io/cypress-docker-images/tree/master/included) builds on the
   [cypress/browsers](https://github.com/cypress-io/cypress-docker-images/tree/master/browsers) image.
