@@ -1046,7 +1046,7 @@
           {
           "name": "cypress-xporter",
           "description": "Cypress Xporter is a CLI tool that syncs your Cypress test results with Jira, TestRail, and Confluence. It automates the process of merging test reports, creating bug tickets, updating test plans, and documenting test summaries — all from your terminal.",
-          "link": "https://www.npmjs.com/package/cypress-xporter",
+          "link": "https://github.com/kabirfaisal1/cypress-reporter/tree/main/packages/cypress-xporter",
           "keywords": ["Jira", "TestRail", "Confluence"],
           "badge": "community"
         }
