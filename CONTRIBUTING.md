@@ -102,9 +102,9 @@ You can learn about how to import markdown & partials
 ### Adding Plugins
 
 To add a plugin, submit a [pull request](#Pull-Requests) with the corresponding
-data added to the [`plugins.json`](/src/data/plugins.json) file. Your plugin
-should have a name, description, link to the plugin's code, as well as any
-keywords.
+data added to the [`plugins.json`](/src/data/plugins.json) file.
+Your plugin entry should have a name, description, link to the plugin's code (for example to a repository on GitHub),
+as well as any keywords.
 
 We want to showcase plugins that work and have a good developer experience. This
 means that a good plugin generally has:
@@ -122,8 +122,13 @@ Each plugin submitted to the plugins list should have the following:
    - Demonstrates the plugin working
    - Acts as real-world example usage
 
-2. CI pipeline
-3. Compatibility with at least the latest major version of Cypress
+1. CI pipeline
+1. Compatibility with at least the latest major version of Cypress
+1. Populated [package-json](https://docs.npmjs.com/cli/v11/configuring-npm/package-json) fields
+
+   - [homepage](https://docs.npmjs.com/cli/v11/configuring-npm/package-json#homepage)
+   - [repository](https://docs.npmjs.com/cli/v11/configuring-npm/package-json#repository) for the command [npm repo](https://docs.npmjs.com/cli/v11/commands/npm-repo)
+   - [bugs](https://docs.npmjs.com/cli/v11/configuring-npm/package-json#bugs) for the command [npm bugs](https://docs.npmjs.com/cli/v11/commands/npm-bugs)
 
 Plugins are listed in the following order:
 
