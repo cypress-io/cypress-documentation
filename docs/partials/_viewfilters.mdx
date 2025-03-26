@@ -137,3 +137,32 @@ https://cypress.io/error/500
 ```
 https://cypress.io/home
 ```
+
+### Excluding URLs regardless of protocol
+
+#### Config
+
+```json
+{
+  "viewFilters": [
+    {
+      "pattern": "localhost:8888/admin/*",
+      "include": false
+    }
+  ]
+}
+```
+
+#### Visited URLs
+
+```
+http://localhost:8888/app
+http://localhost:8888/admin
+https://localhost:8888/admin
+```
+
+#### Views shown in UI
+
+```
+http://localhost:8888/app
+```

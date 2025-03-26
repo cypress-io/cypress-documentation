@@ -59,7 +59,7 @@ The first pattern that a given URL matches is used as its view. If a URL doesn't
 {
   "views": [
     {
-      "pattern": "https://www.my-app.com/users/*"
+      "pattern": "www.my-app.com/users/*"
     }
   ]
 }
@@ -91,7 +91,7 @@ www.my-app.com/users/*
 {
   "views": [
     {
-      "pattern": "https://www.my-app.com/users/:name"
+      "pattern": "www.my-app.com/users/:name"
     }
   ]
 }
@@ -123,7 +123,7 @@ www.my-app.com/users/:name
 {
   "views": [
     {
-      "pattern": "https://www.my-app.com/analytics/:type/:id",
+      "pattern": "www.my-app.com/analytics/:type/:id",
       "groupBy": ["type"]
     }
   ]
@@ -156,7 +156,7 @@ www.my-app.com/analytics/usage/:id
 {
   "views": [
     {
-      "pattern": "https://www.my-app.com/home?*status=:status{&*}?#*",
+      "pattern": "www.my-app.com/home?*status=:status{&*}?#*",
       "groupBy": ["status"]
     }
   ]
