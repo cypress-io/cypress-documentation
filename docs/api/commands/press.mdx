@@ -1,0 +1,112 @@
+---
+title: 'press | Cypress Documentation'
+description: Dispatch a series of native key events to your application
+sidebar_label: press
+slug: /api/commands/press
+componentSpecific: false
+---
+
+<ProductHeading product="app" />
+
+# press
+
+Dispatch a series of native key events to your application.
+
+A keydown, press, and keyup event will be dispatched directly to the browser window. Note that your application must have focus to properly receive this event. It can be helpful to use `cy.focus()` to ensure focus on an element in your application before using this command.
+
+This command is distinct from `cy.type()`: it is meant for non-character keys, will dispatch real keyboard events rather than simulated ones. Currently, the only key support is `Tab`.
+
+This command is _not_ chainable, and does not return a value.
+
+:::info
+
+<strong>Supported Browsers:</strong>
+This command is supported in chromium browsers, and Firefox versions beginning with
+v135. Safari is not supported. This command will fail if executed in a browser that
+does not support it.
+
+:::
+
+:::caution
+
+<Icon name="exclamation-triangle" /> **Transient activation**
+
+By dispatching native keyboard events to the browser, this command will cause the browser to enter [Transient activation](https://developer.mozilla.org/en-US/docs/Glossary/Transient_activation) state.
+
+If your application prevents the default behavior of the `beforeunload` event, this may cause issues when navigating away from the current page.
+
+:::
+
+## Syntax
+
+```javascript
+cy.press(Cypress.Keyboard.Keys.TAB)
+cy.press(Cypress.Keyboard.Keys.TAB, {
+  log: false,
+  timeout: 2000,
+})
+```
+
+## Signature
+
+```typescript
+interface PressCommand {
+  (
+    key: KeyPressSupportedKeys,
+    options?: Partial<Cypress.Loggable> & Partial<Cypress.Timeoutable>
+  ): void
+}
+```
+
+## Usage
+
+<Icon name="check-circle" color="green" /> **Correct Usage**
+
+```javascript
+it('moves focus to the next form element when the user presses tab', function () {
+  cy.visit('/my-form')
+  cy.get('input.first').focus() // focusing the first form element ensures that the application will receive the events
+  cy.press(Cypress.Keyboard.Keys.TAB)
+  cy.get('input.second').should('have.focus')
+})
+```
+
+<Icon name="exclamation-triangle" color="red" /> **Incorrect Usage**
+
+```javascript
+it('moves focus to the next form element when the user presses tab', function () {
+  cy.visit('/my-form')
+  cy.press(Cypress.Keyboard.Keys.TAB) // the key event will be dispatched to the top frame, rather than your application
+  cy.get('input.second').should('have.focus') // the key events did not get dispatched to the application, so the focus did not shift to the second form element.
+})
+```
+
+### Arguments
+
+<Icon name="angle-right" /> **key _(String)_**
+
+The key to press. The supported values are available on `Cypress.Keyboard.Keys`, and may change from time to time. It is recomended that you reference these values from `Cypress.Keyboard.Keys` rather than passing in a string.
+
+### Supported Keys
+
+| Reference                   | Value   |
+| --------------------------- | ------- |
+| `Cypress.Keyboard.Keys.TAB` | `"Tab"` |
+
+<Icon name="angle-right" /> **options _(Object)_**
+
+The second `options` parameter is optional and standard for Cypress commands. It supports setting the timeout and/or whether to log the command:
+
+## History
+
+| Version                                    | Changes                     |
+| ------------------------------------------ | --------------------------- |
+| [14.2.2](/app/references/changelog#14-2-2) | Added the `press()` command |
+
+## See also
+
+- [`.focus()`](/api/commands/focus)
+- [`.focused()`](/api/commands/focused)
+- [`.type()`](/api/commands/type)
+- [`.focused()`](/api/)
+- [`Cypress.Keyboard`](/api/cypress-api/keyboard-api)
