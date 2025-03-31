@@ -9,16 +9,29 @@ sidebar_position: 150
 
 # Cypress.Keyboard
 
-The Keyboard API allows you set the default values for how the
+The Keyboard API allows you to access available `Keys` for use with [`cy.press()`](/api/commands/press) or to set the default values for how the
 [.type()](/api/commands/type) command is executed.
 
 ## Syntax
 
 ```javascript
+Cypress.Keyboard.Keys(key)
 Cypress.Keyboard.defaults(options)
 ```
 
-### Arguments
+### Keys Arguments
+
+<Icon name="angle-right" /> **key _(String)_**
+
+The key available for `cy.press()`.
+
+The following keys are supported:
+
+| Reference                   | Value   |
+| --------------------------- | ------- |
+| `Cypress.Keyboard.Keys.TAB` | `"Tab"` |
+
+### defaults Arguments
 
 <Icon name="angle-right" /> **options _(Object)_**
 
@@ -29,6 +42,13 @@ An object containing the following:
 | `keystrokeDelay` | `10`    | The delay, in milliseconds, between keystrokes while typing with [.type()](/api/commands/type). Set to `0` to remove the delay. Must be a non-negative number. |
 
 ## Examples
+
+### Press tab key
+
+```javascript
+cy.press(Cypress.Keyboard.Keys.TAB)
+cy.get('input.second').should('have.focus')
+```
 
 ### Slow down typing by increasing the keystroke delay
 
@@ -72,9 +92,10 @@ describe('removes keystroke delay in all tests in this suite', { keystrokeDelay:
   it('types fast in the second input', () => {
     cy.get('input').eq(1).type('more fast typing')
   })
-}))
+})
 ```
 
 ## See also
 
+- [`cy.press()`](/api/commands/press)
 - [`.type()`](/api/commands/type)
