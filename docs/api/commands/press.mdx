@@ -12,7 +12,7 @@ componentSpecific: false
 
 Trigger native key events in your application to simulate keyboard interactions.
 
-A `keydown`, `press`, and `keyup` event will be dispatched directly to the browser window. Note that your application must have focus to properly receive this event. It can be helpful to use `cy.focus()` to ensure focus on an element in your application before using this command.
+A `keydown`, `press`, and `keyup` event will be dispatched directly to the browser window.
 
 Unlike `cy.type()`, which is best for typing character keys, `cy.press()` will dispatch real keyboard events rather than simulated ones. This command is especially useful when testing focus management and keyboard navigation patterns which are critical for [accessibility testing](/app/guides/accessibility-testing) and great keyboard UX.
 
