@@ -91,7 +91,7 @@ Pass in an options object to change the default behavior of `.press()`.
 
 ## Examples
 
-### Move focus to the next element
+### Test focus order of tab
 
 ```js
 it('moves focus to the next form element when pressing Tab', () => {
@@ -99,6 +99,16 @@ it('moves focus to the next form element when pressing Tab', () => {
   cy.get('input.email').type('username')
   cy.press(Cypress.Keyboard.Keys.TAB)
   cy.get('input.password').should('have.focus')
+})
+```
+
+### Test autocomplete of search input with tab
+
+```js
+it('autocompletes search input when pressing Tab', () => {
+  cy.get('[data-cy="search"]').type('cy')
+  cy.press(Cypress.Keyboard.Keys.TAB)
+  cy.get('[data-cy="search"]').should('have.value', 'cypress')
 })
 ```
 
