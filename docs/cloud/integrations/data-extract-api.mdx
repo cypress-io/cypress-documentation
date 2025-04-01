@@ -69,14 +69,14 @@ The following query parameters are available for use:
 
 - start_date. **Required** and should be passed in either yyyy-MM-dd or yyyy-MM-ddTHH:mm:ss format.
 
-  For example, to request a start date of September 1, 2024, use: `?start_date=2024-09-01`. To request a
-  start date of 12:30p UTC on that day, use: `?start_date=2024-09-01T12%3A30%3A00`
+  For example, to request a start date of January 1, 2025, use: `?start_date=2025-01-01`. To request a
+  start date of 12:30p UTC on that day, use: `?start_date=2025-01-01T12%3A30%3A00`
 
 - end_date. Optional and should be passed in either yyyy-MM-dd or yyyy-MM-ddTHH:mm:ss format. If no end date is
   specified the query will default to today.
 
-  For example, to request an end date of start of day September 1, 2024, use: `?end_date=2024-09-01`. To request an
-  end date of 12:30p UTC on that day, use: `?end_date=2024-09-01T12%3A30%3A00`
+  For example, to request an end date of start of day March 1, 2025, use: `?end_date=2025-03-01`. To request an
+  end date of 12:30p UTC on that day, use: `?end_date=2025-03-01T12%3A30%3A00`
 
 - projects. Optional, and accepts the name of your Cypress project. The project name should be URL encoded. You can
   pass as many projects parameters as needed.
@@ -89,6 +89,10 @@ The following query parameters are available for use:
   For example, to request that the data be filtered for branches _develop_ and _commitBranch1_, use: `&branch=develop&branch=commitBranch1`
 
 - export_format. Specify the type of data format that will be returned in the response file. Valid options include: `csv`, `json`, `xlsx`
+
+  For example, to request that the data be returned in JSON format, use: `&export_format=json`
+
+## Usage & projects
 
 ### Project list
 
@@ -104,7 +108,7 @@ Data returned includes:
 - id
 
 Example:
-https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=project-list&export_format=csv&start_date=2024-01-01
+https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=project-list&export_format=csv&start_date=2025-03-01
 
 ### Tests per project
 
@@ -119,7 +123,7 @@ Data returned includes:
 - test_run_count
 
 Example:
-https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=usage-per-project-summary&export_format=csv&start_date=2024-01-01
+https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=usage-per-project-summary&export_format=csv&start_date=2025-03-01
 
 ### Tests per project over time
 
@@ -136,216 +140,7 @@ Data returned includes:
 - day
 
 Example:
-https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=usage-per-project-over-time&export_format=csv&start_date=2024-01-01
-
-### Status by run
-
-This data helps you understand the success and failure rates at the run level. If any part of the
-run fails then the entire run is failed.
-
-The report_id is: `status-per-build-summary`
-
-Data returned includes:
-
-- status
-- test_run_count
-
-Example:
-https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=status-per-build-summary&export_format=csv&start_date=2024-01-01
-
-### Status by run over time
-
-This data helps you understand the success and failure rates at the run level. If any part of the
-run fails then the entire run is failed. The data is reported over time.
-
-The report_id is: `status-per-build-over-time`
-
-Data returned includes:
-
-- status
-- test_run_count
-- week
-- day
-
-Example:
-https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=status-per-build-over-time&export_format=csv&start_date=2024-01-01
-
-### Status by spec
-
-This data helps you understand the success and failure rates at the spec level. If any part of the
-spec fails then the entire spec is failed.
-
-The report_id is: `status-per-spec-summary`
-
-Data returned includes:
-
-- status
-- test_run_count
-
-Example:
-https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=status-per-spec-summary&export_format=csv&start_date=2024-01-01
-
-### Status by spec over time
-
-This data helps you understand the success and failure rates at the spec level. If any part of the
-spec fails then the entire spec is failed. The data is reported over time.
-
-The report_id is: `status-per-spec-over-time`
-
-Data returned includes:
-
-- status
-- test_run_count
-- week
-- day
-
-Example:
-https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=status-per-spec-over-time&export_format=csv&start_date=2024-01-01
-
-### Status by test run
-
-This data helps you understand the success and failure rates at the individual test level.
-
-The report_id is: `status-per-test-summary`
-
-Data returned includes:
-
-- failed
-- passed
-
-Example:
-https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=status-per-test-summary&export_format=csv&start_date=2024-01-01
-
-### Status by test run over time
-
-This data helps you understand the success and failure rates at the individual test level.
-The data is reported over time.
-
-The report_id is: `status-per-test-over-time`
-
-Data returned includes:
-
-- project_name
-- test_run_count
-- week
-- status
-
-Example:
-https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=status-per-test-over-time&export_format=csv&start_date=2024-01-01
-
-### Cypress run versions
-
-This data helps you monitor and track which versions of the Cypress app are being
-used in your organization.
-
-The report_id is: `cypress-build-versions-summary`
-
-Data returned includes:
-
-- run_count
-- cypress_version
-
-Example:
-https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=cypress-build-versions-summary&export_format=csv&start_date=2024-01-01
-
-### Cypress run versions over time
-
-This data helps you monitor and track which versions of the Cypress app are being
-used in your organization. This data is reported over time.
-
-The report_id is: `cypress-build-versions-over-time`
-
-Data returned includes:
-
-- run_count
-- cypress_version
-- week
-
-Example:
-https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=cypress-build-versions-over-time&export_format=csv&start_date=2024-01-01
-
-### Cypress run versions per project over time
-
-This data helps you monitor and track which versions of the Cypress app are being used in your organization.
-The versions are reported at the project level. This data is reported over time.
-
-The report_id is: `cypress-build-versions-per-project-over-time`
-
-Data returned includes:
-
-- project_name
-- run_count
-- cypress_version
-- week
-
-Example:
-https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=cypress-build-versions-per-project-over-time&export_format=csv&start_date=2024-01-01
-
-### Browsers tested
-
-This data helps you monitor and track which web browsers are being tested in your organization.
-
-The report_id is: `browsers-tested`
-
-Data returned includes:
-
-- spec_count
-- browser
-
-Example:
-https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=browsers-tested&export_format=csv&start_date=2024-01-01
-
-### Browser versions tested
-
-This data helps you monitor and track which web browsers and specific versions are being tested in your organization.
-
-The report_id is: `browser-versions`
-
-Data returned includes:
-
-- spec_count
-- browser
-- version
-
-Example:
-https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=browser-versions&export_format=csv&start_date=2024-01-01
-
-### Browser versions tested over time
-
-This data helps you monitor and track which web browsers and specific versions are being tested in your organization.
-This data is reported over time.
-
-The report_id is: `browser-versions-over-time`
-
-Data returned includes:
-
-- spec_count
-- browser
-- version
-- day
-- week
-
-Example:
-https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=browser-versions-over-time&export_format=csv&start_date=2024-01-01
-
-### Browser versions tested per project over time
-
-This data about browser versions goes a step deeper and helps you monitor and track which web browsers and specific versions are
-being tested within your specific _projects_. This data is reported over time.
-
-The report_id is: `browser-versions-per-project-over-time`
-
-Data returned includes:
-
-- project_name
-- spec_count
-- browser
-- version
-- day
-- week
-
-Example:
-https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=browser-versions-per-project-over-time&export_format=csv&start_date=2024-01-01
+https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=usage-per-project-over-time&export_format=csv&start_date=2025-03-01
 
 ### Cypress test types
 
@@ -364,7 +159,7 @@ Data returned includes:
 - day
 
 Example:
-https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=cypress-test-types&export_format=csv&start_date=2024-01-01
+https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=cypress-test-types&export_format=csv&start_date=2025-03-01
 
 ### Cypress test suite size
 
@@ -383,7 +178,7 @@ Data returned includes:
 - week
 
 Example:
-https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=test-suite-size-summary&export_format=csv&start_date=2024-01-01
+https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=test-suite-size-summary&export_format=csv&start_date=2025-03-01
 
 ### Cypress test suite over time
 
@@ -403,7 +198,7 @@ Data returned includes:
 - week
 
 Example:
-https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=test-suite-size-over-time&export_format=csv&start_date=2024-01-01
+https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=test-suite-size-over-time&export_format=csv&start_date=2025-03-01
 
 ### Project test count and status
 
@@ -422,7 +217,224 @@ Data returned includes:
 - day
 
 Example:
-https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=status-per-test-daily&export_format=csv&start_date=2024-01-01
+https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=status-per-test-daily&export_format=csv&start_date=2025-03-01
+
+## Run status
+
+### Status by run
+
+This data helps you understand the success and failure rates at the run level. If any part of the
+run fails then the entire run is failed.
+
+The report_id is: `status-per-build-summary`
+
+Data returned includes:
+
+- status
+- test_run_count
+
+Example:
+https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=status-per-build-summary&export_format=csv&start_date=2025-03-01
+
+### Status by run over time
+
+This data helps you understand the success and failure rates at the run level. If any part of the
+run fails then the entire run is failed. The data is reported over time.
+
+The report_id is: `status-per-build-over-time`
+
+Data returned includes:
+
+- status
+- test_run_count
+- week
+- day
+
+Example:
+https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=status-per-build-over-time&export_format=csv&start_date=2025-03-01
+
+### Status by spec
+
+This data helps you understand the success and failure rates at the spec level. If any part of the
+spec fails then the entire spec is failed.
+
+The report_id is: `status-per-spec-summary`
+
+Data returned includes:
+
+- status
+- test_run_count
+
+Example:
+https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=status-per-spec-summary&export_format=csv&start_date=2025-03-01
+
+### Status by spec over time
+
+This data helps you understand the success and failure rates at the spec level. If any part of the
+spec fails then the entire spec is failed. The data is reported over time.
+
+The report_id is: `status-per-spec-over-time`
+
+Data returned includes:
+
+- status
+- test_run_count
+- week
+- day
+
+Example:
+https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=status-per-spec-over-time&export_format=csv&start_date=2025-03-01
+
+### Status by test run
+
+This data helps you understand the success and failure rates at the individual test level.
+
+The report_id is: `status-per-test-summary`
+
+Data returned includes:
+
+- failed
+- passed
+
+Example:
+https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=status-per-test-summary&export_format=csv&start_date=2025-03-01
+
+### Status by test run over time
+
+This data helps you understand the success and failure rates at the individual test level.
+The data is reported over time.
+
+The report_id is: `status-per-test-over-time`
+
+Data returned includes:
+
+- project_name
+- test_run_count
+- week
+- status
+
+Example:
+https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=status-per-test-over-time&export_format=csv&start_date=2025-03-01
+
+## Versions & browsers
+
+### Cypress run versions
+
+This data helps you monitor and track which versions of the Cypress app are being
+used in your organization.
+
+The report_id is: `cypress-build-versions-summary`
+
+Data returned includes:
+
+- run_count
+- cypress_version
+
+Example:
+https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=cypress-build-versions-summary&export_format=csv&start_date=2025-03-01
+
+### Cypress run versions over time
+
+This data helps you monitor and track which versions of the Cypress app are being
+used in your organization. This data is reported over time.
+
+The report_id is: `cypress-build-versions-over-time`
+
+Data returned includes:
+
+- run_count
+- cypress_version
+- week
+
+Example:
+https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=cypress-build-versions-over-time&export_format=csv&start_date=2025-03-01
+
+### Cypress run versions per project over time
+
+This data helps you monitor and track which versions of the Cypress app are being used in your organization.
+The versions are reported at the project level. This data is reported over time.
+
+The report_id is: `cypress-build-versions-per-project-over-time`
+
+Data returned includes:
+
+- project_name
+- run_count
+- cypress_version
+- week
+
+Example:
+https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=cypress-build-versions-per-project-over-time&export_format=csv&start_date=2025-03-01
+
+### Browsers tested
+
+This data helps you monitor and track which web browsers are being tested in your organization.
+
+The report_id is: `browsers-tested`
+
+Data returned includes:
+
+- spec_count
+- browser
+
+Example:
+https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=browsers-tested&export_format=csv&start_date=2025-03-01
+
+### Browser versions tested
+
+This data helps you monitor and track which web browsers and specific versions are being tested in your organization.
+
+The report_id is: `browser-versions`
+
+Data returned includes:
+
+- spec_count
+- browser
+- version
+
+Example:
+https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=browser-versions&export_format=csv&start_date=2025-03-01
+
+### Browser versions tested over time
+
+This data helps you monitor and track which web browsers and specific versions are being tested in your organization.
+This data is reported over time.
+
+The report_id is: `browser-versions-over-time`
+
+Data returned includes:
+
+- spec_count
+- browser
+- version
+- day
+- week
+
+Example:
+https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=browser-versions-over-time&export_format=csv&start_date=2025-03-01
+
+### Browser versions tested per project over time
+
+This data about browser versions goes a step deeper and helps you monitor and track which web browsers and specific versions are
+being tested within your specific _projects_. This data is reported over time.
+
+The report_id is: `browser-versions-per-project-over-time`
+
+Data returned includes:
+
+- project_name
+- spec_count
+- browser
+- version
+- day
+- week
+
+Example:
+https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=browser-versions-per-project-over-time&export_format=csv&start_date=2025-03-01
+
+## Test-level data
+
+All data for these APIs is available near real-time, 30 minutes after the run has completed.
 
 ### Individual spec results
 
@@ -457,7 +469,7 @@ Data returned includes:
 - os_version
 
 Example:
-https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=spec-details&export_format=csv&start_date=2024-01-01
+https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=spec-details&export_format=csv&start_date=2025-03-01
 
 ### Individual failed test results
 
@@ -488,7 +500,7 @@ Data returned includes:
 - test_name (the test name matches what is shown in Cypress Cloud and a '///' delimiter is used between fragments of the test name)
 
 Example:
-https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=failed-test-details&export_format=csv&start_date=2024-01-01
+https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=failed-test-details&export_format=csv&start_date=2025-03-01
 
 ### Individual test results
 
@@ -520,7 +532,9 @@ Data returned includes:
 - test_name (the test name matches what is shown in Cypress Cloud and a '///' delimiter is used between fragments of the test name)
 
 Example:
-https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=test-details&export_format=csv&start_date=2024-01-01
+https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=test-details&export_format=csv&start_date=2025-03-01
+
+## Run duration
 
 ### Average run duration over time
 
@@ -540,7 +554,7 @@ Data returned includes:
 - week
 
 Example:
-https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=average-passing-build-duration&export_format=csv&start_date=2024-01-01
+https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=average-passing-build-duration&export_format=csv&start_date=2025-03-01
 
 ### Average spec duration over time
 
@@ -563,7 +577,9 @@ Data returned includes:
 - week
 
 Example:
-https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=average-passing-spec-duration&export_format=csv&start_date=2024-01-01
+https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=average-passing-spec-duration&export_format=csv&start_date=2025-03-01
+
+## Flaky
 
 ### Test flake detail over time
 
@@ -580,7 +596,7 @@ Data returned includes:
 - day
 
 Example:
-https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=flake-per-project-over-time&export_format=csv&start_date=2024-01-01
+https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=flake-per-project-over-time&export_format=csv&start_date=2025-03-01
 
 ### Flaky rate per project
 
@@ -599,7 +615,7 @@ Data returned includes:
 - flaky_rate
 
 Example:
-https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=flake-rate-per-project&export_format=csv&start_date=2024-01-01
+https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=flake-rate-per-project&export_format=csv&start_date=2025-03-01
 
 ### Flaky rate per project over time
 
@@ -620,7 +636,7 @@ Data returned includes:
 - week
 
 Example:
-https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=flake-rate-per-project-over-time&export_format=csv&start_date=2024-01-01
+https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=flake-rate-per-project-over-time&export_format=csv&start_date=2025-03-01
 
 ### Flaky test details
 
@@ -649,7 +665,7 @@ Data returned includes:
 - test_replay_url
 
 Example:
-https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=flaky-test-details&export_format=csv&start_date=2024-01-01
+https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=flaky-test-details&export_format=csv&start_date=2025-03-01
 
 ### Top flaky tests per project
 
@@ -666,7 +682,9 @@ Data returned includes:
 - test_replay_url
 
 Example:
-https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=top-flaky-per-project&export_format=csv&start_date=2024-01-01
+https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=top-flaky-per-project&export_format=csv&start_date=2025-03-01
+
+## Aggregated data
 
 ### Top failures per project
 
@@ -687,7 +705,7 @@ Data returned includes:
 - test_replay_url
 
 Example:
-https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=top-failures-per-project&export_format=csv&start_date=2024-01-01
+https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=top-failures-per-project&export_format=csv&start_date=2025-03-01
 
 ### Top errors per project
 
@@ -707,4 +725,122 @@ Data returned includes:
 - test_replay_url
 
 Example:
-https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=top-errors-per-project&export_format=csv&start_date=2024-01-01
+https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=top-errors-per-project&export_format=csv&start_date=2025-03-01
+
+## UI Coverage
+
+Learn more about Cypress UI Coverage [here](/ui-coverage/get-started/introduction).
+
+### UI Coverage per project
+
+This data helps you understand which projects in your organization have the
+highest or lowest UI Coverage %. Data is returned in a simple summary per project.
+
+The report_id is: `ui-coverage-per-project-summary`
+
+Data returned includes:
+
+- project_name
+- ui_coverage_pct
+
+Example:
+https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=ui-coverage-per-project-summary&export_format=csv&start_date=2025-03-01
+
+### UI Coverage per project over time
+
+This data helps you understand which projects in your organization have the
+highest or lowest UI Coverage % and how those measurements look over time.
+
+The report_id is: `ui-coverage-per-project-over-time`
+
+Data returned includes:
+
+- project_name
+- ui_coverage_pct
+- week
+- day
+
+Example:
+https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=ui-coverage-per-project-over-time&export_format=csv&start_date=2025-03-01
+
+### UI Coverage details
+
+This report allows you to extract the UI Coverage % for each run along with other attributes of the run. The maximum number of records
+returned is 500,000. Make multiple requests with different start_date and end_date parameter values if your volume of records will
+exceed 500k for a single request.
+
+The report_id is: `ui-coverage-details`
+
+Data returned includes:
+
+- project_name
+- created_at (date and time)
+- run_number
+- status
+- ui_coverage_pct
+- commit_author_name
+- commit_branch
+- ci_build_id
+- run_tags (string array)
+
+Example:
+https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=ui-coverage-details&export_format=csv&start_date=2025-03-01
+
+## Cypress Accessibility
+
+Learn more about Cypress Accessibility [here](/accessibility/get-started/introduction).
+
+### Accessibility score per project
+
+This data helps you understand which projects in your organization have the
+highest or lowest Accessibility scores. Data is returned in a simple summary per project.
+
+The report_id is: `accessibility-per-project-summary`
+
+Data returned includes:
+
+- project_name
+- accessibility_score
+
+Example:
+https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=accessibility-per-project-summary&export_format=csv&start_date=2025-03-01
+
+### Accessibility score per project over time
+
+This data helps you understand which projects in your organization have the
+highest or lowest Accessibility scores and how those scores looks over time.
+
+The report_id is: `accessibility-per-project-over-time`
+
+Data returned includes:
+
+- project_name
+- accessibility_score
+- week
+- day
+
+Example:
+https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=accessibility-per-project-over-time&export_format=csv&start_date=2025-03-01
+
+### Accessibility score details
+
+This report allows you to extract Cypress Accessibility scores for each run along with other attributes of the run. The
+maximum number of records returned is 500,000. Make multiple requests with different start_date and end_date parameter
+values if your volume of records will exceed 500k for a single request.
+
+The report_id is: `accessibility-details`
+
+Data returned includes:
+
+- project_name
+- created_at (date and time)
+- run_number
+- status
+- accessibility_score
+- commit_author_name
+- commit_branch
+- ci_build_id
+- run_tags (string array)
+
+Example:
+https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=accessibility-details&export_format=csv&start_date=2025-03-01
