@@ -95,10 +95,10 @@ Pass in an options object to change the default behavior of `.press()`.
 
 ```js
 it('moves focus to the next form element when pressing Tab', () => {
-  cy.visit('/my-form')
-  cy.get('input.first').focus()
+  cy.visit('/my-login')
+  cy.get('input.email').type('username')
   cy.press(Cypress.Keyboard.Keys.TAB)
-  cy.get('input.second').should('have.focus')
+  cy.get('input.password').should('have.focus')
 })
 ```
 
