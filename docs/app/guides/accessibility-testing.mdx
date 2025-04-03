@@ -169,6 +169,13 @@ This means that, without some assertions about either the `button` element itsel
 
 Developers who are unfamiliar with accessibility may assume that if a Testing Library `ByRole` locator can be made to pass before and after a code change, there has been no functional or accessibility-related change in the underlying element. As we've seen, this is not actually the case, because of the extra behavior browsers only implement for native HTML elements. For more about this difference and why semantic HTML elements are preferred, see the [first rule of Accessible Rich Internet Applications (ARIA)](https://www.w3.org/TR/using-aria/#rule1).
 
+### Keyboard navigation
+
+To test intra-page navigation with the keyboard, you can use the [`cy.press()`](/api/commands/press) to dispatch native tab events.
+
+Note that the application under test does not have focus by default. You must focus an element in your application before it will receive
+this event.
+
 ## Where to test accessibility
 
 So what should you do in your test automation to help confirm the UI is accessible? First of all, for known critical areas like forms or checkout flows, ensure that the accessibility behavior is tested explicitly in at least one place. The means verifying that form fields and buttons have the correct labels and use the expected HTML elements, and other aspects of the DOM that communicate necessary information.
