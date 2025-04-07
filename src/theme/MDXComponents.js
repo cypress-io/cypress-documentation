@@ -2,6 +2,7 @@
 import MDXComponents from "@theme-original/MDXComponents";
 import AnatomyOfAnError from "@site/docs/partials/_anatomy-of-an-error.mdx";
 import AccessibilityAddon from "@site/docs/partials/_accessibility-addon.mdx";
+import AutoCancellationBenefits from "@site/docs/partials/_auto-cancellation-benefits.mdx";
 import Badge from "@site/src/components/badge";
 import Btn from "@site/src/components/button";
 import ComponentOnlyBadge from "@site/src/components/component-only-badge";
@@ -26,6 +27,7 @@ import Icon from "@site/src/components/icon";
 import ImportMountFunctions from "@site/docs/partials/_import-mount-functions.mdx";
 import IntellisenseCodeCompletion from "@site/docs/partials/_intellisense-code-completion.mdx";
 import ProductHeading from "@site/src/components/product-heading";
+import SourceMaps from "@site/docs/partials/_source-maps.mdx";
 import SupportFileConfiguration from "@site/docs/partials/_support-file-configuration.mdx";
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
@@ -160,6 +162,7 @@ export default {
   ...MDXComponents,
   AnatomyOfAnError,
   AccessibilityAddon,
+  AutoCancellationBenefits,
   Badge,
   Btn,
   ComponentOnlyBadge,
@@ -183,6 +186,7 @@ export default {
   ImportMountFunctions,
   IntellisenseCodeCompletion,
   ProductHeading,
+  SourceMaps,
   SupportFileConfiguration,
   Tabs,
   TabItem,
