@@ -21,9 +21,9 @@ Currently, the only key supported is `Tab`.
 :::caution
 
 <strong>Supported Browsers:</strong>
-This command is supported in chromium browsers and Firefox versions >=
-v135. WebKit is not supported. This command will fail if executed in a browser that
-does not support it.
+This command is supported in chromium browsers and Firefox versions >= v135. WebKit
+is not supported. This command will fail if executed in a browser that does not support
+it.
 
 :::
 
@@ -61,7 +61,7 @@ cy.get('input.second').should('have.focus')
 cy.get('input.first').focus()
 cy.press(Cypress.Keyboard.Keys.TAB)
   // Errors because press yields null
-  .should('have.focus') 
+  .should('have.focus')
 ```
 
 ### Arguments
@@ -80,10 +80,10 @@ The key to press. The supported values are available on [`Cypress.Keyboard.Keys`
 
 Pass in an options object to change the default behavior of `.press()`.
 
-| Option                       | Default                                                                     | Description                                                                                                                                     |
-| ---------------------------- | --------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
-| `log`                        | `true`                                                                      | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log)                                                             |
-| `timeout`                    | [`defaultCommandTimeout`](/app/references/configuration#Timeouts)           | Time to wait for `cy.press()` to resolve before timing out                                                                           |
+| Option    | Default                                                           | Description                                                                         |
+| --------- | ----------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| `log`     | `true`                                                            | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log) |
+| `timeout` | [`defaultCommandTimeout`](/app/references/configuration#Timeouts) | Time to wait for `cy.press()` to resolve before timing out                          |
 
 <HeaderYields />
 
@@ -122,8 +122,8 @@ If your application prevents the default behavior of the `beforeunload` event, t
 
 ## History
 
-| Version                                    | Changes                     |
-| ------------------------------------------ | --------------------------- |
+| Version                             | Changes                      |
+| ----------------------------------- | ---------------------------- |
 | [14.3.0](/app/references/changelog) | Added the `.press()` command |
 
 ## See also
