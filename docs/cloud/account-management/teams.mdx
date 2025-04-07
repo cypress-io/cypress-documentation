@@ -1,0 +1,182 @@
+---
+title: 'Manage teams | Cypress Cloud'
+description: 'Learn how to manage teams in Cypress Cloud, assign users to teams, and assign projects to teams.'
+sidebar_position: 35
+sidebar_label: Teams
+sidebar_custom_props: { 'new_label': true }
+---
+
+<ProductHeading product="cloud" />
+
+# Manage teams
+
+:::info
+
+##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
+
+- How teams are used in Cypress Cloud
+- How to assign users to teams
+- How to assign projects to teams
+- Best practices for team setup
+
+:::
+
+Teams can be defined in Cypress Cloud. A team can help you control which users have
+access to specific projects. This is accomplished by selecting which projects a team
+is allowed to access.
+
+Organizations have many reasons for wanting to divide access into teams. Some of the most
+popular reasons are:
+
+- Increase efficiency and reduce clutter by only seeing the projects that you need to see
+- Multiple business units in your organization are sharing the same Cypress Cloud organization
+- Privacy and security when certain projects are only meant to be accessible to specific users
+  in an organization
+- Ability to understand Cypress usage, by team, in [Enterprise Reporting](/cloud/features/analytics/enterprise-reporting)
+
+_Note: [public projects](https://on.cypress.io/what-is-project-access) are visible to all users in the organization in Cypress Cloud_
+
+## Manage teams
+
+Organization [owner or admin](/cloud/account-management/users#User-roles) roles can create
+teams in Cypress Cloud. These organization owners and admins, along with a new role called
+the _team admin_, are then able to configure the team as required.
+
+- There is no limit on the number of teams that can be set up for your organization
+- All users in Cypress Cloud will be a member of the default team named _Everyone_
+- A user can be assigned to multiple teams
+- Roles are defined at the user level. That user's role determines the permissions granted
+  within the team
+- There is no limit on the number of projects that can be assigned to a team
+- The same project can be assigned to multiple teams
+- Having access to a project in Cypress Cloud has no bearing on whether or not a Cypress App user can record runs to Cypress Cloud
+
+### Create or delete teams
+
+Only organization [owner or admin](/cloud/account-management/users#User-roles) roles can create
+teams in Cypress Cloud. Other roles will not see the button to create a new team.
+
+1. On the Users & Teams page, select the _Teams_ tab
+2. Click **+ Create team**
+
+   <DocsImage
+     src="/img/cloud/teams/create-new-team.png"
+     alt="Nagivate to the Users & Teams page and see a button to create a new team."
+   />
+
+3. On the _Create new team_ modal, enter the team name and click **Save**
+
+_Note: team names must be unique_
+
+To delete a team, simply click on the _X_ icon at the right side of the team's row.
+You will be prompted for confirmation before the team is deleted.
+
+### Assign projects to a team
+
+Once a team has been created, it is important to assign projects to the team. If no
+projects are assigned to a team, any users that are a member of only this team will not
+have access to Cypress Cloud projects.
+
+<DocsImage
+  src="/img/cloud/teams/assign-projects-to-team.png"
+  alt="Click the + icon to assign projects to a team."
+/>
+
+On the _Teams_ tab, assign projects to a team by clicking the **+** icon in the
+_Project access_ column. In the modal that appears there will be two options:
+
+1. Assign all projects to team
+
+   Use this option if you have a team that should access all projects, including projects that
+   already exist and ones that will be created in the future. This is the default selection for
+   the _Everyone_ team.
+
+   <DocsImage
+     src="/img/cloud/teams/assign-projects-to-team-modal-all.png"
+     alt="When assigning projects to a team, you can select All Projects that either exist or that may be created in the future."
+   />
+
+2. Assign selected projects to team
+
+   Use this option if you want to assign specific projects to a team. Search for projects by name
+   and select (or unselect) them to assign projects to the team.
+
+   <DocsImage
+     src="/img/cloud/teams/assign-projects-to-team-modal-selected.png"
+     alt="When assigning projects to a team, you can select individual projects from a list."
+   />
+
+### Assign users to a team
+
+Once a team has been created and granted access to projects, the last step is to add
+users to the team. This will allow the users to have access to the projects in Cypress Cloud.
+There are two places in Cypress Cloud where users can be added to an existing team.
+
+1. On the _Teams_ tab, select users for a team by clicking the **+** icon in the _Members_ column
+
+   This makes it easy to add multiple users to a team at the same time. Simply browse the user list
+   or search by name, and then select (or unselect) them to assign users as members of this team.
+
+   <DocsImage
+     src="/img/cloud/teams/assign-members-to-team.png"
+     alt="Click the + icon to assign Cypress Cloud users to a team."
+   />
+   <DocsImage
+     src="/img/cloud/teams/assign-members-to-team-modal.png"
+     alt="When assigning users to a team, you can select individual users from a list."
+   />
+
+2. On the _Users_ tab, select teams for a user by clicking the **+** icon in the _Teams_ column
+
+   You can manage the team(s) assigned to a user directly on the _Users_ page. On the edit modal
+   you you can search by team name and then select (or unselect) them to assign the user to
+   additional teams.
+
+   _Note: The label 'No project access' will appear if a team has not yet been configured to have
+   access to any projects. This will help you avoid mistakes when assigning users to teams._
+
+   <DocsImage
+     src="/img/cloud/teams/assign-team-to-user.png"
+     alt="Click the + icon to assign a team to a specific user."
+   />
+   <DocsImage
+     src="/img/cloud/teams/assign-team-to-user-modal.png"
+     alt="When assigning a team to a specific user, you can select individual teams from a list."
+   />
+
+## Best practices
+
+Separating project access between multiple teams in Cypress Cloud is an optional setup. If your
+organization has no concerns or reasons to define teams, simply keep the default _Everyone_ team
+as it is defined. All users added to Cypress Cloud will automatically be associated with the
+Everyone team, and that team has access to all projects.
+
+For organizations that have a desire to divide into teams, a common setup is as follows:
+
+1. Create a team that will be assigned to all organization-level users (Owner or Admin) and assign
+   all projects to this team. This will provide visibility to all projects to your organization-level users.
+
+   - For example: create a team named 'Admins' and give it access to all projects. Then assign any
+     existing and new organization-level users to this team.
+
+2. Create teams that will align with your organizational structure and teams. It may be tempting to create
+   a lot of teams with access to very specific projects, but that can increase your maintenance over time.
+
+3. Once teams have been created, choose at least one member of each team who can be assigned the **Team admin**
+   role. This will allow users who are regular participants of the team to perform administration tasks for the
+   projects. It also removes this responsibility from your organization-level Admins and Owners.
+
+4. After teams have been configured, you can remove the _All projects_ assignment from the _Everyone_ team.
+   This will enforce your new team structure since users are no longer receiving project access from the default
+   _Everyone_ team.
+
+5. Ensure that all users have access to at least one project. This is easiest to see on the **Users** page
+   where labels will appear in the _Teams_ columns if a user is not assigned to any teams, or if a user is
+   assigned only to teams which cannot access projects. Remember: public projects are outside the scope of Teams
+   and will always be visible to all users in your organization.
+
+6. When a new project is created, make sure that it is granted access to one or more teams.
+
+   - The new project will automatically be accessible to all users in a team assigned to _All projects_
+   - Cypress is considering an additional feature to require a user who creates a new project to select teams
+     at the time of project creation.

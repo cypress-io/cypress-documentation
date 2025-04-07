@@ -1,0 +1,34 @@
+Cypress utilizes source maps to enhance the error experience. Stack traces are
+translated so that your source files are shown instead of the generated file
+that is loaded by the browser. This also enables displaying code frames. Without
+inline source maps, you will not see code frames.
+
+By default, Cypress will include an inline source map in your spec file, so you
+will get the most out of the error experience. If you
+[modify the preprocessor](/api/node-events/preprocessors-api#Usage), ensure that inline
+source maps are enabled to get the same experience. Some examples of this include:
+
+- With webpack and the
+  [webpack preprocessor](https://github.com/cypress-io/cypress/tree/develop/npm/webpack-preprocessor), set
+  [the `devtool` option](https://webpack.js.org/configuration/devtool/) to
+  `inline-source-map`.
+- With esbuild and the
+  [esbuild preprocessor](https://github.com/bahmutov/cypress-esbuild-preprocessor/tree/main), set
+  [the `sourcemap` option](https://esbuild.github.io/api/#sourcemap) to `inline` when
+  [creating the bundler](https://github.com/bahmutov/cypress-esbuild-preprocessor#esbuild-options).
+- With cucumber and the
+  [cucumber preprocessor](https://github.com/badeball/cypress-cucumber-preprocessor/tree/master)
+  third party bundlers are used to bundle the code.
+  - For esbuild and the
+    [esbuild preprocessor](https://github.com/bahmutov/cypress-esbuild-preprocessor/tree/main),
+    set [the `sourcemap` option](https://esbuild.github.io/api/#sourcemap) to `inline` when
+    [creating the bundler](https://github.com/bahmutov/cypress-esbuild-preprocessor#esbuild-options).
+    Note: the cucumber preprocessor documentation for the esbuild bundler describes an experimental
+    option: `prettySourceMaps`, but this option is buggy and setting source maps on the esbuild
+    bundler directly works better.
+  - The other bundlers all default their source maps appropriately.
+
+If using [TypeScript](https://www.typescriptlang.org/) with any custom preprocessor, you will want to make sure that the [TypeScript](https://www.typescriptlang.org/)
+compiler is generating source maps. This can be done by setting the [`sourceMap`](https://www.typescriptlang.org/tsconfig/#sourceMap) option in your
+`tsconfig.json` to `true`. The [`inlineSourceMap`](https://www.typescriptlang.org/tsconfig/#inlineSourceMap) option is **not** recommended as it does not provide an accurate code frame.
+Please see our recommended [tsconfig.json](/app/tooling/typescript-support#Configure-tsconfigjson) as a reference.
