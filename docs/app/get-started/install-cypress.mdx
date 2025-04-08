@@ -107,7 +107,7 @@ Cypress supports running under these operating systems:
 - **Linux** Ubuntu 20.04 and above, Fedora 40 and above, and Debian 11 and above _(x64 or arm64)_
   (see [Linux Prerequisites](#Linux-Prerequisites) down below)
 - **Windows** 10 and above _(x64)_
-- **Windows Server** 2019 and 2022 _(x64)_
+- **Windows Server** 2019, 2022 and 2025 _(x64)_
 
 ### Node.js
 
@@ -135,6 +135,10 @@ Attempting to use it as a non-root user may result in permissions errors.
 
 :::
 
+If you are using a [Cypress Docker image](../continuous-integration/overview#Cypress-Docker-variants),
+you will find a fixed version of Node.js is pre-installed in the image.
+You select the Node.js version using the Docker image tag.
+
 ### Package Manager
 
 Cypress is [installed](#Install) using one of the following supported package managers:
@@ -146,18 +150,17 @@ Cypress is [installed](#Install) using one of the following supported package ma
 | [Yarn (Modern aka berry)](https://yarnpkg.com/)  | `4.x` and above     | [Yarn Installation](https://yarnpkg.com/getting-started/install)                                                |
 | [pnpm](https://pnpm.io/)                         | `8.x` and above     | [pnpm Installation](https://pnpm.io/installation)                                                               |
 
-:::caution
+#### Yarn Configuration
 
-<strong>Yarn Configuration</strong>
+[Yarn (Modern)](https://yarnpkg.com/) configuration using [nodeLinker: "node-modules"](https://yarnpkg.com/configuration/yarnrc#nodeLinker)
+is preferred. Cypress [Component Testing](/app/core-concepts/testing-types#What-is-Component-Testing) is not currently compatible with the default setting [nodeLinker: "pnp"](https://yarnpkg.com/configuration/yarnrc#nodeLinker) which uses [Yarn Plug'n'Play](https://yarnpkg.com/features/pnp).
 
-[Yarn (Modern)](https://yarnpkg.com/) configuration using [`nodeLinker: "node-modules"`](https://yarnpkg.com/configuration/yarnrc#nodeLinker)
-is preferred. Cypress [Component Testing](/app/core-concepts/testing-types#What-is-Component-Testing) is not currently compatible with the default setting [`nodeLinker: "pnp"`](https://yarnpkg.com/configuration/yarnrc#nodeLinker) which uses [Yarn Plug'n'Play](https://yarnpkg.com/features/pnp).
+#### pnpm Configuration
 
-:::
-
-If you are using a [Cypress Docker image](../continuous-integration/overview#Cypress-Docker-variants),
-you will find a fixed version of Node.js is pre-installed in the image.
-You select the Node.js version using the Docker image tag.
+[pnpm@10.0.0](https://github.com/pnpm/pnpm/releases/tag/v10.0.0) and above require allowlisting `cypress`.
+This enables Cypress to execute its `postinstall` script so it can install the Cypress binary into the [binary cache](/app/references/advanced-installation#Binary-cache).
+Refer to the [pnpm](https://pnpm.io/) configuration file documentation for additional information.
+[pnpm@10.4.0](https://github.com/pnpm/pnpm/releases/tag/v10.4.0) introduced the CLI add option [--allow-build](https://pnpm.io/cli/add#--allow-build) to add the allowed build configuration directly through the command line.
 
 ### Hardware
 
