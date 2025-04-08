@@ -173,9 +173,6 @@ Developers who are unfamiliar with accessibility may assume that if a Testing Li
 
 To test intra-page navigation with the keyboard, you can use the [`cy.press()`](/api/commands/press) to dispatch native tab events.
 
-Note that the application under test does not have focus by default. You must focus an element in your application before it will receive
-this event.
-
 ## Where to test accessibility
 
 So what should you do in your test automation to help confirm the UI is accessible? First of all, for known critical areas like forms or checkout flows, ensure that the accessibility behavior is tested explicitly in at least one place. The means verifying that form fields and buttons have the correct labels and use the expected HTML elements, and other aspects of the DOM that communicate necessary information.
