@@ -1,0 +1,134 @@
+---
+title: 'cy.press() | Cypress Documentation'
+description: Trigger native key events in your application to simulate keyboard interactions.
+sidebar_label: press
+slug: /api/commands/press
+componentSpecific: false
+---
+
+<ProductHeading product="app" />
+
+# press
+
+Trigger native key events in your application to simulate keyboard interactions.
+
+A `keydown`, `press`, and `keyup` event will be dispatched directly to the browser window.
+
+Unlike `cy.type()`, which is best for typing character keys, `cy.press()` will dispatch real keyboard events rather than simulated ones. This command is especially useful when testing focus management and keyboard navigation patterns which are critical for [accessibility testing](/app/guides/accessibility-testing) and great keyboard UX.
+
+Currently, the only key supported is `Tab`.
+
+:::caution
+
+<strong>Supported Browsers:</strong>
+This command is supported in chromium browsers and Firefox versions >= v135. WebKit
+is not supported. This command will fail if executed in a browser that does not support
+it.
+
+:::
+
+## Syntax
+
+```javascript
+cy.press(key)
+cy.press(key, options)
+```
+
+## Signature
+
+```typescript
+interface PressCommand {
+  (
+    key: KeyPressSupportedKeys,
+    options?: Partial<Cypress.Loggable> & Partial<Cypress.Timeoutable>
+  ): void
+}
+```
+
+## Usage
+
+<Icon name="check-circle" color="green" /> **Correct Usage**
+
+```javascript
+cy.get('input.first').focus()
+cy.press(Cypress.Keyboard.Keys.TAB)
+cy.get('input.second').should('have.focus')
+```
+
+<Icon name="exclamation-triangle" color="red" /> **Incorrect Usage**
+
+```javascript
+cy.get('input.first').focus()
+cy.press(Cypress.Keyboard.Keys.TAB)
+  // Errors because press yields null
+  .should('have.focus')
+```
+
+### Arguments
+
+<Icon name="angle-right" /> **key _(String)_**
+
+The key to press. The supported values are available on [`Cypress.Keyboard.Keys`](/api/cypress-api/keyboard-api), and may change from time to time. It's recomended that you reference these values from `Cypress.Keyboard.Keys` rather than passing in a string.
+
+### Supported Keys
+
+| Reference                   | Value   |
+| --------------------------- | ------- |
+| `Cypress.Keyboard.Keys.TAB` | `"Tab"` |
+
+<Icon name="angle-right" /> **options _(Object)_**
+
+Pass in an options object to change the default behavior of `.press()`.
+
+| Option    | Default                                                           | Description                                                                         |
+| --------- | ----------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| `log`     | `true`                                                            | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log) |
+| `timeout` | [`defaultCommandTimeout`](/app/references/configuration#Timeouts) | Time to wait for `cy.press()` to resolve before timing out                          |
+
+<HeaderYields />
+
+- `cy.press()` yields `null`.
+
+## Examples
+
+### Test focus order of tab
+
+```js
+it('moves focus to the next form element when pressing Tab', () => {
+  cy.visit('/my-login')
+  cy.get('input.email').type('username')
+  cy.press(Cypress.Keyboard.Keys.TAB)
+  cy.get('input.password').should('have.focus')
+})
+```
+
+### Test autocomplete of search input with tab
+
+```js
+it('autocompletes search input when pressing Tab', () => {
+  cy.get('[data-cy="search"]').type('cy')
+  cy.press(Cypress.Keyboard.Keys.TAB)
+  cy.get('[data-cy="search"]').should('have.value', 'cypress')
+})
+```
+
+## Notes
+
+### Transient activation
+
+By dispatching native keyboard events to the browser, this command will cause the browser to enter [Transient activation](https://developer.mozilla.org/en-US/docs/Glossary/Transient_activation) state.
+
+If your application prevents the default behavior of the `beforeunload` event, this may cause issues when navigating away from the current page.
+
+## History
+
+| Version                             | Changes                      |
+| ----------------------------------- | ---------------------------- |
+| [14.3.0](/app/references/changelog) | Added the `.press()` command |
+
+## See also
+
+- [`Cypress.Keyboard`](/api/cypress-api/keyboard-api)
+- [`.focus()`](/api/commands/focus)
+- [`.focused()`](/api/commands/focused)
+- [`.type()`](/api/commands/type)
