@@ -99,10 +99,7 @@ Chrome. It's happening because of
 In this case, pass `'top'` to `cy.click()` like below:
 
 ```js
-cy.get('#element')
-  .shadow()
-  .find('[data-test-id="my-button"]')
-  .click('top')
+cy.get('#element').shadow().find('[data-test-id="my-button"]').click('top')
 ```
 
 ## Command Log
