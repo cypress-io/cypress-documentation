@@ -191,7 +191,7 @@ will not work:
 cy.origin('https://example.cypress.io', () => {
   cy.visit('/')
   cy.get('h1') // Yields an element, which can't be serialized...
-}).contains('CYPRESS') // ...so this will fail
+}).contains('Kitchen Sink') // ...so this will fail
 ```
 
 Instead, you must explicitly yield a serializable value:
@@ -201,8 +201,8 @@ Instead, you must explicitly yield a serializable value:
 ```js
 cy.origin('https://example.cypress.io', () => {
   cy.visit('/')
-  cy.get('h1').invoke('textContent') // Yields a string...
-}).should('equal', 'CYPRESS') // 👍
+  cy.get('h1').invoke('text') // Yields a string...
+}).should('equal', 'Kitchen Sink') // 👍
 ```
 
 ### Navigating to secondary origin with cy.visit
