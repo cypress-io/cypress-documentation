@@ -40,9 +40,11 @@ doc.
 
 Cypress no longer injects `document.domain` by default, which means `cy.origin()`
 must now be used to navigate between any two origins in the same test, even if
-the two origins are in the same superdomain. This behavior can be disabled by setting
-the `injectDocumentDomain` configuration option to `true`, to allow a smooth transition
-of tests to the new behavior. This configuration option will be removed in a future version of Cypress.
+the two origins are in the same superdomain.
+This behavior can be disabled by setting the
+[injectDocumentDomain](/app/references/configuration#injectDocumentDomain) configuration option to `true`,
+to allow a smooth transition of tests to the new behavior.
+This configuration option will be removed in a future version of Cypress.
 
 :::
 
