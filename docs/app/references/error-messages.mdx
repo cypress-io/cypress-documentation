@@ -498,18 +498,18 @@ as-is:
 ```javascript
 it('navigates to docs.cypress.io', () => {
   cy.visit('http://localhost:3000')
-  cy.visit('https://docs.cypress.io') // visit a different superdomain
+  cy.visit('https://docs.cypress.io') // visit a different domain
 })
 ```
 
-However, when the newly visited URL is not considered the same superdomain, the
+However, when the newly visited URL is not considered the same domain, the
 [`cy.origin()`](/api/commands/origin) command **must** be used to interact with
 the newly visited domain. The following test is incorrect:
 
 ```javascript
 it('navigates to docs.cypress.io and runs additional commands', () => {
   cy.visit('http://localhost:3000')
-  cy.visit('https://docs.cypress.io') // visit a different superdomain
+  cy.visit('https://docs.cypress.io') // visit a different domain
   cy.get('h1').should('contain', 'Why Cypress?') // fails
 })
 ```
@@ -525,10 +525,10 @@ In order to fix this, our `cy.get()` command **must** be wrapped with the
 [`cy.origin()`](/api/commands/origin) command, like so:
 
 ```javascript
-it('navigates to example.cypress.io and runs additional commands', () => {
+it('navigates to docs.cypress.io and runs additional commands', () => {
   cy.visit('http://localhost:3000')
-  cy.visit('https://example.cypress.io') // visit a different superdomain
-  cy.origin('https://example.cypress.io', () => {
+  cy.visit('https://docs.cypress.io') // visit a different domain
+  cy.origin('https://docs.cypress.io', () => {
     cy.get('h1').should('contain', 'Why Cypress?') // now succeeds!
   })
 })
