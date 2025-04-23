@@ -236,7 +236,7 @@ run-cypress:
 pipeline {
   agent {
     docker {
-      image 'cypress/base:22.12.0'
+      image 'cypress/base:22.15.0'
     }
   }
 
@@ -307,7 +307,7 @@ version: 2.1
 jobs:
   linux-test:
     docker:
-      - image: cypress/base:22.12.0
+      - image: cypress/base:22.15.0
 
     working_directory: ~/repo
     steps:
