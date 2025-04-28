@@ -8,6 +8,46 @@ sidebar_label: 'Migration Guide'
 
 # Migration Guide
 
+## Migrating to Cypress 15.0
+
+This guide details the code changes needed to migrate to Cypress
+version 15.
+[See the full changelog for version v15.0](/app/references/changelog#15-0-0).
+
+### Node.js 20 and 22+ support
+
+Cypress requires [Node.js](https://nodejs.org/en) in order to install the Cypress binary and the supported versions are now Node.js 20 and 22+.
+Node.js versions 18 and 23 are no longer supported.
+[See Node's release schedule](https://github.com/nodejs/Release).
+
+### Angular `17` CT no longer supported
+
+With [LTS ending](https://angular.dev/reference/releases#actively-supported-versions) for Angular 17, the minimum required Angular version for component testing is now `18.0.0`.
+
+#### To continue using Angular below 18.0.0
+
+If you haven't been able to migrate away from an older Angular version and still need that test harness, it can be installed independently via the [`@cypress/angular`](https://www.npmjs.com/package/@cypress/angular) `3.x.x` package from `npm`.
+
+Note that this test harness version is deprecated and no longer supported by Cypress. This version is intended to serve as a temporary workaround to migrate your project to Angular v18.0.0+.
+
+```sh
+npm install --save-dev @cypress/angular@3
+```
+
+Inside your support file (ex: `./cypress/support/component.(js|ts)`), or wherever your mount function is imported, make the following update to add `@`.
+
+<Badge type="danger">Before</Badge>{' '}
+
+```ts
+import { mount } from `cypress/angular`
+```
+
+<Badge type="success">After</Badge>
+
+```ts
+import { mount } from `@cypress/angular`
+```
+
 ## Migrating to Cypress 14.0
 
 This guide details the code changes needed to migrate to Cypress
