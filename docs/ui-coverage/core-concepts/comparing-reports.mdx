@@ -1,21 +1,19 @@
 ---
-title: 'Comparing Accessibility Reports | Cypress Documentation'
-description: 'Review the main areas to pay attention to when first reviewing an accessibility report for a Cypress run.'
+title: 'Comparing UI Coverage Reports | Cypress Documentation'
+description: 'Review where coverage has changed in the applciation between two runs.'
 sidebar_position: 40
 sidebar_label: Compare reports
 ---
 
-<ProductHeading product="accessibility" />
+<ProductHeading product="ui-coverage" />
 
 # Compare reports
 
-Accessibility reports from different runs can be compared in the [Branch Review](/cloud/features/branch-review#Getting-Started) area of Cypress Cloud. This allows you to instantly see if any new issues have been introduced, and drill in to see full-page HTML and CSS snapshots showing only the new issues.
+UI Coverage reports from different runs can be compared in the [Branch Review](/cloud/features/branch-review#Getting-Started) area of Cypress Cloud. This allows you to understand the exact change in coverage between any two points in time, revealing the impact of application changes or test code updates on your overall coverage area.
 
-See the video below for an example of using Branch Review in a Pull Request:
-
-<DocsVideo
-  src="https://www.youtube.com/embed/k3vq57O4P4M"
-  title="Accessibility branch review demo"
+<DocsImage
+  src="/img/ui-coverage/branch-review/uic-branch-review.png"
+  alt="UI Coverage Branch Review showing coverage changes between two runs, with sections highlighting new untested elements, resolved coverage gaps, and elements with changed coverage status"
 />
 
 ## Use cases
@@ -24,24 +22,20 @@ Comparing the results from different runs is useful in multiple scenarios.
 
 **Key use cases:**
 
-- **Pre-merge checks**: Know if any net-new issues are introduced by UI code changes.
-- **Monitoring changes**: Compare nightly monitoring runs and track down the introduction of new problems caused by underlying changes in the application.
-- **Detecting content issues**: Sometimes content editors can introduce accessibility issues unrelated to code changes. Seeing the example issues presented visually, in context, helps you quickly triage whether you are dealing with a recent code change issue, or a content authorship problem.
-- **Reviewing AI-generated code changes**: The increased use of AI to generate and/or review front-end code creates some increased risks of accessibility regressions making it to production. The increase or decrease of accessibility issues when reviewing a pull request helps you understand the impact of the change.
+- **Pre-merge checks**: Know if any net-new untested elements are introduced by UI code changes.
+- **Monitoring changes**: Compare nightly monitoring runs and track down changes in coverage caused by unexpected changes in the application.
+- **Reviewing AI-generated code changes**: The increased use of AI to generate and/or review both tests and application code increases the risk of reducing coverage, or adding redundant coverage.
 - **Tracing the introduction of issues**: With dropdowns for each run, it's easy to rapidly compare different A and B runs to find the exact commit that introduced a problem.
-- **Demonstrating the resolution of issues**: Confirm the effect of your improvements, and share the overview with your team to more quickly review code changes.
+- **Demonstrating the resolution of issues**: Confirm the effect of your improvements, and share the overview with your team to more quickly review changes.
 
 ## Content of the report
 
-<DocsImage
-  src="/img/accessibility/core-concepts/branch-review-intro.png"
-  alt="Cypress Accessibility Branch Review with arrows calling out the sections for new failed rules, resolved rules, and failed rules with changes. New failed rules are defined as rules that just started failing on the new branch. Resolved rules are defined as rules that got fully fixed in the new branch. Failed rules with changes are defined as rules that failed on both branches, but with different element counts or different related pages."
-  noBorder={true}
-/>
+The Branch Review report is organized into three sections:
 
-The Branch Review report is prioritized into three sections:
+### Untested links
 
-- **New failed rules**: Rules that were passing every time they ran on the `base` run but now have failures in the `changed` run.
+
+- **Untested links**: Rules that were passing every time they ran on the `base` run but now have failures in the `changed` run.
 - **Resolved rules**: Rules that had some failures detected in the `base` run but have no failures on the `changed` run. This helps you celebrate the wins and recognize when a new run has gone green.
 - **Failed rules with changes**: Rules that were failing in both runs, where the elements with failures detected have increased, decreased, or changed in some way.
 
@@ -53,8 +47,6 @@ The first step is to get to the [Branch Review](/cloud/features/branch-review.md
 You can access this area by clicking the branch name associated with a run, or in several other ways. [Learn more about how to compare runs](/cloud/features/branch-review.mdx).
 
 ## FAQ
-
-### How do I ensure a good comparison?
 
 ### How do I ensure a good comparison?
 
