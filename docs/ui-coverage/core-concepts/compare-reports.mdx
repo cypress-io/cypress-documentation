@@ -64,6 +64,15 @@ Both changes are worth reviewing, and while the causes are different, the way to
 
 This is a summary of everything that appears to be new in the Changed run, and includes both tested and untested items. It's a useful way to compare two builds of your application and how the changes in the application itself relate to your overall coverage metrics.
 
+### Detail View
+
+<DocsImage
+  src="/img/ui-coverage/branch-review/detail-view.png"
+  alt="A list of only the new untested elements, displaying a log-out link in red with a tooltip pointing to it."
+/>
+
+Clicking on any untested link or element will take you into the Detail View, where you can see all the examples of the specific elements that have changed between the two runs. Elements that have the same status on both runs are removed here, so you can focus only on the changes.
+
 ## How to compare runs
 
 The first step is to get to the [Branch Review](/cloud/features/branch-review.mdx) area of Cypress Cloud, which will let you compare one branch against another - or different runs on the same branch, if needed.
