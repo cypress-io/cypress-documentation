@@ -1,6 +1,6 @@
 ---
 title: 'Comparing UI Coverage Reports | Cypress Documentation'
-description: 'Review where coverage has changed in the applciation between two runs.'
+description: 'Review where coverage has changed in the application between two runs.'
 sidebar_position: 40
 sidebar_label: Compare reports
 ---
@@ -34,12 +34,36 @@ The Branch Review report is organized into three sections:
 
 ### Untested links
 
+<DocsImage
+  src="/img/ui-coverage/branch-review/new-untested-links.png"
+  alt="UI Coverage Branch Review showing new untested links that appear in the Changed run but were not present in the Base run"
+/>
 
-- **Untested links**: Rules that were passing every time they ran on the `base` run but now have failures in the `changed` run.
-- **Resolved rules**: Rules that had some failures detected in the `base` run but have no failures on the `changed` run. This helps you celebrate the wins and recognize when a new run has gone green.
-- **Failed rules with changes**: Rules that were failing in both runs, where the elements with failures detected have increased, decreased, or changed in some way.
+Untested links represent unopened doors in your application - pages that a user can reach through your UI, but that are not tested with Cypress. This report shows any new untested pages that appear in the Changed run that were not present in Base run.
 
-This organization of the report brings the most significant results to the top - regressions of rules that had been fully passing in the `base` run. Increases or decreases in the element counts for rules that already have some failures provide a good sense of progress, but can tend to be noisier, especially if the runs have different content or other conditions have changed in between.
+### Untested elements
+<DocsImage
+  src="/img/ui-coverage/branch-review/new-untested-elements.png"
+  alt="UI Coverage Branch Review showing new untested elements that appear in the Changed run but were not present or tested in the Base run"
+/>
+
+Untested interactive elements can increase for two potential reasons:
+
+1. In the Changed run, the tests are no longer interacting with an element that was interacted with in the Base run. The element is still present, but the **test code** has changed.
+2. In the Changed run, new elements exist that were not present in the Base run, and they are not tested in the Changed run. This happens when the **application code** has changed but tests have not kept up.
+
+Both changes are worth reviewing, and while the causes are different, the way to increase coverage is the same. The elements can be tested with Cypress to contribute towards your coverage score, or they can be ignored with configuration if it is not important to test the elements.
+
+### Added links, elements, and views
+
+<DocsImage
+  src="/img/ui-coverage/branch-review/added-links-and-elements.png"
+  alt="UI Coverage Branch Review showing a summary of new links, elements, and views added in the Changed run compared to the Base run"
+/>
+
+
+
+This is a summary of everything that appears to be new in the Changed run, and includes both tested and untested items. It's a useful way to compare two builds of your application and how the changes in the application itself relate to your overall coverage metrics.
 
 ## How to compare runs
 
