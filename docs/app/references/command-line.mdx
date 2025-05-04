@@ -13,6 +13,13 @@ This guide assumes you've already read our
 installed Cypress as an `npm` module. After installing you'll be able to execute
 all of the commands in this document from your **project root**.
 
+:::info
+
+You can alternatively require and run Cypress as a node module using our
+[Module API](/app/references/module-api).
+
+:::
+
 ## How to run commands
 
 You can run Cypress from your **project root** using a command which
@@ -58,8 +65,9 @@ pnpm cypress run --record --spec "cypress/e2e/my-spec.cy.js"
 
 :::info
 
-You can alternatively require and run Cypress as a node module using our
-[Module API](/app/references/module-api).
+**PowerShell**
+
+When `cypress run` [options](#Options) or `cypress open` [options](#Options-1) are specified with multiple values separated by commas, such as for `--conf` or `--env` options, and you are using PowerShell on Windows, you may need to surround the key/value pairs with quotes, for example: `--env "host=api.dev.local,port=4222"`.
 
 :::
 
