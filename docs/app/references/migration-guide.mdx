@@ -20,6 +20,72 @@ Cypress requires [Node.js](https://nodejs.org/en) in order to install the Cypres
 Node.js versions 18 and 23 are no longer supported.
 [See Node's release schedule](https://github.com/nodejs/Release).
 
+### Webpack `4` is no longer supported
+
+Cypress is no longer supporting Webpack `4` as it is no longer maintained by the core Webpack team and Webpack `5` has been available since Q4 2020. This includes Webpack `4` support for:
+
+- `@cypress/webpack-dev-server` for component testing. This use case is most common and will require an update to Webpack `5`.
+  - `@cypress/webpack-dev-server` also no longer supports [Webpack Dev Server v4](https://github.com/webpack/webpack-dev-server/tree/v4.15.2). We shipped [Webpack Dev Server v5](https://github.com/webpack/webpack-dev-server/tree/v5.2.1) as the default in Cypress 14 with `webpack-dev-server@4` being an option.
+- `@cypress/webpack-preprocessor` for end-to-end testing. Cypress, by default, uses the [Webpack Batteries Included Preprocessor](https://github.com/cypress-io/cypress/blob/@cypress/webpack-batteries-included-preprocessor-v3.0.7/npm/webpack-batteries-included-preprocessor/README.md) to process your files for end-to-end testing, which has used Webpack 5 since Cypress 13. Unless you are already using `@cypress/webpack-preprocessor` as a standalone package, this change likely does not apply.
+
+#### To continue using Webpack `4`
+
+##### Component Testing
+
+If you haven't been able to migrate away from Webpack `4` or Webpack Dev Server `4` and still need to be able to run your component tests with Webpack `4` or Webpack Dev Server `4`, you can install the following packages independently:
+
+```sh
+npm install --save-dev @cypress/webpack-dev-server@4
+```
+
+and configure the dev server within your `cypress.config.js` or `cypress.config.ts` file:
+
+```js
+import { devServer } from '@cypress/webpack-dev-server'
+import { defineConfig } from 'cypress'
+
+export default defineConfig({
+  component: {
+    devServer(devServerConfig) {
+      return devServer({
+        ...devServerConfig,
+        framework: 'react',
+        webpackConfig: require('./webpack.config.js'),
+      })
+    },
+  },
+})
+```
+
+Note that this package version is deprecated and no longer supported by Cypress and is intended as a workaround until you can migrate to Webpack `5`. More information on how to configure the dev server can be found in the [Cypress Webpack Dev Server documentation](https://github.com/cypress-io/cypress/blob/@cypress/webpack-dev-server-v4.0.2/npm/webpack-dev-server/README.md) and [Custom Dev Server documentation](/app/component-testing/component-framework-configuration#Custom-Dev-Server).
+
+##### End-to-End Testing
+
+If you haven't been able to migrate away from Webpack `4`, need custom end-to-end spec file preprocessing, are already using `@cypress/webpack-preprocessor` as a standalone package, and still need to be able to run your end-to-end tests with Webpack `4`, you can install the following package independently:
+
+```sh
+npm install --save-dev @cypress/webpack-preprocessor@6
+```
+
+and configure the preprocessor within your `cypress.config.js` or `cypress.config.ts` file:
+
+```js
+import { defineConfig } from 'cypress'
+import webpackPreprocessor from '@cypress/webpack-preprocessor'
+
+export default defineConfig({
+  e2e: {
+    setupNodeEvents(on, config) {
+      on('file:preprocessor', webpackPreprocessor())
+    },
+  },
+})
+```
+
+As stated earlier, this is likely unnecessary unless you are already using `@cypress/webpack-preprocessor` as a standalone package. Cypress by default uses the [Webpack Batteries Included Preprocessor](https://github.com/cypress-io/cypress/blob/@cypress/webpack-batteries-included-preprocessor-v3.0.7/npm/webpack-batteries-included-preprocessor/README.md) to process your spec files for end-to-end testing.
+
+Note that this package version is deprecated and no longer supported by Cypress and is intended as a workaround until you can migrate to Webpack `5`. More information on how to configure the preprocessor can be found in the [Preprocessors API documentation](/api/node-events/preprocessors-api#Usage) and [Webpack Preprocessor documentation](https://github.com/cypress-io/cypress/blob/@cypress/webpack-preprocessor-v6.0.4/npm/webpack-preprocessor/README.md).
+
 ### Angular `17` CT no longer supported
 
 With [LTS ending](https://angular.dev/reference/releases#actively-supported-versions) for Angular 17, the minimum required Angular version for component testing is now `18.0.0`.
