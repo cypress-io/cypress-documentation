@@ -1,0 +1,97 @@
+---
+title: 'Comparing UI Coverage Reports | Cypress Documentation'
+description: 'Review where coverage has changed in the application between two runs.'
+sidebar_position: 40
+sidebar_label: Compare reports
+---
+
+<ProductHeading product="ui-coverage" />
+
+# Compare reports
+
+UI Coverage reports from different runs can be compared in the [Branch Review](/cloud/features/branch-review#Getting-Started) area of Cypress Cloud. This allows you to understand the exact change in coverage between any two points in time, revealing the impact of application changes or test code updates on your overall coverage area.
+
+<DocsImage
+  src="/img/ui-coverage/branch-review/uic-branch-review.png"
+  alt="UI Coverage Branch Review showing coverage changes between two runs, with sections highlighting new untested elements, resolved coverage gaps, and elements with changed coverage status"
+/>
+
+## Use cases
+
+Comparing the results from different runs is useful in multiple scenarios.
+
+**Key use cases:**
+
+- **Pre-merge checks**: Know if any net-new untested elements are introduced by UI code changes.
+- **Monitoring changes**: Compare nightly monitoring runs and track down changes in coverage caused by unexpected changes in the application.
+- **Reviewing AI-generated code changes**: The increased use of AI to generate and/or review both tests and application code increases the risk of reducing coverage, or adding redundant coverage.
+- **Tracing the introduction of issues**: With dropdowns for each run, it's easy to rapidly compare different A and B runs to find the exact commit that introduced a problem.
+- **Demonstrating the resolution of issues**: Confirm the effect of your improvements, and share the overview with your team to more quickly review changes.
+
+## Content of the report
+
+The Branch Review report is organized into three sections:
+
+### Untested links
+
+<DocsImage
+  src="/img/ui-coverage/branch-review/new-untested-links.png"
+  alt="UI Coverage Branch Review showing new untested links that appear in the Changed run but were not present in the Base run"
+/>
+
+Untested links represent unopened doors in your application - pages that a user can reach through your UI, but that are not tested with Cypress. This report shows any new untested pages that appear in the Changed run that were not present in the Base run.
+
+### Untested elements
+
+<DocsImage
+  src="/img/ui-coverage/branch-review/new-untested-elements.png"
+  alt="UI Coverage Branch Review showing new untested elements that appear in the Changed run but were not present or tested in the Base run"
+/>
+
+Untested interactive elements can increase for two potential reasons:
+
+1. In the Changed run, the tests are no longer interacting with an element that was interacted with in the Base run. The element is still present, but the **test code** has changed.
+2. In the Changed run, new elements exist that were not present in the Base run, and they are not tested in the Changed run. This happens when the **application code** has changed but tests have not kept up.
+
+Both changes are worth reviewing, and while the causes are different, the way to increase coverage is the same. The elements can be tested with Cypress to contribute towards your coverage score, or they can be ignored with configuration if it is not important to test the elements.
+
+### Added links, elements, and views
+
+<DocsImage
+  src="/img/ui-coverage/branch-review/added-links-and-elements.png"
+  alt="UI Coverage Branch Review showing a summary of new links, elements, and views added in the Changed run compared to the Base run"
+/>
+
+This is a summary of everything that appears to be new in the Changed run, and includes both tested and untested items. It's a useful way to compare two builds of your application and how the changes in the application itself relate to your overall coverage metrics.
+
+### Detail View
+
+<DocsImage
+  src="/img/ui-coverage/branch-review/detail-view.png"
+  alt="A list of only the new untested elements, displaying a log-out link in red with a tooltip pointing to it."
+/>
+
+Clicking on any untested link or element will take you into the Detail View, where you can see all the examples of the specific elements that have changed between the two runs. Elements that have the same status on both runs are removed here, so you can focus only on the changes.
+
+## How to compare runs
+
+The first step is to get to the [Branch Review](/cloud/features/branch-review.mdx) area of Cypress Cloud, which will let you compare one branch against another - or different runs on the same branch, if needed.
+You can access this area by clicking the branch name associated with a run, or in several other ways. [Learn more about how to compare runs](/cloud/features/branch-review.mdx).
+
+## FAQ
+
+### How do I ensure a good comparison?
+
+The best subjects to compare are passing runs that ran similar tests on the same set of content. This means that each run visited roughly the same pages and completed the same kinds of workflows. In this situation, any diff in the results is likely the result of changes present in the newer run. This is usually what happens out-of-the box when comparing a pull-request branch with your main branch.
+
+That said, it is still possible and valid to compare runs from different points in time with different sets of test results, as long as you bear in mind all the potential sources of difference between the two runs, which you can evaluate for yourself as you explore the results.
+
+In order to see unified changes for your entire test suite, you need to group all the tests together under a single Cypress run, for each report. Learn more about this in the [Branch Review Best Practices documentation](/cloud/features/branch-review#Best-Practices).
+
+### What is the purpose of the Beta label?
+
+This indicates the feature is ready for use and actively seeking feedback based on real usage of the current implementation. We have a few known issues to work through on our side before we consider this fully production-ready and remove the beta label. These issues only affect a subset of projects -- in most cases everything is working as intended. If you see anything unexpected, please use the feedback button and let us know.
+
+### Why do I see some views (pages or components) changing from run-to-run?
+
+URLs with dynamic slugs in them can appear as "new" pages in some situations. This behavior can be adjusted with [View configuration](/accessibility/configuration/views) to make sure page names will match across runs by wildcarding parts of the URL as needed.

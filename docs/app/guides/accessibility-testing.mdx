@@ -92,6 +92,10 @@ To learn more, you can read our [dedicated docs](/accessibility/get-started/intr
 
 While automation like Axe Core® can detect missing attributes and other aspects of code quality that impact the experience of people with disabilities using the web, this kind of automation doesn't know anything about your specific application and the expectations you have for your users. That's where including accessibility in your specs comes in.
 
+### Keyboard navigation
+
+To test in-page navigation with the keyboard, you can use the [`cy.press()`](/api/commands/press) to dispatch native tab events. This can also be used to test custom behavior like autocomplete.
+
 ### Asserting alt text of images
 
 To assert that the correct alternative text is present on your logo image, an explicit test can be written:
@@ -168,10 +172,6 @@ On the other hand, a `div` with `role` of `button` does not get any default brow
 This means that, without some assertions about either the `button` element itself, or a full test of the accessibility "contract" of that element, it is not safe for a developer to refactor from a `button` to a `<div role="button">`, even though Testing Library will treat each as the same if located using the `ByRole` locator. This is because, much like test IDs, the `ByRole` approach is intended to _avoid_ testing the implementation directly, to keep tests resilient when code is refactored.
 
 Developers who are unfamiliar with accessibility may assume that if a Testing Library `ByRole` locator can be made to pass before and after a code change, there has been no functional or accessibility-related change in the underlying element. As we've seen, this is not actually the case, because of the extra behavior browsers only implement for native HTML elements. For more about this difference and why semantic HTML elements are preferred, see the [first rule of Accessible Rich Internet Applications (ARIA)](https://www.w3.org/TR/using-aria/#rule1).
-
-### Keyboard navigation
-
-To test intra-page navigation with the keyboard, you can use the [`cy.press()`](/api/commands/press) to dispatch native tab events.
 
 ## Where to test accessibility
 
