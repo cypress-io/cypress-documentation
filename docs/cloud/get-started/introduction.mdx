@@ -13,11 +13,13 @@ Cypress Cloud unlocks the full potential of Cypress test automation tools in you
 <Btn
   label="Sign up ➜"
   variant="indigo-dark"
+  className="mr-1"
   href="https://cloud.cypress.io/signup"
 />
 <Btn
   label="See a demo"
   icon="action-play-small"
+  className="mr-1"
   href="https://www.youtube.com/watch?v=vFLShoCM8pA"
 />
 <Btn
@@ -33,7 +35,7 @@ Cypress Cloud unlocks the full potential of Cypress test automation tools in you
 
 ## Benefits
 
-[Cypress Cloud](https://on.cypress.io/cloud) is our enterprise-ready companion
+[Cypress Cloud](https://on.cypress.io/about-cypress-cloud?utm_medium=cloud-benefits&utm_source=docs.cypress.io&utm_term=&utm_content=Cypress+Cloud) is our enterprise-ready companion
 to the open-source Cypress app, allowing you to:
 
 - [View and debug past test results](#View-and-debug-past-test-results) from your CI environment.
@@ -45,6 +47,7 @@ to the open-source Cypress app, allowing you to:
 - [View CI runs and test health](#Cypress-app-integration) directly from the
   Cypress app.
 - [Configure Cypress Cloud how you want](#Flexible-enterprise-configuration-and-single-sign-on) and enable enterprise single sign on.
+- Add premium solutions like [UI Coverage](https://on.cypress.io/ui-coverage-trial?utm_medium=cloud-benefits&utm_source=docs.cypress.io&utm_term=&utm_content=UI+Coverage) and [Cypress Accessibility](http://on.cypress.io/accessibility-trial?utm_medium=cloud-benefits&utm_source=docs.cypress.io&utm_term=&utm_content=Cypress+Accessibility) to get new insights into test and application quality with no code, setup, or impact on your test runs.
 
 ### View and debug past test results
 
@@ -158,9 +161,13 @@ directly from specific test failures.
 
 The [Cypress app](/cloud/features/recorded-runs#Cypress-App) integrates directly with
 Cypress Cloud to provide developers with the latest test results without having
-to switch tools.
+to switch tools. This provides notifications about new failing tests in CI, so you can then
+re-run them immediately in your local environment to debug.
 
-<DocsImage src="/img/app/core-concepts/open-mode/debug-page.png" alt="Debug" />
+<DocsImage
+  src="/img/app/core-concepts/open-mode/debug-page.png"
+  alt="Debug page showing test results and failure details in the Cypress App"
+/>
 
 ### Flexible enterprise configuration and single sign on
 
