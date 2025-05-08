@@ -9,8 +9,9 @@ This means you must now use `cy.origin()` when navigating between different _ori
 in the same test. Previously, `cy.origin()` was only necessary when navigating between
 different [superdomains](/app/guides/cross-origin-testing#Parts-of-a-URL) in the same test.
 
-By setting the `injectDocumentDomain` configuration option to `true`, Cypress will
-attempt to inject `document.domain` into `text/html` pages.
+By setting the
+[injectDocumentDomain](/app/references/configuration#injectDocumentDomain) configuration option to `true`,
+Cypress will attempt to inject `document.domain` into `text/html` pages.
 
 A superdomain is comprised of the trailing two elements of the hostname, delimited by
 a `.` (period). Given `https://www.cypress.io`, the superdomain is determined to be

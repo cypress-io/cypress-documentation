@@ -599,21 +599,22 @@ or [`component`](#component) testing-specific options.
 
 ### injectDocumentDomain
 
-This option is <Badge type="caution">deprecated</Badge>, and will be removed in Cypress. 15
+This option is <Badge type="caution">deprecated</Badge>, and will be removed in a future version of Cypress.
 
 Set this configuration option to `true` to instruct Cypress to
 [inject document.domain](/app/guides/cross-origin-testing#What-Cypress-does-under-the-hood)
-into your test application. This can reduce the need for `cy.origin()` when [navigating
-between subdomains](/app/guides/cross-origin-testing), but comes with compatibility
-caveats for some sites.
+into your test application.
+This can reduce the need for [`cy.origin()`](/api/commands/origin)
+when [navigating between subdomains](/app/guides/cross-origin-testing),
+but comes with compatibility caveats for some sites.
 
-This configuration option is provided to ease the transition between `cy.origin()`'s behavior
-in Cypress 13 and the default behavior in Cypress 14. It will be removed in a future version of Cypress.
+This configuration option is provided to ease the transition between [`cy.origin()`](/api/commands/origin)'s behavior
+in Cypress 13 and the default behavior in Cypress 14.
 [Read the Cypress 14 migration guide](/app/references/migration-guide#Migrating-to-Cypress-140) to understand how to update your tests to remove
 the need to set this flag.
 
 This configuration value _must_ be set to true if you are running tests with experimental
-WebKit support, as `cy.origin` is not yet supported in WebKit.
+WebKit support, as [`cy.origin()`](/api/commands/origin) is not yet supported in WebKit.
 
 :::caution
 
