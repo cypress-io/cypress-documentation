@@ -498,18 +498,18 @@ as-is:
 ```javascript
 it('navigates to docs.cypress.io', () => {
   cy.visit('http://localhost:3000')
-  cy.visit('https://docs.cypress.io') // visit a different domain
+  cy.visit('https://docs.cypress.io') // visit a different superdomain
 })
 ```
 
-However, when the newly visited URL is not considered the same domain, the
+However, when the newly visited URL is not considered the same superdomain, the
 [`cy.origin()`](/api/commands/origin) command **must** be used to interact with
 the newly visited domain. The following test is incorrect:
 
 ```javascript
 it('navigates to docs.cypress.io and runs additional commands', () => {
   cy.visit('http://localhost:3000')
-  cy.visit('https://docs.cypress.io') // visit a different domain
+  cy.visit('https://docs.cypress.io') // visit a different superdomain
   cy.get('h1').should('contain', 'Why Cypress?') // fails
 })
 ```
@@ -525,10 +525,10 @@ In order to fix this, our `cy.get()` command **must** be wrapped with the
 [`cy.origin()`](/api/commands/origin) command, like so:
 
 ```javascript
-it('navigates to docs.cypress.io and runs additional commands', () => {
+it('navigates to example.cypress.io and runs additional commands', () => {
   cy.visit('http://localhost:3000')
-  cy.visit('https://docs.cypress.io') // visit a different domain
-  cy.origin('https://docs.cypress.io', () => {
+  cy.visit('https://example.cypress.io') // visit a different superdomain
+  cy.origin('https://example.cypress.io', () => {
     cy.get('h1').should('contain', 'Why Cypress?') // now succeeds!
   })
 })
@@ -610,9 +610,6 @@ if you've exhausted all other possibilities.
 
 ## CLI Errors
 
-Errors in this section may occur when using the [Cypress command line (CLI)](/app/references/command-line).
-They may also apply to running Cypress programmatically through the [Cypress Module API](/app/references/module-api).
-
 ### <Icon name="exclamation-triangle" color="red" /> You passed the `--record` flag but did not provide us your Record Key.
 
 You may receive this error when trying to run Cypress tests in
@@ -662,18 +659,12 @@ We will automatically apply the record key environment variable.
 
 ### <Icon name="exclamation-triangle" color="red" /> A Cached Cypress Binary Could not be found
 
-This error occurs in CI when attempting to use `cypress run` or `cypress verify` CLI commands
-without having a valid Cypress binary cache installed on the system.
+This error occurs in CI when using `cypress run` without a valid Cypress binary
+cache installed on the system (on linux that's `~/.cache/Cypress`).
 
-The Cypress binary is downloaded and installed into a [global cache folder](/app/references/advanced-installation#Binary-cache)
-with a package manager install command (such as `npm ci`, `npm install`, `yarn install` or `pnpm install`).
-The Cypress cache can also be loaded from a CI cache that was saved from a previous CI run.
-
-If you are using pnpm, ensure you are following the [pnpm configuration](/app/get-started/install-cypress#pnpm-Configuration)
-instructions, otherwise pnpm may skip the Cypress binary installation.
-
-If you are using CI caches, then review also the recommendations for
-[caching the Cypress binary in CI](/app/continuous-integration/overview#Caching).
+To fix this error, follow instructions on
+[caching the cypress binary in CI](/app/continuous-integration/overview#Caching),
+then bump the version of your CI cache to ensure a clean build.
 
 ### <Icon name="exclamation-triangle" color="red" /> Incorrect usage of `--ci-build-id` flag
 

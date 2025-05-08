@@ -29,7 +29,7 @@ Comparing the results from different runs is useful in multiple scenarios.
 - **Detecting content issues**: Sometimes content editors can introduce accessibility issues unrelated to code changes. Seeing the example issues presented visually, in context, helps you quickly triage whether you are dealing with a recent code change issue, or a content authorship problem.
 - **Reviewing AI-generated code changes**: The increased use of AI to generate and/or review front-end code creates some increased risks of accessibility regressions making it to production. The increase or decrease of accessibility issues when reviewing a pull request helps you understand the impact of the change.
 - **Tracing the introduction of issues**: With dropdowns for each run, it's easy to rapidly compare different A and B runs to find the exact commit that introduced a problem.
-- **Demonstrating the resolution of issues**: Confirm the effect of your improvements, and share the overview with your team to more quickly review code changes.
+- **Demonstrating the resolution of issues**: Confirm the effect of your improvements, and share overview with your team to more quickly review code changes.
 
 ## Content of the report
 
@@ -49,8 +49,47 @@ This organization of the report brings the most significant results to the top -
 
 ## How to compare runs
 
-The first step is to get to the [Branch Review](/cloud/features/branch-review.mdx) area of Cypress Cloud, which will let you compare one branch against another - or different runs on the same branch, if needed.
-You can access this area by clicking the branch name associated with a run, or in several other ways. [Learn more about how to compare runs](/cloud/features/branch-review.mdx).
+The first step is to get to the Branch Review area of Cypress Cloud, which will let you compare one branch against another - or different runs on the same branch, if needed. We refer to be baseline fun for comparison as the `base` run, and the changes we are comparing with as the `changed` run.
+
+There are a number of ways to get to Branch Review depending on where you are looking at your Cypress results. In all cases, once you've picked a `changed` run, you can adjust the automatically-selected `base` run to any branch or run in the project.
+
+### From a Pull Request
+
+<DocsImage
+  src="/img/accessibility/core-concepts/branch-review-pull-request.png"
+  alt="A pull request comment from Cypress with an arrow pointing to the 'View all changes introduced in this branch' link. Test results and some accessibility score and violation information is also visible in the comment. The project has an 86.86% accessibility score, with  9 failed elements. Failed rule counts are 1 critical, 1 serious, 3 moderate, and 0 minor."
+/>
+
+Click the "View all changes introduced in this branch" link at the bottom of the Test Results table. You will enter branch review with the current PR's branch and latest run pre-selected as the "changed" run.
+
+### From the run list
+
+Click the branch name associated with the run. This will take you to Branch Review with that branch's newest run pre-selected as the `changed` run.
+
+<DocsImage
+  src="/img/accessibility/core-concepts/branch-review-run-card.png"
+  alt="A couple of cards showing various details about Cypress test runs, including pass/fail counts and metadata. An arrow points to the branch name."
+/>
+
+### From the project list
+
+<DocsImage
+  src="/img/accessibility/core-concepts/branch-review-project-card.png"
+  width="40%"
+  alt="A card showing the name of an example project and related branches to choose."
+/>
+
+The project card shows three active branches for the project. You can click through to any of these to enter Branch Review with the newest run on that branch pre-selected as the `changed` run.
+
+### From the main navigation
+
+<DocsImage
+  src="/img/accessibility/core-concepts/branch-review-side-nav.png"
+  width="40%"
+  alt="The main Cypress Cloud navigation showing Latest Runs, Branches, and Analytics menu items. An arrow points to Branches."
+/>
+
+When inside of a project, you can select "Branches" in the main navigation to see a full, filterable list of available branches and choose one to set as the `changed` run.
 
 ## FAQ
 
@@ -60,11 +99,9 @@ The best subjects to compare are passing runs that ran similar tests on the same
 
 That said, it still possible and valid to compare runs from different points in time with different sets of test results, as long as you bear in mind all the potential sources of difference between the two runs, which you can evaluate for yourself as you explore the results.
 
-In order to see unified changes for your entire test suite, you need to group all the tests together under a single Cypress run, for each report. Learn more about this in the [Branch Review Best Practices documentation](/cloud/features/branch-review#Best-Practices).
-
 ### What is the purpose of the Beta label?
 
-This indicates the feature is ready for use and actively seeking feedback based on real usage of the current implementation. We have a few known issues to work through on our side before we consider this fully production-ready and remove the beta label. These issues only affect a subset of projects -- in most cases everything is working as intended. If you see anything unexpected, please use the feedback button and let us know.
+This indicates the feature is ready for use and actively seeking feedback based on real usage of the current implementation. We have a few known issues to work through on our side before we consider this fully production-ready and remove the beta label. These issues only affect a subset of projects -- in most cases everything is working as intended. If you see anything unexpected, please hit the feedback button and let us know.
 
 ### Why do I see some views (pages or components) changing from run-to-run?
 

@@ -19,7 +19,7 @@ const ProductHeading: React.FC<ProductHeadingProps> = ({
     const iconName = product === 'ui-coverage' ? 'technology-ui-coverage' : product === 'accessibility' ? 'cypress-accessibility-outline' : 'technology-cypress'
     const linkPath  = product === 'cloud' ? 'pricing' : product
 
-    let badgeContent = product === 'cloud' ? 'Free Trial' : 'Premium Solution'
+    let badgeContent = product === 'cloud' ? 'Free Trial' : '+ Add-on'
 
     if (product === 'cloud' && plan) {
         badgeContent = plan === 'team' ? 'Team Plan' : plan === 'business' ? 'Business Plan' : 'Enterprise Plan'
