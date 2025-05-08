@@ -34,7 +34,7 @@ Here are the main ways to account for accessibility when testing with Cypress:
 - [In-test plugins](#In-test-plugins)
 - [Cypress Accessibility](#Cypress-Accessibility)
 
-<AccessibilityPremiumNote />
+<AccessibilityAddon />
 
 ### Explicit, application-specific tests
 
@@ -81,7 +81,7 @@ In-test accessibility checks are the only kind available in typical testing scen
 
 To learn more, you can read our [dedicated docs](/accessibility/get-started/introduction), or review a [public live example of an automatically-generated accessibility report](https://cloud.cypress.io/projects/7s5okt/runs/6520/accessibility?tab=views&columnHeading=Views&direction=ascending&rulesColumnHeading=Rules&rulesDirection=ascending&impact=critical%2Cserious%2Cmoderate%2Cminor&ruleset=wcag21a%2Cwcag21aa%2Cbest-practice&status=fail%2Cincomplete) in our Cypress Realworld App demo project.
 
-<AccessibilityPremiumNote />
+<AccessibilityAddon />
 
 <DocsImage
   src="/img/accessibility/cy-a11y-detail.png"
@@ -91,10 +91,6 @@ To learn more, you can read our [dedicated docs](/accessibility/get-started/intr
 ## Accessibility-specific tests
 
 While automation like Axe Core® can detect missing attributes and other aspects of code quality that impact the experience of people with disabilities using the web, this kind of automation doesn't know anything about your specific application and the expectations you have for your users. That's where including accessibility in your specs comes in.
-
-### Keyboard navigation
-
-To test in-page navigation with the keyboard, you can use the [`cy.press()`](/api/commands/press) to dispatch native tab events. This can also be used to test custom behavior like autocomplete.
 
 ### Asserting alt text of images
 

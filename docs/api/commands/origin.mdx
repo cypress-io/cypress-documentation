@@ -40,11 +40,9 @@ doc.
 
 Cypress no longer injects `document.domain` by default, which means `cy.origin()`
 must now be used to navigate between any two origins in the same test, even if
-the two origins are in the same superdomain.
-This behavior can be disabled by setting the
-[injectDocumentDomain](/app/references/configuration#injectDocumentDomain) configuration option to `true`,
-to allow a smooth transition of tests to the new behavior.
-This configuration option will be removed in a future version of Cypress.
+the two origins are in the same superdomain. This behavior can be disabled by setting
+the `injectDocumentDomain` configuration option to `true`, to allow a smooth transition
+of tests to the new behavior. This configuration option will be removed in a future version of Cypress.
 
 :::
 
@@ -193,7 +191,7 @@ will not work:
 cy.origin('https://example.cypress.io', () => {
   cy.visit('/')
   cy.get('h1') // Yields an element, which can't be serialized...
-}).contains('Kitchen Sink') // ...so this will fail
+}).contains('CYPRESS') // ...so this will fail
 ```
 
 Instead, you must explicitly yield a serializable value:
@@ -203,8 +201,8 @@ Instead, you must explicitly yield a serializable value:
 ```js
 cy.origin('https://example.cypress.io', () => {
   cy.visit('/')
-  cy.get('h1').invoke('text') // Yields a string...
-}).should('equal', 'Kitchen Sink') // 👍
+  cy.get('h1').invoke('textContent') // Yields a string...
+}).should('equal', 'CYPRESS') // 👍
 ```
 
 ### Navigating to secondary origin with cy.visit
@@ -369,9 +367,6 @@ Cypress.Commands.add('login', (username, password) => {
 In this video we walk through how to test multiple origins in a single test. We
 also look at how to use the `cy.session()` command to cache session information
 and reuse it across tests.
-The configuration option `experimentalSessionAndOrigin`, mentioned in the video, is not used
-since [Cypress 12.0.0](https://docs.cypress.io/app/references/changelog#12-0-0)
-and the associated functionality is enabled by default.
 
 ## Notes
 

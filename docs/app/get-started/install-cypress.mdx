@@ -107,7 +107,7 @@ Cypress supports running under these operating systems:
 - **Linux** Ubuntu 20.04 and above, Fedora 40 and above, and Debian 11 and above _(x64 or arm64)_
   (see [Linux Prerequisites](#Linux-Prerequisites) down below)
 - **Windows** 10 and above _(x64)_
-- **Windows Server** 2019, 2022 and 2025 _(x64)_
+- **Windows Server** 2019 and 2022 _(x64)_
 
 ### Node.js
 
@@ -117,7 +117,6 @@ Cypress requires [Node.js](https://nodejs.org/) in order to install. We support 
 
 Cypress generally aligns with
 [Node's release schedule](https://github.com/nodejs/Release).
-Accordingly, use of Node.js 18 with Cypress is deprecated and support is planned for removal in a future release of Cypress.
 
 #### Installing Node.js
 
@@ -158,23 +157,10 @@ is preferred. Cypress [Component Testing](/app/core-concepts/testing-types#What-
 
 #### pnpm Configuration
 
-The following configuration options enable Cypress to execute its `postinstall` script so it can install the Cypress binary into the [binary cache](/app/references/advanced-installation#Binary-cache).
-If these configuration options are not set, then Cypress may skip the `postinstall` script execution and Cypress will not run.
-
-The pnpm [side effects cache](https://pnpm.io/settings#sideeffectscache) uses and caches the results of (pre/post)install hooks and is not compatible with Cypress' own caching.
-Disable the pnpm [side effects cache](https://pnpm.io/settings#sideeffectscache), for example using the following command, executed in the root of your Cypress project:
-
-```shell
-pnpm config set side-effects-cache false --location project
-```
-
 [pnpm@10.0.0](https://github.com/pnpm/pnpm/releases/tag/v10.0.0) and above require allowlisting `cypress`.
-Refer to the [pnpm settings](https://pnpm.io/settings) documentation for additional information.
-In [pnpm@10.4.0](https://github.com/pnpm/pnpm/releases/tag/v10.4.0) and above, the CLI `add` option [--allow-build](https://pnpm.io/cli/add#--allow-build) can be used, for example:
-
-```shell
-pnpm --allow-build cypress add --save-dev cypress
-```
+This enables Cypress to execute its `postinstall` script so it can install the Cypress binary into the [binary cache](/app/references/advanced-installation#Binary-cache).
+Refer to the [pnpm](https://pnpm.io/) configuration file documentation for additional information.
+[pnpm@10.4.0](https://github.com/pnpm/pnpm/releases/tag/v10.4.0) introduced the CLI add option [--allow-build](https://pnpm.io/cli/add#--allow-build) to add the allowed build configuration directly through the command line.
 
 ### Hardware
 
