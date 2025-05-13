@@ -53,12 +53,10 @@ following properties:
 | ------------- | ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `preferences` | `object`   | An object describing browser preferences. Differs between browsers. See [Changing browser preferences](#Changing-browser-preferences) for details.                                                                                           |
 | `args`        | `string[]` | An array of strings that will be passed as command-line args when the browser is launched. Has no effect on Electron. See [Modify browser launch arguments](#Modify-browser-launch-arguments) for details.                                   |
-| `extensions`  | `string[]` | An array of paths to folders containing unpacked WebExtensions to be loaded before the browser starts. Note: Electron currently only supports Chrome DevTools extensions. See [Add browser extensions](#Add-browser-extensions) for details. |
+| `extensions`  | `string[]` | An array of paths to folders containing unpacked WebExtensions to be loaded before the browser starts. See [Add browser extensions](#Add-browser-extensions) for details. |
 | `env`         | `object`   | An object of environment variables to pass to the launched browser. See [Configure browser environment](#Configure-browser-environment) for details.                                                                                         |
 
 ## Usage
-
-### Modify browser launch arguments, preferences, extensions, and environment
 
 Using the [setupNodeEvents](/app/plugins/plugins-guide#Using-a-plugin)
 function you can tap into the `before:browser:launch` event and modify how
@@ -72,14 +70,14 @@ how the browser is launched.
 The returned `launchOptions` object will become the new launch options for the
 browser.
 
-#### Modify browser launch arguments:
+### Modify browser launch arguments
 
 Here are args available for the currently supported browsers:
 
 - [Chromium-based browsers](https://peter.sh/experiments/chromium-command-line-switches/)
 - [Firefox](https://developer.mozilla.org/docs/Mozilla/Command_Line_Options)
 
-##### Open devtools by default
+#### Open devtools by default
 
 :::cypress-config-plugin-example
 
@@ -111,14 +109,19 @@ on('before:browser:launch', (browser = {}, launchOptions) => {
 
 :::
 
-#### Add browser extensions:
+### Add browser extensions
+
+**Limitations:**
+
+- Headless Chrome does not support loading extensions.
+- Chrome-branded browsers (e.g., standard Chrome) version 137 and above no longer support extension loading via this API, due to the removal of the --load-extension flag by Chrome. We recommend using Chrome for Testing or Chromium instead. [See download instructions](https://www.chromium.org/getting-involved/download-chromium/).
+- Electron currently supports only Chrome DevTools extensions.
 
 :::cypress-config-plugin-example
 
 ```ts
 on('before:browser:launch', (browser, launchOptions) => {
   // supply the absolute path to an unpacked extension's folder
-  // NOTE: extensions cannot be loaded in headless Chrome
   launchOptions.extensions.push('Users/jane/path/to/extension')
 
   return launchOptions
@@ -127,7 +130,7 @@ on('before:browser:launch', (browser, launchOptions) => {
 
 :::
 
-#### Configure browser environment:
+### Configure browser environment
 
 :::caution
 
@@ -148,7 +151,7 @@ on('before:browser:launch', (browser, launchOptions) => {
 
 :::
 
-#### Changing browser preferences:
+### Change browser preferences
 
 Here are preferences available for the currently supported browsers:
 
