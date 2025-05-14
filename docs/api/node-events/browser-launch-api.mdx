@@ -114,7 +114,7 @@ on('before:browser:launch', (browser = {}, launchOptions) => {
 **Limitations:**
 
 - Headless Chrome does not support loading extensions.
-- Chrome-branded browsers (e.g., standard Chrome) version 137 and above no longer support extension loading via this API, due to the removal of the --load-extension flag by Chrome. We recommend using Chrome for Testing or Chromium instead. See Cypress Docker image examples for [Chrome for Testing](https://github.com/cypress-io/cypress-docker-images/tree/master/examples/chrome-for-testing?rgh-link-date=2025-05-13T19%3A08%3A57.000Z) and [Chromium](https://github.com/cypress-io/cypress-docker-images/tree/master/examples/chromium?rgh-link-date=2025-05-13T19%3A08%3A57.000Z).
+- Chrome-branded browsers (e.g., standard Chrome) version 137 and above no longer support extension loading via this API, due to the removal of the `--load-extension` flag by Chrome. We recommend using Chrome for Testing or Chromium instead. See Cypress Docker image examples for [Chrome for Testing](https://github.com/cypress-io/cypress-docker-images/tree/master/examples/chrome-for-testing) and [Chromium](https://github.com/cypress-io/cypress-docker-images/tree/master/examples/chromium).
 - Electron currently supports only Chrome DevTools extensions.
 
 :::cypress-config-plugin-example
