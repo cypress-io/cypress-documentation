@@ -29,12 +29,11 @@ in the [GitHub Action Documentation](https://docs.github.com/en/actions).
 ## GitHub Actions + Cypress Screencasts
 
 1. [What is Continuous Integration?](https://youtu.be/USX6AntcPyg)
-2. [Actions & Workflows](https://youtu.be/N0TOFWy1Xvg)
-3. [Example App Overview](https://youtu.be/zGrAhZkCoUE)
-4. [Understanding how to configure a workflow](https://youtu.be/vVr7DXDdUks)
-5. [Running Tests in GitHub Actions CI/CD Workflow](https://youtu.be/23ZGSrmbV_4)
-6. [Debugging Test Failures in CI](https://youtu.be/Oqq-_QZWzhg)
-7. [Running Tests in Parallel](https://youtu.be/96Yn_IiQUJI)
+1. [Actions & Workflows](https://youtu.be/N0TOFWy1Xvg)
+1. [Understanding how to configure a workflow](https://youtu.be/vVr7DXDdUks)
+1. [Running Tests in GitHub Actions CI/CD Workflow](https://youtu.be/23ZGSrmbV_4)
+1. [Debugging Test Failures in CI](https://youtu.be/Oqq-_QZWzhg)
+1. [Running Tests in Parallel](https://youtu.be/96Yn_IiQUJI)
 
 :::
 
@@ -171,13 +170,20 @@ Cypress offers various
 [Docker Images](https://github.com/cypress-io/cypress-docker-images) for running
 Cypress locally and in CI.
 
-Below we extend the previous example by adding the `container` attribute using a
-[Cypress Docker Image](https://github.com/cypress-io/cypress-docker-images)
-built with the version of Google Chrome embedded in the tag name of the Docker image
-shown as `chrome-xxx`.
-Specifying a browser version allows our tests to
-execute without any influence from browser version changes in the GitHub runner
-image.
+Note that GitHub Actions
+[requires using a Linux runner](https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idcontainer) when specifying a container image.
+It does not support running Docker images on Windows or macOS runners.
+
+Below, we extend the previous example by adding the `container` attribute using a
+[cypress/browsers](https://github.com/cypress-io/cypress-docker-images/tree/master/browsers)
+Docker image which also includes Google Chrome.
+We are using the Node.js short-form tag to select a `cypress/browsers` image
+built with the corresponding Node.js version.
+To specify instead an exact set of browser versions, visit the
+[Docker Hub cypress/browsers](https://hub.docker.com/r/cypress/browsers) page and view the available long-form tags,
+for example `cypress/browsers:node-22.15.0-chrome-136.0.7103.92-1-ff-138.0.1-edge-136.0.3240.50-1`.
+Using a Cypress Docker image allows our tests to execute without any influence from
+browser version changes in the GitHub runner image.
 
 ```yaml
 name: Cypress Tests using Cypress Docker Image
@@ -417,14 +423,19 @@ aren't used in the steps.
 
 ### Specifying Browsers in Parallel Builds
 
-If you specify a browser in parallel mode, we recommend using a
-[Cypress Docker image](#Testing-with-Cypress-Docker-Images) to pin the browser
-version used.
+When GitHub deploys new runner image versions containing updated browser versions,
+and the deployment is still in progress,
+the workflow "Set up job" phase randomly uses either an old or a new runner image version.
+Your test run might fail if Cypress Cloud detects differences in the browser versions between parallel jobs.
 
-When GitHub updates the browsers in their runner images, not all runners get the
-new version simultaneously. Your test run might fail if Cypress Cloud detects
-differences in the runners between parallel jobs. The Docker image helps ensure
-the browser is consistent during an image upgrade.
+To work around this issue,
+and if you specify a browser other than the default Electron browser in parallel mode,
+we recommend using a
+[cypress/browsers](#Testing-with-Cypress-Docker-Images) Docker image which then uses one consistent browser version.
+This shields the workflow from browser version changes due to possible incomplete GitHub runner image deployments.
+
+As mentioned in [Testing with Cypress Docker Images](#Testing-with-Cypress-Docker-Images),
+this option is only available with GitHub Actions Linux runners.
 
 ## Using Cypress Cloud with GitHub Actions
 
