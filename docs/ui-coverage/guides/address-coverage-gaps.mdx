@@ -69,7 +69,8 @@ Some gaps occur because elements are hidden or not rendered during tests. Update
 
 ```js
 cy.get('[data-cy="dropdown-toggle"]').click() // Reveal hidden elements
-cy.get('[data-cy="dropdown-item"]').should('be.visible').click()
+cy.get('[data-cy="dropdown-item"]').should('be.visible')
+cy.get('[data-cy="dropdown-item"]').click()
 ```
 
 ### Handle Dynamic Content
