@@ -378,8 +378,7 @@ cy.get('body').type(
 // execute a SHIFT + click on the first <li>
 // {release: false} is necessary so that
 // SHIFT will not be released after the type command
-cy.get('body').type('{shift}', { release: false })
-  .get('li:first').click()
+cy.get('body').type('{shift}', { release: false }).get('li:first').click()
 ```
 
 ### Options
