@@ -99,9 +99,7 @@ seeing failures in CI, to easily debug them you may want to run locally with the
 
 ### Chrome Browsers
 
-All Chrome\* flavored browsers will be detected and are supported above
-Chrome 64, with the restriction that a minimum of Chrome 80 is required to use
-`cypress open`.
+All Chrome\* flavored browsers are detected and supported by Cypress.
 
 You can launch Chrome like this:
 
@@ -112,7 +110,7 @@ cypress run --browser chrome
 To use this command in CI, you need to install the browser you want - or use one
 of our [docker images](/app/continuous-integration/overview#Cypress-Docker-Images).
 
-By default, we will launch Chrome in headlessly during `cypress run`. To run
+By default, we will launch Chrome headlessly during `cypress run`. To run
 Chrome headed, you can pass the `--headed` argument to `cypress run`.
 
 You can also launch Chromium:
