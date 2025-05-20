@@ -344,15 +344,13 @@ it('can modify the window prior to page load on all pages', () => {
   cy
     // window:before:load will be called here
     .visit('/first/page')
-
     .then((win) => {
       // and here
       win.location.href = '/second/page'
     })
 
-    // and here
-    .get('a')
-    .click()
+  // and here
+  cy.get('a').click()
 })
 ```
 
