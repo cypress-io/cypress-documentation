@@ -63,7 +63,7 @@ You can access this area by clicking the branch name associated with a run, or i
 
 ## Details of each section
 
-### New Failed Elements
+### New failed elements
 
 A **new failed element** is any failed element which either did not exist in the Base run at all, or existed in the Base run but was passing its accessibility checks.
 
@@ -99,6 +99,18 @@ A **resolved element** is an element that had a failed accessibility rule in the
 Resolved elements are calculated for every rule and View, but are not displayed individually. This is because, as far as the Changed report is concerned, the failures do not exists, so there is not a guarantee the element is still present in the "new" report.
 
 If you have a use case for seeing the specific elements that are no longer detected to have failures, please reach out to your Cypress representative for further discussion. For the time being the focus of Branch Review is on **new problems** - we avoid mixing old and new data in the same report to minimize the chances of confusion.
+
+### What if there are no changes?
+
+If there are no changes, the Accessibility Branch Review report still displays all the sections, and explains that there are no elements that appear to be new or resolved in Changed run:
+
+<DocsImage
+  src="/img/accessibility/core-concepts/branch-review-a11y-empty-state.png"
+  alt="The new and resolved elements sections each showing a message to explain that there are no findings"
+/>
+
+This means the reports are identical, and that the Changed run has not had any impact on accessibility.
+
 
 ## Ensuring a good comparison
 
