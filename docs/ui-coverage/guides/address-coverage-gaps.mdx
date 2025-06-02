@@ -24,6 +24,27 @@ By prioritizing based on application context and business impact, you can addres
 
 Once you've identified priority areas, create or update tests to cover these gaps.
 
+### Generate Targeted Tests :sparkles:
+
+UI Coverage provides AI-powered Test Generation from the Cypress Cloud, to help you quickly add tests for the untested elements detected in UI Coverage reports, in a way that follows your existing practices and conventions.
+
+It works in just three steps:
+
+1. Select an interactive element in your UI Coverage report, from any state of your application
+2. Click “Generate test code”
+3. Choose where to add the tests, from a list of specs that already render this element
+
+<DocsImage
+  src="/img/ui-coverage/guides/cypress-ui-coverage-generate-test.png"
+  alt="Cypress Cloud screenshot cropped to show a generated test after clicking on the 'Generate Test' button for the '/commands/cookies' link."
+/>
+
+Cypress will generate a new test that includes all the required setup steps to reach the element in your UI, and performs an appropriate interaction for the element type and surrounding context.
+
+The generated code will use your existing patterns for navigating and interacting with your application, including custom commands you may have for locating elements or setting up state, and will recommend where followup assertions should be written after the actions are complete.
+
+This test can be copied directly into your spec file at the suggested location, and from there you can continue writing the test locally.
+
 ### Write Targeted Tests
 
 Focus on creating tests that interact with the specific untested elements or pages identified in the coverage reports. For example:
@@ -117,7 +138,7 @@ After updating your tests, record them again to Cypress Cloud and review the new
 
 Use the [Results API](/ui-coverage/results-api) to integrate coverage checks into your CI/CD pipeline. Set thresholds for coverage scores to enforce quality standards. This ensures your application maintains high test coverage over time.
 
-#Collaborate with Your Team
+### Collaborate with Your Team
 
 Improving test coverage often requires collaboration. Share insights from the UI Coverage reports with your team to:
 
