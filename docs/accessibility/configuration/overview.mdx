@@ -1,7 +1,7 @@
 ---
 sidebar_label: Overview
 title: 'Configuration | Cypress Accessibility'
-description: 'Configuration allows you to customize and fine-tune Accessibility in Cypress.'
+description: 'Configuration allows you to customize and fine-tune Cypress Accessibility.'
 sidebar_position: 10
 ---
 
@@ -9,7 +9,7 @@ sidebar_position: 10
 
 # Configuration
 
-Configuration allows you to customize and fine-tune Accessibility in Cypress. While Accessibility is designed to work seamlessly out of the box, there are instances where custom configuration may be necessary to address unique application structures, testing requirements, or edge cases. This section guides you through setting configuration to enhance the functionality and accuracy of Accessibility.
+Configuration allows you to customize and fine-tune accessibility reports in Cypress. While Cypress Accessibility is designed to work seamlessly out of the box, there are instances where custom configuration may be necessary, or preferred. Using configuration, you can avoid reporting on pages or elements that don't matter to your team, combine related urls together into a single View, and modify the element identification and deduplication behavior to reflect your application's specific structure.
 
 **Note**: By default, setting configuration is limited to Admin users. At your request, this can be changed to allow setting config by all users. Reach out to your Cypress point-of-contact if you would like to change this.
 
@@ -26,12 +26,6 @@ You can use the provided editor to write configuration in JSON format. A complet
 
 ```typescript
 {
-  "elementFilters": [
-    {
-      "selector": string,
-      "include": boolean
-    }
-  ],
   "views": [
     {
       "pattern": string,
@@ -43,6 +37,22 @@ You can use the provided editor to write configuration in JSON format. A complet
   "viewFilters": [
     {
       "pattern": string,
+      "include": boolean
+    }
+  ],
+  "elementFilters": [
+    {
+      "selector": string,
+      "include": boolean
+    }
+  ],
+  "significantAttributes": [
+    string
+  ]
+  "attributeFilters": [
+    {
+      "attribute": string,
+      "value": string,
       "include": boolean
     }
   ]

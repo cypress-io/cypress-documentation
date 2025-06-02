@@ -18,6 +18,15 @@ See the video below for an example of using Branch Review in a Pull Request:
   title="Accessibility branch review demo"
 />
 
+Comparing two accessibility reports manually is usually a challenge:
+
+- each report may test thousands of application snapshots for a single Cypress run
+- 80+ accessibility rules are tested for each snapshot
+- many different pages or components are tested and may have changes
+- elements might be identified differently in each run
+
+Branch Review for Cypress Accessibility is set up to help you easily browse this nested set of changes and find what's important. You can review any accessibility violation increases found for specific rules, and drill into the Views where those changes happened.
+
 ## Use cases
 
 Comparing the results from different runs is useful in multiple scenarios.
@@ -34,38 +43,124 @@ Comparing the results from different runs is useful in multiple scenarios.
 ## Content of the report
 
 <DocsImage
-  src="/img/accessibility/core-concepts/branch-review-intro.png"
-  alt="Cypress Accessibility Branch Review with arrows calling out the sections for new failed rules, resolved rules, and failed rules with changes. New failed rules are defined as rules that just started failing on the new branch. Resolved rules are defined as rules that got fully fixed in the new branch. Failed rules with changes are defined as rules that failed on both branches, but with different element counts or different related pages."
-  noBorder={true}
+  src="/img/accessibility/core-concepts/branch-review-example-diff.png"
+  alt="Cypress Accessibility Branch Review showing two main sections - New Failed Elements and Resolved Elements"
 />
 
-The Branch Review report is prioritized into three sections:
+The key to understanding the run comparison report is that the Changed run is the focal point for all data that will be displayed, and the Base run is used as a reference point for comparison. So everywhere that you see an element, or drill in for more details, you will only see data from the Changed run.
 
-- **New failed rules**: Rules that were passing every time they ran on the `base` run but now have failures in the `changed` run.
-- **Resolved rules**: Rules that had some failures detected in the `base` run but have no failures on the `changed` run. This helps you celebrate the wins and recognize when a new run has gone green.
-- **Failed rules with changes**: Rules that were failing in both runs, where the elements with failures detected have increased, decreased, or changed in some way.
+The Branch Review report is divided into two sections:
 
-This organization of the report brings the most significant results to the top - regressions of rules that had been fully passing in the `base` run. Increases or decreases in the element counts for rules that already have some failures provide a good sense of progress, but can tend to be noisier, especially if the runs have different content or other conditions have changed in between.
+- **New failed elements**: Counts of elements that have failures in the Changed run, where matching failures were not found on the Base run. These are listed by View, for each accessibility rule where new failures were detected.
+- **Resolved elements**: Counts of elements that had failures detected in the Base run which are no longer detected in the Changed run. These are also listed as improvements in each View, under the accessibility rules that had improvements.
+
+If the Changed run is associated with a Pull Request and runs the same overall test suite as the Base run, the changes in the report are likely due to code changes in the pull request.
 
 ## How to compare runs
 
 The first step is to get to the [Branch Review](/cloud/features/branch-review.mdx) area of Cypress Cloud, which will let you compare one branch against another - or different runs on the same branch, if needed.
 You can access this area by clicking the branch name associated with a run, or in several other ways. [Learn more about how to compare runs](/cloud/features/branch-review.mdx).
 
-## FAQ
+## Details of each section
 
-### How do I ensure a good comparison?
+### New failed elements
 
-The best subjects to compare are passing runs that ran similar tests on the same set of content. This means that each run visited roughly the same pages and completed the same kinds of workflows. In this situation, any diff in the results is likely the result of changes present in the newer run. This is usually what happens out-of-the box when comparing a pull-request branch with your main branch.
+A **new failed element** is any failed element which either did not exist in the Base run at all, or existed in the Base run but was passing its accessibility checks.
+
+<DocsImage
+  src="/img/accessibility/core-concepts/branch-review-a11y-new-failed.png"
+  alt="Cypress Accessibility Branch Review showing two main sections - New Failed Elements and Resolved Elements"
+/>
+
+Any rules with new failed elements will appear here. There are two ways to explore this list. You can open each rule and choose from he list of Views where a new failed element was detected, or if you click the "View All" link, you will see a full report containing all of the net-new failures in the run, across all rules and views.
+
+Either path will take you to the detailed report, either for a single View or for all View combined. This report works exactly like the main Cypress Accessibility report, with full-page snapshot examples for every violation. The only difference is that all issues that are the same on both runs have been removed, leaving just what's new - either for the specific View you've chosen, or across all views.
+
+<DocsImage
+  src="/img/accessibility/core-concepts/branch-review-a11y-detail-view.png"
+  alt="Cypress Accessibility Branch Review showing the detailed diff for a demo contact form. A 'name' field in the contact form is highlighted in red because it is missing a label."
+/>
+
+#### Single-View diff vs whole-run diff
+
+Each rule has an "All Views" comparison as the first item, and then lists individual Views below that. Depending on the level of detail you are looking for, you can drill into a specific page or component and see the changes in accessibility there, or just look at the combined report.
+
+The combined "All Views" report for a single rule is especially useful if violations tend to move around between pages over time. For example, if there is a popup with an accessibility problem that appears on a random page in every run, it may appear "new" for a View in the Changed run, and "resolved" for the View where it was in the Base run, but in reality your accessibility score is the same and the problem is the same. "All Views" allows you to sidestep any noise of this kind if needed.
+
+### Resolved elements
+
+A **resolved element** is an element that had a failed accessibility rule in the Base Run, where a matching failure is not found in the Changed run.
+
+<DocsImage
+  src="/img/accessibility/core-concepts/branch-review-a11y-resolved-elements.png"
+  alt="A list of accessibility rules with resolved elements in the new run"
+/>
+
+Resolved elements are calculated for every rule and View, but are not displayed individually. This is because, as far as the Changed report is concerned, the failures do not exists, so there is not a guarantee the element is still present in the "new" report.
+
+If you have a use case for seeing the specific elements that are no longer detected to have failures, please reach out to your Cypress representative for further discussion. For the time being the focus of Branch Review is on **new problems** - we avoid mixing old and new data in the same report to minimize the chances of confusion.
+
+### What if there are no changes?
+
+If there are no changes, the Accessibility Branch Review report still displays all the sections, and explains that there are no elements that appear to be new or resolved in Changed run:
+
+<DocsImage
+  src="/img/accessibility/core-concepts/branch-review-a11y-empty-state.png"
+  alt="The new and resolved elements sections each showing a message to explain that there are no findings"
+/>
+
+This means the reports are identical, and that the Changed run has not had any impact on accessibility.
+
+## Ensuring a good comparison
+
+The easiest subjects to compare are **passing runs** that ran **similar tests** on the **similar content**. This means that each run visited roughly the same pages and completed the same kinds of workflows. In this situation, any diff in the results is likely the result of changes present in the newer run. This is usually what happens out-of-the box when comparing a pull-request branch with your main branch, for example - assuming the same tests run on both branches.
 
 That said, it still possible and valid to compare runs from different points in time with different sets of test results, as long as you bear in mind all the potential sources of difference between the two runs, which you can evaluate for yourself as you explore the results.
 
 In order to see unified changes for your entire test suite, you need to group all the tests together under a single Cypress run, for each report. Learn more about this in the [Branch Review Best Practices documentation](/cloud/features/branch-review#Best-Practices).
 
-### What is the purpose of the Beta label?
+### Stabilizing the comparison
 
-This indicates the feature is ready for use and actively seeking feedback based on real usage of the current implementation. We have a few known issues to work through on our side before we consider this fully production-ready and remove the beta label. These issues only affect a subset of projects -- in most cases everything is working as intended. If you see anything unexpected, please use the feedback button and let us know.
+On most projects, comparing accessibility reports will work nicely out of the box. But in some cases, configuration is useful to handle dynamic values that might be present in page URLs or element locator. You may also want to take steps to improve the consistency of the elements under test.
 
-### Why do I see some views (pages or components) changing from run-to-run?
+### Stable Views
 
 URLs with dynamic slugs in them can appear as "new" pages in some situations. This behavior can be adjusted with [View configuration](/accessibility/configuration/views) to make sure page names will match across runs by wildcarding parts of the URL as needed.
+
+Cypress performs this process automatically for certain known patterns. For example, the default behavior is to track a URL like `https://example.com/products/123` as `https://example.com/products/*` so that the underlying product pages are grouped together as one View, and then between runs that View is recognized in a stable way.
+
+If a View appears to be "new", it is identified with a green plus icon, and a tooltip explaining that this View was seen on the Changed run but not on the base run, as seen here in the New Failed Elements section:
+
+<DocsImage
+  src="/img/accessibility/core-concepts/added-views.png"
+  alt="Cypress Accessibility Branch Review showing several added views in a report, with a plus sign beside each one and a tooltip explaining that the view was seen in one report, but not the other."
+/>
+
+Likewise, if a rule appears to have resolved elements on Views that are simply no longer captured on the Changed run, this is identified in the Resolved Elements section:
+
+<DocsImage
+  src="/img/accessibility/core-concepts/removed-views.png"
+  alt="Cypress Accessibility Branch Review showing several added views in a report, with a plus sign beside each one and a tooltip explaining that the view was seen in one report, but not the other."
+/>
+
+These changes in Views may be because a new page was actually added to the application, or a new page was reached by testing that wasn't reached before. It will be clear to you if configuration is needed to improve View stability across runs, as you will see unexpected added and removed URLs.
+
+### Stable Elements
+
+Cypress stores a string that represents each failed element in a report, determined using a standardized [element identification process](/accessibility/core-concepts/element-identification). This operates in a different way to the standard Axe-Core® element identification algorithm, to support the comparison of runs from different builds of the application, and make use of the testing-related attributes you may already have created in the DOM.
+
+Where possible, we prioritize known stable locators like `data-cy` or `data-testid`. In some cases the identification strings will contain dynamic values that change on every build of your application, introducing noise in a diff. The element identification behavior is flexible and can be configured to meet your needs and fully avoid dynamic values as identifiers.
+
+For example, if an element's default locator includes a class like `.css-21kj23` in Build A, and a slightly different class like `.css-2309kj` in Build B, it will appear as though there was a "resolved element" and "new violation".
+
+This behavior is highly customizable so that you can avoid depending on values that don't matter to you, but also you can choose specific attributes that _do_ matter for element recognition and get sensible deduplication and matching behavior based on your own goals.
+
+Learn more about the [`attributeFilters`](/accessibility/configuration/attributefilters) and [`significantAttributes`](/accessibility/configuration/significantattributes) configuration available, or reach out to us for any assistance on dialing in the behavior.
+
+### Stable underlying reporting area
+
+It's likely that your tests have never been used for always-on accessibility tests before, and while most codebases produce stable results, some projects have inherent differences between runs due to the performance of specific processes during testing.
+
+For example, sometimes the test may spend enough time on a page to see a confirmation message after a form is submitted, unless the server response is slow, then the test may finish without rendering the state.
+
+There are different solutions depending on the nature of the issue. If you want to ensure the state is always picked up in Cypress Accessibility, you can add some assertion about that state to your tests. On the other hand, if you do not want to account for this state at all, it can be ignored with [`elementFilters`](/accessibility/configuration/elementfilters) configuration. Either approach will lead to a more stable branch comparison.
