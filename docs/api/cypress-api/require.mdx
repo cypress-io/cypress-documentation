@@ -28,7 +28,7 @@ callback requires enabling the
 :::
 
 ```js
-Cypress.require(moduleNameOrPath)
+Cypress.require('moduleNameOrPath')
 ```
 
 ## Usage
@@ -56,6 +56,12 @@ cy.origin('cypress.io', async () => {
   // Use `Cypress.require()` instead
   const _ = require('lodash')
   const utils = await import('./utils')
+})
+
+// `Cypress.require` must be passed a static string; dynamic values will not
+// import correctly.
+cy.origin('cypress.io', { args: { lodash: 'lodash' } }, ({ lodash }) => {
+  const _ = Cypress.require(lodash)
 })
 ```
 
@@ -109,7 +115,7 @@ cy.origin('cypress.io', async () => {
   - `.mjs`
   - `.json`
   - `.coffee`
-- `Cypress.require('dependency-name')` must on one line as a continuous string:
+- `Cypress.require('dependency-name')` must on one line as a continuous string, and the dependency cannot be dyanmically defined:
 
 {/* prettier-ignore-start */}
 ```js
@@ -131,6 +137,11 @@ Cypress . require('lodash')
 Cypress.require(
   'lodash'
 )
+
+// ❌ BAD
+const lodashPkgName = 'lodash'
+Cypress.require(lodashPkgName)
+
 ```
 {/* prettier-ignore-end */}
 
