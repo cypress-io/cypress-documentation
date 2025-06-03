@@ -47,20 +47,19 @@ cy.origin('cypress.io', () => {
 <Icon name="exclamation-triangle" color="red"></Icon> **Incorrect Usage**
 
 ```js
-// `Cypress.require()` cannot be used outside the `cy.origin()` callback.
+// ❌ `Cypress.require()` cannot be used outside the `cy.origin()` callback.
 // Use CommonJS `require()` instead
 const _ = Cypress.require('lodash')
 
 cy.origin('cypress.io', async () => {
-  // `require()` and `import()` cannot be used inside the `cy.origin()` callback.
+  // ❌ `require()` and `import()` cannot be used inside the `cy.origin()` callback.
   // Use `Cypress.require()` instead
   const _ = require('lodash')
   const utils = await import('./utils')
 })
 
-// `Cypress.require` must be passed a static string; dynamic values will not
-// import correctly.
 cy.origin('cypress.io', { args: { lodash: 'lodash' } }, ({ lodash }) => {
+  // ❌ Dynamic values and variable references cannot be passed to `Cypress.require`.
   const _ = Cypress.require(lodash)
 })
 ```
