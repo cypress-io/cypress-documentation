@@ -88,16 +88,16 @@ Note that this package version is deprecated and no longer supported by Cypress 
 
 ### `@cypress/webpack-batteries-included-preprocessor` no longer shims all built-ins provided by `webpack` v4
 
-The default file preprocessor, `@cypress/webpack-batteries-included-preprocessor`, no longer shims all built-ins that were previously provided by webpack v4. This is mainly to reduce security vulnerabilities and bundle size within the end-to-end file preprocessor. 
+The default file preprocessor, `@cypress/webpack-batteries-included-preprocessor`, no longer shims all built-ins that were previously provided by webpack v4. This is mainly to reduce security vulnerabilities and bundle size within the end-to-end file preprocessor.
 
-However, `@cypress/webpack-batteries-included-preprocessor` still ships with *some* built-ins, such as `buffer`, `path`, `process`, `os`, and `stream`. If other built-ins are required, install `@cypress/webpack-batteries-included-preprocessor` independently and follow the webpack documentation described in [webpack's resolve.fallback](https://webpack.js.org/configuration/resolve/#resolvefallback) to configure the built-ins you need.
+However, `@cypress/webpack-batteries-included-preprocessor` still ships with _some_ built-ins, such as `buffer`, `path`, `process`, `os`, and `stream`. If other built-ins are required, install `@cypress/webpack-batteries-included-preprocessor` independently and follow the webpack documentation described in [webpack's resolve.fallback](https://webpack.js.org/configuration/resolve/#resolvefallback) to configure the built-ins you need.
 
 For example, the following code shows how to provide the `querystring` built-in to the preprocessor:
 
 ```javascript
 const webpackPreprocessor = require('@cypress/webpack-batteries-included-preprocessor')
 
-function getWebpackOptions () {
+function getWebpackOptions() {
   const options = webpackPreprocessor.getFullWebpackOptions()
 
   // add built-ins as needed
@@ -107,9 +107,12 @@ function getWebpackOptions () {
 }
 
 module.exports = (on) => {
-  on('file:preprocessor', webpackPreprocessor({
-    webpackOptions: getWebpackOptions()
-  }))
+  on(
+    'file:preprocessor',
+    webpackPreprocessor({
+      webpackOptions: getWebpackOptions(),
+    })
+  )
 }
 ```
 
