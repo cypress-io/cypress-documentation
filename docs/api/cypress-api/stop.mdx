@@ -34,6 +34,7 @@ To ensure tests stop immediately after a failure across any spec file, add the f
 afterEach(function () {
   if (this.currentTest.state === 'failed') {
     Cypress.stop()
+    return
   }
 })
 ```
@@ -45,11 +46,21 @@ beforeEach(() => {
   if (env !== 'expected-condition') {
     cy.log('Stop tests - environment is not setup correctly')
     Cypress.stop()
+    return
   }
 })
 ```
 
 ## Notes
+
+Calling `Cypress.stop()` will stop the execution of remaining tests, but any code after `Cypress.stop()` in the same container block (such as `beforeEach` or `afterEach`) will still run. To prevent additional logic from executing after `Cypress.stop()`, add a `return` statement immediately after it:
+
+```javascript
+if (someCondition) {
+  Cypress.stop()
+  return // Prevents further code execution in this block
+}
+```
 
 ### `cypress run` vs `cypress open` behavior
 
