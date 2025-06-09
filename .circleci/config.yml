@@ -67,11 +67,12 @@ jobs:
 
   run-tests-in-parallel:
     executor: cypress/default
-    parallelism: 6
     steps:
       - attach_workspace:
           at: ~/
       - cypress/run-tests:
+          parallelism: 6
+          start-command: npm run start
           cypress-command: 'npm run start && npx cypress run --parallel --record'
 
   release:
