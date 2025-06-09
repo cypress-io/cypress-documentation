@@ -363,3 +363,49 @@ All of the data within Test Replay's Developer Tools in Cypress Cloud (including
 ### <Icon name="angle-right" /> Can I `console.log()` data in the console view of the Developer Tools panel?
 
 Yes. This displays console logs from within the application under test or your spec files. You may need to use `JSON.stringify(Object)` to display deeply nested data.
+
+## Cloud AI :sparkles:
+
+### What is Cloud AI?
+
+Cloud AI is a collection of AI capabilities available in Cypress Cloud. These capabilities are continuously being added to the Cloud experience to target various users and problems.
+
+The current Cloud AI capabilities include:
+- [Test Intent Summaries](/cloud/features/recorded-runs#Test-Intent-Summary-sparkles) - Understand what tests do without reading every command
+- _(coming soon)_ Test Error Context - Plain language explanations of what went wrong in your failed tests
+- <Badge type="success">Premium Solution</Badge> [UI Coverage Test Generation](/ui-coverage/guides/address-coverage-gaps#Generate-Targeted-Tests-sparkles)  - Generate tests directly from coverage gaps found during code reviews
+
+### Are all Cloud AI capabilities enabled by default? How can I turn them off?
+
+Cloud AI capabilities are enabled by default for all users on any Cloud plan, with [UI Coverage Test Generation](/ui-coverage/guides/address-coverage-gaps#Generate-Targeted-Tests-sparkles) being limited to UI Coverage users.
+
+Organization admins and owners can enable and disable the AI capabilities for their entire organization from their organization settings.
+
+<DocsImage
+  src="/img/faq/questions/cypress-ai-org-setting.png"
+  alt="Image showing the Cypress AI organization setting"
+/>
+
+### How much does Cloud AI cost?
+
+Cloud AI capabilities are included for free:
+
+- [Test Intent Summaries](/cloud/features/recorded-runs#Test-Intent-Summary-sparkles) - available in all Cloud plans
+- _(coming soon)_ Test Error Context - available in all Cloud plans
+- <Badge type="success">Premium Solution</Badge> [UI Coverage Test Generation](/ui-coverage/guides/address-coverage-gaps#Generate-Targeted-Tests-sparkles) - included with UI Coverage
+
+### How is my data handled?
+
+Review [Cypress AI Security](https://www.cypress.io/security) to learn how your data is handled.
+
+To summarize:
+- Your data is _not_ used to train AI models
+- All data is processed and stored in Cypress's managed Cloud infrastructure
+- All information shared with AI models are session-bound
+- Data is _not_ shared between customers
+- Personally identifiable information (PII) is never shared with the AI model
+- Test content may be shared with AI models, and is _your_ responsibility as the customer to make decisions about the appropriateness of data used in testing and will avoid the use of PII, PHI, or other types of protected information.
+
+### Does Cypress use my data to train models?
+
+No, your data is not used to train models.
