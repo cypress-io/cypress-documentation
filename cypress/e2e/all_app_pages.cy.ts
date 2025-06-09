@@ -1,7 +1,7 @@
 const URLs: Array<string> = Cypress.env('URLs')
 
 // Mostly this is to get a UI Coverage and Accessibility report
-describe('Visit all Apppages', () => {
+describe('Visit all App pages', () => {
   URLs.forEach((URL) => {
     if (!URL.startsWith('app')) return
 
