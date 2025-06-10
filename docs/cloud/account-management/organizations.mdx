@@ -2,7 +2,7 @@
 title: 'Manage organizations | Cypress Cloud'
 description: 'Learn how to create projects, manage users, access billing and usage information, leverage third party integrations, and apply org-level settings.'
 sidebar_label: Organizations
-sidebar_position: 20
+sidebar_position: 10
 ---
 
 <ProductHeading product="cloud" />
@@ -52,6 +52,25 @@ switcher and clicking **<Icon name="plus" /> Create new organization**.
   alt="Create new organization"
 />
 
+### Manage Projects
+
+Once you create an organization, a new "Default Project" will be created for you. From here, you can adjust your [Project Settings](/cloud/account-management/projects#Project-settings) to fit your needs.
+
+### Manage Users and Teams
+
+Organization owner or admin roles can [invite Cypress Cloud users](/cloud/account-management/users) to their organization. Those invited can be [assigned to a team](/cloud/account-management/teams). A team can help you control which users have access to specific projects and tests.
+
+### Manage Cloud AI
+
+[Cloud AI](/cloud/faq#What-is-Cloud-AI) is enabled by default for all users on any Cloud plan.
+
+Organization admins and owners can enable and disable the AI capabilities for their entire organization from the organization settings.
+
+<DocsImage
+  src="/img/faq/questions/cypress-ai-org-setting.png"
+  alt="Image showing the Cypress AI organization setting"
+/>
+
 ### Delete Org
 
 You can delete organizations that you own as long as they do not have any
@@ -91,5 +110,11 @@ See our integration guides to learn more:
 
 - <Logo src="/img/logo/slack.svg" alt="Slack Logo" /> [Cypress integration for Slack guide](/cloud/integrations/slack)
 - <Logo src="/img/logo/ms-teams.svg" alt="Microsoft Teams Logo" /> [Cypress integration for Microsoft Teams guide](/cloud/integrations/teams)
+
+### Enterprise SSO Authentication
+
+- [Okta](/cloud/account-management/enterprise-sso#Okta)
+- [SAML](/cloud/account-management/enterprise-sso#SAML)
+- [Azure AD](/cloud/account-management/enterprise-sso#Azure-AD)
 
 {/* prettier-ignore-end */}
