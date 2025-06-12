@@ -13,7 +13,7 @@ sidebar_label: Data Storage and Controls
 
 ##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
 
-- What data is stored in Cypress Cloud
+- What data is stored in Cypress Cloud and how it is used
 - How to control what data is sent to Cypress Cloud
 - How to mask data in screenshots and videos
 - How to control what is shown in the Cypress Command Log and network requests
@@ -22,9 +22,11 @@ sidebar_label: Data Storage and Controls
 
 :::caution
 
-Please refer to the [Cypress Cloud Terms of Use](https://cloud.cypress.io/terms-of-use) and our [Security & Compliance](https://www.cypress.io/security/) guide for more specifics around reasonable use of Cypress Cloud, data storage and security at Cypress.
+Please refer to the [Cypress Cloud Terms of Use](https://cypress.io/terms-of-use) and our [Security & Compliance](https://on.cypress.io/security/) guide for more specifics around reasonable use of Cypress Cloud, data storage and security at Cypress.
 
 :::
+
+## Types of Data
 
 When you run Cypress via `cypress run` and pass the `--record` flag, the following data is stored in Cypress Cloud for every run:
 
@@ -45,9 +47,11 @@ When [Test Replay](/cloud/features/test-replay) capturing is enabled, the additi
 
 Cypress Cloud does not capture anything related to the code of your application under test or the code within any repositories that are associated with your project.
 
+When [Cloud AI](/cloud/faq#What-is-Cloud-AI) is enabled, test content may be shared with session-bound AI model to enhance your test management experience. Your data is not used to train AI models and will not be shared between customers.
+
 You, the customer, own and are responsible for your test content. We trust that customers will make decisions about the appropriateness of data to use in testing and will avoid use of PII, PHI, or other types of protected information. Cypress makes commercially reasonable efforts to protect confidentiality of information that is provided to Cypress Cloud.
 
-## Types of Data
+## Data Controls
 
 We understand that controlling what data is sent to Cypress Cloud is important to our users. Cypress provides a number of ways to control what data is sent to Cypress Cloud.
 
@@ -172,6 +176,17 @@ Cypress allows users to block requests from specified hosts. [See our blockHosts
 <DocsImage
   src="/img/app/references/v10/blocked-host.png"
   alt="Network tab of dev tools showing blocked host"
+/>
+
+### Cloud AI controls
+
+[Cloud AI](/cloud/faq#What-is-Cloud-AI) is enabled by default for all users on any Cloud plan.
+
+Organization admins and owners can enable and disable the AI capabilities for their entire organization from the organization settings.
+
+<DocsImage
+  src="/img/faq/questions/cypress-ai-org-setting.png"
+  alt="Image showing the Cypress AI organization setting"
 />
 
 ## See Also
