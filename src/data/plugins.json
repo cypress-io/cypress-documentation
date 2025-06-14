@@ -460,6 +460,13 @@
           "badge": "community"
         },
         {
+          "name": "cypress-dragndrop-kit",
+          "description": "A lightweight, Cypress-native plugin that simplifies drag‑and‑drop and movement interactions in end-to-end tests. Perfect for testing sortable lists, draggable elements, and custom UI components.",
+          "link": "https://github.com/vergjor/cypress-dragndrop-kit",
+          "keywords": ["dragndrop", "drag-and-drop", "drag", "drop", "commands"],
+          "badge": "community"
+        },
+        {
           "name": "cypress-fill-command",
           "description": "A Cypress command for fill inputs.",
           "link": "https://github.com/DanielFerrariR/cypress-fill-command",
