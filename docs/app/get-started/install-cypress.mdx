@@ -119,7 +119,7 @@ Cypress requires [Node.js](https://nodejs.org/) in order to install. We support 
 
 Cypress generally aligns with
 [Node's release schedule](https://github.com/nodejs/Release).
-Accordingly, use of Node.js 18 with Cypress is deprecated and support is planned for removal in a future release of Cypress.
+Accordingly, use of Node.js 18 and 23 with Cypress is deprecated and support is planned for removal in a future release of Cypress.
 
 #### Installing Node.js
 
@@ -175,7 +175,7 @@ Refer to the [pnpm settings](https://pnpm.io/settings) documentation for additio
 In [pnpm@10.4.0](https://github.com/pnpm/pnpm/releases/tag/v10.4.0) and above, the CLI `add` option [--allow-build](https://pnpm.io/cli/add#--allow-build) can be used, for example:
 
 ```shell
-pnpm --allow-build cypress add --save-dev cypress
+pnpm --allow-build=cypress add --save-dev cypress
 ```
 
 ### Hardware

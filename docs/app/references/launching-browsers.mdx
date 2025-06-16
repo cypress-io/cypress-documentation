@@ -99,9 +99,7 @@ seeing failures in CI, to easily debug them you may want to run locally with the
 
 ### Chrome Browsers
 
-All Chrome\* flavored browsers will be detected and are supported above
-Chrome 64, with the restriction that a minimum of Chrome 80 is required to use
-`cypress open`.
+All Chrome\* flavored browsers are detected and supported by Cypress.
 
 You can launch Chrome like this:
 
@@ -112,7 +110,7 @@ cypress run --browser chrome
 To use this command in CI, you need to install the browser you want - or use one
 of our [docker images](/app/continuous-integration/overview#Cypress-Docker-Images).
 
-By default, we will launch Chrome in headlessly during `cypress run`. To run
+By default, we will launch Chrome headlessly during `cypress run`. To run
 Chrome headed, you can pass the `--headed` argument to `cypress run`.
 
 You can also launch Chromium:
@@ -189,6 +187,34 @@ of our [docker images](/app/continuous-integration/overview#Cypress-Docker-Image
 
 By default, we will launch Firefox headlessly during `cypress run`. To run
 Firefox headed, you can pass the `--headed` argument to `cypress run`.
+
+##### Mozilla geckodriver
+
+Cypress requires the
+[Mozilla geckodriver](https://github.com/mozilla/geckodriver) to launch Firefox.
+To meet this requirement, the Cypress binary uses the separate npm wrapper package
+[geckodriver](https://github.com/webdriverio-community/node-geckodriver)
+to provide the Mozilla geckodriver.
+The wrapper downloads the latest driver version if it does not find any driver version cached locally.
+
+:::info
+
+Retrieving the driver may fail if you are operating Cypress in an air-gapped environment without Internet connectivity and you do not have a cached driver version available.
+
+To avoid this issue, use a current
+[Cypress Docker image](/app/continuous-integration/overview#Cypress-Docker-Images) `cypress/browsers` or `cypress/included`, built with Firefox 139, or above.
+These images include a Mozilla geckodriver version pre-installed.
+Using `cypress/factory:5.9.0`, or above, you can also build your own custom Cypress Docker image that includes a Mozilla geckodriver version.
+Refer to the `cypress/factory`
+[documentation](https://github.com/cypress-io/cypress-docker-images/blob/master/factory/README.md) for instructions on building custom images.
+
+If you need to work without Docker, refer to the npm wrapper package geckodriver
+[documentation](https://github.com/webdriverio-community/node-geckodriver) for information
+about how to define a custom path for the driver or how to refer to a local CDN mirror site.
+Download the Mozilla geckodriver from the
+[releases](https://github.com/mozilla/geckodriver/releases) location.
+
+:::
 
 ### WebKit (Experimental)
 

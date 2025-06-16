@@ -196,7 +196,7 @@ Cypress.Commands.add('loginViaUi', (user) => {
       cy.visit('/login')
       cy.get('input[name=email]').type(user.email)
       cy.get('input[name=password]').type(user.password)
-      cy.click('button#login')
+      cy.get('button#login').click()
       cy.get('h1').contains(`Welcome back ${user.name}!`)
     },
     {

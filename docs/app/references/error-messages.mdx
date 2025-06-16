@@ -990,16 +990,6 @@ one of the following:
 - See
   [Cypress detected policy settings on your computer that may cause issues](#Cypress-detected-policy-settings-on-your-computer-that-may-cause-issues).
 
-**The `--proxy-server` or `--load-extension` arguments have been changed**
-
-- When adding a plugin with the
-  [Browser Launch API](/api/node-events/browser-launch-api), it's possible for a
-  necessary command-line argument to be changed. If you're running into this
-  error, you can troubleshoot by inspecting `args` before and after the plugin
-  runs, either by using `console.log()` or by
-  [printing DEBUG logs](/app/references/troubleshooting#Print-DEBUG-logs)
-  with `DEBUG=cypress:server:plugins,cypress:server:plugins:*`.
-
 **You visit the Cypress proxy URL outside of a Cypress browser.**
 
 - Don't copy the URL you see when launching a Cypress browser from the Cypress

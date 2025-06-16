@@ -95,15 +95,14 @@ cy.get('button').should('not.be.disabled')
 **_Pause and step through each `.click()` command_**
 
 ```javascript
-cy.get('#action-canvas')
-  .click(80, 75)
-  .pause()
-  .click(170, 75)
-  .click(80, 165)
-  .click(100, 185)
-  .click(125, 190)
-  .click(150, 185)
-  .click(170, 165)
+cy.get('#action-canvas').click(80, 75)
+cy.pause()
+cy.get('#action-canvas').click(170, 75)
+cy.get('#action-canvas').click(80, 165)
+cy.get('#action-canvas').click(100, 185)
+cy.get('#action-canvas').click(125, 190)
+cy.get('#action-canvas').click(150, 185)
+cy.get('#action-canvas').click(170, 165)
 ```
 
 The commands above will display in the Command Log as:

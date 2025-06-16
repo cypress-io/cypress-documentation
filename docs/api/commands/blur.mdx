@@ -74,7 +74,8 @@ Pass in an options object to change the default behavior of `.blur`.
 #### Blur the comment input
 
 ```javascript
-cy.get('[name="comment"]').type('Nice Product!').blur()
+cy.get('[name="comment"]').type('Nice Product!')
+cy.get('[name="comment"]').blur()
 ```
 
 ### Options
@@ -140,7 +141,9 @@ events. Your best bet here is to keep Cypress focused when working on a test.
 **_Blur a textarea after typing._**
 
 ```javascript
-cy.get('[name="comment"]').focus().type('Nice Product!').blur()
+cy.get('[name="comment"]').focus()
+cy.get('[name="comment"]').type('Nice Product!')
+cy.get('[name="comment"]').blur()
 ```
 
 The commands above will display in the Command Log as:

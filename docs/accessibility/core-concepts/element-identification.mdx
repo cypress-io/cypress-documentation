@@ -1,0 +1,63 @@
+---
+title: 'Uniquely identify test elements | Cypress Accessibility'
+description: 'Elements are uniquely identified across views and snapshots by their HTML attributes, location, and other signals in the DOM.'
+sidebar_label: Element identification
+sidebar_position: 20
+---
+
+<ProductHeading product="accessibility" />
+
+# Element Identification
+
+Cypress Accessibility uniquely identifies elements across views and snapshots using a combination of HTML attributes, location, and other signals in the DOM. Stable and unique identifiers are crucial for accurately tracking and de-duplicating elements throughout the various snapshots captured in your tests.
+
+This process replaces the underlying Axe-Core® library's default mechanism for identifying elements, which also uses strings but focusing on capturing a unique identifier for a given element in a specific DOM context. The default behavior does not account for situations where sometimes tens of thousands of Axe-Core® scans need to be merged together for a single run, or later compared based on different builds of the application. Both of these happen in Cypress Cloud, and are much more effective when the element identification process is controllable by the user and can be customized for your project.
+
+## Significant attributes for identification
+
+Certain attributes are prioritized by Cypress Accessibility for element identification. These include:
+
+- `data-cy`
+- `data-test`
+- `data-testid`
+- `data-test-id`
+- `data-qa`
+- `row-id`
+- `id`
+- `name`
+
+If you already have Test IDs or similar attributes in your application, Cypress Accessibility will pick these up and use them to recognize the same element in a new place for improved deduplication. This behavior itself is configurable as well, so that highly-dynamic Test IDs can be avoided, for example.
+
+## Configuring element identification
+
+Using these configuration properties helps you adjust the amount of deduplication Cypress will do to match what makes sense in your application. For example, a component-based Test ID might make a great identifier if the component renders static content, but the same exact test ID would be a poor identifier if the component renders different things everywhere - you might rather treat those instances as unique for accessibility purposes.
+
+### Attribute filters
+
+Exclude irrelevant or dynamically generated attributes to reduce noise in Cypress Accessibility reports. For example:
+
+```json
+{
+  "attributeFilters": [
+    {
+      "attribute": "id",
+      "value": ":r.*:",
+      "include": false
+    }
+  ]
+}
+```
+
+Learn more about attribute filtering in the [Attribute Filters](/accessibility/configuration/attributefilters) guide.
+
+### Significant attributes
+
+Define custom significant attributes to prioritize specific selectors that align with your application’s structure. For example:
+
+```json
+{
+  "significantAttributes": ["data-custom-id"]
+}
+```
+
+Refer to the [Significant Attributes](/accessibility/configuration/significantattributes) guide for detailed instructions.
