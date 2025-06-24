@@ -28,10 +28,7 @@ function useSyntheticTitle() {
   }
   return metadata.title;
 }
-export default function DocItemContent({children}) {
-
-const { frontMatter: {e2eSpecific, componentSpecific} } = useDoc();
-const testTypePill = e2eSpecific && <E2EOnlyBadge /> || componentSpecific && <ComponentOnlyBadge />
+export default function DocItemContent({children}: {children: React.ReactNode}) {
 
 const syntheticTitle = useSyntheticTitle();
 return (
@@ -41,7 +38,6 @@ return (
           <div className={s.mainContentHeader}>
             <div className={s.headerWrapper}>
               <Heading as="h1">{syntheticTitle}</Heading>
-              {testTypePill}
             </div>
           </div>
         </header>
