@@ -1,24 +1,21 @@
 ---
-title: 'Cypress.SelectorPlayground | Cypress Documentation'
-description: 'The Selector Playground exposes APIs that enable you to change the default selector strategy and override the selectors that are returned per element.'
-sidebar_label: SelectorPlayground
+title: 'Cypress.ElementSelector | Cypress Documentation'
+description: 'The Element Selector exposes APIs that enable you to change the default selector strategy and override the selectors that are returned per element.'
+sidebar_label: ElementSelector
+sidebar_position: 105
 ---
 
 <ProductHeading product="app" />
 
-# Cypress.SelectorPlayground
+# Cypress.ElementSelector
 
-The [Selector Playground](/app/core-concepts/open-mode#Selector-Playground)
-exposes APIs that enable you to:
-
-- Change the default selector strategy
-- Override the selectors that are returned per element
+The Element Selector API is used to get the selector priority for selecting elements in [Cypress Studio](/app/guides/cypress-studio) and [Selector Playground](/app/core-concepts/open-mode#Selector-Playground).
 
 ## Syntax
 
 ```javascript
-Cypress.SelectorPlayground.defaults(options)
-Cypress.SelectorPlayground.getSelector($el)
+Cypress.ElementSelector.defaults(options)
+Cypress.ElementSelector.getSelector($el)
 ```
 
 ### Arguments
@@ -30,7 +27,17 @@ An object containing any or all of the following options:
 | Option             | Accepts            | Description                                                                                                                                                           |
 | ------------------ | ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `selectorPriority` | `Array of strings` | Determines the order of preference for which selector is chosen for the element.                                                                                      |
-| `onElement`        | `function`         | A function called with the element that should return a unique selector string for the element. If a falsey value is returned, the default selector function is used. |
+
+`selectorPriority` accepts the following strings:
+
+- `attribute:${string}`
+- `attributes`
+- `class`
+- `data-${string}`
+- `id`
+- `name`
+- `nth-child`
+- `tag`
 
 <DefaultSelectorPriority />
 
@@ -43,37 +50,20 @@ the selector value for.
 
 ### Selector Priority
 
-Set the selector priority to favor IDs, then classes, then attributes.
+Set the selector priority to favor role, then aria-label, then name, then classes, then attributes.
 
 ```javascript
-Cypress.SelectorPlayground.defaults({
-  selectorPriority: ['id', 'class', 'attributes'],
-})
-```
-
-### onElement Callback
-
-Set a custom function for determining the selector for an element. Falls back to
-default behavior if returning a falsey value.
-
-```javascript
-Cypress.SelectorPlayground.defaults({
-  onElement: ($el) => {
-    const customId = $el.attr('my-custom-attr')
-
-    if (customId) {
-      return `[my-custom-attr=${customId}]`
-    }
-  },
+Cypress.ElementSelector.defaults({
+  selectorPriority: ['attribute:role', 'attribute:aria-label', 'name', 'class', 'attributes'],
 })
 ```
 
 ### Get Selector
 
 Returns you the selector value for a given element as determined by the selector
-strategy.
+strategy. This is useful for debugging custom selector priorities you have set.
 
-For example, consider this HTML fragment.
+For example, consider this HTML fragment:
 
 ```html
 <button id="bingo" class="number3">Cup of tea</button>
@@ -84,17 +74,22 @@ because IDs have priority over classes.
 
 ```js
 const $el = Cypress.$('button')
-const selector = Cypress.SelectorPlayground.getSelector($el) // '#bingo'
+const selector = Cypress.ElementSelector.getSelector($el) // '#bingo'
 ```
 
 With a custom selector strategy that favours classes, the selector value will be
 `'.number3'`.
 
 ```js
-Cypress.SelectorPlayground.defaults({
+Cypress.ElementSelector.defaults({
   selectorPriority: ['class', 'id'],
 })
 
 const $el = Cypress.$('button')
-const selector = Cypress.SelectorPlayground.getSelector($el) // '.number3'
+const selector = Cypress.ElementSelector.getSelector($el) // '.number3'
 ```
+
+## See also
+
+- [Cypress Studio](/app/guides/cypress-studio)
+- [Selector Playground](/app/core-concepts/open-mode#Selector-Playground)

@@ -87,6 +87,16 @@ You can also extend and update existing tests using Cypress Studio.
 The selectors are generated according to the
 [`Cypress.ElementSelector` selector priority](/api/cypress-api/selector-playground-api#Default-Selector-Priority).
 
+### How are selectors determined?
+
+Cypress will automatically calculate a **unique selector** to use for a targeted
+element by running through a series of selector strategies.
+
+<DefaultSelectorPriority />
+
+Cypress allows you to control how a selector is determined. Use the
+[`Cypress.ElementSelector`](/api/cypress-api/element-selector-api) API to control
+the selectors you want prioritized.
 
 ## Limitations
 
