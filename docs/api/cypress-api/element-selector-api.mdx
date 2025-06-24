@@ -24,9 +24,9 @@ Cypress.ElementSelector.getSelector($el)
 
 An object containing any or all of the following options:
 
-| Option             | Accepts            | Description                                                                                                                                                           |
-| ------------------ | ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `selectorPriority` | `Array of strings` | Determines the order of preference for which selector is chosen for the element.                                                                                      |
+| Option             | Accepts            | Description                                                                      |
+| ------------------ | ------------------ | -------------------------------------------------------------------------------- |
+| `selectorPriority` | `Array of strings` | Determines the order of preference for which selector is chosen for the element. |
 
 `selectorPriority` accepts the following strings:
 
@@ -54,7 +54,13 @@ Set the selector priority to favor role, then aria-label, then name, then classe
 
 ```javascript
 Cypress.ElementSelector.defaults({
-  selectorPriority: ['attribute:role', 'attribute:aria-label', 'name', 'class', 'attributes'],
+  selectorPriority: [
+    'attribute:role',
+    'attribute:aria-label',
+    'name',
+    'class',
+    'attributes',
+  ],
 })
 ```
 
