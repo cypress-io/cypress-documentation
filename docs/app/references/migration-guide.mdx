@@ -144,6 +144,32 @@ import { mount } from `cypress/angular`
 import { mount } from `@cypress/angular`
 ```
 
+### Selector Playground API changes
+
+The `Cypress.SelectorPlayground` API has been renamed to
+[`Cypress.ElementSelector`](/api/cypress-api/element-selector-api). Additionally, the `onElement` function has been removed as an option to the `defaults` method.
+
+This change was made in order to reflect its use in features beyond just the Selector Playground - like Cypress Studio.
+
+The following code shows how to migrate from the `Cypress.SelectorPlayground` API to the
+[`Cypress.ElementSelector`](/api/cypress-api/element-selector-api) API.
+
+<Badge type="danger">Before</Badge>{' '}
+
+```ts
+Cypress.SelectorPlayground.defaults({
+  selectorPriority: ['class', 'id'],
+})
+```
+
+<Badge type="success">After</Badge>
+
+```ts
+Cypress.ElementSelector.defaults({
+  selectorPriority: ['class', 'id'],
+})
+```
+
 ## Migrating to Cypress 14.0
 
 This guide details the code changes needed to migrate to Cypress
