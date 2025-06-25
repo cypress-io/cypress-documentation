@@ -1,0 +1,98 @@
+---
+title: 'Additional Interaction Commands | Cypress UI Coverage'
+description: 'The `additionalInteractionCommands` configuration property allows users to extend the default set of interaction command types recognized by UI Coverage.'
+sidebar_label: additionalInteractionCommands
+sidebar_position: 90
+---
+
+<ProductHeading product="ui-coverage" />
+
+# additionalInteractionCommands
+
+UI Coverage automatically tracks interactions with elements during test execution using a predefined set of interaction commands. The `additionalInteractionCommands` configuration allows you to extend this default set by specifying custom command types that should also be recognized as interactions, ensuring comprehensive coverage tracking for applications using custom or third-party interaction patterns.
+
+## Why use additionalInteractionCommands?
+
+- **Custom Command Support**: Track interactions from custom Cypress commands that aren't included in the default set.
+- **Third-party Library Support**: Ensure interactions from third-party testing libraries are properly recognized and tracked.
+- **Comprehensive Coverage**: Get complete visibility into all user interactions, including domain-specific or application-specific commands.
+- **Enhanced Reporting**: Improve the accuracy of your UI Coverage reports by including all relevant interaction types.
+
+## Syntax
+
+```json
+{
+  "uiCoverage": {
+    "additionalInteractionCommands": [
+      string
+    ]
+  }
+}
+```
+
+### Options
+
+The `additionalInteractionCommands` property accepts an array of strings, where each string represents a command name that should be treated as an interaction command by UI Coverage.
+
+| Option                         | Required | Default | Description                                                                                                      |
+| ------------------------------ | -------- | ------- | ---------------------------------------------------------------------------------------------------------------- |
+| `additionalInteractionCommands` | Optional | `[]`    | An array of command names (strings) that should be recognized as interaction commands in addition to the defaults. |
+
+## Examples
+
+### Adding custom interaction commands
+
+#### Config
+
+```json
+{
+  "uiCoverage": {
+    "additionalInteractionCommands": [
+      "customClick",
+      "dragAndDrop",
+      "swipeLeft"
+    ]
+  }
+}
+```
+
+#### Usage in tests
+
+```javascript
+// These custom commands will now be tracked as interactions
+cy.get('[data-testid="submit-button"]').customClick()
+cy.get('[data-testid="draggable"]').dragAndDrop()
+cy.get('[data-testid="carousel"]').swipeLeft()
+```
+
+### Adding third-party library commands
+
+#### Config
+
+```json
+{
+  "uiCoverage": {
+    "additionalInteractionCommands": [
+      "realClick",
+      "realType",
+      "realHover"
+    ]
+  }
+}
+```
+
+#### Usage in tests
+
+```javascript
+// Commands from cypress-real-events plugin will be tracked
+cy.get('[data-cy="button"]').realClick()
+cy.get('[data-cy="input"]).realType('Hello World')
+cy.get('[data-cy="tooltip-trigger"]').realHover()
+```
+
+## Notes
+
+- Command names are case-sensitive and must match exactly as they appear in your test code.
+- The additional commands are merged with the default interaction commands, not replaced.
+- Only commands that actually interact with DOM elements should be included in this configuration.
+- Custom commands must log a snapshot that references the subject element. This ensures that the command renders element highlights in Cypress open mode/Test Replay, and also ensures that UI Coverage can properly attribute the interaction to the expected element. More information regarding Custom Commands can be found [here](/api/cypress-api/custom-commands).

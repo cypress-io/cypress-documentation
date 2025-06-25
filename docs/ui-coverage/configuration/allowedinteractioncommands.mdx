@@ -1,0 +1,148 @@
+---
+title: 'Allowed Interaction Commands | Cypress UI Coverage'
+description: 'The `allowedInteractionCommands` configuration property allows users to limit the interaction commands that are tracked for specific elements in UI Coverage.'
+sidebar_label: allowedInteractionCommands
+sidebar_position: 100
+---
+
+<ProductHeading product="ui-coverage" />
+
+# allowedInteractionCommands
+
+UI Coverage tracks all interaction commands by default for comprehensive coverage reporting. The `allowedInteractionCommands` configuration allows you to limit which interaction commands are tracked for specific elements by defining rules based on CSS selectors. This is particularly useful for filtering out irrelevant interactions or focusing coverage tracking on specific interaction patterns for different types of elements.
+
+## Why use allowedInteractionCommands?
+
+- **Focused Tracking**: Limit coverage tracking to relevant interaction types for specific elements or components.
+- **Noise Reduction**: Filter out unimportant interactions that may clutter coverage reports.
+- **Component-Specific Rules**: Apply different interaction tracking rules based on element types or component categories.
+- **Performance Optimization**: Reduce tracking overhead by excluding unnecessary interactions for certain elements.
+
+## Syntax
+
+```json
+{
+  "uiCoverage": {
+    "allowedInteractionCommands": [
+      {
+        "selector": string,
+        "commands": [string]
+      }
+    ]
+  }
+}
+```
+
+### Options
+
+The `allowedInteractionCommands` property accepts an array of objects, where each object defines a rule for limiting interaction commands for elements matching a specific selector.
+
+| Option     | Required | Default | Description                                                                                                      |
+| ---------- | -------- | ------- | ---------------------------------------------------------------------------------------------------------------- |
+| `selector` | Required |         | A CSS selector to identify elements. Supports standard CSS selector syntax, including IDs, classes, attributes, and combinators. |
+| `commands` | Required |         | An array of command names (strings) that should be tracked as interactions for elements matching the selector. All other interaction commands will be ignored for these elements. |
+
+## Examples
+
+### Limiting button interactions to clicks only
+
+#### Config
+
+```json
+{
+  "uiCoverage": {
+    "allowedInteractionCommands": [
+      {
+        "selector": "button, [role='button']",
+        "commands": ["click", "realClick"]
+      }
+    ]
+  }
+}
+```
+
+#### Usage in tests
+
+```javascript
+// Only click and realClick will be tracked for buttons
+cy.get('[data-testid="submit-button"]').click() // ✓ Tracked
+cy.get('[data-testid="submit-button"]').realClick() // ✓ Tracked
+cy.get('[data-testid="submit-button"]').hover() // ✗ Not tracked
+cy.get('[data-testid="submit-button"]').focus() // ✗ Not tracked
+```
+
+### Different rules for form elements
+
+#### Config
+
+```json
+{
+  "uiCoverage": {
+    "allowedInteractionCommands": [
+      {
+        "selector": "input[type='text'], textarea",
+        "commands": ["type", "clear", "realType"]
+      },
+      {
+        "selector": "select",
+        "commands": ["select", "click"]
+      },
+      {
+        "selector": "input[type='checkbox'], input[type='radio']",
+        "commands": ["check", "uncheck", "click"]
+      }
+    ]
+  }
+}
+```
+
+#### Usage in tests
+
+```javascript
+// Text inputs: only type, clear, and realType are tracked
+cy.get('[data-testid="username"]').type('john_doe') // ✓ Tracked
+cy.get('[data-testid="username"]').clear() // ✓ Tracked
+cy.get('[data-testid="username"]').focus() // ✗ Not tracked
+
+// Select elements: only select and click are tracked
+cy.get('[data-testid="country"]').select('US') // ✓ Tracked
+cy.get('[data-testid="country"]').click() // ✓ Tracked
+cy.get('[data-testid="country"]').hover() // ✗ Not tracked
+
+// Checkboxes/Radio buttons: check, uncheck, and click are tracked
+cy.get('[data-testid="agree-terms"]').check() // ✓ Tracked
+cy.get('[data-testid="agree-terms"]').click() // ✓ Tracked
+```
+
+### Excluding hover interactions for mobile components
+
+#### Config
+
+```json
+{
+  "uiCoverage": {
+    "allowedInteractionCommands": [
+      {
+        "selector": "[data-mobile='true']",
+        "commands": ["click", "tap", "swipe", "type"]
+      }
+    ]
+  }
+}
+```
+
+#### Usage in tests
+
+```javascript
+// Mobile components: hover interactions are excluded
+cy.get('[data-mobile="true"][data-testid="menu-item"]').click() // ✓ Tracked
+cy.get('[data-mobile="true"][data-testid="menu-item"]').tap() // ✓ Tracked
+cy.get('[data-mobile="true"][data-testid="menu-item"]').hover() // ✗ Not tracked
+```
+
+## Notes
+
+- Elements that don't match any selector will have all interaction commands tracked (default behavior).
+- If an element matches multiple selectors, commands from all matching rules will be allowed. A high degree of specificity for these selectors is recommended.
+- Command names are case-sensitive and must match exactly as they appear in your test code.
+- This configuration works separately from `additionalInteractionCommands` - custom commands do not need to be defined as `additionalInteractionCommands` in order to be declared here.
