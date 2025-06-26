@@ -37,9 +37,9 @@ UI Coverage tracks all interaction commands by default for comprehensive coverag
 
 The `allowedInteractionCommands` property accepts an array of objects, where each object defines a rule for limiting interaction commands for elements matching a specific selector.
 
-| Option     | Required | Default | Description                                                                                                      |
-| ---------- | -------- | ------- | ---------------------------------------------------------------------------------------------------------------- |
-| `selector` | Required |         | A CSS selector to identify elements. Supports standard CSS selector syntax, including IDs, classes, attributes, and combinators. |
+| Option     | Required | Default | Description                                                                                                                                                                       |
+| ---------- | -------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `selector` | Required |         | A CSS selector to identify elements. Supports standard CSS selector syntax, including IDs, classes, attributes, and combinators.                                                  |
 | `commands` | Required |         | An array of command names (strings) that should be tracked as interactions for elements matching the selector. All other interaction commands will be ignored for these elements. |
 
 ## Examples
@@ -65,10 +65,10 @@ The `allowedInteractionCommands` property accepts an array of objects, where eac
 
 ```javascript
 // Only click and realClick will be tracked for buttons
-cy.get('[data-testid="submit-button"]').click() // ✓ Tracked
-cy.get('[data-testid="submit-button"]').realClick() // ✓ Tracked
-cy.get('[data-testid="submit-button"]').hover() // ✗ Not tracked
-cy.get('[data-testid="submit-button"]').focus() // ✗ Not tracked
+cy.get('[data-cy="submit-button"]').click() // ✓ Tracked
+cy.get('[data-cy="submit-button"]').realClick() // ✓ Tracked
+cy.get('[data-cy="submit-button"]').hover() // ✗ Not tracked
+cy.get('[data-cy="submit-button"]').focus() // ✗ Not tracked
 ```
 
 ### Different rules for form elements
@@ -100,18 +100,18 @@ cy.get('[data-testid="submit-button"]').focus() // ✗ Not tracked
 
 ```javascript
 // Text inputs: only type, clear, and realType are tracked
-cy.get('[data-testid="username"]').type('john_doe') // ✓ Tracked
-cy.get('[data-testid="username"]').clear() // ✓ Tracked
-cy.get('[data-testid="username"]').focus() // ✗ Not tracked
+cy.get('[data-cy="username"]').type('john_doe') // ✓ Tracked
+cy.get('[data-cy="username"]').clear() // ✓ Tracked
+cy.get('[data-cy="username"]').focus() // ✗ Not tracked
 
 // Select elements: only select and click are tracked
-cy.get('[data-testid="country"]').select('US') // ✓ Tracked
-cy.get('[data-testid="country"]').click() // ✓ Tracked
-cy.get('[data-testid="country"]').hover() // ✗ Not tracked
+cy.get('[data-cy="country"]').select('US') // ✓ Tracked
+cy.get('[data-cy="country"]').click() // ✓ Tracked
+cy.get('[data-cy="country"]').hover() // ✗ Not tracked
 
 // Checkboxes/Radio buttons: check, uncheck, and click are tracked
-cy.get('[data-testid="agree-terms"]').check() // ✓ Tracked
-cy.get('[data-testid="agree-terms"]').click() // ✓ Tracked
+cy.get('[data-cy="agree-terms"]').check() // ✓ Tracked
+cy.get('[data-cy="agree-terms"]').click() // ✓ Tracked
 ```
 
 ### Excluding hover interactions for mobile components
@@ -135,9 +135,35 @@ cy.get('[data-testid="agree-terms"]').click() // ✓ Tracked
 
 ```javascript
 // Mobile components: hover interactions are excluded
-cy.get('[data-mobile="true"][data-testid="menu-item"]').click() // ✓ Tracked
-cy.get('[data-mobile="true"][data-testid="menu-item"]').tap() // ✓ Tracked
-cy.get('[data-mobile="true"][data-testid="menu-item"]').hover() // ✗ Not tracked
+cy.get('[data-mobile="true"][data-cy="menu-item"]').click() // ✓ Tracked
+cy.get('[data-mobile="true"][data-cy="menu-item"]').tap() // ✓ Tracked
+cy.get('[data-mobile="true"][data-cy="menu-item"]').hover() // ✗ Not tracked
+```
+
+### Allowing assertions as interactions
+
+#### Config
+
+```json
+{
+  "uiCoverage": {
+    "allowedInteractionCommands": [
+      {
+        "selector": "button[data-no-explicit-interaction='true']",
+        "commands": ["assert"]
+      }
+    ]
+  }
+}
+```
+
+#### Usage in tests
+
+```javascript
+// Any assertions on matching elements are tracked
+cy.get('button[data-no-explicit-interaction='true']').should('exist) // ✓ Tracked
+cy.get('button[data-no-explicit-interaction='true']').should('be.visible) // ✓ Tracked
+cy.get('button[data-no-explicit-interaction='true']').click() // ✗ Not tracked
 ```
 
 ## Notes

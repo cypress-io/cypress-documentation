@@ -34,8 +34,8 @@ UI Coverage automatically tracks interactions with elements during test executio
 
 The `additionalInteractionCommands` property accepts an array of strings, where each string represents a command name that should be treated as an interaction command by UI Coverage.
 
-| Option                         | Required | Default | Description                                                                                                      |
-| ------------------------------ | -------- | ------- | ---------------------------------------------------------------------------------------------------------------- |
+| Option                          | Required | Default | Description                                                                                                        |
+| ------------------------------- | -------- | ------- | ------------------------------------------------------------------------------------------------------------------ |
 | `additionalInteractionCommands` | Optional | `[]`    | An array of command names (strings) that should be recognized as interaction commands in addition to the defaults. |
 
 ## Examples
@@ -47,11 +47,7 @@ The `additionalInteractionCommands` property accepts an array of strings, where 
 ```json
 {
   "uiCoverage": {
-    "additionalInteractionCommands": [
-      "customClick",
-      "dragAndDrop",
-      "swipeLeft"
-    ]
+    "additionalInteractionCommands": ["customClick", "dragAndDrop", "swipeLeft"]
   }
 }
 ```
@@ -72,11 +68,7 @@ cy.get('[data-testid="carousel"]').swipeLeft()
 ```json
 {
   "uiCoverage": {
-    "additionalInteractionCommands": [
-      "realClick",
-      "realType",
-      "realHover"
-    ]
+    "additionalInteractionCommands": ["realClick", "realType", "realHover"]
   }
 }
 ```
