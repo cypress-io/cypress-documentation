@@ -1,0 +1,27 @@
+---
+title: 'Cypress Rules | Cypress Documentation'
+description: 'Review the main areas to pay attention to when first reviewing an accessibility report for a Cypress run.'
+sidebar_position: 70
+sidebar_label: Cypress rules
+sidebar_custom_props: { 'new_label': true }
+---
+
+<ProductHeading product="accessibility" />
+
+# Cypress rules
+
+In addition to the default ruleset of the Axe-Core® library, we also develop custom rules that take advantage of the addition layer of information available in a test automation context.
+
+The first custom rule that we have implemented is called "Interactive elements must be semantically correct." At launch, it is a non-blocking **manual-review** rule that will either pass or return an inconclusive state.
+
+## Interactive elements must be semantically correct
+
+<DocsImage
+  src="/img/accessibility/core-concepts/cypress-rule.png"
+  width="60%"
+  alt="A custom Cypress accessibility rule called 'Interactive elements must be semantically correct' has two failed elements displayed."
+/>
+
+This custom rule is intended to surface the kinds of elements that Axe-Core® traditionally does not evaluate as interactive, even though users may threat them that way.
+
+This works based on the interactions that take place during testing.
