@@ -17,3 +17,9 @@
   font-size: 1.2rem;
   margin-right: 0.5rem;
 }
+
+.productHeadingBadge {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+}
