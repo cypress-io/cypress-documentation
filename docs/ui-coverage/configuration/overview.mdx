@@ -13,6 +13,17 @@ Configuration enables you to customize and fine-tune UI Coverage in Cypress to s
 
 **Note**: By default, setting configuration is limited to Admin users. At your request, this can be changed to allow setting config by all users. Reach out to your Cypress point-of-contact if you would like to change this.
 
+:::success
+
+## New configuration options
+
+UI Coverage now supports defining custom commands that will count towards coverage scores, restricting which kinds of interactions are allowed for certain elements, and including assertions in the UI Coverage calculations. See the following new properties for more details:
+
+- [`additionalInteractionCommands`](/ui-coverage/configuration/additionalinteractioncommands)
+- [`allowedInteractionCommands`](/ui-coverage/configuration/allowedinteractioncommands)
+
+:::
+
 ## Setting configuration
 
 To add or modify the configuration for your project:
@@ -26,6 +37,12 @@ To add or modify the configuration for your project:
 />
 
 ## Configuration options
+
+:::info
+
+For a quick overview of the practical application of the most common UI Coverage confiuration properties, you can read [this blog post](https://www.cypress.io/blog/making-the-most-of-ui-coverage).
+
+:::
 
 A complete configuration with all available options looks as follows:
 

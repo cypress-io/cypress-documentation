@@ -9,14 +9,14 @@ sidebar_position: 100
 
 # allowedInteractionCommands
 
-UI Coverage tracks all interaction commands by default for comprehensive coverage reporting. The `allowedInteractionCommands` configuration allows you to limit which interaction commands are tracked for specific elements by defining rules based on CSS selectors. This is particularly useful for filtering out irrelevant interactions or focusing coverage tracking on specific interaction patterns for different types of elements.
+UI Coverage tracks all interaction commands by default for comprehensive coverage reporting. The `allowedInteractionCommands` configuration allows you to limit which interaction commands are tracked for specific elements by defining rules based on CSS selectors.
+
+This is particularly useful for filtering out irrelevant interactions or focusing coverage tracking on specific interaction patterns for different types of elements.
 
 ## Why use allowedInteractionCommands?
 
-- **Focused Tracking**: Limit coverage tracking to relevant interaction types for specific elements or components.
-- **Noise Reduction**: Filter out unimportant interactions that may clutter coverage reports.
-- **Component-Specific Rules**: Apply different interaction tracking rules based on element types or component categories.
-- **Performance Optimization**: Reduce tracking overhead by excluding unnecessary interactions for certain elements.
+- **Focused tracking**: Limit coverage tracking to relevant interaction types for specific elements or components to reduce noise in reports.
+- **Component-specific rules**: Apply different interaction tracking rules based on element types or component categories. For example, you may require specific kinds of interactions on complex data-visualization components that are not required in regular interactive elements.
 
 ## Syntax
 
@@ -142,12 +142,14 @@ cy.get('[data-mobile="true"][data-cy="menu-item"]').hover() // ✗ Not tracked
 
 ### Allowing assertions as interactions
 
+Note that because `allowedInteractionCommands` replaces the allowed interactions, if you add `assert` as an interaction, remember to also add any other acceptable interactions to the list.
+
 #### Config
 
 ```json
 {
   "uiCoverage": {
-    "allowedInteractionCommands": [
+    "additionalInteractionCommands": [
       {
         "selector": "button[data-no-explicit-interaction='true']",
         "commands": ["assert"]
@@ -171,4 +173,4 @@ cy.get('button[data-no-explicit-interaction="true"]').click() // ✗ Not tracked
 - Elements that don't match any selector will have all interaction commands tracked (default behavior).
 - If an element matches multiple selectors, commands from all matching rules will be allowed. A high degree of specificity for these selectors is recommended.
 - Command names are case-sensitive and must match exactly as they appear in your test code.
-- This configuration works separately from `additionalInteractionCommands`. Custom commands do not need to be defined as `additionalInteractionCommands` in order to be declared here.
+- This configuration works separately from `additionalInteractionCommands`. Custom commands do **not** need to be globally defined as `additionalInteractionCommands` in order to be declared here.

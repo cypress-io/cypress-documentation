@@ -9,14 +9,15 @@ sidebar_position: 90
 
 # additionalInteractionCommands
 
-UI Coverage automatically tracks interactions with elements during test execution using a predefined set of interaction commands. The `additionalInteractionCommands` configuration allows you to extend this default set by specifying custom command types that should also be recognized as interactions, ensuring comprehensive coverage tracking for applications using custom or third-party interaction patterns.
+UI Coverage automatically tracks how elements are used in tests using a predefined set of [Cypress interaction commands](/ui-coverage/core-concepts/interactivity#Interaction-Commands) such as `click`, `type`, `dblclick`, and more.
+
+The `additionalInteractionCommands` configuration allows you to extend this default set. You can specify custom command types that should also be recognized as interactions, which can increase the range of actions that are counted towards UI Coverage
 
 ## Why use additionalInteractionCommands?
 
-- **Custom Command Support**: Track interactions from custom Cypress commands that aren't included in the default set.
-- **Third-party Library Support**: Ensure interactions from third-party testing libraries are properly recognized and tracked.
-- **Comprehensive Coverage**: Get complete visibility into all user interactions, including domain-specific or application-specific commands.
-- **Enhanced Reporting**: Improve the accuracy of your UI Coverage reports by including all relevant interaction types.
+- **Custom command support**: Track interactions from custom Cypress commands that aren't included in the default set.
+- **Third-party library support**: Ensure interactions from third-party testing libraries (such as [`cypress-real-events`](#Adding-third-party-library-commands)) are properly recognized and tracked.
+- **Enhanced reporting**: Improve the accuracy of your UI Coverage reports by including all relevant interaction types.
 
 ## Syntax
 
@@ -85,6 +86,6 @@ cy.get('[data-cy="tooltip-trigger"]').realHover()
 ## Notes
 
 - Command names are case-sensitive and must match exactly as they appear in your test code.
-- The additional commands are merged with the default interaction commands, not replaced.
+- The additional commands are merged with the default interaction commands, the default commands are not replaced.
 - Only commands that actually interact with DOM elements should be included in this configuration.
 - Custom commands must log a snapshot that references the subject element. This ensures that the command renders element highlights in Cypress open mode/Test Replay, and also ensures that UI Coverage can properly attribute the interaction to the expected element. More information regarding Custom Commands can be found [here](/api/cypress-api/custom-commands).
