@@ -20,6 +20,8 @@ The utility supports the following CI providers. Refer to the linked guides for 
 - [GitHub Actions](/app/continuous-integration/github-actions)
 - [GitLab](/app/continuous-integration/gitlab-ci)
 - [Jenkins](/app/continuous-integration/overview#Jenkins)
+- [AWS CodeBuild](/app/continuous-integration/aws-codebuild)
+- Drone
 
 For other CI providers, contact Cypress Support to request support.
 
@@ -324,5 +326,63 @@ workflows:
       - run-cypress
 ```
 
+</TabItem>
+
+<TabItem value="AWS CodeBuild" >
+
+```diff title="buildspec.yaml"
+phases:
+  install:
+    runtime-versions:
+      nodejs: latest
+    commands:
+      # Set COMMIT_INFO variables to send Git specifics to Cypress Cloud when recording
+      # https://docs.cypress.io/app/continuous-integration/overview#Git-information
+      - export COMMIT_INFO_BRANCH="$(git rev-parse HEAD | xargs git name-rev |
+        cut -d' ' -f2 | sed 's/remotes\/origin\///g')"
+      - export COMMIT_INFO_MESSAGE="$(git log -1 --pretty=%B)"
+      - export COMMIT_INFO_EMAIL="$(git log -1 --pretty=%ae)"
+      - export COMMIT_INFO_AUTHOR="$(git log -1 --pretty=%an)"
+      - export COMMIT_INFO_SHA="$(git log -1 --pretty=%H)"
+      - export COMMIT_INFO_REMOTE="$(git config --get remote.origin.url)"
+      - npm ci
+  pre_build:
+    commands:
+      - npm run cypress:verify
+      - npm run cypress:info
+  build:
+    commands:
+      - CYPRESS_INTERNAL_ENV=staging CYPRESS_PROJECT_ID=[slug] npx cypress run --record --key [KEY]
++  post_build:
++    commands:
++      - npm install --force https://cdn.cypress.io/extract-cloud-results/v1/extract-cloud-results.tgz
++      - CYPRESS_INTERNAL_ENV=staging CYPRESS_PROJECT_ID=[slug] CYPRESS_RECORD_KEY=[KEY] node ./scripts/verifyUICoverageResults.js
+```
+
+</TabItem>
+
+<TabItem value="Drone" >
+```diff title=".drone.yaml"
+  kind: pipeline
+  name: default
+
+  environment:
+    CYPRESS_PROJECT_ID: example_project_slug
+    CYPRESS_RECORD_KEY:
+      from_secret: example_record_key_secret
+
+  steps:
+  - name: test
+    image: node:latest
+    commands:
+    - npm install
+    - npx cypress run --record
+
++ - name: validate
++   image: node:latest
++   commands:
++    - npm install --force https://cdn.cypress.io/extract-cloud-results/v1/extract-cloud-results.tgz
++    - node ./scripts/verifyUICoverageResults.js
+```
 </TabItem>
 </Tabs>
