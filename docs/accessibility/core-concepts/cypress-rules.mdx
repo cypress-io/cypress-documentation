@@ -59,12 +59,15 @@ Custom components implemented this way have a direct impact on the independence 
 An incorrectly implemented interactive element may be failing multiple Success Criteria from WCAG, for example:
 
 - [SC 1.3.1 Info and Relationships](https://www.w3.org/TR/WCAG21/#info-and-relationships)
+  - Elements may incorrectly appear to be non-interactive generic elements
 - [SC 2.1.1 Keyboard](https://www.w3.org/TR/WCAG21/#keyboard)
+  - Non-interactive elements require custom implementations for keyboard accessibility and focus states
 - [SC 4.1.2 Name, Role, Value](https://www.w3.org/TR/WCAG21/#name-role-value)
+  - Non-interactive elements require explicit ARIA roles to have their function and name correctly described by assistive technology such as screen readers
 
 ### Status
 
-This rule is available in all Cypress Accessibility projects, though it is not turned on by default at launch. Reach out to Cypress if you would like to have this rule activated for you early.
+This rule is available in all Cypress Accessibility projects, though it is not turned on by default. Reach out to Cypress if you would like to have this rule activated for you early.
 
 ### Possible outcomes
 
