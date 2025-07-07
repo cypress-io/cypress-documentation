@@ -1,5 +1,5 @@
 ---
-title: 'Cypress Rules | Cypress Documentation'
+title: 'Cypress Rules | Cypress Accessibility Documentation'
 description: 'Review the main areas to pay attention to when first reviewing an accessibility report for a Cypress run.'
 sidebar_position: 70
 sidebar_label: Cypress rules
@@ -12,11 +12,11 @@ sidebar_custom_props: { 'new_label': true }
 
 In addition to running the default ruleset of the Axe-Core® library, we also create custom rules that take advantage of the addition layer of information available in a test automation context. These rules are identified by a "Cypress Rule" badge, to distinguish them from the main Axe-Core® rule set.
 
-The first custom rule that we have implemented is called "Interactive elements must be semantically correct." At launch, it is a non-blocking **manual-review** rule that will either pass or return an inconclusive state.
+The first custom rule that we have implemented is called "Interactive elements must be semantically correct." At launch, it is a non-blocking **manual-review** rule that will either pass if no issues are found, or return an inconclusive state.
 
 ## Interactive elements must be semantically correct
 
-**Rule ID**: `semantic-html-warning`
+**Rule ID**: `cd-semantic-html-warning`
 
 <DocsImage
   src="/img/accessibility/core-concepts/cypress-rule.png"
@@ -30,16 +30,21 @@ This works based on the interactions that take place during testing. Often an in
 
 ### How to pass this rule
 
-You should look at the purpose and nature of the specific elements flagged by this rule and decide what interactive element is appropriate for the interactions that a user can do and the effects of the interaction. 
+You should look at the purpose and nature of the specific elements flagged by this rule and decide what interactive element is appropriate.
 
-For example, if the element that gets flagged is a span that has been styled to look like a button and submits a form, the correct solution would be standard html button element. But if the same element was styled with underlined text, and when clicked it resets the URL to navigate to a new page, the correct element is a link.
+For example:
 
-The goal of this rule is not to propose the correct element for your scenarios, but to surface the elements that need attention so that you can make this decision. After that, with appropriate semantics in place, the elements will then be able to be correctly parsed and analyzed by the standard Axe-Core® checks.
+* If the element that gets flagged is a span that has been styled to look like a button and submits a form, the correct solution would be standard HTML button element. This communicates the expected action and is activated with the space bar or enter key.
+
+* If the same element is styled with underlined text, and when clicked it resets the URL to navigate to a new page, the correct solution is a link element with a `href` attribute.
+
+In each case, the solution is to choose the element that provides the best information to the user, so they can independently understand what the action does, and activate it.
+
+After you have updated to a suitable HTML solution, elements will then be able to be correctly parsed and analyzed by the standard Axe-Core® checks.
 
 :::info
-**Tip**: We recommend following the [first rule of ARIA use](https://www.w3.org/TR/using-aria/#firstrule) and implementing interactive controls with standard semantic HTML where possible, relying on ARIA `role` attributes only when no suitable HTML element is available.
+**Tip**: Follow the [first rule of ARIA use](https://www.w3.org/TR/using-aria/#firstrule) and implement interactive controls with standard semantic HTML where possible, relying on ARIA `role` attributes only when no suitable HTML element is available.
 :::
-
 
 ### Why this matters
 
@@ -76,6 +81,7 @@ For each run, this rule can be in one of four states. Most importantly, it will 
 
 ### False positives
 
-We expect a certain number of false positives to be detected during the initial rollout. If you see these, please use the "Submit Feedback" button in the product to let us know. Our goal is to follow the general Axe-Core® philosophy that minimizes false positives.
+We expect a certain number of false positives to be detected during the initial rollout. If you see these, please use the "Submit Feedback" button in the product to let us know. Our goal with any new rules is to follow the general Axe-Core® philosophy that minimizes false positives.
+
 
 
