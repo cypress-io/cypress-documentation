@@ -24,7 +24,7 @@ The first custom rule that we have implemented is called "Interactive elements m
   alt="A custom Cypress accessibility rule called 'Interactive elements must be semantically correct' has two failed elements displayed. One element is open and message reads 'This element should use semantic HTML or ARIA to support the interactions that take place during tests. Detected interactions: mousedown, mouseup, click."
 />
 
-This custom rule is intended to surface potential usability problems with the kinds of elements that Axe-Core® traditionally does not evaluate as interactive, such as div, span, SVG, and image elements. 
+This custom rule is intended to surface potential usability problems with the kinds of elements that Axe-Core® traditionally does not evaluate as interactive, such as div, span, SVG, and image elements.
 
 This works based on the interactions that take place during testing. Often an inaccessible custom component will have Cypress tests that perform interactions the way a user does, and that allows us to detect a mismatch between the underlying purpose of the element in code, and the usage of the element in the context of a test.
 
@@ -34,9 +34,9 @@ You should look at the purpose and nature of the specific elements flagged by th
 
 For example:
 
-* If the element that gets flagged is a span that has been styled to look like a button and submits a form, the correct solution would be standard HTML button element. This communicates the expected action and is activated with the space bar or enter key.
+- If the element that gets flagged is a span that has been styled to look like a button and submits a form, the correct solution would be standard HTML button element. This communicates the expected action and is activated with the space bar or enter key.
 
-* If the same element is styled with underlined text, and when clicked it resets the URL to navigate to a new page, the correct solution is a link element with a `href` attribute.
+- If the same element is styled with underlined text, and when clicked it resets the URL to navigate to a new page, the correct solution is a link element with a `href` attribute.
 
 In each case, the solution is to choose the element that provides the best information to the user, so they can independently understand what the action does, and activate it.
 
@@ -70,18 +70,13 @@ This rule is available in all Cypress Accessibility projects, though it is not t
 
 For each run, this rule can be in one of four states. Most importantly, it will never fail, which means it will not affect your accessibility score.
 
-
-| Outcome | Description |
-|---------|-------------|
-| **Pass** | No interactive elements with semantic issues were detected during the test run. |
-| **Inconclusive** | Interactive elements with potential semantic issues were detected. You should review each element and determine the correct solution. |
-| **Not Applicable** | The test run did not interact with any elements. |
-| **Ignored by configuration** | The rule was not executed during this test run because it was intentionally turned off. |
-
+| Outcome                      | Description                                                                                                                           |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| **Pass**                     | No interactive elements with semantic issues were detected during the test run.                                                       |
+| **Inconclusive**             | Interactive elements with potential semantic issues were detected. You should review each element and determine the correct solution. |
+| **Not Applicable**           | The test run did not interact with any elements.                                                                                      |
+| **Ignored by configuration** | The rule was not executed during this test run because it was intentionally turned off.                                               |
 
 ### False positives
 
 We expect a certain number of false positives to be detected during the initial rollout. If you see these, please use the "Submit Feedback" button in the product to let us know. Our goal with any new rules is to follow the general Axe-Core® philosophy that minimizes false positives.
-
-
-

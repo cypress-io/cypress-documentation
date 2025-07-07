@@ -366,23 +366,26 @@ phases:
   kind: pipeline
   name: default
 
-  environment:
-    CYPRESS_PROJECT_ID: example_project_slug
-    CYPRESS_RECORD_KEY:
-      from_secret: example_record_key_secret
+environment:
+CYPRESS_PROJECT_ID: example_project_slug
+CYPRESS_RECORD_KEY:
+from_secret: example_record_key_secret
 
-  steps:
-  - name: test
-    image: node:latest
-    commands:
-    - npm install
-    - npx cypress run --record
+steps:
 
-+ - name: validate
-+   image: node:latest
-+   commands:
-+    - npm install --force https://cdn.cypress.io/extract-cloud-results/v1/extract-cloud-results.tgz
-+    - node ./scripts/verifyUICoverageResults.js
+- name: test
+  image: node:latest
+  commands:
+  - npm install
+  - npx cypress run --record
+
+* - name: validate
+* image: node:latest
+* commands:
+* - npm install --force https://cdn.cypress.io/extract-cloud-results/v1/extract-cloud-results.tgz
+* - node ./scripts/verifyUICoverageResults.js
+
 ```
 </TabItem>
 </Tabs>
+```

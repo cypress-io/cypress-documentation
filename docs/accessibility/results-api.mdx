@@ -72,10 +72,8 @@ This snippet uses the `getAccessibilityResults()` helper to log out the results.
 const { getAccessibilityResults } = require('@cypress/extract-cloud-results')
 
 getAccessibilityResults().then((results) => {
-
   // use `console.dir` instead of `console.log` because the data is nested
-  console.dir(results, { depth: Infinity });
- 
+  console.dir(results, { depth: Infinity })
 })
 ```
 
@@ -157,7 +155,6 @@ getAccessibilityResults({
 
 #### How to use a previous run as a baseline
 
-
 ```javascript title="scripts/verifyAccessibilityResults.js"
 // Assuming these environment variables are set:
 // CYPRESS_PROJECT_ID=your-id
@@ -166,15 +163,11 @@ getAccessibilityResults({
 const { getAccessibilityResults } = require('@cypress/extract-cloud-results')
 
 getAccessibilityResults().then((results) => {
-
-  // use `console.dir` instead of `console.log` 
+  // use `console.dir` instead of `console.log`
   // to ensure nested data prints out correctly
-  console.dir(results, { depth: Infinity });
- 
+  console.dir(results, { depth: Infinity })
 })
 ```
-
-
 
 ### `getAccessibilityResults` Arguments
 
@@ -494,23 +487,26 @@ phases:
   kind: pipeline
   name: default
 
-  environment:
-    CYPRESS_PROJECT_ID: example_project_slug
-    CYPRESS_RECORD_KEY:
-      from_secret: example_record_key_secret
+environment:
+CYPRESS_PROJECT_ID: example_project_slug
+CYPRESS_RECORD_KEY:
+from_secret: example_record_key_secret
 
-  steps:
-  - name: test
-    image: node:latest
-    commands:
-    - npm install
-    - npx cypress run --record
+steps:
 
-+ - name: validate
-+   image: node:latest
-+   commands:
-+    - npm install --force https://cdn.cypress.io/extract-cloud-results/v1/extract-cloud-results.tgz
-+    - node ./scripts/verifyAccessibilityResults.js
+- name: test
+  image: node:latest
+  commands:
+  - npm install
+  - npx cypress run --record
+
+* - name: validate
+* image: node:latest
+* commands:
+* - npm install --force https://cdn.cypress.io/extract-cloud-results/v1/extract-cloud-results.tgz
+* - node ./scripts/verifyAccessibilityResults.js
+
 ```
 </TabItem>
 </Tabs>
+```
