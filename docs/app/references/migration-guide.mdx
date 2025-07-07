@@ -20,6 +20,55 @@ Cypress requires [Node.js](https://nodejs.org/en) in order to install the Cypres
 Node.js versions 18 and 23 are no longer supported.
 [See Node's release schedule](https://github.com/nodejs/Release).
 
+### Unsupported Linux Distributions
+
+Prebuilt binaries for Linux are no longer compatible with Linux distributions based on glibc `<2.31`.
+This support is in line with Node.js's support for Linux in 20+.
+
+If you're using a Linux distribution based on glibc `<2.31`, for example, Ubuntu 18.04, RHEL 8, CentOS 8, AlmaLinux 8, Rocky Linux 8, you'll need to
+update your system to a newer version to install Cypress 15+.
+
+### Distribution Support Matrix
+
+The following matrix shows which major Linux distributions and macOS versions support the requirements for Cypress 15, compared to Cypress 14:
+
+| Distribution     | Version          | Cypress 14 | Cypress 15 |
+| ---------------- | ---------------- | ---------- | ---------- |
+| **Ubuntu**       | 18.04 LTS        | ❌         | ❌         |
+|                  | 20.04 LTS        | ✅         | ✅         |
+|                  | 22.04 LTS        | ✅         | ✅         |
+|                  | 24.04 LTS        | ✅         | ✅         |
+| **Debian**       | 10 (Buster)      | ❌         | ❌         |
+|                  | 11 (Bullseye)    | ✅         | ✅         |
+|                  | 12 (Bookworm)    | ✅         | ✅         |
+| **RHEL/CentOS**  | 7                | ❌         | ❌         |
+|                  | 8                | ✅         | ❌         |
+|                  | 9                | ✅         | ✅         |
+| **AlmaLinux**    | 8                | ✅         | ❌         |
+|                  | 9                | ✅         | ✅         |
+| **Rocky Linux**  | 8                | ✅         | ❌         |
+|                  | 9                | ✅         | ✅         |
+| **Fedora**       | 31               | ❌         | ❌         |
+|                  | 32+              | ✅         | ✅         |
+| **openSUSE**     | Leap 15.2        | ✅         | ✅         |
+|                  | Leap 15.3+       | ✅         | ✅         |
+|                  | Tumbleweed       | ✅         | ✅         |
+| **Arch Linux**   | Rolling          | ✅         | ✅         |
+| **Amazon Linux** | 2                | ❌         | ❌         |
+|                  | 2023             | ✅         | ✅         |
+| **macOS**        | 10.15 (Catalina) | ❌         | ❌         |
+|                  | 11.0+ (Big Sur+) | ✅         | ✅         |
+
+**Legend:**
+
+- ✅ **Supported**: Meets all requirements
+- ❌ **Not Supported**: Does not meet one or more requirements
+
+**Requirements:**
+
+- **Cypress 14**: Node.js 18+, glibc 2.28+, macOS 11.0+
+- **Cypress 15**: Node.js 20+, glibc 2.31+, macOS 11.0+
+
 ### Webpack `4` is no longer supported
 
 Cypress is no longer supporting Webpack `4` as it is no longer maintained by the core Webpack team and Webpack `5` has been available since Q4 2020. This includes Webpack `4` support for:
