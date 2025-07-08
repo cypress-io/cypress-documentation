@@ -209,9 +209,9 @@ time, performance breakdowns, listings of the test code itself, and more.
 
 ### Header
 
-Contains the title of the failed test, and the spec it's located in. May also
+Contains the status and title of the test, as well as the spec it's located in. May also
 have labels indicating test status or other pertinent information, and shortcuts
-to raise tickets on integrated project management systems or view artifacts.
+to raise tickets on integrated project management systems or test artifacts.
 
 <DocsImage src="/img/cloud/runs/sidebar-header.png" alt="Test sidebar header" />
 
@@ -224,13 +224,15 @@ The Test Intent Summary is a Cypress Cloud AI capability. It is an AI-generated 
   alt="Test details sidebar AI-generated Test Intent Summary"
 />
 
-### Attempts and errors
+### Attempts and errors :sparkles:
 
-Stack traces, error message, and point-of-failure code frames for each attempt
-of a test. View or debug artifacts of each particular attempt.
+Cloud AI **"At a glance" Error Summaries** are quick, human-readable explanations of what went wrong and what led to the last attempts failure, so you can jump straight into debugging and investigating the potential root cause.
+
+This section also contains the stack traces, error messages, and point-of-failure code frames for each attempt
+of a test. Drill into the attempt artifacts to see if the problem was consistent or not.
 
 <DocsImage
-  src="/img/cloud/runs/sidebar-errors.png"
+  src="/img/cloud/runs/sidebar-errors-and-attempts.png"
   alt="Test sidebar attempts and errors"
 />
 
