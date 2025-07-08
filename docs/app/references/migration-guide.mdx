@@ -14,9 +14,9 @@ This guide details the code changes needed to migrate to Cypress
 version 15.
 [See the full changelog for version v15.0](/app/references/changelog#15-0-0).
 
-### Node.js 20 and 22+ support
+### Node.js 20, 22 and 24+ support
 
-Cypress requires [Node.js](https://nodejs.org/en) in order to install the Cypress binary and the supported versions are now Node.js 20 and 22+.
+Cypress requires [Node.js](https://nodejs.org/en) in order to install the Cypress binary and the supported versions are now Node.js 20, 22, 24 and above.
 Node.js versions 18 and 23 are no longer supported.
 [See Node's release schedule](https://github.com/nodejs/Release).
 
@@ -31,7 +31,7 @@ To display which version of glibc your Linux system is running, execute `ldd --v
 
 ### Webpack `4` is no longer supported
 
-Cypress is no longer supporting Webpack `4` as it is no longer maintained by the core Webpack team and Webpack `5` has been available since Q4 2020. This includes Webpack `4` support for:
+Cypress is no longer supporting Webpack `4` as it is no longer maintained by the core Webpack team and Webpack `5` has been available since Q4 2020. This includes dropping Webpack `4` support for:
 
 - `@cypress/webpack-dev-server` for component testing. This use case is most common and will require an update to Webpack `5`.
   - `@cypress/webpack-dev-server` also no longer supports [Webpack Dev Server v4](https://github.com/webpack/webpack-dev-server/tree/v4.15.2). We shipped [Webpack Dev Server v5](https://github.com/webpack/webpack-dev-server/tree/v5.2.1) as the default in Cypress 14 with `webpack-dev-server@4` being an option.
@@ -66,7 +66,7 @@ export default defineConfig({
 })
 ```
 
-Note that this package version is deprecated and no longer supported by Cypress and is intended as a workaround until you can migrate to Webpack `5`. More information on how to configure the dev server can be found in the [Cypress Webpack Dev Server documentation](https://github.com/cypress-io/cypress/blob/@cypress/webpack-dev-server-v4.0.2/npm/webpack-dev-server/README.md) and [Custom Dev Server documentation](/app/component-testing/component-framework-configuration#Custom-Dev-Server).
+Note that this package version is deprecated and no longer supported by Cypress and is intended as a workaround until you can migrate to Webpack `5`. More information on how to configure the dev server `v4 `can be found in the [Cypress Webpack Dev Server documentation](https://github.com/cypress-io/cypress/blob/@cypress/webpack-dev-server-v4.0.2/npm/webpack-dev-server/README.md) and [Custom Dev Server documentation](/app/component-testing/component-framework-configuration#Custom-Dev-Server).
 
 ##### End-to-End Testing
 
@@ -127,7 +127,7 @@ module.exports = (on) => {
 
 ### Angular `17` CT no longer supported
 
-With [LTS ending](https://angular.dev/reference/releases#actively-supported-versions) for Angular 17, the minimum required Angular version for component testing is now `18.0.0`.
+With [LTS end](https://angular.dev/reference/releases#actively-supported-versions) for Angular 17, the minimum required Angular version for component testing is now `18.0.0`.
 
 #### To continue using Angular below 18.0.0
 
