@@ -244,6 +244,14 @@
           ],
           "badge": "community"
         },
+
+        {
+          "name": "cypress-geolocation-locale-faker",
+          "description": "A Cypress plugin to mock geolocation, timezone, language, and locale settings for end-to-end testing. Useful for simulating user environments worldwide.",
+          "link": "https://www.npmjs.com/package/cypress-geolocation-locale-faker",
+          "keywords": ["geolocation", "timezone", "locale", "language", "cypress", "plugin", "testing"],
+          "badge": "community"
+        },
         {
           "name": "cypress-repeat",
           "description": "Run Cypress multiple times in a row, great at finding test flake.",
