@@ -17,6 +17,12 @@ The first custom rule that we have implemented is called "Interactive elements s
 ## Interactive elements should be semantically correct
 
 **Rule ID**: `cy-semantic-html-warning`
+**Rule Tag**: `cypress-rule`
+**Severity**: `serious`
+
+:::caution
+This rule requires that runs be recorded using Cypress version 13.14.0 or above.
+:::
 
 <DocsImage
   src="/img/accessibility/core-concepts/cypress-rule.png"
@@ -83,3 +89,5 @@ For each run, this rule can be in one of four states. Most importantly, it will 
 ### False positives
 
 We expect a certain number of false positives to be detected during the initial rollout. If you see these, please use the "Submit Feedback" button in the product to let us know. Our goal with any new rules is to follow the general Axe-Core® philosophy that minimizes false positives.
+
+There is also a possibility that your tests are interacting with non-interactive elements intentionally, for example to test some side effect on focus.
