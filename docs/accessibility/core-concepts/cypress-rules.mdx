@@ -10,18 +10,18 @@ sidebar_custom_props: { 'new_label': true }
 
 # Cypress rules
 
-In addition to running the default ruleset of the Axe-Core® library, we also create custom rules that take advantage of the addition layer of information available in a test automation context. These rules are identified by a "Cypress Rule" badge, to distinguish them from the main Axe-Core® rule set.
+In addition to running the default ruleset of the Axe-Core® library, Cypress develops custom rules that take advantage of the addition layer of information available in a test automation context. These rules are identified by a "Cypress Rule" badge, to distinguish them from the main Axe-Core® rule set.
 
-The first custom rule that we have implemented is called "Interactive elements must be semantically correct." At launch, it is a non-blocking **manual-review** rule that will either pass if no issues are found, or return an inconclusive state.
+The first custom rule that we have implemented is called "Interactive elements should be semantically correct." At launch, it is a non-blocking **manual-review** rule that will either pass if no issues are found, or return an inconclusive state.
 
-## Interactive elements must be semantically correct
+## Interactive elements should be semantically correct
 
 **Rule ID**: `cy-semantic-html-warning`
 
 <DocsImage
   src="/img/accessibility/core-concepts/cypress-rule.png"
   width="60%"
-  alt="A custom Cypress accessibility rule called 'Interactive elements must be semantically correct' has two failed elements displayed. One element is open and message reads 'This element should use semantic HTML or ARIA to support the interactions that take place during tests. Detected interactions: mousedown, mouseup, click."
+  alt="A custom Cypress accessibility rule called 'Interactive elements should be semantically correct' has two failed elements displayed. One element is open and message reads 'This element should use semantic HTML or ARIA to support the interactions that take place during tests. Detected interactions: mousedown, mouseup, click."
 />
 
 This custom rule is intended to surface potential usability problems with the kinds of elements that Axe-Core® traditionally does not evaluate as interactive, such as div, span, SVG, and image elements.
