@@ -10,9 +10,21 @@ sidebar_custom_props: { 'new_label': true }
 
 # Cypress rules
 
+## What are Cypress rules?
+
 In addition to running the default ruleset of the Axe-Core® library, Cypress develops custom rules that take advantage of the additional layer of information available in a test automation context. These rules are identified by a "Cypress Rule" badge, to distinguish them from the main Axe-Core® rule set.
 
 The first custom rule that we have implemented is called "Interactive elements should be semantically correct." At launch, it is a non-blocking **manual-review** rule that will either pass if no issues are found, or return an inconclusive state.
+
+## Why do we need custom accessibility rules?
+
+Conventional accessibility checks work by scanning the DOM of a web page to discover errors and inconsistencies that would affect the accessibility of the content. These checks use signals based on the nature of the content itself to determine what the correct accessible experience should be. Buttons, links, and form fields without labels can all be detected this way - if they are written correctly.
+
+This form of "passive" accessibility scan is limited to what can be learned from the page itself, because there is no other source of input about the purpose of the elements on the screen. The tools used are typically general-purpose scanners that can be called in many different contexts, not always in a test automation pipeline.
+
+In Cypress Accessibility, we can build rules that move beyond a passive scan and offer more insights about the accessibility of what you are testing, based on your existing test activities, which already describe how a user is supposed to move through the application, and what elements they use.
+
+This helps provide early detection of issues that might later appear in manual testing or in bug reports from users, increasing the total range of issues detectable in an automated scan without custom assertions or setup.
 
 ## Interactive elements should be semantically correct
 
