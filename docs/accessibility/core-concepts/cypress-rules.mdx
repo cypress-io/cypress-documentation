@@ -83,11 +83,11 @@ For each run, this rule can be in one of four states. Most importantly, it will 
 | ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
 | **Pass**                     | No interactive elements with semantic issues were detected during the test run.                                                       |
 | **Inconclusive**             | Interactive elements with potential semantic issues were detected. You should review each element and determine the correct solution. |
-| **Not Applicable**           | The test run did not interact with any elements.                                                                                      |
+| **Not Applicable**           | The test run did not interact with any elements, or the version of Cypress was below 13.14.0, so interaction data was not gathered.                                                                                     |
 | **Ignored by configuration** | The rule was not executed during this test run because it was intentionally turned off.                                               |
 
 ### False positives
 
-We expect a certain number of false positives to be detected during the initial rollout. If you see these, please use the "Submit Feedback" button in the product to let us know. Our goal with any new rules is to follow the general Axe-Core® philosophy that minimizes false positives.
+Please use the "Submit Feedback" button in the product to let us know if you see something that you think is a false positive. Our goal with any new rules is to follow the general Axe-Core® philosophy that minimizes false positives, so we will make adjustments for specific situations that are not already known as we learn about them.
 
-There is also a possibility that your tests are interacting with non-interactive elements intentionally, for example to test some side effect on focus.
+
