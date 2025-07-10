@@ -153,22 +153,6 @@ getAccessibilityResults({
 })
 ```
 
-#### How to use a previous run as a baseline
-
-```javascript title="scripts/verifyAccessibilityResults.js"
-// Assuming these environment variables are set:
-// CYPRESS_PROJECT_ID=your-id
-// CYPRESS_RECORD_KEY=your-record-key
-
-const { getAccessibilityResults } = require('@cypress/extract-cloud-results')
-
-getAccessibilityResults().then((results) => {
-  // use `console.dir` instead of `console.log`
-  // to ensure nested data prints out correctly
-  console.dir(results, { depth: Infinity })
-})
-```
-
 ### `getAccessibilityResults` Arguments
 
 `getAccessibilityResults` uses the following attributes to identify the Cypress run and return the Accessibility results:
