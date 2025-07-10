@@ -363,6 +363,13 @@
           "link": "https://github.com/khawjaahmad/cypress-test-data-generator",
           "keywords": ["data-generation", "faker", "testing", "test-data"],
           "badge": "community"
+        },
+        {
+          "name": "cypress-geolocation-locale-faker",
+          "description": "A Cypress plugin to mock geolocation, timezone, language, and locale settings for end-to-end testing. Useful for simulating user environments worldwide.",
+          "link": "https://github.com/pradapjackie/cypress-geolocation-locale-faker",
+          "keywords": ["geolocation", "timezone", "locale", "language", "plugin", "testing"],
+          "badge": "community"
         }
       ]
     },
@@ -1132,13 +1139,6 @@
           "badge": "community"
         }
       ]
-    },
-    {
-      "name": "cypress-geolocation-locale-faker",
-      "description": "A Cypress plugin to mock geolocation, timezone, language, and locale settings for end-to-end testing. Useful for simulating user environments worldwide.",
-      "link": "https://www.npmjs.com/package/cypress-geolocation-locale-faker",
-      "keywords": ["geolocation", "timezone", "locale", "language", "plugin", "testing"],
-      "badge": "community"
     }
   ]
 }
