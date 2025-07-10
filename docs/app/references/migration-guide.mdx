@@ -20,6 +20,15 @@ Cypress requires [Node.js](https://nodejs.org/en) in order to install the Cypres
 Node.js versions 18 and 23 are no longer supported.
 [See Node's release schedule](https://github.com/nodejs/Release).
 
+### Unsupported Linux Distributions
+
+Prebuilt binaries for Linux are no longer compatible with Linux distributions based on glibc `<2.31`.
+This support is in line with Node.js's support for Linux in 20+.
+
+If you're using a Linux distribution based on glibc `<2.31`, you'll need to
+update your system to a newer version to install Cypress 15+.
+To display which version of glibc your Linux system is running, execute `ldd --version`.
+
 ### Webpack `4` is no longer supported
 
 Cypress is no longer supporting Webpack `4` as it is no longer maintained by the core Webpack team and Webpack `5` has been available since Q4 2020. This includes dropping Webpack `4` support for:
