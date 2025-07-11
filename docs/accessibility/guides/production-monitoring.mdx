@@ -1,5 +1,5 @@
 ---
-sidebar_label: Production monitoring
+sidebar_label: Production monitoring and website crawling
 title: 'Production monitoring | Cypress Accessibility Documentation'
 description: 'Monitor accessibility issues in production by running scheduled Cypress tests against live environments, capturing dynamic content changes, and generating automated reports for a comprehensive accessibility overview.'
 sidebar_position: 60
@@ -7,13 +7,13 @@ sidebar_position: 60
 
 <ProductHeading product="accessibility" />
 
-# Production monitoring
+# Production monitoring and website crawling
 
-Cypress is commonly used in CI and local development workflows. It can also be leveraged to monitor production or staging environments through scheduled tests. This approach is particularly useful for environments involving dynamic content, such as those managed by Content Management Systems (CMS), where content changes can impact accessibility.
+Cypress is commonly used in CI and local development workflows. It can also be used to monitor production or staging environments through scheduled tests. This approach is particularly useful for environments involving dynamic content, such as those managed by Content Management Systems (CMS), where content changes can impact accessibility.
 
 Dynamic or externally controlled content, such as A/B tests or user-generated content, often makes it challenging to write explicit assertions. For these cases, production smoke tests can serve as high-level health checks, ensuring the accessibility of dynamic UI variations without requiring full test coverage.
 
-## Using Cypress for Production Monitoring
+## Using Cypress for production monitoring
 
 Cypress Accessibility enables you to test dynamic content seamlessly. By visiting a production URL within your Cypress tests and performing minimal UI interactions, you can capture the page's accessibility state in reports. This allows teams to detect accessibility issues introduced outside the regular development lifecycle.
 
@@ -34,6 +34,9 @@ describe('Accessibility Scan', () => {
       Cypress._.each(URLs, (URL) => {
         cy.visit(URL)
         cy.contains('<YOUR_FOOTER_CONTENT>').scrollIntoView()
+        // perform some repeatable actions here that influence accessibility, for example:
+        //  - change from light mode to dark mode
+        //  - modify the viewport size to simulate mobile screens and higher zoom levels
       })
     })
   })
