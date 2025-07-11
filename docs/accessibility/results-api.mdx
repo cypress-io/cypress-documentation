@@ -34,6 +34,7 @@ Fetching Accessibility results for a run supports fetching results for the follo
 - [GitLab](/app/continuous-integration/gitlab-ci)
 - [Jenkins](/app/continuous-integration/overview#Jenkins)
 - [AWS CodeBuild](/app/continuous-integration/aws-codebuild)
+- Drone
 
 Please reach out to Cypress Support to request support for a different provider.
 
@@ -58,6 +59,25 @@ If you check this in as a dependency, your installation will fail when we update
 ### **1. Get the Results**
 
 Write a script using the `getAccessibilityResults` utility to retrieve the results and perform one or more assertions to verify if the changes are acceptable. This script will be executed in CI.
+
+#### Basic example
+
+This snippet uses the `getAccessibilityResults()` helper to log out the results. It assumes your Project ID and Record Key variable are set. The following should work in any of the supported CI Providers out of the box:
+
+```javascript title="scripts/verifyAccessibilityResults.js"
+// Assuming these environment variables are set:
+// CYPRESS_PROJECT_ID=your-id
+// CYPRESS_RECORD_KEY=your-record-key
+
+const { getAccessibilityResults } = require('@cypress/extract-cloud-results')
+
+getAccessibilityResults().then((results) => {
+  // use `console.dir` instead of `console.log` because the data is nested
+  console.dir(results, { depth: Infinity })
+})
+```
+
+#### How to assert that only known rules are failing in the run
 
 The Cypress App [repository](https://github.com/cypress-io/cypress) uses the Results API to ensure no new violations have been introduced. You can reference [this script](https://github.com/cypress-io/cypress/blob/develop/scripts/verify-accessibility-results.js) as a real example.
 
@@ -133,7 +153,7 @@ getAccessibilityResults({
 })
 ```
 
-#### `getAccessibilityResults` Arguments
+### `getAccessibilityResults` Arguments
 
 `getAccessibilityResults` uses the following attributes to identify the Cypress run and return the Accessibility results:
 
@@ -445,4 +465,32 @@ phases:
 ```
 
 </TabItem>
+
+<TabItem value="Drone" >
+```diff title=".drone.yaml"
+  kind: pipeline
+  name: default
+
+environment:
+CYPRESS_PROJECT_ID: example_project_slug
+CYPRESS_RECORD_KEY:
+from_secret: example_record_key_secret
+
+steps:
+
+- name: test
+  image: node:latest
+  commands:
+  - npm install
+  - npx cypress run --record
+
+* - name: validate
+* image: node:latest
+* commands:
+* - npm install --force https://cdn.cypress.io/extract-cloud-results/v1/extract-cloud-results.tgz
+* - node ./scripts/verifyAccessibilityResults.js
+
+```
+</TabItem>
 </Tabs>
+```
