@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  cypress: cypress-io/cypress@3
+  cypress: cypress-io/cypress@4
 
 executors:
   node-executor:
@@ -19,7 +19,7 @@ commands:
       - checkout
       - restore_cache:
           keys:
-            - npm-cache-{{ checksum "package-lock.json" }}            
+            - npm-cache-{{ checksum "package-lock.json" }}
       - run:
           name: Install Dependencies
           command: npm ci
@@ -56,7 +56,9 @@ jobs:
       - run: npm run lint
 
   install-and-persist:
-    executor: cypress/default
+    executor:
+      name: cypress/default
+      node-version: 22.15.1
     steps:
       - cypress/install
       - persist_to_workspace:
@@ -66,7 +68,9 @@ jobs:
             - project
 
   run-tests-in-parallel:
-    executor: cypress/default
+    executor:
+      name: cypress/default
+      node-version: 22.15.1
     parallelism: 6
     steps:
       - attach_workspace:
@@ -87,7 +91,7 @@ jobs:
           command: |
             echo "Scraping..."
             ls
-            node ./scripts/search/scrape-and-compare-algolia-index.mjs 
+            node ./scripts/search/scrape-and-compare-algolia-index.mjs
 
 workflows:
   build-and-test:
@@ -96,14 +100,14 @@ workflows:
       - lint:
           name: "Lint JS/CSS/Markdown"
           requires:
-            - build     
+            - build
       - install-and-persist:
           name: Install & Persist To Workspace
       - run-tests-in-parallel:
           name: Run Tests in Parallel
           requires:
             - build
-            - Install & Persist To Workspace      
+            - Install & Persist To Workspace
       # Run Algolia scraper only on main.
       - release:
           name: 'Run Algolia scraper'
