@@ -23,7 +23,7 @@ import util from 'util'
 import { exec as execOriginal } from 'child_process'
 const exec = util.promisify(execOriginal)
 import { AlgoliaClient } from './algolia-client.mjs'
-import config from './config.json' assert { type: 'json' }
+import config from './config.json' with { type: 'json' }
 
 // Required environment variables
 const API_KEY = process.env.ALGOLIA_API_KEY
