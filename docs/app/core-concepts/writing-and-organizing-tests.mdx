@@ -93,12 +93,15 @@ detail.
 
 <strong>What files should I add to my '.gitignore file' ?</strong>
 
-Cypress will create a
-[`screenshotsFolder`](/app/references/configuration#Screenshots) and a
-[`videosFolder`](/app/references/configuration#Videos) to store the
-screenshots and videos taken during the testing of your application. Many users
-will opt to add these folders to their `.gitignore` file. Additionally, if you
-are storing sensitive environment variables in your
+Cypress may create
+[asset files](#Asset-Files) in a
+[`downloadsFolder`](#Download-Files), a
+[`screenshotsFolder`](#Screenshot-Files) or a
+[`videosFolder`](#Video-Files) to store any downloads,
+screenshots or videos created during the testing of your application.
+Many users will opt to add these folders to their
+[.gitignore](https://git-scm.com/docs/gitignore) file (see [below](#Asset-Files) for an example).
+Additionally, if you are storing sensitive environment variables in your
 [Cypress configuration](/app/references/configuration) or
 [`cypress.env.json`](/app/references/environment-variables#Option-2-cypressenvjson),
 these should also be ignored when you check into source control.
@@ -151,8 +154,16 @@ command and most often when you're stubbing
 There are some folders that may be generated after a test run, containing assets
 that were generated during the test run.
 
-You may consider adding these folders to your `.gitignore` file to ignore
-checking these files into source control.
+You may consider adding these folders to your
+[.gitignore](https://git-scm.com/docs/gitignore) file to prevent
+checking files in these folders into source control, for example, using the default folder locations:
+
+```text
+# Cypress asset folders to exclude from source control
+cypress/downloads/
+cypress/screenshots/
+cypress/videos/
+```
 
 #### Download Files
 
