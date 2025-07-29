@@ -9,7 +9,7 @@ sidebar_position: 105
 
 # Cypress.ElementSelector
 
-The ElementSelector API lets you define how Cypress selects elements in tools like [Cypress Studio](/app/guides/cypress-studio) and the [Selector Playground](/app/core-concepts/open-mode#Selector-Playground). 
+The ElementSelector API lets you define how Cypress selects elements in tools like [Cypress Studio](/app/guides/cypress-studio) and the [Selector Playground](/app/core-concepts/open-mode#Selector-Playground).
 
 By setting your own selector strategy, you can control which attributes Cypress prioritizes (like `data-*`, `id`, or `aria-label`) when generating selectors. This helps you enforce consistency, improve test readability, and make generated tests more resilient to changes in your HTML.
 
@@ -25,8 +25,8 @@ Cypress.ElementSelector.defaults(options)
 
 An object containing any or all of the following options:
 
-| Option             | Accepts            | Description                                                                      |
-| ------------------ | ------------------ | -------------------------------------------------------------------------------- |
+| Option             | Accepts            | Description                                                            |
+| ------------------ | ------------------ | ---------------------------------------------------------------------- |
 | `selectorPriority` | `Array of strings` | Determines the order of attributes Cypress uses to generate selectors. |
 
 Accepted values for `selectorPriority` are:
@@ -44,8 +44,10 @@ Accepted values for `selectorPriority` are:
 
 Consider the following HTML:
 
-```html 
-<button id="submit-btn" class="primary" role="button" aria-label="Submit">Submit</button>
+```html
+<button id="submit-btn" class="primary" role="button" aria-label="Submit">
+  Submit
+</button>
 ```
 
 With the default selector priority, Cypress prioritizes `id`, so the selector would be `#submit-btn`.
@@ -80,12 +82,7 @@ Accessibility-first apps often use ARIA roles and labels. You can configure Cypr
 
 ```js
 Cypress.ElementSelector.defaults({
-  selectorPriority: [
-    'attribute:aria-label',
-    'attribute:role',
-    'id',
-    'class',
-  ],
+  selectorPriority: ['attribute:aria-label', 'attribute:role', 'id', 'class'],
 })
 ```
 
