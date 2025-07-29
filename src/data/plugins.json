@@ -363,12 +363,19 @@
           "link": "https://github.com/khawjaahmad/cypress-test-data-generator",
           "keywords": ["data-generation", "faker", "testing", "test-data"],
           "badge": "community"
+        },
+        {
+          "name": "cypress-geolocation-locale-faker",
+          "description": "A Cypress plugin to mock geolocation, timezone, language, and locale settings for end-to-end testing. Useful for simulating user environments worldwide.",
+          "link": "https://github.com/pradapjackie/cypress-geolocation-locale-faker",
+          "keywords": ["geolocation", "timezone", "locale", "language", "plugin", "testing"],
+          "badge": "community"
         }
       ]
     },
     {
       "name": "Custom Commands",
-      "description": "Read the <a target=\"_blank\" href=\"/api/node-events/preprocessors-api\">Custom Commands</a> and <a target=\"_blank\" href=\"/api/node-events/preprocessors-api\">Custom Query</a> documentation to learn more.",
+      "description": "Read the <a target=\"_blank\" href=\"/api/cypress-api/custom-commands\">Custom Commands</a> and <a target=\"_blank\" href=\"/api/cypress-api/custom-queries\">Custom Query</a> documentation to learn more.",
       "plugins": [
         {
           "name": "Puppeteer",
@@ -698,7 +705,7 @@
     },
     {
       "name": "Authentication",
-      "description": "Take a look at our auth guides for <a href=\"/app/guides/authentication-testing/amazon-cognito-authentication\">Amazon Cognito</a>, <a href=\"/app/guides/authentication-testing/amazon-cognito-authentication\">Amazon Cognito</a>, <a href=\"/app/guides/authentication-testing/auth0-authentication\">Auth0</a>, <a href=\"/app/guides/authentication-testing/amazon-cognito-authentication\">Amazon Cognito</a>, <a href=\"/app/guides/authentication-testing/google-authentication\">Google</a>, <a href=\"/app/guides/authentication-testing/okta-authentication\">Okta Cognito</a>, and <a href=\"/app/guides/authentication-testing/social-authentication\">Social Logins</a>. Also checkout our <a target=\"_blank\" href=\"https://github.com/cypress-io/cypress-example-recipes#logging-in-recipes\">Logging in</a> recipes.",
+      "description": "Take a look at our auth guides for <a href=\"/app/guides/authentication-testing/amazon-cognito-authentication\">Amazon Cognito</a>, <a href=\"/app/guides/authentication-testing/auth0-authentication\">Auth0</a>, <a href=\"/app/guides/authentication-testing/azure-active-directory-authentication\">Azure Active Directory</a>, <a href=\"/app/guides/authentication-testing/google-authentication\">Google</a>, <a href=\"/app/guides/authentication-testing/okta-authentication\">Okta Cognito</a>, and <a href=\"/app/guides/authentication-testing/social-authentication\">Social Logins</a>. Also checkout our <a target=\"_blank\" href=\"https://github.com/cypress-io/cypress-example-recipes#logging-in-recipes\">Logging in</a> recipes.",
       "plugins": [
         {
           "name": "cypress-ntlm-auth",
