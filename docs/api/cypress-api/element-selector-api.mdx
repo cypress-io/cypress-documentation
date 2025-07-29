@@ -13,6 +13,11 @@ The ElementSelector API lets you define how Cypress selects elements in tools li
 
 By setting your own selector strategy, you can control which attributes Cypress prioritizes (like `data-*`, `id`, or `aria-label`) when generating selectors. This helps you enforce consistency, improve test readability, and make generated tests more resilient to changes in your HTML.
 
+Cypress uses a strategy to generate selectors that are not only based on your preferred selectors, but also guaranteed to be **unique** within the document.
+
+This means Cypress will **attempt to follow your configured `selectorPriority`**, but may skip lower-priority options or combine multiple selectors if a single attribute isn't unique enough.
+
+
 ## Syntax
 
 ```javascript
@@ -138,6 +143,12 @@ Cypress.ElementSelector.defaults({
   ],
 })
 ```
+
+## History
+
+| Version                                    | Changes                                                                                                                    |
+| ------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------- |
+| [15.0.0](/app/references/changelog#15-0-0) | Renamed `Cypress.SelectorPlayground` to `Cypress.ElementSelector`.                                                        |
 
 ## See also
 
