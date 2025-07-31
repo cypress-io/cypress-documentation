@@ -121,14 +121,12 @@ Many frameworks produce dynamic ids or class names such as:
   id="button-5a3f9d"
   class="Component_button__3XyZ2 css-1a2b3c SeriesIndexFooter-footer-3WmRg"
   data-cy="checkout-btn"
-  role="button"
-  aria-label="Checkout"
 >
   Checkout
 </button>
 ```
 
-You can configure Cypress to prioritize `data-cy` and `role` attributes, and skip `id` and `class` attributes that are dynamically generated.
+You can configure Cypress to skip attributes that are dynamically generated.
 
 ```js
 Cypress.ElementSelector.defaults({
