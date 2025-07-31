@@ -2,7 +2,7 @@
 
 Cypress uses a [default set of attributes](/accessibility/core-concepts/element-identification) (such as common test ID patterns), in a priority order, as the preferred way to identify elements in reports.
 
-The values of these attributes are used as element identifier, which helps us recognize the same element in multiple contexts and deduplicate the findings. This helps when reviewing run reports, or comparing reports in Branch Review.
+The values of these attributes are used as element identifiers, which helps us recognize the same element in multiple contexts and deduplicate the findings. This helps when reviewing run reports, or comparing reports in Branch Review.
 
 You may have attributes already in place in your application that would help with element organization, such as `data-component-name`. If you would like Cypress to use and prioritize these attributes, or you want to change the default priority order, you can define your own list of significant attributes.
 
@@ -18,9 +18,9 @@ supported, if you need to split them up.
 
 ```json
 {
-  "significantAttributes": : [
-      string
-    ]
+  "significantAttributes": [
+    string
+  ]
 }
 ```
 
@@ -33,7 +33,7 @@ supported, if you need to split them up.
 
 ```json
 {
-  "significantAttributes": ["class", "id", "role"]
+  "significantAttributes": ["class", "id", "data-context"]
 }
 ```
 
@@ -41,7 +41,7 @@ supported, if you need to split them up.
 
 ```xml
 <body>
-  <button class="primary" id="submit" role="button" data-testid="submit">
+  <button class="primary" id="submit" data-testid="submit" data-context="user-signup">
     Submit
   </button>
 </body>
@@ -50,7 +50,7 @@ supported, if you need to split them up.
 #### Significant attributes tracked
 
 ```
-class="primary", id="submit", role="button"
+class="primary", id="submit", data-context="user-signup"
 ```
 
 ### Using attribute patterns
