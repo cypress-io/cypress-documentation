@@ -119,8 +119,15 @@ describe('My First Test', () => {
 Once you save again, you'll see Cypress display the failing test in red since
 `true` does not equal `false`.
 
-Cypress also displays the stack trace and the code frame where the assertion
-failed (when available). You can click on the blue file link to open the file
+Cypress displays a detailed error view that includes the stack trace and the exact code frame where the assertion failed. This helps you quickly identify and fix the issue. 
+
+:::info
+
+If you don't see the code frame or stack trace, you may need to [enable sourcemaps](/app/guides/debugging#Source-maps) for better debugging information.
+
+:::
+
+You can click on the blue file link to open the file
 where the error occurred in
 [your preferred file opener](/app/tooling/IDE-integration#File-Opener-Preference).
 To read more about the error's display, read about
@@ -156,15 +163,6 @@ All of these functions come from
 
 Cypress builds on these popular tools and frameworks that you _hopefully_
 already have some familiarity and knowledge of. If not, that's okay too.
-
-:::
-
-:::tip
-
-<strong>Using ESlint?</strong>
-
-Check out our
-[Cypress ESLint plugin](https://github.com/cypress-io/eslint-plugin-cypress).
 
 :::
 
@@ -242,7 +240,6 @@ Let's add it to our test and see what happens:
 describe('My First Test', () => {
   it('finds the content "type"', () => {
     cy.visit('https://example.cypress.io')
-
     cy.contains('type')
   })
 })
@@ -278,15 +275,11 @@ describe('My First Test', () => {
   alt="Test failing to not find content 'hype'"
 />
 
-:::caution
+:::info
 
 <strong>Error Messages</strong>
 
-We've taken care at Cypress to write hundreds of custom error messages that
-attempt to clearly explain what went wrong. In this case, Cypress **timed out
-retrying** to find the content `hype` within the entire page. To read more about
-the error's display, read about
-[Debugging Errors](/app/guides/debugging#Errors).
+Cypress provides detailed, human-readable error messages that explain exactly what went wrong. In this case, Cypress **timed out retrying** to find the content `hype` within the entire page. These descriptive error messages help you quickly understand and fix issues in your tests. For more information about how Cypress displays errors, see [Debugging Errors](/app/guides/debugging#Errors).
 
 :::
 
@@ -393,22 +386,11 @@ describe('My First Test', () => {
 })
 ```
 
-:::caution
-
-We normally don't suggest selecting and finding elements by their class names,
-but we do so here since we are querying an external site, and sometimes that is
-all we have to work with.
-
-For more information on our guidance on selector best practices, see our guide
-on it [here](/app/core-concepts/best-practices#Selecting-Elements).
-
-:::
-
 And there you have it: a short test in Cypress that visits a page, finds and
 clicks a link, verifies the URL and then verifies the behavior of an element on
 the new page. If we read it out loud, it might sound like:
 
-:::note
+:::info
 
 1. _Visit: `https://example.cypress.io`_
 2. _Find the element with content: `type`_
@@ -423,7 +405,7 @@ the new page. If we read it out loud, it might sound like:
 
 Or in the _Given_, _When_, _Then_ syntax:
 
-:::note
+:::info
 
 1. _**Given** a user visits `https://example.cypress.io`_
 2. _**When** they click the link labeled `type`_
@@ -539,8 +521,3 @@ which discusses strategies when this is necessary.
   practical demonstrations of Cypress testing practices, configuration, and
   strategies in a real-world project.
 - Search Cypress's documentation to quickly find what you need.
-
-<DocsImage
-  src="/img/app/get-started/e2e/search-box.png"
-  alt="Use the search box to find relevant documentation"
-/>
