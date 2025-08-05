@@ -179,6 +179,20 @@ In [pnpm@10.4.0](https://github.com/pnpm/pnpm/releases/tag/v10.4.0) and above, t
 pnpm --allow-build=cypress add --save-dev cypress
 ```
 
+### Browsers
+
+Each Cypress release includes the Electron-bundled Chromium [browser](/app/references/launching-browsers#Electron-Browser).
+
+The latest 3 major versions of the following browsers are also supported:
+
+- [Google Chrome](/app/references/launching-browsers#Chrome-Browsers)
+- [Microsoft Edge](/app/references/launching-browsers#Edge-Browsers)
+- [Mozilla Firefox](/app/references/launching-browsers#Firefox-Browsers) (_release Firefox [141.0](https://developer.mozilla.org/en-US/docs/Mozilla/Firefox/Releases/141) and above requires a minimum Cypress [14.1.0](https://docs.cypress.io/app/references/changelog#14-1-0)_)
+
+Additionally:
+
+- [WebKit](https://docs.cypress.io/app/references/launching-browsers#WebKit-Experimental) is experimentally supported
+
 ### Hardware
 
 When running Cypress locally, it should run comfortably on any machine that is
