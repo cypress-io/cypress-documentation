@@ -51,29 +51,3 @@ supported, if you need to split them up.
 ```
 class="primary", id="submit", data-context="user-signup"
 ```
-
-### Using attribute patterns
-
-#### Config
-
-```json
-{
-  "significantAttributes": ["aria-*"]
-}
-```
-
-#### HTML
-
-```xml
-<body>
-  <div aria-label="Main content" aria-hidden="false" class="container">
-    Content
-  </div>
-</body>
-```
-
-#### Significant attributes tracked
-
-```
-aria-label="Main content", aria-hidden="false"
-```
