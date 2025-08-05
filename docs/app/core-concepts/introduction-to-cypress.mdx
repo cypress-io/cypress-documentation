@@ -728,14 +728,7 @@ later in this guide.
 #### Avoid loops
 
 Using JavaScript loop commands like `while` can have unexpected effects. Let's
-say our application shows a random number on load.
-
-<DocsImage
-  src="/img/app/core-concepts/reload-page.gif"
-  alt="Manually reloading the browser page until the number 7 appears"
-/>
-
-We want the test to stop when it finds the number 7. If any other number is
+say our application shows a random number on load. We want the test to stop when it finds the number 7. If any other number is
 displayed the test reloads the page and checks again.
 
 **Note:** you can find this application and the correct test in our
@@ -743,7 +736,7 @@ displayed the test reloads the page and checks again.
 
 <Icon name="exclamation-triangle" color="red" /> **Incorrect test**
 
-The test written below WILL NOT work and most likely will crash your browser.
+The test written below **WILL NOT work** and most likely will crash your browser.
 
 ```js
 let found7 = false
@@ -813,10 +806,6 @@ The test runs and correctly finishes.
   alt="Test reloads the page until the number 7 appears"
 />
 
-You can see a short video going through this example at
-
-<Icon name="play-circle" url="https://www.youtube.com/watch?v=5Z8BaPNDfvA" />
-
 ### Commands Run Serially
 
 After a test function is finished running, Cypress goes to work executing the
@@ -843,6 +832,8 @@ it('hides the thing when it is clicked', () => {
 
 The test above would cause an execution in this order:
 
+:::note
+
 1. Visit the URL (or mount the component).
 2. Find an element by its selector.
 3. Assert that the element is visible.
@@ -850,11 +841,15 @@ The test above would cause an execution in this order:
 5. Find an element by its selector.
 6. Assert that the element is no longer visible.
 
+:::
+
 These actions will always happen serially (one after the other), never in
 parallel (at the same time). Why?
 
 To illustrate this, let's revisit that list of actions and expose some of the
 hidden **✨ magic ✨** Cypress does for us at each step:
+
+:::note
 
 1. Visit the URL ✨ **and wait for the page load event to fire after all
    external resources have loaded** ✨ (or mount the component ✨ **and wait for
@@ -869,6 +864,8 @@ hidden **✨ magic ✨** Cypress does for us at each step:
    ✨
 6. Assert that the element is no longer visible ✨ **and retry until the
    assertion passes** ✨
+
+:::
 
 As you can see, Cypress does a lot of extra work to ensure the state of the
 application matches what our commands expect about it. Each command may resolve
