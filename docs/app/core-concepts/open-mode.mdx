@@ -391,14 +391,14 @@ it('intercept command log', () => {
 
 ## Preview pane
 
-The right-hand side of the Test Runner is where the Application or Component
+The right-hand side of the App is where the Application or Component
 Under Test is rendered.
 
 ### Application Under Test <E2EOnlyBadge />
 
 In
 [E2E Testing](/app/core-concepts/testing-types#What-is-E2E-Testing),
-the right-hand side of the Test Runner is used to display the Application Under
+the right-hand side of the App is used to display the Application Under
 Test (AUT): the application that was navigated to using a
 [`cy.visit()`](/api/commands/visit) or any subsequent routing calls made from
 the visited application.
@@ -407,7 +407,6 @@ In the example below, we wrote the following code in our test file:
 
 ```javascript
 cy.visit('https://example.cypress.io')
-
 cy.title().should('include', 'Kitchen Sink')
 ```
 
@@ -504,14 +503,14 @@ available for debugging.
   alt="Cypress app showing mounted component and password assertion"
 />
 
-The CUT also displays in the size and orientation specified in your tests. You
+The AUT also displays in the size and orientation specified in your tests. You
 can change the size or orientation with the
 [`cy.viewport()`](/api/commands/viewport) command or in your
-[Cypress configuration](/app/references/configuration#Viewport). If the CUT
+[Cypress configuration](/app/references/configuration#Viewport). If the AUT
 does not fit within the current browser window, it is scaled appropriately to
 fit within the window.
 
-The current size and scale of the CUT is displayed in the top right corner of
+The current size and scale of the AUT is displayed in the top right corner of
 the window.
 
 The image below shows that our application is displaying at `500px` width,
@@ -529,14 +528,6 @@ that prevent the tests from running.
   src="/img/app/core-concepts/open-mode/aut-error-ct.png"
   alt="Cypress app showing error as application under test"
 />
-
-:::caution
-
-Internally, the AUT renders within an iframe. This can sometimes cause
-unexpected behaviors
-[explained here.](/api/commands/window#Cypress-uses-2-different-windows)
-
-:::
 
 ## Selector Playground
 
