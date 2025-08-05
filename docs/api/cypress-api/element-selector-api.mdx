@@ -9,7 +9,7 @@ sidebar_position: 105
 
 # Cypress.ElementSelector
 
-The ElementSelector API lets you define how Cypress selects elements in tools like [Cypress Studio](/app/guides/cypress-studio) and the [Selector Playground](/app/core-concepts/open-mode#Selector-Playground).
+The ElementSelector API lets you define how Cypress selects elements in tools like [Cypress Studio](/app/guides/cypress-studio) and the [Selector Playground](/app/core-concepts/open-mode#Selector-Playground) (which will be replaced by Cypress Studio once it is no longer experimental).
 
 By setting your own selector strategy, you can control which attributes Cypress prioritizes (like `data-*`, `id`, or `aria-label`) when generating selectors. This helps you enforce consistency, improve test readability, and make generated tests more resilient to changes in your HTML.
 
@@ -32,6 +32,14 @@ An object containing any or all of the following options:
 | Option             | Accepts            | Description                                                            |
 | ------------------ | ------------------ | ---------------------------------------------------------------------- |
 | `selectorPriority` | `Array of strings` | Determines the order of attributes Cypress uses to generate selectors. |
+
+:::info
+
+##### API Stability
+
+The `selectorPriority` API is under active development and may change in future versions as we refine the best way to generate selectors within our products. Stay updated with our [changelog](/app/references/changelog) for any breaking changes.
+
+:::
 
 Accepted values for `selectorPriority` are:
 
@@ -64,7 +72,7 @@ The [jQuery element](http://api.jquery.com/Types/#jQuery) for which you want to 
 
 ### Set custom selector priority
 
-You can customize how Cypress generates selectors by defining a priority order for which attributes to prefer. This affects the selectors you see in tools like [Cypress Studio](/app/guides/cypress-studio) and the [Selector Playground](/app/core-concepts/open-mode#Selector-Playground).
+You can customize how Cypress generates selectors by defining a priority order for which attributes to prefer. This affects the selectors you see in tools like [Cypress Studio](/app/guides/cypress-studio) and the [Selector Playground](/app/core-concepts/open-mode#Selector-Playground) (which will be replaced by Cypress Studio once it is no longer experimental).
 
 For example, this config tells Cypress to prefer semantic and accessibility attributes before falling back to styling details like class names.
 
