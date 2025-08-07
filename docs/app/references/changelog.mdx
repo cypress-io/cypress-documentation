@@ -8,6 +8,14 @@ sidebar_label: Changelog
 
 # Changelog
 
+## 14.5.4
+
+_Released 8/07/2025_
+
+**Dependency Updates:**
+
+- Upgraded `tar-fs` to `2.1.3` and `3.1.0` in places we can control, to resolve [CVE-2024-12905](https://github.com/advisories/GHSA-pq67-2wwv-3xjx). `@puppeteer/browsers` still references `3.0.4`, but it is only used to download browsers which is not a feature of `puppeteer` that we utilize. Addressed in [#32160](https://github.com/cypress-io/cypress/pull/32160).
+
 ## 14.5.3
 
 _Released 7/25/2025_
