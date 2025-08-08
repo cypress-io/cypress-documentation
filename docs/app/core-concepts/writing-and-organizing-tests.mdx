@@ -803,7 +803,7 @@ Passed tests have successfully completed all their hooks and commands without
 failing any assertions. The test screenshot below shows a passed test:
 
 <DocsImage
-  src="/img/app/core-concepts/todo-mvc-passing-test.png"
+  src="/img/app/core-concepts/cypress-passing-test.png"
   alt="Cypress with a single passed test"
 />
 
@@ -817,7 +817,7 @@ Good news - the failed hook or test has found a problem. Could be much worse -
 it could be a user hitting this bug!
 
 <DocsImage
-  src="/img/app/core-concepts/todo-mvc-failing-test.png"
+  src="/img/app/core-concepts/cypress-failing-test.png"
   alt="Cypress with a single failed test"
 />
 
@@ -861,7 +861,7 @@ All four tests above are marked _pending_ when Cypress finishes running the spec
 file.
 
 <DocsImage
-  src="/img/app/core-concepts/todo-mvc-pending-tests.png"
+  src="/img/app/core-concepts/cypress-pending-tests.png"
   alt="Cypress with four pending test"
 />
 
@@ -875,38 +875,7 @@ skipped due to some run-time error. For example, imagine a group of tests
 sharing the same `beforeEach` hook - where you visit the page in the
 `beforeEach` hook.
 
-```js
-/// <reference types="cypress" />
-
-describe('TodoMVC', () => {
-  beforeEach(() => {
-    cy.visit('/')
-  })
-
-  it('hides footer initially', () => {
-    cy.get('[data-testid="filters"]').should('not.exist')
-  })
-
-  it('adds 2 todos', () => {
-    cy.get('[data-testid="new-todo"]').as('new').type('learn testing{enter}')
-
-    cy.get('@new').type('be cool{enter}')
-
-    cy.get('[data-testid="todo-list"] li').should('have.length', 2)
-  })
-})
-```
-
-If the `beforeEach` hook completes and both tests finish, two tests are passing.
-
-<DocsImage
-  src="/img/app/core-concepts/todo-mvc-2-tests-passing.png"
-  alt="Cypress showing two passing tests"
-/>
-
-But what happens if a command inside the `beforeEach` hook fails? For example,
-let's pretend we want to visit a non-existent page `/does-not-exist` instead of
-the `/`. If we change our `beforeEach` to fail:
+If a command inside the `beforeEach` hook fails - for example, if we want to visit a non-existent page `/does-not-exist` instead of the `/` - and we change our `beforeEach` to fail:
 
 ```js
 beforeEach(() => {
@@ -921,7 +890,7 @@ the same way! So Cypress _skips_ the remaining tests in that block, because they
 would also fail due to the `beforeEach` hook failure.
 
 <DocsImage
-  src="/img/app/core-concepts/todo-mvc-failed-and-skipped-tests.png"
+  src="/img/app/core-concepts/cypress-failed-and-skipped-tests.png"
   alt="Cypress showing one failed and one skipped test"
 />
 
@@ -929,7 +898,7 @@ If we collapse the test commands, we can see the empty box marking the skipped
 test "adds 2 todos".
 
 <DocsImage
-  src="/img/app/core-concepts/todo-mvc-skipped-test.png"
+  src="/img/app/core-concepts/cypress-skipped-test.png"
   alt="Cypress showing one skipped test"
 />
 
