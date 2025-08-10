@@ -42,16 +42,16 @@ and start testing.
 
 :::danger
 
-<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Sharing page objects,
-using your UI to log in, and not taking shortcuts.
+<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Sharing page
+objects, using your UI to log in, and not taking shortcuts.
 
 :::
 
 :::tip
 
-<Icon name="check-circle" color="green" /> **Best Practice:** Test specs in isolation,
-programmatically log into your application, and take control of your application's
-state.
+<Icon name="check-circle" color="green" /> **Best Practice:** Test specs in
+isolation, programmatically log into your application, and take control of your
+application's state.
 
 :::
 
@@ -77,15 +77,16 @@ in our examples.
 
 :::danger
 
-<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Using highly brittle
-selectors that are subject to change.
+<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Using highly
+brittle selectors that are subject to change.
 
 :::
 
 :::tip
 
-<Icon name="check-circle" color="green" /> **Best Practice:** Use `data-*` attributes
-to provide context to your selectors and isolate them from CSS or JS changes.
+<Icon name="check-circle" color="green" /> **Best Practice:** Use `data-*`
+attributes to provide context to your selectors and isolate them from CSS or JS
+changes.
 
 :::
 
@@ -247,16 +248,16 @@ your application is working as expected for people with disabilities and the tec
 
 :::danger
 
-<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Trying to assign
-the return value of Commands with `const`, `let`, or `var`.
+<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Trying to
+assign the return value of Commands with `const`, `let`, or `var`.
 
 :::
 
 :::tip
 
-<Icon name="check-circle" color="green" /> **Best Practice:** Use [aliases and closures
-to access and store](/app/core-concepts/variables-and-aliases) what Commands yield
-you.
+<Icon name="check-circle" color="green" /> **Best Practice:** Use [aliases and
+closures to access and store](/app/core-concepts/variables-and-aliases) what
+Commands yield you.
 
 :::
 
@@ -306,18 +307,20 @@ For working with either of these patterns, please read our
 
 :::danger
 
-<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Trying to visit
-or interact with sites or servers you do not control.
+<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Trying to
+visit or interact with sites or servers you do not control.
 
 :::
 
 :::tip
 
 <Icon name="check-circle" color="green" /> **Best Practice:** Only test websites
-that you control. Try to avoid visiting or requiring a 3rd party server. If you choose,
-you may use [`cy.request()`](/api/commands/request) to talk to 3rd party servers
-via their APIs. If possible, cache results via [`cy.session()`](/api/commands/session)
-to avoid repeat visits. See also reasons against [Testing Apps You Don't Control](/app/end-to-end-testing/writing-your-first-end-to-end-test#Testing-Apps-You-Dont-Control).
+that you control. Try to avoid visiting or requiring a 3rd party server. If you
+choose, you may use [`cy.request()`](/api/commands/request) to talk to 3rd party
+servers via their APIs. If possible, cache results via
+[`cy.session()`](/api/commands/session) to avoid repeat visits. See also reasons
+against [Testing Apps You Don't
+Control](/app/end-to-end-testing/writing-your-first-end-to-end-test#Testing-Apps-You-Dont-Control).
 
 :::
 
@@ -457,21 +460,22 @@ email's functionality and visual style:
    exposes an API to read off emails. You will then need the proper
    authentication credentials, which your server could provide, or you could use
    environment variables. Some email services already provide
-   <a href="/app/plugins/plugins-list#email">Cypress plugins</a> to access emails.
+   <a href="/app/plugins/plugins-list#email">Cypress plugins</a> to access
+   emails.
 
 ## <Icon name="angle-right" /> Having Tests Rely On The State Of Previous Tests
 
 :::danger
 
-<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Coupling multiple
-tests together.
+<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Coupling
+multiple tests together.
 
 :::
 
 :::tip
 
-<Icon name="check-circle" color="green" /> **Best Practice:** Tests should always
-be able to be run independently from one another **and still pass**.
+<Icon name="check-circle" color="green" /> **Best Practice:** Tests should
+always be able to be run independently from one another **and still pass**.
 
 :::
 
@@ -593,15 +597,15 @@ can be run independently and pass.
 
 :::danger
 
-<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Acting like you're
-writing unit tests.
+<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Acting like
+you're writing unit tests.
 
 :::
 
 :::tip
 
-<Icon name="check-circle" color="green" /> **Best Practice:** Add multiple assertions
-and don't worry about it
+<Icon name="check-circle" color="green" /> **Best Practice:** Add multiple
+assertions and don't worry about it
 
 :::
 
@@ -686,8 +690,8 @@ or `afterEach` hooks to clean up state.
 
 :::tip
 
-<Icon name="check-circle" color="green" /> **Best Practice:** Clean up state **before**
-tests run.
+<Icon name="check-circle" color="green" /> **Best Practice:** Clean up state
+**before** tests run.
 
 :::
 
@@ -881,15 +885,16 @@ script.
 
 :::danger
 
-<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Waiting for arbitrary
-time periods using [`cy.wait(Number)`](/api/commands/wait#Time).
+<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Waiting for
+arbitrary time periods using [`cy.wait(Number)`](/api/commands/wait#Time).
 
 :::
 
 :::tip
 
-<Icon name="check-circle" color="green" /> **Best Practice:** Use route aliases or
-assertions to guard Cypress from proceeding until an explicit condition is met.
+<Icon name="check-circle" color="green" /> **Best Practice:** Use route aliases
+or assertions to guard Cypress from proceeding until an explicit condition is
+met.
 
 :::
 
@@ -955,13 +960,17 @@ cy.get('table tr').should('have.length', 2)
 
 :::danger
 
-<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Using `then()` unnecessarily or re-querying the same element multiple times when chaining would work.
+<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Using
+`then()` unnecessarily or re-querying the same element multiple times when
+chaining would work.
 
 :::
 
 :::tip
 
-<Icon name="check-circle" color="green" /> **Best Practice:** Use command chaining when possible, and only use `then()` when you need to perform complex operations or work with the actual DOM element.
+<Icon name="check-circle" color="green" /> **Best Practice:** Use command
+chaining when possible, and only use `then()` when you need to perform complex
+operations or work with the actual DOM element.
 
 :::
 
@@ -975,11 +984,7 @@ When you need to perform several actions on the same element (like focus, clear,
 
 ```js
 // RECOMMENDED: Chain commands when possible
-cy.get('[data-cy="input-field"]')
-  .focus()
-  .clear()
-  .type('new value')
-  .blur()
+cy.get('[data-cy="input-field"]').focus().clear().type('new value').blur()
 ```
 
 #### Option 2: Using then() (Only when necessary)
@@ -997,16 +1002,19 @@ cy.get('[data-cy="input-field"]').then(($input) => {
 ### Why Command Chaining is Usually Better
 
 **Performance Benefits:**
+
 - Cypress optimizes chained commands and doesn't re-query the element unnecessarily.
 - The element reference is passed through the command chain automatically.
 - No additional overhead from `cy.wrap()` calls.
 
 **Simplicity and Readability:**
+
 - More concise and easier to read.
 - Follows Cypress's natural command pattern.
 - Less nested code structure.
 
 **Automatic Retries:**
+
 - Each command in the chain automatically retries if the element becomes stale.
 - Cypress handles DOM updates and element re-querying automatically.
 
@@ -1015,6 +1023,7 @@ cy.get('[data-cy="input-field"]').then(($input) => {
 Use `then()` only when you need to:
 
 1. **Access DOM element properties or methods directly:**
+
 ```js
 cy.get('[data-cy="input-field"]').then(($input) => {
   const initialValue = $input.val()
@@ -1026,6 +1035,7 @@ cy.get('[data-cy="input-field"]').then(($input) => {
 ```
 
 2. **Perform conditional logic based on element state:**
+
 ```js
 cy.get('[data-cy="toggle"]').then(($toggle) => {
   if ($toggle.hasClass('active')) {
@@ -1035,11 +1045,12 @@ cy.get('[data-cy="toggle"]').then(($toggle) => {
 ```
 
 3. **Work with multiple elements from the same query:**
+
 ```js
 cy.get('[data-cy="list-item"]').then(($items) => {
   const count = $items.length
   cy.log(`Found ${count} items`)
-  
+
   // Work with specific items
   cy.wrap($items.first()).should('contain', 'First item')
   cy.wrap($items.last()).should('contain', 'Last item')
@@ -1059,6 +1070,7 @@ While `then()` captures the element at that moment, Cypress commands within `the
 ### Best Practice Examples
 
 #### Form Interaction (Good)
+
 ```js
 describe('form interaction', () => {
   it('updates input field correctly', () => {
@@ -1074,12 +1086,13 @@ describe('form interaction', () => {
 ```
 
 #### Conditional Actions (When `then()` is appropriate)
+
 ```js
 describe('conditional interactions', () => {
   it('handles different input states', () => {
     cy.get('[data-cy="search-input"]').then(($input) => {
       const currentValue = $input.val()
-      
+
       if (currentValue) {
         // Clear existing value and enter new one
         cy.wrap($input).clear().type('new search term')
@@ -1093,6 +1106,7 @@ describe('conditional interactions', () => {
 ```
 
 #### Working with Element Collections
+
 ```js
 describe('element collections', () => {
   it('processes multiple items', () => {
@@ -1143,9 +1157,9 @@ waste.
 
 :::danger
 
-<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Trying to start
-a web server from within Cypress scripts with [`cy.exec()`](/api/commands/exec) or
-[`cy.task()`](/api/commands/task).
+<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Trying to
+start a web server from within Cypress scripts with
+[`cy.exec()`](/api/commands/exec) or [`cy.task()`](/api/commands/task).
 
 :::
 
@@ -1193,8 +1207,8 @@ We have
 
 :::danger
 
-<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Using [cy.visit()](/api/commands/visit)
-without setting a `baseUrl`.
+<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Using
+[cy.visit()](/api/commands/visit) without setting a `baseUrl`.
 
 :::
 
