@@ -28,6 +28,7 @@ cypress/videos
 # Generated files
 .docusaurus
 .cache-loader
+.vercel
 
 .nuxt
 .husky
