@@ -1,6 +1,6 @@
 ---
-title: 'Cypress Studio: Record Interactions & Generate Tests in Cypress'
-description: 'Learn how to use Cypress Studio to record interactions and generate tests in Cypress.'
+title: 'Cypress Studio: Build Tests by Interacting with Your App'
+description: 'Create, extend, and refine Cypress tests without writing commands by hand.'
 sidebar_label: 'Cypress Studio'
 e2eSpecific: true
 ---
@@ -14,36 +14,45 @@ e2eSpecific: true
 ##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
 
 - How to generate Cypress tests by interacting with your app
-- How to add assertions through the browser UI
-- How to extend or edit tests using Cypress Studio
+- How to add assertions by right-clicking elements
+- How to quickly extend or edit tests without leaving Cypress
 
 :::
 
-## Overview
+## Why Use Cypress Studio
 
-Cypress Studio makes test creation faster and easier. With Studio, you can record user interactions in the browser and instantly generate Cypress test code. Add assertions with a right-click and fine-tune your tests inline.
+Cypress Studio turns test creation into a natural part of exploring your app.  
+Instead of manually typing every `.get()`, `.click()`, or `.type()` command, you can **record interactions in real time**, automatically generate Cypress code, and fine-tune your test inline.
 
-It is ideal for bootstrapping new tests or extending existing ones without writing every `.get()`, `.click()`, or `.type()` command by hand.
+- **Save time**: Skip manually typing `.get().click().type()` sequences
+- **Stay in the flow**: Build and extend tests without leaving the Cypress App
+- **Boost coverage**: Add new checks to existing tests in seconds
 
-:::caution
+<DocsVideo
+  src="/img/app/cypress-studio/cypress-studio-recording-assertions-editing.mp4"
+  autoPlay={true}
+/>
 
-<Icon name="exclamation-triangle" /> **Experimental**
+## 🚀 Quickstart: Try Studio in 60 Seconds
 
-Cypress Studio is an experimental feature and can be enabled by adding the
-[experimentalStudio](/app/references/experiments#End-to-End-Testing)
-attribute to your Cypress configuration.
+:::success
 
-:::
+1. **Enable Studio:**  
+   Add to your `cypress.config.js` (Cypress Studio is currently experimental):
 
-:::cypress-config-example
+   ```js
+   {
+     e2e: {
+       experimentalStudio: true
+     }
+   }
+   ```
 
-```js
-{
-  e2e: {
-    experimentalStudio: true
-  }
-}
-```
+2. **Run a Spec:**
+   Open Cypress, run a spec file, and click New Test or Edit in Studio.
+
+3. **Interact & Save:**
+   Click, type, and right-click to add assertions. Click Save to save your test.
 
 :::
 
@@ -51,53 +60,120 @@ attribute to your Cypress configuration.
 
 When Studio is enabled, you can:
 
-- Generate test steps by interacting with your app in the Cypress browser
-- Add assertions by right-clicking DOM elements
-- Save or edit tests without leaving Cypress
+- **Record:** Interact with your app in the Cypress browser to capture test commands
+- **Assert:** Right-click any element to add built-in assertions
+- **Edit:** Adjust tests inline without switching tools
 
 Supported action commands include: [`.click()`](/api/commands/click), [`.type()`](/api/commands/type), [`.check()`](/api/commands/check), [`.uncheck()`](/api/commands/uncheck), [`.select()`](/api/commands/select)
 
-Click the Studio panel button in the top right of the Cypress browser to open the Studio panel. You can also open the Studio panel by clicking **Edit in Studio** or **New test** in the Command Log.
+### Start Studio
 
-![Cypress Studio button](/img/app/cypress-studio/cypress-studio-beta-button.png)
+You can start Studio in several ways:
 
-## Recording new tests
+- Click **Edit in Studio** on a test in the Command Log.
+- Click **New Test** on the running spec or suite.
+- Click **Studio Beta** in the Studio panel.
 
-You can record a new test with Cypress Studio inside any describe or context block.
+<DocsVideo
+  src="/img/app/cypress-studio/edit-in-studio-button-on-cypress-test.mp4"
+  autoPlay={true}
+/>
 
-1. Click **New Test** under the desired block
-2. Add a name for the test
-3. Enter the URL of the page you want to test (if not on the current page)
-4. Interact with your app (click, type, select elements)
-5. Right-click elements to add assertions
-6. Click **Save** to save the changes to your spec file
+### Record a new test
 
-## Extending existing tests
+1. Click **New Test** on the file or suite you want to work in
+2. Give your test a clear, descriptive name
 
-You can also extend and update existing tests using Cypress Studio.
+Studio will automatically create a new test definition for you.
+
+<DocsVideo
+  src="/img/app/cypress-studio/create-new-test-in-suite-with-cypress-studio.mp4"
+  autoPlay={true}
+/>
+
+### Extend an existing test
+
+You can extend and update existing tests using Cypress Studio.
 
 1. Run the spec in Cypress
 2. Hover over the test in the Command Log
-3. Click **Edit in Studio** to open Cypress Studio
-4. Interact with your app to record actions
-5. Right-click to add assertions
-6. Click **Save** to save the changes to your spec file
+3. Click **Edit in Studio**
 
-### How are selectors determined?
+Studio runs your test up to the last command and lets you keep building from there.
 
-Cypress will automatically calculate a **unique selector** to use for a targeted
-element by running through a series of selector strategies.
+<DocsVideo
+  src="/img/app/cypress-studio/cypress-studio-recording-assertions-editing.mp4"
+  title="Cypress Studio"
+  autoPlay={true}
+/>
+
+### Set a URL
+
+Studio needs a `cy.visit()` before it can record. If your test doesn't have one yet, Studio will prompt you to enter a URL so it can start recording.
+
+<DocsVideo
+  src="/img/app/cypress-studio/cy-visit-url-in-studio.mp4"
+  autoPlay={true}
+/>
+
+### Record actions
+
+Record actions by interacting with the application under test.
+
+- **Clicks:** Click buttons, links, or interactive elements
+- **Typing:** Enter text into inputs and text areas
+- **Selections:** Use dropdowns, checkboxes, and radio buttons
+
+Studio translates your actions into Cypress commands in real time.
+
+<DocsVideo
+  src="/img/app/cypress-studio/studio-recording-typing.mp4"
+  autoPlay={true}
+/>
+
+### Add assertions
+
+Right-click any element in your app to instantly add an assertion.
+
+For example, confirm text is visible, a checkbox is checked, or an element has a specific CSS class. Assertions are added directly in your test code, ready to save and run.
+
+Assertions available are dynamically generated based on the element you right-click.
+
+<DocsVideo
+  src="/img/app/cypress-studio/cypress-studio-assertions-demo.mp4"
+  autoPlay={true}
+/>
+
+## How selectors are chosen
+
+Cypress automatically generates a **unique selector** for each element you interact with, using a priority strategy to ensure accuracy.
 
 <DefaultSelectorPriority />
 
-Cypress allows you to control how a selector is determined. Use the
-[`Cypress.ElementSelector`](/api/cypress-api/element-selector-api) API to control
-the selectors you want prioritized.
+Want more control? Use the [`Cypress.ElementSelector`](/api/cypress-api/element-selector-api) API to customize selector priority for your project.
 
 ## Limitations
 
-- Cypress Studio is currently only available for writing E2E tests, and doesn't
-  yet work with Component Testing.
-- Cypress Studio does not support writing tests that use domains of [multiple
+- Works only in E2E tests (Component Testing not yet supported)
+- Cannot record across [multiple
   origins](/app/guides/cross-origin-testing).
-- Cypress Studio can not interact with elements within a ShadowDom directly, though it can still run tests that do.
+
+## Coming Soon: AI in Studio
+
+Imagine Studio suggesting the most relevant assertions for every step you take. Cypress AI is a feature that's **coming soon** that will recommend relevant assertions in real time based on your interactions.
+
+<Btn
+  label="Join the waitlist ➜"
+  variant="indigo-dark"
+  className="mr-1"
+  href="https://go.cypress.io/studio-ai-waitlist?utm_source=docs.cypress.io&utm_medium=cypress-studio&utm_content=Join-the-waitlist"
+/>
+
+<DocsImage
+  src="/img/app/cypress-studio/cypress-studio-ai-illustration.gif"
+  alt="Cypress AI in Studio generating assertions"
+/>
+
+## See also
+
+- [Element Selector API](/api/cypress-api/element-selector-api)
