@@ -135,7 +135,14 @@ Studio translates your actions into Cypress commands in real time.
 
 Right-click any element in your app to instantly add an assertion.
 
-For example, confirm text is visible, a checkbox is checked, or an element has a specific CSS class. Assertions appear directly in your test code, ready to save and run.
+For example, confirm text is visible, a checkbox is checked, or an element has a specific CSS class. Assertions are added directly in your test code, ready to save and run.
+
+Assertions available are dynamically generated based on the element you right-click.
+
+<DocsVideo
+  src="/img/app/cypress-studio/cypress-studio-assertions-demo.mp4"
+  autoPlay={true}
+/>
 
 ## How selectors are chosen
 
@@ -151,7 +158,7 @@ Want more control? Use the [`Cypress.ElementSelector`](/api/cypress-api/element-
 - Cannot record across [multiple
   origins](/app/guides/cross-origin-testing).
 
-## Coming Soon:Cypress AI in Studio
+## Coming Soon: AI in Studio
 
 Imagine Studio suggesting the most relevant assertions for every step you take. Cypress AI is a feature that's **coming soon** that will recommend relevant assertions in real time based on your interactions.
 
