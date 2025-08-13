@@ -22,7 +22,7 @@ e2eSpecific: true
 ## Why Use Cypress Studio
 
 Cypress Studio turns test creation into a natural part of exploring your app.  
-Instead of manually typing every `.get()`, `.click()`, or `.type()` command, you can **record interactions in real time**, automatically generate Cypress code, and fine-tune your test inline.  
+Instead of manually typing every `.get()`, `.click()`, or `.type()` command, you can **record interactions in real time**, automatically generate Cypress code, and fine-tune your test inline.
 
 - **Save time**: Skip manually typing `.get().click().type()` sequences
 - **Stay in the flow**: Build and extend tests without leaving the Cypress App
@@ -39,12 +39,14 @@ Instead of manually typing every `.get()`, `.click()`, or `.type()` command, you
 
 1. **Enable Studio:**  
    Add to your `cypress.config.js` (Cypress Studio is currently experimental):
+
    ```js
    {
      e2e: {
        experimentalStudio: true
      }
    }
+   ```
 
 2. **Run a Spec:**
    Open Cypress, run a spec file, and click New Test or Edit in Studio.
@@ -134,7 +136,6 @@ Studio translates your actions into Cypress commands in real time.
 Right-click any element in your app to instantly add an assertion.
 
 For example, confirm text is visible, a checkbox is checked, or an element has a specific CSS class. Assertions appear directly in your test code, ready to save and run.
-
 
 ## How selectors are chosen
 
