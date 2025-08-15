@@ -1,10 +1,10 @@
-The `significantAttributes` property allows you to specify which attributes should be considered significant for UI Coverage analysis.
-
 ## Why use significant attributes?
 
-- **Focus on Important Changes**: Track attributes that are most relevant to user interaction and functionality
-- **Reduce False Positives**: Avoid flagging changes in non-essential attributes as coverage issues
-- **Improve Report Clarity**: Make coverage reports more meaningful by focusing on attributes that matter
+Cypress uses a [default set of attributes](/accessibility/core-concepts/element-identification) (such as common test ID patterns), in a priority order, as the preferred way to identify elements in reports.
+
+The values of these attributes are used as element identifiers, which helps us recognize the same element in multiple contexts and deduplicate the findings. This helps when reviewing run reports, or comparing reports in Branch Review.
+
+You may have attributes already in place in your application that would help with element organization, such as `data-component-name`. If you would like Cypress to use and prioritize these attributes, or you want to change the default priority order, you can define your own list of significant attributes.
 
 ## Scope
 
@@ -16,40 +16,25 @@ supported, if you need to split them up.
 
 ## Syntax
 
+`significantAttributes` is an array of strings, with each string being the name of a HTML attribute.
+
 ```json
 {
   "significantAttributes": [
-    {
-      "selector": string,
-      "attributes": string[]
-    }
+    string
   ]
 }
 ```
 
-### Options
-
-The first `significantAttributes` rule for which the selector property matches the element is used to determine which attributes should be considered significant. Attributes that do not match any rules are not considered significant by default.
-
-| Option       | Required | Default | Description                                                                                                                      |
-| ------------ | -------- | ------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| `selector`   | Required |         | A CSS selector to identify elements. Supports standard CSS selector syntax, including IDs, classes, attributes, and combinators. |
-| `attributes` | Required |         | An array of attribute names that should be considered significant for coverage analysis.                                         |
-
 ## Examples
 
-### Marking specific attributes as significant for all elements
+### Marking specific attributes as significant
 
 #### Config
 
 ```json
 {
-  "significantAttributes": [
-    {
-      "selector": "*",
-      "attributes": ["class", "id", "role"]
-    }
-  ]
+  "significantAttributes": ["class", "id", "data-context"]
 }
 ```
 
@@ -57,7 +42,7 @@ The first `significantAttributes` rule for which the selector property matches t
 
 ```xml
 <body>
-  <button class="primary" id="submit" role="button" data-testid="submit">
+  <button class="primary" id="submit" data-testid="submit" data-context="user-signup">
     Submit
   </button>
 </body>
@@ -66,73 +51,5 @@ The first `significantAttributes` rule for which the selector property matches t
 #### Significant attributes tracked
 
 ```
-class="primary", id="submit", role="button"
-```
-
----
-
-### Marking different attributes as significant for different elements
-
-#### Config
-
-```json
-{
-  "significantAttributes": [
-    {
-      "selector": "input",
-      "attributes": ["type", "name", "required"]
-    },
-    {
-      "selector": "button",
-      "attributes": ["type", "disabled"]
-    }
-  ]
-}
-```
-
-#### HTML
-
-```xml
-<body>
-  <input type="text" name="username" required class="form-control" />
-  <button type="submit" disabled class="btn">Submit</button>
-</body>
-```
-
-#### Significant attributes tracked
-
-```
-input: type="text", name="username", required="required"
-button: type="submit", disabled="disabled"
-```
-
-### Using attribute patterns
-
-#### Config
-
-```json
-{
-  "significantAttributes": [
-    {
-      "selector": "*",
-      "attributes": ["aria-*"]
-    }
-  ]
-}
-```
-
-#### HTML
-
-```xml
-<body>
-  <div aria-label="Main content" aria-hidden="false" class="container">
-    Content
-  </div>
-</body>
-```
-
-#### Significant attributes tracked
-
-```
-aria-label="Main content", aria-hidden="false"
+class="primary", id="submit", data-context="user-signup"
 ```
