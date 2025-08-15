@@ -20,6 +20,22 @@ Cypress requires [Node.js](https://nodejs.org/en) in order to install the Cypres
 Node.js versions 18 and 23 are no longer supported.
 [See Node's release schedule](https://github.com/nodejs/Release).
 
+### cy.exec code property renamed
+
+The `code` property on [`cy.exec()`](/api/commands/exec) has been renamed to `exitCode`.
+
+<Badge type="danger">Before</Badge>{' '}
+
+```javascript
+cy.exec('rake db:seed').its('code').should('eq', 0)
+```
+
+<Badge type="success">After</Badge>
+
+```javascript
+cy.exec('rake db:seed').its('exitCode').should('eq', 0)
+```
+
 ### Unsupported Linux Distributions
 
 Prebuilt binaries for Linux are no longer compatible with Linux distributions based on glibc `<2.31`.
