@@ -39,18 +39,18 @@ sidebar_position: 30
 
 Cypress supports running under these operating systems:
 
-- **macOS** 11+ _(Intel or Apple Silicon 64-bit (x64 or arm64))_
+- **macOS** >=11 _(Intel or Apple Silicon 64-bit (x64 or arm64))_
 - **Linux** _(x64 or arm64)_ see also [Linux Prerequisites](#Linux-Prerequisites) down below
-  - Ubuntu 20.04+
-  - Debian 11+
-  - Fedora 41+
+  - Ubuntu >=20.04
+  - Debian >=11
+  - Fedora >=41
 - **Windows** 10 & 11 _(x64)_
 - **Windows** 11 24H2 _(arm64, runs in [x64 emulation](https://learn.microsoft.com/en-us/windows/arm/apps-on-arm-x86-emulation) mode, minimum Cypress [14.5.0](/app/references/changelog#14-5-0) required)_ - preview status
 - **Windows Server** 2019, 2022 and 2025 _(x64)_
 
 ### Node.js
 
-- **Node.js** 20.x, 22.x, 24.x and above
+- **Node.js** 20.x, 22.x, >=24.x
 
 Follow the instructions on [Download Node.js](https://nodejs.org/en/download/) to download and install [Node.js](https://nodejs.org/).
 
@@ -69,17 +69,17 @@ Cypress is [installed](#Install) using one of the following supported package ma
 
 | Manager                                          | Version    | Docs                                                                             |
 | ------------------------------------------------ | ---------- | -------------------------------------------------------------------------------- |
-| [npm](https://docs.npmjs.com/)                   | `10.1.0`+  | [Install npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) |
-| [Yarn 1 (Classic)](https://classic.yarnpkg.com/) | `1.22.22`+ | [Install Yarn Classic](https://classic.yarnpkg.com/en/docs/install)              |
-| [Yarn (Modern aka berry)](https://yarnpkg.com/)  | `4.x`+     | [Install Yarn Modern](https://yarnpkg.com/getting-started/install)               |
-| [pnpm](https://pnpm.io/)                         | `8.x`+     | [Install pnpm](https://pnpm.io/installation)                                     |
+| [npm](https://docs.npmjs.com/)                   | >=10.1.0  | [Install npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) |
+| [Yarn 1 (Classic)](https://classic.yarnpkg.com/) | >=1.22.22 | [Install Yarn Classic](https://classic.yarnpkg.com/en/docs/install)              |
+| [Yarn (Modern aka berry)](https://yarnpkg.com/)  | >=4.x     | [Install Yarn Modern](https://yarnpkg.com/getting-started/install)               |
+| [pnpm](https://pnpm.io/)                         | >=8.x     | [Install pnpm](https://pnpm.io/installation)                                     |
 
 #### Yarn users
 
 [Yarn (Modern)](https://yarnpkg.com/) configuration using [nodeLinker: "node-modules"](https://yarnpkg.com/configuration/yarnrc#nodeLinker)
 is preferred. Cypress [Component Testing](/app/core-concepts/testing-types#What-is-Component-Testing) is not currently compatible with the default setting [nodeLinker: "pnp"](https://yarnpkg.com/configuration/yarnrc#nodeLinker) which uses [Yarn Plug'n'Play](https://yarnpkg.com/features/pnp).
 
-#### pnpm users
+#### pnpm configuration
 
 The following configuration options enable Cypress to execute its `postinstall` script so it can install the Cypress binary into the [binary cache](/app/references/advanced-installation#Binary-cache).
 If these configuration options are not set, then Cypress may skip the `postinstall` script execution and Cypress will not run.
@@ -107,7 +107,7 @@ The latest 3 major versions of the following browsers are also supported:
 
 - [Google Chrome](/app/references/launching-browsers#Chrome-Browsers)
 - [Microsoft Edge](/app/references/launching-browsers#Edge-Browsers)
-- [Mozilla Firefox](/app/references/launching-browsers#Firefox-Browsers) (_Firefox [141.0](https://developer.mozilla.org/en-US/docs/Mozilla/Firefox/Releases/141)+ requires Cypress [14.1.0](https://docs.cypress.io/app/references/changelog#14-1-0)+_)
+- [Mozilla Firefox](/app/references/launching-browsers#Firefox-Browsers) (_Firefox >=[141.0](https://developer.mozilla.org/en-US/docs/Mozilla/Firefox/Releases/141) requires Cypress >=[14.1.0](https://docs.cypress.io/app/references/changelog#14-1-0)_)
 - [WebKit](https://docs.cypress.io/app/references/launching-browsers#WebKit-Experimental) support is experimental
 
 ### Hardware
@@ -127,11 +127,13 @@ Install required dependencies. See below under [Docker Prerequisites](#Docker-Pr
 
 #### Ubuntu/Debian
 
+For Ubuntu 22.04 and below, and Debian:
+
 ```shell
 apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libnss3 libxss1 libasound2 libxtst6 xauth xvfb
 ```
 
-For Ubuntu 24.04+, use the following command:
+For Ubuntu >=24.04 and optionally for Debian 13:
 
 ```shell
 apt-get install libgtk2.0-0t64 libgtk-3-0t64 libgbm-dev libnotify-dev libnss3 libxss1 libasound2t64 libxtst6 xauth xvfb
