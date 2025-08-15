@@ -57,7 +57,7 @@ Pass in an options object to change the default behavior of `cy.exec()`.
 
 `cy.exec()` yields an object with the following properties:
 
-- `code`
+- `exitCode`
 - `stdout`
 - `stderr`
 
@@ -80,7 +80,7 @@ is great for:
 cy.exec('npm run build').then((result) => {
   // yields the 'result' object
   // {
-  //   code: 0,
+  //   exitCode: 0,
   //   stdout: "Files successfully built",
   //   stderr: ""
   // }
@@ -90,7 +90,7 @@ cy.exec('npm run build').then((result) => {
 #### Seed the database and assert it was successful
 
 ```javascript
-cy.exec('rake db:seed').its('code').should('eq', 0)
+cy.exec('rake db:seed').its('exitCode').should('eq', 0)
 ```
 
 #### Run an arbitrary script and assert its output
@@ -133,7 +133,7 @@ cy.exec('npm run build', { timeout: 20000 })
 
 ```javascript
 cy.exec('man bear pig', { failOnNonZeroExit: false }).then((result) => {
-  expect(result.code).to.eq(1)
+  expect(result.exitCode).to.eq(1)
   expect(result.stderr).to.contain('No manual entry for bear')
 })
 ```
@@ -236,6 +236,12 @@ the following:
   src="/img/api/exec/console-shows-code-shell-stderr-and-stdout-for-exec.png"
   alt="console.log exec"
 />
+
+## History
+
+| Version                                    | Changes                               |
+| ------------------------------------------ | ------------------------------------- |
+| [15.0.0](/app/references/changelog#15-0-0) | Renamed property `code` to `exitCode` |
 
 ## See also
 

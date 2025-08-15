@@ -1,0 +1,161 @@
+---
+title: 'Cypress.ElementSelector | Cypress Documentation'
+description: 'Customize how Cypress chooses selectors in Studio and Selector Playground by setting your preferred selector strategy.'
+sidebar_label: ElementSelector
+sidebar_position: 105
+---
+
+<ProductHeading product="app" />
+
+# Cypress.ElementSelector
+
+The ElementSelector API lets you define how Cypress selects elements in tools like [Cypress Studio](/app/guides/cypress-studio) and the [Selector Playground](/app/core-concepts/open-mode#Selector-Playground) (which will be replaced by Cypress Studio once it is no longer experimental).
+
+By setting your own selector strategy, you can control which attributes Cypress prioritizes (like `data-*`, `id`, or `aria-label`) when generating selectors. This helps you enforce consistency, improve test readability, and make generated tests more resilient to changes in your HTML.
+
+Cypress uses a strategy to generate selectors that are not only based on your preferred selectors, but also guaranteed to be **unique** within the document.
+
+This means Cypress will **attempt to follow your configured `selectorPriority`**, but may skip lower-priority options or combine multiple selectors if a single attribute isn't unique enough.
+
+## Syntax
+
+```javascript
+Cypress.ElementSelector.defaults(options)
+```
+
+### Arguments
+
+<Icon name="angle-right" /> **options _(Object)_**
+
+An object containing any or all of the following options:
+
+| Option             | Accepts            | Description                                                            |
+| ------------------ | ------------------ | ---------------------------------------------------------------------- |
+| `selectorPriority` | `Array of strings` | Determines the order of attributes Cypress uses to generate selectors. |
+
+:::info
+
+##### API Stability
+
+The `selectorPriority` API is under active development and may change in future versions as we refine the best way to generate selectors within our products. Stay updated with our [changelog](/app/references/changelog) for any breaking changes.
+
+:::
+
+Accepted values for `selectorPriority` are:
+
+- `attribute:${string}` - for specific attributes like `attribute:aria-label`, `attribute:lang`, etc.
+- `attributes` - general fallback for any other attributes
+- `class`
+- `data-${string}` - for specific data attributes like `data-cy`, `data-testid`, etc.
+- `id`
+- `name`
+- `nth-child`
+- `tag`
+
+<DefaultSelectorPriority />
+
+Consider the following HTML:
+
+```html
+<button id="submit-btn" class="primary" role="button" aria-label="Submit">
+  Submit
+</button>
+```
+
+With the default selector priority, Cypress prioritizes `id`, so the selector would be `#submit-btn`.
+
+<Icon name="angle-right" /> **$el _(Object)_**
+
+The [jQuery element](http://api.jquery.com/Types/#jQuery) for which you want to retrieve a selector.
+
+## Examples
+
+### Set custom selector priority
+
+You can customize how Cypress generates selectors by defining a priority order for which attributes to prefer. This affects the selectors you see in tools like [Cypress Studio](/app/guides/cypress-studio) and the [Selector Playground](/app/core-concepts/open-mode#Selector-Playground) (which will be replaced by Cypress Studio once it is no longer experimental).
+
+For example, this config tells Cypress to prefer semantic and accessibility attributes before falling back to styling details like class names.
+
+```javascript
+Cypress.ElementSelector.defaults({
+  selectorPriority: [
+    'attribute:role',
+    'attribute:aria-label',
+    'name',
+    'class',
+    'attributes',
+  ],
+})
+```
+
+### Prioritize accessible attributes
+
+Accessibility-first apps often use ARIA roles and labels. You can configure Cypress to prioritize these when generating selectors:
+
+```js
+Cypress.ElementSelector.defaults({
+  selectorPriority: ['attribute:aria-label', 'attribute:role', 'id', 'class'],
+})
+```
+
+This helps produce more readable and resilient selectors, especially for accessibility-first applications.
+
+### Prioritize language-agnostic selectors (for i18n)
+
+In multilingual applications, selectors based on text or labels may change between locales. Prefer stable, language-agnostic attributes like `data-*`, `role`, and `aria-labelledby`.
+
+```js
+Cypress.ElementSelector.defaults({
+  selectorPriority: [
+    'data-cy',
+    'attribute:role',
+    'attribute:aria-labelledby',
+    'name',
+    'id',
+    'class',
+    'attributes',
+  ],
+})
+```
+
+This ensures selectors are resilient to translation changes in text or labels.
+
+### Avoid dynamic or auto-generated selectors
+
+Many frameworks produce dynamic ids or class names such as:
+
+```html
+<button
+  id="button-5a3f9d"
+  class="Component_button__3XyZ2 css-1a2b3c SeriesIndexFooter-footer-3WmRg"
+  data-cy="checkout-btn"
+>
+  Checkout
+</button>
+```
+
+You can configure Cypress to skip attributes that are dynamically generated.
+
+```js
+Cypress.ElementSelector.defaults({
+  selectorPriority: [
+    'data-cy',
+    'attribute:role',
+    'attribute:aria-label',
+    'name',
+    'attributes', // fallback
+    // deliberately omit 'id' and 'class'
+  ],
+})
+```
+
+## History
+
+| Version                                    | Changes                                                            |
+| ------------------------------------------ | ------------------------------------------------------------------ |
+| [15.0.0](/app/references/changelog#15-0-0) | Renamed `Cypress.SelectorPlayground` to `Cypress.ElementSelector`. |
+
+## See also
+
+- [Cypress Studio](/app/guides/cypress-studio)
+- [Selector Playground](/app/core-concepts/open-mode#Selector-Playground)

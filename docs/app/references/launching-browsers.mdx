@@ -216,22 +216,6 @@ Download the Mozilla geckodriver from the
 
 :::
 
-##### Webdriver BiDi and CDP Deprecation
-
-:::info
-
-Since Firefox 129, Chrome DevTools Protocol (CDP) has been [deprecated in Firefox](https://fxdx.dev/deprecating-cdp-support-in-firefox-embracing-the-future-with-webdriver-bidi/).
-In Firefox 135 and above, Cypress defaults to automating the Firefox browser with WebDriver BiDi.
-Cypress will no longer support CDP within Firefox in the future and is planned for removal in Cypress 15.
-
-If CDP still needs to be used, you can force enablement via the `FORCE_FIREFOX_CDP=1` environment variable, regardless of Firefox version. For example:
-
-```bash
-FORCE_FIREFOX_CDP=1 npx cypress run --browser firefox
-```
-
-:::
-
 ### WebKit (Experimental)
 
 Cypress has [experimental](/app/references/experiments) support for WebKit,
