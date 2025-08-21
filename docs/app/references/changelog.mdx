@@ -362,7 +362,7 @@ _Released 1/28/2025_
 
 - Fixed an issue where Cypress would incorrectly navigate to `about:blank` when test isolation was disabled and the last test would fail and then retry. Fixes [#28527](https://github.com/cypress-io/cypress/issues/28527).
 - Fixed a regression introduced in [14.0.0](#14-0-0) where an element would not return the correct visibility if its offset parent was within the clipping element. Fixes [#30922](https://github.com/cypress-io/cypress/issues/30922).
-- Fixed a regression introduced in [14.0.0](#14-0-0) where the incorrect visiblity would be returned when either `overflow-x` or `overflow-y` was visible but the other one was clipping. Fixed in [#30934](https://github.com/cypress-io/cypress/pull/30934).
+- Fixed a regression introduced in [14.0.0](#14-0-0) where the incorrect visibility would be returned when either `overflow-x` or `overflow-y` was visible but the other one was clipping. Fixed in [#30934](https://github.com/cypress-io/cypress/pull/30934).
 - Fixed an issue where an `option` element would not return the correct visibility if its parent element has a clipping overflow. Fixed in [#30934](https://github.com/cypress-io/cypress/pull/30934).
 - Fixed an issue where non-HTMLElement(s) may fail during assertions. Fixes [#30944](https://github.com/cypress-io/cypress/issues/30944).
 
@@ -1398,7 +1398,7 @@ _Released 06/07/2023_
 
 - Upgraded [`find-process`](https://www.npmjs.com/package/find-process) from
   `1.4.1` to `1.4.7` to address this
-  [Synk](https://security.snyk.io/vuln/SNYK-JS-FINDPROCESS-1090284) security
+  [Snyk](https://security.snyk.io/vuln/SNYK-JS-FINDPROCESS-1090284) security
   vulnerability. Addressed in
   [#26906](https://github.com/cypress-io/cypress/pull/26906).
 - Upgraded [`firefox-profile`](https://www.npmjs.com/package/firefox-profile)
@@ -2010,7 +2010,7 @@ _Released 1/03/2023_
   [#25036](https://github.com/cypress-io/cypress/pull/25036).
 - Fixed a regression in [10.11.0](#10-11-0) where the mocha test results no
   longer sent the pending boolean to reporters. This caused the
-  [`mochaawesome`](https://www.npmjs.com/package/mochawesome) reporter to
+  [`mochawesome`](https://www.npmjs.com/package/mochawesome) reporter to
   incorrectly report pending tests as pending and skipped. Fixes
   [#24477](https://github.com/cypress-io/cypress/issues/24477).
 - Fix for regression introduced in [12.1.0](#12-1-0), where
