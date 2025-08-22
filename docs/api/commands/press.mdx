@@ -66,12 +66,15 @@ cy.press(Cypress.Keyboard.Keys.TAB)
 
 <Icon name="angle-right" /> **key _(String)_**
 
-The key to press. The supported values are available on [`Cypress.Keyboard.Keys`](/api/cypress-api/keyboard-api), and may change from time to time. It's recommended that you reference these values from `Cypress.Keyboard.Keys` rather than passing in a string.
+The key to press. Values for non single character keys are available on [`Cypress.Keyboard.Keys`](/api/cypress-api/keyboard-api), and may change from time to time. It's recommended that you reference these values from `Cypress.Keyboard.Keys` rather than passing in a string when available.
 
-### Supported Keys
+#### Supported Keys
 
 | Reference                         | Value          |
 | --------------------------------- | -------------- |
+| Letters                            | `"a"` through `"z"`, `"A"` through `"Z"` |
+| Numbers                            | `"0"`, `"1"`, `"2"`, `"3"`, `"4"`, `"5"`, `"6"`, `"7"`, `"8"`, `"9"` |
+| Special Characters                 | `"!"`, `"@"`, `"#"`, `'+'`, `"€"`, `"é"`, etc. |
 | `Cypress.Keyboard.Keys.DOWN`      | `"ArrowDown"`  |
 | `Cypress.Keyboard.Keys.LEFT`      | `"ArrowLeft"`  |
 | `Cypress.Keyboard.Keys.RIGHT`     | `"ArrowRight"` |
@@ -98,41 +101,6 @@ The key to press. The supported values are available on [`Cypress.Keyboard.Keys`
 | `Cypress.Keyboard.Keys.F11`       | `"F11"`        |
 | `Cypress.Keyboard.Keys.F12`       | `"F12"`        |
 
-:::caution
-
-<strong>Browser-Specific Functionality:</strong>
-In Firefox, [the F6 key is used to change focus to the next frame](https://support.mozilla.org/en-US/kb/keyboard-shortcuts-perform-firefox-tasks-quickly#w_current-page).
-Pressing F6 via `cy.press()` will dispatch the initial `keydown` appropriately, but
-due to the focus change, the `keyup` event will not be dispatched to the iframe containing
-the application under test.
-
-To re-focus the iframe after pressing F6, use [`cy.focus()`](/api/commands/focus).
-:::
-
-## Supported Characters
-
-Single character keys are supported, like `a`, `b`, `c`, etc. There is no need to reference `Cypress.Keyboard.Keys` record for these keys, just type them normally as a string:
-
-```javascript
-cy.get('input').focus()
-cy.press('a')
-```
-
-Multi-codepoint UTF-8 characters are also supported and do not need to be entered as individual codepoints. For example, `é` can be either one single codepoint or two separate codepoints when the accent is pressed as a subsequent modifier key. You do not need to press each codepoint separately; just type the entire character as a string.
-
-```javascript
-// works
-cy.get('input').focus()
-cy.press('é') // \u00e9 (composed é)
-cy.press('é') // \u0065\u0301 (e + combining acute accent)
-
-// also fine, but not necessary
-cy.get('input').focus()
-cy.press('e') // \u0065
-cy.press('́') // \u0301 (combining acute accent)
-```
-
-Strings with multiple characters are not supported. If you need to input longer strings into a text input or similar, use [`cy.type()`](/api/commands/type).
 
 <Icon name="angle-right" /> **options _(Object)_**
 
@@ -170,13 +138,55 @@ it('autocompletes search input when pressing Tab', () => {
 })
 ```
 
+### Type a single character
+
+Single character keys are supported, like `a`, `b`, `c`, etc. There is no need to reference `Cypress.Keyboard.Keys` record for these keys, just type them normally as a string:
+
+```javascript
+cy.get('input').focus()
+cy.press('a')
+```
+
+### Type a multi-codepoint UTF-8 character
+
+Multi-codepoint UTF-8 characters are also supported and do not need to be entered as individual codepoints. For example, `é` can be either one single codepoint or two separate codepoints when the accent is pressed as a subsequent modifier key. You do not need to press each codepoint separately; just type the entire character as a string.
+
+```javascript
+// works
+cy.get('input').focus()
+cy.press('é') // \u00e9 (composed é)
+cy.press('é') // \u0065\u0301 (e + combining acute accent)
+
+// also fine, but not necessary
+cy.get('input').focus()
+cy.press('e') // \u0065
+cy.press('́') // \u0301 (combining acute accent)
+```
+
 ## Notes
+
+### Strings with multiple characters
+
+Strings with multiple characters are not supported. If you need to input longer strings into a text input or similar, use [`cy.type()`](/api/commands/type).
+
+```js
+cy.get('input').type('Hello, World') // Type 'Hello, World' into the 'input'
+```
 
 ### Transient activation
 
 By dispatching native keyboard events to the browser, this command will cause the browser to enter [Transient activation](https://developer.mozilla.org/en-US/docs/Glossary/Transient_activation) state.
 
 If your application prevents the default behavior of the `beforeunload` event, this may cause issues when navigating away from the current page.
+
+### Firefox F6 key
+
+In Firefox, [the F6 key is used to change focus to the next frame](https://support.mozilla.org/en-US/kb/keyboard-shortcuts-perform-firefox-tasks-quickly#w_current-page).
+Pressing F6 via `cy.press()` will dispatch the initial `keydown` appropriately, but
+due to the focus change, the `keyup` event will not be dispatched to the iframe containing
+the application under test.
+
+To re-focus the iframe after pressing F6, use [`cy.focus()`](/api/commands/focus).
 
 ## History
 
