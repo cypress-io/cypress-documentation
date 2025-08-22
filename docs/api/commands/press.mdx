@@ -70,37 +70,41 @@ The key to press. The supported values are available on [`Cypress.Keyboard.Keys`
 
 ### Supported Keys
 
-| Reference                   | Value   |
-| --------------------------- | ------- |
-| `Cypress.Keyboard.Keys.DOWN` | `"ArrowDown"` |
-| `Cypress.Keyboard.Keys.LEFT` | `"ArrowLeft"` |
-| `Cypress.Keyboard.Keys.RIGHT` | `"ArrowRight"` |
-| `Cypress.Keyboard.Keys.UP` | `"ArrowUp"` |
-| `Cypress.Keyboard.Keys.END` | `"End"` |
-| `Cypress.Keyboard.Keys.HOME` | `"Home"` |
-| `Cypress.Keyboard.Keys.PAGEDOWN` | `"PageDown"` |
-| `Cypress.Keyboard.Keys.PAGEUP` | `"PageUp"` |
-| `Cypress.Keyboard.Keys.ENTER` | `"Enter"` |
-| `Cypress.Keyboard.Keys.TAB` | `"Tab"` |
-| `Cypress.Keyboard.Keys.BACKSPACE` | `"Backspace"` |
-| `Cypress.Keyboard.Keys.DELETE` | `"Delete"` |
-| `Cypress.Keyboard.Keys.INSERT` | `"Insert"` |
-| `Cypress.Keyboard.Keys.F1` | `"F1"` |
-| `Cypress.Keyboard.Keys.F2` | `"F2"` |
-| `Cypress.Keyboard.Keys.F3` | `"F3"` |
-| `Cypress.Keyboard.Keys.F4` | `"F4"` |
-| `Cypress.Keyboard.Keys.F5` | `"F5"` |
-| `Cypress.Keyboard.Keys.F6` | `"F6"` |
-| `Cypress.Keyboard.Keys.F7` | `"F7"` |
-| `Cypress.Keyboard.Keys.F8` | `"F8"` |
-| `Cypress.Keyboard.Keys.F9` | `"F9"` |
-| `Cypress.Keyboard.Keys.F10` | `"F10"` |
-| `Cypress.Keyboard.Keys.F11` | `"F11"` |
-| `Cypress.Keyboard.Keys.F12` | `"F12"` |
+| Reference                         | Value          |
+| --------------------------------- | -------------- |
+| `Cypress.Keyboard.Keys.DOWN`      | `"ArrowDown"`  |
+| `Cypress.Keyboard.Keys.LEFT`      | `"ArrowLeft"`  |
+| `Cypress.Keyboard.Keys.RIGHT`     | `"ArrowRight"` |
+| `Cypress.Keyboard.Keys.UP`        | `"ArrowUp"`    |
+| `Cypress.Keyboard.Keys.END`       | `"End"`        |
+| `Cypress.Keyboard.Keys.HOME`      | `"Home"`       |
+| `Cypress.Keyboard.Keys.PAGEDOWN`  | `"PageDown"`   |
+| `Cypress.Keyboard.Keys.PAGEUP`    | `"PageUp"`     |
+| `Cypress.Keyboard.Keys.ENTER`     | `"Enter"`      |
+| `Cypress.Keyboard.Keys.TAB`       | `"Tab"`        |
+| `Cypress.Keyboard.Keys.BACKSPACE` | `"Backspace"`  |
+| `Cypress.Keyboard.Keys.DELETE`    | `"Delete"`     |
+| `Cypress.Keyboard.Keys.INSERT`    | `"Insert"`     |
+| `Cypress.Keyboard.Keys.F1`        | `"F1"`         |
+| `Cypress.Keyboard.Keys.F2`        | `"F2"`         |
+| `Cypress.Keyboard.Keys.F3`        | `"F3"`         |
+| `Cypress.Keyboard.Keys.F4`        | `"F4"`         |
+| `Cypress.Keyboard.Keys.F5`        | `"F5"`         |
+| `Cypress.Keyboard.Keys.F6`        | `"F6"`         |
+| `Cypress.Keyboard.Keys.F7`        | `"F7"`         |
+| `Cypress.Keyboard.Keys.F8`        | `"F8"`         |
+| `Cypress.Keyboard.Keys.F9`        | `"F9"`         |
+| `Cypress.Keyboard.Keys.F10`       | `"F10"`        |
+| `Cypress.Keyboard.Keys.F11`       | `"F11"`        |
+| `Cypress.Keyboard.Keys.F12`       | `"F12"`        |
 
 :::caution
+
 <strong>Browser-Specific Functionality:</strong>
-In Firefox, [the F6 key is used to change focus to the next frame](https://support.mozilla.org/en-US/kb/keyboard-shortcuts-perform-firefox-tasks-quickly#w_current-page). Pressing F6 via `cy.press()` will dispatch the initial `keydown` appropriately, but due to the focus change, the `keyup` event will not be dispatched to the iframe containing the application under test.
+In Firefox, [the F6 key is used to change focus to the next frame](https://support.mozilla.org/en-US/kb/keyboard-shortcuts-perform-firefox-tasks-quickly#w_current-page).
+Pressing F6 via `cy.press()` will dispatch the initial `keydown` appropriately, but
+due to the focus change, the `keyup` event will not be dispatched to the iframe containing
+the application under test.
 
 To re-focus the iframe after pressing F6, use [`cy.focus()`](/api/commands/focus).
 :::
@@ -176,9 +180,9 @@ If your application prevents the default behavior of the `beforeunload` event, t
 
 ## History
 
-| Version                             | Changes                      |
-| ----------------------------------- | ---------------------------- |
-| [14.3.0](/app/references/changelog) | Added the `.press()` command |
+| Version                             | Changes                                                                             |
+| ----------------------------------- | ----------------------------------------------------------------------------------- |
+| [14.3.0](/app/references/changelog) | Added the `.press()` command                                                        |
 | [15.1.0](/app/references/changelog) | Expanded support to include named keys and single+multi-codepoint UTF-8 characters. |
 
 ## See also
