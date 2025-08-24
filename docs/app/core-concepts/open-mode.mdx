@@ -223,6 +223,7 @@ experience in [Test Replay](/cloud/features/test-replay) for runs recorded in CI
 <DocsImage
   src="/img/app/core-concepts/open-mode/test-runner.png"
   alt="The Test Runner"
+  noBorder={true}
 />
 
 ## Command Log
@@ -281,11 +282,6 @@ it into view (to the top of the page).
 Also note that as we hover over the [`contains`](/api/commands/contains)
 command, Cypress reverts back to the URL that was present when the snapshot was
 taken.
-
-<DocsImage
-  src="/img/app/core-concepts/open-mode/first-test-url-revert.png"
-  alt="The url address bar shows https://example.cypress.io/"
-/>
 
 ### Pinning snapshots
 
@@ -421,6 +417,8 @@ DOM is completely available for debugging.
   alt="Application Under Test"
 />
 
+#### Viewport Size and Scale
+
 The AUT also displays in the size and orientation specified in your tests. You
 can change the size or orientation with the
 [`cy.viewport()`](/api/commands/viewport) command or in your
@@ -432,32 +430,22 @@ The current size and scale of the AUT is displayed in the top right corner of
 the window.
 
 The image below shows that our application is displaying at `1000px` width,
-`660px` height and scaled to `100%`.
+`660px` height and scaled to `90%`.
 
 <DocsImage
   src="/img/app/core-concepts/open-mode/viewport-scaling.png"
   alt="Viewport Scaling"
 />
 
-:::info
+#### Errors
 
 The right-hand side may also be used to display syntax errors in your spec file
 that prevent the tests from running.
-
-:::
 
 <DocsImage
   src="/img/app/core-concepts/open-mode/aut-error-e2e.png"
   alt="Errors"
 />
-
-:::caution
-
-Internally, the AUT renders within an iframe. This can sometimes cause
-unexpected behaviors
-[explained here.](/api/commands/window#Cypress-uses-2-different-windows)
-
-:::
 
 ### Component Under Test <ComponentOnlyBadge />
 
@@ -531,6 +519,13 @@ that prevent the tests from running.
 
 ## Selector Playground
 
+:::caution
+
+##### Deprecation Notice
+
+The Selector Playground will be replaced by [Cypress Studio](/app/guides/cypress-studio) once it is no longer experimental. Cypress Studio provides the same functionality for constructing Cypress commands using unique selectors, along with additional recording capabilities.
+:::
+
 The Selector Playground is an interactive feature that helps you:
 
 - Determine a unique selector for an element.
@@ -550,19 +545,16 @@ interactions.
   title="Selector Playground demo"
 />
 
-### Uniqueness
+### How are selectors determined?
 
-Cypress will automatically calculate a **unique selector** to use targeted
+Cypress will automatically calculate a **unique selector** to use for a targeted
 element by running through a series of selector strategies.
 
 <DefaultSelectorPriority />
 
-:::info
-
-Cypress allows you to control how a selector is determined. Use the [Cypress.SelectorPlayground](/api/cypress-api/selector-playground-api)
-API to control the selectors you want returned.
-
-:::
+Cypress allows you to control how a selector is determined. Use the
+[`Cypress.ElementSelector`](/api/cypress-api/element-selector-api) API to control
+the selectors you want prioritized.
 
 ### Best practices
 
