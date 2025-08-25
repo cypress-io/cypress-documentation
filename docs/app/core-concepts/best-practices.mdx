@@ -978,8 +978,11 @@ When you need to perform several actions on the same element (like focus, clear,
 #### Option 1: Command Chaining (Recommended)
 
 ```js
-// RECOMMENDED: Chain commands when possible
-cy.get('[data-cy="input-field"]').focus().clear().type('new value').blur()
+// RECOMMENDED: Use separate cy.get() or cy.wrap() for each action command
+cy.get('[data-cy="input-field"]').focus()
+cy.get('[data-cy="input-field"]').clear()
+cy.get('[data-cy="input-field"]').type('new value')
+cy.get('[data-cy="input-field"]').blur()
 ```
 
 #### Option 2: Using then() (Only when necessary)
@@ -1064,21 +1067,19 @@ While `then()` captures the element at that moment, Cypress commands within `the
 
 ### Best Practice Examples
 
-#### Form Interaction (Good)
-
-```js
 describe('form interaction', () => {
-  it('updates input field correctly', () => {
-    cy.get('[data-cy="email-input"]')
-      .should('be.visible')
-      .focus()
-      .clear()
-      .type('user@example.com')
-      .should('have.value', 'user@example.com')
-      .blur()
-  })
+it('updates input field correctly', () => {
+cy.get('[data-cy="email-input"]').as('emailInput')
+cy.get('@emailInput').should('be.visible')
+cy.get('@emailInput').focus()
+cy.get('@emailInput').clear()
+cy.get('@emailInput').type('user@example.com')
 })
-```
+
+cy.get('@emailInput').should('have.value', 'user@example.com')
+cy.get('@emailInput').blur()
+})
+})
 
 #### Conditional Actions (When `then()` is appropriate)
 
