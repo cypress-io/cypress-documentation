@@ -973,15 +973,23 @@ A common question arises when performing multiple actions on the same element: s
 
 ### Multiple Actions on the Same Element
 
-When you need to perform several actions on the same element (like focus, clear, type, and blur), you have two main approaches:
+When you need to perform several actions on the same element (like focus, clear, type, and blur), you have two main approaches. Remember that Cypress commands are retry-able, but actions like `.click()`, `.type()`, etc. should be at the end of command chains to maintain retry-ability:
 
 #### Option 1: Command Chaining (Recommended)
 
 ```js
-// RECOMMENDED: Use separate cy.get() or cy.wrap() for each action command
-cy.get('[data-cy="input-field"]').focus()
+// RECOMMENDED: Chain commands with assertions before actions
+cy.get('[data-cy="input-field"]')
+  .should('be.visible')
+  .should('not.be.disabled')
+  .focus()
+
+// Each action gets its own chain to ensure retry-ability
 cy.get('[data-cy="input-field"]').clear()
-cy.get('[data-cy="input-field"]').type('new value')
+cy.get('[data-cy="input-field"]')
+  .type('new value')
+  .should('have.value', 'new value')
+
 cy.get('[data-cy="input-field"]').blur()
 ```
 
