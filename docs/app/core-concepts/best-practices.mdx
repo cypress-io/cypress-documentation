@@ -1079,9 +1079,7 @@ While `then()` captures the element at that moment, Cypress commands within `the
 describe('form interaction', () => {
   it('updates input field correctly', () => {
     cy.get('[data-cy="email-input"]').as('emailInput')
-    cy.get('@emailInput')
-      .should('be.visible')
-      .focus()
+    cy.get('@emailInput').should('be.visible').focus()
     cy.get('@emailInput').clear()
     cy.get('@emailInput')
       .type('user@example.com')
