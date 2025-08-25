@@ -1075,17 +1075,21 @@ While `then()` captures the element at that moment, Cypress commands within `the
 
 ### Best Practice Examples
 
+```javascript
 describe('form interaction', () => {
-it('updates input field correctly', () => {
-cy.get('[data-cy="email-input"]').as('emailInput')
-cy.get('@emailInput').should('be.visible')
-cy.get('@emailInput').focus()
-cy.get('@emailInput').clear()
-cy.get('@emailInput').type('user@example.com')
-cy.get('@emailInput').should('have.value', 'user@example.com')
-cy.get('@emailInput').blur()
+  it('updates input field correctly', () => {
+    cy.get('[data-cy="email-input"]').as('emailInput')
+    cy.get('@emailInput')
+      .should('be.visible')
+      .focus()
+    cy.get('@emailInput').clear()
+    cy.get('@emailInput')
+      .type('user@example.com')
+      .should('have.value', 'user@example.com')
+    cy.get('@emailInput').blur()
+  })
 })
-})
+```
 
 #### Conditional Actions (When `then()` is appropriate)
 
@@ -1109,7 +1113,7 @@ describe('conditional interactions', () => {
 
 #### Working with Element Collections
 
-```js
+```javascript
 describe('element collections', () => {
   it('processes multiple items', () => {
     cy.get('[data-cy="product-card"]').then(($cards) => {
