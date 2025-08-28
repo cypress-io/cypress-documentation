@@ -16,15 +16,6 @@ A `keydown`, `press`, and `keyup` event will be dispatched directly to the brows
 
 Unlike `cy.type()`, which is best for typing multiple character keys, `cy.press()` will dispatch real keyboard events rather than simulated ones. This command is especially useful when testing focus management and keyboard navigation patterns which are critical for [accessibility testing](/app/guides/accessibility-testing) and great keyboard UX.
 
-:::caution
-
-<strong>Supported Browsers:</strong>
-This command is supported in chromium browsers and Firefox versions >= v135. WebKit
-is not supported. This command will fail if executed in a browser that does not support
-it.
-
-:::
-
 ## Syntax
 
 ```javascript
@@ -88,18 +79,13 @@ The key to press. Values for non single character keys are available on [`Cypres
 | `Cypress.Keyboard.Keys.BACKSPACE` | `"Backspace"`                                                        |
 | `Cypress.Keyboard.Keys.DELETE`    | `"Delete"`                                                           |
 | `Cypress.Keyboard.Keys.INSERT`    | `"Insert"`                                                           |
-| `Cypress.Keyboard.Keys.F1`        | `"F1"`                                                               |
-| `Cypress.Keyboard.Keys.F2`        | `"F2"`                                                               |
-| `Cypress.Keyboard.Keys.F3`        | `"F3"`                                                               |
-| `Cypress.Keyboard.Keys.F4`        | `"F4"`                                                               |
-| `Cypress.Keyboard.Keys.F5`        | `"F5"`                                                               |
-| `Cypress.Keyboard.Keys.F6`        | `"F6"`                                                               |
-| `Cypress.Keyboard.Keys.F7`        | `"F7"`                                                               |
-| `Cypress.Keyboard.Keys.F8`        | `"F8"`                                                               |
-| `Cypress.Keyboard.Keys.F9`        | `"F9"`                                                               |
-| `Cypress.Keyboard.Keys.F10`       | `"F10"`                                                              |
-| `Cypress.Keyboard.Keys.F11`       | `"F11"`                                                              |
-| `Cypress.Keyboard.Keys.F12`       | `"F12"`                                                              |
+| `Cypress.Keyboard.Keys.SPACE`     | `"Space"`                                                            |
+
+:::info
+
+F1-F12 keys are not supported. These keys are used for browser shortcuts, and can prevent the test suite from executing properly after they are pressed.
+
+:::
 
 <Icon name="angle-right" /> **options _(Object)_**
 
@@ -177,15 +163,6 @@ cy.get('input').type('Hello, World') // Type 'Hello, World' into the 'input'
 By dispatching native keyboard events to the browser, this command will cause the browser to enter [Transient activation](https://developer.mozilla.org/en-US/docs/Glossary/Transient_activation) state.
 
 If your application prevents the default behavior of the `beforeunload` event, this may cause issues when navigating away from the current page.
-
-### Firefox F6 key
-
-In Firefox, [the F6 key is used to change focus to the next frame](https://support.mozilla.org/en-US/kb/keyboard-shortcuts-perform-firefox-tasks-quickly#w_current-page).
-Pressing F6 via `cy.press()` will dispatch the initial `keydown` appropriately, but
-due to the focus change, the `keyup` event will not be dispatched to the iframe containing
-the application under test.
-
-To re-focus the iframe after pressing F6, use [`cy.focus()`](/api/commands/focus).
 
 ## History
 
