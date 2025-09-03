@@ -13,7 +13,7 @@ sidebar_custom_props: { 'new_label': true }
 
 Trigger native key events in your application to simulate keyboard interactions.
 
-A `keydown`, `press`, and `keyup` event will be dispatched directly to the browser window.
+A `keydown` and `keyup` event will be dispatched directly to the browser window.
 
 Unlike `cy.type()`, which is best for typing multiple character keys, `cy.press()` will dispatch real keyboard events rather than simulated ones. This command is especially useful when testing focus management and keyboard navigation patterns which are critical for [accessibility testing](/app/guides/accessibility-testing) and great keyboard UX.
 
