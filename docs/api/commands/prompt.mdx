@@ -1,0 +1,352 @@
+---
+title: 'cy.prompt() | Cypress Documentation'
+description: Use natural language to generate Cypress tests with AI. Write steps in plain English and let Cypress do the rest.
+sidebar_label: prompt
+slug: /api/commands/prompt
+e2eSpecific: true
+sidebar_custom_props: { 'new_label': true }
+---
+
+<ProductHeading product="cloud" />
+
+# prompt
+
+`cy.prompt` is an AI-powered Cypress command that turns plain English test steps into executable Cypress code. It offers a fast way to explore new test flows, bootstrap end-to-end coverage, and prototype without writing selectors or commands by hand. It is available on all Cypress Cloud plan types.
+
+:::note
+
+<strong>Before you start coding with `cy.prompt`</strong>
+
+
+- [How it works](#how-it-works) — code generation, caching, and self-healing
+- [Writing effective prompts](#writing-effective-prompts) — patterns that work best
+- [Selectors](#how-selectors-are-chosen) — how Cypress selects elements automatically
+- [Debugging & transparency](#debugging--transparency) — inspect generated code and save it for version control
+- [Setup](#setup) — setup and prerequisites  
+- [Limitations](#limitations) — what is and is not supported today  
+- [Pricing, limits, and security](#pricing--availability)  
+
+:::
+
+<DocsVideo
+  src="/img/api/prompt/cy-prompt-demo.mp4"
+  autoPlay={true}
+  title="cy.prompt written for login screen using Cypress Studio"
+/>
+
+*The demo above shows `cy.prompt` in action with [Cypress Studio](/app/guides/cypress-studio).*
+
+## Syntax
+
+
+```typescript
+interface PromptCommand {
+  (
+    steps: string[], // array of steps to execute
+    options?: {
+      excludeFromAI?: string[] // keys to exclude from AI (e.g. sensitive vars)
+    }
+  ): void
+}
+```
+
+**Example**
+
+```typescript
+cy.prompt([
+  'visit https://cloud.cypress.io/login',
+  'type "user@example.com" in the email field',
+  'type ${password} in the password field',
+  'click the login button'
+], { 
+  excludeFromAI: ['password'] 
+})
+```
+
+<HeaderYields />
+
+- `cy.prompt()` yields `null`.
+
+
+## How it works
+
+When you call `cy.prompt`, Cypress performs a multi-step process:
+
+1. **Interpret prompt:**  Each string in your `steps[]` array is parsed using an AI model. Cypress maps the intent (e.g. 'click the login button') to Cypress commands (`cy.get(...).click()`) and target elements.
+
+2. **Generate selectors:**  Cypress evaluates your app's DOM and picks a selector based on priority rules (unique identifiers that are likely to be stable).
+
+3. **Generate Cypress code:**  Commands are generated and executed in sequence. The Command Log shows both your natural language step and the commands Cypress ran.
+
+4. **Cache for speed:**  Generated code is cached. Re-running the same test does not re-call the AI model unless the prompt or DOM changes in a way that invalidates the cached code.
+
+5. **Self-heal if needed:**  If cached selectors fail (element renamed, attributes changed, etc.), Cypress regenerates code for that step. This 'self-healing' happens automatically on future runs.   
+
+6. **Version control (optional):**  You can view generated code in the Command Log and save it to your test file for version control. Once saved, the test no longer depends on AI at runtime. This can be ideal for projects that do not want to rely on self-healing or the AI to interpret the prompt on every run.
+
+
+## Writing Effective Prompts
+
+Prompt clarity determines reliability. Follow these rules:
+
+- **Imperative voice**: Start with an action (click, type, verify).
+- **Use absolute URLs**: Use the full URL of the page you want to visit.
+- **One action per step**: Avoid chaining multiple actions in one string.
+- **Avoid ambiguity**: Specify the action or element explicitly. Wrap specific text, values, or identifiers in quotes to help the AI identify them as exact matches. For example, `click the "Submit" button` is clearer than `click the Submit button`.
+- **Include context**: `click the login button in the header` is better than `click login button`.
+
+### Example: Good vs. poor steps
+
+```javascript
+// ✅ Good - clear and descriptive
+cy.prompt([
+  'visit https://cloud.cypress.io/users/settings',
+  'click the "Edit Profile" button',
+  'type "John Doe" in the name field',
+  'type "john.doe@example.com" in the email field',
+  'click the "Save Changes" button',
+  'verify the success message "Profile updated successfully" appears'
+])
+
+// ❌ Poor - vague and error-prone
+cy.prompt([
+  'go to profile',
+  'click button',
+  'type name',
+  'type email',
+  'save',
+  'check success'
+])
+```
+
+### If Cypress cannot interpret a step
+
+If Cypress cannot interpret a step, you'll see a dialog prompting you to refine your prompt. Fill out each step that needs information with a more specific prompt and click **Save** to update the `cy.prompt` code within your test file. The test will then run with the new prompt.
+
+<DocsVideo
+  src="/img/api/prompt/cy-prompt-need-more-info.mp4"
+  autoPlay={true}
+  title="cy.prompt asking for more information when the prompt is not clear"
+/>
+
+
+## What you can do
+
+### Navigate to pages
+
+```javascript
+'visit https://example.cypress.io'
+'visit /login' // with baseUrl set
+```
+
+### Interact with elements
+
+```javascript
+'click the login button'
+'double click the product image'
+'right click the file item'
+'type "john.doe@company.com" in the email field'
+'clear the username field'
+'focus on the search input'
+'blur the filter input'
+'select "Canada" from the country dropdown'
+'check "I agree"'
+'uncheck "Send me updates"'
+'submit the contact form'
+'trigger the "submit" event'
+```
+
+### Verify results
+
+```javascript
+'expect the notification to contain the text "Email sent"'
+'assert the "I agree" checkbox is checked'
+'verify an alert with the text "Success" exists'
+'ensure that the counter shows 5'
+'the heading should be visible'
+```
+
+### Wait
+
+```javascript
+'wait 5 seconds'
+```
+
+
+## Reliability and control
+
+Everything within `cy.prompt()` is logged in the Cypress Command Log:
+
+- The **prompt** you wrote  
+- The **Cypress command(s)** generated  
+
+You can use the **Get code** button to view the generated Cypress code. This will display the generated code in a dialog where you can preview what Cypress generated from your prompt. You can save the code to your test file, commit it to your version control system, or copy it to your clipboard.
+
+This allows you to use `cy.prompt` as a starting point for your test, but modify it to fit your needs and commit it to your version control system so that you do not rely on the AI for each run to work. 
+
+This can be ideal for projects that do not want to rely on self-healing or the AI to interpret the prompt on every run, or for projects that want to commit the generated code to their version control system.
+
+## Setup
+
+### Enable the command
+
+`cy.prompt` is experimental and may change in future releases. Enable the command in your config file:
+
+:::cypress-config-example
+
+```ts
+{
+  e2e: {
+    experimentalPromptCommand: true,
+  },
+}
+```
+
+:::
+
+### Authentication & usage
+
+Because `cy.prompt` uses AI under the hood, it needs to communicate securely with large language models to interpret your prompts. Cypress Cloud helps manage those requests, apply organization-level controls, and track usage in a way that's non-invasive. We never use your prompts to train AI models, and you can turn AI features off at any time. `cy.prompt` is currently available on any of our [Cypress Cloud plan types](https://www.cypress.io/pricing).
+
+**To use `cy.prompt`, you must either:**
+
+- Log into Cypress Cloud
+- Or run with `--record` and a valid `--key`. See [instructions](/cloud/get-started/setup).
+
+**If you don't have a Cypress Cloud account, sign up to start your 2 week free trial.**
+
+<Btn
+  label="Sign up ➜"
+  variant="indigo-dark"
+  className="mr-1"
+  href="https://cloud.cypress.io/signup"
+/>
+<Btn
+  label="See a demo"
+  icon="action-play-small"
+  className="mr-1"
+  href="https://www.youtube.com/watch?v=vFLShoCM8pA"
+/>
+<Btn
+  label=" Explore an example project"
+  icon="technology-terminal-log"
+  href="https://cloud.cypress.io/projects/7s5okt"
+/>
+
+## Examples
+
+### Login flow
+
+```javascript
+const password = Cypress.env('adminPassword')
+
+cy.prompt([
+  'visit the login page',
+  'type "user@example.com" in the email field',
+  'type ${password} in the password field',
+  'click the login button',
+  'verify we are redirected to the dashboard'
+], {
+  excludeFromAI: ['password']
+})
+```
+
+### E-commerce checkout
+
+```javascript
+cy.prompt([
+  'visit https://example.com/products',
+  'search for "wireless headphones"',
+  'click on the first search result',
+  'click the "Add to Cart" button',
+  'verify the cart icon shows 1 item',
+  'click the cart icon',
+  'click the "Proceed to Checkout" button',
+  'fill in shipping information',
+  'select standard shipping',
+  'enter credit card details',
+  'click the "Place Order" button',
+  'verify the order confirmation page loads'
+])
+```
+
+### Mixed with traditional Cypress
+
+```javascript
+const electronicsCount = 25
+
+// Confirm the UI works in desktop view
+cy.viewport(1024, 768)
+cy.visit(`${Cypress.env('stagingUrl')}/products`)
+cy.prompt([
+  'filter by category "Electronics"',
+  'sort by price high to low',
+  `verify the product count is ${electronicsCount}`,
+  'verify the sort indicator is "Price: High to Low"'
+])
+
+// Confirm the UI works in mobile view
+cy.viewport(400, 600)
+cy.visit(`${Cypress.env('stagingUrl')}/products`)
+cy.prompt([
+  'filter by category "Electronics"',
+  'sort by price high to low',
+  `verify the product count is ${electronicsCount}`,
+  'verify the sort indicator is "Price: High to Low"'
+])
+```
+
+Or to further clean up the `cy.prompt` call:
+
+```javascript
+const electronicsCount = 25
+const electronicsFilterPrompt = [
+  'filter by category "Electronics"',
+  'sort by price high to low',
+  `verify the product count is ${electronicsCount}`,
+  'verify the sort indicator is "Price: High to Low"'
+]
+
+// Confirm the UI works in desktop view
+cy.viewport(1024, 768)
+cy.visit(`${Cypress.env('stagingUrl')}/products`)
+cy.prompt(electronicsFilterPrompt)
+
+// Confirm the UI works in mobile view
+cy.viewport(400, 600)
+cy.visit(`${Cypress.env('stagingUrl')}/products`)
+cy.prompt(electronicsFilterPrompt)
+```
+
+## Limitations
+
+| Limitation | Details |
+|------------|---------|
+| Browser Support | Chromium-based browsers only (Chrome, Edge, Electron) |
+| Test Type | E2E tests only (component testing not yet supported) |
+| Authentication | Requires Cypress Cloud account or valid record key |
+| Command Coverage | Not all Cypress APIs supported - see [Supported Actions](#supported-actions) |
+
+## Pricing & availability
+
+During the experimental release, access will be provided at no additional charge. While certain built-in limits on prompt calls will apply, these are not intended to block reasonable usage. Our objective is to collect feedback and utilize this information to guide future development of the feature. Please note that pricing and usage limitations are subject to future adjustments, and we commit to keeping you informed of any such changes.
+
+### Privacy & security
+
+For detailed information about how Cypress protects your data and manages AI model security, see our [Security & Compliance page](https://www.cypress.io/security).
+
+### Disabling AI features
+
+AI capabilities, including `cy.prompt`, are enabled by default for all users on any Cloud plan. Organization admins and owners can enable and disable the AI capabilities for their entire organization from their organization settings. For more information, see [our FAQ](/cloud/faq#are-all-cloud-ai-capabilities-enabled-by-default-how-can-i-turn-them-off).
+
+## History
+
+| Version   | Changes                  |
+| --------- | ------------------------ |
+| [15.0.0](/app/references/changelog) | Introduced experimental `cy.prompt` command |
+
+---
+
+## See also
+
+- [Cypress Studio](/app/guides/cypress-studio)  

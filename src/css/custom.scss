@@ -293,6 +293,18 @@ html[data-theme='dark'] {
   }
 }
 
+.alert.alert--secondary {
+  background-color: var(--ifm-color-indigo-50);
+  color: var(--ifm-color-indigo-1000);
+  --ifm-alert-border-color: var(--ifm-color-indigo-400);
+
+  [data-theme='dark'] & {
+    background-color: var(--ifm-color-indigo-1000);
+    color: var(--ifm-color-indigo-50);
+    --ifm-alert-border-color: var(--ifm-color-indigo-800);
+  }
+}
+
 div[class^='announcementBar'] {
   font-size: 1rem;
   font-weight: var(--ifm-font-weight-semibold);
