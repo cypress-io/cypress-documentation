@@ -17,14 +17,11 @@ sidebar_custom_props: { 'new_label': true }
 
 <strong>Before you start coding with `cy.prompt`</strong>
 
-- [Choosing your workflow](#choose-your-workflow) — how to use `cy.prompt` in your project
-- [How it works](#how-it-works) — code generation, caching, and self-healing
-- [Writing effective prompts](#writing-effective-prompts) — patterns that work best
-- [Selectors](#how-selectors-are-chosen) — how Cypress selects elements automatically
-- [Debugging & transparency](#debugging--transparency) — inspect generated code and save it for version control
-- [Setup](#setup) — setup and prerequisites
-- [Limitations](#limitations) — what is and is not supported today
-- [Pricing, limits, and security](#pricing--availability)
+- [How it works](#How-it-works) — understand the AI-powered process behind `cy.prompt`
+- [Choosing your workflow](#Choose-your-workflow) — decide between one-time generation or continuous self-healing
+- [Writing effective prompts](#Writing-effective-prompts) — craft clear, reliable natural language steps
+- [What you can do](#What-you-can-do) — explore supported actions and capabilities
+- [Setup](#Setup) — enable the command and configure authentication
 
 :::
 
@@ -153,7 +150,7 @@ cy.prompt([
 ])
 ```
 
-## Writing Effective Prompts
+## Writing effective prompts
 
 Prompt clarity determines reliability. Follow these rules:
 
@@ -381,7 +378,7 @@ cy.prompt(electronicsFilterPrompt)
 | Browser Support  | Chromium-based browsers only (Chrome, Edge, Electron)                        |
 | Test Type        | E2E tests only (component testing not yet supported)                         |
 | Authentication   | Requires Cypress Cloud account or valid record key                           |
-| Command Coverage | Not all Cypress APIs supported - see [Supported Actions](#supported-actions) |
+| Command Coverage | Not all Cypress APIs supported - see [Supported Actions](#What-you-can-do) |
 
 ## Pricing & availability
 
@@ -393,7 +390,7 @@ For detailed information about how Cypress protects your data and manages AI mod
 
 ### Disabling AI features
 
-AI capabilities, including `cy.prompt`, are enabled by default for all users on any Cloud plan. Organization admins and owners can enable and disable the AI capabilities for their entire organization from their organization settings. For more information, see [our FAQ](/cloud/faq#are-all-cloud-ai-capabilities-enabled-by-default-how-can-i-turn-them-off).
+AI capabilities, including `cy.prompt`, are enabled by default for all users on any Cloud plan. Organization admins and owners can enable and disable the AI capabilities for their entire organization from their organization settings. For more information, see [our FAQ](/cloud/faq#Are-all-Cloud-AI-capabilities-enabled-by-default-How-can-I-turn-them-off).
 
 ## History
 
