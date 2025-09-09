@@ -11,13 +11,13 @@ sidebar_custom_props: { 'new_label': true }
 
 # prompt
 
-`cy.prompt` is an AI-powered Cypress command that turns plain English test steps into executable Cypress code. It offers a fast way to explore new test flows, bootstrap end-to-end coverage, and prototype without writing selectors or commands by hand. It is available on all Cypress Cloud plan types.
+`cy.prompt` is an AI-powered Cypress command that turns plain English test steps into executable Cypress code. It's designed to be flexible - you can use it to quickly generate tests and commit them to source control, or keep it running continuously for self-healing tests that adapt to your app's changes. You can choose the workflow that fits your project's needs.
 
 :::note
 
 <strong>Before you start coding with `cy.prompt`</strong>
 
-
+- [Choosing your workflow](#choose-your-workflow) — how to use `cy.prompt` in your project
 - [How it works](#how-it-works) — code generation, caching, and self-healing
 - [Writing effective prompts](#writing-effective-prompts) — patterns that work best
 - [Selectors](#how-selectors-are-chosen) — how Cypress selects elements automatically
@@ -68,9 +68,10 @@ cy.prompt([
 - `cy.prompt()` yields `null`.
 
 
+
 ## How it works
 
-When you call `cy.prompt`, Cypress performs a multi-step process:
+When you call `cy.prompt`, Cypress performs a multi-step process that works for both workflows:
 
 1. **Interpret prompt:**  Each string in your `steps[]` array is parsed using an AI model. Cypress maps the intent (e.g. 'click the login button') to Cypress commands (`cy.get(...).click()`) and target elements.
 
@@ -80,10 +81,76 @@ When you call `cy.prompt`, Cypress performs a multi-step process:
 
 4. **Cache for speed:**  Generated code is cached. Re-running the same test does not re-call the AI model unless the prompt or DOM changes in a way that invalidates the cached code.
 
-5. **Self-heal if needed:**  If cached selectors fail (element renamed, attributes changed, etc.), Cypress regenerates code for that step. This 'self-healing' happens automatically on future runs.   
+5. **Self-heal if needed:**  If cached selectors fail (element renamed, attributes changed, etc.), Cypress regenerates code for that step. This 'self-healing' happens automatically on future runs.
 
-6. **Version control (optional):**  You can view generated code in the Command Log and save it to your test file for version control. Once saved, the test no longer depends on AI at runtime. This can be ideal for projects that do not want to rely on self-healing or the AI to interpret the prompt on every run.
+6. **Choose your workflow:** `cy.prompt` supports two flexible workflows depending on your project needs.
+   - **Export the code** - Save generated code to your test file for predictable, version-controlled tests
+   - **Keep it running** - Let `cy.prompt` continue to self-heal and adapt to changes
 
+## Choose your workflow
+
+`cy.prompt` supports two flexible workflows depending on your project needs. Both workflows give you full visibility into what code was generated, so you can always inspect and modify the results.
+
+### Workflow 1: Generate once, commit to source control
+
+Use `cy.prompt` to generate tests, then export and commit the code.
+
+#### Why choose this workflow?
+
+- **Predictable execution** - You know exactly what code runs every time
+- **Fast test generation** - Use AI to quickly create test skeletons
+- **No AI dependency** - Tests run without calling the AI service
+- **PR review friendly** - Generated code fits into existing review processes
+- **Stable selectors** - Your app has stable, predictable elements
+
+#### Example
+
+```typescript
+// Generate the test
+cy.prompt([
+  'visit https://cloud.cypress.io/login',
+  'type "user@example.com" in the email field', 
+  'type ${password} in the password field',
+  'click the login button',
+  'verify we are redirected to the dashboard'
+], {
+  excludeFromAI: ['password']
+})
+```
+
+Use the **Get code** button to view the generated Cypress code. This will display the generated code in a dialog where you can preview what Cypress generated from your prompt. You can save the code to your test file, commit it to your version control system, or copy it to your clipboard.
+
+<DocsVideo
+  src="/img/api/prompt/cy-prompt-demo.mp4"
+  autoPlay={true}
+  title="cy.prompt written for login screen using Cypress Studio"
+/>
+
+
+
+### Workflow 2: Continuous AI-powered testing
+
+Keep `cy.prompt` in your tests and let it self-heal and adapt to changes.
+
+#### Why choose this workflow?
+
+- **Self-healing selectors** - Tests adapt when your app changes
+- **Less maintenance** - No need to update tests for every UI change
+- **Dynamic content friendly** - Works well with changing data
+- **Smart regeneration** - AI handles selector failures automatically
+- **Rapid iteration** - Perfect for apps in active development
+
+#### Example
+
+```typescript
+// Let cy.prompt run on every test execution
+cy.prompt([
+  'visit the product catalog',
+  'filter by category "Electronics"',
+  'sort by price high to low',
+  'verify the product count is 25'
+])
+```
 
 ## Writing Effective Prompts
 
@@ -171,20 +238,6 @@ If Cypress cannot interpret a step, you'll see a dialog prompting you to refine 
 ```javascript
 'wait 5 seconds'
 ```
-
-
-## Reliability and control
-
-Everything within `cy.prompt()` is logged in the Cypress Command Log:
-
-- The **prompt** you wrote  
-- The **Cypress command(s)** generated  
-
-You can use the **Get code** button to view the generated Cypress code. This will display the generated code in a dialog where you can preview what Cypress generated from your prompt. You can save the code to your test file, commit it to your version control system, or copy it to your clipboard.
-
-This allows you to use `cy.prompt` as a starting point for your test, but modify it to fit your needs and commit it to your version control system so that you do not rely on the AI for each run to work. 
-
-This can be ideal for projects that do not want to rely on self-healing or the AI to interpret the prompt on every run, or for projects that want to commit the generated code to their version control system.
 
 ## Setup
 
