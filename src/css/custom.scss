@@ -122,7 +122,8 @@
   --ifm-heading-font-family: Poppins;
   --ifm-heading-font-weight: var(--ifm-font-weight-bold);
   --ifm-line-height-base: 1.6;
-  --ifm-heading-color: theme(colors.gray.1000) --ifm-code-font-size: 95%;
+  --ifm-heading-color: theme(colors.gray.1000);
+  --ifm-code-font-size: 95%;
   --ifm-pre-line-height: 1.5em;
 
   --ifm-code-background-color: #282a36;
