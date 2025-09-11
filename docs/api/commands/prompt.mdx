@@ -40,7 +40,7 @@ interface PromptCommand {
   (
     steps: string[], // array of steps to execute
     options?: {
-      excludeFromAI?: string[] // keys to exclude from AI (e.g. sensitive vars)
+      excludeFromAI?: { [key: string]: string } // key-value pairs to exclude from AI (e.g. sensitive vars)
     }
   ): void
 }
@@ -49,15 +49,16 @@ interface PromptCommand {
 **Example**
 
 ```typescript
+const email = 'user@example.com'
 cy.prompt(
   [
     'visit https://cloud.cypress.io/login',
-    'type "user@example.com" in the email field',
-    'type ${password} in the password field',
+    `type ${email} in the email field`,
+    'type {{password}} in the password field',
     'click the login button',
   ],
   {
-    excludeFromAI: ['password'],
+    excludeFromAI: { password: 'secret123' },
   }
 )
 ```
@@ -108,12 +109,12 @@ cy.prompt(
   [
     'visit https://cloud.cypress.io/login',
     'type "user@example.com" in the email field',
-    'type ${password} in the password field',
+    'type {{password}} in the password field',
     'click the login button',
     'verify we are redirected to the dashboard',
   ],
   {
-    excludeFromAI: ['password'],
+    excludeFromAI: { password: 'secret123' },
   }
 )
 ```
@@ -294,12 +295,12 @@ cy.prompt(
   [
     'visit the login page',
     'type "user@example.com" in the email field',
-    'type ${password} in the password field',
+    'type {{password}} in the password field',
     'click the login button',
     'verify we are redirected to the dashboard',
   ],
   {
-    excludeFromAI: ['password'],
+    excludeFromAI: { password },
   }
 )
 ```
