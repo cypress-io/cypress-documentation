@@ -11,7 +11,7 @@ sidebar_custom_props: { 'new_label': true }
 
 # prompt
 
-`cy.prompt` is an AI-powered Cypress command that turns plain English test steps into executable Cypress code. It's designed to be flexible - you can use it to quickly generate tests and commit them to source control, or keep it running continuously for self-healing tests that adapt to your app's changes. You can choose the workflow that fits your project's needs.
+`cy.prompt` is an AI-powered Cypress command that turns natural language test steps into executable Cypress code. It's designed to be flexible - you can use it to quickly generate tests and commit them to source control, or keep it running continuously for self-healing tests that adapt to your app's changes. You can choose the workflow that fits your project's needs.
 
 :::note
 
@@ -40,7 +40,7 @@ interface PromptCommand {
   (
     steps: string[], // array of steps to execute
     options?: {
-      excludeFromAI?: { [key: string]: string } // key-value pairs to exclude from AI (e.g. sensitive vars)
+      excludeFromAI?: { [key: string]: string } // key-value pairs to exclude from AI
     }
   ): void
 }
@@ -50,6 +50,7 @@ interface PromptCommand {
 
 ```typescript
 const email = 'user@example.com'
+
 cy.prompt(
   [
     'visit https://cloud.cypress.io/login',
@@ -69,7 +70,7 @@ cy.prompt(
 
 ## How it works
 
-When you call `cy.prompt`, Cypress performs a multi-step process that works for both workflows:
+When you call `cy.prompt`, Cypress performs a multi-step process:
 
 1. **Interpret prompt:** Each string in your `steps[]` array is parsed using an AI model. Cypress maps the intent (e.g. 'click the login button') to Cypress commands (`cy.get(...).click()`) and target elements.
 
@@ -79,7 +80,7 @@ When you call `cy.prompt`, Cypress performs a multi-step process that works for 
 
 4. **Cache for speed:** Generated code is cached. Re-running the same test does not re-call the AI model unless the prompt or DOM changes in a way that invalidates the cached code.
 
-5. **Self-heal if needed:** If cached selectors fail (element renamed, attributes changed, etc.), Cypress regenerates code for that step. This 'self-healing' happens automatically on future runs.
+5. **Self-heal if needed:** If cached selectors fail (element renamed, attributes changed, etc.), Cypress regenerates code for that step. This 'self-healing' happens automatically on future attempts.
 
 6. **Choose your workflow:** `cy.prompt` supports two flexible workflows depending on your project needs.
    - **Export the code** - Save generated code to your test file for predictable, version-controlled tests
@@ -264,7 +265,7 @@ Because `cy.prompt` uses AI under the hood, it needs to communicate securely wit
 - Log into Cypress Cloud
 - Or run with `--record` and a valid `--key`. See [instructions](/cloud/get-started/setup).
 
-**If you don't have a Cypress Cloud account, sign up to start your 2 week free trial.**
+**If you don't have a Cloud account, create a free account and gain access to a 2-week trial of all paid features.**
 
 <Btn
   label="Sign up ➜"
@@ -381,17 +382,39 @@ cy.prompt(electronicsFilterPrompt)
 | Authentication   | Requires Cypress Cloud account or valid record key                         |
 | Command Coverage | Not all Cypress APIs supported - see [Supported Actions](#What-you-can-do) |
 
-## Pricing & availability
+## Pricing & usage limits
 
-During the experimental release, access will be provided at no additional charge. While certain built-in limits on prompt calls will apply, these are not intended to block reasonable usage. Our objective is to collect feedback and utilize this information to guide future development of the feature. Please note that pricing and usage limitations are subject to future adjustments, and we commit to keeping you informed of any such changes.
+During the experimental release, access will be provided at no additional charge. Users are limited by the number of `cy.prompt` definitions and steps they can run per hour. This limit is higher for paid accounts and lower for free accounts. Our intention is to not limit normal usage of the feature. 
 
-### Privacy & security
+:::note
+
+Please note that pricing and usage limitations are subject to future adjustments. We commit to keeping you informed of any such changes.
+
+:::
+
+### Usage limits
+
+*Usage limits only apply to runs that are not recording to Cypress Cloud.*
+
+**User limits on projects with free accounts:**
+- 100 prompts per hour
+- 500 prompt steps per hour
+
+**User limits on projects with paid accounts (or on free trial):**
+- 600 prompts per hour
+- 3,000 prompt steps per hour
+
+
+
+## Privacy & security
 
 For detailed information about how Cypress protects your data and manages AI model security, see our [Security & Compliance page](https://www.cypress.io/security).
 
-### Disabling AI features
+## Disabling AI features
 
 AI capabilities, including `cy.prompt`, are enabled by default for all users on any Cloud plan. Organization admins and owners can enable and disable the AI capabilities for their entire organization from their organization settings. For more information, see [our FAQ](/cloud/faq#Are-all-Cloud-AI-capabilities-enabled-by-default-How-can-I-turn-them-off).
+
+
 
 ## History
 
