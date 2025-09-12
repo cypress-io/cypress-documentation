@@ -240,7 +240,7 @@ If Cypress cannot interpret a step, you'll see a dialog prompting you to refine 
 'expect the notification to contain the text "Email sent"'
 'assert the "I agree" checkbox is checked'
 'verify an alert with the text "Success" exists'
-'the modal ought to be displayed' 
+'the modal ought to be displayed'
 'verify both checkboxes are checked'
 'make sure the ".error-message" is visible'
 'the "Success" message must appear'
@@ -361,7 +361,7 @@ cy.prompt([
   'toggle on the "Enable Notifications" switch',
   'verify the notification shows "Enable Notifications enabled"',
   'verify the notifications toggle is enabled',
-  'verify the toggle switch is in the on position'
+  'verify the toggle switch is in the on position',
 ])
 ```
 
@@ -374,14 +374,14 @@ const nonMatchingSearchTerms = ['cyprus', 'fuzzy', 'wrong']
 matchingSearchTerms.forEach((term) => {
   cy.prompt([
     `type "${term}" in the search input`,
-    `verify the search results contain "${term}"`
+    `verify the search results contain "${term}"`,
   ])
 })
 
 nonMatchingSearchTerms.forEach((term) => {
   cy.prompt([
     `type "${term}" in the search input`,
-    `verify the search results does not contain "${term}"`
+    `verify the search results does not contain "${term}"`,
   ])
 })
 ```
@@ -390,15 +390,18 @@ nonMatchingSearchTerms.forEach((term) => {
 
 ```javascript
 cy.origin('https://cloud.cypress.io/login', () => {
-  cy.prompt([
-    'type "may@example.com" in the email field',
-    'type {{password}} in the password field',
-    'click the login button'
-  ], {
-    excludeFromAI: { 
-      password: Cypress.env('PASSWORD')
+  cy.prompt(
+    [
+      'type "may@example.com" in the email field',
+      'type {{password}} in the password field',
+      'click the login button',
+    ],
+    {
+      excludeFromAI: {
+        password: Cypress.env('PASSWORD'),
+      },
     }
-  })
+  )
 })
 ```
 
