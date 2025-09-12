@@ -202,22 +202,34 @@ If Cypress cannot interpret a step, you'll see a dialog prompting you to refine 
 
 ```javascript
 'visit https://example.cypress.io'
-'visit /login' // with baseUrl set
+'navigate to /login' // with baseUrl set
 ```
 
 ### Interact with elements
 
 ```javascript
 'click the login button'
+'hit the "x" button'
+'expand the FAQ section'
+'close the Technical Information section'
+'switch to the Settings tab'
+'dismiss the modal'
 'double click the product image'
 'right click the file item'
 'type "john.doe@company.com" in the email field'
+'type {enter} in the email field'
+'write "42" in the number field'
+'put "No comment" in the textarea'
+'fill the search input with "cypress"'
 'clear the username field'
 'focus on the search input'
 'blur the filter input'
 'select "Canada" from the country dropdown'
+'pick "United States" from the list'
+'choose "Newest" from the suggestions'
 'check "I agree"'
 'uncheck "Send me updates"'
+'toggle the "Dark Mode" switch'
 'submit the contact form'
 'trigger the "submit" event'
 ```
@@ -228,6 +240,10 @@ If Cypress cannot interpret a step, you'll see a dialog prompting you to refine 
 'expect the notification to contain the text "Email sent"'
 'assert the "I agree" checkbox is checked'
 'verify an alert with the text "Success" exists'
+'the modal ought to be displayed' 
+'verify both checkboxes are checked'
+'make sure the ".error-message" is visible'
+'the "Success" message must appear'
 'ensure that the counter shows 5'
 'the heading should be visible'
 ```
@@ -235,7 +251,8 @@ If Cypress cannot interpret a step, you'll see a dialog prompting you to refine 
 ### Wait
 
 ```javascript
-'wait 5 seconds'
+'wait 500 milliseconds'
+'wait 2 seconds'
 ```
 
 ## Setup
@@ -323,6 +340,66 @@ cy.prompt([
   'click the "Place Order" button',
   'verify the order confirmation page loads',
 ])
+```
+
+### Search functionality
+
+```javascript
+cy.prompt([
+  'search for "united states"',
+  'pick "United States" from the list',
+  'clear the search field',
+  'look for "canada"',
+  'choose "Canada" from the suggestions',
+])
+```
+
+### Settings configuration
+
+```javascript
+cy.prompt([
+  'toggle on the "Enable Notifications" switch',
+  'verify the notification shows "Enable Notifications enabled"',
+  'verify the notifications toggle is enabled',
+  'verify the toggle switch is in the on position'
+])
+```
+
+### Dynamic testing with loops
+
+```javascript
+const matchingSearchTerms = ['cypress', 'testing', 'automation']
+const nonMatchingSearchTerms = ['cyprus', 'fuzzy', 'wrong']
+
+matchingSearchTerms.forEach((term) => {
+  cy.prompt([
+    `type "${term}" in the search input`,
+    `verify the search results contain "${term}"`
+  ])
+})
+
+nonMatchingSearchTerms.forEach((term) => {
+  cy.prompt([
+    `type "${term}" in the search input`,
+    `verify the search results does not contain "${term}"`
+  ])
+})
+```
+
+### Cross-origin testing
+
+```javascript
+cy.origin('https://cloud.cypress.io/login', () => {
+  cy.prompt([
+    'type "may@example.com" in the email field',
+    'type {{password}} in the password field',
+    'click the login button'
+  ], {
+    excludeFromAI: { 
+      password: Cypress.env('PASSWORD')
+    }
+  })
+})
 ```
 
 ### Mixed with traditional Cypress
