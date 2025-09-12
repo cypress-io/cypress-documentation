@@ -1,4 +1,4 @@
-# Cypress Documentation [![Discord chat](https://img.shields.io/badge/chat-on%20Discord-brightgreen)](https://on.cypress.io/discord) [![first-timers-only](http://img.shields.io/badge/first--timers--only-friendly-blue.svg)](https://github.com/cypress-io/cypress-documentation/labels/first-timers-only)
+# Cypress Documentation [![Discord chat](https://img.shields.io/badge/chat-on%20Discord-brightgreen)](https://on.cypress.io/discord) [![Good first issue](https://img.shields.io/badge/good%20first%20issue-blue.svg)](https://github.com/cypress-io/cypress-documentation/labels/good-first-issue)
 
 ![Cypress Documentation Preview](/static/img/cypress-docs.png)
 
