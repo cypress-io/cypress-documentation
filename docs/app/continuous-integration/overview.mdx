@@ -709,6 +709,14 @@ colors are not properly formatted in your CI.
 NO_COLOR=1 cypress run
 ```
 
+### `Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket`
+
+This error message indicates that Electron is attempting to connect to `dbus`, a desktop environment service, when there is no `dbus` present.
+
+Cypress does its best to detect non-interactive shells and disable `dbus` by setting the `DBUS_SESSION_BUS_ADDRESS` environment variable to `disabled:`.
+
+If you see these error messages, setting the `DBUS_SESSION_BUS_ADDRESS` environment variable to `disabled:` should resolve them.
+
 ## See also
 
 - [Cypress Real World App](https://github.com/cypress-io/cypress-realworld-app)
