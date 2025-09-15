@@ -320,22 +320,25 @@ Because `cy.prompt` uses AI under the hood, it needs to communicate securely wit
 ```javascript
 describe('Feature: User Registration', () => {
   it('Scenario: Successful user registration with valid data', () => {
-    cy.prompt([
-      'Given the user is on the "/register" page',
-      'When the user enters "Avery Lopez" in the name field',
-      'And the user enters "avery.lopez@example.com" in the email field',
-      'And the user enters {{password}} in the password field',
-      'And the user enters {{password}} in the confirm password field',
-      'And the user selects "admin" from the role dropdown',
-      'And the user checks the terms and conditions checkbox',
-      'Then the user clicks the "Register User" button',
-      'And the user should see a success notification',
-      'And the user should be added to the user list'
-    ],{
-      excludeFromAI: {
-        password: Cypress.env('PASSWORD'),
-      },
-    })
+    cy.prompt(
+      [
+        'Given the user is on the "/register" page',
+        'When the user enters "Avery Lopez" in the name field',
+        'And the user enters "avery.lopez@example.com" in the email field',
+        'And the user enters {{password}} in the password field',
+        'And the user enters {{password}} in the confirm password field',
+        'And the user selects "admin" from the role dropdown',
+        'And the user checks the terms and conditions checkbox',
+        'Then the user clicks the "Register User" button',
+        'And the user should see a success notification',
+        'And the user should be added to the user list',
+      ],
+      {
+        excludeFromAI: {
+          password: Cypress.env('PASSWORD'),
+        },
+      }
+    )
   })
 })
 ```
@@ -346,34 +349,34 @@ The generated code may look like:
 describe('Feature: User Registration', () => {
   it('Scenario: Successful user registration with valid data', () => {
     // Prompt step 1: Given the user is on the "/register" page
-    cy.visit("/register");
+    cy.visit('/register')
 
     // Prompt step 2: When the user enters "Avery Lopez" in the name field
-    cy.get("#full-name").type("Avery Lopez")
+    cy.get('#full-name').type('Avery Lopez')
 
     // Prompt step 3: And the user enters "avery.lopez@example.com" in the email field
-    cy.get("#email").type("avery.lopez@example.com")
+    cy.get('#email').type('avery.lopez@example.com')
 
     // Prompt step 4: And the user enters "password123" in the password field
-    cy.get("#password").type("password123")
+    cy.get('#password').type('password123')
 
     // Prompt step 5: And the user enters "password123" in the confirm password field
-    cy.get("#confirm-password").type("password123")
+    cy.get('#confirm-password').type('password123')
 
     // Prompt step 6: And the user selects "admin" from the role dropdown
-    cy.get("#role").select("admin")
+    cy.get('#role').select('admin')
 
     // Prompt step 7: And the user checks the terms and conditions checkbox
-    cy.get("#terms").check()
+    cy.get('#terms').check()
 
     // Prompt step 8: Then the user clicks the "Register User" button
-    cy.get("#registration-form .btn-success").click()
+    cy.get('#registration-form .btn-success').click()
 
     // Prompt step 10: And the user should see a success notification
-    cy.get(".success").should("be.visible")
+    cy.get('.success').should('be.visible')
 
     // Prompt step 11: And the user should be added to the user list
-    cy.get("#user-list").should("contain", "Avery")
+    cy.get('#user-list').should('contain', 'Avery')
   })
 })
 ```
@@ -381,18 +384,18 @@ describe('Feature: User Registration', () => {
 #### Gherkin example 2: User cannot be deactivated if already inactive
 
 ```javascript
-  describe('Feature: User Status Management', () => {
-    it('Scenario: User cannot be deactivated if already inactive', () => {
-      cy.visit('/user-management')
-      cy.prompt([
-        'Given there is an inactive user on the page',
-        'When the admin tries to deactivate the already inactive user',
-        'But the user is already in inactive status',
-        'Then the system should show a message that user is already inactive',
-        'But the user status should remain unchanged'
-      ])
-    })
+describe('Feature: User Status Management', () => {
+  it('Scenario: User cannot be deactivated if already inactive', () => {
+    cy.visit('/user-management')
+    cy.prompt([
+      'Given there is an inactive user on the page',
+      'When the admin tries to deactivate the already inactive user',
+      'But the user is already in inactive status',
+      'Then the system should show a message that user is already inactive',
+      'But the user status should remain unchanged',
+    ])
   })
+})
 ```
 
 The generated code may look like:
@@ -403,19 +406,19 @@ describe('Feature: User Status Management', () => {
     cy.visit('/user-management')
 
     // Prompt step 1: Given there is an inactive user on the page
-    cy.get("#user-list .status-inactive").should("be.visible")
+    cy.get('#user-list .status-inactive').should('be.visible')
 
     // Prompt step 2: When the admin tries to deactivate the already inactive user
-    cy.get("#user-list div:nth-child(3) > .user-actions > .btn-danger").click()
+    cy.get('#user-list div:nth-child(3) > .user-actions > .btn-danger').click()
 
     // Prompt step 3: But the user is already in inactive status
-    cy.get("#user-list .status-inactive").should("contain", "inactive")
+    cy.get('#user-list .status-inactive').should('contain', 'inactive')
 
     // Prompt step 4: Then the system should show a warning message
-    cy.get(".warning-notification").should("be.visible")
+    cy.get('.warning-notification').should('be.visible')
 
     // Prompt step 5: But the user status should remain unchanged
-    cy.get("#user-list .status-inactive").should("contain", "inactive")
+    cy.get('#user-list .status-inactive').should('contain', 'inactive')
   })
 })
 ```
