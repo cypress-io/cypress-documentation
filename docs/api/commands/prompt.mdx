@@ -432,10 +432,10 @@ it('Scenario Outline: Admin manages user status', () => {
   const Examples = [
     { status: 'pending', action: 'activates', new_status: 'active' },
     { status: 'active', action: 'deactivates', new_status: 'inactive' },
-    { status: 'inactive', action: 'activates', new_status: 'active' }
-  ];
+    { status: 'inactive', action: 'activates', new_status: 'active' },
+  ]
 
-  Examples.forEach(example => {
+  Examples.forEach((example) => {
     cy.prompt([
       `Given there is a(n) ${example.status} user on the page`,
       `When the admin ${example.action} the user`,
