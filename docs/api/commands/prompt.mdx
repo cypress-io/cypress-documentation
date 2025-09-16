@@ -423,6 +423,35 @@ describe('Feature: User Status Management', () => {
 })
 ```
 
+#### Gherkin example 3: Admin manages user status
+
+```javascript
+it('Scenario Outline: Admin manages user status', () => {
+  cy.visit('/users')
+
+  const Examples = [
+    { status: 'pending', action: 'activates', new_status: 'active' },
+    { status: 'active', action: 'deactivates', new_status: 'inactive' },
+    { status: 'inactive', action: 'activates', new_status: 'active' }
+  ];
+
+  Examples.forEach(example => {
+    cy.prompt([
+      `Given there is a(n) ${example.status} user on the page`,
+      `When the admin ${example.action} the user`,
+      `Then the user status should change to ${example.new_status}`,
+    ])
+  })
+})
+```
+
+The commands in the generated code may look like:
+
+<DocsImage
+  src="/img/api/prompt/gherkin-example-cy-prompt-command-log.png"
+  alt="Command log for Gherkin example 3"
+/>
+
 ### Login flow
 
 ```javascript
