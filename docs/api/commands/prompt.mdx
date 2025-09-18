@@ -66,7 +66,29 @@ cy.prompt(
 
 <HeaderYields />
 
-- `cy.prompt()` yields `null`.
+`cy.prompt()` yields the value yielded by the last Cypress command executed in the prompt. In most cases, this will be an element, but it depends on the last command executed in the prompt.
+
+```javascript
+cy.prompt([
+  // Executes cy.visit('/user-management')
+  'visit https://cloud.cypress.io/login',
+  // Executes cy.get('#login-button').click()
+  'click the login button',
+]) // yields <button> since .click() yields the same subject it was originally given.
+  .closest('form')
+  .submit()
+```
+
+In the example below, the last command executed in the prompt is `.visit()`, so the yielded value is the window object.
+
+```javascript
+cy.prompt([
+  // Executes cy.visit('/user-management')
+  'visit https://cloud.cypress.io/login',
+]) // yields window object since .visit() yields window object
+  .its('navigator.language')
+  .should('equal', 'en-US')
+```
 
 ## How it works
 
