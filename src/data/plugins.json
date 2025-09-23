@@ -726,6 +726,18 @@
             "google"
           ],
           "badge": "community"
+        },
+        {
+          "name": "cypress-get-otp",
+          "description": "Cypress custom command for generating OTP codes.",
+          "link": "https://github.com/sergiubcn/cypress-get-otp",
+          "keywords": [
+            "authentication",
+            "hmac",
+            "otp",
+            "totp"
+          ],
+          "badge": "community"
         }
       ]
     },
