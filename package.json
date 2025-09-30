@@ -22,7 +22,8 @@
     "test": "cypress run",
     "write-translations": "docusaurus write-translations",
     "write-heading-ids": "docusaurus write-heading-ids",
-    "typecheck": "tsc"
+    "typecheck": "tsc",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@cypress-design/css": "^1.0.0",
@@ -52,6 +53,8 @@
     "@docusaurus/tsconfig": "3.1.1",
     "@prettier/sync": "^0.6.1",
     "cypress": "^15.0.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.3",
     "node-fetch": "^3.3.2",
     "patch-package": "^8.0.0",
     "prettier": "^3.2.5",
@@ -69,5 +72,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "lint-staged": {
+    "**/*.{md,mdx}": "prettier --write"
   }
 }
