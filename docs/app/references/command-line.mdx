@@ -442,11 +442,13 @@ cypress run --port 8080
 
 #### `cypress run --posix-exit-codes` {#cypress-run-posix-exit-codes}
 
-Exit with POSIX exit code of 1 when there are test failures or if Cypress could not run.
+This changes the default behavior of Cypress regarding exit codes. This flag causes Cypress to exit with POSIX exit code of 1 when there are test failures or if Cypress could not run, rather than the number of tests that failed.
 
 ```shell
 cypress run --posix-exit-codes
 ```
+
+For more about Cypress' exit code behavior, see the [Exit Code section](/app/references/command-line#Exit-code).
 
 #### `cypress run --project <project-path>` {#cypress-run-project-lt-project-path-gt}
 
