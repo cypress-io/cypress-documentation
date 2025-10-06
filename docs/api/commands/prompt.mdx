@@ -40,29 +40,25 @@ interface PromptCommand {
   (
     steps: string[], // array of steps to execute
     options?: {
-      excludeFromAI?: { [key: string]: string } // key-value pairs to exclude from AI
+      placeholders?: { [key: string]: string } // redacted dynamic inputs that are ignored for cache identity
     }
   ): void
 }
 ```
 
-**Example**
+### Arguments
 
-```typescript
-const email = 'user@example.com'
+<Icon name="angle-right" /> **steps _(String[])_**
 
-cy.prompt(
-  [
-    'visit https://cloud.cypress.io/login',
-    `type ${email} in the email field`,
-    'type {{password}} in the password field',
-    'click the login button',
-  ],
-  {
-    excludeFromAI: { password: 'secret123' },
-  }
-)
-```
+An array of steps to execute.
+
+<Icon name="angle-right" /> **options _(Object)_**
+
+Pass in an options object to `cy.prompt()`.
+
+| Option         | Default | Description                                                                                                           |
+| -------------- | ------- | --------------------------------------------------------------------------------------------------------------------- |
+| `placeholders` | `{}`    | Dynamic or sensitive values that enable high performance caching. See [placeholders](#Placeholders) for more details. |
 
 <HeaderYields />
 
@@ -137,7 +133,7 @@ cy.prompt(
     'verify we are redirected to the dashboard',
   ],
   {
-    excludeFromAI: { password: 'secret123' },
+    placeholders: { password: 'secret123' },
   }
 )
 ```
@@ -292,6 +288,71 @@ If Cypress cannot interpret a step, you'll see a dialog prompting you to refine 
 'wait 2 seconds'
 ```
 
+## Placeholders
+
+### The caching problem
+
+`cy.prompt` works by caching your prompt steps so it doesn't need to reach out to the AI every time. This makes tests run faster, but there's a challenge: **any change to your prompt steps invalidates the cache**, forcing a new AI call.
+
+This becomes problematic when you have **dynamic values** that change each time cy.prompt is run (like timestamps, user IDs, or randomly generated data)
+
+Without placeholders, the cache would always be invalidated because these dynamic values would be hardcoded directly in your steps.
+
+### The placeholder solution
+
+Placeholders let you use dynamic and sensitive values while maintaining cache efficiency:
+
+- **Cache-friendly**: Changes to placeholder values don't invalidate the cache
+- **Runtime substitution**: `{{placeholder}}` syntax gets replaced with actual values at execution time
+- **Privacy-protected**: Placeholder values are never sent to AI services, keeping sensitive data secure
+
+### Example usage
+
+```typescript
+describe('Campaign Management', () => {
+  it('creates multiple campaigns with different discount percentages', () => {
+    const adminPassword = Cypress.env('ADMIN_PASSWORD')
+
+    const campaigns = [
+      { name: 'Fall Sale', discountPct: 10 },
+      { name: 'Spring Sale', discountPct: 15 },
+    ]
+
+    // This loop demonstrates the caching benefit:
+    // - First iteration: AI generates and caches the code
+    // - Subsequent iterations: Reuse cached code with different placeholder values
+    campaigns.forEach((campaign) => {
+      const campaignName = campaign.name
+      const campaignDiscountPct = campaign.discountPct
+
+      cy.prompt(
+        [
+          `Visit ${Cypress.env('ADMIN_URL')}/admin/login`,
+          // Using {{adminPassword}} prevents this sensitive value from being sent to AI
+          'Type {{adminPassword}} into the password field',
+          'Click Sign In',
+          'Open the Promotions tab',
+          'Click to create a new campaign',
+          // Using {{campaignName}} and {{campaignDiscountPct}}
+          // allows for high performance caching with different values
+          'Type {{campaignName}} into the name field',
+          'Set discount to {{campaignDiscountPct}}% for all products',
+          'Save the campaign',
+          'Verify the campaign "{{campaignName}}" appears in the list',
+        ],
+        {
+          placeholders: {
+            adminPassword,
+            campaignName,
+            campaignDiscountPct,
+          },
+        }
+      )
+    })
+  })
+})
+```
+
 ## Setup
 
 ### Enable the command
@@ -362,8 +423,8 @@ describe('Feature: User Registration', () => {
         'Given the user is on the "/register" page',
         'When the user enters "Avery Lopez" in the name field',
         'And the user enters "avery.lopez@example.com" in the email field',
-        'And the user enters {{password}} in the password field',
-        'And the user enters {{password}} in the confirm password field',
+        'And the user enters {{password}} in the password field', // password placeholder
+        'And the user enters {{password}} in the confirm password field', // Same password placeholder used twice
         'And the user selects "admin" from the role dropdown',
         'And the user checks the terms and conditions checkbox',
         'Then the user clicks the "Register User" button',
@@ -371,7 +432,7 @@ describe('Feature: User Registration', () => {
         'And the user should be added to the user list',
       ],
       {
-        excludeFromAI: {
+        placeholders: {
           password: Cypress.env('PASSWORD'),
         },
       }
@@ -503,7 +564,7 @@ cy.prompt(
     'verify we are redirected to the dashboard',
   ],
   {
-    excludeFromAI: { password },
+    placeholders: { password },
   }
 )
 ```
@@ -582,7 +643,7 @@ cy.origin('https://cloud.cypress.io/login', () => {
       'click the login button',
     ],
     {
-      excludeFromAI: {
+      placeholders: {
         password: Cypress.env('PASSWORD'),
       },
     }
