@@ -263,11 +263,10 @@ creating `e2e` and `component` objects inside your Cypress configuration.
 These experiments are available to be specified inside the `e2e` configuration
 object:
 
-| Option                           | Default | Description                                                                                               |
-| -------------------------------- | ------- | --------------------------------------------------------------------------------------------------------- |
-| `experimentalStudio`             | `false` | Generate and save commands directly to your test suite by interacting with your app as an end user would. |
-| `experimentalRunAllSpecs`        | `false` | Enables the "Run All Specs" UI feature, allowing the execution of multiple specs sequentially.            |
-| `experimentalOriginDependencies` | `false` | Enables support for `Cypress.require` within `cy.origin`.                                                 |
+| Option                           | Default | Description                                                                                    |
+| -------------------------------- | ------- | ---------------------------------------------------------------------------------------------- |
+| `experimentalRunAllSpecs`        | `false` | Enables the "Run All Specs" UI feature, allowing the execution of multiple specs sequentially. |
+| `experimentalOriginDependencies` | `false` | Enables support for `Cypress.require` within `cy.origin`.                                      |
 
 ### Component Testing
 
@@ -282,6 +281,7 @@ configuration object:
 
 | Version                                      | Changes                                                                                                                                       |
 | -------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| [15.4.0](/app/references/changelog)          | Removed `experimentalStudio`. Cypress Studio is available as default behavior.                                                                |
 | [14.0.0](/app/references/changelog#14-0-0)   | Removed `experimentalJustInTimeCompile` and `experimentalSkipDomainInjection` and made it default behavior.                                   |
 | [13.14.0](/app/references/changelog#13-14-0) | Added support for configuring the Experimental Just-In-Time (JIT) Compiling for component testing via `experimentalJustInTimeCompile`.        |
 | [13.4.0](/app/references/changelog#13-4-0)   | Added support for configuring the Experimental Flake Detection strategy via `retries.experimentalStrategy` and `retries.experimentalOptions`. |
