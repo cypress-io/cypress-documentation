@@ -75,6 +75,12 @@ To disable parsing special characters sequences, set the
 | `{selectAll}`   | Selects all text by creating a `selection range` |
 | `{upArrow}`     | Moves cursor up                                  |
 
+:::info
+
+**Note**: For navigation keys like `Tab`, `Arrow` keys, and `Enter` in non-form contexts, consider using [`cy.press()`](/api/commands/press) for more accurate native keyboard event simulation.
+
+:::
+
 Text passed to `.type()` may also include any of these modifier character
 sequences:
 
@@ -381,6 +387,23 @@ cy.get('body').type(
 cy.get('body').type('{shift}', { release: false }).get('li:first').click()
 ```
 
+### Combined Usage with cy.press()
+
+For comprehensive keyboard testing, combine `.type()` and `.press()`:
+
+#### Form navigation with keyboard
+
+```javascript
+it('navigates form using keyboard only', () => {
+  cy.get('input[name="firstName"]').type('Marcus')
+  cy.press(Cypress.Keyboard.Keys.TAB)
+  cy.get('input[name="lastName"]').should('have.focus').type('Baker')
+  cy.press(Cypress.Keyboard.Keys.TAB)
+  cy.get('input[name="email"]').should('have.focus').type('marcus@example.com')
+  cy.press(Cypress.Keyboard.Keys.ENTER)
+})
+```
+
 ### Options
 
 #### Force typing regardless of its actionable state
@@ -509,13 +532,40 @@ Any modifiers activated for the event are also listed in a `modifiers` column.
   alt="Cypress .type() key events table"
 />
 
-### Tabbing
+### When to use cy.press()
 
-#### Typing `tab` key does not work
+While `.type()` is excellent for typing text content, use [`cy.press()`](/api/commands/press) for:
 
-In the meantime, you can use the experimental
-[cypress-plugin-tab](https://github.com/Bkucera/cypress-plugin-tab) and can
-thumbs up [this issue](https://github.com/cypress-io/cypress/issues/299).
+- **Navigation keys**: `Tab`, `Arrow` keys, `Enter`, `Escape`
+- **Accessibility testing**: Focus management and keyboard navigation
+- **Single key events**: When you need native keyboard events rather than simulated ones
+- **Keys not supported by .type()**: Such as `{tab}`
+
+```javascript
+// Use .type() for text input
+cy.get('input').type('Hello World')
+
+// Use .press() for navigation and special keys
+cy.press(Cypress.Keyboard.Keys.TAB)
+cy.press(Cypress.Keyboard.Keys.ENTER)
+```
+
+
+:::info
+
+**Combining .type() and .press()**: You can use both commands together for comprehensive keyboard testing:
+
+```javascript
+// Type text content
+cy.get('input.email').type('user@example.com')
+// Navigate with keyboard
+cy.press(Cypress.Keyboard.Keys.TAB)
+cy.get('input.password').type('password123')
+// Submit with keyboard
+cy.press(Cypress.Keyboard.Keys.ENTER)
+```
+
+:::
 
 ### Modifiers
 
@@ -660,10 +710,10 @@ following:
 
 ## See also
 
-- [`.blur()`](/api/commands/blur)
-- [`.clear()`](/api/commands/clear)
-- [`.click()`](/api/commands/click)
-- [`.focus()`](/api/commands/focus)
-- [`cy.press()`](/api/commands/press)
-- [`.submit()`](/api/commands/submit)
-- [`Cypress.Keyboard`](/api/cypress-api/keyboard-api)
+- [`cy.press()`](/api/commands/press) - For single key events and navigation
+- [`.focus()`](/api/commands/focus) - Focus elements before typing
+- [`.clear()`](/api/commands/clear) - Clear input values
+- [`.blur()`](/api/commands/blur) - Remove focus from elements
+- [`.click()`](/api/commands/click) - Click elements
+- [`.submit()`](/api/commands/submit) - Submit forms
+- [`Cypress.Keyboard`](/api/cypress-api/keyboard-api) - Keyboard constants
