@@ -137,6 +137,15 @@ Or Chrome for Testing:
 cypress run --browser chrome-for-testing
 ```
 
+#### Chrome policy
+
+If Chrome policy is set, ensure that
+[RemoteDebuggingAllowed](https://chromeenterprise.google/policies/#RemoteDebuggingAllowed)
+is either undefined or set to `true`.
+If this is not the case, then Cypress will timeout, returning an `ECONNREFUSED` error, attempting to connect to the browser.
+Chrome policy is generally applied to a Chrome-branded browser only, not to Chromium or Chrome for Testing browsers.
+Check by browsing to **chrome://policy**.
+
 ### Edge Browsers
 
 Microsoft Edge-family (Chromium-based) browsers are supported by Cypress.
@@ -164,6 +173,14 @@ Or Microsoft Edge Dev:
 ```shell
 cypress run --browser edge:dev
 ```
+
+#### Edge policy
+
+If Edge policy is set, ensure that
+[RemoteDebuggingAllowed](https://learn.microsoft.com/en-us/deployedge/microsoft-edge-browser-policies/remotedebuggingallowed)
+is either undefined or set to `true`.
+If this is not the case, then Cypress will timeout, returning an `ECONNREFUSED` error, attempting to connect to the browser.
+Check by browsing to **edge://policy**.
 
 ### Firefox Browsers
 
