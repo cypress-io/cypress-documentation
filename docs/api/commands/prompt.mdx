@@ -25,7 +25,7 @@ sidebar_custom_props: { 'new_label': true }
 
 - [How it works](#How-it-works) — understand the AI-powered process behind `cy.prompt`
 - [Choosing your workflow](#Choose-your-workflow) — decide between one-time generation or continuous self-healing
-- [Writing effective prompts](#Writing-effective-prompts) — craft clear, reliable natural language steps
+- [How to write effective prompts](#How-to-write-effective-prompts) — craft clear, reliable natural language steps
 - [What you can do](#What-you-can-do) — explore supported actions and capabilities
 - [Setup](#Setup) — enable the command and configure authentication
 
@@ -92,7 +92,7 @@ cy.prompt([
   .should('equal', 'en-US')
 ```
 
-## How cy.prompt works
+## How it works
 
 When you call `cy.prompt`, Cypress performs a multi-step process:
 
