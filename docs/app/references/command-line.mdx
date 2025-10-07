@@ -598,86 +598,20 @@ Cypress Cloud will display any tags sent with the appropriate run.
 
 #### Exit code
 
-When Cypress finishes running tests, it exits. If there are no failed tests, the
-exit code will be 0.
+Cypress supports two different exit code behaviors. The default behavior is similar to that of Mocha, but is not POSIX compliant: reserved exit codes can be returned for certain conditions. As well, the default behavior
+can return a false negative when there are a number of tests that fail in multiples of 255.
 
-```text
-## All tests pass
-$ cypress run
-...
-                                        Tests  Passing  Failing
-    ✔  All specs passed!      00:16       17       17        0
+POSIX compliant exit codes are available via the `--posix-exit-codes` flag. When this flag is passed, additional conditions can be returned that are not possible with the default behavior, including when Cypress fails due to
+network errors when connections to Cypress Cloud are required, such as in `--record` or `--parallel` runs.
 
-## print exit code on Mac or Linux
-$ echo $?
-0
-```
+When using POSIX compliant exit codes, the number of failed tests can be determined from [structured reporter data](/app/tooling/reporters).
 
-By default, if there are any test failures, then the exit code will match the number of
-tests that failed.
-
-```text
-## Spec with two failing tests
-$ cypress run
-...
-                                        Tests  Passing  Failing
-    ✖  1 of 1 failed (100%)   00:22       17       14        2
-
-## print exit code on Mac or Linux
-$ echo $?
-2
-```
-
-You can change this behavior by passing the `--posix-exit-codes` flag. When this flag is passed,
-the exit code will be 0 if all tests pass. If there are any test failures or if Cypress could not run,
-the exit code will be 1.
-
-```text
-## Spec with two failing tests
-$ cypress run --posix-exit-codes
-...
-                                        Tests  Passing  Failing
-    ✖  1 of 1 failed (100%)   00:22       17       14        2
-
-## print exit code on Mac or Linux
-$ echo $?
-1
-```
-
-When you use the `--posix-exit-codes` flag in a run that requires [Cypress Cloud](/cloud/get-started/introduction), and the Cypress application cannot communicate with the Cypress Cloud API due to a network error, the exit code will be `112`. Runs that use either `--record` or `--parallel` require communication with Cypress Cloud API.
-
-```text
-$ cypress run --posix-exit-codes --parallel --group=foo --ciBuildId=ciBuildId123
-We encountered an unexpected error communicating with our servers.
-
-RequestError: Error: ESOCKETTIMEDOUT
-
-Because you passed the --parallel flag, this run cannot proceed since it requires a valid response from our servers.
-
-The --group flag you passed was: foo
-The --ciBuildId flag you passed was: ciBuildId123
-
-$ echo $?
-112
-```
-
-If Cypress could not run for some reason (for example if no spec files were
-found) then the exit code will be 1.
-
-```text
-## No spec files found
-$ cypress run --spec not-found.js
-...
-Can't run because no spec files were found.
-
-We searched for any files matching this glob pattern:
-
-not-found.js
-
-## print exit code on Mac or Linux
-$ echo $?
-1
-```
+| Exit Condition                                                                              | POSIX Exit Code (with `--posix-exit-codes`) | Default Exit Code (without `--posix-exit-codes`) |
+| ------------------------------------------------------------------------------------------- | ------------------------------------------- | ------------------------------------------------ |
+| All tests pass                                                                              | 0                                           | 0                                                |
+| _n_ tests fail                                                                              | 1                                           | _n_                                              |
+| Cypress could not run due to a network error when connections to Cypress Cloud are required | 112                                         | 1                                                |
+| Cypress could not run for any other reason, including no spec files found                   | 1                                           | 1                                                |
 
 ### `cypress open`
 
