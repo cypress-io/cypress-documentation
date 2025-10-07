@@ -67,10 +67,11 @@ The key to press. Values for non single character keys are available on [`Cypres
 | Letters                           | `"a"` through `"z"`, `"A"` through `"Z"`                             |
 | Numbers                           | `"0"`, `"1"`, `"2"`, `"3"`, `"4"`, `"5"`, `"6"`, `"7"`, `"8"`, `"9"` |
 | Special Characters                | `"!"`, `"@"`, `"#"`, `'+'`, `"€"`, `"é"`, etc.                       |
+| `Cypress.Keyboard.Keys.UP`        | `"ArrowUp"`                                                          |
 | `Cypress.Keyboard.Keys.DOWN`      | `"ArrowDown"`                                                        |
 | `Cypress.Keyboard.Keys.LEFT`      | `"ArrowLeft"`                                                        |
 | `Cypress.Keyboard.Keys.RIGHT`     | `"ArrowRight"`                                                       |
-| `Cypress.Keyboard.Keys.UP`        | `"ArrowUp"`                                                          |
+| `Cypress.Keyboard.Keys.ESC`       | `"Escape"`                                                           |
 | `Cypress.Keyboard.Keys.END`       | `"End"`                                                              |
 | `Cypress.Keyboard.Keys.HOME`      | `"Home"`                                                             |
 | `Cypress.Keyboard.Keys.PAGEDOWN`  | `"PageDown"`                                                         |
@@ -169,8 +170,9 @@ If your application prevents the default behavior of the `beforeunload` event, t
 
 | Version                             | Changes                                                                             |
 | ----------------------------------- | ----------------------------------------------------------------------------------- |
-| [14.3.0](/app/references/changelog) | Added the `.press()` command                                                        |
+| [15.3.0](/app/references/changelog) | Added support for `{esc}` key.                                                      |
 | [15.1.0](/app/references/changelog) | Expanded support to include named keys and single+multi-codepoint UTF-8 characters. |
+| [14.3.0](/app/references/changelog) | Added the `.press()` command                                                        |
 
 ## See also
 
