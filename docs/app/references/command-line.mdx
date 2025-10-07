@@ -599,7 +599,7 @@ Cypress Cloud will display any tags sent with the appropriate run.
 #### Exit code
 
 Cypress supports two different exit code behaviors. The default behavior is similar to that of Mocha, but is not POSIX compliant: reserved exit codes can be returned for certain conditions. As well, the default behavior
-can return a false negative when there are a number of tests that fail in multiples of 255.
+can return a false negative when there are a number of tests that fail in multiples of 256: most terminals will apply modulo 256 to any exit code larger than 255.
 
 POSIX compliant exit codes are available via the `--posix-exit-codes` flag. When this flag is passed, additional conditions can be returned that are not possible with the default behavior, including when Cypress fails due to
 network errors when connections to Cypress Cloud are required, such as in `--record` or `--parallel` runs.
