@@ -627,25 +627,31 @@ const matchingSearchTerms = ['cypress', 'testing', 'automation']
 const nonMatchingSearchTerms = ['cyprus', 'fuzzy', 'wrong']
 
 matchingSearchTerms.forEach((term) => {
-  cy.prompt([
-    `type "{{term}}" in the search input`,
-    `verify the search results contain "{{term}}"`,
-  ], {
-    placeholders: {
-      term,
-    },
-  })
+  cy.prompt(
+    [
+      `type "{{term}}" in the search input`,
+      `verify the search results contain "{{term}}"`,
+    ],
+    {
+      placeholders: {
+        term,
+      },
+    }
+  )
 })
 
 nonMatchingSearchTerms.forEach((term) => {
-  cy.prompt([ 
-    `type "{{term}}" in the search input`,
-    `verify the search results does not contain "{{term}}"`,
-  ], {
-    placeholders: {
-      term,
-    },
-  })
+  cy.prompt(
+    [
+      `type "{{term}}" in the search input`,
+      `verify the search results does not contain "{{term}}"`,
+    ],
+    {
+      placeholders: {
+        term,
+      },
+    }
+  )
 })
 ```
 
