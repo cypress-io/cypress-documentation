@@ -620,22 +620,32 @@ cy.prompt([
 
 ### Dynamic testing with loops
 
+If you need to test a loop of steps, you can use the `placeholders` option to pass in the dynamic values. This optimizes caching so that the prompt does not need to be called out to AI for each iteration of the loop.
+
 ```javascript
 const matchingSearchTerms = ['cypress', 'testing', 'automation']
 const nonMatchingSearchTerms = ['cyprus', 'fuzzy', 'wrong']
 
 matchingSearchTerms.forEach((term) => {
   cy.prompt([
-    `type "${term}" in the search input`,
-    `verify the search results contain "${term}"`,
-  ])
+    `type "{{term}}" in the search input`,
+    `verify the search results contain "{{term}}"`,
+  ], {
+    placeholders: {
+      term,
+    },
+  })
 })
 
 nonMatchingSearchTerms.forEach((term) => {
-  cy.prompt([
-    `type "${term}" in the search input`,
-    `verify the search results does not contain "${term}"`,
-  ])
+  cy.prompt([ 
+    `type "{{term}}" in the search input`,
+    `verify the search results does not contain "{{term}}"`,
+  ], {
+    placeholders: {
+      term,
+    },
+  })
 })
 ```
 
