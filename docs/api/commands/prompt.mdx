@@ -474,10 +474,10 @@ describe('Feature: User Registration', () => {
     // Prompt step 7: And the user checks the terms and conditions checkbox
     cy.get('#terms').check()
 
-    // Prompt step 8: Then the user clicks the "Register User" button
+    // Prompt step 8: Add the user clicks the "Register User" button
     cy.get('#registration-form .btn-success').click()
 
-    // Prompt step 10: And the user should see a success notification
+    // Prompt step 10: Then the user should see a success notification
     cy.get('.success').should('be.visible')
 
     // Prompt step 11: And the user should be added to the user list
@@ -762,9 +762,9 @@ AI capabilities, including `cy.prompt`, are enabled by default for all users on 
 
 ## History
 
-| Version                             | Changes                                     |
-| ----------------------------------- | ------------------------------------------- |
-| [15.4.0](/app/references/changelog) | Introduced experimental `cy.prompt` command |
+| Version                                    | Changes                                     |
+| ------------------------------------------ | ------------------------------------------- |
+| [15.4.0](/app/references/changelog#15-4-0) | Introduced experimental `cy.prompt` command |
 
 ---
 
