@@ -634,7 +634,7 @@ the exit code will be 1.
 
 ```text
 ## Spec with two failing tests
-$ cypress run
+$ cypress run --posix-exit-codes
 ...
                                         Tests  Passing  Failing
     ✖  1 of 1 failed (100%)   00:22       17       14        2
@@ -642,6 +642,23 @@ $ cypress run
 ## print exit code on Mac or Linux
 $ echo $?
 1
+```
+
+When you use the `--posix-exit-codes` flag in a run that requires [Cypress Cloud](/cloud/get-started/introduction), and the Cypress application cannot communicate with the Cypress Cloud API due to a network error, the exit code will be `112`. Runs that use either `--record` or `--parallel` require communication with Cypress Cloud API.
+
+```text
+$ cypress run --posix-exit-codes --parallel --group=foo --ciBuildId=ciBuildId123
+We encountered an unexpected error communicating with our servers.
+
+RequestError: Error: ESOCKETTIMEDOUT
+
+Because you passed the --parallel flag, this run cannot proceed since it requires a valid response from our servers.
+
+The --group flag you passed was: foo
+The --ciBuildId flag you passed was: ciBuildId123
+
+$ echo $?
+112
 ```
 
 If Cypress could not run for some reason (for example if no spec files were
