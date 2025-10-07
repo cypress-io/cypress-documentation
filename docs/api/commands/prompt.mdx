@@ -9,9 +9,16 @@ sidebar_custom_props: { 'new_label': true }
 
 <ProductHeading product="cloud" />
 
+:::warning
+
+`cy.prompt` is currently invite-only. [Request access](https://on.cypress.io/cy-prompt-early-access?utm_source=docs.cypress.io&utm_medium=prompt-command&utm_content=Request-access) to get early access.
+
+:::
+
 # prompt
 
 `cy.prompt` is an AI-powered Cypress command that turns natural language test steps into executable Cypress code. It's designed to be flexible - you can use it to quickly generate tests and commit them to source control, or keep it running continuously for self-healing tests that adapt to your app's changes. You can choose the workflow that fits your project's needs.
+
 
 :::note
 
@@ -265,6 +272,7 @@ If Cypress cannot interpret a step, you'll see a dialog prompting you to refine 
 'expect the notification to contain the text "Email sent"'
 'confirm that the [data-cy="result"] element has the text "Success"'
 'the toast should not contain the text "Failed"'
+'the current URL should be "https://cloud.cypress.io/login"'
 'I expect the email field to have the value "anika.mehta@email.com"'
 'verify the "Remember me" input is disabled'
 'the "Login" button should be enabled'
@@ -284,8 +292,8 @@ If Cypress cannot interpret a step, you'll see a dialog prompting you to refine 
 ### Wait
 
 ```javascript
-'wait 500 milliseconds'
 'wait 2 seconds'
+'wait 500 milliseconds'
 ```
 
 ## Placeholders
@@ -423,12 +431,12 @@ describe('Feature: User Registration', () => {
         'Given the user is on the "/register" page',
         'When the user enters "Avery Lopez" in the name field',
         'And the user enters "avery.lopez@example.com" in the email field',
-        'And the user enters {{password}} in the password field', // password placeholder
-        'And the user enters {{password}} in the confirm password field', // Same password placeholder used twice
+        'And the user enters {{password}} in the password field',
+        'And the user enters {{password}} in the confirm password field',
         'And the user selects "admin" from the role dropdown',
         'And the user checks the terms and conditions checkbox',
-        'Then the user clicks the "Register User" button',
-        'And the user should see a success notification',
+        'And the user clicks the "Register User" button',
+        'Then the user should see a success notification',
         'And the user should be added to the user list',
       ],
       {
@@ -708,6 +716,7 @@ cy.prompt(electronicsFilterPrompt)
 | Browser Support  | Chromium-based browsers only (Chrome, Edge, Electron)                    |
 | Language Support | Optimized for English prompts; other languages are not guaranteed        |
 | Assertions       | 'not.exist' assertions are not supported                                 |
+| DOM Support      | Canvas elements are not supported                                        |
 | Command Coverage | Not all Cypress APIs supported - see [What you can do](#What-you-can-do) |
 
 ## Pricing & usage limits
@@ -746,7 +755,7 @@ AI capabilities, including `cy.prompt`, are enabled by default for all users on 
 
 | Version                             | Changes                                     |
 | ----------------------------------- | ------------------------------------------- |
-| [15.0.0](/app/references/changelog) | Introduced experimental `cy.prompt` command |
+| [15.4.0](/app/references/changelog) | Introduced experimental `cy.prompt` command |
 
 ---
 
