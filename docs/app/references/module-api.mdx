@@ -77,6 +77,7 @@ Just like the [Command Line options](/app/references/command-line) for
 | `exit`                    | _boolean_           | Whether to close Cypress after all tests run                                                                                                                                                                 |
 | `parallel`                | _boolean_           | Run recorded specs in [parallel](/cloud/features/smart-orchestration/parallelization) across multiple machines                                                                                               |
 | `port`                    | _number_            | Override default port                                                                                                                                                                                        |
+| `posixExitCodes`          | _boolean_           | Exit with a POSIX-compliant exit code rather than the number of failed tests.                                                                                                                                |
 | `project`                 | _string_            | Path to a specific project                                                                                                                                                                                   |
 | `quiet`                   | _boolean_           | If passed, Cypress output will not be printed to `stdout`. Only output from the configured [Mocha reporter](/app/tooling/reporters) will print.                                                              |
 | `record`                  | _boolean_           | Whether to record the test run                                                                                                                                                                               |
@@ -367,6 +368,7 @@ node ./wrapper cypress run --browser chrome --config ...
 
 | Version                                    | Changes                                                 |
 | ------------------------------------------ | ------------------------------------------------------- |
+| [15.4.0](/app/references/changelog#15-4-0) | Added `posixExitCodes` to run options.                  |
 | [12.6.0](/app/references/changelog#12-6-0) | Added `autoCancelAfterFailures` to run options.         |
 | [10.0.0](/app/references/changelog#10-0-0) | `slowTestThreshold` is now scoped to each testing type. |
 | [8.7.0](/app/references/changelog#8-7-0)   | Added `slowTestThreshold` configuration option.         |
