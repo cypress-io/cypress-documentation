@@ -217,6 +217,7 @@ cypress run [options]
 | `--no-runner-ui`               | [Hides the Cypress Runner UI](#cypress-run-no-runner-ui)                                                                                                                                      |
 | `--parallel`                   | [Run recorded specs in parallel across multiple machines](#cypress-run-parallel)                                                                                                              |
 | `--port`,`-p`                  | [Override default port](#cypress-run-port-lt-port-gt)                                                                                                                                         |
+| `--posix-exit-codes`           | [Exit with a POSIX-compliant exit code](#cypress-run-posix-exit-codes) rather than the number of failed tests.                                                                                |
 | `--project`, `-P`              | [Path to a specific project](#cypress-run-project-lt-project-path-gt)                                                                                                                         |
 | `--quiet`, `-q`                | [Reduce output to `stdout`](#cypress-run-quiet)                                                                                                                                               |
 | `--record`                     | [Whether to record the test run](#cypress-run-record-key-lt-record-key-gt)                                                                                                                    |
@@ -439,6 +440,16 @@ documentation to learn more.
 cypress run --port 8080
 ```
 
+#### `cypress run --posix-exit-codes` {#cypress-run-posix-exit-codes}
+
+This changes the default behavior of Cypress regarding exit codes. This flag causes Cypress to exit with POSIX exit code of 1 when there are test failures or if Cypress could not run, rather than the number of tests that failed.
+
+```shell
+cypress run --posix-exit-codes
+```
+
+For more about Cypress' exit code behavior, see the [Exit Code section](/app/references/command-line#Exit-code).
+
 #### `cypress run --project <project-path>` {#cypress-run-project-lt-project-path-gt}
 
 To see this in action we've set up an
@@ -602,7 +613,7 @@ $ echo $?
 0
 ```
 
-If there are any test failures, then the exit code will match the number of
+By default, if there are any test failures, then the exit code will match the number of
 tests that failed.
 
 ```text
@@ -615,6 +626,22 @@ $ cypress run
 ## print exit code on Mac or Linux
 $ echo $?
 2
+```
+
+You can change this behavior by passing the `--posix-exit-codes` flag. When this flag is passed,
+the exit code will be 0 if all tests pass. If there are any test failures or if Cypress could not run,
+the exit code will be 1.
+
+```text
+## Spec with two failing tests
+$ cypress run
+...
+                                        Tests  Passing  Failing
+    ✖  1 of 1 failed (100%)   00:22       17       14        2
+
+## print exit code on Mac or Linux
+$ echo $?
+1
 ```
 
 If Cypress could not run for some reason (for example if no spec files were
@@ -975,6 +1002,7 @@ and with Windows CMD and PowerShell terminal windows.
 
 | Version                                    | Changes                                                    |
 | ------------------------------------------ | ---------------------------------------------------------- |
+| [15.4.0](/app/references/changelog#15-4-0) | Added `--posix-exit-codes` flag to `cypress run`           |
 | [12.6.0](/app/references/changelog#12-6-0) | Added `--auto-cancel-after-failures` flag to `cypress run` |
 | [5.4.0](/app/references/changelog)         | Added `prune` subcommand to `cypress cache`                |
 | [5.4.0](/app/references/changelog)         | Added `--size` flag to `cypress cache list` subcommand     |
