@@ -1,0 +1,44 @@
+---
+title: 'Ignoring rules for specific elements | Cypress Accessibility'
+description: 'Elements can avoid failing certain rules using a data-a11y-ignore attribute'
+sidebar_label: 'Ignore rules for specific elements'
+sidebar_position: 70
+---
+
+<ProductHeading product="accessibility" />
+
+# Ignore rules for specific elements
+
+Cypress Accessibility configuration allows you to exclude [elements](/accessibility/configuration/elementfilters) or whole [pages](/accessibility/configuration/viewfilters) from the accessibility report, but sometimes there are situations where you may want to keep an element in your accessibility report, but ignore some accessibility rules for that element.
+
+This can be accomplished in your application code using the `data-a11y-ignore` attribute, like this:
+
+```html
+<button data-a11y-ignore="color-contrast">Log In</button>
+```
+
+This would mean that if a color contrast violation was detected on this button, it would be tracked and flagged as an ignored violation in your accessibility report, instead of being listed as a failure. Any other violations detected would be flagged as normal failures.
+
+## Ignore multiple rules
+
+Multiple rules can be ignored by using commas to separate a list of rule IDs:
+
+```html
+<button data-a11y-ignore="color-contrast,button-name">Log In</button>
+```
+
+## Where to find rule IDs
+
+The "Learn more" link in your accessibility reports will display the ID for each rule. They can also be looked up in the [Axe-Core® rule documentation](https://github.com/dequelabs/axe-core/blob/develop/doc/rule-descriptions.md) directly.
+
+## When to use this
+
+### Handle false positives
+
+This is most useful when there is a known false positive failure for a specific rule and you want to remove it from your report without losing all other insights about an element.
+
+The `data-a11y-ignore` attribute pattern is used in some libraries like Adobe's React Spectrum, so those UI elements automatically have the defined rules ignored correctly in Cypress Accessibility.
+
+### Avoid blocking a code change
+
+A secondary use case is to avoid certain known issues becoming blocking for a pull request. `data-a11y-ignore` allows for a minimal scope of what to ignore, and creates a paper trail through version control which means these changes are obvious at code review, and comments can be added nearby to explain the reason for ignoring the rule.
