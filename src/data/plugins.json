@@ -99,7 +99,7 @@
           "badge": "official"
         },
         {
-          "name": "Cypress Github Actions",
+          "name": "Cypress GitHub Actions",
           "description": "GitHub Action for running Cypress end-to-end and component tests. Includes npm, pnpm and Yarn installation, custom caching and lots of configuration options.",
           "link": "https://github.com/cypress-io/github-action",
           "keywords": ["continuous-integration", "github-actions"],
@@ -726,6 +726,18 @@
             "google"
           ],
           "badge": "community"
+        },
+        {
+          "name": "cypress-get-otp",
+          "description": "Cypress custom command for generating OTP codes.",
+          "link": "https://github.com/sergiubcn/cypress-get-otp",
+          "keywords": [
+            "authentication",
+            "hmac",
+            "otp",
+            "totp"
+          ],
+          "badge": "community"
         }
       ]
     },
@@ -1117,7 +1129,7 @@
           "link":"https://github.com/pushpak1300/cypress-mailpit",
           "keywords":["mailpit", "email", "test", "commands", "email"],
           "badge":"community"
-        }, 
+        },
         {
           "name":"cypress-sql",
           "description":"The @dankieu/cypress-sql package supports the following database connections Sql server, Mysql, OracleDB, Postgress",

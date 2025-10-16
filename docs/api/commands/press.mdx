@@ -4,6 +4,7 @@ description: Trigger native key events in your application to simulate keyboard 
 sidebar_label: press
 slug: /api/commands/press
 componentSpecific: false
+sidebar_custom_props: { 'new_label': true }
 ---
 
 <ProductHeading product="app" />
@@ -12,20 +13,9 @@ componentSpecific: false
 
 Trigger native key events in your application to simulate keyboard interactions.
 
-A `keydown`, `press`, and `keyup` event will be dispatched directly to the browser window.
+A `keydown` and `keyup` event will be dispatched directly to the browser window.
 
-Unlike `cy.type()`, which is best for typing character keys, `cy.press()` will dispatch real keyboard events rather than simulated ones. This command is especially useful when testing focus management and keyboard navigation patterns which are critical for [accessibility testing](/app/guides/accessibility-testing) and great keyboard UX.
-
-Currently, the only key supported is `Tab`.
-
-:::caution
-
-<strong>Supported Browsers:</strong>
-This command is supported in chromium browsers and Firefox versions >= v135. WebKit
-is not supported. This command will fail if executed in a browser that does not support
-it.
-
-:::
+Unlike `cy.type()`, which is best for typing multiple character keys, `cy.press()` will dispatch real keyboard events rather than simulated ones. This command is especially useful when testing focus management and keyboard navigation patterns which are critical for [accessibility testing](/app/guides/accessibility-testing) and great keyboard UX.
 
 ## Syntax
 
@@ -68,13 +58,36 @@ cy.press(Cypress.Keyboard.Keys.TAB)
 
 <Icon name="angle-right" /> **key _(String)_**
 
-The key to press. The supported values are available on [`Cypress.Keyboard.Keys`](/api/cypress-api/keyboard-api), and may change from time to time. It's recomended that you reference these values from `Cypress.Keyboard.Keys` rather than passing in a string.
+The key to press. Values for non single character keys are available on [`Cypress.Keyboard.Keys`](/api/cypress-api/keyboard-api), and may change from time to time. It's recommended that you reference these values from `Cypress.Keyboard.Keys` rather than passing in a string when available.
 
-### Supported Keys
+#### Supported Keys
 
-| Reference                   | Value   |
-| --------------------------- | ------- |
-| `Cypress.Keyboard.Keys.TAB` | `"Tab"` |
+| Reference                         | Value                                                                |
+| --------------------------------- | -------------------------------------------------------------------- |
+| Letters                           | `"a"` through `"z"`, `"A"` through `"Z"`                             |
+| Numbers                           | `"0"`, `"1"`, `"2"`, `"3"`, `"4"`, `"5"`, `"6"`, `"7"`, `"8"`, `"9"` |
+| Special Characters                | `"!"`, `"@"`, `"#"`, `'+'`, `"€"`, `"é"`, etc.                       |
+| `Cypress.Keyboard.Keys.UP`        | `"ArrowUp"`                                                          |
+| `Cypress.Keyboard.Keys.DOWN`      | `"ArrowDown"`                                                        |
+| `Cypress.Keyboard.Keys.LEFT`      | `"ArrowLeft"`                                                        |
+| `Cypress.Keyboard.Keys.RIGHT`     | `"ArrowRight"`                                                       |
+| `Cypress.Keyboard.Keys.ESC`       | `"Escape"`                                                           |
+| `Cypress.Keyboard.Keys.END`       | `"End"`                                                              |
+| `Cypress.Keyboard.Keys.HOME`      | `"Home"`                                                             |
+| `Cypress.Keyboard.Keys.PAGEDOWN`  | `"PageDown"`                                                         |
+| `Cypress.Keyboard.Keys.PAGEUP`    | `"PageUp"`                                                           |
+| `Cypress.Keyboard.Keys.ENTER`     | `"Enter"`                                                            |
+| `Cypress.Keyboard.Keys.TAB`       | `"Tab"`                                                              |
+| `Cypress.Keyboard.Keys.BACKSPACE` | `"Backspace"`                                                        |
+| `Cypress.Keyboard.Keys.DELETE`    | `"Delete"`                                                           |
+| `Cypress.Keyboard.Keys.INSERT`    | `"Insert"`                                                           |
+| `Cypress.Keyboard.Keys.SPACE`     | `"Space"`                                                            |
+
+:::info
+
+F1-F12 keys are not supported. These keys are used for browser shortcuts, and can prevent the test suite from executing properly after they are pressed.
+
+:::
 
 <Icon name="angle-right" /> **options _(Object)_**
 
@@ -112,7 +125,57 @@ it('autocompletes search input when pressing Tab', () => {
 })
 ```
 
+### Type a single character
+
+Single character keys are supported, like `a`, `b`, `c`, etc. There is no need to reference `Cypress.Keyboard.Keys` record for these keys, just type them normally as a string:
+
+```javascript
+cy.get('input').focus()
+cy.press('a')
+```
+
+### Type a multi-codepoint UTF-8 character
+
+Multi-codepoint UTF-8 characters are also supported and do not need to be entered as individual codepoints. For example, `é` can be either one single codepoint or two separate codepoints when the accent is pressed as a subsequent modifier key. You do not need to press each codepoint separately; just type the entire character as a string.
+
+```javascript
+// works
+cy.get('input').focus()
+cy.press('é') // \u00e9 (composed é)
+cy.press('é') // \u0065\u0301 (e + combining acute accent)
+
+// also fine, but not necessary
+cy.get('input').focus()
+cy.press('e') // \u0065
+cy.press('́') // \u0301 (combining acute accent)
+```
+
 ## Notes
+
+### When to use cy.type()
+
+While `.press()` dispatches native keyboard events, use [`cy.type()`](/api/commands/type) for:
+
+- **Text input**: Typing multiple characters or words
+- **Special character sequences**: `{backspace}`, `{selectAll}`, `{moveToEnd}`
+- **Modifier combinations**: `{ctrl}c`, `{shift}b`
+- **Form filling**: When you need to simulate specific timing of typing behavior
+
+```javascript
+// Use .press() for single key events
+cy.press(Cypress.Keyboard.Keys.TAB)
+
+// Use .type() for text and complex sequences
+cy.get('input').type('Hello{backspace}World')
+```
+
+### Strings with multiple characters
+
+Strings with multiple characters are not supported. If you need to input longer strings into a text input or similar, use [`cy.type()`](/api/commands/type).
+
+```js
+cy.get('input').type('Hello, World') // Type 'Hello, World' into the 'input'
+```
 
 ### Transient activation
 
@@ -122,13 +185,17 @@ If your application prevents the default behavior of the `beforeunload` event, t
 
 ## History
 
-| Version                             | Changes                      |
-| ----------------------------------- | ---------------------------- |
-| [14.3.0](/app/references/changelog) | Added the `.press()` command |
+| Version                             | Changes                                                                             |
+| ----------------------------------- | ----------------------------------------------------------------------------------- |
+| [15.3.0](/app/references/changelog) | Added support for `{esc}` key.                                                      |
+| [15.1.0](/app/references/changelog) | Expanded support to include named keys and single+multi-codepoint UTF-8 characters. |
+| [14.3.0](/app/references/changelog) | Added the `.press()` command                                                        |
 
 ## See also
 
-- [`Cypress.Keyboard`](/api/cypress-api/keyboard-api)
-- [`.focus()`](/api/commands/focus)
-- [`.focused()`](/api/commands/focused)
-- [`.type()`](/api/commands/type)
+- [`cy.type()`](/api/commands/type) - For typing text and special sequences
+- [`.focus()`](/api/commands/focus) - Focus elements before pressing keys
+- [`.focused()`](/api/commands/focused) - Assert focused elements
+- [`.click()`](/api/commands/click) - Click elements
+- [`Cypress.Keyboard`](/api/cypress-api/keyboard-api) - Keyboard constants
+- [Accessibility Testing Guide](/app/guides/accessibility-testing) - Keyboard navigation patterns

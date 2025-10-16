@@ -122,7 +122,6 @@
   --ifm-heading-font-family: Poppins;
   --ifm-heading-font-weight: var(--ifm-font-weight-bold);
   --ifm-line-height-base: 1.6;
-  --ifm-heading-color: theme(colors.gray.1000) --ifm-code-font-size: 95%;
   --ifm-pre-line-height: 1.5em;
 
   --ifm-code-background-color: #282a36;
@@ -290,6 +289,18 @@ html[data-theme='dark'] {
     background-color: var(--ifm-color-red-1000);
     color: var(--ifm-color-red-50);
     --ifm-alert-border-color: var(--ifm-color-red-800);
+  }
+}
+
+.alert.alert--secondary {
+  background-color: var(--ifm-color-indigo-50);
+  color: var(--ifm-color-indigo-1000);
+  --ifm-alert-border-color: var(--ifm-color-indigo-400);
+
+  [data-theme='dark'] & {
+    background-color: var(--ifm-color-indigo-1000);
+    color: var(--ifm-color-indigo-50);
+    --ifm-alert-border-color: var(--ifm-color-indigo-800);
   }
 }
 
