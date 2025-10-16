@@ -602,7 +602,7 @@ can return a false negative when there are a number of tests that fail in multip
 POSIX compliant exit codes are available via the `--posix-exit-codes` flag. When this flag is passed, additional conditions can be returned that are not possible with the default behavior, including when Cypress fails due to
 network errors when connections to Cypress Cloud are required, such as in `--record` or `--parallel` runs.
 
-When using POSIX compliant exit codes, the number of failed tests can be determined from [structured reporter data](/app/tooling/reporters).
+When using POSIX compliant exit codes, the number of failed tests can be determined from the [Module API](/app/references/module-api) or [structured reporter data](/app/tooling/reporters).
 
 | Exit Condition                                                                              | POSIX Exit Code (with `--posix-exit-codes`) | Default Exit Code (without `--posix-exit-codes`) |
 | ------------------------------------------------------------------------------------------- | ------------------------------------------- | ------------------------------------------------ |
