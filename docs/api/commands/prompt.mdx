@@ -733,6 +733,19 @@ cy.prompt(electronicsFilterPrompt)
 | Assertions       | 'not.exist' assertions are not supported                                 |
 | DOM Support      | Canvas elements are not supported                                        |
 | Command Coverage | Not all Cypress APIs supported - see [What you can do](#What-you-can-do) |
+| Step Limit       | Each `cy.prompt` call is limited to 50 steps                             |
+
+### Step limit details
+
+Each `cy.prompt` call is limited to 50 steps. This constraint helps maintain the accuracy and reliability of AI-generated test code. As the number of steps increases, the AI model's ability to maintain context and generate precise, executable Cypress commands may decrease. By keeping prompts focused and concise, you'll get more reliable results and better test performance.
+
+:::note
+
+**System-wide prompt length limits**
+
+During the experimental release, we have system-wide limits on the total input length processed by `cy.prompt`. If you encounter issues with longer prompts, consider breaking them into smaller, more focused `cy.prompt` calls.
+
+:::
 
 ## Pricing & usage limits
 
