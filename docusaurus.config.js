@@ -156,8 +156,8 @@ const config = {
       // Styles for this are controlled in src/css/announcement-bar.scss
       announcementBar: {
         //give id a unique value to get a new announcement bar to appear
-        id: 'ga-ui-cov-a11y',
-        content: `📢 NEW! Improve app quality with instant insights using <a href="https://www.cypress.io/accessibility?utm_medium=accouncement-banner&utm_source=docs.cypress.io&utm_content=Cypress Accessibility">Cypress Accessibility</a> or <a href="https://www.cypress.io/ui-coverage?utm_medium=announcement-banner&utm_source=docs.cypress.io&utm_content=UI Coverage">UI Coverage</a>.`,
+        id: 'cy-prompt-experimental-live',
+        content: `📢 NEW! cy.prompt() natural language and self-healing tests <a href="https://www.cypress.io/blog/cy-prompt-experimental-launch?utm_source=docs.cypress.io&utm_medium=cyconf&utm_campaign=cypressconf">now available</a> in the Cypress App.`,
         isCloseable: true,
       },
       footer: {
