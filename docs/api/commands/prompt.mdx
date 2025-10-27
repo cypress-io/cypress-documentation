@@ -718,28 +718,30 @@ cy.prompt(electronicsFilterPrompt)
 
 ## Limitations
 
+These apply to all `cy.prompt` usage unless noted otherwise.
+
+### General limitations
+
 | Limitation       | Details                                                                  |
 | ---------------- | ------------------------------------------------------------------------ |
 | Authentication   | Requires Cypress Cloud account and/or valid record key                   |
 | Test Type        | E2E tests only (component testing not yet supported)                     |
 | Browser Support  | Chromium-based browsers only (Chrome, Edge, Electron)                    |
 | Language Support | Optimized for English prompts; other languages are not guaranteed        |
-| Assertions       | 'not.exist' assertions are not supported                                 |
-| DOM Support      | Canvas and iframe elements are not supported                             |
 | Command Coverage | Not all Cypress APIs supported - see [What you can do](#What-you-can-do) |
-| Step Limit       | Each `cy.prompt` call is limited to 50 steps                             |
 
-### Step limit details
+### Experimental release limitations
 
-Each `cy.prompt` call is limited to 50 steps. This constraint helps maintain the accuracy and reliability of AI-generated test code. As the number of steps increases, the AI model's ability to maintain context and generate precise, executable Cypress commands may decrease. By keeping prompts focused and concise, you'll get more reliable results and better test performance.
+The `cy.prompt` command is currently in experimental release. During the experimental release, there are some limitations that we intend to address in the future.
 
-:::note
-
-**System-wide prompt length limits**
-
-During the experimental release, we have system-wide limits on the total input length processed by `cy.prompt`. If you encounter issues with longer prompts, consider breaking them into smaller, more focused `cy.prompt` calls.
-
-:::
+| Limitation       | Details                                                                                                                                                                                     |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Assertions       | 'not.exist' assertions are not supported [See issue](https://github.com/cypress-io/cypress/issues/32793)                                                                                    |
+| Multi-Element    | Assertions on multiple elements are not currently supported [See issue](https://github.com/cypress-io/cypress/issues/32787)                                                                 |
+| Cookies/Sessions | Clearing cookies or sessions is not supported [See issue](https://github.com/cypress-io/cypress/issues/32810)                                                                               |
+| Scrolling        | Scrolling to elements is not supported [See issue](https://github.com/cypress-io/cypress/issues/32789)                                                                                      |
+| API Testing      | API requests (e.g., cy.request() or cy.intercept()) are not supported [See issue](https://github.com/cypress-io/cypress/issues/32792)                                                       |
+| DOM Support      | Canvas and iframe elements are not supported. See [canvas issue](https://github.com/cypress-io/cypress/issues/32830) and [iframe issue](https://github.com/cypress-io/cypress/issues/32800) |
 
 ## Pricing & usage limits
 
@@ -751,7 +753,9 @@ Please note that pricing and usage limitations are subject to future adjustments
 
 :::
 
-### Usage limits
+There are two sets of limits: per-user hourly limits and per-prompt limits.
+
+### Per-user hourly limits
 
 _Usage limits only apply to runs that are not recording to Cypress Cloud._
 
@@ -764,6 +768,16 @@ _Usage limits only apply to runs that are not recording to Cypress Cloud._
 
 - 600 prompts per hour
 - 3,000 prompt steps per hour
+
+### Per-prompt limits
+
+- Up to 50 steps per `cy.prompt` call to maintain context fidelity and produce reliable, executable commands.
+- During the experimental release, system-wide limits apply to the total input length processed by `cy.prompt`. Very long prompts may be rejected or require splitting.
+
+To improve reliability and performance, consider the following:
+
+- Keep one action or assertion per step.
+- Split long flows into multiple `cy.prompt` calls.
 
 ## Privacy & security
 
