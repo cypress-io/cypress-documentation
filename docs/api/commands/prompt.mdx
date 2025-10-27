@@ -682,30 +682,36 @@ const electronicsCount = Cypress.env('staging') === true ? 5 : 25
 // Confirm the UI works in staging environment
 cy.task('seedStagingDB')
 cy.visit(`${Cypress.env('stagingUrl')}/products`)
-cy.prompt([
-  'filter by category "Electronics"',
-  'sort by price high to low',
-  `verify the product count is {{electronicsCount}}`,
-  'verify the sort indicator is "Price: High to Low"',
-], {
-  placeholders: {
-    electronicsCount,
-  },
-})
+cy.prompt(
+  [
+    'filter by category "Electronics"',
+    'sort by price high to low',
+    `verify the product count is {{electronicsCount}}`,
+    'verify the sort indicator is "Price: High to Low"',
+  ],
+  {
+    placeholders: {
+      electronicsCount,
+    },
+  }
+)
 
 // Confirm the UI works in production environment
 cy.task('seedProductionDB')
 cy.visit(`${Cypress.env('productionUrl')}/products`)
-cy.prompt([
-  'filter by category "Electronics"',
-  'sort by price high to low',
-  `verify the product count is {{electronicsCount}}`,
-  'verify the sort indicator is "Price: High to Low"',
-], {
-  placeholders: {
-    electronicsCount,
-  },
-})
+cy.prompt(
+  [
+    'filter by category "Electronics"',
+    'sort by price high to low',
+    `verify the product count is {{electronicsCount}}`,
+    'verify the sort indicator is "Price: High to Low"',
+  ],
+  {
+    placeholders: {
+      electronicsCount,
+    },
+  }
+)
 ```
 
 Or to further clean up the `cy.prompt` call:
