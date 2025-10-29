@@ -282,6 +282,12 @@ If Cypress cannot interpret a step, you'll see a dialog prompting you to refine 
 'confirm that the code frame includes HTML "<span class="token">'
 ```
 
+### Change the viewport
+
+```javascript
+'set the viewport to 400x600'
+```
+
 ### Wait
 
 ```javascript
@@ -671,49 +677,71 @@ cy.origin('https://cloud.cypress.io/login', () => {
 ### Mixed with traditional Cypress
 
 ```javascript
-const electronicsCount = 25
+const electronicsCount = Cypress.env('staging') === true ? 5 : 25
 
-// Confirm the UI works in desktop view
-cy.viewport(1024, 768)
+// Confirm the UI works in staging environment
+cy.task('seedStagingDB')
 cy.visit(`${Cypress.env('stagingUrl')}/products`)
-cy.prompt([
-  'filter by category "Electronics"',
-  'sort by price high to low',
-  `verify the product count is ${electronicsCount}`,
-  'verify the sort indicator is "Price: High to Low"',
-])
+cy.prompt(
+  [
+    'filter by category "Electronics"',
+    'sort by price high to low',
+    `verify the product count is {{electronicsCount}}`,
+    'verify the sort indicator is "Price: High to Low"',
+  ],
+  {
+    placeholders: {
+      electronicsCount,
+    },
+  }
+)
 
-// Confirm the UI works in mobile view
-cy.viewport(400, 600)
-cy.visit(`${Cypress.env('stagingUrl')}/products`)
-cy.prompt([
-  'filter by category "Electronics"',
-  'sort by price high to low',
-  `verify the product count is ${electronicsCount}`,
-  'verify the sort indicator is "Price: High to Low"',
-])
+// Confirm the UI works in production environment
+cy.task('seedProductionDB')
+cy.visit(`${Cypress.env('productionUrl')}/products`)
+cy.prompt(
+  [
+    'filter by category "Electronics"',
+    'sort by price high to low',
+    `verify the product count is {{electronicsCount}}`,
+    'verify the sort indicator is "Price: High to Low"',
+  ],
+  {
+    placeholders: {
+      electronicsCount,
+    },
+  }
+)
 ```
 
 Or to further clean up the `cy.prompt` call:
 
 ```javascript
-const electronicsCount = 25
+const electronicsCount = Cypress.env('staging') === true ? 5 : 25
 const electronicsFilterPrompt = [
   'filter by category "Electronics"',
   'sort by price high to low',
-  `verify the product count is ${electronicsCount}`,
+  `verify the product count is {{electronicsCount}}`,
   'verify the sort indicator is "Price: High to Low"',
 ]
 
-// Confirm the UI works in desktop view
-cy.viewport(1024, 768)
+// Confirm the UI works in staging environment
+cy.task('seedStagingDB')
 cy.visit(`${Cypress.env('stagingUrl')}/products`)
-cy.prompt(electronicsFilterPrompt)
+cy.prompt(electronicsFilterPrompt, {
+  placeholders: {
+    electronicsCount,
+  },
+})
 
-// Confirm the UI works in mobile view
-cy.viewport(400, 600)
+// Confirm the UI works in production environment
+cy.task('seedProductionDB')
 cy.visit(`${Cypress.env('stagingUrl')}/products`)
-cy.prompt(electronicsFilterPrompt)
+cy.prompt(electronicsFilterPrompt, {
+  placeholders: {
+    electronicsCount,
+  },
+})
 ```
 
 ## Limitations
