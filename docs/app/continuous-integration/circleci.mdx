@@ -40,11 +40,11 @@ A typical project can have:
 ```yaml title=".circleci/config.yml"
 version: 2.1
 orbs:
-  # "cypress-io/cypress@3" installs the latest published
+  # "cypress-io/cypress@4" installs the latest published
   # version "s.x.y" of the orb. We recommend you then use
-  # the strict explicit version "cypress-io/cypress@3.x.y"
+  # the strict explicit version "cypress-io/cypress@4.x.y"
   # to lock the version and prevent unexpected CI changes
-  cypress: cypress-io/cypress@3
+  cypress: cypress-io/cypress@4
 workflows:
   build:
     jobs:
@@ -64,7 +64,7 @@ run tests across 4 CI machines
 ```yaml title=".circleci/config.yml"
 version: 2.1
 orbs:
-  cypress: cypress-io/cypress@3
+  cypress: cypress-io/cypress@4
 workflows:
   build:
     jobs:
@@ -101,7 +101,7 @@ Check out the full <Icon name="github" inline="true" callout="RWA Circle CI conf
 ```yaml title=".circleci/config.yml"
 version: 2.1
 orbs:
-  cypress: cypress-io/cypress@3
+  cypress: cypress-io/cypress@4
 workflows:
   test:
     jobs:
@@ -114,7 +114,7 @@ workflows:
 ```yaml title=".circleci/config.yml"
 version: 2.1
 orbs:
-  cypress: cypress-io/cypress@3
+  cypress: cypress-io/cypress@4
 workflows:
   test:
     jobs:
@@ -126,13 +126,13 @@ workflows:
 ### Chrome Example
 
 Cypress uses Electron by default to run your tests. The `install-browsers` flag
-is used to install Firefox and Chrome to run your tests. This is only needed if
-you are passing the `--browser` flag in your `cypress-command`
+is used to install Chrome, Chrome for Testing, Edge, Firefox and the geckodriver to run your tests.
+This is only needed if you are passing the `--browser` flag in your `cypress-command`.
 
 ```yaml title=".circleci/config.yml"
 version: 2.1
 orbs:
-  cypress: cypress-io/cypress@3
+  cypress: cypress-io/cypress@4
 workflows:
   test:
     jobs:

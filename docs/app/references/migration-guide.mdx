@@ -8,6 +8,195 @@ sidebar_label: 'Migration Guide'
 
 # Migration Guide
 
+## Migrating to Cypress 15.0
+
+This guide details the code changes needed to migrate to Cypress
+version 15.
+[See the full changelog for version v15.0](/app/references/changelog#15-0-0).
+
+### Node.js 20, 22 and 24+ support
+
+Cypress requires [Node.js](https://nodejs.org/en) in order to install the Cypress binary and the supported versions are now Node.js 20, 22, 24 and above.
+Node.js versions 18 and 23 are no longer supported.
+[See Node's release schedule](https://github.com/nodejs/Release).
+
+### cy.exec code property renamed
+
+The `code` property on [`cy.exec()`](/api/commands/exec) has been renamed to `exitCode`.
+
+<Badge type="danger">Before</Badge>{' '}
+
+```javascript
+cy.exec('rake db:seed').its('code').should('eq', 0)
+```
+
+<Badge type="success">After</Badge>
+
+```javascript
+cy.exec('rake db:seed').its('exitCode').should('eq', 0)
+```
+
+### Unsupported Linux Distributions
+
+Prebuilt binaries for Linux are no longer compatible with Linux distributions based on glibc `<2.31`.
+This support is in line with Node.js's support for Linux in 20+.
+
+If you're using a Linux distribution based on glibc `<2.31`, you'll need to
+update your system to a newer version to install Cypress 15+.
+To display which version of glibc your Linux system is running, execute `ldd --version`.
+
+### Webpack `4` is no longer supported
+
+Cypress is no longer supporting Webpack `4` as it is no longer maintained by the core Webpack team and Webpack `5` has been available since Q4 2020. This includes dropping Webpack `4` support for:
+
+- `@cypress/webpack-dev-server` for component testing. This use case is most common and will require an update to Webpack `5`.
+  - `@cypress/webpack-dev-server` also no longer supports [Webpack Dev Server v4](https://github.com/webpack/webpack-dev-server/tree/v4.15.2). We shipped [Webpack Dev Server v5](https://github.com/webpack/webpack-dev-server/tree/v5.2.1) as the default in Cypress 14 with `webpack-dev-server@4` being an option.
+- `@cypress/webpack-preprocessor` for end-to-end testing. Cypress, by default, uses the [Webpack Batteries Included Preprocessor](https://github.com/cypress-io/cypress/blob/@cypress/webpack-batteries-included-preprocessor-v3.0.7/npm/webpack-batteries-included-preprocessor/README.md) to process your files for end-to-end testing, which has used Webpack 5 since Cypress 13. Unless you are already using `@cypress/webpack-preprocessor` as a standalone package, this change likely does not apply.
+
+#### To continue using Webpack `4`
+
+##### Component Testing
+
+If you haven't been able to migrate away from Webpack `4` or Webpack Dev Server `4` and still need to be able to run your component tests with Webpack `4` or Webpack Dev Server `4`, you can install the following packages independently:
+
+```sh
+npm install --save-dev @cypress/webpack-dev-server@4
+```
+
+and configure the dev server within your `cypress.config.js` or `cypress.config.ts` file:
+
+```js
+import { devServer } from '@cypress/webpack-dev-server'
+import { defineConfig } from 'cypress'
+
+export default defineConfig({
+  component: {
+    devServer(devServerConfig) {
+      return devServer({
+        ...devServerConfig,
+        framework: 'react',
+        webpackConfig: require('./webpack.config.js'),
+      })
+    },
+  },
+})
+```
+
+Note that this package version is deprecated and no longer supported by Cypress and is intended as a workaround until you can migrate to Webpack `5`. More information on how to configure the dev server `v4 `can be found in the [Cypress Webpack Dev Server documentation](https://github.com/cypress-io/cypress/blob/@cypress/webpack-dev-server-v4.0.2/npm/webpack-dev-server/README.md) and [Custom Dev Server documentation](/app/component-testing/component-framework-configuration#Custom-Dev-Server).
+
+##### End-to-End Testing
+
+If you haven't been able to migrate away from Webpack `4`, need custom end-to-end spec file preprocessing, are already using `@cypress/webpack-preprocessor` as a standalone package, and still need to be able to run your end-to-end tests with Webpack `4`, you can install the following package independently:
+
+```sh
+npm install --save-dev @cypress/webpack-preprocessor@6
+```
+
+and configure the preprocessor within your `cypress.config.js` or `cypress.config.ts` file:
+
+```js
+import { defineConfig } from 'cypress'
+import webpackPreprocessor from '@cypress/webpack-preprocessor'
+
+export default defineConfig({
+  e2e: {
+    setupNodeEvents(on, config) {
+      on('file:preprocessor', webpackPreprocessor())
+    },
+  },
+})
+```
+
+As stated earlier, this is likely unnecessary unless you are already using `@cypress/webpack-preprocessor` as a standalone package. Cypress by default uses the [Webpack Batteries Included Preprocessor](https://github.com/cypress-io/cypress/blob/@cypress/webpack-batteries-included-preprocessor-v3.0.7/npm/webpack-batteries-included-preprocessor/README.md) to process your spec files for end-to-end testing.
+
+Note that this package version is deprecated and no longer supported by Cypress and is intended as a workaround until you can migrate to Webpack `5`. More information on how to configure the preprocessor can be found in the [Preprocessors API documentation](/api/node-events/preprocessors-api#Usage) and [Webpack Preprocessor documentation](https://github.com/cypress-io/cypress/blob/@cypress/webpack-preprocessor-v6.0.4/npm/webpack-preprocessor/README.md).
+
+### `@cypress/webpack-batteries-included-preprocessor` no longer shims all built-ins provided by `webpack` v4
+
+The default file preprocessor, `@cypress/webpack-batteries-included-preprocessor`, no longer shims all built-ins that were previously provided by webpack v4. This is mainly to reduce security vulnerabilities and bundle size within the end-to-end file preprocessor.
+
+However, `@cypress/webpack-batteries-included-preprocessor` still ships with _some_ built-ins, such as `buffer`, `path`, `process`, `os`, and `stream`. If other built-ins are required, install `@cypress/webpack-batteries-included-preprocessor` independently and follow the webpack documentation described in [webpack's resolve.fallback](https://webpack.js.org/configuration/resolve/#resolvefallback) to configure the built-ins you need.
+
+For example, the following code shows how to provide the `querystring` built-in to the preprocessor:
+
+```javascript
+const webpackPreprocessor = require('@cypress/webpack-batteries-included-preprocessor')
+
+function getWebpackOptions() {
+  const options = webpackPreprocessor.getFullWebpackOptions()
+
+  // add built-ins as needed
+  // NOTE: for this example, querystring-es3 needs to be installed as a dependency
+  options.resolve.fallback.querystring = require.resolve('querystring-es3')
+  return options
+}
+
+module.exports = (on) => {
+  on(
+    'file:preprocessor',
+    webpackPreprocessor({
+      // if using typescript, you will need to set the typescript option to true
+      typescript: true,
+      webpackOptions: getWebpackOptions(),
+    })
+  )
+}
+```
+
+### Angular `17` CT no longer supported
+
+With [LTS end](https://angular.dev/reference/releases#actively-supported-versions) for Angular 17, the minimum required Angular version for component testing is now `18.0.0`.
+
+#### To continue using Angular below 18.0.0
+
+If you haven't been able to migrate away from an older Angular version and still need that test harness, it can be installed independently via the [`@cypress/angular`](https://www.npmjs.com/package/@cypress/angular) `3.x.x` package from `npm`.
+
+Note that this test harness version is deprecated and no longer supported by Cypress. This version is intended to serve as a temporary workaround to migrate your project to Angular v18.0.0+.
+
+```sh
+npm install --save-dev @cypress/angular@3
+```
+
+Inside your support file (ex: `./cypress/support/component.(js|ts)`), or wherever your mount function is imported, make the following update to add `@`.
+
+<Badge type="danger">Before</Badge>{' '}
+
+```ts
+import { mount } from `cypress/angular`
+```
+
+<Badge type="success">After</Badge>
+
+```ts
+import { mount } from `@cypress/angular`
+```
+
+### Selector Playground API changes
+
+The `Cypress.SelectorPlayground` API has been renamed to
+[`Cypress.ElementSelector`](/api/cypress-api/element-selector-api). Additionally, the `onElement` function has been removed as an option to the `defaults` method.
+
+This change was made in order to reflect its use in features beyond just the Selector Playground - like Cypress Studio.
+
+The following code shows how to migrate from the `Cypress.SelectorPlayground` API to the
+[`Cypress.ElementSelector`](/api/cypress-api/element-selector-api) API.
+
+<Badge type="danger">Before</Badge>{' '}
+
+```ts
+Cypress.SelectorPlayground.defaults({
+  selectorPriority: ['class', 'id'],
+})
+```
+
+<Badge type="success">After</Badge>
+
+```ts
+Cypress.ElementSelector.defaults({
+  selectorPriority: ['class', 'id'],
+})
+```
+
 ## Migrating to Cypress 14.0
 
 This guide details the code changes needed to migrate to Cypress
@@ -33,6 +222,13 @@ This support is in line with Node.js's support for Linux in 18+.
 If you're using a Linux distribution based on glibc `<2.28`, for example, Ubuntu 14-18, RHEL 7, CentOS 7, Amazon Linux 2, you'll need to
 update your system to a newer version to install Cypress 14+.
 
+### Minimum macOS 11 (Big Sur)
+
+[Cypress 14.0](/app/references/changelog#14-0-0) upgrades Electron to `33.2.1`.
+On macOS this requires a minimum version of macOS 11 (Big Sur).
+
+If you're using a lower version of macOS make sure that you update.
+
 ### Updated Browser Support
 
 Starting in Cypress 14, Cypress will officially support [the latest 3 major versions of Chrome, Firefox, and Edge](/app/references/launching-browsers#Browser-versions-supported).
@@ -50,21 +246,21 @@ are in the same superdomain. This means you must now use `cy.origin()` in more s
 
 {/* prettier-ignore-start */}
 <Icon name="exclamation-triangle" color="red" /> **Failing Test**
-```js 
+```js
 cy.visit('https://www.cypress.io')
 cy.visit('https://docs.cypress.io')
-// Cypress will not be able to interact with the page, causing the test to fail 
+// Cypress will not be able to interact with the page, causing the test to fail
 cy.get('[role="banner"]').should('be.visible')
 ```
 
-<Icon name="check-circle" color="green" /> **Fixed Test** 
+<Icon name="check-circle" color="green" /> **Fixed Test**
 
-```js 
+```js
 cy.visit('https://www.cypress.io')
 cy.visit('https://docs.cypress.io')
 cy.origin('https://docs.cypress.io', () => {
   cy.get('[role="banner"]').should('be.visible')
-}) 
+})
 ```
 {/* prettier-ignore-end */}
 
@@ -76,8 +272,8 @@ is set to true, `cy.origin()` will not be required to navigate between origins, 
 <Icon name="exclamation-triangle" /> If `injectDocumentDomain` is set to `true`,
 Cypress will warn that this option is deprecated.
 
-<Icon name="exclamation-triangle" /> `injectDocumentDomain` will be removed in Cypress
-15.
+<Icon name="exclamation-triangle" /> `injectDocumentDomain` will be removed in a
+future version of Cypress.
 
 <Icon name="exclamation-triangle" /> Setting `injectDocumentDomain` to `true` may
 cause certain sites to stop working in Cypress. Please read the [configuration notes](/app/references/configuration#injectDocumentDomain)
@@ -141,13 +337,13 @@ To migrate, change the test harness from `cypress/react18` to `cypress/react`.
 <Badge type="danger">Before</Badge>{' '}
 
 ```ts
-import { mount } from `cypress/react18`
+import { mount } from 'cypress/react18'
 ```
 
 <Badge type="success">After</Badge>
 
 ```ts
-import { mount } from `cypress/react`
+import { mount } from 'cypress/react'
 ```
 
 #### To continue using React below v18
@@ -165,13 +361,13 @@ Inside your support file (ex: `./cypress/support/component.(js|ts)`), or whereve
 <Badge type="danger">Before</Badge>{' '}
 
 ```ts
-import { mount } from `cypress/react`
+import { mount } from 'cypress/react'
 ```
 
 <Badge type="success">After</Badge>
 
 ```ts
-import { mount } from `@cypress/react`
+import { mount } from '@cypress/react'
 ```
 
 ### Angular `<17.2.0` CT no longer supported
@@ -185,13 +381,13 @@ To migrate, just change the test harness from `cypress/angular-signals` to `cypr
 <Badge type="danger">Before</Badge>{' '}
 
 ```ts
-import { mount } from `cypress/angular-signals`
+import { mount } from 'cypress/angular-signals'
 ```
 
 <Badge type="success">After</Badge>
 
 ```ts
-import { mount } from `cypress/angular`
+import { mount } from 'cypress/angular'
 ```
 
 #### To continue using Angular below v17.2.0
@@ -209,13 +405,13 @@ Inside your support file (ex: `./cypress/support/component.(js|ts)`), or whereve
 <Badge type="danger">Before</Badge>{' '}
 
 ```ts
-import { mount } from `cypress/angular`
+import { mount } from 'cypress/angular'
 ```
 
 <Badge type="success">After</Badge>
 
 ```ts
-import { mount } from `@cypress/angular`
+import { mount } from '@cypress/angular'
 ```
 
 ### Vue 2 CT no longer supported
@@ -237,13 +433,13 @@ Inside your support file (ex: `./cypress/support/component.(js|ts)`), or whereve
 <Badge type="danger">Before</Badge>{' '}
 
 ```ts
-import { mount } from `cypress/vue2`
+import { mount } from 'cypress/vue2'
 ```
 
 <Badge type="success">After</Badge>
 
 ```ts
-import { mount } from `@cypress/vue2`
+import { mount } from '@cypress/vue2'
 ```
 
 ### Create React App CT no longer supported
@@ -329,20 +525,20 @@ Note that this version of the test harness is deprecated and no longer actively 
 To update, inside your support file (ex: `./cypress/support/component.(js|ts)`) or wherever your mount function is imported, change
 
 ```ts
-import { mount } from `cypress/svelte`
+import { mount } from 'cypress/svelte'
 ```
 
 to
 
 ```ts
-import { mount } from `@cypress/svelte`
+import { mount } from '@cypress/svelte'
 ```
 
 Your code should now look like this:
 
 ```ts
 import MySvelteComponent from './MySvelteComponent'
-import { mount } from `@cypress/svelte`
+import { mount } from '@cypress/svelte'
 
 it('renders', () => {
   cy.mount(MySvelteComponent)

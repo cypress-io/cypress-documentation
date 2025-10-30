@@ -32,10 +32,11 @@
 
 .table-of-contents .table-of-contents__link--active {
   @apply text-indigo-500;
+  font-weight: 700;
+  
   html[data-theme='dark'] & {
     @apply text-indigo-300;
   }
-  font-weight: 700;
 }
 
 .table-of-contents__left-border {

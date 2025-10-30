@@ -2,16 +2,16 @@ The `elementFilters` property allows you to specify selectors for elements that 
 
 ## Why use element filters?
 
+- **Ignoring 3rd Party Components**: Libraries or widgets that are not part of your application logic may be excluded from reports.
+- **Streamlining Reports**: Reducing noise by filtering out non-essential elements makes reports more actionable.
+
+## Syntax
+
 :::info
 **Note:** setting `elementFilters` impacts both Accessibility and UI Coverage
 reports if set at the root of the configuration. Nesting this property under an `accessibility` or `uiCoverage` key is
 supported, if you need to split them up.
 :::
-
-- **Ignoring 3rd Party Components**: Libraries or widgets that are not part of your application logic may be excluded from reports.
-- **Streamlining Reports**: Reducing noise by filtering out non-essential elements makes reports more actionable.
-
-## Syntax
 
 ```json
 {

@@ -65,8 +65,9 @@ cy.get('[type="input"]').focus()
 #### Focus, type, and blur a textarea
 
 ```javascript
-// yields the <textarea> for further chaining
-cy.get('textarea').focus().type('Nice Product!').blur()
+cy.get('textarea').focus()
+cy.get('textarea').type('Nice Product!')
+cy.get('textarea').blur()
 ```
 
 ## Notes
@@ -159,4 +160,5 @@ the following:
 - [`.blur()`](/api/commands/blur)
 - [`.click()`](/api/commands/click)
 - [`cy.focused()`](/api/commands/focused)
+- [`cy.press()`](/api/commands/press)
 - [`.type()`](/api/commands/type)

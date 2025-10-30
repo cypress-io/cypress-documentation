@@ -2,121 +2,13 @@
 title: 'Significant Attributes | Cypress UI Coverage'
 description: 'The `significantAttributes` configuration property allows users to specify custom attributes that should be considered "significant" for the purpose of identification and grouping in UI Coverage.'
 sidebar_label: significantAttributes
+sidebar_position: 50
 ---
 
 <ProductHeading product="ui-coverage" />
 
 # significantAttributes
 
-UI Coverage provides logic to automatically [identify](/ui-coverage/core-concepts/element-identification) and [group](/ui-coverage/core-concepts/element-grouping) elements based on their attributes and DOM structure. However, your application may rely on custom attributes for identification that are not prioritized by default in UI Coverage. The `significantAttributes` configuration allows you to specify these attributes, ensuring accurate identification and grouping.
+The `significantAttributes` property allows you to specify which attributes should be considered significant when identifying elements in UI Coverage.
 
-## Why use significant attributes?
-
-- **Handle Custom Identifiers**: Prioritize custom attributes like `data-custom-id` that are essential for identifying elements in your application.
-- **Avoid Misclassification**: In cases where elements share generic attributes like class or name, prioritizing more specific attributes prevents incorrect grouping.
-- **Streamline Dynamic Elements**: Attributes that change dynamically can disrupt accurate identification. Specifying significant attributes ensures stability.
-
-## Syntax
-
-```json
-{
-  "uiCoverage": {
-    "significantAttributes": [
-      string
-    ]
-  }
-}
-```
-
-### Options
-
-The attributes listed in `significantAttributes` are considered "significant" and are prioritized above the default significant attributes, but below `data-cy-ui-id` and `data-cy-ui-group`, for the purpose of identification and grouping.
-
-| Option                  | Required | Default | Description                                                                                                                |
-| ----------------------- | -------- | ------- | -------------------------------------------------------------------------------------------------------------------------- |
-| `significantAttributes` | Required |         | An array of attribute names to prioritize for element identification and grouping.Supports any valid HTML attribute names. |
-
-## Examples
-
-### Consider a custom attribute significant
-
-#### Config
-
-```json
-{
-  "uiCoverage": {
-    "significantAttributes": ["data-role"]
-  }
-}
-```
-
-#### HTML
-
-```xml
-<form>
-  <input id="in1" data-role="email"></input>
-  <input id="in2" data-role="interests"></input>
-  <input id="in3" data-role="interests"></input>
-</form>
-```
-
-#### Elements shown in UI Coverage
-
-```
-[data-role="email"]
-[data-role="interests"] (2 instances)
-```
-
-### Prioritize stable attributes over dynamic
-
-#### Config
-
-```json
-{
-  "uiCoverage": {
-    "significantAttributes": ["data-type"]
-  }
-}
-```
-
-#### HTML
-
-```xml
-<ul>
-  <li row-id="10829" data-type="search">Search</li>
-  <li row-id="38019" data-type="filter">Filter</li>
-</ul>
-```
-
-#### Elements shown in UI Coverage
-
-```
-[data-type="search"]
-[data-type="filter"]
-```
-
-### Define aria attributes as significant
-
-#### Config
-
-```json
-{
-  "uiCoverage": {
-    "significantAttributes": ["aria-label"]
-  }
-}
-```
-
-#### HTML
-
-```xml
-<button data-cy="close" aria-label="Close">X</button>
-<button data-cy="submit">Save</button>
-```
-
-#### Elements shown in UI Coverage
-
-```
-[aria-label="Close"]
-[data-cy="submit"]
-```
+<SignificantAttributes />

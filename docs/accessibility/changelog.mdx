@@ -9,14 +9,48 @@ sidebar_position: 200
 
 # Changelog
 
-## Week of 3/04/2025
+## Week of 10/13/2025
+
+- Individual rules, or set of rules, can now be ignored for specific elements using [a `data-a11y-ignore` attribute](/accessibility/configuration/ignoring-rules-per-element).
+
+## Week of 10/6/2025
+
+- False positives in ["Interactive elements should be semantically correct"](/accessibility/core-concepts/cypress-rules#Interactive-elements-should-be-semantically-correct) related to elements using the `contenteditable` attribute have been addressed.
+
+## Week of 7/7/2025
+
+- A new custom accessibility rule, ["Interactive elements should be semantically correct"](/accessibility/core-concepts/cypress-rules#Interactive-elements-should-be-semantically-correct), is now available. This rule is based on the interactions that take place during your test execution, and helps detect accessibility issues that are not a part of typical DOM-based accessibility scans.
+
+## Week of 6/2/2025
+
+- We now support fetching Accessibility results from Drone CI with the [Results API](/accessibility/results-api).
+
+## Week of 5/26/2025
+
+- A new [element identification](/accessibility/core-concepts/element-identification) algorithm is now available for Cypress Accessibility. This produces improved element deduplication across different snapshots and runs, and incorporates testing-specific attributes like Test IDs into the element recognition and deduplication process. This replaces the default Axe-Core® element identification behavior.
+- Two new configuration options are available in Cypress Accessibility - [`significantAttributes`](/accessibility/configuration/significantattributes) and [`attributeFilters`](/accessibility/configuration/attributefilters). These allow you to fine-tune Cypress's element identification behavior to ensure stable and relevant locators are used.
+- Branch Review for Cypress Accessibility is now generally available, with an updated interface for displaying new and resolved violations, based on feedback during the Beta period. Thank you all for hitting the feedback button! [Learn more about comparing reports](/accessibility/core-concepts/compare-reports).
+
+## Week of 5/12/2025
+
+- We now support fetching Accessibility results from AWS CodeBuild with the [Results API](/accessibility/results-api).
+
+## Week of 3/24/2025
+
+- Cypress Accessibility results are now included in the [Data Extract API](/cloud/integrations/data-extract-api) so that you can retrieve data over time.
+
+## Week of 3/10/2025
+
+- The [Cypress Accessibility Results API](/accessibility/results-api) has been updated with additional details about accessibility scores and failed element counts at the run level. Also, view-level reporting has been added, breaking out accessibility report data by the pages and components covered in the report. These improvements support more advanced workflows based on the accessibility data in the API, such as alerting a specific team about violations in a part of the app they own, or implementing different standards for different parts of the application.
+
+## Week of 3/03/2025
 
 - We've upgraded our axe-core version to [4.10.2](https://docs.deque.com/axe-release-impact/4.10.2/en/release-notes).
 - The axe-core version used to generate a report can now be viewed in the Run Properties tab.
 
 ## Week of 2/24/2025
 
-- [Cypress Accessibility Branch Review](/accessibility/core-concepts/comparing-reports) has entered beta. Read the docs to learn how to compare runs and automatically spot newly introduced issues.
+- [Cypress Accessibility Branch Review](/accessibility/core-concepts/compare-reports) has entered beta. Read the docs to learn how to compare runs and automatically spot newly introduced issues.
 
 ## Week of 1/13/2025
 

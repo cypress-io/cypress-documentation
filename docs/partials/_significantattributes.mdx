@@ -1,0 +1,55 @@
+## Why use significant attributes?
+
+Cypress uses a [default set of attributes](/accessibility/core-concepts/element-identification) (such as common test ID patterns), in a priority order, as the preferred way to identify elements in reports.
+
+The values of these attributes are used as element identifiers, which helps us recognize the same element in multiple contexts and deduplicate the findings. This helps when reviewing run reports, or comparing reports in Branch Review.
+
+You may have attributes already in place in your application that would help with element organization, such as `data-component-name`. If you would like Cypress to use and prioritize these attributes, or you want to change the default priority order, you can define your own list of significant attributes.
+
+## Scope
+
+:::info
+**Note:** setting `significantAttributes` impacts both Cypress Accessibility and UI Coverage
+reports if set at the root of the configuration. Nesting this property under an `accessibility` or `uiCoverage` key is
+supported, if you need to split them up.
+:::
+
+## Syntax
+
+`significantAttributes` is an array of strings, with each string being the name of a HTML attribute.
+
+```json
+{
+  "significantAttributes": [
+    string
+  ]
+}
+```
+
+## Examples
+
+### Marking specific attributes as significant
+
+#### Config
+
+```json
+{
+  "significantAttributes": ["class", "id", "data-context"]
+}
+```
+
+#### HTML
+
+```xml
+<body>
+  <button class="primary" id="submit" data-testid="submit" data-context="user-signup">
+    Submit
+  </button>
+</body>
+```
+
+#### Significant attributes tracked
+
+```
+class="primary", id="submit", data-context="user-signup"
+```

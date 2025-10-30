@@ -11,7 +11,18 @@ sidebar_position: 100
 
 The `@cypress/extract-cloud-results` module provides the `getAccessibilityResults` utility which enables you to programmatically fetch your run's Accessibility results in a CI environment. It determines the Cypress run created for the given CI workflow and will return the Accessibility results associated with that run. The results will be returned once the Cypress run has finished and the Accessibility report has been processed.
 
-This allows you to review the results within CI and to determine if the results are acceptable or need to be addressed before code changes can merge.
+This allows you to review the results within CI and to determine if the results are acceptable or need to be addressed before code changes can merge. It provides overall accessibility scores and violation details for the runs, as well as page- or component-level feedback. This supports a wide variety of needs related to alerting about failures in specific focus areas of the application or creating fine-grained regression monitoring according to the current standards being met by each page.
+
+:::info
+
+##### <Icon name="question-circle" color="#0097A8" /> Examples and use cases
+
+This page focuses on how the Results API works and what kinds of information can be accessed. For examples of how this can be used, see our higher-level guides:
+
+- The [pull requests and policies guide](/accessibility/guides/block-pull-requests) shows what it looks like to use the Results API to set a policy and fail a pull request.
+- The guide for [detecting and managing changes](/accessibility/guides/detect-changes#Results-API) shows some other common use cases.
+
+:::
 
 ## Supported CI Providers
 
@@ -22,6 +33,8 @@ Fetching Accessibility results for a run supports fetching results for the follo
 - [GitHub Actions](/app/continuous-integration/github-actions)
 - [GitLab](/app/continuous-integration/gitlab-ci)
 - [Jenkins](/app/continuous-integration/overview#Jenkins)
+- [AWS CodeBuild](/app/continuous-integration/aws-codebuild)
+- Drone
 
 Please reach out to Cypress Support to request support for a different provider.
 
@@ -46,6 +59,25 @@ If you check this in as a dependency, your installation will fail when we update
 ### **1. Get the Results**
 
 Write a script using the `getAccessibilityResults` utility to retrieve the results and perform one or more assertions to verify if the changes are acceptable. This script will be executed in CI.
+
+#### Basic example
+
+This snippet uses the `getAccessibilityResults()` helper to log out the results. It assumes your Project ID and Record Key variable are set. The following should work in any of the supported CI Providers out of the box:
+
+```javascript title="scripts/verifyAccessibilityResults.js"
+// Assuming these environment variables are set:
+// CYPRESS_PROJECT_ID=your-id
+// CYPRESS_RECORD_KEY=your-record-key
+
+const { getAccessibilityResults } = require('@cypress/extract-cloud-results')
+
+getAccessibilityResults().then((results) => {
+  // use `console.dir` instead of `console.log` because the data is nested
+  console.dir(results, { depth: Infinity })
+})
+```
+
+#### How to assert that only known rules are failing in the run
 
 The Cypress App [repository](https://github.com/cypress-io/cypress) uses the Results API to ensure no new violations have been introduced. You can reference [this script](https://github.com/cypress-io/cypress/blob/develop/scripts/verify-accessibility-results.js) as a real example.
 
@@ -121,7 +153,7 @@ getAccessibilityResults({
 })
 ```
 
-#### `getAccessibilityResults` Arguments
+### `getAccessibilityResults` Arguments
 
 `getAccessibilityResults` uses the following attributes to identify the Cypress run and return the Accessibility results:
 
@@ -164,8 +196,8 @@ The Accessibility results for the run are returned as an object containing the f
   accessibilityReportUrl: 'https://cloud.cypress.io/[...]'
 
   // The axe-core library version used when generating the Accessibility report.
-  // See https://github.com/dequelabs/axe-core.
-  axeVersion: '4.9.1'
+  // See https://github.com/dequelabs/axe-core. Example: 4.10.0
+  axeVersion: string
 
   summary: {
     // Indicates whether a complete Accessibility report was generated.
@@ -186,6 +218,13 @@ The Accessibility results for the run are returned as an object containing the f
       // The count of unique minor rules that detected a violation.
       minor: number,
     },
+
+    // The accessibility score for the run as a whole, to two decimal places
+    score: number,
+
+    // The count of distinct failed elements detected during the run, across all views
+    failedElements: number
+
   }
 
   // The list of violated rules.
@@ -199,6 +238,22 @@ The Accessibility results for the run are returned as an object containing the f
     // The url that deep links the report for this specific rule violation.
     accessibilityReportUrl: 'https://cloud.cypress.io/[...]'
   }]
+
+  // This list of views with accessibility violations detected,
+  // and details of failed rules on each view
+  views: [
+      {
+        // The url that deep links the report for this view, with no rule-preselected
+        accessibilityReportUrl: 'https://cloud.cypress.io/[...]'
+        // The name of the view as it appears in the accessibility report
+        displayName: "/app/get-started/why-cypress",
+        // The accessibility score for this particular view
+        score: number
+        // The list of violated rules for this specific view
+        rules: Rule[]
+      }
+    ]
+
 }
 ```
 
@@ -288,7 +343,7 @@ run-cypress:
 pipeline {
   agent {
     docker {
-      image 'cypress/base:22.12.0'
+      image 'cypress/base:22.15.0'
     }
   }
 
@@ -359,7 +414,7 @@ version: 2.1
 jobs:
   linux-test:
     docker:
-      - image: cypress/base:22.12.0
+      - image: cypress/base:22.15.0
 
     working_directory: ~/repo
     steps:
@@ -377,4 +432,70 @@ workflows:
 ```
 
 </TabItem>
+
+<TabItem value="AWS CodeBuild" >
+
+```diff title="buildspec.yaml"
+phases:
+  install:
+    runtime-versions:
+      nodejs: latest
+    commands:
+      # Set COMMIT_INFO variables to send Git specifics to Cypress Cloud when recording
+      # https://docs.cypress.io/app/continuous-integration/overview#Git-information
+      - export COMMIT_INFO_BRANCH="$(git rev-parse HEAD | xargs git name-rev |
+        cut -d' ' -f2 | sed 's/remotes\/origin\///g')"
+      - export COMMIT_INFO_MESSAGE="$(git log -1 --pretty=%B)"
+      - export COMMIT_INFO_EMAIL="$(git log -1 --pretty=%ae)"
+      - export COMMIT_INFO_AUTHOR="$(git log -1 --pretty=%an)"
+      - export COMMIT_INFO_SHA="$(git log -1 --pretty=%H)"
+      - export COMMIT_INFO_REMOTE="$(git config --get remote.origin.url)"
+      - npm ci
+  pre_build:
+    commands:
+      - npm run cypress:verify
+      - npm run cypress:info
+  build:
+    commands:
+      - CYPRESS_INTERNAL_ENV=staging CYPRESS_PROJECT_ID=[slug] npx cypress run --record --key [KEY]
++  post_build:
++    commands:
++      - npm install --force https://cdn.cypress.io/extract-cloud-results/v1/extract-cloud-results.tgz
++      - CYPRESS_INTERNAL_ENV=staging CYPRESS_PROJECT_ID=[slug] CYPRESS_RECORD_KEY=[KEY] node ./scripts/verifyAccessibilityResults.js
+```
+
+</TabItem>
+
+<TabItem value="Drone" >
+```diff title=".drone.yaml"
+  kind: pipeline
+  name: default
+
+environment:
+CYPRESS_PROJECT_ID: example_project_slug
+CYPRESS_RECORD_KEY:
+from_secret: example_record_key_secret
+
+steps:
+
+- name: test
+  image: node:latest
+  commands:
+  - npm install
+  - npx cypress run --record
+
+* - name: validate
+* image: node:latest
+* commands:
+* - npm install --force https://cdn.cypress.io/extract-cloud-results/v1/extract-cloud-results.tgz
+* - node ./scripts/verifyAccessibilityResults.js
+
+```
+</TabItem>
 </Tabs>
+
+## Required CI environment variables
+
+<ResultsApiEnvVars />
+
+```

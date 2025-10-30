@@ -9,6 +9,33 @@ sidebar_position: 200
 
 # Changelog
 
+## Week of 6/23/25
+
+UI Coverage now supports defining custom commands that will count towards coverage scores, restricting which kinds of interactions are allowed for certain elements, and including assertions in the UI Coverage calculations. See the following new properties for more details:
+
+- [`additionalInteractionCommands`](/ui-coverage/configuration/additionalinteractioncommands)
+- [`allowedInteractionCommands`](/ui-coverage/configuration/allowedinteractioncommands)
+
+## Week of 6/2/2025
+
+- We now support fetching UI Coverage results from Drone CI with the [Results API](/ui-coverage/results-api).
+
+## Week of 5/26/2025
+
+- Launched AI-powered Test Generation in Cypress Cloud, to help you quickly add tests for the untested elements detected in UI Coverage reports, in a way that follows your existing practices and conventions. For more details, read [our blog post](https://www.cypress.io/blog/add-your-missing-tests-faster-with-test-generation-in-ui-coverage).
+
+## Week of 5/12/2025
+
+- We now support fetching UI Coverage results from AWS CodeBuild with the [Results API](/ui-coverage/results-api).
+
+## Week of 4/1/2024
+
+- **Shadow DOM and iFrame Support:** UI Coverage now supports Shadow DOM and iFrames for reporting on interactions. Both of these settings are off by default. Please contact your Cypress representative to opt in.
+
+## Week of 3/24/2025
+
+- UI Coverage results are now included in the [Data Extract API](/cloud/integrations/data-extract-api) so that you can retrieve data over time.
+
 ## Week of 1/15/2024
 
 - **Branch Review Integration (Beta):** Added UI Coverage comparisons to Branch Review, enabling teams to see how code changes impact test coverage across branches. Available for all Git providers and includes manual run selection for customized comparisons.

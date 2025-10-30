@@ -3,28 +3,30 @@ title: 'Test coverage with UI Coverage | Cypress Documentation'
 description: 'Increase your test coverage with UI Coverage, a visual test coverage report based on the interactive elements that make up your application.'
 sidebar_label: Introduction
 sidebar_position: 10
-sidebar_custom_props: { 'new_label': true }
 ---
 
 <ProductHeading product="ui-coverage" />
 
 # Identify testing gaps with UI Coverage
 
-Easily track, monitor, and visualize the test coverage of your UI to prevent regressions by ensuring critical flows of your app are tested. Save CI resources by removing redundant tests and improve your team's productivity with a visual overview of UI coverage across every page and component.
+Easily track, monitor, and visualize the test coverage of your UI to prevent regressions by ensuring critical flows of your app are tested. Save CI resources by removing redundant tests and improve your team's productivity with a visual overview of UI coverage across every page and component and quickly close coverage with Test Generation.
 
 <Btn
   label="Request trial ➜"
   variant="indigo-dark"
+  className="mr-1"
   href="https://www.cypress.io/ui-coverage?utm_medium=intro-cta&utm_source=docs.cypress.io&utm_content=Request%20trial"
 />
 <Btn
   label="See a demo"
   icon="action-play-small"
-  href="https://go.cypress.io/hubfs/App%20Quality%20Products/UI%20Coverage/ui_coverage__overview_and_demo%20(1080p).mp4"
+  className="mr-1"
+  href="https://on.cypress.io/ui-coverage-demo-video"
 />
 <Btn
   label=" Explore an example project"
   icon="object-tested-element"
+  className="mr-1"
   href="https://on.cypress.io/rwa-ui-coverage-views?utm_source=docs.cypress.io&utm_medium=intro-cta&utm_content=Explore%20an%20example%20project"
 />
 
@@ -151,6 +153,7 @@ UI Coverage provides an interactive, visual map of test coverage for your applic
 - **DOM Snapshots**: Each tested and untested element is accompanied by a full-page, inspectable DOM snapshot, highlighting the exact location and context of element.
 - **Comprehensive Scoring**: A UI Coverage score is calculated by comparing tested elements to the total interactable elements in your application.
 - **Actionable Reports**: Sortable and filterable views provide insights into which areas are tested and which need improvement.
+- **Test Generation**: Quickly close coverage gaps with AI-powered test generation of untested elements and links surfaced in reports.
 - **Flexible configuration**: Customize and fine-tune UI Coverage to suit specific needs and scenarios like ignoring views or elements or grouping similar elements together.
 - **Configurable CI Integration**: The [Results API](/ui-coverage/results-api) allows you to programmatically control your CI pipeline's behavior based on UI Coverage scores.
 

@@ -53,7 +53,7 @@ Cypress automatically detects available browsers on your OS. You can switch the
 browser by using the drop down near the top right corner:
 
 <DocsImage
-  src="/img/app/launching-browsers/v10/browser-list-dropdown.png"
+  src="/img/app/launching-browsers/browser-list-dropdown.png"
   alt="Select a different browser"
 />
 
@@ -99,9 +99,7 @@ seeing failures in CI, to easily debug them you may want to run locally with the
 
 ### Chrome Browsers
 
-All Chrome\* flavored browsers will be detected and are supported above
-Chrome 64, with the restriction that a minimum of Chrome 80 is required to use
-`cypress open`.
+All Chrome\* flavored browsers are detected and supported by Cypress.
 
 You can launch Chrome like this:
 
@@ -112,7 +110,7 @@ cypress run --browser chrome
 To use this command in CI, you need to install the browser you want - or use one
 of our [docker images](/app/continuous-integration/overview#Cypress-Docker-Images).
 
-By default, we will launch Chrome in headlessly during `cypress run`. To run
+By default, we will launch Chrome headlessly during `cypress run`. To run
 Chrome headed, you can pass the `--headed` argument to `cypress run`.
 
 You can also launch Chromium:
@@ -138,6 +136,15 @@ Or Chrome for Testing:
 ```shell
 cypress run --browser chrome-for-testing
 ```
+
+#### Chrome policy
+
+If Chrome policy is set, ensure that
+[RemoteDebuggingAllowed](https://chromeenterprise.google/policies/#RemoteDebuggingAllowed)
+is either undefined or set to `true`.
+If this is not the case, then Cypress will timeout, returning an `ECONNREFUSED` error, attempting to connect to the browser.
+Chrome policy is generally applied to a Chrome-branded browser only, not to Chromium or Chrome for Testing browsers.
+Check by browsing to **chrome://policy**.
 
 ### Edge Browsers
 
@@ -167,6 +174,14 @@ Or Microsoft Edge Dev:
 cypress run --browser edge:dev
 ```
 
+#### Edge policy
+
+If Edge policy is set, ensure that
+[RemoteDebuggingAllowed](https://learn.microsoft.com/en-us/deployedge/microsoft-edge-browser-policies/remotedebuggingallowed)
+is either undefined or set to `true`.
+If this is not the case, then Cypress will timeout, returning an `ECONNREFUSED` error, attempting to connect to the browser.
+Check by browsing to **edge://policy**.
+
 ### Firefox Browsers
 
 Firefox-family browsers are supported by Cypress.
@@ -190,19 +205,31 @@ of our [docker images](/app/continuous-integration/overview#Cypress-Docker-Image
 By default, we will launch Firefox headlessly during `cypress run`. To run
 Firefox headed, you can pass the `--headed` argument to `cypress run`.
 
-##### Webdriver BiDi and CDP Deprecation
+##### Mozilla geckodriver
+
+Cypress requires the
+[Mozilla geckodriver](https://github.com/mozilla/geckodriver) to launch Firefox.
+To meet this requirement, the Cypress binary uses the separate npm wrapper package
+[geckodriver](https://github.com/webdriverio-community/node-geckodriver)
+to provide the Mozilla geckodriver.
+The wrapper downloads the latest driver version if it does not find any driver version cached locally.
 
 :::info
 
-Since Firefox 129, Chrome DevTools Protocol (CDP) has been [deprecated in Firefox](https://fxdx.dev/deprecating-cdp-support-in-firefox-embracing-the-future-with-webdriver-bidi/).
-In Firefox 135 and above, Cypress defaults to automating the Firefox browser with WebDriver BiDi.
-Cypress will no longer support CDP within Firefox in the future and is planned for removal in Cypress 15.
+Retrieving the driver may fail if you are operating Cypress in an air-gapped environment without Internet connectivity and you do not have a cached driver version available.
 
-If CDP still needs to be used, you can force enablement via the `FORCE_FIREFOX_CDP=1` environment variable, regardless of Firefox version. For example:
+To avoid this issue, use a current
+[Cypress Docker image](/app/continuous-integration/overview#Cypress-Docker-Images) `cypress/browsers` or `cypress/included`, built with Firefox 139, or above.
+These images include a Mozilla geckodriver version pre-installed.
+Using `cypress/factory:5.9.0`, or above, you can also build your own custom Cypress Docker image that includes a Mozilla geckodriver version.
+Refer to the `cypress/factory`
+[documentation](https://github.com/cypress-io/cypress-docker-images/blob/master/factory/README.md) for instructions on building custom images.
 
-```bash
-FORCE_FIREFOX_CDP=1 npx cypress run --browser firefox
-```
+If you need to work without Docker, refer to the npm wrapper package geckodriver
+[documentation](https://github.com/webdriverio-community/node-geckodriver) for information
+about how to define a custom path for the driver or how to refer to a local CDN mirror site.
+Download the Mozilla geckodriver from the
+[releases](https://github.com/mozilla/geckodriver/releases) location.
 
 :::
 
@@ -372,7 +399,7 @@ Once selected, the Brave browser is detected using the same approach as any
 other browser of the `chromium` family.
 
 <DocsImage
-  src="/img/app/launching-browsers/v10/brave-running-tests.png"
+  src="/img/app/launching-browsers/brave-running-tests.png"
   alt="Brave browser executing end-to-end tests"
 />
 
@@ -452,7 +479,7 @@ You might notice that if you already have the browser open you will see two of
 the same browser icons in your dock.
 
 <DocsImage
-  src="/img/app/launching-browsers/v10/multiple-chrome-icons.png"
+  src="/img/app/launching-browsers/multiple-chrome-icons.png"
   alt="Cypress icon with 2 Google Chrome icons"
 />
 
@@ -469,7 +496,7 @@ Cypress look different than regular sessions. You'll see a darker theme around
 the chrome of the browser. You'll always be able to visually distinguish these.
 
 <DocsImage
-  src="/img/app/launching-browsers/v10/cypress-browser-chrome.png"
+  src="/img/app/launching-browsers/cypress-browser-chrome.png"
   alt="Cypress Browser with darker chrome"
 />
 

@@ -8,7 +8,12 @@ export default defineConfig({
   viewportHeight: 800,
   viewportWidth: 1200,
   experimentalMemoryManagement: true,
+  retries: {
+    runMode: 2,
+    openMode: 0,
+  },
   e2e: {
+    experimentalPromptCommand: true,
     supportFile: false,
     baseUrl: "http://localhost:3000",
     setupNodeEvents(on, config) {

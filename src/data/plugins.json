@@ -130,7 +130,7 @@
           "badge": "official"
         },
         {
-          "name": "Cypress Github Actions",
+          "name": "Cypress GitHub Actions",
           "description": "GitHub Action for running Cypress end-to-end and component tests. Includes npm, pnpm and Yarn installation, custom caching and lots of configuration options.",
           "link": "https://github.com/cypress-io/github-action",
           "keywords": [
@@ -508,12 +508,26 @@
             "test-data"
           ],
           "badge": "community"
+        },
+        {
+          "name": "cypress-geolocation-locale-faker",
+          "description": "A Cypress plugin to mock geolocation, timezone, language, and locale settings for end-to-end testing. Useful for simulating user environments worldwide.",
+          "link": "https://github.com/pradapjackie/cypress-geolocation-locale-faker",
+          "keywords": [
+            "geolocation",
+            "timezone",
+            "locale",
+            "language",
+            "plugin",
+            "testing"
+          ],
+          "badge": "community"
         }
       ]
     },
     {
       "name": "Custom Commands",
-      "description": "Read the <a target=\"_blank\" href=\"/api/node-events/preprocessors-api\">Custom Commands</a> and <a target=\"_blank\" href=\"/api/node-events/preprocessors-api\">Custom Query</a> documentation to learn more.",
+      "description": "Read the <a target=\"_blank\" href=\"/api/cypress-api/custom-commands\">Custom Commands</a> and <a target=\"_blank\" href=\"/api/cypress-api/custom-queries\">Custom Query</a> documentation to learn more.",
       "plugins": [
         {
           "name": "Puppeteer",
@@ -634,6 +648,19 @@
           "link": "https://github.com/4teamwork/cypress-drag-drop",
           "keywords": [
             "dragndrop",
+            "drag",
+            "drop",
+            "commands"
+          ],
+          "badge": "community"
+        },
+        {
+          "name": "cypress-dragndrop-kit",
+          "description": "A lightweight, Cypress-native plugin that simplifies drag‑and‑drop and movement interactions in end-to-end tests. Perfect for testing sortable lists, draggable elements, and custom UI components.",
+          "link": "https://github.com/vergjor/cypress-dragndrop-kit",
+          "keywords": [
+            "dragndrop",
+            "drag-and-drop",
             "drag",
             "drop",
             "commands"
@@ -969,7 +996,7 @@
     },
     {
       "name": "Authentication",
-      "description": "Take a look at our auth guides for <a href=\"/app/guides/authentication-testing/amazon-cognito-authentication\">Amazon Cognito</a>, <a href=\"/app/guides/authentication-testing/amazon-cognito-authentication\">Amazon Cognito</a>, <a href=\"/app/guides/authentication-testing/auth0-authentication\">Auth0</a>, <a href=\"/app/guides/authentication-testing/amazon-cognito-authentication\">Amazon Cognito</a>, <a href=\"/app/guides/authentication-testing/google-authentication\">Google</a>, <a href=\"/app/guides/authentication-testing/okta-authentication\">Okta Cognito</a>, and <a href=\"/app/guides/authentication-testing/social-authentication\">Social Logins</a>. Also checkout our <a target=\"_blank\" href=\"https://github.com/cypress-io/cypress-example-recipes#logging-in-recipes\">Logging in</a> recipes.",
+      "description": "Take a look at our auth guides for <a href=\"/app/guides/authentication-testing/amazon-cognito-authentication\">Amazon Cognito</a>, <a href=\"/app/guides/authentication-testing/auth0-authentication\">Auth0</a>, <a href=\"/app/guides/authentication-testing/azure-active-directory-authentication\">Azure Active Directory</a>, <a href=\"/app/guides/authentication-testing/google-authentication\">Google</a>, <a href=\"/app/guides/authentication-testing/okta-authentication\">Okta Cognito</a>, and <a href=\"/app/guides/authentication-testing/social-authentication\">Social Logins</a>. Also checkout our <a target=\"_blank\" href=\"https://github.com/cypress-io/cypress-example-recipes#logging-in-recipes\">Logging in</a> recipes.",
       "plugins": [
         {
           "name": "cypress-ntlm-auth",
@@ -991,6 +1018,18 @@
             "social profiles",
             "github",
             "google"
+          ],
+          "badge": "community"
+        },
+        {
+          "name": "cypress-get-otp",
+          "description": "Cypress custom command for generating OTP codes.",
+          "link": "https://github.com/sergiubcn/cypress-get-otp",
+          "keywords": [
+            "authentication",
+            "hmac",
+            "otp",
+            "totp"
           ],
           "badge": "community"
         }

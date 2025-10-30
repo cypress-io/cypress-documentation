@@ -1,6 +1,13 @@
-By default, every URL visited within a test run is included in reports. However, not all URLs are relevant for your analysis. The `viewFilters` property allows you to specify patterns for URLs that should be excluded, ensuring your reports focus on meaningful parts of your application. Excluding a URL also excludes all links pointing to that URL.
+By default, every URL visited within a test run is included in reports. However, not all URLs are relevant for your analysis. The `viewFilters` property allows you to specify patterns for URLs that should be excluded, ensuring your reports focus on meaningful parts of your application.
 
 ## Why use view filters?
+
+- **Exclude Third-Party URLs**: If your application integrates with third-party services, you might want to exclude their URLs from analysis.
+- **Exclude Admin Pages**: URLs that are not part of the user-facing application, such as admin pages, could be excluded from reports.
+- **Reduce Noise**: Certain URLs visited during tests (e.g., error pages or redirects) may not represent meaningful user flows. Exclude these to clean up your reports.
+- **Optimize Performance**: Filtering out irrelevant URLs reduces the amount of data processed, speeding up analysis and improving report readability.
+
+## Scope
 
 :::info
 **Note:** setting `viewFilters` impacts both Accessibility and UI Coverage reports.
@@ -8,10 +15,10 @@ Nesting this property under an `accessibility` or `uiCoverage` key is
 supported, if you need to split them up.
 :::
 
-- **Exclude Third-Party URLs**: If your application integrates with third-party services, you might want to exclude their URLs from analysis.
-- **Exclude Admin Pages**: URLs that are not part of the user-facing application, such as admin pages, could be excluded from reports.
-- **Reduce Noise**: Certain URLs visited during tests (e.g., error pages or redirects) may not represent meaningful user flows. Exclude these to clean up your reports.
-- **Optimize Performance**: Filtering out irrelevant URLs reduces the amount of data processed, speeding up analysis and improving report readability.
+## Note on product-specific behavior
+
+- In UI Coverage, excluding a URL excludes all application snapshots from that URL from the reports, and **also** excludes all links pointing to that URL from being counted towards coverage scores.
+- In Cypress Accessibility, excluding a URL excludes all application snapshots from that URL from the reports, but has no other effects.
 
 ## Syntax
 
