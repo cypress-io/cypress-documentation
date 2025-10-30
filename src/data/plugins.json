@@ -8,56 +8,74 @@
           "name": "Webpack",
           "description": "Watches and bundles your spec files via webpack.",
           "link": "https://github.com/cypress-io/cypress/tree/develop/npm/webpack-preprocessor",
-          "keywords": ["webpack"],
+          "keywords": [
+            "webpack"
+          ],
           "badge": "official"
         },
         {
           "name": "Watch",
           "description": "Watches your spec files and serves them as-is. Useful as an example reference or if you don't need transpiling/bundling.",
           "link": "https://github.com/cypress-io/cypress-watch-preprocessor",
-          "keywords": ["file-watcher"],
+          "keywords": [
+            "file-watcher"
+          ],
           "badge": "official"
         },
         {
           "name": "Cucumber",
           "description": "Run cucumber/gherkin-syntaxed specs with cypress.io.",
           "link": "https://github.com/badeball/cypress-cucumber-preprocessor",
-          "keywords": ["file-watcher", "cucumber"],
+          "keywords": [
+            "file-watcher",
+            "cucumber"
+          ],
           "badge": "community"
         },
         {
           "name": "cypress-markdown-preprocessor",
           "description": "Cypress preprocessor for extracting tests from Markdown files.",
           "link": "https://github.com/bahmutov/cypress-markdown-preprocessor",
-          "keywords": ["markdown"],
+          "keywords": [
+            "markdown"
+          ],
           "badge": "community"
         },
         {
           "name": "cypress-rollup-preprocessor",
           "description": "Cypress preprocessor for bundling JavaScript via rollup.",
           "link": "https://github.com/lmarqs/cypress-rollup-preprocessor",
-          "keywords": ["rollup"],
+          "keywords": [
+            "rollup"
+          ],
           "badge": "community"
         },
         {
           "name": "@bahmutov/cypress-esbuild-preprocessor",
           "description": "Bundle Cypress specs using esbuild.",
           "link": "https://github.com/bahmutov/cypress-esbuild-preprocessor",
-          "keywords": ["esbuild"],
+          "keywords": [
+            "esbuild"
+          ],
           "badge": "community"
         },
         {
           "name": "cypress-vite",
           "description": "Cypress preproccessor for running specs using vite.",
           "link": "https://github.com/mammadataei/cypress-vite",
-          "keywords": ["vite"],
+          "keywords": [
+            "vite"
+          ],
           "badge": "community"
         },
         {
           "name": "cypress-laravel",
           "description": "Add commands and hooks to test Laravel applications.",
           "link": "https://github.com/noeldemartin/cypress-laravel",
-          "keywords": ["php", "laravel"],
+          "keywords": [
+            "php",
+            "laravel"
+          ],
           "badge": "community"
         }
       ]
@@ -65,11 +83,16 @@
     {
       "name": "Secret Managment",
       "plugins": [
-         {
+        {
           "name": "Cypress AWS Secrets Manager",
           "description": "This plugin integrates AWS Secrets Manager into your Cypress tests, ensuring that sensitive data like API keys, passwords, and tokens remain secure during testing. It allows for secure loading and updating of secrets directly from your tests.",
           "link": "https://github.com/alecmestroni/cypress-aws-secrets-manager/",
-          "keywords": ["aws", "secrets", "aws-secrets-manager", "secrets-manager"],
+          "keywords": [
+            "aws",
+            "secrets",
+            "aws-secrets-manager",
+            "secrets-manager"
+          ],
           "badge": "community"
         }
       ]
@@ -81,119 +104,179 @@
           "name": "Docker",
           "description": "Docker images providing all the dependencies to run Cypress in CI including browsers.",
           "link": "https://github.com/cypress-io/cypress-docker-images",
-          "keywords": ["docker", "continuous-integration"],
+          "keywords": [
+            "docker",
+            "continuous-integration"
+          ],
           "badge": "official"
         },
         {
           "name": "eslint-plugin-cypress",
           "description": "ESLint plugin that sets globals for writing tests in Cypress.",
           "link": "https://github.com/cypress-io/eslint-plugin-cypress",
-          "keywords": ["eslint"],
+          "keywords": [
+            "eslint"
+          ],
           "badge": "official"
         },
         {
           "name": "CircleCI Cypress Orb",
           "description": "Cypress Orb for CircleCI configuration to correctly install, cache and run Cypress.io tests in CircleCI with very little effort.",
           "link": "https://github.com/cypress-io/circleci-orb",
-          "keywords": ["continuous-integration", "circleci"],
+          "keywords": [
+            "continuous-integration",
+            "circleci"
+          ],
           "badge": "official"
         },
         {
           "name": "Cypress Github Actions",
           "description": "GitHub Action for running Cypress end-to-end and component tests. Includes npm, pnpm and Yarn installation, custom caching and lots of configuration options.",
           "link": "https://github.com/cypress-io/github-action",
-          "keywords": ["continuous-integration", "github-actions"],
+          "keywords": [
+            "continuous-integration",
+            "github-actions"
+          ],
           "badge": "official"
         },
         {
           "name": "@cypress/code-coverage",
           "description": "Plugin to save code coverage collected during Cypress tests.",
           "link": "https://github.com/cypress-io/code-coverage",
-          "keywords": ["coverage"],
+          "keywords": [
+            "coverage"
+          ],
           "badge": "official"
         },
         {
           "name": "Cypress Chrome Recorder",
           "description": "Tool to export Cypress Tests from Google Chrome DevTools' Recordings programmatically.",
           "link": "https://github.com/cypress-io/cypress-chrome-recorder",
-          "keywords": ["recording", "chrome", "automation", "devtools"],
+          "keywords": [
+            "recording",
+            "chrome",
+            "automation",
+            "devtools"
+          ],
           "badge": "official"
         },
         {
           "name": "Cypress Chrome Recorder Extension",
           "description": "Official Cypress extension for Chrome DevTools that allows you to export Cypress tests directly from the Recorder panel.",
           "link": "https://chrome.google.com/webstore/detail/cypress-chrome-recorder/fellcphjglholofndfmmjmheedhomgin",
-          "keywords": ["recording", "chrome", "extension", "devtools"],
+          "keywords": [
+            "recording",
+            "chrome",
+            "extension",
+            "devtools"
+          ],
           "badge": "official"
         },
         {
           "name": "@cypress/grep",
           "description": "Filter tests using its title or tags.",
           "link": "https://github.com/cypress-io/cypress/tree/develop/npm/grep",
-          "keywords": ["grep"],
+          "keywords": [
+            "grep"
+          ],
           "badge": "official"
         },
         {
           "name": "TypeScript",
           "description": "Official TypeScript definitions for the Cypress API.",
           "link": "https://github.com/cypress-io/cypress/tree/develop/cli/types",
-          "keywords": ["typescript"],
+          "keywords": [
+            "typescript"
+          ],
           "badge": "official"
         },
         {
           "name": "cypress-runner-themes",
           "description": "Alternative themes for the Cypress Test Runner.",
           "link": "https://github.com/dingraham/cypress-runner-themes",
-          "keywords": ["theme", "dark", "light", "colorblind"],
+          "keywords": [
+            "theme",
+            "dark",
+            "light",
+            "colorblind"
+          ],
           "badge": "community"
         },
         {
           "name": "cypress-voice-plugin",
           "description": "Cypress plugin to announce spec result and time in Cypress Test Runner.",
           "link": "https://github.com/dennisbergevin/cypress-voice-plugin",
-          "keywords": ["auditory", "ui", "results", "duration"],
+          "keywords": [
+            "auditory",
+            "ui",
+            "results",
+            "duration"
+          ],
           "badge": "community"
         },
         {
           "name": "cypress-plugin-last-failed",
           "description": "A companion Cypress plugin for `cy-grep` that re-runs the last failed test(s).",
           "link": "https://github.com/dennisbergevin/cypress-plugin-last-failed",
-          "keywords": ["grep", "ui", "failure", "results"],
+          "keywords": [
+            "grep",
+            "ui",
+            "failure",
+            "results"
+          ],
           "badge": "community"
         },
         {
           "name": "cypress-plugin-grep-boxes",
           "description": "A companion Cypress plugin for `cy-grep` that allows users to run specific test(s) in open mode.",
           "link": "https://github.com/dennisbergevin/cypress-plugin-grep-boxes",
-          "keywords": ["grep", "ui"],
+          "keywords": [
+            "grep",
+            "ui"
+          ],
           "badge": "community"
         },
         {
           "name": "cypress-cli-select",
           "description": "Cypress interactive cli prompt to select and run specific specs, tests or tags",
           "link": "https://github.com/dennisbergevin/cypress-cli-select",
-          "keywords": ["grep", "cli", "tags"],
+          "keywords": [
+            "grep",
+            "cli",
+            "tags"
+          ],
           "badge": "community"
         },
         {
           "name": "cly",
           "description": "A prototype of generating quicker project scaffolding for Cypress.",
           "link": "https://github.com/bahmutov/cly",
-          "keywords": ["cypress cli", "prototype", "CLI", "scaffolding"],
+          "keywords": [
+            "cypress cli",
+            "prototype",
+            "CLI",
+            "scaffolding"
+          ],
           "badge": "community"
         },
         {
           "name": "cypress-watch-and-reload",
           "description": "Reloads Cypress when one of the watched files changes.",
           "link": "https://github.com/bahmutov/cypress-watch-and-reload",
-          "keywords": ["file-watcher"],
+          "keywords": [
+            "file-watcher"
+          ],
           "badge": "community"
         },
         {
           "name": "vscode-cy-helper",
           "description": "Visual Studio Code extension for cypress and cucumber preprocessor.",
           "link": "https://marketplace.visualstudio.com/items?itemName=Shelex.vscode-cy-helper",
-          "keywords": ["vscode", "extension", "intellisense"],
+          "keywords": [
+            "vscode",
+            "extension",
+            "intellisense"
+          ],
           "badge": "community"
         },
         {
@@ -214,21 +297,30 @@
           "name": "cypress-expect-n-assertions",
           "description": "Cypress helper that checks number of expected and actual assertions in the test.",
           "link": "https://github.com/bahmutov/cypress-expect-n-assertions",
-          "keywords": ["test", "assertion"],
+          "keywords": [
+            "test",
+            "assertion"
+          ],
           "badge": "community"
         },
         {
           "name": "cypress-audit",
           "description": "Run Lighthouse audit directly in your E2E test suites.",
           "link": "https://github.com/mfrachet/cypress-audit",
-          "keywords": ["lighthouse"],
+          "keywords": [
+            "lighthouse"
+          ],
           "badge": "community"
         },
         {
           "name": "cypress-hmr-restarter",
           "description": "Restarts tests when receiving webpack-dev-server HMR updates.",
           "link": "https://github.com/Svish/cypress-hmr-restarter",
-          "keywords": ["webpack", "webpack-dev-server", "hmr"],
+          "keywords": [
+            "webpack",
+            "webpack-dev-server",
+            "hmr"
+          ],
           "badge": "community"
         },
         {
@@ -248,42 +340,61 @@
           "name": "cypress-repeat",
           "description": "Run Cypress multiple times in a row, great at finding test flake.",
           "link": "https://github.com/bahmutov/cypress-repeat",
-          "keyboards": ["cli", "ci"],
+          "keyboards": [
+            "cli",
+            "ci"
+          ],
           "badge": "community"
         },
         {
           "name": "cypress-expect",
           "description": "Cypress CLI wrapper where you can specify the total number of expected tests.",
           "link": "https://github.com/bahmutov/cypress-expect",
-          "keywords": ["cli"],
+          "keywords": [
+            "cli"
+          ],
           "badge": "community"
         },
         {
           "name": "cypress-log-filter",
           "description": "Easily filter Cypress command logs based on different log levels",
           "link": "https://github.com/Brugui7/cypress-log-filter",
-          "keywords": ["log", "command", "filter"],
+          "keywords": [
+            "log",
+            "command",
+            "filter"
+          ],
           "badge": "community"
         },
         {
           "name": "cy-search",
           "description": "Search Cypress documentation from the terminal.",
           "link": "https://github.com/bahmutov/cy-search",
-          "keywords": ["cli"],
+          "keywords": [
+            "cli"
+          ],
           "badge": "community"
         },
         {
           "name": "cypress-tags",
           "description": "Use custom tags to slice up Cypress test runs.",
           "link": "https://github.com/infosum/cypress-tags",
-          "keywords": ["test", "tag", "browserify"],
+          "keywords": [
+            "test",
+            "tag",
+            "browserify"
+          ],
           "badge": "community"
         },
         {
           "name": "@swimlane/cy-mockapi",
           "description": "Easily mock your REST API in Cypress by putting responses in the fixtures directory tree.",
           "link": "https://github.com/swimlane/cy-mockapi",
-          "keywords": ["mock", "rest", "api"],
+          "keywords": [
+            "mock",
+            "rest",
+            "api"
+          ],
           "badge": "community"
         },
         {
@@ -305,63 +416,97 @@
           "name": "cypress-timings",
           "description": "A Cypress plugin for reporting individual command timings.",
           "link": "https://github.com/bahmutov/cypress-timings",
-          "keywords": ["commands", "performance"],
+          "keywords": [
+            "commands",
+            "performance"
+          ],
           "badge": "community"
         },
         {
           "name": "cypress-fail-fast",
           "description": "Enables fail fast in Cypress, skipping the rest of tests on first failure.",
           "link": "https://github.com/javierbrea/cypress-fail-fast",
-          "keywords": ["fail-fast", "failure", "skip", "config"],
+          "keywords": [
+            "fail-fast",
+            "failure",
+            "skip",
+            "config"
+          ],
           "badge": "community"
         },
         {
           "name": "cypress-fail-on-console-error",
           "description": "Fail cypress test on console error.",
           "link": "https://github.com/nils-hoyer/cypress-fail-on-console-error",
-          "keywords": ["console", "error", "fail"],
+          "keywords": [
+            "console",
+            "error",
+            "fail"
+          ],
           "badge": "community"
         },
         {
           "name": "cypress-fail-on-network-error",
           "description": "Fail cypress test on network error.",
           "link": "https://github.com/nils-hoyer/cypress-fail-on-network-error",
-          "keywords": ["network", "error", "fail"],
+          "keywords": [
+            "network",
+            "error",
+            "fail"
+          ],
           "badge": "community"
         },
         {
           "name": "cypress-codegen",
           "description": "A Cypress plugin which automatically adds and enables IntelliSense for custom commands",
           "link": "https://github.com/ExpediaGroup/cypress-codegen",
-          "keywords": ["commands", "development", "codegen"],
+          "keywords": [
+            "commands",
+            "development",
+            "codegen"
+          ],
           "badge": "community"
         },
         {
           "name": "cypress-backoff",
           "description": "A Cypress plugin to apply different timeout strategies to retried tests",
           "link": "https://github.com/joostvanwollingen/cypress-backoff",
-          "keywords": ["retries", "backoff"],
+          "keywords": [
+            "retries",
+            "backoff"
+          ],
           "badge": "community"
         },
         {
           "name": "cypress-fixture-faker",
           "description": "A Cypress plugin that enables faker functions in json fixture files.",
           "link": "https://github.com/Zaista/cypress-fixture-faker",
-          "keywords": ["fixture", "faker"],
+          "keywords": [
+            "fixture",
+            "faker"
+          ],
           "badge": "community"
         },
         {
           "name": "cypress-solid",
           "description": "A Cypress plugin to help you test applications using the Solid Protocol.",
           "link": "https://github.com/NoelDeMartin/cypress-solid",
-          "keywords": ["solid", "solid-protocol"],
+          "keywords": [
+            "solid",
+            "solid-protocol"
+          ],
           "badge": "community"
         },
         {
           "name": "cypress-test-data-generator",
           "description": "Generate realistic test data for Cypress tests using Faker.js.",
           "link": "https://github.com/khawjaahmad/cypress-test-data-generator",
-          "keywords": ["data-generation", "faker", "testing", "test-data"],
+          "keywords": [
+            "data-generation",
+            "faker",
+            "testing",
+            "test-data"
+          ],
           "badge": "community"
         }
       ]
@@ -374,7 +519,10 @@
           "name": "Puppeteer",
           "description": "Utilize Puppeteer's browser API with one command within Cypress.",
           "link": "https://github.com/cypress-io/cypress/tree/develop/npm/puppeteer",
-          "keywords": ["puppeteer", "multi-tab"],
+          "keywords": [
+            "puppeteer",
+            "multi-tab"
+          ],
           "badge": "official"
         },
         {
@@ -407,105 +555,164 @@
           "name": "cypress-plugin-steps",
           "description": "Helper utility for annotating your tests with steps. Adds cy.step() and cy.section() commands",
           "link": "https://github.com/filiphric/cypress-plugin-steps",
-          "keywords": ["step", "section", "readability"],
+          "keywords": [
+            "step",
+            "section",
+            "readability"
+          ],
           "badge": "community"
         },
         {
           "name": "cypress-env",
           "description": " This utility simplifies the process of handling different environments (such as test, staging, and production) by providing a environment-specific settings in your Cypress tests.",
           "link": "https://github.com/alecmestroni/cypress-env",
-          "keywords": ["multi", "environment", "env", "multi-environment", "test", "stage", "prod"],
+          "keywords": [
+            "multi",
+            "environment",
+            "env",
+            "multi-environment",
+            "test",
+            "stage",
+            "prod"
+          ],
           "badge": "community"
         },
         {
           "name": "cypress-plugin-xhr-toggle",
           "description": "Hides and reveals XHR events in Cypress GUI",
           "link": "https://github.com/filiphric/cypress-plugin-xhr-toggle",
-          "keywords": ["utility", "UI", "api", "xhr"],
+          "keywords": [
+            "utility",
+            "UI",
+            "api",
+            "xhr"
+          ],
           "badge": "community"
         },
         {
           "name": "cypress-plugin-api",
           "description": "Cypress plugin for effective API testing. Imagine Postman, but in Cypress.",
           "link": "https://github.com/filiphric/cypress-plugin-api",
-          "keywords": ["api"],
+          "keywords": [
+            "api"
+          ],
           "badge": "community"
         },
         {
           "name": "cy-view",
           "description": "Run tests on multiple URLs at various viewport sizes.",
           "link": "https://github.com/andrewmcoupe/cy-view",
-          "keywords": ["viewports"],
+          "keywords": [
+            "viewports"
+          ],
           "badge": "community"
         },
         {
           "name": "cypress-axe",
           "description": "Helps test your applications for accessibility issues using axe-core.",
           "link": "https://github.com/avanslaars/cypress-axe",
-          "keywords": ["accessibility", "a11y"],
+          "keywords": [
+            "accessibility",
+            "a11y"
+          ],
           "badge": "community"
         },
         {
           "name": "cypress-a11y-report",
           "description": "Test your web applications and components for accessibility issues with axe-core®.",
           "link": "https://github.com/rowellx68/cypress-a11y-report",
-          "keywords": ["accessibility", "a11y", "axe-core"],
+          "keywords": [
+            "accessibility",
+            "a11y",
+            "axe-core"
+          ],
           "badge": "community"
         },
         {
           "name": "cypress-drag-drop",
           "description": "Adds a cypress child command for drag'n'drop support.",
           "link": "https://github.com/4teamwork/cypress-drag-drop",
-          "keywords": ["dragndrop", "drag", "drop", "commands"],
+          "keywords": [
+            "dragndrop",
+            "drag",
+            "drop",
+            "commands"
+          ],
           "badge": "community"
         },
         {
           "name": "cypress-fill-command",
           "description": "A Cypress command for fill inputs.",
           "link": "https://github.com/DanielFerrariR/cypress-fill-command",
-          "keywords": ["commands"],
+          "keywords": [
+            "commands"
+          ],
           "badge": "community"
         },
         {
           "name": "cypress-firebase",
           "description": "Custom commands for Firebase including Authentication and Database communication (both Real Time Database and Firestore).",
           "link": "https://github.com/prescottprue/cypress-firebase",
-          "keywords": ["firebase", "database", "commands"],
+          "keywords": [
+            "firebase",
+            "database",
+            "commands"
+          ],
           "badge": "community"
         },
         {
           "name": "cypress-graphql",
           "description": "Custom commands to stub, spy, or test GraphQL operations.",
           "link": "https://github.com/Shopify/cypress-graphql",
-          "keywords": ["graphql", "mocking", "networking", "commands"],
+          "keywords": [
+            "graphql",
+            "mocking",
+            "networking",
+            "commands"
+          ],
           "badge": "community"
         },
         {
           "name": "cypress-graphql-mock-network",
           "description": "Custom commands to mock your GraphQL API at the network level. Using service-workers for complete isolation of the mock server.",
           "link": "https://github.com/warrenday/cypress-graphql-mock-network",
-          "keywords": ["graphql", "mocking", "networking", "commands"],
+          "keywords": [
+            "graphql",
+            "mocking",
+            "networking",
+            "commands"
+          ],
           "badge": "community"
         },
         {
           "name": "cy-mobile-commands",
           "description": "Mobile testing helper for Cypress.",
           "link": "https://gitlab.com/nTopus/cy-mobile-commands#readme",
-          "keywords": ["mobile", "swipe", "touch", "commands"],
+          "keywords": [
+            "mobile",
+            "swipe",
+            "touch",
+            "commands"
+          ],
           "badge": "community"
         },
         {
           "name": "cypress-downloadfile",
           "description": "A custom command to download different kinds of files and store them on your local machine",
           "link": "https://github.com/Xvier/cypress-downloadfile",
-          "keywords": ["commands", "downloading"],
+          "keywords": [
+            "commands",
+            "downloading"
+          ],
           "badge": "community"
         },
         {
           "name": "cypress-commands",
           "description": "A collection of Cypress commands to extend and complement the defaults.",
           "link": "https://github.com/Lakitna/cypress-commands",
-          "keywords": ["commands"],
+          "keywords": [
+            "commands"
+          ],
           "badge": "community"
         },
         {
@@ -526,84 +733,128 @@
           "name": "cypress-cy-select",
           "description": "data-cy shorthand notation for cypress get and find functions.",
           "link": "https://github.com/FlorianGoussin/cypress-cy-select",
-          "keywords": ["commands", "shorthand"],
+          "keywords": [
+            "commands",
+            "shorthand"
+          ],
           "badge": "community"
         },
         {
           "name": "Cypress-SignalR-Mock",
           "description": "Easy way to publish messages from and to your SignalR hubs in Cypress E2E tests.",
           "link": "https://github.com/JasonLandbridge/Cypress-SignalR-Mock",
-          "keywords": ["commands", "signalr", "mock", "websocket"],
+          "keywords": [
+            "commands",
+            "signalr",
+            "mock",
+            "websocket"
+          ],
           "badge": "community"
         },
         {
           "name": "@bahmutov/cy-api",
           "description": "Cypress custom command \"cy.api\" for HTTP API testing with server logs.",
           "link": "https://github.com/bahmutov/cy-api",
-          "keywords": ["api"],
+          "keywords": [
+            "api"
+          ],
           "badge": "community"
         },
         {
           "name": "cypress-localstorage-commands",
           "description": "Custom commands for localStorage. Allows preserving localStorage between tests.",
           "link": "https://github.com/javierbrea/cypress-localstorage-commands",
-          "keywords": ["commands", "localstorage", "persistence"],
+          "keywords": [
+            "commands",
+            "localstorage",
+            "persistence"
+          ],
           "badge": "community"
         },
         {
           "name": "@this-dot/cypress-indexeddb",
           "description": "Custom commands for indexedDb. Allows populating, modifying and asserting data stored in indexedDb.",
           "link": "https://github.com/thisdot/open-source/tree/main/libs/cypress-indexeddb",
-          "keywords": ["commands", "indexedDb"],
+          "keywords": [
+            "commands",
+            "indexedDb"
+          ],
           "badge": "community"
         },
         {
           "name": "cypress-react-selector",
           "description": "cypress custom commands to locate react elements by component, props and state.",
           "link": "https://github.com/abhinaba-ghosh/cypress-react-selector",
-          "keywords": ["react", "commands", "locator"],
+          "keywords": [
+            "react",
+            "commands",
+            "locator"
+          ],
           "badge": "community"
         },
         {
           "name": "cypress-layout-inspector",
           "description": "A simple utility to provide layout testing functionality to Cypress via custom assertions.",
           "link": "https://github.com/msmps/cypress-layout-inspector",
-          "keywords": ["testing", "ui", "dom", "assertions"],
+          "keywords": [
+            "testing",
+            "ui",
+            "dom",
+            "assertions"
+          ],
           "badge": "community"
         },
         {
           "name": "@swimlane/cy-dom-diff",
           "description": "cy-dom-diff allows matching chunks of DOM against HTML; including dynamic content.",
           "link": "https://github.com/swimlane/cy-dom-diff",
-          "keywords": ["dom", "assertions"],
+          "keywords": [
+            "dom",
+            "assertions"
+          ],
           "badge": "community"
         },
         {
           "name": "cypress-real-events",
           "description": "Fire native system events from Cypress like hover, swipe, etc.",
           "link": "https://github.com/dmtrKovalenko/cypress-real-events",
-          "keywords": ["commands"],
+          "keywords": [
+            "commands"
+          ],
           "badge": "community"
         },
         {
           "name": "cypress-azure-keyvault",
           "description": "Cypress custom command to get keys from Azure Key Vaults.",
           "link": "https://github.com/prma85/cypress-azure-keyvault",
-          "keywords": ["testing", "azure", "keyvault", "secret"],
+          "keywords": [
+            "testing",
+            "azure",
+            "keyvault",
+            "secret"
+          ],
           "badge": "community"
         },
         {
           "name": "cy-verify-downloads",
           "description": "Cypress custom command to wait and verify that file was downloaded.",
           "link": "https://github.com/elaichenkov/cy-verify-downloads",
-          "keywords": ["commands", "assertions", "wait", "verify", "download"],
+          "keywords": [
+            "commands",
+            "assertions",
+            "wait",
+            "verify",
+            "download"
+          ],
           "badge": "community"
         },
         {
           "name": "cypress-if",
           "description": "Easy conditional if-else logic for your Cypress tests.",
           "link": "https://github.com/bahmutov/cypress-if",
-          "keywords": ["commands"],
+          "keywords": [
+            "commands"
+          ],
           "badge": "community"
         },
         {
@@ -624,35 +875,52 @@
           "name": "cy-spok",
           "description": "Adds assertions from Spok library for easy schema and value validations.",
           "link": "https://github.com/bahmutov/cy-spok",
-          "keywords": ["assertions"],
+          "keywords": [
+            "assertions"
+          ],
           "badge": "community"
         },
         {
           "name": "cypress-plugin-tab",
           "description": "A Cypress plugin to add a tab command.",
           "link": "https://github.com/Bkucera/cypress-plugin-tab",
-          "keywords": ["commands"],
+          "keywords": [
+            "commands"
+          ],
           "badge": "community"
         },
         {
           "name": "cypress-plugin-multiple-click",
           "description": "Click multiple times in Cypress.",
           "link": "https://github.com/MohamadKh75/cypress-plugin-multiple-click",
-          "keywords": ["testing", "commands", "click"],
+          "keywords": [
+            "testing",
+            "commands",
+            "click"
+          ],
           "badge": "community"
         },
         {
           "name": "@datashard/snapshot",
           "description": "Adds Snapshot command. Adds value / object / DOM element snapshot testing support to Cypress test runner",
           "link": "https://github.com/datashard/snapshot",
-          "keywords": ["snapshot", "comparison", "commands"],
+          "keywords": [
+            "snapshot",
+            "comparison",
+            "commands"
+          ],
           "badge": "community"
         },
         {
           "name": "cypress-plugin-dotenv",
           "description": "Load .env variables in Cypress.",
           "link": "https://github.com/MohamadKh75/cypress-plugin-dotenv",
-          "keywords": ["testing", "commands", ".env", "environment variables"],
+          "keywords": [
+            "testing",
+            "commands",
+            ".env",
+            "environment variables"
+          ],
           "badge": "community"
         },
         {
@@ -677,14 +945,24 @@
           "name": "PickleJS",
           "description": "An addition to the Cucumber plugin, featuring a collection of phrases you can use for common actions (ex: \"I click on an &lt;Element&gt;\", \"I should see an &lt;Element&gt;\").",
           "link": "https://picklejs.com",
-          "keywords": ["cucumber", "collection", "actions", "commands"],
+          "keywords": [
+            "cucumber",
+            "collection",
+            "actions",
+            "commands"
+          ],
           "badge": "community"
         },
         {
           "name": "Pact Cypress Adapter",
           "description": "Simple commands to generate Pact contracts from your existing Cypress tests, maintained by the Pactflow team.",
           "link": "https://github.com/pactflow/pact-cypress-adapter",
-          "keywords": ["pact", "pactflow", "contract testing", "commands"],
+          "keywords": [
+            "pact",
+            "pactflow",
+            "contract testing",
+            "commands"
+          ],
           "badge": "community"
         }
       ]
@@ -697,7 +975,10 @@
           "name": "cypress-ntlm-auth",
           "description": "NTLM authentication support for Cypress.",
           "link": "https://github.com/bjowes/cypress-ntlm-auth",
-          "keywords": ["authentication", "ntlm"],
+          "keywords": [
+            "authentication",
+            "ntlm"
+          ],
           "badge": "verified"
         },
         {
@@ -722,49 +1003,87 @@
           "name": "Cypress Schematic",
           "description": "Adds Cypress to your Angular project via the Angular CLI. Adopted by Cypress; originally released as <a target=\"_blank\" href=\"https://www.npmjs.com/package/@briebug/cypress-schematic\">@briebug/cypress-schematic</a>.",
           "link": "https://github.com/cypress-io/cypress/tree/develop/npm/cypress-schematic",
-          "keywords": ["angular", "cli"],
+          "keywords": [
+            "angular",
+            "cli"
+          ],
           "badge": "official"
         },
         {
           "name": "cypress-on-rails",
           "description": "Rubygem for using cypress.io with Ruby on Rails applications.",
           "link": "https://github.com/shakacode/cypress-on-rails",
-          "keywords": ["ruby-rack", "ruby-on-rails"],
+          "keywords": [
+            "ruby-rack",
+            "ruby-on-rails"
+          ],
           "badge": "community"
         },
         {
           "name": "Nx",
           "description": "Smart, Fast and Extensible Build System.",
           "link": "https://nx.dev/cypress/overview",
-          "keywords": ["angular", "react", "cli", "monorepo"],
+          "keywords": [
+            "angular",
+            "react",
+            "cli",
+            "monorepo"
+          ],
           "badge": "community"
         },
         {
           "name": "Aurelia CLI",
           "description": "The Aurelia CLI is the official command line tool for Aurelia.",
           "link": "https://aurelia.io/docs/cli",
-          "keywords": ["aurelia", "cli"],
+          "keywords": [
+            "aurelia",
+            "cli"
+          ],
           "badge": "community"
         },
         {
           "name": "WordPress ReactJS Boilerplate",
           "description": "Complete WordPress Plugin Boilerplate including Cypress.io E2E tests.",
           "link": "https://github.com/matzeeable/wp-reactjs-starter",
-          "keywords": ["wp", "wordpress"],
+          "keywords": [
+            "wp",
+            "wordpress"
+          ],
           "badge": "community"
         },
         {
           "name": "Next Right Now - Next.js Boilerplate",
           "description": "Next.js boilerplate with Jest/Cypress and CI/CD pipeline built-in (monorepo, multi-tenants).",
           "link": "https://github.com/UnlyEd/next-right-now",
-          "keywords": ["next.js", "react", "monorepo", "multi-tenants"],
+          "keywords": [
+            "next.js",
+            "react",
+            "monorepo",
+            "multi-tenants"
+          ],
           "badge": "community"
         },
         {
           "name": "cypress-rails",
           "description": "Ruby gem to run Cypress against Rails apps, replacing Capybara in system tests.",
           "link": "https://github.com/testdouble/cypress-rails",
-          "keywords": ["ruby", "rails"],
+          "keywords": [
+            "ruby",
+            "rails"
+          ],
+          "badge": "community"
+        },
+        {
+          "name": "cypress-load-balancer",
+          "description": "A simple load balancer for Cypress tests. Use this for parallelizing jobs across CI/CD solutions or locally in separate processes.",
+          "link": "https://github.com/hammzj/cypress-load-balancer/",
+          "keywords": [
+            "ci",
+            "continuous-integration",
+            "load-balancer",
+            "parallel",
+            "sharding"
+          ],
           "badge": "community"
         }
       ]
@@ -777,56 +1096,84 @@
           "name": "Cypress Angular",
           "description": "Test Angular components using Cypress Test Runner. This package is bundled with the cypress package and does not need to be installed separately, unless a specific version is desired. See the <a target=\"_blank\" href=\"/app/component-testing/angular/overview\">Angular Component Testing Docs</a> for mounting Angular components.",
           "link": "https://github.com/cypress-io/cypress/tree/develop/npm/angular",
-          "keywords": ["component", "angular"],
+          "keywords": [
+            "component",
+            "angular"
+          ],
           "badge": "official"
         },
         {
           "name": "Cypress React",
           "description": "Test React components using Cypress Test Runner. This package is bundled with the cypress package and does not need to be installed separately, unless a specific version is desired. See the <a target=\"_blank\" href=\"/app/component-testing/react/overview\">React Component Testing Docs</a> for mounting React components.",
           "link": "https://github.com/cypress-io/cypress/tree/develop/npm/react",
-          "keywords": ["component", "react"],
+          "keywords": [
+            "component",
+            "react"
+          ],
           "badge": "official"
         },
         {
           "name": "Cypress Svelte",
           "description": "Test Svelte components using Cypress Test Runner. This package is bundled with the cypress package and should not need to be installed separately. See the <a target=\"_blank\" href=\"/app/component-testing/svelte/overview\">Svelte Component Testing Docs</a> for mounting Svelte components.",
           "link": "https://github.com/cypress-io/cypress/tree/develop/npm/svelte",
-          "keywords": ["component", "svelte"],
+          "keywords": [
+            "component",
+            "svelte"
+          ],
           "badge": "official"
         },
         {
           "name": "Cypress Vue",
           "description": "Test Vue 3 components using Cypress Test Runner. This package is bundled with the cypress package and should not need to be installed separately. See the <a target=\"_blank\" href=\"/app/component-testing/vue/overview\">Vue Component Testing Docs</a> for mounting Vue components.",
           "link": "https://github.com/cypress-io/cypress/tree/develop/npm/vue",
-          "keywords": ["component", "vue", "vue.js"],
+          "keywords": [
+            "component",
+            "vue",
+            "vue.js"
+          ],
           "badge": "official"
         },
         {
           "name": "cypress-angular-unit-test",
           "description": "Test Angular component using Cypress Test Runner.",
           "link": "https://github.com/bahmutov/cypress-angular-unit-test",
-          "keywords": ["component", "angular"],
+          "keywords": [
+            "component",
+            "angular"
+          ],
           "badge": "community"
         },
         {
           "name": "cypress-ct-custom-devserver",
           "description": "Simplified API for creating custom dev servers for Cypress.",
           "link": "https://github.com/fochlac/cypress-ct-custom-devserver",
-          "keywords": ["component", "buildtool", "devserver"],
+          "keywords": [
+            "component",
+            "buildtool",
+            "devserver"
+          ],
           "badge": "community"
         },
         {
           "name": "cypress-devserver-esbuild",
           "description": "Build Cypress Component Tests using esbuild.",
           "link": "https://github.com/fochlac/cypress-devserver-esbuild",
-          "keywords": ["component", "esbuild", "devserver"],
+          "keywords": [
+            "component",
+            "esbuild",
+            "devserver"
+          ],
           "badge": "community"
         },
         {
           "name": "cypress-rspack-dev-server",
           "description": "Build Cypress Component Tests using Rspack.",
           "link": "https://github.com/th3fallen/cypress-rspack-dev-server",
-          "keywords": ["component", "Rspack", "dev-server"],
+          "keywords": [
+            "component",
+            "Rspack",
+            "dev-server"
+          ],
           "badge": "community"
         }
       ]
@@ -864,21 +1211,31 @@
           "name": "Argos",
           "description": "Automate visual testing in your CI.",
           "link": "https://docs.argos-ci.com/cypress",
-          "keywords": ["devX", "screenshots"],
+          "keywords": [
+            "devX",
+            "screenshots"
+          ],
           "badge": "verified"
         },
         {
           "name": "Applitools",
           "description": "Fast, easy and reliable visual UI testing with Cypress.",
           "link": "https://applitools.com/tutorials/sdks/cypress/quickstart/getting-started",
-          "keyword": ["screenshots", "visual regression", "visual-ai"],
+          "keyword": [
+            "screenshots",
+            "visual regression",
+            "visual-ai"
+          ],
           "badge": "verified"
         },
         {
           "name": "Percy",
           "description": "Visual regression testing for Cypress tests with Percy.",
           "link": "https://docs.percy.io/docs/cypress",
-          "keywords": ["screenshots", "visual regression"],
+          "keywords": [
+            "screenshots",
+            "visual regression"
+          ],
           "badge": "verified"
         },
         {
@@ -897,42 +1254,63 @@
           "name": "Happo",
           "description": "Cross-platform, cross-browser screenshot testing for modern user interfaces.",
           "link": "https://github.com/happo/happo-cypress",
-          "keywords": ["screenshots", "visual regression"],
+          "keywords": [
+            "screenshots",
+            "visual regression"
+          ],
           "badge": "community"
         },
         {
           "name": "Cypress Image Snapshot",
           "description": "Catch visual regressions and compare image diffs locally and in Cypress Cloud.",
           "link": "https://github.com/simonsmith/cypress-image-snapshot",
-          "keywords": ["image-diff", "snapshot"],
+          "keywords": [
+            "image-diff",
+            "snapshot"
+          ],
           "badge": "community"
         },
         {
           "name": "Cypress Visual Regression",
           "description": "Plugin that adds powerful visual regression testing capabilities to Cypress, that comes with a comparison preview built in the Cypress Test Runner.",
           "link": "https://github.com/cypress-visual-regression/cypress-visual-regression",
-          "keywords": ["image-diff", "snapshot", "visual regression"],
+          "keywords": [
+            "image-diff",
+            "snapshot",
+            "visual regression"
+          ],
           "badge": "community"
         },
         {
           "name": "Cypress Visual Regression with Resemble.JS",
           "description": "A module for adding visual regression testing to Cypress, based on Cypress Visual Regression plugin and Resemble.JS library. The main difference between 'Cypress Visual Regression' plugin and this one is that the present plugin mitigates the anti-aliasing problem. The problem appears when comparing the base and actual screenshots generated on different environments (e.g. Windows vs Linux).",
           "link": "https://github.com/Andremoniy/cypress-visual-regression-resemble-js",
-          "keywords": ["image-diff", "snapshot"],
+          "keywords": [
+            "image-diff",
+            "snapshot"
+          ],
           "badge": "community"
         },
         {
           "name": "Visual Regression Tracker",
           "description": "Integration with open source service for visual testing and managing its results.",
           "link": "https://github.com/Visual-Regression-Tracker/agent-cypress",
-          "keywords": ["screenshots", "image-diff", "visual regression"],
+          "keywords": [
+            "screenshots",
+            "image-diff",
+            "visual regression"
+          ],
           "badge": "community"
         },
         {
           "name": "Cypress Image Diff",
           "description": "Visual regression testing plugin maintained by DIT - UK Gov.",
           "link": "https://github.com/uktrade/cypress-image-diff",
-          "keywords": ["screenshots", "visual regression", "image-diff"],
+          "keywords": [
+            "screenshots",
+            "visual regression",
+            "image-diff"
+          ],
           "badge": "community"
         },
         {
@@ -970,77 +1348,130 @@
           "name": "cypress-xray-junit-reporter",
           "description": "Enhances your Cypress test suite with the cypress-xray-junit-reporter a specialized custom reporter designed to seamlessly generating comprehensive XRay-compatible JUnit-style XML reports, complete with embedded screenshots on test failures, facilitating a thorough analysis of test execution.",
           "link": "https://github.com/alecmestroni/cypress-xray-junit-reporter",
-          "keywords": ["reporter", "xray", "mochawesome", "jira", "screenshot", "issue", "junit", "screenshots","CI", "CLI"],
+          "keywords": [
+            "reporter",
+            "xray",
+            "mochawesome",
+            "jira",
+            "screenshot",
+            "issue",
+            "junit",
+            "screenshots",
+            "CI",
+            "CLI"
+          ],
           "badge": "community"
         },
         {
           "name": "cypress-failed-log",
           "description": "Saves the Cypress test command log as a JSON file if a test fails.",
           "link": "https://github.com/bahmutov/cypress-failed-log",
-          "keywords": ["reporter"],
+          "keywords": [
+            "reporter"
+          ],
           "badge": "community"
         },
         {
           "name": "cypress-terminal-report",
           "description": "Logs to terminal and files mimicking cypress UI. Logs all cypress commands, request/response data and browser console logs.",
           "link": "https://github.com/archfz/cypress-terminal-report",
-          "keywords": ["reporter", "logs", "terminal", "CI", "CLI"],
+          "keywords": [
+            "reporter",
+            "logs",
+            "terminal",
+            "CI",
+            "CLI"
+          ],
           "badge": "community"
         },
         {
           "name": "autoset-status-cypress-testrail-reporter",
           "description": "TestRail Reporter which auto-set status for specific TestRun for Cypress.",
           "link": "https://github.com/dkuznetsov21/autoset-status-cypress-testrail-reporter",
-          "keywords": ["testrail", "reporter", "autoset", "status"],
+          "keywords": [
+            "testrail",
+            "reporter",
+            "autoset",
+            "status"
+          ],
           "badge": "community"
         },
         {
           "name": "cypress-testrail-reporter",
           "description": "Custom reporter for publishing Cypress results to a TestRail test run.",
           "link": "https://github.com/Vivify-Ideas/cypress-testrail-reporter",
-          "keywords": ["testrail", "reporter"],
+          "keywords": [
+            "testrail",
+            "reporter"
+          ],
           "badge": "community"
         },
         {
           "name": "cypress-teamcity-reporter",
           "description": "Custom reporter for Teamcity which makes it possible to display test results in real-time and add them on the Tests tab of the Build Results page.",
           "link": "https://github.com/prma85/cypress-teamcity-reporter",
-          "keywords": ["teamcity", "reporter"],
+          "keywords": [
+            "teamcity",
+            "reporter"
+          ],
           "badge": "community"
         },
         {
           "name": "cypress-slack-reporter",
           "description": "Slack reporting tool. Uses mochawesome json reports, provides links to VCS Provider (github/bitbucket) and CircleCI logs.",
           "link": "https://github.com/you54f/cypress-slack-reporter",
-          "keywords": ["reporter", "mochawesome", "slack"],
+          "keywords": [
+            "reporter",
+            "mochawesome",
+            "slack"
+          ],
           "badge": "community"
         },
         {
           "name": "mochawesome-merge",
           "description": "Merges multiple mochawesome JSON reports.",
           "link": "https://github.com/antontelesh/mochawesome-merge",
-          "keywords": ["reporter", "mochawesome"],
+          "keywords": [
+            "reporter",
+            "mochawesome"
+          ],
           "badge": "community"
         },
         {
           "name": "cypress-mochawesome-reporter",
           "description": "Zero config Mochawesome reporter for Cypress with screenshots.",
           "link": "https://github.com/LironEr/cypress-mochawesome-reporter",
-          "keywords": ["reporter", "mochawesome", "screenshot"],
+          "keywords": [
+            "reporter",
+            "mochawesome",
+            "screenshot"
+          ],
           "badge": "community"
         },
         {
           "name": "allure-cypress",
           "description": "Allure reporter for Cypress. Creates rich HTML test reports with screenshots, steps and more.",
           "link": "https://github.com/allure-framework/allure-js/tree/main/packages/allure-cypress",
-          "keywords": ["reporter", "allure", "step", "screenshot"],
+          "keywords": [
+            "reporter",
+            "allure",
+            "step",
+            "screenshot"
+          ],
           "badge": "community"
         },
         {
           "name": "cypress-xray-plugin",
           "description": "A plugin for uploading Cypress test results to Xray, including evidence such as screenshots, videos or custom data. Fully compatible with Cucumber.",
           "link": "https://github.com/Qytera-Gmbh/cypress-xray-plugin",
-          "keywords": ["reporter", "xray", "jira", "cucumber", "screenshot", "video"],
+          "keywords": [
+            "reporter",
+            "xray",
+            "jira",
+            "cucumber",
+            "screenshot",
+            "video"
+          ],
           "badge": "community"
         }
       ]
@@ -1052,66 +1483,111 @@
           "name": "cypress-mailosaur",
           "description": "Test email and SMS messages using Mailosaur.",
           "link": "https://github.com/mailosaur/cypress-mailosaur",
-          "keywords": ["email", "sms", "commands"],
+          "keywords": [
+            "email",
+            "sms",
+            "commands"
+          ],
           "badge": "community"
         },
         {
           "name": "cypress-maildev",
           "description": "A bunch of Cypress commands in order to test your messages (SMS and Emails) by using Maildev REST API.",
           "link": "https://github.com/Clebiez/cypress-maildev",
-          "keywords": ["email", "sms", "commands"],
+          "keywords": [
+            "email",
+            "sms",
+            "commands"
+          ],
           "badge": "community"
         },
         {
           "name": "cypress-mailslurp",
           "description": "Use test email accounts to send and receive emails in Cypress tests with MailSlurp.",
           "link": "https://github.com/mailslurp/cypress-mailslurp",
-          "keywords": ["email", "mailslurp", "test", "commands"],
+          "keywords": [
+            "email",
+            "mailslurp",
+            "test",
+            "commands"
+          ],
           "badge": "community"
         },
         {
           "name": "cypress-mailhog",
           "description": "A collection of useful Cypress commands for testing Emails utilizing the MailHog RestAPI. Comes with TypeScript support.",
           "link": "https://github.com/SMenigat/cypress-mailhog",
-          "keywords": ["email", "mailhog", "test", "commands"],
+          "keywords": [
+            "email",
+            "mailhog",
+            "test",
+            "commands"
+          ],
           "badge": "community"
         },
         {
           "name": "cypress-guerrillamail",
           "description": "Create and use a randomly-generated email address from Guerrilla Mail.",
           "link": "https://github.com/e23thr/cypress-guerrillamail",
-          "keywords": ["email", "guerrillamail", "test", "commands"],
+          "keywords": [
+            "email",
+            "guerrillamail",
+            "test",
+            "commands"
+          ],
           "badge": "community"
         },
         {
           "name": "cypress-temp-mail",
           "description": "Lightweight npm library designed to generate temporary email addresses for end-to-end testing with Cypress",
           "link": "https://github.com/madhusaran/cypress-temp-mail",
-          "keywords": ["cypress-temp-mail", "email","temp-mail", "test", "commands"],
+          "keywords": [
+            "cypress-temp-mail",
+            "email",
+            "temp-mail",
+            "test",
+            "commands"
+          ],
           "badge": "community"
         },
         {
-          "name":"cymap",
-          "description":"Access email from any email server by leveraging IMAP capabilities inside Cypress.",
-          "link":"https://github.com/FC122/cymap",
-          "keywords":["imap", "email", "test", "commands"],
-          "badge":"community"
+          "name": "cymap",
+          "description": "Access email from any email server by leveraging IMAP capabilities inside Cypress.",
+          "link": "https://github.com/FC122/cymap",
+          "keywords": [
+            "imap",
+            "email",
+            "test",
+            "commands"
+          ],
+          "badge": "community"
         },
         {
-          "name":"cypress-mailpit",
-          "description":"A collection of useful Cypress commands for testing Emails utilizing the Mailpit RestAPI. Comes with TypeScript support",
-          "link":"https://github.com/pushpak1300/cypress-mailpit",
-          "keywords":["mailpit", "email", "test", "commands", "email"],
-          "badge":"community"
-        }, 
+          "name": "cypress-mailpit",
+          "description": "A collection of useful Cypress commands for testing Emails utilizing the Mailpit RestAPI. Comes with TypeScript support",
+          "link": "https://github.com/pushpak1300/cypress-mailpit",
+          "keywords": [
+            "mailpit",
+            "email",
+            "test",
+            "commands",
+            "email"
+          ],
+          "badge": "community"
+        },
         {
-          "name":"cypress-sql",
-          "description":"The @dankieu/cypress-sql package supports the following database connections Sql server, Mysql, OracleDB, Postgress",
-          "link":"https://github.com/testervippro/cypress-sql",
-          "keywords":["sql", "database", "test", "commands", "oracle"],
-          "badge":"community"
+          "name": "cypress-sql",
+          "description": "The @dankieu/cypress-sql package supports the following database connections Sql server, Mysql, OracleDB, Postgress",
+          "link": "https://github.com/testervippro/cypress-sql",
+          "keywords": [
+            "sql",
+            "database",
+            "test",
+            "commands",
+            "oracle"
+          ],
+          "badge": "community"
         }
-
       ]
     },
     {
@@ -1121,7 +1597,14 @@
           "name": "cypress-temp-sms",
           "description": "Generates temporary mobile numbers that shall be used for SMS verification (OTP,2FA)",
           "link": "https://github.com/madhusaran/cypress-temp-sms",
-          "keywords": ["cypress-temp-sms", "sms","temp-number", "otp", "2fa", "commands"],
+          "keywords": [
+            "cypress-temp-sms",
+            "sms",
+            "temp-number",
+            "otp",
+            "2fa",
+            "commands"
+          ],
           "badge": "community"
         }
       ]
