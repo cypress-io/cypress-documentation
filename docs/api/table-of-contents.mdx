@@ -191,29 +191,29 @@ The _key_ difference between Cypress APIs and Cypress commands is that Cypress
 APIs execute the moment they are invoked and are **not** enqueued to run at a
 later time.
 
-| Property                                                           | Usage                                                                                                                                                         |
-| ------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [`Cypress.arch`](/api/cypress-api/arch)                            | CPU architecture name of the underlying OS, as returned from Node's `os.arch()`.                                                                              |
-| [`Cypress.browser`](/api/cypress-api/browser)                      | Information about the current browser, such as browser family and version.                                                                                    |
-| [`Cypress.Commands`](/api/cypress-api/custom-commands)             | Create new custom commands and extend or override existing ones.                                                                                              |
-| [`Cypress.config()`](/api/cypress-api/config)                      | Get and set Cypress configuration from inside your tests.                                                                                                     |
-| [`Cypress.Cookies.debug()`](/api/cypress-api/cookies)              | Generate console logs whenever a cookie is modified.                                                                                                          |
-| [`Cypress.currentRetry`](/api/cypress-api/currentretry)            | A number representing the current test retry count.                                                                                                           |
-| [`Cypress.currentTest`](/api/cypress-api/currenttest)              | An object with information about the currently executing test.                                                                                                |
-| [`Cypress.log`](/api/cypress-api/cypress-log)                      | This is the internal API for controlling what gets printed to the Command Log. Useful when writing your own custom commands.                                  |
-| [`Cypress.dom`](/api/cypress-api/dom)                              | A collection of DOM related helper methods.                                                                                                                   |
-| [`Cypress.ElementSelector`](/api/cypress-api/element-selector-api) | Configure selector priority used by [Cypress Studio](/app/guides/cypress-studio) and [Selector Playground](/app/core-concepts/open-mode#Selector-Playground). |
-| [`Cypress.env`](/api/cypress-api/env)                              | Get environment variables from inside your tests.                                                                                                             |
-| [`Cypress.isBrowser()`](/api/cypress-api/isbrowser)                | Checks if the current browser matches the given name or filter.                                                                                               |
-| [`Cypress.isCy()`](/api/cypress-api/iscy)                          | checks if a variable is a valid instance of cy or a cy chainable.                                                                                             |
-| [`Cypress.Keyboard.defaults()`](/api/cypress-api/keyboard-api)     | Set default values for how the `.type()` command is executed.                                                                                                 |
-| [`Cypress.platform`](/api/cypress-api/platform)                    | The underlaying OS name, as returned by Node's `os.platform()`.                                                                                               |
-| [`Cypress.require`](/api/cypress-api/require)                      | Enables utilizing dependencies within the [cy.origin()](/api/commands/origin) callback function.                                                              |
-| [`Cypress.Screenshot.defaults()`](/api/cypress-api/screenshot-api) | Set defaults for screenshots captured by the `.screenshot()` command and the automatic screenshots taken during test failures.                                |
-| [`Cypress.session`](/api/cypress-api/session)                      | A collection of helper methods related to the `.session()` command.                                                                                           |
-| [`Cypress.spec`](/api/cypress-api/spec)                            | An object with information about the currently executing spec file.                                                                                           |
-| [`Cypress.testingType`](/api/cypress-api/testing-type)             | The current testing type, eg. `"e2e"` or `"component".                                                                                                        |
-| [`Cypress.version`](/api/cypress-api/version)                      | The current Cypress version.                                                                                                                                  |
+| Property                                                           | Usage                                                                                                                          |
+| ------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------ |
+| [`Cypress.arch`](/api/cypress-api/arch)                            | CPU architecture name of the underlying OS, as returned from Node's `os.arch()`.                                               |
+| [`Cypress.browser`](/api/cypress-api/browser)                      | Information about the current browser, such as browser family and version.                                                     |
+| [`Cypress.Commands`](/api/cypress-api/custom-commands)             | Create new custom commands and extend or override existing ones.                                                               |
+| [`Cypress.config()`](/api/cypress-api/config)                      | Get and set Cypress configuration from inside your tests.                                                                      |
+| [`Cypress.Cookies.debug()`](/api/cypress-api/cookies)              | Generate console logs whenever a cookie is modified.                                                                           |
+| [`Cypress.currentRetry`](/api/cypress-api/currentretry)            | A number representing the current test retry count.                                                                            |
+| [`Cypress.currentTest`](/api/cypress-api/currenttest)              | An object with information about the currently executing test.                                                                 |
+| [`Cypress.log`](/api/cypress-api/cypress-log)                      | This is the internal API for controlling what gets printed to the Command Log. Useful when writing your own custom commands.   |
+| [`Cypress.dom`](/api/cypress-api/dom)                              | A collection of DOM related helper methods.                                                                                    |
+| [`Cypress.ElementSelector`](/api/cypress-api/element-selector-api) | Configure selector priority used by [Cypress Studio](/app/guides/cypress-studio) and [cy.prompt()](/api/commands/prompt).      |
+| [`Cypress.env`](/api/cypress-api/env)                              | Get environment variables from inside your tests.                                                                              |
+| [`Cypress.isBrowser()`](/api/cypress-api/isbrowser)                | Checks if the current browser matches the given name or filter.                                                                |
+| [`Cypress.isCy()`](/api/cypress-api/iscy)                          | checks if a variable is a valid instance of cy or a cy chainable.                                                              |
+| [`Cypress.Keyboard.defaults()`](/api/cypress-api/keyboard-api)     | Set default values for how the `.type()` command is executed.                                                                  |
+| [`Cypress.platform`](/api/cypress-api/platform)                    | The underlaying OS name, as returned by Node's `os.platform()`.                                                                |
+| [`Cypress.require`](/api/cypress-api/require)                      | Enables utilizing dependencies within the [cy.origin()](/api/commands/origin) callback function.                               |
+| [`Cypress.Screenshot.defaults()`](/api/cypress-api/screenshot-api) | Set defaults for screenshots captured by the `.screenshot()` command and the automatic screenshots taken during test failures. |
+| [`Cypress.session`](/api/cypress-api/session)                      | A collection of helper methods related to the `.session()` command.                                                            |
+| [`Cypress.spec`](/api/cypress-api/spec)                            | An object with information about the currently executing spec file.                                                            |
+| [`Cypress.testingType`](/api/cypress-api/testing-type)             | The current testing type, eg. `"e2e"` or `"component".                                                                         |
+| [`Cypress.version`](/api/cypress-api/version)                      | The current Cypress version.                                                                                                   |
 
 ## Utilities
 
