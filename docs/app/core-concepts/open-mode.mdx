@@ -1,6 +1,6 @@
 ---
 title: Open Mode
-description: The different sections of the Cypress app in open mode, the information surfaced in the app's Command Log, how to use the Selector Playground to find unique selectors, and debugging tools available in the app in open mode.
+description: Learn how Cypress open mode works, including the Test Runner, Command Log, Cypress Studio for recording interactions and inline edits, and tools for debugging tests in the Cypress app.
 sidebar_position: 60
 ---
 
@@ -14,14 +14,13 @@ sidebar_position: 60
 
 - The different sections of the Cypress app in open mode
 - The information surfaced in the app's Command Log
-- How to use the Selector Playground to find unique selectors
+- How to hide HTTP requests in the Command Log
+- How to use Cypress Studio to record interactions and edit tests inline
 - Debugging tools available in the app in open mode
 
 :::
 
-The Cypress App has powerful features for creating, configuring,
-browsing, and most importantly running your tests once you [open the app](/app/get-started/open-the-app).
-Open mode is the heart of the Cypress testing experience.
+The Cypress app includes an interactive workflow called open mode. In Cypress open mode you can run specs, watch the Command Log update in real time, and inspect the application or component under test. You can [open the app](/app/get-started/open-the-app), use Cypress Studio to record interactions and edit tests inline, and debug with time travel snapshots and console output. Open mode is best for local development, while recorded runs in Cypress Cloud provide history and analytics when needed.
 
 ### Launchpad
 
@@ -30,13 +29,10 @@ Open mode is the heart of the Cypress testing experience.
   alt="The Launchpad"
 />
 
-The Launchpad is your portal to Cypress, helping with onboarding, choosing a
-testing type and launching a browser.
+The Launchpad helps you choose a testing type, pick a browser, and open your project. It also guides first time setup when needed so you can start running specs with the right configuration.
 
-Once you get comfortable with Cypress you might find you don't need the
-Launchpad any more. In this case
-[you can run `cypress open` with the `--browser` and `--component` or `--e2e` options](/app/references/command-line#cypress-open)
-to go straight to the Specs page.
+If you prefer to skip the Launchpad, run
+[`cypress open`](/app/references/command-line#cypress-open) with `--browser` and either `--component` or `--e2e` to go directly to the Specs page.
 
 ### Specs
 
@@ -45,43 +41,21 @@ to go straight to the Specs page.
   alt="Specs"
 />
 
-On choosing your browser in the Launchpad, you'll be presented with a list of
-your specs, their names, locations, and information about your latest recorded
-runs. Here you can launch specs by clicking them, create new blank or example
-specs, or search specs by name (handy for large test suites).
+After you pick a browser, the Specs page lists your spec files with name, path, and recent run details. Click a spec to run it, create a new spec, or search by name.
 
-We've made the following spec data available directly on the Specs page:
+The Specs page shows:
 
 #### Last updated
 
-This column tells you when the code of this spec was last updated, using local
-file data from git or your own filesystem. It surfaces the change history of
-your tests, so you can quickly find the most relevant specs as you're browsing
-your project.
-
-This column will vary from machine to machine, as it reflects the state of the
-code as stored on that computer.
+Shows when the spec file last changed on your machine, based on git or filesystem data. Values can differ across machines.
 
 #### Latest runs
 
-This column shows the last time the spec was run, and the last four returned
-statuses. Results are scoped to your current git branch if available, falling
-back to the default branch if not, then finally all branches.
-
-With this intelligence you can monitor, run, and fix tests locally within CI
-workflows, and then further dig into your results by clicking through to Cypress
-Cloud.
-
-The runs data is sourced from Cypress Cloud so it
-will be the same everywhere.
+Shows the last time the spec ran and the last four statuses. Results are scoped to your current git branch when available, then the default branch, then all branches. Data comes from Cypress Cloud.
 
 #### Average duration
 
-This column indicates the time taken to run the entire spec file, averaged over
-the last four runs, so that you can quickly identify and take action to improve
-the performance of your long-running tests.
-
-Again, this analysis comes from Cypress Cloud.
+Shows the average time to run the spec, calculated from the last four runs. Useful for spotting slow specs. Data comes from Cypress Cloud.
 
 #### Flake annotation
 
@@ -94,124 +68,70 @@ can pass and fail across multiple retry attempts without any code changes.
 
 :::
 
-Specs with flaky tests are flagged with an indicator beside the spec name. This
-means you can easily discern which areas of your application might result in an
-unreliable user experience.
-
-The flake indicator will display if any tests in the given spec have been flaky
-in your latest runs (limited to 4). Hovering over the indicator will show a
-tooltip with the following analytics, based off the last **50** runs:
-
-- Rate (flaky runs divided by total runs)
-- Severity (flaky rate at a glance)
-- Last flaky (how many runs ago)
-
-Clicking on the flake indicator will take you to the spec's
-[Flaky Test Analytics in Cypress Cloud](https://cloud.cypress.io/projects/7s5okt/analytics/flaky-tests).
+Specs with flaky tests show an indicator next to the name. Hover to see rate, severity, and last flaky across the last 50 runs. Click to open Flaky Test Analytics in Cypress Cloud.
 
 #### Running Specs
 
 <DocsImage src="/img/app/core-concepts/open-mode/spec-page.png" alt="Specs" />
 
-To run a spec, simply click the row with the spec you would like to run. You
-will be taken to the [Test Runner](#Test-Runner) and the spec will execute. You
-can narrow down the list of specs by typing into the search bar (1).
+Click a spec to open the [Test Runner](#Test-Runner) and run it. Use the search bar to filter by name.
 
-It is also possible to run multiple specs sequentially using the
-[`experimentalRunAllSpecs`](/app/references/experiments#End-to-End-Testing)
-(2).
+You can run multiple specs sequentially using [`experimentalRunAllSpecs`](/app/references/experiments#End-to-End-Testing).
 
 :::caution
 
 <strong>Experimental Run All Specs</strong>
 
-`experimentalRunAllSpecs` currently works with End to End Testing.
-
-Running multiple specs sequentially is currently an
-[experimental feature](/app/references/configuration#Experiments) and it may
-change in the future. There are some known limitations outlined in this
-[GitHub Discussion](https://github.com/cypress-io/cypress/discussions/21628).
-
-Running a large number of specs sequentially can consume more resources.
+`experimentalRunAllSpecs` works with End to End Testing. The feature is experimental and may change. Review known limitations in the linked [GitHub Discussion](https://github.com/cypress-io/cypress/discussions/21628). Running many specs in sequence can consume more resources.
 
 :::
 
 ### Runs
 
-When you configure the open source Cypress app to record tests to
-[Cypress Cloud](/cloud/get-started/introduction), you'll see data from your latest
-[recorded runs](/cloud/features/recorded-runs#Latest-Runs) directly in the Cypress app. This increased visibility into your
-test history allows you to debug your tests faster and more effectively, all
-within your local workflow.
+When your project records to [Cypress Cloud](/cloud/get-started/introduction), the app shows your latest [recorded runs](/cloud/features/recorded-runs#Latest-Runs) directly in open mode. This gives branch scoped results in context while you debug locally.
 
-If you're not sure whether you're logged in, you can always check using the
-profile control in the top right of the window.
+- **Authentication:** Sign in to Cypress Cloud using the profile in the top right.
+- **Branch scoping:** Cypress reads your current git branch to scope results. It first shows runs from that branch. If no runs are found, it falls back to the default branch, then to all branches.
+- **Git information:** To scope runs correctly, the app needs git metadata. Ensure git is available and that you send git information to Cypress Cloud. In some environments, such as `docker` or `docker-compose`, pass git information with [custom environment variables](/app/continuous-integration/overview#Git-information).
+- **Run titles:** Each run title comes from the git commit message. Click a run to open it in Cypress Cloud.
 
 <DocsImage
   src="/img/app/core-concepts/open-mode/recorded-runs.jpg"
   alt="Recorded Runs"
 />
 
-Cypress uses Git to show runs for your branch. Ensure that version control is
-properly configured and that you are sending Git information to Cypress Cloud. Under some
-environment setups (e.g. `docker`/`docker-compose`), you may have to pass git
-information using
-[custom environment variables](/app/continuous-integration/overview#Git-information).
-If no runs are found for your current branch, all runs for your project are
-shown as a fallback.
-
-The title of each run is taken from the
-[git commit message](https://www.educative.io/edpresso/git-commit-message-simply-explained)
-for that change, and clicking on it will take you to the corresponding run page
-in Cypress Cloud.
-
 ### Debug
 
-The Debug page allows you to easily debug failed CI test runs from within the
-Cypress app. From this page, you can review, rerun, and debug failed CI test
-runs that are recorded to [Cypress Cloud](/cloud/get-started/introduction) - all
-without leaving the Cypress app.
+The Debug page in the Cypress app helps you investigate failed CI test runs recorded to [Cypress Cloud](/cloud/get-started/introduction) without leaving the app. You can review failures, rerun only the failed tests, and open [Test Replay](/cloud/features/test-replay) along with screenshots, videos, and logs.
 
-<DocsImage src="/img/app/core-concepts/open-mode/debug-page.png" alt="Debug" />
+<DocsImage
+  src="/img/app/core-concepts/open-mode/debug-page.png"
+  alt="Cypress Debug page showing failed tests"
+/>
 
-This feature eliminates the tedious process of switching between Cypress, your
-local editor, and CI output, in order to fix failed tests. It does this by
-enabling you to use the app to run only the tests that
-failed in your last recorded test run, as well as review the
-[Test Replay](/cloud/features/test-replay) and other artifacts like screenshots,
-videos, and logs from your tests.
+#### What the Debug page shows
 
-#### What does the Debug page show?
+- Latest completed [recorded run](/cloud/features/recorded-runs#Latest-Runs) that matches the `HEAD` commit of your working directory
+- If none is found, the most recent run on your current branch, then the default branch
+- The first 100 failed tests, each with a link to view the full run in Cypress Cloud and open Test Replay
 
-The Debug page shows the latest completed
-[test run](/cloud/features/recorded-runs#Latest-Runs) that matches the `HEAD` commit
-(the commit currently checked out in the working directory) of your local
-project. Users can see and switch to relevant runs within the Debug page. If no
-run is found for your current commit, then Cypress shows the most recent run in
-your branch's history up until the current commit. The first **100** failed
-tests are listed, with a link to Cypress Cloud to review the full run.
+#### Requirements
 
-To use this feature, you must ensure that git is properly configured for your
-project and that you are sending git information to Cypress Cloud. Under some
-environment setups (e.g. `docker`/`docker-compose`), you may have to pass git
-information using
-[custom environment variables](/app/continuous-integration/overview#Git-information).
+- **Authentication:** Sign in to Cypress Cloud using the profile in the top right.
+- **Git information:**Provide git metadata so the app can match your `HEAD` commit and branch. In environments like `docker` or `docker-compose`, pass git information with [custom environment variables](/app/continuous-integration/overview#Git-information)
 
-### Cloud Run Notifications
+### Cloud run notifications
 
-You can receive notifications in the Cypress app for recorded runs directly from
-Cypress Cloud. Learn more about [Cloud Run Notifications](/cloud/features/recorded-runs#Notifications).
+Get notifications in the Cypress app for recorded runs from [Cypress Cloud](/cloud/get-started/introduction). Notifications appear in open mode when you are signed in and your project records to Cloud. Click a notification to open the run in Cypress Cloud. Learn more in [Cloud run notifications](/cloud/features/recorded-runs#Notifications).
 
 <DocsImage
   src="/img/cloud/runs/app-notification.jpg"
-  alt="App notification on macOS"
+  alt="Cypress app notification for recorded runs on macOS"
 />
 
 ## Test Runner
 
-At the core of the app is the Test Runner itself. Cypress runs tests
-interactively, allowing you to see commands as they execute while also viewing
-the Application or Component Under Test, and exploring its DOM.
+The Cypress Test Runner is where you run and debug specs in open mode. It executes commands step by step, renders the Application or Component Under Test, and streams details to the Command Log so you can see what happened and why. Use the Test Runner to reproduce failures, inspect the DOM, and iterate quickly during development.
 
 :::tip
 
@@ -222,28 +142,23 @@ experience in [Test Replay](/cloud/features/test-replay) for runs recorded in CI
 
 <DocsImage
   src="/img/app/core-concepts/open-mode/test-runner.png"
-  alt="The Test Runner"
+  alt="Cypress Test Runner with Command Log and application under test"
   noBorder={true}
 />
 
 ## Command Log
 
-The left-hand side of the Test Runner is a visual representation of your test
-suite. Each test block is properly nested and each test, when clicked, displays
-every Cypress command executed within the test's block as well as any commands
-executed in relevant `before`, `beforeEach`, `afterEach`, and `after` hooks.
+The Cypress Command Log (left panel) lists every command and hook in order for each test in the spec file. Click a test to expand its commands, including commands from `before`, `beforeEach`, `afterEach`, and `after` hooks. Each entry is interactive and links to a snapshot and console details so you can see what happened and why.
 
 <DocsImage
   src="/img/app/core-concepts/open-mode/command-log.png"
-  alt="Cypress app"
+  alt="Cypress Command Log showing test commands and hooks"
   width-600
 />
 
 ### Open files in your IDE
 
-There are some places in the Command Log that display a link to the relevant
-file where the code is located. Clicking on this link will open the file in your
-[preferred file opener](/app/tooling/IDE-integration#File-Opener-Preference).
+Links in the Command Log often point to the source file where a command is defined. Click a link to open the file in your [preferred file opener](/app/tooling/IDE-integration#File-Opener-Preference).
 
 <DocsImage
   src="/img/app/core-concepts/open-mode/open-file-in-IDE.gif"
@@ -252,9 +167,7 @@ file where the code is located. Clicking on this link will open the file in your
 
 ### Time traveling
 
-Each command, when hovered over, restores the Application or Component Under
-Test (right-hand side) to the state it was in when that command executed. This
-allows you to **time travel** back to previous states when testing.
+Hover over any command in the Command Log to restore the Application or Component Under Test to the state it had when that command ran. Cypress captures a snapshot for every command, which lets you time travel to previous states while you debug.
 
 :::info
 
@@ -265,104 +178,78 @@ browser, you may want to lower the `numTestsKeptInMemory` in your
 
 :::
 
-In the following example, hovering over the [`contains`](/api/commands/contains)
-command in the Command Log changes the state of the
-[AUT](#Application-Under-Test) preview:
+In this example, hovering over [`contains`](/api/commands/contains) changes the state of the [AUT](#Application-Under-Test) preview:
 
 <DocsImage
   src="/img/app/core-concepts/open-mode/first-test-hover-contains.png"
   alt="Hovering over the contains tab highlights the dom element in the App in the Cypress app"
 />
 
-Cypress automatically travels back in time to a snapshot of when a hovered-over
-command resolved. Additionally, since [`cy.contains()`](/api/commands/contains)
-finds DOM elements on the page, Cypress also highlights the element and scrolls
-it into view (to the top of the page).
+When you hover over a command, Cypress restores the snapshot from when that command resolved. Because [`cy.contains()`](/api/commands/contains) finds a DOM element, Cypress highlights the element and scrolls it into view.
 
-Also note that as we hover over the [`contains`](/api/commands/contains)
-command, Cypress reverts back to the URL that was present when the snapshot was
-taken.
+While you hover over [`cy.contains()`](/api/commands/contains), Cypress also restores the URL that was present when the snapshot was taken.
 
 ### Pinning snapshots
 
-Each command, when clicked on, displays extra information in the dev tools
-console. Clicking also **pins** the Application or Component Under Test
-(right-hand side) to its previous state, or **snapshot**, when the command
-executed.
+Click any command to pin its snapshot. Pinning locks the Application or Component Under Test to the state it had when that command executed and opens extra details in the console.
 
-In the following example, clicking on the `CLICK` command highlights it in
-purple, and does three other things worth noting:
+In this example, clicking the `CLICK` command highlights it and shows:
 
 <DocsImage
   src="/img/app/core-concepts/open-mode/first-test-click-revert.png"
   alt="A click on the click command in the Command Log with Cypress app labeled as 1, 2, 3"
 />
 
-#### 1. Pinned snapshots
+#### 1. Pinned snapshot
 
-We have now **pinned** this snapshot. Hovering over other commands will not
-revert to them. This gives us a chance to manually inspect the DOM of our
-application under test at the time the snapshot was taken.
+The snapshot is pinned. Hovering other commands does not change the preview, which lets you inspect the DOM at that moment in time.
 
 #### 2. Event hitbox
 
-Since [`.click()`](/api/commands/click) is an action command, that means we also
-see a red hitbox at the coordinates the event took place.
+Action commands like [`.click()`](/api/commands/click) show a red hitbox at the event coordinates.
 
-#### 3. Snapshot menu panel
+#### 3. Snapshot menu
 
-There is also a new menu panel. Some commands (like action commands) will take
-multiple snapshots: **before** and **after**. We can now cycle through these.
-
-The **before** snapshot is taken prior to the click event firing. The **after**
-snapshot is taken immediately after the click event. Although this click event
-caused our browser to load a new page, it's not an instantaneous transition.
-Depending on how fast your page loaded, you may still see the same page, or a
-blank screen as the page is unloading and in transition.
-
-When a command causes an immediate visual change in our application, cycling
-between before and after will update our snapshot. We can see this in action by
-clicking the `TYPE` command in the Command Log. Now, clicking **before** will
-show us the input in a default state, showing the placeholder text. Click
-**after** will show us what the input looks like when the `TYPE` command has
-completed.
+Some commands capture multiple snapshots, for example action commands capture both before and after. Use the snapshot menu to switch between them. This is useful when an action triggers a visible change, such as typing into an input.
 
 ### Page events
 
-In addition to showing all the commands that were called, the command log also
-shows important events from your application or component when they occur.
-Notice these look different (they are gray and without a number).
+The Command Log also records application events. These entries appear in gray without a number.
 
 <DocsImage
   src="/img/app/core-concepts/open-mode/first-test-page-load.png"
   alt="Command log shows 'Page load --page loaded--' and 'New url https://example.cypress.io/'"
 />
 
-**Cypress logs out page events for:**
+**Cypress logs page events for:**
 
-- Network XHR Requests
+- Network XHR and fetch requests
 - URL hash changes
-- Page Loads
-- Form Submissions
+- Page loads
+- Form submissions
+
+### Hide HTTP Requests
+
+When you do not need to inspect network calls, you can hide HTTP requests in the Command Log to reduce noise. Use the Hide HTTP Requests control in the Command Log header to collapse entries for XHR and fetch requests. This makes it easier to focus on the commands that interact with the page.
+
+Hiding HTTP requests does not change how your tests run. It only affects what is displayed in the Command Log. Requests still execute and remain available to assertions and tooling like [`cy.intercept()`](/api/commands/intercept).
 
 ### Instrument panel
 
-For certain commands like [`cy.intercept()`](/api/commands/intercept),
-[`cy.stub()`](/api/commands/stub), and [`cy.spy()`](/api/commands/spy), an extra
-instrument panel is displayed above the test to give more information about the
-state of your tests.
+When you use [`cy.intercept()`](/api/commands/intercept), [`cy.stub()`](/api/commands/stub), or [`cy.spy()`](/api/commands/spy), the instrument panel appears above the test. It summarizes routes, stubs, and spies so you can quickly inspect network traffic and function calls while you debug.
 
 #### Routes
 
 <!-- Code to reproduce screenshot:
 it('intercept command log', () => {
-    cy.intercept('GET', '/comments/1').as('getComment')
-    .intercept('POST', '/comments').as('postComment')
-    .intercept('PUT', /comments\/\d+/, 'res').as('putComment')
+cy.intercept('GET', '/comments/1').as('getComment')
+.intercept('POST', '/comments').as('postComment')
+.intercept('PUT', /comments\/\d+/, 'res').as('putComment')
 
     cy.then(() => {
         Cypress.$.get('/comments/1')
     })
+
 })
 -->
 
@@ -414,46 +301,35 @@ DOM is completely available for debugging.
 
 <DocsImage
   src="/img/app/core-concepts/open-mode/application-under-test.png"
-  alt="Application Under Test"
+  alt="Application under test rendered in the Cypress Test Runner"
 />
 
 #### Viewport Size and Scale
 
-The AUT also displays in the size and orientation specified in your tests. You
-can change the size or orientation with the
-[`cy.viewport()`](/api/commands/viewport) command or in your
-[Cypress configuration](/app/references/configuration#Viewport). If the AUT
-does not fit within the current browser window, it is scaled appropriately to
-fit within the window.
+The application preview honors the size and orientation defined in your tests. Control the viewport with [`cy.viewport()`](/api/commands/viewport) or set defaults in your [Cypress configuration](/app/references/configuration#Viewport). If the preview does not fit in the browser window, Cypress scales it to fit.
 
 The current size and scale of the AUT is displayed in the top right corner of
 the window.
 
-The image below shows that our application is displaying at `1000px` width,
-`660px` height and scaled to `90%`.
+The image below shows an application at `1000px` by `660px`, scaled to `90%`.
 
 <DocsImage
   src="/img/app/core-concepts/open-mode/viewport-scaling.png"
-  alt="Viewport Scaling"
+  alt="Cypress viewport scaling showing size and scale of application under test"
 />
 
 #### Errors
 
-The right-hand side may also be used to display syntax errors in your spec file
-that prevent the tests from running.
+Cypress surfaces syntax errors in your spec file directly in the preview so you can fix them when tests run. This helps catch typos and missing imports early.
 
 <DocsImage
   src="/img/app/core-concepts/open-mode/aut-error-e2e.png"
-  alt="Errors"
+  alt="Syntax error displayed in the E2E application preview"
 />
 
 ### Component Under Test <ComponentOnlyBadge />
 
-In
-[Component testing](/app/core-concepts/testing-types#What-is-Component-Testing),
-the right-hand side of the Test Runner is used to display the Component Under
-Test (CUT): the component that was mounted using the
-[`cy.mount()`](/api/commands/mount) command.
+In [component testing](/app/core-concepts/testing-types#What-is-Component-Testing), the right side of the Test Runner renders the component under test (CUT). Mount the component with [`cy.mount()`](/api/commands/mount) and interact with it in a real browser to validate behavior and accessibility.
 
 In the following example, we have the following test in our spec file:
 
@@ -480,182 +356,67 @@ it('should have password input of type password', () => {
 </TabItem>
 </Tabs>
 
-In the corresponding Component Preview below, you can see the `LoginForm`
-component is being displayed in the right-hand side. Not only is the component
-visible, but it is fully interactable. You can open your developer tools to
-inspect elements as you would in your normal application. The DOM is completely
-available for debugging.
+In the preview below, the `LoginForm` component is rendered on the right. The component is fully interactive. Open developer tools to inspect elements as you would in your application. The DOM is available for debugging.
 
 <DocsImage
   src="/img/app/core-concepts/component-under-test.png"
-  alt="Cypress app showing mounted component and password assertion"
+  alt="Cypress component testing preview with mounted component and assertion"
 />
 
-The AUT also displays in the size and orientation specified in your tests. You
-can change the size or orientation with the
-[`cy.viewport()`](/api/commands/viewport) command or in your
-[Cypress configuration](/app/references/configuration#Viewport). If the AUT
-does not fit within the current browser window, it is scaled appropriately to
-fit within the window.
+The component preview uses the size and orientation defined by your test. Adjust it with [`cy.viewport()`](/api/commands/viewport) or configure defaults in [Cypress configuration](/app/references/configuration#Viewport). If the preview does not fit in the window, Cypress scales it. The current size and scale appear in the top right.
 
-The current size and scale of the AUT is displayed in the top right corner of
-the window.
-
-The image below shows that our application is displaying at `500px` width,
-`500px` height and scaled to `100%`.
+The image below shows the preview at `800px` by `850px`, scaled to `70%`.
 
 <DocsImage
   src="/img/app/core-concepts/open-mode/viewport-scaling-ct.png"
-  alt="Cypress app showing mounted component test viewport scale"
+  alt="Cypress component preview showing viewport size and scale"
 />
 
-The right-hand side may also be used to display syntax errors in your spec file
-that prevent the tests from running.
+Cypress also surfaces syntax errors in component specs in the preview so you can correct issues when the test executes.
 
 <DocsImage
   src="/img/app/core-concepts/open-mode/aut-error-ct.png"
-  alt="Cypress app showing error as application under test"
+  alt="Syntax error displayed in the component preview"
 />
 
-## Selector Playground
+## Cypress Studio
 
-:::caution
+[Cypress Studio](/app/guides/cypress-studio) is part of open mode. Use Studio to record interactions and generate Cypress commands, then edit tests inline without leaving the app. Changes are saved to your spec file so your tests stay in code.
 
-##### Deprecation Notice
-
-The Selector Playground will be replaced by [Cypress Studio](/app/guides/cypress-studio) once it is no longer experimental. Cypress Studio provides the same functionality for constructing Cypress commands using unique selectors, along with additional recording capabilities.
-:::
-
-The Selector Playground is an interactive feature that helps you:
-
-- Determine a unique selector for an element.
-- See what elements match a given selector.
-- See what element matches a string of text.
-
-:::tip
-
-Need a low code approach to create tests? Use
-[Cypress Studio](/app/guides/cypress-studio) to record your browser
-interactions.
-
-:::
+To learn how to start Studio, record actions, add assertions, and edit tests, see the [Cypress Studio guide](/app/guides/cypress-studio).
 
 <DocsVideo
-  src="/img/snippets/selector-playground.mp4"
-  title="Selector Playground demo"
-/>
-
-### How are selectors determined?
-
-Cypress will automatically calculate a **unique selector** to use for a targeted
-element by running through a series of selector strategies.
-
-<DefaultSelectorPriority />
-
-Cypress allows you to control how a selector is determined. Use the
-[`Cypress.ElementSelector`](/api/cypress-api/element-selector-api) API to control
-the selectors you want prioritized.
-
-### Best practices
-
-You may find yourself struggling to write good selectors because:
-
-- Your application or component uses dynamic ID's and class names
-- Your tests break whenever there are CSS or content changes
-
-To help with these common challenges, the Selector Playground automatically
-prefers certain `data-*` attributes when determining a unique selector.
-
-Please read our
-[Best Practices guide](/app/core-concepts/best-practices#Selecting-Elements) on
-helping you target elements and prevent tests from breaking on CSS or JS
-changes.
-
-### Finding selectors
-
-To open the Selector Playground, click the <Icon name="crosshairs" /> button
-next to the URL at the top of the Test Runner. Hover over elements in your app
-to preview a unique selector for that element in the tooltip.
-
-<DocsImage
-  src="/img/app/core-concepts/open-mode/open-selector-playground.gif"
-  alt="Opening selector playground and hovering over elements"
-/>
-
-Click on the element and its selector will appear at the top. From there, you
-can copy it to your clipboard ( <Icon name="copy" /> ) or print it to the
-console ( <Icon name="terminal" /> ).
-
-<DocsImage
-  src="/img/app/core-concepts/open-mode/copy-selector-in-selector-playground.gif"
-  alt="Clicking an element, copying its selector to clipboard, printing it to the console"
-/>
-
-### Running experiments
-
-The box at the top that displays the selector is also a text input.
-
-#### Editing a selector
-
-When you edit the selector, it will show you how many elements match and
-highlight those elements in your app.
-
-<DocsImage
-  src="/img/app/core-concepts/open-mode/typing-a-selector-to-find-in-playground.gif"
-  alt="Type a selector to see what elements it matches"
-/>
-
-#### Switching to contains
-
-You can also experiment with what [`cy.contains()`](/api/commands/contains)
-would yield given a string of text. Click on `cy.get` and switch to
-`cy.contains`.
-
-Type in text to see which element it matches. Note that
-[`cy.contains()`](/api/commands/contains) only yields the first element that
-matches the text, even if multiple elements on the page contain the text.
-
-<DocsImage
-  src="/img/app/core-concepts/open-mode/cy-contains-in-selector-playground.gif"
-  alt="Experiment with cy.contains"
-/>
-
-#### Disabling highlights
-
-If you would like to interact with your app while the Selector Playground is
-open, the element highlighting might get in the way. Toggling the highlighting
-off will allow you to interact with your app more easily.
-
-<DocsImage
-  src="/img/app/core-concepts/open-mode/turn-off-highlight-in-selector-playground.gif"
-  alt="Turn off highlighting"
+  src="/img/app/cypress-studio/cypress-studio-recording-assertions-editing.mp4"
+  autoPlay={true}
 />
 
 ## Keyboard shortcuts
 
-There are keyboard shortcuts to quickly perform common actions from within
-Cypress.
+Cypress keyboard shortcuts help you work faster in open mode.
 
-| Key | Action                        |
-| --- | ----------------------------- |
-| `r` | Rerun tests                   |
-| `s` | Stop tests                    |
-| `f` | Bring focus to 'specs' window |
+**Keyboard shortcuts in open mode**
+
+| Key                                       | Action                      |
+| ----------------------------------------- | --------------------------- |
+| `r`                                       | Rerun tests                 |
+| `s`                                       | Stop tests                  |
+| `f`                                       | Bring focus to specs window |
+| `⌘+s` (macOS) / `Ctrl+s` (Windows, Linux) | Save Studio changes         |
+
+Note: The save shortcut works when the Studio panel is open and there are unsaved changes.
 
 <DocsImage
   src="/img/app/core-concepts/open-mode/keyboard-shortcuts.png"
-  alt="Tooltips show keyboard shortcuts"
+  alt="Cypress keyboard shortcuts tooltip in the app"
 />
 
 ## Debugging
 
-In addition to the features already mentioned, Cypress comes with a host of
-debugging tools to help you understand a test. You can:
+Use Cypress debugging tools in open mode to trace failures, inspect state, and fix flake faster. You can:
 
-- See detailed information about [errors](#Errors) that occur.
-- Receive additional [console output](#Console-output) about each command.
-- [Pause commands](#Special-commands) and step through them iteratively.
-  {/* - Visualize when hidden or multiple elements are found. */}
+- Review detailed [errors](#Errors) with stack traces and helpful context
+- View structured [console output](#Console-output) for each command
+- Use [special commands](#Special-commands) to pause and step through tests
 
 ### Errors
 
@@ -663,37 +424,32 @@ debugging tools to help you understand a test. You can:
 
 ### Console output
 
-Besides commands being interactive, they also output additional debugging
-information to your console.
+Each Command Log entry emits structured details to the browser console. Open DevTools and click a Command Log entry to see `consoleProps`, including inputs and outputs for that command.
 
-Open up your Dev Tools and click on the `GET` for the `.action-email` class
-selector.
+For example, click the `GET` for the `.action-email` selector in the Command Log with Developer Tools open.
 
 <DocsImage
   src="/img/app/core-concepts/open-mode/first-test-console-output.png"
   alt="Cypress app with get command pinned and console log open showing the yielded element"
 />
 
-**We can see Cypress output additional information in the console:**
+You will see Cypress print additional information:
 
-- Command (that was issued)
-- Yielded (what was returned by this command)
-- Elements (the number of elements found)
-- Selector (the argument we used)
+- Command issued
+- Yielded value
+- Elements found
+- Selector used
 
-We can even expand what was returned and inspect each individual element or even
-right click and inspect them in the Elements panel!
+Expand the output to inspect individual elements. You can right click an element and jump to it in the Elements panel.
 
 ### Special commands
 
-In addition to having a helpful UI, there are also special commands dedicated to
-the task of debugging, for example:
+Use these commands to control execution while you debug:
 
 - [cy.pause()](/api/commands/pause)
 - [cy.debug()](/api/commands/debug)
 
-In the following example, we've added a [cy.pause()](/api/commands/pause)
-command to this test:
+In the example below, a [cy.pause()](/api/commands/pause) call pauses execution so you can step through the remaining commands.
 
 ```js
 describe('My First Test', () => {
@@ -715,8 +471,7 @@ describe('My First Test', () => {
 })
 ```
 
-Now, when the test runs, Cypress provides us a UI (similar to debugger) to step
-forward through each command in the test.
+When the test runs, Cypress shows step controls so you can advance one command at a time and inspect state between steps.
 
 <DocsImage
   src="/img/app/core-concepts/open-mode/first-test-paused.png"
@@ -726,6 +481,6 @@ forward through each command in the test.
 In action:
 
 <DocsVideo
-  src="/img/snippets/first-test-debugging-30fps.mp4"
+  src="/img/snippets/first-test-debugging.mp4"
   title="Pause test runner demo"
 />
