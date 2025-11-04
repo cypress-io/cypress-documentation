@@ -1,6 +1,6 @@
 ---
 title: 'Cypress.ElementSelector | Cypress Documentation'
-description: 'Customize how Cypress chooses selectors in Studio and Selector Playground by setting your preferred selector strategy.'
+description: 'Customize how Cypress chooses selectors in Studio and cy.prompt() by setting your preferred selector strategy.'
 sidebar_label: ElementSelector
 sidebar_position: 105
 ---
@@ -9,7 +9,7 @@ sidebar_position: 105
 
 # Cypress.ElementSelector
 
-The ElementSelector API lets you define how Cypress selects elements in tools like [Cypress Studio](/app/guides/cypress-studio) and the [Selector Playground](/app/core-concepts/open-mode#Selector-Playground) (which will be replaced by Cypress Studio once it is no longer experimental).
+The ElementSelector API lets you define how Cypress selects elements in tools like [Cypress Studio](/app/guides/cypress-studio) and [cy.prompt()](/api/commands/prompt).
 
 By setting your own selector strategy, you can control which attributes Cypress prioritizes (like `data-*`, `id`, or `aria-label`) when generating selectors. This helps you enforce consistency, improve test readability, and make generated tests more resilient to changes in your HTML.
 
@@ -72,7 +72,7 @@ The [jQuery element](http://api.jquery.com/Types/#jQuery) for which you want to 
 
 ### Set custom selector priority
 
-You can customize how Cypress generates selectors by defining a priority order for which attributes to prefer. This affects the selectors you see in tools like [Cypress Studio](/app/guides/cypress-studio) and the [Selector Playground](/app/core-concepts/open-mode#Selector-Playground) (which will be replaced by Cypress Studio once it is no longer experimental).
+You can customize how Cypress generates selectors by defining a priority order for which attributes to prefer. This affects the selectors you see in tools like [Cypress Studio](/app/guides/cypress-studio) and [cy.prompt()](/api/commands/prompt)
 
 For example, this config tells Cypress to prefer semantic and accessibility attributes before falling back to styling details like class names.
 
@@ -158,4 +158,4 @@ Cypress.ElementSelector.defaults({
 ## See also
 
 - [Cypress Studio](/app/guides/cypress-studio)
-- [Selector Playground](/app/core-concepts/open-mode#Selector-Playground)
+- [cy.prompt()](/api/commands/prompt)
