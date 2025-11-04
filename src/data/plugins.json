@@ -370,6 +370,19 @@
           "link": "https://github.com/pradapjackie/cypress-geolocation-locale-faker",
           "keywords": ["geolocation", "timezone", "locale", "language", "plugin", "testing"],
           "badge": "community"
+        },
+        {
+          "name": "cypress-load-balancer",
+          "description": "A simple load balancer for Cypress tests. Use this for parallelizing jobs across CI/CD solutions or locally in separate processes.",
+          "link": "https://github.com/hammzj/cypress-load-balancer/",
+          "keywords": [
+            "ci",
+            "continuous-integration",
+            "load-balancer",
+            "parallel",
+            "sharding"
+          ],
+          "badge": "community"
         }
       ]
     },
@@ -791,19 +804,6 @@
           "description": "Ruby gem to run Cypress against Rails apps, replacing Capybara in system tests.",
           "link": "https://github.com/testdouble/cypress-rails",
           "keywords": ["ruby", "rails"],
-          "badge": "community"
-        },
-        {
-          "name": "cypress-load-balancer",
-          "description": "A simple load balancer for Cypress tests. Use this for parallelizing jobs across CI/CD solutions or locally in separate processes.",
-          "link": "https://github.com/hammzj/cypress-load-balancer/",
-          "keywords": [
-            "ci",
-            "continuous-integration",
-            "load-balancer",
-            "parallel",
-            "sharding"
-          ],
           "badge": "community"
         }
       ]
