@@ -230,9 +230,15 @@ The Command Log also records application events. These entries appear in gray wi
 
 ### Hide HTTP Requests
 
-When you do not need to inspect network calls, you can hide HTTP requests in the Command Log to reduce noise. Use the Hide HTTP Requests control in the Command Log header to collapse entries for XHR and fetch requests. This makes it easier to focus on the commands that interact with the page.
+When you do not need to inspect network calls, you can hide HTTP requests in the Command Log to reduce noise. Deselect the "Show HTTP Requests" toggle in the Options menu in the Command Log header to collapse entries for XHR and fetch requests. This makes it easier to focus on the commands that interact with the page.
 
 Hiding HTTP requests does not change how your tests run. It only affects what is displayed in the Command Log. Requests still execute and remain available to assertions and tooling like [`cy.intercept()`](/api/commands/intercept).
+
+<DocsVideo
+  src="/img/app/core-concepts/open-mode/hide-http-fetch-requests-cypress.mp4"
+  title="Hide HTTP Fetch Requests in the Command Log"
+  autoPlay={true}
+/>
 
 ### Instrument panel
 
