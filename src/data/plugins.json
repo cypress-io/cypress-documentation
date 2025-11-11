@@ -65,7 +65,7 @@
     {
       "name": "Secret Managment",
       "plugins": [
-         {
+        {
           "name": "Cypress AWS Secrets Manager",
           "description": "This plugin integrates AWS Secrets Manager into your Cypress tests, ensuring that sensitive data like API keys, passwords, and tokens remain secure during testing. It allows for secure loading and updating of secrets directly from your tests.",
           "link": "https://github.com/alecmestroni/cypress-aws-secrets-manager/",
@@ -369,6 +369,19 @@
           "description": "A Cypress plugin to mock geolocation, timezone, language, and locale settings for end-to-end testing. Useful for simulating user environments worldwide.",
           "link": "https://github.com/pradapjackie/cypress-geolocation-locale-faker",
           "keywords": ["geolocation", "timezone", "locale", "language", "plugin", "testing"],
+          "badge": "community"
+        },
+        {
+          "name": "cypress-load-balancer",
+          "description": "A simple load balancer for Cypress tests. Use this for parallelizing jobs across CI/CD solutions or locally in separate processes.",
+          "link": "https://github.com/hammzj/cypress-load-balancer/",
+          "keywords": [
+            "ci",
+            "continuous-integration",
+            "load-balancer",
+            "parallel",
+            "sharding"
+          ],
           "badge": "community"
         }
       ]
