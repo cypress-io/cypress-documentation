@@ -84,6 +84,12 @@ Studio will automatically create a new test definition for you.
 
 ### Extend an existing test
 
+:::warning
+
+**Sourcemaps required:** Sourcemaps must be enabled for Studio to load your existing test. See [how to enable sourcemaps](api/node-events/preprocessors-api#Source-maps) for more information.
+
+:::
+
 You can extend and update existing tests using Cypress Studio.
 
 1. Run the spec in Cypress
@@ -149,7 +155,8 @@ Want more control? Use the [`Cypress.ElementSelector`](/api/cypress-api/element-
 - Cucumber tests are not yet supported
 - Cannot record across [multiple
   origins](/app/guides/cross-origin-testing).
-- See issues labeled with [`experiment: studio`](https://github.com/cypress-io/cypress/issues?q=is%3Aissue%20state%3Aopen%20label%3A%22experiment%3A%20studio%22) for other known issues.
+- Recording in iframe is not yet supported
+- See issues labeled with [`topic: studio`](https://github.com/cypress-io/cypress/issues?q=is%3Aissue%20state%3Aopen%20label%3A%22topic%3A%20studio%22) for other known issues.
 
 ## Coming Soon: AI in Studio
 
