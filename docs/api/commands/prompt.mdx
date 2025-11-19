@@ -422,11 +422,11 @@ Configure the selector priority in your support file or test file:
 // cypress/support/e2e.js or in your test file
 Cypress.ElementSelector.defaults({
   selectorPriority: [
-    'data-cy',           // Prefer data-cy attributes
-    'attribute:role',    // Then ARIA roles
+    'data-cy', // Prefer data-cy attributes
+    'attribute:role', // Then ARIA roles
     'attribute:aria-label', // Then ARIA labels
-    'id',                // Then IDs
-    'class',             // Finally classes
+    'id', // Then IDs
+    'class', // Finally classes
   ],
 })
 ```
