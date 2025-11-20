@@ -11,7 +11,14 @@ sidebar_custom_props: { 'new_label': true }
 
 # prompt
 
-`cy.prompt` is a Cypress command that uses AI to convert natural language test steps into executable Cypress tests. It's designed to be flexible - you can use it to quickly generate tests and commit them to source control, or keep it running continuously for self-healing tests that adapt to your app's changes. You can choose the workflow that fits your project's needs.
+`cy.prompt` is a Cypress command that uses AI to convert natural language test steps into executable Cypress tests. You can view the generated Cypress code at any time using the **Code** button in the Command Log, giving you full visibility into what commands were created from your prompts.
+
+**`cy.prompt` supports two flexible workflows:**
+
+1. **Generate and export** - Use AI to quickly create tests, review the generated code, and save it to your test files for predictable, version-controlled tests
+2. **Continuous self-healing** - Keep `cy.prompt` running in your tests to automatically adapt when your app changes
+
+You can choose the workflow that fits your project's needs.
 
 :::note
 
@@ -21,6 +28,7 @@ sidebar_custom_props: { 'new_label': true }
 - [Choosing your workflow](#Choose-your-workflow) — decide between one-time generation or continuous self-healing
 - [How to write effective prompts](#How-to-write-effective-prompts) — craft clear, reliable natural language steps
 - [What you can do](#What-you-can-do) — explore supported actions and capabilities
+- [Viewing and exporting generated code](#Viewing-and-exporting-generated-code) — see the Cypress code generated from your prompts and save it to your files
 - [Setup](#Setup) — enable the command and configure authentication
 
 :::
@@ -94,7 +102,7 @@ When you call `cy.prompt`, Cypress performs a multi-step process:
 
 2. **Generate selectors:** Cypress evaluates your app's DOM and picks a selector based on priority rules (unique identifiers that are likely to be stable).
 
-3. **Generate Cypress code:** Commands are generated and executed in sequence. The Command Log shows both your natural language step and the commands Cypress ran.
+3. **Generate Cypress code:** Commands are generated and executed in sequence. The Command Log shows both your natural language step and the commands Cypress ran. You can view the complete generated code at any time using the **Code** button in the Command Log.
 
 4. **Cache for speed:** Generated code is cached. Re-running the same test does not re-call the AI model unless the prompt or DOM changes in a way that invalidates the cached code.
 
@@ -138,7 +146,13 @@ cy.prompt(
 )
 ```
 
-Use the **Get code** button to view the generated Cypress code. This will display the generated code in a dialog where you can preview what Cypress generated from your prompt. You can save the code to your test file, commit it to your version control system, or copy it to your clipboard.
+After the test runs, click the **Code** button in the Command Log to view the generated Cypress code. This opens a dialog showing the complete Cypress commands that were generated from your natural language steps. From there, you can:
+
+- **Save to file** - Replace your `cy.prompt` call with the generated code directly in your test file
+- **Copy to clipboard** - Copy the code for use elsewhere
+- **Review and modify** - Inspect the generated selectors and commands before committing
+
+This workflow lets you use AI to quickly generate test code, then commit the exact generated code to your repository for predictable, version-controlled tests.
 
 <DocsVideo
   src="/img/api/prompt/cy-prompt-demo.mp4"
@@ -169,6 +183,12 @@ cy.prompt([
   'verify the product count is 25',
 ])
 ```
+
+Even when using `cy.prompt` for continuous testing, you can still view the generated code at any time. Click the **Code** button in the Command Log to see what Cypress generated, which is especially useful for:
+
+- **Debugging** - Understanding why a test behaved a certain way
+- **Learning** - Seeing how natural language maps to Cypress commands
+- **Exporting later** - If you decide to switch to Workflow 1, you can export the code at any point
 
 ## How to write effective prompts
 
@@ -361,6 +381,57 @@ describe('Campaign Management', () => {
   })
 })
 ```
+
+## Viewing and exporting generated code
+
+At any time during or after a test run, you can view the exact Cypress code that `cy.prompt` generated from your natural language steps. This transparency is built into every `cy.prompt` execution.
+
+### How to view generated code
+
+- **Run your test** with `cy.prompt` in Cypress App
+- **Click the "Code" button** - This button appears next to each `cy.prompt` command in the Command Log
+
+<DocsImage
+  src="/img/api/prompt/cy-prompt-export-code.png"
+  alt="Code button in the Command Log"
+/>
+
+- **Review the generated code** - A dialog displays the complete Cypress code with all of the generated commands (e.g., `cy.get()`, `cy.click()`, `cy.type()`) and comments showing which prompt step generated each command.
+
+<DocsImage
+  src="/img/api/prompt/cy-prompt-generated-test-code.png"
+  alt="Generated Cypress code dialog"
+/>
+
+### What you can do with the generated code
+
+Once you have the generated code, you can:
+
+- **Save code to your test file** - Replace the `cy.prompt` call with the generated Cypress commands for predictable, version-controlled tests.
+- **Copy code to your clipboard** - Use the code in other files or share it with your team.
+
+This helps you review and modify the generated code as needed or just use it as a reference to understand what `cy.prompt` is doing behind the scenes.
+
+### Customizing selectors in generated code
+
+You can customize which selectors `cy.prompt` uses when generating Cypress code by configuring the [ElementSelector API](/api/cypress-api/element-selector-api). This lets you control which attributes Cypress prioritizes (like `data-*`, `id`, `aria-label`, etc.) when creating selectors, ensuring the generated code matches your project's selector strategy.
+
+Configure the selector priority in your support file or test file:
+
+```javascript
+// cypress/support/e2e.js or in your test file
+Cypress.ElementSelector.defaults({
+  selectorPriority: [
+    'data-cy', // Prefer data-cy attributes
+    'attribute:role', // Then ARIA roles
+    'attribute:aria-label', // Then ARIA labels
+    'id', // Then IDs
+    'class', // Finally classes
+  ],
+})
+```
+
+For more examples and details, see the [ElementSelector API documentation](/api/cypress-api/element-selector-api).
 
 ## Setup
 
