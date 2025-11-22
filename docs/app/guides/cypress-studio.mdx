@@ -1,19 +1,21 @@
 ---
-title: 'Cypress Studio: Build Tests by Interacting with Your App'
-description: 'Create, extend, and refine Cypress tests without writing commands by hand.'
-sidebar_label: 'Cypress Studio'
+title: 'Cypress Studio AI: Build Tests by Interacting with Your App'
+description: 'Create, extend, and refine Cypress tests with AI-powered recommendations without writing commands by hand.'
+sidebar_label: 'Cypress Studio AI'
 e2eSpecific: true
+sidebar_custom_props: { 'new_label': true }
 ---
 
 <ProductHeading product="app" />
 
-# Cypress Studio
+# Cypress Studio AI
 
 :::info
 
 ##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
 
 - How to generate Cypress tests by interacting with your app
+- How AI automatically suggests relevant assertions as you record
 - How to add assertions by right-clicking elements
 - How to quickly extend or edit tests without leaving Cypress
 
@@ -24,16 +26,21 @@ e2eSpecific: true
 Cypress Studio turns test creation into a natural part of exploring your app.  
 Instead of manually typing every `.get()`, `.click()`, or `.type()` command, you can **record interactions in real time**, automatically generate Cypress code, and fine-tune your test inline.
 
+### Powered by AI
+
+With **Cypress Studio AI**, intelligent recommendations appear automatically as you record. The AI analyzes your interactions and suggests the most relevant assertions for each step, helping you build more comprehensive tests with less effort.
+
 - **Save time**: Skip manually typing `.get().click().type()` sequences
 - **Stay in the flow**: Build and extend tests without leaving the Cypress App
 - **Boost coverage**: Add new checks to existing tests in seconds
+- **AI-powered insights**: Get intelligent assertion recommendations as you interact with your app
 
 <DocsVideo
   src="/img/app/cypress-studio/cypress-studio-recording-assertions-editing.mp4"
   autoPlay={true}
 />
 
-## 🚀 Quickstart: Try Studio in 60 Seconds
+## 🚀 Quickstart: Try Studio AI in 60 Seconds
 
 :::success
 
@@ -42,8 +49,11 @@ Instead of manually typing every `.get()`, `.click()`, or `.type()` command, you
 2. **Open Studio:**
    Click Edit in Studio on a test in the Command Log or click Studio Beta in the Studio panel.
 
-3. **Interact & Save:**
-   Click, type, and right-click to add assertions. Click Save to save your test.
+3. **Interact & Get AI Recommendations:**
+   Click, type, and watch as AI automatically suggests relevant assertions in the Studio Panel. Accept or reject recommendations as you build your test.
+
+4. **Save Your Test:**
+   Click Save to save your test with all the AI-suggested assertions.
 
 :::
 
@@ -56,6 +66,26 @@ When Studio is enabled, you can:
 - **Edit:** Adjust tests inline without switching tools
 
 Supported action commands include: [`.click()`](/api/commands/click), [`.type()`](/api/commands/type), [`.check()`](/api/commands/check), [`.uncheck()`](/api/commands/uncheck), [`.select()`](/api/commands/select)
+
+## AI-Powered Recommendations
+
+Cypress Studio AI enhances your test creation workflow by automatically analyzing your interactions and suggesting relevant assertions in real time. As you record actions, the AI appears in the Studio Panel with intelligent recommendations tailored to each step.
+
+### How AI Recommendations Work
+
+1. **Automatic Analysis**: As you interact with elements, the AI analyzes the context and element properties
+2. **Smart Suggestions**: Relevant assertions appear in the Studio Panel based on your actions
+3. **Accept or Reject**: Review each recommendation and choose to accept or reject it
+4. **Seamless Integration**: Accepted recommendations can be saved to your test file
+
+### Types of AI Recommendations
+
+The AI Suggests assertions based on changes within your App after interactions occur.
+
+- **Visibility checks**: Ensure elements are visible or hidden
+- **Text validation**: Verify text content matches expectations
+- **Form validation**: Check input values, selections, and form states
+- **Element properties**: Validate attributes, classes, and other properties
 
 ### Start Studio
 
@@ -158,21 +188,72 @@ Want more control? Use the [`Cypress.ElementSelector`](/api/cypress-api/element-
 - Recording in iframe is not yet supported
 - See issues labeled with [`topic: studio`](https://github.com/cypress-io/cypress/issues?q=is%3Aissue%20state%3Aopen%20label%3A%22topic%3A%20studio%22) for other known issues.
 
-## Coming Soon: AI in Studio
+:::note
 
-Imagine Studio suggesting the most relevant assertions for every step you take. Cypress AI is a feature that's **coming soon** that will recommend relevant assertions in real time based on your interactions.
+**Studio without AI**: Cypress Studio can be used without AI features and does not require a Cloud account. You can still record interactions and manually add assertions by right-clicking elements.
+
+**Studio with AI**: AI-powered recommendations require a Cypress Cloud account and provide intelligent assertion suggestions as you record.
+
+:::
+
+## Authentication & usage
+
+Because Cypress Studio AI uses AI under the hood, it needs to communicate securely with large language models to analyze your interactions and generate relevant assertion recommendations. Cypress Cloud helps manage those requests, apply organization-level controls, and track usage in a way that's non-invasive. We never use your interactions to train AI models, and you can turn AI features off at any time. Cypress Studio AI is currently available on any of our [Cypress Cloud plan types](https://www.cypress.io/pricing).
+
+**To use Cypress Studio AI, you must either:**
+
+- Log into Cypress Cloud
+- Set up your project in Cypress Cloud
+
+**If you don't have a Cloud account, create a free account and gain access to a 2-week trial of all paid features.**
 
 <Btn
-  label="Join the waitlist ➜"
+  label="Sign up ➜"
   variant="indigo-dark"
   className="mr-1"
-  href="https://go.cypress.io/studio-ai-waitlist?utm_source=docs.cypress.io&utm_medium=cypress-studio&utm_content=Join-the-waitlist"
+  href="https://cloud.cypress.io/signup"
+/>
+<Btn
+  label="See a demo"
+  icon="action-play-small"
+  className="mr-1"
+  href="https://www.youtube.com/watch?v=vFLShoCM8pA"
+/>
+<Btn
+  label=" Explore an example project"
+  icon="technology-terminal-log"
+  href="https://cloud.cypress.io/projects/7s5okt"
 />
 
-<DocsImage
-  src="/img/app/cypress-studio/cypress-studio-ai-illustration.gif"
-  alt="Cypress AI in Studio generating assertions"
-/>
+## Pricing & usage limits
+
+During the experimental release, access will be provided at no additional charge. Users are limited by the number of AI recommendations they can receive per hour. This limit is higher for paid accounts and lower for free accounts. Our intention is to not limit normal usage of the feature.
+
+:::note
+
+Please note that pricing and usage limitations are subject to future adjustments. We commit to keeping you informed of any such changes.
+
+:::
+
+### Usage limits
+
+**User limits on projects with free accounts:**
+
+- 60 AI recommendations per hour
+
+**User limits on projects with paid accounts (or on free trial):**
+
+- 300 AI recommendations per hour
+
+## Privacy & security
+
+For detailed information about how Cypress protects your data and manages AI model security, see our [Security & Compliance page](https://www.cypress.io/security).
+
+## Disabling AI features
+
+AI capabilities, including Cypress Studio AI, are enabled by default for all users on any Cloud plan. Organization admins and owners can enable and disable the AI capabilities for their entire organization from their organization settings. For more information, see [our FAQ](/cloud/faq#Are-all-Cloud-AI-capabilities-enabled-by-default-How-can-I-turn-them-off).
+
+You can also disable Studio AI locally in the Cypress App by toggling off the AI feature in the Studio panel.
 
 ## See also
 
