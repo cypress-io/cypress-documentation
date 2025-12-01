@@ -934,8 +934,8 @@
         },
         {
           "name": "Happo",
-          "description": "Cross-platform, cross-browser screenshot testing for modern user interfaces.",
-          "link": "https://github.com/happo/happo-cypress",
+          "description": "Catch unexpected visual and accessibility changes and UI bugs",
+          "link": "https://docs.happo.io/docs/cypress",
           "keywords": ["screenshots", "visual regression"],
           "badge": "community"
         },
