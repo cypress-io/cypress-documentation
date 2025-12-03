@@ -43,8 +43,7 @@ cy.request(Cypress.env('EXTERNAL_API')) // points to a dynamic env var
 
 <strong>Using 'baseUrl'</strong>
 
-Environment variables are great at pointing to external services and servers, or
-storing password or other credentials.
+Environment variables are great at pointing to external services and servers.
 
 However, you **do not** need to use environment variables to point to the origin
 and domain under test. Use `baseUrl` instead of environment variables.
@@ -275,7 +274,7 @@ You can use the `--env` argument for
 
 :::caution
 
-Multiple values must be separated by a comma, not a space. In some shells, like Windows PowerShell, you may need to surround the key/value pair with quotes: `--env "cyuser=dummyUser,cypassword=dummyPassword"`.
+Multiple values must be separated by a comma, not a space. In some shells, like Windows PowerShell, you may need to surround the key/value pair with quotes: `--env "host=kevin.dev.local,api_server=http://localhost:8888/api/v1"`.
 
 :::
 

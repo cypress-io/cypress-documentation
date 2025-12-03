@@ -66,15 +66,7 @@ To have access to test user credentials within our tests, we need to configure
 Cypress to use the
 [Azure Active Directory](https://learn.microsoft.com/en-us/azure/active-directory/fundamentals/active-directory-whatis)
 user credentials for a given user in your tenant. These user credentials should
-be set in the `cypress.env.json` file inside the root directory of your project.
-
-```json title="cypress.env.json"
-{
-  "aad_username": "AAD_USERNAME",
-  "aad_password": "AAD_PASSWORD",
-  "aad_name": "AAD_NAME"
-}
-```
+be set as OS-level environment variables (e.g., in your `.env` file or CI secret management).
 
 Also, to authenticate with Azure Active Directory, you'll need to enable the
 [`experimentalModifyObstructiveThirdPartyCode`](/app/guides/cross-origin-testing#Modifying-Obstructive-Third-Party-Code)
@@ -87,7 +79,27 @@ authentication workflow will enter an infinite redirect loop.
 {
   e2e: {
     experimentalModifyObstructiveThirdPartyCode: true
-  }
+  },
+  setupNodeEvents(on, config) {
+    on('task', {
+      getAuthCredentials() {
+        const username = process.env.AAD_USERNAME
+        const password = process.env.AAD_PASSWORD
+        if (!username || !password) {
+          throw new Error('AAD_USERNAME and AAD_PASSWORD must be set')
+        }
+        return { username, password }
+      },
+      getSecret(secretName) {
+        const secret = process.env[secretName]
+        if (!secret) {
+          throw new Error(`Secret ${secretName} is not set`)
+        }
+        return secret
+      },
+    })
+    return config
+  },
 }
 ```
 
@@ -145,10 +157,12 @@ function loginViaAAD(username: string, password: string) {
 
   // Ensure Microsoft has redirected us back to the sample app with our logged in user.
   cy.url().should('equal', 'http://localhost:3000/')
-  cy.get('#welcome-div').should(
-    'contain',
-    `Welcome ${Cypress.env('aad_username')}!`
-  )
+  cy.task('getAuthCredentials').then(({ username }) => {
+    cy.get('#welcome-div').should(
+      'contain',
+      `Welcome ${username}!`
+    )
+  })
 }
 
 Cypress.Commands.add('loginToAAD', (username: string, password: string) => {
@@ -173,22 +187,25 @@ as a user via Azure Active Directory and run a basic sanity check.
 describe('Azure Active Directory Authentication', () => {
   beforeEach(() => {
     // log into Azure Active Directory through our sample SPA using our custom command
-    cy.loginToAAD(Cypress.env('aad_username'), Cypress.env('aad_password'))
+    cy.task('getAuthCredentials').then(({ username, password }) => {
+      cy.loginToAAD(username, password)
+    })
     cy.visit('http://localhost:3000')
   })
 
   it('verifies the user logged in has the correct name', () => {
-    cy.get('#table-body-div td:contains("name") + td').should(
-      'contain',
-      `${Cypress.env('aad_name')}`
-    )
+    cy.task('getSecret', 'AAD_NAME').then((name) => {
+      cy.get('#table-body-div td:contains("name") + td').should('contain', name)
+    })
   })
 
   it('verifies the user logged in has the correct preferred name', () => {
-    cy.get('#table-body-div td:contains("preferred_username") + td').should(
-      'contain',
-      `${Cypress.env('aad_username')}`
-    )
+    cy.task('getAuthCredentials').then(({ username }) => {
+      cy.get('#table-body-div td:contains("preferred_username") + td').should(
+        'contain',
+        username
+      )
+    })
   })
 })
 ```
@@ -230,10 +247,9 @@ Cypress.Commands.add('loginToAAD', (username: string, password: string) => {
         // this is a very basic form of session validation for this demo.
         // depending on your needs, something more verbose might be needed
         cy.visit('http://localhost:3000')
-        cy.get('#welcome-div').should(
-          'contain',
-          `Welcome ${Cypress.env('aad_username')}!`
-        )
+        cy.task('getAuthCredentials').then(({ username }) => {
+          cy.get('#welcome-div').should('contain', `Welcome ${username}!`)
+        })
       },
     }
   )

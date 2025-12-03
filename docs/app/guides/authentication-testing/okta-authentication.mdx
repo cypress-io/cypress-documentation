@@ -46,10 +46,21 @@ require('dotenv').config()
 ```js
 {
   env: {
-    auth_username: process.env.AUTH_USERNAME,
-    auth_password: process.env.AUTH_PASSWORD,
     okta_domain: process.env.REACT_APP_OKTA_DOMAIN,
     okta_client_id: process.env.REACT_APP_OKTA_CLIENTID,
+  },
+  setupNodeEvents(on, config) {
+    on('task', {
+      getAuthCredentials() {
+        const username = process.env.AUTH_USERNAME
+        const password = process.env.AUTH_PASSWORD
+        if (!username || !password) {
+          throw new Error('AUTH_USERNAME and AUTH_PASSWORD must be set')
+        }
+        return { username, password }
+      },
+    })
+    return config
   },
 }
 ```
@@ -120,7 +131,9 @@ is in the <Icon name="github" inline="true" contentType="rwa" />.
 describe('Okta', function () {
   beforeEach(function () {
     cy.task('db:seed')
-    cy.loginByOkta(Cypress.env('okta_username'), Cypress.env('okta_password'))
+    cy.task('getAuthCredentials').then(({ username, password }) => {
+      cy.loginByOkta(username, password)
+    })
   })
 
   it('verifies signed in user does not have a bank account', function () {
@@ -238,10 +251,9 @@ process and logout.
 describe('Okta', function () {
   beforeEach(function () {
     cy.task('db:seed')
-    cy.loginByOktaApi(
-      Cypress.env('auth_username'),
-      Cypress.env('auth_password')
-    )
+    cy.task('getAuthCredentials').then(({ username, password }) => {
+      cy.loginByOktaApi(username, password)
+    })
   })
 
   it('shows onboarding', function () {

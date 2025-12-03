@@ -90,13 +90,30 @@ require('dotenv').config()
 ```js
 {
   env: {
-    auth0_username: process.env.AUTH0_USERNAME,
-    auth0_password: process.env.AUTH0_PASSWORD,
     auth0_domain: process.env.REACT_APP_AUTH0_DOMAIN,
     auth0_audience: process.env.REACT_APP_AUTH0_AUDIENCE,
     auth0_scope: process.env.REACT_APP_AUTH0_SCOPE,
     auth0_client_id: process.env.REACT_APP_AUTH0_CLIENTID,
-    auth0_client_secret: process.env.AUTH0_CLIENT_SECRET,
+  },
+  setupNodeEvents(on, config) {
+    on('task', {
+      getAuthCredentials() {
+        const username = process.env.AUTH0_USERNAME
+        const password = process.env.AUTH0_PASSWORD
+        if (!username || !password) {
+          throw new Error('AUTH0_USERNAME and AUTH0_PASSWORD must be set')
+        }
+        return { username, password }
+      },
+      getSecret(secretName) {
+        const secret = process.env[secretName]
+        if (!secret) {
+          throw new Error(`Secret ${secretName} is not set`)
+        }
+        return secret
+      },
+    })
+    return config
   },
 }
 ```
@@ -177,10 +194,10 @@ describe('Auth0', function () {
   beforeEach(function () {
     cy.task('db:seed')
     cy.intercept('POST', '/graphql').as('createBankAccount')
-    cy.loginToAuth0(
-      Cypress.env('auth0_username'),
-      Cypress.env('auth0_password')
-    )
+
+    cy.task('getAuthCredentials').then(({ username, password }) => {
+      cy.loginToAuth0(username, password)
+    })
     cy.visit('/')
   })
 
@@ -256,23 +273,23 @@ Cypress.Commands.add(
   (username: string, password: string) => {
     cy.log(`Logging in as ${username}`)
     const client_id = Cypress.env('auth0_client_id')
-    const client_secret = Cypress.env('auth0_client_secret')
     const audience = Cypress.env('auth0_audience')
     const scope = Cypress.env('auth0_scope')
 
-    cy.request({
-      method: 'POST',
-      url: `https://${Cypress.env('auth0_domain')}/oauth/token`,
-      body: {
-        grant_type: 'password',
-        username,
-        password,
-        audience,
-        scope,
-        client_id,
-        client_secret,
-      },
-    }).then(({ body }) => {
+    cy.task('getSecret', 'AUTH0_CLIENT_SECRET').then((client_secret) => {
+      cy.request({
+        method: 'POST',
+        url: `https://${Cypress.env('auth0_domain')}/oauth/token`,
+        body: {
+          grant_type: 'password',
+          username,
+          password,
+          audience,
+          scope,
+          client_id,
+          client_secret,
+        },
+      }).then(({ body }) => {
       const claims = jwt.decode(body.id_token)
       const {
         nickname,
@@ -309,6 +326,7 @@ Cypress.Commands.add(
       window.localStorage.setItem('auth0Cypress', JSON.stringify(item))
 
       cy.visit('/')
+      })
     })
   }
 )
@@ -324,10 +342,9 @@ onboarding process and logout.
 describe('Auth0', function () {
   beforeEach(function () {
     cy.task('db:seed')
-    cy.loginByAuth0Api(
-      Cypress.env('auth0_username'),
-      Cypress.env('auth0_password')
-    )
+    cy.task('getAuthCredentials').then(({ username, password }) => {
+      cy.loginByAuth0Api(username, password)
+    })
   })
 
   it('shows onboarding', function () {
@@ -641,14 +658,16 @@ Cypress.Commands.add('loginByAuth0Api', (username, password) => {
   cy.exec('curl -4 icanhazip.com')
     .its('stdout')
     .then((ip) => {
-      cy.request({
-        method: 'DELETE',
-        url: `https://${Cypress.env(
-          'auth0_domain'
-        )}/api/v2/anomaly/blocks/ips/${ip}`,
-        auth: {
-          bearer: Cypress.env('auth0_mgmt_api_token'),
-        },
+      cy.task('getSecret', 'AUTH0_MGMT_API_TOKEN').then((token) => {
+        cy.request({
+          method: 'DELETE',
+          url: `https://${Cypress.env(
+            'auth0_domain'
+          )}/api/v2/anomaly/blocks/ips/${ip}`,
+          auth: {
+            bearer: token,
+          },
+        })
       })
     })
 

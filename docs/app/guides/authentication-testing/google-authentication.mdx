@@ -105,9 +105,20 @@ require('dotenv').config()
 ```js
 {
   env: {
-    googleRefreshToken: process.env.GOOGLE_REFRESH_TOKEN,
     googleClientId: process.env.REACT_APP_GOOGLE_CLIENTID,
-    googleClientSecret: process.env.REACT_APP_GOOGLE_CLIENT_SECRET,
+  },
+  setupNodeEvents(on, config) {
+    on('task', {
+      getGoogleAuthCredentials() {
+        const clientSecret = process.env.REACT_APP_GOOGLE_CLIENT_SECRET
+        const refreshToken = process.env.GOOGLE_REFRESH_TOKEN
+        if (!clientSecret || !refreshToken) {
+          throw new Error('REACT_APP_GOOGLE_CLIENT_SECRET and GOOGLE_REFRESH_TOKEN must be set')
+        }
+        return { clientSecret, refreshToken }
+      },
+    })
+    return config
   },
 }
 ```
@@ -134,16 +145,17 @@ The `loginByGoogleApi` command will execute the following steps:
 ```jsx title="cypress/support/commands.js"
 Cypress.Commands.add('loginByGoogleApi', () => {
   cy.log('Logging in to Google')
-  cy.request({
-    method: 'POST',
-    url: 'https://www.googleapis.com/oauth2/v4/token',
-    body: {
-      grant_type: 'refresh_token',
-      client_id: Cypress.env('googleClientId'),
-      client_secret: Cypress.env('googleClientSecret'),
-      refresh_token: Cypress.env('googleRefreshToken'),
-    },
-  }).then(({ body }) => {
+  cy.task('getGoogleAuthCredentials').then(({ clientSecret, refreshToken }) => {
+    cy.request({
+      method: 'POST',
+      url: 'https://www.googleapis.com/oauth2/v4/token',
+      body: {
+        grant_type: 'refresh_token',
+        client_id: Cypress.env('googleClientId'),
+        client_secret: clientSecret,
+        refresh_token: refreshToken,
+      },
+    }).then(({ body }) => {
     const { access_token, id_token } = body
 
     cy.request({
