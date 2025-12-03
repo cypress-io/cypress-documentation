@@ -1,6 +1,6 @@
 ---
 title: 'cy.prompt() - Generate Cypress Tests with Natural Language and AI'
-description: Generate Cypress tests from plain English using AI. Automate test creation, reduce maintenance, and enable self-healing with cy.prompt.
+description: AI-powered Cypress command for developers and QA teams. Generate Cypress tests from plain English, get self-healing selectors, and reduce end-to-end test maintenance with cy.prompt.
 sidebar_label: prompt
 slug: /api/commands/prompt
 e2eSpecific: true
@@ -11,7 +11,7 @@ sidebar_custom_props: { 'new_label': true }
 
 # prompt
 
-`cy.prompt` is a Cypress command that uses AI to convert natural language test steps into executable Cypress tests. You can view the generated Cypress code at any time using the **Code** button in the Command Log, giving you full visibility into what commands were created from your prompts.
+`cy.prompt` is a Cypress command that uses AI to convert natural language test steps into executable Cypress tests. It helps developers and QA engineers generate tests faster, experiment with self-healing end-to-end tests, and reduce ongoing test maintenance. You can view the generated Cypress code at any time using the **Code** button in the Command Log, giving you full visibility into what commands were created from your prompts.
 
 **`cy.prompt` supports two flexible workflows:**
 
@@ -28,7 +28,8 @@ You can choose the workflow that fits your project's needs.
 - [Choosing your workflow](#Choose-your-workflow) — decide between one-time generation or continuous self-healing
 - [How to write effective prompts](#How-to-write-effective-prompts) — craft clear, reliable natural language steps
 - [What you can do](#What-you-can-do) — explore supported actions and capabilities
-- [Viewing and exporting generated code](#Viewing-and-exporting-generated-code) — see the Cypress code generated from your prompts and save it to your files
+- [See self-healed steps in the Command Log](#See-self-healed-steps-in-the-Command-Log) — understand exactly what changed and which element the step resolved to
+- [View and export generated code](#View-and-export-generated-code) — see the Cypress code generated from your prompts and save it to your files
 - [Setup](#Setup) — enable the command and configure authentication
 
 :::
@@ -40,6 +41,12 @@ You can choose the workflow that fits your project's needs.
 />
 
 _The demo above shows `cy.prompt` in action with [Cypress Studio](/app/guides/cypress-studio)._
+
+## Why use cy.prompt for AI-powered testing?
+
+- **Reduce test maintenance**: Let AI and self-healing selectors absorb many minor UI changes instead of constantly updating selectors by hand.
+- **Accelerate test creation**: Turn plain-English test ideas into runnable Cypress tests without having to hand-write every command.
+- **Improve collaboration**: Product owners, QA, and developers can all contribute natural language steps that become real tests.
 
 ## Syntax
 
@@ -382,9 +389,56 @@ describe('Campaign Management', () => {
 })
 ```
 
-## Viewing and exporting generated code
+## See self-healed steps in the Command Log
 
-At any time during or after a test run, you can view the exact Cypress code that `cy.prompt` generated from your natural language steps. This transparency is built into every `cy.prompt` execution.
+cy.prompt self-heals when the element it needs to interact with has changed since the last time the step ran, enabling self-healing Cypress tests that adapt as your UI evolves.
+
+When `cy.prompt` self-heals a step, Cypress makes that change visible directly in the Command Log so you can understand exactly what changed and which element the step resolved to.
+
+<DocsImage
+  src="/img/api/prompt/cy-prompt-self-healed-command-log.png"
+  alt="Self-healed tag in the Command Log for a cy.prompt step"
+/>
+
+### Command Log
+
+You can see that a step self-healed in three places:
+
+- **Test** - The test entry shows when at least one `cy.prompt` step self-healed during the run.
+- **Prompt** - The `cy.prompt` command is marked when one or more of its steps self-healed.
+- **Step** - Individual prompt steps show a **Self-healed** tag when the element they resolved to has changed since the last time that step ran.
+
+<DocsImage
+  src="/img/api/prompt/cy-prompt-self-healed-prompt-level-logs.png"
+  alt="Console logs for a self-healed cy.prompt step"
+/>
+
+### Console logs
+
+Clicking a `cy.prompt` command or an individual self-healed step prints detailed Console logs in the Developer Tools, including:
+
+- **Resolved element** - The selector and element that this step resolved to after self-healing.
+- **Cached elements** - The previously resolved elements that the step checked before self-healing.
+- **Self-healed** - Whether the element was self-healed.
+
+If the element was self-healed via cache, the Console logs will show the resolved element within the cached elements. If the element was self-healed via AI, the Console logs will not have the resolved element within the cached elements.
+
+<DocsImage
+  src="/img/api/prompt/cy-prompt-self-healed-step-level-logs.png"
+  alt="Console logs for a self-healed cy.prompt step"
+/>
+
+This level of detail makes it easy to tell whether a self-heal reflects an intentional product change or an unexpected behavior so you can refine or rewrite the step if necessary.
+
+### Self-healed status definitions
+
+**Self-Healed via Cache** - A selector changed since the last time `cy.prompt` ran and the element resolved to another element using the existing cache entry. In this case, `cy.prompt` did **not** call AI; the cached mapping was able to resolve the new element.
+
+**Self-Healed via AI** - A selector changed since the last time `cy.prompt` ran and the element resolved to another element via an AI call because there was no matching cache entry.
+
+## View and export generated code
+
+At any time during or after a test run, you can view the exact Cypress code that `cy.prompt` generated from your natural language steps. Combined with the self-healed tags and Console details in the Command Log, this gives you a clear, auditable record of what happened during `cy.prompt` execution so you can debug AI-generated tests and reduce flaky end-to-end tests over time. This transparency is built into every `cy.prompt` execution.
 
 ### How to view generated code
 
