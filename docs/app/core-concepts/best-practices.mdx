@@ -440,8 +440,7 @@ email's functionality and visual style:
    without involving the UI. Your server would have to expose this endpoint.
 4. You could also use `cy.request()` to a 3rd party email recipient server that
    exposes an API to read off emails. You will then need the proper
-   authentication credentials, which your server could provide, or you could use
-   environment variables. Some email services already provide
+   authentication credentials, which your server could provide via cy.task. Some email services already provide
    <a href="/app/plugins/plugins-list#email">Cypress plugins</a> to access emails.
 
 ## <Icon name="angle-right" /> Having Tests Rely On The State Of Previous Tests

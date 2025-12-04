@@ -138,7 +138,7 @@ cy.exec('man bear pig', { failOnNonZeroExit: false }).then((result) => {
 })
 ```
 
-#### Specify environment variables
+#### Specify system environment variables
 
 ```javascript
 cy.exec('echo $USERNAME', { env: { USERNAME: 'johndoe' } })

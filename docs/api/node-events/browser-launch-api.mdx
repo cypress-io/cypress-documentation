@@ -54,7 +54,7 @@ following properties:
 | `preferences` | `object`   | An object describing browser preferences. Differs between browsers. See [Change browser preferences](#Change-browser-preferences) for details.                                                             |
 | `args`        | `string[]` | An array of strings that will be passed as command-line args when the browser is launched. Has no effect on Electron. See [Modify browser launch arguments](#Modify-browser-launch-arguments) for details. |
 | `extensions`  | `string[]` | An array of paths to folders containing unpacked WebExtensions to be loaded before the browser starts. See [Add browser extensions](#Add-browser-extensions) for details.                                  |
-| `env`         | `object`   | An object of environment variables to pass to the launched browser. See [Configure browser environment](#Configure-browser-environment) for details.                                                       |
+| `env`         | `object`   | An object of system environment variables to pass to the launched browser. See [Configure browser environment](#Configure-browser-environment) for details.                                                       |
 
 ## Usage
 
@@ -162,7 +162,7 @@ Here are preferences available for the currently supported browsers:
 
 :::info
 
-If you want to ignore Chrome preferences altogether, you can set `IGNORE_CHROME_PREFERENCES` as an environment variable when running Cypress.
+If you want to ignore Chrome preferences altogether, you can set `IGNORE_CHROME_PREFERENCES` as a system environment variable when running Cypress.
 
 :::
 
@@ -206,7 +206,7 @@ line switches. The supported switches depend on the Electron version, see
 [Electron documentation](https://www.electronjs.org/docs/api/command-line-switches).
 
 You can pass Electron-specific launch arguments using the
-`ELECTRON_EXTRA_LAUNCH_ARGS` environment variable. For example, to disable HTTP
+`ELECTRON_EXTRA_LAUNCH_ARGS` system environment variable. For example, to disable HTTP
 browser cache and ignore certificate errors, you can set the environment
 variables before running Cypress like below:
 

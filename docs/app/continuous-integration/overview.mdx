@@ -165,7 +165,7 @@ the server like this:
 }
 ```
 
-When working with local `https` in webpack, set an environment variable to allow
+When working with local `https` in webpack, set a system environment variable to allow
 local certificate:
 
 ```json
@@ -534,7 +534,7 @@ like `git show -s --pretty=%B` to get commit message, see
 
 Under some environment setups (e.g. `docker`/`docker-compose`) if the `.git`
 directory is not available or mounted, you can pass all git related information
-under custom environment variables.
+under custom system environment variables.
 
 - Branch: `COMMIT_INFO_BRANCH`
 - Message: `COMMIT_INFO_MESSAGE`
@@ -546,7 +546,7 @@ under custom environment variables.
 If the commit information is missing in the Cypress Cloud run then
 [GitHub Integration](/cloud/integrations/source-control/github) or other
 tasks might not work correctly. To see the relevant Cypress debug logs, set the
-environment variable `DEBUG` on your CI machine and inspect the terminal output
+system environment variable `DEBUG` on your CI machine and inspect the terminal output
 to see why the commit information is unavailable.
 
 ```shell
@@ -555,7 +555,7 @@ DEBUG=commit-info,cypress:server:record
 
 #### CI Build Information
 
-In some newer CI providers, Cypress can't map the environment variables required
+In some newer CI providers, Cypress can't map the system environment variables required
 to link back to builds or pull requests. In this case we provided users some
 environment variables to help pass that information along.
 
@@ -569,7 +569,7 @@ appropriate place.
 #### Custom Environment Variables
 
 You can also set custom environment variables for use in your tests. These
-enable your code to reference dynamic values.
+enable your test code and browserto reference dynamic values.
 
 ```shell
 export "EXTERNAL_API_SERVER=https://corp.acme.co"
@@ -666,7 +666,7 @@ the tools below should be available.
 Xvfb :99 &
 ```
 
-Second, set the X11 address in an environment variable
+Second, set the X11 address in a system environment variable
 
 ```shell
 export DISPLAY=:99
