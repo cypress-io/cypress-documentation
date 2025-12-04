@@ -46,7 +46,6 @@ in the options:
 cy.mount(StepperComponent, {
   componentProperties: {
     count: 100,
-    change: new EventEmitter(),
   },
 })
 ```
@@ -157,6 +156,26 @@ it('clicking + fires a change event with the incremented value', () => {
 })
 ```
 
+### Working with Legacy @Input() Decorators
+
+With the release of Angular 18, [signals](https://angular.dev/guide/signals) became the preferred way to handle data binding.
+However, legacy components that use `@Input()` and `@Output()` decorators are still supported.
+
+Interacting with legacy `@Input()` decorators is a bit different than working with signals.
+In order to update the `@Input()` value, you need to use the `componentRef.setInput` method so Angular change detection runs properly.
+Otherwise, you may see errors.
+
+```ts
+cy.mount(StepperComponent, { componentProperties: { count: 100 } })
+  .then(({ fixture }) => {
+    return cy.contains('span', '100').wrap(fixture)
+  })
+  .then((fixture) => {
+    fixture.componentRef.setInput('count', 110)
+    return cy.contains('span', '110')
+  })
+```
+
 ### Using createOutputSpy()
 
 To make spying on event emitters easier, there is a utility function called
@@ -179,7 +198,13 @@ it('clicking + fires a change event with the incremented value', () => {
 })
 ```
 
-### Using autoSpyOutputs
+### Using autoSpyOutputs (deprecated)
+
+:::caution
+
+The `autoSpyOutputs` flag is deprecated and not supported in `cypress/angular-zoneless` and will be removed in a future version.
+
+:::
 
 You might find yourself repeatedly creating a `cy.spy()` for each of your
 component outputs. Because of this, we created an easy mechanism to handle this
@@ -208,16 +233,7 @@ function. It currently does not work with the template syntax.
 
 :::
 
-:::caution
-
-`autoSpyOutput` is an **experimental feature** and could be removed or changed
-in the future
-
-:::
-
 ### Signals
-
-With the releases of Angular versions [17.1](https://github.com/angular/angular/blob/main/CHANGELOG.md#1710-2024-01-17) and [17.2](https://github.com/angular/angular/blob/main/CHANGELOG.md#1720-2024-02-14), [input](https://github.com/angular/angular/pull/53521) and [model](https://github.com/angular/angular/pull/54252) signals were introduced into the `@angular/core` API. Though basic signals were introduced in Angular `16`, using all signals requires Angular `17.2` and above.
 
 :::info
 
@@ -434,7 +450,13 @@ This custom mount command will allow you to skip manually passing in the
 `ButtonComponent` and `CardComponent` as declarations into each `cy.mount()`
 call.
 
-### autoSpyOutputs
+### autoSpyOutputs (deprecated)
+
+:::caution
+
+The `autoSpyOutputs` flag is deprecated and not supported in `cypress/angular-zoneless` and will be removed in a future version.
+
+:::
 
 Here is an example of defaulting `autoSpyOutputs` for every mounted component:
 
