@@ -502,7 +502,7 @@ To see additional how-to examples, you can also refer to our
 ### Re-run jobs passing with empty tests
 
 We recommend passing the `GITHUB_TOKEN` secret (created by the GH Action
-automatically) as an environment variable in CI/CD. This will allow the accurate
+automatically) as a system environment variable in CI/CD. This will allow the accurate
 identification of each build to avoid confusion when re-running a build.
 
 ```yml
@@ -527,7 +527,7 @@ jobs:
 
 ### Pull requests commit message is `merge SHA into SHA`
 
-You can overwrite the commit message sent to Cypress Cloud by setting an
+You can overwrite the commit message sent to Cypress Cloud by setting a
 system environment variable in CI/CD. See
 [Issue #124](https://github.com/cypress-io/github-action/issues/124) for more
 details.
