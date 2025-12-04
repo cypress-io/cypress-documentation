@@ -166,6 +166,24 @@ Enable fast visibility by setting `experimentalFastVisibility` to `true` in your
 }
 ```
 
+`experimentalFastVisibility` can also be enabled or disabled on a per-test or per-suite basis by passing the `experimentalFastVisibility` option to the test or suite function:
+
+:::cypress-config-example
+
+```js
+// Enable fast visibility for the entire suite
+describe('My Test Suite', { experimentalFastVisibility: true }, () => {
+  // Disable fast visibility for this test
+  it(
+    'Requires legacy visibility to pass',
+    { experimentalFastVisibility: false },
+    () => {
+      // ...
+    }
+  )
+})
+```
+
 :::
 
 ### When to Use
@@ -178,7 +196,17 @@ Consider enabling `experimentalFastVisibility` if you:
 
 :::caution
 
-**Note:** The fast visibility algorithm may have different behavior in some edge cases compared to the legacy algorithm. If you encounter issues, you can disable this option to revert to the legacy behavior. For detailed migration information and behavior differences, see the [Cypress repository](https://github.com/cypress-io/cypress).
+The experimental fast visibility algorithm is not yet fully compatible with the legacy visibility algorithm. Tests that rely on edge-case behavior of the legacy visibility algorithm may fail or behave incorrectly.
+
+- Scroll elements into view before asserting on their visibility.
+- Shadow DOM is not yet supported. Tests that interact with Shadow DOM elements may fail or behave incorrectly.
+- Elements outside of the browser's viewport are not yet correctly identified as visible. Scroll elements into view before testing.
+
+:::
+
+:::info
+
+For detailed information about how the fast visibility algorithm works, its differences from the legacy algorithm, and solutions to common compatibility issues, see the [Experimental Fast Visibility](/app/core-concepts/interacting-with-elements#Experimental-Fast-Visibility) section in the [Interacting with Elements](/app/core-concepts/interacting-with-elements) guide.
 
 :::
 
