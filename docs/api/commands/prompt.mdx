@@ -1,6 +1,6 @@
 ---
 title: 'cy.prompt() - Generate Cypress Tests with Natural Language and AI'
-description: Generate Cypress tests from plain English using AI. Automate test creation, reduce maintenance, and enable self-healing with cy.prompt.
+description: AI-powered Cypress command for developers and QA teams. Generate Cypress tests from plain English, get self-healing selectors, and reduce end-to-end test maintenance with cy.prompt.
 sidebar_label: prompt
 slug: /api/commands/prompt
 e2eSpecific: true
@@ -9,15 +9,16 @@ sidebar_custom_props: { 'new_label': true }
 
 <ProductHeading product="cloud" />
 
-:::warning
-
-`cy.prompt` is currently invite-only. [Request access](https://on.cypress.io/cy-prompt-early-access?utm_source=docs.cypress.io&utm_medium=prompt-command&utm_content=Request-access) to get early access.
-
-:::
-
 # prompt
 
-`cy.prompt` is a Cypress command that uses AI to convert natural language test steps into executable Cypress tests. It's designed to be flexible - you can use it to quickly generate tests and commit them to source control, or keep it running continuously for self-healing tests that adapt to your app's changes. You can choose the workflow that fits your project's needs.
+`cy.prompt` is a Cypress command that uses AI to convert natural language test steps into executable Cypress tests. It helps developers and QA engineers generate tests faster, experiment with self-healing end-to-end tests, and reduce ongoing test maintenance. You can view the generated Cypress code at any time using the **Code** button in the Command Log, giving you full visibility into what commands were created from your prompts.
+
+**`cy.prompt` supports two flexible workflows:**
+
+1. **Generate and export** - Use AI to quickly create tests, review the generated code, and save it to your test files for predictable, version-controlled tests
+2. **Continuous self-healing** - Keep `cy.prompt` running in your tests to automatically adapt when your app changes
+
+You can choose the workflow that fits your project's needs.
 
 :::note
 
@@ -27,6 +28,8 @@ sidebar_custom_props: { 'new_label': true }
 - [Choosing your workflow](#Choose-your-workflow) — decide between one-time generation or continuous self-healing
 - [How to write effective prompts](#How-to-write-effective-prompts) — craft clear, reliable natural language steps
 - [What you can do](#What-you-can-do) — explore supported actions and capabilities
+- [See self-healed steps in the Command Log](#See-self-healed-steps-in-the-Command-Log) — understand exactly what changed and which element the step resolved to
+- [View and export generated code](#View-and-export-generated-code) — see the Cypress code generated from your prompts and save it to your files
 - [Setup](#Setup) — enable the command and configure authentication
 
 :::
@@ -38,6 +41,12 @@ sidebar_custom_props: { 'new_label': true }
 />
 
 _The demo above shows `cy.prompt` in action with [Cypress Studio](/app/guides/cypress-studio)._
+
+## Why use cy.prompt for AI-powered testing?
+
+- **Reduce test maintenance**: Let AI and self-healing selectors absorb many minor UI changes instead of constantly updating selectors by hand.
+- **Accelerate test creation**: Turn plain-English test ideas into runnable Cypress tests without having to hand-write every command.
+- **Improve collaboration**: Product owners, QA, and developers can all contribute natural language steps that become real tests.
 
 ## Syntax
 
@@ -100,7 +109,7 @@ When you call `cy.prompt`, Cypress performs a multi-step process:
 
 2. **Generate selectors:** Cypress evaluates your app's DOM and picks a selector based on priority rules (unique identifiers that are likely to be stable).
 
-3. **Generate Cypress code:** Commands are generated and executed in sequence. The Command Log shows both your natural language step and the commands Cypress ran.
+3. **Generate Cypress code:** Commands are generated and executed in sequence. The Command Log shows both your natural language step and the commands Cypress ran. You can view the complete generated code at any time using the **Code** button in the Command Log.
 
 4. **Cache for speed:** Generated code is cached. Re-running the same test does not re-call the AI model unless the prompt or DOM changes in a way that invalidates the cached code.
 
@@ -144,7 +153,13 @@ cy.prompt(
 )
 ```
 
-Use the **Get code** button to view the generated Cypress code. This will display the generated code in a dialog where you can preview what Cypress generated from your prompt. You can save the code to your test file, commit it to your version control system, or copy it to your clipboard.
+After the test runs, click the **Code** button in the Command Log to view the generated Cypress code. This opens a dialog showing the complete Cypress commands that were generated from your natural language steps. From there, you can:
+
+- **Save to file** - Replace your `cy.prompt` call with the generated code directly in your test file
+- **Copy to clipboard** - Copy the code for use elsewhere
+- **Review and modify** - Inspect the generated selectors and commands before committing
+
+This workflow lets you use AI to quickly generate test code, then commit the exact generated code to your repository for predictable, version-controlled tests.
 
 <DocsVideo
   src="/img/api/prompt/cy-prompt-demo.mp4"
@@ -175,6 +190,12 @@ cy.prompt([
   'verify the product count is 25',
 ])
 ```
+
+Even when using `cy.prompt` for continuous testing, you can still view the generated code at any time. Click the **Code** button in the Command Log to see what Cypress generated, which is especially useful for:
+
+- **Debugging** - Understanding why a test behaved a certain way
+- **Learning** - Seeing how natural language maps to Cypress commands
+- **Exporting later** - If you decide to switch to Workflow 1, you can export the code at any point
 
 ## How to write effective prompts
 
@@ -261,6 +282,8 @@ If Cypress cannot interpret a step, you'll see a dialog prompting you to refine 
 'uncheck "Send me updates"'
 'toggle the "Dark Mode" switch'
 'submit the contact form'
+'scroll the sales section into view'
+'scroll to todays date in the calendar'
 ```
 
 ### Verify results
@@ -286,6 +309,12 @@ If Cypress cannot interpret a step, you'll see a dialog prompting you to refine 
 'ensure that the counter shows 5'
 'verify the counter has the id "reset"'
 'confirm that the code frame includes HTML "<span class="token">'
+```
+
+### Change the viewport
+
+```javascript
+'set the viewport to 400x600'
 ```
 
 ### Wait
@@ -359,6 +388,104 @@ describe('Campaign Management', () => {
   })
 })
 ```
+
+## See self-healed steps in the Command Log
+
+cy.prompt self-heals when the element it needs to interact with has changed since the last time the step ran, enabling self-healing Cypress tests that adapt as your UI evolves.
+
+When `cy.prompt` self-heals a step, Cypress makes that change visible directly in the Command Log so you can understand exactly what changed and which element the step resolved to.
+
+<DocsImage
+  src="/img/api/prompt/cy-prompt-self-healed-command-log.png"
+  alt="Self-healed tag in the Command Log for a cy.prompt step"
+/>
+
+### Command Log
+
+You can see that a step self-healed in three places:
+
+- **Test** - The test entry shows when at least one `cy.prompt` step self-healed during the run.
+- **Prompt** - The `cy.prompt` command is marked when one or more of its steps self-healed.
+- **Step** - Individual prompt steps show a **Self-healed** tag when the element they resolved to has changed since the last time that step ran.
+
+<DocsImage
+  src="/img/api/prompt/cy-prompt-self-healed-prompt-level-logs.png"
+  alt="Console logs for a self-healed cy.prompt step"
+/>
+
+### Console logs
+
+Clicking a `cy.prompt` command or an individual self-healed step prints detailed Console logs in the Developer Tools, including:
+
+- **Resolved element** - The selector and element that this step resolved to after self-healing.
+- **Cached elements** - The previously resolved elements that the step checked before self-healing.
+- **Self-healed** - Whether the element was self-healed.
+
+If the element was self-healed via cache, the Console logs will show the resolved element within the cached elements. If the element was self-healed via AI, the Console logs will not have the resolved element within the cached elements.
+
+<DocsImage
+  src="/img/api/prompt/cy-prompt-self-healed-step-level-logs.png"
+  alt="Console logs for a self-healed cy.prompt step"
+/>
+
+This level of detail makes it easy to tell whether a self-heal reflects an intentional product change or an unexpected behavior so you can refine or rewrite the step if necessary.
+
+### Self-healed status definitions
+
+**Self-Healed via Cache** - A selector changed since the last time `cy.prompt` ran and the element resolved to another element using the existing cache entry. In this case, `cy.prompt` did **not** call AI; the cached mapping was able to resolve the new element.
+
+**Self-Healed via AI** - A selector changed since the last time `cy.prompt` ran and the element resolved to another element via an AI call because there was no matching cache entry.
+
+## View and export generated code
+
+At any time during or after a test run, you can view the exact Cypress code that `cy.prompt` generated from your natural language steps. Combined with the self-healed tags and Console details in the Command Log, this gives you a clear, auditable record of what happened during `cy.prompt` execution so you can debug AI-generated tests and reduce flaky end-to-end tests over time. This transparency is built into every `cy.prompt` execution.
+
+### How to view generated code
+
+- **Run your test** with `cy.prompt` in Cypress App
+- **Click the "Code" button** - This button appears next to each `cy.prompt` command in the Command Log
+
+<DocsImage
+  src="/img/api/prompt/cy-prompt-export-code.png"
+  alt="Code button in the Command Log"
+/>
+
+- **Review the generated code** - A dialog displays the complete Cypress code with all of the generated commands (e.g., `cy.get()`, `cy.click()`, `cy.type()`) and comments showing which prompt step generated each command.
+
+<DocsImage
+  src="/img/api/prompt/cy-prompt-generated-test-code.png"
+  alt="Generated Cypress code dialog"
+/>
+
+### What you can do with the generated code
+
+Once you have the generated code, you can:
+
+- **Save code to your test file** - Replace the `cy.prompt` call with the generated Cypress commands for predictable, version-controlled tests.
+- **Copy code to your clipboard** - Use the code in other files or share it with your team.
+
+This helps you review and modify the generated code as needed or just use it as a reference to understand what `cy.prompt` is doing behind the scenes.
+
+### Customizing selectors in generated code
+
+You can customize which selectors `cy.prompt` uses when generating Cypress code by configuring the [ElementSelector API](/api/cypress-api/element-selector-api). This lets you control which attributes Cypress prioritizes (like `data-*`, `id`, `aria-label`, etc.) when creating selectors, ensuring the generated code matches your project's selector strategy.
+
+Configure the selector priority in your support file or test file:
+
+```javascript
+// cypress/support/e2e.js or in your test file
+Cypress.ElementSelector.defaults({
+  selectorPriority: [
+    'data-cy', // Prefer data-cy attributes
+    'attribute:role', // Then ARIA roles
+    'attribute:aria-label', // Then ARIA labels
+    'id', // Then IDs
+    'class', // Finally classes
+  ],
+})
+```
+
+For more examples and details, see the [ElementSelector API documentation](/api/cypress-api/element-selector-api).
 
 ## Setup
 
@@ -677,52 +804,78 @@ cy.origin('https://cloud.cypress.io/login', () => {
 ### Mixed with traditional Cypress
 
 ```javascript
-const electronicsCount = 25
+const electronicsCount = Cypress.env('staging') === true ? 5 : 25
 
-// Confirm the UI works in desktop view
-cy.viewport(1024, 768)
+// Confirm the UI works in staging environment
+cy.task('seedStagingDB')
 cy.visit(`${Cypress.env('stagingUrl')}/products`)
-cy.prompt([
-  'filter by category "Electronics"',
-  'sort by price high to low',
-  `verify the product count is ${electronicsCount}`,
-  'verify the sort indicator is "Price: High to Low"',
-])
+cy.prompt(
+  [
+    'filter by category "Electronics"',
+    'sort by price high to low',
+    `verify the product count is {{electronicsCount}}`,
+    'verify the sort indicator is "Price: High to Low"',
+  ],
+  {
+    placeholders: {
+      electronicsCount,
+    },
+  }
+)
 
-// Confirm the UI works in mobile view
-cy.viewport(400, 600)
-cy.visit(`${Cypress.env('stagingUrl')}/products`)
-cy.prompt([
-  'filter by category "Electronics"',
-  'sort by price high to low',
-  `verify the product count is ${electronicsCount}`,
-  'verify the sort indicator is "Price: High to Low"',
-])
+// Confirm the UI works in production environment
+cy.task('seedProductionDB')
+cy.visit(`${Cypress.env('productionUrl')}/products`)
+cy.prompt(
+  [
+    'filter by category "Electronics"',
+    'sort by price high to low',
+    `verify the product count is {{electronicsCount}}`,
+    'verify the sort indicator is "Price: High to Low"',
+  ],
+  {
+    placeholders: {
+      electronicsCount,
+    },
+  }
+)
 ```
 
 Or to further clean up the `cy.prompt` call:
 
 ```javascript
-const electronicsCount = 25
+const electronicsCount = Cypress.env('staging') === true ? 5 : 25
 const electronicsFilterPrompt = [
   'filter by category "Electronics"',
   'sort by price high to low',
-  `verify the product count is ${electronicsCount}`,
+  `verify the product count is {{electronicsCount}}`,
   'verify the sort indicator is "Price: High to Low"',
 ]
 
-// Confirm the UI works in desktop view
-cy.viewport(1024, 768)
+// Confirm the UI works in staging environment
+cy.task('seedStagingDB')
 cy.visit(`${Cypress.env('stagingUrl')}/products`)
-cy.prompt(electronicsFilterPrompt)
+cy.prompt(electronicsFilterPrompt, {
+  placeholders: {
+    electronicsCount,
+  },
+})
 
-// Confirm the UI works in mobile view
-cy.viewport(400, 600)
+// Confirm the UI works in production environment
+cy.task('seedProductionDB')
 cy.visit(`${Cypress.env('stagingUrl')}/products`)
-cy.prompt(electronicsFilterPrompt)
+cy.prompt(electronicsFilterPrompt, {
+  placeholders: {
+    electronicsCount,
+  },
+})
 ```
 
 ## Limitations
+
+These apply to all `cy.prompt` usage unless noted otherwise.
+
+### General limitations
 
 | Limitation       | Details                                                                  |
 | ---------------- | ------------------------------------------------------------------------ |
@@ -730,9 +883,20 @@ cy.prompt(electronicsFilterPrompt)
 | Test Type        | E2E tests only (component testing not yet supported)                     |
 | Browser Support  | Chromium-based browsers only (Chrome, Edge, Electron)                    |
 | Language Support | Optimized for English prompts; other languages are not guaranteed        |
-| Assertions       | 'not.exist' assertions are not supported                                 |
-| DOM Support      | Canvas elements are not supported                                        |
 | Command Coverage | Not all Cypress APIs supported - see [What you can do](#What-you-can-do) |
+
+### Experimental release limitations
+
+The `cy.prompt` command is currently in experimental release. During the experimental release, there are some limitations that we intend to address in the future.
+
+| Limitation       | Details                                                                                                                                                                                     |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Assertions       | 'not.exist' assertions are not supported [See issue](https://github.com/cypress-io/cypress/issues/32793)                                                                                    |
+| Multi-Element    | Assertions on multiple elements are not currently supported [See issue](https://github.com/cypress-io/cypress/issues/32787)                                                                 |
+| Cookies/Sessions | Clearing cookies or sessions is not supported [See issue](https://github.com/cypress-io/cypress/issues/32810)                                                                               |
+| Scrolling        | Scrolling to elements is not supported [See issue](https://github.com/cypress-io/cypress/issues/32789)                                                                                      |
+| API Testing      | API requests (e.g., cy.request() or cy.intercept()) are not supported [See issue](https://github.com/cypress-io/cypress/issues/32792)                                                       |
+| DOM Support      | Canvas and iframe elements are not supported. See [canvas issue](https://github.com/cypress-io/cypress/issues/32830) and [iframe issue](https://github.com/cypress-io/cypress/issues/32800) |
 
 ## Pricing & usage limits
 
@@ -744,7 +908,9 @@ Please note that pricing and usage limitations are subject to future adjustments
 
 :::
 
-### Usage limits
+There are two sets of limits: per-user hourly limits and per-prompt limits.
+
+### Per-user hourly limits
 
 _Usage limits only apply to runs that are not recording to Cypress Cloud._
 
@@ -757,6 +923,16 @@ _Usage limits only apply to runs that are not recording to Cypress Cloud._
 
 - 600 prompts per hour
 - 3,000 prompt steps per hour
+
+### Per-prompt limits
+
+- Up to 50 steps per `cy.prompt` call to maintain context fidelity and produce reliable, executable commands.
+- During the experimental release, system-wide limits apply to the total input length processed by `cy.prompt`. Very long prompts may be rejected or require splitting.
+
+To improve reliability and performance, consider the following:
+
+- Keep one action or assertion per step.
+- Split long flows into multiple `cy.prompt` calls.
 
 ## Privacy & security
 

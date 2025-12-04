@@ -337,13 +337,13 @@ To migrate, change the test harness from `cypress/react18` to `cypress/react`.
 <Badge type="danger">Before</Badge>{' '}
 
 ```ts
-import { mount } from `cypress/react18`
+import { mount } from 'cypress/react18'
 ```
 
 <Badge type="success">After</Badge>
 
 ```ts
-import { mount } from `cypress/react`
+import { mount } from 'cypress/react'
 ```
 
 #### To continue using React below v18
@@ -361,13 +361,13 @@ Inside your support file (ex: `./cypress/support/component.(js|ts)`), or whereve
 <Badge type="danger">Before</Badge>{' '}
 
 ```ts
-import { mount } from `cypress/react`
+import { mount } from 'cypress/react'
 ```
 
 <Badge type="success">After</Badge>
 
 ```ts
-import { mount } from `@cypress/react`
+import { mount } from '@cypress/react'
 ```
 
 ### Angular `<17.2.0` CT no longer supported
@@ -381,13 +381,13 @@ To migrate, just change the test harness from `cypress/angular-signals` to `cypr
 <Badge type="danger">Before</Badge>{' '}
 
 ```ts
-import { mount } from `cypress/angular-signals`
+import { mount } from 'cypress/angular-signals'
 ```
 
 <Badge type="success">After</Badge>
 
 ```ts
-import { mount } from `cypress/angular`
+import { mount } from 'cypress/angular'
 ```
 
 #### To continue using Angular below v17.2.0
@@ -405,13 +405,13 @@ Inside your support file (ex: `./cypress/support/component.(js|ts)`), or whereve
 <Badge type="danger">Before</Badge>{' '}
 
 ```ts
-import { mount } from `cypress/angular`
+import { mount } from 'cypress/angular'
 ```
 
 <Badge type="success">After</Badge>
 
 ```ts
-import { mount } from `@cypress/angular`
+import { mount } from '@cypress/angular'
 ```
 
 ### Vue 2 CT no longer supported
@@ -433,13 +433,13 @@ Inside your support file (ex: `./cypress/support/component.(js|ts)`), or whereve
 <Badge type="danger">Before</Badge>{' '}
 
 ```ts
-import { mount } from `cypress/vue2`
+import { mount } from 'cypress/vue2'
 ```
 
 <Badge type="success">After</Badge>
 
 ```ts
-import { mount } from `@cypress/vue2`
+import { mount } from '@cypress/vue2'
 ```
 
 ### Create React App CT no longer supported
@@ -525,20 +525,20 @@ Note that this version of the test harness is deprecated and no longer actively 
 To update, inside your support file (ex: `./cypress/support/component.(js|ts)`) or wherever your mount function is imported, change
 
 ```ts
-import { mount } from `cypress/svelte`
+import { mount } from 'cypress/svelte'
 ```
 
 to
 
 ```ts
-import { mount } from `@cypress/svelte`
+import { mount } from '@cypress/svelte'
 ```
 
 Your code should now look like this:
 
 ```ts
 import MySvelteComponent from './MySvelteComponent'
-import { mount } from `@cypress/svelte`
+import { mount } from '@cypress/svelte'
 
 it('renders', () => {
   cy.mount(MySvelteComponent)
