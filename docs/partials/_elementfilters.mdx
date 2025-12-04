@@ -18,7 +18,8 @@ supported, if you need to split them up.
   "elementFilters": [
     {
       "selector": string,
-      "include": boolean
+      "include": boolean,
+      "comment": string
     }
   ]
 }
@@ -32,6 +33,7 @@ The first `elementFilters` rule for which the selector property matches the elem
 | ---------- | -------- | ------- | -------------------------------------------------------------------------------------------------------------------------------- |
 | `selector` | Required |         | A CSS selector to identify elements. Supports standard CSS selector syntax, including IDs, classes, attributes, and combinators. |
 | `include`  | Optional | `true`  | A boolean indicating whether the matched elements should be included in the report.                                              |
+| `comment`  | Optional |         | A comment describing the purpose of this filter rule.                                                                            |
 
 ## Examples
 
@@ -44,7 +46,8 @@ The first `elementFilters` rule for which the selector property matches the elem
   "elementFilters": [
     {
       "selector": "#button-2",
-      "include": false
+      "include": false,
+      "comment": "Exclude test-only button from reports"
     }
   ]
 }

@@ -26,7 +26,8 @@ This is particularly useful for filtering out irrelevant interactions or focusin
     "allowedInteractionCommands": [
       {
         "selector": string,
-        "commands": [string]
+        "commands": [string],
+        "comment": string
       }
     ]
   }
@@ -41,6 +42,7 @@ The `allowedInteractionCommands` property accepts an array of objects, where eac
 | ---------- | -------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `selector` | Required |         | A CSS selector to identify elements. Supports standard CSS selector syntax, including IDs, classes, attributes, and combinators.                                                  |
 | `commands` | Required |         | An array of command names (strings) that should be tracked as interactions for elements matching the selector. All other interaction commands will be ignored for these elements. |
+| `comment`  | Optional |         | A comment describing the purpose of this allowed interaction commands configuration.                                                                                              |
 
 ## Examples
 

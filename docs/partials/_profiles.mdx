@@ -1,0 +1,249 @@
+The `profiles` property allows you to create configuration overrides that are applied based on run tags. This enables you to use different configuration settings for different types of runs, such as regression tests compared to smoke tests environments, or providing scoped results relevant to specific teams.
+
+## Why use profiles?
+
+- **Team specific reporting**: If multiple teams use the same Cypress Cloud project, they may have completely different areas of concern for which pages or DOM elements are included in reports about accessibility or UI Coverage. Profiles allow each team to see and track against only the results that matter to them, and remove all other findings.
+- **Run-type customization**: Use different filters or settings for regression runs versus pull requests. It can be useful to have a narrow config for blocking a merge, optimized for the most critical areas of your app -- while still running a wide config on a full regression suite to manage on a difference cadence.
+- **Skip runs when needed**: If you know that certain kinds of runs are not going to be valuable for App Quality reporting, you can ignore all view on these runs so that no report is created. In some situations this can improve clarity about when to look at a report and which reports are considered significant.
+
+## How profiles work
+
+Profiles are selected by matching run tags to profile names. When you run Cypress with the [`--tag`](/app/references/command-line#cypress-run-tag-lt-tag-gt) flag, Cypress Cloud looks for a profile whose `name` matches one of the tags. If a match is found, properties defined in profile's `config` properties override the root configuration. Properties defined in the root that are not referenced in the profile will be inherited, meaning you do not need to repeat config values that you want to keep the same.
+
+If more than one tag provided to a run matches a profile in your App Quality profiles array, the first matching profile in the array will be used. The order in which the tags are passed to the run doesn't matter.
+
+## Best practices
+
+Use a naming convention like `aq-config-x` (e.g., `aq-config-regression`, `aq-config-staging`) to make it clear that a tag is used for configuration lookup purposes.
+
+While relying on existing tags works just fine, but being explicit will help avoid accidental removal or changes of important tags.
+
+## Syntax
+
+```json
+{
+  "profiles": [
+    {
+      "name": string,
+      "config": {
+        // Any App Quality configuration options
+      },
+      "comment": string
+    }
+  ]
+}
+```
+
+### Options
+
+| Option    | Required | Description                                                                                               |
+| --------- | -------- | --------------------------------------------------------------------------------------------------------- |
+| `name`    | Required | The profile name that must match a run tag to activate this profile.                                      |
+| `config`  | Required | An object containing any App Quality configuration options. These values override the root configuration. |
+| `comment` | Optional | A comment describing the purpose of this profile.                                                         |
+
+## Examples
+
+### Basic profile structure
+
+#### Config
+
+```json
+{
+  "elementFilters": [
+    {
+      "selector": "[data-testid*='temp']",
+      "include": false,
+      "comment": "Exclude temporary test elements"
+    }
+  ],
+  "profiles": [
+    {
+      "name": "aq-config-regression",
+      "config": {
+        "elementFilters": [
+          {
+            "selector": "[data-testid*='temp']",
+            "include": false,
+            "comment": "Exclude temporary test elements in regression runs"
+          },
+          {
+            "selector": "[data-role='debug']",
+            "include": false,
+            "comment": "Exclude debug elements in regression runs"
+          }
+        ]
+      }
+    }
+  ]
+}
+```
+
+#### Usage
+
+To use this profile, run Cypress with a matching tag:
+
+```shell
+cypress run --record --tag "aq-config-regression"
+```
+
+When this tag is used, the profile's `elementFilters` configuration will override the base `elementFilters`, excluding both temporary test elements and debug elements.
+
+---
+
+### Multiple profiles
+
+You can define multiple profiles for different scenarios:
+
+#### Config
+
+```json
+{
+  "elementFilters": [
+    {
+      "selector": "[data-testid*='temp']",
+      "include": false
+    }
+  ],
+  "profiles": [
+    {
+      "name": "aq-config-regression",
+      "config": {
+        "elementFilters": [
+          {
+            "selector": "[data-testid*='temp']",
+            "include": false
+          },
+          {
+            "selector": "[data-role='debug']",
+            "include": false,
+            "comment": "Exclude debug elements in regression runs"
+          }
+        ]
+      }
+    },
+    {
+      "name": "aq-config-staging",
+      "config": {
+        "viewFilters": [
+          {
+            "pattern": "https://staging.example.com/admin/*",
+            "include": false,
+            "comment": "Exclude admin pages in staging runs"
+          }
+        ]
+      }
+    }
+  ]
+}
+```
+
+#### Usage
+
+Use different tags to activate different profiles:
+
+```shell
+# For regression runs
+cypress run --record --tag "aq-config-regression"
+
+# For staging runs
+cypress run --record --tag "aq-config-staging"
+```
+
+---
+
+### Profile with nested configuration
+
+Profiles can override configuration at any level, including nested configuration specific to Cypress Accessibility or UI Coverage, if your project has both projects enabled. For example:
+
+#### Config
+
+```json
+{
+  "elementFilters": [
+    {
+      "selector": "[data-testid*='temp']",
+      "include": false
+    }
+  ],
+  "uiCoverage": {
+    "attributeFilters": [
+      {
+        "attribute": "id",
+        "value": ":r.*:",
+        "include": false,
+        "comment": "Filter out React auto-generated IDs"
+      }
+    ]
+  },
+  "profiles": [
+    {
+      "name": "aq-config-feature-branch",
+      "config": {
+        "uiCoverage": {
+          "elementGroups": [
+            {
+              "selector": "[data-feature='new-checkout']",
+              "name": "New Checkout Flow",
+              "comment": "Group new checkout elements for feature branch testing"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}
+```
+
+#### Usage
+
+```shell
+cypress run --record --tag "aq-config-feature-branch"
+```
+
+This profile adds element grouping for the new checkout flow while keeping the base configuration for element filters and attribute filters.
+
+---
+
+### Profile selection with multiple matching tags
+
+If you pass multiple tags and more than one matches a profile name, the first matching profile in the `profiles` array is used:
+
+#### Config
+
+```json
+{
+  "profiles": [
+    {
+      "name": "aq-config-regression",
+      "config": {
+        "elementFilters": [
+          {
+            "selector": "[data-role='debug']",
+            "include": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "aq-config-staging",
+      "config": {
+        "viewFilters": [
+          {
+            "pattern": "https://staging.example.com/admin/*",
+            "include": false
+          }
+        ]
+      }
+    }
+  ]
+}
+```
+
+#### Usage
+
+```shell
+cypress run --record --tag "aq-config-regression,aq-config-staging"
+```
+
+In this case, the `aq-config-regression` profile will be used because it appears first in the `profiles` array, even though both tags match profile names.

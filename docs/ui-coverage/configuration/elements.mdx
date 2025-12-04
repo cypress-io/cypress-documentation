@@ -27,7 +27,8 @@ The `elements` configuration is used as the element's identity if **only one ele
     "elements": [
       {
         "selector": string,
-        "name": string
+        "name": string,
+        "comment": string
       }
     ]
   }
@@ -44,6 +45,7 @@ If multiple elements within the same snapshot satisfy the same rule, the rule ca
 | ---------- | -------- | ---------- | -------------------------------------------------------------------------------------------------------------------------------- |
 | `selector` | Required |            | A CSS selector to identify elements. Supports standard CSS selector syntax, including IDs, classes, attributes, and combinators. |
 | `name`     | Optional | `selector` | A human-readable name for the element, displayed in UI Coverage reports.                                                         |
+| `comment`  | Optional |            | A comment describing the purpose of this element configuration.                                                                  |
 
 ## Examples
 
