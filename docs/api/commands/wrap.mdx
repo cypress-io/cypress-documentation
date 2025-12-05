@@ -126,16 +126,15 @@ import { userService } from '../../src/_services/user.service'
 it('can assert against resolved object using .should', () => {
   cy.log('user service login')
   const username = Cypress.env('username')
-  const password = Cypress.env('password')
-
-  // wrap the promise returned by the application code
-  cy.wrap(userService.login(username, password))
-    // check the yielded object
-    .should('be.an', 'object')
-    .and('have.keys', ['firstName', 'lastName', 'username', 'id', 'token'])
-    .and('contain', {
-      username: 'test',
-      firstName: 'Test',
+  cy.task('getSecret', 'PASSWORD').then((password) => {
+    // wrap the promise returned by the application code
+    cy.wrap(userService.login(username, password))
+      // check the yielded object
+      .should('be.an', 'object')
+      .and('have.keys', ['firstName', 'lastName', 'username', 'id', 'token'])
+      .and('contain', {
+        username: 'test',
+        firstName: 'Test',
       lastName: 'User',
     })
 

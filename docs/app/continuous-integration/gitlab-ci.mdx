@@ -157,7 +157,7 @@ assign it to the `build` stage.
 stages:
   - build
 
-## Set environment variables for folders in "cache" job settings
+## Set system environment variables for folders in "cache" job settings
 ## for npm modules and Cypress binary
 variables:
   npm_config_cache: '$CI_PROJECT_DIR/.npm'
@@ -201,7 +201,7 @@ stages:
   - build
   - test
 
-## Set environment variables for folders in "cache" job settings
+## Set system environment variables for folders in "cache" job settings
 ## for npm modules and Cypress binary
 variables:
   npm_config_cache: '$CI_PROJECT_DIR/.npm'

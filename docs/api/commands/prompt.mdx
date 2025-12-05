@@ -347,43 +347,43 @@ Placeholders let you use dynamic and sensitive values while maintaining cache ef
 ```typescript
 describe('Campaign Management', () => {
   it('creates multiple campaigns with different discount percentages', () => {
-    const adminPassword = Cypress.env('ADMIN_PASSWORD')
+    cy.task('getSecret', 'ADMIN_PASSWORD').then((adminPassword) => {
+      const campaigns = [
+        { name: 'Fall Sale', discountPct: 10 },
+        { name: 'Spring Sale', discountPct: 15 },
+      ]
 
-    const campaigns = [
-      { name: 'Fall Sale', discountPct: 10 },
-      { name: 'Spring Sale', discountPct: 15 },
-    ]
+      // This loop demonstrates the caching benefit:
+      // - First iteration: AI generates and caches the code
+      // - Subsequent iterations: Reuse cached code with different placeholder values
+      campaigns.forEach((campaign) => {
+        const campaignName = campaign.name
+        const campaignDiscountPct = campaign.discountPct
 
-    // This loop demonstrates the caching benefit:
-    // - First iteration: AI generates and caches the code
-    // - Subsequent iterations: Reuse cached code with different placeholder values
-    campaigns.forEach((campaign) => {
-      const campaignName = campaign.name
-      const campaignDiscountPct = campaign.discountPct
-
-      cy.prompt(
-        [
-          `Visit ${Cypress.env('ADMIN_URL')}/admin/login`,
-          // Using {{adminPassword}} prevents this sensitive value from being sent to AI
-          'Type {{adminPassword}} into the password field',
-          'Click Sign In',
-          'Open the Promotions tab',
-          'Click to create a new campaign',
-          // Using {{campaignName}} and {{campaignDiscountPct}}
-          // allows for high performance caching with different values
-          'Type {{campaignName}} into the name field',
-          'Set discount to {{campaignDiscountPct}}% for all products',
-          'Save the campaign',
-          'Verify the campaign "{{campaignName}}" appears in the list',
-        ],
-        {
-          placeholders: {
-            adminPassword,
-            campaignName,
-            campaignDiscountPct,
-          },
-        }
-      )
+        cy.prompt(
+          [
+            `Visit ${Cypress.env('ADMIN_URL')}/admin/login`,
+            // Using {{adminPassword}} prevents this sensitive value from being sent to AI
+            'Type {{adminPassword}} into the password field',
+            'Click Sign In',
+            'Open the Promotions tab',
+            'Click to create a new campaign',
+            // Using {{campaignName}} and {{campaignDiscountPct}}
+            // allows for high performance caching with different values
+            'Type {{campaignName}} into the name field',
+            'Set discount to {{campaignDiscountPct}}% for all products',
+            'Save the campaign',
+            'Verify the campaign "{{campaignName}}" appears in the list',
+          ],
+          {
+            placeholders: {
+              adminPassword,
+              campaignName,
+              campaignDiscountPct,
+            },
+          }
+        )
+      })
     })
   })
 })
@@ -567,7 +567,7 @@ describe('Feature: User Registration', () => {
       ],
       {
         placeholders: {
-          password: Cypress.env('PASSWORD'),
+          password: 'PASSWORD_PLACEHOLDER', // Use cy.task('getSecret', 'PASSWORD') to get the actual value
         },
       }
     )
@@ -687,20 +687,20 @@ The commands in the generated code may look like:
 ### Login flow
 
 ```javascript
-const password = Cypress.env('adminPassword')
-
-cy.prompt(
-  [
-    'visit the login page',
-    'type "user@example.com" in the email field',
-    'type {{password}} in the password field',
-    'click the login button',
-    'verify we are redirected to the dashboard',
-  ],
-  {
-    placeholders: { password },
-  }
-)
+cy.task('getSecret', 'ADMIN_PASSWORD').then((password) => {
+  cy.prompt(
+    [
+      'visit the login page',
+      'type "user@example.com" in the email field',
+      'type {{password}} in the password field',
+      'click the login button',
+      'verify we are redirected to the dashboard',
+    ],
+    {
+      placeholders: { password },
+    }
+  )
+})
 ```
 
 ### E-commerce checkout
@@ -794,7 +794,7 @@ cy.origin('https://cloud.cypress.io/login', () => {
     ],
     {
       placeholders: {
-        password: Cypress.env('PASSWORD'),
+        password: 'PASSWORD_PLACEHOLDER',
       },
     }
   )
