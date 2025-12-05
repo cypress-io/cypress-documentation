@@ -51,11 +51,11 @@ require('dotenv').config()
   },
   setupNodeEvents(on, config) {
     on('task', {
-      getAuthCredentials() {
-        const username = process.env.AUTH_USERNAME
-        const password = process.env.AUTH_PASSWORD
+      getOktaCredentials() {
+        const username = process.env.OKTA_USERNAME
+        const password = process.env.OKTA_PASSWORD
         if (!username || !password) {
-          throw new Error('AUTH_USERNAME and AUTH_PASSWORD must be set')
+          throw new Error('OKTA_USERNAME and OKTA_PASSWORD must be set')
         }
         return { username, password }
       },
@@ -131,7 +131,7 @@ is in the <Icon name="github" inline="true" contentType="rwa" />.
 describe('Okta', function () {
   beforeEach(function () {
     cy.task('db:seed')
-    cy.task('getAuthCredentials').then(({ username, password }) => {
+    cy.task('getOktaCredentials').then(({ username, password }) => {
       cy.loginByOkta(username, password)
     })
   })
@@ -251,7 +251,7 @@ process and logout.
 describe('Okta', function () {
   beforeEach(function () {
     cy.task('db:seed')
-    cy.task('getAuthCredentials').then(({ username, password }) => {
+    cy.task('getOktaCredentials').then(({ username, password }) => {
       cy.loginByOktaApi(username, password)
     })
   })

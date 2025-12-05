@@ -97,7 +97,7 @@ require('dotenv').config()
   },
   setupNodeEvents(on, config) {
     on('task', {
-      getAuthCredentials() {
+      getAuth0Credentials() {
         const username = process.env.AUTH0_USERNAME
         const password = process.env.AUTH0_PASSWORD
         if (!username || !password) {
@@ -195,7 +195,7 @@ describe('Auth0', function () {
     cy.task('db:seed')
     cy.intercept('POST', '/graphql').as('createBankAccount')
 
-    cy.task('getAuthCredentials').then(({ username, password }) => {
+    cy.task('getAuth0Credentials').then(({ username, password }) => {
       cy.loginToAuth0(username, password)
     })
     cy.visit('/')
@@ -342,7 +342,7 @@ onboarding process and logout.
 describe('Auth0', function () {
   beforeEach(function () {
     cy.task('db:seed')
-    cy.task('getAuthCredentials').then(({ username, password }) => {
+    cy.task('getAuth0Credentials').then(({ username, password }) => {
       cy.loginByAuth0Api(username, password)
     })
   })

@@ -163,7 +163,7 @@ const awsConfig = require('./aws-exports-es5.js')
   },
   setupNodeEvents(on, config) {
     on('task', {
-      getAuthCredentials() {
+      getCognitoCredentials() {
         const username = process.env.AWS_COGNITO_USERNAME
         const password = process.env.AWS_COGNITO_PASSWORD
         if (!username || !password) {
@@ -264,7 +264,7 @@ describe('Cognito, cy.origin() login', function () {
     cy.task('db:seed')
 
     // login via Amazon Cognito via cy.origin()
-    cy.task('getAuthCredentials').then(({ username, password }) => {
+    cy.task('getCognitoCredentials').then(({ username, password }) => {
       cy.loginByCognito(username, password)
     })
   })
@@ -464,7 +464,7 @@ describe('Cognito, programmatic login', function () {
     cy.task('db:seed')
 
     // Programmatically login via Amazon Cognito API
-    cy.task('getAuthCredentials').then(({ username, password }) => {
+    cy.task('getCognitoCredentials').then(({ username, password }) => {
       cy.loginByCognitoApi(username, password)
     })
   })
