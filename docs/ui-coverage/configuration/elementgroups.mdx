@@ -26,7 +26,8 @@ UI Coverage provides logic to automatically [group](/ui-coverage/core-concepts/e
     "elementGroups": [
       {
         "selector": string,
-        "name": string
+        "name": string,
+        "comment": string
       }
     ]
   }
@@ -41,6 +42,7 @@ For every element considered by UI Coverage, the first `elementGroup` rule for w
 | ---------- | -------- | ---------- | -------------------------------------------------------------------------------------------------------------------------------- |
 | `selector` | Required |            | A CSS selector to identify elements. Supports standard CSS selector syntax, including IDs, classes, attributes, and combinators. |
 | `name`     | Optional | `selector` | A human-readable name for the group, displayed in UI Coverage reports.                                                           |
+| `comment`  | Optional |            | A comment describing the purpose of this element group configuration.                                                            |
 
 ## Examples
 
