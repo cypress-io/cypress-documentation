@@ -20,11 +20,12 @@ sidebar_label: Overview
 
 ## Framework Support
 
-Cypress Component Testing supports Angular `^18.0.0`, `^19.0.0`, and `^20.0.0`.
+Cypress Component Testing supports Angular `^18.0.0`, `^19.0.0`, `^20.0.0`, and `^21.0.0`.
 
 :::info
 
 Our testing harness, `cypress/angular`, still requires `zone.js` and `@angular-devkit/build-angular` to be installed in your project, even if your project is zoneless or is built with `@angular/build`.
+If you wish to use the zoneless configuration, which is the default in Angular 21, you can use `cypress/angular-zoneless` testing harness instead as of Cypress `15.8.0`.
 :::
 
 ## Tutorial
@@ -129,5 +130,5 @@ export default {
 
 #### Sample Angular Apps
 
-- [Angular 18](https://github.com/cypress-io/cypress-component-testing-apps/tree/main/angular)
 - [Angular 20 Standalone](https://github.com/cypress-io/cypress-component-testing-apps/tree/main/angular-standalone)
+- [Angular 21 Zoneless](https://github.com/cypress-io/cypress-component-testing-apps/tree/main/angular-zoneless)

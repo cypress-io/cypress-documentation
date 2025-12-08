@@ -801,10 +801,10 @@ read a unique identifier from your CI provider as described in our
 
 You may encounter this error if Cypress is detecting the exact same CI Build ID
 matching a previous CI Build ID in a run that was completed over 24 hours ago.
-You cannot run tests on a run that has been complete for that long. ​ ​You can
+You cannot run tests on a run that has been complete for that long. You can
 see the CI Build ID that is detected for each completed run by looking at the
 details section at the top of your run in
-[Cypress Cloud](https://on.cypress.io/cloud). ​ ​You can generate and pass in
+[Cypress Cloud](https://on.cypress.io/cloud). You can generate and pass in
 your own unique CI Build ID per run as described
 [here](/app/references/command-line#cypress-run-ci-build-id-lt-id-gt).
 
@@ -945,6 +945,32 @@ there.
 
 It's possible to enable debugging these scripts by adding the `crossorigin`
 attribute and setting a `CORS` header.
+
+### <Icon name="exclamation-triangle" color="red" /> Synchronous XHR requests
+
+:::caution
+
+<strong>Note</strong>
+
+Synchronous XHR requests often cause hangs on the web, especially with poor network conditions or when the remote server is slow to respond. Synchronous XHR is now deprecated and should be avoided in favor of asynchronous requests.
+
+:::
+
+When using synchronous XHR requests, you may see the following warnings:
+
+> **Warning: Synchronous XHR request was not intercepted: http://example.com.**
+
+Cypress is unable to intercept a synchronous XHR request if the [`cy.intercept()`](/api/commands/intercept) is using a [`routeHandler`](/api/commands/intercept#routeHandler-Function).
+Thus, the [`routeHandler`](/api/commands/intercept#routeHandler-Function) won't be executed and the request will be sent to the origin server without any modifications.
+An intercept with a [`StaticResponse`](/api/commands/intercept#staticResponse-StaticResponse) does not have this limitation and will still be executed.
+
+> **Warning: Cookies may not have been applied to synchronous XHR request: http://example.com.**
+
+Cypress is unable to apply cookies to a synchronous XHR request if the request is cross-origin to the `top` origin.
+
+> **Warning: Cookies may not have been set for synchronous XHR response: http://example.com.**
+
+Cypress is unable to set cookies for a synchronous XHR response if the request is cross-origin to the `top` origin.
 
 ## Browser Errors
 
