@@ -960,8 +960,8 @@ When using synchronous XHR requests, you may see the following warnings:
 
 > **Warning: Synchronous XHR request was not intercepted: http://example.com.**
 
-Cypress is unable to intercept a synchronous XHR request if the [`cy.intercept()`](/api/commands/intercept) is using a [`routeHandler`](/api/commands/intercept#routeHandler-Function). 
-Thus, the [`routeHandler`](/api/commands/intercept#routeHandler-Function) won't be executed and the request will be sent to the origin server without any modifications. 
+Cypress is unable to intercept a synchronous XHR request if the [`cy.intercept()`](/api/commands/intercept) is using a [`routeHandler`](/api/commands/intercept#routeHandler-Function).
+Thus, the [`routeHandler`](/api/commands/intercept#routeHandler-Function) won't be executed and the request will be sent to the origin server without any modifications.
 An intercept with a [`StaticResponse`](/api/commands/intercept#staticResponse-StaticResponse) does not have this limitation and will still be executed.
 
 > **Warning: Cookies may not have been applied to synchronous XHR request: http://example.com.**
