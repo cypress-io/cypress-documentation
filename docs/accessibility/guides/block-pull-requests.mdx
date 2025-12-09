@@ -63,3 +63,257 @@ getAccessibilityResults().then((results) => {
 ```
 
 By examining the results and customizing your response, you gain maximum control over how to handle accessibility violations. Leverage CI environment context, such as tags, to fine-tune responses to specific accessibility outcomes.
+
+## Comparing against a baseline
+
+Comparing current results against a stored baseline allows you to detect only new violations that have been introduced, while ignoring existing known issues. This approach is more sophisticated than simply maintaining a list of known failing rules, as it tracks violations at the view level and can detect both regressions (new violations) and improvements (resolved violations).
+
+This is particularly useful in CI/CD pipelines where you want to fail builds only when new accessibility violations are introduced, allowing you to address existing issues incrementally without blocking deployments.
+
+### Baseline structure
+
+You can use any format you like as baseline for comparing reports. In the example code below we generate a baseline in a simplified format, which captures the state of accessibility violations from a specific run. The Results API handler code logs this for every run so that it can be easily copied as a new reference point.
+
+It includes:
+
+- **runNumber**: The run number used as the baseline reference
+- **severityLevels**: The severity levels to track (e.g., `['critical', 'serious', 'moderate', 'minor']`)
+- **views**: An object mapping view display names to arrays of failed rule names for that view
+
+```javascript
+{
+  "runNumber": "111",
+  "severityLevels": [
+    "critical",
+    "serious",
+    "moderate",
+    "minor"
+  ],
+  "views": {
+    "/": [
+      "aria-dialog-name",
+      "heading-order",
+      "scrollable-region-focusable"
+    ],
+    "/authorizations": [
+      "heading-order",
+      "listitem",
+      "region"
+    ]
+  }
+}
+```
+
+### Complete example
+
+The following example demonstrates how to compare current results against a baseline, detect new violations, identify resolved violations, and generate a new baseline when changes are detected.
+
+```javascript title="scripts/compareAccessibilityBaseline.js"
+require('dotenv').config(); 
+
+const { getAccessibilityResults } = require('@cypress/extract-cloud-results');
+const fs = require('fs');
+
+const TARGET_SEVERITY_LEVELS = ['critical', 'serious', 'moderate', 'minor'];
+
+// Parse the run number from an accessibility report URL
+const parseRunNumber = (url) => {
+  return url.split('runs/')[1].split('/accessibility')[0];
+};
+
+// Define your baseline - this should be stored and updated as your application improves
+const baseline = {
+  "runNumber": "111",
+  "severityLevels": [
+    "critical",
+    "serious",
+    "moderate",
+    "minor"
+  ],
+  "views": {
+    "/": [
+      "aria-dialog-name",
+      "heading-order",
+      "scrollable-region-focusable",
+      "empty-table-header",
+      "listitem",
+      "region",
+      "aria-required-children",
+      "presentation-role-conflict",
+      "scope-attr-valid",
+      "aria-prohibited-attr",
+      "aria-allowed-attr"
+    ],
+    "/authorizations": [
+      "heading-order",
+      "listitem",
+      "region",
+      "presentation-role-conflict",
+      "svg-img-alt",
+      "aria-allowed-attr"
+    ]
+  }
+};
+
+getAccessibilityResults().then((results) => {
+  // Create objects to store the results
+  const viewRules = {};
+  const viewsWithNewFailedRules = {};
+  const viewsWithMissingRules = {};
+
+  // Iterate through each view in current results
+  results.views.forEach(view => {
+    const displayName = view.displayName;
+    const ruleNames = view.rules.map(rule => rule.name);
+
+    // Add to our results object
+    viewRules[displayName] = ruleNames;
+
+    // Check for new failing rules
+    if (view.rules.length) {
+      view.rules.forEach(rule => {
+        if (!TARGET_SEVERITY_LEVELS.includes(rule.severity)) {
+          return;
+        }
+
+        // If the view exists in baseline and the rule is not in baseline's failed rules
+        if (!baseline.views?.[displayName]?.includes(rule.name)) {
+          if (viewsWithNewFailedRules[displayName]) {
+            viewsWithNewFailedRules[displayName].newFailedRules.push({
+              name: rule.name,
+              url: rule.accessibilityReportUrl,
+            });
+          } else {
+            viewsWithNewFailedRules[displayName] = {
+              newFailedRules: [{
+                name: rule.name,
+                url: rule.accessibilityReportUrl,
+              }]
+            };
+          }
+        }
+      });
+    }
+  });
+
+  // Check for rules in baseline that are not in current results (resolved rules)
+  Object.entries(baseline.views).forEach(([displayName, baselineRules]) => {
+    const currentRules = viewRules[displayName] || [];
+    const resolvedRules = baselineRules.filter(rule => !currentRules.includes(rule));
+
+    if (resolvedRules.length > 0) {
+      viewsWithMissingRules[displayName] = { resolvedRules };
+    }
+  });
+
+  // Report any missing rules
+  const countOfViewsWithMissingRules = Object.keys(viewsWithMissingRules).length;
+  const countOfViewsWithNewFailedRules = Object.keys(viewsWithNewFailedRules).length;
+
+  if (countOfViewsWithMissingRules || countOfViewsWithNewFailedRules) {
+    // Generate and log the new baseline values if there has been a change
+    const newBaseline = generateBaseline(results);
+    console.log('\nTo use this run as the new baseline, copy these values:');
+    console.log(JSON.stringify(newBaseline, null, 2));
+    fs.writeFileSync('new-baseline.json', JSON.stringify(newBaseline, null, 2));
+  }
+
+  if (countOfViewsWithMissingRules) {
+    console.log('\nThe following Views had rules in the baseline that are no longer failing. This may be due to improvements in these rules, or because you did not run as many tests in this run as the baseline run:');
+    console.dir(viewsWithMissingRules, { depth: 3 });
+  } else if (!countOfViewsWithNewFailedRules) {
+    console.log('\nNo new or resolved rules were detected. All violations match the baseline.\n');
+  }
+
+  if (countOfViewsWithNewFailedRules) {
+    // Report any new failing rules
+    console.error('\nThe following Views had rules violated that were previously passing:');
+    console.dir(viewsWithNewFailedRules, { depth: 3 });
+    throw new Error(
+      `${countOfViewsWithNewFailedRules} Views contained new failing accessibility rules.`
+    );
+  }
+
+  return viewRules;
+});
+
+function generateBaseline(results) {
+  try {
+    // Create an object to store the results
+    const viewRules = {};
+
+    // Iterate through each view
+    results.views.forEach(view => {
+      // Get the displayName and extract the rule names
+      const displayName = view.displayName;
+      const ruleNames = view.rules
+        .filter(rule => TARGET_SEVERITY_LEVELS.includes(rule.severity))
+        .map(rule => rule.name);
+
+      // Add to our results object
+      viewRules[displayName] = ruleNames;
+    });
+
+    const runNumber = parseRunNumber(results.views[0].accessibilityReportUrl);
+
+    return {
+      runNumber,
+      severityLevels: TARGET_SEVERITY_LEVELS,
+      views: viewRules
+    };
+  } catch (error) {
+    console.error('Error parsing accessibility results:', error);
+    return null;
+  }
+}
+```
+
+### Key concepts
+
+#### New failing rules
+
+A **new failing rule** is a rule that has violations in the current run but was not present in the baseline for that view. These represent regressions that need to be addressed. The script will fail the build if any new failing rules are detected.
+
+#### Resolved rules
+
+A **resolved rule** is a rule that was present in the baseline but no longer has violations in the current run. These represent improvements in accessibility. The script reports these but does not fail the build, allowing you to track progress.
+
+#### Severity filtering
+
+The baseline comparison only tracks rules at the severity levels you specify in `TARGET_SEVERITY_LEVELS`. This allows you to focus on the severity levels that matter most to your team. Rules at other severity levels are ignored during comparison.
+
+#### View-level comparison
+
+Violations are tracked per view (URL pattern or component), allowing you to see exactly which pages or components have regressed or improved. This granular tracking makes it easier to identify the source of changes and assign fixes to the appropriate teams.
+
+### Best practices
+
+#### When to update the baseline
+
+Update your baseline when:
+- You've fixed accessibility violations and want to prevent regressions
+- You've accepted certain violations as known issues that won't block deployments
+- You want to track improvements over time
+
+Store the baseline in version control so it's versioned alongside your code and accessible in CI environments.
+
+#### Handling partial reports
+
+If a run is cancelled or incomplete, the Results API may return a partial report. Consider checking `summary.isPartialReport` before comparing against the baseline, as partial reports may not include all views and could produce false positives.
+
+#### Managing baseline across branches
+
+You may want different baselines for different branches (e.g., `main` vs feature branches). Consider storing baselines in branch-specific files or using environment variables to specify which baseline to use.
+
+#### Storing the baseline
+
+Common approaches for storing baselines:
+- **Version control**: Commit the baseline JSON file to your repository
+- **CI artifacts**: Store baselines as build artifacts that can be retrieved in subsequent runs
+- **External storage**: Use cloud storage or a database for baselines if you need more sophisticated versioning
+
+:::info
+
+This baseline comparison approach is more sophisticated than the simple rule list approach shown earlier in this guide, as it tracks violations at the view level and can detect both regressions and improvements. For simpler use cases, the rule list approach may be sufficient.
+
+:::

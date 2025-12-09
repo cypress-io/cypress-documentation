@@ -1,0 +1,262 @@
+---
+sidebar_label: Block pull requests and set policies
+title: 'Block pull requests and set policies | Cypress UI Coverage Documentation'
+description: "Set policies and block pull requests automatically with Cypress UI Coverage's Results API, enabling custom CI workflows to enforce test coverage standards and prevent regressions."
+sidebar_position: 40
+---
+
+<ProductHeading product="ui-coverage" />
+
+# Block pull requests and set policies
+
+Cypress UI Coverage reports are generated server-side in Cypress Cloud, based on test artifacts uploaded during execution. This ensures there is no performance impact on your Cypress test runs.
+
+## Using the Results API
+
+The [Cypress UI Coverage Results API](/ui-coverage/results-api) allows you to access UI Coverage results post-test run, enabling workflows like blocking pull requests or triggering alerts based on specific coverage criteria. This involves adding a dedicated UI Coverage verification step to your CI pipeline. With a Cypress helper function, you can automatically fetch the report for the relevant test run within the CI build context.
+
+## Implementing a status check
+
+The Results API offers full flexibility to analyze results and take tailored actions. It can also integrate with status checks on pull requests, allowing you to block merges when coverage thresholds are not met.
+
+## Defining policies in the verification step
+
+The [Results API Documentation](/ui-coverage/results-api) provides detailed guidance on the API's capabilities. Here's a simplified example demonstrating how to enforce a minimum coverage threshold:
+
+```js
+const { getUICoverageResults } = require('@cypress/extract-cloud-results')
+
+// Fetch UI Coverage results
+getUICoverageResults().then((results) => {
+  const { summary, views } = results
+
+  // Verify overall coverage
+  if (summary.coverage < 80) {
+    throw new Error(
+      `Project coverage is ${summary.coverage}%, below the minimum threshold of 80%.`
+    )
+  }
+
+  // Verify critical view coverage
+  const criticalViews = [/login/, /checkout/]
+  views.forEach((view) => {
+    if (
+      criticalViews.some((pattern) => pattern.test(view.displayName)) &&
+      view.coverage < 95
+    ) {
+      throw new Error(
+        `Critical view "${view.displayName}" coverage is ${view.coverage}%, below the required 95%.`
+      )
+    }
+  })
+})
+```
+
+By examining the results and customizing your response, you gain maximum control over how to handle coverage gaps. Leverage CI environment context, such as tags, to fine-tune responses to specific coverage outcomes.
+
+## Comparing against a baseline
+
+Comparing current results against a stored baseline allows you to detect only new untested elements that have been introduced, while ignoring existing coverage gaps. This approach helps you focus on regressions in test coverage and track improvements over time.
+
+This is particularly useful in CI/CD pipelines where you want to fail builds only when new untested elements are introduced, allowing you to address existing coverage gaps incrementally without blocking deployments.
+
+### Baseline structure
+
+A baseline is a JSON object that captures the state of untested elements from a specific run. It includes:
+
+- **runNumber**: The run number used as the baseline reference
+- **views**: An object mapping view display names to arrays of view identifiers that had untested elements
+
+Since the UI Coverage Results API provides `untestedElementsCount` per view rather than individual element identifiers, the baseline tracks which views have untested elements (where `untestedElementsCount > 0`).
+
+```javascript
+{
+  "runNumber": "111",
+  "views": {
+    "/": [],
+    "/authorizations": [],
+    "/checkout": ["/checkout"],
+    "/profile": ["/profile"]
+  }
+}
+```
+
+In this example, `/checkout` and `/profile` had untested elements in the baseline run, while `/` and `/authorizations` had full coverage.
+
+### Complete example
+
+The following example demonstrates how to compare current results against a baseline, detect new views with untested elements, identify views where coverage has improved, and generate a new baseline when changes are detected.
+
+```javascript title="scripts/compareUICoverageBaseline.js"
+require('dotenv').config();
+
+const { getUICoverageResults } = require('@cypress/extract-cloud-results');
+const fs = require('fs');
+
+// Parse the run number from a UI Coverage report URL
+const parseRunNumber = (url) => {
+  return url.split('runs/')[1].split('/ui-coverage')[0];
+};
+
+// Define your baseline - this should be stored and updated as your test coverage improves
+const baseline = {
+  "runNumber": "111",
+  "views": {
+    "/": [],
+    "/authorizations": [],
+    "/checkout": ["/checkout"],
+    "/profile": ["/profile"]
+  }
+};
+
+getUICoverageResults().then((results) => {
+  // Create objects to store the results
+  const viewUntestedElements = {};
+  const viewsWithNewUntestedElements = {};
+  const viewsWithResolvedUntestedElements = {};
+
+  // Iterate through each view in current results
+  results.views.forEach(view => {
+    const displayName = view.displayName;
+    const hasUntestedElements = view.untestedElementsCount > 0;
+
+    // Track which views have untested elements
+    if (hasUntestedElements) {
+      viewUntestedElements[displayName] = [displayName];
+    } else {
+      viewUntestedElements[displayName] = [];
+    }
+
+    // Check for new views with untested elements
+    // A view has new untested elements if:
+    // 1. It has untested elements in current run, AND
+    // 2. It either didn't exist in baseline OR had no untested elements in baseline
+    if (hasUntestedElements) {
+      const baselineHadUntested = baseline.views?.[displayName]?.length > 0;
+      
+      if (!baselineHadUntested) {
+        viewsWithNewUntestedElements[displayName] = {
+          untestedElementsCount: view.untestedElementsCount,
+          url: view.uiCoverageReportUrl
+        };
+      }
+    }
+  });
+
+  // Check for views in baseline that no longer have untested elements (resolved)
+  Object.entries(baseline.views).forEach(([displayName, baselineUntested]) => {
+    const currentHasUntested = viewUntestedElements[displayName]?.length > 0;
+    const baselineHadUntested = baselineUntested.length > 0;
+
+    // If baseline had untested elements but current run doesn't, it's resolved
+    if (baselineHadUntested && !currentHasUntested) {
+      viewsWithResolvedUntestedElements[displayName] = {
+        resolved: true
+      };
+    }
+  });
+
+  // Report any changes
+  const countOfViewsWithResolved = Object.keys(viewsWithResolvedUntestedElements).length;
+  const countOfViewsWithNewUntested = Object.keys(viewsWithNewUntestedElements).length;
+
+  if (countOfViewsWithResolved || countOfViewsWithNewUntested) {
+    // Generate and log the new baseline values if there has been a change
+    const newBaseline = generateBaseline(results);
+    console.log('\nTo use this run as the new baseline, copy these values:');
+    console.log(JSON.stringify(newBaseline, null, 2));
+    fs.writeFileSync('new-baseline.json', JSON.stringify(newBaseline, null, 2));
+  }
+
+  if (countOfViewsWithResolved) {
+    console.log('\nThe following Views had untested elements in the baseline that are now fully tested. This indicates improved test coverage:');
+    console.dir(viewsWithResolvedUntestedElements, { depth: 3 });
+  } else if (!countOfViewsWithNewUntested) {
+    console.log('\nNo new or resolved untested elements were detected. All coverage matches the baseline.\n');
+  }
+
+  if (countOfViewsWithNewUntested) {
+    // Report any new untested elements
+    console.error('\nThe following Views have new untested elements that were not present in the baseline:');
+    console.dir(viewsWithNewUntestedElements, { depth: 3 });
+    throw new Error(
+      `${countOfViewsWithNewUntested} Views contained new untested elements.`
+    );
+  }
+
+  return viewUntestedElements;
+});
+
+function generateBaseline(results) {
+  try {
+    // Create an object to store the results
+    const viewUntestedElements = {};
+
+    // Iterate through each view
+    results.views.forEach(view => {
+      const displayName = view.displayName;
+      const hasUntestedElements = view.untestedElementsCount > 0;
+
+      // Track views that have untested elements
+      // Store the view name in an array if it has untested elements, empty array otherwise
+      viewUntestedElements[displayName] = hasUntestedElements ? [displayName] : [];
+    });
+
+    const runNumber = parseRunNumber(results.views[0].uiCoverageReportUrl);
+
+    return {
+      runNumber,
+      views: viewUntestedElements
+    };
+  } catch (error) {
+    console.error('Error parsing UI Coverage results:', error);
+    return null;
+  }
+}
+```
+
+### Key concepts
+
+#### New untested elements
+
+A **new untested element** situation occurs when a view has untested elements in the current run but did not have untested elements in the baseline. This represents a regression in test coverage that needs to be addressed. The script will fail the build if any views with new untested elements are detected.
+
+#### Resolved untested elements
+
+A **resolved untested element** situation occurs when a view had untested elements in the baseline but no longer has untested elements in the current run. This represents an improvement in test coverage. The script reports these but does not fail the build, allowing you to track progress.
+
+#### View-level comparison
+
+Untested elements are tracked per view (URL pattern or component), allowing you to see exactly which pages or components have coverage regressions or improvements. This granular tracking makes it easier to identify where new tests are needed or where coverage has improved.
+
+### Best practices
+
+#### When to update the baseline
+
+Update your baseline when:
+- You've added tests to cover previously untested elements and want to prevent regressions
+- You've accepted certain coverage gaps as known issues that won't block deployments
+- You want to track coverage improvements over time
+
+Store the baseline in version control so it's versioned alongside your code and accessible in CI environments.
+
+#### Handling partial reports
+
+If a run is cancelled or incomplete, the Results API may return a partial report. Consider checking `summary.isPartialReport` before comparing against the baseline, as partial reports may not include all views and could produce false positives.
+
+#### Managing baseline across branches
+
+You may want different baselines for different branches (e.g., `main` vs feature branches). Consider storing baselines in branch-specific files or using environment variables to specify which baseline to use.
+
+#### Storing the baseline
+
+Common approaches for storing baselines:
+- **Version control**: Commit the baseline JSON file to your repository
+- **CI artifacts**: Store baselines as build artifacts that can be retrieved in subsequent runs
+- **External storage**: Use cloud storage or a database for baselines if you need more sophisticated versioning
+
+:::info
+
+This baseline comparison approach complements the [Branch Review](/ui-coverage/guides/compare-reports) UI feature, which provides visual comparisons between runs. The programmatic approach is ideal for CI/CD automation, while Branch Review is better suited for manual investigation and code review workflows.
+
+:::
