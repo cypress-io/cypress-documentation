@@ -54,7 +54,7 @@ getUICoverageResults().then((results) => {
 
 By examining the results and customizing your response, you gain maximum control over how to handle coverage gaps. Leverage CI environment context, such as tags, to fine-tune responses to specific coverage outcomes.
 
-## Comparing against a baseline
+## Comparing against a baseline {#comparing-against-a-baseline}
 
 Comparing current results against a stored baseline allows you to detect only new untested elements that have been introduced, while ignoring existing coverage gaps. This approach helps you focus on regressions in test coverage and track improvements over time.
 
@@ -88,43 +88,43 @@ In this example, `/checkout` and `/profile` had untested elements in the baselin
 The following example demonstrates how to compare current results against a baseline, detect new views with untested elements, identify views where coverage has improved, and generate a new baseline when changes are detected.
 
 ```javascript title="scripts/compareUICoverageBaseline.js"
-require('dotenv').config();
+require('dotenv').config()
 
-const { getUICoverageResults } = require('@cypress/extract-cloud-results');
-const fs = require('fs');
+const { getUICoverageResults } = require('@cypress/extract-cloud-results')
+const fs = require('fs')
 
 // Parse the run number from a UI Coverage report URL
 const parseRunNumber = (url) => {
-  return url.split('runs/')[1].split('/ui-coverage')[0];
-};
+  return url.split('runs/')[1].split('/ui-coverage')[0]
+}
 
 // Define your baseline - this should be stored and updated as your test coverage improves
 const baseline = {
-  "runNumber": "111",
-  "views": {
-    "/": [],
-    "/authorizations": [],
-    "/checkout": ["/checkout"],
-    "/profile": ["/profile"]
-  }
-};
+  runNumber: '111',
+  views: {
+    '/': [],
+    '/authorizations': [],
+    '/checkout': ['/checkout'],
+    '/profile': ['/profile'],
+  },
+}
 
 getUICoverageResults().then((results) => {
   // Create objects to store the results
-  const viewUntestedElements = {};
-  const viewsWithNewUntestedElements = {};
-  const viewsWithResolvedUntestedElements = {};
+  const viewUntestedElements = {}
+  const viewsWithNewUntestedElements = {}
+  const viewsWithResolvedUntestedElements = {}
 
   // Iterate through each view in current results
-  results.views.forEach(view => {
-    const displayName = view.displayName;
-    const hasUntestedElements = view.untestedElementsCount > 0;
+  results.views.forEach((view) => {
+    const displayName = view.displayName
+    const hasUntestedElements = view.untestedElementsCount > 0
 
     // Track which views have untested elements
     if (hasUntestedElements) {
-      viewUntestedElements[displayName] = [displayName];
+      viewUntestedElements[displayName] = [displayName]
     } else {
-      viewUntestedElements[displayName] = [];
+      viewUntestedElements[displayName] = []
     }
 
     // Check for new views with untested elements
@@ -132,85 +132,97 @@ getUICoverageResults().then((results) => {
     // 1. It has untested elements in current run, AND
     // 2. It either didn't exist in baseline OR had no untested elements in baseline
     if (hasUntestedElements) {
-      const baselineHadUntested = baseline.views?.[displayName]?.length > 0;
-      
+      const baselineHadUntested = baseline.views?.[displayName]?.length > 0
+
       if (!baselineHadUntested) {
         viewsWithNewUntestedElements[displayName] = {
           untestedElementsCount: view.untestedElementsCount,
-          url: view.uiCoverageReportUrl
-        };
+          url: view.uiCoverageReportUrl,
+        }
       }
     }
-  });
+  })
 
   // Check for views in baseline that no longer have untested elements (resolved)
   Object.entries(baseline.views).forEach(([displayName, baselineUntested]) => {
-    const currentHasUntested = viewUntestedElements[displayName]?.length > 0;
-    const baselineHadUntested = baselineUntested.length > 0;
+    const currentHasUntested = viewUntestedElements[displayName]?.length > 0
+    const baselineHadUntested = baselineUntested.length > 0
 
     // If baseline had untested elements but current run doesn't, it's resolved
     if (baselineHadUntested && !currentHasUntested) {
       viewsWithResolvedUntestedElements[displayName] = {
-        resolved: true
-      };
+        resolved: true,
+      }
     }
-  });
+  })
 
   // Report any changes
-  const countOfViewsWithResolved = Object.keys(viewsWithResolvedUntestedElements).length;
-  const countOfViewsWithNewUntested = Object.keys(viewsWithNewUntestedElements).length;
+  const countOfViewsWithResolved = Object.keys(
+    viewsWithResolvedUntestedElements
+  ).length
+  const countOfViewsWithNewUntested = Object.keys(
+    viewsWithNewUntestedElements
+  ).length
 
   if (countOfViewsWithResolved || countOfViewsWithNewUntested) {
     // Generate and log the new baseline values if there has been a change
-    const newBaseline = generateBaseline(results);
-    console.log('\nTo use this run as the new baseline, copy these values:');
-    console.log(JSON.stringify(newBaseline, null, 2));
-    fs.writeFileSync('new-baseline.json', JSON.stringify(newBaseline, null, 2));
+    const newBaseline = generateBaseline(results)
+    console.log('\nTo use this run as the new baseline, copy these values:')
+    console.log(JSON.stringify(newBaseline, null, 2))
+    fs.writeFileSync('new-baseline.json', JSON.stringify(newBaseline, null, 2))
   }
 
   if (countOfViewsWithResolved) {
-    console.log('\nThe following Views had untested elements in the baseline that are now fully tested. This indicates improved test coverage:');
-    console.dir(viewsWithResolvedUntestedElements, { depth: 3 });
+    console.log(
+      '\nThe following Views had untested elements in the baseline that are now fully tested. This indicates improved test coverage:'
+    )
+    console.dir(viewsWithResolvedUntestedElements, { depth: 3 })
   } else if (!countOfViewsWithNewUntested) {
-    console.log('\nNo new or resolved untested elements were detected. All coverage matches the baseline.\n');
+    console.log(
+      '\nNo new or resolved untested elements were detected. All coverage matches the baseline.\n'
+    )
   }
 
   if (countOfViewsWithNewUntested) {
     // Report any new untested elements
-    console.error('\nThe following Views have new untested elements that were not present in the baseline:');
-    console.dir(viewsWithNewUntestedElements, { depth: 3 });
+    console.error(
+      '\nThe following Views have new untested elements that were not present in the baseline:'
+    )
+    console.dir(viewsWithNewUntestedElements, { depth: 3 })
     throw new Error(
       `${countOfViewsWithNewUntested} Views contained new untested elements.`
-    );
+    )
   }
 
-  return viewUntestedElements;
-});
+  return viewUntestedElements
+})
 
 function generateBaseline(results) {
   try {
     // Create an object to store the results
-    const viewUntestedElements = {};
+    const viewUntestedElements = {}
 
     // Iterate through each view
-    results.views.forEach(view => {
-      const displayName = view.displayName;
-      const hasUntestedElements = view.untestedElementsCount > 0;
+    results.views.forEach((view) => {
+      const displayName = view.displayName
+      const hasUntestedElements = view.untestedElementsCount > 0
 
       // Track views that have untested elements
       // Store the view name in an array if it has untested elements, empty array otherwise
-      viewUntestedElements[displayName] = hasUntestedElements ? [displayName] : [];
-    });
+      viewUntestedElements[displayName] = hasUntestedElements
+        ? [displayName]
+        : []
+    })
 
-    const runNumber = parseRunNumber(results.views[0].uiCoverageReportUrl);
+    const runNumber = parseRunNumber(results.views[0].uiCoverageReportUrl)
 
     return {
       runNumber,
-      views: viewUntestedElements
-    };
+      views: viewUntestedElements,
+    }
   } catch (error) {
-    console.error('Error parsing UI Coverage results:', error);
-    return null;
+    console.error('Error parsing UI Coverage results:', error)
+    return null
   }
 }
 ```
@@ -234,6 +246,7 @@ Untested elements are tracked per view (URL pattern or component), allowing you 
 #### When to update the baseline
 
 Update your baseline when:
+
 - You've added tests to cover previously untested elements and want to prevent regressions
 - You've accepted certain coverage gaps as known issues that won't block deployments
 - You want to track coverage improvements over time
@@ -251,6 +264,7 @@ You may want different baselines for different branches (e.g., `main` vs feature
 #### Storing the baseline
 
 Common approaches for storing baselines:
+
 - **Version control**: Commit the baseline JSON file to your repository
 - **CI artifacts**: Store baselines as build artifacts that can be retrieved in subsequent runs
 - **External storage**: Use cloud storage or a database for baselines if you need more sophisticated versioning
