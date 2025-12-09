@@ -24,7 +24,8 @@ supported, if you need to split them up.
     {
       "attribute": string,
       "value": string,
-      "include": boolean
+      "include": boolean,
+      "comment": string
     }
   ]
 }
@@ -39,6 +40,7 @@ For every attribute that an element has, the first `attributeFilters` rule for w
 | `attribute` | Required |         | A regex string to match attribute names                                |
 | `value`     | Optional | `.*`    | A regex string to match attribute values                               |
 | `include`   | Optional | `true`  | A boolean to specify whether the matched attribute should be included. |
+| `comment`   | Optional |         | A comment describing the purpose of this filter rule.                  |
 
 ## Examples
 

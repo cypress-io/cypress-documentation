@@ -34,7 +34,8 @@ URLs with the same values for the specified parameters will be grouped together,
       "pattern": string,
       "groupBy": [
         string
-      ]
+      ],
+      "comment": string
     }
   ]
 }
@@ -48,6 +49,7 @@ The first pattern that a given URL matches is used as its view. If a URL doesn't
 | --------- | -------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `pattern` | Required |         | A URL pattern to group matching URLs into a single view. Uses [URL Pattern API](https://developer.mozilla.org/en-US/docs/Web/API/URL_Pattern_API) syntax. |
 | `groupBy` | Optional |         | An array of named parameters from your pattern that should create separate views.                                                                         |
+| `comment` | Optional |         | A comment describing the purpose of this view configuration.                                                                                              |
 
 ## Examples
 

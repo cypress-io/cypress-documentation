@@ -47,6 +47,27 @@ If you check this in as a dependency, your installation will fail when we update
 
 Write a script to fetch UI Coverage results and assert test coverage criteria. This script will be executed in CI.
 
+#### Basic example
+
+This snippet uses the `getUICoverageResults()` helper to log out the results. It assumes your Project ID and Record Key variable are set. The following should work in any of the supported CI Providers out of the box:
+
+```javascript title="scripts/verifyUICoverageResults.js"
+// Assuming these environment variables are set:
+// CYPRESS_PROJECT_ID=your-id
+// CYPRESS_RECORD_KEY=your-record-key
+
+const { getUICoverageResults } = require('@cypress/extract-cloud-results')
+
+getUICoverageResults().then((results) => {
+  // use `console.dir` instead of `console.log` because the data is nested
+  console.dir(results, { depth: Infinity })
+})
+```
+
+#### How to assert test coverage meets your requirements
+
+The following example demonstrates how to verify that test coverage meets minimum thresholds:
+
 ```javascript title="scripts/verifyUICoverageResults.js"
 const { getUICoverageResults } = require('@cypress/extract-cloud-results')
 
@@ -151,6 +172,10 @@ The `getUICoverageResults` utility returns the following data:
   }]
 }
 ```
+
+## Comparing against a baseline
+
+For comprehensive examples of comparing results against a baseline, including complete code examples, baseline structure, and best practices, see the [Block pull requests and set policies](/ui-coverage/guides/block-pull-requests#comparing-against-a-baseline) guide.
 
 ### **2. Add to CI Workflow**
 
