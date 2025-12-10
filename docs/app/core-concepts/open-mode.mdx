@@ -92,7 +92,7 @@ When your project records to [Cypress Cloud](/cloud/get-started/introduction), t
 
 - **Authentication:** Sign in to Cypress Cloud using the profile in the top right.
 - **Branch scoping:** Cypress reads your current git branch to scope results. It first shows runs from that branch. If no runs are found, it falls back to the default branch, then to all branches.
-- **Git information:** To scope runs correctly, the app needs git metadata. Ensure git is available and that you send git information to Cypress Cloud. In some environments, such as `docker` or `docker-compose`, pass git information with [custom environment variables](/app/continuous-integration/overview#Git-information).
+- **Git information:** To scope runs correctly, the app needs git metadata. Ensure git is available and that you send git information to Cypress Cloud. In some environments, such as `docker` or `docker-compose`, pass git information with [custom system environment variables](/app/continuous-integration/overview#Git-information).
 - **Run titles:** Each run title comes from the git commit message. Click a run to open it in Cypress Cloud.
 
 <DocsImage
@@ -118,7 +118,7 @@ The Debug page in the Cypress app helps you investigate failed CI test runs reco
 #### Requirements
 
 - **Authentication:** Sign in to Cypress Cloud using the profile in the top right.
-- **Git information:**Provide git metadata so the app can match your `HEAD` commit and branch. In environments like `docker` or `docker-compose`, pass git information with [custom environment variables](/app/continuous-integration/overview#Git-information)
+- **Git information:**Provide git metadata so the app can match your `HEAD` commit and branch. In environments like `docker` or `docker-compose`, pass git information with [custom system environment variables](/app/continuous-integration/overview#Git-information)
 
 ### Cloud run notifications
 
