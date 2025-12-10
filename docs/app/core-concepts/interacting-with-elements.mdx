@@ -83,7 +83,9 @@ When `experimentalFastVisibility` is enabled, an element is considered hidden if
   - `pointer-events: none`
 - It is positioned fully outside of the browser viewport
   - _this is a compatibility issue with the legacy visibility algorithm_ when it comes to asserting visibility. Scroll elements into view before asserting on their visibility.
-- It is fully covered by another element
+- It is fully covered or clipped by another element
+
+Keep up-to-date with the the progress of this experiment in the [Cypress repository](https://github.com/cypress-io/cypress/issues/33043).
 
 #### Limitations
 
