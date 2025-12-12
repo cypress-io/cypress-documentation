@@ -9,6 +9,12 @@ sidebar_position: 200
 
 # Changelog
 
+## Week of 12/12/2025
+
+- The `profiles` configuration property allows you to use different configuration settings for different runs based on [run tags](/app/references/command-line#cypress-run-tag-lt-tag-gt). This enables you to customize UI Coverage behavior for different environments, branches, or test scenarios. See the [Profiles](/ui-coverage/configuration/profiles) guide for more details.
+- All configuration objects now support an optional `comment` property that you can use to provide context and explanations for why certain values are set. This helps make your configuration easier to understand and maintain, especially when working in teams or revisiting configuration after some time.
+- A new guide on [blocking pull requests and setting policies](/ui-coverage/guides/block-pull-requests) is now available. This guide demonstrates how to use the Results API to enforce test coverage standards, compare results against baselines, and automatically block pull requests when coverage thresholds are not met.
+
 ## Week of 6/23/25
 
 UI Coverage now supports defining custom commands that will count towards coverage scores, restricting which kinds of interactions are allowed for certain elements, and including assertions in the UI Coverage calculations. See the following new properties for more details:
