@@ -104,18 +104,27 @@ you.
 const fs = require('fs-extra')
 const path = require('path')
 
-function getConfigurationByFile(file) {
-  const pathToConfigFile = path.resolve('..', 'config', `${file}.json`)
+function getConfigurationByFile(file, projectRoot) {
+  const pathToConfigFile = path.join(
+    projectRoot,
+    'cypress',
+    'config',
+    `${file}.json`
+  )
 
   return fs.readJson(pathToConfigFile)
 }
 
-// plugins file
-module.exports = (on, config) => {
-  // accept a configFile value or use development by default
-  const file = config.env.configFile || 'development'
+// cypress.config.js or cypress.config.ts
+module.exports = {
+  e2e: {
+    setupNodeEvents(on, config) {
+      // accept a environment value or use development by default
+      const file = config.env.environment || 'development'
 
-  return getConfigurationByFile(file)
+      return getConfigurationByFile(file, config.projectRoot)
+    },
+  },
 }
 ```
 
@@ -126,15 +135,15 @@ cypress run
 ```
 
 ```shell
-cypress run --env configFile=qa
+cypress run --env environment=qa
 ```
 
 ```shell
-cypress run --env configFile=staging
+cypress run --env environment=staging
 ```
 
 ```shell
-cypress run --env configFile=production
+cypress run --env environment=production
 ```
 
 Each of these environments would read in the configuration at these files:

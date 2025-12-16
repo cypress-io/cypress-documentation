@@ -159,10 +159,21 @@ const awsConfig = require('./aws-exports-es5.js')
 ```js
 {
   env: {
-    cognito_username: process.env.AWS_COGNITO_USERNAME,
-    cognito_password: process.env.AWS_COGNITO_PASSWORD,
     awsConfig: awsConfig.default
-  }
+  },
+  setupNodeEvents(on, config) {
+    on('task', {
+      getCognitoCredentials() {
+        const username = process.env.AWS_COGNITO_USERNAME
+        const password = process.env.AWS_COGNITO_PASSWORD
+        if (!username || !password) {
+          throw new Error('AWS_COGNITO_USERNAME and AWS_COGNITO_PASSWORD must be set')
+        }
+        return { username, password }
+      },
+    })
+    return config
+  },
 }
 ```
 
@@ -253,10 +264,9 @@ describe('Cognito, cy.origin() login', function () {
     cy.task('db:seed')
 
     // login via Amazon Cognito via cy.origin()
-    cy.loginByCognito(
-      Cypress.env('cognito_username'),
-      Cypress.env('cognito_password')
-    )
+    cy.task('getCognitoCredentials').then(({ username, password }) => {
+      cy.loginByCognito(username, password)
+    })
   })
 
   it('shows onboarding', function () {
@@ -454,10 +464,9 @@ describe('Cognito, programmatic login', function () {
     cy.task('db:seed')
 
     // Programmatically login via Amazon Cognito API
-    cy.loginByCognitoApi(
-      Cypress.env('cognito_username'),
-      Cypress.env('cognito_password')
-    )
+    cy.task('getCognitoCredentials').then(({ username, password }) => {
+      cy.loginByCognitoApi(username, password)
+    })
   })
 
   it('shows onboarding', function () {

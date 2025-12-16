@@ -110,22 +110,30 @@ configuration option must be enabled.
 
 To have access to test user credentials within our tests we need to configure
 Cypress to use the social username, password, and name environment variables set
-in the `cypress.env.json` file or by one of our
-[supported methods](/app/references/environment-variables#Setting).
+as OS-level environment variables (e.g., in your `.env` file or CI secret management).
 
-```json title='cypress.env.json'
+:::cypress-config-example
+
+```js
 {
-  "GOOGLE_USERNAME": "",
-  "GOOGLE_PASSWORD": "",
-  "GOOGLE_NAME": "",
-  "MICROSOFT_USERNAME": "",
-  "MICROSOFT_PASSWORD": "",
-  "MICROSOFT_NAME": "",
-  "FACEBOOK_USERNAME": "",
-  "FACEBOOK_PASSWORD": "",
-  "FACEBOOK_NAME": ""
+  setupNodeEvents(on, config) {
+    on('task', {
+      getAuthCredentials(provider) {
+        const username = process.env[`${provider}_USERNAME`]
+        const password = process.env[`${provider}_PASSWORD`]
+        const name = process.env[`${provider}_NAME`]
+        if (!username || !password || !name) {
+          throw new Error(`${provider}_USERNAME, ${provider}_PASSWORD, and ${provider}_NAME must be set`)
+        }
+        return { username, password, name }
+      },
+    })
+    return config
+  },
 }
 ```
+
+:::
 
 ### Login with `cy.origin()`
 
@@ -283,24 +291,24 @@ Cypress.Commands.add(
 
     switch (SOCIAL_PROVIDER) {
       case 'microsoft':
-        logIntoMicrosoft(
-          Cypress.env('MICROSOFT_USERNAME'),
-          Cypress.env('MICROSOFT_PASSWORD'),
-          Cypress.env('MICROSOFT_NAME')
+        cy.task('getAuthCredentials', 'MICROSOFT').then(
+          ({ username, password, name }) => {
+            logIntoMicrosoft(username, password, name)
+          }
         )
         break
       case 'google':
-        logIntoGoogle(
-          Cypress.env('GOOGLE_USERNAME'),
-          Cypress.env('GOOGLE_PASSWORD'),
-          Cypress.env('GOOGLE_NAME')
+        cy.task('getAuthCredentials', 'GOOGLE').then(
+          ({ username, password, name }) => {
+            logIntoGoogle(username, password, name)
+          }
         )
         break
       case 'facebook':
-        logIntoFacebook(
-          Cypress.env('FACEBOOK_USERNAME'),
-          Cypress.env('FACEBOOK_PASSWORD'),
-          Cypress.env('FACEBOOK_NAME')
+        cy.task('getAuthCredentials', 'FACEBOOK').then(
+          ({ username, password, name }) => {
+            logIntoFacebook(username, password, name)
+          }
         )
         break
       default:
@@ -360,24 +368,24 @@ Cypress.Commands.add(
       () => {
         switch (SOCIAL_PROVIDER) {
           case 'microsoft':
-            logIntoMicrosoft(
-              Cypress.env('MICROSOFT_USERNAME'),
-              Cypress.env('MICROSOFT_PASSWORD'),
-              Cypress.env('MICROSOFT_NAME')
+            cy.task('getAuthCredentials', 'MICROSOFT').then(
+              ({ username, password, name }) => {
+                logIntoMicrosoft(username, password, name)
+              }
             )
             break
           case 'google':
-            logIntoGoogle(
-              Cypress.env('GOOGLE_USERNAME'),
-              Cypress.env('GOOGLE_PASSWORD'),
-              Cypress.env('GOOGLE_NAME')
+            cy.task('getAuthCredentials', 'GOOGLE').then(
+              ({ username, password, name }) => {
+                logIntoGoogle(username, password, name)
+              }
             )
             break
           case 'facebook':
-            logIntoFacebook(
-              Cypress.env('FACEBOOK_USERNAME'),
-              Cypress.env('FACEBOOK_PASSWORD'),
-              Cypress.env('FACEBOOK_NAME')
+            cy.task('getAuthCredentials', 'FACEBOOK').then(
+              ({ username, password, name }) => {
+                logIntoFacebook(username, password, name)
+              }
             )
             break
           default:
@@ -389,22 +397,19 @@ Cypress.Commands.add(
           cy.visit('http://localhost:3000')
           switch (SOCIAL_PROVIDER) {
             case 'microsoft':
-              cy.get('h6.dropdown-header').should(
-                'contain',
-                Cypress.env('MICROSOFT_NAME')
-              )
+              cy.task('getAuthCredentials', 'MICROSOFT').then(({ name }) => {
+                cy.get('h6.dropdown-header').should('contain', name)
+              })
               break
             case 'google':
-              cy.get('h6.dropdown-header').should(
-                'contain',
-                Cypress.env('GOOGLE_NAME')
-              )
+              cy.task('getAuthCredentials', 'GOOGLE').then(({ name }) => {
+                cy.get('h6.dropdown-header').should('contain', name)
+              })
               break
             case 'facebook':
-              cy.get('h6.dropdown-header').should(
-                'contain',
-                Cypress.env('FACEBOOK_NAME')
-              )
+              cy.task('getAuthCredentials', 'FACEBOOK').then(({ name }) => {
+                cy.get('h6.dropdown-header').should('contain', name)
+              })
               break
             default:
               throw new Error('no social provider configured!')
