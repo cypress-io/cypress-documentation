@@ -26,6 +26,119 @@ inform your testing strategy, and ship high-quality code with confidence.
 
 :::
 
+## Visibility
+
+### Default Behavior
+
+Cypress checks a lot of things to determine an element's visibility. The
+following calculations factor in CSS translations and transforms.
+
+#### An element is considered hidden if:
+
+- Its `width` or `height` is `0`.
+- Its CSS property (or ancestors) is `visibility: hidden`.
+- Its CSS property (or ancestors) is `display: none`.
+- Its CSS property is `position: fixed` and it's offscreen or covered up.
+- Any of its ancestors **hides overflow**\*
+  - AND that ancestor has a `width` or `height` of `0`
+  - AND an element between that ancestor and the element is `position: absolute`
+- Any of its ancestors **hides overflow**\*
+  - AND that ancestor or an ancestor between it and that ancestor is its offset
+    parent
+  - AND it is positioned outside that ancestor's bounds
+- Any of its ancestors **hides overflow**\*
+  - AND the element is `position: relative`
+  - AND it is positioned outside that ancestor's bounds
+
+\***hides overflow** means it has `overflow: hidden`, `overflow-x: hidden`,
+`overflow-y: hidden`, `overflow: scroll`, or `overflow: auto`
+
+:::info
+
+<strong>Opacity</strong>
+
+Elements where the CSS property (or ancestors) is `opacity: 0` are considered
+hidden when
+[asserting on the element's visibility directly](/app/references/assertions#Visibility).
+
+However elements where the CSS property (or ancestors) is `opacity: 0` are
+considered actionable and any commands used to interact with the hidden element
+will perform the action.
+
+:::
+
+### Experimental Fast Visibility
+
+You can enable a faster visibility detection algorithm using [`experimentalFastVisibility`](/app/references/experiments#Experimental-Fast-Visibility).
+
+This algorithm is more accurate and less resource-intensive than the default behavior, but it has slightly different semantics.
+
+When `experimentalFastVisibility` is enabled, an element is considered hidden if:
+
+- Its `width` or `height` is `0`
+- Its computed CSS properties prevent it from being clicked on or visible:
+  - `visibility: hidden`
+  - `opacity: 0`
+  - `display: none`
+  - `pointer-events: none`
+- It is positioned fully outside of the browser viewport
+  - _this is a known compatibility issue with the legacy visibility algorithm_ when it comes to asserting visibility. It will be addressed during the course of this experiment.
+- It is fully covered or clipped by another element
+
+Keep up-to-date with the the progress of this experiment in the [Cypress repository](https://github.com/cypress-io/cypress/issues/33043).
+
+#### Limitations
+
+Experimental fast visibility is an experimental feature that is still under development. It uses different semantics from the legacy visibility algorithm, and does not yet fully support all testing scenarios.
+
+- Shadow DOM is not yet supported. Tests that interact with Shadow DOM elements may fail or behave incorrectly.
+- Elements outside of the browser's viewport are not yet correctly identified as visible. Scroll elements into view before testing.
+
+#### Common Compatibility Issues
+
+When enabling fast visibility, you may encounter differences in how elements are detected. The fast algorithm provides more geometrically accurate visibility detection, which may reveal that elements previously considered visible are actually hidden.
+
+**Elements Outside Viewport**
+
+Elements positioned outside the viewport are now correctly identified as hidden. Scroll elements into view before testing:
+
+```javascript
+// Before
+cy.get('.off-screen-element').should('be.visible')
+
+// After
+cy.get('.off-screen-element').scrollIntoView().should('be.visible')
+```
+
+**Covered Elements**
+
+Elements covered by other elements are now correctly identified as hidden. Test the covering element or the user interaction that reveals the covered element:
+
+```javascript
+// Test the user action that reveals the element
+cy.get('.toggle-button').click()
+cy.get('.covered-element').should('be.visible')
+```
+
+**Zero-Dimension Containers**
+
+Containers with zero dimensions are now correctly identified as hidden. Test the child element instead of the container:
+
+```javascript
+// Test the child element that should be visible
+cy.get('.zero-dimension-container .child-element').should('be.visible')
+```
+
+**Elements with `pointer-events: none`**
+
+Elements with `pointer-events: none` may be detected as hidden when they are visible. Do not assert visibility on elements with `pointer-events: none`, as they cannot be interacted with.
+
+:::caution
+
+**Important:** If tests fail after enabling fast visibility, the fast algorithm is likely correct and tests should be updated to match the actual behavior.
+
+:::
+
 ## Actionability
 
 Some commands in Cypress are for interacting with the DOM such as:
@@ -70,45 +183,6 @@ core concept guide).
 Whenever Cypress cannot interact with an element, it could fail at any of the
 above steps. You will usually get an error explaining why the element was not
 found to be actionable.
-
-### Visibility
-
-Cypress checks a lot of things to determine an element's visibility. The
-following calculations factor in CSS translations and transforms.
-
-#### An element is considered hidden if:
-
-- Its `width` or `height` is `0`.
-- Its CSS property (or ancestors) is `visibility: hidden`.
-- Its CSS property (or ancestors) is `display: none`.
-- Its CSS property is `position: fixed` and it's offscreen or covered up.
-- Any of its ancestors **hides overflow**\*
-  - AND that ancestor has a `width` or `height` of `0`
-  - AND an element between that ancestor and the element is `position: absolute`
-- Any of its ancestors **hides overflow**\*
-  - AND that ancestor or an ancestor between it and that ancestor is its offset
-    parent
-  - AND it is positioned outside that ancestor's bounds
-- Any of its ancestors **hides overflow**\*
-  - AND the element is `position: relative`
-  - AND it is positioned outside that ancestor's bounds
-
-\***hides overflow** means it has `overflow: hidden`, `overflow-x: hidden`,
-`overflow-y: hidden`, `overflow: scroll`, or `overflow: auto`
-
-:::info
-
-<strong>Opacity</strong>
-
-Elements where the CSS property (or ancestors) is `opacity: 0` are considered
-hidden when
-[asserting on the element's visibility directly](/app/references/assertions#Visibility).
-
-However elements where the CSS property (or ancestors) is `opacity: 0` are
-considered actionable and any commands used to interact with the hidden element
-will perform the action.
-
-:::
 
 ### Disability
 
