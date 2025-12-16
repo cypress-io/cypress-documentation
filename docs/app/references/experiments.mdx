@@ -196,9 +196,8 @@ Consider enabling `experimentalFastVisibility` if you:
 
 :::caution
 
-The experimental fast visibility algorithm is not yet fully compatible with the legacy visibility algorithm. Tests that rely on edge-case behavior of the legacy visibility algorithm may fail or behave incorrectly.
+The experimental fast visibility algorithm has slightly different semantics for what it considers visible, when compared with the legacy algorithm. Tests that rely on edge-case behavior of the legacy visibility algorithm may fail or behave incorrectly.
 
-- Scroll elements into view before asserting on their visibility.
 - Shadow DOM is not yet supported. Tests that interact with Shadow DOM elements may fail or behave incorrectly.
 - Elements outside of the browser's viewport are not yet correctly identified as visible. Scroll elements into view before testing.
 
