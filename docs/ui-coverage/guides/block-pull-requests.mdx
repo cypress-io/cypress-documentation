@@ -9,7 +9,7 @@ sidebar_position: 40
 
 # Block pull requests and set policies
 
-Cypress UI Coverage reports are generated server-side in Cypress Cloud, based on test artifacts uploaded during execution. This ensures there is no performance impact on your Cypress test runs.
+Cypress UI Coverage reports are generated server-side in Cypress Cloud, based on test artifacts uploaded during execution. This ensures there is no performance impact on your Cypress test runs, but also means that nothing in your Cypress pipeline will fail due to coverage issues that are detected. Failing a build is a fully opt-in step based on your handling of the results in your CI process.
 
 ## Using the Results API
 
@@ -53,6 +53,22 @@ getUICoverageResults().then((results) => {
 ```
 
 By examining the results and customizing your response, you gain maximum control over how to handle coverage gaps. Leverage CI environment context, such as tags, to fine-tune responses to specific coverage outcomes.
+
+## Using Profiles for PR-specific configuration
+
+You can use [Profiles](/ui-coverage/configuration/profiles) to apply different configuration settings for pull request runs versus regression runs. This allows you to:
+
+- Use a narrow, focused configuration for PR runs that blocks merges based on critical coverage thresholds
+- Maintain a broader configuration for regression runs that tracks all coverage gaps for long-term monitoring
+- Apply team-specific configurations when multiple teams share the same Cypress Cloud project
+
+For example, you might configure a profile named `aq-config-pr` that excludes non-critical pages and focuses only on the most important coverage areas, while your base configuration includes all pages for comprehensive regression tracking.
+
+```shell
+cypress run --record --tag "aq-config-pr"
+```
+
+This approach ensures that PR checks are fast and focused, while still maintaining comprehensive reporting for your full test suite.
 
 ## Comparing against a baseline {#comparing-against-a-baseline}
 

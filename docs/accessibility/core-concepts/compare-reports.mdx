@@ -164,3 +164,18 @@ It's likely that your tests have never been used for always-on accessibility tes
 For example, sometimes the test may spend enough time on a page to see a confirmation message after a form is submitted, unless the server response is slow, then the test may finish without rendering the state.
 
 There are different solutions depending on the nature of the issue. If you want to ensure the state is always picked up in Cypress Accessibility, you can add some assertion about that state to your tests. On the other hand, if you do not want to account for this state at all, it can be ignored with [`elementFilters`](/accessibility/configuration/elementfilters) configuration. Either approach will lead to a more stable branch comparison.
+
+
+## Optimizing for Pull Request reviews
+
+If you plan to use branch comparison for investigating Pull Requests that have been blocked through the Results API for not meeting your standard, it's useful to implement this in a gradual way, prioritizing the developer experience at first.
+
+Choose a scope of rules, page, and elements that reduces ambiguity. A good starting point is something like "We will fail a build if it introduces new critical issues on the login or checkout page."
+
+If your application is unstable between runs in terms of content, pages, or different states reached, fine tune your configuration to ignore the unstable parts of the DOM that have issues already. These can be documented and dealt with on their own.
+
+When everything is dialled in correctly, the Branch Review diff will be 100% clean, unless something has actually changed in an area you didn't already know about. This gives you the highest confidence that if an issue is blocking a merge, it is genuinely a new problem introduced by the incoming Pull Request.
+
+If the team is not already familiar with accessibility, it's useful to consider which rules to start with. See the [starting from scratch guide](/accessibility/guides/improve-accessibility) for suggestions about this.
+
+If multiple teams are working on the same project and need accessibility results to be isolated from each other, consider splitting runs into dedicated Cypress projects or using [configuration profiles](/accessibility/configuration/profiles) so that each team can have a customized report for the areas they are responsible for.

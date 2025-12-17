@@ -29,7 +29,11 @@ UI Coverage now supports defining custom commands that will count towards covera
 To add or modify the configuration for your project:
 
 1. Navigate to the **App Quality** tab in your project settings on Cypress Cloud.
-2. Use the configuration editor to add or edit confiuration in JSON format.
+2. Use the configuration editor to add or edit configuration in JSON format.
+
+After new configuration changes have been saved, you can reprocess any historical run using the "regenerate" button on the properties tab where the configuration values that were used for that run are displayed, or through the UI Coverage report where the "configuration updated" message appears if you are looking at a historical run using an old config. 
+
+Regenerating reports in this way allows you to make config changes and see their effects without running your Cypress tests again.
 
 <DocsImage
   src="/img/ui-coverage/configuration/cypress-ui-coverage-configuration-editor.png"
@@ -126,7 +130,7 @@ A complete configuration with all available options looks as follows:
 
 ## Configuration scope
 
-The root-level properties `elementFilters` and `viewFilters` apply to both UI Coverage and Accessibility. These properties can also be nested under `uiCoverage` or `accessibility` to apply to only that product, with nested configuration taking precedence over root-level configuration.
+The root-level properties `elementFilters`, `viewFilters`, `attributeFilters`, and `significantAttributes` apply to both UI Coverage and Accessibility. These properties can also be nested under `uiCoverage` or `accessibility` to apply to only that product, with nested configuration taking precedence over root-level configuration.
 
 The `views` property applies to UI Coverage and Accessibility but cannot be nested.
 
@@ -143,11 +147,18 @@ You can review the configuration used during a specific run by checking the **Pr
 
 Check out the following configuration guides.
 
-- [Attribute Filters](/ui-coverage/configuration/attributefilters)
+
+
+- [Views](/ui-coverage/configuration/views)
+- [View Filters](/ui-coverage/configuration/viewfilters)
 - [Element Filters](/ui-coverage/configuration/elementfilters)
+- [Attribute Filters](/ui-coverage/configuration/attributefilters)
+- [Significant Attributes](/ui-coverage/configuration/significantattributes)
 - [Element Groups](/ui-coverage/configuration/elementgroups)
 - [Elements](/ui-coverage/configuration/elements)
+- [Additional Interaction Commands](/ui-coverage/configuration/additionalinteractioncommands)
+- [Allowed Interaction Commands](/ui-coverage/configuration/allowedinteractioncommands)
 - [Profiles](/ui-coverage/configuration/profiles)
-- [Significant Attributes](/ui-coverage/configuration/significantattributes)
-- [View Filters](/ui-coverage/configuration/viewfilters)
-- [Views](/ui-coverage/configuration/views)
+
+
+UI Coverage now supports defining custom commands that will count towards coverage scores, restricting which kinds of interactions are allowed for certain elements, and including assertions in the UI Coverage calculations. See the following new properties for more details:

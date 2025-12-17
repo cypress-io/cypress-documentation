@@ -1,9 +1,11 @@
-The `profiles` property allows you to create configuration overrides that are applied based on run tags. This enables you to use different configuration settings for different types of runs, such as regression tests compared to smoke tests environments, or providing scoped results relevant to specific teams.
+The `profiles` property allows you to create configuration overrides that are applied based on [run tags](/app/references/command-line#cypress-run-tag-lt-tag-gt). This enables you to use different configuration settings for different types of runs in the same Cypress Cloud project, such as regression tests compared to smoke tests environments, or providing scoped results relevant to specific teams.
+
+In many cases, the need for different profiles can be avoided completely by having distinct Cypress Cloud projects for different kinds of runs or different team ownership. This is the recommended first choice, because it usually simplifies reporting and tracking. But where distinct projects are not the right answer, profiles will help.
 
 ## Why use profiles?
 
 - **Team specific reporting**: If multiple teams use the same Cypress Cloud project, they may have completely different areas of concern for which pages or DOM elements are included in reports about accessibility or UI Coverage. Profiles allow each team to see and track against only the results that matter to them, and remove all other findings.
-- **Run-type customization**: Use different filters or settings for regression runs versus pull requests. It can be useful to have a narrow config for blocking a merge, optimized for the most critical areas of your app -- while still running a wide config on a full regression suite to manage on a difference cadence.
+- **Run-type customization**: Use different filters or settings for regression runs versus pull requests. It can be useful to have a narrow config for blocking a merge, optimized for the most critical areas of your app and high "solvability", while still running a wide config on a full regression suite to manage findings on a difference cadence.
 - **Skip runs when needed**: If you know that certain kinds of runs are not going to be valuable for App Quality reporting, you can ignore all view on these runs so that no report is created. In some situations this can improve clarity about when to look at a report and which reports are considered significant.
 
 ## How profiles work
@@ -16,7 +18,7 @@ If more than one tag provided to a run matches a profile in your App Quality pro
 
 Use a naming convention like `aq-config-x` (e.g., `aq-config-regression`, `aq-config-staging`) to make it clear that a tag is used for configuration lookup purposes.
 
-While relying on existing tags works just fine, being explicit will help avoid accidental removal of or changes to important tags.
+While relying on existing tags works just fine, being explicit will help avoid unintentionally changing or removing a tag which is depended on for a profile. 
 
 ## Syntax
 

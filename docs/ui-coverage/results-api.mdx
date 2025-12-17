@@ -189,7 +189,7 @@ In your CI workflow that runs your Cypress tests,
 
 If you record multiple runs in a single CI build, you must record these runs using the `--tag` parameter and then call `getUICoverageResults` with the `runTags` argument for each run.
 
-This is necessary to identify each unique run and return a corresponding set of results. The tags are how each run is uniquely identified.
+This is necessary to identify each unique run and return a corresponding set of results. The tags are how each run is uniquely identified. Tags can also be used to activate [Profiles](/ui-coverage/configuration/profiles) that apply different configuration settings to your runs.
 
 **Example**
 

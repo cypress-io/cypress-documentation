@@ -9,7 +9,7 @@ sidebar_position: 40
 
 # Block pull requests and set policies
 
-Cypress Accessibility reports are generated server-side in Cypress Cloud, based on test artifacts uploaded during execution. This ensures there is no performance impact on your Cypress test runs.
+Cypress Accessibility reports are generated server-side in Cypress Cloud, based on test artifacts uploaded during execution. This ensures there is no performance impact on your Cypress test runs, but also means that nothing in your Cypress pipeline will fail due to accessibility issues that are detected. Failing a build is a fully opt-in step based on your handling of the results in your CI process.
 
 ## Using the Results API
 
@@ -63,6 +63,22 @@ getAccessibilityResults().then((results) => {
 ```
 
 By examining the results and customizing your response, you gain maximum control over how to handle accessibility violations. Leverage CI environment context, such as tags, to fine-tune responses to specific accessibility outcomes.
+
+## Using Profiles for PR-specific configuration
+
+You can use [Profiles](/accessibility/configuration/profiles) to apply different configuration settings for pull request runs versus regression runs. This allows you to:
+
+- Use a narrow, focused configuration for PR runs that blocks merges based on critical accessibility issues
+- Maintain a broader configuration for regression runs that tracks all issues for long-term monitoring
+- Apply team-specific configurations when multiple teams share the same Cypress Cloud project
+
+For example, you might configure a profile named `aq-config-pr` that excludes non-critical pages and focuses only on the most important accessibility rules, while your base configuration includes all pages and rules for comprehensive regression tracking.
+
+```shell
+cypress run --record --tag "aq-config-pr"
+```
+
+This approach ensures that PR checks are fast and focused, while still maintaining comprehensive reporting for your full test suite.
 
 ## Comparing against a baseline {#comparing-against-a-baseline}
 
@@ -121,33 +137,14 @@ const parseRunNumber = (url) => {
   return url.split('runs/')[1].split('/accessibility')[0]
 }
 
-// Define your baseline - this should be stored and updated as your application improves
+// Define your baseline - beginning with no details 
+// will list all current violations as "new", and log a
+// baseline that you can copy and save as your starting point
+
 const baseline = {
-  runNumber: '111',
+  runNumber: '',
   severityLevels: ['critical', 'serious', 'moderate', 'minor'],
-  views: {
-    '/': [
-      'aria-dialog-name',
-      'heading-order',
-      'scrollable-region-focusable',
-      'empty-table-header',
-      'listitem',
-      'region',
-      'aria-required-children',
-      'presentation-role-conflict',
-      'scope-attr-valid',
-      'aria-prohibited-attr',
-      'aria-allowed-attr',
-    ],
-    '/authorizations': [
-      'heading-order',
-      'listitem',
-      'region',
-      'presentation-role-conflict',
-      'svg-img-alt',
-      'aria-allowed-attr',
-    ],
-  },
+  views: { },
 }
 
 getAccessibilityResults().then((results) => {
@@ -275,15 +272,15 @@ function generateBaseline(results) {
 }
 ```
 
-### Key concepts
+### Key concepts in the example script
 
 #### New failing rules
 
-A **new failing rule** is a rule that has violations in the current run but was not present in the baseline for that view. These represent regressions that need to be addressed. The script will fail the build if any new failing rules are detected.
+A **new failing rule** is a rule that has violations on a View in the current run that were not present in the baseline. These represent regressions that need to be addressed. The script will fail the build if any new failing rules are detected.
 
 #### Resolved rules
 
-A **resolved rule** is a rule that was present in the baseline but no longer has violations in the current run. These represent improvements in accessibility. The script reports these but does not fail the build, allowing you to track progress.
+A **resolved rule** is a rule that was present in the baseline but no longer has violations in the current run. These represent improvements in accessibility. The script reports these but does not fail the build, allowing you to track progress, and printing out an updated baseline to copy over when things are fixed.
 
 #### Severity filtering
 
@@ -301,9 +298,8 @@ Update your baseline when:
 
 - You've fixed accessibility violations and want to prevent regressions
 - You've accepted certain violations as known issues that won't block deployments
-- You want to track improvements over time
 
-Store the baseline in version control so it's versioned alongside your code and accessible in CI environments.
+We recommend storing the baseline in version control so it's versioned alongside your code and accessible in CI environments, but some users prefer updating the baseline automatically based on the newest results from a full passing test run on the main branch of the project. This means any PRs will be compared against the reference run that makes sense at the time the results are analyzed, and avoids needing to manually own the standard.
 
 #### Handling partial reports
 
@@ -319,10 +315,4 @@ Common approaches for storing baselines:
 
 - **Version control**: Commit the baseline JSON file to your repository
 - **CI artifacts**: Store baselines as build artifacts that can be retrieved in subsequent runs
-- **External storage**: Use cloud storage or a database for baselines if you need more sophisticated versioning
 
-:::info
-
-This baseline comparison approach is more sophisticated than the simple rule list approach shown earlier in this guide, as it tracks violations at the view level and can detect both regressions and improvements. For simpler use cases, the rule list approach may be sufficient.
-
-:::
