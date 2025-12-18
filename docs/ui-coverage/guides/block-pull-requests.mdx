@@ -84,7 +84,6 @@ In our example the baseline is a JSON object that captures the state of untested
 - **views**: An object mapping view display names to arrays of view identifiers and their untested elements counts
 - **runUrl**: The link to the cloud run that generated this report
 
-
 ```javascript
 {
   "runNumber": 68086,
@@ -106,110 +105,137 @@ The [UI Coverage score](/ui-coverage/guides/identify-coverage-gaps#Overall-Score
 The following example demonstrates how to compare current results against a baseline, detect new views with untested elements, identify views where coverage has improved, and generate a new baseline on every run so that it's easy to copy and update if needed.
 
 ```javascript title="scripts/compareUICoverageBaseline.js"
-require('dotenv').config();
+require('dotenv').config()
 
 const { getUICoverageResults } = require('@cypress/extract-cloud-results')
-const fs = require('fs');
+const fs = require('fs')
 
 // Define your baseline - this should be stored and updated as your application improves
 // Running the script once with no baseline will generate a baseline for you
 const baseline = {
-  "runNumber": undefined,
-  "runUrl": undefined,
-  "views": []
+  runNumber: undefined,
+  runUrl: undefined,
+  views: [],
 }
 
 // Function to compare coverage between current results and baseline
 const compareTestedElementsWithBaseline = (currentResults, baselineData) => {
-  const testedElementsIssues = [];
-  const testedElementsImprovements = [];
-  const newPages = [];
-  
+  const testedElementsIssues = []
+  const testedElementsImprovements = []
+  const newPages = []
+
   // Check if current results has views
   if (!currentResults.views || !Array.isArray(currentResults.views)) {
-    console.log('Warning: Current results do not contain a valid "views" array. Skipping comparison.');
-    return { testedElementsIssues, testedElementsImprovements, newPages, hasChanges: false };
+    console.log(
+      'Warning: Current results do not contain a valid "views" array. Skipping comparison.'
+    )
+    return {
+      testedElementsIssues,
+      testedElementsImprovements,
+      newPages,
+      hasChanges: false,
+    }
   }
-  
-  const currentViews = currentResults.views;
-  
+
+  const currentViews = currentResults.views
+
   // Check if baseline data has the expected structure
   if (!baselineData.views) {
-    console.log('Warning: Baseline data does not contain "views" property. Skipping comparison.');
-    console.log('Current baseline structure:', Object.keys(baselineData));
-    return { testedElementsIssues, testedElementsImprovements, newPages, hasChanges: true };
+    console.log(
+      'Warning: Baseline data does not contain "views" property. Skipping comparison.'
+    )
+    console.log('Current baseline structure:', Object.keys(baselineData))
+    return {
+      testedElementsIssues,
+      testedElementsImprovements,
+      newPages,
+      hasChanges: true,
+    }
   }
-  
-  const baselineViews = baselineData.views;
-  
+
+  const baselineViews = baselineData.views
+
   // Ensure baselineViews is an array
   if (!Array.isArray(baselineViews)) {
-    console.log('Warning: Baseline views is not an array. Skipping comparison.');
-    return { testedElementsIssues, testedElementsImprovements, newPages, hasChanges: true };
+    console.log('Warning: Baseline views is not an array. Skipping comparison.')
+    return {
+      testedElementsIssues,
+      testedElementsImprovements,
+      newPages,
+      hasChanges: true,
+    }
   }
-  
+
   // Create a map of baseline testedElementsCount by displayName for quick lookup
-  const baselineTestedElementsMap = {};
-  baselineViews.forEach(view => {
-    baselineTestedElementsMap[view.displayName] = view.testedElementsCount;
-  });
-  
+  const baselineTestedElementsMap = {}
+  baselineViews.forEach((view) => {
+    baselineTestedElementsMap[view.displayName] = view.testedElementsCount
+  })
+
   // Create a map of current views by displayName to check for missing pages
-  const currentViewsMap = {};
-  currentViews.forEach(view => {
-    currentViewsMap[view.displayName] = view.testedElementsCount;
-  });
-  
+  const currentViewsMap = {}
+  currentViews.forEach((view) => {
+    currentViewsMap[view.displayName] = view.testedElementsCount
+  })
+
   // Compare each current view with baseline
-  currentViews.forEach(currentView => {
-    const pageName = currentView.displayName;
-    const currentTestedElements = currentView.testedElementsCount;
-    const pageExistsInBaseline = pageName in baselineTestedElementsMap;
-    
+  currentViews.forEach((currentView) => {
+    const pageName = currentView.displayName
+    const currentTestedElements = currentView.testedElementsCount
+    const pageExistsInBaseline = pageName in baselineTestedElementsMap
+
     if (pageExistsInBaseline) {
-      const baselineTestedElements = baselineTestedElementsMap[pageName];
+      const baselineTestedElements = baselineTestedElementsMap[pageName]
       if (currentTestedElements < baselineTestedElements) {
         testedElementsIssues.push({
           page: pageName,
           currentTestedElements: currentTestedElements,
           baselineTestedElements: baselineTestedElements,
-          difference: baselineTestedElements - currentTestedElements
-        });
+          difference: baselineTestedElements - currentTestedElements,
+        })
       } else if (currentTestedElements > baselineTestedElements) {
         testedElementsImprovements.push({
           page: pageName,
           currentTestedElements: currentTestedElements,
           baselineTestedElements: baselineTestedElements,
-          difference: currentTestedElements - baselineTestedElements
-        });
+          difference: currentTestedElements - baselineTestedElements,
+        })
       }
     } else {
       // New page not in baseline
       newPages.push({
         page: pageName,
-        testedElementsCount: currentTestedElements
-      });
+        testedElementsCount: currentTestedElements,
+      })
     }
-  });
-  
+  })
+
   // Check for pages in baseline that are missing from current results
   // These are treated as regressions (0 tested elements)
-  baselineViews.forEach(baselineView => {
-    const pageName = baselineView.displayName;
+  baselineViews.forEach((baselineView) => {
+    const pageName = baselineView.displayName
     if (!(pageName in currentViewsMap)) {
       testedElementsIssues.push({
         page: pageName,
         currentTestedElements: 0,
         baselineTestedElements: baselineView.testedElementsCount,
         difference: baselineView.testedElementsCount,
-        isMissing: true
-      });
+        isMissing: true,
+      })
     }
-  });
-  
-  const hasChanges = testedElementsIssues.length > 0 || testedElementsImprovements.length > 0 || newPages.length > 0;
-  
-  return { testedElementsIssues, testedElementsImprovements, newPages, hasChanges };
+  })
+
+  const hasChanges =
+    testedElementsIssues.length > 0 ||
+    testedElementsImprovements.length > 0 ||
+    newPages.length > 0
+
+  return {
+    testedElementsIssues,
+    testedElementsImprovements,
+    newPages,
+    hasChanges,
+  }
 }
 
 function generateUICoverageBaseline(results) {
@@ -218,10 +244,10 @@ function generateUICoverageBaseline(results) {
     return {
       runNumber: results.runNumber,
       runUrl: results.runUrl,
-      views: results.views.map(view => ({
+      views: results.views.map((view) => ({
         displayName: view.displayName,
-        testedElementsCount: view.testedElementsCount
-      }))
+        testedElementsCount: view.testedElementsCount,
+      })),
     }
   } catch (error) {
     console.error('Error generating UI Coverage baseline:', error)
@@ -229,79 +255,107 @@ function generateUICoverageBaseline(results) {
   }
 }
 
-getUICoverageResults().then((results) => {
+getUICoverageResults()
+  .then((results) => {
+    // Compare tested elements count with baseline
+    const {
+      testedElementsIssues,
+      testedElementsImprovements,
+      newPages,
+      hasChanges,
+    } = compareTestedElementsWithBaseline(results, baseline)
 
-  // Compare tested elements count with baseline
-  const { testedElementsIssues, testedElementsImprovements, newPages, hasChanges } = compareTestedElementsWithBaseline(results, baseline);
-  
-  if (hasChanges) {
-    // Generate and log the new baseline values if there has been a change
-    const newBaseline = generateUICoverageBaseline(results)
-    console.log('\nTo use this run as the new baseline, copy these values:')
-    console.log(JSON.stringify(newBaseline, null, 2))
-    fs.writeFileSync('new-UICbaseline.json', JSON.stringify(newBaseline, null, 2))
-  }
-  
-  // Log tested elements regressions
-  if (testedElementsIssues.length > 0) {
-    console.error('\n❌ TESTED ELEMENTS REGRESSION DETECTED!');
-    console.error('The following pages have fewer tested elements than the baseline:');
-    console.error('');
-    
-    testedElementsIssues.forEach(issue => {
-      console.error(`  📄 ${issue.page}`);
-      if (issue.isMissing) {
-        console.error(`     ⚠️  MISSING FROM REPORT (treated as 0 tested elements)`);
-        console.error(`     Current: 0 | Baseline: ${issue.baselineTestedElements} | Difference: -${issue.difference}`);
-      } else {
-        console.error(`     Current: ${issue.currentTestedElements} | Baseline: ${issue.baselineTestedElements} | Difference: -${issue.difference}`);
-      }
-      console.error('');
-    });
-    
-    console.error(`Total pages with tested elements regression: ${testedElementsIssues.length}`);
-  }
-  
-  // Log tested elements improvements
-  if (testedElementsImprovements.length > 0) {
-    console.log('\n✅ TESTED ELEMENTS IMPROVEMENTS DETECTED!');
-    console.log('The following pages have more tested elements than the baseline:');
-    console.log('');
-    
-    testedElementsImprovements.forEach(improvement => {
-      console.log(`  📄 ${improvement.page}`);
-      console.log(`     Current: ${improvement.currentTestedElements} | Baseline: ${improvement.baselineTestedElements} | Difference: +${improvement.difference}`);
-      console.log('');
-    });
-    
-    console.log(`Total pages with tested elements improvement: ${testedElementsImprovements.length}`);
-  }
-  
-  // Log new pages
-  if (newPages.length > 0) {
-    console.log('\n📝 NEW PAGES DETECTED (not in baseline):');
-    newPages.forEach(page => {
-      console.log(`  📄 ${page.page} - Tested Elements: ${page.testedElementsCount}`);
-    });
-    console.log(`Total new pages: ${newPages.length}`);
-  }
-  
-  // Summary
-  if (!hasChanges) {
-    console.log('\n✅ All pages meet or exceed baseline tested elements count!');
-  } else if (testedElementsIssues.length === 0) {
-    console.log('\n✅ No tested elements regressions detected!');
-  }
-  
-  // Exit with error code if there are regressions
-  if (testedElementsIssues.length > 0) {
-    process.exit(1);
-  }
-}).catch((error) => {
-  console.error('Error getting UI coverage results:', error);
-  process.exit(1);
-});
+    if (hasChanges) {
+      // Generate and log the new baseline values if there has been a change
+      const newBaseline = generateUICoverageBaseline(results)
+      console.log('\nTo use this run as the new baseline, copy these values:')
+      console.log(JSON.stringify(newBaseline, null, 2))
+      fs.writeFileSync(
+        'new-UICbaseline.json',
+        JSON.stringify(newBaseline, null, 2)
+      )
+    }
 
+    // Log tested elements regressions
+    if (testedElementsIssues.length > 0) {
+      console.error('\n❌ TESTED ELEMENTS REGRESSION DETECTED!')
+      console.error(
+        'The following pages have fewer tested elements than the baseline:'
+      )
+      console.error('')
+
+      testedElementsIssues.forEach((issue) => {
+        console.error(`  📄 ${issue.page}`)
+        if (issue.isMissing) {
+          console.error(
+            `     ⚠️  MISSING FROM REPORT (treated as 0 tested elements)`
+          )
+          console.error(
+            `     Current: 0 | Baseline: ${issue.baselineTestedElements} | Difference: -${issue.difference}`
+          )
+        } else {
+          console.error(
+            `     Current: ${issue.currentTestedElements} | Baseline: ${issue.baselineTestedElements} | Difference: -${issue.difference}`
+          )
+        }
+        console.error('')
+      })
+
+      console.error(
+        `Total pages with tested elements regression: ${testedElementsIssues.length}`
+      )
+    }
+
+    // Log tested elements improvements
+    if (testedElementsImprovements.length > 0) {
+      console.log('\n✅ TESTED ELEMENTS IMPROVEMENTS DETECTED!')
+      console.log(
+        'The following pages have more tested elements than the baseline:'
+      )
+      console.log('')
+
+      testedElementsImprovements.forEach((improvement) => {
+        console.log(`  📄 ${improvement.page}`)
+        console.log(
+          `     Current: ${improvement.currentTestedElements} | Baseline: ${improvement.baselineTestedElements} | Difference: +${improvement.difference}`
+        )
+        console.log('')
+      })
+
+      console.log(
+        `Total pages with tested elements improvement: ${testedElementsImprovements.length}`
+      )
+    }
+
+    // Log new pages
+    if (newPages.length > 0) {
+      console.log('\n📝 NEW PAGES DETECTED (not in baseline):')
+      newPages.forEach((page) => {
+        console.log(
+          `  📄 ${page.page} - Tested Elements: ${page.testedElementsCount}`
+        )
+      })
+      console.log(`Total new pages: ${newPages.length}`)
+    }
+
+    // Summary
+    if (!hasChanges) {
+      console.log(
+        '\n✅ All pages meet or exceed baseline tested elements count!'
+      )
+    } else if (testedElementsIssues.length === 0) {
+      console.log('\n✅ No tested elements regressions detected!')
+    }
+
+    // Exit with error code if there are regressions
+    if (testedElementsIssues.length > 0) {
+      process.exit(1)
+    }
+  })
+  .catch((error) => {
+    console.error('Error getting UI coverage results:', error)
+    process.exit(1)
+  })
 ```
 
 ### Key concepts
