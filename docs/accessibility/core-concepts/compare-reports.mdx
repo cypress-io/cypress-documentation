@@ -165,7 +165,6 @@ For example, sometimes the test may spend enough time on a page to see a confirm
 
 There are different solutions depending on the nature of the issue. If you want to ensure the state is always picked up in Cypress Accessibility, you can add some assertion about that state to your tests. On the other hand, if you do not want to account for this state at all, it can be ignored with [`elementFilters`](/accessibility/configuration/elementfilters) configuration. Either approach will lead to a more stable branch comparison.
 
-
 ## Optimizing for Pull Request reviews
 
 If you plan to use branch comparison for investigating Pull Requests that have been blocked through the Results API for not meeting your standard, it's useful to implement this in a gradual way, prioritizing the developer experience at first.

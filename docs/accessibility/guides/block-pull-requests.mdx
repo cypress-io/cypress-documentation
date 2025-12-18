@@ -137,14 +137,14 @@ const parseRunNumber = (url) => {
   return url.split('runs/')[1].split('/accessibility')[0]
 }
 
-// Define your baseline - beginning with no details 
+// Define your baseline - beginning with no details
 // will list all current violations as "new", and log a
 // baseline that you can copy and save as your starting point
 
 const baseline = {
   runNumber: '',
   severityLevels: ['critical', 'serious', 'moderate', 'minor'],
-  views: { },
+  views: {},
 }
 
 getAccessibilityResults().then((results) => {
@@ -315,4 +315,3 @@ Common approaches for storing baselines:
 
 - **Version control**: Commit the baseline JSON file to your repository
 - **CI artifacts**: Store baselines as build artifacts that can be retrieved in subsequent runs
-
