@@ -30,12 +30,12 @@ supported, if you need to split them up.
 
 The first `elementFilters` rule for which the selector property matches the element is used to either include or exclude the element based on the `include` value. Elements that do not match any rules are included by default.
 
-| Option          | Required | Default | Description                                                                                                                      |
-| --------------- | -------- | ------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| `selector`      | Required |         | A CSS selector to identify elements. Supports standard CSS selector syntax, including IDs, classes, attributes, and combinators. |
-| `include`       | Optional | `true`  | A boolean indicating whether the matched elements should be included in the report.                                              |
+| Option          | Required | Default | Description                                                                                                                                                                                                                                 |
+| --------------- | -------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `selector`      | Required |         | A CSS selector to identify elements. Supports standard CSS selector syntax, including IDs, classes, attributes, and combinators.                                                                                                            |
+| `include`       | Optional | `true`  | A boolean indicating whether the matched elements should be included in the report.                                                                                                                                                         |
 | `documentScope` | Optional |         | An array of CSS selectors that identify document hosts (iframes or shadow DOM hosts) that must be ancestors of the matched element. The selector will only match if all specified document hosts are found in the element's ancestor chain. |
-| `comment`       | Optional |         | A comment describing the purpose of this filter rule.                                                                            |
+| `comment`       | Optional |         | A comment describing the purpose of this filter rule.                                                                                                                                                                                       |
 
 ## Examples
 

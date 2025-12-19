@@ -39,12 +39,12 @@ UI Coverage provides logic to automatically [group](/ui-coverage/core-concepts/e
 
 For every element considered by UI Coverage, the first `elementGroup` rule for which the `selector` property matches the element is used to group the element. Elements that do not match any rules are grouped by the default UI Coverage [element grouping rules](/ui-coverage/core-concepts/element-grouping).
 
-| Option          | Required | Default    | Description                                                                                                                      |
-| --------------- | -------- | ---------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| `selector`      | Required |            | A CSS selector to identify elements. Supports standard CSS selector syntax, including IDs, classes, attributes, and combinators. |
-| `name`          | Optional | `selector` | A human-readable name for the group, displayed in UI Coverage reports.                                                           |
+| Option          | Required | Default    | Description                                                                                                                                                                                                                                 |
+| --------------- | -------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `selector`      | Required |            | A CSS selector to identify elements. Supports standard CSS selector syntax, including IDs, classes, attributes, and combinators.                                                                                                            |
+| `name`          | Optional | `selector` | A human-readable name for the group, displayed in UI Coverage reports.                                                                                                                                                                      |
 | `documentScope` | Optional |            | An array of CSS selectors that identify document hosts (iframes or shadow DOM hosts) that must be ancestors of the matched element. The selector will only match if all specified document hosts are found in the element's ancestor chain. |
-| `comment`       | Optional |            | A comment describing the purpose of this element group configuration.                                                            |
+| `comment`       | Optional |            | A comment describing the purpose of this element group configuration.                                                                                                                                                                       |
 
 ## Examples
 
