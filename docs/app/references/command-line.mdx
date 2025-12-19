@@ -271,7 +271,7 @@ cypress run --browser /usr/bin/chromium
 This value should be automatically detected for most CI providers and is
 unnecessary to define unless Cypress is unable to determine it.
 
-Typically, this is defined as an environment variable within your CI provider,
+Typically, this is defined as a system environment variable within your CI provider,
 defining a unique "build" or "run".
 
 ```shell
@@ -482,7 +482,7 @@ cypress run --record --key <record_key>
 ```
 
 If you set the **Record Key** as the environment variable `CYPRESS_RECORD_KEY`,
-you can omit the `--key` flag. You'd typically set this environment variable
+you can omit the `--key` flag. You may want to set this environment variable
 when running in
 [Continuous Integration](/app/continuous-integration/overview).
 
