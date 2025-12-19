@@ -9,6 +9,10 @@ sidebar_position: 200
 
 # Changelog
 
+## Week of 12/19/2025
+
+- The `elementFilters` configuration property now supports an optional `documentScope` field that allows you to scope selectors to specific document hosts (iframes or shadow DOM hosts). This enables you to filter elements within nested document contexts without requiring DOM changes. For example, you can filter all elements within a specific shadow DOM component or iframe by combining a selector with `documentScope`. See the [Element Filters](/accessibility/configuration/elementfilters) documentation for more details and examples.
+
 ## Week of 12/12/2025
 
 - You can now create Jira issues directly from accessibility violations in the detail view. This allows you to quickly track and prioritize accessibility issues within your existing Jira workflow. The created Jira issue will include a link back to the accessibility violation in Cypress Cloud. [Learn more about creating Jira issues](/accessibility/core-concepts/inspecting-violation-details#Create-Jira-issue).

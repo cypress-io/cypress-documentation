@@ -27,6 +27,7 @@ This is particularly useful for filtering out irrelevant interactions or focusin
       {
         "selector": string,
         "commands": [string],
+        "documentScope": [string],
         "comment": string
       }
     ]
@@ -38,11 +39,12 @@ This is particularly useful for filtering out irrelevant interactions or focusin
 
 The `allowedInteractionCommands` property accepts an array of objects, where each object defines a rule for limiting interaction commands for elements matching a specific selector.
 
-| Option     | Required | Default | Description                                                                                                                                                                       |
-| ---------- | -------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `selector` | Required |         | A CSS selector to identify elements. Supports standard CSS selector syntax, including IDs, classes, attributes, and combinators.                                                  |
-| `commands` | Required |         | An array of command names (strings) that should be tracked as interactions for elements matching the selector. All other interaction commands will be ignored for these elements. |
-| `comment`  | Optional |         | A comment describing the purpose of this allowed interaction commands configuration.                                                                                              |
+| Option          | Required | Default | Description                                                                                                                                                                       |
+| --------------- | -------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `selector`      | Required |         | A CSS selector to identify elements. Supports standard CSS selector syntax, including IDs, classes, attributes, and combinators.                                                  |
+| `commands`      | Required |         | An array of command names (strings) that should be tracked as interactions for elements matching the selector. All other interaction commands will be ignored for these elements. |
+| `documentScope` | Optional |         | An array of CSS selectors that identify document hosts (iframes or shadow DOM hosts) that must be ancestors of the matched element. The selector will only match if all specified document hosts are found in the element's ancestor chain. |
+| `comment`       | Optional |         | A comment describing the purpose of this allowed interaction commands configuration.                                                                                              |
 
 ## Examples
 
@@ -168,6 +170,101 @@ Note that because `allowedInteractionCommands` replaces the allowed interactions
 cy.get('button[data-no-explicit-interaction="true"]').should('exist) // ✓ Tracked
 cy.get('button[data-no-explicit-interaction="true"]').should('be.visible) // ✓ Tracked
 cy.get('button[data-no-explicit-interaction="true"]').click() // ✗ Not tracked
+```
+
+### Scoping interaction commands to shadow DOM
+
+When you need to limit interaction commands for elements within a specific shadow DOM host, use the `documentScope` property to scope your selector to that document context.
+
+#### Config
+
+```json
+{
+  "uiCoverage": {
+    "allowedInteractionCommands": [
+      {
+        "selector": "button",
+        "commands": ["click"],
+        "documentScope": ["custom-component"]
+      }
+    ]
+  }
+}
+```
+
+#### HTML
+
+```xml
+<body>
+  <button id="root-button">Root Button</button>
+  <custom-component>
+    #shadow-dom
+      <button id="shadow-button">Shadow Button</button>
+  </custom-component>
+</body>
+```
+
+#### Usage in tests
+
+```javascript
+// Root button: all interactions tracked (default behavior)
+cy.get('#root-button').click() // ✓ Tracked
+cy.get('#root-button').hover() // ✓ Tracked
+
+// Shadow DOM button: only click tracked
+cy.get('custom-component').shadow().find('#shadow-button').click() // ✓ Tracked
+cy.get('custom-component').shadow().find('#shadow-button').hover() // ✗ Not tracked
+```
+
+---
+
+### Scoping interaction commands to iframes
+
+You can also scope interaction command rules to elements within specific iframes using `documentScope`.
+
+#### Config
+
+```json
+{
+  "uiCoverage": {
+    "allowedInteractionCommands": [
+      {
+        "selector": "input",
+        "commands": ["type", "clear"],
+        "documentScope": ["#embedded-form"]
+      }
+    ]
+  }
+}
+```
+
+#### HTML
+
+```xml
+<body>
+  <input id="root-input" />
+  <iframe id="embedded-form" src="http://www.foo.com">
+    <html>
+      <body>
+        <input id="embedded-input" />
+      </body>
+    </html>
+  </iframe>
+</body>
+```
+
+#### Usage in tests
+
+```javascript
+// Root input: all interactions tracked (default behavior)
+cy.get('#root-input').type('text') // ✓ Tracked
+cy.get('#root-input').focus() // ✓ Tracked
+
+// Embedded input: only type and clear tracked
+cy.get('#embedded-form').then(($iframe) => {
+  cy.wrap($iframe.contents().find('#embedded-input')).type('text') // ✓ Tracked
+  cy.wrap($iframe.contents().find('#embedded-input')).focus() // ✗ Not tracked
+})
 ```
 
 ## Notes
