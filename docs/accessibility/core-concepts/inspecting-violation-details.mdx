@@ -36,13 +36,62 @@ Clicking on an element in the expanded Rule section provides:
 - **Pinned Element**: Highlights the element in the UI for easier identification.
 - **Copy Selector**: A button to copy the CSS selector uniquely identifying the element.
 - **Print to Console**: Logs the element reference to the browser's console for debugging. In Chrome-based browsers, you can right-click the logged element and select "Reveal in elements panel" to navigate directly to the live DOM.
-- **Share issue**: A button to copy markdown or plain text snippet to share the issue with your team or collaborators.
+- **Actions**: Share details of the accessibility problem or create a Jira issue (if the Jira integration is installed).
 - **Solutions**: A list of potential solutions to address the issue.
 
 <DocsImage
   src="/img/accessibility/core-concepts/cypress-accessibility-element-details-on-click.png"
   alt="Details displayed after clicking on an element in the Rules section of the Cypress Accessibility issue detail view. Options to copy the selector, print to console, share the issue, and solutions are available."
 />
+
+## Actions
+
+When you click on an element in the expanded Rule section, you can copy details of the accessibility violation to share, or directly create a Jira issue if you have the [Cypress Cloud Jira integration](/cloud/integrations/jira) installed.
+
+### Share issue
+
+The **Share issue** button allows you to copy a markdown or plain text snippet containing key details and related links for a particular accessibility violation. This makes it easy to share the issue with your team members or add it to tickets in your issue tracking system.
+
+<DocsImage
+  src="/img/accessibility/core-concepts/cypress-accessibility-element-details-on-click.png"
+  width="60%"
+  alt="The Share issue button visible in the element details panel after clicking on an element in the Rules section."
+/>
+
+The shared snippet includes:
+
+- The rule name and description
+- The element selector
+- Links back to the violation in Cypress Cloud
+- Context about the violation
+
+### Create Jira issue
+
+You can create Jira issues directly from accessibility violations in the detail view. This allows you to quickly track and prioritize accessibility issues within your existing Jira workflow.
+
+<DocsImage
+  src="/img/accessibility/a11y-jira-create.png"
+  width="60%"
+  alt="The Create Jira issue button in the element details panel for an accessibility violation."
+/>
+
+To create a Jira issue:
+
+1. Click on an element in the expanded Rule section to open the element details.
+2. Click the **Create Jira issue** button to open the Jira issue creation form.
+
+<DocsImage
+  src="/img/accessibility/a11y-jira-modal.png"
+  width="60%"
+  alt="The Jira issue creation modal form for creating a new issue from an accessibility violation."
+/>
+
+3. Complete the form by selecting the Jira project, issue type, assignee, and any additional fields required by your Jira configuration.
+4. Submit the form to create the issue in Jira.
+
+The created Jira issue will include a link back to the accessibility violation in Cypress Cloud, making it easy to navigate between your issue tracker and the detailed violation information.
+
+Additional context like related elements or comments for future triage can be added to the issue summary.
 
 ## Snapshots
 
@@ -53,4 +102,4 @@ Snapshots are fully hydrated HTML and CSS representations of your application's 
 
 This area also has the Test Replay button to provide access to any tests where this snapshot appeared, as well as the specific URL of the snapshot displayed at the bottom of the screen.
 
-It's also possible to cycle through the available snapshots to see all the states of the application that were captured, but this is usually not necessary. Think of snapshots more as examples and evidence relate to elements that are listed on the left hand side of the screen. The most useful way to go through the report is this way.
+It's also possible to cycle through the available snapshots to see all the states of the application that were captured, but this is usually not necessary. Think of snapshots more as examples and evidence related to elements that are listed on the left hand side of the screen. The most useful way to browse the report is to move through the elements on the left.

@@ -27,7 +27,9 @@ The `elements` configuration is used as the element's identity if **only one ele
     "elements": [
       {
         "selector": string,
-        "name": string
+        "name": string,
+        "documentScope": [string],
+        "comment": string
       }
     ]
   }
@@ -40,10 +42,12 @@ For every element considered by UI Coverage, the first applicable rule, determin
 
 If multiple elements within the same snapshot satisfy the same rule, the rule cannot uniquely identify these elements. In such cases, the rule is bypassed, and either subsequent rules or the default element identification logic are applied.
 
-| Option     | Required | Default    | Description                                                                                                                      |
-| ---------- | -------- | ---------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| `selector` | Required |            | A CSS selector to identify elements. Supports standard CSS selector syntax, including IDs, classes, attributes, and combinators. |
-| `name`     | Optional | `selector` | A human-readable name for the element, displayed in UI Coverage reports.                                                         |
+| Option          | Required | Default    | Description                                                                                                                                                                                                                                 |
+| --------------- | -------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `selector`      | Required |            | A CSS selector to identify elements. Supports standard CSS selector syntax, including IDs, classes, attributes, and combinators.                                                                                                            |
+| `name`          | Optional | `selector` | A human-readable name for the element, displayed in UI Coverage reports.                                                                                                                                                                    |
+| `documentScope` | Optional |            | An array of CSS selectors that identify document hosts (iframes or shadow DOM hosts) that must be ancestors of the matched element. The selector will only match if all specified document hosts are found in the element's ancestor chain. |
+| `comment`       | Optional |            | A comment describing the purpose of this element configuration.                                                                                                                                                                             |
 
 ## Examples
 
@@ -119,3 +123,92 @@ If multiple elements within the same snapshot satisfy the same rule, the rule ca
 ```
 Help Popover
 ```
+
+---
+
+### Scoping element identification to shadow DOM
+
+When you need to uniquely identify elements within a specific shadow DOM host, use the `documentScope` property to scope your selector to that document context.
+
+#### Config
+
+```json
+{
+  "uiCoverage": {
+    "elements": [
+      {
+        "selector": "#my-button",
+        "name": "Custom Component Button",
+        "documentScope": ["custom-component"]
+      }
+    ]
+  }
+}
+```
+
+#### HTML
+
+```xml
+<body>
+  <button id="my-button">Button Outside Shadow DOM</button>
+  <custom-component>
+    #shadow-dom
+      <button id="my-button">Button Inside Shadow DOM</button>
+  </custom-component>
+</body>
+```
+
+#### Elements shown in UI Coverage
+
+```
+#my-button (from root document)
+Custom Component Button (from shadow DOM)
+```
+
+Only the button inside the shadow DOM is identified using the custom name, while the button in the root document uses the default identification.
+
+---
+
+### Scoping element identification to iframes
+
+You can also scope element identification to elements within specific iframes using `documentScope`.
+
+#### Config
+
+```json
+{
+  "uiCoverage": {
+    "elements": [
+      {
+        "selector": "#submit",
+        "name": "Embedded Form Submit",
+        "documentScope": ["#embedded-form"]
+      }
+    ]
+  }
+}
+```
+
+#### HTML
+
+```xml
+<body>
+  <button id="submit">Submit (Root)</button>
+  <iframe id="embedded-form" src="http://www.foo.com">
+    <html>
+      <body>
+        <button id="submit">Submit (Embedded)</button>
+      </body>
+    </html>
+  </iframe>
+</body>
+```
+
+#### Elements shown in UI Coverage
+
+```
+#submit (from root document)
+Embedded Form Submit (from iframe)
+```
+
+Only the button inside the iframe is identified using the custom name.

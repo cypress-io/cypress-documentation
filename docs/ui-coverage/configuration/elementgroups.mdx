@@ -26,7 +26,9 @@ UI Coverage provides logic to automatically [group](/ui-coverage/core-concepts/e
     "elementGroups": [
       {
         "selector": string,
-        "name": string
+        "name": string,
+        "documentScope": [string],
+        "comment": string
       }
     ]
   }
@@ -37,10 +39,12 @@ UI Coverage provides logic to automatically [group](/ui-coverage/core-concepts/e
 
 For every element considered by UI Coverage, the first `elementGroup` rule for which the `selector` property matches the element is used to group the element. Elements that do not match any rules are grouped by the default UI Coverage [element grouping rules](/ui-coverage/core-concepts/element-grouping).
 
-| Option     | Required | Default    | Description                                                                                                                      |
-| ---------- | -------- | ---------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| `selector` | Required |            | A CSS selector to identify elements. Supports standard CSS selector syntax, including IDs, classes, attributes, and combinators. |
-| `name`     | Optional | `selector` | A human-readable name for the group, displayed in UI Coverage reports.                                                           |
+| Option          | Required | Default    | Description                                                                                                                                                                                                                                 |
+| --------------- | -------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `selector`      | Required |            | A CSS selector to identify elements. Supports standard CSS selector syntax, including IDs, classes, attributes, and combinators.                                                                                                            |
+| `name`          | Optional | `selector` | A human-readable name for the group, displayed in UI Coverage reports.                                                                                                                                                                      |
+| `documentScope` | Optional |            | An array of CSS selectors that identify document hosts (iframes or shadow DOM hosts) that must be ancestors of the matched element. The selector will only match if all specified document hosts are found in the element's ancestor chain. |
+| `comment`       | Optional |            | A comment describing the purpose of this element group configuration.                                                                                                                                                                       |
 
 ## Examples
 
@@ -217,3 +221,94 @@ Sometimes you may want to group elements by a common attribute but give the grou
 ```
 Add Button (4 instances)
 ```
+
+---
+
+### Grouping elements within shadow DOM
+
+When you need to group elements within a specific shadow DOM host, use the `documentScope` property to scope your selector to that document context.
+
+#### Config
+
+```json
+{
+  "uiCoverage": {
+    "elementGroups": [
+      {
+        "selector": "button",
+        "name": "Shadow DOM Buttons",
+        "documentScope": ["custom-component"]
+      }
+    ]
+  }
+}
+```
+
+#### HTML
+
+```xml
+<body>
+  <button id="root-button">Root Button</button>
+  <custom-component>
+    #shadow-dom
+      <button id="shadow-button-1">Shadow Button 1</button>
+      <button id="shadow-button-2">Shadow Button 2</button>
+  </custom-component>
+</body>
+```
+
+#### Elements shown in UI
+
+```
+#root-button
+Shadow DOM Buttons (2 instances)
+```
+
+Only the buttons inside the shadow DOM are grouped together, while the root button remains separate.
+
+---
+
+### Grouping elements within iframes
+
+You can also scope element grouping to elements within specific iframes using `documentScope`.
+
+#### Config
+
+```json
+{
+  "uiCoverage": {
+    "elementGroups": [
+      {
+        "selector": "[data-action]",
+        "name": "Embedded Actions",
+        "documentScope": ["#embedded-widget"]
+      }
+    ]
+  }
+}
+```
+
+#### HTML
+
+```xml
+<body>
+  <button data-action="save">Save (Root)</button>
+  <iframe id="embedded-widget" src="http://www.foo.com">
+    <html>
+      <body>
+        <button data-action="save">Save (Embedded)</button>
+        <button data-action="cancel">Cancel (Embedded)</button>
+      </body>
+    </html>
+  </iframe>
+</body>
+```
+
+#### Elements shown in UI
+
+```
+[data-action="save"] (from root document)
+Embedded Actions (2 instances)
+```
+
+Only the buttons inside the iframe are grouped together.

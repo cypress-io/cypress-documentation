@@ -257,6 +257,10 @@ The Accessibility results for the run are returned as an object containing the f
 }
 ```
 
+## Comparing against a baseline
+
+For comprehensive examples of comparing results against a baseline, including complete code examples, baseline structure, and best practices, see the [Block pull requests and set policies](/accessibility/guides/block-pull-requests#comparing-against-a-baseline) guide.
+
 ### **2. Add to CI Workflow**
 
 In your CI workflow that runs your Cypress tests,
@@ -269,7 +273,7 @@ In your CI workflow that runs your Cypress tests,
 
 If you record multiple runs in a single CI build, you must record these runs using the `--tag` parameter and then call `getAccessibilityResults` with the `runTags` argument for each run.
 
-This is necessary to identify each unique run and return a corresponding set of results. The tags are how each run is uniquely identified.
+This is necessary to identify each unique run and return a corresponding set of results. The tags are how each run is uniquely identified. Tags can also be used to activate [Profiles](/accessibility/configuration/profiles) that apply different configuration settings to your runs.
 
 **Example**
 

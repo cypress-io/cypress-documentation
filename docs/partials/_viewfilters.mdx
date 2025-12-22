@@ -27,7 +27,8 @@ supported, if you need to split them up.
   "viewFilters": [
     {
       "pattern": string,
-      "include": boolean
+      "include": boolean,
+      "comment": string
     }
   ]
 }
@@ -41,6 +42,7 @@ For every URL visited and link element found, the first `viewFilters` rule for w
 | --------- | -------- | ------- | ---------------------------------------------------------------------------------------------------------------------------- |
 | `pattern` | Required |         | A string that matches URLs using [URL Pattern API](https://developer.mozilla.org/en-US/docs/Web/API/URL_Pattern_API) syntax. |
 | `include` | Optional | `true`  | A boolean that determines whether matching URLs should be included in the report.                                            |
+| `comment` | Optional |         | A comment describing the purpose of this filter rule.                                                                        |
 
 ## Examples
 

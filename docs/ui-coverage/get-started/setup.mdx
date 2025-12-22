@@ -10,8 +10,6 @@ sidebar_position: 20
 # Get Started
 
 UI Coverage works instantly, with no setup or code instrumentation required. If you record test runs to the Cypress Cloud with Test Replay, you're ready to start using UI Coverage.
-You'll start your free trial with personalized support from our sales team and your existing test data to instantly see where testing gaps exist for all of your Cypress projects.
-From there, you can easily customize reports to fit your needs with flexible configuration options.
 
 ## 1. Request a trial
 
@@ -44,13 +42,16 @@ After recording a test run, you can view your UI Coverage results in the Cypress
 
 UI Coverage provides flexible configuration options to customize your reports. You can configure:
 
-- [Attribute filters](/ui-coverage/configuration/attributefilters): specify patterns for attributes and their values that should not be used for identifying and grouping elements
+- [Views](/ui-coverage/configuration/views): specify URL patterns that represent related pages or states of your application
+- [View filters](/ui-coverage/configuration/viewfilters): specify URL patterns for URLs that should be excluded from UI Coverage for visiting and linking purposes
 - [Element filters](/ui-coverage/configuration/elementfilters): specify selectors for elements that should be excluded from UI Coverage
 - [Element groups](/ui-coverage/configuration/elementgroups): groups elements that are related to one another
 - [Elements](/ui-coverage/configuration/elements): specify selectors to uniquely identify elements
 - [Significant Attributes](/ui-coverage/configuration/significantattributes): prioritize the identification and grouping of specific attributes
-- [View filters](/ui-coverage/configuration/viewfilters): specify URL patterns for URLs that should be excluded from UI Coverage. Excluding a URL also excludes all links to that URL.
-- [Views](/ui-coverage/configuration/views): specify URL patterns that represent views
+- [Attribute filters](/ui-coverage/configuration/attributefilters): specify patterns for attributes and their values that should not be used for identifying and grouping elements
+- [Additional Interaction Commands](/ui-coverage/configuration/additionalinteractioncommands): Define custom interactions that will count towards coverage scores, beyond built-in Cypress interaction commands
+- [Allowed Interaction Commands](/ui-coverage/configuration/allowedinteractioncommands): Control which kinds of interactions are allowed for certain elements to restrict or expand what counts as "covered" for that element
+- [Profiles](/ui-coverage/configuration/profiles): use different configuration settings for different runs based on run tags
 
 To add or modify the configuration for your project, navigate to the **App Quality** tab in your project settings.
 

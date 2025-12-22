@@ -18,7 +18,9 @@ supported, if you need to split them up.
   "elementFilters": [
     {
       "selector": string,
-      "include": boolean
+      "include": boolean,
+      "documentScope": [string],
+      "comment": string
     }
   ]
 }
@@ -28,10 +30,12 @@ supported, if you need to split them up.
 
 The first `elementFilters` rule for which the selector property matches the element is used to either include or exclude the element based on the `include` value. Elements that do not match any rules are included by default.
 
-| Option     | Required | Default | Description                                                                                                                      |
-| ---------- | -------- | ------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| `selector` | Required |         | A CSS selector to identify elements. Supports standard CSS selector syntax, including IDs, classes, attributes, and combinators. |
-| `include`  | Optional | `true`  | A boolean indicating whether the matched elements should be included in the report.                                              |
+| Option          | Required | Default | Description                                                                                                                                                                                                                                 |
+| --------------- | -------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `selector`      | Required |         | A CSS selector to identify elements. Supports standard CSS selector syntax, including IDs, classes, attributes, and combinators.                                                                                                            |
+| `include`       | Optional | `true`  | A boolean indicating whether the matched elements should be included in the report.                                                                                                                                                         |
+| `documentScope` | Optional |         | An array of CSS selectors that identify document hosts (iframes or shadow DOM hosts) that must be ancestors of the matched element. The selector will only match if all specified document hosts are found in the element's ancestor chain. |
+| `comment`       | Optional |         | A comment describing the purpose of this filter rule.                                                                                                                                                                                       |
 
 ## Examples
 
@@ -44,7 +48,8 @@ The first `elementFilters` rule for which the selector property matches the elem
   "elementFilters": [
     {
       "selector": "#button-2",
-      "include": false
+      "include": false,
+      "comment": "Exclude test-only button from reports"
     }
   ]
 }
@@ -202,3 +207,174 @@ The first `elementFilters` rule for which the selector property matches the elem
 ```
 .cancel
 ```
+
+### Scoping selectors to shadow DOM
+
+When you need to filter elements within a specific shadow DOM host, use the `documentScope` property to scope your selector to that document context.
+
+#### Config
+
+```json
+{
+  "elementFilters": [
+    {
+      "selector": "#my-button",
+      "include": false,
+      "documentScope": ["custom-component"]
+    }
+  ]
+}
+```
+
+#### HTML
+
+```xml
+<body>
+  <button id="my-button">Button Outside Shadow DOM - Important</button>
+  <custom-component>
+    #shadow-dom
+      <button id="my-button">Button Inside Shadow DOM - Not Important</button>
+  </custom-component>
+</body>
+```
+
+#### Elements shown in UI
+
+```
+#my-button (from root document)
+```
+
+Only the button inside the shadow DOM is filtered, while the button in the root document remains in the report.
+
+---
+
+### Scoping selectors to iframes
+
+You can also scope selectors to elements within specific iframes using `documentScope`.
+
+#### Config
+
+```json
+{
+  "elementFilters": [
+    {
+      "selector": "#my-button",
+      "include": false,
+      "documentScope": ["#my-iframe"]
+    }
+  ]
+}
+```
+
+#### HTML
+
+```xml
+<body>
+  <button id="my-button">Button Outside Iframe - Important</button>
+  <iframe src="http://www.foo.com" id="my-iframe">
+    <html>
+      <body>
+        <button id="my-button">Button Inside Iframe - Not Important</button>
+      </body>
+    </html>
+  </iframe>
+</body>
+```
+
+#### Elements shown in UI
+
+```
+#my-button (from root document)
+```
+
+Only the button inside the iframe is filtered.
+
+---
+
+### Scoping to nested documents
+
+You can chain multiple document hosts in the `documentScope` array to target elements within nested documents (e.g., an iframe containing a shadow DOM component).
+
+#### Config
+
+```json
+{
+  "elementFilters": [
+    {
+      "selector": "#my-button",
+      "include": false,
+      "documentScope": ["iframe", "custom-component"]
+    }
+  ]
+}
+```
+
+#### HTML
+
+```xml
+<body>
+  <button id="my-button">Button Outside Iframe - Important</button>
+  <iframe src="http://www.foo.com">
+    <html>
+      <body>
+        <button id="my-button">Button Inside Iframe - Not Important</button>
+        <custom-component>
+          #shadow-dom
+            <button id="my-button">Button Inside Shadow DOM - Not Important</button>
+        </custom-component>
+      </body>
+    </html>
+  </iframe>
+</body>
+```
+
+#### Elements shown in UI
+
+```
+#my-button (from root document)
+#my-button (from iframe)
+```
+
+Only the button inside the shadow DOM (which is nested within the iframe) is filtered.
+
+---
+
+### Filtering all elements within a document scope
+
+You can use a wildcard selector with `documentScope` to filter all elements within a specific document host.
+
+#### Config
+
+```json
+{
+  "elementFilters": [
+    {
+      "selector": "*",
+      "include": false,
+      "documentScope": ["external-component"]
+    }
+  ]
+}
+```
+
+#### HTML
+
+```xml
+<body>
+  <button id="important">Important Button</button>
+  <external-component>
+    #shadow-dom
+      <button id="unimportant-1">Unimportant</button>
+      <input id="unimportant-2" />
+      <a href="#" id="unimportant-3">Link</a>
+  </external-component>
+</body>
+```
+
+#### Elements shown in UI
+
+```
+#important
+```
+
+All elements within the `external-component` shadow DOM are filtered from the report.

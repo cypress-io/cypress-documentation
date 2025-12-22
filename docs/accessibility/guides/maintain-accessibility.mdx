@@ -9,7 +9,7 @@ sidebar_position: 30
 
 # Maintain accessibility
 
-Accessibility isn't a one-time project—it's a continuous process. This guide explains how to transition from addressing known issues to maintaining long-term accessibility in your projects.
+Accessibility is never a one-time project that can be completed in a certain timeframe and considered done. For an actively developed application, accessibility is a continuous process like all other aspects of quality. This guide explains how to transition from addressing known issues to maintaining long-term accessibility in your projects.
 
 ## Switching from "improving" to "maintaining"
 
@@ -19,6 +19,8 @@ When a specific accessibility rule reaches zero violations for a page, component
 - **Post-Merge Monitoring**: If violations resurface on the main branch, tracing their introduction to specific pull requests helps pinpoint code or test changes causing the problem and facilitate follow-ups and training for developers.
 
 Your ultimate goal is to achieve a fully passing state across all rules. Cypress provides you a lot of flexibility to manage large amounts of accessibility violations and make incremental progress towards well-defined targets. Through a combination of fixing accessibility problems, and configuring Cypress to focus on a tight scope of rules, standards, and application areas that matter most to you, you might be closer than you think to a "clean" main branch, from which you can expand your standards over time.
+
+You can also use [Configuration Profiles](/accessibility/configuration/profiles) to manage different standards for different run types, such as stricter requirements for pull requests versus comprehensive monitoring for regression runs.
 
 ## Maintaining accessibility standards
 

@@ -22,50 +22,89 @@ To add or modify the configuration for your project, navigate to the "App Qualit
   alt="The Cypress Cloud UI showing the configuration editor"
 />
 
-You can use the provided editor to write configuration in JSON format. A complete configuration with all available options looks as follows:
+You can use the provided editor to write configuration in JSON format.
 
-```typescript
+After new configuration changes have been saved, you can reprocess any historical run using the "regenerate" button on the properties tab where the configuration values that were used for that run are displayed.
+
+This allows you to iterate on the config quickly without having to execute test runs and wait for the results. You can try out different configurations and see what effects your changes have to make sure everything works the way you intend.
+
+### Viewing Configuration for a Run
+
+You can view configuration information for each run in the Properties tab, as shown below. This configuration is determined when your run begins.
+
+<DocsImage
+  src="/img/accessibility/configuration/cypress-cloud-properties-tab-application-quality-config.png"
+  alt="The properties tab for a run, with an Application Quality section at the bottom"
+/>
+
+### Comments
+
+All configuration objects support an optional `comment` property that you can use to provide context and explanations for why certain values are set. This helps make your configuration easier to understand and maintain, especially when working in teams or revisiting configuration after some time.
+
+```json
+{
+  "elementFilters": [
+    {
+      "selector": "[data-testid*='temp']",
+      "include": false,
+      "comment": "Exclude temporary test elements from accessibility reports"
+    }
+  ]
+}
+```
+
+### Profiles
+
+The `profiles` property allows you to use different configuration settings for different runs based on [run tags](/app/references/command-line#cypress-run-tag-lt-tag-gt). See the [Profiles](/accessibility/configuration/profiles) guide for more details.
+
+### Complete configuration example
+
+A complete configuration with all available options looks as follows:
+
+```json
 {
   "views": [
     {
       "pattern": string,
       "groupBy": [
         string
-      ]
+      ],
+      "comment": string
     }
   ],
   "viewFilters": [
     {
       "pattern": string,
-      "include": boolean
+      "include": boolean,
+      "comment": string
     }
   ],
   "elementFilters": [
     {
       "selector": string,
-      "include": boolean
+      "include": boolean,
+      "documentScope": [string],
+      "comment": string
     }
   ],
   "significantAttributes": [
     string
-  ]
+  ],
   "attributeFilters": [
     {
       "attribute": string,
       "value": string,
-      "include": boolean
+      "include": boolean,
+      "comment": string
+    }
+  ],
+  "profiles": [
+    {
+      "name": string,
+      "config": {
+        // Any App Quality configuration options
+      }
     }
   ]
 }
 ```
-
-Note that these root-level App Quality configuration properties (`elementFilters`, `views`, and `viewFilters`) impact both UI Coverage and Accessibility.
-
-### Viewing Configuration for a Run
-
-You can view configuration information for each run in the Properties tab, as shown below. This is the configuration set for the project at the start of the run.
-
-<DocsImage
-  src="/img/accessibility/configuration/cypress-cloud-properties-tab-application-quality-config.png"
-  alt="The properties tab for a run, with an Application Quality section at the bottom"
-/>
