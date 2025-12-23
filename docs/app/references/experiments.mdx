@@ -36,6 +36,7 @@ configuration to Cypress.
 | `experimentalInteractiveRunEvents`            | `false` | Allows listening to the [`before:run`](/api/node-events/before-run-api), [`after:run`](/api/node-events/after-run-api), [`before:spec`](/api/node-events/before-spec-api), and [`after:spec`](/api/node-events/after-spec-api) events in the [setupNodeEvents](/app/plugins/plugins-guide#Using-a-plugin) function during interactive mode. |
 | `experimentalMemoryManagement`                | `false` | Enables support for improved memory management within Chromium-based browsers.                                                                                                                                                                                                                                                              |
 | `experimentalModifyObstructiveThirdPartyCode` | `false` | Whether Cypress will search for and replace obstructive code in third party `.js` or `.html` files. NOTE: Setting this flag removes [Subresource Integrity (SRI)](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity).                                                                                             |
+| `experimentalRunAllSpecs`                     | `false` | Enables the "Run All Specs" UI feature, allowing the execution of multiple specs sequentially.                                                                                                                                                                                                                                              |
 | `experimentalSourceRewriting`                 | `false` | Enables AST-based JS/HTML rewriting. This may fix issues caused by the existing regex-based JS/HTML replacement algorithm. See [#5273](https://github.com/cypress-io/cypress/issues/5273) for details.                                                                                                                                      |
 | `experimentalWebKitSupport`                   | `false` | Enable experimental support for running tests in WebKit. When set, installs of `playwright-webkit` will be detected and available in Cypress. See [Launching Browsers](/app/references/launching-browsers#WebKit-Experimental) for more information.                                                                                        |
 | `experimentalFastVisibility`                  | `false` | Enables a faster visibility detection algorithm using point sampling. This can significantly improve performance when interacting with complex DOM structures. See [Experimental Fast Visibility](/app/references/experiments#Experimental-Fast-Visibility) for more details.                                                               |
@@ -348,10 +349,9 @@ creating `e2e` and `component` objects inside your Cypress configuration.
 These experiments are available to be specified inside the `e2e` configuration
 object:
 
-| Option                           | Default | Description                                                                                    |
-| -------------------------------- | ------- | ---------------------------------------------------------------------------------------------- |
-| `experimentalRunAllSpecs`        | `false` | Enables the "Run All Specs" UI feature, allowing the execution of multiple specs sequentially. |
-| `experimentalOriginDependencies` | `false` | Enables support for `Cypress.require` within `cy.origin`.                                      |
+| Option                           | Default | Description                                               |
+| -------------------------------- | ------- | --------------------------------------------------------- |
+| `experimentalOriginDependencies` | `false` | Enables support for `Cypress.require` within `cy.origin`. |
 
 ### Component Testing
 
@@ -366,6 +366,7 @@ configuration object:
 
 | Version                                      | Changes                                                                                                                                       |
 | -------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| [15.9.0](/app/references/changelog#15-9-0)   | Added component testing support for `experimentalRunAllSpecs`.                                                                                |
 | [15.8.0](/app/references/changelog#15-8-0)   | Added support for `experimentalFastVisibility` experiment.                                                                                    |
 | [15.4.0](/app/references/changelog)          | Removed `experimentalStudio`. Cypress Studio is available as default behavior.                                                                |
 | [14.0.0](/app/references/changelog#14-0-0)   | Removed `experimentalJustInTimeCompile` and `experimentalSkipDomainInjection` and made it default behavior.                                   |
