@@ -320,6 +320,18 @@ You can set environment variables for specific suites or tests by passing the
 `env` values to the
 [test configuration](/app/references/configuration#Test-Configuration).
 
+:::caution
+
+<strong>allowCypressEnv</strong>
+
+Starting with Cypress `15.10.0`, users are unable to override test/suite environment variables when the [`allowCypressEnv`](/app/references/configuration#Global) option is set to `false`.
+
+Cypress recommends migrating to using [`cy.env()`](/api/commands/env) instead.
+
+Please see the [Migration Guide](/app/references/migration-guide#Migrating-away-from-Cypressenv) for more information.
+
+:::
+
 #### Suite of test configuration
 
 :::visit-mount-example
