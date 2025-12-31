@@ -1,0 +1,526 @@
+---
+title: 'Migrating from Cypress.env() to cy.env(): A Guide'
+description: Mitigate security risks and migrate to cy.env() as soon as possible.
+sidebar_label: Migrating to cy.env()
+---
+
+<ProductHeading product="app" />
+
+# Migrating from `Cypress.env()` to `cy.env()`: A Guide
+
+:::info
+
+##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
+
+- Why `Cypress.env()` is deprecated and poses security risks
+- How `cy.env()` provides a more secure alternative
+- Step-by-step migration examples
+- How to enable `disallowCypressEnv` to prevent future use of `Cypress.env()`
+
+:::
+
+Starting with Cypress `15.9.0`, `Cypress.env()` has been deprecated and will be removed in a future major version. This guide will help you migrate to the new `cy.env()` command, which provides a more secure way to access environment variables in your tests.
+
+## Why `Cypress.env()` is Not Recommended
+
+`Cypress.env()` has a significant security vulnerability: **it hydrates all Cypress environment variables into the browser**. This means that every environment variable you've configured—including sensitive values like API keys, database credentials, or authentication tokens—becomes accessible in the browser's JavaScript context.
+
+### Security Risks
+
+When you use `Cypress.env()`, Cypress automatically makes all environment variables available in the browser. This creates several security concerns:
+
+1. **Exposure of Sensitive Data**: All environment variables, including secrets, are serialized and sent to the browser where they can be accessed via `Cypress.env()` or inspected in the browser's developer tools.
+
+2. **No Selective Access**: You cannot control which environment variables are exposed. Even if your test only needs one variable, all variables become accessible in the browser.
+
+3. **Cross-Origin Risks**: When using [`cy.origin()`](/api/commands/origin) for cross-origin testing, all environment variables are automatically passed to the cross-origin context, potentially exposing sensitive data to untrusted origins.
+
+4. **Application Code Access**: Since environment variables are available in the browser context, your application code could potentially access them if it checks for `window.Cypress` or similar patterns.
+
+### Example of the Problem
+
+```javascript
+// cypress.config.js
+{
+  env: {
+    apiUrl: 'https://api.example.com',
+    apiKey: 'secret-key-12345',  // ⚠️ This will be exposed in the browser!
+    dbPassword: 'super-secret-password',  // ⚠️ This too!
+    publicConfig: 'safe-to-expose'
+  }
+}
+```
+
+When you use `Cypress.env()` anywhere in your tests, **all** of these values become accessible in the browser, including the sensitive `apiKey` and `dbPassword`.
+
+## Why `cy.env()` is a Better Choice
+
+`cy.env()` provides a secure, on-demand way to retrieve environment variables. Instead of hydrating all variables into the browser, `cy.env()` only retrieves the specific variables you request when you need them.
+
+### Security Benefits
+
+1. **Selective Access**: You explicitly request only the environment variables you need, reducing the attack surface.
+
+2. **No Automatic Hydration**: Environment variables are not automatically serialized into the browser. They are only retrieved when you call `cy.env()` with specific variable names.
+
+3. **Command-Based**: As a Cypress command, `cy.env()` follows Cypress's command queue, meaning the values are only available after the command has resolved. These values are wrapped inside a JavaScript function and are not exposed globally.
+
+4. **Better Control**: You have explicit control over which variables are accessed, making it easier to audit and secure your test code.
+
+### How `cy.env()` Works
+
+`cy.env()` retrieves environment variables from your Cypress configuration on-demand. It accepts an array of variable names and returns an object with the requested values:
+
+```javascript
+// Request specific variables
+cy.env(['apiUrl', 'publicConfig']).then((env) => {
+  // env = { apiUrl: 'https://api.example.com', publicConfig: 'safe-to-expose' }
+  // apiKey and dbPassword are NOT accessible here
+})
+```
+
+## How to Migrate
+
+Migrating from `Cypress.env()` to `cy.env()` is straightforward. The main difference is that `cy.env()` is asynchronous (it's a Cypress command) and requires you to specify which variables you want to retrieve.
+
+### Basic Migration: Getting a Single Variable
+
+<Badge type="danger">Before: Cypress.env()</Badge>
+
+```javascript
+describe('API tests', () => {
+  it('makes a request to the API', () => {
+    const apiUrl = Cypress.env('apiUrl')
+    cy.request(`${apiUrl}/users`).its('status').should('eq', 200)
+  })
+})
+```
+
+<Badge type="success">After: cy.env()</Badge>
+
+```javascript
+describe('API tests', () => {
+  it('makes a request to the API', () => {
+    cy.env(['apiUrl']).then(({ apiUrl }) => {
+      cy.request(`${apiUrl}/users`).its('status').should('eq', 200)
+    })
+  })
+})
+```
+
+### Getting Multiple Variables
+
+<Badge type="danger">Before: Cypress.env()</Badge>
+
+```javascript
+describe('API tests', () => {
+  it('makes authenticated requests', () => {
+    const apiUrl = Cypress.env('apiUrl')
+    const apiKey = Cypress.env('apiKey')
+
+    cy.request({
+      url: `${apiUrl}/users`,
+      headers: { Authorization: `Bearer ${apiKey}` },
+    })
+      .its('status')
+      .should('eq', 200)
+  })
+})
+```
+
+<Badge type="success">After: cy.env()</Badge>
+
+```javascript
+describe('API tests', () => {
+  it('makes authenticated requests', () => {
+    cy.env(['apiUrl', 'apiKey']).then(({ apiUrl, apiKey }) => {
+      cy.request({
+        url: `${apiUrl}/users`,
+        headers: { Authorization: `Bearer ${apiKey}` },
+      })
+        .its('status')
+        .should('eq', 200)
+    })
+  })
+})
+```
+
+### Using in `before()` Hooks
+
+<Badge type="danger">Before: Cypress.env()</Badge>
+
+```javascript
+describe('API tests', () => {
+  let apiBaseUrl
+
+  before(() => {
+    apiBaseUrl = Cypress.env('apiBaseUrl')
+  })
+
+  it('can make requests to the correct environment', () => {
+    cy.request({
+      method: 'GET',
+      url: `${apiBaseUrl}/users`,
+    }).then((response) => {
+      expect(response.status).to.eq(200)
+    })
+  })
+})
+```
+
+<Badge type="success">After: cy.env()</Badge>
+
+```javascript
+describe('API tests', () => {
+  let apiBaseUrl
+
+  before(() => {
+    cy.env(['apiBaseUrl']).then(({ apiBaseUrl: url }) => {
+      apiBaseUrl = url
+    })
+  })
+
+  it('can make requests to the correct environment', () => {
+    cy.request({
+      method: 'GET',
+      url: `${apiBaseUrl}/users`,
+    }).then((response) => {
+      expect(response.status).to.eq(200)
+    })
+  })
+})
+```
+
+### Handling Undefined Variables
+
+`cy.env()` returns `undefined` for variables that are not set, just like `Cypress.env()`. You can handle this explicitly:
+
+```javascript
+cy.env(['optionalVar', 'requiredVar']).then(({ optionalVar, requiredVar }) => {
+  if (requiredVar === undefined) {
+    throw new Error('requiredVar must be set in Cypress configuration')
+  }
+
+  // Use optionalVar only if it's defined
+  if (optionalVar) {
+    // Use optionalVar
+  }
+})
+```
+
+### Using with Other Cypress Commands
+
+Since `cy.env()` is a Cypress command, it integrates seamlessly with other commands in the command chain:
+
+```javascript
+cy.env(['baseUrl'])
+  .then(({ baseUrl }) => {
+    return cy.visit(baseUrl)
+  })
+  .then(() => {
+    cy.get('h1').should('be.visible')
+  })
+```
+
+Or more concisely:
+
+```javascript
+cy.env(['baseUrl']).then(({ baseUrl }) => {
+  cy.visit(baseUrl)
+  cy.get('h1').should('be.visible')
+})
+```
+
+## Setting Environment Variables
+
+:::caution
+
+**Important Limitation**
+
+`cy.env()` is **read-only** and cannot be used to set or modify environment variables. Unlike `Cypress.env()`, which allowed you to set environment variables at runtime, `cy.env()` only retrieves values that have been configured elsewhere.
+
+:::
+
+### No Migration Path for Setting Variables
+
+If you were using `Cypress.env()` to **set** environment variables (not just read them), there is **no direct migration path** to `cy.env()`. The ability to set environment variables at runtime has been intentionally removed for security reasons.
+
+<Badge type="danger">Before: Cypress.env() - Setting Variables</Badge>
+
+```javascript
+// Setting a single variable
+Cypress.env('host', 'http://server.dev.local')
+
+// Setting multiple variables
+Cypress.env({
+  host: 'http://server.dev.local',
+  apiVersion: 'v2',
+})
+
+// Later in the test
+const host = Cypress.env('host') // => 'http://server.dev.local'
+```
+
+<Badge type="warning">After: No Direct Replacement</Badge>
+
+```javascript
+// ❌ This is NOT possible with cy.env()
+// cy.env() cannot set environment variables
+
+// ✅ Instead, set environment variables using one of these methods:
+```
+
+### Alternatives for Setting Environment Variables
+
+Since `cy.env()` cannot set environment variables, you need to configure them before your tests run. Here are the recommended approaches:
+
+#### Option 1: Cypress Configuration File
+
+Set environment variables in your `cypress.config.js` or `cypress.config.ts`:
+
+:::cypress-config-example
+
+```ts
+{
+  env: {
+    host: 'http://server.dev.local',
+    apiVersion: 'v2',
+  },
+  e2e: {
+    baseUrl: 'http://localhost:3000',
+  },
+}
+```
+
+:::
+
+#### Option 2: Command-Line Arguments
+
+Use the `--env` flag when running Cypress:
+
+```shell
+cypress run --env host=http://server.dev.local,apiVersion=v2
+```
+
+#### Option 3: Environment Variables with `CYPRESS_` Prefix
+
+Set OS-level environment variables that Cypress will automatically pick up:
+
+```shell
+export CYPRESS_HOST=http://server.dev.local
+export CYPRESS_API_VERSION=v2
+cypress run
+```
+
+#### Option 4: `cypress.env.json` File
+
+Create a `cypress.env.json` file in your project root:
+
+```json
+{
+  "host": "http://server.dev.local",
+  "apiVersion": "v2"
+}
+```
+
+#### Option 5: Dynamic Configuration in `setupNodeEvents`
+
+If you need dynamic values based on runtime conditions, set them in your `setupNodeEvents` function:
+
+```javascript
+// cypress.config.js
+export default defineConfig({
+  e2e: {
+    setupNodeEvents(on, config) {
+      // Set environment variables dynamically
+      config.env.host =
+        process.env.NODE_ENV === 'staging'
+          ? 'https://staging.example.com'
+          : 'https://example.com'
+
+      return config
+    },
+  },
+})
+```
+
+### Why Setting Variables Was Removed
+
+The ability to set environment variables at runtime was removed because:
+
+1. **Security**: Setting variables at runtime could lead to accidentally exposing sensitive data
+2. **Consistency**: Environment variables should be known and configured before tests run, not changed during execution
+3. **Predictability**: Tests should have consistent configuration throughout their execution
+
+If you need different values for different tests, consider:
+
+- Using separate configuration files for different environments
+- Using test-specific configuration for other settings (like `baseUrl`, `viewportWidth`, etc.)
+- Organizing tests into different spec files that can use different configurations
+
+## Enable `disallowCypressEnv` Configuration
+
+Once you've migrated all `Cypress.env()` invocations to `cy.env()`, you should enable the `disallowCypressEnv` configuration option. This will:
+
+1. **Prevent accidental use** of `Cypress.env()` in your codebase
+2. **Throw an error** if `Cypress.env()` is called, making it easy to catch any remaining usage
+3. **Disable test/suite-level environment variable overrides** when using test configuration
+
+### How to Enable
+
+Add `disallowCypressEnv: true` to your Cypress configuration file:
+
+:::cypress-config-example
+
+```ts
+{
+  disallowCypressEnv: true,
+  env: {
+    apiUrl: 'https://api.example.com',
+    apiKey: 'secret-key-12345',
+  },
+  e2e: {
+    baseUrl: 'http://localhost:3000',
+  },
+}
+```
+
+:::
+
+### What Happens When Enabled
+
+When `disallowCypressEnv` is set to `true`:
+
+- **`Cypress.env()` calls will throw an error**: Any attempt to use `Cypress.env()` in your tests will result in an error with a message directing you to use `cy.env()` instead.
+
+- **Test configuration overrides are disabled**: You cannot override environment variables using test or suite configuration (the `env` option in test configuration). This prevents the security risk of exposing variables through test configuration.
+
+:::caution
+
+**Test Configuration Overrides**
+
+When `disallowCypressEnv` is `true`, you cannot use the `env` option in test or suite configuration:
+
+```javascript
+// ❌ This will throw an error when disallowCypressEnv is true
+it('test', { env: { apiUrl: 'https://staging.example.com' } }, () => {
+  // ...
+})
+```
+
+Instead, use other methods to set environment-specific values, such as:
+
+- Different configuration files for different environments
+- Environment variables via `CYPRESS_*` prefix
+- Command-line arguments with `--env`
+
+:::
+
+### Migration Checklist
+
+1. ✅ Search your codebase for all `Cypress.env()` calls
+2. ✅ Replace each `Cypress.env()` call with `cy.env()`
+3. ✅ Update code to handle the asynchronous nature of `cy.env()`
+4. ✅ Test your changes to ensure everything works correctly
+5. ✅ Add `disallowCypressEnv: true` to your Cypress configuration
+6. ✅ Verify that no errors are thrown (confirming all `Cypress.env()` calls are removed)
+
+## Common Migration Patterns
+
+### Pattern 1: Storing Values for Later Use
+
+If you need to use an environment variable multiple times in a test, you can store it in a variable:
+
+```javascript
+describe('API tests', () => {
+  let apiUrl
+
+  before(() => {
+    cy.env(['apiUrl']).then(({ apiUrl: url }) => {
+      apiUrl = url
+    })
+  })
+
+  it('makes multiple requests', () => {
+    cy.request(`${apiUrl}/users`).its('status').should('eq', 200)
+    cy.request(`${apiUrl}/posts`).its('status').should('eq', 200)
+  })
+})
+```
+
+### Pattern 2: Using with Custom Commands
+
+You can create custom commands that use `cy.env()`:
+
+```javascript
+// cypress/support/commands.js
+Cypress.Commands.add('apiRequest', (endpoint, options = {}) => {
+  cy.env(['apiUrl', 'apiKey']).then(({ apiUrl, apiKey }) => {
+    cy.request({
+      url: `${apiUrl}${endpoint}`,
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        ...options.headers,
+      },
+      ...options,
+    })
+  })
+})
+
+// In your test
+cy.apiRequest('/users').its('status').should('eq', 200)
+```
+
+### Pattern 3: Conditional Logic Based on Environment
+
+```javascript
+cy.env(['environment']).then(({ environment }) => {
+  if (environment === 'staging') {
+    // Staging-specific test logic
+    cy.visit('https://staging.example.com')
+  } else {
+    // Production test logic
+    cy.visit('https://example.com')
+  }
+})
+```
+
+### Pattern 4: Getting All Variables (Not Recommended)
+
+:::caution
+
+**Security Warning**
+
+Getting all environment variables defeats the purpose of using `cy.env()`. If you need all variables, consider refactoring your code to only request the specific variables you need.
+
+:::
+
+If you absolutely need all environment variables (not recommended for security reasons), you would need to know all variable names in advance:
+
+```javascript
+// ❌ Not recommended - defeats the security benefits
+cy.env(['var1', 'var2', 'var3' /* ... all variable names ... */]).then(
+  (env) => {
+    // Use env object
+  }
+)
+```
+
+Instead, refactor to only request the variables you actually need.
+
+## Summary
+
+Migrating from `Cypress.env()` to `cy.env()` is an important security improvement for your Cypress tests. The key points to remember:
+
+- **`Cypress.env()` is insecure**: It exposes all environment variables in the browser
+- **`cy.env()` is secure**: It only retrieves the specific variables you request
+- **`cy.env()` is read-only**: Unlike `Cypress.env()`, you cannot set environment variables with `cy.env()`. There is no migration path for setting variables—use configuration files, command-line arguments, or `setupNodeEvents` instead
+- **Migration is straightforward**: Replace synchronous `Cypress.env()` calls with asynchronous `cy.env()` calls (for reading values only)
+- **Enable `disallowCypressEnv`**: Once migrated, add `disallowCypressEnv: true` to prevent future use of `Cypress.env()`
+
+For more information, see:
+
+- [`cy.env()` command documentation](/api/commands/env)
+- [`Cypress.env()` API documentation](/api/cypress-api/env) (deprecated)
+- [Environment Variables guide](/app/references/environment-variables)
+- [Configuration options](/app/references/configuration)
