@@ -937,7 +937,7 @@
           "description": "Catch unexpected visual and accessibility changes and UI bugs",
           "link": "https://docs.happo.io/docs/cypress",
           "keywords": ["screenshots", "visual regression"],
-          "badge": "community"
+          "badge": "verified"
         },
         {
           "name": "Cypress Image Snapshot",
