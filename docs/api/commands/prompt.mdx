@@ -212,6 +212,7 @@ Prompt clarity determines reliability. Follow these rules:
 - **One action per step**: Avoid chaining multiple actions in one string.
 - **Avoid ambiguity**: Specify the action or element explicitly. Wrap specific text, values, or identifiers in quotes to help the AI identify them as exact matches. For example, `click the "Submit" button` is clearer than `click the Submit button`.
 - **Include context**: `click the login button in the header` is better than `click login button`.
+- **Specify Cypress options**: Some Cypress command options can be specified directly in your prompts using natural language. For example: `'go to "/users" with a timeout of 10 seconds'` or `'dismiss the modal using a timeout of 6 seconds'`. This allows you to customize timeout without changing your test code. Not all Cypress command options can be specified this way.
 
 ### Example: Good vs. poor steps
 
@@ -264,7 +265,6 @@ If Cypress cannot interpret a step, you'll see a dialog prompting you to refine 
 'expand the FAQ section'
 'close the Technical Information section'
 'switch to the Settings tab'
-'dismiss the modal'
 'double click the product image'
 'right click the file item'
 'type "john.doe@company.com" in the email field'
@@ -322,6 +322,13 @@ If Cypress cannot interpret a step, you'll see a dialog prompting you to refine 
 ```javascript
 'wait 2 seconds'
 'wait 500 milliseconds'
+```
+
+### Command options
+
+```javascript
+'go to "/users" with a timeout of 10 seconds'
+'dismiss the modal using a timeout of 6 seconds'
 ```
 
 ## Placeholders
@@ -468,7 +475,7 @@ This helps you review and modify the generated code as needed or just use it as 
 
 ### Customizing selectors in generated code
 
-You can customize which selectors `cy.prompt` uses when generating Cypress code by configuring the [ElementSelector API](/api/cypress-api/element-selector-api). This lets you control which attributes Cypress prioritizes (like `data-*`, `id`, `aria-label`, etc.) when creating selectors, ensuring the generated code matches your project's selector strategy.
+You can customize which selectors `cy.prompt` uses by configuring the [ElementSelector API](/api/cypress-api/element-selector-api). This lets you control which attributes Cypress prioritizes (like `data-*`, `id`, `aria-label`, etc.) when querying for selectors, ensuring the generated code matches your project's selector strategy.
 
 Configure the selector priority in your support file or test file:
 
