@@ -21,17 +21,27 @@ description: Authenticate with common social authentication platforms with cy.or
 
 <Icon name="exclamation-triangle" /> **Not recommended in CI**
 
-Cypress does **not** recommend testing social connection authentication as a
-primary means of authentication testing. This is due to the
+Cypress does **not** recommend testing social connection authentication against **real providers** as a
+primary means of authentication testing. This is due to bot detection, CAPTCHAs, and the
 [challenges](/app/core-concepts/best-practices#Potential-Challenges-Authenticating-with-Social-Platforms)
 mentioned in our
 [Best Practices Guide](/app/core-concepts/best-practices).
 
-Relying on social authentication in CI will likely result in bot detection and
-in some cases, account suspension due to violating the provider's Terms of
-Service.
+**Recommended Alternative:**
+
+To test the OAuth flow end-to-end without these issues, use the free and open source project
+[oAuth mock server](https://github.com/atagon-GmbH/oAuth-mock).
+
+By replacing your OAuth provider URL in development with [https://oauth.kogiqa.com](https://oauth.kogiqa.com), the server
+will behave like a real OAuth provider (mimicking responses from Google, Facebook, etc.) but will
+automatically accept requests and approve them. This is safe for use in CI.
+
+You can customize the user scenario using query parameters:
+- `?email=test@example.org`
+- `&name=example`
 
 :::
+
 
 ## Application Setup
 
