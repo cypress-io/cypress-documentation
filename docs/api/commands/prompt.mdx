@@ -475,7 +475,7 @@ This helps you review and modify the generated code as needed or just use it as 
 
 ### Customizing selectors in generated code
 
-You can customize which selectors `cy.prompt` uses when generating Cypress code by configuring the [ElementSelector API](/api/cypress-api/element-selector-api). This lets you control which attributes Cypress prioritizes (like `data-*`, `id`, `aria-label`, etc.) when creating selectors, ensuring the generated code matches your project's selector strategy.
+You can customize which selectors `cy.prompt` uses by configuring the [ElementSelector API](/api/cypress-api/element-selector-api). This lets you control which attributes Cypress prioritizes (like `data-*`, `id`, `aria-label`, etc.) when querying for selectors, ensuring the generated code matches your project's selector strategy.
 
 Configure the selector priority in your support file or test file:
 
