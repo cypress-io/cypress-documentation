@@ -51,11 +51,17 @@ Instead of manually typing every `.get()`, `.click()`, or `.type()` command, you
 
 When Studio is enabled, you can:
 
-- **Record:** Interact with your app in the Cypress browser to capture test commands
+- **Record:** Interact with your app in the Cypress browser to capture test commands. Recording appends new commands to the end of your test.
 - **Assert:** Right-click any element to add built-in assertions
-- **Edit:** Adjust tests inline without switching tools
+- **Edit:** Manually edit any portion of your test code directly in the Studio editor. You can modify or add new test code directly in the Cypress App.
 
 Supported action commands include: [`.click()`](/api/commands/click), [`.type()`](/api/commands/type), [`.check()`](/api/commands/check), [`.uncheck()`](/api/commands/uncheck), [`.select()`](/api/commands/select)
+
+:::info
+
+**Sourcemaps:** Studio requires sourcemaps to load your existing test code. Sourcemaps are typically enabled by default in most Cypress setups. If Studio successfully loads your test when you click **Edit in Studio**, sourcemaps are already configured correctly. If sourcemaps aren't enabled, Studio will display an error message. See [how to enable sourcemaps](/api/node-events/preprocessors-api#Source-maps) if you encounter issues.
+
+:::
 
 ### Start Studio
 
@@ -84,19 +90,19 @@ Studio will automatically create a new test definition for you.
 
 ### Extend an existing test
 
-:::warning
+You can extend and update existing tests using Cypress Studio in two ways:
 
-**Sourcemaps required:** Sourcemaps must be enabled for Studio to load your existing test. See [how to enable sourcemaps](/api/node-events/preprocessors-api#Source-maps) for more information.
+**Record new actions or assertions:** Studio runs your test up to the last command and then records new interactions or assertions from that point forward. Recording always appends commands to the end of your test.
 
-:::
+**Edit code directly:** You can manually edit any portion of your test within the Studio editor. Modify or add new test code directly in the Cypress App.
 
-You can extend and update existing tests using Cypress Studio.
+To extend an existing test:
 
 1. Run the spec in Cypress
 2. Hover over the test in the Command Log
 3. Click **Edit in Studio**
 
-Studio runs your test up to the last command and lets you keep building from there.
+Studio loads your test and runs it up to the last command, ready for you to either edit the code directly or record new actions and assertions from that point.
 
 <DocsVideo
   src="/img/app/cypress-studio/cypress-studio-recording-assertions-editing.mp4"
@@ -115,13 +121,11 @@ Studio needs a `cy.visit()` before it can record. If your test doesn't have one 
 
 ### Record actions
 
-Record actions by interacting with the application under test.
+Record actions by interacting with the application under test. Studio translates your actions into Cypress commands in real time and appends them to the end of your test.
 
 - **Clicks:** Click buttons, links, or interactive elements
 - **Typing:** Enter text into inputs and text areas
 - **Selections:** Use dropdowns, checkboxes, and radio buttons
-
-Studio translates your actions into Cypress commands in real time.
 
 <DocsVideo
   src="/img/app/cypress-studio/studio-recording-typing.mp4"
@@ -132,7 +136,7 @@ Studio translates your actions into Cypress commands in real time.
 
 Right-click any element in your app to instantly add an assertion.
 
-For example, confirm text is visible, a checkbox is checked, or an element has a specific CSS class. Assertions are added directly in your test code, ready to save and run.
+For example, confirm text is visible, a checkbox is checked, or an element has a specific CSS class. Assertions are added directly in your test code, ready to save and run. Assertions are added to the end of your test.
 
 Assertions available are dynamically generated based on the element you right-click.
 
