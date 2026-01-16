@@ -593,12 +593,6 @@ almost never need to return both a promise and also invoke `cy` commands.
 `cy` commands themselves are already promise like, and you can likely avoid the
 use of the separate Promise.
 
-### <Icon name="exclamation-triangle" color="red" /> Cypress detected that you returned a promise in a test, but also invoked a done callback.
-
-The version of Mocha was upgraded with Cypress 4.0. Mocha 3+ no longer allows
-returning a promise and invoking a done callback. Read more about it in the
-[4.0 migration guide](/app/references/migration-guide#Mocha-upgrade).
-
 ### <Icon name="exclamation-triangle" color="red" /> CypressError: Timed out retrying: Expected to find element: ‘…’, but never found it. Queried from element: \<…>
 
 If you get this error in a case where the element is definitely visible in the
@@ -863,8 +857,7 @@ regedit or gpedit.
 
 ### <Icon name="exclamation-triangle" color="red" /> error: unknown option: --auto-cancel-after-failures
 
-The `--auto-cancel-after-failures` flag is only available in Cypress 12.6.0 and
-later, and must be used with the `cypress run` command.
+The `--auto-cancel-after-failures` flag must be used with the `cypress run` command.
 
 ### <Icon name="exclamation-triangle" color="red" /> --auto-cancel-after-failures must be an integer or false
 

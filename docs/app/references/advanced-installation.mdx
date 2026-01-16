@@ -317,13 +317,13 @@ generated based on endpoint, version, platform and architecture.
   (e.g. `win32`, `linux`, `darwin`)
 - `${arch}` is replaced with the architecture the installation is running on
   (e.g. `x64`, `arm64`)
-- Starting with Cypress 10.6.0, `${version}` is replaced with the version number
+- `${version}` is replaced with the version number
   that's being installed (e.g. `10.11.0`)
 
 **Examples:**
 
 To install the binary from a download mirror that matches the exact file
-structure of `https://cdn.cypress.io` (works for Cypress 9.3.0 or newer):
+structure of `https://cdn.cypress.io`:
 
 ```shell
 export CYPRESS_DOWNLOAD_MIRROR=https://cypress-download.local
@@ -331,8 +331,7 @@ export CYPRESS_DOWNLOAD_PATH_TEMPLATE='${endpoint}/${platform}-${arch}/cypress.z
 # Example of a resulting URL: https://cypress-download.local/desktop/10.11.0/linux-x64/cypress.zip
 ```
 
-To install the binary from a download server with a custom file structure (works
-for Cypress 10.6.0 or newer):
+To install the binary from a download server with a custom file structure:
 
 ```shell
 export CYPRESS_DOWNLOAD_PATH_TEMPLATE='https://software.local/cypress/${platform}/${arch}/${version}/cypress.zip'
@@ -340,7 +339,7 @@ export CYPRESS_DOWNLOAD_PATH_TEMPLATE='https://software.local/cypress/${platform
 ```
 
 To define `CYPRESS_DOWNLOAD_PATH_TEMPLATE` in `.npmrc`, put a backslash before
-every `$` (works for Cypress 9.5.3 or newer):
+every `$`:
 
 ```ini
 CYPRESS_DOWNLOAD_PATH_TEMPLATE=\${endpoint}/\${platform}-\${arch}/cypress.zip
