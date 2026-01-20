@@ -80,7 +80,8 @@ default values.
 | ---------------------- | ------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `clientCertificates`   | `[]`                                  | An optional array of [client certificates](/app/references/client-certificates).                                                                                                                                                                                                                                                   |
 | `allowCypressEnv`      | `true`                                | Whether to allow the use of [`Cypress.env()`](/api/cypress-api/env) in your tests. Please see our [Migration Guide](/app/references/migration-guide#Migrating-away-from-Cypressenv) on migrating from [`Cypress.env()`](/api/cypress-api/env) to [`cy.env()`](/api/commands/env) and [`Cypress.expose()`](/api/cypress-api/expose) |
-| `env`                  | `{}`                                  | Any values to be set as [environment variables](/app/references/environment-variables).                                                                                                                                                                                                                                            |
+| `env`                  | `{}`                                  | Any secret values to be set as [environment variables](/app/references/environment-variables).                                                                                                                                                                                                                                            |
+| `expose`                  | `{}`                                  | Any public values to be set as [exposed variables](/api/cypress-api/expose).                                                                                                                                                                                                                                            |
 | `includeShadowDom`     | `false`                               | Whether to traverse shadow DOM boundaries and include elements within the shadow DOM in the results of query commands (e.g. [`cy.get()`](/api/commands/get)).                                                                                                                                                                      |
 | `numTestsKeptInMemory` | Default based on `run` or `open` mode | The number of tests for which snapshots and command data are kept in memory. `numTestsKeptInMemory` is set to `50` by default during `cypress open` and set to `0` by default during `cypress run`. Reduce this number if you are experiencing high memory consumption in your browser during a test run.                          |
 | `port`                 | `null`                                | Port used to host Cypress. Normally this is a randomly generated port.                                                                                                                                                                                                                                                             |
@@ -334,15 +335,13 @@ running, `Cypress.config()` and suite-specific or test-specific configuration
 overrides.
 
 ⚠️ **Note:** The configuration values below are all writeable and **can be
-changed** via per test configuration. Any other configuration values are
+changed** via test configuration. Any other configuration values are
 readonly and cannot be changed at run time.
 
 - `animationDistanceThreshold`
 - `baseUrl`
 - `blockHosts`
 - `defaultCommandTimeout`
-- `env` **note:** Provided environment variables will be merged with current
-  environment variables.
 - `execTimeout`
 - `includeShadowDom`
 - `keystrokeDelay`
@@ -771,6 +770,8 @@ DEBUG=cypress:cli,cypress:data-context:sources:FileDataSource,cypress:data-conte
 
 | Version                                      | Changes                                                                                                                                       |
 | -------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| [15.10.0](/app/references/changelog#15-10-0)   | Updated `env` to no longer be settable via test configuration.                                                                                                     |
+| [15.10.0](/app/references/changelog#15-10-0)   | Added `expose` option for exposing public configuration values.                                                                                                     |
 | [14.0.0](/app/references/changelog#14-0-0)   | Added support for re-enabling superdomain navigation with the `injectDocumentDomain` configuration option                                     |
 | [13.16.0](/app/references/changelog#13-16-0) | Added `defaultBrowser` option.                                                                                                                |
 | [13.4.0](/app/references/changelog#13-4-0)   | Added support for configuring the Experimental Flake Detection strategy via `retries.experimentalStrategy` and `retries.experimentalOptions`. |
@@ -793,7 +794,8 @@ DEBUG=cypress:cli,cypress:data-context:sources:FileDataSource,cypress:data-conte
 
 ## See also
 
-- [Cypress.config()](/api/cypress-api/config) and
-  [Cypress.env()](/api/cypress-api/env)
+- [Cypress.config()](/api/cypress-api/config)
+- [cy.env()](/api/commands/env)
+- [Cypress.expose()](/api/cypress-api/expose)
 - [Environment variables](/app/references/environment-variables)
 - [Environment Variables recipe](/app/references/recipes#Fundamentals)
