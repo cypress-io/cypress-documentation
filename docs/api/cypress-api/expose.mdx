@@ -40,7 +40,7 @@ The name of the exposed configuration variable to get or set.
 
 <Icon name="angle-right" /> **value _(any)_**
 
-The value of the exposed configuration variable to set. Can be any type (string, number, boolean, object, etc.).
+The value of the exposed configuration variable to set. Can be any serializable type (string, number, boolean, object, etc.).
 
 <Icon name="angle-right" /> **object _(Object)_**
 
@@ -48,9 +48,7 @@ Set multiple exposed configuration variables with an object literal. Values are 
 
 ## Examples
 
-### No Arguments
-
-#### Get all exposed configuration variables
+### Get all exposed configuration variables
 
 :::cypress-config-example
 
@@ -67,12 +65,11 @@ Set multiple exposed configuration variables with an object literal. Values are 
 :::
 
 ```javascript
-Cypress.expose() // => {pluginConfig: 'value1', featureFlag: true, apiVersion: 2}
+Cypress.expose() 
+// => {pluginConfig: 'value1', featureFlag: true, apiVersion: 2}
 ```
 
-### Key
-
-#### Return a single exposed configuration variable
+### Get a single exposed configuration variable
 
 :::cypress-config-example
 
@@ -89,21 +86,13 @@ Cypress.expose() // => {pluginConfig: 'value1', featureFlag: true, apiVersion: 2
 
 ```javascript
 Cypress.expose('pluginConfig') // => "my-plugin-config"
-Cypress.expose('featureFlag') // => true
-Cypress.expose('nonExistent') // => undefined
+Cypress.expose('featureFlag')  // => true
+Cypress.expose('nonExistent')  // => undefined
 ```
 
-### Key and Value
+### Set a single exposed value
 
-#### Set a single exposed configuration variable
-
-:::caution
-
-**Scope**
-
-Remember, any changes that you make to exposed configuration variables using this API will only be in effect for the remainder of the tests _in the same spec file._
-
-:::
+Changes made with `Cypress.expose()` apply only for the remainder of the _current spec file_.
 
 :::cypress-config-example
 
@@ -123,9 +112,7 @@ Cypress.expose('pluginConfig', 'updated-value')
 Cypress.expose('pluginConfig') // => "updated-value"
 ```
 
-### Object
-
-#### Set multiple exposed configuration variables at once
+#### Set multiple exposed values
 
 :::cypress-config-example
 
@@ -149,11 +136,11 @@ Cypress.expose({
 Cypress.expose() // => {pluginConfig: 'updated-value', featureFlag: true}
 ```
 
-### Configuration File
+### Configuration sources
 
-#### Set exposed configuration variables in `cypress.config.js`
+#### Cypress configuration file
 
-Exposed configuration variables can be set in your Cypress configuration file:
+Exposed configuration variables can be set in your [Cypress configuration](/app/references/configuration) file:
 
 :::cypress-config-example
 
@@ -178,9 +165,7 @@ const apiVersion = Cypress.expose('API_VERSION') // => 1
 
 ### CLI Flags
 
-#### Set exposed configuration variables via command line
-
-You can set exposed configuration variables using the `--expose` or `-x` CLI flags:
+You can set exposed configuration variables using the `--expose` or `-x` CLI flags. CLI values override configuration file values.
 
 ```shell
 cypress run --expose pluginConfig=foo,featureFlag=true,API_VERSION=1
@@ -192,26 +177,17 @@ Or using the short form:
 cypress run -x pluginConfig=foo,featureFlag=true,API_VERSION=1
 ```
 
-:::info
+### Common use cases
 
-**CLI Override**
+#### Use `Cypress.expose()` in plugins or support files
 
-Values set via CLI flags override values set in the configuration file.
-
-:::
-
-### Plugin Use Case
-
-#### Using `Cypress.expose()` in a plugin
-
-`Cypress.expose()` is particularly useful for plugins that need synchronous access to configuration values outside of `cy` command contexts:
+`Cypress.expose()` is ideal when configuration is needed outside of Cypress command chains:
 
 ```javascript
-// cypress/support/commands.js or plugin file
+// cypress/support/commands.js or plugin code
 const pluginConfig = Cypress.expose('pluginConfig')
 
 if (pluginConfig === 'enabled') {
-  // Initialize plugin with configuration
   initializePlugin(pluginConfig)
 }
 ```
@@ -262,29 +238,19 @@ Update your configuration file:
 
 See [`cy.env()`](/api/commands/env) for more details on when to use it.
 
-### Scope Limitations
+### Scope and lifecycle limitations
 
-- Exposed configuration variables set in the browser context are only available as long as the browser is open
-- Changes made to exposed configuration variables persist for the remainder of tests in the same spec file
-- Changes do NOT persist past the browser into the Node.js context (e.g., `setupNodeEvents`, `cy.task()` handlers)
+- Exposed values persist only while the browser is open.
+- Runtime changes apply only within the current spec file
+- Values do not propagate back to Node.js contexts such as setupNodeEvents or cy.task()
 
-### Security Considerations
-
-Since `Cypress.expose()` values are accessible in the browser context:
-
-- **Never** store sensitive credentials or secrets
-- Values can be accessed by application code, third-party scripts, and browser extensions
-- Values can be inspected in browser developer tools
-- Use [`cy.env()`](/api/commands/env) for sensitive values that should remain privileged
-
-### Configuration Priority
+### Configuration precedence
 
 Exposed configuration variables are resolved in the following order (later sources override earlier ones):
 
 1. Configuration file (`expose` key in `cypress.config.{js,ts,mjs,cjs}`)
 2. CLI flags (`--expose` or `-x`)
-
-Runtime changes made via `Cypress.expose(key, value)` or `Cypress.expose(object)` override both configuration file and CLI values for the remainder of the spec file.
+3. Runtime calls to `Cypress.expose()`
 
 ## History
 
