@@ -212,7 +212,7 @@ Prompt clarity determines reliability. Follow these rules:
 - **One action per step**: Avoid chaining multiple actions in one string.
 - **Avoid ambiguity**: Specify the action or element explicitly. Wrap specific text, values, or identifiers in quotes to help the AI identify them as exact matches. For example, `click the "Submit" button` is clearer than `click the Submit button`.
 - **Include context**: `click the login button in the header` is better than `click login button`.
-- **Specify Cypress options**: Some Cypress command options can be specified directly in your prompts using natural language. This allows you to customize `timeout` and `force` options without changing your test code. For example: `'go to "/users" with a timeout of 10 seconds'` or `'force click the submit button'`. Not all Cypress command options can be specified this way.
+- **Specify Cypress options**: Some Cypress command options can be specified directly in your prompts using natural language. Force and timeout are the only options that are currently supported. For example: `'go to "/users" with a timeout of 10 seconds'` or `'force click the submit button'`.
 
 ### Example: Good vs. poor steps
 
