@@ -212,7 +212,7 @@ Prompt clarity determines reliability. Follow these rules:
 - **One action per step**: Avoid chaining multiple actions in one string.
 - **Avoid ambiguity**: Specify the action or element explicitly. Wrap specific text, values, or identifiers in quotes to help the AI identify them as exact matches. For example, `click the "Submit" button` is clearer than `click the Submit button`.
 - **Include context**: `click the login button in the header` is better than `click login button`.
-- **Specify Cypress options**: Some Cypress command options can be specified directly in your prompts using natural language. For example: `'go to "/users" with a timeout of 10 seconds'` or `'dismiss the modal using a timeout of 6 seconds'`. This allows you to customize timeout without changing your test code. Not all Cypress command options can be specified this way.
+- **Specify Cypress options**: Some Cypress command options can be specified directly in your prompts using natural language. This allows you to customize `timeout` and `force` options without changing your test code. For example: `'go to "/users" with a timeout of 10 seconds'` or `'force click the submit button'`. Not all Cypress command options can be specified this way.
 
 ### Example: Good vs. poor steps
 
@@ -265,6 +265,7 @@ If Cypress cannot interpret a step, you'll see a dialog prompting you to refine 
 'expand the FAQ section'
 'close the Technical Information section'
 'switch to the Settings tab'
+'force click the submit button'
 'double click the product image'
 'right click the file item'
 'type "john.doe@company.com" in the email field'
@@ -272,6 +273,7 @@ If Cypress cannot interpret a step, you'll see a dialog prompting you to refine 
 'write "42" in the number field'
 'put "No comment" in the textarea'
 'fill the search input with "cypress"'
+'force type "text" in the hidden input'
 'clear the username field'
 'focus on the search input'
 'blur the filter input'
@@ -284,6 +286,7 @@ If Cypress cannot interpret a step, you'll see a dialog prompting you to refine 
 'submit the contact form'
 'scroll the sales section into view'
 'scroll to todays date in the calendar'
+
 ```
 
 ### Verify results
@@ -329,6 +332,11 @@ If Cypress cannot interpret a step, you'll see a dialog prompting you to refine 
 ```javascript
 'go to "/users" with a timeout of 10 seconds'
 'dismiss the modal using a timeout of 6 seconds'
+'force click the submit button'
+'force click the "Close" button'
+'force type "text" in the hidden input field'
+'force check the "I agree" checkbox'
+'force uncheck the "Send updates" checkbox'
 ```
 
 ## Placeholders
@@ -902,7 +910,7 @@ The `cy.prompt` command is currently in experimental release. During the experim
 | Multi-Element    | Assertions on multiple elements are not currently supported [See issue](https://github.com/cypress-io/cypress/issues/32787)                                                                 |
 | Cookies/Sessions | Clearing cookies or sessions is not supported [See issue](https://github.com/cypress-io/cypress/issues/32810)                                                                               |
 | Scrolling        | Scrolling to elements is not supported [See issue](https://github.com/cypress-io/cypress/issues/32789)                                                                                      |
-| API Testing      | API requests (e.g., cy.request() or cy.intercept()) are not supported [See issue](https://github.com/cypress-io/cypress/issues/32792)                                                       |
+| API Testing      | API requests (e.g., `cy.request()` or `cy.intercept()`) are not supported [See issue](https://github.com/cypress-io/cypress/issues/32792)                                                       |
 | DOM Support      | Canvas and iframe elements are not supported. See [canvas issue](https://github.com/cypress-io/cypress/issues/32830) and [iframe issue](https://github.com/cypress-io/cypress/issues/32800) |
 
 ## Pricing & usage limits
