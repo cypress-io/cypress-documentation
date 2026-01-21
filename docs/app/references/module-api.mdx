@@ -72,7 +72,7 @@ Just like the [Command Line options](/app/references/command-line) for
 | `config`                  | _object_            | Specify [configuration](/app/references/configuration)                                                                                                                                                       |
 | `configFile`              | _string_            | Path to the [configuration file](/app/references/configuration#Configuration-File) to be used.                                                                                                               |
 | `env`                     | _object_            | Specify secret [environment variables](/app/guides/environment-variables)                                                                                                                                       |
-| `expose`                  | _object_            | Specify public [exposed variables](/api/cypress-api/expose)                                                                                                                                       |
+| `expose`                  | _object_            | Specify public [exposed variables](/api/cypress-api/expose)                                                                                                                                                  |
 | `group`                   | _string_            | [Group](/cloud/features/smart-orchestration/parallelization#Grouping-test-runs) recorded tests together under a single run                                                                                   |
 | `headed`                  | _boolean_           | Displays the browser instead of running headlessly                                                                                                                                                           |
 | `headless`                | _boolean_           | Hide the browser instead of running headed (default during `cypress run`)                                                                                                                                    |
@@ -321,7 +321,7 @@ options that modify how Cypress runs.
 | `configFile`  | _string_  | Path to the [configuration file](/app/references/configuration#Configuration-File) to be used. |
 | `detached`    | _boolean_ | Open Cypress in detached mode                                                                  |
 | `env`         | _object_  | Specify secret [environment variables](/app/guides/environment-variables)                         |
-| `expose`      | _object_  | Specify public [exposed variables](/api/cypress-api/expose)                         |
+| `expose`      | _object_  | Specify public [exposed variables](/api/cypress-api/expose)                                    |
 | `global`      | _boolean_ | Run in global mode                                                                             |
 | `port`        | _number_  | Override default port                                                                          |
 | `project`     | _string_  | Path to a specific project                                                                     |
@@ -372,14 +372,14 @@ node ./wrapper cypress run --browser chrome --config ...
 
 ## History
 
-| Version                                    | Changes                                                 |
-| ------------------------------------------ | ------------------------------------------------------- |
-| [15.10.0](/app/references/changelog#15-10-0) | Added `expose` configuration option.                  |
-| [15.4.0](/app/references/changelog#15-4-0) | Added `posixExitCodes` to run options.                  |
-| [12.6.0](/app/references/changelog#12-6-0) | Added `autoCancelAfterFailures` to run options.         |
-| [10.0.0](/app/references/changelog#10-0-0) | `slowTestThreshold` is now scoped to each testing type. |
-| [8.7.0](/app/references/changelog#8-7-0)   | Added `slowTestThreshold` configuration option.         |
-| [7.3.0](/app/references/changelog#7-3-0)   | Added `testingType` configuration option.               |
-| [5.0.0](/app/references/changelog#5-0-0)   | Test results returned from `cypress.run()` changed.     |
-| [4.11.0](/app/references/changelog#4-11-0) | Added `cypress.cli` with `parseRunArguments` function.  |
-| [4.9.0](/app/references/changelog#4-9-0)   | Added `quiet` option to `cypress.run()`                 |
+| Version                                      | Changes                                                 |
+| -------------------------------------------- | ------------------------------------------------------- |
+| [15.10.0](/app/references/changelog#15-10-0) | Added `expose` configuration option.                    |
+| [15.4.0](/app/references/changelog#15-4-0)   | Added `posixExitCodes` to run options.                  |
+| [12.6.0](/app/references/changelog#12-6-0)   | Added `autoCancelAfterFailures` to run options.         |
+| [10.0.0](/app/references/changelog#10-0-0)   | `slowTestThreshold` is now scoped to each testing type. |
+| [8.7.0](/app/references/changelog#8-7-0)     | Added `slowTestThreshold` configuration option.         |
+| [7.3.0](/app/references/changelog#7-3-0)     | Added `testingType` configuration option.               |
+| [5.0.0](/app/references/changelog#5-0-0)     | Test results returned from `cypress.run()` changed.     |
+| [4.11.0](/app/references/changelog#4-11-0)   | Added `cypress.cli` with `parseRunArguments` function.  |
+| [4.9.0](/app/references/changelog#4-9-0)     | Added `quiet` option to `cypress.run()`                 |

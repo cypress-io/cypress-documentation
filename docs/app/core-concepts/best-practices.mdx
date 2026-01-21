@@ -1108,13 +1108,17 @@ depth how to use `baseUrl` correctly.
 
 :::danger
 
-<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Hardcoding secrets in test files, using `Cypress.expose()` for sensitive values, or exposing secrets to the browser context.
+<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Hardcoding secrets
+in test files, using `Cypress.expose()` for sensitive values, or exposing secrets
+to the browser context.
 
 :::
 
 :::tip
 
-<Icon name="check-circle" color="green" /> **Best Practice:** Use the right API for the right purpose: `cy.env()` for sensitive values in tests, `cy.task()` for Node.js-only secrets, and `Cypress.expose()` only for public configuration.
+<Icon name="check-circle" color="green" /> **Best Practice:** Use the right API for
+the right purpose: `cy.env()` for sensitive values in tests, `cy.task()` for Node.js-only
+secrets, and `Cypress.expose()` only for public configuration.
 
 :::
 
@@ -1127,11 +1131,11 @@ Cypress runs in two contexts:
 - **Browser context**: Where your tests execute and can access browser APIs. Values here are visible to application code, browser extensions, and developer tools.
 - **Node.js context**: Where plugins and tasks run. Values here never enter the browser and remain secure.
 
-| API | Context | Browser Exposure | Use Case |
-| --- | ------- | ---------------- | -------- |
-| [`cy.env()`](/api/commands/env) | Browser (privileged) | No | Sensitive values needed in tests |
-| [`cy.task()`](/api/commands/task) | Browser (privileged) & Node.js | No | Secrets needed in tests andNode.js |
-| [`Cypress.expose()`](/api/cypress-api/expose) | Browser (public) | Yes | Public/non-sensitive configuration |
+| API                                           | Context                        | Browser Exposure | Use Case                           |
+| --------------------------------------------- | ------------------------------ | ---------------- | ---------------------------------- |
+| [`cy.env()`](/api/commands/env)               | Browser (privileged)           | No               | Sensitive values needed in tests   |
+| [`cy.task()`](/api/commands/task)             | Browser (privileged) & Node.js | No               | Secrets needed in tests andNode.js |
+| [`Cypress.expose()`](/api/cypress-api/expose) | Browser (public)               | Yes              | Public/non-sensitive configuration |
 
 ### Use `cy.env()` for Sensitive Values in Tests
 
