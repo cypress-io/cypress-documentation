@@ -21,6 +21,7 @@ This guide helps you choose the right API for your use case and points you to th
 `cy.env()` retrieves only the values you explicitly request, when you need them, and avoids exposing all environment variables in browser state. This provides privileged access that doesn't automatically serialize values into browser context.
 
 **Examples of secrets:**
+
 - API keys
 - Authentication tokens
 - Passwords
@@ -45,6 +46,7 @@ See the [`cy.env()`](/api/commands/env) command documentation for complete detai
 `Cypress.expose()` provides synchronous access to configuration that is safe to expose in the browser context. Values are accessible to application code, third-party scripts, and browser extensions.
 
 **Examples of public configuration:**
+
 - Feature flags
 - API versions
 - Plugin configuration

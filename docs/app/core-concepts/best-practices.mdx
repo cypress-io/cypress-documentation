@@ -51,7 +51,8 @@ to the browser context.
 :::tip
 
 <Icon name="check-circle" color="green" /> **Best Practice:** Use the right API for
-the right purpose: `cy.env()` for sensitive values in tests and `Cypress.expose()` only for public configuration.
+the right purpose: `cy.env()` for sensitive values in tests and `Cypress.expose()`
+only for public configuration.
 
 :::
 
@@ -64,10 +65,10 @@ Cypress runs in two contexts:
 - **Browser context**: Where your tests execute and can access browser APIs. Values here are visible to application code, browser extensions, and developer tools.
 - **Node.js context**: Where plugins and tasks run. Values here never enter the browser and remain secure.
 
-| API                                           | Context                        | Browser Exposure | Use Case                           |
-| --------------------------------------------- | ------------------------------ | ---------------- | ---------------------------------- |
-| [`cy.env()`](/api/commands/env)               | Browser (privileged)           | No               | Sensitive values needed in tests   |
-| [`Cypress.expose()`](/api/cypress-api/expose) | Browser (public)               | Yes              | Public/non-sensitive configuration |
+| API                                           | Context              | Browser Exposure | Use Case                           |
+| --------------------------------------------- | -------------------- | ---------------- | ---------------------------------- |
+| [`cy.env()`](/api/commands/env)               | Browser (privileged) | No               | Sensitive values needed in tests   |
+| [`Cypress.expose()`](/api/cypress-api/expose) | Browser (public)     | Yes              | Public/non-sensitive configuration |
 
 ### Use `cy.env()` for Sensitive Values in Tests
 

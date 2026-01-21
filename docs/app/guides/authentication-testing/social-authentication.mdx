@@ -288,11 +288,13 @@ Cypress.Commands.add(
 
     switch (SOCIAL_PROVIDER) {
       case 'microsoft':
-        cy.env(['MICROSOFT_USERNAME', 'MICROSOFT_PASSWORD', 'MICROSOFT_NAME']).then(
-          ({ microsoftUsername, microsoftPassword, microsoftName }) => {
-            logIntoMicrosoft(microsoftUsername, microsoftPassword, microsoftName)
-          }
-        )
+        cy.env([
+          'MICROSOFT_USERNAME',
+          'MICROSOFT_PASSWORD',
+          'MICROSOFT_NAME',
+        ]).then(({ microsoftUsername, microsoftPassword, microsoftName }) => {
+          logIntoMicrosoft(microsoftUsername, microsoftPassword, microsoftName)
+        })
         break
       case 'google':
         cy.env(['GOOGLE_USERNAME', 'GOOGLE_PASSWORD', 'GOOGLE_NAME']).then(
@@ -302,11 +304,13 @@ Cypress.Commands.add(
         )
         break
       case 'facebook':
-        cy.env(['FACEBOOK_USERNAME', 'FACEBOOK_PASSWORD', 'FACEBOOK_NAME']).then(
-          ({ facebookUsername, facebookPassword, facebookName }) => {
-            logIntoFacebook(facebookUsername, facebookPassword, facebookName)
-          }
-        )
+        cy.env([
+          'FACEBOOK_USERNAME',
+          'FACEBOOK_PASSWORD',
+          'FACEBOOK_NAME',
+        ]).then(({ facebookUsername, facebookPassword, facebookName }) => {
+          logIntoFacebook(facebookUsername, facebookPassword, facebookName)
+        })
         break
       default:
         throw new Error('no social provider configured!')
@@ -365,9 +369,17 @@ Cypress.Commands.add(
       () => {
         switch (SOCIAL_PROVIDER) {
           case 'microsoft':
-            cy.env(['MICROSOFT_USERNAME', 'MICROSOFT_PASSWORD', 'MICROSOFT_NAME']).then(
+            cy.env([
+              'MICROSOFT_USERNAME',
+              'MICROSOFT_PASSWORD',
+              'MICROSOFT_NAME',
+            ]).then(
               ({ microsoftUsername, microsoftPassword, microsoftName }) => {
-                logIntoMicrosoft(microsoftUsername, microsoftPassword, microsoftName)
+                logIntoMicrosoft(
+                  microsoftUsername,
+                  microsoftPassword,
+                  microsoftName
+                )
               }
             )
             break
@@ -379,11 +391,13 @@ Cypress.Commands.add(
             )
             break
           case 'facebook':
-            cy.env(['FACEBOOK_USERNAME', 'FACEBOOK_PASSWORD', 'FACEBOOK_NAME']).then(
-              ({ facebookUsername, facebookPassword, facebookName }) => {
-                logIntoFacebook(facebookUsername, facebookPassword, facebookName)
-              }
-            )
+            cy.env([
+              'FACEBOOK_USERNAME',
+              'FACEBOOK_PASSWORD',
+              'FACEBOOK_NAME',
+            ]).then(({ facebookUsername, facebookPassword, facebookName }) => {
+              logIntoFacebook(facebookUsername, facebookPassword, facebookName)
+            })
             break
           default:
             throw new Error('no social provider configured!')

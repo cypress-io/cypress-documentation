@@ -264,9 +264,11 @@ describe('Cognito, cy.origin() login', function () {
     cy.task('db:seed')
 
     // login via Amazon Cognito via cy.origin()
-    cy.env(['AWS_COGNITO_USERNAME', 'AWS_COGNITO_PASSWORD']).then(({ username, password }) => {
-      cy.loginByCognito(username, password)
-    })
+    cy.env(['AWS_COGNITO_USERNAME', 'AWS_COGNITO_PASSWORD']).then(
+      ({ username, password }) => {
+        cy.loginByCognito(username, password)
+      }
+    )
   })
 
   it('shows onboarding', function () {
@@ -464,9 +466,11 @@ describe('Cognito, programmatic login', function () {
     cy.task('db:seed')
 
     // Programmatically login via Amazon Cognito API
-    cy.env(['AWS_COGNITO_USERNAME', 'AWS_COGNITO_PASSWORD']).then(({ username, password }) => {
-      cy.loginByCognitoApi(username, password)
-    })
+    cy.env(['AWS_COGNITO_USERNAME', 'AWS_COGNITO_PASSWORD']).then(
+      ({ username, password }) => {
+        cy.loginByCognitoApi(username, password)
+      }
+    )
   })
 
   it('shows onboarding', function () {

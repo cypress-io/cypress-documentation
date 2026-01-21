@@ -122,9 +122,11 @@ is in the <Icon name="github" inline="true" contentType="rwa" />.
 describe('Okta', function () {
   beforeEach(function () {
     cy.task('db:seed')
-    cy.env(['OKTA_USERNAME', 'OKTA_PASSWORD']).then(({ username, password }) => {
-      cy.loginByOkta(username, password)
-    })
+    cy.env(['OKTA_USERNAME', 'OKTA_PASSWORD']).then(
+      ({ username, password }) => {
+        cy.loginByOkta(username, password)
+      }
+    )
   })
 
   it('verifies signed in user does not have a bank account', function () {
@@ -242,9 +244,11 @@ process and logout.
 describe('Okta', function () {
   beforeEach(function () {
     cy.task('db:seed')
-    cy.env(['OKTA_USERNAME', 'OKTA_PASSWORD']).then(({ username, password }) => {
-      cy.loginByOktaApi(username, password)
-    })
+    cy.env(['OKTA_USERNAME', 'OKTA_PASSWORD']).then(
+      ({ username, password }) => {
+        cy.loginByOktaApi(username, password)
+      }
+    )
   })
 
   it('shows onboarding', function () {

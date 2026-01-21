@@ -179,9 +179,11 @@ describe('Auth0', function () {
     cy.task('db:seed')
     cy.intercept('POST', '/graphql').as('createBankAccount')
 
-    cy.env(['AUTH0_USERNAME', 'AUTH0_PASSWORD']).then(({ username, password }) => {
-      cy.loginToAuth0(username, password)
-    })
+    cy.env(['AUTH0_USERNAME', 'AUTH0_PASSWORD']).then(
+      ({ username, password }) => {
+        cy.loginToAuth0(username, password)
+      }
+    )
     cy.visit('/')
   })
 
@@ -326,9 +328,11 @@ onboarding process and logout.
 describe('Auth0', function () {
   beforeEach(function () {
     cy.task('db:seed')
-    cy.env(['AUTH0_USERNAME', 'AUTH0_PASSWORD']).then(({ username, password }) => {
-      cy.loginByAuth0Api(username, password)
-    })
+    cy.env(['AUTH0_USERNAME', 'AUTH0_PASSWORD']).then(
+      ({ username, password }) => {
+        cy.loginByAuth0Api(username, password)
+      }
+    )
   })
 
   it('shows onboarding', function () {
