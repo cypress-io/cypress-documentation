@@ -80,7 +80,7 @@ default values.
 | ---------------------- | ------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `clientCertificates`   | `[]`                                  | An optional array of [client certificates](/app/references/client-certificates).                                                                                                                                                                                                                                                   |
 | `allowCypressEnv`      | `true`                                | Whether to allow the use of `Cypress.env()` in your tests. Please see our [Migration Guide](/app/references/migration-guide#Migrating-away-from-Cypressenv) on migrating from `Cypress.env()` to [`cy.env()`](/api/commands/env) and [`Cypress.expose()`](/api/cypress-api/expose) |
-| `env`                  | `{}`                                  | Any secret values to be set as [environment variables](/app/references/environment-variables).                                                                                                                                                                                                                                            |
+| `env`                  | `{}`                                  | Any secret values to be set as environment variables. Access these values in tests using [`cy.env()`](/api/commands/env).                                                                                                                                                                                                                           |
 | `expose`                  | `{}`                                  | Any public values to be set as [exposed variables](/api/cypress-api/expose).                                                                                                                                                                                                                                            |
 | `includeShadowDom`     | `false`                               | Whether to traverse shadow DOM boundaries and include elements within the shadow DOM in the results of query commands (e.g. [`cy.get()`](/api/commands/get)).                                                                                                                                                                      |
 | `numTestsKeptInMemory` | Default based on `run` or `open` mode | The number of tests for which snapshots and command data are kept in memory. `numTestsKeptInMemory` is set to `50` by default during `cypress open` and set to `0` by default during `cypress run`. Reduce this number if you are experiencing high memory consumption in your browser during a test run.                          |
@@ -309,8 +309,7 @@ For example:
 
 ### Environment Variables
 
-Configuration options can be overridden with
-[environment variables](/app/references/environment-variables). This is
+Configuration options can be overridden with environment variables. This is
 especially useful in
 [Continuous Integration](/app/continuous-integration/overview) or when
 working locally. This gives you the ability to change configuration options
@@ -323,10 +322,6 @@ For example, these environment variables in the command line will override any
 export CYPRESS_VIEWPORT_WIDTH=800
 export CYPRESS_VIEWPORT_HEIGHT=600
 ```
-
-See the
-[Environment Variables](/app/references/environment-variables#Option-3-CYPRESS_)
-guide for more examples.
 
 ## Test Configuration
 
@@ -451,9 +446,8 @@ highlighted to show where the value has been set via the following ways:
 
 - Default value
 - [Cypress configuration file](/app/references/configuration)
-- The
-  [Cypress environment file](/app/references/environment-variables#Option-2-cypressenvjson)
-- [System set environment variables prefixed with `CYPRESS_`](/app/references/environment-variables#Option-3-CYPRESS_)
+- The `cypress.env.json` file (if present)
+- System set environment variables prefixed with `CYPRESS_`
 - [Command Line arguments](/app/references/command-line)
 - [setupNodeEvents](#setupNodeEvents)
 
@@ -795,7 +789,6 @@ DEBUG=cypress:cli,cypress:data-context:sources:FileDataSource,cypress:data-conte
 ## See also
 
 - [Cypress.config()](/api/cypress-api/config)
-- [cy.env()](/api/commands/env)
-- [Cypress.expose()](/api/cypress-api/expose)
-- [Environment variables](/app/references/environment-variables)
+- [cy.env()](/api/commands/env) - Command for accessing environment variables
+- [Cypress.expose()](/api/cypress-api/expose) - API for public configuration values
 - [Environment Variables recipe](/app/references/recipes#Fundamentals)

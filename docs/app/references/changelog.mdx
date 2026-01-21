@@ -7004,7 +7004,7 @@ to Cypress 5.0.**
 - The error `Maximum call stack size exceeded` will no longer throw when calling
   `scrollIntoView` on an element in the shadow dom. Fixes
   [#7986](https://github.com/cypress-io/cypress/issues/7986).
-- Cypress [environment variables](/app/references/environment-variables) that
+- Cypress [environment variables](/app/guides/environment-variables) that
   accept arrays as their value will now properly evaluate as arrays. Fixes
   [#6810](https://github.com/cypress-io/cypress/issues/6810).
 - Elements having `display: inline` will no longer be considered hidden if it
@@ -11620,7 +11620,7 @@ _Released 12/14/2017_
 - [Added `Configuration API`](/api/node-events/configuration-api)
 - [Added `Recipes`](/app/references/recipes)
 - [Updated `Configuration`](/app/references/configuration)
-- [Updated `Environment Variables`](/app/references/environment-variables)
+- [Updated `Environment Variables`](/app/guides/environment-variables)
 - [Updated `Using Cypress FAQ`](/app/faq)
 - [Updated `Plugins Guide`](/app/plugins/plugins-guide)
 - [Updated `Writing a Plugin API`](/api/node-events/overview)
@@ -13988,7 +13988,7 @@ _Released 04/10/2016_
   `cypress open --config waitForAnimations=false --env foo=bar,baz=quux`. This
   enables you to set and override local `cypress.json` configuration and
   additionally set environment variables.
-- [Environment Variables](/app/references/environment-variables) that match any
+- [Environment Variables](/app/guides/environment-variables) that match any
   configuration keys (such as `pageLoadTimeout` or `watchForFileChanges`) now
   override their values. So, if you
   `export CYPRESS_WATCH_FOR_FILE_CHANGES=false` it will turn off this
@@ -14849,7 +14849,7 @@ _Released 11/01/2015_
   been written yet).
 - `Environment Variable` support has been added and can be accessed in your
   tests with `Cypress.env`. The docs have been written
-  [Environment Variable](/app/references/environment-variables).
+  [Environment Variable](/app/guides/environment-variables).
 
 **Misc:**
 
