@@ -369,7 +369,7 @@ describe('Campaign Management', () => {
 
         cy.prompt(
           [
-            `Visit ${Cypress.env('ADMIN_URL')}/admin/login`,
+            `Visit ${Cypress.expose('ADMIN_URL')}/admin/login`,
             // Using {{adminPassword}} prevents this sensitive value from being sent to AI
             'Type {{adminPassword}} into the password field',
             'Click Sign In',
@@ -851,7 +851,7 @@ cy.prompt(
 Or to further clean up the `cy.prompt` call:
 
 ```javascript
-const electronicsCount = Cypress.env('staging') === true ? 5 : 25
+const electronicsCount = Cypress.expose('staging') === true ? 5 : 25
 const electronicsFilterPrompt = [
   'filter by category "Electronics"',
   'sort by price high to low',

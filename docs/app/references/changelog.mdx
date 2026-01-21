@@ -8785,7 +8785,7 @@ _Released 10/31/2019_
   Fixes [#5432](https://github.com/cypress-io/cypress/issues/5432).
 - We fixed a regression in [3.5.0](#3-5-0) causing environment variables
   containing unicode values to be incorrectly resolved when read via
-  [Cypress.env()](/api/cypress-api/env). Fixes
+  `Cypress.env()`. Fixes
   [#5435](https://github.com/cypress-io/cypress/issues/5435).
 - We fixed a regression in [3.5.0](#3-5-0) that prevented use of `.click()` or
   `.type()` inside of an iframe element. Fixes
@@ -8937,7 +8937,7 @@ _Released 10/23/2019_
   that would cause the Selector Playground to not properly highlight the
   currently hovered element. Fixes
   [#4872](https://github.com/cypress-io/cypress/issues/4872).
-- [Cypress.env()](/api/cypress-api/env) now escapes `<script>` tags in the
+- `Cypress.env()` now escapes `<script>` tags in the
   configuration file. Fixes
   [#4952](https://github.com/cypress-io/cypress/issues/4952).
 - Cypress now properly handles converting responses of `content-type`
@@ -14738,7 +14738,7 @@ _Released 11/29/2015_
   `cypress.json` - meaning you no longer have to manually reboot the server for
   changes to be picked up.
 - There is a new [`Cypress.config`](/api/cypress-api/config) interface - akin to
-  [`Cypress.env`](/api/cypress-api/env) which provides access to configuration
+  `Cypress.env` which provides access to configuration
   values.
 
 **Bugfixes:**
@@ -14848,9 +14848,8 @@ _Released 11/01/2015_
   be accessed by `cy.cmd("dashboard.setSlider", arg1, arg2)`. (Docs have not
   been written yet).
 - `Environment Variable` support has been added and can be accessed in your
-  tests with [`Cypress.env`](/api/cypress-api/env). The docs have been written
-  [Environment Variable](/app/references/environment-variables) and
-  [here](/api/cypress-api/env).
+  tests with `Cypress.env`. The docs have been written
+  [Environment Variable](/app/references/environment-variables).
 
 **Misc:**
 

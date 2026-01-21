@@ -1034,7 +1034,7 @@ You can use your own custom commands in any of your tests:
 
 ```js
 it('should display the username of a logged in user', () => {
-  cy.task('getSecret', 'PASSWORD').then((password) => {
+  cy.env(['PASSWORD']).then(({ password }) => {
     cy.login('Matt', password)
   })
   cy.get('.username').contains('Matt')

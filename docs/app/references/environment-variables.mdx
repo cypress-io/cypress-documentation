@@ -1,19 +1,18 @@
 ---
-title: 'Cypress Environment Variables'
-description: 'Set and use environment variables in Cypress to manage dynamic values across different environments.'
-sidebar_label: 'Environment Variables'
+title: 'Environment & Runtime Variables'
+description: 'Learn how to manage environment and runtime variables in Cypress. Understand when to use cy.env() vs Cypress.expose(), how values flow into tests, and how to configure them safely across environments.'
 ---
 
 <ProductHeading product="app" />
 
-# Cypress Environment Variables
+# Environment & Runtime Variables in Cypress
 
 :::caution
 
 <strong>Difference between OS-level and Cypress environment variables</strong>
 
-In Cypress, "environment variables" are variables that are accessible via
-`Cypress.env` in your tests or the browser. These are not the same as OS-level environment variables.
+In Cypress, "environment variables" are sensitive variables that are accessible via
+`cy.env()` in your tests or the browser. These are not the same as OS-level environment variables.
 However,
 [it is possible to set Cypress environment variables from OS-level environment variables](/app/references/environment-variables#Option-3-CYPRESS_).
 

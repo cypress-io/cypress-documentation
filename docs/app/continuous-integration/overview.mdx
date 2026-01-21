@@ -580,7 +580,7 @@ And then in your tests:
 ```javascript
 cy.request({
   method: 'POST',
-  url: Cypress.env('EXTERNAL_API_SERVER') + '/users/1',
+  url: Cypress.expose('EXTERNAL_API_SERVER') + '/users/1',
   body: {
     foo: 'bar',
     baz: 'quux',
