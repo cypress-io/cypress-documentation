@@ -8,17 +8,15 @@ sidebar_label: 'Migration Guide'
 
 # Migration Guide
 
-## Migrating away from `Cypress.env()`
+## Migrating away from Cypress.env()
 
-:::info
+Starting with Cypress 15.10.0, `Cypress.env()` has been deprecated and will be removed in a future major version. This guide helps you migrate to [`cy.env()`](/api/commands/env) (for sensitive values) or [`Cypress.expose()`](/api/cypress-api/expose) (for public/non-sensitive values), depending on your use case.
 
-Starting with Cypress `15.10.0`, `Cypress.env()` has been deprecated and will be removed in a future major version. This guide helps you migrate to `cy.env()` (for sensitive values) or `Cypress.expose()` (for public/non-sensitive values), depending on your use case.
+### Why Cypress.env() is deprecated
 
-### Why `Cypress.env()` is deprecated
+`Cypress.env()` makes it easy to accidentally expose more data than intended because Cypress hydrates all configured environment variables into the browser context. That includes values your test never reads.
 
-`Cypress.env()` makes it easy to accidentally expose more data than intended because Cypress **hydrates all configured environment variables into the browser context**. That includes values your test never reads.
-
-This deprecation is a precaution to reduce the risk of unintentionally exposing secrets in the browser-accessible state when run within the Cypress browser. There is no requirement to assume a breach. This is about ensuring safer defaults and preventing accidental exposure of sensitive data.
+This deprecation is a precaution to reduce the risk of unintentionally exposing secrets in the browser-accessible state when run within the Cypress browser. This is about ensuring safer defaults and preventing accidental exposure of sensitive data.
 
 #### What's the risk
 
@@ -42,12 +40,11 @@ When migrating from `Cypress.env()`, you have two options: `cy.env()` and `Cypre
 
 - The value is **public/non-sensitive** (feature flags, API versions, public URLs, plugin configurations)
 - You need **synchronous access**
-- You need the value in support files or plugin-style code outside command chains
-- It's acceptable for the value to be accessible in the browser context
+- It's acceptable for the value to be accessible in the browser context (e.g. application code, third-party scripts, or extensions)
 
-### Migrate sensitive values to `cy.env()`
+### Migrate sensitive values to cy.env()
 
-`cy.env()` is read-only and asynchronous (it's a Cypress command).
+`cy.env()` is read-only and asynchronous.
 
 #### Read one value
 
@@ -56,8 +53,11 @@ When migrating from `Cypress.env()`, you have two options: `cy.env()` and `Cypre
 ```javascript
 describe('API tests', () => {
   it('makes a request to the API', () => {
-    const apiUrl = Cypress.env('apiUrl')
-    cy.request(`${apiUrl}/users`).its('status').should('eq', 200)
+    const apiKey = Cypress.env('apiKey')
+    cy.request({
+      url: 'https://api.example.com/users',
+      headers: { Authorization: `Bearer ${apiKey}` },
+    }).its('status').should('eq', 200)
   })
 })
 ```
@@ -67,8 +67,11 @@ describe('API tests', () => {
 ```javascript
 describe('API tests', () => {
   it('makes a request to the API', () => {
-    cy.env(['apiUrl']).then(({ apiUrl }) => {
-      cy.request(`${apiUrl}/users`).its('status').should('eq', 200)
+    cy.env(['apiKey']).then(({ apiKey }) => {
+      cy.request({
+        url: 'https://api.example.com/users',
+        headers: { Authorization: `Bearer ${apiKey}` },
+      }).its('status').should('eq', 200)
     })
   })
 })
@@ -113,9 +116,9 @@ describe('API tests', () => {
 
 See [cy.env()](/api/commands/env) for more details.
 
-### Migrate public configuration to `Cypress.expose()`
+### Migrate public config to Cypress.expose()
 
-Use this path only for non-sensitive values. Cypress.expose() is synchronous and is designed for configuration that is safe to be available in the browser.
+Use this path only for non-sensitive values. `Cypress.expose()` is synchronous and is designed for configuration that is safe to be available in the browser.
 
 #### Via configuration file
 
@@ -202,7 +205,7 @@ Cypress.expose({
 
 See [Cypress.expose()](/api/cypress-api/expose) for more details.
 
-#### If you were setting values with Cypress.env()
+### If you were setting values with Cypress.env()
 
 `cy.env()` cannot set values. If you used `Cypress.env()` to write sensitive values at runtime, you can use `cy.task()` to store state in the Cypress config process. These are **not** environment variables and are **not** accessible through `cy.env()`.
 
