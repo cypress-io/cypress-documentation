@@ -116,19 +116,16 @@ as OS-level environment variables (e.g., in your `.env` file or CI secret manage
 
 ```js
 {
-  setupNodeEvents(on, config) {
-    on('task', {
-      getAuthCredentials(provider) {
-        const username = process.env[`${provider}_USERNAME`]
-        const password = process.env[`${provider}_PASSWORD`]
-        const name = process.env[`${provider}_NAME`]
-        if (!username || !password || !name) {
-          throw new Error(`${provider}_USERNAME, ${provider}_PASSWORD, and ${provider}_NAME must be set`)
-        }
-        return { username, password, name }
-      },
-    })
-    return config
+  env: {
+    MICROSOFT_USERNAME: process.env.MICROSOFT_USERNAME,
+    MICROSOFT_PASSWORD: process.env.MICROSOFT_PASSWORD,
+    MICROSOFT_NAME: process.env.MICROSOFT_NAME,
+    GOOGLE_USERNAME: process.env.GOOGLE_USERNAME,
+    GOOGLE_PASSWORD: process.env.GOOGLE_PASSWORD,
+    GOOGLE_NAME: process.env.GOOGLE_NAME,
+    FACEBOOK_USERNAME: process.env.FACEBOOK_USERNAME,
+    FACEBOOK_PASSWORD: process.env.FACEBOOK_PASSWORD,
+    FACEBOOK_NAME: process.env.FACEBOOK_NAME,
   },
 }
 ```
@@ -291,23 +288,23 @@ Cypress.Commands.add(
 
     switch (SOCIAL_PROVIDER) {
       case 'microsoft':
-        cy.task('getAuthCredentials', 'MICROSOFT').then(
-          ({ username, password, name }) => {
-            logIntoMicrosoft(username, password, name)
+        cy.env(['MICROSOFT_USERNAME', 'MICROSOFT_PASSWORD', 'MICROSOFT_NAME']).then(
+          ({ microsoftUsername, microsoftPassword, microsoftName }) => {
+            logIntoMicrosoft(microsoftUsername, microsoftPassword, microsoftName)
           }
         )
         break
       case 'google':
-        cy.task('getAuthCredentials', 'GOOGLE').then(
-          ({ username, password, name }) => {
-            logIntoGoogle(username, password, name)
+        cy.env(['GOOGLE_USERNAME', 'GOOGLE_PASSWORD', 'GOOGLE_NAME']).then(
+          ({ googleUsername, googlePassword, googleName }) => {
+            logIntoGoogle(googleUsername, googlePassword, googleName)
           }
         )
         break
       case 'facebook':
-        cy.task('getAuthCredentials', 'FACEBOOK').then(
-          ({ username, password, name }) => {
-            logIntoFacebook(username, password, name)
+        cy.env(['FACEBOOK_USERNAME', 'FACEBOOK_PASSWORD', 'FACEBOOK_NAME']).then(
+          ({ facebookUsername, facebookPassword, facebookName }) => {
+            logIntoFacebook(facebookUsername, facebookPassword, facebookName)
           }
         )
         break
@@ -368,23 +365,23 @@ Cypress.Commands.add(
       () => {
         switch (SOCIAL_PROVIDER) {
           case 'microsoft':
-            cy.task('getAuthCredentials', 'MICROSOFT').then(
-              ({ username, password, name }) => {
-                logIntoMicrosoft(username, password, name)
+            cy.env(['MICROSOFT_USERNAME', 'MICROSOFT_PASSWORD', 'MICROSOFT_NAME']).then(
+              ({ microsoftUsername, microsoftPassword, microsoftName }) => {
+                logIntoMicrosoft(microsoftUsername, microsoftPassword, microsoftName)
               }
             )
             break
           case 'google':
-            cy.task('getAuthCredentials', 'GOOGLE').then(
-              ({ username, password, name }) => {
-                logIntoGoogle(username, password, name)
+            cy.env(['GOOGLE_USERNAME', 'GOOGLE_PASSWORD', 'GOOGLE_NAME']).then(
+              ({ googleUsername, googlePassword, googleName }) => {
+                logIntoGoogle(googleUsername, googlePassword, googleName)
               }
             )
             break
           case 'facebook':
-            cy.task('getAuthCredentials', 'FACEBOOK').then(
-              ({ username, password, name }) => {
-                logIntoFacebook(username, password, name)
+            cy.env(['FACEBOOK_USERNAME', 'FACEBOOK_PASSWORD', 'FACEBOOK_NAME']).then(
+              ({ facebookUsername, facebookPassword, facebookName }) => {
+                logIntoFacebook(facebookUsername, facebookPassword, facebookName)
               }
             )
             break
@@ -397,18 +394,18 @@ Cypress.Commands.add(
           cy.visit('http://localhost:3000')
           switch (SOCIAL_PROVIDER) {
             case 'microsoft':
-              cy.task('getAuthCredentials', 'MICROSOFT').then(({ name }) => {
-                cy.get('h6.dropdown-header').should('contain', name)
+              cy.env(['MICROSOFT_NAME']).then(({ microsoftName }) => {
+                cy.get('h6.dropdown-header').should('contain', microsoftName)
               })
               break
             case 'google':
-              cy.task('getAuthCredentials', 'GOOGLE').then(({ name }) => {
-                cy.get('h6.dropdown-header').should('contain', name)
+              cy.env(['GOOGLE_NAME']).then(({ googleName }) => {
+                cy.get('h6.dropdown-header').should('contain', googleName)
               })
               break
             case 'facebook':
-              cy.task('getAuthCredentials', 'FACEBOOK').then(({ name }) => {
-                cy.get('h6.dropdown-header').should('contain', name)
+              cy.env(['FACEBOOK_NAME']).then(({ facebookName }) => {
+                cy.get('h6.dropdown-header').should('contain', facebookName)
               })
               break
             default:
