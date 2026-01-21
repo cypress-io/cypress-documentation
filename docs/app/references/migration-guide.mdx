@@ -263,7 +263,7 @@ describe('API tests', () => {
 
 ### Lock it down with `allowCypressEnv: false`
 
-Once you've migrated all `Cypress.env()` invocations to either `cy.env()`, `Cypress.expose()`, or `cy.task()`, you should set `allowCypressEnv: false` in your Cypress configuration.
+Once you've migrated all `Cypress.env()` invocations to either `cy.env()` or `Cypress.expose()`, you should set `allowCypressEnv: false` in your Cypress configuration.
 
 :::cypress-config-example
 
@@ -290,8 +290,8 @@ When `allowCypressEnv` is set to `false`:
 #### Migration Checklist
 
 1. ✅ Search your codebase for all `Cypress.env()` calls
-2. ✅ Replace each `Cypress.env()` call with either `cy.env()`, `Cypress.expose()`, or `cy.task()`
-3. ✅ Update code to handle the asynchronous nature of `cy.env()` and `cy.task()`
+2. ✅ Replace each `Cypress.env()` call with either `cy.env()` or `Cypress.expose()`
+3. ✅ Update code to handle the asynchronous nature of `cy.env()`
 4. ✅ Test your changes to ensure everything works correctly
 5. ✅ Set `allowCypressEnv: false` in your Cypress configuration
 6. ✅ Verify that no errors are thrown
