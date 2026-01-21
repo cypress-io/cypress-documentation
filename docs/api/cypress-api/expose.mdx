@@ -20,7 +20,7 @@ sidebar_custom_props: { 'new_label': true }
 
 `Cypress.expose()` is intended for **public/non-sensitive** configuration values only. Values set with `Cypress.expose()` are accessible in the browser context, including to application code, third-party scripts, and browser extensions.
 
-**Do NOT** store sensitive data (API keys, passwords, tokens, etc.) using `Cypress.expose()`. Use [`cy.env()`](/api/commands/env) or [`cy.task()`](/api/commands/task) for sensitive values.
+**Do NOT** store sensitive data (API keys, passwords, tokens, etc.) using `Cypress.expose()`. Use [`cy.env()`](/api/commands/env) for sensitive values.
 
 :::
 
@@ -243,7 +243,7 @@ See [`cy.env()`](/api/commands/env) for more details on when to use it.
 
 - Exposed values persist only while the browser is open.
 - Runtime changes apply only within the current spec file
-- Values do not propagate back to Node.js contexts such as setupNodeEvents or cy.task()
+- Values do not propagate back to Node.js contexts such as `setupNodeEvents`
 
 ### Configuration precedence
 
