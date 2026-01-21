@@ -57,7 +57,9 @@ describe('API tests', () => {
     cy.request({
       url: 'https://api.example.com/users',
       headers: { Authorization: `Bearer ${apiKey}` },
-    }).its('status').should('eq', 200)
+    })
+      .its('status')
+      .should('eq', 200)
   })
 })
 ```
@@ -71,7 +73,9 @@ describe('API tests', () => {
       cy.request({
         url: 'https://api.example.com/users',
         headers: { Authorization: `Bearer ${apiKey}` },
-      }).its('status').should('eq', 200)
+      })
+        .its('status')
+        .should('eq', 200)
     })
   })
 })
