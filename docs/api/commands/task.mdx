@@ -509,7 +509,9 @@ on('task', {
 
 ### Accessing secrets securely
 
-You can use `cy.task()` to securely access secrets from the Node.js process environment variables. This is the recommended approach for accessing sensitive values like passwords, API keys, or tokens, as they remain in the Node.js process and are not exposed to the browser.
+You can use `cy.task()` to securely access secrets from the Node.js process environment variables and use them in your tests, support files, or plugins. This is the recommended approach for accessing sensitive values like passwords, API keys, or tokens, as they remain in the Node.js process and are not exposed to the browser.
+
+[cy.env()](/api/commands/env) also provides a way to access secrets securely and use them in your tests.
 
 :::cypress-config-plugin-example
 
