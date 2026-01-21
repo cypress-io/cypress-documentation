@@ -10,7 +10,7 @@ sidebar_custom_props: { 'new_label': true }
 
 # Cypress.expose
 
-`get` and `set` exposed public configuration _in your tests_.
+Get and set public configuration in your tests.
 
 `Cypress.expose()` provides synchronous access to configuration that is safe to expose in the browser context. It may be used for feature flags, plugin configuration, and other public values that need to be available outside of Cypress command chains.
 
@@ -66,8 +66,7 @@ Set multiple exposed configuration variables with an object literal. Values are 
 :::
 
 ```javascript
-Cypress.expose()
-// => {pluginConfig: 'value1', featureFlag: true, apiVersion: 2}
+Cypress.expose() // => {pluginConfig: 'value1', featureFlag: true, apiVersion: 2}
 ```
 
 ### Get a single exposed configuration variable
@@ -91,7 +90,7 @@ Cypress.expose('featureFlag') // => true
 Cypress.expose('nonExistent') // => undefined
 ```
 
-### Set a single exposed value
+### Set a single exposed configuration variable
 
 Changes made with `Cypress.expose()` apply only for the remainder of the _current spec file_.
 
@@ -137,9 +136,11 @@ Cypress.expose({
 Cypress.expose() // => {pluginConfig: 'updated-value', featureFlag: true}
 ```
 
-### Configuration sources
+## Configuration sources
 
-#### Cypress configuration file
+Read the [Environment Variables & Secrets](/app/guides/environment-variables) guide for more details.
+
+### Cypress configuration file
 
 Exposed configuration variables can be set in your [Cypress configuration](/app/references/configuration) file:
 
@@ -178,9 +179,9 @@ Or using the short form:
 cypress run -x pluginConfig=foo,featureFlag=true,API_VERSION=1
 ```
 
-### Common use cases
+## Common use cases
 
-#### Use `Cypress.expose()` in plugins or support files
+### Use Cypress.expose() in plugins or support files
 
 `Cypress.expose()` is ideal when configuration is needed outside of Cypress command chains:
 
@@ -193,7 +194,7 @@ if (pluginConfig === 'enabled') {
 }
 ```
 
-#### Migrating from `Cypress.env()` to `Cypress.expose()`
+## Migrate from Cypress.env() to Cypress.expose()
 
 If you're migrating a plugin from `Cypress.env()` to `Cypress.expose()`, the API is similar:
 
@@ -237,21 +238,13 @@ Update your configuration file:
 
 <CypressEnvVsCypressExpose />
 
-See [`cy.env()`](/api/commands/env) for more details on when to use it.
+See [`cy.env()`](/api/commands/env) for more details.
 
 ### Scope and lifecycle limitations
 
 - Exposed values persist only while the browser is open.
 - Runtime changes apply only within the current spec file
 - Values do not propagate back to Node.js contexts such as `setupNodeEvents`
-
-### Configuration precedence
-
-Exposed configuration variables are resolved in the following order (later sources override earlier ones):
-
-1. Configuration file (`expose` key in `cypress.config.{js,ts,mjs,cjs}`)
-2. CLI flags (`--expose` or `-x`)
-3. Runtime calls to `Cypress.expose()`
 
 ## History
 
@@ -261,7 +254,7 @@ Exposed configuration variables are resolved in the following order (later sourc
 
 ## See also
 
-- [`cy.env()`](/api/commands/env) - Privileged command for accessing sensitive environment variables
-- [`Cypress.env()`](/api/cypress-api/env) - Deprecated API (use `cy.env()` or `Cypress.expose()` instead)
+- [`cy.env()`](/api/commands/env)
+- [`Cypress.env()`](/api/cypress-api/env) - Deprecated API
 - [Migration Guide to `cy.env()`](/app/references/migration-guide#Migrating-away-from-Cypressenv) - Guide for migrating from `Cypress.env()`
-- [Configuration options](/app/references/configuration) - Cypress configuration reference, including setting environment variables
+- [Configuration options](/app/references/configuration)
