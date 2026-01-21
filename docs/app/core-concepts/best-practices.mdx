@@ -38,6 +38,161 @@ The app is bundled with everything you need,
 [just clone the repository](https://github.com/cypress-io/cypress-realworld-app)
 and start testing.
 
+## <Icon name="angle-right" /> Handling Secrets and Sensitive Data
+
+:::danger
+
+<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Hardcoding secrets
+in test files, using `Cypress.expose()` for sensitive values, or exposing secrets
+to the browser context.
+
+:::
+
+:::tip
+
+<Icon name="check-circle" color="green" /> **Best Practice:** Use the right API for
+the right purpose: `cy.env()` for sensitive values in tests and `Cypress.expose()` only for public configuration.
+
+:::
+
+When writing Cypress tests, you'll often need to work with sensitive data like API keys, passwords, tokens, or database credentials. Cypress provides three different APIs for handling configuration values, each with different security characteristics and use cases.
+
+### Understanding the Security Model
+
+Cypress runs in two contexts:
+
+- **Browser context**: Where your tests execute and can access browser APIs. Values here are visible to application code, browser extensions, and developer tools.
+- **Node.js context**: Where plugins and tasks run. Values here never enter the browser and remain secure.
+
+| API                                           | Context                        | Browser Exposure | Use Case                           |
+| --------------------------------------------- | ------------------------------ | ---------------- | ---------------------------------- |
+| [`cy.env()`](/api/commands/env)               | Browser (privileged)           | No               | Sensitive values needed in tests   |
+| [`Cypress.expose()`](/api/cypress-api/expose) | Browser (public)               | Yes              | Public/non-sensitive configuration |
+
+### Use `cy.env()` for Sensitive Values in Tests
+
+`cy.env()` is the recommended way to access sensitive environment variables in your tests. It provides privileged access that doesn't automatically expose values to the browser context.
+
+**When to use:**
+
+- API keys, passwords, tokens, or credentials needed in test code
+- Values that should remain secure but are needed within Cypress command chains
+
+**Example: Using API keys securely**
+
+```javascript
+// ✅ Good: Using cy.env() for sensitive API key
+cy.env(['apiKey']).then(({ apiKey }) => {
+  cy.request({
+    method: 'POST',
+    url: 'https://api.example.com/data',
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+    },
+  })
+})
+```
+
+**Configuration:**
+
+Set sensitive values via environment variables or configuration files:
+
+```javascript
+// cypress.config.js
+{
+  env: {
+    apiKey: process.env.API_KEY, // From CI environment
+    dbPassword: process.env.DB_PASSWORD,
+  },
+}
+```
+
+### Use `Cypress.expose()` for public configuration
+
+`Cypress.expose()` is designed for **public, non-sensitive** configuration values that are safe to expose in the browser context.
+
+**When to use:**
+
+- Feature flags, API versions, environment labels
+- Plugin configuration that's safe to appear in browser state
+- Values needed synchronously outside of Cypress command chains
+- Configuration that application code might need to access
+
+**When NOT to use:**
+
+- ❌ API keys, passwords, tokens, or any credentials
+- ❌ Database connection strings
+- ❌ Any value that should remain secret
+
+**Example: Public configuration only**
+
+```javascript
+// ✅ Good: Public configuration
+const apiVersion = Cypress.expose('apiVersion') // e.g., "v2"
+const featureFlag = Cypress.expose('featureFlag') // e.g., true
+
+// ❌ Bad: Never use for secrets
+const apiKey = Cypress.expose('apiKey') // ⚠️ Exposed to browser!
+```
+
+### Security Best Practices
+
+1. **Never hardcode secrets in test files**
+
+```javascript
+// ❌ Bad: Hardcoded secret
+cy.request({
+  url: 'https://api.example.com/data',
+  headers: { Authorization: 'Bearer secret-key-12345' },
+})
+
+// ✅ Good: From environment
+cy.env(['apiKey']).then(({ apiKey }) => {
+  cy.request({
+    url: 'https://api.example.com/data',
+    headers: { Authorization: `Bearer ${apiKey}` },
+  })
+})
+```
+
+2. **Use environment variables in CI/CD**
+
+Set secrets in your CI/CD platform's secret management system:
+
+```yaml
+# GitHub Actions example
+env:
+  CYPRESS_API_KEY: ${{ secrets.API_KEY }}
+  CYPRESS_DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+```
+
+3. **Don't commit secrets to version control**
+
+Use `.gitignore` for files containing secrets:
+
+```gitignore
+# .gitignore
+cypress.env.json
+.env
+*.secret
+```
+
+4. **Use `cy.env()` with explicit variable names**
+
+Only request the variables you need:
+
+```javascript
+// ✅ Good: Explicit, minimal exposure
+cy.env(['apiKey']).then(({ apiKey }) => {
+  // Use apiKey
+})
+
+// ⚠️ Less ideal: Requesting more than needed
+cy.env(['apiKey', 'dbPassword', 'otherSecret']).then((env) => {
+  // All values now in scope
+})
+```
+
 ## <Icon name="angle-right" /> Organizing Tests, Logging In, Controlling State
 
 :::danger
@@ -1103,217 +1258,3 @@ We also display an error if your server is not running at the specified
 
 This [short video](https://www.youtube.com/watch?v=f5UaXuAc52c) explains in
 depth how to use `baseUrl` correctly.
-
-## <Icon name="angle-right" /> Handling Secrets and Sensitive Data
-
-:::danger
-
-<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Hardcoding secrets
-in test files, using `Cypress.expose()` for sensitive values, or exposing secrets
-to the browser context.
-
-:::
-
-:::tip
-
-<Icon name="check-circle" color="green" /> **Best Practice:** Use the right API for
-the right purpose: `cy.env()` for sensitive values in tests, `cy.task()` for Node.js-only
-secrets, and `Cypress.expose()` only for public configuration.
-
-:::
-
-When writing Cypress tests, you'll often need to work with sensitive data like API keys, passwords, tokens, or database credentials. Cypress provides three different APIs for handling configuration values, each with different security characteristics and use cases.
-
-### Understanding the Security Model
-
-Cypress runs in two contexts:
-
-- **Browser context**: Where your tests execute and can access browser APIs. Values here are visible to application code, browser extensions, and developer tools.
-- **Node.js context**: Where plugins and tasks run. Values here never enter the browser and remain secure.
-
-| API                                           | Context                        | Browser Exposure | Use Case                           |
-| --------------------------------------------- | ------------------------------ | ---------------- | ---------------------------------- |
-| [`cy.env()`](/api/commands/env)               | Browser (privileged)           | No               | Sensitive values needed in tests   |
-| [`cy.task()`](/api/commands/task)             | Browser (privileged) & Node.js | No               | Secrets needed in tests andNode.js |
-| [`Cypress.expose()`](/api/cypress-api/expose) | Browser (public)               | Yes              | Public/non-sensitive configuration |
-
-### Use `cy.env()` for Sensitive Values in Tests
-
-`cy.env()` is the recommended way to access sensitive environment variables in your tests. It provides privileged access that doesn't automatically expose values to the browser context.
-
-**When to use:**
-
-- API keys, passwords, tokens, or credentials needed in test code
-- Values that should remain secure but are needed within Cypress command chains
-
-**Example: Using API keys securely**
-
-```javascript
-// ✅ Good: Using cy.env() for sensitive API key
-cy.env(['apiKey']).then(({ apiKey }) => {
-  cy.request({
-    method: 'POST',
-    url: 'https://api.example.com/data',
-    headers: {
-      Authorization: `Bearer ${apiKey}`,
-    },
-  })
-})
-```
-
-**Configuration:**
-
-Set sensitive values via environment variables or configuration files:
-
-```javascript
-// cypress.config.js
-{
-  env: {
-    apiKey: process.env.API_KEY, // From CI environment
-    dbPassword: process.env.DB_PASSWORD,
-  },
-}
-```
-
-### Use `cy.task()` for support file or plugin secrets
-
-`cy.task()` executes code in the Node.js process and is a great way to access secrets in your support files or plugins.
-
-**Example: Accessing secrets in a support file**
-
-```javascript
-// In test
-cy.task('seedDatabase').then(() => {
-  cy.visit('/dashboard')
-})
-```
-
-:::cypress-config-plugin-example
-
-```ts
-on('task', {
-  seedDatabase() {
-    // Access secrets from Node.js environment
-    const dbPassword = process.env.DB_PASSWORD
-    const connectionString = `postgresql://user:${dbPassword}@localhost/testdb`
-
-    // Seed database using secure connection
-    return seedDatabase(connectionString)
-  },
-})
-```
-
-:::
-
-**Example: Retrieving secrets for test use**
-
-If you need a secret in your support file, plugin, or test:
-
-```javascript
-// In test
-cy.task('getApiKey').then((apiKey) => {
-  cy.request({
-    url: 'https://api.example.com/data',
-    headers: { Authorization: `Bearer ${apiKey}` },
-  })
-})
-```
-
-:::cypress-config-plugin-example
-
-```ts
-on('task', {
-  getApiKey() {
-    // Access secret from Node.js environment
-    return process.env.API_KEY
-  },
-})
-```
-
-:::
-
-### Use `Cypress.expose()` for public configuration
-
-`Cypress.expose()` is designed for **public, non-sensitive** configuration values that are safe to expose in the browser context.
-
-**When to use:**
-
-- Feature flags, API versions, environment labels
-- Plugin configuration that's safe to appear in browser state
-- Values needed synchronously outside of Cypress command chains
-- Configuration that application code might need to access
-
-**When NOT to use:**
-
-- ❌ API keys, passwords, tokens, or any credentials
-- ❌ Database connection strings
-- ❌ Any value that should remain secret
-
-**Example: Public configuration only**
-
-```javascript
-// ✅ Good: Public configuration
-const apiVersion = Cypress.expose('apiVersion') // e.g., "v2"
-const featureFlag = Cypress.expose('featureFlag') // e.g., true
-
-// ❌ Bad: Never use for secrets
-const apiKey = Cypress.expose('apiKey') // ⚠️ Exposed to browser!
-```
-
-### Security Best Practices
-
-1. **Never hardcode secrets in test files**
-
-```javascript
-// ❌ Bad: Hardcoded secret
-cy.request({
-  url: 'https://api.example.com/data',
-  headers: { Authorization: 'Bearer secret-key-12345' },
-})
-
-// ✅ Good: From environment
-cy.env(['apiKey']).then(({ apiKey }) => {
-  cy.request({
-    url: 'https://api.example.com/data',
-    headers: { Authorization: `Bearer ${apiKey}` },
-  })
-})
-```
-
-2. **Use environment variables in CI/CD**
-
-Set secrets in your CI/CD platform's secret management system:
-
-```yaml
-# GitHub Actions example
-env:
-  CYPRESS_API_KEY: ${{ secrets.API_KEY }}
-  CYPRESS_DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-```
-
-3. **Don't commit secrets to version control**
-
-Use `.gitignore` for files containing secrets:
-
-```gitignore
-# .gitignore
-cypress.env.json
-.env
-*.secret
-```
-
-4. **Use `cy.env()` with explicit variable names**
-
-Only request the variables you need:
-
-```javascript
-// ✅ Good: Explicit, minimal exposure
-cy.env(['apiKey']).then(({ apiKey }) => {
-  // Use apiKey
-})
-
-// ⚠️ Less ideal: Requesting more than needed
-cy.env(['apiKey', 'dbPassword', 'otherSecret']).then((env) => {
-  // All values now in scope
-})
-```
