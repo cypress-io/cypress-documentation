@@ -706,49 +706,6 @@ an [`e2e`](#e2e) or [`component`](#component) testing specific option.
 
 See the [plugins guide](/app/plugins/plugins-guide) for more information.
 
-## Common problems
-
-### <Icon name="angle-right" /> `baseUrl` is not set
-
-Make sure you do not accidentally place the `baseUrl` config option into the
-`env` object. The following configuration is _incorrect_ and will not work:
-
-:::cypress-config-example
-
-```ts
-{
-  // ⛔️ DOES NOT WORK
-  env: {
-    baseUrl: 'http://localhost:3030',
-    FOO: 'bar',
-  },
-}
-```
-
-:::
-
-Solution: place the `baseUrl` property outside the `env` object and inside the
-[e2e](/app/references/configuration#e2e) testing-type specific object.
-
-:::cypress-config-example
-
-```ts
-{
-  // ✅ THE CORRECT WAY
-  env: {
-    FOO: 'bar',
-  },
-  e2e: {
-    baseUrl: 'http://localhost:3030',
-  },
-}
-```
-
-:::
-
-You can also find a few tips on setting the `baseUrl` in this
-[short video](https://www.youtube.com/watch?v=f5UaXuAc52c).
-
 ### <Icon name="angle-right" /> Test files not found when using `spec` parameter
 
 When using the `--spec <path or mask>` argument, make it relative to the

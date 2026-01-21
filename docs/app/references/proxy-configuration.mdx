@@ -184,6 +184,14 @@ echo $SOME_VARIABLE
 
 #### See all the currently set environment variables
 
+:::caution
+
+**Avoid in CI environments**
+
+Do not print environment variables in CI runs where logs are captured and stored, as this can expose sensitive information like passwords, API keys, or tokens that may be stored in environment variables.
+
+:::
+
 Print all env vars:
 
 ```shell
