@@ -207,7 +207,8 @@ cypress run [options]
 | `--config`, `-c`               | [Specify configuration](#cypress-run-config-lt-config-gt)                                                                                                                                     |
 | `--config-file`, `-C`          | [Specify configuration file](#cypress-run-config-file-lt-configuration-file-gt)                                                                                                               |
 | `--e2e`                        | Run end to end tests (default)                                                                                                                                                                |
-| `--env`, `-e`                  | [Specify environment variables](#cypress-run-env-lt-env-gt)                                                                                                                                   |
+| `--env`, `-e`                  | [Specify secret environment variables](#cypress-run-env-lt-env-gt)                                                                                                                                   |
+| `--expose`, `-x`               | [Specify public configuration values](#cypress-run-expose-lt-expose-gt)                                                                                                                          |
 | `--group`                      | [Group recorded tests together under a single run](#cypress-run-group-lt-name-gt)                                                                                                             |
 | `--headed`                     | [Displays the browser instead of running headlessly](#cypress-run-headed)                                                                                                                     |
 | `--headless`                   | Hide the browser instead of running headed (default during `cypress run`)                                                                                                                     |
@@ -340,23 +341,39 @@ cypress run --config-file tests/cypress.config.js
 
 #### `cypress run --env <env>` {#cypress-run-env-lt-env-gt}
 
-Set Cypress [environment variables](/app/references/environment-variables).
+:::caution
+
+**Security Warning**
+
+Secrets passed via CLI may appear in CI logs. For production use, prefer setting secrets via your CI/CD platform's secret management system.
+
+:::
+
+Set secret [environment variables](/app/guides/environment-variables) for use in your tests via [`cy.env()`](/api/commands/env). See the [Environment Variables & Secrets](/app/guides/environment-variables) guide for more details.
 
 ```shell
-cypress run --env host=api.dev.local
+cypress run --env apiKey=secret-key-12345
 ```
 
 Pass several variables using commas and no spaces. Numbers are automatically
 converted from strings.
 
 ```shell
-cypress run --env host=api.dev.local,port=4222
+cypress run --env apiKey=secret-key-12345,apiUrl=https://api.example.com
 ```
 
 Pass an object as a JSON in a string.
 
 ```shell
-cypress run --env flags='{"feature-a":true,"feature-b":false}'
+cypress run --env credentials='{"apiKey":"secret-key-12345","dbPassword":"secure-password"}'
+```
+
+#### `cypress run --expose <expose>` {#cypress-run-expose-lt-expose-gt}
+
+Set public configuration values for use in your tests via [`Cypress.expose()`](/api/cypress-api/expose). See the [Environment Variables & Secrets](/app/guides/environment-variables) guide for more details.
+
+```shell
+cypress run --expose apiVersion=v2,featureFlag=true
 ```
 
 #### `cypress run --group <name>` {#cypress-run-group-lt-name-gt}
@@ -644,7 +661,8 @@ be guided through selecting a browser, project, and/or testing type.
 | `--config-file`, `-C` | [Specify configuration file](#cypress-open-config-file-lt-configuration-file-gt)                                                                                                    |
 | `--detached`, `-d`    | Open Cypress in detached mode                                                                                                                                                       |
 | `--e2e`               | Open in end to end testing mode (default)                                                                                                                                           |
-| `--env`, `-e`         | [Specify environment variables](#cypress-open-env-lt-env-gt)                                                                                                                        |
+| `--env`, `-e`         | [Specify secret environment variables](#cypress-open-env-lt-env-gt)                                                                                                                        |
+| `--expose`, `-x`      | [Specify public configuration values](#cypress-open-expose-lt-expose-gt)                                                                                                                 |
 | `--global`            | [Open in global mode](#cypress-open-global)                                                                                                                                         |
 | `--help`, `-h`        | Output usage information                                                                                                                                                            |
 | `--port`, `-p`        | [Override default port](#cypress-open-port-lt-port-gt)                                                                                                                              |
@@ -700,23 +718,39 @@ cypress open --config-file tests/cypress.config.js
 
 #### `cypress open --env <env>` {#cypress-open-env-lt-env-gt}
 
-Set Cypress [environment variables](/app/references/environment-variables).
+:::caution
+
+**Security Warning**
+
+Secrets passed via CLI may appear in CI logs. For production use, prefer setting secrets via your CI/CD platform's secret management system.
+
+:::
+
+Set secret [environment variables](/app/guides/environment-variables) for use in your tests via [`cy.env()`](/api/commands/env). See the [Environment Variables & Secrets](/app/guides/environment-variables) guide for more details.
 
 ```shell
-cypress open --env host=api.dev.local
+cypress open --env apiKey=secret-key-12345
 ```
 
 Pass several variables using commas and no spaces. Numbers are automatically
 converted from strings.
 
 ```shell
-cypress open --env host=api.dev.local,port=4222
+cypress open --env apiKey=secret-key-12345,apiUrl=https://api.example.com
 ```
 
 Pass an object as a JSON in a string.
 
 ```shell
-cypress open --env flags='{"feature-a":true,"feature-b":false}'
+cypress open --env credentials='{"apiKey":"secret-key-12345","dbPassword":"secure-password"}'
+```
+
+#### `cypress open --expose <expose>` {#cypress-open-expose-lt-expose-gt}
+
+Set public configuration values for use in your tests via [`Cypress.expose()`](/api/cypress-api/expose). See the [Environment Variables & Secrets](/app/guides/environment-variables) guide for more details.
+
+```shell
+cypress open --expose apiVersion=v2,featureFlag=true
 ```
 
 #### `cypress open --global` {#cypress-open-global}
