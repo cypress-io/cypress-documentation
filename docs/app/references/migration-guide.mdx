@@ -20,7 +20,7 @@ Starting with Cypress `15.10.0`, `Cypress.env()` has been deprecated and will be
 
 This deprecation is a precaution to reduce the risk of unintentionally exposing secrets in the browser-accessible state when run within the Cypress browser. There is no requirement to assume a breach. This is about ensuring safer defaults and preventing accidental exposure of sensitive data.
 
-#### What's the risk 
+#### What's the risk
 
 When Cypress environment values are available in the browser, they can be inspected through normal browser tooling and may be accessible to code running in that context (for example, app code, third-party scripts, or extensions). The core issues are:
 
@@ -286,7 +286,6 @@ When `allowCypressEnv` is set to `false`:
 
 1. `Cypress.env()` calls will throw an error
 2. Test configuration overrides are disabled
-
 
 #### Migration Checklist
 
