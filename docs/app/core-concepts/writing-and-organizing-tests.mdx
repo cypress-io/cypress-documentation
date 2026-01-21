@@ -666,8 +666,7 @@ describe('When NOT in Chrome', { browser: '!chrome' }, () => {
 ```
 
 The following suite of tests will only execute when running in the Firefox
-browser. It will overwrite the viewport resolution in one of the tests, and will
-merge any current environment variables with the provided ones.
+browser. Additionally, it will overwrite the viewport resolution.
 
 ```js
 describe(
@@ -676,31 +675,12 @@ describe(
     browser: 'firefox',
     viewportWidth: 1024,
     viewportHeight: 700,
-    env: {
-      DEMO: true,
-      API: 'http://localhost:9000',
-    },
   },
   () => {
     it('Sets the expected viewport and API URL', () => {
       expect(cy.config('viewportWidth')).to.equal(1024)
       expect(cy.config('viewportHeight')).to.equal(700)
-      expect(cy.env('API')).to.equal('http://localhost:9000')
     })
-
-    it(
-      'Uses the closest API environment variable',
-      {
-        env: {
-          API: 'http://localhost:3003',
-        },
-      },
-      () => {
-        expect(cy.env('API')).to.equal('http://localhost:3003')
-        // other environment variables remain unchanged
-        expect(cy.env('DEMO')).to.be.true
-      }
-    )
   }
 )
 ```
@@ -931,7 +911,7 @@ behavior.
 #### Files
 
 - [Cypress configuration](/app/references/configuration)
-- [cypress.env.json](/app/references/environment-variables)
+- [cypress.env.json](/app/guides/environment-variables#2-cypressenvjson)
 
 #### Folders
 

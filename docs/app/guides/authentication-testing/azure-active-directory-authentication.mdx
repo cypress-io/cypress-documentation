@@ -80,26 +80,10 @@ authentication workflow will enter an infinite redirect loop.
   e2e: {
     experimentalModifyObstructiveThirdPartyCode: true
   },
-  setupNodeEvents(on, config) {
-    on('task', {
-      getAADCredentials() {
-        const username = process.env.AAD_USERNAME
-        const password = process.env.AAD_PASSWORD
-        if (!username || !password) {
-          throw new Error('AAD_USERNAME and AAD_PASSWORD must be set')
-        }
-        return { username, password }
-      },
-      getSecret(secretName) {
-        const secret = process.env[secretName]
-        if (!secret) {
-          throw new Error(`Secret ${secretName} is not set`)
-        }
-        return secret
-      },
-    })
-    return config
-  },
+  env: {
+    AAD_USERNAME: process.env.AAD_USERNAME,
+    AAD_PASSWORD: process.env.AAD_PASSWORD,
+  }
 }
 ```
 
@@ -157,7 +141,7 @@ function loginViaAAD(username: string, password: string) {
 
   // Ensure Microsoft has redirected us back to the sample app with our logged in user.
   cy.url().should('equal', 'http://localhost:3000/')
-  cy.task('getAADCredentials').then(({ username }) => {
+  cy.env(['AAD_USERNAME']).then(({ username }) => {
     cy.get('#welcome-div').should(
       'contain',
       `Welcome ${username}!`
@@ -187,20 +171,20 @@ as a user via Azure Active Directory and run a basic sanity check.
 describe('Azure Active Directory Authentication', () => {
   beforeEach(() => {
     // log into Azure Active Directory through our sample SPA using our custom command
-    cy.task('getAADCredentials').then(({ username, password }) => {
+    cy.env(['AAD_USERNAME', 'AAD_PASSWORD']).then(({ username, password }) => {
       cy.loginToAAD(username, password)
     })
     cy.visit('http://localhost:3000')
   })
 
   it('verifies the user logged in has the correct name', () => {
-    cy.task('getSecret', 'AAD_NAME').then((name) => {
+    cy.env(['AAD_NAME']).then(({ name }) => {
       cy.get('#table-body-div td:contains("name") + td').should('contain', name)
     })
   })
 
   it('verifies the user logged in has the correct preferred name', () => {
-    cy.task('getAADCredentials').then(({ username }) => {
+    cy.env(['AAD_USERNAME']).then(({ username }) => {
       cy.get('#table-body-div td:contains("preferred_username") + td').should(
         'contain',
         username
@@ -247,7 +231,7 @@ Cypress.Commands.add('loginToAAD', (username: string, password: string) => {
         // this is a very basic form of session validation for this demo.
         // depending on your needs, something more verbose might be needed
         cy.visit('http://localhost:3000')
-        cy.task('getAADCredentials').then(({ username }) => {
+        cy.env(['AAD_USERNAME']).then(({ username }) => {
           cy.get('#welcome-div').should('contain', `Welcome ${username}!`)
         })
       },

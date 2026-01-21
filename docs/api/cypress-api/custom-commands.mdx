@@ -458,7 +458,7 @@ want to modify the behavior of a query, you'll need to use
 
 ```javascript
 Cypress.Commands.overwrite('visit', (originalFn, url, options) => {
-  const domain = Cypress.env('BASE_DOMAIN')
+  const domain = Cypress.expose('BASE_DOMAIN')
 
   if (domain === '...') {
     url = '...'
