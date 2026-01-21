@@ -12,9 +12,9 @@ Cypress tests often need values that change across environments like API URLs, c
 
 Not all values should be treated the same. Some are **secrets that must be protected**, while others are **safe to expose** and convenient to access synchronously.
 
-This guide helps you choose the right API for your use case and points you to the correct documentation.
+This guide helps you choose the right API for your use case.
 
-## Secrets and Sensitive Values
+## Secrets and sensitive values
 
 **Use [`cy.env()`](/api/commands/env)** for sensitive values like API keys, passwords, tokens, or credentials.
 
@@ -39,7 +39,7 @@ cy.env(['apiKey']).then(({ apiKey }) => {
 
 See the [`cy.env()`](/api/commands/env) command documentation for complete details.
 
-## Public Configuration Values
+## Public configuration values
 
 **Use [`Cypress.expose()`](/api/cypress-api/expose)** for public, non-sensitive configuration values.
 
@@ -64,7 +64,7 @@ if (featureFlag) {
 
 See the [`Cypress.expose()`](/api/cypress-api/expose) API documentation for complete details.
 
-## Setting Environment Variables
+## Set environment variables
 
 Environment variables for `cy.env()` can be set using several methods:
 
@@ -108,7 +108,7 @@ Create a `cypress.env.json` file in your project root. Values here override conf
 
 :::
 
-### 3. `CYPRESS_*` Environment Variables
+### 3. `CYPRESS_*` environment variables
 
 Set OS-level environment variables with the `CYPRESS_` or `cypress_` prefix:
 
@@ -125,21 +125,15 @@ The environment variable `CYPRESS_INTERNAL_ENV` is reserved and should not be se
 
 :::
 
-### 4. `--env` CLI Flag
+### 4. `--env` CLI flag
 
-Pass environment variables via the command line:
+Pass environment variables via the command line. Multiple values must be separated by a comma, not a space. In some shells, like Windows PowerShell, you may need to surround the key/value pair with quotes.
 
 ```shell
 cypress run --env host=kevin.dev.local,api_server=http://localhost:8888/api/v1
 ```
 
-:::caution
-
-Multiple values must be separated by a comma, not a space. In some shells, like Windows PowerShell, you may need to surround the key/value pair with quotes.
-
-:::
-
-### 5. Dynamic Configuration in `setupNodeEvents`
+### 5. setupNodeEvents
 
 Set environment variables dynamically in the `setupNodeEvents` function:
 
@@ -149,7 +143,6 @@ Set environment variables dynamically in the `setupNodeEvents` function:
 export default defineConfig({
   e2e: {
     setupNodeEvents(on, config) {
-      config.env.apiUrl = process.env.API_URL || 'https://api.example.com'
       config.env.apiKey = process.env.API_KEY
       return config
     },
@@ -159,14 +152,14 @@ export default defineConfig({
 
 :::
 
-## Setting Exposed Configuration
+## Set exposed configuration
 
 Exposed configuration for `Cypress.expose()` can be set via:
 
 1. **Cypress configuration file** - Set in the `expose` key of your Cypress configuration
 1. **`--expose` CLI flag** - Pass exposed configuration via command line
 
-### 1. Configuration File
+### 1. Configuration file
 
 Set exposed configuration in your Cypress configuration file under the `expose` key:
 
@@ -184,7 +177,7 @@ Set exposed configuration in your Cypress configuration file under the `expose` 
 
 :::
 
-### 2. `--expose` CLI Flag
+### 2. `--expose` CLI flag
 
 Pass exposed configuration via the command line:
 
@@ -194,7 +187,7 @@ cypress run --expose apiVersion=v2,featureFlag=true
 
 See the [`Cypress.expose()`](/api/cypress-api/expose) API documentation for complete details on setting exposed configuration.
 
-## Migration from `Cypress.env()`
+## Migrate from Cypress.env()
 
 If you're using the deprecated `Cypress.env()` API, migrate to the appropriate modern API:
 
@@ -205,7 +198,7 @@ See the [Migration Guide](/app/references/migration-guide#Migrating-away-from-Cy
 
 ## See also
 
-- [`cy.env()`](/api/commands/env) - Secure command for accessing sensitive environment variables
-- [`Cypress.expose()`](/api/cypress-api/expose) - API for public/non-sensitive configuration
-- [Configuration](/app/references/configuration) - Setting environment variables and exposed configuration
-- [Best Practices: Handling Secrets](/app/core-concepts/best-practices#Handling-Secrets-and-Sensitive-Data) - Comprehensive security guidance
+- [`cy.env()`](/api/commands/env)
+- [`Cypress.expose()`](/api/cypress-api/expose)
+- [Configuration](/app/references/configuration)
+- [Best Practices: Handling Secrets](/app/core-concepts/best-practices#Handling-Secrets-and-Sensitive-Data)
