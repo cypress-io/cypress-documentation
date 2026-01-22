@@ -118,14 +118,12 @@ means that a good plugin generally has:
 Each plugin submitted to the plugins list should have the following:
 
 1. Integration tests with Cypress
-
    - Demonstrates the plugin working
    - Acts as real-world example usage
 
 1. CI pipeline
 1. Compatibility with at least the latest major version of Cypress
 1. Populated [package-json](https://docs.npmjs.com/cli/v11/configuring-npm/package-json) fields
-
    - [homepage](https://docs.npmjs.com/cli/v11/configuring-npm/package-json#homepage)
    - [repository](https://docs.npmjs.com/cli/v11/configuring-npm/package-json#repository) for the command [npm repo](https://docs.npmjs.com/cli/v11/commands/npm-repo)
    - [bugs](https://docs.npmjs.com/cli/v11/configuring-npm/package-json#bugs) for the command [npm bugs](https://docs.npmjs.com/cli/v11/commands/npm-bugs)
