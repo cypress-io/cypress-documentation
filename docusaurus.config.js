@@ -22,7 +22,11 @@ const config = {
   baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenAnchors: 'throw',
-  onBrokenMarkdownLinks: 'throw',
+  markdown: {
+    hooks: {
+      onBrokenMarkdownLinks: 'throw',
+    },
+  },
   favicon: undefined,
 
   // Even if you don't use internalization, you can use this field to set useful
@@ -93,10 +97,17 @@ const config = {
         id: 'docs-fullstory',
       },
     ],
-    'docusaurus-plugin-sass',
+    [
+      'docusaurus-plugin-sass',
+      {
+        sassOptions: {
+          silenceDeprecations: ['import'],
+        },
+      },
+    ],
     require.resolve('docusaurus-plugin-image-zoom'),
     // ....
-    async function myPlugin(context, options) {
+    function docusaurusTailwindcssPlugin(context, options) {
       return {
         name: 'docusaurus-tailwindcss',
         configurePostCss(postcssOptions) {
