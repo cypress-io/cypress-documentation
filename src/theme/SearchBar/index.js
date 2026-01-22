@@ -51,6 +51,7 @@ function DocSearch({ contextualSearch, externalUrlRegex, ...props }) {
   const searchParameters = {
     ...props.searchParameters,
     facetFilters,
+    clickAnalytics: true,
   }
   const history = useHistory()
   const searchContainer = useRef(null)
@@ -178,6 +179,7 @@ function DocSearch({ contextualSearch, externalUrlRegex, ...props }) {
             searchParameters={searchParameters}
             placeholder={translations.placeholder}
             translations={translations.modal}
+            insights={true}
           />,
           searchContainer.current
         )}
