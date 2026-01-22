@@ -1,8 +1,8 @@
 diff --git a/node_modules/@docusaurus/mdx-loader/lib/remark/headings/index.js b/node_modules/@docusaurus/mdx-loader/lib/remark/headings/index.js
-index 53ecafa..dc8f0df 100644
+index 9dfe637..92ea756 100644
 --- a/node_modules/@docusaurus/mdx-loader/lib/remark/headings/index.js
 +++ b/node_modules/@docusaurus/mdx-loader/lib/remark/headings/index.js
-@@ -22,10 +22,14 @@ function plugin() {
+@@ -22,12 +22,16 @@ const plugin = function plugin({ anchorsMaintainCase, }) {
              }
              else {
                  const headingTextNodes = headingNode.children.filter(({ type }) => !['html', 'jsx'].includes(type));
@@ -10,16 +10,18 @@ index 53ecafa..dc8f0df 100644
 +                let heading = toString(headingTextNodes.length > 0 ? headingTextNodes : headingNode);
                  // Support explicit heading IDs
                  const parsedHeading = (0, utils_1.parseMarkdownHeadingId)(heading);
--                id = parsedHeading.id ?? slugs.slug(heading);
 +                // if the heading is a semver version number, replace the dots with dashes
 +                heading = parseVersionHeading(heading);
 +                // remove any spaces that might be cause by things like having icons in the headings
-+                heading = heading.trim(); 
-+                id = parsedHeading.id ?? slugs.slug(heading, { maintainCase: true });
++                heading = heading.trim();
+                 id =
+                     parsedHeading.id ??
+-                        slugs.slug(heading, { maintainCase: anchorsMaintainCase });
++                        slugs.slug(heading, { maintainCase: true });
                  if (parsedHeading.id) {
                      // When there's an id, it is always in the last child node
                      // Sometimes heading is in multiple "parts" (** syntax creates a child
-@@ -34,7 +38,7 @@ function plugin() {
+@@ -36,7 +40,7 @@ const plugin = function plugin({ anchorsMaintainCase, }) {
                      const lastNode = headingNode.children[headingNode.children.length - 1];
                      if (headingNode.children.length > 1) {
                          const lastNodeText = (0, utils_1.parseMarkdownHeadingId)(lastNode.value).text;
@@ -28,7 +30,7 @@ index 53ecafa..dc8f0df 100644
                          if (lastNodeText) {
                              lastNode.value = lastNodeText;
                          }
-@@ -48,10 +52,19 @@ function plugin() {
+@@ -50,10 +54,17 @@ const plugin = function plugin({ anchorsMaintainCase, }) {
                      }
                  }
              }
@@ -38,16 +40,14 @@ index 53ecafa..dc8f0df 100644
 +            properties.id = id.trim();
          });
      };
- }
-+
+ };
 +function parseVersionHeading(heading) {
-+  const isSemVer = /^[\d]*.?[\d]*.?[\d]*$/g;
-+  if (heading.match(isSemVer)) {
-+    return heading.replaceAll('.', '-')
-+  }
-+  return heading
++    const isSemVer = /^[\d]*.?[\d]*.?[\d]*$/g;
++    if (heading.match(isSemVer)) {
++        return heading.replaceAll('.', '-');
++    }
++    return heading;
 +}
-+
  exports.default = plugin;
  //# sourceMappingURL=index.js.map
 \ No newline at end of file

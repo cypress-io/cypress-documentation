@@ -1,7 +1,7 @@
 import Icon from '@cypress-design/react-icon'
 import Badge from "@site/src/components/badge"
 import s from './style.module.css'
-import {useDoc} from '@docusaurus/theme-common/internal';
+import {useDoc} from '@docusaurus/plugin-content-docs/client';
 import E2EOnlyBadge from "@site/src/components/e2e-only-badge";
 import ComponentOnlyBadge from "@site/src/components/component-only-badge";
 
