@@ -13,18 +13,82 @@ sidebar_position: 50
 
 ##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
 
-- How to view billing and usage information
+- How to view Cloud billing and usage information
+- How to view usage of Cy.prompt AI
 - How to request an Open Source Plan
 
 :::
 
-Billing and usage information can be found in the Cypress Cloud under the
-**Billing & Usage** section. Here you can view your current plan, usage, and
-billing information.
+Billing and usage information can be found in the Cypress Cloud under the **Billing & Usage** section.
+Here you can view your current plan, usage, and billing information.
+
+## Cloud test results
+
+The **Test results** card highlights the number of used and included test results in your current billing period.
+It will also show how many additional tests have been purchased and used, if applicable.
 
 <DocsImage
-  src="/img/cloud/billing/billing-and-usage-results.jpg"
-  alt="Billing and Usage Results"
+  src="/img/cloud/billing/billing-and-usage-tests-overview.jpg"
+  alt="Billing and Usage Results shows visuals of usage in your current billing period"
+/>
+
+Click the **Usage details** button in order to view graphs of your test results usage.
+
+### Usage over time
+
+The **Detailed** tab shows your usage over time during the selected billing period.
+
+<DocsImage
+  src="/img/cloud/billing/billing-and-usage-tests-detailed.jpg"
+  alt="A graph is displayed showing Test Result usage over time for your selected billing period"
+/>
+
+### Usage by project
+
+The **By project** tab shows your usage per project during the selected billing period. Click the **CSV** button to download
+your results usage for further analysis.
+
+<DocsImage
+  src="/img/cloud/billing/billing-and-usage-tests-byproject.jpg"
+  alt="A graph is displayed showing Test Result usage, per project, for your selected billing period"
+/>
+
+## Prompt executions
+
+The **AI Prompts** card highlights the usage of [cy.prompt](/api/commands/prompt) AI in your organization.
+See our [documentation on cy.prompt](/api/commands/prompt) to learn about its natural language and self-healing capabilities!
+
+<DocsImage
+  src="/img/cloud/billing/billing-and-usage-prompt-info.jpg"
+  alt="Hover over the info icon to see AI cy.prompt usage"
+/>
+
+Hover over the **info icon** next to the number of prompt steps used to see a summarized breakdown of the usage.
+
+The "Prompt execution" information conveys how many times the [cy.prompt](/api/commands/prompt) command has been executed in your organization,
+either on developer machines or in CI. Each [cy.prompt](/api/commands/prompt) command can define more than one step to be executed.
+We also break down the number of commands that took place in "Open mode" or in "Run mode". This enables you
+to understand where [cy.prompt](/api/commands/prompt) AI is being leveraged in your organization.
+
+Click the **Usage details** button in order to view graphs of your cy.prompt AI usage.
+
+### Usage over time
+
+The **Detailed** tab shows your prompt usage over time during the selected billing period.
+
+<DocsImage
+  src="/img/cloud/billing/billing-and-usage-prompt-detailed.jpg"
+  alt="A graph is displayed showing AI prompt usage over time for your selected billing period"
+/>
+
+### Usage by project
+
+The **By project** tab shows your prompt usage per project during the selected billing period. Click the **CSV** button to download
+your AI prompt usage for further analysis.
+
+<DocsImage
+  src="/img/cloud/billing/billing-and-usage-prompt-byproject.jpg"
+  alt="A graph is displayed showing AI prompt usage, per project, for your selected billing period"
 />
 
 ## Open Source Plan
