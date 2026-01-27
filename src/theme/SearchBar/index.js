@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useRef, useState } from 'react'
+import React, { useCallback, useMemo, useRef, useState, useEffect } from 'react'
 import { useDocSearchKeyboardEvents } from '@docsearch/react'
 import Head from '@docusaurus/Head'
 import Link from '@docusaurus/Link'
@@ -17,8 +17,76 @@ import { createPortal } from 'react-dom'
 import translations from '@theme/SearchTranslations'
 import { IconObjectMagnifyingGlass } from '@cypress-design/react-icon'
 let DocSearchModal = null
-function Hit({ hit, children }) {
-  return <Link to={hit.url}>{children}</Link>
+
+/**
+ * Initialize search-insights library with credentials.
+ * The insights={true} prop loads the library but may not initialize it with credentials.
+ * This ensures credentials are set so click events can be sent.
+ */
+async function initializeInsights(appId, apiKey) {
+  if (typeof window === 'undefined') return false
+  
+  try {
+    // Wait for the library to be loaded (insights prop loads it asynchronously)
+    let attempts = 0
+    while (attempts < 20 && (!window.aa || typeof window.aa !== 'function')) {
+      await new Promise((resolve) => setTimeout(resolve, 100))
+      attempts++
+    }
+    
+    if (!window.aa || typeof window.aa !== 'function') {
+      return false
+    }
+    
+    // Initialize with credentials (idempotent - safe to call multiple times)
+    window.aa('init', {
+      appId,
+      apiKey,
+      useCookie: true,
+    })
+    
+    return true
+  } catch (e) {
+    if (process.env.NODE_ENV === 'development') {
+      console.warn('[Algolia Analytics] Failed to initialize insights:', e)
+    }
+    return false
+  }
+}
+
+function Hit({ hit, children, appId, apiKey }) {
+  const handleClick = useCallback(async () => {
+    if (!hit.objectID || !appId || !apiKey) return
+    
+    // Ensure insights is initialized before sending events
+    await initializeInsights(appId, apiKey)
+    
+    // Get queryID from hit (attached via transformItems)
+    const queryID = hit.queryID || hit.__autocomplete_queryID
+    if (!queryID) return // No queryID means clickAnalytics isn't working
+    
+    try {
+      // Send click event to Algolia Insights
+      window.aa('clickedObjectIDsAfterSearch', {
+        eventName: 'Result Clicked',
+        index: hit.__autocomplete_indexName || hit.index || 'cypress_docs',
+        objectIDs: [hit.objectID],
+        positions: [hit.__position || hit.__autocomplete_id || hit.position || 1],
+        queryID: queryID,
+      })
+    } catch (error) {
+      // Silently fail - don't break search functionality
+      if (process.env.NODE_ENV === 'development') {
+        console.warn('[Algolia Analytics] Failed to send click event:', error)
+      }
+    }
+  }, [hit, appId, apiKey])
+
+  return (
+    <Link to={hit.url} onClick={handleClick}>
+      {children}
+    </Link>
+  )
 }
 function ResultsFooter({ state, onClose }) {
   const createSearchLink = useSearchLinkCreator()
@@ -51,7 +119,15 @@ function DocSearch({ contextualSearch, externalUrlRegex, ...props }) {
   const searchParameters = {
     ...props.searchParameters,
     facetFilters,
+    clickAnalytics: true,
   }
+
+  // Initialize search-insights when component mounts
+  useEffect(() => {
+    if (props.appId && props.apiKey) {
+      initializeInsights(props.appId, props.apiKey)
+    }
+  }, [props.appId, props.apiKey])
   const history = useHistory()
   const searchContainer = useRef(null)
   const searchButtonRef = useRef(null)
@@ -103,16 +179,23 @@ function DocSearch({ contextualSearch, externalUrlRegex, ...props }) {
       }
     },
   }).current
-  const transformItems = useRef((items) =>
-    props.transformItems
+  // Store the latest queryID from search responses
+  const queryIDRef = useRef(null)
+  
+  const transformItems = useRef((items) => {
+    const transformedItems = props.transformItems
       ? // Custom transformItems
         props.transformItems(items)
       : // Default transformItems
         items.map((item) => ({
           ...item,
           url: processSearchResultUrl(item.url),
+          // Attach queryID to each hit for click tracking (if available)
+          queryID: queryIDRef.current || item.queryID,
         }))
-  ).current
+    
+    return transformedItems
+  }).current
   const resultsFooterComponent = useMemo(
     () =>
       // eslint-disable-next-line react/no-unstable-nested-components
@@ -123,6 +206,18 @@ function DocSearch({ contextualSearch, externalUrlRegex, ...props }) {
   const transformSearchClient = useCallback(
     (searchClient) => {
       searchClient.addAlgoliaAgent('docusaurus', siteMetadata.docusaurusVersion)
+      
+      // Capture queryID from search responses for click tracking
+      const originalSearch = searchClient.search.bind(searchClient)
+      searchClient.search = function (requests) {
+        return originalSearch(requests).then((response) => {
+          if (response.results?.[0]?.queryID) {
+            queryIDRef.current = response.results[0].queryID
+          }
+          return response
+        })
+      }
+      
       return searchClient
     },
     [siteMetadata.docusaurusVersion]
@@ -169,7 +264,9 @@ function DocSearch({ contextualSearch, externalUrlRegex, ...props }) {
             initialQuery={initialQuery}
             navigator={navigator}
             transformItems={transformItems}
-            hitComponent={Hit}
+            hitComponent={(hitProps) => (
+              <Hit {...hitProps} appId={props.appId} apiKey={props.apiKey} />
+            )}
             transformSearchClient={transformSearchClient}
             {...(props.searchPagePath && {
               resultsFooterComponent,
@@ -178,6 +275,7 @@ function DocSearch({ contextualSearch, externalUrlRegex, ...props }) {
             searchParameters={searchParameters}
             placeholder={translations.placeholder}
             translations={translations.modal}
+            insights={true}
           />,
           searchContainer.current
         )}

@@ -3723,9 +3723,10 @@ into your overall development experience. Read more about 10.0 in
 **Breaking Changes:**
 
 <Icon name="exclamation-triangle" color="red" /> Please run `cypress open` to go
-through our interactive migration which will guide you in updating your files and
-configuration options. Read our [Migration Guide](/app/references/migration-guide)
-which explains some breaking changes in more detail.**
+through our interactive migration which will guide you in updating your files
+and configuration options. Read our [Migration
+Guide](/app/references/migration-guide) which explains some breaking changes in
+more detail.**
 
 - We introduced several breaking changes to the **Cypress configuration file**
   detailed below:
@@ -3753,7 +3754,6 @@ which explains some breaking changes in more detail.**
   options, removing options, and only allowing some options within a specific
   testing type. Please run `cypress open` to have our automated migration update
   these options for you.
-
   - Many configuration options are now specific to either end-to-end or
     component testing. The types have also been updated to match the new
     structure. Addressed in
@@ -3828,7 +3828,6 @@ which explains some breaking changes in more detail.**
 
 - Cypress 10 now includes beta support for **component testing**. More features
   around component testing are detailed below:
-
   - Component testing is now integrated directly into the main app, allowing you
     to choose which testing experience you want upon launching Cypress. See our
     [current support for frameworks and bundlers](/app/component-testing/component-framework-configuration).
@@ -3855,7 +3854,6 @@ which explains some breaking changes in more detail.**
     - `@cypress/vue2@1.0.0`
 
 - We've enhanced how you can set and refresh **configuration** detailed below:
-
   - Support for `cypress.config.js|ts|cjs|mjs` configuration files was added.
     Addressed in [#20643](https://github.com/cypress-io/cypress/pull/20643).
   - The Cypress app will now refresh when changes are made in the configuration
@@ -3863,7 +3861,6 @@ which explains some breaking changes in more detail.**
     [#21160](https://github.com/cypress-io/cypress/pull/21160).
 
 - We've added several **new configuration options** detailed below:
-
   - The [`setupNodeEvents()`](/app/references/configuration#setupNodeEvents)
     option is a new testing type specific configuration option. It must be
     defined within the [`e2e`](/app/references/configuration#e2e) and/or
@@ -3889,7 +3886,6 @@ which explains some breaking changes in more detail.**
     [#19319](https://github.com/cypress-io/cypress/pull/19319),
     [#20565](https://github.com/cypress-io/cypress/pull/20565) and
     [#20853](https://github.com/cypress-io/cypress/pull/20853).
-
     - The [`e2e.specPattern`](/app/references/configuration#e2e) default
       value for new projects is `cypress/e2e/**.cy.{js,jsx,ts,tsx}`. For
       existing projects, please run `cypress open` to have your spec files
@@ -3927,7 +3923,6 @@ which explains some breaking changes in more detail.**
     [#18302](https://github.com/cypress-io/cypress/pull/18302).
 
 - We've made some updates to **Cypress API commands** detailed below:
-
   - Enhancements were made to provide visual indication of nested commands and
     logs. With this change, users are now able to click on log groups to print
     additional log details to the dev tools console.
@@ -3945,7 +3940,6 @@ which explains some breaking changes in more detail.**
     [#18941](https://github.com/cypress-io/cypress/issues/18941).
 
 - We've made some updates to the **Cypress CLI** detailed below:
-
   - You can now pass in testing type specific configuration options via the
     `--config` CLI flag without nesting JSON. Addressed in
     [#20127](https://github.com/cypress-io/cypress/pull/20127).
@@ -3963,7 +3957,6 @@ which explains some breaking changes in more detail.**
 
 - The `cypress open` experience has been updated to take you through our
   **Launchpad** with many features detailed below:
-
   - When you launch Cypress via `cypress open` you'll be asked whether you want
     to do end-to-end or component testing and taken through the configuration
     necessary to set up your project. Addressed in
@@ -3980,7 +3973,6 @@ which explains some breaking changes in more detail.**
 
 - After launching the browser, there are several new features in our **App**
   detailed below:
-
   - The Cypress app has been redesigned so that the Command Log and all
     associated navigation display with a dark background.
   - You can now change specs or the browser within the same window as running
@@ -5098,9 +5090,9 @@ of 1, and a screen size of 1280x720 by default.
 
 **Breaking Changes:**
 
-<Icon name="exclamation-triangle" color="red" /> Please read our [Migration Guide](/app/references/migration-guide)
-which explains the changes in more detail and how to change your code to migrate
-to Cypress 8.0.**
+<Icon name="exclamation-triangle" color="red" /> Please read our [Migration
+Guide](/app/references/migration-guide) which explains the changes in more
+detail and how to change your code to migrate to Cypress 8.0.**
 
 - When running `cypress run` previous to 8.0, some browsers would launch headed
   while others were launched headless by default. Cypress now runs all browsers
@@ -5594,9 +5586,9 @@ components using your favorite developer tools. Read our
 
 **Breaking Changes:**
 
-<Icon name="exclamation-triangle" color="red" /> Please read our [Migration Guide](/app/references/migration-guide)
-which explains the changes in more detail and how to change your code to migrate
-to Cypress 7.0.**
+<Icon name="exclamation-triangle" color="red" /> Please read our [Migration
+Guide](/app/references/migration-guide) which explains the changes in more
+detail and how to change your code to migrate to Cypress 7.0.**
 
 - We introduced several breaking changes to
   [cy.intercept()](/api/commands/intercept). See the
@@ -6341,9 +6333,9 @@ and wait on any type of HTTP request originating from your app. See our guide on
 
 **Breaking Changes:**
 
-<Icon name="exclamation-triangle" color="red" /> Please read our [Migration Guide](/app/references/migration-guide)
-which explains the changes in more detail and how to change your code to migrate
-to Cypress 6.0.**
+<Icon name="exclamation-triangle" color="red" /> Please read our [Migration
+Guide](/app/references/migration-guide) which explains the changes in more
+detail and how to change your code to migrate to Cypress 6.0.**
 
 - Cypress now always throws an error when asserting on an element that doesn't
   exist in the DOM (unless you're asserting that the element should
@@ -6924,9 +6916,9 @@ failed test prior to marking it as failed. Read our new guide on
 
 **Breaking Changes:**
 
-<Icon name="exclamation-triangle" color="red" /> Please read our [Migration Guide](/app/references/migration-guide)
-which explains the changes in more detail and how to change your code to migrate
-to Cypress 5.0.**
+<Icon name="exclamation-triangle" color="red" /> Please read our [Migration
+Guide](/app/references/migration-guide) which explains the changes in more
+detail and how to change your code to migrate to Cypress 5.0.**
 
 - The
   [`cypress-plugin-retries`](https://github.com/Bkucera/cypress-plugin-retries)
@@ -8174,9 +8166,9 @@ bring new powerful features.
 
 **Breaking Changes:**
 
-<Icon name="exclamation-triangle" color="red" /> Please read our [Migration Guide](/app/references/migration-guide)
-which explains the changes in more detail and how to change your code to migrate
-to Cypress 4.0.**
+<Icon name="exclamation-triangle" color="red" /> Please read our [Migration
+Guide](/app/references/migration-guide) which explains the changes in more
+detail and how to change your code to migrate to Cypress 4.0.**
 
 - Mocha, Chai, and Sinon.JS has been upgraded which includes a number of
   breaking changes and new features. Addresses

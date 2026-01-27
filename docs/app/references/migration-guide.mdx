@@ -24,7 +24,7 @@ Node.js versions 18 and 23 are no longer supported.
 
 The `code` property on [`cy.exec()`](/api/commands/exec) has been renamed to `exitCode`.
 
-<Badge type="danger">Before</Badge>{' '}
+<Badge type="danger">Before</Badge>
 
 ```javascript
 cy.exec('rake db:seed').its('code').should('eq', 0)
@@ -159,7 +159,7 @@ npm install --save-dev @cypress/angular@3
 
 Inside your support file (ex: `./cypress/support/component.(js|ts)`), or wherever your mount function is imported, make the following update to add `@`.
 
-<Badge type="danger">Before</Badge>{' '}
+<Badge type="danger">Before</Badge>
 
 ```ts
 import { mount } from `cypress/angular`
@@ -181,7 +181,7 @@ This change was made in order to reflect its use in features beyond just the Sel
 The following code shows how to migrate from the `Cypress.SelectorPlayground` API to the
 [`Cypress.ElementSelector`](/api/cypress-api/element-selector-api) API.
 
-<Badge type="danger">Before</Badge>{' '}
+<Badge type="danger">Before</Badge>
 
 ```ts
 Cypress.SelectorPlayground.defaults({
@@ -275,19 +275,20 @@ Cypress will warn that this option is deprecated.
 <Icon name="exclamation-triangle" /> `injectDocumentDomain` will be removed in a
 future version of Cypress.
 
-<Icon name="exclamation-triangle" /> Setting `injectDocumentDomain` to `true` may
-cause certain sites to stop working in Cypress. Please read the [configuration notes](/app/references/configuration#injectDocumentDomain)
-before use.
+<Icon name="exclamation-triangle" /> Setting `injectDocumentDomain` to `true`
+may cause certain sites to stop working in Cypress. Please read the
+[configuration notes](/app/references/configuration#injectDocumentDomain) before
+use.
 
-<Icon name="exclamation-triangle" /> If your test suites require `experimentalWebKitSupport`,
-`injectDocumentDomain` must be set to `true`.
+<Icon name="exclamation-triangle" /> If your test suites require
+`experimentalWebKitSupport`, `injectDocumentDomain` must be set to `true`.
 
-<Icon name="exclamation-triangle" /> Chrome may remove support for `document.domain`
-at any time; if this configuration option is enabled, Cypress may cease to work in
-Chrome at any time. If this occurs, Chrome will raise an issue in its developer tools
-indicating that the deprecated `document.domain` is in use. To resolve this issue,
-set the `injectDocumentDomain` option to `false` and issue any newly necessary `cy.origin()`
-commands.{' '}
+<Icon name="exclamation-triangle" /> Chrome may remove support for
+`document.domain` at any time; if this configuration option is enabled, Cypress
+may cease to work in Chrome at any time. If this occurs, Chrome will raise an
+issue in its developer tools indicating that the deprecated `document.domain` is
+in use. To resolve this issue, set the `injectDocumentDomain` option to `false`
+and issue any newly necessary `cy.origin()` commands.
 
 :::
 
@@ -334,7 +335,7 @@ Now that the minimum version of React supported for Component Testing is `18.0.0
 
 To migrate, change the test harness from `cypress/react18` to `cypress/react`.
 
-<Badge type="danger">Before</Badge>{' '}
+<Badge type="danger">Before</Badge>
 
 ```ts
 import { mount } from 'cypress/react18'
@@ -358,7 +359,7 @@ npm install --save-dev @cypress/react@8
 
 Inside your support file (ex: `./cypress/support/component.(js|ts)`), or wherever your mount function is imported, make the following update to add `@`.
 
-<Badge type="danger">Before</Badge>{' '}
+<Badge type="danger">Before</Badge>
 
 ```ts
 import { mount } from 'cypress/react'
@@ -378,7 +379,7 @@ Now that the minimum version of Angular supported for Component Testing is `17.2
 
 To migrate, just change the test harness from `cypress/angular-signals` to `cypress/angular`.
 
-<Badge type="danger">Before</Badge>{' '}
+<Badge type="danger">Before</Badge>
 
 ```ts
 import { mount } from 'cypress/angular-signals'
@@ -402,7 +403,7 @@ npm install --save-dev @cypress/angular@2
 
 Inside your support file (ex: `./cypress/support/component.(js|ts)`), or wherever your mount function is imported, make the following update to add `@`.
 
-<Badge type="danger">Before</Badge>{' '}
+<Badge type="danger">Before</Badge>
 
 ```ts
 import { mount } from 'cypress/angular'
@@ -430,7 +431,7 @@ npm install --save-dev @cypress/vue2
 
 Inside your support file (ex: `./cypress/support/component.(js|ts)`), or wherever your mount function is imported, make the following update to add `@`.
 
-<Badge type="danger">Before</Badge>{' '}
+<Badge type="danger">Before</Badge>
 
 ```ts
 import { mount } from 'cypress/vue2'
@@ -684,7 +685,8 @@ in the fourth.
 
 Here's a simplified example of such a test strategy.
 
-<Badge type="danger">Before</Badge> Multiple small tests against different origins
+<Badge type="danger">Before</Badge> Multiple small tests against different
+origins
 
 ```js
 it('logs in', () => {

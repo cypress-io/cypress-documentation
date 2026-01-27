@@ -1,16 +1,9 @@
 /* https://dev.to/sajclarke_62/using-tailwindcss-v3-in-docusaurus-in-5-steps-5c26 */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/**
- * Any CSS included here will be global. The classic template
- * bundles Infima by default. Infima is a CSS framework designed to
- * work well for content-centric websites.
- */
-
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500;700&display=swap');
 @import './announcement-bar.scss';
 @import './markdown.scss';
 @import './sidebar.scss';
@@ -19,6 +12,16 @@
 @import './embeds.scss';
 @import './table-of-contents.scss';
 @import './docsearch.scss';
+
+/**
+ * Any CSS included here will be global. The classic template
+ * bundles Infima by default. Infima is a CSS framework designed to
+ * work well for content-centric websites.
+ */
+
+// CSS @import for external fonts (not deprecated - these are CSS imports, not Sass imports)
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500;700&display=swap');
 
 /* You can override the default Infima variables here. */
 :root {
@@ -302,21 +305,6 @@ html[data-theme='dark'] {
     color: var(--ifm-color-indigo-50);
     --ifm-alert-border-color: var(--ifm-color-indigo-800);
   }
-}
-
-div[class^='announcementBar'] {
-  font-size: 1rem;
-  font-weight: var(--ifm-font-weight-semibold);
-  border-bottom: none;
-}
-
-div[class^='announcementBar'] div[class^='content'] {
-  font-size: 1rem;
-  border-bottom: none;
-}
-
-div[class^='announcementBar'] .close {
-  margin-right: 1rem;
 }
 
 /* Font Awesome Icons */
