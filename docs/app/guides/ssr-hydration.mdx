@@ -1,0 +1,275 @@
+---
+title: 'Server-Side Rendering & Hydration: Cypress Guide'
+sidebar_label: SSR & Hydration
+description: 'Fix React 18 hydration issues when testing SSR applications with Cypress. Learn how to use the data-cy-bootstrap marker for Next.js and React Router.'
+sidebar_position: 70
+e2eSpecific: true
+---
+
+<ProductHeading product="app" />
+
+# Server-Side Rendering & Hydration
+
+:::info
+
+##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
+
+- Why React 18 hydration errors occur when running Cypress tests
+- How to use the `data-cy-bootstrap` marker to fix hydration issues
+- Framework-specific implementations for Next.js App Router and React Router 7
+
+:::
+
+When running Cypress E2E tests against Server-Side Rendered (SSR) applications
+built with frameworks like Next.js App Router or React Router 7, you may
+encounter React hydration errors. This guide explains why these errors occur and
+how to resolve them using the `data-cy-bootstrap` marker.
+
+## The Problem
+
+React 18 introduced stricter hydration checks. When a React application is
+server-side rendered, the browser receives pre-rendered HTML from the server.
+React then "hydrates" this HTML by attaching event listeners and making it
+interactive. During hydration, React compares the server-rendered DOM with what
+it expects to render on the client.
+
+When Cypress loads your application, it dynamically injects bootstrap scripts
+into the `<head>` element to enable its testing functionality. This injection
+modifies the DOM after server rendering but before React hydration occurs,
+causing a mismatch between what the server rendered and what React sees on the
+client.
+
+This results in errors like:
+
+```
+Hydration failed because the server rendered HTML didn't match the client.
+```
+
+or
+
+```
+There was an error while hydrating. Because the error happened outside of a
+Suspense boundary, the entire root will switch to client rendering.
+```
+
+## The Solution: `data-cy-bootstrap` Marker
+
+Cypress provides a way to control where its bootstrap scripts are injected using
+a marker script tag with the `data-cy-bootstrap` attribute. Instead of Cypress
+creating a new script element in the `<head>`, it will inject its code into your
+pre-existing marker script, preserving the DOM structure that React expects.
+
+### Basic Usage
+
+Add a placeholder script tag with the `data-cy-bootstrap` attribute to your
+application's `<head>`:
+
+```html
+<script data-cy-bootstrap suppressHydrationWarning>
+  /* placeholder */
+</script>
+```
+
+When Cypress detects this marker:
+
+1. It injects its bootstrap code **into** the existing script element
+2. The DOM structure remains unchanged (no new elements added)
+3. React's hydration succeeds because the DOM matches expectations
+
+The `suppressHydrationWarning` attribute is a React prop that prevents warnings
+about this specific element, which is helpful since the script content will
+differ between server and client.
+
+## Framework-Specific Setup
+
+### Next.js App Router
+
+For Next.js applications using the App Router, add the marker script to your
+root layout file:
+
+```tsx title="app/layout.tsx"
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <html lang="en">
+      <head>
+        <script data-cy-bootstrap suppressHydrationWarning>
+          {/* Cypress bootstrap injection point */}
+        </script>
+      </head>
+      <body>{children}</body>
+    </html>
+  )
+}
+```
+
+:::info
+
+The marker script should be placed inside the `<head>` element in your root
+layout. This ensures it's present on every page of your application.
+
+:::
+
+### React Router 7
+
+For React Router 7 applications, add the marker script to your root component or
+entry file:
+
+```tsx title="app/root.tsx"
+import { Links, Meta, Outlet, Scripts, ScrollRestoration } from 'react-router'
+
+export default function Root() {
+  return (
+    <html lang="en">
+      <head>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <Meta />
+        <Links />
+        <script data-cy-bootstrap suppressHydrationWarning>
+          {/* Cypress bootstrap injection point */}
+        </script>
+      </head>
+      <body>
+        <Outlet />
+        <ScrollRestoration />
+        <Scripts />
+      </body>
+    </html>
+  )
+}
+```
+
+### Other SSR Frameworks
+
+For other SSR frameworks (Remix, Astro with React, etc.), the same principle
+applies: add the marker script to your HTML `<head>` in whatever file controls
+your document structure.
+
+```html
+<head>
+  <!-- Your existing head content -->
+  <script data-cy-bootstrap suppressHydrationWarning>
+    /* placeholder */
+  </script>
+</head>
+```
+
+## How It Works
+
+When Cypress loads your application, it normally injects bootstrap scripts by
+creating new `<script>` elements in the document's `<head>`. With the
+`data-cy-bootstrap` marker:
+
+1. Cypress scans the HTML for a `<script>` tag with the `data-cy-bootstrap`
+   attribute
+2. If found, Cypress injects its bootstrap code into that existing script
+   element instead of creating a new one
+3. If not found, Cypress falls back to the default behavior (creating a new
+   script element)
+
+This approach is fully backward compatible. Applications without the marker
+continue to work as before.
+
+### CSP Nonce Handling
+
+If your application uses Content Security Policy (CSP) with nonces, Cypress
+automatically handles this. When a `data-cy-bootstrap` marker is detected,
+Cypress will apply the correct nonce to ensure the script executes properly.
+
+## Troubleshooting
+
+### Common Hydration Error Messages
+
+If you see these errors in the browser console when running Cypress tests, the
+`data-cy-bootstrap` marker may help resolve them:
+
+| Error Message                                                                                      | Cause                                                                          |
+| -------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| "Hydration failed because the server rendered HTML didn't match the client"                        | DOM mismatch between server and client, possibly from Cypress script injection |
+| "There was an error while hydrating. Because the error happened outside of a Suspense boundary..." | React detected DOM changes before hydration completed                          |
+| "Text content does not match server-rendered HTML"                                                 | Content differences, may be unrelated to Cypress                               |
+| "Expected server HTML to contain a matching `<script>` in `<head>`"                                | Script element count mismatch from dynamic injection                           |
+
+### Verifying the Fix
+
+After adding the `data-cy-bootstrap` marker:
+
+1. Run your Cypress tests
+2. Open the browser's developer console
+3. Confirm hydration errors no longer appear
+4. Verify your application functions correctly
+
+### When This Fix Doesn't Apply
+
+The `data-cy-bootstrap` marker specifically addresses hydration issues caused by
+Cypress's script injection. If you continue to see hydration errors after
+implementing this fix, the issue may be:
+
+- **Content-based mismatches**: Dynamic content that differs between server and
+  client (timestamps, random values, user-specific data)
+- **Browser extension interference**: Extensions that modify the DOM before
+  hydration
+- **Other third-party scripts**: Analytics or tracking scripts that modify the
+  DOM
+
+## Caveats and Considerations
+
+### When to Use
+
+Use the `data-cy-bootstrap` marker when:
+
+- You're testing an SSR application with React 18+
+- You see hydration errors only when running Cypress tests
+- Your application works correctly when accessed directly in the browser
+
+### When Not Needed
+
+You don't need this marker if:
+
+- Your application uses client-side rendering (CSR) only
+- You're using React 17 or earlier (less strict hydration)
+- You're not experiencing hydration errors in Cypress tests
+
+### Production Safety
+
+The `data-cy-bootstrap` marker is safe to include in production builds. When
+Cypress is not running:
+
+- The script element remains in the DOM but contains only a comment or empty
+  content
+- It has no performance impact
+- React ignores it during normal hydration
+
+If you prefer to only include the marker during testing, you can conditionally
+render it based on an environment variable:
+
+```tsx title="app/layout.tsx"
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <html lang="en">
+      <head>
+        {process.env.NEXT_PUBLIC_CYPRESS_TESTING && (
+          <script data-cy-bootstrap suppressHydrationWarning>
+            {/* Cypress bootstrap injection point */}
+          </script>
+        )}
+      </head>
+      <body>{children}</body>
+    </html>
+  )
+}
+```
+
+## See Also
+
+- [Cross Origin Testing](/app/guides/cross-origin-testing)
+- [`cy.visit()`](/api/commands/visit)
+- [Web Security](/app/guides/cross-origin-testing#Web-Security)
