@@ -111,7 +111,7 @@ When you call `cy.prompt`, Cypress performs a multi-step process:
 
 3. **Generate Cypress code:** Commands are generated and executed in sequence. The Command Log shows both your natural language step and the commands Cypress ran. You can view the complete generated code at any time using the **Code** button in the Command Log.
 
-4. **Cache for speed:** Generated code is cached. Re-running the same test does not re-call the AI model unless the prompt or DOM changes in a way that invalidates the cached code.
+4. **Cache for speed:** Generated code is cached and shared across machines and environments, including CI. Re-running the same test does not re-call the AI model unless the prompt or DOM changes in a way that invalidates the cached code. This means that once a prompt is cached, it benefits all team members and CI runs without additional AI calls.
 
 5. **Self-heal if needed:** If cached selectors fail (element renamed, attributes changed, etc.), Cypress regenerates code for that step. This 'self-healing' happens automatically on future attempts.
 
@@ -212,7 +212,7 @@ Prompt clarity determines reliability. Follow these rules:
 - **One action per step**: Avoid chaining multiple actions in one string.
 - **Avoid ambiguity**: Specify the action or element explicitly. Wrap specific text, values, or identifiers in quotes to help the AI identify them as exact matches. For example, `click the "Submit" button` is clearer than `click the Submit button`.
 - **Include context**: `click the login button in the header` is better than `click login button`.
-- **Specify Cypress options**: Some Cypress command options can be specified directly in your prompts using natural language. For example: `'go to "/users" with a timeout of 10 seconds'` or `'dismiss the modal using a timeout of 6 seconds'`. This allows you to customize timeout without changing your test code. Not all Cypress command options can be specified this way.
+- **Specify Cypress options**: Some Cypress command options can be specified directly in your prompts using natural language. Force and timeout are the only options that are currently supported. For example: `'go to "/users" with a timeout of 10 seconds'` or `'force click the submit button'`.
 
 ### Example: Good vs. poor steps
 
@@ -265,6 +265,7 @@ If Cypress cannot interpret a step, you'll see a dialog prompting you to refine 
 'expand the FAQ section'
 'close the Technical Information section'
 'switch to the Settings tab'
+'force click the submit button'
 'double click the product image'
 'right click the file item'
 'type "john.doe@company.com" in the email field'
@@ -272,6 +273,7 @@ If Cypress cannot interpret a step, you'll see a dialog prompting you to refine 
 'write "42" in the number field'
 'put "No comment" in the textarea'
 'fill the search input with "cypress"'
+'force type "text" in the hidden input'
 'clear the username field'
 'focus on the search input'
 'blur the filter input'
@@ -311,6 +313,15 @@ If Cypress cannot interpret a step, you'll see a dialog prompting you to refine 
 'confirm that the code frame includes HTML "<span class="token">'
 ```
 
+#### Non-existence assertions
+
+You can verify that elements do not exist to generate `not.exist` assertions, but **only when you provide an exact CSS selector**. Natural language descriptions for non-existence are not currently supported. Additionally, ensure that your intention is to verify that the element does not exist in the DOM, not that it is not visible.
+
+```javascript
+'verify #error-message does not exist'
+'the ".loading-spinner" should not exist'
+```
+
 ### Change the viewport
 
 ```javascript
@@ -329,13 +340,20 @@ If Cypress cannot interpret a step, you'll see a dialog prompting you to refine 
 ```javascript
 'go to "/users" with a timeout of 10 seconds'
 'dismiss the modal using a timeout of 6 seconds'
+'force click the submit button'
+'force click the "Close" button'
+'force type "text" in the hidden input field'
+'force check the "I agree" checkbox'
+'force uncheck the "Send updates" checkbox'
 ```
 
 ## Placeholders
 
 ### The caching problem
 
-`cy.prompt` works by caching your prompt steps so it doesn't need to reach out to the AI every time. This makes tests run faster, but there's a challenge: **any change to your prompt steps invalidates the cache**, forcing a new AI call.
+`cy.prompt` works by caching your prompt steps so it doesn't need to reach out to the AI every time. This makes tests run faster, and caching is honored across machines and environments, including CI. This means that once a prompt is cached, all team members and CI runs benefit from the cached code without additional AI calls.
+
+However, there's a challenge: **any change to your prompt steps invalidates the cache**, forcing a new AI call.
 
 This becomes problematic when you have **dynamic values** that change each time cy.prompt is run (like timestamps, user IDs, or randomly generated data)
 
@@ -896,14 +914,14 @@ These apply to all `cy.prompt` usage unless noted otherwise.
 
 The `cy.prompt` command is currently in experimental release. During the experimental release, there are some limitations that we intend to address in the future.
 
-| Limitation       | Details                                                                                                                                                                                     |
-| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Assertions       | 'not.exist' assertions are not supported [See issue](https://github.com/cypress-io/cypress/issues/32793)                                                                                    |
-| Multi-Element    | Assertions on multiple elements are not currently supported [See issue](https://github.com/cypress-io/cypress/issues/32787)                                                                 |
-| Cookies/Sessions | Clearing cookies or sessions is not supported [See issue](https://github.com/cypress-io/cypress/issues/32810)                                                                               |
-| Scrolling        | Scrolling to elements is not supported [See issue](https://github.com/cypress-io/cypress/issues/32789)                                                                                      |
-| API Testing      | API requests (e.g., cy.request() or cy.intercept()) are not supported [See issue](https://github.com/cypress-io/cypress/issues/32792)                                                       |
-| DOM Support      | Canvas and iframe elements are not supported. See [canvas issue](https://github.com/cypress-io/cypress/issues/32830) and [iframe issue](https://github.com/cypress-io/cypress/issues/32800) |
+| Limitation       | Details                                                                                                                                                                                                                                                       |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Assertions       | 'not.exist' assertions from natural language are not supported. However, 'not.exist' assertions work when you provide an exact CSS selector (e.g., `'verify #error-message does not exist'`). [See issue](https://github.com/cypress-io/cypress/issues/33274) |
+| Multi-Element    | Assertions on multiple elements are not currently supported [See issue](https://github.com/cypress-io/cypress/issues/32787)                                                                                                                                   |
+| Cookies/Sessions | Clearing cookies or sessions is not supported [See issue](https://github.com/cypress-io/cypress/issues/32810)                                                                                                                                                 |
+| Scrolling        | Scrolling to elements is not supported [See issue](https://github.com/cypress-io/cypress/issues/32789)                                                                                                                                                        |
+| API Testing      | API requests (e.g., `cy.request()` or `cy.intercept()`) are not supported [See issue](https://github.com/cypress-io/cypress/issues/32792)                                                                                                                     |
+| DOM Support      | Canvas and iframe elements are not supported. See [canvas issue](https://github.com/cypress-io/cypress/issues/32830) and [iframe issue](https://github.com/cypress-io/cypress/issues/32800)                                                                   |
 
 ## Pricing & usage limits
 

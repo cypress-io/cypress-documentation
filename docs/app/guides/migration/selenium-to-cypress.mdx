@@ -183,8 +183,8 @@ describe('General information', () => {
 
 <br />
 Another big change is that you no longer need any WebDriver definitions. Cypress
-takes care of opening and closing the browser without any explicit prompting, unlike
-Selenium. Any code that is used to define the WebDriver is now obsolete.
+takes care of opening and closing the browser without any explicit prompting,
+unlike Selenium. Any code that is used to define the WebDriver is now obsolete.
 
 ```java
  WebDriver driver = new ChromeDriver();
@@ -203,17 +203,18 @@ wait.until(EC.element_to_be_clickable((By.ID, "myButton"))).click()
 ```
 
 <br />
-It is fairly easy to change this line of code to work inside a Cypress framework.
-It could even be done with a find and replace. In Cypress, the command would be the
-following:
+It is fairly easy to change this line of code to work inside a Cypress
+framework. It could even be done with a find and replace. In Cypress, the
+command would be the following:
 
 ```Javascript
 cy.get('#myButton').click()
 ```
 
 <br />
-Any wait until functionality that you have been using in Selenium is no longer required
-in Cypress. This functionality is [built in](/app/core-concepts/retry-ability).
+Any wait until functionality that you have been using in Selenium is no longer
+required in Cypress. This functionality is [built
+in](/app/core-concepts/retry-ability).
 
 The next vital part to migrate would be the [assertions](/app/references/assertions). We can all agree assertions
 are moderately vital to a test automation framework. The next piece of code is a
@@ -292,8 +293,8 @@ Then('I should see a search bar', () => {
 ```
 
 <br />
-As evident, the actual code or logic remains unchanged. The difference lies in the
-structure of the spec file and the framework's architecture.
+As evident, the actual code or logic remains unchanged. The difference lies in
+the structure of the spec file and the framework's architecture.
 
 ## Integration with CI/CD Pipeline
 
