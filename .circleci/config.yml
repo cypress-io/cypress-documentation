@@ -73,6 +73,7 @@ jobs:
       node-version: 22.15.1
     parallelism: 6
     steps:
+      - checkout
       - attach_workspace:
           at: ~/
       - cypress/run-tests:
