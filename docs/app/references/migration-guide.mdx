@@ -339,7 +339,7 @@ Node.js versions 18 and 23 are no longer supported.
 
 The `code` property on [`cy.exec()`](/api/commands/exec) has been renamed to `exitCode`.
 
-<Badge type="danger">Before</Badge>{' '}
+<Badge type="danger">Before</Badge>
 
 ```javascript
 cy.exec('rake db:seed').its('code').should('eq', 0)
@@ -474,7 +474,7 @@ npm install --save-dev @cypress/angular@3
 
 Inside your support file (ex: `./cypress/support/component.(js|ts)`), or wherever your mount function is imported, make the following update to add `@`.
 
-<Badge type="danger">Before</Badge>{' '}
+<Badge type="danger">Before</Badge>
 
 ```ts
 import { mount } from `cypress/angular`
@@ -496,7 +496,7 @@ This change was made in order to reflect its use in features beyond just the Sel
 The following code shows how to migrate from the `Cypress.SelectorPlayground` API to the
 [`Cypress.ElementSelector`](/api/cypress-api/element-selector-api) API.
 
-<Badge type="danger">Before</Badge>{' '}
+<Badge type="danger">Before</Badge>
 
 ```ts
 Cypress.SelectorPlayground.defaults({
@@ -590,19 +590,20 @@ Cypress will warn that this option is deprecated.
 <Icon name="exclamation-triangle" /> `injectDocumentDomain` will be removed in a
 future version of Cypress.
 
-<Icon name="exclamation-triangle" /> Setting `injectDocumentDomain` to `true` may
-cause certain sites to stop working in Cypress. Please read the [configuration notes](/app/references/configuration#injectDocumentDomain)
-before use.
+<Icon name="exclamation-triangle" /> Setting `injectDocumentDomain` to `true`
+may cause certain sites to stop working in Cypress. Please read the
+[configuration notes](/app/references/configuration#injectDocumentDomain) before
+use.
 
-<Icon name="exclamation-triangle" /> If your test suites require `experimentalWebKitSupport`,
-`injectDocumentDomain` must be set to `true`.
+<Icon name="exclamation-triangle" /> If your test suites require
+`experimentalWebKitSupport`, `injectDocumentDomain` must be set to `true`.
 
-<Icon name="exclamation-triangle" /> Chrome may remove support for `document.domain`
-at any time; if this configuration option is enabled, Cypress may cease to work in
-Chrome at any time. If this occurs, Chrome will raise an issue in its developer tools
-indicating that the deprecated `document.domain` is in use. To resolve this issue,
-set the `injectDocumentDomain` option to `false` and issue any newly necessary `cy.origin()`
-commands.{' '}
+<Icon name="exclamation-triangle" /> Chrome may remove support for
+`document.domain` at any time; if this configuration option is enabled, Cypress
+may cease to work in Chrome at any time. If this occurs, Chrome will raise an
+issue in its developer tools indicating that the deprecated `document.domain` is
+in use. To resolve this issue, set the `injectDocumentDomain` option to `false`
+and issue any newly necessary `cy.origin()` commands.
 
 :::
 
@@ -649,7 +650,7 @@ Now that the minimum version of React supported for Component Testing is `18.0.0
 
 To migrate, change the test harness from `cypress/react18` to `cypress/react`.
 
-<Badge type="danger">Before</Badge>{' '}
+<Badge type="danger">Before</Badge>
 
 ```ts
 import { mount } from 'cypress/react18'
@@ -673,7 +674,7 @@ npm install --save-dev @cypress/react@8
 
 Inside your support file (ex: `./cypress/support/component.(js|ts)`), or wherever your mount function is imported, make the following update to add `@`.
 
-<Badge type="danger">Before</Badge>{' '}
+<Badge type="danger">Before</Badge>
 
 ```ts
 import { mount } from 'cypress/react'
@@ -693,7 +694,7 @@ Now that the minimum version of Angular supported for Component Testing is `17.2
 
 To migrate, just change the test harness from `cypress/angular-signals` to `cypress/angular`.
 
-<Badge type="danger">Before</Badge>{' '}
+<Badge type="danger">Before</Badge>
 
 ```ts
 import { mount } from 'cypress/angular-signals'
@@ -717,7 +718,7 @@ npm install --save-dev @cypress/angular@2
 
 Inside your support file (ex: `./cypress/support/component.(js|ts)`), or wherever your mount function is imported, make the following update to add `@`.
 
-<Badge type="danger">Before</Badge>{' '}
+<Badge type="danger">Before</Badge>
 
 ```ts
 import { mount } from 'cypress/angular'
@@ -745,7 +746,7 @@ npm install --save-dev @cypress/vue2
 
 Inside your support file (ex: `./cypress/support/component.(js|ts)`), or wherever your mount function is imported, make the following update to add `@`.
 
-<Badge type="danger">Before</Badge>{' '}
+<Badge type="danger">Before</Badge>
 
 ```ts
 import { mount } from 'cypress/vue2'
@@ -999,7 +1000,8 @@ in the fourth.
 
 Here's a simplified example of such a test strategy.
 
-<Badge type="danger">Before</Badge> Multiple small tests against different origins
+<Badge type="danger">Before</Badge> Multiple small tests against different
+origins
 
 ```js
 it('logs in', () => {
@@ -2514,8 +2516,9 @@ cy.fixture(special, 'binary')
 ```
 
 <Badge type="success">After</Badge> Working with file contents before using with
-`.selectFile()`. The `null` encoding introduced in Cypress 9.0 makes working with
-binary data simpler, and is the preferred encoding for use with `.selectFile()`.
+`.selectFile()`. The `null` encoding introduced in Cypress 9.0 makes working
+with binary data simpler, and is the preferred encoding for use with
+`.selectFile()`.
 
 ```js
 const special = 'file.spss'
@@ -2839,8 +2842,8 @@ The `experimentalComponentTesting` configuration is no longer needed to run
 component tests. Remove this flag in order to run Cypress tests without
 erroring.
 
-<Badge type="danger">Before</Badge> experimentalComponentTesting flag is required
-for component testing
+<Badge type="danger">Before</Badge> experimentalComponentTesting flag is
+required for component testing
 
 ```json
 {
@@ -2850,7 +2853,8 @@ for component testing
 }
 ```
 
-<Badge type="success">After</Badge> experimentalComponentTesting flag must be removed
+<Badge type="success">After</Badge> experimentalComponentTesting flag must be
+removed
 
 ```json
 {
@@ -2917,8 +2921,8 @@ In 7.0 Cypress component tests require that code is bundled with your local
 development server, via a new `dev-server:start` event. This event replaces the
 previous `file:preprocessor` event.
 
-<Badge type="danger">Before</Badge> Plugins file registers the file\:preprocessor
-event
+<Badge type="danger">Before</Badge> Plugins file registers the
+file\:preprocessor event
 
 ```js
 const webpackPreprocessor = require('@cypress/webpack-preprocessor')
@@ -2961,8 +2965,8 @@ need to update your plugins file. To check if you are using a preset, check to
 see if your plugins file contains an import to a file inside of
 `@cypress/react/plugins`.
 
-<Badge type="success">After</Badge> An example plugins file to configure component
-testing in a React Scripts project
+<Badge type="success">After</Badge> An example plugins file to configure
+component testing in a React Scripts project
 
 ```js
 // The @cypress/react project exposes preset plugin configurations
@@ -2989,8 +2993,8 @@ configuration that contains any `vue.config.js` setup or the default
 configuration and pass it into
 [`@cypress/webpack-dev-server`](https://www.npmjs.com/package/@cypress/webpack-dev-server).
 
-<Badge type="success">After</Badge> An example plugins file to configure component
-testing in a Vue CLI project
+<Badge type="success">After</Badge> An example plugins file to configure
+component testing in a Vue CLI project
 
 ```js
 const { startDevServer } = require('@cypress/webpack-dev-server')
@@ -3010,8 +3014,8 @@ module.exports = (on, config) => {
 For projects with manually defined or ejected webpack configurations, the
 webpack configuration must be passed in.
 
-<Badge type="success">After</Badge> An example plugins file to configure component
-testing in a project with vanilla webpack
+<Badge type="success">After</Badge> An example plugins file to configure
+component testing in a project with vanilla webpack
 
 ```js
 const { startDevServer } = require('@cypress/webpack-dev-server')
@@ -3040,13 +3044,13 @@ Component tests will no longer be picked up when launching Cypress from
 
 :::
 
-<Badge type="danger">Before</Badge> Commands launches both end-to-end and component
-tests.
+<Badge type="danger">Before</Badge> Commands launches both end-to-end and
+component tests.
 
 <CypressRunCommands />
 
-<Badge type="success">After</Badge> Command launches Cypress Component Test Runner
-and executes component tests. End-to-end tests are run separately.
+<Badge type="success">After</Badge> Command launches Cypress Component Test
+Runner and executes component tests. End-to-end tests are run separately.
 
 ```shell
 # open component testing runner
@@ -3069,8 +3073,9 @@ Specifically for React users, if the support file contains the following line,
 please remove it. The import will fail in the future. We have left it in to
 avoid a breaking change, but the file does nothing.
 
-<Badge type="danger">Before</Badge> The support file was required to import a script
-from <a href="https://www.npmjs.com/package/@cypress/react">@cypress/react</a>
+<Badge type="danger">Before</Badge> The support file was required to import a
+script from
+<a href="https://www.npmjs.com/package/@cypress/react">@cypress/react</a>
 
 ```js
 // support.js
@@ -3110,8 +3115,8 @@ it('renders a Button', () => {
 })
 ```
 
-<Badge type="success">After</Badge> Stylesheets are supported via an import and `mountingOptions.stylesheets`
-is not recommended
+<Badge type="success">After</Badge> Stylesheets are supported via an import and
+`mountingOptions.stylesheets` is not recommended
 
 ```js
 // In the majority of modern style-loaders,
@@ -3170,7 +3175,8 @@ As of 7.0, we only clean up components mounted by Cypress via
 We no longer automatically reset the `document.body` between tests. Any HTML
 side effects of your component tests will carry over.
 
-<Badge type="danger">Before</Badge> All HTML content was cleared between spec files
+<Badge type="danger">Before</Badge> All HTML content was cleared between spec
+files
 
 ```jsx
 const { mount } = require('@cypress/react')
@@ -3198,8 +3204,8 @@ describe('Component teardown behavior', () => {
 })
 ```
 
-<Badge type="success">After</Badge> Only the components are cleaned up between spec
-files
+<Badge type="success">After</Badge> Only the components are cleaned up between
+spec files
 
 ```jsx
 const { mount } = require('@cypress/react')
@@ -3469,7 +3475,8 @@ assertions such as `not.be.visible` or `not.contains` to test that the DOM
 element did not _exist_ in the DOM. This means you'll need to update your test
 code to be more specific about your assertions on non-existent elements.
 
-<Badge type="danger">Before</Badge> Assert that non existent element was not visible
+<Badge type="danger">Before</Badge> Assert that non existent element was not
+visible
 
 ```js
 it('test', () => {
@@ -3481,7 +3488,8 @@ it('test', () => {
 })
 ```
 
-<Badge type="success">After</Badge> Assert that non existent element does not exist
+<Badge type="success">After</Badge> Assert that non existent element does not
+exist
 
 ```js
 it('test', () => {
@@ -3507,8 +3515,8 @@ browser's implementation on how they regard elements with `opacity: 0`.
 
 #### Assert visibility of `opacity: 0` element
 
-<Badge type="danger">Before</Badge> Failed assertion that `opacity: 0` element is
-not visible.
+<Badge type="danger">Before</Badge> Failed assertion that `opacity: 0` element
+is not visible.
 
 ```js
 it('test', () => {
@@ -3518,8 +3526,8 @@ it('test', () => {
 })
 ```
 
-<Badge type="success">After</Badge> Passed assertion that `opacity: 0` element is
-not visible.
+<Badge type="success">After</Badge> Passed assertion that `opacity: 0` element
+is not visible.
 
 ```js
 it('test', () => {
@@ -3550,12 +3558,13 @@ it('test', () => {
 [cy.intercept()][intercept] instead. Due to this deprecation, the type yielded
 by [cy.wait(alias)](/api/commands/wait) has changed.
 
-<Badge type="danger">Before</Badge> Before 6.0.0, [cy.wait(alias)](/api/commands/wait)
-would yield an object of type `WaitXHR`.
+<Badge type="danger">Before</Badge> Before 6.0.0,
+[cy.wait(alias)](/api/commands/wait) would yield an object of type `WaitXHR`.
 
-<Badge type="success">After</Badge> In 6.0.0 and onwards, [cy.wait(alias)](/api/commands/wait)
-will yield an object of type `Interception`. This matches the new interception object
-type used for [cy.intercept()][intercept].
+<Badge type="success">After</Badge> In 6.0.0 and onwards,
+[cy.wait(alias)](/api/commands/wait) will yield an object of type
+`Interception`. This matches the new interception object type used for
+[cy.intercept()][intercept].
 
 #### Restore old behavior
 
@@ -3631,14 +3640,15 @@ plugin to Cypress's built-in test retries.
 
 #### Configure test retries via the CLI
 
-<Badge type="danger">Before</Badge> Setting retries with `cypress-plugin-retries`
-via env vars
+<Badge type="danger">Before</Badge> Setting retries with
+`cypress-plugin-retries` via env vars
 
 ```shell
 CYPRESS_RETRIES=2 cypress run
 ```
 
-<Badge type="success">After</Badge> Setting test retries in Cypress 5.0 via env vars
+<Badge type="success">After</Badge> Setting test retries in Cypress 5.0 via env
+vars
 
 ```shell
 CYPRESS_RETRIES=2 cypress run
@@ -3646,8 +3656,8 @@ CYPRESS_RETRIES=2 cypress run
 
 #### Configure test retries in the configuration file
 
-<Badge type="danger">Before</Badge> Setting retries with `cypress-plugin-retries`
-via configuration
+<Badge type="danger">Before</Badge> Setting retries with
+`cypress-plugin-retries` via configuration
 
 ```json
 {
@@ -3657,7 +3667,8 @@ via configuration
 }
 ```
 
-<Badge type="success">After</Badge> Setting test retries in Cypress 5.0 via configuration
+<Badge type="success">After</Badge> Setting test retries in Cypress 5.0 via
+configuration
 
 ```json
 {
@@ -3681,8 +3692,8 @@ via configuration
 
 #### Configure test retries per test
 
-<Badge type="danger">Before</Badge> Setting retries with `cypress-plugin-retries`
-via the test
+<Badge type="danger">Before</Badge> Setting retries with
+`cypress-plugin-retries` via the test
 
 ```js
 it('test', () => {
@@ -3943,7 +3954,8 @@ property if specified.
 If you were using the `experimentalGetCookiesSameSite` configuration to get the
 `sameSite` property previously, this should be removed.
 
-<Badge type="danger">Before</Badge> Cookies yielded before had no `sameSite` property.
+<Badge type="danger">Before</Badge> Cookies yielded before had no `sameSite`
+property.
 
 ```js
 cy.getCookie('token').then((cookie) => {
@@ -4094,8 +4106,8 @@ it('uses invokes done and returns promise', (done) => {
 })
 ```
 
-<Badge type="success">After</Badge> You can remove the `done` callback and return
-the promise instead:
+<Badge type="success">After</Badge> You can remove the `done` callback and
+return the promise instead:
 
 ```javascript
 it('uses invokes done and returns promise', () => {
@@ -4107,8 +4119,8 @@ it('uses invokes done and returns promise', () => {
 
 ##### Example #2
 
-<Badge type="danger">Before</Badge> Sometimes it might make more sense to use the
-`done` callback and not return a promise:
+<Badge type="danger">Before</Badge> Sometimes it might make more sense to use
+the `done` callback and not return a promise:
 
 ```javascript
 it('uses invokes done and returns promise', (done) => {
@@ -4121,7 +4133,8 @@ it('uses invokes done and returns promise', (done) => {
 })
 ```
 
-<Badge type="success">After</Badge> In this case, you don't need to return the promise:
+<Badge type="success">After</Badge> In this case, you don't need to return the
+promise:
 
 ```javascript
 it('uses invokes done and returns promise', (done) => {
@@ -4232,7 +4245,8 @@ cy.wrap([
 })
 ```
 
-<Badge type="success">After</Badge> Need to specificy `deep.include` for deep equality
+<Badge type="success">After</Badge> Need to specificy `deep.include` for deep
+equality
 
 ```javascript
 // Specifically check for deep.include to pass in Cypress 4
@@ -4329,8 +4343,8 @@ in `before:browser:launch` by modifying the `launchOptions` object.
 
 Now, you must pass those options as `launchOptions.preferences`:
 
-<Badge type="danger">Before</Badge> Passing BrowserWindow options on the `launchOptions`
-object is no longer supported.
+<Badge type="danger">Before</Badge> Passing BrowserWindow options on the
+`launchOptions` object is no longer supported.
 
 ```js
 on('before:browser:launch', (browser, args) => {
@@ -4340,8 +4354,8 @@ on('before:browser:launch', (browser, args) => {
 })
 ```
 
-<Badge type="success">After</Badge> Pass BrowserWindow options on the `options.preferences`
-object instead.
+<Badge type="success">After</Badge> Pass BrowserWindow options on the
+`options.preferences` object instead.
 
 ```js
 on('before:browser:launch', (browser, launchOptions) => {
@@ -4361,7 +4375,8 @@ See the
 [docs for `cypress run --browser`](/app/references/command-line#cypress-run-browser-lt-browser-name-or-path-gt)
 for more information.
 
-<Badge type="danger">Before</Badge> Passing `canary` will no longer find a browser
+<Badge type="danger">Before</Badge> Passing `canary` will no longer find a
+browser
 
 ```shell
 cypress run --browser canary
@@ -4400,7 +4415,8 @@ module.exports = (on, config) => {
 
 #### Example #1 (Finding Electron)
 
-<Badge type="danger">Before</Badge> This will no longer find the Electron browser.
+<Badge type="danger">Before</Badge> This will no longer find the Electron
+browser.
 
 ```js
 module.exports = (on, config) => {
@@ -4441,8 +4457,8 @@ module.exports = (on, config) => {
 }
 ```
 
-<Badge type="success">After</Badge> Use `browser.name` and `browser.family` to select
-non-Electron Chromium-based browsers
+<Badge type="success">After</Badge> Use `browser.name` and `browser.family` to
+select non-Electron Chromium-based browsers
 
 ```js
 module.exports = (on, config) => {
