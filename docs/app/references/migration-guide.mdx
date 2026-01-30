@@ -294,6 +294,26 @@ When `allowCypressEnv` is set to `false`:
 1. `Cypress.env()` calls will throw an error
 2. Test configuration overrides are disabled
 
+### Migrating plugins that use Cypress.env()
+
+If you're using Cypress plugins that reference `Cypress.env()`, you should check for updated versions that support the new API. When `allowCypressEnv: false` is set, plugins that still use `Cypress.env()` will throw errors.
+
+#### Check for plugin updates
+
+Before setting `allowCypressEnv: false`, review your installed plugins and update them to their latest versions. Many popular plugins need to be updated to use `Cypress.expose()` or `cy.env()` instead of `Cypress.env()`.
+
+#### Plugins requiring migration
+
+The following plugins require updates to their latest major versions and migration to the new API:
+
+##### @cypress/code-coverage
+
+Update to version 4.0.0+ of `@cypress/code-coverage` and follow its [migration guide](https://github.com/cypress-io/code-coverage/blob/master/README.md#migrations) to move from environment variables to `--expose` CLI flags and `expose` config.
+
+##### @cypress/grep
+
+Update to version 6.0.0+ of `@cypress/grep` and follow its [migration guide](https://github.com/cypress-io/cypress/tree/develop/npm/grep#migration) to move from environment variables to `--expose` CLI flags and `expose` config.
+
 #### Migration Checklist
 
 1. ✅ Search your codebase for all `Cypress.env()` calls
