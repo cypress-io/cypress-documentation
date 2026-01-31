@@ -187,8 +187,16 @@ and [Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation) gu
 
 #### Run completion delay
 
-You can edit the number of seconds that a run will wait for new groups to join
-before transitioning to 'completed'.
+Control how long the Cypress Cloud should wait for new groups to join a run before transitioning a run to a _completed_ status with the **Run completion delay** . This gives your test groups a grace period to join an existing run before the run is considered complete.
+
+Use run completion delay when you have a distributed test setup where test groups might
+not all start simultaneously. For example:
+
+- CI jobs that might start at slightly different times
+- [Parallelization](/cloud/features/smart-orchestration/parallelization) across multiple machines
+- Flaky network conditions that might delay some test groups from connecting
+
+The default is **60 seconds**. Increasing this value gives your test groups more time to join the run; decreasing it will make runs complete faster when no new groups are joining.
 
 See our
 [Parallelization guide](/cloud/features/smart-orchestration/parallelization#Run-completion-delay)
@@ -201,16 +209,34 @@ to learn more.
 
 ### Run Timeout
 
-You can edit the number of minutes that Cloud will wait to receive a signal from the run before being set to
-'Timed Out'. The default is 90 minutes. Valid timeout values are between 5 and 300 minutes.
+**Run timeout** is the number of minutes that Cypress Cloud will
+wait to receive a signal from a run before marking the spec and run as **Timed Out**.
+This is the maximum time Cypress Cloud will wait for activity from your tests before
+considering them hung or failed.
 
-You can lengthen the timeout if you are experiencing runs that have passing / failing tests but are not being
-captured by Cloud due to a timeout. You can shorten the timeout if you need faster feedback.
+Use run timeout when you have long-running tests that might exceed the default. For
+example:
+
+- Very long-running end-to-end tests
+- Tests that include operations that take significant time (such as large file uploads)
+- Operations with unpredictable completion times
+
+The default is **90 minutes**. You can shorten this for faster feedback when a run has stopped sending data.
 
 <DocsImage
   src="/img/cloud/projects/run-timeout-setting.jpg"
   alt="Run timeout setting"
 />
+
+#### Run completion delay vs. Run timeout
+
+These settings work together to balance giving your tests enough time to complete
+while not waiting indefinitely for runs that have failed or hung:
+
+- **Run completion delay** (seconds): How long to wait for new test groups to join
+  after all currently known groups complete. Applies only during that waiting period.
+- **Run timeout** (minutes): How long to wait for any activity from a run before
+  marking it timed out. Applies throughout the entire run.
 
 ### Transfer ownership
 
