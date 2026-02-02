@@ -104,12 +104,13 @@ npm install @aws-amplify/cli --global
 
 The
 
-<Icon name="github" inline="true" contentType="rwa" /> is configured with an optional
-[Amazon Cognito](https://aws.amazon.com/cognito) instance via the [AWS Amplify Framework
-Authentication Library](https://aws-amplify.github.io/amplify-js/api/classes/authclass.html).
-The [AWS Amazon Amplify CLI](https://docs.amplify.aws/cli) is used to provision the
-[Amazon Web Services (AWS)](https://aws.amazon.com) infrastructure needed to configure
-your environment and cloud resources.
+<Icon name="github" inline="true" contentType="rwa" /> is configured with an
+optional [Amazon Cognito](https://aws.amazon.com/cognito) instance via the [AWS
+Amplify Framework Authentication
+Library](https://aws-amplify.github.io/amplify-js/api/classes/authclass.html).
+The [AWS Amazon Amplify CLI](https://docs.amplify.aws/cli) is used to provision
+the [Amazon Web Services (AWS)](https://aws.amazon.com) infrastructure needed to
+configure your environment and cloud resources.
 
 First, run the
 [amplify init](https://docs.amplify.aws/cli/start/workflows#initialize-new-project)
@@ -210,7 +211,7 @@ const loginToCognito = (username: string, password: string) => {
   cy.visit('/')
 
   cy.origin(
-    Cypress.env('cognito_domain'),
+    Cypress.expose('cognito_domain'),
     {
       args: {
         username,
@@ -264,9 +265,11 @@ describe('Cognito, cy.origin() login', function () {
     cy.task('db:seed')
 
     // login via Amazon Cognito via cy.origin()
-    cy.task('getCognitoCredentials').then(({ username, password }) => {
-      cy.loginByCognito(username, password)
-    })
+    cy.env(['AWS_COGNITO_USERNAME', 'AWS_COGNITO_PASSWORD']).then(
+      ({ username, password }) => {
+        cy.loginByCognito(username, password)
+      }
+    )
   })
 
   it('shows onboarding', function () {
@@ -329,7 +332,7 @@ user is logged into the application.
 ```jsx title="cypress/support/auth-provider-commands/cognito.ts"
 import Amplify, { Auth } from 'aws-amplify'
 
-Amplify.configure(Cypress.env('awsConfig'))
+Amplify.configure(Cypress.expose('awsConfig'))
 
 // Amazon Cognito
 Cypress.Commands.add('loginByCognitoApi', (username, password) => {
@@ -389,7 +392,7 @@ Cypress.Commands.add('loginByCognitoApi', (username, password) => {
 import { Amplify } from 'aws-amplify'
 import { fetchAuthSession, signIn } from 'aws-amplify/auth'
 
-Amplify.configure(Cypress.env('awsConfig'))
+Amplify.configure(Cypress.expose('awsConfig'))
 const fetchJwts = async (username: string, password: string) => {
   const options = { authFlowType: 'USER_PASSWORD_AUTH' as const }
   await signIn({ username, password, options })
@@ -464,9 +467,11 @@ describe('Cognito, programmatic login', function () {
     cy.task('db:seed')
 
     // Programmatically login via Amazon Cognito API
-    cy.task('getCognitoCredentials').then(({ username, password }) => {
-      cy.loginByCognitoApi(username, password)
-    })
+    cy.env(['AWS_COGNITO_USERNAME', 'AWS_COGNITO_PASSWORD']).then(
+      ({ username, password }) => {
+        cy.loginByCognitoApi(username, password)
+      }
+    )
   })
 
   it('shows onboarding', function () {
@@ -493,8 +498,8 @@ the Cognito JWTs to authorize the frontend's requests.
 
 The
 
-<Icon name="github" inline="true" contentType="rwa" /> is used and provides configuration
-and runnable code for both the React SPA and the Express back end.
+<Icon name="github" inline="true" contentType="rwa" /> is used and provides
+configuration and runnable code for both the React SPA and the Express back end.
 
 The front end uses the
 [AWS Amplify Framework Authentication Library](https://aws-amplify.github.io/amplify-js/api/classes/authclass.html).

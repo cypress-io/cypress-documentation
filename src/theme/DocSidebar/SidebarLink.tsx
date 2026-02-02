@@ -27,6 +27,11 @@ export const SidebarLink: React.FC<SidebarLinkProps> = ({
           New
         </Tag>
       ) : null}
+      {customProps?.deprecated_label ? (
+        <Tag color="red" size="16" dark style={{ marginTop: '-2px' }}>
+          Deprecated
+        </Tag>
+      ) : null}
     </Link>
   )
 }

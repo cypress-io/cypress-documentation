@@ -591,7 +591,7 @@ it('fails on unhandled rejection', () => {
 Yes, you can pass configuration to Cypress via environment variables, CLI
 arguments and other means.
 
-[Read the Environment Variables guide.](/app/references/environment-variables)
+[Read the Environment Variables & Secrets guide.](/app/guides/environment-variables)
 
 ### <Icon name="angle-right" /> Can I override or change the default user agent the browser uses?
 
@@ -703,7 +703,8 @@ email's functionality and visual style:
 
 3. You can use a 3rd party email service that provides temporary email addresses
    for testing. Some of these services even offer a
-   <a href="/app/plugins/plugins-list#email">Cypress plugin</a> to access emails.
+   <a href="/app/plugins/plugins-list#email">Cypress plugin</a> to access
+   emails.
 
 ### <Icon name="angle-right" /> How do I wait for multiple requests to the same url?
 
@@ -723,8 +724,7 @@ cy.get('#list>li').should('have.length', 20)
 
 ### <Icon name="angle-right" /> How do I seed / reset my database?
 
-You can use [`cy.request()`](/api/commands/request),
-[`cy.exec()`](/api/commands/exec), or [`cy.task()`](/api/commands/task) to talk
+You can use [`cy.request()`](/api/commands/request) or [`cy.task()`](/api/commands/task) to talk
 to your back end to seed data.
 
 You could also stub requests directly using
@@ -1247,8 +1247,8 @@ cy.get('[type="email"]').then(($input) => {
 
 ### <Icon name="angle-right" /> Can Cypress be used for model-based testing?
 
-<Icon name="github" inline="true" contentType="rwa" /> is implemented using XState
-model state library.
+<Icon name="github" inline="true" contentType="rwa" /> is implemented using
+XState model state library.
 
 ### <Icon name="angle-right" /> Can Cypress be used for performance testing?
 

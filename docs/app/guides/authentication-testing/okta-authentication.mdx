@@ -46,21 +46,12 @@ require('dotenv').config()
 ```js
 {
   env: {
+    OKTA_USERNAME: process.env.OKTA_USERNAME,
+    OKTA_PASSWORD: process.env.OKTA_PASSWORD,
+  },
+  expose: {
     okta_domain: process.env.REACT_APP_OKTA_DOMAIN,
     okta_client_id: process.env.REACT_APP_OKTA_CLIENTID,
-  },
-  setupNodeEvents(on, config) {
-    on('task', {
-      getOktaCredentials() {
-        const username = process.env.OKTA_USERNAME
-        const password = process.env.OKTA_PASSWORD
-        if (!username || !password) {
-          throw new Error('OKTA_USERNAME and OKTA_PASSWORD must be set')
-        }
-        return { username, password }
-      },
-    })
-    return config
   },
 }
 ```
@@ -97,7 +88,7 @@ const loginToOkta = (username: string, password: string) => {
 
   cy.visit('/')
   cy.origin(
-    Cypress.env('okta_domain'),
+    Cypress.expose('okta_domain'),
     { args: { username, password } },
     ({ username, password }) => {
       cy.get('input[name="identifier"]').type(username)
@@ -131,9 +122,11 @@ is in the <Icon name="github" inline="true" contentType="rwa" />.
 describe('Okta', function () {
   beforeEach(function () {
     cy.task('db:seed')
-    cy.task('getOktaCredentials').then(({ username, password }) => {
-      cy.loginByOkta(username, password)
-    })
+    cy.env(['OKTA_USERNAME', 'OKTA_PASSWORD']).then(
+      ({ username, password }) => {
+        cy.loginByOkta(username, password)
+      }
+    )
   })
 
   it('verifies signed in user does not have a bank account', function () {
@@ -202,7 +195,7 @@ import { OktaAuth } from '@okta/okta-auth-js'
 Cypress.Commands.add('loginByOktaApi', (username, password) => {
   cy.request({
     method: 'POST',
-    url: `https://${Cypress.env('okta_domain')}/api/v1/authn`,
+    url: `https://${Cypress.expose('okta_domain')}/api/v1/authn`,
     body: {
       username,
       password,
@@ -210,8 +203,8 @@ Cypress.Commands.add('loginByOktaApi', (username, password) => {
   }).then(({ body }) => {
     const user = body._embedded.user
     const config = {
-      issuer: `https://${Cypress.env('okta_domain')}/oauth2/default`,
-      clientId: Cypress.env('okta_client_id'),
+      issuer: `https://${Cypress.expose('okta_domain')}/oauth2/default`,
+      clientId: Cypress.expose('okta_client_id'),
       redirectUri: 'http://localhost:3000/implicit/callback',
       scopes: ['openid', 'email', 'profile'],
     }
@@ -251,9 +244,11 @@ process and logout.
 describe('Okta', function () {
   beforeEach(function () {
     cy.task('db:seed')
-    cy.task('getOktaCredentials').then(({ username, password }) => {
-      cy.loginByOktaApi(username, password)
-    })
+    cy.env(['OKTA_USERNAME', 'OKTA_PASSWORD']).then(
+      ({ username, password }) => {
+        cy.loginByOktaApi(username, password)
+      }
+    )
   })
 
   it('shows onboarding', function () {

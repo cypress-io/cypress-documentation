@@ -38,20 +38,176 @@ The app is bundled with everything you need,
 [just clone the repository](https://github.com/cypress-io/cypress-realworld-app)
 and start testing.
 
-## <Icon name="angle-right" /> Organizing Tests, Logging In, Controlling State
+## <Icon name="angle-right" /> Handling Secrets and Sensitive Data
 
 :::danger
 
-<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Sharing page objects,
-using your UI to log in, and not taking shortcuts.
+<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Hardcoding
+secrets in test files, using `Cypress.expose()` for sensitive values, or
+exposing secrets to the browser context.
 
 :::
 
 :::tip
 
-<Icon name="check-circle" color="green" /> **Best Practice:** Test specs in isolation,
-programmatically log into your application, and take control of your application's
-state.
+<Icon name="check-circle" color="green" /> **Best Practice:** Use the right API
+for the right purpose: `cy.env()` for sensitive values in tests and
+`Cypress.expose()` only for public configuration.
+
+:::
+
+When writing Cypress tests, you'll often need to work with sensitive data like API keys, passwords, tokens, or database credentials. Cypress provides three different APIs for handling configuration values, each with different security characteristics and use cases.
+
+### Understanding the Security Model
+
+Cypress runs in two contexts:
+
+- **Browser context**: Where your tests execute and can access browser APIs. Values here are visible to application code, browser extensions, and developer tools.
+- **Node.js context**: Where plugins and tasks run. Values here never enter the browser and remain secure.
+
+| API                                           | Context              | Browser Exposure | Use Case                           |
+| --------------------------------------------- | -------------------- | ---------------- | ---------------------------------- |
+| [`cy.env()`](/api/commands/env)               | Browser (privileged) | No               | Sensitive values needed in tests   |
+| [`Cypress.expose()`](/api/cypress-api/expose) | Browser (public)     | Yes              | Public/non-sensitive configuration |
+
+### Use `cy.env()` for Sensitive Values in Tests
+
+`cy.env()` is the recommended way to access sensitive environment variables in your tests. It provides privileged access that doesn't automatically expose values to the browser context.
+
+**When to use:**
+
+- API keys, passwords, tokens, or credentials needed in test code
+- Values that should remain secure but are needed within Cypress command chains
+
+**Example: Using API keys securely**
+
+```javascript
+// ✅ Good: Using cy.env() for sensitive API key
+cy.env(['apiKey']).then(({ apiKey }) => {
+  cy.request({
+    method: 'POST',
+    url: 'https://api.example.com/data',
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+    },
+  })
+})
+```
+
+**Configuration:**
+
+Set sensitive values via environment variables or configuration files:
+
+```javascript
+// cypress.config.js
+{
+  env: {
+    apiKey: process.env.API_KEY, // From CI environment
+    dbPassword: process.env.DB_PASSWORD,
+  },
+}
+```
+
+### Use `Cypress.expose()` for public configuration
+
+`Cypress.expose()` is designed for **public, non-sensitive** configuration values that are safe to expose in the browser context.
+
+**When to use:**
+
+- Feature flags, API versions, environment labels
+- Plugin configuration that's safe to appear in browser state
+- Values needed synchronously outside of Cypress command chains
+- Configuration that application code might need to access
+
+**When NOT to use:**
+
+- ❌ API keys, passwords, tokens, or any credentials
+- ❌ Database connection strings
+- ❌ Any value that should remain secret
+
+**Example: Public configuration only**
+
+```javascript
+// ✅ Good: Public configuration
+const apiVersion = Cypress.expose('apiVersion') // e.g., "v2"
+const featureFlag = Cypress.expose('featureFlag') // e.g., true
+
+// ❌ Bad: Never use for secrets
+const apiKey = Cypress.expose('apiKey') // ⚠️ Exposed to browser!
+```
+
+### Security Best Practices
+
+1. **Never hardcode secrets in test files**
+
+```javascript
+// ❌ Bad: Hardcoded secret
+cy.request({
+  url: 'https://api.example.com/data',
+  headers: { Authorization: 'Bearer secret-key-12345' },
+})
+
+// ✅ Good: From environment
+cy.env(['apiKey']).then(({ apiKey }) => {
+  cy.request({
+    url: 'https://api.example.com/data',
+    headers: { Authorization: `Bearer ${apiKey}` },
+  })
+})
+```
+
+2. **Use environment variables in CI/CD**
+
+Set secrets in your CI/CD platform's secret management system:
+
+```yaml
+# GitHub Actions example
+env:
+  CYPRESS_API_KEY: ${{ secrets.API_KEY }}
+  CYPRESS_DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+```
+
+3. **Don't commit secrets to version control**
+
+Use `.gitignore` for files containing secrets:
+
+```gitignore
+# .gitignore
+cypress.env.json
+.env
+*.secret
+```
+
+4. **Use `cy.env()` with explicit variable names**
+
+Only request the variables you need:
+
+```javascript
+// ✅ Good: Explicit, minimal exposure
+cy.env(['apiKey']).then(({ apiKey }) => {
+  // Use apiKey
+})
+
+// ⚠️ Less ideal: Requesting more than needed
+cy.env(['apiKey', 'dbPassword', 'otherSecret']).then((env) => {
+  // All values now in scope
+})
+```
+
+## <Icon name="angle-right" /> Organizing Tests, Logging In, Controlling State
+
+:::danger
+
+<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Sharing page
+objects, using your UI to log in, and not taking shortcuts.
+
+:::
+
+:::tip
+
+<Icon name="check-circle" color="green" /> **Best Practice:** Test specs in
+isolation, programmatically log into your application, and take control of your
+application's state.
 
 :::
 
@@ -77,15 +233,16 @@ in our examples.
 
 :::danger
 
-<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Using highly brittle
-selectors that are subject to change.
+<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Using highly
+brittle selectors that are subject to change.
 
 :::
 
 :::tip
 
-<Icon name="check-circle" color="green" /> **Best Practice:** Use `data-*` attributes
-to provide context to your selectors and isolate them from CSS or JS changes.
+<Icon name="check-circle" color="green" /> **Best Practice:** Use `data-*`
+attributes to provide context to your selectors and isolate them from CSS or JS
+changes.
 
 :::
 
@@ -232,16 +389,16 @@ your application is working as expected for people with disabilities and the tec
 
 :::danger
 
-<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Trying to assign
-the return value of Commands with `const`, `let`, or `var`.
+<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Trying to
+assign the return value of Commands with `const`, `let`, or `var`.
 
 :::
 
 :::tip
 
-<Icon name="check-circle" color="green" /> **Best Practice:** Use [aliases and closures
-to access and store](/app/core-concepts/variables-and-aliases) what Commands yield
-you.
+<Icon name="check-circle" color="green" /> **Best Practice:** Use [aliases and
+closures to access and store](/app/core-concepts/variables-and-aliases) what
+Commands yield you.
 
 :::
 
@@ -291,18 +448,20 @@ For working with either of these patterns, please read our
 
 :::danger
 
-<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Trying to visit
-or interact with sites or servers you do not control.
+<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Trying to
+visit or interact with sites or servers you do not control.
 
 :::
 
 :::tip
 
 <Icon name="check-circle" color="green" /> **Best Practice:** Only test websites
-that you control. Try to avoid visiting or requiring a 3rd party server. If you choose,
-you may use [`cy.request()`](/api/commands/request) to talk to 3rd party servers
-via their APIs. If possible, cache results via [`cy.session()`](/api/commands/session)
-to avoid repeat visits. See also reasons against [Testing Apps You Don't Control](/app/end-to-end-testing/writing-your-first-end-to-end-test#Testing-Apps-You-Dont-Control).
+that you control. Try to avoid visiting or requiring a 3rd party server. If you
+choose, you may use [`cy.request()`](/api/commands/request) to talk to 3rd party
+servers via their APIs. If possible, cache results via
+[`cy.session()`](/api/commands/session) to avoid repeat visits. See also reasons
+against [Testing Apps You Don't
+Control](/app/end-to-end-testing/writing-your-first-end-to-end-test#Testing-Apps-You-Dont-Control).
 
 :::
 
@@ -440,22 +599,23 @@ email's functionality and visual style:
    without involving the UI. Your server would have to expose this endpoint.
 4. You could also use `cy.request()` to a 3rd party email recipient server that
    exposes an API to read off emails. You will then need the proper
-   authentication credentials, which your server could provide via cy.task. Some email services already provide
-   <a href="/app/plugins/plugins-list#email">Cypress plugins</a> to access emails.
+   authentication credentials, which your server could provide via [`cy.task()`](/api/commands/task). Some email services already provide
+   <a href="/app/plugins/plugins-list#email">Cypress plugins</a> to access
+   emails.
 
 ## <Icon name="angle-right" /> Having Tests Rely On The State Of Previous Tests
 
 :::danger
 
-<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Coupling multiple
-tests together.
+<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Coupling
+multiple tests together.
 
 :::
 
 :::tip
 
-<Icon name="check-circle" color="green" /> **Best Practice:** Tests should always
-be able to be run independently from one another **and still pass**.
+<Icon name="check-circle" color="green" /> **Best Practice:** Tests should
+always be able to be run independently from one another **and still pass**.
 
 :::
 
@@ -577,15 +737,15 @@ can be run independently and pass.
 
 :::danger
 
-<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Acting like you're
-writing unit tests.
+<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Acting like
+you're writing unit tests.
 
 :::
 
 :::tip
 
-<Icon name="check-circle" color="green" /> **Best Practice:** Add multiple assertions
-and don't worry about it
+<Icon name="check-circle" color="green" /> **Best Practice:** Add multiple
+assertions and don't worry about it
 
 :::
 
@@ -670,8 +830,8 @@ or `afterEach` hooks to clean up state.
 
 :::tip
 
-<Icon name="check-circle" color="green" /> **Best Practice:** Clean up state **before**
-tests run.
+<Icon name="check-circle" color="green" /> **Best Practice:** Clean up state
+**before** tests run.
 
 :::
 
@@ -865,15 +1025,16 @@ script.
 
 :::danger
 
-<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Waiting for arbitrary
-time periods using [`cy.wait(Number)`](/api/commands/wait#Time).
+<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Waiting for
+arbitrary time periods using [`cy.wait(Number)`](/api/commands/wait#Time).
 
 :::
 
 :::tip
 
-<Icon name="check-circle" color="green" /> **Best Practice:** Use route aliases or
-assertions to guard Cypress from proceeding until an explicit condition is met.
+<Icon name="check-circle" color="green" /> **Best Practice:** Use route aliases
+or assertions to guard Cypress from proceeding until an explicit condition is
+met.
 
 :::
 
@@ -958,9 +1119,9 @@ waste.
 
 :::danger
 
-<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Trying to start
-a web server from within Cypress scripts with [`cy.exec()`](/api/commands/exec) or
-[`cy.task()`](/api/commands/task).
+<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Trying to
+start a web server from within Cypress scripts with
+[`cy.exec()`](/api/commands/exec) or [`cy.task()`](/api/commands/task).
 
 :::
 
@@ -1008,8 +1169,8 @@ We have
 
 :::danger
 
-<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Using [cy.visit()](/api/commands/visit)
-without setting a `baseUrl`.
+<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Using
+[cy.visit()](/api/commands/visit) without setting a `baseUrl`.
 
 :::
 
