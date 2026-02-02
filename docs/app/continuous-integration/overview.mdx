@@ -523,14 +523,8 @@ Typically you'd set this inside of your CI provider.
 
 #### Git information
 
-Cypress uses the
-[@cypress/commit-info](https://github.com/cypress-io/commit-info) package to
-extract git information to associate with the run (e.g. branch, commit message,
-author).
-
-It assumes there is a `.git` folder and uses Git commands to get each property,
-like `git show -s --pretty=%B` to get commit message, see
-[src/git-api.js](https://github.com/cypress-io/commit-info/blob/master/src/git-api.js).
+Cypress assumes there is a `.git` folder and uses Git commands to get each property,
+like `git show -s --pretty=%B` to get the commit message.
 
 Under some environment setups (e.g. `docker`/`docker-compose`) if the `.git`
 directory is not available or mounted, you can pass all git related information
@@ -550,7 +544,7 @@ system environment variable `DEBUG` on your CI machine and inspect the terminal 
 to see why the commit information is unavailable.
 
 ```shell
-DEBUG=commit-info,cypress:server:record
+DEBUG=cypress:server:record
 ```
 
 #### CI Build Information

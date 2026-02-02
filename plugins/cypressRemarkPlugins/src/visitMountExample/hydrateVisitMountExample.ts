@@ -1,5 +1,5 @@
 export function hydrateVisitMountExample(code: string) {
-  const regex = /-{(.*)}-/gs
+  const regex = /-{([\s\S]*?)}-/g
   const matches = [...(code.matchAll(regex) || [])][0] || []
 
   if (matches.length != 2) {

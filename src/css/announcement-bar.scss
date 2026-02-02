@@ -1,55 +1,72 @@
 /* announcement bar overrides */
 
-/* using attribute selector for these dynamic classes */
-div [class^='announcementBar'] {
-  font-family: 'Poppins';
-  height: unset;
-  @apply bg-indigo-50;
-  color: var(--ifm-color-gray-1000);
-  padding: 0.8rem 0;
-  font-size: 1rem;
-  font-weight: var(--ifm-font-weight-semibold);
-  border-bottom: none;
+/* Docusaurus 3.9+ uses stable class name .theme-announcement-bar */
+/* Also include attribute selectors as fallback for CSS module classes */
+.theme-announcement-bar,
+div[class^='announcementBar'],
+[class^='announcementBar'],
+[class*='announcementBar'] {
+  font-family: 'Poppins' !important;
+  height: unset !important;
+  margin: 0 !important;
+  background-color: rgb(238 242 255) !important; /* bg-indigo-50 */
+  color: var(--ifm-color-gray-1000) !important;
+  padding: 0.65rem 0 !important;
+  font-size: 1rem !important;
+  font-weight: var(--ifm-font-weight-semibold) !important;
+  border-bottom: none !important;
+  
+  /* Remove margins from all child elements */
+  * {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
 
-  [data-theme='dark'] & {
-    @apply bg-indigo-1000;
-    color: white;
+  html[data-theme='dark'] & {
+    background-color: rgb(30 27 75) !important; /* bg-indigo-1000 */
+    color: white !important;
     a {
-      @apply text-indigo-300;
+      color: rgb(165 180 252) !important; /* text-indigo-300 */
       &:hover {
-        @apply border-b-indigo-300;
+        border-bottom-color: rgb(165 180 252) !important; /* border-b-indigo-300 */
       }
     }
   }
 
   a {
-    text-decoration: none;
-    @apply text-indigo-500;
-    border-bottom: 1px dotted var(--ifm-color-gray-500);
+    text-decoration: none !important;
+    color: rgb(99 102 241) !important; /* text-indigo-500 */
+    border-bottom: 1px dotted var(--ifm-color-gray-500) !important;
 
     &:hover {
-      border-bottom: 1px solid var(--ifm-color-gray-500);
-      @apply border-b-indigo-500;
+      border-bottom: 1px solid var(--ifm-color-gray-500) !important;
+      border-bottom-color: rgb(99 102 241) !important; /* border-b-indigo-500 */
     }
   }
 
   button[aria-label='Close'] {
-    opacity: 1;
-    transition: color 0.2s ease-out, transform 0.2s ease-out;
-    @apply text-indigo-400;
+    opacity: 1 !important;
+    transition: color 0.2s ease-out, transform 0.2s ease-out !important;
+    color: rgb(129 140 248) !important; /* text-indigo-400 */
 
     &:hover {
-      transform: scale(1.1);
-      @apply text-indigo-500;
+      transform: scale(1.1) !important;
+      color: rgb(99 102 241) !important; /* text-indigo-500 */
     }
   }
 
-  div[class^='content'] {
-    font-size: 16px;
-    border-bottom: none;
+  /* Target content wrapper */
+  div[class*='content'],
+  .theme-announcement-bar__content {
+    font-size: 16px !important;
+    border-bottom: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
 
     .close {
-      margin-right: 1rem;
+      margin-right: 1rem !important;
+      margin-top: 0 !important;
+      margin-bottom: 0 !important;
     }
   }
 }
