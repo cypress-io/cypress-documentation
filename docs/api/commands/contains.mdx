@@ -9,9 +9,13 @@ slug: /api/commands/contains
 
 # contains
 
-Get the DOM element containing the text. DOM elements can contain _more_ than
-the desired text and still match. Additionally, Cypress
-[prefers some DOM elements](#Notes) over the deepest element found.
+Get the DOM element containing the text. The element may contain _more_ than
+the desired text and still be considered a match.
+
+When multiple elements contain the text, Cypress returns a signle element, determined by
+- Element preference order
+- DOM order 
+See the [preferences](#Preferences) section for details.
 
 ## Syntax
 
