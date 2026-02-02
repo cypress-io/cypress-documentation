@@ -4457,7 +4457,7 @@ _Released 01/18/2022_
   [`.selectFile()`](/api/commands/selectfile), to select a file or files in an
   HTML5 input element or simulate dragging a file or files into the browser. The
   API is similar to `cypress-file-upload` and we have provided a
-  [migration guide](/app/references/migration-guide#Migrating-from-cypress-file-upload-to-selectFile)
+  [migration guide](/app/references/migration-guide)
   for previous users of that plugin. For more details, see
   [our blog post](https://cypress.io/blog/2022/01/18/uploading-files-with-selectfile/).
   Fixes [#19524](https://github.com/cypress-io/cypress/issues/19524) and
@@ -6333,7 +6333,7 @@ Cypress now offers full network stubbing support with the introduction of the
 [cy.intercept()](/api/commands/intercept) command (previously `cy.route2()`).
 With [cy.intercept()](/api/commands/intercept) your tests can intercept, modify
 and wait on any type of HTTP request originating from your app. See our guide on
-[Migrating `cy.route()` to `cy.intercept()`](/app/references/migration-guide#Migrating-cyroute-to-cyintercept).
+[Migrating `cy.route()` to `cy.intercept()`](/app/references/migration-guide).
 
 **Breaking Changes:**
 
@@ -6386,7 +6386,7 @@ deprecations.
 - `cy.server()` and `cy.route()` have been deprecated. In a future release,
   support for `cy.server()` and `cy.route()` will be removed. We encourage you
   to use [cy.intercept()](/api/commands/intercept) instead. See our guide on
-  [Migrating `cy.route()` to `cy.intercept()`](/app/references/migration-guide#Migrating-cyroute-to-cyintercept).
+  [Migrating `cy.route()` to `cy.intercept()`](/app/references/migration-guide).
   Addressed in [#9185](https://github.com/cypress-io/cypress/pull/9185).
 - `experimentalFetchPolyfill` has been deprecated. We encourage you to use
   [cy.intercept()](/api/commands/intercept) to intercept requests using the
