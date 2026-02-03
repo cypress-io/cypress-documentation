@@ -374,7 +374,7 @@ Placeholders let you use dynamic and sensitive values while maintaining cache ef
 ```typescript
 describe('Campaign Management', () => {
   it('creates multiple campaigns with different discount percentages', () => {
-    cy.task('getSecret', 'ADMIN_PASSWORD').then((adminPassword) => {
+    cy.env(['ADMIN_PASSWORD']).then(({ adminPassword }) => {
       const campaigns = [
         { name: 'Fall Sale', discountPct: 10 },
         { name: 'Spring Sale', discountPct: 15 },
@@ -389,7 +389,7 @@ describe('Campaign Management', () => {
 
         cy.prompt(
           [
-            `Visit ${Cypress.env('ADMIN_URL')}/admin/login`,
+            `Visit ${Cypress.expose('ADMIN_URL')}/admin/login`,
             // Using {{adminPassword}} prevents this sensitive value from being sent to AI
             'Type {{adminPassword}} into the password field',
             'Click Sign In',
@@ -594,7 +594,7 @@ describe('Feature: User Registration', () => {
       ],
       {
         placeholders: {
-          password: 'PASSWORD_PLACEHOLDER', // Use cy.task('getSecret', 'PASSWORD') to get the actual value
+          password: 'PASSWORD_PLACEHOLDER', // Use cy.env(['PASSWORD']) to get the actual value
         },
       }
     )
@@ -714,7 +714,7 @@ The commands in the generated code may look like:
 ### Login flow
 
 ```javascript
-cy.task('getSecret', 'ADMIN_PASSWORD').then((password) => {
+cy.env(['ADMIN_PASSWORD']).then(({ adminPassword }) => {
   cy.prompt(
     [
       'visit the login page',
@@ -724,7 +724,7 @@ cy.task('getSecret', 'ADMIN_PASSWORD').then((password) => {
       'verify we are redirected to the dashboard',
     ],
     {
-      placeholders: { password },
+      placeholders: { adminPassword },
     }
   )
 })
@@ -831,11 +831,11 @@ cy.origin('https://cloud.cypress.io/login', () => {
 ### Mixed with traditional Cypress
 
 ```javascript
-const electronicsCount = Cypress.env('staging') === true ? 5 : 25
+const electronicsCount = Cypress.expose('staging') === true ? 5 : 25
 
 // Confirm the UI works in staging environment
 cy.task('seedStagingDB')
-cy.visit(`${Cypress.env('stagingUrl')}/products`)
+cy.visit(`${Cypress.expose('stagingUrl')}/products`)
 cy.prompt(
   [
     'filter by category "Electronics"',
@@ -852,7 +852,7 @@ cy.prompt(
 
 // Confirm the UI works in production environment
 cy.task('seedProductionDB')
-cy.visit(`${Cypress.env('productionUrl')}/products`)
+cy.visit(`${Cypress.expose('productionUrl')}/products`)
 cy.prompt(
   [
     'filter by category "Electronics"',
@@ -871,7 +871,7 @@ cy.prompt(
 Or to further clean up the `cy.prompt` call:
 
 ```javascript
-const electronicsCount = Cypress.env('staging') === true ? 5 : 25
+const electronicsCount = Cypress.expose('staging') === true ? 5 : 25
 const electronicsFilterPrompt = [
   'filter by category "Electronics"',
   'sort by price high to low',
@@ -881,7 +881,7 @@ const electronicsFilterPrompt = [
 
 // Confirm the UI works in staging environment
 cy.task('seedStagingDB')
-cy.visit(`${Cypress.env('stagingUrl')}/products`)
+cy.visit(`${Cypress.expose('stagingUrl')}/products`)
 cy.prompt(electronicsFilterPrompt, {
   placeholders: {
     electronicsCount,
@@ -890,7 +890,7 @@ cy.prompt(electronicsFilterPrompt, {
 
 // Confirm the UI works in production environment
 cy.task('seedProductionDB')
-cy.visit(`${Cypress.env('stagingUrl')}/products`)
+cy.visit(`${Cypress.expose('stagingUrl')}/products`)
 cy.prompt(electronicsFilterPrompt, {
   placeholders: {
     electronicsCount,

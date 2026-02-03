@@ -8,6 +8,321 @@ sidebar_label: 'Migration Guide'
 
 # Migration Guide
 
+## Migrating away from Cypress.env()
+
+Starting with Cypress 15.10.0, `Cypress.env()` has been deprecated and will be removed in a future major version. This guide helps you migrate to [`cy.env()`](/api/commands/env) (for sensitive values) or [`Cypress.expose()`](/api/cypress-api/expose) (for public/non-sensitive values), depending on your use case.
+
+### Why Cypress.env() is deprecated
+
+`Cypress.env()` makes it easy to accidentally expose more data than intended because Cypress hydrates all configured environment variables into the browser context. That includes values your test never reads.
+
+This deprecation is a precaution to reduce the risk of unintentionally exposing secrets in the browser-accessible state when run within the Cypress browser. This is about ensuring safer defaults and preventing accidental exposure of sensitive data.
+
+#### What's the risk
+
+When Cypress environment values are available in the browser, they can be inspected through normal browser tooling and may be accessible to code running in that context (for example, app code, third-party scripts, or extensions). The core issues are:
+
+1. **All-or-nothing exposure**: All environment variables are serialized and sent to the browser where they can be accessed via `Cypress.env()` or inspected in the browser's developer tools.
+1. **Cross-origin risks**: When using [`cy.origin()`](/api/commands/origin) for cross-origin testing, all environment variables are automatically passed to the cross-origin context, potentially exposing sensitive data to untrusted origins.
+1. **Application code access**: Since environment variables are available in the browser context when tests run, your application code or third-party scripts could potentially access them if it checks for `window.Cypress` or similar patterns.
+
+### Choose the right migration path
+
+When migrating from `Cypress.env()`, you have two options: `cy.env()` and `Cypress.expose()`. The choice depends on the sensitivity of your configuration values and your access requirements.
+
+#### Use `cy.env()` when:
+
+- The values are **sensitive** (API keys, passwords, tokens, credentials, secrets)
+- You're using the value inside tests/hooks where async Cypress commands are fine
+- You want the most conservative exposure model (only request what you need)
+
+#### Use `Cypress.expose()` when:
+
+- The value is **public/non-sensitive** (feature flags, API versions, public URLs, plugin configurations)
+- You need **synchronous access**
+- It's acceptable for the value to be accessible in the browser context (e.g. application code, third-party scripts, or extensions)
+
+### Migrate sensitive values to cy.env()
+
+`cy.env()` is read-only and asynchronous.
+
+#### Read one value
+
+<Badge type="danger">Before: Cypress.env()</Badge>
+
+```javascript
+describe('API tests', () => {
+  it('makes a request to the API', () => {
+    const apiKey = Cypress.env('apiKey')
+    cy.request({
+      url: 'https://api.example.com/users',
+      headers: { Authorization: `Bearer ${apiKey}` },
+    })
+      .its('status')
+      .should('eq', 200)
+  })
+})
+```
+
+<Badge type="success">After: cy.env()</Badge>
+
+```javascript
+describe('API tests', () => {
+  it('makes a request to the API', () => {
+    cy.env(['apiKey']).then(({ apiKey }) => {
+      cy.request({
+        url: 'https://api.example.com/users',
+        headers: { Authorization: `Bearer ${apiKey}` },
+      })
+        .its('status')
+        .should('eq', 200)
+    })
+  })
+})
+```
+
+#### Read multiple values
+
+<Badge type="danger">Before: Cypress.env()</Badge>
+
+```javascript
+describe('API tests', () => {
+  it('makes authenticated requests', () => {
+    const apiUrl = Cypress.env('apiUrl')
+    const apiKey = Cypress.env('apiKey')
+
+    cy.request({
+      url: `${apiUrl}/users`,
+      headers: { Authorization: `Bearer ${apiKey}` },
+    })
+      .its('status')
+      .should('eq', 200)
+  })
+})
+```
+
+<Badge type="success">After: cy.env()</Badge>
+
+```javascript
+describe('API tests', () => {
+  it('makes authenticated requests', () => {
+    cy.env(['apiUrl', 'apiKey']).then(({ apiUrl, apiKey }) => {
+      cy.request({
+        url: `${apiUrl}/users`,
+        headers: { Authorization: `Bearer ${apiKey}` },
+      })
+        .its('status')
+        .should('eq', 200)
+    })
+  })
+})
+```
+
+See [cy.env()](/api/commands/env) for more details.
+
+### Migrate public config to Cypress.expose()
+
+Use this path only for non-sensitive values. `Cypress.expose()` is synchronous and is designed for configuration that is safe to be available in the browser.
+
+#### Via configuration file
+
+<Badge type="danger">Before: Cypress.env()</Badge>
+
+```javascript
+const pluginConfig = Cypress.env('PLUGIN_CONFIG')
+```
+
+:::cypress-config-example
+
+```ts
+{
+  env: {
+    apiKey: 'secret-key-12345',
+    featureFlag: true,
+    apiVersion: 'v2',
+    publicApiUrl: 'https://api.example.com',
+    pluginConfig: 'development',
+  },
+}
+```
+
+:::
+
+<Badge type="success">After: Cypress.expose()</Badge>
+
+```javascript
+const pluginConfig = Cypress.expose('PLUGIN_CONFIG')
+```
+
+:::cypress-config-example
+
+```ts
+{
+  expose: {
+    featureFlag: true,
+    apiVersion: 'v2',
+    publicApiUrl: 'https://api.example.com',
+    pluginConfig: 'development',
+  },
+  env: {
+    apiKey: 'secret-key-12345',  // Sensitive - use env, not expose
+  },
+}
+```
+
+:::
+
+See [Cypress.expose()](/api/cypress-api/expose) for more details.
+
+#### Via CLI flags
+
+Use the `--expose` or `-x` CLI flags when running Cypress.
+
+<Badge type="danger">Before: Cypress.env() CLI flags</Badge>
+
+```shell
+cypress run --env FEATURE_FLAG=true,API_VERSION=v2,PUBLIC_API_URL=https://api.example.com
+```
+
+<Badge type="success">After: Cypress.expose() CLI flags</Badge>
+
+```shell
+cypress run --expose FEATURE_FLAG=true,API_VERSION=v2,PUBLIC_API_URL=https://api.example.com
+```
+
+See [Cypress.expose()](/api/cypress-api/expose) for more details.
+
+#### Via runtime
+
+You can set exposed values at runtime using `Cypress.expose(key, value)` or `Cypress.expose(object)`. Note that these changes only persist for the remainder of the current spec file:
+
+```javascript
+// Set a single value
+Cypress.expose('featureFlag', true)
+
+// Set multiple values
+Cypress.expose({
+  featureFlag: true,
+  apiVersion: 'v2',
+})
+```
+
+See [Cypress.expose()](/api/cypress-api/expose) for more details.
+
+### If you were setting values with Cypress.env()
+
+`cy.env()` cannot set values. If you used `Cypress.env()` to write sensitive values at runtime, you can use `cy.task()` to store state in the Cypress config process. These are **not** environment variables and are **not** accessible through `cy.env()`.
+
+**Setup in `cypress.config.js`:**
+
+```javascript
+// cypress.config.js
+export default defineConfig({
+  e2e: {
+    setupNodeEvents(on, config) {
+      const configProcessScopedVariables = {}
+
+      on('task', {
+        set: (keySet) => {
+          Object.entries(keySet).forEach(([key, value]) => {
+            configProcessScopedVariables[key] = value
+          })
+          return null
+        },
+        get: (keys) => {
+          const variablesToReturn = {}
+          keys.forEach((key) => {
+            variablesToReturn[key] = configProcessScopedVariables[key]
+          })
+          return variablesToReturn
+        },
+      })
+
+      return config
+    },
+  },
+})
+```
+
+**Usage in your tests:**
+
+```javascript
+// spec.cy.js
+describe('API tests', () => {
+  it('stores and retrieves sensitive runtime values', () => {
+    // Get an access token from an API
+    cy.getAccessTokenFromApi().then(({ token }) => {
+      // Store it securely in the config process
+      cy.task('set', { accessToken: token })
+    })
+
+    // Later in the test, retrieve it
+    cy.task('get', ['accessToken']).then(({ accessToken }) => {
+      // Use the token securely
+      cy.request({
+        url: 'https://api.example.com/data',
+        headers: { Authorization: `Bearer ${accessToken}` },
+      })
+    })
+  })
+})
+```
+
+### Migrate plugins that use Cypress.env()
+
+If you're using Cypress plugins that reference `Cypress.env()`, you should check for updated versions that support the new API. When `allowCypressEnv: false` is set, plugins that still use `Cypress.env()` will throw errors.
+
+#### Check for plugin updates
+
+Before setting `allowCypressEnv: false`, review your installed plugins and update them to their latest versions. Many popular plugins need to be updated to use `Cypress.expose()` or `cy.env()` instead of `Cypress.env()`.
+
+#### Plugins requiring migration
+
+The following plugins require updates to their latest major versions and migration to the new API:
+
+##### @cypress/code-coverage
+
+Update to version 4.0.0+ of `@cypress/code-coverage` and follow its [migration guide](https://github.com/cypress-io/code-coverage/blob/master/README.md#migrations) to move from environment variables to `--expose` CLI flags and `expose` config.
+
+##### @cypress/grep
+
+Update to version 6.0.0+ of `@cypress/grep` and follow its [migration guide](https://github.com/cypress-io/cypress/tree/develop/npm/grep#migration) to move from environment variables to `--expose` CLI flags and `expose` config.
+
+### Lock it down with `allowCypressEnv: false`
+
+Once you've migrated all `Cypress.env()` invocations to either `cy.env()` or `Cypress.expose()`, you should set `allowCypressEnv: false` in your Cypress configuration.
+
+:::cypress-config-example
+
+```ts
+{
+  allowCypressEnv: false,
+  env: {
+    apiUrl: 'https://api.example.com',
+    apiKey: 'secret-key-12345',
+  },
+  e2e: {
+    baseUrl: 'http://localhost:3000',
+  },
+}
+```
+
+:::
+
+When `allowCypressEnv` is set to `false`:
+
+1. `Cypress.env()` calls will throw an error
+2. Test configuration overrides are disabled
+
+#### Migration Checklist
+
+1. ✅ Search your codebase for all `Cypress.env()` calls
+1. ✅ Replace each `Cypress.env()` call with either `cy.env()` or `Cypress.expose()`
+1. ✅ Update code to handle the asynchronous nature of `cy.env()`
+1. ✅ Migrate plugins that use `Cypress.env()`
+1. ✅ Set `allowCypressEnv: false` in your Cypress configuration
+1. ✅ Verify that no errors are thrown
+
 ## Migrating to Cypress 15.0
 
 This guide details the code changes needed to migrate to Cypress

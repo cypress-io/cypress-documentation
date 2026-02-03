@@ -211,7 +211,7 @@ const loginToCognito = (username: string, password: string) => {
   cy.visit('/')
 
   cy.origin(
-    Cypress.env('cognito_domain'),
+    Cypress.expose('cognito_domain'),
     {
       args: {
         username,
@@ -265,9 +265,11 @@ describe('Cognito, cy.origin() login', function () {
     cy.task('db:seed')
 
     // login via Amazon Cognito via cy.origin()
-    cy.task('getCognitoCredentials').then(({ username, password }) => {
-      cy.loginByCognito(username, password)
-    })
+    cy.env(['AWS_COGNITO_USERNAME', 'AWS_COGNITO_PASSWORD']).then(
+      ({ username, password }) => {
+        cy.loginByCognito(username, password)
+      }
+    )
   })
 
   it('shows onboarding', function () {
@@ -330,7 +332,7 @@ user is logged into the application.
 ```jsx title="cypress/support/auth-provider-commands/cognito.ts"
 import Amplify, { Auth } from 'aws-amplify'
 
-Amplify.configure(Cypress.env('awsConfig'))
+Amplify.configure(Cypress.expose('awsConfig'))
 
 // Amazon Cognito
 Cypress.Commands.add('loginByCognitoApi', (username, password) => {
@@ -390,7 +392,7 @@ Cypress.Commands.add('loginByCognitoApi', (username, password) => {
 import { Amplify } from 'aws-amplify'
 import { fetchAuthSession, signIn } from 'aws-amplify/auth'
 
-Amplify.configure(Cypress.env('awsConfig'))
+Amplify.configure(Cypress.expose('awsConfig'))
 const fetchJwts = async (username: string, password: string) => {
   const options = { authFlowType: 'USER_PASSWORD_AUTH' as const }
   await signIn({ username, password, options })
@@ -465,9 +467,11 @@ describe('Cognito, programmatic login', function () {
     cy.task('db:seed')
 
     // Programmatically login via Amazon Cognito API
-    cy.task('getCognitoCredentials').then(({ username, password }) => {
-      cy.loginByCognitoApi(username, password)
-    })
+    cy.env(['AWS_COGNITO_USERNAME', 'AWS_COGNITO_PASSWORD']).then(
+      ({ username, password }) => {
+        cy.loginByCognitoApi(username, password)
+      }
+    )
   })
 
   it('shows onboarding', function () {
