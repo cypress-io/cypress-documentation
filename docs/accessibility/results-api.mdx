@@ -35,6 +35,8 @@ Fetching Accessibility results for a run supports fetching results for the follo
 - [Jenkins](/app/continuous-integration/overview#Jenkins)
 - [AWS CodeBuild](/app/continuous-integration/aws-codebuild)
 - Drone
+- [Bitbucket](/app/continuous-integration/bitbucket-pipelines)
+- Buildkite
 
 Please reach out to Cypress Support to request support for a different provider.
 
@@ -494,12 +496,46 @@ steps:
 * - npm install --force https://cdn.cypress.io/extract-cloud-results/v1/extract-cloud-results.tgz
 * - node ./scripts/verifyAccessibilityResults.js
 
+````
+</TabItem>
+
+<TabItem value="Bitbucket" >
+
+```diff title="bitbucket-pipelines.yml"
+image: node:latest
+
+pipelines:
+  default:
+    - step:
+        name: Run Cypress tests
+        script:
+          - npm install
+          - npx cypress run --record
++         - npm install --force https://cdn.cypress.io/extract-cloud-results/v1/extract-cloud-results.tgz
++         - node ./scripts/verifyAccessibilityResults.js
+````
+
+</TabItem>
+
+<TabItem value="Buildkite" >
+
+```diff title="pipeline.yml"
+steps:
+  - label: "Run Cypress tests"
+    command:
+      - npm install
+      - npx cypress run --record
++     - npm install --force https://cdn.cypress.io/extract-cloud-results/v1/extract-cloud-results.tgz
++     - node ./scripts/verifyAccessibilityResults.js
 ```
+
 </TabItem>
 </Tabs>
 
 ## Required CI environment variables
 
 <ResultsApiEnvVars />
+
+```
 
 ```
