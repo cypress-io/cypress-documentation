@@ -160,4 +160,38 @@ Full environment variable reference: https://docs.drone.io/pipeline/environment/
 1. The run to validate and this module's validation script are being executed within the same build.
 2. The module script is always executed _after_ the run to validate has been created. This can be achieved by executing the module script in serial with the cypress recording in the same build.
 
+### Bitbucket
+
+Reference: https://support.atlassian.com/bitbucket-cloud/docs/
+
+#### Essential environment variables
+
+- `BITBUCKET_BUILD_NUMBER` - Presence identifies the environment as a Bitbucket environment. Value uniquely identifies a build.
+- `BITBUCKET_STEP_RUN_NUMBER` - Value indicates a build step execution index and increments when a step is retried. Initial value of 1.
+
+Full environment variable reference: https://support.atlassian.com/bitbucket-cloud/docs/variables-and-secrets/
+
+#### Prerequisites
+
+1. The run to validate and this module's validation script are being executed within the same build.
+2. The module script is always executed _after_ the run to validate has been created. This can be achieved by executing the module script in serial with the cypress recording in the same build.
+
+### Buildkite
+
+Reference: https://buildkite.com/docs
+
+#### Essential environment variables
+
+- `BUILDKITE` - Presence identifies the environment as a Buildkite environment.
+- `BUILDKITE_BUILD_ID` - Value uniquely identifies a build. This value does not change across different jobs within the same build.
+- `BUILDKITE_JOB_ID` - Value uniquely identifies a job execution. Each job in a build has a unique job ID.
+- `BUILDKITE_RETRY_COUNT` - Value indicates the retry attempt for a job. Default value of 0.
+
+Full environment variable reference: https://buildkite.com/docs/pipelines/environment-variables
+
+#### Prerequisites
+
+1. The run to validate and this module's validation script are being executed within the same build.
+2. The module script is always executed _after_ the run to validate has been created. This can be achieved by executing the module script in serial with the cypress recording in the same build.
+
 In order to iterate on your verification script and see everything working without putting code into your CI environment, it can be useful to simulate the CI context for a specific Cypress run locally. This can save a lot of time when getting started.
