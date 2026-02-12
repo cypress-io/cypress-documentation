@@ -71,7 +71,7 @@ You can tailor Slack messages to match your teams' needs. Options include:
 
 ### Per-organization vs per-project configuration
 
-You can configure the Slack integration at two levels: for an entire organization (covering all projects) or for a specific project. Both can coexist — an organization-level channel and a project-level channel can both receive notifications for the same run, each with their own settings.
+You can configure the Slack integration at two levels: for an entire organization (covering all projects) or for a specific project. Both can coexist — an organization-level channel and a project-level channel can both receive notifications for the same run, each with their own settings. See [Example configurations](#example-configurations) for ways to combine these levels.
 
 #### Organization settings
 
@@ -133,9 +133,7 @@ To set notification preferences:
 
 ### Flaky test alerts
 
-The **Flaky tests** preference works independently from the run status preferences. This means you can configure a channel to receive notifications _only_ when flaky tests are detected — even if you don't subscribe to passed or failed runs.
-
-For example, you might set up a dedicated `#flaky-tests` channel with only the **Flaky tests** preference enabled. This channel will receive a notification whenever a run contains flaky tests, regardless of whether the overall run passed or failed. This is useful for teams that want to proactively monitor and triage flaky behavior without the noise of every run result.
+The **Flaky tests** preference works independently from the run status preferences. This means you can configure a channel to receive notifications _only_ when flaky tests are detected — even if you don't subscribe to passed or failed runs. See [Example configurations](#example-configurations) for a concrete setup.
 
 When flaky test alerts are enabled, the Slack message includes flaky test counts in the test results section and lists flaky specs alongside failed specs in the specs for review section.
 
@@ -176,7 +174,7 @@ Each Slack notification includes run metadata and up to six configurable content
 
 ### What's included in every message
 
-Every message includes the following by run properties:
+Every run completion message includes the following run properties:
 
 - **Run title**: The run number and commit message, linked to the run in Cypress Cloud.
 - **Run status**: A color-coded status indicator (passed, failed, errored, timed out, or canceled).
@@ -213,6 +211,26 @@ You can choose between two display modes for your Slack messages:
 The display mode applies to the test results, UI Coverage, and accessibility sections.
 
 <!-- add image showing the same run result in stacked and compact display modes side by side -->
+
+## Example configurations
+
+The options above — notification preferences, tag and run group filters, content sections, display modes, and org-vs-project scoping — can be combined to build notification setups tailored to how your team works. Below are some common configurations.
+
+### Route notifications by environment
+
+Create separate project-level channels for each environment and use tag filters to route runs to the right place. For example, a `#staging-tests` channel filtered to the `staging` tag with **Failed runs** and **Passed runs** enabled gives your QA team full visibility into staging health, while a `#prod-alerts` channel filtered to the `production` tag with only **Failed runs** enabled keeps production notifications focused on breakages.
+
+### Dedicated flaky test triage
+
+Add a channel like `#flaky-triage` with only the **Flaky tests** preference enabled and no run status preferences selected. This channel will only receive a notification when a run contains flaky tests — regardless of whether the run passed or failed — so your team can triage new flake without the noise of every run result.
+
+### Slim CI bridge for high-volume projects
+
+For projects with frequent CI runs, set up a channel with only the **Test results** content section enabled in **Compact** display mode. This gives your team a single-line pass/fail summary per run with a direct link to the CI build, keeping the channel scannable even at high volume.
+
+### Cross-team visibility with focused project channels
+
+Configure an organization-level `#cypress-results` channel with **Failed runs** enabled so leadership and stakeholders can monitor test health across all projects. Then add project-level channels like `#team-checkout-tests` with additional content sections (specs for review, run tags) and extra notification preferences (passed runs, flaky tests) so individual teams get the detail they need for the projects they own.
 
 ## Managing channels
 
