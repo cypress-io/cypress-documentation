@@ -1,6 +1,6 @@
 ---
 title: 'Slack Integration for Cypress | Cypress Documentation'
-description: 'Setup Slack notifications on failed runs, passed runs, and flaky tests for your Cypress Cloud organization and projects.'
+description: 'Setup Slack notifications on failed runs, passed runs, flaky tests, and more for your Cypress Cloud organization and projects.'
 sidebar_position: 40
 sidebar_label: Slack
 ---
@@ -14,12 +14,14 @@ sidebar_label: Slack
 ##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
 
 - How to install the Cypress integration for Slack
-- How to configure Slack notifications on failed runs, passed runs, and flaky tests
+- How to configure Slack notifications for run results, flaky tests, and test muting
+- How to customize message content and display
+- How to filter notifications by tag, run group, or run status
 - How to manage Slack notifications at the organization and project level
 
 :::
 
-Cypress's Slack integration provides real-time results for your Cypress tests, all in one place - improving remote
+Cypress's Slack integration provides real-time results for your Cypress tests, all in one place — improving remote
 collaboration and giving wider visibility into test failures and flake, [UI Coverage](/ui-coverage/get-started/introduction),
 and [Cypress Accessibility](/accessibility/get-started/introduction) results.
 
@@ -28,6 +30,7 @@ The Cypress integration for Slack allows you to:
 - Improve cross-team collaboration by instantly surfacing Cypress results to the teams that need visibility
 - Confirm that key tests pass prior to launching new products or features
 - Reduce the time it takes to catch failed tests
+- Monitor flaky tests as they appear, even on passing runs
 
 <DocsVideo
   src="https://www.youtube.com/embed/hnDPz7dognY?si=PRRy4f5n6f1jzfVJ"
@@ -39,32 +42,36 @@ The Cypress integration for Slack allows you to:
 **You need three things to get started:**
 
 - A Cypress Cloud account
-- The ability to configure Cypress Cloud integrations - you must be an **admin** or the **owner** of your Cypress Cloud organization.
-- The ability to authorize Slack apps - by default, Slack allows **any workspace member** to authorize apps,
+- The ability to configure Cypress Cloud integrations — you must be an **admin** or the **owner** of your Cypress Cloud organization.
+- The ability to authorize Slack apps — by default, Slack allows **any workspace member** to authorize apps,
   however workspace owners may require app approvals before installation. See this [Slack help article](https://slack.com/help/articles/202035138-Add-apps-to-your-Slack-workspace) for more details.
 
 ## Install the Cypress app for Slack
 
-1. In the Cypress Cloud, visit the **Integrations** page for the organization you wish to integrate with Slack.
+1. In Cypress Cloud, visit the **Integrations** page for the organization you wish to integrate with Slack.
 2. Click the **Enable** button in the **Slack** section.
-3. A popup window will be displayed requesting permission for Cypress to access the
+3. A popup window will be displayed requesting permission for Cypress to access your
    workspace.
-4. After you approve the app permissions, you can choose your Slack **workspace** and **channel** to
+4. After you approve the app permissions, choose your Slack **workspace** and **channel** to
    associate with the installation.
 
-Now Cypress will post run results for all projects in your organization to the specified Slack channel.
+<!-- add image showing the Slack OAuth authorization popup with the workspace and channel selection -->
+
+Cypress Cloud will now post run results for all projects in your organization to the specified Slack channel.
 
 ## Slack configuration
 
-The Slack messages can be tailored to match your teams' needs. A few options include:
+You can tailor Slack messages to match your teams' needs. Options include:
 
-- Sending results to one or more public or private Slack channels or directly to a specific user.
-- Set notification preferences for when and where run results should be posted.
-- Configure at the organization-level and/or project-level to support multiple teams working on separate projects.
+- Sending results to one or more public or private Slack channels, or directly to a specific user.
+- Setting notification preferences for which run statuses trigger messages.
+- Choosing which content sections appear in each message.
+- Switching between stacked and compact display modes.
+- Configuring at the organization-level and/or project-level to support multiple teams working on separate projects.
 
-### Per-Organization vs per-project configuration
+### Per-organization vs per-project configuration
 
-The following describes where to go to configure Slack for an organization and a project.
+You can configure the Slack integration at two levels: for an entire organization (covering all projects) or for a specific project. Both can coexist — an organization-level channel and a project-level channel can both receive notifications for the same run, each with their own settings. See [Example configurations](#Example-configurations) for ways to combine these levels.
 
 #### Organization settings
 
@@ -76,11 +83,11 @@ Configure Slack for the organization:
 
 #### Project settings
 
-Configurate Slack for a project:
+Configure Slack for a project:
 
 1. Navigate to the **Project Settings** page for the project you wish to configure.
 2. Click on the **Integrations** tab within the **Project Settings** page.
-3. Configure the app with the **Slack Integration** section.
+3. Configure the app within the **Slack Integration** section.
 
 ### Slack channels
 
@@ -90,7 +97,7 @@ channel:
 1. Navigate to the **Slack** configuration page.
 2. Click **Add Slack Channel**.
 3. You'll see a popup window that allows you to choose the channel or individual to associate with the organization.
-4. Search for and selecting the channel messages should post to.
+4. Search for and select the channel messages should post to.
 
 Cypress Cloud will begin to post run results to the channel.
 
@@ -98,7 +105,7 @@ Cypress Cloud will begin to post run results to the channel.
 
 You can have Cypress Cloud post run results as a direct message to a single user. To post to a direct message:
 
-1. Navigate to the **Slack** configuration page
+1. Navigate to the **Slack** configuration page.
 2. Click **Add Slack Channel**.
 3. You'll see a popup window that allows you to choose the channel or individual to associate
    with the organization.
@@ -109,35 +116,123 @@ Cypress Cloud will begin to send run results to this user.
 ## Notification preferences
 
 By default, Cypress Cloud will post a Slack message to each configured channel
-only for failing runs. However, you can select any combination of the followings preferences:
+only for failing runs. You can select any combination of the following preferences:
 
-- **Failed runs**: will notify on runs with a _failed_ status.
-- **Passed runs**: will notify on runs with a _passed_ status.
-- **Flaky tests**: will notify on runs that have an identified _flaky_ test.
+- **Failed runs**: notifies on runs with a _failed_ or _errored_ status.
+- **Passed runs**: notifies on runs with a _passed_ status.
+- **Canceled runs**: notifies on runs with a _canceled_ status.
+- **Timed out runs**: notifies on runs with a _timed out_ status.
+- **Flaky tests**: notifies on runs that contain an identified _flaky_ test.
 
 To set notification preferences:
 
-1. Navigate to Slack configuration page
-2. Select the notification preferences for each channel
+1. Navigate to the **Slack** configuration page.
+2. Select the notification preferences for each channel.
+
+<!-- add image showing the notification preference checkboxes for a configured Slack channel, with all five options visible -->
+
+### Flaky test alerts
+
+The **Flaky tests** preference works independently from the run status preferences. This means you can configure a channel to receive notifications _only_ when flaky tests are detected — even if you don't subscribe to passed or failed runs. See [Example configurations](#Example-configurations) for a concrete setup.
+
+When flaky test alerts are enabled, the Slack message includes flaky test counts in the test results section and lists flaky specs alongside failed specs in the specs for review section.
+
+:::tip
+
+<Icon name="star" /> **Premium Cypress Cloud Feature**
+
+Flaky test detection requires the flaky test management feature to be enabled for your organization. See [Flaky Test Management](/cloud/features/flaky-test-management) for more details.
+
+:::
 
 ### Filter notifications by tag or run group
 
 When configuring at the project-level, you can filter notifications posted to Slack based on a
 [tag](/app/references/command-line#cypress-run-tag-lt-tag-gt) or
 [group](/app/references/command-line#cypress-run-group-lt-name-gt) the run was
-recorded with. This can be helpful to only post notifications on certain runs,
+recorded with. This is helpful for posting notifications only for certain runs,
 like those to a staging or release environment.
 
-1. Navigate to the **Slack** configuration page
+1. Navigate to the **Slack** configuration page.
 2. Under **Tags**, select the **Tag** dropdown for the desired integration and
-   select which tag(s) to filter. If more than one tag is selected the Slack message will be sent
+   select which tag(s) to filter. If more than one tag is selected, the Slack message will be sent
    if any of the tags were associated with the run.
 3. Under **Run Groups**, select the **Run Group** dropdown for the desired integration and
-   select which run group(s) to filter. If more than one run group is selected the Slack message will be
+   select which run group(s) to filter. If more than one run group is selected, the Slack message will be
    sent if any of the run groups were associated with the run.
 
 If both a tag and run group are selected, only a run associated with both criteria will
 trigger a message to be sent to Slack.
+
+<!-- add image showing the tag and run group filter dropdowns on the Slack configuration page for a project-level install -->
+
+## Message content
+
+Each Slack notification includes run metadata and up to six configurable content sections. You can choose which sections appear in your messages and how they're displayed.
+
+<!-- add image showing a complete Slack run completion message for a failed run, with all content sections visible -->
+
+### What's included in every message
+
+Every run completion message includes the following run properties:
+
+- **Run title**: The run number and commit message, linked to the run in Cypress Cloud.
+- **Run status**: A color-coded status indicator (passed, failed, errored, timed out, or canceled).
+- **Project**: The project name, linked to the project in Cypress Cloud.
+- **Branch**: The branch name where the run was recorded.
+- **Commit author**: The author of the commit that triggered the run.
+- **CI build**: The CI provider and build number, linked to the CI build.
+
+### Configurable content sections
+
+You can enable or disable any of the following content sections for each Slack channel:
+
+- **Test results**: Shows pass, fail, skip, pending, and flaky counts. Each count links directly to the filtered view in Cypress Cloud.
+- **UI Coverage results**: Shows the coverage percentage along with counts of tested and untested elements and links. Only appears when [UI Coverage](/ui-coverage/get-started/introduction) data is available.
+- **Accessibility results**: Shows the accessibility pass percentage, failed rules broken down by severity (critical, serious, moderate, minor), and failed elements. Only appears when [Cypress Accessibility](/accessibility/get-started/introduction) data is available.
+- **Specs for review**: Lists up to 10 failed and flaky spec files with clickable links, the count of failed or flaky tests in each, and the run group name. If there are more than 10, a link to see all specs is included.
+- **Run tags**: Displays the tags associated with the run.
+- **Run groups**: Displays the run groups associated with the run.
+
+To configure message content:
+
+1. Navigate to the **Slack** configuration page.
+2. Adjust the content sections for each channel.
+
+<!-- add image showing the message content configuration UI with toggles for each content section -->
+
+### Display modes
+
+You can choose between two display modes for your Slack messages:
+
+- **Stacked** (default): Each test result status appears on its own line with an icon and count. This is easier to scan when there are many statuses.
+- **Compact**: All status counts appear on a single line, saving vertical space in your Slack channel.
+
+The display mode applies to the test results, UI Coverage, and accessibility sections.
+
+<!-- add image showing the same run result in stacked and compact display modes side by side -->
+
+## Example configurations
+
+The options above — notification preferences, tag and run group filters, content sections, display modes, and org-vs-project scoping — can be combined to build notification setups tailored to how your team works. Below are some common configurations.
+
+### Route notifications by environment
+
+Create separate project-level channels for each environment and use tag filters to route runs to the right place. For example, a `#staging-tests` channel filtered to the `staging` tag with **Failed runs** and **Passed runs** enabled gives your QA team full visibility into staging health, while a `#prod-alerts` channel filtered to the `production` tag with only **Failed runs** enabled keeps production notifications focused on breakages.
+
+### Dedicated flaky test triage
+
+Add a channel like `#flaky-triage` with only the **Flaky tests** preference enabled and no run status preferences selected. This channel will only receive a notification when a run contains flaky tests — regardless of whether the run passed or failed — so your team can triage new flake without the noise of every run result.
+
+### Slim CI bridge for high-volume projects
+
+For projects with frequent CI runs, set up a channel with only the **Test results** content section enabled in **Compact** display mode. This gives your team a single-line pass/fail summary per run with a direct link to the CI build, keeping the channel scannable even at high volume.
+
+### Cross-team visibility with focused project channels
+
+Configure an organization-level `#cypress-results` channel with **Failed runs** enabled so leadership and stakeholders can monitor test health across all projects. Then add project-level channels like `#team-checkout-tests` with additional content sections (specs for review, run tags) and extra notification preferences (passed runs, flaky tests) so individual teams get the detail they need for the projects they own.
+
+## Managing channels
 
 ### Mute a channel
 
@@ -146,8 +241,22 @@ certain channel, you can **Mute** that channel. This allows you to easily pause
 and resume notifications for a specific channel without losing the configuration
 you've put in place.
 
-1. Navigate to the **Slack** configuration page
+1. Navigate to the **Slack** configuration page.
 2. Toggle the **Active** selector for each Slack channel you want muted.
+
+#### Per-project muting for organization channels
+
+If you have an organization-level Slack channel, you can mute it for specific projects without affecting other projects. This is useful when you want most projects to post to a shared channel but need to silence notifications for a particular project temporarily.
+
+1. Navigate to the **Project Settings** page for the project you want to mute.
+2. Click the **Integrations** tab.
+3. Toggle the mute setting for the organization-level Slack channel.
+
+:::caution
+
+Toggling the mute on an organization-level install will clear all project-level mute overrides for that channel. If you're using per-project muting, be aware that changing the global mute state resets those overrides.
+
+:::
 
 ### Remove a Slack channel
 
@@ -155,7 +264,7 @@ You can have Cypress Cloud stop posting notifications to a channel. You can
 remove all Slack channels if you'd prefer to disable global notifications
 altogether in favor of per-project notifications.
 
-1. Navigate to the **Slack** configuration page
+1. Navigate to the **Slack** configuration page.
 2. Under **Actions**, select **Delete** for each Slack channel you want
    deleted.
 
