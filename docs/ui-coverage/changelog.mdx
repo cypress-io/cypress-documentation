@@ -9,6 +9,14 @@ sidebar_position: 200
 
 # Changelog
 
+## Week of 2/6/2026
+
+- We now support fetching UI Coverage results from Buildkite CI with the [Results API](/ui-coverage/results-api).
+
+## Week of 1/16/2026
+
+- We now support fetching UI Coverage results from Bitbucket CI with the [Results API](/ui-coverage/results-api).
+
 ## Week of 12/19/2025
 
 - The `elementFilters`, `elements`, `elementGroups`, and `allowedInteractionCommands` configuration properties now support an optional `documentScope` field that allows you to scope selectors to specific document hosts (iframes or shadow DOM hosts). This enables you to target elements within nested document contexts without requiring DOM changes. For example, you can filter, identify, group, or restrict interactions for elements within a specific shadow DOM component or iframe by combining a selector with `documentScope`. Multiple document hosts can be chained in the array to target elements within nested documents (e.g., an iframe containing a shadow DOM component). See the [Element Filters](/ui-coverage/configuration/elementfilters), [Elements](/ui-coverage/configuration/elements), [Element Groups](/ui-coverage/configuration/elementgroups), and [Allowed Interaction Commands](/ui-coverage/configuration/allowedinteractioncommands) documentation for more details and examples.
