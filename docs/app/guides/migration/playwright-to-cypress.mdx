@@ -901,8 +901,7 @@ Beyond basic retries, Cypress Cloud provides:
 | `await expect(locator).toBeDisabled()`                           | `cy.get(...).should('be.disabled')`                                            |
 | `await expect(locator).toBeVisible()`                            | `cy.get(...).should('be.visible')`                                             |
 | `await expect(page).toHaveURL(/re/)`                             | `cy.url().should('match', /re/)`                                               |
-| `page.getByRole('button', { name: 'Save' })`                     | `cy.findByRole('button', { name: 'Save' })` (requires Cypress Testing Library) |
 | `page.route('**/api', ...)`                                      | `cy.intercept('/api', ...)`                                                    |
 | `await page.waitForResponse(...)`                                | `cy.intercept(...).as('x'); cy.wait('@x')`                                     |
-| `await page.setInputFiles('input[type=file]', 'file.png')`       | `cy.get('input[type=file]').selectFile('cypress/fixtures/file.png')`           |
+| `await page.setInputFiles('input[type=file]', 'file.png')`       | `cy.get('input[type=file]').selectFile('file.png')`                            |
 | `use: { storageState: 'state.json' }`                            | `cy.session('user', login)`                                                    |
