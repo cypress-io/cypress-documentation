@@ -16,18 +16,21 @@ Most migrations are incremental. You do not need to migrate all tests at
 once. Cypress and Playwright can coexist in the same repository during
 a transition.
 
+Jump to the [cheat sheet](#cheat-sheet) for a quick reference.
+
 ::::info
 
 ##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
 
-- How Cypress executes tests: retry-ability, command chaining, and what replaces async/await
-- Locators, actions, and assertions side by side
-- Network stubbing and request interception
-- Authentication flows, cross-origin testing, and multi-tab patterns
-- Running tests in CI: parallelization and Smart Orchestration
-- Debugging with Test Replay, screenshots, and video
-- Component Testing: supported frameworks and bundlers
-- Migrating page objects and extracting custom commands
+- How Cypress executes tests: command chaining, retry-ability, and what
+  replaces async/await
+- Configuration, CLI flags, and browser installation
+- Locators, interactions, assertions, and network stubbing mapped side by side
+- Authentication, cross-origin testing, and multi-tab patterns
+- Clock control, dialogs, iframes, and file handling
+- Page objects, parameterized tests, and custom commands
+- Parallelization, Smart Orchestration, Test Replay, and accessibility
+  testing in Cypress Cloud
 
 ::::
 
@@ -222,6 +225,49 @@ section covers the most common translations.
 | `--fully-parallel`                 | `--parallel`                                                                                      | Requires [Cypress Cloud](/cloud/get-started/introduction)                                               |
 | `--workers=4`                      | `--parallel`                                                                                      | Requires [Cypress Cloud](/cloud/get-started/introduction)                                               |
 
+### Passing environment variables
+ 
+In Cypress, use `cy.env()` for sensitive values (credentials, tokens, secrets)
+or `Cypress.expose()` for non-sensitive configuration (feature flags, public
+URLs, API versions). These must be set in the Node.js environment within 
+`setupNodeEvents` in your Cypress configuration file.
+
+<Badge type="danger">Before: Playwright</Badge>
+```ts
+test('logs in', async ({ page }) => {
+  await page.getByLabel('User Name').fill(process.env.USER_NAME)
+  await page.getByLabel('Password').fill(process.env.PASSWORD)
+})
+```
+
+<Badge type="success">After: Cypress</Badge>
+
+```ts
+export default defineConfig({
+  expose: {
+    API_VERSION: 'v2',
+  },
+  env: {
+    USER_NAME: process.env.USER_NAME,
+    PASSWORD: process.env.PASSWORD,
+  },
+})
+```
+
+```ts
+it('logs in', () => {
+  cy.env(['USER_NAME', 'PASSWORD']).then(({ USER_NAME, PASSWORD }) => {
+    const apiVersion = Cypress.expose('API_VERSION')
+    cy.visit(`/login/${apiVersion}`)
+    cy.get('[data-testid="username"]').type(USER_NAME)
+    cy.get('[data-testid="password"]').type(PASSWORD)
+  })
+})
+```
+
+See [cy.env()](/api/commands/env) and
+[Cypress.expose()](/api/cypress-api/expose) for the full reference.
+
 ## Browser installation
 
 Playwright and Cypress take different approaches to browser management.
@@ -240,21 +286,20 @@ find and use it. This means browser setup is a CI concern rather than a
 per-project dependency.
 
 <Badge type="danger">Before: Playwright</Badge>
-```sh # Download Playwright's browser binaries npx playwright install
-
+```sh
 # Download with OS-level dependencies
-
 npx playwright install --with-deps
 
 # Download specific browsers only
-
 npx playwright install chromium webkit
-
-````
+```
 
 <Badge type="success">After: Cypress</Badge>
-```sh # No install step needed — Cypress uses browsers already on the machine. #
-To verify which browsers Cypress can find: cypress info ````
+
+To verify which browsers Cypress can find:
+```sh
+ cypress info 
+```
 
 ### Browser support
 
@@ -1368,6 +1413,41 @@ export class LoginPage {
     cy.contains('button', 'Login').click()
   }
 }
+```
+
+## Parameterized tests
+
+Both Playwright and Cypress support generating tests from a data array using 
+standard JavaScript. The pattern is the same in both tools: call `.forEach()` 
+on your dataset outside of or inside a `describe` block, and generate one 
+test per entry.
+
+<Badge type="danger">Before: Playwright</Badge>
+```ts
+[
+  { name: 'Alice', expected: 'Hello, Alice!' },
+  { name: 'Bob', expected: 'Hello, Bob!' },
+  { name: 'Charlie', expected: 'Hello, Charlie!' },
+].forEach(({ name, expected }) => {
+  test(`testing with ${name}`, async ({ page }) => {
+    await page.goto(`https://example.com/greet?name=${name}`)
+    await expect(page.getByRole('heading')).toHaveText(expected)
+  })
+})
+```
+
+<Badge type="success">After: Cypress</Badge>
+```ts
+[
+  { name: 'Alice', expected: 'Hello, Alice!' },
+  { name: 'Bob', expected: 'Hello, Bob!' },
+  { name: 'Charlie', expected: 'Hello, Charlie!' },
+].forEach(({ name, expected }) => {
+  it(`testing with ${name}`, () => {
+    cy.visit(`/greet?name=${name}`)
+    cy.get('h1').should('have.text', expected)
+  })
+})
 ```
 
 ### Custom commands
