@@ -766,18 +766,122 @@ export default defineConfig({
 
 See [Cypress Configuration](/app/references/configuration).
 
+## CLI/Command line migration
 
+Playwright and Cypress use different commands and flag structures. This 
+section covers the most common translations.
 
-## CLI differences
+### Base commands
 
-Playwright commonly runs browsers via projects (`--project=chromium|firefox|webkit`). Cypress runs browsers via the `--browser` flag.
+| Task | Playwright | Cypress |
+|---|---|---|
+| Run all tests (headless) | `npx playwright test` | `cypress run` |
+| Open interactive mode | `npx playwright test --ui` | `cypress open` |
+| Run in headed mode | `npx playwright test --headed` | `cypress run --headed` |
 
+### Common flag translations
+
+| Playwright | Cypress | Notes |
+|---|---|---|
+| `--config=playwright.config.ts` | `--config-file cypress.config.ts` | |
+| `npx playwright test todo.spec.ts` | `cypress run --spec "todo.cy.ts"` | Run a single spec file or glob pattern |
+| `--fail-on-flaky-tests` | `detect-flake-but-always-fail` in Configuration | See [Experimental Test Retries](/app/references/experiments#Experimental-Test-Retries) |
+| `--forbid-only` | use `mocha/no-exclusive-tests` lint rule | [eslint-plugin-mocha](https://www.npmjs.com/package/eslint-plugin-mocha) |
+| `--grep "pattern"` | `--expose grep="pattern"` | Requires [`@cypress/grep`](https://github.com/cypress-io/cypress/tree/develop/npm/grep) |
+| `--grep-invert "pattern"` | `--expose grep="-pattern"` | Requires [`@cypress/grep`](https://github.com/cypress-io/cypress/tree/develop/npm/grep) |
+| `--last-failed` | [Spec Prioritization](/cloud/features/smart-orchestration/spec-prioritization) | Requires [Cypress Cloud](/cloud/overview) |
+| `--max-failures=5` | `--auto-cancel-after-failures=5` | Requires [Run Cancellation](/cloud/features/smart-orchestration/run-cancellation) |
+| `--project=chromium` | [`--project='./front-end'`](/app/references/command-line#cypress-open-project-lt-project-path-gt) |  |
+| `--quiet` | `--quiet` |  |
+| `--retries=2` | `--config retries=2` | |
+| `--reporter=html` | `--reporter html` | |
+| `--shard=1/4` | `--parallel --ci-build-id $BUILD_ID` | Cypress distributes specs dynamically; no manual sharding required |
+| `--trace on` | `--record` | Cypress Test Replay requires [Cypress Cloud](/cloud/overview) |
+| `--fully-parallel` | `--parallel` | Requires [Cypress Cloud](/cloud/overview) |
+| `--workers=4` | `--parallel` | Requires [Cypress Cloud](/cloud/overview) |
+
+### Run specific specs
+
+<Badge type="danger">Before: Playwright</Badge>
 ```sh
-# Cypress
-cypress run --browser firefox
+# Single file
+npx playwright test tests/login.spec.ts
+
+# Match by filename pattern
+npx playwright test login
+
+# Multiple files
+npx playwright test tests/login.spec.ts tests/signup.spec.ts
 ```
 
-See [Launching Browsers](/app/references/launching-browsers) and [Cross Browser Testing](/app/guides/cross-browser-testing).
+<Badge type="success">After: Cypress</Badge>
+```sh
+# Single file
+cypress run --spec "cypress/e2e/login.cy.ts"
+
+# Glob pattern
+cypress run --spec "cypress/e2e/auth/**/*"
+
+# Multiple files
+cypress run --spec "cypress/e2e/login.cy.ts,cypress/e2e/signup.cy.ts"
+```
+
+### Filter by test title
+
+<Badge type="danger">Before: Playwright</Badge>
+```sh
+npx playwright test --grep "signs up"
+```
+
+<Badge type="success">After: Cypress</Badge>
+```sh
+cypress run --env grep="signs up"
+```
+
+Cypress test title filtering requires the 
+[`@cypress/grep`](https://github.com/cypress-io/cypress/tree/develop/npm/grep) 
+plugin. Install it once and the `--env grep` flag works across your suite.
+
+### Override config values
+
+<Badge type="danger">Before: Playwright</Badge>
+```sh
+npx playwright test --timeout=60000 --retries=3
+```
+
+<Badge type="success">After: Cypress</Badge>
+```sh
+cypress run --config defaultCommandTimeout=60000,retries=3
+```
+
+### Flags with no direct equivalent
+
+A few Playwright flags do not map one-to-one to a Cypress CLI flag.
+
+**`--last-failed`**
+
+Playwright re-runs only the tests that failed in the previous run. Cypress 
+does not have a CLI flag for this. In Cypress Cloud, 
+[Spec Prioritization](/cloud/features/smart-orchestration/spec-prioritization) 
+automatically runs previously failed specs first on every CI run.
+
+**`--forbid-only`**
+
+Playwright prevents commits that contain `test.only` from running in CI. 
+Cypress does not have an equivalent flag, but `cy.only` is ignored in 
+`cypress run` by default. To enforce this in CI, use a lint rule or a 
+pre-commit hook to catch `.only` calls before they reach your pipeline.
+
+**`--repeat-each`**
+
+Playwright can run each test N times to check for flakiness. Cypress does 
+not have a direct CLI equivalent. To detect flakiness before committing, 
+run your spec multiple times by calling the command repeatedly, or use 
+Cypress Cloud's [flaky test management](/cloud/features/flaky-test-management) 
+to track flake rates automatically over time.
+
+See [Command Line](/app/references/command-line) for a full reference of 
+Cypress CLI flags.
 
 ## CI parallelization
 
