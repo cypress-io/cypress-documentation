@@ -966,20 +966,54 @@ In your support file, import the command once:
 import '@cypress/puppeteer/support'
 ```
 
-## Iframes and Shadow DOM
+## Iframes
 
-Playwright can interact with elements inside iframes using `frameLocator()`.
+Cypress has no equivalent single command. The standard approach is to get the 
+iframe element, access its `contentDocument.body`, and then wrap that body 
+element with `cy.wrap()` so you can use Cypress commands on its contents. The 
+`.should('not.be.empty')` assertion ensures Cypress waits for the frame's 
+document to load before proceeding.
 
 <Badge type="danger">Before: Playwright</Badge>
-
 ```ts
-await page
-  .frameLocator('iframe[name="checkout"]')
-  .getByTestId('pay-now')
-  .click()
+// Locate and fill a field inside an iframe
+const frame = page.frameLocator('#payment-frame')
+await frame.getByLabel('Card number').fill('4242424242424242')
+await frame.getByLabel('Expiry').fill('12/26')
+await frame.getByRole('button', { name: 'Pay now' }).click()
 ```
 
-In Cypress, iframe support is more limited. If you need to test inside a third-party iframe, see the recipe [Testing iframes](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/blogs__iframes).
+<Badge type="success">After: Cypress</Badge>
+```ts
+cy.get('#payment-frame')
+  .its('0.contentDocument.body')
+  .should('not.be.empty')
+  .then(cy.wrap)
+  .within(() => {
+    cy.get('input[aria-label="Card number"]').type('4242424242424242')
+    cy.get('input[aria-label="Expiry"]').type('12/26')
+    cy.contains('button', 'Pay now').click()
+  })
+```
+
+If you interact with the same iframe across multiple tests, extract the frame 
+access into a custom command to avoid repeating the boilerplate:
+```ts
+// cypress/support/commands.ts
+Cypress.Commands.add('getIframeBody', (selector: string) => {
+  return cy.get(selector)
+    .its('0.contentDocument.body')
+    .should('not.be.empty')
+    .then(cy.wrap)
+})
+
+// In your test
+cy.getIframeBody('#payment-frame').within(() => {
+  cy.contains('button', 'Pay now').click()
+})
+```
+
+## Shadow DOM
 
 For Shadow DOM in Cypress, you can traverse explicitly:
 
@@ -996,8 +1030,7 @@ See [`.shadow()`](/api/commands/shadow).
 [Cypress Studio](/app/guides/cypress-studio) lets you generate test code
 by interacting with your application in the Cypress app. It records
 actions like clicks and form inputs and writes the corresponding Cypress
-commands. It is useful for prototyping tests but is not a replacement for
-hand-authored test logic. Cypress Studio is a replacement for Playwright's `playwright codegen`.
+commands. Cypress Studio is a replacement for Playwright's `playwright codegen`.
 
 <DocsVideo
   src="/img/app/cypress-studio/cypress-studio-recording-assertions-editing.mp4"
@@ -1306,7 +1339,7 @@ describe('Button', () => {
 
 See [Component Testing](/app/component-testing/get-started) and [`cy.mount()`](/api/commands/mount).
 
-## Common migration patterns
+## Reusable code patterns
 
 ### Page object model
 
@@ -1487,7 +1520,7 @@ Beyond basic retries, Cypress Cloud provides:
 - Provides analytics on which specs are most flaky
 - Helps prioritize stability improvements
 
-### Accessibility testing
+## Accessibility testing
 
 If you record test runs to Cypress Cloud, [Cypress Accessibility](/accessibility/get-started/introduction) provides automated accessibility scanning across your entire test suite with no changes to your test code.
 
@@ -1498,8 +1531,8 @@ Learn more about [Accessibility testing](/accessibility/get-started/introduction
 ## Cheat sheet
 
 | Playwright                                                         | Cypress                                                                      |
-| ------------------------------------------------------------------ | ---------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
-| `page.locator('css')`                                              | `cy.get('css')`                                                              |
+| ------------------------------------------------------------------ | ---------------------------------------------------------------------------- | 
+| page.locator('css')                                              | cy.get('css')                                                              |
 | `page.getByTestId('x')`                                            | `cy.get('[data-testid=\"x\"]')`                                              |
 | `await page.goto('/path')`                                         | `cy.visit('/path')`                                                          |
 | `await page.getByLabel('I agree').check()`                         | `cy.get('[aria-label="I agree"]').check()`                                   |
@@ -1532,19 +1565,15 @@ Learn more about [Accessibility testing](/accessibility/get-started/introduction
 | `await expect(page).toHaveURL(/re/)`                               | `cy.url().should('match', /re/)`                                             |
 | `page.route('**/api', ...)`                                        | `cy.intercept('/api', ...)`                                                  |
 | `use: { storageState: 'state.json' }`                              | `cy.session('user', login)`                                                  |
-| `page.screenshot()`                                                | cy.screenshot()                                                              |                                                                            |
-| `await page.locator('.header').screenshot()`                       | cy.get('.header').screenshot()                                               |                                                                            |
-| `page.clock.setFixedTime(date)`                                    | `cy.clock(now)`                                                              | Playwright's `setFixedTime` leaves timers running; `cy.clock()` stops them |
-| `page.clock.install({ time })`                                     | `cy.clock(now)`                                                              | Direct equivalent                                                          |
-| `page.clock.fastForward(duration)`                                 | `cy.tick(ms)`                                                                | Cypress only accepts milliseconds                                          |
-| `page.clock.runFor(duration)`                                      | `cy.tick(ms)`                                                                | Cypress only accepts milliseconds                                          |
-| `page.clock.pauseAt(date)`                                         | No equivalent                                                                | Calculate the delta and use `cy.tick()`                                    |
-| `page.clock.resume()`                                              | No equivalent                                                                | In Cypress, time only moves when `cy.tick()` is called                     |
-| `page.clock.setSystemTime(date)`                                   | `clock.setSystemTime(date)`                                                  | Both change the time without firing timers                                 |
-| `page.on('dialog', dialog => dialog.accept())`                     | Auto-accepted by default                                                     | No handler needed to accept `alert()` or `confirm()`                       |
-| `page.on('dialog', dialog => dialog.dismiss())`                    | `cy.on('window:confirm', () => false)`                                       | `alert()` cannot be dismissed in Cypress                                   |
-| `page.on('dialog', dialog => dialog.accept('text'))`               | `cy.stub(win, 'prompt').returns('text')` in `onBeforeLoad`                   | Cypress requires a stub; there is no `window:prompt` event                 |
-| `dialog.message()`                                                 | `cy.on('window:alert', msg => ...)` or `cy.on('window:confirm', msg => ...)` | Inspect dialog text inside the event handler                               |
-| `dialog.type()`                                                    | Separate events per dialog type                                              | `window:alert`, `window:confirm`; `prompt` requires a stub                 |
-| `page.on('dialog')` with `beforeunload`                            | `cy.on('window:before:unload', event => ...)`                                | Cypress cannot intercept or cancel the `beforeunload` dialog               |
-| Evaluate + `waitForFunction` for `window.print`                    | `cy.stub(win, 'print')` in `onBeforeLoad`                                    | Cypress approach is simpler and uses the same stub API                     |
+| `page.screenshot()`                                                | cy.screenshot()                                                              |                                                                            
+| `await page.locator('.header').screenshot()`                       | cy.get('.header').screenshot()                                               |                                                                            
+| `page.clock.setFixedTime(date)`                                    | `cy.clock(now)`                                                              | 
+| `page.clock.install({ time })`                                     | `cy.clock(now)`                                                              | 
+| `page.clock.fastForward(duration)`                                 | `cy.tick(ms)`                                                                | 
+| `page.clock.runFor(duration)`                                      | `cy.tick(ms)`                                                                | 
+| `page.clock.setSystemTime(date)`                                   | `clock.setSystemTime(date)`                                                  | 
+| `page.on('dialog', dialog => dialog.accept())`                     | Auto-accepted by default                                                     | 
+| `page.on('dialog', dialog => dialog.dismiss())`                    | `cy.on('window:confirm', () => false)`                                       | 
+| `page.on('dialog', dialog => dialog.accept('text'))`               | `cy.stub(win, 'prompt').returns('text')` in `onBeforeLoad`                   | 
+| `page.on('dialog')` with `beforeunload`                            | `cy.on('window:before:unload', event => ...)`                                | 
+| Evaluate + `waitForFunction` for `window.print`                    | `cy.stub(win, 'print')` in `onBeforeLoad`                                    | 
