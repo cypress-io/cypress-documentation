@@ -1063,6 +1063,188 @@ cy.readFile('cypress/downloads/export.csv')
 
 See [`cy.readFile()`](/api/commands/readfile).
 
+## Dialogs
+
+### Default behavior
+
+The two tools handle unhandled dialogs differently, and this affects how you 
+approach tests that trigger them.
+
+### alert()
+
+Cypress always accepts `alert()` dialogs.
+
+<Badge type="danger">Before: Playwright</Badge>
+```ts
+// Register a handler to inspect the alert text before accepting
+page.on('dialog', async (dialog) => {
+  expect(dialog.type()).toBe('alert')
+  expect(dialog.message()).toBe('Unsaved changes will be lost.')
+  await dialog.accept()
+})
+
+await page.getByRole('button', { name: 'Leave page' }).click()
+```
+
+<Badge type="success">After: Cypress</Badge>
+```ts
+// Cypress auto-accepts alerts. Listen to assert on the message.
+cy.on('window:alert', (message) => {
+  expect(message).to.eq('Unsaved changes will be lost.')
+})
+
+cy.get('button').contains('Leave page').click()
+```
+
+### confirm()
+
+<Badge type="danger">Before: Playwright</Badge>
+```ts
+// Accept the confirmation
+page.on('dialog', (dialog) => dialog.accept())
+await page.getByRole('button', { name: 'Delete account' }).click()
+await expect(page.getByText('Account deleted')).toBeVisible()
+
+// Dismiss the confirmation
+page.on('dialog', (dialog) => dialog.dismiss())
+await page.getByRole('button', { name: 'Delete account' }).click()
+await expect(page.getByText('Account deleted')).not.toBeVisible()
+```
+
+<Badge type="success">After: Cypress</Badge>
+```ts
+// Cypress auto-accepts confirm(). No handler needed to test the accepted path.
+cy.get('button').contains('Delete account').click()
+cy.contains('Account deleted').should('be.visible')
+
+// Return false to dismiss the confirmation
+cy.on('window:confirm', () => false)
+cy.get('button').contains('Delete account').click()
+cy.contains('Account deleted').should('not.exist')
+```
+
+If you need to assert on the confirmation message text and control acceptance 
+in the same test, combine both:
+
+```ts
+cy.on('window:confirm', (message) => {
+  expect(message).to.eq('Are you sure you want to delete your account?')
+  return false // return true or omit the return to accept
+})
+
+cy.get('button').contains('Delete account').click()
+```
+
+For tests that need to verify the stub was called, use `cy.stub()` instead of 
+`cy.on()`. This lets you use Sinon assertions to confirm the dialog was 
+triggered the expected number of times.
+
+```ts
+const confirmStub = cy.stub().as('confirmDialog').returns(false)
+cy.on('window:confirm', confirmStub)
+
+cy.get('button').contains('Delete account').click()
+cy.get('@confirmDialog').should('have.been.calledOnce')
+```
+
+### prompt()
+
+In Cypress, you must stub `window.prompt` before 
+the page loads using the `onBeforeLoad` callback in `cy.visit()`. This gives 
+you full control over the return value and lets you assert that the prompt 
+was called.
+
+<Badge type="danger">Before: Playwright</Badge>
+```ts
+page.on('dialog', async (dialog) => {
+  expect(dialog.type()).toBe('prompt')
+  expect(dialog.message()).toBe('Enter your name:')
+  await dialog.accept('Ada Lovelace')
+})
+
+await page.getByRole('button', { name: 'Set name' }).click()
+await expect(page.getByTestId('greeting')).toHaveText('Hello, Ada Lovelace!')
+```
+
+<Badge type="success">After: Cypress</Badge>
+```ts
+cy.visit('/', {
+  onBeforeLoad(win) {
+    cy.stub(win, 'prompt').as('promptDialog').returns('Ada Lovelace')
+  },
+})
+
+cy.get('button').contains('Set name').click()
+cy.get('[data-testid="greeting"]').should('have.text', 'Hello, Ada Lovelace!')
+cy.get('@promptDialog').should('have.been.calledWith', 'Enter your name:')
+```
+
+To simulate the user cancelling the prompt (equivalent to `dialog.dismiss()` 
+in Playwright), return `null` from the stub:
+
+```ts
+cy.visit('/', {
+  onBeforeLoad(win) {
+    cy.stub(win, 'prompt').returns(null)
+  },
+})
+```
+
+### beforeunload
+
+If your tests need to verify that a `beforeunload` handler is registered and 
+sets a `returnValue`, use the `window:before:unload` event to assert on the 
+event object directly:
+
+<Badge type="danger">Before: Playwright</Badge>
+```ts
+page.on('dialog', async (dialog) => {
+  expect(dialog.type()).toBe('beforeunload')
+  await dialog.dismiss()
+})
+
+await page.close({ runBeforeUnload: true })
+```
+
+<Badge type="success">After: Cypress</Badge>
+```ts
+// Assert that the beforeunload handler fired and set a returnValue
+cy.on('window:before:unload', (event) => {
+  expect(event.returnValue).to.eq('')
+})
+
+// Trigger navigation to fire beforeunload
+cy.get('a').contains('Leave').click()
+```
+
+### print dialogs
+
+In Cypress, stub `window.print` using `onBeforeLoad` in `cy.visit()` and 
+assert that the stub was called.
+
+<Badge type="danger">Before: Playwright</Badge>
+```ts
+await page.goto('/')
+await page.evaluate(
+  '(() => { window.waitForPrint = new Promise(f => window.print = f) })()'
+)
+
+await page.getByRole('button', { name: 'Print invoice' }).click()
+await page.waitForFunction('window.waitForPrint')
+```
+
+<Badge type="success">After: Cypress</Badge>
+```ts
+cy.visit('/', {
+  onBeforeLoad(win) {
+    cy.stub(win, 'print').as('printDialog')
+  },
+})
+
+cy.get('button').contains('Print invoice').click()
+cy.get('@printDialog').should('have.been.calledOnce')
+```
+
 ## API testing
 
 <Badge type="danger">Before: Playwright</Badge>
@@ -1354,6 +1536,8 @@ Learn more about [Accessibility testing](/accessibility/get-started/introduction
 | `await expect(page).toHaveURL(/re/)`                             | `cy.url().should('match', /re/)`                                               |
 | `page.route('**/api', ...)`                                      | `cy.intercept('/api', ...)`                                                    |
 | `use: { storageState: 'state.json' }`                            | `cy.session('user', login)`                                                    |
+| `page.screenshot()` | cy.screenshot() |  |
+| `await page.locator('.header').screenshot()` | cy.get('.header').screenshot() |  |
 | `page.clock.setFixedTime(date)` | `cy.clock(now)` | Playwright's `setFixedTime` leaves timers running; `cy.clock()` stops them |
 | `page.clock.install({ time })` | `cy.clock(now)` | Direct equivalent |
 | `page.clock.fastForward(duration)` | `cy.tick(ms)` | Cypress only accepts milliseconds |
@@ -1361,3 +1545,10 @@ Learn more about [Accessibility testing](/accessibility/get-started/introduction
 | `page.clock.pauseAt(date)` | No equivalent | Calculate the delta and use `cy.tick()` |
 | `page.clock.resume()` | No equivalent | In Cypress, time only moves when `cy.tick()` is called |
 | `page.clock.setSystemTime(date)` | `clock.setSystemTime(date)` | Both change the time without firing timers |
+| `page.on('dialog', dialog => dialog.accept())` | Auto-accepted by default | No handler needed to accept `alert()` or `confirm()` |
+| `page.on('dialog', dialog => dialog.dismiss())` | `cy.on('window:confirm', () => false)` | `alert()` cannot be dismissed in Cypress |
+| `page.on('dialog', dialog => dialog.accept('text'))` | `cy.stub(win, 'prompt').returns('text')` in `onBeforeLoad` | Cypress requires a stub; there is no `window:prompt` event |
+| `dialog.message()` | `cy.on('window:alert', msg => ...)` or `cy.on('window:confirm', msg => ...)` | Inspect dialog text inside the event handler |
+| `dialog.type()` | Separate events per dialog type | `window:alert`, `window:confirm`; `prompt` requires a stub |
+| `page.on('dialog')` with `beforeunload` | `cy.on('window:before:unload', event => ...)` | Cypress cannot intercept or cancel the `beforeunload` dialog |
+| Evaluate + `waitForFunction` for `window.print` | `cy.stub(win, 'print')` in `onBeforeLoad` | Cypress approach is simpler and uses the same stub API |
