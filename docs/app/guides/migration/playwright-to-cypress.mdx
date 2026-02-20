@@ -79,7 +79,7 @@ describe('Authorization', () => {
     cy.url().should('include', 'signup/success')
   })
 })
-````
+```
 
 ## Installing Cypress
 
@@ -119,7 +119,7 @@ The configuration file location is configurable using the `--config-file` comman
 | `forbidOnly`            | use `mocha/no-exclusive-tests` lint rule | [eslint-plugin-mocha](https://www.npmjs.com/package/eslint-plugin-mocha)                    |
 | `headless`              | `--headless` or `--headed` CLI flag      | Default headless in `cypress run`                                                           |
 | `outputDir`             | `screenshotsFolder` / `videosFolder`     | Separate options per asset type                                                             |
-| `reporter`              | `reporter`                               | See [Reporters]('/app/references/reporters').                                                 |
+| `reporter`              | `reporter`                               | See [Reporters](/app/tooling/reporters).                                                 |
 | `retries`               | `retries.runMode` / `retries.openMode`   | Cypress separates CI and interactive mode retries                                           |
 | `testDir`               | `e2e.specPattern`                        | Cypress uses a glob, not a path.                                                            |
 | `testIgnore`            | `e2e.excludeSpecPattern`                 | Glob string or array of globs.                                                              |
