@@ -62,7 +62,7 @@ test.describe('Authorization', () => {
 ```
 
 <Badge type="success">After: Cypress</Badge>
-```ts title="test.cy.ts" 
+```ts title="test.cy.ts"
 describe('Authorization', () => {
   it('signs up', () => {
     // Navigate
@@ -243,7 +243,7 @@ export default defineConfig({
 })
 ```
 
-```ts title="test.cy.ts" 
+```ts title="test.cy.ts"
 it('logs in', () => {
   cy.env(['USER_NAME', 'PASSWORD']).then(({ USER_NAME, PASSWORD }) => {
     const apiVersion = Cypress.expose('API_VERSION')
@@ -416,7 +416,7 @@ test.describe('checkout', () => {
 ```
 
 <Badge type="success">After: Cypress</Badge>
-```ts title="test.cy.ts" 
+```ts title="test.cy.ts"
 describe('checkout', () => {
   it('completes purchase', () => { ... })
   it.only('applies discount', () => { ... })
@@ -445,7 +445,7 @@ await expect(page.getByTestId('toast')).toHaveText('Saved!')
 
 <Badge type="success">After: Cypress</Badge>
 
-```ts title="test.cy.ts" 
+```ts title="test.cy.ts"
 cy.get('[data-testid="submit"]').click()
 cy.get('[data-testid="toast"]').should('have.text', 'Saved!')
 ```
@@ -468,7 +468,7 @@ Cypress uses command chaining without async/await.
 
 <Badge type="success">After: Cypress</Badge>
 
-```ts title="test.cy.ts" 
+```ts title="test.cy.ts"
 cy.get('button').contains('Submit').click()
 cy.get('[data-testid="toast"]').should('have.text', 'Success')
 ```
@@ -490,7 +490,7 @@ await page.getByRole('button', { name: 'Sign in' }).click()
 
 <Badge type="success">After: Cypress</Badge>
 
-```ts title="test.cy.ts" 
+```ts title="test.cy.ts"
 cy.get('[data-testid="email"]').type('user@email.com')
 cy.contains('button', 'Sign in').click()
 ```
@@ -508,7 +508,7 @@ await page.getByLabel('First name').fill('Jane')
 
 <Badge type="success">After: Cypress</Badge>
 
-```ts title="test.cy.ts" 
+```ts title="test.cy.ts"
 cy.findByRole('button', { name: 'Save' }).click()
 cy.findByLabelText('First name').type('Jane')
 ```
@@ -527,7 +527,7 @@ await page.getByRole('button', { name: 'Log in' }).click()
 
 <Badge type="success">After: Cypress</Badge>
 
-```ts title="test.cy.ts" 
+```ts title="test.cy.ts"
 cy.get('#username').clear()
 cy.get('#username').type('jane')
 cy.get('#password').clear()
@@ -547,7 +547,7 @@ await page.getByLabel('Country').selectOption('US')
 
 <Badge type="success">After: Cypress</Badge>
 
-```ts title="test.cy.ts" 
+```ts title="test.cy.ts"
 cy.get('[data-testid="subscribe"]').check()
 cy.get('[data-testid="daily"]').check()
 cy.get('[data-testid="country"]').select('US')
@@ -564,7 +564,7 @@ await page.getByRole('menuitem', { name: 'Settings' }).click()
 
 <Badge type="success">After: Cypress</Badge>
 
-```ts title="test.cy.ts" 
+```ts title="test.cy.ts"
 cy.get('[data-testid="menu"]').trigger('mouseover')
 cy.contains('[role="menuitem"]', 'Settings').click()
 ```
@@ -580,7 +580,7 @@ await page.goto('/')
 
 <Badge type="success">After: Cypress</Badge>
 
-```ts title="test.cy.ts" 
+```ts title="test.cy.ts"
 cy.viewport(375, 812)
 cy.visit('/')
 ```
@@ -600,7 +600,7 @@ await expect(page.getByTestId('spinner')).toBeHidden()
 
 <Badge type="success">After: Cypress</Badge>
 
-```ts title="test.cy.ts" 
+```ts title="test.cy.ts"
 cy.contains('Welcome').should('be.visible')
 cy.get('[data-testid="spinner"]').should('not.be.visible')
 ```
@@ -617,7 +617,7 @@ await expect(page).toHaveURL(/\/dashboard$/)
 
 <Badge type="success">After: Cypress</Badge>
 
-```ts title="test.cy.ts" 
+```ts title="test.cy.ts"
 cy.get('[data-testid="toast"]').should('have.text', 'Saved!')
 cy.contains('button', 'Save').should('be.disabled')
 cy.url().should('match', /\/dashboard$/)
@@ -639,7 +639,7 @@ await expect(page.getByTestId('toast')).toHaveText('Saved!')
 
 <Badge type="success">After: Cypress</Badge>
 
-```ts title="test.cy.ts" 
+```ts title="test.cy.ts"
 cy.intercept('POST', '/api/profile').as('saveProfile')
 cy.contains('button', 'Save').click()
 cy.wait('@saveProfile')
@@ -664,7 +664,7 @@ expect(response.ok()).toBeTruthy()
 
 <Badge type="success">After: Cypress</Badge>
 
-```ts title="test.cy.ts" 
+```ts title="test.cy.ts"
 cy.intercept('GET', '/api/users').as('users')
 cy.contains('button', 'Load users').click()
 cy.wait('@users').its('response.statusCode').should('eq', 200)
@@ -686,7 +686,7 @@ await page.route('**/api/projects', async (route) => {
 
 <Badge type="success">After: Cypress</Badge>
 
-```ts title="test.cy.ts" 
+```ts title="test.cy.ts"
 cy.intercept('GET', '/api/projects', {
   statusCode: 200,
   body: [{ id: '1' }, { id: '2' }],
@@ -708,7 +708,7 @@ await page.route('**/api/profile', async (route) => {
 
 <Badge type="success">After: Cypress</Badge>
 
-```ts title="test.cy.ts" 
+```ts title="test.cy.ts"
 cy.intercept('GET', '/api/profile', (req) => {
   req.continue((res) => {
     res.body.plan = 'enterprise'
@@ -779,7 +779,7 @@ await expect(page.getByRole('banner')).toBeVisible()
 
 <Badge type="success">After: Cypress</Badge>
 
-```ts title="test.cy.ts" 
+```ts title="test.cy.ts"
 cy.visit('https://site-a.example')
 cy.origin('https://site-b.example', () => {
   cy.visit('https://site-b.example')
@@ -859,7 +859,7 @@ expect(page.getByTestId('current-time')).toHaveText('2/2/2024, 10:00:00 AM')
 ```
 
 <Badge type="success">After: Cypress</Badge>
-```ts title="test.cy.ts" 
+```ts title="test.cy.ts"
 cy.clock(new Date('2024-02-02T10:00:00')) cy.visit('/')
 cy.get('[data-testid="current-time"]').should('have.text', '2/2/2024, 10:00:00
 AM') 
@@ -881,7 +881,7 @@ await expect(page.getByText('Session expired')).toBeVisible()
 ```
 
 <Badge type="success">After: Cypress</Badge>
-```ts title="test.cy.ts" 
+```ts title="test.cy.ts"
 cy.clock()
 cy.visit('/')
 cy.getByRole('button').click()
@@ -911,7 +911,7 @@ await expect(page.getByTestId('current-time')).toHaveText('2/2/2024, 10:30:00 AM
 ```
 
 <Badge type="success">After: Cypress</Badge>
-```ts title="test.cy.ts" 
+```ts title="test.cy.ts"
 cy.clock(new Date('2024-02-02T08:00:00'))
 cy.visit('/')
 
@@ -938,7 +938,7 @@ await page.clock.setSystemTime(new Date('2024-02-02T10:30:00'))
 ```
 
 <Badge type="success">After: Cypress</Badge>
-```ts title="test.cy.ts" 
+```ts title="test.cy.ts"
 cy.clock(new Date('2024-02-02T10:00:00'))
 cy.visit('/')
 
@@ -1016,7 +1016,7 @@ In your support file, import the command once:
 import '@cypress/puppeteer/support'
 ```
 
-```ts title="test.cy.ts" 
+```ts title="test.cy.ts"
 cy.visit('/')
 cy.contains('button', 'Open new tab').click()
 
@@ -1044,7 +1044,7 @@ await frame.getByRole('button', { name: 'Pay now' }).click()
 ```
 
 <Badge type="success">After: Cypress</Badge>
-```ts title="test.cy.ts" 
+```ts title="test.cy.ts"
 cy.get('#payment-frame')
   .its('0.contentDocument.body')
   .should('not.be.empty')
@@ -1080,7 +1080,7 @@ For Shadow DOM in Cypress, you can traverse explicitly:
 
 <Badge type="success">Cypress</Badge>
 
-```ts title="test.cy.ts" 
+```ts title="test.cy.ts"
 cy.get('[data-testid="shadow-host"]').shadow().find('button').click()
 ```
 
@@ -1105,7 +1105,7 @@ await page.getByRole('button', { name: 'Leave page' }).click()
 ```
 
 <Badge type="success">After: Cypress</Badge>
-```ts title="test.cy.ts" 
+```ts title="test.cy.ts"
 // Cypress auto-accepts alerts. Listen to assert on the message.
 cy.on('window:alert', (message) => {
   expect(message).to.eq('Unsaved changes will be lost.')
@@ -1130,7 +1130,7 @@ await expect(page.getByText('Account deleted')).not.toBeVisible()
 ```
 
 <Badge type="success">After: Cypress</Badge>
-```ts title="test.cy.ts" 
+```ts title="test.cy.ts"
 // Cypress auto-accepts confirm(). No handler needed to test the accepted path.
 cy.get('button').contains('Delete account').click()
 cy.contains('Account deleted').should('be.visible')
@@ -1185,7 +1185,7 @@ await expect(page.getByTestId('greeting')).toHaveText('Hello, Ada Lovelace!')
 ```
 
 <Badge type="success">After: Cypress</Badge>
-```ts title="test.cy.ts" 
+```ts title="test.cy.ts"
 cy.visit('/', {
   onBeforeLoad(win) {
     cy.stub(win, 'prompt').as('promptDialog').returns('Ada Lovelace')
@@ -1225,7 +1225,7 @@ await page.close({ runBeforeUnload: true })
 ```
 
 <Badge type="success">After: Cypress</Badge>
-```ts title="test.cy.ts" 
+```ts title="test.cy.ts"
 // Assert that the beforeunload handler fired and set a returnValue
 cy.on('window:before:unload', (event) => {
   expect(event.returnValue).to.eq('')
@@ -1252,7 +1252,7 @@ await page.waitForFunction('window.waitForPrint')
 ```
 
 <Badge type="success">After: Cypress</Badge>
-```ts title="test.cy.ts" 
+```ts title="test.cy.ts"
 cy.visit('/', {
   onBeforeLoad(win) {
     cy.stub(win, 'print').as('printDialog')
@@ -1275,7 +1275,7 @@ expect(res.ok()).toBeTruthy()
 
 <Badge type="success">After: Cypress</Badge>
 
-```ts title="test.cy.ts" 
+```ts title="test.cy.ts"
 cy.request('/api/health').its('status').should('eq', 200)
 ```
 
@@ -1385,7 +1385,7 @@ test per entry.
 ```
 
 <Badge type="success">After: Cypress</Badge>
-```ts title="test.cy.ts" 
+```ts title="test.cy.ts"
 [
   { name: 'Maya', expected: 'Hello, Maya!' },
   { name: 'Theo', expected: 'Hello, Theo!' },
