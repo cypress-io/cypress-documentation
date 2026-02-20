@@ -276,7 +276,7 @@ per-project dependency.
 
 <Badge type="danger">Before: Playwright</Badge>
 
-```sh
+```shell
 npx playwright install chromium webkit
 ```
 
@@ -284,7 +284,7 @@ npx playwright install chromium webkit
 
 To verify which browsers Cypress can find:
 
-```sh
+```shell
  cypress info
 ```
 
@@ -302,13 +302,13 @@ changes are explicit.
 
 **Node + browsers, without Cypress**
 
-```sh
+```shell
 cypress/browsers:node-22.19.0-chrome-139.0.7258.154-1-ff-142.0.1-edge-139.0.3405.125-1
 ```
 
 **Node + browsers + Cypress pre-installed**
 
-```sh
+```shell
 cypress/included:cypress-15.1.0-node-22.19.0-chrome-139.0.7258.154-1-ff-142.0.1-edge-139.0.3405.125-1
 ```
 
@@ -1442,7 +1442,7 @@ command line.
 - You define the split strategy upfront
 
 <Badge type="danger">Before: Playwright</Badge>
-```sh 
+```shell 
 playwright test --shard=2/4 # Machine 2 playwright test --shard=3/4 # Machine 3
 playwright test --shard=4/4 # Machine 4 ```
 ```
@@ -1456,7 +1456,7 @@ on historical run durations. This requires a Cypress Cloud account.
 - No manual sharding required.
 
 <Badge type="success">After: Cypress Cloud</Badge>
-```sh 
+```shell 
 cypress run--record --parallel 
 ``` 
 
@@ -1498,17 +1498,17 @@ not require a local trace file.
 
 <Badge type="danger">Before: Playwright</Badge>
 
-```sh
+```shell 
 playwright test --trace on
 ```
 
-```sh
+```shell
 npx playwright show-trace test-results/**/trace.zip
 ```
 
 <Badge type="success">After: Cypress</Badge>
 
-```sh
+```shell
 cypress run --record --key <record_key>
 ```
 
