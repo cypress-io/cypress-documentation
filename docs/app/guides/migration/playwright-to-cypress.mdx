@@ -1,6 +1,6 @@
 ---
 title: 'Migrate from Playwright to Cypress: Complete Migration Guide'
-description: 'Step-by-step guide to migrate end-to-end tests from Playwright to Cypress. Compare syntax, learn retry-ability, network stubbing, auth patterns, CI parallelization, and Cloud features.'
+description: 'Step-by-step guide to migrate end-to-end and component tests from Playwright to Cypress. Compare syntax, learn retry-ability, network stubbing, auth patterns, CI parallelization, and Cloud features.'
 sidebar_label: Migrating from Playwright
 ---
 
@@ -8,23 +8,29 @@ sidebar_label: Migrating from Playwright
 
 # Migrating from Playwright to Cypress
 
-This guide helps you migrate tests from Playwright to Cypress.
+This guide helps you translate Playwright tests to Cypress. It covers the 
+core execution model differences, syntax mappings, and patterns for auth, 
+networking, and CI.
+
+Most migrations are incremental. You do not need to migrate all tests at 
+once. Cypress and Playwright can coexist in the same repository during 
+a transition.
 
 ::::info
 
 ##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
 
-- How Playwright patterns translate to Cypress
-- Execution model and retry-ability (how 'waiting' changes)
-- Locators, actions, and assertions
-- Network stubbing/spying with `cy.intercept()`
-- Auth/session reuse, cross-origin, and multi-tab workflows
-- CI: sharding vs Cloud parallelization + Smart Orchestration
-- Debugging artifacts: screenshots/videos + Test Replay
-- Component Testing: framework/bundler support + mount vs `cy.mount()`
-- Migration patterns: page objects and custom commands
+- How Cypress executes tests: retry-ability, command chaining, and what replaces async/await
+- Locators, actions, and assertions side by side
+- Network stubbing and request interception
+- Authentication flows, cross-origin testing, and multi-tab patterns
+- Running tests in CI: parallelization and Smart Orchestration
+- Debugging with Test Replay, screenshots, and video
+- Component Testing: supported frameworks and bundlers
+- Migrating page objects and extracting custom commands
 
 ::::
+
 
 ## Quick conversion example
 
@@ -67,7 +73,7 @@ describe('Authorization', () => {
     cy.contains('button', 'Create new account').click()
 
     // Assert navigation
-    cy.url().should('match', /\/signup\/success$/)
+    cy.url().should('include', 'signup/success')
   })
 })
 ```
@@ -415,7 +421,10 @@ beforeEach(() => {
 
 ## Cross-origin
 
-Cypress requires `cy.origin()` when interacting with multiple origins in one test.
+Cypress enforces a same-origin policy by default. Use `cy.origin()` to 
+run commands against a different origin within the same test. Any 
+commands targeting a secondary origin must be scoped inside the 
+`cy.origin()` callback.
 
 <Badge type="danger">Before: Playwright</Badge>
 
@@ -429,8 +438,8 @@ await expect(page.getByRole('banner')).toBeVisible()
 
 ```ts
 cy.visit('https://site-a.example')
-cy.visit('https://site-b.example')
 cy.origin('https://site-b.example', () => {
+  cy.visit('https://site-b.example')
   cy.get('[role="banner"]').should('be.visible')
 })
 ```
@@ -439,7 +448,9 @@ See [`cy.origin()`](/api/commands/origin) for complete documentation.
 
 ## Multiple tabs and windows
 
-Cypress can use the [`@cypress/puppeteer`](https://www.npmjs.com/package/@cypress/puppeteer) plugin to handle multi-tab workflows.
+You can handle multi-tab workflows using the 
+[`@cypress/puppeteer`](https://www.npmjs.com/package/@cypress/puppeteer) 
+plugin, which gives Cypress access to the underlying browser via Puppeteer. This approach requires Puppeteer as a dependency.
 
 <Badge type="danger">Before: Playwright</Badge>
 
@@ -530,7 +541,16 @@ See [`.shadow()`](/api/commands/shadow).
 
 ## Test generation
 
-Cypress can generate tests from the runner via [Cypress Studio](/app/guides/cypress-studio).
+[Cypress Studio](/app/guides/cypress-studio) lets you generate test code 
+by interacting with your application in the Cypress app. It records 
+actions like clicks and form inputs and writes the corresponding Cypress 
+commands. It is useful for prototyping tests but is not a replacement for 
+hand-authored test logic. Cypress Studio is a replacement for Playwright's `playwright codegen`.
+
+<DocsVideo
+  src="/img/app/cypress-studio/cypress-studio-recording-assertions-editing.mp4"
+  autoPlay={true}
+/>
 
 ## Screenshots
 
@@ -748,7 +768,7 @@ See [Cypress Configuration](/app/references/configuration).
 
 
 
-## Cross-browser notes
+## CLI differences
 
 Playwright commonly runs browsers via projects (`--project=chromium|firefox|webkit`). Cypress runs browsers via the `--browser` flag.
 
@@ -763,7 +783,9 @@ See [Launching Browsers](/app/references/launching-browsers) and [Cross Browser 
 
 ### Key architectural difference
 
-Playwright offers parallelization through workers.
+Playwright parallelizes tests locally using workers and across machines 
+using manual sharding. You define the split strategy in config or at the 
+command line.
 
 - Worker count controlled via config (`workers: 4`) or CLI (`--workers=4`)
 - Sharding splits tests across machines (`--shard=1/4`)
@@ -778,7 +800,9 @@ playwright test --shard=3/4  # Machine 3
 playwright test --shard=4/4  # Machine 4
 ```
 
-Cypress parallelization works differently.
+Cypress parallelizes tests across machines through 
+[Cypress Cloud](/cloud/overview), which distributes specs dynamically based 
+on historical run durations. This requires a Cypress Cloud account.
 
 - Parallelization happens in CI through Cypress Cloud.
 - Specs are distributed dynamically based on historical run data.
@@ -813,7 +837,17 @@ When you use Cypress Cloud, you gain **Smart Orchestration** features that go be
 
 See [Parallelization](/cloud/features/smart-orchestration/parallelization) for setup details.
 
-### Test Replay
+### Debugging with Test Replay
+
+Test Replay is available on all Cypress Cloud plans at no additional cost. It records a 
+full, interactive replay of every test run, including network requests, 
+console output, and DOM snapshots. Replays are shareable via link and do 
+not require a local trace file.
+
+<DocsVideo
+  src="https://youtube.com/embed/vFLShoCM8pA"
+  title="Test Replay Product Demo"
+/>
 
 <Badge type="danger">Before: Playwright</Badge>
 
@@ -832,11 +866,9 @@ npx playwright show-trace test-results/**/trace.zip
 cypress run --record --key <record_key>
 ```
 
-Cloud-based replay is available to view and share for every test run when you use Cypress Cloud.
-
 See [Test Replay](/cloud/features/test-replay) for more details.
 
-## Handling Flaky Tests
+## Handling flaky tests
 
 Flaky tests are a common challenge in testing. Both frameworks offer retry mechanisms, but Cypress Cloud adds intelligent flake detection and management.
 
@@ -870,21 +902,6 @@ Beyond basic retries, Cypress Cloud provides:
 - Tracks flake rate over time
 - Provides analytics on which specs are most flaky
 - Helps prioritize stability improvements
-
-## Team Collaboration Features
-
-**Playwright:**
-
-- HTML reports generated locally
-- Trace files can be shared manually
-
-**Cypress Cloud:**
-
-- Centralized test results dashboard
-- Shareable Test Replay links for debugging
-- Project-level analytics and trends
-- Team-wide visibility into test health
-- Integration with Slack, GitHub, GitLab, etc.
 
 ## Cheat sheet
 
