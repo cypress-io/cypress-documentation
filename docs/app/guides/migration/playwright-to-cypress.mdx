@@ -39,6 +39,7 @@ Jump to the [cheat sheet](#cheat-sheet) for a quick reference.
 Here's a side-by-side comparison showing how Playwright tests translate to Cypress:
 
 <Badge type="danger">Before: Playwright</Badge>
+
 ```ts title="test.ts"
 import { test, expect } from '@playwright/test'
 
@@ -62,6 +63,7 @@ test.describe('Authorization', () => {
 ```
 
 <Badge type="success">After: Cypress</Badge>
+
 ```ts title="test.cy.ts"
 describe('Authorization', () => {
   it('signs up', () => {
@@ -114,8 +116,9 @@ The configuration file location is configurable using the `--config-file` comman
 | Node event hooks     | `globalSetup` / `globalTeardown` | `e2e.setupNodeEvents`    |
 
 <Badge type="danger">Before: Playwright</Badge>
-```ts title="playwright.config.ts" 
-import {defineConfig} from '@playwright/test'
+
+```ts title="playwright.config.ts"
+import { defineConfig } from '@playwright/test'
 
 export default defineConfig({
   testDir: './tests',
@@ -129,13 +132,14 @@ export default defineConfig({
     viewport: { width: 1280, height: 720 },
     video: 'off',
     screenshot: 'only-on-failure',
-  }
+  },
 })
 ```
 
 <Badge type="success">After: Cypress</Badge>
-```ts title="cypress.config.ts" 
-import {defineConfig} from 'cypress'
+
+```ts title="cypress.config.ts"
+import { defineConfig } from 'cypress'
 
 export default defineConfig({
   viewportWidth: 1280,
@@ -222,6 +226,7 @@ URLs, API versions). These must be set in the Node.js environment within
 `setupNodeEvents` in your Cypress configuration file.
 
 <Badge type="danger">Before: Playwright</Badge>
+
 ```ts title="test.ts"
 test('logs in', async ({ page }) => {
   await page.getByLabel('User Name').fill(process.env.USER_NAME)
@@ -357,7 +362,8 @@ Playwright's `launchOptions` in `playwright.config.ts` maps to the
 Cypress exposes the `before:browser:launch` event.
 
 <Badge type="danger">Before: Playwright</Badge>
-```ts title="playwright.config.ts" 
+
+```ts title="playwright.config.ts"
 export default defineConfig({
   use: {
     launchOptions: {
@@ -368,7 +374,8 @@ export default defineConfig({
 ```
 
 <Badge type="success">After: Cypress</Badge>
-```ts title="cypress.config.ts" 
+
+```ts title="cypress.config.ts"
 export default defineConfig({
   e2e: {
     setupNodeEvents(on) {
@@ -407,6 +414,7 @@ Playwright imports `test` from `@playwright/test`. Cypress uses Mocha's BDD inte
 | `test.describe.only('group', () => {})` | `describe.only('group', () => {})` |
 
 <Badge type="danger">Before: Playwright</Badge>
+
 ```ts title="test.ts"
 import { test, expect } from '@playwright/test'
 
@@ -418,6 +426,7 @@ test.describe('checkout', () => {
 ```
 
 <Badge type="success">After: Cypress</Badge>
+
 ```ts title="test.cy.ts"
 describe('checkout', () => {
   it('completes purchase', () => { ... })
@@ -459,6 +468,7 @@ Learn more about Cypress [retry-ability](/app/core-concepts/retry-ability).
 Playwright uses async/await patterns.
 
 <Badge type="danger">Before: Playwright</Badge>
+
 ```ts title="test.ts"
 const button = await page.getByRole('button', { name: 'Submit' })
 await button.click()
@@ -853,17 +863,19 @@ See [`cy.readFile()`](/api/commands/readfile).
 Both Playwright and Cypress let you replace native browser time functions with a fake clock that you control. This allows tests to set a specific date, skip waiting for timers, and test time-sensitive UI behavior without real delays. The two tools take different approaches to time control.
 
 <Badge type="danger">Before: Playwright</Badge>
+
 ```ts title="test.ts"
 await page.clock.setFixedTime(new Date('2024-02-02T10:00:00')) await
 page.goto('/') await
-expect(page.getByTestId('current-time')).toHaveText('2/2/2024, 10:00:00 AM') 
+expect(page.getByTestId('current-time')).toHaveText('2/2/2024, 10:00:00 AM')
 ```
 
 <Badge type="success">After: Cypress</Badge>
+
 ```ts title="test.cy.ts"
 cy.clock(new Date('2024-02-02T10:00:00')) cy.visit('/')
 cy.get('[data-testid="current-time"]').should('have.text', '2/2/2024, 10:00:00
-AM') 
+AM')
 ```
 
 ### Advancing time
@@ -871,6 +883,7 @@ AM')
 To simulate the passage of time and trigger scheduled timers, Playwright uses `fastForward` or `runFor`. Cypress uses `cy.tick()`.
 
 <Badge type="danger">Before: Playwright</Badge>
+
 ```ts title="test.ts"
 await page.clock.install() await page.goto('/') await
 page.getByRole('button').click()
@@ -882,6 +895,7 @@ await expect(page.getByText('Session expired')).toBeVisible()
 ```
 
 <Badge type="success">After: Cypress</Badge>
+
 ```ts title="test.cy.ts"
 cy.clock()
 cy.visit('/')
@@ -898,31 +912,43 @@ cy.contains('Session expired').should('be.visible')
 Playwright supports `pauseAt`, which lets the clock run naturally from its installed time and then pause automatically when it reaches a target timestamp. For Cypress to reach a specific point in time, calculate the delta between the installed time and the target time and pass that to `cy.tick()`.
 
 <Badge type="danger">Before: Playwright</Badge>
+
 ```ts title="test.ts"
 await page.clock.install({ time: new Date('2024-02-02T08:00:00') })
 await page.goto('/')
 
 // Clock runs naturally until it reaches 10:00 AM, then pauses
 await page.clock.pauseAt(new Date('2024-02-02T10:00:00'))
-await expect(page.getByTestId('current-time')).toHaveText('2/2/2024, 10:00:00 AM')
+await expect(page.getByTestId('current-time')).toHaveText(
+  '2/2/2024, 10:00:00 AM'
+)
 
 // Advance another 30 minutes manually
 await page.clock.fastForward('30:00')
-await expect(page.getByTestId('current-time')).toHaveText('2/2/2024, 10:30:00 AM')
+await expect(page.getByTestId('current-time')).toHaveText(
+  '2/2/2024, 10:30:00 AM'
+)
 ```
 
 <Badge type="success">After: Cypress</Badge>
+
 ```ts title="test.cy.ts"
 cy.clock(new Date('2024-02-02T08:00:00'))
 cy.visit('/')
 
 // Advance 2 hours (from 08:00 to 10:00) manually
 cy.tick(2 * 60 * 60 * 1000)
-cy.get('[data-testid="current-time"]').should('have.text', '2/2/2024, 10:00:00 AM')
+cy.get('[data-testid="current-time"]').should(
+  'have.text',
+  '2/2/2024, 10:00:00 AM'
+)
 
 // Advance another 30 minutes
 cy.tick(30 * 60 * 1000)
-cy.get('[data-testid="current-time"]').should('have.text', '2/2/2024, 10:30:00 AM')
+cy.get('[data-testid="current-time"]').should(
+  'have.text',
+  '2/2/2024, 10:30:00 AM'
+)
 ```
 
 ### Changing the system time mid-test
@@ -930,6 +956,7 @@ cy.get('[data-testid="current-time"]').should('have.text', '2/2/2024, 10:30:00 A
 Both tools allow you to change the current time without triggering timers. In Playwright this is `page.clock.setSystemTime()`. In Cypress it is `clock.setSystemTime()` on the yielded clock object.
 
 <Badge type="danger">Before: Playwright</Badge>
+
 ```ts title="test.ts"
 await page.clock.install({ time: new Date('2024-02-02T10:00:00') })
 await page.goto('/')
@@ -939,6 +966,7 @@ await page.clock.setSystemTime(new Date('2024-02-02T10:30:00'))
 ```
 
 <Badge type="success">After: Cypress</Badge>
+
 ```ts title="test.cy.ts"
 cy.clock(new Date('2024-02-02T10:00:00'))
 cy.visit('/')
@@ -1036,6 +1064,7 @@ element with `cy.wrap()` so you can use Cypress commands on its contents. The
 document to load before proceeding.
 
 <Badge type="danger">Before: Playwright</Badge>
+
 ```ts title="test.ts"
 // Locate and fill a field inside an iframe
 const frame = page.frameLocator('#payment-frame')
@@ -1045,6 +1074,7 @@ await frame.getByRole('button', { name: 'Pay now' }).click()
 ```
 
 <Badge type="success">After: Cypress</Badge>
+
 ```ts title="test.cy.ts"
 cy.get('#payment-frame')
   .its('0.contentDocument.body')
@@ -1094,6 +1124,7 @@ See [`.shadow()`](/api/commands/shadow).
 Cypress always accepts `alert()` dialogs.
 
 <Badge type="danger">Before: Playwright</Badge>
+
 ```ts title="test.ts"
 // Register a handler to inspect the alert text before accepting
 page.on('dialog', async (dialog) => {
@@ -1106,6 +1137,7 @@ await page.getByRole('button', { name: 'Leave page' }).click()
 ```
 
 <Badge type="success">After: Cypress</Badge>
+
 ```ts title="test.cy.ts"
 // Cypress auto-accepts alerts. Listen to assert on the message.
 cy.on('window:alert', (message) => {
@@ -1118,6 +1150,7 @@ cy.get('button').contains('Leave page').click()
 ### confirm()
 
 <Badge type="danger">Before: Playwright</Badge>
+
 ```ts title="test.ts"
 // Accept the confirmation
 page.on('dialog', (dialog) => dialog.accept())
@@ -1131,6 +1164,7 @@ await expect(page.getByText('Account deleted')).not.toBeVisible()
 ```
 
 <Badge type="success">After: Cypress</Badge>
+
 ```ts title="test.cy.ts"
 // Cypress auto-accepts confirm(). No handler needed to test the accepted path.
 cy.get('button').contains('Delete account').click()
@@ -1174,6 +1208,7 @@ you full control over the return value and lets you assert that the prompt
 was called.
 
 <Badge type="danger">Before: Playwright</Badge>
+
 ```ts title="test.ts"
 page.on('dialog', async (dialog) => {
   expect(dialog.type()).toBe('prompt')
@@ -1186,6 +1221,7 @@ await expect(page.getByTestId('greeting')).toHaveText('Hello, Ada Lovelace!')
 ```
 
 <Badge type="success">After: Cypress</Badge>
+
 ```ts title="test.cy.ts"
 cy.visit('/', {
   onBeforeLoad(win) {
@@ -1216,6 +1252,7 @@ sets a `returnValue`, use the `window:before:unload` event to assert on the
 event object directly:
 
 <Badge type="danger">Before: Playwright</Badge>
+
 ```ts title="test.ts"
 page.on('dialog', async (dialog) => {
   expect(dialog.type()).toBe('beforeunload')
@@ -1226,6 +1263,7 @@ await page.close({ runBeforeUnload: true })
 ```
 
 <Badge type="success">After: Cypress</Badge>
+
 ```ts title="test.cy.ts"
 // Assert that the beforeunload handler fired and set a returnValue
 cy.on('window:before:unload', (event) => {
@@ -1242,6 +1280,7 @@ In Cypress, stub `window.print` using `onBeforeLoad` in `cy.visit()` and
 assert that the stub was called.
 
 <Badge type="danger">Before: Playwright</Badge>
+
 ```ts title="test.ts"
 await page.goto('/')
 await page.evaluate(
@@ -1253,6 +1292,7 @@ await page.waitForFunction('window.waitForPrint')
 ```
 
 <Badge type="success">After: Cypress</Badge>
+
 ```ts title="test.cy.ts"
 cy.visit('/', {
   onBeforeLoad(win) {
@@ -1341,10 +1381,11 @@ See [Component Testing](/app/component-testing/get-started) and [`cy.mount()`](/
 If you're using Page Object Model (POM) in Playwright, the same pattern works in Cypress:
 
 <Badge type="danger">Before: Playwright</Badge>
-```ts title="loginPage.ts" 
+
+```ts title="loginPage.ts"
 export class LoginPage {
   constructor(private page: Page) {}
-  
+
   async login(username: string, password: string) {
     await this.page.getByLabel('Username').fill(username)
     await this.page.getByLabel('Password').fill(password)
@@ -1354,7 +1395,8 @@ export class LoginPage {
 ```
 
 <Badge type="success">After: Cypress</Badge>
-```ts title="support.cy.ts" 
+
+```ts title="support.cy.ts"
 export class LoginPage {
   login(username: string, password: string) {
     cy.get('[data-testid="username"]').type(username)
@@ -1372,8 +1414,9 @@ on your dataset outside of or inside a `describe` block, and generate one
 test per entry.
 
 <Badge type="danger">Before: Playwright</Badge>
+
 ```ts title="test.ts"
-[
+;[
   { name: 'Maya', expected: 'Hello, Maya!' },
   { name: 'Theo', expected: 'Hello, Theo!' },
   { name: 'Nora', expected: 'Hello, Nora!' },
@@ -1386,8 +1429,9 @@ test per entry.
 ```
 
 <Badge type="success">After: Cypress</Badge>
+
 ```ts title="test.cy.ts"
-[
+;[
   { name: 'Maya', expected: 'Hello, Maya!' },
   { name: 'Theo', expected: 'Hello, Theo!' },
   { name: 'Nora', expected: 'Hello, Nora!' },
@@ -1402,7 +1446,8 @@ test per entry.
 ### Custom commands
 
 <Badge type="danger">Before: Playwright</Badge>
-```ts title="fixtures/auth.ts" 
+
+```ts title="fixtures/auth.ts"
 export const test = base.extend({
   authenticatedPage: async ({ page }, use) => {
     await page.goto('/login')
@@ -1415,7 +1460,8 @@ export const test = base.extend({
 ```
 
 <Badge type="success">After: Cypress</Badge>
-```ts title="support.cy.ts" 
+
+```ts title="support.cy.ts"
 Cypress.Commands.add('login', (username: string, password: string) => {
   cy.session([username, password], () => {
     cy.visit('/login')
@@ -1442,9 +1488,10 @@ command line.
 - You define the split strategy upfront
 
 <Badge type="danger">Before: Playwright</Badge>
-```shell 
+
+```shell
 playwright test --shard=2/4 # Machine 2 playwright test --shard=3/4 # Machine 3
-playwright test --shard=4/4 # Machine 4 ```
+playwright test --shard=4/4 # Machine 4
 ```
 
 Cypress parallelizes tests across machines through
@@ -1456,9 +1503,10 @@ on historical run durations. This requires a Cypress Cloud account.
 - No manual sharding required.
 
 <Badge type="success">After: Cypress Cloud</Badge>
-```shell 
-cypress run--record --parallel 
-``` 
+
+```shell
+cypress run--record --parallel
+```
 
 ### Smart Orchestration in Cypress Cloud
 
@@ -1498,7 +1546,7 @@ not require a local trace file.
 
 <Badge type="danger">Before: Playwright</Badge>
 
-```shell 
+```shell
 playwright test --trace on
 ```
 
@@ -1527,7 +1575,8 @@ export default {
 ```
 
 <Badge type="success">After: Cypress</Badge>
-```ts title="cypress.config.ts" 
+
+```ts title="cypress.config.ts"
 export default {
   retries: {
     runMode: 2,
