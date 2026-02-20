@@ -163,22 +163,22 @@ option reference.
 
 ### Common translations
 
-| Playwright              | Cypress                                  | Notes                                                                                       |
-| ----------------------- | ---------------------------------------- | ------------------------------------------------------------------------------------------- |
-| `forbidOnly`            | use `mocha/no-exclusive-tests` lint rule | [eslint-plugin-mocha](https://www.npmjs.com/package/eslint-plugin-mocha)                    |
-| `headless`              | `--headless` or `--headed` CLI flag      | Default headless in `cypress run`                                                           |
-| `outputDir`             | `screenshotsFolder` / `videosFolder`     | Separate options per asset type                                                             |
-| `reporter`              | `reporter`                               | See [Reporters](/app/tooling/reporters).                                                 |
-| `retries`               | `retries.runMode` / `retries.openMode`   | Cypress separates CI and interactive mode retries                                           |
-| `testDir`               | `specPattern`                        | Cypress uses a glob, not a path.                                                            |
-| `testIgnore`            | `excludeSpecPattern`                 | Glob string or array of globs.                                                              |
-| `timeout`               | `defaultCommandTimeout`                  | [`defaultCommandTimeout`](/app/references/configuration#Timeouts) is per command, not test. |
-| `use.baseURL`           | `e2e.baseUrl`                            | Must be under `e2e`, not top-level                                                          |
-| `use.channel`           | `--browser <name>:<channel>` on the CLI  | See [Launching Browsers](/app/references/launching-browsers).                               |
-| `use.proxy`        | OS environment variables                | See [Proxy Configuration](/app/references/proxy-configuration)                                          |
-| `use.screenshot`        | `screenshotOnRunFailure`                 | Default is `true`                                          |
-| `use.video`             | `video`                                  | Default is `false`                             |
-| `use.viewport`          | `viewportWidth` / `viewportHeight`       | Set at top level or scoped under testing type                                                      |
+| Playwright       | Cypress                                  | Notes                                                                                       |
+| ---------------- | ---------------------------------------- | ------------------------------------------------------------------------------------------- |
+| `forbidOnly`     | use `mocha/no-exclusive-tests` lint rule | [eslint-plugin-mocha](https://www.npmjs.com/package/eslint-plugin-mocha)                    |
+| `headless`       | `--headless` or `--headed` CLI flag      | Default headless in `cypress run`                                                           |
+| `outputDir`      | `screenshotsFolder` / `videosFolder`     | Separate options per asset type                                                             |
+| `reporter`       | `reporter`                               | See [Reporters](/app/tooling/reporters).                                                    |
+| `retries`        | `retries.runMode` / `retries.openMode`   | Cypress separates CI and interactive mode retries                                           |
+| `testDir`        | `specPattern`                            | Cypress uses a glob, not a path.                                                            |
+| `testIgnore`     | `excludeSpecPattern`                     | Glob string or array of globs.                                                              |
+| `timeout`        | `defaultCommandTimeout`                  | [`defaultCommandTimeout`](/app/references/configuration#Timeouts) is per command, not test. |
+| `use.baseURL`    | `e2e.baseUrl`                            | Must be under `e2e`, not top-level                                                          |
+| `use.channel`    | `--browser <name>:<channel>` on the CLI  | See [Launching Browsers](/app/references/launching-browsers).                               |
+| `use.proxy`      | OS environment variables                 | See [Proxy Configuration](/app/references/proxy-configuration)                              |
+| `use.screenshot` | `screenshotOnRunFailure`                 | Default is `true`                                                                           |
+| `use.video`      | `video`                                  | Default is `false`                                                                          |
+| `use.viewport`   | `viewportWidth` / `viewportHeight`       | Set at top level or scoped under testing type                                               |
 
 ## CLI/Command line migration
 
@@ -195,30 +195,30 @@ section covers the most common translations.
 
 ### Common flag translations
 
-| Playwright                         | Cypress                                                                                           |                                                               
-| ---------------------------------- | ------------------------------------------------------------------------------------------------- |
-| `--config=playwright.config.ts`    | `--config-file cypress.config.ts`                                                                 |                                                                                         
-| `npx playwright test todo.spec.ts` | `cypress run --spec "todo.cy.ts"`                                                                 |                                                 
-| `--fail-on-flaky-tests`            | `detect-flake-but-always-fail` in config with [Experimental Test Retries](/app/references/experiments#Experimental-Test-Retries)                                                 |   
-| `--forbid-only`                    | `mocha/no-exclusive-tests` [eslint-plugin-mocha](https://www.npmjs.com/package/eslint-plugin-mocha) rule                                                          |                 
-| `--grep "pattern"`                 | `--expose grep="pattern"` from [`@cypress/grep`](https://github.com/cypress-io/cypress/tree/develop/npm/grep)                                                                         | 
-| `--grep-invert "pattern"`          | `--expose grep="-pattern"` from [`@cypress/grep`](https://github.com/cypress-io/cypress/tree/develop/npm/grep)                                                                       |  
-| `--last-failed`                    | [Spec Prioritization](/cloud/features/smart-orchestration/spec-prioritization)                    |                                             
-| `--max-failures=5`                 | `--auto-cancel-after-failures=5`                                                                  |       
-| `--project=chromium`               | [`--project='./front-end'`](/app/references/command-line#cypress-open-project-lt-project-path-gt) |                                                                                         
-| `--quiet`                          | `--quiet`                                                                                         |                                                                                         
-| `--retries=2`                      | `--config retries=2`                                                                              |                                                                                         
-| `--reporter=html`                  | `--reporter html`                                                                                 |                                                                                         
-| `--shard=1/4`                      | `--parallel`                                                              |                      
-| `--fully-parallel`                 | `--parallel`                                                                                      |                                              
-| `--workers=4`                      | `--parallel`                                                                                      |                                              
-| `--trace on`                       | `--record` automatically records [Test Replay](/cloud/features/test-replay) |
+| Playwright                         | Cypress                                                                                                                          |
+| ---------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| `--config=playwright.config.ts`    | `--config-file cypress.config.ts`                                                                                                |
+| `npx playwright test todo.spec.ts` | `cypress run --spec "todo.cy.ts"`                                                                                                |
+| `--fail-on-flaky-tests`            | `detect-flake-but-always-fail` in config with [Experimental Test Retries](/app/references/experiments#Experimental-Test-Retries) |
+| `--forbid-only`                    | `mocha/no-exclusive-tests` [eslint-plugin-mocha](https://www.npmjs.com/package/eslint-plugin-mocha) rule                         |
+| `--grep "pattern"`                 | `--expose grep="pattern"` from [`@cypress/grep`](https://github.com/cypress-io/cypress/tree/develop/npm/grep)                    |
+| `--grep-invert "pattern"`          | `--expose grep="-pattern"` from [`@cypress/grep`](https://github.com/cypress-io/cypress/tree/develop/npm/grep)                   |
+| `--last-failed`                    | [Spec Prioritization](/cloud/features/smart-orchestration/spec-prioritization)                                                   |
+| `--max-failures=5`                 | `--auto-cancel-after-failures=5`                                                                                                 |
+| `--project=chromium`               | [`--project='./front-end'`](/app/references/command-line#cypress-open-project-lt-project-path-gt)                                |
+| `--quiet`                          | `--quiet`                                                                                                                        |
+| `--retries=2`                      | `--config retries=2`                                                                                                             |
+| `--reporter=html`                  | `--reporter html`                                                                                                                |
+| `--shard=1/4`                      | `--parallel`                                                                                                                     |
+| `--fully-parallel`                 | `--parallel`                                                                                                                     |
+| `--workers=4`                      | `--parallel`                                                                                                                     |
+| `--trace on`                       | `--record` automatically records [Test Replay](/cloud/features/test-replay)                                                      |
 
 ### Passing environment variables
- 
+
 In Cypress, use `cy.env()` for sensitive values (credentials, tokens, secrets)
 or `Cypress.expose()` for non-sensitive configuration (feature flags, public
-URLs, API versions). These must be set in the Node.js environment within 
+URLs, API versions). These must be set in the Node.js environment within
 `setupNodeEvents` in your Cypress configuration file.
 
 <Badge type="danger">Before: Playwright</Badge>
@@ -231,7 +231,7 @@ test('logs in', async ({ page }) => {
 
 <Badge type="success">After: Cypress</Badge>
 
-```ts title="cypress.config.ts" 
+```ts title="cypress.config.ts"
 export default defineConfig({
   expose: {
     API_VERSION: 'v2',
@@ -283,8 +283,9 @@ npx playwright install chromium webkit
 <Badge type="success">After: Cypress</Badge>
 
 To verify which browsers Cypress can find:
+
 ```sh
- cypress info 
+ cypress info
 ```
 
 ### Browser versions and CI
@@ -306,6 +307,7 @@ cypress/browsers:node-22.19.0-chrome-139.0.7258.154-1-ff-142.0.1-edge-139.0.3405
 ```
 
 **Node + browsers + Cypress pre-installed**
+
 ```sh
 cypress/included:cypress-15.1.0-node-22.19.0-chrome-139.0.7258.154-1-ff-142.0.1-edge-139.0.3405.125-1
 ```
@@ -430,10 +432,10 @@ Playwright code typically awaits each action and may use explicit waits for spec
 
 **What this means for your tests:**
 
-| Playwright                                      | Cypress                                               |
-| ----------------------------------------------- | ----------------------------------------------------- |
-| `await page.waitForSelector(...)`               | `cy.get(...)` retries until it finds the element      |
-| `await expect(locator)...`                      | `cy.get(...).should(...)` retries automatically       |
+| Playwright                        | Cypress                                          |
+| --------------------------------- | ------------------------------------------------ |
+| `await page.waitForSelector(...)` | `cy.get(...)` retries until it finds the element |
+| `await expect(locator)...`        | `cy.get(...).should(...)` retries automatically  |
 
 <Badge type="danger">Before: Playwright</Badge>
 
@@ -724,7 +726,7 @@ Playwright commonly reuses auth via `storageState`. In Cypress, use [`cy.session
 
 <Badge type="danger">Before: Playwright</Badge>
 
-```ts title="playwright.config.ts" 
+```ts title="playwright.config.ts"
 import { defineConfig } from '@playwright/test'
 
 export default defineConfig({
@@ -734,7 +736,7 @@ export default defineConfig({
 })
 ```
 
-```ts title="auth.setup.ts" 
+```ts title="auth.setup.ts"
 import { test as setup } from '@playwright/test'
 
 setup('authenticate', async ({ page }) => {
@@ -749,7 +751,7 @@ setup('authenticate', async ({ page }) => {
 
 <Badge type="success">After: Cypress</Badge>
 
-```ts title="cypress.config.ts" 
+```ts title="cypress.config.ts"
 const login = () => {
   cy.visit('/login')
   cy.get('#username').type('jane')
@@ -845,7 +847,6 @@ cy.readFile('cypress/downloads/export.csv')
 ```
 
 See [`cy.readFile()`](/api/commands/readfile).
-
 
 ## Clock and time control
 
@@ -980,7 +981,7 @@ await newPage.getByRole('button', { name: 'Confirm' }).click()
 
 <Badge type="success">After: Cypress</Badge>
 
-```ts title="cypress.config.ts" 
+```ts title="cypress.config.ts"
 import { defineConfig } from 'cypress'
 import { setup, retry } from '@cypress/puppeteer'
 
@@ -1059,7 +1060,7 @@ cy.get('#payment-frame')
 If you interact with the same iframe across multiple tests, extract the frame
 access into a custom command to avoid repeating the boilerplate:
 
-```ts title="cypress/support/commands.ts" 
+```ts title="cypress/support/commands.ts"
 Cypress.Commands.add('getIframeBody', (selector: string) => {
   return cy
     .get(selector)
@@ -1308,7 +1309,7 @@ See [Component Testing](/app/component-testing/get-started) for more details.
 
 <Badge type="danger">Before: Playwright</Badge>
 
-```tsx title="button.test.ts" 
+```tsx title="button.test.ts"
 import { test, expect } from '@playwright/experimental-ct-react'
 import { Button } from './Button'
 
@@ -1320,7 +1321,7 @@ test('renders', async ({ mount }) => {
 
 <Badge type="success">After: Cypress</Badge>
 
-```tsx title="button.cy.ts" 
+```tsx title="button.cy.ts"
 import { Button } from './Button'
 
 describe('Button', () => {
@@ -1365,9 +1366,9 @@ export class LoginPage {
 
 ## Parameterized tests
 
-Both Playwright and Cypress support generating tests from a data array using 
-standard JavaScript. The pattern is the same in both tools: call `.forEach()` 
-on your dataset outside of or inside a `describe` block, and generate one 
+Both Playwright and Cypress support generating tests from a data array using
+standard JavaScript. The pattern is the same in both tools: call `.forEach()`
+on your dataset outside of or inside a `describe` block, and generate one
 test per entry.
 
 <Badge type="danger">Before: Playwright</Badge>
@@ -1500,6 +1501,7 @@ not require a local trace file.
 ```sh
 playwright test --trace on
 ```
+
 ```sh
 npx playwright show-trace test-results/**/trace.zip
 ```
@@ -1518,7 +1520,7 @@ Flaky tests are a common challenge in testing. Both frameworks offer retry mecha
 
 <Badge type="danger">Before: Playwright</Badge>
 
-```ts title="playwright.config.ts" 
+```ts title="playwright.config.ts"
 export default {
   retries: process.env.CI ? 2 : 0,
 }
