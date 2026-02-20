@@ -253,11 +253,8 @@ npx playwright install chromium webkit
 ````
 
 <Badge type="success">After: Cypress</Badge>
-```sh
-# No install step needed — Cypress uses browsers already on the machine.
-# To verify which browsers Cypress can find:
-cypress info
-````
+```sh # No install step needed — Cypress uses browsers already on the machine. #
+To verify which browsers Cypress can find: cypress info ````
 
 ### Browser support
 
@@ -968,10 +965,10 @@ import '@cypress/puppeteer/support'
 
 ## Iframes
 
-Cypress has no equivalent single command. The standard approach is to get the 
-iframe element, access its `contentDocument.body`, and then wrap that body 
-element with `cy.wrap()` so you can use Cypress commands on its contents. The 
-`.should('not.be.empty')` assertion ensures Cypress waits for the frame's 
+Cypress has no equivalent single command. The standard approach is to get the
+iframe element, access its `contentDocument.body`, and then wrap that body
+element with `cy.wrap()` so you can use Cypress commands on its contents. The
+`.should('not.be.empty')` assertion ensures Cypress waits for the frame's
 document to load before proceeding.
 
 <Badge type="danger">Before: Playwright</Badge>
@@ -996,12 +993,14 @@ cy.get('#payment-frame')
   })
 ```
 
-If you interact with the same iframe across multiple tests, extract the frame 
+If you interact with the same iframe across multiple tests, extract the frame
 access into a custom command to avoid repeating the boilerplate:
+
 ```ts
 // cypress/support/commands.ts
 Cypress.Commands.add('getIframeBody', (selector: string) => {
-  return cy.get(selector)
+  return cy
+    .get(selector)
     .its('0.contentDocument.body')
     .should('not.be.empty')
     .then(cy.wrap)
@@ -1530,50 +1529,56 @@ Learn more about [Accessibility testing](/accessibility/get-started/introduction
 
 ## Cheat sheet
 
-| Playwright                                                         | Cypress                                                                      |
-| ------------------------------------------------------------------ | ---------------------------------------------------------------------------- | 
-| page.locator('css')                                              | cy.get('css')                                                              |
-| `page.getByTestId('x')`                                            | `cy.get('[data-testid=\"x\"]')`                                              |
-| `await page.goto('/path')`                                         | `cy.visit('/path')`                                                          |
-| `await page.getByLabel('I agree').check()`                         | `cy.get('[aria-label="I agree"]').check()`                                   |
-| `await page.locator('[data-testid="color"]').selectOption('blue')` | `cy.get('[data-testid="color"]').select('blue')`                             |
-| `await page.waitForResponse(...)`                                  | `cy.intercept(...).as('x'); cy.wait('@x')`                                   |
-| `await page.setInputFiles('input[type=file]', 'file.png')`         | `cy.get('input[type=file]').selectFile('file.png')`                          |
-| `await page.locator.click()`                                       | `cy.get(...).click()`                                                        |
-| `await page.locator.click({ force: true })`                        | `cy.get(...).click({force: true})`                                           |
-| `await page.locator.click({ button: 'right' })`                    | `cy.get(...).rightclick()`                                                   |
-| `await page.locator.click({ modifiers: ['Shift'] })`               | `cy.get(...).click({shiftKey: true})`                                        |
-| `await page.locator.dblclick()`                                    | `cy.get(...).dblclick()`                                                     |
-| `await page.locator.hover()`                                       | `cy.get(...).trigger('mouseover')`                                           |
-| `await page.locator.fill('text')`                                  | `cy.get(...).clear().type('text')`                                           |
-| `await page.locator.focus()`                                       | `cy.get(...).focus()`                                                        |
-| `await page.locator.press('Tab')`                                  | `cy.get(...).press(Cypress.Keyboard.Keys.TAB)`                               |
-| `await page.locator.scrollIntoViewIfNeeded()`                      | `cy.get(...).scrollIntoView()`                                               |
-| `await expect(locator).toHaveText('Saved!')`                       | `cy.get(...).should('have.text', 'Saved!')`                                  |
-| `await expect(locator).toHaveAttribute('aria-expanded', 'true')`   | `cy.get(...).should('have.attr', 'aria-expanded', 'true')`                   |
-| `await expect(locator).toBeChecked()`                              | `cy.get(...).should('be.checked')`                                           |
-| `await expect(locator).toBeDisabled()`                             | `cy.get(...).should('be.disabled')`                                          |
-| `await expect(locator).toBeVisible()`                              | `cy.get(...).should('be.visible')`                                           |
-| `await expect(locator).toBeHidden()`                               | `cy.get(...).should('be.hidden')`                                            |
-| `await expect(locator).toBeEnabled()`                              | `cy.get(...).should('be.enabled')`                                           |
-| `await expect(locator).toBeAttached()`                             | `Cypress.dom.isAttached($el)`                                                |
-| `await expect(locator).toBeFocused()`                              | `cy.get(...).should('have.focus')`                                           |
-| `await expect(locator).toHaveValue('123')`                         | `cy.get(...).should('have.value', '123')`                                    |
-| `await expect(locator).toContainText('Saved!')`                    | `cy.get(...).should('contain', 'Saved!')`                                    |
-| `await expect(locator).toContainClass('light-mode')`               | `cy.get(...).should('have.class', 'light-mode')`                             |
-| `await expect(locator).toHaveCSS('color', 'red')`                  | `cy.get(...).should('have.css', 'color', 'red')`                             |
-| `await expect(page).toHaveURL(/re/)`                               | `cy.url().should('match', /re/)`                                             |
-| `page.route('**/api', ...)`                                        | `cy.intercept('/api', ...)`                                                  |
-| `use: { storageState: 'state.json' }`                              | `cy.session('user', login)`                                                  |
-| `page.screenshot()`                                                | cy.screenshot()                                                              |                                                                            
-| `await page.locator('.header').screenshot()`                       | cy.get('.header').screenshot()                                               |                                                                            
-| `page.clock.setFixedTime(date)`                                    | `cy.clock(now)`                                                              | 
-| `page.clock.install({ time })`                                     | `cy.clock(now)`                                                              | 
-| `page.clock.fastForward(duration)`                                 | `cy.tick(ms)`                                                                | 
-| `page.clock.runFor(duration)`                                      | `cy.tick(ms)`                                                                | 
-| `page.clock.setSystemTime(date)`                                   | `clock.setSystemTime(date)`                                                  | 
-| `page.on('dialog', dialog => dialog.accept())`                     | Auto-accepted by default                                                     | 
-| `page.on('dialog', dialog => dialog.dismiss())`                    | `cy.on('window:confirm', () => false)`                                       | 
-| `page.on('dialog', dialog => dialog.accept('text'))`               | `cy.stub(win, 'prompt').returns('text')` in `onBeforeLoad`                   | 
-| `page.on('dialog')` with `beforeunload`                            | `cy.on('window:before:unload', event => ...)`                                | 
-| Evaluate + `waitForFunction` for `window.print`                    | `cy.stub(win, 'print')` in `onBeforeLoad`                                    | 
+The `await` required in Playwright is not included in the cheat sheet for readability.
+
+| Playwright                                               | Cypress                                                 |
+| -------------------------------------------------------- | ------------------------------------------------------- |
+| `page.locator('css')`                                    | `cy.get('css')`                                         |
+| `page.getByTestId('submit')`                             | `cy.get('[data-testid="submit"]')`                      |
+| `page.goto('/path')`                                     | `cy.visit('/path')`                                     |
+| `page.reload()`                                          | `cy.reload()`                                           |
+| `page.title()`                                           | `cy.title()`                                            |
+| `page.url()`                                             | `cy.url()`                                              |
+| `page.waitForResponse(...)`                              | `cy.intercept(...).as('x'); cy.wait('@x')`              |
+| `page.setInputFiles(selector, 'file.png')`               | `cy.get(selector).selectFile('file.png')`               |
+| `page.locator(selector).click()`                         | `cy.get(selector).click()`                              |
+| `page.locator(selector).click({ force: true })`          | `cy.get(selector).click({force: true})`                 |
+| `page.locator(selector).click({ button: 'right' })`      | `cy.get(selector).rightclick()`                         |
+| `page.locator(selector).click({ modifiers: ['Shift'] })` | `cy.get(selector).click({shiftKey: true})`              |
+| `page.locator(selector).dblclick()`                      | `cy.get(selector).dblclick()`                           |
+| `page.locator(selector).hover()`                         | `cy.get(selector).trigger('mouseover')`                 |
+| `page.locator(selector).fill('text')`                    | `cy.get(selector).clear().type('text')`                 |
+| `page.locator(selector).focus()`                         | `cy.get(selector).focus()`                              |
+| `page.locator(selector).press('Tab')`                    | `cy.get(selector).press(Cypress.Keyboard.Keys.TAB)`     |
+| `page.locator(selector).selectOption('blue')`            | `cy.get('[data-testid="color"]').select('blue')`        |
+| `page.locator(selector).scrollIntoViewIfNeeded()`        | `cy.get(selector).scrollIntoView()`                     |
+| `page.locator(selector).screenshot()`                    | cy.get(selector).screenshot()                           |
+| `page.route('**/api', ...)`                              | `cy.intercept('/api', ...)`                             |
+| `page.screenshot()`                                      | cy.screenshot()                                         |
+| `use: { storageState: 'state.json' }`                    | `cy.session('user', login)`                             |
+| `page.clock.setFixedTime(date)`                          | `cy.clock(now)`                                         |
+| `page.clock.install({ time })`                           | `cy.clock(now)`                                         |
+| `page.clock.fastForward(duration)`                       | `cy.tick(ms)`                                           |
+| `page.clock.runFor(duration)`                            | `cy.tick(ms)`                                           |
+| `page.clock.setSystemTime(date)`                         | `clock.setSystemTime(date)`                             |
+| `page.on('dialog', dialog => dialog.accept())`           | Auto-accepted by default                                |
+| `page.on('dialog', dialog => dialog.dismiss())`          | `cy.on('window:confirm', () => false)`                  |
+| `page.on('dialog', dialog => dialog.accept('x'))`        | `cy.stub(win, 'prompt').returns('x')` in `onBeforeLoad` |
+| `page.on('dialog')` with `beforeunload`                  | `cy.on('window:before:unload', event => ...)`           |
+| `expect(page).toHaveURL(/re/)`                           | `cy.url().should('contain', 're')`                      |
+| `expect(locator).toHaveText('Yes!')`                     | `cy.get(selector).should('have.text', 'Yes!')`          |
+| `expect(locator).toHaveAttribute('href')`                | `cy.get(selector).should('have.attr', 'href')`          |
+| `expect(locator).toBeChecked()`                          | `cy.get(selector).should('be.checked')`                 |
+| `expect(locator).toBeDisabled()`                         | `cy.get(selector).should('be.disabled')`                |
+| `expect(locator).toBeVisible()`                          | `cy.get(selector).should('be.visible')`                 |
+| `expect(locator).toBeHidden()`                           | `cy.get(selector).should('be.hidden')`                  |
+| `expect(locator).toBeEnabled()`                          | `cy.get(selector).should('be.enabled')`                 |
+| `expect(locator).toBeAttached()`                         | `Cypress.dom.isAttached($el)`                           |
+| `expect(locator).toBeFocused()`                          | `cy.get(selector).should('have.focus')`                 |
+| `expect(locator).toHaveValue('123')`                     | `cy.get(selector).should('have.value', '123')`          |
+| `expect(locator).toContainText('Yes!')`                  | `cy.get(selector).should('contain', 'Yes!')`            |
+| `expect(locator).toContainClass('light')`                | `cy.get(selector).should('have.class', 'light')`        |
+| `expect(locator).toHaveCSS('color', 'red')`              | `cy.get(selector).should('have.css', 'color', 'red')`   |
+| `browserContext.cookies()`                               | `cy.getCookies()`                                       |
+| `browserContext.clearCookies()`                          | `cy.clearCookies()`                                     |
+| `browserContext.addCookies(cookie)`                      | `cy.setCookie(name, value)`                             |
