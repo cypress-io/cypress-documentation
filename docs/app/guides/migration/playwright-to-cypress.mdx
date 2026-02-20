@@ -40,20 +40,22 @@ Here's a side-by-side comparison showing how Playwright test patterns translate 
 ```ts
 import { test, expect } from '@playwright/test'
 
-test('signs up', async ({ page }) => {
-// Navigate
-await page.goto('/signup')
+test.describe('Authorization', () => {
+  test('signs up', async ({ page }) => {
+    // Navigate
+    await page.goto('/signup')
 
-// Fill form
-await page.getByLabel('Email').fill('user@email.com')
-await page.getByLabel('Confirm Email').fill('user@email.com')
-await page.getByLabel('Password').fill('testPassword1234')
+    // Fill form
+    await page.getByLabel('Email').fill('user@email.com')
+    await page.getByLabel('Confirm Email').fill('user@email.com')
+    await page.getByLabel('Password').fill('testPassword1234')
 
-// Submit
-await page.getByRole('button', { name: 'Create new account' }).click()
+    // Submit
+    await page.getByRole('button', { name: 'Create new account' }).click()
 
-// Assert navigation
-await expect(page).toHaveURL(/\/signup\/success$/)
+    // Assert navigation
+    await expect(page).toHaveURL(/\/signup\/success$/)
+  })
 })
 ```
 
@@ -75,6 +77,285 @@ describe('Authorization', () => {
     // Assert navigation
     cy.url().should('include', 'signup/success')
   })
+})
+```
+
+## Installing Cypress
+Before migrating your tests, add Cypress to your project as a dev dependency.
+
+<CypressInstallCommands />
+
+Unlike Playwright, Cypress does not download its own browser binaries. It uses browsers already installed on your machine. Electron is bundled with Cypress and available by default, so you can run tests immediately after installation without any additional setup.
+Once installed, open the Cypress app to complete initial configuration:
+
+<CypressOpenCommands />
+
+The Cypress App will walk you through choosing a testing type (end-to-end or component) and generating a starter configuration file. After setup, Cypress creates a `cypress.config.js` (or `.ts`) file and a `cypress/` directory in your project root.
+
+## Configuration migration
+
+Both Playwright and Cypress use a `defineConfig`-based configuration file at the 
+root of your project. The key structural difference is that Cypress scopes 
+most E2E-specific options under an `e2e` object, rather than a flat `use` 
+block.
+
+### Config file structure
+
+The configuration file location is configurable using the `--config-file` command line flag or the `configFile` Module API option.
+
+| | Playwright | Cypress |
+|---|---|---|
+| Default config file | `playwright.config.ts` | `cypress.config.ts` |
+| Test files | `testDir: './tests'` | `e2e.specPattern` (glob) |
+| E2E-specific options | `use: { ... }` | `e2e: { ... }` |
+| Node event hooks | `globalSetup` / `globalTeardown` | `e2e.setupNodeEvents` |
+
+### Common translations
+
+| Playwright | Cypress | Notes |
+|---|---|---|
+| `use.baseURL` | `e2e.baseUrl` | Must be under `e2e`, not top-level |
+| `testDir` | `e2e.specPattern` | Cypress uses a glob, not a directory path. Default: `cypress/e2e/**/*.cy.{js,jsx,ts,tsx}` |
+| `timeout` | `defaultCommandTimeout` | Playwright's `timeout` is per test. Cypress's `defaultCommandTimeout` is per command (default: 4000ms). See [Timeouts](/app/references/configuration#Timeouts) for the full list. |
+| `use.viewport` | `viewportWidth` / `viewportHeight` | Set at top level or scoped under `e2e` |
+| `retries` | `retries.runMode` / `retries.openMode` | Cypress separates CI and interactive mode retries |
+| `use.video` | `video` | Boolean. Cypress records video during `cypress run` by default |
+| `use.screenshot` | `screenshotOnRunFailure` | Cypress takes screenshots on failure automatically |
+| `outputDir` | `screenshotsFolder` / `videosFolder` | Separate options per asset type |
+| `use.ignoreHTTPSErrors` | `chromeWebSecurity: false` | Also disables same-origin restrictions |
+| `reporter` | `reporter` | |
+
+<Badge type="danger">Before: Playwright</Badge>
+```ts
+// playwright.config.ts
+import { defineConfig } from '@playwright/test'
+
+export default defineConfig({
+  use: {
+    baseURL: 'http://localhost:3000',
+    viewport: { width: 1280, height: 720 },
+    video: 'on',
+  },
+  testDir: './tests',
+  retries: process.env.CI ? 2 : 0,
+  timeout: 30000,
+})
+```
+
+<Badge type="success">After: Cypress</Badge>
+```ts
+// cypress.config.ts
+import { defineConfig } from 'cypress'
+
+export default defineConfig({
+  viewportWidth: 1280,
+  viewportHeight: 720,
+  video: true,
+  e2e: {
+    baseUrl: 'http://localhost:3000',
+    specPattern: 'tests/**/*.cy.ts',
+    retries: {
+      runMode: 2,
+      openMode: 0,
+    },
+    defaultCommandTimeout: 30000,
+  },
+})
+```
+
+See [Cypress Configuration](/app/references/configuration) for the full 
+option reference.
+
+### Proxy configuration
+
+Playwright supports proxy settings directly in `playwright.config.ts`. 
+Cypress does not have an equivalent config option. Instead, Cypress reads 
+proxy settings from OS-level environment variables:
+
+```sh
+export HTTP_PROXY=http://myproxy.com:3128
+export HTTPS_PROXY=http://myproxy.com:3128
+export NO_PROXY=localhost
+```
+
+These must be set in your shell or CI environment before running Cypress. 
+Proxy Auto-Configuration (PAC) files are not supported.
+
+See [Proxy Configuration](/app/references/proxy-configuration) for full setup 
+instructions, including Windows-specific steps and corporate CA certificate 
+configuration.
+
+## CLI/Command line migration
+
+Playwright and Cypress use different commands and flag structures. This 
+section covers the most common translations.
+
+### Base commands
+
+| Task | Playwright | Cypress |
+|---|---|---|
+| Run all tests (headless) | `npx playwright test` | `cypress run` |
+| Open interactive mode | `npx playwright test --ui` | `cypress open` |
+| Run in headed mode | `npx playwright test --headed` | `cypress run --headed` |
+
+### Common flag translations
+
+| Playwright | Cypress | Notes |
+|---|---|---|
+| `--config=playwright.config.ts` | `--config-file cypress.config.ts` | |
+| `npx playwright test todo.spec.ts` | `cypress run --spec "todo.cy.ts"` | Run a single spec file or glob pattern |
+| `--fail-on-flaky-tests` | `detect-flake-but-always-fail` in Configuration | See [Experimental Test Retries](/app/references/experiments#Experimental-Test-Retries) |
+| `--forbid-only` | use `mocha/no-exclusive-tests` lint rule | [eslint-plugin-mocha](https://www.npmjs.com/package/eslint-plugin-mocha) |
+| `--grep "pattern"` | `--expose grep="pattern"` | Requires [`@cypress/grep`](https://github.com/cypress-io/cypress/tree/develop/npm/grep) |
+| `--grep-invert "pattern"` | `--expose grep="-pattern"` | Requires [`@cypress/grep`](https://github.com/cypress-io/cypress/tree/develop/npm/grep) |
+| `--last-failed` | [Spec Prioritization](/cloud/features/smart-orchestration/spec-prioritization) | Requires [Cypress Cloud](/cloud/overview) |
+| `--max-failures=5` | `--auto-cancel-after-failures=5` | Requires [Run Cancellation](/cloud/features/smart-orchestration/run-cancellation) |
+| `--project=chromium` | [`--project='./front-end'`](/app/references/command-line#cypress-open-project-lt-project-path-gt) |  |
+| `--quiet` | `--quiet` |  |
+| `--retries=2` | `--config retries=2` | |
+| `--reporter=html` | `--reporter html` | |
+| `--shard=1/4` | `--parallel --ci-build-id $BUILD_ID` | Cypress distributes specs dynamically; no manual sharding required |
+| `--trace on` | `--record` | Cypress Test Replay requires [Cypress Cloud](/cloud/overview) |
+| `--fully-parallel` | `--parallel` | Requires [Cypress Cloud](/cloud/overview) |
+| `--workers=4` | `--parallel` | Requires [Cypress Cloud](/cloud/overview) |
+
+## Browser installation
+
+Playwright and Cypress take different approaches to browser management. 
+Understanding the difference will help you set up CI correctly.
+
+### How each framework handles browsers
+
+Playwright downloads and manages its own isolated browser binaries. 
+Running `npx playwright install` fetches Playwright-specific builds of 
+Chromium, Firefox, and WebKit that are separate from any browsers installed 
+on your system.
+
+Cypress uses browsers already installed on the machine. There are no 
+browser binaries to download. If Chrome is installed locally, Cypress will 
+find and use it. This means browser setup is a CI concern rather than a 
+per-project dependency.
+
+<Badge type="danger">Before: Playwright</Badge>
+```sh
+# Download Playwright's browser binaries
+npx playwright install
+
+# Download with OS-level dependencies
+npx playwright install --with-deps
+
+# Download specific browsers only
+npx playwright install chromium webkit
+```
+
+<Badge type="success">After: Cypress</Badge>
+```sh
+# No install step needed — Cypress uses browsers already on the machine.
+# To verify which browsers Cypress can find:
+cypress info
+```
+
+### Browser support
+
+| Browser | Playwright | Cypress |
+|---|---|---|
+| Chromium / Chrome | Yes | Yes |
+| Microsoft Edge | Yes | Yes |
+| Firefox | Yes | Yes |
+| WebKit (Safari) | Yes | Yes (experimental) |
+
+Cypress runs in Electron by default when you run `cypress run` without a 
+`--browser` flag. Electron is bundled with Cypress and requires no 
+separate installation. 
+
+For WebKit, follow the 
+[experimental WebKit setup](/app/references/launching-browsers#WebKit-Experimental) 
+to install the required `playwright-webkit` package.
+
+### Browser versions and CI
+
+Because Cypress uses system browsers, you have explicit control over which 
+browser version your tests run against. In CI, there are two recommended 
+approaches.
+
+#### Docker images
+
+Cypress publishes official Docker images with specific browser versions 
+pre-installed. Image tags encode the exact versions of Node, Chrome, 
+Firefox, and Edge, so your CI environment is reproducible and version 
+changes are explicit.
+
+```sh
+# Node + browsers, without Cypress
+cypress/browsers:node-22.19.0-chrome-139.0.7258.154-1-ff-142.0.1-edge-139.0.3405.125-1
+
+# Node + browsers + Cypress pre-installed
+cypress/included:cypress-15.1.0-node-22.19.0-chrome-139.0.7258.154-1-ff-142.0.1-edge-139.0.3405.125-1
+```
+
+Use `cypress/browsers` when you want to control the Cypress version 
+through your `package.json`. Use `cypress/included` when you want a 
+fully self-contained image. If you need a specific combination of 
+versions not covered by the published images, use 
+[`cypress/factory`](https://github.com/cypress-io/cypress-docker-images/tree/master/factory) 
+to build a custom image.
+
+See [cypress-docker-images](https://github.com/cypress-io/cypress-docker-images) 
+for all available tags.
+
+#### CircleCI orb
+
+If you use CircleCI, the 
+[Cypress CircleCI orb](https://github.com/cypress-io/circleci-orb) 
+handles installation, caching, and test execution. Pass 
+`install-browsers: true` to install Chrome, Firefox, and Edge into the CI 
+environment.
+```yaml
+# .circleci/config.yml
+version: 2.1
+orbs:
+  cypress: cypress-io/cypress@6
+workflows:
+  build:
+    jobs:
+      - cypress/run:
+          install-browsers: true
+          start-command: 'npm start'
+          cypress-command: 'npx cypress run --browser chrome'
+```
+
+See [CircleCI](/app/continuous-integration/circleci) for full setup 
+documentation.
+
+## Test structure and syntax migration
+
+Playwright imports `test` from `@playwright/test`. Cypress uses Mocha's BDD interface, which provides `it()` and `describe()` globally. `test` is not available in Cypress and must be replaced.
+
+| Playwright | Cypress |
+|---|---|
+| `test('name', () => {})` | `it('name', () => {})` |
+| `test.only('name', () => {})` | `it.only('name', () => {})` |
+| `test.skip('name', () => {})` | `it.skip('name', () => {})` |
+| `test.describe('group', () => {})` | `describe('group', () => {})` |
+| `test.describe.only('group', () => {})` | `describe.only('group', () => {})` |
+
+<Badge type="danger">Before: Playwright</Badge>
+```ts
+import { test, expect } from '@playwright/test'
+
+test.describe('checkout', () => {
+  test('completes purchase', async ({ page }) => { ... })
+  test.only('applies discount', async ({ page }) => { ... })
+  test.skip('handles expired card', async ({ page }) => { ... })
+})
+```
+
+<Badge type="success">After: Cypress</Badge>
+```ts
+describe('checkout', () => {
+  it('completes purchase', () => { ... })
+  it.only('applies discount', () => { ... })
+  it.skip('handles expired card', () => { ... })
 })
 ```
 
@@ -730,158 +1011,6 @@ Cypress.Commands.add('login', (username: string, password: string) => {
 ```
 
 See [Custom Commands](/api/cypress-api/custom-commands) for more details.
-
-## Configuration mapping
-
-<Badge type="danger">Before: Playwright</Badge>
-
-```ts
-// playwright.config.ts
-import { defineConfig } from '@playwright/test'
-
-export default defineConfig({
-  use: {
-    baseURL: 'http://localhost:3000',
-  },
-  retries: process.env.CI ? 2 : 0,
-})
-```
-
-<Badge type="success">After: Cypress</Badge>
-
-```ts
-// cypress.config.ts
-import { defineConfig } from 'cypress'
-
-export default defineConfig({
-  e2e: {
-    baseUrl: 'http://localhost:3000',
-  },
-  retries: {
-    runMode: 2,
-    openMode: 0,
-  },
-})
-```
-
-See [Cypress Configuration](/app/references/configuration).
-
-## CLI/Command line migration
-
-Playwright and Cypress use different commands and flag structures. This 
-section covers the most common translations.
-
-### Base commands
-
-| Task | Playwright | Cypress |
-|---|---|---|
-| Run all tests (headless) | `npx playwright test` | `cypress run` |
-| Open interactive mode | `npx playwright test --ui` | `cypress open` |
-| Run in headed mode | `npx playwright test --headed` | `cypress run --headed` |
-
-### Common flag translations
-
-| Playwright | Cypress | Notes |
-|---|---|---|
-| `--config=playwright.config.ts` | `--config-file cypress.config.ts` | |
-| `npx playwright test todo.spec.ts` | `cypress run --spec "todo.cy.ts"` | Run a single spec file or glob pattern |
-| `--fail-on-flaky-tests` | `detect-flake-but-always-fail` in Configuration | See [Experimental Test Retries](/app/references/experiments#Experimental-Test-Retries) |
-| `--forbid-only` | use `mocha/no-exclusive-tests` lint rule | [eslint-plugin-mocha](https://www.npmjs.com/package/eslint-plugin-mocha) |
-| `--grep "pattern"` | `--expose grep="pattern"` | Requires [`@cypress/grep`](https://github.com/cypress-io/cypress/tree/develop/npm/grep) |
-| `--grep-invert "pattern"` | `--expose grep="-pattern"` | Requires [`@cypress/grep`](https://github.com/cypress-io/cypress/tree/develop/npm/grep) |
-| `--last-failed` | [Spec Prioritization](/cloud/features/smart-orchestration/spec-prioritization) | Requires [Cypress Cloud](/cloud/overview) |
-| `--max-failures=5` | `--auto-cancel-after-failures=5` | Requires [Run Cancellation](/cloud/features/smart-orchestration/run-cancellation) |
-| `--project=chromium` | [`--project='./front-end'`](/app/references/command-line#cypress-open-project-lt-project-path-gt) |  |
-| `--quiet` | `--quiet` |  |
-| `--retries=2` | `--config retries=2` | |
-| `--reporter=html` | `--reporter html` | |
-| `--shard=1/4` | `--parallel --ci-build-id $BUILD_ID` | Cypress distributes specs dynamically; no manual sharding required |
-| `--trace on` | `--record` | Cypress Test Replay requires [Cypress Cloud](/cloud/overview) |
-| `--fully-parallel` | `--parallel` | Requires [Cypress Cloud](/cloud/overview) |
-| `--workers=4` | `--parallel` | Requires [Cypress Cloud](/cloud/overview) |
-
-### Run specific specs
-
-<Badge type="danger">Before: Playwright</Badge>
-```sh
-# Single file
-npx playwright test tests/login.spec.ts
-
-# Match by filename pattern
-npx playwright test login
-
-# Multiple files
-npx playwright test tests/login.spec.ts tests/signup.spec.ts
-```
-
-<Badge type="success">After: Cypress</Badge>
-```sh
-# Single file
-cypress run --spec "cypress/e2e/login.cy.ts"
-
-# Glob pattern
-cypress run --spec "cypress/e2e/auth/**/*"
-
-# Multiple files
-cypress run --spec "cypress/e2e/login.cy.ts,cypress/e2e/signup.cy.ts"
-```
-
-### Filter by test title
-
-<Badge type="danger">Before: Playwright</Badge>
-```sh
-npx playwright test --grep "signs up"
-```
-
-<Badge type="success">After: Cypress</Badge>
-```sh
-cypress run --env grep="signs up"
-```
-
-Cypress test title filtering requires the 
-[`@cypress/grep`](https://github.com/cypress-io/cypress/tree/develop/npm/grep) 
-plugin. Install it once and the `--env grep` flag works across your suite.
-
-### Override config values
-
-<Badge type="danger">Before: Playwright</Badge>
-```sh
-npx playwright test --timeout=60000 --retries=3
-```
-
-<Badge type="success">After: Cypress</Badge>
-```sh
-cypress run --config defaultCommandTimeout=60000,retries=3
-```
-
-### Flags with no direct equivalent
-
-A few Playwright flags do not map one-to-one to a Cypress CLI flag.
-
-**`--last-failed`**
-
-Playwright re-runs only the tests that failed in the previous run. Cypress 
-does not have a CLI flag for this. In Cypress Cloud, 
-[Spec Prioritization](/cloud/features/smart-orchestration/spec-prioritization) 
-automatically runs previously failed specs first on every CI run.
-
-**`--forbid-only`**
-
-Playwright prevents commits that contain `test.only` from running in CI. 
-Cypress does not have an equivalent flag, but `cy.only` is ignored in 
-`cypress run` by default. To enforce this in CI, use a lint rule or a 
-pre-commit hook to catch `.only` calls before they reach your pipeline.
-
-**`--repeat-each`**
-
-Playwright can run each test N times to check for flakiness. Cypress does 
-not have a direct CLI equivalent. To detect flakiness before committing, 
-run your spec multiple times by calling the command repeatedly, or use 
-Cypress Cloud's [flaky test management](/cloud/features/flaky-test-management) 
-to track flake rates automatically over time.
-
-See [Command Line](/app/references/command-line) for a full reference of 
-Cypress CLI flags.
 
 ## CI parallelization
 
