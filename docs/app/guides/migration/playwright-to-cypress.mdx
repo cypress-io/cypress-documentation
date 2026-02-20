@@ -1086,20 +1086,14 @@ cy.get('[data-testid="shadow-host"]').shadow().find('button').click()
 
 See [`.shadow()`](/api/commands/shadow).
 
-#
 ## Dialogs
-
-### Default behavior
-
-The two tools handle unhandled dialogs differently, and this affects how you
-approach tests that trigger them.
 
 ### alert()
 
 Cypress always accepts `alert()` dialogs.
 
 <Badge type="danger">Before: Playwright</Badge>
-```ts
+```ts title="test.ts" 
 // Register a handler to inspect the alert text before accepting
 page.on('dialog', async (dialog) => {
   expect(dialog.type()).toBe('alert')
@@ -1108,23 +1102,22 @@ page.on('dialog', async (dialog) => {
 })
 
 await page.getByRole('button', { name: 'Leave page' }).click()
-
-````
+```
 
 <Badge type="success">After: Cypress</Badge>
-```ts
+```ts title="test.cy.ts" 
 // Cypress auto-accepts alerts. Listen to assert on the message.
 cy.on('window:alert', (message) => {
   expect(message).to.eq('Unsaved changes will be lost.')
 })
 
 cy.get('button').contains('Leave page').click()
-````
+```
 
 ### confirm()
 
 <Badge type="danger">Before: Playwright</Badge>
-```ts
+```ts title="test.ts" 
 // Accept the confirmation
 page.on('dialog', (dialog) => dialog.accept())
 await page.getByRole('button', { name: 'Delete account' }).click()
@@ -1134,11 +1127,10 @@ await expect(page.getByText('Account deleted')).toBeVisible()
 page.on('dialog', (dialog) => dialog.dismiss())
 await page.getByRole('button', { name: 'Delete account' }).click()
 await expect(page.getByText('Account deleted')).not.toBeVisible()
-
-````
+```
 
 <Badge type="success">After: Cypress</Badge>
-```ts
+```ts title="test.cy.ts" 
 // Cypress auto-accepts confirm(). No handler needed to test the accepted path.
 cy.get('button').contains('Delete account').click()
 cy.contains('Account deleted').should('be.visible')
@@ -1147,7 +1139,7 @@ cy.contains('Account deleted').should('be.visible')
 cy.on('window:confirm', () => false)
 cy.get('button').contains('Delete account').click()
 cy.contains('Account deleted').should('not.exist')
-````
+```
 
 If you need to assert on the confirmation message text and control acceptance
 in the same test, combine both:
@@ -1181,7 +1173,7 @@ you full control over the return value and lets you assert that the prompt
 was called.
 
 <Badge type="danger">Before: Playwright</Badge>
-```ts
+```ts title="test.ts" 
 page.on('dialog', async (dialog) => {
   expect(dialog.type()).toBe('prompt')
   expect(dialog.message()).toBe('Enter your name:')
@@ -1190,11 +1182,10 @@ page.on('dialog', async (dialog) => {
 
 await page.getByRole('button', { name: 'Set name' }).click()
 await expect(page.getByTestId('greeting')).toHaveText('Hello, Ada Lovelace!')
-
-````
+```
 
 <Badge type="success">After: Cypress</Badge>
-```ts
+```ts title="test.cy.ts" 
 cy.visit('/', {
   onBeforeLoad(win) {
     cy.stub(win, 'prompt').as('promptDialog').returns('Ada Lovelace')
@@ -1204,7 +1195,7 @@ cy.visit('/', {
 cy.get('button').contains('Set name').click()
 cy.get('[data-testid="greeting"]').should('have.text', 'Hello, Ada Lovelace!')
 cy.get('@promptDialog').should('have.been.calledWith', 'Enter your name:')
-````
+```
 
 To simulate the user cancelling the prompt (equivalent to `dialog.dismiss()`
 in Playwright), return `null` from the stub:
@@ -1224,18 +1215,17 @@ sets a `returnValue`, use the `window:before:unload` event to assert on the
 event object directly:
 
 <Badge type="danger">Before: Playwright</Badge>
-```ts
+```ts title="test.ts" 
 page.on('dialog', async (dialog) => {
   expect(dialog.type()).toBe('beforeunload')
   await dialog.dismiss()
 })
 
 await page.close({ runBeforeUnload: true })
-
-````
+```
 
 <Badge type="success">After: Cypress</Badge>
-```ts
+```ts title="test.cy.ts" 
 // Assert that the beforeunload handler fired and set a returnValue
 cy.on('window:before:unload', (event) => {
   expect(event.returnValue).to.eq('')
@@ -1243,7 +1233,7 @@ cy.on('window:before:unload', (event) => {
 
 // Trigger navigation to fire beforeunload
 cy.get('a').contains('Leave').click()
-````
+```
 
 ### print dialogs
 
@@ -1251,7 +1241,7 @@ In Cypress, stub `window.print` using `onBeforeLoad` in `cy.visit()` and
 assert that the stub was called.
 
 <Badge type="danger">Before: Playwright</Badge>
-```ts
+```ts title="test.ts" 
 await page.goto('/')
 await page.evaluate(
   '(() => { window.waitForPrint = new Promise(f => window.print = f) })()'
@@ -1259,11 +1249,10 @@ await page.evaluate(
 
 await page.getByRole('button', { name: 'Print invoice' }).click()
 await page.waitForFunction('window.waitForPrint')
-
-````
+```
 
 <Badge type="success">After: Cypress</Badge>
-```ts
+```ts title="test.cy.ts" 
 cy.visit('/', {
   onBeforeLoad(win) {
     cy.stub(win, 'print').as('printDialog')
@@ -1272,13 +1261,13 @@ cy.visit('/', {
 
 cy.get('button').contains('Print invoice').click()
 cy.get('@printDialog').should('have.been.calledOnce')
-````
+```
 
 ## API testing
 
 <Badge type="danger">Before: Playwright</Badge>
 
-```ts
+```ts title="test.ts" 
 // APIRequestContext (Playwright)
 const res = await request.get('/api/health')
 expect(res.ok()).toBeTruthy()
@@ -1286,7 +1275,7 @@ expect(res.ok()).toBeTruthy()
 
 <Badge type="success">After: Cypress</Badge>
 
-```ts
+```ts title="test.cy.ts" 
 cy.request('/api/health').its('status').should('eq', 200)
 ```
 
@@ -1319,7 +1308,7 @@ See [Component Testing](/app/component-testing/get-started) for more details.
 
 <Badge type="danger">Before: Playwright</Badge>
 
-```tsx
+```tsx title="button.test.ts" 
 import { test, expect } from '@playwright/experimental-ct-react'
 import { Button } from './Button'
 
@@ -1331,7 +1320,7 @@ test('renders', async ({ mount }) => {
 
 <Badge type="success">After: Cypress</Badge>
 
-```tsx
+```tsx title="button.cy.ts" 
 import { Button } from './Button'
 
 describe('Button', () => {
@@ -1351,8 +1340,7 @@ See [Component Testing](/app/component-testing/get-started) and [`cy.mount()`](/
 If you're using Page Object Model (POM) in Playwright, the same pattern works in Cypress:
 
 <Badge type="danger">Before: Playwright</Badge>
-```ts
-// loginPage.ts
+```ts title="loginPage.ts" 
 export class LoginPage {
   constructor(private page: Page) {}
   
@@ -1365,8 +1353,7 @@ export class LoginPage {
 ```
 
 <Badge type="success">After: Cypress</Badge>
-```ts
-// loginPage.ts
+```ts title="support.cy.ts" 
 export class LoginPage {
   login(username: string, password: string) {
     cy.get('[data-testid="username"]').type(username)
@@ -1384,11 +1371,11 @@ on your dataset outside of or inside a `describe` block, and generate one
 test per entry.
 
 <Badge type="danger">Before: Playwright</Badge>
-```ts
+```ts title="test.ts" 
 [
-  { name: 'Alice', expected: 'Hello, Alice!' },
-  { name: 'Bob', expected: 'Hello, Bob!' },
-  { name: 'Charlie', expected: 'Hello, Charlie!' },
+  { name: 'Maya', expected: 'Hello, Maya!' },
+  { name: 'Theo', expected: 'Hello, Theo!' },
+  { name: 'Nora', expected: 'Hello, Nora!' },
 ].forEach(({ name, expected }) => {
   test(`testing with ${name}`, async ({ page }) => {
     await page.goto(`https://example.com/greet?name=${name}`)
@@ -1398,11 +1385,11 @@ test per entry.
 ```
 
 <Badge type="success">After: Cypress</Badge>
-```ts
+```ts title="test.cy.ts" 
 [
-  { name: 'Alice', expected: 'Hello, Alice!' },
-  { name: 'Bob', expected: 'Hello, Bob!' },
-  { name: 'Charlie', expected: 'Hello, Charlie!' },
+  { name: 'Maya', expected: 'Hello, Maya!' },
+  { name: 'Theo', expected: 'Hello, Theo!' },
+  { name: 'Nora', expected: 'Hello, Nora!' },
 ].forEach(({ name, expected }) => {
   it(`testing with ${name}`, () => {
     cy.visit(`/greet?name=${name}`)
@@ -1414,8 +1401,7 @@ test per entry.
 ### Custom commands
 
 <Badge type="danger">Before: Playwright</Badge>
-```ts
-// fixtures/auth.ts
+```ts title="fixtures/auth.ts" 
 export const test = base.extend({
   authenticatedPage: async ({ page }, use) => {
     await page.goto('/login')
@@ -1428,8 +1414,7 @@ export const test = base.extend({
 ```
 
 <Badge type="success">After: Cypress</Badge>
-```ts
-// support/commands.ts
+```ts title="support.cy.ts" 
 Cypress.Commands.add('login', (username: string, password: string) => {
   cy.session([username, password], () => {
     cy.visit('/login')
@@ -1456,9 +1441,10 @@ command line.
 - You define the split strategy upfront
 
 <Badge type="danger">Before: Playwright</Badge>
-```sh # Split across 4 machines manually playwright test --shard=1/4 # Machine 1
+```sh 
 playwright test --shard=2/4 # Machine 2 playwright test --shard=3/4 # Machine 3
 playwright test --shard=4/4 # Machine 4 ```
+```
 
 Cypress parallelizes tests across machines through
 [Cypress Cloud](/cloud/get-started/introduction), which distributes specs dynamically based
@@ -1469,8 +1455,11 @@ on historical run durations. This requires a Cypress Cloud account.
 - No manual sharding required.
 
 <Badge type="success">After: Cypress Cloud</Badge>
-```sh # Cloud automatically distributes specs across machines cypress run
---record --parallel ``` ### Smart Orchestration in Cypress Cloud
+```sh 
+cypress run--record --parallel 
+``` 
+
+### Smart Orchestration in Cypress Cloud
 
 When you use Cypress Cloud, you gain **Smart Orchestration** features that go beyond simple parallelization:
 
@@ -1509,17 +1498,15 @@ not require a local trace file.
 <Badge type="danger">Before: Playwright</Badge>
 
 ```sh
-# Generate trace files
 playwright test --trace on
-
-# View traces locally
+```
+```sh
 npx playwright show-trace test-results/**/trace.zip
 ```
 
 <Badge type="success">After: Cypress</Badge>
 
 ```sh
-# Enable recording to Cypress Cloud
 cypress run --record --key <record_key>
 ```
 
@@ -1531,16 +1518,14 @@ Flaky tests are a common challenge in testing. Both frameworks offer retry mecha
 
 <Badge type="danger">Before: Playwright</Badge>
 
-```ts
-// playwright.config.ts
+```ts title="playwright.config.ts" 
 export default {
   retries: process.env.CI ? 2 : 0,
 }
 ```
 
 <Badge type="success">After: Cypress</Badge>
-```ts
-// cypress.config.ts
+```ts title="cypress.config.ts" 
 export default {
   retries: {
     runMode: 2,
