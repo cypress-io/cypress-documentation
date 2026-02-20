@@ -8,12 +8,12 @@ sidebar_label: Migrating from Playwright
 
 # Migrating from Playwright to Cypress
 
-This guide helps you translate Playwright tests to Cypress. It covers the 
-core execution model differences, syntax mappings, and patterns for auth, 
+This guide helps you translate Playwright tests to Cypress. It covers the
+core execution model differences, syntax mappings, and patterns for auth,
 networking, and CI.
 
-Most migrations are incremental. You do not need to migrate all tests at 
-once. Cypress and Playwright can coexist in the same repository during 
+Most migrations are incremental. You do not need to migrate all tests at
+once. Cypress and Playwright can coexist in the same repository during
 a transition.
 
 ::::info
@@ -31,7 +31,6 @@ a transition.
 
 ::::
 
-
 ## Quick conversion example
 
 Here's a side-by-side comparison showing how Playwright test patterns translate to Cypress:
@@ -41,9 +40,9 @@ Here's a side-by-side comparison showing how Playwright test patterns translate 
 import { test, expect } from '@playwright/test'
 
 test.describe('Authorization', () => {
-  test('signs up', async ({ page }) => {
-    // Navigate
-    await page.goto('/signup')
+test('signs up', async ({ page }) => {
+// Navigate
+await page.goto('/signup')
 
     // Fill form
     await page.getByLabel('Email').fill('user@email.com')
@@ -55,9 +54,11 @@ test.describe('Authorization', () => {
 
     // Assert navigation
     await expect(page).toHaveURL(/\/signup\/success$/)
-  })
+
 })
-```
+})
+
+````
 
 <Badge type="success">After: Cypress</Badge>
 ```ts
@@ -65,12 +66,12 @@ describe('Authorization', () => {
   it('signs up', () => {
     // Navigate
     cy.visit('/signup')
-    
+
     // Fill form
     cy.get('[data-testid="email"]').type('user@email.com')
     cy.get('[data-testid="confirm-email"]').type('user@email.com')
     cy.get('[data-testid="password"]').type('testPassword1234')
-    
+
     // Submit
     cy.contains('button', 'Create new account').click()
 
@@ -78,9 +79,10 @@ describe('Authorization', () => {
     cy.url().should('include', 'signup/success')
   })
 })
-```
+````
 
 ## Installing Cypress
+
 Before migrating your tests, add Cypress to your project as a dev dependency.
 
 <CypressInstallCommands />
@@ -94,46 +96,44 @@ The Cypress App will walk you through choosing a testing type (end-to-end or com
 
 ## Configuration migration
 
-Both Playwright and Cypress use a `defineConfig`-based configuration file at the 
-root of your project. The key structural difference is that Cypress scopes 
-most E2E-specific options under an `e2e` object, rather than a flat `use` 
+Both Playwright and Cypress use a `defineConfig`-based configuration file at the
+root of your project. The key structural difference is that Cypress scopes
+most E2E-specific options under an `e2e` object, rather than a flat `use`
 block.
 
 ### Config file structure
 
 The configuration file location is configurable using the `--config-file` command line flag or the `configFile` Module API option.
 
-| | Playwright | Cypress |
-|---|---|---|
-| Default config file | `playwright.config.ts` | `cypress.config.ts` |
-| Test files | `testDir: './tests'` | `e2e.specPattern` (glob) |
-| E2E-specific options | `use: { ... }` | `e2e: { ... }` |
-| Node event hooks | `globalSetup` / `globalTeardown` | `e2e.setupNodeEvents` |
+|                      | Playwright                       | Cypress                  |
+| -------------------- | -------------------------------- | ------------------------ |
+| Default config file  | `playwright.config.ts`           | `cypress.config.ts`      |
+| Test files           | `testDir: './tests'`             | `e2e.specPattern` (glob) |
+| E2E-specific options | `use: { ... }`                   | `e2e: { ... }`           |
+| Node event hooks     | `globalSetup` / `globalTeardown` | `e2e.setupNodeEvents`    |
 
 ### Common translations
 
-| Playwright | Cypress | Notes |
-|---|---|---|
-| `forbidOnly` | use `mocha/no-exclusive-tests` lint rule | [eslint-plugin-mocha](https://www.npmjs.com/package/eslint-plugin-mocha) |
-| `headless` | `--headless` or `--headed` CLI flag | Default headless in `cypress run` |
-| `outputDir` | `screenshotsFolder` / `videosFolder` | Separate options per asset type |
-| `reporter` | `reporter` | See [Reporters](/app/references/reporters). |
-| `retries` | `retries.runMode` / `retries.openMode` | Cypress separates CI and interactive mode retries |
-| `testDir` | `e2e.specPattern` | Cypress uses a glob, not a path. |
-| `testIgnore` | `e2e.excludeSpecPattern` | Glob string or array of globs.  |
-| `testMatch` | `e2e.specPattern` | Glob string or array of globs. |
-| `timeout` | `defaultCommandTimeout` | [`defaultCommandTimeout`](/app/references/configuration#Timeouts) is per command, not test. |
-| `use.baseURL` | `e2e.baseUrl` | Must be under `e2e`, not top-level |
-| `use.viewport` | `viewportWidth` / `viewportHeight` | Set at top level or scoped under `e2e` |
-| `use.video` | `video` | Boolean. Cypress records video during `cypress run` by default |
-| `use.screenshot` | `screenshotOnRunFailure` | Cypress takes screenshots on failure automatically |
-| `use.ignoreHTTPSErrors` | `chromeWebSecurity: false` | Also disables same-origin restrictions |
-| `use.channel` | `--browser <name>:<channel>` on the CLI | See [Launching Browsers](/app/references/launching-browsers). |
+| Playwright              | Cypress                                  | Notes                                                                                       |
+| ----------------------- | ---------------------------------------- | ------------------------------------------------------------------------------------------- |
+| `forbidOnly`            | use `mocha/no-exclusive-tests` lint rule | [eslint-plugin-mocha](https://www.npmjs.com/package/eslint-plugin-mocha)                    |
+| `headless`              | `--headless` or `--headed` CLI flag      | Default headless in `cypress run`                                                           |
+| `outputDir`             | `screenshotsFolder` / `videosFolder`     | Separate options per asset type                                                             |
+| `reporter`              | `reporter`                               | See [Reporters](/app/references/reporters).                                                 |
+| `retries`               | `retries.runMode` / `retries.openMode`   | Cypress separates CI and interactive mode retries                                           |
+| `testDir`               | `e2e.specPattern`                        | Cypress uses a glob, not a path.                                                            |
+| `testIgnore`            | `e2e.excludeSpecPattern`                 | Glob string or array of globs.                                                              |
+| `testMatch`             | `e2e.specPattern`                        | Glob string or array of globs.                                                              |
+| `timeout`               | `defaultCommandTimeout`                  | [`defaultCommandTimeout`](/app/references/configuration#Timeouts) is per command, not test. |
+| `use.baseURL`           | `e2e.baseUrl`                            | Must be under `e2e`, not top-level                                                          |
+| `use.viewport`          | `viewportWidth` / `viewportHeight`       | Set at top level or scoped under `e2e`                                                      |
+| `use.video`             | `video`                                  | Boolean. Cypress records video during `cypress run` by default                              |
+| `use.screenshot`        | `screenshotOnRunFailure`                 | Cypress takes screenshots on failure automatically                                          |
+| `use.ignoreHTTPSErrors` | `chromeWebSecurity: false`               | Also disables same-origin restrictions                                                      |
+| `use.channel`           | `--browser <name>:<channel>` on the CLI  | See [Launching Browsers](/app/references/launching-browsers).                               |
 
 <Badge type="danger">Before: Playwright</Badge>
-```ts
-// playwright.config.ts
-import { defineConfig } from '@playwright/test'
+```ts // playwright.config.ts import {defineConfig} from '@playwright/test'
 
 export default defineConfig({
   use: {
@@ -148,9 +148,7 @@ export default defineConfig({
 ```
 
 <Badge type="success">After: Cypress</Badge>
-```ts
-// cypress.config.ts
-import { defineConfig } from 'cypress'
+```ts // cypress.config.ts import {defineConfig} from 'cypress'
 
 export default defineConfig({
   viewportWidth: 1280,
@@ -168,13 +166,13 @@ export default defineConfig({
 })
 ```
 
-See [Cypress Configuration](/app/references/configuration) for the full 
+See [Cypress Configuration](/app/references/configuration) for the full
 option reference.
 
 ### Proxy configuration
 
-Playwright supports proxy settings directly in `playwright.config.ts`. 
-Cypress does not have an equivalent config option. Instead, Cypress reads 
+Playwright supports proxy settings directly in `playwright.config.ts`.
+Cypress does not have an equivalent config option. Instead, Cypress reads
 proxy settings from OS-level environment variables:
 
 ```sh
@@ -183,111 +181,112 @@ export HTTPS_PROXY=http://myproxy.com:3128
 export NO_PROXY=localhost
 ```
 
-These must be set in your shell or CI environment before running Cypress. 
+These must be set in your shell or CI environment before running Cypress.
 Proxy Auto-Configuration (PAC) files are not supported.
 
-See [Proxy Configuration](/app/references/proxy-configuration) for full setup 
-instructions, including Windows-specific steps and corporate CA certificate 
+See [Proxy Configuration](/app/references/proxy-configuration) for full setup
+instructions, including Windows-specific steps and corporate CA certificate
 configuration.
 
 ## CLI/Command line migration
 
-Playwright and Cypress use different commands and flag structures. This 
+Playwright and Cypress use different commands and flag structures. This
 section covers the most common translations.
 
 ### Base commands
 
-| Task | Playwright | Cypress |
-|---|---|---|
-| Run all tests (headless) | `npx playwright test` | `cypress run` |
-| Open interactive mode | `npx playwright test --ui` | `cypress open` |
-| Run in headed mode | `npx playwright test --headed` | `cypress run --headed` |
+| Task                     | Playwright                     | Cypress                |
+| ------------------------ | ------------------------------ | ---------------------- |
+| Run all tests (headless) | `npx playwright test`          | `cypress run`          |
+| Open interactive mode    | `npx playwright test --ui`     | `cypress open`         |
+| Run in headed mode       | `npx playwright test --headed` | `cypress run --headed` |
 
 ### Common flag translations
 
-| Playwright | Cypress | Notes |
-|---|---|---|
-| `--config=playwright.config.ts` | `--config-file cypress.config.ts` | |
-| `npx playwright test todo.spec.ts` | `cypress run --spec "todo.cy.ts"` | Run a single spec file or glob pattern |
-| `--fail-on-flaky-tests` | `detect-flake-but-always-fail` in Configuration | See [Experimental Test Retries](/app/references/experiments#Experimental-Test-Retries) |
-| `--forbid-only` | use `mocha/no-exclusive-tests` lint rule | [eslint-plugin-mocha](https://www.npmjs.com/package/eslint-plugin-mocha) |
-| `--grep "pattern"` | `--expose grep="pattern"` | Requires [`@cypress/grep`](https://github.com/cypress-io/cypress/tree/develop/npm/grep) |
-| `--grep-invert "pattern"` | `--expose grep="-pattern"` | Requires [`@cypress/grep`](https://github.com/cypress-io/cypress/tree/develop/npm/grep) |
-| `--last-failed` | [Spec Prioritization](/cloud/features/smart-orchestration/spec-prioritization) | Requires [Cypress Cloud](/cloud/overview) |
-| `--max-failures=5` | `--auto-cancel-after-failures=5` | Requires [Run Cancellation](/cloud/features/smart-orchestration/run-cancellation) |
-| `--project=chromium` | [`--project='./front-end'`](/app/references/command-line#cypress-open-project-lt-project-path-gt) |  |
-| `--quiet` | `--quiet` |  |
-| `--retries=2` | `--config retries=2` | |
-| `--reporter=html` | `--reporter html` | |
-| `--shard=1/4` | `--parallel --ci-build-id $BUILD_ID` | Cypress distributes specs dynamically; no manual sharding required |
-| `--trace on` | `--record` | Cypress Test Replay requires [Cypress Cloud](/cloud/overview) |
-| `--fully-parallel` | `--parallel` | Requires [Cypress Cloud](/cloud/overview) |
-| `--workers=4` | `--parallel` | Requires [Cypress Cloud](/cloud/overview) |
+| Playwright                         | Cypress                                                                                           | Notes                                                                                   |
+| ---------------------------------- | ------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| `--config=playwright.config.ts`    | `--config-file cypress.config.ts`                                                                 |                                                                                         |
+| `npx playwright test todo.spec.ts` | `cypress run --spec "todo.cy.ts"`                                                                 | Run a single spec file or glob pattern                                                  |
+| `--fail-on-flaky-tests`            | `detect-flake-but-always-fail` in Configuration                                                   | See [Experimental Test Retries](/app/references/experiments#Experimental-Test-Retries)  |
+| `--forbid-only`                    | use `mocha/no-exclusive-tests` lint rule                                                          | [eslint-plugin-mocha](https://www.npmjs.com/package/eslint-plugin-mocha)                |
+| `--grep "pattern"`                 | `--expose grep="pattern"`                                                                         | Requires [`@cypress/grep`](https://github.com/cypress-io/cypress/tree/develop/npm/grep) |
+| `--grep-invert "pattern"`          | `--expose grep="-pattern"`                                                                        | Requires [`@cypress/grep`](https://github.com/cypress-io/cypress/tree/develop/npm/grep) |
+| `--last-failed`                    | [Spec Prioritization](/cloud/features/smart-orchestration/spec-prioritization)                    | Requires [Cypress Cloud](/cloud/overview)                                               |
+| `--max-failures=5`                 | `--auto-cancel-after-failures=5`                                                                  | Requires [Run Cancellation](/cloud/features/smart-orchestration/run-cancellation)       |
+| `--project=chromium`               | [`--project='./front-end'`](/app/references/command-line#cypress-open-project-lt-project-path-gt) |                                                                                         |
+| `--quiet`                          | `--quiet`                                                                                         |                                                                                         |
+| `--retries=2`                      | `--config retries=2`                                                                              |                                                                                         |
+| `--reporter=html`                  | `--reporter html`                                                                                 |                                                                                         |
+| `--shard=1/4`                      | `--parallel --ci-build-id $BUILD_ID`                                                              | Cypress distributes specs dynamically; no manual sharding required                      |
+| `--trace on`                       | `--record`                                                                                        | Cypress Test Replay requires [Cypress Cloud](/cloud/overview)                           |
+| `--fully-parallel`                 | `--parallel`                                                                                      | Requires [Cypress Cloud](/cloud/overview)                                               |
+| `--workers=4`                      | `--parallel`                                                                                      | Requires [Cypress Cloud](/cloud/overview)                                               |
 
 ## Browser installation
 
-Playwright and Cypress take different approaches to browser management. 
+Playwright and Cypress take different approaches to browser management.
 Understanding the difference will help you set up CI correctly.
 
 ### How each framework handles browsers
 
-Playwright downloads and manages its own isolated browser binaries. 
-Running `npx playwright install` fetches Playwright-specific builds of 
-Chromium, Firefox, and WebKit that are separate from any browsers installed 
+Playwright downloads and manages its own isolated browser binaries.
+Running `npx playwright install` fetches Playwright-specific builds of
+Chromium, Firefox, and WebKit that are separate from any browsers installed
 on your system.
 
-Cypress uses browsers already installed on the machine. There are no 
-browser binaries to download. If Chrome is installed locally, Cypress will 
-find and use it. This means browser setup is a CI concern rather than a 
+Cypress uses browsers already installed on the machine. There are no
+browser binaries to download. If Chrome is installed locally, Cypress will
+find and use it. This means browser setup is a CI concern rather than a
 per-project dependency.
 
 <Badge type="danger">Before: Playwright</Badge>
-```sh
-# Download Playwright's browser binaries
-npx playwright install
+```sh # Download Playwright's browser binaries npx playwright install
 
 # Download with OS-level dependencies
+
 npx playwright install --with-deps
 
 # Download specific browsers only
+
 npx playwright install chromium webkit
-```
+
+````
 
 <Badge type="success">After: Cypress</Badge>
 ```sh
 # No install step needed — Cypress uses browsers already on the machine.
 # To verify which browsers Cypress can find:
 cypress info
-```
+````
 
 ### Browser support
 
-| Browser | Playwright | Cypress |
-|---|---|---|
-| Chromium / Chrome | Yes | Yes |
-| Microsoft Edge | Yes | Yes |
-| Firefox | Yes | Yes |
-| WebKit (Safari) | Yes | Yes (experimental) |
+| Browser           | Playwright | Cypress            |
+| ----------------- | ---------- | ------------------ |
+| Chromium / Chrome | Yes        | Yes                |
+| Microsoft Edge    | Yes        | Yes                |
+| Firefox           | Yes        | Yes                |
+| WebKit (Safari)   | Yes        | Yes (experimental) |
 
-Cypress runs in Electron by default when you run `cypress run` without a 
-`--browser` flag. Electron is bundled with Cypress and requires no 
-separate installation. 
+Cypress runs in Electron by default when you run `cypress run` without a
+`--browser` flag. Electron is bundled with Cypress and requires no
+separate installation.
 
-For WebKit, follow the 
-[experimental WebKit setup](/app/references/launching-browsers#WebKit-Experimental) 
+For WebKit, follow the
+[experimental WebKit setup](/app/references/launching-browsers#WebKit-Experimental)
 to install the required `playwright-webkit` package.
 
 ### Browser versions and CI
 
-Because Cypress uses system browsers, you have explicit control over which 
-browser version your tests run against. In CI, there are two recommended 
+Because Cypress uses system browsers, you have explicit control over which
+browser version your tests run against. In CI, there are two recommended
 approaches.
 
 #### Docker images
 
-Cypress publishes official Docker images with specific browser versions 
-pre-installed. Image tags encode the exact versions of Node, Chrome, 
-Firefox, and Edge, so your CI environment is reproducible and version 
+Cypress publishes official Docker images with specific browser versions
+pre-installed. Image tags encode the exact versions of Node, Chrome,
+Firefox, and Edge, so your CI environment is reproducible and version
 changes are explicit.
 
 ```sh
@@ -298,23 +297,24 @@ cypress/browsers:node-22.19.0-chrome-139.0.7258.154-1-ff-142.0.1-edge-139.0.3405
 cypress/included:cypress-15.1.0-node-22.19.0-chrome-139.0.7258.154-1-ff-142.0.1-edge-139.0.3405.125-1
 ```
 
-Use `cypress/browsers` when you want to control the Cypress version 
-through your `package.json`. Use `cypress/included` when you want a 
-fully self-contained image. If you need a specific combination of 
-versions not covered by the published images, use 
-[`cypress/factory`](https://github.com/cypress-io/cypress-docker-images/tree/master/factory) 
+Use `cypress/browsers` when you want to control the Cypress version
+through your `package.json`. Use `cypress/included` when you want a
+fully self-contained image. If you need a specific combination of
+versions not covered by the published images, use
+[`cypress/factory`](https://github.com/cypress-io/cypress-docker-images/tree/master/factory)
 to build a custom image.
 
-See [cypress-docker-images](https://github.com/cypress-io/cypress-docker-images) 
+See [cypress-docker-images](https://github.com/cypress-io/cypress-docker-images)
 for all available tags.
 
 #### CircleCI orb
 
-If you use CircleCI, the 
-[Cypress CircleCI orb](https://github.com/cypress-io/circleci-orb) 
-handles installation, caching, and test execution. Pass 
-`install-browsers: true` to install Chrome, Firefox, and Edge into the CI 
+If you use CircleCI, the
+[Cypress CircleCI orb](https://github.com/cypress-io/circleci-orb)
+handles installation, caching, and test execution. Pass
+`install-browsers: true` to install Chrome, Firefox, and Edge into the CI
 environment.
+
 ```yaml
 # .circleci/config.yml
 version: 2.1
@@ -329,13 +329,13 @@ workflows:
           cypress-command: 'npx cypress run --browser chrome'
 ```
 
-See [CircleCI](/app/continuous-integration/circleci) for full setup 
+See [CircleCI](/app/continuous-integration/circleci) for full setup
 documentation.
 
 ### Browser launch options
 
-Playwright's `launchOptions` in `playwright.config.ts` maps to the 
-`before:browser:launch` event in Cypress, which you configure inside 
+Playwright's `launchOptions` in `playwright.config.ts` maps to the
+`before:browser:launch` event in Cypress, which you configure inside
 `setupNodeEvents` of your Cypress configuration file. Both let you modify how the browser starts. See the [Browser Launch Event](/api/node-events/browser-launch-api) for the full reference.
 
 #### Launch arguments, extensions, and preferences
@@ -373,25 +373,25 @@ export default defineConfig({
 
 The `launchOptions` object exposes three properties depending on the browser:
 
-| Capability | Playwright | Cypress |
-|---|---|---|
-| Browser launch arguments | `launchOptions.args` | `launchOptions.args` via `before:browser:launch` |
-| Firefox preferences | `launchOptions.firefoxUserPrefs` | `launchOptions.preferences` via `before:browser:launch` |
-| Chrome/Edge extensions | `args` flags in `launchPersistentContext()` | `launchOptions.extensions`  via `before:browser:launch` |
+| Capability               | Playwright                                  | Cypress                                                 |
+| ------------------------ | ------------------------------------------- | ------------------------------------------------------- |
+| Browser launch arguments | `launchOptions.args`                        | `launchOptions.args` via `before:browser:launch`        |
+| Firefox preferences      | `launchOptions.firefoxUserPrefs`            | `launchOptions.preferences` via `before:browser:launch` |
+| Chrome/Edge extensions   | `args` flags in `launchPersistentContext()` | `launchOptions.extensions` via `before:browser:launch`  |
 
-See the [Browser Launch Event](/api/node-events/browser-launch-api) for the 
+See the [Browser Launch Event](/api/node-events/browser-launch-api) for the
 full reference and per-browser examples.
 
 ## Test structure and syntax migration
 
 Playwright imports `test` from `@playwright/test`. Cypress uses Mocha's BDD interface, which provides `it()` and `describe()` globally. `test` is not available in Cypress and must be replaced.
 
-| Playwright | Cypress |
-|---|---|
-| `test('name', () => {})` | `it('name', () => {})` |
-| `test.only('name', () => {})` | `it.only('name', () => {})` |
-| `test.skip('name', () => {})` | `it.skip('name', () => {})` |
-| `test.describe('group', () => {})` | `describe('group', () => {})` |
+| Playwright                              | Cypress                            |
+| --------------------------------------- | ---------------------------------- |
+| `test('name', () => {})`                | `it('name', () => {})`             |
+| `test.only('name', () => {})`           | `it.only('name', () => {})`        |
+| `test.skip('name', () => {})`           | `it.skip('name', () => {})`        |
+| `test.describe('group', () => {})`      | `describe('group', () => {})`      |
 | `test.describe.only('group', () => {})` | `describe.only('group', () => {})` |
 
 <Badge type="danger">Before: Playwright</Badge>
@@ -399,11 +399,12 @@ Playwright imports `test` from `@playwright/test`. Cypress uses Mocha's BDD inte
 import { test, expect } from '@playwright/test'
 
 test.describe('checkout', () => {
-  test('completes purchase', async ({ page }) => { ... })
-  test.only('applies discount', async ({ page }) => { ... })
-  test.skip('handles expired card', async ({ page }) => { ... })
+test('completes purchase', async ({ page }) => { ... })
+test.only('applies discount', async ({ page }) => { ... })
+test.skip('handles expired card', async ({ page }) => { ... })
 })
-```
+
+````
 
 <Badge type="success">After: Cypress</Badge>
 ```ts
@@ -412,7 +413,7 @@ describe('checkout', () => {
   it.only('applies discount', () => { ... })
   it.skip('handles expired card', () => { ... })
 })
-```
+````
 
 ## Execution model and retry-ability
 
@@ -420,11 +421,11 @@ Playwright code typically awaits each action and may use explicit waits for spec
 
 **What this means for your tests:**
 
-| Playwright | Cypress |
-| --- | --- |
+| Playwright                                      | Cypress                                               |
+| ----------------------------------------------- | ----------------------------------------------------- |
 | Explicit waits are available when you need them | Most DOM queries/assertions wait and retry by default |
-| `await page.waitForSelector(...)` | `cy.get(...)` retries until it finds the element |
-| `await expect(locator)...` | `cy.get(...).should(...)` retries automatically |
+| `await page.waitForSelector(...)`               | `cy.get(...)` retries until it finds the element      |
+| `await expect(locator)...`                      | `cy.get(...).should(...)` retries automatically       |
 
 <Badge type="danger">Before: Playwright</Badge>
 
@@ -757,9 +758,9 @@ beforeEach(() => {
 
 ## Cross-origin
 
-Cypress enforces a same-origin policy by default. Use `cy.origin()` to 
-run commands against a different origin within the same test. Any 
-commands targeting a secondary origin must be scoped inside the 
+Cypress enforces a same-origin policy by default. Use `cy.origin()` to
+run commands against a different origin within the same test. Any
+commands targeting a secondary origin must be scoped inside the
 `cy.origin()` callback.
 
 <Badge type="danger">Before: Playwright</Badge>
@@ -791,34 +792,29 @@ Both Playwright and Cypress let you replace native browser time functions with a
 The two tools take different approaches to time control.
 
 <Badge type="danger">Before: Playwright</Badge>
-```ts
-await page.clock.setFixedTime(new Date('2024-02-02T10:00:00'))
-await page.goto('/')
-await expect(page.getByTestId('current-time')).toHaveText('2/2/2024, 10:00:00 AM')
-```
+```ts await page.clock.setFixedTime(new Date('2024-02-02T10:00:00')) await
+page.goto('/') await
+expect(page.getByTestId('current-time')).toHaveText('2/2/2024, 10:00:00 AM') ```
 
 <Badge type="success">After: Cypress</Badge>
-```ts
-cy.clock(new Date('2024-02-02T10:00:00'))
-cy.visit('/')
-cy.get('[data-testid="current-time"]').should('have.text', '2/2/2024, 10:00:00 AM')
-```
+```ts cy.clock(new Date('2024-02-02T10:00:00')) cy.visit('/')
+cy.get('[data-testid="current-time"]').should('have.text', '2/2/2024, 10:00:00
+AM') ```
 
 ### Advancing time
 
 To simulate the passage of time and trigger scheduled timers, Playwright uses `fastForward` or `runFor`. Cypress uses `cy.tick()`.
 
 <Badge type="danger">Before: Playwright</Badge>
-```ts
-await page.clock.install()
-await page.goto('/')
-await page.getByRole('button').click()
+```ts await page.clock.install() await page.goto('/') await
+page.getByRole('button').click()
 
 // Skip forward 5 minutes, firing all timers that fall within the window
 await page.clock.fastForward('05:00')
 
 await expect(page.getByText('Session expired')).toBeVisible()
-```
+
+````
 
 <Badge type="success">After: Cypress</Badge>
 ```ts
@@ -830,7 +826,7 @@ cy.getByRole('button').click()
 cy.tick(5 * 60 * 1000)
 
 cy.contains('Session expired').should('be.visible')
-```
+````
 
 ### Pausing at a specific time
 
@@ -848,7 +844,8 @@ await expect(page.getByTestId('current-time')).toHaveText('2/2/2024, 10:00:00 AM
 // Advance another 30 minutes manually
 await page.clock.fastForward('30:00')
 await expect(page.getByTestId('current-time')).toHaveText('2/2/2024, 10:30:00 AM')
-```
+
+````
 
 <Badge type="success">After: Cypress</Badge>
 ```ts
@@ -862,7 +859,7 @@ cy.get('[data-testid="current-time"]').should('have.text', '2/2/2024, 10:00:00 A
 // Advance another 30 minutes
 cy.tick(30 * 60 * 1000)
 cy.get('[data-testid="current-time"]').should('have.text', '2/2/2024, 10:30:00 AM')
-```
+````
 
 ### Changing the system time mid-test
 
@@ -875,7 +872,8 @@ await page.goto('/')
 
 // Jump to a new time without firing any scheduled timers
 await page.clock.setSystemTime(new Date('2024-02-02T10:30:00'))
-```
+
+````
 
 <Badge type="success">After: Cypress</Badge>
 ```ts
@@ -886,7 +884,7 @@ cy.clock().then((clock) => {
   // Jump to a new time without firing any scheduled timers
   clock.setSystemTime(new Date('2024-02-02T10:30:00'))
 })
-```
+````
 
 ### Overriding only specific functions
 
@@ -902,8 +900,8 @@ cy.clock(null, ['setTimeout', 'clearTimeout', 'setInterval', 'clearInterval'])
 
 ## Multiple tabs and windows
 
-You can handle multi-tab workflows using the 
-[`@cypress/puppeteer`](https://www.npmjs.com/package/@cypress/puppeteer) 
+You can handle multi-tab workflows using the
+[`@cypress/puppeteer`](https://www.npmjs.com/package/@cypress/puppeteer)
 plugin, which gives Cypress access to the underlying browser via Puppeteer. This approach requires Puppeteer as a dependency.
 
 <Badge type="danger">Before: Playwright</Badge>
@@ -995,10 +993,10 @@ See [`.shadow()`](/api/commands/shadow).
 
 ## Test generation
 
-[Cypress Studio](/app/guides/cypress-studio) lets you generate test code 
-by interacting with your application in the Cypress app. It records 
-actions like clicks and form inputs and writes the corresponding Cypress 
-commands. It is useful for prototyping tests but is not a replacement for 
+[Cypress Studio](/app/guides/cypress-studio) lets you generate test code
+by interacting with your application in the Cypress app. It records
+actions like clicks and form inputs and writes the corresponding Cypress
+commands. It is useful for prototyping tests but is not a replacement for
 hand-authored test logic. Cypress Studio is a replacement for Playwright's `playwright codegen`.
 
 <DocsVideo
@@ -1067,7 +1065,7 @@ See [`cy.readFile()`](/api/commands/readfile).
 
 ### Default behavior
 
-The two tools handle unhandled dialogs differently, and this affects how you 
+The two tools handle unhandled dialogs differently, and this affects how you
 approach tests that trigger them.
 
 ### alert()
@@ -1084,7 +1082,8 @@ page.on('dialog', async (dialog) => {
 })
 
 await page.getByRole('button', { name: 'Leave page' }).click()
-```
+
+````
 
 <Badge type="success">After: Cypress</Badge>
 ```ts
@@ -1094,7 +1093,7 @@ cy.on('window:alert', (message) => {
 })
 
 cy.get('button').contains('Leave page').click()
-```
+````
 
 ### confirm()
 
@@ -1109,7 +1108,8 @@ await expect(page.getByText('Account deleted')).toBeVisible()
 page.on('dialog', (dialog) => dialog.dismiss())
 await page.getByRole('button', { name: 'Delete account' }).click()
 await expect(page.getByText('Account deleted')).not.toBeVisible()
-```
+
+````
 
 <Badge type="success">After: Cypress</Badge>
 ```ts
@@ -1121,9 +1121,9 @@ cy.contains('Account deleted').should('be.visible')
 cy.on('window:confirm', () => false)
 cy.get('button').contains('Delete account').click()
 cy.contains('Account deleted').should('not.exist')
-```
+````
 
-If you need to assert on the confirmation message text and control acceptance 
+If you need to assert on the confirmation message text and control acceptance
 in the same test, combine both:
 
 ```ts
@@ -1135,8 +1135,8 @@ cy.on('window:confirm', (message) => {
 cy.get('button').contains('Delete account').click()
 ```
 
-For tests that need to verify the stub was called, use `cy.stub()` instead of 
-`cy.on()`. This lets you use Sinon assertions to confirm the dialog was 
+For tests that need to verify the stub was called, use `cy.stub()` instead of
+`cy.on()`. This lets you use Sinon assertions to confirm the dialog was
 triggered the expected number of times.
 
 ```ts
@@ -1149,9 +1149,9 @@ cy.get('@confirmDialog').should('have.been.calledOnce')
 
 ### prompt()
 
-In Cypress, you must stub `window.prompt` before 
-the page loads using the `onBeforeLoad` callback in `cy.visit()`. This gives 
-you full control over the return value and lets you assert that the prompt 
+In Cypress, you must stub `window.prompt` before
+the page loads using the `onBeforeLoad` callback in `cy.visit()`. This gives
+you full control over the return value and lets you assert that the prompt
 was called.
 
 <Badge type="danger">Before: Playwright</Badge>
@@ -1164,7 +1164,8 @@ page.on('dialog', async (dialog) => {
 
 await page.getByRole('button', { name: 'Set name' }).click()
 await expect(page.getByTestId('greeting')).toHaveText('Hello, Ada Lovelace!')
-```
+
+````
 
 <Badge type="success">After: Cypress</Badge>
 ```ts
@@ -1177,9 +1178,9 @@ cy.visit('/', {
 cy.get('button').contains('Set name').click()
 cy.get('[data-testid="greeting"]').should('have.text', 'Hello, Ada Lovelace!')
 cy.get('@promptDialog').should('have.been.calledWith', 'Enter your name:')
-```
+````
 
-To simulate the user cancelling the prompt (equivalent to `dialog.dismiss()` 
+To simulate the user cancelling the prompt (equivalent to `dialog.dismiss()`
 in Playwright), return `null` from the stub:
 
 ```ts
@@ -1192,8 +1193,8 @@ cy.visit('/', {
 
 ### beforeunload
 
-If your tests need to verify that a `beforeunload` handler is registered and 
-sets a `returnValue`, use the `window:before:unload` event to assert on the 
+If your tests need to verify that a `beforeunload` handler is registered and
+sets a `returnValue`, use the `window:before:unload` event to assert on the
 event object directly:
 
 <Badge type="danger">Before: Playwright</Badge>
@@ -1204,7 +1205,8 @@ page.on('dialog', async (dialog) => {
 })
 
 await page.close({ runBeforeUnload: true })
-```
+
+````
 
 <Badge type="success">After: Cypress</Badge>
 ```ts
@@ -1215,11 +1217,11 @@ cy.on('window:before:unload', (event) => {
 
 // Trigger navigation to fire beforeunload
 cy.get('a').contains('Leave').click()
-```
+````
 
 ### print dialogs
 
-In Cypress, stub `window.print` using `onBeforeLoad` in `cy.visit()` and 
+In Cypress, stub `window.print` using `onBeforeLoad` in `cy.visit()` and
 assert that the stub was called.
 
 <Badge type="danger">Before: Playwright</Badge>
@@ -1231,7 +1233,8 @@ await page.evaluate(
 
 await page.getByRole('button', { name: 'Print invoice' }).click()
 await page.waitForFunction('window.waitForPrint')
-```
+
+````
 
 <Badge type="success">After: Cypress</Badge>
 ```ts
@@ -1243,7 +1246,7 @@ cy.visit('/', {
 
 cy.get('button').contains('Print invoice').click()
 cy.get('@printDialog').should('have.been.calledOnce')
-```
+````
 
 ## API testing
 
@@ -1371,8 +1374,8 @@ See [Custom Commands](/api/cypress-api/custom-commands) for more details.
 
 ### Key architectural difference
 
-Playwright parallelizes tests locally using workers and across machines 
-using manual sharding. You define the split strategy in config or at the 
+Playwright parallelizes tests locally using workers and across machines
+using manual sharding. You define the split strategy in config or at the
 command line.
 
 - Worker count controlled via config (`workers: 4`) or CLI (`--workers=4`)
@@ -1380,16 +1383,12 @@ command line.
 - You define the split strategy upfront
 
 <Badge type="danger">Before: Playwright</Badge>
-```sh
-# Split across 4 machines manually
-playwright test --shard=1/4  # Machine 1
-playwright test --shard=2/4  # Machine 2
-playwright test --shard=3/4  # Machine 3
-playwright test --shard=4/4  # Machine 4
-```
+```sh # Split across 4 machines manually playwright test --shard=1/4 # Machine 1
+playwright test --shard=2/4 # Machine 2 playwright test --shard=3/4 # Machine 3
+playwright test --shard=4/4 # Machine 4 ```
 
-Cypress parallelizes tests across machines through 
-[Cypress Cloud](/cloud/overview), which distributes specs dynamically based 
+Cypress parallelizes tests across machines through
+[Cypress Cloud](/cloud/overview), which distributes specs dynamically based
 on historical run durations. This requires a Cypress Cloud account.
 
 - Parallelization happens in CI through Cypress Cloud.
@@ -1397,11 +1396,8 @@ on historical run durations. This requires a Cypress Cloud account.
 - No manual sharding required.
 
 <Badge type="success">After: Cypress Cloud</Badge>
-```sh
-# Cloud automatically distributes specs across machines
-cypress run --record --parallel 
-```
-### Smart Orchestration in Cypress Cloud
+```sh # Cloud automatically distributes specs across machines cypress run
+--record --parallel ``` ### Smart Orchestration in Cypress Cloud
 
 When you use Cypress Cloud, you gain **Smart Orchestration** features that go beyond simple parallelization:
 
@@ -1427,9 +1423,9 @@ See [Parallelization](/cloud/features/smart-orchestration/parallelization) for s
 
 ### Debugging with Test Replay
 
-Test Replay is available on all Cypress Cloud plans at no additional cost. It records a 
-full, interactive replay of every test run, including network requests, 
-console output, and DOM snapshots. Replays are shareable via link and do 
+Test Replay is available on all Cypress Cloud plans at no additional cost. It records a
+full, interactive replay of every test run, including network requests,
+console output, and DOM snapshots. Replays are shareable via link and do
 not require a local trace file.
 
 <DocsVideo
@@ -1501,54 +1497,54 @@ Learn more about [Accessibility testing](/accessibility/get-started/introduction
 
 ## Cheat sheet
 
-| Playwright                                                       | Cypress                                                                        |
-| ---------------------------------------------------------------- | ------------------------------------------------------------------------------ |
-| `page.locator('css')`                                            | `cy.get('css')`                                                                |
-| `page.getByTestId('x')`                                          | `cy.get('[data-testid=\"x\"]')`                                                |
-| `await page.goto('/path')`                                       | `cy.visit('/path')`                                                            |
-| `await page.getByLabel('I agree').check()`                                       | `cy.get('[aria-label="I agree"]').check()`                                                            |
-| `await page.locator('[data-testid="color"]').selectOption('blue')`                       | `cy.get('[data-testid="color"]').select('blue')`                                                            |
-| `await page.waitForResponse(...)`                                | `cy.intercept(...).as('x'); cy.wait('@x')`                                     |
-| `await page.setInputFiles('input[type=file]', 'file.png')`       | `cy.get('input[type=file]').selectFile('file.png')`                            |
-| `await page.locator.click()`                                          | `cy.get(...).click()`                                                          |
-| `await page.locator.click({ force: true })`                                          | `cy.get(...).click({force: true})`                                                          |
-| `await page.locator.click({ button: 'right' })`                                          | `cy.get(...).rightclick()`                                                          |
-| `await page.locator.click({ modifiers: ['Shift'] })`                                          | `cy.get(...).click({shiftKey: true})`                                                          |
-| `await page.locator.dblclick()`                                          | `cy.get(...).dblclick()`                                                          |
-| `await page.locator.hover()`                                          | `cy.get(...).trigger('mouseover')`                                                          |
-| `await page.locator.fill('text')`                                     | `cy.get(...).clear().type('text')`                                             |
-| `await page.locator.focus()`                                     | `cy.get(...).focus()`                                             |
-| `await page.locator.press('Tab')`                                     | `cy.get(...).press(Cypress.Keyboard.Keys.TAB)`                                             |
-| `await page.locator.scrollIntoViewIfNeeded()`                                     | `cy.get(...).scrollIntoView()`                                             |
-| `await expect(locator).toHaveText('Saved!')`                     | `cy.get(...).should('have.text', 'Saved!')`                                    |
-| `await expect(locator).toHaveAttribute('aria-expanded', 'true')` | `cy.get(...).should('have.attr', 'aria-expanded', 'true')`                     |
-| `await expect(locator).toBeChecked()`                            | `cy.get(...).should('be.checked')`                                             |
-| `await expect(locator).toBeDisabled()`                           | `cy.get(...).should('be.disabled')`                                            |
-| `await expect(locator).toBeVisible()`                            | `cy.get(...).should('be.visible')`                                             |
-| `await expect(locator).toBeHidden()`                            | `cy.get(...).should('be.hidden')`                                             |
-| `await expect(locator).toBeEnabled()`                            | `cy.get(...).should('be.enabled')`                                             |
-| `await expect(locator).toBeAttached()`                            | `Cypress.dom.isAttached($el)`                                             |
-| `await expect(locator).toBeFocused()`                            | `cy.get(...).should('have.focus')`                                             |
-| `await expect(locator).toHaveValue('123')`                            | `cy.get(...).should('have.value', '123')`                                             |
-| `await expect(locator).toContainText('Saved!')`                            | `cy.get(...).should('contain', 'Saved!')`                                             |
-| `await expect(locator).toContainClass('light-mode')`                            | `cy.get(...).should('have.class', 'light-mode')`                                             |
-| `await expect(locator).toHaveCSS('color', 'red')`                            | `cy.get(...).should('have.css', 'color', 'red')`                                             |
-| `await expect(page).toHaveURL(/re/)`                             | `cy.url().should('match', /re/)`                                               |
-| `page.route('**/api', ...)`                                      | `cy.intercept('/api', ...)`                                                    |
-| `use: { storageState: 'state.json' }`                            | `cy.session('user', login)`                                                    |
-| `page.screenshot()` | cy.screenshot() |  |
-| `await page.locator('.header').screenshot()` | cy.get('.header').screenshot() |  |
-| `page.clock.setFixedTime(date)` | `cy.clock(now)` | Playwright's `setFixedTime` leaves timers running; `cy.clock()` stops them |
-| `page.clock.install({ time })` | `cy.clock(now)` | Direct equivalent |
-| `page.clock.fastForward(duration)` | `cy.tick(ms)` | Cypress only accepts milliseconds |
-| `page.clock.runFor(duration)` | `cy.tick(ms)` | Cypress only accepts milliseconds |
-| `page.clock.pauseAt(date)` | No equivalent | Calculate the delta and use `cy.tick()` |
-| `page.clock.resume()` | No equivalent | In Cypress, time only moves when `cy.tick()` is called |
-| `page.clock.setSystemTime(date)` | `clock.setSystemTime(date)` | Both change the time without firing timers |
-| `page.on('dialog', dialog => dialog.accept())` | Auto-accepted by default | No handler needed to accept `alert()` or `confirm()` |
-| `page.on('dialog', dialog => dialog.dismiss())` | `cy.on('window:confirm', () => false)` | `alert()` cannot be dismissed in Cypress |
-| `page.on('dialog', dialog => dialog.accept('text'))` | `cy.stub(win, 'prompt').returns('text')` in `onBeforeLoad` | Cypress requires a stub; there is no `window:prompt` event |
-| `dialog.message()` | `cy.on('window:alert', msg => ...)` or `cy.on('window:confirm', msg => ...)` | Inspect dialog text inside the event handler |
-| `dialog.type()` | Separate events per dialog type | `window:alert`, `window:confirm`; `prompt` requires a stub |
-| `page.on('dialog')` with `beforeunload` | `cy.on('window:before:unload', event => ...)` | Cypress cannot intercept or cancel the `beforeunload` dialog |
-| Evaluate + `waitForFunction` for `window.print` | `cy.stub(win, 'print')` in `onBeforeLoad` | Cypress approach is simpler and uses the same stub API |
+| Playwright                                                         | Cypress                                                                      |
+| ------------------------------------------------------------------ | ---------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| `page.locator('css')`                                              | `cy.get('css')`                                                              |
+| `page.getByTestId('x')`                                            | `cy.get('[data-testid=\"x\"]')`                                              |
+| `await page.goto('/path')`                                         | `cy.visit('/path')`                                                          |
+| `await page.getByLabel('I agree').check()`                         | `cy.get('[aria-label="I agree"]').check()`                                   |
+| `await page.locator('[data-testid="color"]').selectOption('blue')` | `cy.get('[data-testid="color"]').select('blue')`                             |
+| `await page.waitForResponse(...)`                                  | `cy.intercept(...).as('x'); cy.wait('@x')`                                   |
+| `await page.setInputFiles('input[type=file]', 'file.png')`         | `cy.get('input[type=file]').selectFile('file.png')`                          |
+| `await page.locator.click()`                                       | `cy.get(...).click()`                                                        |
+| `await page.locator.click({ force: true })`                        | `cy.get(...).click({force: true})`                                           |
+| `await page.locator.click({ button: 'right' })`                    | `cy.get(...).rightclick()`                                                   |
+| `await page.locator.click({ modifiers: ['Shift'] })`               | `cy.get(...).click({shiftKey: true})`                                        |
+| `await page.locator.dblclick()`                                    | `cy.get(...).dblclick()`                                                     |
+| `await page.locator.hover()`                                       | `cy.get(...).trigger('mouseover')`                                           |
+| `await page.locator.fill('text')`                                  | `cy.get(...).clear().type('text')`                                           |
+| `await page.locator.focus()`                                       | `cy.get(...).focus()`                                                        |
+| `await page.locator.press('Tab')`                                  | `cy.get(...).press(Cypress.Keyboard.Keys.TAB)`                               |
+| `await page.locator.scrollIntoViewIfNeeded()`                      | `cy.get(...).scrollIntoView()`                                               |
+| `await expect(locator).toHaveText('Saved!')`                       | `cy.get(...).should('have.text', 'Saved!')`                                  |
+| `await expect(locator).toHaveAttribute('aria-expanded', 'true')`   | `cy.get(...).should('have.attr', 'aria-expanded', 'true')`                   |
+| `await expect(locator).toBeChecked()`                              | `cy.get(...).should('be.checked')`                                           |
+| `await expect(locator).toBeDisabled()`                             | `cy.get(...).should('be.disabled')`                                          |
+| `await expect(locator).toBeVisible()`                              | `cy.get(...).should('be.visible')`                                           |
+| `await expect(locator).toBeHidden()`                               | `cy.get(...).should('be.hidden')`                                            |
+| `await expect(locator).toBeEnabled()`                              | `cy.get(...).should('be.enabled')`                                           |
+| `await expect(locator).toBeAttached()`                             | `Cypress.dom.isAttached($el)`                                                |
+| `await expect(locator).toBeFocused()`                              | `cy.get(...).should('have.focus')`                                           |
+| `await expect(locator).toHaveValue('123')`                         | `cy.get(...).should('have.value', '123')`                                    |
+| `await expect(locator).toContainText('Saved!')`                    | `cy.get(...).should('contain', 'Saved!')`                                    |
+| `await expect(locator).toContainClass('light-mode')`               | `cy.get(...).should('have.class', 'light-mode')`                             |
+| `await expect(locator).toHaveCSS('color', 'red')`                  | `cy.get(...).should('have.css', 'color', 'red')`                             |
+| `await expect(page).toHaveURL(/re/)`                               | `cy.url().should('match', /re/)`                                             |
+| `page.route('**/api', ...)`                                        | `cy.intercept('/api', ...)`                                                  |
+| `use: { storageState: 'state.json' }`                              | `cy.session('user', login)`                                                  |
+| `page.screenshot()`                                                | cy.screenshot()                                                              |                                                                            |
+| `await page.locator('.header').screenshot()`                       | cy.get('.header').screenshot()                                               |                                                                            |
+| `page.clock.setFixedTime(date)`                                    | `cy.clock(now)`                                                              | Playwright's `setFixedTime` leaves timers running; `cy.clock()` stops them |
+| `page.clock.install({ time })`                                     | `cy.clock(now)`                                                              | Direct equivalent                                                          |
+| `page.clock.fastForward(duration)`                                 | `cy.tick(ms)`                                                                | Cypress only accepts milliseconds                                          |
+| `page.clock.runFor(duration)`                                      | `cy.tick(ms)`                                                                | Cypress only accepts milliseconds                                          |
+| `page.clock.pauseAt(date)`                                         | No equivalent                                                                | Calculate the delta and use `cy.tick()`                                    |
+| `page.clock.resume()`                                              | No equivalent                                                                | In Cypress, time only moves when `cy.tick()` is called                     |
+| `page.clock.setSystemTime(date)`                                   | `clock.setSystemTime(date)`                                                  | Both change the time without firing timers                                 |
+| `page.on('dialog', dialog => dialog.accept())`                     | Auto-accepted by default                                                     | No handler needed to accept `alert()` or `confirm()`                       |
+| `page.on('dialog', dialog => dialog.dismiss())`                    | `cy.on('window:confirm', () => false)`                                       | `alert()` cannot be dismissed in Cypress                                   |
+| `page.on('dialog', dialog => dialog.accept('text'))`               | `cy.stub(win, 'prompt').returns('text')` in `onBeforeLoad`                   | Cypress requires a stub; there is no `window:prompt` event                 |
+| `dialog.message()`                                                 | `cy.on('window:alert', msg => ...)` or `cy.on('window:confirm', msg => ...)` | Inspect dialog text inside the event handler                               |
+| `dialog.type()`                                                    | Separate events per dialog type                                              | `window:alert`, `window:confirm`; `prompt` requires a stub                 |
+| `page.on('dialog')` with `beforeunload`                            | `cy.on('window:before:unload', event => ...)`                                | Cypress cannot intercept or cancel the `beforeunload` dialog               |
+| Evaluate + `waitForFunction` for `window.print`                    | `cy.stub(win, 'print')` in `onBeforeLoad`                                    | Cypress approach is simpler and uses the same stub API                     |
