@@ -454,7 +454,7 @@ documentation to learn more.
 
 #### `cypress run --pass-with-no-tests` {#cypress-run-pass-with-no-tests}
 
-To pass in projects that do not have tests, use `--pass-with-no-tests`.
+Exits with a success code when no spec files are found. Useful in CI pipelines where specs may be conditionally generated or filtered out at runtime.
 
 ```shell
 cypress run --pass-with-no-tests
