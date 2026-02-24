@@ -193,10 +193,10 @@ cy.prompt([
 
 #### Self-healing frequency
 
-`cy.prompt` self-heals when a **selector** becomes invalid between runs. Self-healing works 
+`cy.prompt` self-heals when a **selector** becomes invalid between runs. Self-healing works
 best when it catches occasional, unexpected changes — **not when it fires on every run**.
 
-If you use `cy.prompt` to target an element whose content changes frequently (like 
+If you use `cy.prompt` to target an element whose content changes frequently (like
 dynamically generated selectors), `cy.prompt` will attempt to self-heal on every run. This increases AI calls, slows test execution, and reduces the cache benefit that makes `cy.prompt` fast in CI. This is not what you want.
 
 #### Solutions
@@ -207,7 +207,7 @@ To avoid self-healing on every run, you can:
 - Use placeholders to store a dynamic value of the element you are targeting. In this case, you could consider using [placeholders](#Placeholders).
 - Update the ElementSelector API to prioritize a different attribute or selector that is more stable. In this case, you could consider using [ElementSelector API](/api/cypress-api/element-selector-api).
 
-The right targeting strategy is the one that aligns with what is actually stable in 
+The right targeting strategy is the one that aligns with what is actually stable in
 your application.
 
 #### Viewing generated code
@@ -217,7 +217,6 @@ Even when using `cy.prompt` for continuous testing, you can still view the gener
 - **Debugging** - Understanding why a test behaved a certain way
 - **Learning** - Seeing how natural language maps to Cypress commands
 - **Exporting later** - If you decide to switch to Workflow 1, you can export the code at any point
-
 
 ## How to write effective prompts
 
@@ -238,20 +237,20 @@ Prompt clarity determines reliability. Follow these rules:
 
 ### Targeting elements by text content
 
-When an element is best identified by its visible text, you have two ways to target it. 
-Choosing the right one depends on what is more stable in your application: the element's 
+When an element is best identified by its visible text, you have two ways to target it.
+Choosing the right one depends on what is more stable in your application: the element's
 selector, or its content.
 
-**Quoted text** resolves to `cy.contains(text)` and uses the text as the primary 
+**Quoted text** resolves to `cy.contains(text)` and uses the text as the primary
 identifier. Use this when:
 
 - The selector is variable or unstable, and the visible content is what matters.
-- You are testing that specific text appears and is interactive — for example, verifying 
+- You are testing that specific text appears and is interactive — for example, verifying
   a localized label or a dynamically generated button label is correct and clickable.
-- You want the test to fail if the content changes, because the content itself is what 
+- You want the test to fail if the content changes, because the content itself is what
   you are asserting on.
 
-When test content is not specified,Cypress resolves the element by its structural role in the DOM. This resolves to `cy.get(selector)` and is better suited for elements where the selector is stable and the content may change 
+When test content is not specified,Cypress resolves the element by its structural role in the DOM. This resolves to `cy.get(selector)` and is better suited for elements where the selector is stable and the content may change
 — for example, a submit button whose label varies by locale.
 
 ```javascript
@@ -421,7 +420,6 @@ You can verify that elements do not exist to generate `not.exist` assertions, bu
 'force uncheck the "Send updates" checkbox'
 ```
 
-
 ## Placeholders
 
 The placeholder option provides a way to use dynamic and sensitive values while maintaining cache efficiency.
@@ -495,33 +493,34 @@ describe('Campaign Management', () => {
 
 #### Sensitive data in the DOM
 
-When `cy.prompt` reads your application's DOM to resolve element context, values from 
-certain field types are automatically excluded before any data is sent to the AI model. 
+When `cy.prompt` reads your application's DOM to resolve element context, values from
+certain field types are automatically excluded before any data is sent to the AI model.
 This applies to:
 
 - **Password fields** (`input[type=password]`)
-- **Credit card fields** using standard autocomplete attributes, including card name, 
+- **Credit card fields** using standard autocomplete attributes, including card name,
   card number, expiry date, security code, and card type
 - **Hidden inputs** (`input[type=hidden]`)
 
-The structure and surrounding DOM context of these fields are still used to identify 
+The structure and surrounding DOM context of these fields are still used to identify
 and interact with them. Only the field values are excluded.
 
 #### Sensitive data from the prompt
 
 If you write:
+
 ```javascript
 'type "hunter2" in the password field'
 ```
 
-The string `"hunter2"` is part of your test code and is not affected by this feature. 
+The string `"hunter2"` is part of your test code and is not affected by this feature.
 To keep sensitive values out of your step strings entirely, use placeholders:
+
 ```javascript
 cy.env(['USER_PASSWORD']).then(({ userPassword }) => {
-  cy.prompt(
-    ['type {{password}} in the password field'],
-    { placeholders: { password: userPassword } }
-  )
+  cy.prompt(['type {{password}} in the password field'], {
+    placeholders: { password: userPassword },
+  })
 })
 ```
 
@@ -861,8 +860,8 @@ cy.prompt([
 ```
 
 :::info
-When `cy.prompt` resolves the credit card fields in this flow, field values are 
-automatically excluded before any data is sent to the AI model. See 
+When `cy.prompt` resolves the credit card fields in this flow, field values are
+automatically excluded before any data is sent to the AI model. See
 [Sensitive data handling](#Sensitive-data-handling).
 :::
 
@@ -1033,14 +1032,14 @@ These apply to all `cy.prompt` usage unless noted otherwise.
 
 The `cy.prompt` command is currently in experimental release. During the experimental release, there are some limitations that we intend to address in the future.
 
-| Limitation       | Details                                                                                                                                                                                                                                                       |
-| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Limitation       | Details                                                                                                                                                                                                                                                                                                                                   |
+| ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Assertions       | 'not.exist' assertions from natural language are not supported. However, 'not.exist' assertions work when you provide an exact CSS selector (e.g., `'verify #error-message does not exist'`) or when you use [text-based targeting](#Targeting-elements-by-text-content). [See issue](https://github.com/cypress-io/cypress/issues/33274) |
-| Multi-Element    | Assertions on multiple elements are not currently supported [See issue](https://github.com/cypress-io/cypress/issues/32787)                                                                                                                                   |
-| Cookies/Sessions | Clearing cookies or sessions is not supported [See issue](https://github.com/cypress-io/cypress/issues/32810)                                                                                                                                                 |
-| Scrolling        | Scrolling to elements is not supported [See issue](https://github.com/cypress-io/cypress/issues/32789)                                                                                                                                                        |
-| API Testing      | API requests (e.g., `cy.request()` or `cy.intercept()`) are not supported [See issue](https://github.com/cypress-io/cypress/issues/32792)                                                                                                                     |
-| DOM Support      | Canvas and iframe elements are not supported. See [canvas issue](https://github.com/cypress-io/cypress/issues/32830) and [iframe issue](https://github.com/cypress-io/cypress/issues/32800)                                                                   |
+| Multi-Element    | Assertions on multiple elements are not currently supported [See issue](https://github.com/cypress-io/cypress/issues/32787)                                                                                                                                                                                                               |
+| Cookies/Sessions | Clearing cookies or sessions is not supported [See issue](https://github.com/cypress-io/cypress/issues/32810)                                                                                                                                                                                                                             |
+| Scrolling        | Scrolling to elements is not supported [See issue](https://github.com/cypress-io/cypress/issues/32789)                                                                                                                                                                                                                                    |
+| API Testing      | API requests (e.g., `cy.request()` or `cy.intercept()`) are not supported [See issue](https://github.com/cypress-io/cypress/issues/32792)                                                                                                                                                                                                 |
+| DOM Support      | Canvas and iframe elements are not supported. See [canvas issue](https://github.com/cypress-io/cypress/issues/32830) and [iframe issue](https://github.com/cypress-io/cypress/issues/32800)                                                                                                                                               |
 
 ## Pricing & usage limits
 
