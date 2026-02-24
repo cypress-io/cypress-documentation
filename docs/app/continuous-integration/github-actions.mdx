@@ -74,13 +74,13 @@ For Example:
 jobs:
   cypress-run:
     steps:
-      - uses: cypress-io/github-action@v6
+      - uses: cypress-io/github-action@v7
 ```
 
 Alternatively, as a mitigation strategy for unforeseen breaks, bind to a
 specific
 [release version tag](https://github.com/cypress-io/github-action/releases), for
-example `cypress-io/github-action@v6.1.0`. Read the
+example `cypress-io/github-action@v7.1.0`. Read the
 [Cypress GitHub Action documentation](https://github.com/cypress-io/github-action#action-version)
 for more information.
 
@@ -106,11 +106,11 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       # Install npm dependencies, cache them correctly
       # and run all Cypress tests
       - name: Cypress run
-        uses: cypress-io/github-action@v6
+        uses: cypress-io/github-action@v7
         with:
           build: npm run build
           start: npm start
@@ -144,7 +144,7 @@ the above example to select Chrome instead of the default browser Electron, add
 
 ```yaml
 - name: Cypress run
-  uses: cypress-io/github-action@v6
+  uses: cypress-io/github-action@v7
   with:
     build: npm run build
     start: npm start
@@ -198,9 +198,9 @@ jobs:
       options: --user 1001
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       - name: Cypress run
-        uses: cypress-io/github-action@v6
+        uses: cypress-io/github-action@v7
         with:
           build: npm run build
           start: npm start
@@ -244,17 +244,17 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Cypress install
-        uses: cypress-io/github-action@v6
+        uses: cypress-io/github-action@v7
         with:
           # Disable running of tests within install job
           runTests: false
           build: npm run build
 
       - name: Save build folder
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: build
           if-no-files-found: error
@@ -265,16 +265,16 @@ jobs:
     needs: install
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Download the build folder
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v7
         with:
           name: build
           path: build
 
       - name: Cypress run
-        uses: cypress-io/github-action@v6
+        uses: cypress-io/github-action@v7
         with:
           start: npm start
           browser: chrome
@@ -340,17 +340,17 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Cypress install
-        uses: cypress-io/github-action@v6
+        uses: cypress-io/github-action@v7
         with:
           # Disable running of tests within install job
           runTests: false
           build: npm run build
 
       - name: Save build folder
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: build
           if-no-files-found: error
@@ -385,15 +385,15 @@ jobs:
         containers: [1, 2, 3, 4, 5]
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Download the build folder
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v7
         with:
           name: build
 
       - name: Cypress run
-        uses: cypress-io/github-action@v6
+        uses: cypress-io/github-action@v7
         with:
           record: true
           parallel: true
@@ -513,10 +513,10 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Cypress run
-        uses: cypress-io/github-action@v6
+        uses: cypress-io/github-action@v7
         with:
           record: true
         env:
@@ -540,10 +540,10 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Cypress run
-        uses: cypress-io/github-action@v6
+        uses: cypress-io/github-action@v7
         with:
           record: true
         env:
