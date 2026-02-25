@@ -175,7 +175,7 @@ Keep `cy.prompt` in your tests and let it self-heal and adapt to changes.
 
 - **Self-healing selectors** - Tests adapt when your app changes
 - **Less maintenance** - No need to update tests for every UI change
-- **Dynamic content friendly** - Works well with changing data
+- **Dynamic content friendly** - Works well with changing data or structure
 - **Smart regeneration** - AI handles selector failures automatically
 - **Rapid iteration** - Perfect for apps in active development
 
@@ -190,6 +190,27 @@ cy.prompt([
   'verify the product count is 25',
 ])
 ```
+
+#### Self-healing frequency
+
+`cy.prompt` self-heals when a **selector** becomes invalid between runs. Self-healing works
+best when it catches occasional, unexpected changes — **not when it fires on every run**.
+
+If you use `cy.prompt` to target an element whose content changes frequently (like
+dynamically generated selectors), `cy.prompt` will attempt to self-heal on every run. This increases AI calls, slows test execution, and reduces the cache benefit that makes `cy.prompt` fast in CI. This is not what you want.
+
+#### Solutions
+
+To avoid self-healing on every run, you can:
+
+- Target an element by its content. In this case, you should consider using [text-based targeting](#Targeting-elements-by-text-content).
+- Use placeholders to store a dynamic value of the element you are targeting. In this case, you could consider using [placeholders](#Placeholders).
+- Update the ElementSelector API to prioritize a different attribute or selector that is more stable. In this case, you could consider using [ElementSelector API](/api/cypress-api/element-selector-api).
+
+The right targeting strategy is the one that aligns with what is actually stable in
+your application.
+
+#### Viewing generated code
 
 Even when using `cy.prompt` for continuous testing, you can still view the generated code at any time. Click the **Code** button in the Command Log to see what Cypress generated, which is especially useful for:
 
@@ -210,9 +231,32 @@ Prompt clarity determines reliability. Follow these rules:
 - **Imperative voice**: Start with an action (click, type, verify).
 - **Use absolute URLs**: Use the full URL of the page you want to visit.
 - **One action per step**: Avoid chaining multiple actions in one string.
-- **Avoid ambiguity**: Specify the action or element explicitly. Wrap specific text, values, or identifiers in quotes to help the AI identify them as exact matches. For example, `click the "Submit" button` is clearer than `click the Submit button`.
+- **Avoid ambiguity**: Specify the action or element explicitly.
 - **Include context**: `click the login button in the header` is better than `click login button`.
 - **Specify Cypress options**: Some Cypress command options can be specified directly in your prompts using natural language. Force and timeout are the only options that are currently supported. For example: `'go to "/users" with a timeout of 10 seconds'` or `'force click the submit button'`.
+
+### Targeting elements by text content
+
+When an element is best identified by its visible text, you have two ways to target it.
+Choosing the right one depends on what is more stable in your application: the element's
+selector, or its content.
+
+**Quoted text** resolves to `cy.contains(text)` and uses the text as the primary
+identifier. Use this when:
+
+- The selector is variable or unstable, and the visible content is what matters.
+- You are testing that specific text appears and is interactive — for example, verifying
+  a localized label or a dynamically generated button label is correct and clickable.
+- You want the test to fail if the content changes, because the content itself is what
+  you are asserting on.
+
+When test content is not specified,Cypress resolves the element by its structural role in the DOM. This resolves to `cy.get(selector)` and is better suited for elements where the selector is stable and the content may change
+— for example, a submit button whose label varies by locale.
+
+```javascript
+'click the login button'
+'press the submit button in the form'
+```
 
 ### Example: Good vs. poor steps
 
@@ -259,15 +303,23 @@ If Cypress cannot interpret a step, you'll see a dialog prompting you to refine 
 
 ### Interact with elements
 
+#### Click
+
 ```javascript
 'click the login button'
 'hit the "x" button'
+'click the button containing "Edit"'
 'expand the FAQ section'
 'close the Technical Information section'
 'switch to the Settings tab'
 'force click the submit button'
 'double click the product image'
 'right click the file item'
+```
+
+#### Type and inputs
+
+```javascript
 'type "john.doe@company.com" in the email field'
 'type {enter} in the email field'
 'write "42" in the number field'
@@ -277,7 +329,11 @@ If Cypress cannot interpret a step, you'll see a dialog prompting you to refine 
 'clear the username field'
 'focus on the search input'
 'blur the filter input'
-'hover over the "Help" button'
+```
+
+#### Form and controls
+
+```javascript
 'select "Canada" from the country dropdown'
 'pick "United States" from the list'
 'choose "Newest" from the suggestions'
@@ -285,8 +341,21 @@ If Cypress cannot interpret a step, you'll see a dialog prompting you to refine 
 'uncheck "Send me updates"'
 'toggle the "Dark Mode" switch'
 'submit the contact form'
+```
+
+#### Scroll
+
+```javascript
 'scroll the sales section into view'
 'scroll to todays date in the calendar'
+```
+
+#### Keyboard, mouse, and other events
+
+```javascript
+'press "Tab" to focus the next field'
+'press "Enter" to choose the current selection'
+'hover over the "Help" button'
 'trigger a mousemove event on the .bar-chart'
 ```
 
@@ -317,11 +386,13 @@ If Cypress cannot interpret a step, you'll see a dialog prompting you to refine 
 
 #### Non-existence assertions
 
-You can verify that elements do not exist to generate `not.exist` assertions, but **only when you provide an exact CSS selector**. Natural language descriptions for non-existence are not currently supported. Additionally, ensure that your intention is to verify that the element does not exist in the DOM, not that it is not visible.
+You can verify that elements do not exist to generate `not.exist` assertions, but **only when you provide an exact CSS selector or when you use [text-based targeting](#Targeting-elements-by-text-content)**. Natural language descriptions for non-existence are not currently supported. Additionally, ensure that your intention is to verify that the element does not exist in the DOM, not that it is not visible.
 
 ```javascript
 'verify #error-message does not exist'
 'the ".loading-spinner" should not exist'
+'make sure the "Error" message does not exist'
+'confirm "Reset" button does not exist'
 ```
 
 ### Change the viewport
@@ -350,6 +421,8 @@ You can verify that elements do not exist to generate `not.exist` assertions, bu
 ```
 
 ## Placeholders
+
+The placeholder option provides a way to use dynamic and sensitive values while maintaining cache efficiency.
 
 ### The caching problem
 
@@ -415,6 +488,43 @@ describe('Campaign Management', () => {
   })
 })
 ```
+
+### Sensitive data handling
+
+#### Sensitive data in the DOM
+
+When `cy.prompt` reads your application's DOM to resolve element context, values from
+certain field types are automatically excluded before any data is sent to the AI model.
+This applies to:
+
+- **Password fields** (`input[type=password]`)
+- **Credit card fields** using standard autocomplete attributes, including card name,
+  card number, expiry date, security code, and card type
+- **Hidden inputs** (`input[type=hidden]`)
+
+The structure and surrounding DOM context of these fields are still used to identify
+and interact with them. Only the field values are excluded.
+
+#### Sensitive data from the prompt
+
+If you write:
+
+```javascript
+'type "hunter2" in the password field'
+```
+
+The string `"hunter2"` is part of your test code and is not affected by this feature.
+To keep sensitive values out of your step strings entirely, use placeholders:
+
+```javascript
+cy.env(['USER_PASSWORD']).then(({ userPassword }) => {
+  cy.prompt(['type {{password}} in the password field'], {
+    placeholders: { password: userPassword },
+  })
+})
+```
+
+Placeholder values are never sent to the AI model.
 
 ## See self-healed steps in the Command Log
 
@@ -724,7 +834,7 @@ cy.env(['ADMIN_PASSWORD']).then(({ adminPassword }) => {
       'verify we are redirected to the dashboard',
     ],
     {
-      placeholders: { adminPassword },
+      placeholders: { password: adminPassword },
     }
   )
 })
@@ -748,6 +858,12 @@ cy.prompt([
   'verify the order confirmation page loads',
 ])
 ```
+
+:::info
+When `cy.prompt` resolves the credit card fields in this flow, field values are
+automatically excluded before any data is sent to the AI model. See
+[Sensitive data handling](#Sensitive-data-handling).
+:::
 
 ### Search functionality
 
@@ -916,14 +1032,14 @@ These apply to all `cy.prompt` usage unless noted otherwise.
 
 The `cy.prompt` command is currently in experimental release. During the experimental release, there are some limitations that we intend to address in the future.
 
-| Limitation       | Details                                                                                                                                                                                                                                                       |
-| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Assertions       | 'not.exist' assertions from natural language are not supported. However, 'not.exist' assertions work when you provide an exact CSS selector (e.g., `'verify #error-message does not exist'`). [See issue](https://github.com/cypress-io/cypress/issues/33274) |
-| Multi-Element    | Assertions on multiple elements are not currently supported [See issue](https://github.com/cypress-io/cypress/issues/32787)                                                                                                                                   |
-| Cookies/Sessions | Clearing cookies or sessions is not supported [See issue](https://github.com/cypress-io/cypress/issues/32810)                                                                                                                                                 |
-| Scrolling        | Scrolling to elements is not supported [See issue](https://github.com/cypress-io/cypress/issues/32789)                                                                                                                                                        |
-| API Testing      | API requests (e.g., `cy.request()` or `cy.intercept()`) are not supported [See issue](https://github.com/cypress-io/cypress/issues/32792)                                                                                                                     |
-| DOM Support      | Canvas and iframe elements are not supported. See [canvas issue](https://github.com/cypress-io/cypress/issues/32830) and [iframe issue](https://github.com/cypress-io/cypress/issues/32800)                                                                   |
+| Limitation       | Details                                                                                                                                                                                                                                                                                                                                   |
+| ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Assertions       | 'not.exist' assertions from natural language are not supported. However, 'not.exist' assertions work when you provide an exact CSS selector (e.g., `'verify #error-message does not exist'`) or when you use [text-based targeting](#Targeting-elements-by-text-content). [See issue](https://github.com/cypress-io/cypress/issues/33274) |
+| Multi-Element    | Assertions on multiple elements are not currently supported [See issue](https://github.com/cypress-io/cypress/issues/32787)                                                                                                                                                                                                               |
+| Cookies/Sessions | Clearing cookies or sessions is not supported [See issue](https://github.com/cypress-io/cypress/issues/32810)                                                                                                                                                                                                                             |
+| Scrolling        | Scrolling to elements is not supported [See issue](https://github.com/cypress-io/cypress/issues/32789)                                                                                                                                                                                                                                    |
+| API Testing      | API requests (e.g., `cy.request()` or `cy.intercept()`) are not supported [See issue](https://github.com/cypress-io/cypress/issues/32792)                                                                                                                                                                                                 |
+| DOM Support      | Canvas and iframe elements are not supported. See [canvas issue](https://github.com/cypress-io/cypress/issues/32830) and [iframe issue](https://github.com/cypress-io/cypress/issues/32800)                                                                                                                                               |
 
 ## Pricing & usage limits
 
