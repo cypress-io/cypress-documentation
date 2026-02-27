@@ -22,18 +22,16 @@ The result is faster test authoring and fewer gaps in coverage without guessing 
 
 {/* VIDEO: Overview of the full Studio AI workflow — record, see recommendations appear, accept, save */}
 
-
-
 ## Studio vs. Studio AI
 
-| Feature | Studio (no Cloud) | Studio AI (Cloud required) |
-|---|---|---|
-| Record interactions | ✅ | ✅ |
-| Manually add assertions | ✅ | ✅ |
-| Edit test code inline | ✅ | ✅ |
-| Undo / redo / reset | ✅ | ✅ |
-| **AI assertion recommendations** | - | ✅ |
-| **Review DOM snapshots for AI recommendations** | - | ✅ |
+| Feature                                         | Studio (no Cloud) | Studio AI (Cloud required) |
+| ----------------------------------------------- | ----------------- | -------------------------- |
+| Record interactions                             | ✅                | ✅                         |
+| Manually add assertions                         | ✅                | ✅                         |
+| Edit test code inline                           | ✅                | ✅                         |
+| Undo / redo / reset                             | ✅                | ✅                         |
+| **AI assertion recommendations**                | -                 | ✅                         |
+| **Review DOM snapshots for AI recommendations** | -                 | ✅                         |
 
 If you don't have a Cloud account, Studio still works for recording interactions and manually adding assertions. The AI recommendations panel will ask you to login and link your project when you open it.
 
@@ -57,7 +55,6 @@ Studio requires **internet access** and **sourcemaps**. See [enable sourcemaps](
 Free accounts include a two-week trial of all paid features, including the higher AI recommendation limit.
 
 To link your project to Cypress Cloud, see [Set up your project to record](/cloud/get-started/setup#Set-up-a-project-to-record).
-
 
 ### Enable sourcemaps
 
@@ -133,7 +130,7 @@ Right-click any element in your app to see available assertions based on that el
 
 {/* VIDEO: Right-clicking an element and selecting an assertion from the context menu */}
 
-##  AI smart recommendations
+## AI smart recommendations
 
 As you record, Studio AI observes changes in the DOM between interactions and suggests meaningful assertions for each step based on what changed.
 
@@ -165,7 +162,7 @@ Each recommendation includes **Accept** and **Reject (×)** buttons that remain 
 
 Hover over any recommendation to see:
 
-- The exact state of the DOM at the time the assertion was generated. You'll see a *before* and *after* snapshot of the DOM for each recommendation that represents the state of the DOM before and after the interaction that triggered the recommendation.
+- The exact state of the DOM at the time the assertion was generated. You'll see a _before_ and _after_ snapshot of the DOM for each recommendation that represents the state of the DOM before and after the interaction that triggered the recommendation.
 - The specific element being asserted on will be highlighted in the DOM.
 
 This gives you enough context to decide whether the assertion reflects something meaningful to your team and not just something that changed.
@@ -174,7 +171,7 @@ This gives you enough context to decide whether the assertion reflects something
 
 ### Failing tests
 
-If a test is failing, AI recommendations and recording are both disabled. This is intentional - you don't want to take actions or add assertions when the test is already in a bad state.  
+If a test is failing, AI recommendations and recording are both disabled. This is intentional - you don't want to take actions or add assertions when the test is already in a bad state.
 
 **To recover from a failing test:**
 
@@ -211,7 +208,7 @@ The structure and context of these fields are still used to generate assertions.
 
 For full details on how Cypress handles data and AI model security, see the [Security & Compliance page](https://www.cypress.io/security).
 
-## Disable AI 
+## Disable AI
 
 ### For an individual session
 
@@ -229,10 +226,10 @@ For more information, see the [Cloud FAQ](/cloud/faq#Are-all-Cloud-AI-capabiliti
 
 Recommendation limits are per user, per hour. All plans share a limit of 10 parallel recommendation requests.
 
-| Plan | Recommendations per hour |
-|---|---|
-| Free Cloud account | 60 |
-| Paid Cloud account (or free trial) | 300 |
+| Plan                               | Recommendations per hour |
+| ---------------------------------- | ------------------------ |
+| Free Cloud account                 | 60                       |
+| Paid Cloud account (or free trial) | 300                      |
 
 During the beta, Studio AI is included at no additional charge. Limits and pricing are subject to change. We'll communicate any adjustments before they take effect.
 
