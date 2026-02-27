@@ -27,10 +27,10 @@ They can be used independently or together.
 | Capability                                                  | Where it lives | What it does                                          |
 | ----------------------------------------------------------- | -------------- | ----------------------------------------------------- |
 | [cy.prompt()](#cyprompt)                                    | Cypress App    | Converts natural language steps into Cypress commands |
-| [Studio AI](#studio-ai)                                     | Cypress App    | Recommends assertions as you record interactions      |
-| [Test Intent Summaries](#test-intent-summaries)             | Cypress Cloud  | Summarizes what a test does in plain language         |
-| [Error Summaries](#error-summaries)                         | Cypress Cloud  | Explains what went wrong in a failing test            |
-| [UI Coverage Test Generation](#ui-coverage-test-generation) | Cypress Cloud  | Generates targeted tests from coverage gaps           |
+| [Studio AI](#Studio-AI)                                     | Cypress App    | Recommends assertions as you record interactions      |
+| [Test Intent Summaries](#Test-Intent-Summaries)             | Cypress Cloud  | Summarizes what a test does in plain language         |
+| [Error Summaries](#Error-Summaries)                         | Cypress Cloud  | Explains what went wrong in a failing test            |
+| [UI Coverage Test Generation](#UI-Coverage-Test-Generation) | Cypress Cloud  | Generates targeted tests from coverage gaps           |
 
 ## Cypress AI requires a Cloud account
 
@@ -64,7 +64,6 @@ Free accounts include a two-week trial of all paid features, including the highe
 Use `cy.prompt()` to generate a test quickly, then export and commit the generated code.
 
 This workflow is a good fit when:
-
 - Your app has stable, predictable elements.
 - You want predictable, reviewable test code in version control.
 - You want to use AI to accelerate authoring but prefer to own the output.
@@ -74,7 +73,6 @@ This workflow is a good fit when:
 Keep `cy.prompt()` running in your tests. When a selector fails between runs, Cypress regenerates code for that step automatically. This is "self-healing" — the test adapts without manual intervention.
 
 This workflow is a good fit when:
-
 - Your app is in active development and UI changes frequently.
 - You are willing to accept AI calls at runtime in exchange for less maintenance.
 - You understand that self-healing works best when it catches occasional, unexpected changes — not when selectors change on every run.
@@ -97,13 +95,14 @@ Studio AI observes DOM changes between interactions and generates assertions bas
 
 :::note
 **Best for:** teams who need to understand what a test is checking without reading every command or watching a full Test Replay.
+
 :::
 
 Test Intent Summaries are AI-generated descriptions of a test's purpose, available in the Cypress Cloud test details sidebar. They help you orient quickly — whether you are reviewing a new test or debugging a failure — without needing to trace through the command log manually.
 
 Test Intent Summaries are available on all Cypress Cloud plans at no additional cost.
 
-[See Test Intent Summaries in context →](/cloud/features/recorded-runs#Test-Intent-Summary)
+[See Test Intent Summaries in context →](/cloud/features/recorded-runs#test-intent-summary)
 
 ### Error Summaries
 
@@ -115,7 +114,7 @@ Test Intent Summaries are available on all Cypress Cloud plans at no additional 
 
 Error Summaries are available on all Cypress Cloud plans at no additional cost.
 
-[See Error Summaries in context →](/cloud/features/recorded-runs#Attempts-and-errors)
+[See Error Summaries in context →](/cloud/features/recorded-runs#attempts-and-errors)
 
 ### UI Coverage Test Generation
 
@@ -127,7 +126,8 @@ UI Coverage Test Generation lets you generate targeted Cypress tests directly fr
 
 This capability is included with UI Coverage and is not available on standard Cloud plans.
 
-[Read the UI Coverage Test Generation documentation →](/ui-coverage/guides/address-coverage-gaps#Generate-Targeted-Tests)
+[Read the UI Coverage Test Generation documentation →](/ui-coverage/guides/address-coverage-gaps#generate-targeted-tests)
+
 
 ## Security and data handling
 
@@ -167,6 +167,6 @@ See [Cypress Cloud plans](https://www.cypress.io/pricing) for full plan details.
 
 - [cy.prompt()](/api/commands/prompt)
 - [Cypress Studio AI](/app/guides/cypress-studio)
-- [UI Coverage Test Generation](/ui-coverage/guides/address-coverage-gaps#Generate-Targeted-Tests)
+- [UI Coverage Test Generation](/ui-coverage/guides/address-coverage-gaps#generate-targeted-tests)
 - [Recorded Runs](/cloud/features/recorded-runs)
 - [Cypress AI Security](https://on.cypress.io/ai-security)
