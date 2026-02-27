@@ -24,13 +24,13 @@ They can be used independently or together.
 
 ## AI capabilities at a glance
 
-| Capability | Where it lives | What it does | 
-|---|---|---|
-| [cy.prompt()](#cyprompt) | Cypress App | Converts natural language steps into Cypress commands | 
-| [Studio AI](#studio-ai) | Cypress App | Recommends assertions as you record interactions |
-| [Test Intent Summaries](#test-intent-summaries) | Cypress Cloud | Summarizes what a test does in plain language | 
-| [Error Summaries](#error-summaries) | Cypress Cloud | Explains what went wrong in a failing test | 
-| [UI Coverage Test Generation](#ui-coverage-test-generation) | Cypress Cloud | Generates targeted tests from coverage gaps | 
+| Capability                                                  | Where it lives | What it does                                          |
+| ----------------------------------------------------------- | -------------- | ----------------------------------------------------- |
+| [cy.prompt()](#cyprompt)                                    | Cypress App    | Converts natural language steps into Cypress commands |
+| [Studio AI](#studio-ai)                                     | Cypress App    | Recommends assertions as you record interactions      |
+| [Test Intent Summaries](#test-intent-summaries)             | Cypress Cloud  | Summarizes what a test does in plain language         |
+| [Error Summaries](#error-summaries)                         | Cypress Cloud  | Explains what went wrong in a failing test            |
+| [UI Coverage Test Generation](#ui-coverage-test-generation) | Cypress Cloud  | Generates targeted tests from coverage gaps           |
 
 ## Cypress AI requires a Cloud account
 
@@ -51,7 +51,6 @@ Free accounts include a two-week trial of all paid features, including the highe
 
 ## Capabilities in detail
 
-
 ### cy.prompt()
 
 :::note
@@ -65,6 +64,7 @@ Free accounts include a two-week trial of all paid features, including the highe
 Use `cy.prompt()` to generate a test quickly, then export and commit the generated code.
 
 This workflow is a good fit when:
+
 - Your app has stable, predictable elements.
 - You want predictable, reviewable test code in version control.
 - You want to use AI to accelerate authoring but prefer to own the output.
@@ -74,6 +74,7 @@ This workflow is a good fit when:
 Keep `cy.prompt()` running in your tests. When a selector fails between runs, Cypress regenerates code for that step automatically. This is "self-healing" — the test adapts without manual intervention.
 
 This workflow is a good fit when:
+
 - Your app is in active development and UI changes frequently.
 - You are willing to accept AI calls at runtime in exchange for less maintenance.
 - You understand that self-healing works best when it catches occasional, unexpected changes — not when selectors change on every run.
@@ -128,7 +129,6 @@ This capability is included with UI Coverage and is not available on standard Cl
 
 [Read the UI Coverage Test Generation documentation →](/ui-coverage/guides/address-coverage-gaps#Generate-Targeted-Tests)
 
-
 ## Security and data handling
 
 [Read the Cypress AI Security page →](https://on.cypress.io/ai-security)
@@ -146,14 +146,14 @@ This capability is included with UI Coverage and is not available on standard Cl
 
 Usage limits vary by feature and plan. During beta periods, limits are subject to change.
 
-| Capability | Free plan | Paid plan |
-|---|---|---|
-| Studio AI recommendations | 60 per hour, per user | 300 per hour, per user |
-| cy.prompt() prompts | 100 per hour, per user | 600 per hour, per user |
-| cy.prompt() steps | 500 per hour, per user | 3,000 per hour, per user |
-| Test Intent Summaries | Included | Included |
-| Error Summaries | Included | Included |
-| UI Coverage Test Generation | Not available | Included with UI Coverage |
+| Capability                  | Free plan              | Paid plan                 |
+| --------------------------- | ---------------------- | ------------------------- |
+| Studio AI recommendations   | 60 per hour, per user  | 300 per hour, per user    |
+| cy.prompt() prompts         | 100 per hour, per user | 600 per hour, per user    |
+| cy.prompt() steps           | 500 per hour, per user | 3,000 per hour, per user  |
+| Test Intent Summaries       | Included               | Included                  |
+| Error Summaries             | Included               | Included                  |
+| UI Coverage Test Generation | Not available          | Included with UI Coverage |
 
 If you need to increase your limits, contact support at support@cypress.io.
 
