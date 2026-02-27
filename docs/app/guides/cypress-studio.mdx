@@ -10,7 +10,7 @@ sidebar_custom_props: { 'new_label': true }
 
 # Cypress Studio AI
 
-Record, assert, and verify - with AI doing the heavy lifting.
+**Record, assert, and verify - with AI doing the heavy lifting.**
 
 Cypress Studio lets you build and extend E2E tests by recording real interactions in your app. Studio AI adds a layer on top: as you record, it watches what changes in the UI and recommends assertions automatically. You review them, keep what fits, and save.
 
@@ -22,37 +22,30 @@ The result is faster test authoring and fewer gaps in coverage without guessing 
 
 {/* VIDEO: Overview of the full Studio AI workflow — record, see recommendations appear, accept, save */}
 
-## Requirements
 
-Before you start, confirm the following:
-
-| Requirement | Details |
-|---|---|
-| Cypress version | 15.11.0+ |
-| Browser | Chromium |
-| Tests | E2E only |
-| Sourcemaps | Must be configured (see [Enable sourcemaps](#sourcemaps)) |
-| Internet access | Required for Studio |
-| **For AI features only** | Cypress Cloud account and linked project |
 
 ## Studio vs. Studio AI
 
 | Feature | Studio (no Cloud) | Studio AI (Cloud required) |
 |---|---|---|
-| Record interactions | ✓ | ✓ |
-| Manually add assertions | ✓ | ✓ |
-| Edit test code inline | ✓ | ✓ |
-| AI assertion recommendations | — | ✓ |
-| Snapshots of the DOM for AI recommendations | — | ✓ |
-| Undo / redo / reset | ✓ | ✓ |
+| Record interactions | ✅ | ✅ |
+| Manually add assertions | ✅ | ✅ |
+| Edit test code inline | ✅ | ✅ |
+| Undo / redo / reset | ✅ | ✅ |
+| **AI assertion recommendations** | - | ✅ |
+| **Review DOM snapshots for AI recommendations** | - | ✅ |
 
 If you don't have a Cloud account, Studio still works for recording interactions and manually adding assertions. The AI recommendations panel will ask you to login and link your project when you open it.
 
 ## Get started
 
+:::note Requirements
+Studio requires **internet access** and **sourcemaps**. See [enable sourcemaps](#sourcemaps) for sourcemap setup. AI features additionally require a Cypress Cloud account and linked project.
+:::
+
 ### Connect to Cypress Cloud
 
-Studio AI requires a Cypress Cloud account and a linked project. If you haven't set this up, the Studio panel will walk you through it.
+**Studio AI** requires a Cypress Cloud account and a linked project. If you haven't set this up, the Studio panel will walk you through it.
 
 <Btn
   label="Create a free account ➜"
@@ -62,6 +55,9 @@ Studio AI requires a Cypress Cloud account and a linked project. If you haven't 
 />
 
 Free accounts include a two-week trial of all paid features, including the higher AI recommendation limit.
+
+To link your project to Cypress Cloud, see [Set up your project to record](/cloud/get-started/setup#Set-up-a-project-to-record).
+
 
 ### Enable sourcemaps
 
@@ -87,7 +83,7 @@ You can start Studio three ways:
 2. Give the test a descriptive name. This is used by Studio AI to help generate more meaningful assertions.
 3. When prompted, enter the URL you want Studio to visit. This writes a `cy.visit()` command to your test file, which Studio uses to load the app before recording can begin.
 
-Studio creates the test definition and opens the recording interface.
+Studio creates the test definition and opens the Studio panel and is ready to record interactions.
 
 {/* VIDEO: Creating a new test — naming it, entering the URL, Studio loading the app */}
 
@@ -95,7 +91,7 @@ Studio creates the test definition and opens the recording interface.
 
 Studio runs your test up to the last command, then puts you in **recording mode** from that point forward. New recorded actions and assertions are always appended to the end of your test.
 
-To extend a test:
+**To extend a test:**
 
 1. Run the spec in the Cypress App.
 2. Hover over the test in the Command Log.
@@ -103,7 +99,7 @@ To extend a test:
 
 {/* VIDEO: Extending an existing test — hovering, clicking 'Edit in Studio', Studio running the test and stopping */}
 
-You can also edit any portion of the test code directly in the Studio code panel. There's no need to switch to your IDE.
+You can then edit any portion of the test code directly in the Studio code panel. There's no need to switch to your IDE.
 
 ## Record interactions
 
@@ -119,45 +115,49 @@ Once Studio is open, interact with your app normally. Studio translates each act
 
 {/* VIDEO: Recording a sequence of interactions — click, type, select — watching code appear in the panel */}
 
-**Need to inspect something while recording mode is active?** You can pause recording by clicking the **Record** button and open DevTools to inspect elements or debug behavior, then click the **Record** button again to resume.
+:::note
+**Need to inspect something while recording mode is active?** You can pause recording by clicking the **Record** button and open DevTools to inspect elements or debug behavior, then click the Record button again to resume.
+:::
 
-### How selectors are chosen
+### How selectors are chosen for commands
 
-Studio automatically picks a unique selector for each element you interact with, add an assertion for, or for smart recommendations using a priority strategy designed for stability.
+Studio automatically picks a unique selector for each element you interact with, add an assertion to, or for AI smart recommendations. We use a priority strategy designed to optimize for uniqueness, readability, and performance.
 
 <DefaultSelectorPriority />
 
-To customize selector priority for Studio and `cy.prompt()`, use the [`Cypress.ElementSelector`](/api/cypress-api/element-selector-api) API.
+To prioritize selectors that make more sense for your project for Studio and `cy.prompt()`, use the [`Cypress.ElementSelector`](/api/cypress-api/element-selector-api) API.
 
 ## Add assertions manually
 
-Right-click any element in your app to see available assertions based on that element's current state — visible, hidden, a specific value, a CSS class, and more. Assertions are appended to the end of your test.
+Right-click any element in your app to see available assertions based on that element's current state - visible, hidden, a specific value, a CSS class, and more. Assertions are always appended to the end of your test.
 
 {/* VIDEO: Right-clicking an element and selecting an assertion from the context menu */}
 
-## AI smart recommendations
+##  AI smart recommendations
 
-As you record, Studio AI observes what changes in the DOM between interactions and suggests meaningful assertions for each step.
+As you record, Studio AI observes changes in the DOM between interactions and suggests meaningful assertions for each step based on what changed.
 
 ### How recommendations work
 
 For each recorded interaction:
 
 1. A **thinking indicator** appears in the Studio panel while Studio AI generates a recommendation.
-2. If a recommendation is available, Studio AI displays an **AI-generated comment** explaining what the assertion validates. The actual test code is generated and collapsed by default — expand it to review.
+2. If a recommendation is available, Studio AI displays an **AI-generated comment** explaining what the assertion validates. The actual test code is generated and collapsed by default - expand it to review.
 3. If no meaningful DOM changes were detected or another issue is preventing a recommendation from being generated, Studio AI displays an icon indicating this and the reason (for example, no state difference was found).
 
 {/* IMAGE: Studio panel showing a thinking indicator, a generated recommendation with comment, and the expand toggle */}
 
+:::note
 Recommendations are added to your test code immediately when generated. This means you can **save or run the test with AI recommendations included** before deciding to keep them. This is intentional: it lets you verify whether a recommended assertion actually passes against your app before committing it.
+:::
 
 ### Accept, reject, or edit
 
-Each recommendation includes **Accept** and **Reject (×)** buttons that remain available even after saving. You can:
+Each recommendation includes **Accept** and **Reject (×)** buttons that remain visible even after saving. You can:
 
 - Accept recommendations one at a time or use **Accept all** to approve the full set.
 - Reject recommendations individually or use **Reject all** to dismiss them.
-- Undo, redo, or reset any changes in the Studio panel editor (including acceptances and rejections).
+- Undo, redo, or reset any changes in the Studio code panel (including acceptances and rejections).
 
 {/* VIDEO: Accepting and rejecting recommendations, using 'accept all', undoing a rejection */}
 
@@ -165,7 +165,7 @@ Each recommendation includes **Accept** and **Reject (×)** buttons that remain 
 
 Hover over any recommendation to see:
 
-- The exact state of the DOM at the time the assertion was generated. You'll see a before and after snapshot of the DOM for each recommendation that represents the state of the DOM before and after the interaction that triggered the recommendation.
+- The exact state of the DOM at the time the assertion was generated. You'll see a *before* and *after* snapshot of the DOM for each recommendation that represents the state of the DOM before and after the interaction that triggered the recommendation.
 - The specific element being asserted on will be highlighted in the DOM.
 
 This gives you enough context to decide whether the assertion reflects something meaningful to your team and not just something that changed.
@@ -174,10 +174,12 @@ This gives you enough context to decide whether the assertion reflects something
 
 ### Failing tests
 
-Studio AI does not generate recommendations for failing tests. If a test is in a failing state, recommendations and recording are both disabled. To recover:
+If a test is failing, AI recommendations and recording are both disabled. This is intentional - you don't want to take actions or add assertions when the test is already in a bad state.  
+
+**To recover from a failing test:**
 
 1. Edit the failing code directly in the Studio panel or in your IDE.
-2. Click **Save** to write the changes.
+2. Click **Save** to write the changes to your spec file.
 
 When a line causes a test failure, that line is highlighted in the Studio code panel so you can locate it immediately for easier debugging.
 
@@ -188,11 +190,12 @@ When a line causes a test failure, that line is highlighted in the Studio code p
 Studio AI suggests assertions based on visible UI changes after each interaction, including:
 
 - Visibility (element visible or hidden)
+- Element existence
 - Text content
+- Length (number of elements)
 - Form input values, selections, and states
-- Element attributes and CSS classes
-- Current URL
-- Page title
+- Element attributes including CSS classes and aria attributes
+- Current URL and page title
 
 Studio AI does not have access to your application code, business logic, or backend rules. Its recommendations reflect what actually changed in the visible UI.
 
@@ -210,13 +213,13 @@ For full details on how Cypress handles data and AI model security, see the [Sec
 
 ## Disable AI 
 
-### For a session
+### For an individual session
 
 You can disable Studio AI for any individual session by clicking the AI status indicator in the status bar at the bottom of the Studio panel. This disables AI recommendations for your current session only. It does not affect other users, other projects, or your organization's AI settings.
 
 {/* IMAGE: The AI status bar toggle at the bottom of the Studio panel */}
 
-### Organization-level controls
+### For an entire organization
 
 Organization admins and owners can disable AI capabilities for their entire organization from Cypress Cloud organization settings. This affects all users in the organization.
 
@@ -237,10 +240,16 @@ If you need to increase your limits, please contact support at support@cypress.i
 
 ## Known limitations
 
+### Studio
+
 - E2E tests only — Component Testing is not yet supported.
 - Cucumber-style tests are not yet supported.
 - Studio cannot record interactions across [multiple origins](/app/guides/cross-origin-testing).
 - iFrames and Shadow DOM are not supported.
+
+### Studio AI
+
+- Studio AI requires Cypress version 15.11.0 or later.
 - Animations and transitional UI states may produce intermediate DOM diffs, which can affect AI recommendation quality.
 - Large pages may exceed AI context window limits resulting in no recommendations being generated.
 - No automatic application crawling. Studio AI only observes what you interact with.
