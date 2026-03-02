@@ -21,10 +21,11 @@ The result is faster test authoring and fewer gaps in coverage without guessing 
 :::
 
 <DocsVideo
-  src="/img/app/cypress-studio/cypress-studio-recording-assertions-editing.mp4"
+  src="/img/app/cypress-studio/studio-ai-recording-multiple-actions.mp4"
   autoPlay={true}
-  title="Overview of the full Studio AI workflow — record, see recommendations appear, accept, save"
+  title="Clicking 'Edit in Studio' on a test in the Command Log"
 />
+
 
 ## Studio vs. Studio AI
 
@@ -114,7 +115,11 @@ Studio runs your test up to the last command, then puts you in **recording mode*
 2. Hover over the test in the Command Log.
 3. Click **Edit in Studio**.
 
-{/* VIDEO: Extending an existing test — hovering, clicking 'Edit in Studio', Studio running the test and stopping */}
+<DocsVideo
+  src="/img/app/cypress-studio/edit-in-studio-button-on-cypress-test.mp4"
+  autoPlay={true}
+  title="Clicking 'Edit in Studio' on a test in the Command Log"
+/>
 
 You can then edit any portion of the test code directly in the Studio code panel. There's no need to switch to your IDE.
 
@@ -130,7 +135,11 @@ Once Studio is open, interact with your app normally. Studio translates each act
 - [`.uncheck()`](/api/commands/uncheck)
 - [`.select()`](/api/commands/select)
 
-{/* VIDEO: Recording a sequence of interactions — click, type, select — watching code appear in the panel */}
+<DocsVideo
+  src="/img/app/cypress-studio/studio-ai-recording-multiple-actions.mp4"
+  autoPlay={true}
+  title="Clicking 'Edit in Studio' on a test in the Command Log"
+/>
 
 :::note
 **Need to inspect something while recording mode is active?** You can pause recording by clicking the **Record** button and open DevTools to inspect elements or debug behavior, then click the Record button again to resume.
@@ -198,10 +207,15 @@ Hover over any recommendation to see:
 
 - The exact state of the DOM at the time the assertion was generated. You'll see a _before_ and _after_ snapshot of the DOM for each recommendation that represents the state of the DOM before and after the interaction that triggered the recommendation.
 - The specific element being asserted on will be highlighted in the DOM.
+- You can save the code to verify the assertion passes before accepting or rejecting it.
 
 This gives you enough context to decide whether the assertion reflects something meaningful to your team and not just something that changed.
 
-{/* IMAGE: Hovering over a recommendation to reveal the DOM state and element highlight */}
+<DocsVideo
+  src="/img/app/cypress-studio/studio-ai-run-recommendations-before-save.mp4"
+  autoPlay={true}
+  title="Running the test to verify the assertion passes before saving"
+/>
 
 ### Failing tests
 
