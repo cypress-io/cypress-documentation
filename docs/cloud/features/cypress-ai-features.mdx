@@ -59,6 +59,21 @@ Free accounts include a two-week trial of all paid features, including the highe
 
 `cy.prompt()` is a Cypress command that converts natural language test steps into executable Cypress commands. It uses AI to interpret each step, evaluate the DOM, generate selectors, and produce Cypress code. `cy.prompt()` supports two workflows.
 
+```typescript
+cy.prompt(
+  [
+    'visit https://cloud.cypress.io/login',
+    'type "user@example.com" in the email field',
+    'type {{password}} in the password field',
+    'click the login button',
+    'verify we are redirected to the dashboard',
+  ],
+  {
+    placeholders: { password: 'secret123' },
+  }
+)
+```
+
 #### Workflow 1: Generate once, commit to source control
 
 Use `cy.prompt()` to generate a test quickly, then export and commit the generated code.
@@ -69,15 +84,27 @@ This workflow is a good fit when:
 - You want predictable, reviewable test code in version control.
 - You want to use AI to accelerate authoring but prefer to own the output.
 
+<DocsImage
+  src="/img/api/prompt/cy-prompt-generated-test-code.png"
+  alt="Generated Cypress code dialog"
+/>
+
 #### Workflow 2: Continuous self-healing
 
 Keep `cy.prompt()` running in your tests. When a selector fails between runs, Cypress regenerates code for that step automatically. This is "self-healing" — the test adapts without manual intervention.
+
+
 
 This workflow is a good fit when:
 
 - Your app is in active development and UI changes frequently.
 - You are willing to accept AI calls at runtime in exchange for less maintenance.
 - You understand that self-healing works best when it catches occasional, unexpected changes — not when selectors change on every run.
+
+<DocsImage
+  src="/img/api/prompt/cy-prompt-self-healed-prompt-level-logs.png"
+  alt="Console logs for a self-healed cy.prompt step"
+/>
 
 [Read the full cy.prompt() documentation →](/api/commands/prompt)
 
@@ -104,7 +131,10 @@ Test Intent Summaries are AI-generated descriptions of a test's purpose, availab
 
 Test Intent Summaries are available on all Cypress Cloud plans at no additional cost.
 
-[See Test Intent Summaries in context →](/cloud/features/recorded-runs#test-intent-summary)
+<DocsImage
+  src="/img/cloud/runs/sidebar-test-intent-summary.png"
+  alt="Test details sidebar AI-generated Test Intent Summary"
+/>
 
 ### Error Summaries
 
@@ -116,7 +146,10 @@ Test Intent Summaries are available on all Cypress Cloud plans at no additional 
 
 Error Summaries are available on all Cypress Cloud plans at no additional cost.
 
-[See Error Summaries in context →](/cloud/features/recorded-runs#attempts-and-errors)
+<DocsImage
+  src="/img/cloud/runs/sidebar-errors-and-attempts.png"
+  alt="Test sidebar attempts and errors"
+/>
 
 ### UI Coverage Test Generation
 
@@ -127,6 +160,11 @@ Error Summaries are available on all Cypress Cloud plans at no additional cost.
 UI Coverage Test Generation lets you generate targeted Cypress tests directly from coverage gaps identified during code reviews. Instead of manually identifying what to test, you can generate a test scaffold from the gap and refine from there.
 
 This capability is included with UI Coverage and is not available on standard Cloud plans.
+
+<DocsImage
+  src="/img/ui-coverage/guides/cypress-ui-coverage-generate-test.png"
+  alt="Cypress Cloud screenshot cropped to show a generated test after clicking on the 'Generate Test' button for the '/commands/cookies' link."
+/>
 
 [Read the UI Coverage Test Generation documentation →](/ui-coverage/guides/address-coverage-gaps#generate-targeted-tests)
 
