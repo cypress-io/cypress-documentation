@@ -158,6 +158,12 @@ Right-click any element in your app to see available assertions based on that el
 
 As you record, Studio AI observes changes in the DOM between interactions and suggests meaningful assertions for each step based on what changed.
 
+<DocsVideo
+  src="/img/app/cypress-studio/cypress-studio-ai-recommendations-accept-reject-save.mp4"
+  autoPlay={true}
+  title="Accepting, rejecting, and saving Cypress Studio AI recommendations"
+/>
+
 ### How recommendations work
 
 For each recorded interaction:
@@ -166,7 +172,11 @@ For each recorded interaction:
 2. If a recommendation is available, Studio AI displays an **AI-generated comment** explaining what the assertion validates. The actual test code is generated and collapsed by default - expand it to review.
 3. If no meaningful DOM changes were detected or another issue is preventing a recommendation from being generated, Studio AI displays an icon indicating this and the reason (for example, no state difference was found).
 
-{/* IMAGE: Studio panel showing a thinking indicator, a generated recommendation with comment, and the expand toggle */}
+<DocsVideo
+  src="/img/app/cypress-studio/cypress-studio-ai-multiple-recommendations-flow.mp4"
+  autoPlay={true}
+  title="Multiple Cypress Studio AI recommendations flow"
+/>
 
 :::note
 Recommendations are added to your test code immediately when generated. This means you can **save or run the test with AI recommendations included** before deciding to keep them. This is intentional: it lets you verify whether a recommended assertion actually passes against your app before committing it.
@@ -174,7 +184,7 @@ Recommendations are added to your test code immediately when generated. This mea
 
 ### Accept, reject, or edit
 
-Each recommendation includes **Accept** and **Reject (×)** buttons that remain visible even after saving. You can:
+Each recommendation includes **Accept** and **Reject (x)** buttons that remain visible even after saving. You can:
 
 - Accept recommendations one at a time or use **Accept all** to approve the full set.
 - Reject recommendations individually or use **Reject all** to dismiss them.
@@ -204,7 +214,11 @@ If a test is failing, AI recommendations and recording are both disabled. This i
 
 When a line causes a test failure, that line is highlighted in the Studio code panel so you can locate it immediately for easier debugging.
 
-{/* IMAGE: Failing line highlighted in the Studio code panel */}
+<DocsVideo
+  src="/img/app/cypress-studio/cypress-studio-ai-failing-test-inline-editing.mp4"
+  autoPlay={true}
+  title="Failing test inline editing in the Studio code panel"
+/>
 
 ### Types of assertions Studio AI recommends
 
