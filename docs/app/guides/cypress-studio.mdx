@@ -1,183 +1,320 @@
 ---
-title: 'Cypress Studio: Build Tests by Interacting with Your App'
-description: 'Create, extend, and refine Cypress tests without writing commands by hand.'
-sidebar_label: 'Cypress Studio'
+title: 'Cypress Studio AI'
+description: 'Record interactions, get AI-powered assertion recommendations, and build more complete E2E tests without writing every line by hand.'
+sidebar_label: 'Cypress Studio AI'
 e2eSpecific: true
+sidebar_custom_props: { 'new_label': true }
 ---
 
 <ProductHeading product="app" />
 
-# Cypress Studio
+# Cypress Studio AI
 
-:::info
+**Record, assert, and verify - with AI doing the heavy lifting.**
 
-##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
+Cypress Studio lets you generate and extend E2E tests by recording real interactions in your app. Studio AI adds a layer on top: as you record, it watches what changes in the UI and recommends assertions automatically. You review them, keep what fits, and save.
 
-- How to generate Cypress tests by interacting with your app
-- How to add assertions by right-clicking elements
-- How to quickly extend or edit tests without leaving Cypress
+The result is faster test authoring and fewer gaps in coverage without guessing what to assert after every click.
 
+:::note Studio without AI
+**Cypress Studio alone does not require a Cloud account or AI to be useful.** You can record interactions and add assertions manually at any time. AI-powered recommendations are an opt-in layer that requires a Cypress Cloud connection.
 :::
-
-## Why Use Cypress Studio
-
-Cypress Studio turns test creation into a natural part of exploring your app.  
-Instead of manually typing every `.get()`, `.click()`, or `.type()` command, you can **record interactions in real time**, automatically generate Cypress code, and fine-tune your test inline.
-
-- **Save time**: Skip manually typing `.get().click().type()` sequences
-- **Stay in the flow**: Build and extend tests without leaving the Cypress App
-- **Boost coverage**: Add new checks to existing tests in seconds
 
 <DocsVideo
-  src="/img/app/cypress-studio/cypress-studio-recording-assertions-editing.mp4"
+  src="/img/app/cypress-studio/studio-ai-recording-multiple-actions.mp4"
   autoPlay={true}
+  title="Clicking 'Edit in Studio' on a test in the Command Log"
 />
 
-## 🚀 Quickstart: Try Studio in 60 Seconds
+## Studio vs. Studio AI
 
-:::success
+| Feature                                         | Studio (no Cloud) | Studio AI (Cloud required) |
+| ----------------------------------------------- | ----------------- | -------------------------- |
+| Record interactions                             | ✅                | ✅                         |
+| Manually add assertions                         | ✅                | ✅                         |
+| Edit test code inline                           | ✅                | ✅                         |
+| Undo / redo / reset                             | ✅                | ✅                         |
+| **AI assertion recommendations**                | -                 | ✅                         |
+| **Review DOM snapshots for AI recommendations** | -                 | ✅                         |
 
-1. **Run a Spec:**
-   Open Cypress and run a spec file
-2. **Open Studio:**
-   Click Edit in Studio on a test in the Command Log or click Studio Beta in the Studio panel.
+If you don't have a Cloud account, Studio still works for recording interactions and manually adding assertions. The AI recommendations panel will ask you to login and link your project when you open it.
 
-3. **Interact & Save:**
-   Click, type, and right-click to add assertions. Click Save to save your test.
+## Get started
 
+:::note Requirements
+Studio requires **internet access** and **sourcemaps**. See [enable sourcemaps](#Enable-sourcemaps) for sourcemap setup. AI features additionally require a Cypress Cloud account and linked project.
 :::
 
-## How Cypress Studio works
+### Connect to Cypress Cloud
 
-When Studio is enabled, you can:
+**Studio AI** requires a Cypress Cloud account and a linked project. If you haven't set this up, the Studio panel will walk you through it.
 
-- **Record:** Interact with your app in the Cypress browser to capture test commands. Recording appends new commands to the end of your test.
-- **Assert:** Right-click any element to add built-in assertions
-- **Edit:** Manually edit any portion of your test code directly in the Studio editor. You can modify or add new test code directly in the Cypress App.
+<Btn
+  label="Create a free account ➜"
+  variant="indigo-dark"
+  className="mr-1"
+  href="https://cloud.cypress.io/signup"
+/>
 
-Supported action commands include: [`.click()`](/api/commands/click), [`.type()`](/api/commands/type), [`.check()`](/api/commands/check), [`.uncheck()`](/api/commands/uncheck), [`.select()`](/api/commands/select)
+Free accounts include a two-week trial of all paid features, including the higher AI recommendation limit.
 
-:::info
+To link your project to Cypress Cloud, see [Set up your project to record](/cloud/get-started/setup#Set-up-a-project-to-record).
 
-**Sourcemaps:** Studio requires sourcemaps to load your existing test code. Sourcemaps are typically enabled by default in most Cypress setups. If Studio successfully loads your test when you click **Edit in Studio**, sourcemaps are already configured correctly. If sourcemaps aren't enabled, Studio will display an error message. See [how to enable sourcemaps](/api/node-events/preprocessors-api#Source-maps) if you encounter issues.
+### Enable sourcemaps
 
-:::
+Studio needs sourcemaps to load your test code accurately. Sourcemaps are enabled by default in most Cypress configurations. If Studio opens your test correctly when you click **Edit in Studio**, you're already set.
 
-### Start Studio
+If sourcemaps are missing, Studio displays an error. See [how to enable sourcemaps](/api/node-events/preprocessors-api#Source-maps) to resolve it.
 
-You can start Studio in several ways:
+## Open Studio
 
-- Click **Edit in Studio** on a test in the Command Log.
-- Click **New Test** on the running spec or suite.
-- Click **Studio Beta** in the Studio panel.
+You can start Studio three ways:
+
+- **New test:** Click **New Test** on any spec or suite in the Cypress App.
+- **Existing test:** Hover over a test in the Command Log and click **Edit in Studio**.
+- **Studio panel:** Click **Studio Beta** in the header panel directly.
+
+### Edit in Studio button on a Cypress test
 
 <DocsVideo
   src="/img/app/cypress-studio/edit-in-studio-button-on-cypress-test.mp4"
   autoPlay={true}
+  title="Clicking 'Edit in Studio' on a test in the Command Log"
 />
 
-### Record a new test
-
-1. Click **New Test** on the file or suite you want to work in
-2. Give your test a clear, descriptive name
-
-Studio will automatically create a new test definition for you.
+### Clicking 'New Test' on a suite
 
 <DocsVideo
   src="/img/app/cypress-studio/create-new-test-in-suite-with-cypress-studio.mp4"
   autoPlay={true}
+  title="Clicking 'New Test' on a suite"
 />
 
-### Extend an existing test
+## Create a new test
 
-You can extend and update existing tests using Cypress Studio in two ways:
+1. Click **New Test** on the spec file or suite you want to work in.
+2. Give the test a descriptive name. This is used by Studio AI to help generate more meaningful assertions.
+3. When prompted, enter the URL you want Studio to visit. This writes a `cy.visit()` command to your test file, which Studio uses to load the app before recording can begin.
 
-**Record new actions or assertions:** Studio runs your test up to the last command and then records new interactions or assertions from that point forward. Recording always appends commands to the end of your test.
-
-**Edit code directly:** You can manually edit any portion of your test within the Studio editor. Modify or add new test code directly in the Cypress App.
-
-To extend an existing test:
-
-1. Run the spec in Cypress
-2. Hover over the test in the Command Log
-3. Click **Edit in Studio**
-
-Studio loads your test and runs it up to the last command, ready for you to either edit the code directly or record new actions and assertions from that point.
-
-<DocsVideo
-  src="/img/app/cypress-studio/cypress-studio-recording-assertions-editing.mp4"
-  title="Cypress Studio"
-  autoPlay={true}
-/>
-
-### Set a URL
-
-Studio needs a `cy.visit()` before it can record. If your test doesn't have one yet, Studio will prompt you to enter a URL so it can start recording.
+Studio creates the test definition and opens the Studio panel and is ready to record interactions.
 
 <DocsVideo
   src="/img/app/cypress-studio/cy-visit-url-in-studio.mp4"
   autoPlay={true}
+  title="Entering the URL, Studio loading the app"
 />
 
-### Record actions
+## Extend an existing test
 
-Record actions by interacting with the application under test. Studio translates your actions into Cypress commands in real time and appends them to the end of your test.
+Studio runs your test up to the last command, then puts you in **recording mode** from that point forward. New recorded actions and assertions are always appended to the end of your test.
 
-- **Clicks:** Click buttons, links, or interactive elements
-- **Typing:** Enter text into inputs and text areas
-- **Selections:** Use dropdowns, checkboxes, and radio buttons
+**To extend a test:**
+
+1. Run the spec in the Cypress App.
+2. Hover over the test in the Command Log.
+3. Click **Edit in Studio**.
 
 <DocsVideo
-  src="/img/app/cypress-studio/studio-recording-typing.mp4"
+  src="/img/app/cypress-studio/edit-in-studio-button-on-cypress-test.mp4"
   autoPlay={true}
+  title="Clicking 'Edit in Studio' on a test in the Command Log"
 />
 
-### Add assertions
+You can then edit any portion of the test code directly in the Studio code panel. There's no need to switch to your IDE.
 
-Right-click any element in your app to instantly add an assertion.
+## Record interactions
 
-For example, confirm text is visible, a checkbox is checked, or an element has a specific CSS class. Assertions are added directly in your test code, ready to save and run. Assertions are added to the end of your test.
+Once Studio is open, interact with your app normally. Studio translates each action into a Cypress command in real time and adds it to your spec file. You can see the commands as they are being written in the Studio code panel.
 
-Assertions available are dynamically generated based on the element you right-click.
+**Supported actions:**
+
+- [`.click()`](/api/commands/click)
+- [`.type()`](/api/commands/type)
+- [`.check()`](/api/commands/check)
+- [`.uncheck()`](/api/commands/uncheck)
+- [`.select()`](/api/commands/select)
 
 <DocsVideo
-  src="/img/app/cypress-studio/cypress-studio-assertions-demo.mp4"
+  src="/img/app/cypress-studio/studio-ai-recording-multiple-actions.mp4"
   autoPlay={true}
+  title="Clicking 'Edit in Studio' on a test in the Command Log"
 />
 
-## How selectors are chosen
+:::note
+**Need to inspect something while recording mode is active?** You can pause recording by clicking the **Record** button and open DevTools to inspect elements or debug behavior, then click the Record button again to resume.
+:::
 
-Cypress automatically generates a **unique selector** for each element you interact with, using a priority strategy to ensure accuracy.
+### How selectors are chosen for commands
+
+Studio automatically picks a unique selector for each element you interact with, add an assertion to, or for AI smart recommendations. We use a priority strategy designed to optimize for uniqueness, readability, and performance.
 
 <DefaultSelectorPriority />
 
-Want more control? Use the [`Cypress.ElementSelector`](/api/cypress-api/element-selector-api) API to customize selector priority for your project.
+To prioritize selectors that make more sense for your project for Studio and `cy.prompt()`, use the [`Cypress.ElementSelector`](/api/cypress-api/element-selector-api) API.
 
-## Limitations
+## Add assertions manually
 
-- Works only in E2E tests (Component Testing not yet supported)
-- Cucumber tests are not yet supported
-- Cannot record across [multiple
-  origins](/app/guides/cross-origin-testing).
-- Recording in iframe is not yet supported
-- See issues labeled with [`topic: studio`](https://github.com/cypress-io/cypress/issues?q=is%3Aissue%20state%3Aopen%20label%3A%22topic%3A%20studio%22) for other known issues.
+Right-click any element in your app to see available assertions based on that element's current state - visible, hidden, a specific value, a CSS class, and more. Assertions are always appended to the end of your test.
 
-## Coming Soon: AI in Studio
-
-Imagine Studio suggesting the most relevant assertions for every step you take. Cypress AI is a feature that's **coming soon** that will recommend relevant assertions in real time based on your interactions.
-
-<Btn
-  label="Join the waitlist ➜"
-  variant="indigo-dark"
-  className="mr-1"
-  href="https://go.cypress.io/studio-ai-waitlist?utm_source=docs.cypress.io&utm_medium=cypress-studio&utm_content=Join-the-waitlist"
+<DocsVideo
+  src="/img/app/cypress-studio/cypress-studio-manual-assertions-demo.mp4"
+  autoPlay={true}
+  title="Right-clicking an element and selecting an assertion from the context menu"
 />
 
-<DocsImage
-  src="/img/app/cypress-studio/cypress-studio-ai-illustration.gif"
-  alt="Cypress AI in Studio generating assertions"
+## AI smart recommendations :sparkles:
+
+As you record, Studio AI observes changes in the DOM between interactions and suggests meaningful assertions for each step based on what changed.
+
+<DocsVideo
+  src="/img/app/cypress-studio/cypress-studio-ai-recommendations-accept-reject-save.mp4"
+  autoPlay={true}
+  title="Accepting, rejecting, and saving Cypress Studio AI recommendations"
 />
+
+### How recommendations work
+
+For each recorded interaction:
+
+1. A **thinking indicator** appears in the Studio panel while Studio AI generates a recommendation.
+2. If a recommendation is available, Studio AI displays an **AI-generated comment** explaining what the assertion validates. The actual test code is generated and collapsed by default - expand it to review.
+3. If no meaningful DOM changes were detected or another issue is preventing a recommendation from being generated, Studio AI displays an icon indicating this and the reason (for example, no state difference was found).
+
+<DocsVideo
+  src="/img/app/cypress-studio/cypress-studio-ai-multiple-recommendations-flow.mp4"
+  autoPlay={true}
+  title="Multiple Cypress Studio AI recommendations flow"
+/>
+
+:::note
+Recommendations are added to your test code immediately when generated. This means you can **save or run the test with AI recommendations included** before deciding to keep them. This is intentional: it lets you verify whether a recommended assertion actually passes against your app before committing it.
+:::
+
+### Accept, reject, or edit
+
+Each recommendation includes **Accept** and **Reject (x)** buttons that remain visible even after saving. You can:
+
+- Accept recommendations one at a time or use **Accept all** to approve the full set.
+- Reject recommendations individually or use **Reject all** to dismiss them.
+- Undo, redo, or reset any changes in the Studio code panel (including acceptances and rejections).
+
+{/* VIDEO: Accepting and rejecting recommendations, using 'accept all', undoing a rejection */}
+
+### Understand what was detected
+
+Hover over any recommendation to see:
+
+- The exact state of the DOM at the time the assertion was generated. You'll see a _before_ and _after_ snapshot of the DOM for each recommendation that represents the state of the DOM before and after the interaction that triggered the recommendation.
+- The specific element being asserted on will be highlighted in the DOM.
+- You can save the code to verify the assertion passes before accepting or rejecting it.
+
+This gives you enough context to decide whether the assertion reflects something meaningful to your team and not just something that changed.
+
+<DocsVideo
+  src="/img/app/cypress-studio/studio-ai-run-recommendations-before-save.mp4"
+  autoPlay={true}
+  title="Running the test to verify the assertion passes before saving"
+/>
+
+### Failing tests
+
+If a test is failing, AI recommendations and recording are both disabled. This is intentional - you don't want to take actions or add assertions when the test is already in a bad state.
+
+**To recover from a failing test:**
+
+1. Edit the failing code directly in the Studio panel or in your IDE.
+2. Click **Save** to write the changes to your spec file.
+
+When a line causes a test failure, that line is highlighted in the Studio code panel so you can locate it immediately for easier debugging.
+
+<DocsVideo
+  src="/img/app/cypress-studio/cypress-studio-ai-failing-test-inline-editing.mp4"
+  autoPlay={true}
+  title="Failing test inline editing in the Studio code panel"
+/>
+
+### Types of assertions Studio AI recommends
+
+Studio AI suggests assertions based on visible UI changes after each interaction, including:
+
+- Visibility (element visible or hidden)
+- Element existence
+- Text content
+- Length (number of elements)
+- Form input values, selections, and states
+- Element attributes including CSS classes and aria attributes
+- Current URL and page title
+
+Studio AI does not have access to your application code, business logic, or backend rules. Its recommendations reflect what actually changed in the visible UI.
+
+## Sensitive data handling
+
+When Studio AI reads your app's DOM to generate recommendations, values from certain field types are automatically excluded before anything is sent to the AI model:
+
+- Password fields (`input[type=password]`)
+- Credit card fields using standard autocomplete attributes (card name, card number, expiry date, security code, card type)
+- Hidden inputs (`input[type=hidden]`)
+
+The structure and context of these fields are still used to generate assertions. Only the values are excluded.
+
+For full details on how Cypress handles data and AI model security, see the [Security & Compliance page](https://www.cypress.io/security).
+
+## Disable AI
+
+### For an individual session
+
+You can disable Studio AI for any individual session by clicking the AI status indicator in the status bar at the bottom of the Studio panel. This disables AI recommendations for your current session only. It does not affect other users, other projects, or your organization's AI settings.
+
+<DocsVideo
+  src="/img/app/cypress-studio/disable-studio-ai-for-session.mp4"
+  autoPlay={true}
+  title="Disabling Studio AI for a session"
+/>
+
+### For an entire organization
+
+Organization admins and owners can disable AI capabilities for their entire organization from Cypress Cloud organization settings. This affects all users in the organization.
+
+For more information, see [Disabling AI features](/cloud/features/cypress-ai-features#Disabling-AI-features).
+
+## Usage limits
+
+Recommendation limits are per user, per hour. All plans share a limit of 10 parallel recommendation requests.
+
+| Plan                               | Recommendations per hour |
+| ---------------------------------- | ------------------------ |
+| Free Cloud account                 | 60                       |
+| Paid Cloud account (or free trial) | 300                      |
+
+During the beta, Studio AI is included at no additional charge. Limits and pricing are subject to change. We'll communicate any adjustments before they take effect.
+
+If you need to increase your limits, please contact support at support@cypress.io.
+
+## Known limitations
+
+### Studio
+
+- E2E tests only — Component Testing is not yet supported.
+- Cucumber-style tests are not yet supported.
+- Studio cannot record interactions across [multiple origins](/app/guides/cross-origin-testing).
+- iFrames and Shadow DOM are not supported.
+
+### Studio AI
+
+- Studio AI requires Cypress version 15.11.0 or later.
+- Animations and transitional UI states may produce intermediate DOM diffs, which can affect AI recommendation quality.
+- Large pages may exceed AI context window limits resulting in no recommendations being generated.
+- No automatic application crawling. Studio AI only observes what you interact with.
+
+See [open issues labeled `topic: studio`](https://github.com/cypress-io/cypress/issues?q=is%3Aissue%20state%3Aopen%20label%3A%22topic%3A+studio%22) for the full list.
+
+## Send feedback
+
+There's a feedback button at the bottom of the Studio panel. Use it. This is a beta and your input directly shapes what we prioritize next.
 
 ## See also
 
 - [Element Selector API](/api/cypress-api/element-selector-api)
+- [Cypress Cloud plans](https://www.cypress.io/pricing)
+- [Security & Compliance](https://www.cypress.io/security)
+- [cy.prompt()](/api/commands/prompt)

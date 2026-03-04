@@ -11,7 +11,7 @@ sidebar_position: 20
 
 After [identifying test coverage gaps](/ui-coverage/guides/identify-coverage-gaps) using Cypress UI Coverage, the next step is to address these gaps to ensure your application is comprehensively tested. This guide outlines best practices and strategies for improving coverage and closing the identified gaps effectively.
 
-## Prioritize Gaps
+## Prioritize coverage gaps
 
 Not all coverage gaps are equally critical. Use the information provided in the UI Coverage reports to prioritize testing efforts based on:
 
@@ -20,18 +20,18 @@ Not all coverage gaps are equally critical. Use the information provided in the 
 
 By prioritizing based on application context and business impact, you can address the most significant gaps first.
 
-## Enhance Test Coverage
+## Enhance test coverage
 
 Once you've identified priority areas, create or update tests to cover these gaps.
 
-### Generate Targeted Tests :sparkles:
+### Generate tests from UI Coverage reports :sparkles: {#Generate-tests-from-UI-Coverage-reports}
 
 UI Coverage provides AI-powered Test Generation from the Cypress Cloud, to help you quickly add tests for the untested elements detected in UI Coverage reports, in a way that follows your existing practices and conventions.
 
 It works in just three steps:
 
 1. Select an interactive element in your UI Coverage report, from any state of your application
-2. Click “Generate test code”
+2. Click 'Generate test code'
 3. Choose where to add the tests, from a list of specs that already render this element
 
 <DocsImage
@@ -45,7 +45,7 @@ The generated code will use your existing patterns for navigating and interactin
 
 This test can be copied directly into your spec file at the suggested location, and from there you can continue writing the test locally.
 
-### Write Targeted Tests
+### Write tests for specific elements
 
 Focus on creating tests that interact with the specific untested elements or pages identified in the coverage reports. For example:
 
@@ -63,7 +63,7 @@ describe('Dashboard', () => {
 })
 ```
 
-### Cover Untested Links
+### Add tests for untested links
 
 Use the **Untested Links** section of the UI Coverage report to identify pages your tests haven't visited. Add navigation steps to your tests to include these pages:
 
@@ -82,9 +82,9 @@ describe('Cover Untested Links', () => {
 })
 ```
 
-## Refine Tests
+## Improve existing tests
 
-### Ensure Element Visibility
+### Reveal hidden elements
 
 Some gaps occur because elements are hidden or not rendered during tests. Update your tests to reveal these elements:
 
@@ -94,7 +94,7 @@ cy.get('[data-cy="dropdown-item"]').should('be.visible')
 cy.get('[data-cy="dropdown-item"]').click()
 ```
 
-### Handle Dynamic Content
+### Account for dynamic content
 
 If coverage gaps are caused by dynamic or conditional rendering, ensure your tests account for various application states:
 
@@ -104,7 +104,7 @@ cy.get('[data-cy="login-button"]').click()
 cy.get('[data-cy="user-profile"]')
 ```
 
-## Optimize Configuration
+## Optimize configuration
 
 To maximize the effectiveness of UI Coverage, consider refining your configuration:
 
@@ -125,20 +125,20 @@ Refer to the [Configuration Guide](/ui-coverage/configuration/overview) to learn
   - [Attribute Filters](/ui-coverage/configuration/attributefilters): Specify patterns for attributes and their values that should not be used for identifying and grouping elements.
   - [Significant Attributes](/ui-coverage/configuration/significantattributes): Define selectors to prioritize above the default attributes Cypress uses for the purpose of identification and grouping.
 
-## Iterate and Monitor
+## Review and maintain coverage
 
-### Review Coverage Reports
+### Review coverage reports
 
 After updating your tests, record them again to Cypress Cloud and review the new coverage reports. Verify that:
 
 - Untested elements and links have been addressed.
 - Overall coverage score has improved.
 
-### Automate Coverage Enforcement
+### Automate coverage enforcement
 
 Use the [Results API](/ui-coverage/results-api) to integrate coverage checks into your CI/CD pipeline. Set thresholds for coverage scores to enforce quality standards. This ensures your application maintains high test coverage over time.
 
-### Collaborate with Your Team
+### Collaborate with your team
 
 Improving test coverage often requires collaboration. Share insights from the UI Coverage reports with your team to:
 
@@ -146,6 +146,6 @@ Improving test coverage often requires collaboration. Share insights from the UI
 - Align on critical areas that require attention.
 - Distribute tasks for writing or updating tests.
 
-## Next Steps
+## Next steps
 
 You can also leverage UI Coverage to reduce test duplication to optimize your test suite further. Learn how to [reduce test duplication](/ui-coverage/guides/reduce-test-duplication) with UI Coverage to streamline your testing process.
