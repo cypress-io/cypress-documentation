@@ -1,7 +1,9 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import CypressIcon from "@cypress-design/react-icon";
 
 interface IconProps {
+  useCypressIcon: boolean;
   name: string;
   color?: string;
   inline?: boolean;
@@ -11,7 +13,11 @@ interface IconProps {
   title?: string;
 }
 
-export default function Icon({ name, color, inline, url, callout, contentType, title }: IconProps) {
+export default function Icon({ useCypressIcon, name, color, inline, url, callout, contentType, title, ...customProps }: IconProps) {
+  if (useCypressIcon) {
+    return <CypressIcon name={name as any} {...customProps} />
+  }
+
   const iconName = name === "github" ? ["fab", "github"] : name;
   const space = inline ? '.25rem' : '0.5rem'
 
