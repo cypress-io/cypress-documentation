@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import CypressIcon from "@cypress-design/react-icon";
 
 interface IconProps {
-  useCypressIcon: boolean;
+  useCypressIcon?: boolean;
   name: string;
   color?: string;
   inline?: boolean;

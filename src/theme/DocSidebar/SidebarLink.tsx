@@ -24,7 +24,7 @@ export const SidebarLink: React.FC<SidebarLinkProps> = ({
     <Link {...{ className, href, style, onClick }}>
       {children}{' '}
       {customProps?.ai_icon && (
-        <IconGeneralSparkleDoubleSmall fillColor="white" className="inline margin mr-[4px] mt-[-2px]" />
+        <IconGeneralSparkleDoubleSmall fillColor="white" className="inline mr-[4px] mt-[-2px]" />
       )}
       {customProps?.new_label ? (
         <Tag color="indigo" size="16" dark style={{ marginTop: '-2px' }}>
