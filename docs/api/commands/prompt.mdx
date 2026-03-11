@@ -403,9 +403,13 @@ You can verify that elements do not exist to generate `not.exist` assertions, bu
 
 ### Wait
 
+Wait for an amount of time or wait for an already aliased intercept to resolve before moving on to the next command in Cypress.
+
 ```javascript
 'wait 2 seconds'
 'wait 500 milliseconds'
+'wait for @customer alias'
+'wait for the @users request to finish'
 ```
 
 ### Command options
