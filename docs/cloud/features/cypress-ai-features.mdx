@@ -1,53 +1,45 @@
 ---
-title: 'Cypress AI features'
+title: 'Cypress AI'
 description: 'Learn about AI-powered testing tools in Cypress — including cy.prompt(), Studio AI, and Cloud AI features for test generation, self-healing, and failure analysis.'
-sidebar_label: 'AI features'
+sidebar_label: 'Cypress AI'
 sidebar_position: 45
-sidebar_custom_props: { 'new_label': true }
+sidebar_custom_props: { 'ai_icon': true, 'new_label': true }
 ---
 
-# Cypress AI features
+<ProductHeading product="cloud" />
+
+# <Icon useCypressIcon name="cypress-studio" size="48" fillColor="indigo-500" /> Cypress AI
 
 Cypress offers AI capabilities across the platform to help teams write tests faster, understand failures more clearly, and keep tests running as apps change. These capabilities are built into the tools you already use - the Cypress App and Cypress Cloud - and are designed to reduce the manual effort that can slow down testing.
 
 This page explains what's available, how each capability fits into your workflow, and how Cypress handles your data.
 
-## What Cypress AI does
+## The Problem Developers Face
 
-Cypress AI helps at three distinct points in the testing workflow:
+Writing tests, maintaining them, and debugging failures is time-consuming and repetitive:
 
-- **Test authoring:** Generate test assertions and commands from natural language or recorded interactions, so you spend less time writing boilerplate and more time on what matters.
-- **Test maintenance:** Automatically adapt to UI changes that would otherwise break selectors, reducing the time spent fixing tests that stopped working.
-- **Test analysis:** Surface plain-language explanations of what tests do and what went wrong, so you spend less time reading logs and more time fixing the actual problem.
+- Writing tests requires boilerplate and memorizing commands.
+- Understanding large test suites is hard for new team members.
+- Debugging failures often means staring at logs and replaying tests.
+- Identifying missing coverage is manual and error-prone.
 
-They can be used independently or together.
+Cypress AI is designed to solve these problems without changing how you already work.
 
-## AI capabilities at a glance
+## How Cypress AI Fits Into the Workflow
 
-| Capability                                                  | Where it lives | What it does                                          |
-| ----------------------------------------------------------- | -------------- | ----------------------------------------------------- |
-| [cy.prompt()](#cyprompt)                                    | Cypress App    | Converts natural language steps into Cypress commands |
-| [Studio AI](#Studio-AI)                                     | Cypress App    | Recommends assertions as you record interactions      |
-| [Test Intent Summaries](#Test-Intent-Summaries)             | Cypress Cloud  | Summarizes what a test does in plain language         |
-| [Error Summaries](#Error-Summaries)                         | Cypress Cloud  | Explains what went wrong in a failing test            |
-| [UI Coverage Test Generation](#UI-Coverage-Test-Generation) | Cypress Cloud  | Generates targeted tests from coverage gaps           |
+Cypress AI are easy-to-use tools across your testing lifecycle. They are woven into the core workflow.
 
-## Cypress AI requires a Cloud account
+| Stage              | AI Capability               | Outcome                                                                               |
+| ------------------ | --------------------------- | ------------------------------------------------------------------------------------- |
+| Author Tests       | cy.prompt(), Studio AI      | Generate commands, assertions, and full tests from natural language or UI exploration |
+| Understand Tests   | Test Intent Summaries       | Quickly see what tests verify, reducing cognitive load and onboarding friction        |
+| Debug Failures     | Error Summaries             | AI-powered explanations for what happened when a test failed                          |
+| Test maintenance   | cy.prompt()                 | Atomatically adapt to UI changes that would otherwise break selectors                 |
+| Fill Coverage Gaps | UI Coverage Test Generation | Identify untested flows and automatically generate new tests                          |
 
-Since Cypress AI features use large language models (LLMs) to interpret prompts, analyze DOM state, and generate test code, Cypress Cloud manages those LLM requests securely on your behalf.
+## Get Started
 
-Without a Cloud account, there is no secure channel through which to route those requests, no organizational controls to apply, and no way to enforce the data handling commitments Cypress makes to its customers.
-
-**A free Cypress Cloud account is enough to get started.**
-
-<Btn
-  label="Create a free account ➜"
-  variant="indigo-dark"
-  className="mr-1"
-  href="https://cloud.cypress.io/signup"
-/>
-
-Free accounts include a two-week trial of all paid features, including the higher AI recommendation limit.
+Log into your Cloud account to start using Cloud AI. By default, all AI capabilities are enabled for your organization.
 
 ## Capabilities in detail
 
@@ -172,11 +164,51 @@ This capability is included with UI Coverage and is not available on standard Cl
 
 [Read the UI Coverage Test Generation documentation →](/ui-coverage/guides/address-coverage-gaps#Generate-tests-from-UI-Coverage-reports)
 
-## Security and data handling
+## FAQs
+
+### Why do I need a Cloud Account?
+
+Cypress AI features use large language models (LLMs) to interpret prompts, analyze DOM state, and generate test code. Cypress Cloud manages those LLM requests securely on your behalf.
+
+Without a Cloud account, there is no secure channel through which to route those requests, no organizational controls to apply, and no way to enforce the data handling commitments Cypress makes to its customers.
+
+**A free Cypress Cloud account is enough to get started.**
+
+<Btn
+  label="Create a free account ➜"
+  variant="indigo-dark"
+  className="mr-1"
+  href="https://cloud.cypress.io/signup"
+/>
+
+Free accounts include a two-week trial of all paid features, including higher AI usage limits.
+
+### Usage limits
+
+Usage limits vary by feature and plan. During beta periods, limits are subject to change.
+
+| Capability                  | Free plan              | Paid plan                 |
+| --------------------------- | ---------------------- | ------------------------- |
+| cy.prompt() prompts         | 100 per hour, per user | 600 per hour, per user    |
+| cy.prompt() steps           | 500 per hour, per user | 3,000 per hour, per user  |
+| Studio AI recommendations   | 60 per hour, per user  | 300 per hour, per user    |
+| Test Intent Summaries       | Included               | Included                  |
+| Error Summaries             | Included               | Included                  |
+| UI Coverage Test Generation | Not available          | Included with UI Coverage |
+
+If you need to increase your limits, contact support at support@cypress.io.
+
+### Pricing
+
+During experimental and beta periods, AI features are provided at no additional charge. Pricing is subject to change. We will communicate any changes before they take effect.
+
+See [Cypress Cloud plans](https://www.cypress.io/pricing) for full plan details.
+
+### Security and data handling
 
 [Read the Cypress AI Security page →](https://on.cypress.io/ai-security)
 
-## Disabling AI features
+### Disabling AI features
 
 **AI features are opt-out, not opt-in by default.** AI capabilities are enabled for all users of an organization on the applicable plan. Organization admins and owners can disable AI capabilities for their entire organization from Cypress Cloud organization settings.
 
@@ -184,27 +216,6 @@ This capability is included with UI Coverage and is not available on standard Cl
   src="/img/faq/questions/cypress-ai-org-setting.png"
   alt="Cypress AI organization setting in Cypress Cloud"
 />
-
-## Usage limits
-
-Usage limits vary by feature and plan. During beta periods, limits are subject to change.
-
-| Capability                  | Free plan              | Paid plan                 |
-| --------------------------- | ---------------------- | ------------------------- |
-| Studio AI recommendations   | 60 per hour, per user  | 300 per hour, per user    |
-| cy.prompt() prompts         | 100 per hour, per user | 600 per hour, per user    |
-| cy.prompt() steps           | 500 per hour, per user | 3,000 per hour, per user  |
-| Test Intent Summaries       | Included               | Included                  |
-| Error Summaries             | Included               | Included                  |
-| UI Coverage Test Generation | Not available          | Included with UI Coverage |
-
-If you need to increase your limits, contact support at support@cypress.io.
-
-## Pricing
-
-During experimental and beta periods, AI features are provided at no additional charge. Pricing is subject to change. We will communicate any changes before they take effect.
-
-See [Cypress Cloud plans](https://www.cypress.io/pricing) for full plan details.
 
 ## See also
 
