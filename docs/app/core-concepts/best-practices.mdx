@@ -1096,6 +1096,193 @@ cy.wait('@getUsers') // <--- wait explicitly for this route to finish
 cy.get('table tr').should('have.length', 2)
 ```
 
+## <Icon name="angle-right" /> Element Interaction Patterns and Command Chaining
+
+:::danger
+
+<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Using `then()`
+unnecessarily or re-querying the same element multiple times when chaining would
+work.
+
+:::
+
+:::tip
+
+<Icon name="check-circle" color="green" /> **Best Practice:** Use command chaining
+when possible, and only use `then()` when you need to perform complex operations
+or work with the actual DOM element.
+
+:::
+
+A common question arises when performing multiple actions on the same element: should you chain commands or use `then()` to wrap all actions? Let's examine the best approaches for common interaction patterns.
+
+### Multiple Actions on the Same Element
+
+When you need to perform several actions on the same element (like focus, clear, type, and blur), you have two main approaches. Remember that Cypress commands are retry-able, but actions like `.click()`, `.type()`, etc. should be at the end of command chains to maintain retry-ability:
+
+#### Option 1: Command Chaining (Recommended)
+
+```js
+// RECOMMENDED: Chain commands with assertions before actions
+cy.get('[data-cy="input-field"]')
+  .should('be.visible')
+  .should('not.be.disabled')
+  .focus()
+
+// Each action gets its own chain to ensure retry-ability
+cy.get('[data-cy="input-field"]').clear()
+cy.get('[data-cy="input-field"]')
+  .type('new value')
+  .should('have.value', 'new value')
+
+cy.get('[data-cy="input-field"]').blur()
+```
+
+#### Option 2: Using then() (Only when necessary)
+
+```js
+// ONLY USE when you need to work with the actual DOM element
+cy.get('[data-cy="input-field"]').then(($input) => {
+  cy.wrap($input).focus()
+  cy.wrap($input).clear()
+  cy.wrap($input).type('new value')
+  cy.wrap($input).blur()
+})
+```
+
+### Why Command Chaining is Usually Better
+
+**Performance Benefits:**
+
+- Cypress optimizes chained commands and doesn't re-query the element unnecessarily.
+- The element reference is passed through the command chain automatically.
+- No additional overhead from `cy.wrap()` calls.
+
+**Simplicity and Readability:**
+
+- More concise and easier to read.
+- Follows Cypress's natural command pattern.
+- Less nested code structure.
+
+**Automatic Retries:**
+
+- Each command in the chain automatically retries if the element becomes stale.
+- Cypress handles DOM updates and element re-querying automatically.
+
+### When to Use `then()`
+
+Use `then()` only when you need to:
+
+1. **Access DOM element properties or methods directly:**
+
+```js
+cy.get('[data-cy="input-field"]').then(($input) => {
+  const initialValue = $input.val()
+  // Do something with the initial value
+  if (initialValue !== '') {
+    cy.wrap($input).clear().type('new value')
+  }
+})
+```
+
+2. **Perform conditional logic based on element state:**
+
+```js
+cy.get('[data-cy="toggle"]').then(($toggle) => {
+  if ($toggle.hasClass('active')) {
+    cy.wrap($toggle).click()
+  }
+})
+```
+
+3. **Work with multiple elements from the same query:**
+
+```js
+cy.get('[data-cy="list-item"]').then(($items) => {
+  const count = $items.length
+  cy.log(`Found ${count} items`)
+
+  // Work with specific items
+  cy.wrap($items.first()).should('contain', 'First item')
+  cy.wrap($items.last()).should('contain', 'Last item')
+})
+```
+
+### Common Misconceptions
+
+**"Using `then()` prevents detached DOM errors"**
+
+This is not accurate. Cypress automatically handles element re-querying in both chaining and `then()` scenarios. The framework is designed to handle DOM updates gracefully.
+
+**"Element is found only once with `then()`"**
+
+While `then()` captures the element at that moment, Cypress commands within `then()` (like those wrapped with `cy.wrap()`) still perform their own element queries and retries as needed.
+
+### Best Practice Examples
+
+```javascript
+describe('form interaction', () => {
+  it('updates input field correctly', () => {
+    cy.get('[data-cy="email-input"]').as('emailInput')
+    cy.get('@emailInput').should('be.visible').focus()
+    cy.get('@emailInput').clear()
+    cy.get('@emailInput')
+      .type('user@example.com')
+      .should('have.value', 'user@example.com')
+    cy.get('@emailInput').blur()
+  })
+})
+```
+
+#### Conditional Actions (When `then()` is appropriate)
+
+```js
+describe('conditional interactions', () => {
+  it('handles different input states', () => {
+    cy.get('[data-cy="search-input"]').then(($input) => {
+      const currentValue = $input.val()
+
+      if (currentValue) {
+        // Clear existing value and enter new one
+        cy.wrap($input).clear().type('new search term')
+      } else {
+        // Just enter the new value
+        cy.wrap($input).type('new search term')
+      }
+    })
+  })
+})
+```
+
+#### Working with Element Collections
+
+```javascript
+describe('element collections', () => {
+  it('processes multiple items', () => {
+    cy.get('[data-cy="product-card"]').then(($cards) => {
+      // Process each card
+      $cards.each((index, card) => {
+        cy.wrap(card)
+          .should('be.visible')
+          .find('[data-cy="product-title"]')
+          .should('not.be.empty')
+      })
+    })
+  })
+})
+```
+
+### Performance Considerations
+
+Command chaining is typically more performant because:
+
+- Cypress optimizes the command queue for chained operations.
+- No additional `cy.wrap()` overhead.
+- Automatic smart retries and element resolution.
+- Better memory management with fewer closures.
+
+Use `then()` judiciously and only when the additional functionality it provides is necessary for your specific use case.
+
 ## <Icon name="angle-right" /> Running Tests Intelligently
 
 As your test suite grows and takes longer to run, you may find yourself hitting
