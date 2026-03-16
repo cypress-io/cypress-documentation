@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "@cypress-design/css": "^1.0.0",
+    "@cypress-design/react-accordion": "^1.1.0",
     "@cypress-design/react-button": "^1.0.1",
     "@cypress-design/react-docmenu": "^1.0.2",
     "@cypress-design/react-tag": "^1.0.3",

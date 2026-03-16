@@ -5,6 +5,7 @@ sidebar_label: 'Cypress AI'
 sidebar_position: 45
 sidebar_custom_props: { 'ai_icon': true, 'new_label': true }
 ---
+import Tag from '@cypress-design/react-tag'
 
 <ProductHeading product="cloud" />
 
@@ -34,7 +35,8 @@ Cypress AI are easy-to-use tools across your testing lifecycle. They are woven i
 | Author Tests       | cy.prompt(), Studio AI      | Generate commands, assertions, and full tests from natural language or UI exploration |
 | Understand Tests   | Test Intent Summaries       | Quickly see what tests verify, reducing cognitive load and onboarding friction        |
 | Debug Failures     | Error Summaries             | AI-powered explanations for what happened when a test failed                          |
-| Test maintenance   | cy.prompt()                 | Atomatically adapt to UI changes that would otherwise break selectors                 |
+| Analyze & Triage | Cloud MCP | Gives AI coding assistants and AI agents a direct window into your application’s health and stability |
+| Test maintenance   | cy.prompt()                 | Automatically adapt to UI changes that would otherwise break selectors                 |
 | Fill Coverage Gaps | UI Coverage Test Generation | Identify untested flows and automatically generate new tests                          |
 
 ## Get Started
@@ -147,6 +149,20 @@ Error Summaries are available on all Cypress Cloud plans at no additional cost.
   alt="Test sidebar attempts and errors"
 />
 
+### Cloud MCP <Tag color="jade" dark size="32" dark>Beta</Tag>
+
+:::note
+**Best for:** teams moving toward agentic workflows who want to eliminate the context gap between their CI environment and their development tools.
+:::
+
+Cloud MCP is a remote server that gives AI assistants a direct window into your application’s health and stability. By connecting your AI coding assistant or AI agent directly to your CI results, it transforms Cypress from a testing tool into a real-time engineering data source—removing the manual overhead that makes testing a bottleneck.
+
+Instead of spending time investigating runs, your assistant uses the [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) to independently monitor and analyze recorded run data, including errors, stack traces and test replay links. This makes it easier to reach for Cypress as your tool of choice.
+
+<---- insert video / image ---->
+
+Read the [Cloud MCP documentation →](/cloud/integrations/cloud-mcp)
+
 ### UI Coverage Test Generation
 
 :::note
@@ -194,6 +210,7 @@ Usage limits vary by feature and plan. During beta periods, limits are subject t
 | Studio AI recommendations   | 60 per hour, per user  | 300 per hour, per user    |
 | Test Intent Summaries       | Included               | Included                  |
 | Error Summaries             | Included               | Included                  |
+| Cloud MCP requests        	| 100 per hour, per user | 100 per hour, per user    |
 | UI Coverage Test Generation | Not available          | Included with UI Coverage |
 
 If you need to increase your limits, contact support at support@cypress.io.

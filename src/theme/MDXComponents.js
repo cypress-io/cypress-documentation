@@ -42,6 +42,7 @@ import ViewFilters from "@site/docs/partials/_viewfilters.mdx";
 import Views from "@site/docs/partials/_views.mdx";
 import LineBreak from "@site/src/components/line-break";
 import Logo from "@site/src/components/logo";
+import AccordionBlock from "@site/src/components/accordion-block";
 import CloudFreePlan from "@site/docs/partials/_cloud_free_plan.mdx";
 import CiProviderCloudSteps from "@site/docs/partials/_ci_provider_cloud_steps.mdx";
 import UrlAllowList from "@site/docs/partials/_url_allowlist.mdx";
@@ -209,6 +210,7 @@ export default {
   Views,
   Logo,
   LineBreak,
+  AccordionBlock,
   CloudFreePlan,
   CiProviderCloudSteps,
   UrlAllowList,
