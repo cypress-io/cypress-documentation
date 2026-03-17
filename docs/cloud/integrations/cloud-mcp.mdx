@@ -1,0 +1,346 @@
+---
+title: 'Cloud MCP | Cypress Documentation'
+description: 'Give AI coding assistants real-time access to your Cypress test results.'
+sidebar_position: 60
+sidebar_label: Cloud MCP
+sidebar_custom_props: { 'ai_icon': true, 'new_label': true }
+---
+
+import Tag from '@cypress-design/react-tag'
+
+<ProductHeading product="cloud" />
+
+# <Icon useCypressIcon name="technology-logo-mcp" size="24" fillColor="indigo-500" /> Cloud MCP <Tag color="jade" dark size="32">Beta</Tag>: Agentic Debugging
+
+Cypress Cloud Model Context Protocol (MCP) server gives AI coding assistants a direct window into your application’s health and stability by connect it directly to Cypress Cloud.
+
+By eliminating the context gap between CI and your editor, you remove the manual triage that makes testing a bottleneck. Cloud MCP gives your AI agent real-time access to your test results. It allows agents to query run statuses, identify flaky tests, and retrieve failure details—including Test Replay links—directly within your agentic workflow.
+
+## How it Works
+
+The [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) is an open standard that enables AI models to safely access external data and tools.
+
+Think of MCP as the "USB port" for AI. Just as a USB port allows any peripheral to connect to any computer, MCP allows your AI assistant (the Host) to plug into Cypress Cloud (the Server) to fetch real-time context.
+
+1. **The Host:** Your AI client (like Cursor, Claude Desktop, or VS Code).
+2. **The Server:** A remote service hosted by Cypress that retrieves Cloud data for the AI.
+3. **The Connection:** A secure pipe authenticated by your personal access token.
+
+## Configuring the Cloud MCP
+
+To use the Cloud MCP:
+
+1. **Enable integration:** An admin will need to enable the integration for your organization
+2. **Generate personal access token:** Each user will need to create a personal access token to authenticate with Cloud MCP
+3. **Configure AI:** Each user will need to add the remote MCP configuration to their preferred AI client
+
+### Enable for Organization
+
+Enable the Cloud MCP integration for your organization from the **Integrations** page for your organization.
+
+<DocsImage
+  src="/img/cloud/integrations/cloud-mcp/mcp-org-setting.png"
+  alt="Enable Cloud MPC organization integration"
+/>
+
+Each user who wants to use Cloud MCP must then generate a personal access token to authenticate.
+
+### Generate personal access token
+
+A personal access token (PAT) is used to securely connect with Cypress Cloud through the Cloud MCP server. You create
+and manage your PAT from your Cypress Cloud profile.
+
+1. Sign in to [Cypress Cloud](https://cloud.cypress.io).
+2. In the upper-left corner of any page, click your organization picture.
+3. Select **[Manage Profile](https://cloud.cypress.io/profile)**.
+4. Under **MCP personal access token**, click **Generate token**.
+5. Select an expiration for the token and click **Continue**.
+6. Your token is generated. Copy it immediately — it is only shown once.
+
+The token access is scoped to your role and permissions in each MCP-enabled organization
+
+<DocsImage
+  src="/img/cloud/integrations/cloud-mcp/cloud-profile-pat.png"
+  alt="Enable user's MPC personal access token"
+/>
+
+### Configure AI Assistant
+
+Configure your agent or AI client to connect to Cloud MCP. Cloud MCP is a remote server hosted by Cypress, so your client must support **tools** and **remote server** (HTTP) connections.
+
+The remote url is: `https://mcp.cypress.io/mcp`. Set the authorization header with `Bearer CYPRESS_MCP_PAT`.
+
+<AccordionBlock title="Antigravity">
+
+1. Open the MCP store via the "..." dropdown at the top of the editor's agent panel.
+2. Click on **Manage MCP Servers**
+3. Click on **View raw config**
+4. Modify the `mcp_config.json` with your custom MCP server configuration.
+   ```json
+   {
+     "mcpServers": {
+       "Cypress Cloud": {
+         "serverUrl": "https://mcp.cypress.io/mcp",
+         "headers": {
+           "Authorization": "Bearer YOUR_MCP_TOKEN"
+         }
+       }
+     }
+   }
+   ```
+5. Replace `YOUR_MCP_TOKEN` with your personal access token.
+6. Save `mcp_config.json` and click Refresh
+
+See [Antigravity's documentation](https://antigravity.google/docs/mcp) for more details.
+
+</AccordionBlock>
+
+<AccordionBlock title="Claude Desktop">
+
+1. Open Claude Desktop.
+2. Go to Settings > Developer > Edit Config.
+3. Add the following to your `claude_desktop_config.json`:
+   ```json
+   {
+     "mcpServers": {
+       "Cypress Cloud": {
+         "command": "npx",
+         "args": [
+           "-y",
+           "@modelcontextprotocol/server-remote",
+           "https://mcp.cypress.io/mcp",
+           "--header",
+           "Authorization: Bearer ${CYPRESS_MCP_TOKEN}"
+         ],
+         "env": {
+           "CYPRESS_MCP_TOKEN": "YOUR_MCP_TOKEN"
+         }
+       }
+     }
+   }
+   ```
+4. Replace `YOUR_MCP_TOKEN` with your personal access token.
+5. Restart Claude Desktop after saving. You should see a tools indicator in the chat input.
+
+See [Claude's documentation](https://code.claude.com/docs/en/mcp) for more details.
+
+</AccordionBlock>
+
+<AccordionBlock title="Claude Code (CLI)">
+
+1. Add the Cloud MCP like:
+
+   ```bash
+   claude mcp add --transport http \
+     --header "Authorization: Bearer YOUR_MCP_TOKEN" \
+     "Cypress Cloud" \
+     https://mcp.cypress.io/mcp
+   ```
+
+2. Replace `YOUR_MCP_TOKEN` with your personal access token.
+
+**Note:** CLI Scope options are
+
+- `--scope user` — available across all projects (recommended)
+- `--scope local` — current project only (default)
+- `--scope project` — shared via `.mcp.json` in project root
+
+See [Claude Code's documentation](https://code.claude.com/docs/en/mcp) for more details.
+
+</AccordionBlock>
+
+<AccordionBlock title="Cursor">
+
+1. Open Cursor
+2. Open the "Settings" menu and select "Cursor Settings"
+3. Select "Tools & MCPs"
+4. Select "New MCP Sever"
+5. Add the following to your `~/.cursor/mcp.json`:
+   ```json
+   {
+     "mcpServers": {
+       "cypress": {
+         "url": "https://mcp.cypress.io/mcp",
+         "headers": {
+           "Authorization": "Bearer YOUR_MCP_TOKEN"
+         }
+       }
+     }
+   }
+   ```
+6. Replace `YOUR_MCP_TOKEN` with your personal access token.
+7. Save the file and restart Cursor.
+
+See [Cursor's documentation](https://cursor.com/docs/mcp) for more details.
+
+</AccordionBlock>
+
+<AccordionBlock title="GitHub Copilot in VS Code">
+
+You can install the Cloud MCP server in your user profile or a specific workspace. See [VS Code's MCP installation options](https://code.visualstudio.com/docs/copilot/customization/mcp-servers).
+
+1. Add the following to your `.vscode/mcp.json`:
+   ```json
+   {
+     "servers": {
+       "cypress": {
+         "type": "http",
+         "url": "https://mcp.cypress.io/mcp",
+         "headers": {
+           "Authorization": "Bearer ${input:CYPRESS_MCP_TOKEN}"
+         }
+       }
+     },
+     "inputs": [
+       {
+         "type": "promptString",
+         "id": "CYPRESS_MCP_TOKEN",
+         "description": "Enter your Cypress MCP personal access token",
+         "password": true
+       }
+     ]
+   }
+   ```
+2. VS Code will prompt for your PAT via the `CYPRESS_MCP_TOKEN` input when connecting.
+
+See [VS Code's documentation](https://code.visualstudio.com/docs/copilot/customization/mcp-servers) for more details.
+
+</AccordionBlock>
+
+<AccordionBlock title="GitHub Copilot CLI">
+
+1. Add the following to your global config (`~/.copilot/mcp-config.json`) or project config (`.copilot/mcp-config.json`):
+   ```json
+   {
+     "mcpServers": {
+       "Cypress Cloud": {
+         "type": "http",
+         "url": "https://mcp.cypress.io/mcp",
+         "headers": {
+           "Authorization": "Bearer ${CYPRESS_MCP_TOKEN}"
+         }
+       }
+     }
+   }
+   ```
+2. Set the Environment Variable: Before launching the CLI, ensure the token is exported in your terminal, replacing `YOUR_MCP_TOKEN` with your personal access token.
+   - macOS/Linux: `export CYPRESS_MCP_TOKEN=YOUR_MCP_TOKEN`
+   - Windows (Powershell): `$env:CYPRESS_MCP_TOKEN="YOUR_MCP_TOKEN"`
+3. Verify the connection. Run `/mcp` show inside the Copilot CLI to confirm the server is loaded and the variable is resolved.
+
+See [GitHub Copilot's documentation](https://docs.github.com/en/copilot/how-tos/copilot-cli/use-copilot-cli-agents/overview) for more details.
+
+</AccordionBlock>
+
+<AccordionBlock title="OpenAI Codex CLI">
+
+1. Add the following to `~/.codex/config.toml` (shared between CLI and Codex IDE extension):
+   ```toml
+   [mcp_servers.cypress-cloud]
+   url = "https://mcp.cypress.io/mcp"
+   bearer_token_env_var = "CYPRESS_MCP_TOKEN"
+   ```
+2. Set your token in your environment:
+   - macOS/Linux: `export CYPRESS_MCP_TOKEN=YOUR_MCP_TOKEN`
+   - Windows (Powershell): `$env:CYPRESS_MCP_TOKEN="YOUR_MCP_TOKEN"`
+
+See [Codex's documentation](https://developers.openai.com/codex/mcp) for more details.
+
+</AccordionBlock>
+
+If you use an AI client not listed here, refer to its documentation for configuring a remote MCP connection.
+
+## Available tools
+
+Once connected, your AI agent can autonomously use the following tools. You don't call these manually; the agent selects them based on your prompt.
+
+Each time the Cloud MCP connection is
+established, any new tools become immediately available.
+
+| Tool                              | Capability                                                                                                                                              | Best Use Case                                                          |
+| --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| `cypress_get_projects`            | Lists all projects in your Org.                                                                                                                         | Helping the agent find the correct `projectId` for subsequent queries. |
+| `cypress_get_runs`                | Returns run summaries for a project, run URL, or git branch. Summaries include project name, run number, status, run URL, tags, and test status counts. | "Check the status of the last CI run on main?"                         |
+| `cypress_get_failed_test_details` | Retrieves attempt details : test name, spec, attempt error and stack trace, and a Test Replay link for quick debugging. Does not return test artifacts. | "Analyze why the checkout test failed in the latest run."              |
+| `cypress_get_flaky_tests`         | Identifies the flaky tests in a run.                                                                                                                    | "Are these failures regressions or known flakiness?"                   |
+| `cypress_feedback`                | Shares feedback with Cypress directly from your agentic environment.                                                                                    | "Report a bug or request a new MCP feature."                           |
+
+## Writing effective prompts
+
+To get the most out of Cloud MCP, follow these three principles:
+
+- **Trigger Explicitly:** Use the phrase "Cypress Cloud" to ensure the agent looks for the correct MCP tools.
+- **Provide Context:** Mention "this branch," "this commit," or paste a Run URL directly.
+- **Define the Workflow:** Don't just ask what failed; ask the agent to fix it.
+
+## Example Prompts
+
+### The Health Check
+
+> "Check Cypress Cloud for the latest run on this branch. Give me a high-level summary of any failures."
+
+### The Deep Debug
+
+> "Find the failing tests for [Run URL]. For each failure, look at the stack trace, check my local code, and propose a fix to stop the regression."
+
+### The Flake Audit
+
+> "List all flaky tests from the last 5 runs in Cypress Cloud. Are there any common patterns in the error messages?"
+
+:::note
+**Pro-Tip:** If you find a workflow that works well, save it as a Custom Instruction or Skill in your AI client to standardize debugging for your entire team.
+:::
+
+## FAQs
+
+### Troubleshooting
+
+**Agent can't find your run::**
+
+- Verify the organization has the Cloud MCP integration enabled in Cypress Cloud.
+- Ensure your Git branch name in CI matches the branch name you're telling the AI.
+
+**Connection errors:**
+
+- Verify your PAT hasn't expired (check Manage Profile).
+- Check firewall and proxy settings to ensure https://mcp.cypress.io is allowlisted.
+
+### Pricing & Availability
+
+Cloud MCP is available for free to all Cypress Cloud plans, including the Starter plan. We believe AI-assisted debugging should be accessible to every developer building with Cypress.
+
+No minimum Cypress App version required to get started.
+
+### Usage Limits
+
+Current limited include 100 tool requests per hour for all plans.
+
+Cloud MCP data available matches existing test recording limits and data retention policies for your plan.
+
+If you need to increase your limits, contact support at support@cypress.io.
+
+### Security & Privacy
+
+- **Read-Only Access:** The Cloud MCP server is designed for data retrieval and debugging. It cannot modify your test code or delete runs.
+- **User-Scoped:** The AI only sees the projects and data that your specific Cypress Cloud user has permission to access. Whether you're part of a specific team or just have access to certain projects, your AI assistant stays within those same boundaries.
+- **Local Control:** You control exactly when the server is active by managing the configuration in your local AI client.
+
+### Remove the integration
+
+Cloud MCP integration at any time by going to the **Integrations** page for your organization and select **Disable** in the Cypress MCP section.
+
+Disabling immediately prevents any users who have previously generated a PAT from accessing data for that organization.
+
+## Send feedback
+
+You can share feedback directly through your agent:
+
+> "Send Cypress the following feedback: [Your message here]"
+
+Alternatively, use [this feedback form](https://share.hsforms.com/2NWNpyi5KSZmG4x0geIXgBg3a4za) to share any feedback, use cases, or issues encountered with your prompts and queries.
+
+## Also See
+
+- [Recording Cloud Runs](/cloud/features/recorded-runs)
+- [Cypress AI](/cloud/features/cypress-ai-features)
+- [cy.prompt()](/api/commands/prompt)
