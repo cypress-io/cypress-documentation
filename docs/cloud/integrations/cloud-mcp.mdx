@@ -260,8 +260,8 @@ established, any new tools become immediately available.
 | Tool                              | Capability                                                                                                                                              | Best Use Case                                                          |
 | --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
 | `cypress_get_projects`            | Lists all projects in your Org.                                                                                                                         | Helping the agent find the correct `projectId` for subsequent queries. |
-| `cypress_get_runs`                | Returns run summaries for a project, run URL, or git branch. Summaries include project name, run number, status, run URL, tags, and test status counts. | "Check the status of the last CI run on main?"                         |
-| `cypress_get_failed_test_details` | Retrieves attempt details : test name, spec, attempt error and stack trace, and a Test Replay link for quick debugging. Does not return test artifacts. | "Analyze why the checkout test failed in the latest run."              |
+| `cypress_get_runs`                | Returns run summaries for a project, run URL, or git branch. Summaries include project name, run number, status, run URL, tags, and test status counts. | "Check the status of the last CI run on main"                         |
+| `cypress_get_failed_test_details` | Retrieves attempt details: test name, spec, attempt error and stack trace, and a Test Replay link for quick debugging. Does not return test artifacts. | "Analyze why the checkout test failed in the latest run."              |
 | `cypress_get_flaky_tests`         | Identifies the flaky tests in a run.                                                                                                                    | "Are these failures regressions or known flakiness?"                   |
 | `cypress_feedback`                | Shares feedback with Cypress directly from your agentic environment.                                                                                    | "Report a bug or request a new MCP feature."                           |
 
@@ -295,7 +295,7 @@ To get the most out of Cloud MCP, follow these three principles:
 
 ### Troubleshooting
 
-**Agent can't find your run::**
+**Agent can't find your run:**
 
 - Verify the organization has the Cloud MCP integration enabled in Cypress Cloud.
 - Ensure your Git branch name in CI matches the branch name you're telling the AI.
@@ -309,13 +309,13 @@ To get the most out of Cloud MCP, follow these three principles:
 
 Cloud MCP is available for free to all Cypress Cloud plans, including the Starter plan. We believe AI-assisted debugging should be accessible to every developer building with Cypress.
 
-No minimum Cypress App version required to get started.
+No minimum Cypress App version is required to get started.
 
 ### Usage Limits
 
-Current limited include 100 tool requests per hour for all plans.
+Current limits include 100 tool requests per hour for all plans.
 
-Cloud MCP data available matches existing test recording limits and data retention policies for your plan.
+Cloud MCP data availability matches existing test recording limits and data retention policies for your plan.
 
 If you need to increase your limits, contact support at support@cypress.io.
 
@@ -327,9 +327,9 @@ If you need to increase your limits, contact support at support@cypress.io.
 
 ### Remove the integration
 
-Cloud MCP integration at any time by going to the **Integrations** page for your organization and select **Disable** in the Cypress MCP section.
+Remove the Cloud MCP integration at any time by going to the **Integrations** page for your organization and select **Disable** in the Cypress MCP section.
 
-Disabling immediately prevents any users who have previously generated a PAT from accessing data for that organization.
+Disabling the integration immediately prevents any users who have previously generated a PAT from accessing data for that organization.
 
 ## Send feedback
 
