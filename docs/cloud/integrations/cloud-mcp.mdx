@@ -131,10 +131,11 @@ See [Claude's documentation](https://code.claude.com/docs/en/mcp) for more detai
 1. Add the Cloud MCP like:
 
    ```bash
-claude mcp add cypress-cloud \
-     https://mcp.cypress.io/mcp \
-     --transport http \
-     --header "Authorization: Bearer YOUR_MCP_TOKEN" 
+claude mcp add \
+  --transport http \
+  --header "Authorization: Bearer YOUR_MCP_TOKEN" \
+  cypress-cloud \
+  https://mcp.cypress.io/mcp
    ```
 
 2. Replace `YOUR_MCP_TOKEN` with your personal access token.
