@@ -79,7 +79,7 @@ The remote url is: `https://mcp.cypress.io/mcp`. Set the authorization header wi
    ```json
    {
      "mcpServers": {
-       "Cypress Cloud": {
+       "cypress-cloud": {
          "serverUrl": "https://mcp.cypress.io/mcp",
          "headers": {
            "Authorization": "Bearer YOUR_MCP_TOKEN"
@@ -131,10 +131,10 @@ See [Claude's documentation](https://code.claude.com/docs/en/mcp) for more detai
 1. Add the Cloud MCP like:
 
    ```bash
-   claude mcp add --transport http \
-     --header "Authorization: Bearer YOUR_MCP_TOKEN" \
-     "Cypress Cloud" \
-     https://mcp.cypress.io/mcp
+claude mcp add cypress-cloud \
+     https://mcp.cypress.io/mcp \
+     --transport http \
+     --header "Authorization: Bearer YOUR_MCP_TOKEN" 
    ```
 
 2. Replace `YOUR_MCP_TOKEN` with your personal access token.
