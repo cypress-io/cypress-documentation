@@ -1008,18 +1008,18 @@ These apply to all `cy.prompt` usage unless noted otherwise.
 
 ### General limitations
 
-| Limitation       | Details                                                                  |
-| ---------------- | ------------------------------------------------------------------------ |
-| Authentication   | Requires Cypress Cloud account and/or valid record key                   |
-| Test Type        | E2E tests only (component testing not yet supported)                     |
-| Browser Support  | Chromium-based browsers only (Chrome, Edge, Electron)                    |
-| Language Support | Optimized for English prompts; other languages are not guaranteed        |
-| Command Coverage | Not all Cypress APIs supported - see [What you can do](#What-you-can-do) |
+| Limitation       | Details                                                                                                                                                                                                                                                                                                                                   |
+| ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Authentication   | Requires Cypress Cloud account and/or valid record key                                                                                                                                                                                                                                                                                    |
+| Test Type        | E2E tests only (component testing not yet supported)                                                                                                                                                                                                                                                                                      |
+| Browser Support  | Chromium-based browsers only (Chrome, Edge, Electron)                                                                                                                                                                                                                                                                                     |
+| Language Support | Optimized for English prompts; other languages are not guaranteed                                                                                                                                                                                                                                                                         |
+| Command Coverage | Not all Cypress APIs supported - see [What you can do](#What-you-can-do)                                                                                                                                                                                                                                                                  |
 | Assertions       | 'not.exist' assertions from natural language are not supported. However, 'not.exist' assertions work when you provide an exact CSS selector (e.g., `'verify #error-message does not exist'`) or when you use [text-based targeting](#Targeting-elements-by-text-content). [See issue](https://github.com/cypress-io/cypress/issues/33274) |
 | Multi-Element    | Assertions on multiple elements are not currently supported [See issue](https://github.com/cypress-io/cypress/issues/32787)                                                                                                                                                                                                               |
 | Cookies/Sessions | Clearing cookies or sessions is not supported [See issue](https://github.com/cypress-io/cypress/issues/32810)                                                                                                                                                                                                                             |
 | Scrolling        | Scrolling to elements is not supported [See issue](https://github.com/cypress-io/cypress/issues/32789)                                                                                                                                                                                                                                    |
-| API Testing      | API requests (e.g., `cy.request()`) is not supported [See issue](https://github.com/cypress-io/cypress/issues/32792)                                                                                                                                                                                                 |
+| API Testing      | API requests (e.g., `cy.request()`) is not supported [See issue](https://github.com/cypress-io/cypress/issues/32792)                                                                                                                                                                                                                      |
 | DOM Support      | Canvas and iframe elements are not supported. See [canvas issue](https://github.com/cypress-io/cypress/issues/32830) and [iframe issue](https://github.com/cypress-io/cypress/issues/32800)                                                                                                                                               |
 
 ## Pricing & usage limits
@@ -1046,7 +1046,7 @@ _Usage limits only apply to runs that are not recording to Cypress Cloud._
 **User limits on projects with paid accounts (or on free trial):**
 
 - 600 prompts per hour per user
-- 3,000 prompt steps per hour per user 
+- 3,000 prompt steps per hour per user
 
 ### Per-prompt limits
 
@@ -1068,10 +1068,10 @@ AI capabilities, including `cy.prompt`, are enabled by default for all users on 
 
 ## History
 
-| Version                                    | Changes                                     |
-| ------------------------------------------ | ------------------------------------------- |
+| Version                                      | Changes                                                              |
+| -------------------------------------------- | -------------------------------------------------------------------- |
 | [15.13.0](/app/references/changelog#15-13-0) | `cy.prompt` moves to beta. Removed `experimentalPromptCommand` flag. |
-| [15.4.0](/app/references/changelog#15-4-0) | Introduced `cy.prompt` command |
+| [15.4.0](/app/references/changelog#15-4-0)   | Introduced `cy.prompt` command                                       |
 
 ---
 
