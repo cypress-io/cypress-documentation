@@ -30,7 +30,7 @@ You can choose the workflow that fits your project's needs.
 - [What you can do](#What-you-can-do) — explore supported actions and capabilities
 - [See self-healed steps in the Command Log](#See-self-healed-steps-in-the-Command-Log) — understand exactly what changed and which element the step resolved to
 - [View and export generated code](#View-and-export-generated-code) — see the Cypress code generated from your prompts and save it to your files
-- [Setup](#Setup) — enable the command and configure authentication
+- [Setup](#Setup) — Configure authentication
 
 :::
 
@@ -232,7 +232,7 @@ Prompt clarity determines reliability. Follow these rules:
 - **Use absolute URLs**: Use the full URL of the page you want to visit.
 - **One action per step**: Avoid chaining multiple actions in one string.
 - **Avoid ambiguity**: Specify the action or element explicitly.
-- **Include context**: `click the login button in the header` is better than `click login button`.
+- **Include positional context**: `click the login button in the header` is better than `click login button`.
 - **Specify Cypress options**: Some Cypress command options can be specified directly in your prompts using natural language. Force and timeout are the only options that are currently supported. For example: `'go to "/users" with a timeout of 10 seconds'` or `'force click the submit button'`.
 
 ### Targeting elements by text content
@@ -264,7 +264,7 @@ When test content is not specified,Cypress resolves the element by its structura
 // ✅ Good - clear and descriptive
 cy.prompt([
   'visit https://cloud.cypress.io/users/settings',
-  'click the "Edit Profile" button',
+  'click the "Edit Profile" button in the profile section',
   'type "John Doe" in the name field',
   'type "john.doe@example.com" in the email field',
   'click the "Save Changes" button',
@@ -584,7 +584,7 @@ At any time during or after a test run, you can view the exact Cypress code that
 ### How to view generated code
 
 - **Run your test** with `cy.prompt` in Cypress App
-- **Click the "Code" button** - This button appears next to each `cy.prompt` command in the Command Log
+- **Click the "Code" button** - This button appears next to each `cy.prompt` command in the Command Log (event for failing tests)
 
 <DocsImage
   src="/img/api/prompt/cy-prompt-export-code.png"
@@ -629,22 +629,6 @@ Cypress.ElementSelector.defaults({
 For more examples and details, see the [ElementSelector API documentation](/api/cypress-api/element-selector-api).
 
 ## Setup
-
-### Enable the command
-
-`cy.prompt` is experimental and may change in future releases. Enable the command in your config file:
-
-:::cypress-config-example
-
-```ts
-{
-  e2e: {
-    experimentalPromptCommand: true,
-  },
-}
-```
-
-:::
 
 ### Authentication & usage
 
@@ -1024,30 +1008,23 @@ These apply to all `cy.prompt` usage unless noted otherwise.
 
 ### General limitations
 
-| Limitation       | Details                                                                  |
-| ---------------- | ------------------------------------------------------------------------ |
-| Authentication   | Requires Cypress Cloud account and/or valid record key                   |
-| Test Type        | E2E tests only (component testing not yet supported)                     |
-| Browser Support  | Chromium-based browsers only (Chrome, Edge, Electron)                    |
-| Language Support | Optimized for English prompts; other languages are not guaranteed        |
-| Command Coverage | Not all Cypress APIs supported - see [What you can do](#What-you-can-do) |
-
-### Experimental release limitations
-
-The `cy.prompt` command is currently in experimental release. During the experimental release, there are some limitations that we intend to address in the future.
-
 | Limitation       | Details                                                                                                                                                                                                                                                                                                                                   |
 | ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Authentication   | Requires Cypress Cloud account and/or valid record key                                                                                                                                                                                                                                                                                    |
+| Test Type        | E2E tests only (component testing not yet supported)                                                                                                                                                                                                                                                                                      |
+| Browser Support  | Chromium-based browsers only (Chrome, Edge, Electron)                                                                                                                                                                                                                                                                                     |
+| Language Support | Optimized for English prompts; other languages are not guaranteed                                                                                                                                                                                                                                                                         |
+| Command Coverage | Not all Cypress APIs supported - see [What you can do](#What-you-can-do)                                                                                                                                                                                                                                                                  |
 | Assertions       | 'not.exist' assertions from natural language are not supported. However, 'not.exist' assertions work when you provide an exact CSS selector (e.g., `'verify #error-message does not exist'`) or when you use [text-based targeting](#Targeting-elements-by-text-content). [See issue](https://github.com/cypress-io/cypress/issues/33274) |
 | Multi-Element    | Assertions on multiple elements are not currently supported [See issue](https://github.com/cypress-io/cypress/issues/32787)                                                                                                                                                                                                               |
 | Cookies/Sessions | Clearing cookies or sessions is not supported [See issue](https://github.com/cypress-io/cypress/issues/32810)                                                                                                                                                                                                                             |
 | Scrolling        | Scrolling to elements is not supported [See issue](https://github.com/cypress-io/cypress/issues/32789)                                                                                                                                                                                                                                    |
-| API Testing      | API requests (e.g., `cy.request()` or `cy.intercept()`) are not supported [See issue](https://github.com/cypress-io/cypress/issues/32792)                                                                                                                                                                                                 |
+| API Testing      | API requests (e.g., `cy.request()`) is not supported [See issue](https://github.com/cypress-io/cypress/issues/32792)                                                                                                                                                                                                                      |
 | DOM Support      | Canvas and iframe elements are not supported. See [canvas issue](https://github.com/cypress-io/cypress/issues/32830) and [iframe issue](https://github.com/cypress-io/cypress/issues/32800)                                                                                                                                               |
 
 ## Pricing & usage limits
 
-During the experimental release, access will be provided at no additional charge. Users are limited by the number of `cy.prompt` definitions and steps they can run per hour. This limit is higher for paid accounts and lower for free accounts. Our intention is to not limit normal usage of the feature.
+`cy.prompt` is free to use during the beta period. Users are limited by the number of `cy.prompt` definitions and steps they can run per hour. This limit is higher for paid accounts and lower for free accounts. Our intention is to not limit normal usage of the feature.
 
 :::note
 
@@ -1063,18 +1040,18 @@ _Usage limits only apply to runs that are not recording to Cypress Cloud._
 
 **User limits on projects with free accounts:**
 
-- 100 prompts per hour
-- 500 prompt steps per hour
+- 100 prompts per hour per user
+- 500 prompt steps per hour per user
 
 **User limits on projects with paid accounts (or on free trial):**
 
-- 600 prompts per hour
-- 3,000 prompt steps per hour
+- 600 prompts per hour per user
+- 3,000 prompt steps per hour per user
 
 ### Per-prompt limits
 
 - Up to 50 steps per `cy.prompt` call to maintain context fidelity and produce reliable, executable commands.
-- During the experimental release, system-wide limits apply to the total input length processed by `cy.prompt`. Very long prompts may be rejected or require splitting.
+- During the beta period, system-wide limits apply to the total input length processed by `cy.prompt`. Very long prompts may be rejected or require splitting.
 
 To improve reliability and performance, consider the following:
 
@@ -1091,9 +1068,10 @@ AI capabilities, including `cy.prompt`, are enabled by default for all users on 
 
 ## History
 
-| Version                                    | Changes                                     |
-| ------------------------------------------ | ------------------------------------------- |
-| [15.4.0](/app/references/changelog#15-4-0) | Introduced experimental `cy.prompt` command |
+| Version                                      | Changes                                                              |
+| -------------------------------------------- | -------------------------------------------------------------------- |
+| [15.13.0](/app/references/changelog#15-13-0) | `cy.prompt` moves to beta. Removed `experimentalPromptCommand` flag. |
+| [15.4.0](/app/references/changelog#15-4-0)   | Introduced `cy.prompt` command                                       |
 
 ---
 
