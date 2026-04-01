@@ -1,0 +1,135 @@
+.container {
+  border: 1px solid var(--ifm-color-gray-100);
+  border-radius: 8px;
+  margin: 16px 8px;
+  padding: 16px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+[data-theme='dark'] .container {
+  border-color: var(--ifm-color-gray-800);
+}
+
+.title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ifm-color-gray-900);
+}
+
+[data-theme='dark'] .title {
+  color: var(--ifm-color-gray-50);
+}
+
+.dismiss {
+  background-color: inherit;
+  border: none !important;
+  color: var(--ifm-color-gray-500) !important;
+  font-size: 16px;
+  padding: 0;
+  position: relative;
+  right: -2px;
+}
+
+.dismiss:hover {
+  color: var(--ifm-color-gray-700) !important;
+}
+
+[data-theme='dark'] .dismiss {
+  color: var(--ifm-color-gray-300) !important;
+}
+
+[data-theme='dark'] .dismiss:hover {
+  color: var(--ifm-color-gray-50) !important;
+}
+
+.list {
+  margin: 0;
+  padding: 0 0 0 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.list li {
+  display: list-item;
+  list-style: disc;
+}
+
+.list li::marker {
+  color: var(--ifm-color-gray-300);
+}
+
+[data-theme='dark'] .list li::marker {
+  color: var(--ifm-color-gray-600);
+}
+
+.link {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  width: 100%;
+  justify-content: space-between;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--ifm-color-gray-900);
+  text-decoration: none;
+  padding-right: 2px;
+  transition: color 150ms ease;
+}
+
+.linkContent {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.itemTitle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.link:hover {
+  color: var(--ifm-color-indigo-500);
+  text-decoration: none;
+}
+
+[data-theme='dark'] .link {
+  color: var(--ifm-color-gray-300);
+}
+
+[data-theme='dark'] .link:hover {
+  color: var(--ifm-color-indigo-300);
+}
+
+.arrow {
+  flex-shrink: 0;
+  margin-left: 8px;
+  margin-top: 2px;
+  opacity: 0;
+  transition: opacity 150ms ease;
+}
+
+.link:hover .arrow,
+.link:focus-visible .arrow {
+  opacity: 1;
+}
+
+.description {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 400;
+  color: var(--ifm-color-gray-700);
+  margin: 2px 0 0;
+}
+
+[data-theme='dark'] .description {
+  color: var(--ifm-color-gray-500);
+}

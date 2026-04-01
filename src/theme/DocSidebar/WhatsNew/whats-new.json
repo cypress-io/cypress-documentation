@@ -1,0 +1,55 @@
+{
+  "app": [
+    {
+      "label": "Cypress Studio AI",
+      "href": "/app/guides/cypress-studio",
+      "description": "Smart recommendations while building tests.",
+      "showAISparkle": true,
+      "isNew": true
+    },
+    {
+      "label": "Test Author Skill",
+      "href": "/app/tooling/ai-skills",
+      "description": "Test generation from you AI agent.",
+      "showAISparkle": true,
+      "isNew": true
+    }
+  ],
+  "api": [
+    {
+      "label": "cy.expose()",
+      "description": "Safely expose public configuration to tests.",
+      "href": "/api/commands/expose",
+      "isNew": true
+    },
+    {
+      "label": "cy.prompt()",
+      "href": "/api/commands/prompt",
+      "description": "Natural language and self-healing tests.",
+      "showAISparkle": true,
+      "isNew": true
+    }
+  ],
+  "cloud": [
+    {
+      "label": "Cloud MCP",
+      "href": "/cloud/integrations/cloud-mcp",
+      "description": "Connect AI agents directly to Cypress Cloud.",
+      "isNew": true
+    }
+  ],
+  "ui-coverage": [
+    {
+      "label": "Configuration Profiles",
+      "href": "/ui-coverage/configuration/profiles",
+      "description": "Different config per environment with run tags."
+    }
+  ],
+  "accessibility": [
+    {
+      "label": "Configuration Profiles",
+      "href": "/accessibility/configuration/profiles",
+      "description": "Different config per environment with run tags."
+    }
+  ]
+}

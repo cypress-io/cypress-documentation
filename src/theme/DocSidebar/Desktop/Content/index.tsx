@@ -9,6 +9,7 @@ import DocMenu from '@cypress-design/react-docmenu'
 import styles from './styles.module.css'
 import { cloneSidebarWithActivePathExpanded } from '../../utils'
 import { SidebarLink } from '../../SidebarLink'
+import WhatsNew from '../../WhatsNew'
 
 function useShowAnnouncementBar() {
   const { isActive } = useAnnouncementBar()
@@ -58,6 +59,7 @@ export default function DocSidebarDesktopContent({
           collapsible
         />
       </div>
+      <WhatsNew path={path} />
     </nav>
   )
 }
