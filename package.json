@@ -75,6 +75,6 @@
     ]
   },
   "lint-staged": {
-    "**/*.{md,mdx}": "prettier --write"
+    "**/*.{md,mdx}": "prettier --check"
   }
 }
