@@ -1142,7 +1142,7 @@
   force = true
 
 [[redirects]]
-  from = "/app/changelog"
+  from = "/app/references/changelog"
   to = "/app/changelog"
   status = 301
   force = true
