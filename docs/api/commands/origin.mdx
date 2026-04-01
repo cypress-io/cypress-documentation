@@ -36,7 +36,7 @@ doc.
 
 :::info
 
-<strong>Changes in Cypress [v14.0.0](/app/references/changelog#14-0-0)</strong>
+<strong>Changes in Cypress [v14.0.0](/app/changelog#14-0-0)</strong>
 
 Cypress no longer injects `document.domain` by default, which means `cy.origin()`
 must now be used to navigate between any two origins in the same test, even if
@@ -370,7 +370,7 @@ In this video we walk through how to test multiple origins in a single test. We
 also look at how to use the `cy.session()` command to cache session information
 and reuse it across tests.
 The configuration option `experimentalSessionAndOrigin`, mentioned in the video, is not used
-since [Cypress 12.0.0](https://docs.cypress.io/app/references/changelog#12-0-0)
+since [Cypress 12.0.0](https://docs.cypress.io/app/changelog#12-0-0)
 and the associated functionality is enabled by default.
 
 ## Notes
@@ -564,10 +564,10 @@ There are other testing scenarios which are not currently covered by
 
 | Version                                     | Changes                                                                                                     |
 | ------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
-| [14.0.0](/app/references/changelog#14-0-0)  | `cy.origin()` is now required when navigating between origins in the same test, rather than superdomains.   |
-| [12.6.0](/app/references/changelog#10-7-0)  | Support for `Cypress.require()` added and support for CommonJS `require()` and ES module `import()` removed |
-| [10.11.0](/app/references/changelog#10-7-0) | Support for CommonJS `require()` and ES module `import()` added and support for `Cypress.require()` removed |
-| [10.7.0](/app/references/changelog#10-7-0)  | Support for `Cypress.require()` added                                                                       |
+| [14.0.0](/app/changelog#14-0-0)  | `cy.origin()` is now required when navigating between origins in the same test, rather than superdomains.   |
+| [12.6.0](/app/changelog#10-7-0)  | Support for `Cypress.require()` added and support for CommonJS `require()` and ES module `import()` removed |
+| [10.11.0](/app/changelog#10-7-0) | Support for CommonJS `require()` and ES module `import()` added and support for `Cypress.require()` removed |
+| [10.7.0](/app/changelog#10-7-0)  | Support for `Cypress.require()` added                                                                       |
 
 ## See also
 

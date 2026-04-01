@@ -898,7 +898,7 @@ IntelliSense to show helpful documentation.
 
 #### 6. Create a function that adds the custom command
 
-Cypress [12.17.4](/app/references/changelog#12-17-4) includes a Webpack upgrade (v4 to v5), which [tree shakes out](https://webpack.js.org/blog/2020-10-10-webpack-5-release/#inner-module-tree-shaking) any side-effects or files that _only_ include side-effects.
+Cypress [12.17.4](/app/changelog#12-17-4) includes a Webpack upgrade (v4 to v5), which [tree shakes out](https://webpack.js.org/blog/2020-10-10-webpack-5-release/#inner-module-tree-shaking) any side-effects or files that _only_ include side-effects.
 
 If you are using TypeScript and have Webpack's `sideEffects:false` set in your package.json, custom Cypress commands will not be registered by the common pattern of writing the commands in one file and having them be run as a side effect of importing the file. For example:
 
@@ -932,7 +932,7 @@ registerCommands()
 
 | Version                                    | Changes                      |
 | ------------------------------------------ | ---------------------------- |
-| [0.20.0](/app/references/changelog#0-20-0) | `Cypress.Commands` API added |
+| [0.20.0](/app/changelog#0-20-0) | `Cypress.Commands` API added |
 
 ## See also
 
