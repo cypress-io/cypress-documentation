@@ -8,10 +8,6 @@ executors:
     resource_class: medium+
     docker:
       - image: cimg/node:22.15.1
-  with-chrome-and-firefox:
-    resource_class: medium+
-    docker:
-      - image: 'cypress/browsers:node-22.15.1-chrome-136.0.7103.113-1-ff-138.0.4-edge-136.0.3240.76-1'
 
 commands:
   docs-build:
@@ -71,6 +67,7 @@ jobs:
     executor:
       name: cypress/default
       node-version: 22.15.1
+    resource_class: large
     parallelism: 6
     steps:
       - checkout
