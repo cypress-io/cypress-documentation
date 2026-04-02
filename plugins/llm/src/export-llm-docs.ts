@@ -14,6 +14,26 @@ const MARKDOWN_ROOT = path.join(EXPORT_ROOT, 'markdown')
 const JSON_ROOT = path.join(EXPORT_ROOT, 'json')
 const PARTIALS_SECTION = 'partials'
 const PARTIALS_DIR = path.join(DOCS_ROOT, PARTIALS_SECTION)
+const MDX_COMPONENTS_PATH = path.join(ROOT, 'src/theme/MDXComponents.js')
+
+/** Basename (e.g. `_foo.mdx`) -> component name from MDXComponents.js imports. */
+function loadPartialsFileToComponentName(): Record<string, string> {
+  const map: Record<string, string> = {}
+  if (!fs.existsSync(MDX_COMPONENTS_PATH)) {
+    return map
+  }
+  const src = fs.readFileSync(MDX_COMPONENTS_PATH, 'utf8')
+  // import Foo from "@site/docs/partials/_bar.mdx";
+  const importRe =
+    /^import\s+([A-Za-z][A-Za-z0-9]*)\s+from\s+["']@site\/docs\/partials\/([^"']+)["']/
+  for (const line of src.split('\n')) {
+    const m = importRe.exec(line.trim())
+    if (!m) continue
+    const basename = path.posix.basename(m[2].replace(/\\/g, '/'))
+    map[basename] = m[1]
+  }
+  return map
+}
 
 const CONFIG: LlmExportConfig = {
   includeSections: ['accessibility', 'api', 'app', 'cloud', 'ui-coverage', 'partials'],
@@ -202,17 +222,20 @@ function loadPartialsMap(config: LlmExportConfig): Record<string, string> {
   }
 
   const partialFiles = walkDocs(PARTIALS_DIR)
+  const fileToComponentName = loadPartialsFileToComponentName()
 
   for (const absPath of partialFiles) {
     const raw = fs.readFileSync(absPath, 'utf8')
     const parsed = matter(raw)
     const normalized = normalizeContent(parsed.content, null)
 
-    const baseName = path.basename(absPath).replace(/\.(md|mdx|markdown)$/i, '')
+    const fileName = path.basename(absPath)
+    const baseName = fileName.replace(/\.(md|mdx|markdown)$/i, '')
     const stripped = baseName.replace(/^_+/, '')
-    const defaultComponentName = stripped ? stripped.charAt(0).toUpperCase() + stripped.slice(1) : 'Partial'
+    const fallbackName = stripped ? stripped.charAt(0).toUpperCase() + stripped.slice(1) : 'Partial'
+    const componentName = fileToComponentName[fileName] ?? fallbackName
 
-    mapByComponentName[defaultComponentName] = normalized
+    mapByComponentName[componentName] = normalized
   }
 
   return mapByComponentName
