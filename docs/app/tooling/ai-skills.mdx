@@ -1,6 +1,6 @@
 ---
 title: 'Cypress AI Skills'
-description: Improve AI-generated Cypress tests with reusable skill instructions.
+description: Instruction sets that unlock common Cypress workflow patterns for your AI tool.
 sidebar_label: 'AI Skills'
 sidebar_custom_props: { 'ai_icon': true, 'new_label': true }
 sidebar_position: 10
@@ -68,12 +68,12 @@ Beyond what a generic LLM knows, this skill:
 - Reuses existing helpers and custom commands
 - Checks your Cypress version and suggests only compatible APIs
 
-**Example prompts:**
+#### Example prompts:
 
 **Write a component test:**
 
 ```skill
-Write component tests for the CheckoutSummary component. It should render correctly with an empty cart, show a line item for each product, and disable the "Place order" button when stock is unavailable.
+/cypress-author Write component tests for the CheckoutSummary component. It should render correctly with an empty cart, show a line item for each product, and disable the "Place order" button when stock is unavailable.
 ```
 
 **Fix a failing test:**
@@ -157,6 +157,6 @@ notifications, so check back periodically for new releases.
 
 ## See also
 
-- [Cypress AI(/cloud/features/cypress-ai-features)
+- [Cypress AI](/cloud/features/cypress-ai-features)
 - [Cypress Studio AI](/app/guides/cypress-studio)
 - [Cypress Cloud MCP](/cloud/integrations/cloud-mcp)
