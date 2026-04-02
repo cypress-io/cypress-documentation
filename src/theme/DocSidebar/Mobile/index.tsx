@@ -33,7 +33,7 @@ const DocSidebarMobileSecondaryMenu = ({
         activePath={path}
         collapsible
       />
-      <WhatsNew path={path} />
+      <WhatsNew path={path} onLinkClick={() => mobileSidebar.toggle()} />
     </>
   )
 }

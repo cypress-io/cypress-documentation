@@ -3,15 +3,11 @@ import Link from '@docusaurus/Link'
 import Button from '@cypress-design/react-button'
 import Tag from '@cypress-design/react-tag'
 import styles from './styles.module.css'
-import { getWhatsNewItems } from './whatsNewItems'
+import { getWhatsNewItems, getSection } from './whatsNewItems'
 import { IconGeneralSparkleDoubleSmall, IconChevronRightMedium, IconActionDeleteMedium } from '@cypress-design/react-icon'
 
 
 const DISMISS_LOCAL_STORAGE_KEY = 'docs-whats-new-dismissed'
-
-function getSection(path: string) {
-  return path.split('/').filter(Boolean)[0] || 'global'
-}
 
 function readDismissedFromLocalStorage(section: string) {
   if (typeof window === 'undefined') return false
@@ -26,12 +22,14 @@ function writeDismissedToLocalStorage(section: string) {
   window.localStorage.setItem(`${DISMISS_LOCAL_STORAGE_KEY}-${section}`, 'true')
 }
 
-export default function WhatsNew({ path }: { path: string }) {
+export default function WhatsNew({ path, onLinkClick }: { path: string; onLinkClick?: () => void }) {
   const section = getSection(path)
-  const [dismissed, setDismissed] = React.useState(() =>
-    readDismissedFromLocalStorage(section)
-  )
+  const [dismissed, setDismissed] = React.useState(false)
   const items = getWhatsNewItems(path)
+
+  React.useEffect(() => {
+    setDismissed(readDismissedFromLocalStorage(section))
+  }, [section])
 
   if (items.length === 0 || dismissed) {
     return null
@@ -57,7 +55,7 @@ export default function WhatsNew({ path }: { path: string }) {
       <ul className={styles.list}>
         {items.map((item) => (
           <li key={item.href}>
-            <Link className={styles.link} href={item.href}>
+            <Link className={styles.link} href={item.href} onClick={onLinkClick}>
               <span className={styles.linkContent}>
                 <span className={styles.itemTitle}>
                   <span>{item.label}</span>
