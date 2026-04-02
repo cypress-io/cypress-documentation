@@ -70,6 +70,40 @@ export function parseHeadingLine(trimmedLine: string): { level: number; text: st
 }
 
 /**
+ * Net nesting delta for PascalCase MDX/JSX component tags on a line (order-preserving scan).
+ * Opening `<Name>` → +1; closing `</Name>` → -1; self-closing `<Name .../>` → 0.
+ * Lowercase tags (e.g. `<div>`) are skipped so they do not affect depth.
+ */
+export function computeJsxPascalTagDepthDelta(line: string): number {
+  let delta = 0
+  let i = 0
+  while (i < line.length) {
+    const lt = line.indexOf('<', i)
+    if (lt === -1) break
+    const rest = line.slice(lt)
+    const closeMatch = /^<\/([A-Z][A-Za-z0-9]*)\s*>/.exec(rest)
+    if (closeMatch) {
+      delta -= 1
+      i = lt + closeMatch[0].length
+      continue
+    }
+    const selfCloseMatch = /^<([A-Z][A-Za-z0-9]*)(?:\s[^>]*)?\/>/.exec(rest)
+    if (selfCloseMatch) {
+      i = lt + selfCloseMatch[0].length
+      continue
+    }
+    const openMatch = /^<([A-Z][A-Za-z0-9]*)(?:\s[^>]*)?>/.exec(rest)
+    if (openMatch) {
+      delta += 1
+      i = lt + openMatch[0].length
+      continue
+    }
+    i = lt + 1
+  }
+  return delta
+}
+
+/**
  * Strips a markdown file extension from a path segment (e.g. doc id without suffix).
  */
 export function stripMarkdownExtension(pathStr: string): string {

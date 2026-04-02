@@ -27,3 +27,11 @@ export type LlmExportConfig = {
     minContentWords?: number
   }
 }
+
+/** Resolved at export time — not tied to `process.cwd()` at module load. */
+export type LlmExportRunOptions = {
+  /** Project root (contains `docs/`, `src/`). Defaults to `process.cwd()` when omitted. */
+  siteDir?: string
+  /** Docusaurus build output directory. Defaults to `<siteDir>/dist` when omitted. */
+  outDir?: string
+}

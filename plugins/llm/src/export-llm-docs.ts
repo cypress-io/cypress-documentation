@@ -13,8 +13,9 @@
 import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
-import { Chunk, HeadingMeta, LlmExportConfig } from './types'
+import { Chunk, HeadingMeta, LlmExportConfig, LlmExportRunOptions } from './types'
 import {
+  computeJsxPascalTagDepthDelta,
   countMarkdownAndJsonFiles,
   countWords,
   ensureDir,
@@ -29,15 +30,7 @@ import {
   tokenizeCount,
 } from './utils'
 
-const ROOT = process.cwd()
-const DOCS_ROOT = path.join(ROOT, 'docs')
-const DIST_ROOT = path.join(ROOT, 'dist')
-const EXPORT_ROOT = path.join(DIST_ROOT, 'llm')
-const MARKDOWN_ROOT = path.join(EXPORT_ROOT, 'markdown')
-const JSON_ROOT = path.join(EXPORT_ROOT, 'json')
 const PARTIALS_SECTION = 'partials'
-const PARTIALS_DIR = path.join(DOCS_ROOT, PARTIALS_SECTION)
-const MDX_COMPONENTS_PATH = path.join(ROOT, 'src/theme/MDXComponents.js')
 
 const CONFIG: LlmExportConfig = {
   includeSections: ['accessibility', 'api', 'app', 'cloud', 'ui-coverage', 'partials'],
@@ -105,7 +98,7 @@ function walkDocs(dir: string, files: string[] = []): string[] {
 function normalizeContent(raw: string, inlinePartialsByComponentName: Record<string, string> | null): string {
   const lines = raw.split('\n')
   const out: string[] = []
-  let inComponentBlock = false
+  let componentDepth = 0
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i]
@@ -115,8 +108,9 @@ function normalizeContent(raw: string, inlinePartialsByComponentName: Record<str
     if (/^import\s/.test(trimmed)) continue
     if (/^:{3,}/.test(trimmed)) continue
 
-    if (inComponentBlock) {
-      if (trimmed.endsWith('/>') || /^<\/[A-Z]/.test(trimmed)) inComponentBlock = false
+    if (componentDepth > 0) {
+      componentDepth += computeJsxPascalTagDepthDelta(line)
+      if (componentDepth < 0) componentDepth = 0
       continue
     }
 
@@ -143,7 +137,8 @@ function normalizeContent(raw: string, inlinePartialsByComponentName: Record<str
         if (trailing) out.push(trailing)
         continue
       }
-      if (!(trimmed.endsWith('/>') || /^<\/[A-Z]/.test(trimmed))) inComponentBlock = true
+      componentDepth += computeJsxPascalTagDepthDelta(trimmed)
+      if (componentDepth < 0) componentDepth = 0
       continue
     }
 
@@ -154,7 +149,11 @@ function normalizeContent(raw: string, inlinePartialsByComponentName: Record<str
 }
 
 /** Loads normalized partial bodies keyed by component name when `partials` is included in config. */
-function loadPartialsMap(config: LlmExportConfig): Record<string, string> {
+function loadPartialsMap(
+  config: LlmExportConfig,
+  partialsDir: string,
+  mdxComponentsPath: string,
+): Record<string, string> {
   const mapByComponentName: Record<string, string> = {}
   if (
     !Array.isArray(config.includeSections) ||
@@ -162,11 +161,11 @@ function loadPartialsMap(config: LlmExportConfig): Record<string, string> {
   ) {
     return mapByComponentName
   }
-  if (!fs.existsSync(PARTIALS_DIR)) return mapByComponentName
+  if (!fs.existsSync(partialsDir)) return mapByComponentName
 
-  const fileToComponentName = loadPartialsFileToComponentName(MDX_COMPONENTS_PATH)
+  const fileToComponentName = loadPartialsFileToComponentName(mdxComponentsPath)
 
-  for (const absPath of walkDocs(PARTIALS_DIR)) {
+  for (const absPath of walkDocs(partialsDir)) {
     const parsed = matter(fs.readFileSync(absPath, 'utf8'))
     const normalized = normalizeContent(parsed.content, null)
     const fileName = path.basename(absPath)
@@ -260,7 +259,7 @@ function buildChunks(
   return { chunks, headingMeta }
 }
 
-function buildManifest(config: LlmExportConfig, generatedAt: string): void {
+function buildManifest(config: LlmExportConfig, generatedAt: string, distRoot: string): void {
   const manifest = {
     site_name: 'Cypress Documentation',
     description:
@@ -292,25 +291,36 @@ function buildManifest(config: LlmExportConfig, generatedAt: string): void {
     })
   }
 
-  fs.writeFileSync(path.join(DIST_ROOT, 'llms.json'), JSON.stringify(manifest, null, 2), 'utf8')
+  fs.writeFileSync(path.join(distRoot, 'llms.json'), JSON.stringify(manifest, null, 2), 'utf8')
 }
 
-export async function runLlmExport(): Promise<void> {
+export async function runLlmExport(options?: LlmExportRunOptions): Promise<void> {
   const startedAt = performance.now()
   const config = CONFIG
 
-  ensureDir(MARKDOWN_ROOT)
-  ensureDir(JSON_ROOT)
+  const siteDir = path.resolve(options?.siteDir ?? process.cwd())
+  const distRoot = path.resolve(options?.outDir ?? path.join(siteDir, 'dist'))
+  const docsRoot = path.join(siteDir, 'docs')
+  const exportRoot = path.join(distRoot, 'llm')
+  const markdownRoot = path.join(exportRoot, 'markdown')
+  const jsonRoot = path.join(exportRoot, 'json')
+  const partialsDir = path.join(docsRoot, PARTIALS_SECTION)
+  const mdxComponentsPath = path.join(siteDir, 'src/theme/MDXComponents.js')
 
-  const files = walkDocs(DOCS_ROOT)
+  ensureDir(markdownRoot)
+  ensureDir(jsonRoot)
+
+  const files = walkDocs(docsRoot)
   const allChunks: Chunk[] = []
   const generatedAt = new Date().toISOString()
-  const gitSha = getGitSha(ROOT)
+  const gitSha = getGitSha(siteDir)
   const partialsByComponentName =
-    config.partialsMode === 'inline' ? loadPartialsMap(config) : ({} as Record<string, string>)
+    config.partialsMode === 'inline'
+      ? loadPartialsMap(config, partialsDir, mdxComponentsPath)
+      : ({} as Record<string, string>)
 
   for (const absPath of files) {
-    const relFromDocs = toPosixPath(path.relative(DOCS_ROOT, absPath))
+    const relFromDocs = toPosixPath(path.relative(docsRoot, absPath))
     const section = relFromDocs.split('/')[0] || ''
 
     if (Array.isArray(config.includeSections) && config.includeSections.length > 0) {
@@ -318,7 +328,7 @@ export async function runLlmExport(): Promise<void> {
     }
     if (config.partialsMode === 'inline' && section === PARTIALS_SECTION) continue
 
-    const sourcePath = toPosixPath(path.relative(ROOT, absPath))
+    const sourcePath = toPosixPath(path.relative(siteDir, absPath))
     const id = stripMarkdownExtension(relFromDocs)
     const raw = fs.readFileSync(absPath, 'utf8')
     const parsed = matter(raw)
@@ -343,11 +353,11 @@ export async function runLlmExport(): Promise<void> {
 
     const markdownOut = matter.stringify(`${bodyWithHeading.trim()}\n`, metadata)
     const relOutPath = replaceMarkdownExtension(relFromDocs, '.md')
-    const mdOutPath = path.join(MARKDOWN_ROOT, relOutPath)
+    const mdOutPath = path.join(markdownRoot, relOutPath)
     ensureDir(path.dirname(mdOutPath))
     fs.writeFileSync(mdOutPath, markdownOut, 'utf8')
 
-    const jsonSourcePath = `/${toPosixPath(path.relative(DIST_ROOT, mdOutPath))}`
+    const jsonSourcePath = `/${toPosixPath(path.relative(distRoot, mdOutPath))}`
     const { chunks, headingMeta } = buildChunks(
       id,
       section,
@@ -357,7 +367,7 @@ export async function runLlmExport(): Promise<void> {
       config.chunk?.minContentWords ?? 30,
     )
 
-    const jsonOutPath = path.join(JSON_ROOT, replaceMarkdownExtension(relFromDocs, '.json'))
+    const jsonOutPath = path.join(jsonRoot, replaceMarkdownExtension(relFromDocs, '.json'))
     ensureDir(path.dirname(jsonOutPath))
 
     if (config.emit?.json) {
@@ -388,7 +398,7 @@ export async function runLlmExport(): Promise<void> {
   }
 
   fs.writeFileSync(
-    path.join(JSON_ROOT, 'index.json'),
+    path.join(jsonRoot, 'index.json'),
     JSON.stringify(
       {
         build: { version: gitSha || null, generated_at: generatedAt },
@@ -408,12 +418,12 @@ export async function runLlmExport(): Promise<void> {
     'utf8',
   )
 
-  buildManifest(config, generatedAt)
+  buildManifest(config, generatedAt, distRoot)
 
-  buildMarkdownDirectoryIndexes(MARKDOWN_ROOT)
+  buildMarkdownDirectoryIndexes(markdownRoot)
 
   const elapsedMs = Math.round(performance.now() - startedAt)
-  const { markdown: outMarkdown, json: outJson } = countMarkdownAndJsonFiles(EXPORT_ROOT)
+  const { markdown: outMarkdown, json: outJson } = countMarkdownAndJsonFiles(exportRoot)
   const outTotal = outMarkdown + outJson
 
   // Output metrics
@@ -424,7 +434,7 @@ export async function runLlmExport(): Promise<void> {
       `Time: ${elapsedMs}ms`,
       `Source docs scanned: ${files.length}`,
       `Chunks indexed: ${allChunks.length}`,
-      `Output files under ${toPosixPath(path.relative(ROOT, EXPORT_ROOT))}/: ${outTotal} total`,
+      `Output files under ${toPosixPath(path.relative(siteDir, exportRoot))}/: ${outTotal} total`,
       `  — ${outMarkdown} markdown (.md)`,
       `  — ${outJson} json (.json)`,
     ].join('\n'),
