@@ -32,10 +32,14 @@ Skills are published in the open-source
 
 ## What are AI Skills?
 
-Skills are instruction sets that tell your AI tool how to approach a specific
-Cypress workflow — what conventions to follow, how to reason about the task,
-and what good output looks like. You invoke a skill when you want consistent,
-Cypress-aware behavior for that context.
+Think of a generic AI as a brilliant but inexperienced new hire. Without guidance,
+it will do its best — but it won't know your team's standards, your project's
+conventions, or what good Cypress looks like. A skill is the expert SOP manual you
+hand them on day one.
+
+Skills are instruction sets that tell your AI tool how to approach a specific Cypress
+workflow — what conventions to follow, how to reason about the task, and what good
+output looks like.
 
 Use skills when you want your AI tool to:
 
@@ -50,9 +54,8 @@ The Cypress AI Toolkit currently includes two skills.
 
 ### `cypress-author`
 
-For creating, updating, and fixing Cypress tests. Most AI tools load this skill
-automatically when your prompt is about writing or fixing tests. You can also invoke
-it explicitly with `/cypress-author`.
+For creating, updating, and fixing Cypress tests. Invoke explicitly with
+`/cypress-author`, or let your AI tool load it automatically when relevant.
 
 Beyond what a generic LLM knows, this skill:
 
@@ -67,6 +70,9 @@ Beyond what a generic LLM knows, this skill:
 - Matches your project's language (TypeScript or JavaScript) and existing type patterns
 - Reuses existing helpers and custom commands
 - Checks your Cypress version and suggests only compatible APIs
+
+The result: your whole team gets consistent tests without anyone needing to write a
+detailed prompt from scratch every time.
 
 #### Example prompts:
 
@@ -84,9 +90,9 @@ Beyond what a generic LLM knows, this skill:
 
 ### `cypress-explain`
 
-For explaining and critiquing existing Cypress tests without changing code. Most AI
-tools load this skill automatically when your prompt is about understanding or reviewing
-tests. You can also invoke it explicitly with `/cypress-explain`.
+For explaining and critiquing existing Cypress tests without changing code. Invoke
+explicitly with `/cypress-explain`, or let your AI tool load it automatically when
+relevant.
 
 Beyond what a generic LLM knows, this skill:
 
@@ -100,6 +106,9 @@ Beyond what a generic LLM knows, this skill:
 - Flags common risks: brittle selectors, timing assumptions, unnecessary waits, UI
   coupling, and missing assertions
 - Catches misleading or incorrect test titles and comments
+
+The result: faster onboarding for new team members, and higher-confidence test reviews
+without needing a Cypress expert in the room.
 
 #### Example prompts:
 
@@ -120,7 +129,7 @@ Beyond what a generic LLM knows, this skill:
 Cypress skills work with any AI coding tool that supports custom instructions,
 including Cursor, Claude Code, GitHub Copilot, and others.
 
-### With the `skills` package (recommended)
+### Install via skills
 
 The [`skills`](https://skills.sh/) package is the fastest way to install Cypress skills. 
 
@@ -131,6 +140,7 @@ npx skills add cypress-io/ai-toolkit
 ```
 
 or install each skill with:
+
 ```bash
 npx skills add https://github.com/cypress-io/ai-toolkit --skill cypress-author
 npx skills add https://github.com/cypress-io/ai-toolkit --skill cypress-explain
@@ -157,6 +167,15 @@ notifications, so check back periodically for new releases.
 
 ## See also
 
-- [Cypress AI](/cloud/features/cypress-ai-features)
-- [Cypress Studio AI](/app/guides/cypress-studio)
-- [Cypress Cloud MCP](/cloud/integrations/cloud-mcp)
+Skills are one part of the broader Cypress AI experience. Each of the following can
+extend or complement your agentic workflows:
+
+- **[Cypress AI](/cloud/features/cypress-ai-features)** — Overview of all AI
+  capabilities across the Cypress App and Cloud.
+- **[cy.prompt()](/api/commands/prompt)** — Replace brittle selectors in
+  skills-generated tests with natural language steps that self-heal when the UI changes.
+- **[Studio AI](/app/guides/cypress-studio)** — Walk through your app visually after
+  generation to catch assertions your agent might have missed.
+- **[Cloud MCP](/cloud/integrations/cloud-mcp)** — Give your AI agent direct access
+  to Cypress Cloud test results and failure data to investigate and fix issues without
+  leaving your coding environment.
