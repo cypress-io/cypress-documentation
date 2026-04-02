@@ -38,10 +38,11 @@ export function countWords(text: string): number {
 }
 
 /**
- * Heuristic token estimate for LLM context sizing (~0.75 tokens per word).
+ * Heuristic token estimate for LLM context sizing (~0.75 words per token for English,
+ * i.e. ~4/3 tokens per word — aligned with common “100 tokens ≈ 75 words” guidance).
  */
 export function tokenizeCount(str: string): number {
-  return Math.round(countWords(str) * 0.75)
+  return Math.round(countWords(str) / 0.75)
 }
 
 /**
