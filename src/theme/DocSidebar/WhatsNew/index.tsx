@@ -24,7 +24,7 @@ function writeDismissedToLocalStorage(section: string) {
 
 export default function WhatsNew({ path, onLinkClick }: { path: string; onLinkClick?: () => void }) {
   const section = getSection(path)
-  const [dismissed, setDismissed] = React.useState(false)
+  const [dismissed, setDismissed] = React.useState(true)
   const items = getWhatsNewItems(path)
 
   React.useEffect(() => {
