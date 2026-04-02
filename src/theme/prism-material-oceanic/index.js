@@ -68,11 +68,6 @@ var theme = {
     style: {
       color: "#89ddff"
     }
-  }, {
-    types: ["skillname"],
-    style: {
-      color: "#6470f3"
-    }
   }]
 };
 

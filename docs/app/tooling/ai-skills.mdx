@@ -50,9 +50,7 @@ Use skills when you want your AI tool to:
 
 ## Available Cypress skills
 
-The Cypress AI Toolkit currently includes two skills.
-
-### `cypress-author`
+### [cypress-author](https://github.com/cypress-io/ai-toolkit/tree/main/skills/cypress-author)
 
 For creating, updating, and fixing Cypress tests. Invoke explicitly with
 `/cypress-author`, or let your AI tool load it automatically when relevant.
@@ -85,10 +83,37 @@ detailed prompt from scratch every time.
 **Fix a failing test:**
 
 ```skill
-/cypress-author The "verify there are 2 notifications" test in notifications.cy.ts is failing with an ".notification is not visible" error. Fix it.
+The "verify there are 2 notifications" test in notifications.cy.ts is failing with an ".notification is not visible" error. Fix it.
 ```
 
-### `cypress-explain`
+**Scaffold tests from requirements:**
+
+```skill
+Here are the acceptance criteria for the checkout flow:
+- users must be able to apply a promo code
+- see the discount reflected in the order summary
+- receive an error if the code is invalid or expired.
+Scaffold the full Cypress test coverage for this.
+```
+
+:::tip
+
+**Pro-Tip:** Connect your agent to your ticket or planning tool so it can pull in requirements and context about the behavior being changed — the more it understands about what needs to be tested, the better the output.
+
+:::
+
+**Write AI-powered tests using natural language steps:**
+
+You can encourage your agent to create AI-powered tests using [`cy.prompt()`](/api/commands/prompt) by supplying an ordered list of steps and referencing words like "AI" or "self-healing".
+
+```skill
+Write an e2e test that uses AI to:
+1. Visit the shopping cart page
+2. Remove the "Vegetables" item from the cart
+3. Increase the quantity of the "Chocolate" item to 99
+```
+
+### [cypress-explain](https://github.com/cypress-io/ai-toolkit/tree/main/skills/cypress-explain) 
 
 For explaining and critiquing existing Cypress tests without changing code. Invoke
 explicitly with `/cypress-explain`, or let your AI tool load it automatically when
@@ -115,13 +140,19 @@ without needing a Cypress expert in the room.
 **Explain a Cypress concept:**
 
 ```skill
-/cypress-explain How does cy.intercept() work, and when should I use cy.wait('@alias') with it?
+How does cy.intercept() work, and when should I use cy.wait('@alias') with it?
 ```
 
 **Audit a spec for quality issues:**
 
 ```skill
 /cypress-explain Review cypress/e2e/dashboard.cy.ts. Flag any tests that are likely to be flaky, over-coupled to implementation details, or missing meaningful assertions.
+```
+
+**Get a plain-language summary for a non-technical stakeholder:**
+
+```skill
+Summarize what the tests in cypress/e2e/onboarding.cy.ts cover in plain language, as if explaining it to a product manager.
 ```
 
 ## Install a skill
@@ -164,6 +195,11 @@ Installation steps vary by tool.
 Each skill includes a version in its `SKILL.md` file. Check that file to see
 which version you have installed. Skills don't have automatic update
 notifications, so check back periodically for new releases.
+
+## Troubleshooting
+
+If a skill is producing incorrect output, missing a Cypress pattern, or behaving in a way that seems wrong, [open an issue](https://github.com/cypress-io/ai-toolkit/issues) in the Cypress AI Toolkit repository.
+
 
 ## See also
 
