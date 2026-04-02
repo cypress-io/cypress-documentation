@@ -31,7 +31,6 @@
   background-color: inherit;
   border: none !important;
   color: var(--ifm-color-gray-500) !important;
-  font-size: 16px;
   padding: 0;
   position: relative;
   right: -2px;
@@ -58,7 +57,6 @@
 }
 
 .list li {
-  display: list-item;
   list-style: disc;
 }
 
@@ -123,8 +121,6 @@
 }
 
 .description {
-  font-size: 14px;
-  line-height: 20px;
   font-weight: 400;
   color: var(--ifm-color-gray-700);
   margin: 2px 0 0;

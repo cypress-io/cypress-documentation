@@ -4,7 +4,7 @@ import Button from '@cypress-design/react-button'
 import Tag from '@cypress-design/react-tag'
 import styles from './styles.module.css'
 import { getWhatsNewItems } from './whatsNewItems'
-import { IconGeneralSparkleDoubleSmall, IconChevronRightMedium } from '@cypress-design/react-icon'
+import { IconGeneralSparkleDoubleSmall, IconChevronRightMedium, IconActionDeleteMedium } from '@cypress-design/react-icon'
 
 
 const DISMISS_LOCAL_STORAGE_KEY = 'docs-whats-new-dismissed'
@@ -51,7 +51,7 @@ export default function WhatsNew({ path }: { path: string }) {
             setDismissed(true)
           }}
         >
-          ×
+          <IconActionDeleteMedium strokeColor="currentColor" />
         </Button>
       </div>
       <ul className={styles.list}>
