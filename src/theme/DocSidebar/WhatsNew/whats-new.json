@@ -8,9 +8,9 @@
       "isNew": true
     },
     {
-      "label": "Test Author Skill",
+      "label": "AI Skills",
       "href": "/app/tooling/ai-skills",
-      "description": "Test generation from you AI agent.",
+      "description": "Instructions to guide your AI agents.",
       "showAISparkle": true,
       "isNew": true
     }
@@ -34,22 +34,12 @@
     {
       "label": "Cloud MCP",
       "href": "/cloud/integrations/cloud-mcp",
-      "description": "Connect AI agents directly to Cypress Cloud.",
+      "description": "Connect AI agents directly to Cypress Cloud runs.",
       "isNew": true
     }
   ],
   "ui-coverage": [
-    {
-      "label": "Configuration Profiles",
-      "href": "/ui-coverage/configuration/profiles",
-      "description": "Different config per environment with run tags."
-    }
   ],
   "accessibility": [
-    {
-      "label": "Configuration Profiles",
-      "href": "/accessibility/configuration/profiles",
-      "description": "Different config per environment with run tags."
-    }
   ]
 }

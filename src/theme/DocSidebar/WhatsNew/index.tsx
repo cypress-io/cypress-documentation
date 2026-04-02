@@ -62,7 +62,7 @@ export default function WhatsNew({ path }: { path: string }) {
                 <span className={styles.itemTitle}>
                   <span>{item.label}</span>
                   {item.showAISparkle && 
-                    <IconGeneralSparkleDoubleSmall fillColor="transparent" className="inline" />
+                    <IconGeneralSparkleDoubleSmall fillColor="transparent" className="inline ml-[-8px]" />
                   }
                   {item.isNew && (
                     <Tag color="indigo" size="16" dark>

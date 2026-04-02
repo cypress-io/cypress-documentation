@@ -1,8 +1,162 @@
 ---
 title: 'Cypress AI Skills'
-description: Custom Instructions to 
+description: Improve AI-generated Cypress tests with reusable skill instructions.
 sidebar_label: 'AI Skills'
 sidebar_custom_props: { 'ai_icon': true, 'new_label': true }
 sidebar_position: 10
 ---
 
+<ProductHeading product="app" />
+
+# Cypress AI Skills
+
+::::info
+
+##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
+
+- What AI Skills are and when to use them
+- What each Cypress skill provides beyond generic AI knowledge
+- How to install and use Cypress skills with your AI tool
+
+::::
+
+## Introduction
+
+Cypress AI Skills are instruction sets that unlock common Cypress workflow
+patterns for your AI tool — helping it converge on consistent conventions,
+standards, and agentic behavior across tasks like authoring, reviewing, and
+explaining tests.
+
+Skills are published in the open-source
+[Cypress AI Toolkit](https://github.com/cypress-io/ai-toolkit).
+
+## What are AI Skills?
+
+Skills are instruction sets that tell your AI tool how to approach a specific
+Cypress workflow — what conventions to follow, how to reason about the task,
+and what good output looks like. You invoke a skill when you want consistent,
+Cypress-aware behavior for that context.
+
+Use skills when you want your AI tool to:
+
+- Apply Cypress best practices to generated and reviewed tests
+- Steer away from brittle patterns and weak selectors
+- Produce more Cypress-focused explanations and critiques
+- Establish consistent AI behavior across your team and workflows
+
+## Available Cypress skills
+
+The Cypress AI Toolkit currently includes two skills.
+
+### `cypress-author`
+
+For creating, updating, and fixing Cypress tests. Most AI tools load this skill
+automatically when your prompt is about writing or fixing tests. You can also invoke
+it explicitly with `/cypress-author`.
+
+Beyond what a generic LLM knows, this skill:
+
+- Reads your project before writing — config, existing specs, custom commands, and
+  fixtures — so tests match your conventions rather than generic ones
+- Follows a defined selector hierarchy (`data-cy`, `data-test`, `data-testid`) and
+  flags unstable selectors
+- Enforces proper waiting patterns (`cy.intercept()` + `cy.wait('@alias')`) — no
+  arbitrary `cy.wait(5000)`
+- Keeps tests independent and runnable in isolation
+- Prefers programmatic state setup over UI flows (`cy.request()`, `cy.task()`)
+- Matches your project's language (TypeScript or JavaScript) and existing type patterns
+- Reuses existing helpers and custom commands
+- Checks your Cypress version and suggests only compatible APIs
+
+**Example prompts:**
+
+**Write a component test:**
+
+```skill
+Write component tests for the CheckoutSummary component. It should render correctly with an empty cart, show a line item for each product, and disable the "Place order" button when stock is unavailable.
+```
+
+**Fix a failing test:**
+
+```skill
+/cypress-author The "verify there are 2 notifications" test in notifications.cy.ts is failing with an ".notification is not visible" error. Fix it.
+```
+
+### `cypress-explain`
+
+For explaining and critiquing existing Cypress tests without changing code. Most AI
+tools load this skill automatically when your prompt is about understanding or reviewing
+tests. You can also invoke it explicitly with `/cypress-explain`.
+
+Beyond what a generic LLM knows, this skill:
+
+- Classifies your question — Cypress concept or specific test — and applies the right
+  approach for each
+- Uses accurate Cypress terminology (command chain, subject, assertions, network stubbing)
+- Keeps explanations concise and scannable, focused on practical use over exhaustive
+  API details
+- When reviewing a test: identifies intent, structure, Cypress mechanics, and hidden
+  dependencies
+- Flags common risks: brittle selectors, timing assumptions, unnecessary waits, UI
+  coupling, and missing assertions
+- Catches misleading or incorrect test titles and comments
+
+#### Example prompts:
+
+**Explain a Cypress concept:**
+
+```skill
+/cypress-explain How does cy.intercept() work, and when should I use cy.wait('@alias') with it?
+```
+
+**Audit a spec for quality issues:**
+
+```skill
+/cypress-explain Review cypress/e2e/dashboard.cy.ts. Flag any tests that are likely to be flaky, over-coupled to implementation details, or missing meaningful assertions.
+```
+
+## Install a skill
+
+Cypress skills work with any AI coding tool that supports custom instructions,
+including Cursor, Claude Code, GitHub Copilot, and others.
+
+### With the `skills` package (recommended)
+
+The [`skills`](https://skills.sh/) package is the fastest way to install Cypress skills. 
+
+Install all skills by running:
+
+```bash
+npx skills add cypress-io/ai-toolkit
+```
+
+or install each skill with:
+```bash
+npx skills add https://github.com/cypress-io/ai-toolkit --skill cypress-author
+npx skills add https://github.com/cypress-io/ai-toolkit --skill cypress-explain
+```
+
+For update and remove commands, see [skills.sh](https://skills.sh/).
+
+### Manual install
+
+Installation steps vary by tool.
+
+1. Download the skill directory from the
+   [Cypress AI Toolkit](https://github.com/cypress-io/ai-toolkit/tree/main/skills).
+2. Copy it into your agent's skills location. Common locations:
+   - **Cursor** (global): `~/.cursor/skills`
+   - **Claude Code** (project): `{PROJECT_DIR}/.claude/skills`
+   - **Other tools**: check your tool's documentation for its skills or custom instructions directory.
+
+### Versions
+
+Each skill includes a version in its `SKILL.md` file. Check that file to see
+which version you have installed. Skills don't have automatic update
+notifications, so check back periodically for new releases.
+
+## See also
+
+- [Cypress AI(/cloud/features/cypress-ai-features)
+- [Cypress Studio AI](/app/guides/cypress-studio)
+- [Cypress Cloud MCP](/cloud/integrations/cloud-mcp)
