@@ -47,6 +47,22 @@ export function tokenizeCount(str: string): number {
 /**
  * Parses a markdown ATX heading line, or returns null if not a heading.
  */
+/**
+ * Removes MDX/JSX (PascalCase components) from inline text, for headings and titles.
+ * Handles self-closing tags and simple paired tags with no nested markup inside.
+ */
+export function stripMdxJsxFromInlineText(text: string): string {
+  let prev = ''
+  let s = text
+  while (s !== prev) {
+    prev = s
+    s = s.replace(/<([A-Z][A-Za-z0-9]*)(?:\s[^>]*)?>([^<]*)<\/\1>/g, '$2')
+    s = s.replace(/<[A-Z][A-Za-z0-9]*(?:\s[^>]*)?\/>/g, '')
+  }
+  s = s.replace(/\[\s*\]\([^)]*\)/g, '')
+  return s.replace(/\s{2,}/g, ' ').trim()
+}
+
 export function parseHeadingLine(trimmedLine: string): { level: number; text: string } | null {
   const m = /^(#{1,6})\s+(.*)/.exec(trimmedLine)
   if (!m) return null

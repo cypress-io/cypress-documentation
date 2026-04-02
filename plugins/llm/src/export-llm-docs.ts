@@ -23,6 +23,7 @@ import {
   parseHeadingLine,
   replaceMarkdownExtension,
   slugify,
+  stripMdxJsxFromInlineText,
   stripMarkdownExtension,
   toPosixPath,
   tokenizeCount,
@@ -116,6 +117,14 @@ function normalizeContent(raw: string, inlinePartialsByComponentName: Record<str
 
     if (inComponentBlock) {
       if (trimmed.endsWith('/>') || /^<\/[A-Z]/.test(trimmed)) inComponentBlock = false
+      continue
+    }
+
+    const atxHeading = /^(\s*)(#{1,6})\s+(.*)$/.exec(line)
+    if (atxHeading) {
+      const rawText = atxHeading[3]
+      const cleaned = stripMdxJsxFromInlineText(rawText) || rawText
+      out.push(`${atxHeading[1]}${atxHeading[2]} ${cleaned}`)
       continue
     }
 
