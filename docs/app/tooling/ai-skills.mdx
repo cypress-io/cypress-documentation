@@ -51,6 +51,7 @@ Use skills when you want your AI tool to:
 ## Available Cypress skills
 
 ### [`cypress-author`](https://github.com/cypress-io/ai-toolkit/tree/main/skills/cypress-author)
+
 Improves how AI tools create, update, and fix Cypress tests. Use it when you're writing new tests or fixing broken ones.
 
 Before writing a single line, the cypress-author skill reads your project: your config, existing specs, custom commands, and fixtures. Everything it produces is shaped by what is already there, not what a generic Cypress project might look like.
@@ -62,8 +63,8 @@ In practice, that means:
 - **Only APIs your Cypress version supports.** The skill checks your Cypress version and limits suggestions to what is actually available to your project.
 
 ### [`cypress-explain`](https://github.com/cypress-io/ai-toolkit/tree/main/skills/cypress-explain)
-Helps you understand, describe, and critique existing tests. Use it when auditing a suite, onboarding a new team member, or investigating a brittle test before rewriting it.
 
+Helps you understand, describe, and critique existing tests. Use it when auditing a suite, onboarding a new team member, or investigating a brittle test before rewriting it.
 
 Beyond what a generic AI tool knows, this skill:
 
@@ -75,11 +76,13 @@ Beyond what a generic AI tool knows, this skill:
 - **Catches bad metadata.** Misleading or incorrect test titles and comments are flagged and corrected, not silently accepted.
 
 ## Example Prompts
+
 Below are a few examples of how you can leverage Cypress Skills. These are not exhaustive.
 
 Skills can be invoke explicitly with `/cypress-author` or `/cypress-explain`, or your AI tool load it automatically when relevant based on the language used in your prompt.
 
 ### Scaffold from requirements
+
 This prompt example describes acceptance criteria for the "Mark all complete" behavior of the TODO app in the our [Kitchen Sink Example](https://github.com/cypress-io/cypress-example-kitchensink).
 
 ```skill
@@ -99,6 +102,7 @@ Using the Cypress Explain skill, review the existing tests to check if these req
 :::
 
 ### Generate using cy.prompt()
+
 [`cy.prompt()`](/api/commands/prompt) can reduce test maintenance by using AI-driven element resolution and self-healing when the UI changes, so you depend less on brittle hand-written selectors for those steps.
 
 You can ask your coding agent to author tests that call `cy.prompt()` so those behaviors are built into the specs it generates.
@@ -208,7 +212,6 @@ Each agent is different, but usually you can look in the conversation history to
 Skills set general guidelines. Add your own steps, instructions, or anti-patterns directly in your prompt to override or extend them. The skill will mix your additions with its own.
 
 For teams with consistent preferences, consider contributing your improvements back to the [Cypress AI Toolkit repository](https://github.com/cypress-io/ai-toolkit/), or define a project-level skill that builds on top of the defaults.
-
 
 ## See also
 
