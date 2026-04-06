@@ -35,3 +35,4 @@ cypress/videos
 themes
 .eslintcache
 db.json
+.claude/settings.local.json
