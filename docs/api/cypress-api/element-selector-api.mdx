@@ -72,7 +72,7 @@ The [jQuery element](http://api.jquery.com/Types/#jQuery) for which you want to 
 
 ### Set custom selector priority
 
-You can customize how Cypress generates selectors by defining a priority order for which attributes to prefer. This affects the selectors you see in tools like [Cypress Studio](/app/guides/cypress-studio) and [cy.prompt()](/api/commands/prompt)
+You can customize how Cypress generates selectors by defining a priority order for which attributes to prefer. This affects the selectors you see in tools like [Cypress Studio](/app/guides/cypress-studio) and [cy.prompt()](/api/commands/prompt), and is also respected by [Cypress AI Skills](/app/tooling/ai-skills) when your AI coding tool generates selectors.
 
 For example, this config tells Cypress to prefer semantic and accessibility attributes before falling back to styling details like class names.
 
@@ -159,3 +159,4 @@ Cypress.ElementSelector.defaults({
 
 - [Cypress Studio](/app/guides/cypress-studio)
 - [cy.prompt()](/api/commands/prompt)
+- [Cypress AI Skills](/app/tooling/ai-skills)
