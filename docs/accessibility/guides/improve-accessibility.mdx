@@ -78,3 +78,31 @@ Incremental progress is key to long-term accessibility improvements. By focusing
 With support from Deque University's "Learn More" links in the reports, even teams new to accessibility can learn the related context and confidently address violations.
 
 For guidance on preventing regressions and enforcing accessibility policies, explore our [Blocking Pull Requests Section](/accessibility/guides/block-pull-requests).
+
+## Fixing violations with your AI agent
+
+If you have [Cloud MCP](/cloud/integrations/cloud-mcp) configured, your AI agent can pull violation details directly from Cypress Cloud and help you work through fixes element-by-element. This prompt template is a good starting point:
+
+```
+You are a front-end expert focused on delivering an accessible product.
+
+The <element_id> selector was flagged as inaccessible by the Cypress Accessibility report.
+It <element_status> the <rule_severity> rule <rule_name> described as <rule_label>.
+The proposed solution is <proposed_solution>.
+
+First, verify the issue is actually a problem given how the code is constructed.
+
+If it is a valid issue, provide an explanation by briefly summarizing the fix in markdown
+so I can include it in my code review, then generate a plan to fix this issue
+(I must approve this plan before you make changes).
+
+If it is not an issue, note it and stop. If there are not enough details to reasonably
+solve this, explain what other information you need before making changes. If the information
+is within Cypress Cloud, submit feedback to the Cypress team.
+```
+
+Fill in the placeholder values from the violation details in Cypress Cloud, or ask your agent to pull them and work through each failure for a specific rule:
+
+> "Pull the `button-name` failures from the latest Cypress Cloud run and work through each one using this template."
+
+This works especially well for rules that appear across many elements, where the pattern of the fix is consistent once you've seen the first example.
