@@ -156,7 +156,7 @@ This data is then uploaded and stored in Cypress Cloud and replayed for debuggin
 - SVG elements
 - Iframes
 - Shadow DOM
-- Canvas elements (v13.5.0+, please contact us at support@cypress.io to enable capturing canvas elements)
+- Canvas elements
 
 ### What is not captured
 
@@ -214,11 +214,15 @@ The only assets stored to your file system are in a temporary directory and dele
 
 #### Canvas Elements
 
-Capturing canvas elements can be resource-intensive. If you have a large number of canvas elements or large canvas elements
-in your application, you may experience performance issues when capturing Test Replay, so we recommend
-monitoring the performance of your tests after enabling capturing of canvas elements and raising any issues with us.
+Capturing canvas elements can be resource-intensive. If you have a large number of canvas elements or large canvas elements in your application, you may experience performance issues when capturing Test Replay, so we recommend
+monitoring the performance of your tests and disabling capturing of canvas elements if necessary.
 
-Capturing canvas is disabled by default. To enable capturing canvas elements, please contact us at support@cypress.io.
+To disable capturing canvas elements, open project settings in Cypress Cloud and look in the Test Replay section. The canvas toggle sits below the main Test Replay recording toggle.
+
+<DocsImage
+  src="/img/cloud/features/test-replay/cypress-test-replay-canvas-elements-toggle-cloud.png"
+  alt="Test Replay canvas toggle"
+/>
 
 ### Runner UI
 
