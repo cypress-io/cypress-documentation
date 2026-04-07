@@ -81,28 +81,8 @@ For guidance on preventing regressions and enforcing accessibility policies, exp
 
 ## Fixing violations with your AI agent
 
-If you have [Cloud MCP](/cloud/integrations/cloud-mcp) configured, your AI agent can pull violation details directly from Cypress Cloud and help you work through fixes element-by-element. This prompt template is a good starting point:
+If you have [Cloud MCP](/cloud/integrations/cloud-mcp) configured, you can ask your agent to pull violation details from Cypress Cloud and work through fixes for a specific rule:
 
-```
-You are a front-end expert focused on delivering an accessible product.
-
-The <element_id> selector was flagged as inaccessible by the Cypress Accessibility report.
-It <element_status> the <rule_severity> rule <rule_name> described as <rule_label>.
-The proposed solution is <proposed_solution>.
-
-First, verify the issue is actually a problem given how the code is constructed.
-
-If it is a valid issue, provide an explanation by briefly summarizing the fix in markdown
-so I can include it in my code review, then generate a plan to fix this issue
-(I must approve this plan before you make changes).
-
-If it is not an issue, note it and stop. If there are not enough details to reasonably
-solve this, explain what other information you need before making changes. If the information
-is within Cypress Cloud, submit feedback to the Cypress team.
-```
-
-Fill in the placeholder values from the violation details in Cypress Cloud, or ask your agent to pull them and work through each failure for a specific rule:
-
-> "Pull the `button-name` failures from the latest Cypress Cloud run and work through each one using this template."
+> "Pull all `button-name` failures from the latest Cypress Cloud run. For each failing element: verify whether it's actually a problem given how the code is constructed. If it's valid, summarize the fix in markdown for my code review and propose a plan — wait for my approval before making any changes. If it's not a real issue, note it and move on. If you need more context to solve it, tell me what's missing — and if it's something only Cypress Cloud would have, submit feedback to the Cypress team."
 
 This works especially well for rules that appear across many elements, where the pattern of the fix is consistent once you've seen the first example.
