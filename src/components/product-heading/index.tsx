@@ -8,13 +8,15 @@ import ComponentOnlyBadge from "@site/src/components/component-only-badge";
 import React from 'react';
 
 interface ProductBadgeProps {
-    productLink?: string
-    badgeContent?: string
+    productLink: string
+    badgeContent: string
+    plan?: 'team' | 'business' | 'enterprise' | 'premium solution'
 }
 
 const ProductBadge: React.FC<ProductBadgeProps> = ({ 
     productLink, // The plan to display for Cloud product
     badgeContent, // The badge title to display
+    plan,
 }) => (
     <a 
     href={productLink}
@@ -22,14 +24,15 @@ const ProductBadge: React.FC<ProductBadgeProps> = ({
     title="Learn more"
     className={s.productHeadingLink}
     >
-      <Badge type="success">{badgeContent}</Badge>
+      <Badge type={plan || "success"}>{badgeContent}</Badge>
   </a>
 )
 
 interface ProductHeadingProps {
     product: 'app' | 'cloud' | 'accessibility' | 'ui-coverage'
-    plan?: 'team' | 'business' | 'enterprise'
+    plan?: 'starter' | 'team' | 'business' | 'enterprise'
     badge?: React.ReactNode
+    productPrefix?: boolean
     badgeOnly?: boolean
 }
 
@@ -38,6 +41,7 @@ const DocProductHeading: React.FC<ProductHeadingProps> = ({
     product, // The product to display
     plan, // The plan to display for Cloud product
     badge, // The badge to display
+    productPrefix =  false,
     badgeOnly = false
 }) => {
     const productName = product === 'ui-coverage' ? 'UI Coverage' : product === 'accessibility' ? 'Cypress Accessibility' : product === 'cloud' ? 'Cypress Cloud' : 'Cypress App'
@@ -47,18 +51,23 @@ const DocProductHeading: React.FC<ProductHeadingProps> = ({
     let badgeContent = product === 'cloud' ? 'Free Trial' : 'Premium Solution'
 
     if (product === 'cloud' && plan) {
-        badgeContent = plan === 'team' ? 'Team Plan' : plan === 'business' ? 'Business Plan' : 'Enterprise Plan'
+        badgeContent = plan === 'starter' ? 'Free Trial' : plan === 'team' ? 'Team Plan' : plan === 'business' ? 'Business Plan' : 'Enterprise Plan'
     }
 
     const productLink = `https://www.cypress.io/${linkPath}?utm_source=docs&utm_medium=product-heading-${product}&utm_content=${badgeContent}`
 
+    if (productPrefix) {
+        const shortProductName = product === 'ui-coverage' ? 'UI Coverage' : product === 'accessibility' ? 'Accessibility' : product === 'cloud' ? 'Cloud' : 'App'
+        badgeContent = `${shortProductName} ${badgeContent}`
+    }
+
     if (badgeOnly) {
         if (product === 'app') return null
-
         return (
           <ProductBadge
             productLink={productLink}
             badgeContent={badgeContent}
+            plan={plan}
           />
         )
     }

@@ -5,7 +5,7 @@
   font-size: 0.8rem;
   line-height: 0.75rem;
   font-weight: 700;
-  border-radius: 9999px;
+  border-radius: 4px;
   letter-spacing: 0.04em;
 }
 
@@ -50,4 +50,29 @@ a:focus > .success {
   font-size: 0.875rem;
   line-height: 1.25rem;
   font-weight: 500;
+}
+
+.starter {
+  background-color: rgb(224, 246, 250);
+  color: rgb(0, 119, 128);
+}
+
+.team {
+  background-color: rgb(240, 241, 255);
+  color: rgb(73, 86, 227);
+}
+
+.business {
+  background-color: rgb(245, 240, 251);
+  color: var(--ifm-color-purple-500);
+}
+
+.enterprise {
+  background-color: rgb(243, 244, 250);
+  color: rgb(67, 72, 97);
+}
+
+.premium-solution {
+  background-color: var(--ifm-color-jade-100);
+  color: var(--ifm-color-jade-600);
 }
