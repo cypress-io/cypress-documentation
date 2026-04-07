@@ -6,7 +6,7 @@
  * Pipeline:
  * 1. Walk `docs/` for `.md`/`.mdx`, filter by configured sections.
  * 2. Normalize MDX (strip imports/exports, inline configured partials) and write flat markdown under `dist/llm/markdown/`.
- * 3. Optionally emit per-doc JSON + chunk index under `dist/llm/json/` for retrieval / RAG-style use.
+ * 3. Optionally emit JSON under `dist/llm/json/`: chunked per-doc files + chunk index in `json/chunked/`, and full-document structured JSON in `json/full/`.
  * 4. Write `dist/llms.json` (site manifest) and per-directory `index.md` listings under the markdown export root.
  */
 
@@ -92,7 +92,7 @@ function walkDocs(dir: string, files: string[] = []): string[] {
   return files
 }
 
-/** CommonMark-style fenced code block opener (0–3 spaces, then 3+ backticks or tildes). */
+/** CommonMark-style fenced code block opener (0-3 spaces, then 3+ backticks or tildes). */
 function matchFenceStart(line: string): { marker: '`' | '~'; len: number } | null {
   const m = /^ {0,3}(`{3,}|~{3,})/.exec(line)
   if (!m) return null
@@ -100,7 +100,7 @@ function matchFenceStart(line: string): { marker: '`' | '~'; len: number } | nul
   return { marker: fence[0] as '`' | '~', len: fence.length }
 }
 
-/** Closing fence: same marker, length ≥ opening; optional 0–3 spaces indent; only trailing whitespace after. */
+/** Closing fence: same marker, length ≥ opening; optional 0-3 spaces indent; only trailing whitespace after. */
 function isClosingFence(line: string, marker: '`' | '~', openLen: number): boolean {
   const m = /^ {0,3}(`+|~+)(?:\s*)$/.exec(line)
   if (!m) return false
@@ -335,15 +335,26 @@ function buildManifest(config: LlmExportConfig, generatedAt: string, distRoot: s
   }
 
   if (config.emit?.json) {
-    manifest.files.push({
-      url: '/llm/json/index.json',
-      format: 'json',
-      intended_for: ['llm'],
-      description: 'The index page of the Cypress Documentation in JSON format.',
-    })
+    manifest.files.push(
+      {
+        url: '/llm/json/chunked/index.json',
+        format: 'json',
+        intended_for: ['llm'],
+        description: 'Chunk-level index of the Cypress Documentation for retrieval / RAG-style use.',
+      },
+      {
+        url: '/llm/json/full/index.json',
+        format: 'json',
+        intended_for: ['llm'],
+        description: 'Per-document structured JSON index for the Cypress Documentation.',
+      },
+    )
   }
 
+  // Write `llms.json` to root as well as `/.well-known`
   fs.writeFileSync(path.join(distRoot, 'llms.json'), JSON.stringify(manifest, null, 2), 'utf8')
+  ensureDir(path.join(distRoot, '.well-known'))
+  fs.writeFileSync(path.join(distRoot, '.well-known', 'llms.json'), JSON.stringify(manifest, null, 2), 'utf8')
 }
 
 export async function runLlmExport(options?: LlmExportRunOptions): Promise<void> {
@@ -356,14 +367,21 @@ export async function runLlmExport(options?: LlmExportRunOptions): Promise<void>
   const exportRoot = path.join(distRoot, 'llm')
   const markdownRoot = path.join(exportRoot, 'markdown')
   const jsonRoot = path.join(exportRoot, 'json')
+  const chunkedJsonRoot = path.join(jsonRoot, 'chunked')
+  const fullJsonRoot = path.join(jsonRoot, 'full')
   const partialsDir = path.join(docsRoot, PARTIALS_SECTION)
   const mdxComponentsPath = path.join(siteDir, 'src/theme/MDXComponents.js')
 
   ensureDir(markdownRoot)
   ensureDir(jsonRoot)
+  if (config.emit?.json) {
+    ensureDir(chunkedJsonRoot)
+    ensureDir(fullJsonRoot)
+  }
 
   const files = walkDocs(docsRoot)
   const allChunks: Chunk[] = []
+  const fullDocIndex: { id: string; title: string; section: string; path: string }[] = []
   const generatedAt = new Date().toISOString()
   const gitSha = getGitSha(siteDir)
   const partialsByComponentName =
@@ -419,25 +437,39 @@ export async function runLlmExport(options?: LlmExportRunOptions): Promise<void>
       config.chunk?.minContentWords ?? 30,
     )
 
-    const jsonOutPath = path.join(jsonRoot, replaceMarkdownExtension(relFromDocs, '.json'))
-    ensureDir(path.dirname(jsonOutPath))
+    const chunkedJsonOutPath = path.join(chunkedJsonRoot, replaceMarkdownExtension(relFromDocs, '.json'))
+    const fullJsonOutPath = path.join(fullJsonRoot, replaceMarkdownExtension(relFromDocs, '.json'))
+    ensureDir(path.dirname(chunkedJsonOutPath))
+    ensureDir(path.dirname(fullJsonOutPath))
 
     if (config.emit?.json) {
+      const docBlock = {
+        id,
+        title,
+        description: (metadata.description as string) || null,
+        section,
+        source_path: jsonSourcePath,
+        version: (metadata.version as string) || null,
+        updated_at: (metadata.updated_at as string) || null,
+        headings: headingMeta,
+      }
+
       fs.writeFileSync(
-        jsonOutPath,
+        chunkedJsonOutPath,
+        JSON.stringify({ doc: docBlock, chunks }, null, 2),
+        'utf8',
+      )
+
+      const fullJsonPath = `/${toPosixPath(path.relative(distRoot, fullJsonOutPath))}`
+      fullDocIndex.push({ id, title, section, path: fullJsonPath })
+
+      fs.writeFileSync(
+        fullJsonOutPath,
         JSON.stringify(
           {
-            doc: {
-              id,
-              title,
-              description: (metadata.description as string) || null,
-              section,
-              source_path: jsonSourcePath,
-              version: (metadata.version as string) || null,
-              updated_at: (metadata.updated_at as string) || null,
-              headings: headingMeta,
-            },
-            chunks,
+            doc: docBlock,
+            content_markdown: `${bodyWithHeading.trim()}\n`,
+            token_estimate: tokenizeCount(bodyWithHeading),
           },
           null,
           2,
@@ -451,7 +483,7 @@ export async function runLlmExport(options?: LlmExportRunOptions): Promise<void>
 
   if (config.emit?.json) {
     fs.writeFileSync(
-      path.join(jsonRoot, 'index.json'),
+      path.join(chunkedJsonRoot, 'index.json'),
       JSON.stringify(
         {
           build: { version: gitSha || null, generated_at: generatedAt },
@@ -464,6 +496,20 @@ export async function runLlmExport(options?: LlmExportRunOptions): Promise<void>
             path: c.path,
             token_estimate: c.token_estimate,
           })),
+        },
+        null,
+        2,
+      ),
+      'utf8',
+    )
+
+    fullDocIndex.sort((a, b) => a.id.localeCompare(b.id))
+    fs.writeFileSync(
+      path.join(fullJsonRoot, 'index.json'),
+      JSON.stringify(
+        {
+          build: { version: gitSha || null, generated_at: generatedAt },
+          documents: fullDocIndex,
         },
         null,
         2,

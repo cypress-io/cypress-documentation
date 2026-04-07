@@ -9,6 +9,20 @@ import { runLlmExport } from './export-llm-docs'
 function llmExportPlugin(context: any, _options: any) {
   return {
     name: 'llm-export',
+    injectHtmlTags({ content }) {
+      return {
+        headTags: [
+          {
+            tagName: 'link',
+            attributes: {
+              rel: 'alternate',
+              type: 'application/json',
+              href: '/llms.json',
+            },
+          },
+        ],
+      }
+    },
     async postBuild({ outDir }: { outDir: string }) {
       const siteDir = (context as { siteDir?: string }).siteDir ?? path.resolve(__dirname, '../../..')
       await runLlmExport({ siteDir, outDir })
