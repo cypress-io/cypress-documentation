@@ -7,13 +7,12 @@ sidebar_custom_props: { 'ai_icon': true, 'new_label': true }
 ---
 
 import Tag from '@cypress-design/react-tag'
-import { DocProductHeading } from '@site/src/components/product-heading'
 
 <ProductHeading product="cloud" />
 
 # <Icon useCypressIcon name="technology-logo-mcp" size="24" fillColor="indigo-500" /> Cloud MCP: Agentic Debugging <Tag color="jade" dark size="32">Beta</Tag>
 
-Cypress Cloud Model Context Protocol (MCP) server gives AI coding assistants a direct window into your application’s health and stability by connect it directly to Cypress Cloud.
+Cypress Cloud's Model Context Protocol (MCP) server connects your AI coding assistants directly to Cypress Cloud, giving them a window into your application's health and stability.
 
 By eliminating the context gap between CI and your editor, you remove the manual triage that makes testing a bottleneck. Cloud MCP gives your AI agent real-time access to your test results. It allows agents to query run statuses, identify flaky tests, and retrieve failure details—including Test Replay links—directly within your agentic workflow.
 
@@ -256,19 +255,20 @@ If you use an AI client not listed here, refer to its documentation for configur
 
 Once connected, your AI agent can autonomously use the following tools. You don't call these manually; the agent selects them based on your prompt.
 
-Each time the Cloud MCP connection is
-established, any new tools become immediately available.
+Each time the Cloud MCP connection is established, any new tools become immediately available.
 
-| Tool                                      | Capability                                                                                                                                                         | Best Use Case                                                           | Availability                                                          |
-| ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------- | --------------------------------------------------------------------- |
-| `cypress_get_projects`                    | Lists all projects in your Org.                                                                                                                                    | Helping the agent find the correct `projectId` for subsequent queries.  | <DocProductHeading product="cloud" plan="starter" badgeOnly />        |
-| `cypress_get_runs`                        | Returns run summaries for a project, run URL, or git branch. Summaries include project name, run number, status, run URL, tags, and test status counts.            | "Check the status of the last CI run on main"                           | <DocProductHeading product="cloud" plan="starter" badgeOnly />        |
-| `cypress_get_failed_test_details`         | Retrieves attempt details: test name, spec, attempt error and stack trace, and a Test Replay link for quick debugging. Does not return test artifacts.             | "Analyze why the checkout test failed in the latest run."               | <DocProductHeading product="cloud" plan="starter" badgeOnly />        |
-| `cypress_get_flaky_tests`                 | Identifies the flaky tests in a run.                                                                                                                               | "Are these failures regressions or known flakiness?"                    | <DocProductHeading product="cloud" plan="team" badgeOnly />           |
-| `cypress_get_accessibility_report`        | Returns a high-level accessibility report for a run: violation counts by severity, failing rules with element counts, and the top 5 views sorted by failure count. | "Summarize accessibility violations for the latest run on this branch." | <DocProductHeading product="accessibility" productPrefix badgeOnly /> |
-| `cypress_get_accessibility_views`         | Returns paginated views from an accessibility report, sorted by number of failing rules. Use to browse all views beyond the top 5 in the report summary.           | "Which pages have the most accessibility failures in this run?"         | <DocProductHeading product="accessibility" productPrefix badgeOnly /> |
-| `cypress_get_accessibility_rule_failures` | Returns paginated failing DOM elements for a specific accessibility rule, with CSS selector, view, and failure message. Optionally scope to a specific view.       | "Show me all color-contrast failures on the checkout page."             | <DocProductHeading product="accessibility" productPrefix badgeOnly /> |
-| `cypress_feedback`                        | Shares feedback with Cypress directly from your agentic environment.                                                                                               | "Report a bug or request a new MCP feature."                            | <DocProductHeading product="cloud" plan="starter" badgeOnly />        |
+Some tools are relevant for all Cypress Cloud plans (including free), but some others are for **plan-specific data** like flaky test reporting, or **product-specific data** like Cypress Accessibility violation details. These are only available if you organization has  subscriptions for the plans and products that would provide the underlying data.
+
+| Tool                                      | Capability                                                                                                                                                         | Best Use Case                                                           |
+| ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------- |
+| `cypress_get_projects`                    | Lists all projects in your Org.                                                                                                                                    | Helping the agent find the correct `projectId` for subsequent queries.  |
+| `cypress_get_runs`                        | Returns run summaries for a project, run URL, or git branch. Summaries include project name, run number, status, run URL, tags, and test status counts.            | "Check the status of the last CI run on main"                           |
+| `cypress_get_failed_test_details`         | Retrieves attempt details: test name, spec, attempt error and stack trace, and a Test Replay link for quick debugging. Does not return test artifacts.             | "Analyze why the checkout test failed in the latest run."               |
+| `cypress_get_flaky_tests`                 | Identifies the flaky tests in a run.                                                                                                                               | "Are these failures regressions or known flakiness?"                    |
+| `cypress_get_accessibility_report`        | Returns a high-level accessibility report for a run: violation counts by severity, failing rules with element counts, and the top 5 views sorted by failure count. | "Summarize accessibility violations for the latest run on this branch." |
+| `cypress_get_accessibility_views`         | Returns paginated views from an accessibility report, sorted by number of failing rules. Use to browse all views beyond the top 5 in the report summary.           | "Which pages have the most accessibility failures in this run?"         |
+| `cypress_get_accessibility_rule_failures` | Returns paginated failing DOM elements for a specific accessibility rule, with CSS selector, view, and failure message. Optionally scope to a specific view.       | "Show me all color-contrast failures on the checkout page."             |
+| `cypress_feedback`                        | Shares feedback with Cypress directly from your agentic environment.                                                                                               | "Report a bug or request a new MCP feature."                            |
 
 ## Writing effective prompts
 
