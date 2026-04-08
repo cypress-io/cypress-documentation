@@ -16,6 +16,26 @@ export type HeadingMeta = {
   level: number
 }
 
+/** Metadata block shared by chunked and full JSON exports for one document. */
+export type LlmDocExportMeta = {
+  id: string
+  title: string
+  description: string | null
+  section: string
+  source_path: string
+  version: string | null
+  updated_at: string | null
+  headings: HeadingMeta[]
+}
+
+/** Row in `json/full/index.json`. */
+export type LlmFullDocIndexEntry = {
+  id: string
+  title: string
+  section: string
+  path: string
+}
+
 export type LlmExportConfig = {
   includeSections?: string[]
   partialsMode?: 'inline' | 'standalone'
@@ -34,4 +54,10 @@ export type LlmExportRunOptions = {
   siteDir?: string
   /** Docusaurus build output directory. Defaults to `<siteDir>/dist` when omitted. */
   outDir?: string
+}
+
+export type LlmJsonRoots = {
+  jsonRoot: string
+  chunkedJsonRoot: string
+  fullJsonRoot: string
 }

@@ -16,6 +16,25 @@ export function ensureDir(dir: string): void {
   fs.mkdirSync(dir, { recursive: true })
 }
 
+/** Writes `data` as formatted JSON (UTF-8). Parent directory must exist. */
+export function writeJsonFile(filePath: string, data: unknown): void {
+  fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf8')
+}
+
+/** Collects all markdown / MDX source files under `dir` (recursive). */
+export function walkDocs(dir: string, files: string[] = []): string[] {
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    const fullPath = path.join(dir, entry.name)
+    if (entry.isDirectory()) {
+      walkDocs(fullPath, files)
+    }
+    else if (entry.isFile() && /\.(md|mdx|markdown)$/i.test(entry.name)) {
+      files.push(fullPath)
+    }
+  }
+  return files
+}
+
 /**
  * Produces a URL-safe slug from heading text (aligned with typical anchor behavior).
  */
