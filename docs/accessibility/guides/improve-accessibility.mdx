@@ -31,6 +31,8 @@ Effective remediation often requires collaboration across departments, emphasizi
 
 If your organization or team is newer to accessibility, you're likely to find plenty of issues reported by Axe Core® in Cypress Accessibility. Many of the issues in your first report may relate to concepts that are new, such as [ARIA attributes](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA) or [invalid nesting of interactive controls](https://dequeuniversity.com/rules/axe/4.2/nested-interactive). Since it will be impossible to fix all issues overnight, we recommend finding some low-hanging fruit as a starting point. This can help your team build confidence by getting some wins on the board, and teach them the overall idea of how accessibility problems get fixed.
 
+If you are use Claude, Cursor, or other AI agents in your development process, this is a good time to consider using the [Cypress Cloud MCP's accessibility tools](#Fixing-violations-with-your-AI-agent) to help triage your accessibility findings and develop action plans based on the source of each issue.
+
 ## Good low-hanging fruit
 
 Some accessibility issues are easier to address but have a significant impact. Consider issues related to [WCAG SC 4.2.1 \- Name, role, value](https://www.w3.org/WAI/WCAG21/Understanding/name-role-value.html), which ensures interactive controls are appropriately labeled. Violations in this category often:
@@ -78,3 +80,11 @@ Incremental progress is key to long-term accessibility improvements. By focusing
 With support from Deque University's "Learn More" links in the reports, even teams new to accessibility can learn the related context and confidently address violations.
 
 For guidance on preventing regressions and enforcing accessibility policies, explore our [Blocking Pull Requests Section](/accessibility/guides/block-pull-requests).
+
+## Fixing violations with your AI agent
+
+If you have [Cloud MCP](/cloud/integrations/cloud-mcp) configured, you can ask your agent to pull violation details from Cypress Cloud and work through fixes. Here's an example prompt that focuses on a specific rule and asks the agent to create a plan:
+
+> "Pull all `button-name` failures from the latest Cypress Cloud run. For each failing element: verify whether it's actually a problem given how the code is constructed. If it's valid, summarize the fix in markdown for my code review and propose a plan — wait for my approval before making any changes. If it's not a real issue, note it and move on. If you need more context to solve it, tell me what's missing — and if it's something only Cypress Cloud would have, submit feedback to the Cypress team."
+
+This works especially well for rules that appear across many elements, where the pattern of the fix is consistent once you've seen the first example.

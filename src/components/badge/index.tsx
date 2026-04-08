@@ -16,7 +16,6 @@ export default function Badge({ type, path, children }: BadgeProps) {
           </div>
         </a>
       )}
-
       {!path && (
         // simple inline badge (no anchor link) is a span to avoid "<div> cannot 
         // appear as a descendant of <p>" console error
