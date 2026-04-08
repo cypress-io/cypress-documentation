@@ -254,19 +254,23 @@ cy.get('button')
   specified assertions until it times out.
 
 ```javascript
-cy.get('input', {timeout: 10000}).should('have.value', '10').and('have.class', 'error')
-  // timeout here will be passed down to the '.and()'
-  // and it will retry for up to 10 secs
+// timeout here will be passed down to the '.and()'
+// and it will retry for up to 10 secs
+cy.get('input', { timeout: 10000 })
+  .should('have.value', '10')
+  .and('have.class', 'error')
 ```
 
 ```javascript
-cy.get('input', {timeout: 10000}).should('have.value', 'US').and(($input) => {
-  // timeout here will be passed down to the '.and()'
-  // unless an assertion throws earlier,
-  // ALL of the assertions will retry for up to 10 secs
-  expect($input).to.not.be('disabled')
-  expect($input).to.not.have.class('error')
-})
+// timeout here will be passed down to the '.and()'
+// unless an assertion throws earlier,
+// ALL of the assertions will retry for up to 10 secs
+cy.get('input', { timeout: 10000 })
+  .should('have.value', 'US')
+  .and(($input) => {
+    expect($input).to.not.be('disabled')
+    expect($input).to.not.have.class('error')
+  })
 ```
 
 ## Command Log
