@@ -72,7 +72,7 @@ export class JsonExporter {
     const { chunks, headingMeta } = this.buildChunks(
       metadata.id,
       metadata.section,
-      '/'+path.relative(this.distRoot, chunkedJsonOutPath),
+      toPosixPath('/'+path.relative(this.distRoot, chunkedJsonOutPath)),
       bodyWithHeading,
       config.chunk?.minHeadingLevel ?? 2,
       config.chunk?.minContentWords ?? 30,

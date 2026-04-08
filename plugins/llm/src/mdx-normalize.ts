@@ -89,6 +89,12 @@ export function normalizeContent(raw: string, inlinePartialsByComponentName: Rec
 
       if (componentName && inlinePartialsByComponentName?.[componentName]) {
         out.push(inlinePartialsByComponentName[componentName].trimEnd())
+        if (selfClosingMatch) {
+          const trailing = selfClosingMatch[2]?.trim()
+          if (trailing) {
+            out.push(trailing)
+          }
+        }
         continue
       }
       if (selfClosingMatch) {

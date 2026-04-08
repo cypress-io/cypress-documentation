@@ -84,7 +84,7 @@ export async function runLlmExport(options?: LlmExportRunOptions): Promise<void>
   }
 
   const manifestWriter = new ManifestWriter(distRoot)
-  manifestWriter.write(config, generatedAt, distRoot)
+  manifestWriter.write(config, generatedAt)
 
   const elapsedMs = Math.round(performance.now() - startedAt)
   const { markdown: outMarkdown, json: outJson } = countMarkdownAndJsonFiles(exportRoot)

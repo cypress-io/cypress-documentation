@@ -63,7 +63,7 @@ export class MarkdownExporter {
 /** Recursively writes `index.md` in each directory under `rootDir`, listing sibling `.md` files and subfolders. */
   buildMarkdownDirectoryIndexes(): void {
     ensureDir(this.markdownRoot)
-    this.processDir(this.rootDir)
+    this.processDir(this.markdownRoot)
   }
 
   private extractTitleFromContent(content: string): string | null {
@@ -85,6 +85,12 @@ export class MarkdownExporter {
   }
 
   private processDir(dir: string): void {
+    // check for an existing index.md and if it exists, don't overwrite it
+    const indexMdPath = path.join(dir, 'index.md')
+    if (fs.existsSync(indexMdPath)) {
+      return
+    }
+    
     const entries = fs.readdirSync(dir, { withFileTypes: true })
     const subdirs: string[] = []
     const files: string[] = []
@@ -100,8 +106,8 @@ export class MarkdownExporter {
       this.processDir(path.join(dir, sub))
     }
 
-    const relFromRoot = toPosixPath(path.relative(this.rootDir, dir))
-    const isRoot = relFromRoot === ''
+    const relFromRoot = toPosixPath('/'+path.relative(this.rootDir, dir))
+    const isRoot = relFromRoot === '/'
     const dirName = isRoot ? 'Docs' : path.basename(dir)
     const lines: string[] = [`# ${dirName}`, '']
 

@@ -5,11 +5,11 @@ import { ensureDir, writeJsonFile } from './utils'
 export class ManifestWriter {
   constructor(private readonly distRoot: string) {}
 
-  write(config: LlmExportConfig, generatedAt: string, distRoot: string): void {
+  write(config: LlmExportConfig, generatedAt: string): void {
     const manifest = this.buildManifest(config, generatedAt)
-    writeJsonFile(path.join(distRoot, 'llms.json'), manifest)
-    ensureDir(path.join(distRoot, '.well-known'))
-    writeJsonFile(path.join(distRoot, '.well-known', 'llms.json'), manifest)
+    writeJsonFile(path.join(this.distRoot, 'llms.json'), manifest)
+    ensureDir(path.join(this.distRoot, '.well-known'))
+    writeJsonFile(path.join(this.distRoot, '.well-known', 'llms.json'), manifest)
   }
 
   private buildManifest(config: LlmExportConfig, generatedAt: string) { 
