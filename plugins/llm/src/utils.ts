@@ -2,6 +2,18 @@ import fs from 'fs'
 import { spawnSync } from 'child_process'
 import path from 'path'
 
+import { LlmExportConfig } from './types'
+
+export const PARTIALS_SECTION = 'partials'
+
+export const DEFAULT_LLM_EXPORT_CONFIG: LlmExportConfig = {
+  includeSections: ['accessibility', 'api', 'app', 'cloud', 'ui-coverage', 'partials'],
+  partialsMode: 'inline',
+  emit: { json: true },
+  chunk: { minHeadingLevel: 2, minContentWords: 30 },
+}
+
+
 /** Matches `.md`, `.mdx`, or `.markdown` at end of path (case-insensitive). */
 const MARKDOWN_EXT_RE = /\.(md|mdx|markdown)$/i
 

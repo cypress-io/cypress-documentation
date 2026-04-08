@@ -1,10 +1,9 @@
 import fs from 'fs'
 import path from 'path'
-import { PARTIALS_SECTION } from './constants'
 import { LlmExportConfig } from './types'
 import matter from 'gray-matter'
 import { normalizeContent } from './mdx-normalize'
-import { loadPartialsFileToComponentName, walkDocs, stripMarkdownExtension } from './utils'
+import { loadPartialsFileToComponentName, walkDocs, stripMarkdownExtension, PARTIALS_SECTION } from './utils'
 
 export class PartialsRegistry {
   private readonly partialsDir: string

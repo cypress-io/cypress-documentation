@@ -11,7 +11,6 @@
  */
 
 import path from 'path'
-import { DEFAULT_LLM_EXPORT_CONFIG, PARTIALS_SECTION } from './constants'
 import {
   JsonExporter,
 } from './JsonExporter'
@@ -19,6 +18,8 @@ import { ManifestWriter } from './ManifestWriter'
 import { MarkdownExporter } from './MarkdownExporter'
 import { LlmExportRunOptions } from './types'
 import {
+  DEFAULT_LLM_EXPORT_CONFIG,
+  PARTIALS_SECTION,
   countMarkdownAndJsonFiles,
   getGitSha,
   toPosixPath,

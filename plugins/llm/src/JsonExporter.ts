@@ -3,9 +3,11 @@ import type { InlineCode, Node, Parent, Root, Text } from 'mdast'
 import remarkGfm from 'remark-gfm'
 import remarkParse from 'remark-parse'
 import { unified } from 'unified'
-import { Chunk, HeadingMeta, LlmDocExportMeta, LlmExportConfig, LlmFullDocIndexEntry } from './types'
-import { ensureDir, replaceMarkdownExtension, toPosixPath, tokenizeCount, writeJsonFile } from './utils'
-import { buildChunks } from './chunk-builder'
+import { Chunk, ChunkHeadingEntry, HeadingMeta, LlmDocExportMeta, LlmExportConfig, LlmFullDocIndexEntry } from './types'
+import { ensureDir, replaceMarkdownExtension, toPosixPath, tokenizeCount, writeJsonFile,countWords, slugify, stripMdxJsxFromInlineText, } from './utils'
+import type { Heading, Node as UnistNode } from 'mdast'
+import { toString } from 'mdast-util-to-string'
+import { visit } from 'unist-util-visit'
 
 const TEXT = 'text' as const
 export class JsonExporter {
@@ -67,7 +69,7 @@ export class JsonExporter {
     )
 
     const mdastTree = this.markdownProcessor.parse(bodyWithHeading)
-    const { chunks, headingMeta } = buildChunks(
+    const { chunks, headingMeta } = this.buildChunks(
       metadata.id,
       metadata.section,
       '/'+path.relative(this.distRoot, chunkedJsonOutPath),
@@ -273,4 +275,73 @@ export class JsonExporter {
     return out[0] as Root
   }
 
+  private headingPlainText(node: Heading): string {
+    const raw = toString(node)
+    return stripMdxJsxFromInlineText(raw) || raw
+  }
+
+  /**
+   * Splits markdown into chunks by headings at or above `minHeadingLevel`, dropping chunks under `minContentWords`.
+   */
+  private buildChunks(
+    docId: string,
+    section: string,
+    chunkedJsonPath: string,
+    markdown: string,
+    minHeadingLevel: number,
+    minContentWords: number,
+    mdastTree: UnistNode,
+  ): { chunks: Chunk[]; headingMeta: HeadingMeta[] } {
+    const headings: ChunkHeadingEntry[] = []
+
+    visit(mdastTree, 'heading', (node: Heading) => {
+      const start = node.position?.start?.offset
+      if (start === undefined) {
+        throw new Error('LLM chunk export: heading node missing source position')
+      }
+      const text = this.headingPlainText(node)
+      const slug = slugify(text)
+      headings.push({
+        level: node.depth,
+        text,
+        slug,
+        id: `${docId}#${slug}`,
+        startOffset: start,
+      })
+    })
+
+    const chunks: Chunk[] = []
+    for (let idx = 0; idx < headings.length; idx++) {
+      const h = headings[idx]
+      if (h.level < minHeadingLevel) continue
+
+      let endOffset = markdown.length
+      for (let j = idx + 1; j < headings.length; j++) {
+        if (headings[j].level <= h.level) {
+          endOffset = headings[j].startOffset
+          break
+        }
+      }
+
+      const content = markdown.slice(h.startOffset, endOffset).trim()
+      if (countWords(content) < minContentWords) {
+        continue
+      }
+
+      chunks.push({
+        id: h.id,
+        doc_id: docId,
+        heading: h.text,
+        heading_level: h.level,
+        content_markdown: `${content}\n`,
+        section,
+        anchors: [h.slug],
+        path: chunkedJsonPath,
+        token_estimate: tokenizeCount(content),
+      })
+    }
+
+    const headingMeta: HeadingMeta[] = headings.map((h) => ({ id: h.id, text: h.text, level: h.level }))
+    return { chunks, headingMeta }
+  }
 }

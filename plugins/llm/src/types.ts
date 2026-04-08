@@ -61,3 +61,11 @@ export type LlmJsonRoots = {
   chunkedJsonRoot: string
   fullJsonRoot: string
 }
+
+export type ChunkHeadingEntry = {
+  level: number
+  text: string
+  slug: string
+  id: string
+  startOffset: number
+}
