@@ -34,7 +34,7 @@ export class PartialsRegistry {
   
     for (const absPath of walkDocs(this.partialsDir)) {
       const parsed = matter(fs.readFileSync(absPath, 'utf8'))
-      const normalized = normalizeContent(parsed.content, null)
+      const normalized = normalizeContent(absPath, parsed.content, null)
       const fileName = path.basename(absPath)
       const baseName = stripMarkdownExtension(fileName)
       const stripped = baseName.replace(/^_+/, '')

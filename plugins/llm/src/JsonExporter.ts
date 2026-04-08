@@ -4,7 +4,7 @@ import remarkGfm from 'remark-gfm'
 import remarkParse from 'remark-parse'
 import { unified } from 'unified'
 import { Chunk, ChunkHeadingEntry, HeadingMeta, LlmDocExportMeta, LlmExportConfig, LlmFullDocIndexEntry } from './types'
-import { ensureDir, replaceMarkdownExtension, toPosixPath, tokenizeCount, writeJsonFile,countWords, slugify, stripMdxJsxFromInlineText, } from './utils'
+import { ensureDir, replaceMarkdownExtension, toPosixPath, tokenizeCount, writeJsonFile,countWords, slugify, } from './utils'
 import type { Heading, Node as UnistNode } from 'mdast'
 import { toString } from 'mdast-util-to-string'
 import { visit } from 'unist-util-visit'
@@ -276,8 +276,7 @@ export class JsonExporter {
   }
 
   private headingPlainText(node: Heading): string {
-    const raw = toString(node)
-    return stripMdxJsxFromInlineText(raw) || raw
+    return toString(node)
   }
 
   /**

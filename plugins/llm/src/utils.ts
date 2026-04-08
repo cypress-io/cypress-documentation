@@ -76,63 +76,10 @@ export function tokenizeCount(str: string): number {
   return Math.round(countWords(str) / 0.75)
 }
 
-/**
- * Parses a markdown ATX heading line, or returns null if not a heading.
- */
-/**
- * Removes MDX/JSX (PascalCase components) from inline text, for headings and titles.
- * Handles self-closing tags and simple paired tags with no nested markup inside.
- */
-export function stripMdxJsxFromInlineText(text: string): string {
-  let prev = ''
-  let s = text
-  while (s !== prev) {
-    prev = s
-    s = s.replace(/<([A-Z][A-Za-z0-9]*)(?:\s[^>]*)?>([^<]*)<\/\1>/g, '$2')
-    s = s.replace(/<[A-Z][A-Za-z0-9]*(?:\s[^>]*)?\/>/g, '')
-  }
-  s = s.replace(/\[\s*\]\([^)]*\)/g, '')
-  return s.replace(/\s{2,}/g, ' ').trim()
-}
-
 export function parseHeadingLine(trimmedLine: string): { level: number; text: string } | null {
   const m = /^(#{1,6})\s+(.*)/.exec(trimmedLine)
   if (!m) return null
   return { level: m[1].length, text: m[2].trim() }
-}
-
-/**
- * Net nesting delta for PascalCase MDX/JSX component tags on a line (order-preserving scan).
- * Opening `<Name>` → +1; closing `</Name>` → -1; self-closing `<Name .../>` → 0.
- * Lowercase tags (e.g. `<div>`) are skipped so they do not affect depth.
- */
-export function computeJsxPascalTagDepthDelta(line: string): number {
-  let delta = 0
-  let i = 0
-  while (i < line.length) {
-    const lt = line.indexOf('<', i)
-    if (lt === -1) break
-    const rest = line.slice(lt)
-    const closeMatch = /^<\/([A-Z][A-Za-z0-9]*)\s*>/.exec(rest)
-    if (closeMatch) {
-      delta -= 1
-      i = lt + closeMatch[0].length
-      continue
-    }
-    const selfCloseMatch = /^<([A-Z][A-Za-z0-9]*)(?:\s[^>]*)?\/>/.exec(rest)
-    if (selfCloseMatch) {
-      i = lt + selfCloseMatch[0].length
-      continue
-    }
-    const openMatch = /^<([A-Z][A-Za-z0-9]*)(?:\s[^>]*)?>/.exec(rest)
-    if (openMatch) {
-      delta += 1
-      i = lt + openMatch[0].length
-      continue
-    }
-    i = lt + 1
-  }
-  return delta
 }
 
 /**

@@ -29,7 +29,7 @@ export class MarkdownExporter {
     const raw = fs.readFileSync(absPath, 'utf8')
     const parsed = matter(raw)
     
-    const normalizedBody = normalizeContent(parsed.content, this.partialsByComponentName)
+    const normalizedBody = normalizeContent(absPath, parsed.content, this.partialsByComponentName)
 
     const titleFromContent = this.extractTitleFromContent(normalizedBody)
     const title =
@@ -85,25 +85,29 @@ export class MarkdownExporter {
   }
 
   private processDir(dir: string): void {
-    // check for an existing index.md and if it exists, don't overwrite it
-    const indexMdPath = path.join(dir, 'index.md')
-    if (fs.existsSync(indexMdPath)) {
-      return
-    }
-    
     const entries = fs.readdirSync(dir, { withFileTypes: true })
     const subdirs: string[] = []
     const files: string[] = []
 
+    let alreadyHasIndex = false
     for (const entry of entries) {
-      if (entry.isDirectory()) subdirs.push(entry.name)
-      else if (entry.isFile() && /\.md$/i.test(entry.name) && entry.name.toLowerCase() !== 'index.md') {
+      if (entry.isDirectory()) {
+        subdirs.push(entry.name)
+      } else if (entry.isFile() && /\.md$/i.test(entry.name)) {
+        if (entry.name.toLowerCase() === 'index.md') {
+          alreadyHasIndex = true
+        }
         files.push(entry.name)
       }
     }
 
     for (const sub of subdirs) {
       this.processDir(path.join(dir, sub))
+    }
+
+    // if the directory already has an index.md, don't overwrite it
+    if (alreadyHasIndex) {
+      return
     }
 
     const relFromRoot = toPosixPath('/'+path.relative(this.rootDir, dir))
