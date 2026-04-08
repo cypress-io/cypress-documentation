@@ -42,7 +42,7 @@ When the error is fixed in your test file, your tests will automatically re-run.
 ### <Icon name="exclamation-triangle" color="red" /> Support file missing or invalid
 
 The `supportFolder` option was removed from Cypress in version
-[`0.18.0`](/app/references/changelog#0-18-0) and was replaced by module
+[`0.18.0`](/app/changelog#0-18-0) and was replaced by module
 support and the
 [`supportFile`](/app/references/configuration#Testing-Type-Specific-Options)
 configuration option.
@@ -457,7 +457,7 @@ it('does not forget to return a promise', () => {
 <strong>Note</strong>
 
 This error only pertains to Cypress version `v11.0.0` and under. As of Cypress
-[v12.0.0](/app/references/changelog#12-0-0), users can navigate to
+[v12.0.0](/app/changelog#12-0-0), users can navigate to
 multiple domains in a single test.
 
 :::
@@ -471,7 +471,7 @@ See our [Cross Origin Testing](/app/guides/cross-origin-testing#Limitations) doc
 <strong>Note</strong>
 
 This error only pertains to Cypress version `v11.0.0` and under. As of Cypress
-[v12.0.0](/app/references/changelog#12-0-0), users can navigate to
+[v12.0.0](/app/changelog#12-0-0), users can navigate to
 multiple domains in a single test.
 
 :::
@@ -491,7 +491,7 @@ for more information and workarounds.
 
 ### <Icon name="exclamation-triangle" color="red" /> `cy.visit()` succeeded, but commands are timing out
 
-As of Cypress [v12.0.0](/app/references/changelog#12-0-0), users can
+As of Cypress [v12.0.0](/app/changelog#12-0-0), users can
 navigate to multiple domains in a single test. The following test will succeed
 as-is:
 
@@ -539,7 +539,7 @@ for more information and workarounds.
 
 ### <Icon name="exclamation-triangle" color="red" /> `Cypress.addParentCommand()` / `Cypress.addDualCommand()` / `Cypress.addChildCommand()` has been removed and replaced by `Cypress.Commands.add()`
 
-In version [0.20.0](/app/references/changelog), we removed the commands for
+In version [0.20.0](/app/changelog), we removed the commands for
 adding custom commands and replaced them with, what we believe to be, a simpler
 interface.
 
@@ -557,7 +557,7 @@ doesn't make sense to return anything else.
 For convenience, you can also omit any return value or return `undefined` and
 Cypress will not error.
 
-In versions before [0.20.0](/app/references/changelog) of Cypress we
+In versions before [0.20.0](/app/changelog) of Cypress we
 automatically detected this and forced the `cy` commands to be returned. To make
 things less magical and clearer, we are now throwing an error.
 
@@ -569,7 +569,7 @@ make sense to return anything else.
 For convenience, you can also omit any return value or return `undefined` and
 Cypress will not error.
 
-In versions before [0.20.0](/app/references/changelog) of Cypress we
+In versions before [0.20.0](/app/changelog) of Cypress we
 automatically detected this and forced the `cy` commands to be returned. To make
 things less magical and clearer, we are now throwing an error.
 
@@ -625,7 +625,7 @@ You will want to then
 
 ### <Icon name="exclamation-triangle" color="red" /> The `cypress ci` command has been deprecated
 
-As of version [`0.19.0`](/app/references/changelog#0-19-0) and CLI versions
+As of version [`0.19.0`](/app/changelog#0-19-0) and CLI versions
 `0.13.0`, the `cypress ci` command has been deprecated. We did this to make it
 clearer what the difference was between a _regular test run_ and a _recorded
 test run_.

@@ -1141,6 +1141,12 @@
   status = 301
   force = true
 
+[[redirects]]
+  from = "/app/references/changelog"
+  to = "/app/changelog"
+  status = 301
+  force = true
+
 [[plugins]]
 package = "@netlify/plugin-sitemap"
 
