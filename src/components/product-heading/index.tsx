@@ -7,13 +7,10 @@ import ComponentOnlyBadge from "@site/src/components/component-only-badge";
 
 import React from 'react';
 
-
 interface ProductHeadingProps {
     product: 'app' | 'cloud' | 'accessibility' | 'ui-coverage'
     plan?: 'team' | 'business' | 'enterprise'
     badge?: React.ReactNode
-    productPrefix?: boolean
-    badgeOnly?: boolean
 }
 
 // Build the Button component with the specified props
@@ -21,8 +18,6 @@ const DocProductHeading: React.FC<ProductHeadingProps> = ({
     product, // The product to display
     plan, // The plan to display for Cloud product
     badge, // The badge to display
-    productPrefix =  false,
-    badgeOnly = false
 }) => {
     const productName = product === 'ui-coverage' ? 'UI Coverage' : product === 'accessibility' ? 'Cypress Accessibility' : product === 'cloud' ? 'Cypress Cloud' : 'Cypress App'
     const iconName = product === 'ui-coverage' ? 'technology-ui-coverage' : product === 'accessibility' ? 'cypress-accessibility-outline' : 'technology-cypress'
