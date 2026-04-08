@@ -37,17 +37,16 @@ export class MarkdownExporter {
         ? (parsed.data as { title: string }).title
         : titleFromContent) || path.basename(id)
 
-    
-    const metadata: Record<string, string> = {
-      ...(parsed.data || {}),
+    const metadata = {
       id,
       title,
+      description: parsed.data?.description || '',
       section,
       source_path: sourcePath,
       version: (parsed.data as { version?: string } | undefined)?.version || gitSha || 'N/A',
       updated_at: generatedAt,
     }
-
+    
     const bodyWithHeading = this.ensureTopHeading(normalizedBody, title)
     const markdownOut = matter.stringify(`${bodyWithHeading.trim()}\n`, metadata)
     const relOutPath = replaceMarkdownExtension(relFromDocs, '.md')
