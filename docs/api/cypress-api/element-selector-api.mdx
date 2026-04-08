@@ -68,6 +68,10 @@ With the default selector priority, Cypress prioritizes `id`, so the selector wo
 
 The [jQuery element](http://api.jquery.com/Types/#jQuery) for which you want to retrieve a selector.
 
+## Where to configure
+
+Call `Cypress.ElementSelector.defaults()` **once at the top level** in the **browser** (not from `cypress.config` or other Node-only scripts). Put it in the file set by [`supportFile`](/app/references/configuration), outside `describe`, `it`, and hooks, so it runs when support loads.
+
 ## Examples
 
 ### Set custom selector priority
