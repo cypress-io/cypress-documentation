@@ -70,7 +70,9 @@ The [jQuery element](http://api.jquery.com/Types/#jQuery) for which you want to 
 
 ## Where to configure
 
-Call `Cypress.ElementSelector.defaults()` **once at the top level** in the **browser** (not from `cypress.config` or other Node-only scripts). Put it in the file set by [`supportFile`](/app/references/configuration), outside `describe`, `it`, and hooks, so it runs when support loads.
+Call `Cypress.ElementSelector.defaults({ ... })` once in your [support file](/app/references/configuration). You want this to load before your specs and do **not** want to set this inside `describe`, `it`, `before`, `beforeEach`, or similar test hooks.
+
+`Cypress.ElementSelector` is only available in support and spec code, not in the Node process that loads your cypress configuration.
 
 ## Examples
 
