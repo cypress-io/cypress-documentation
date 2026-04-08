@@ -1,12 +1,21 @@
+import type { Heading, Node as UnistNode } from 'mdast'
+import { toString } from 'mdast-util-to-string'
+import { visit } from 'unist-util-visit'
 import { Chunk, HeadingMeta } from './types'
-import {
-  countWords,
-  parseHeadingLine,
-  slugify,
-  tokenizeCount,
-} from './utils'
+import { countWords, slugify, stripMdxJsxFromInlineText, tokenizeCount } from './utils'
 
-type HeadingRow = { index: number; level: number; text: string; slug: string; id: string }
+type HeadingEntry = {
+  level: number
+  text: string
+  slug: string
+  id: string
+  startOffset: number
+}
+
+function headingPlainText(node: Heading): string {
+  const raw = toString(node)
+  return stripMdxJsxFromInlineText(raw) || raw
+}
 
 /**
  * Splits markdown into chunks by headings at or above `minHeadingLevel`, dropping chunks under `minContentWords`.
@@ -14,43 +23,47 @@ type HeadingRow = { index: number; level: number; text: string; slug: string; id
 export function buildChunks(
   docId: string,
   section: string,
-  sourcePath: string,
+  chunkedJsonPath: string,
   markdown: string,
   minHeadingLevel: number,
   minContentWords: number,
+  mdastTree: UnistNode,
 ): { chunks: Chunk[]; headingMeta: HeadingMeta[] } {
-  const lines = markdown.split('\n')
-  const headings: HeadingRow[] = []
+  const headings: HeadingEntry[] = []
 
-  for (let i = 0; i < lines.length; i++) {
-    const parsed = parseHeadingLine(lines[i].trim())
-    if (parsed) {
-      const slug = slugify(parsed.text)
-      headings.push({
-        index: i,
-        level: parsed.level,
-        text: parsed.text,
-        slug,
-        id: `${docId}#${slug}`,
-      })
+  visit(mdastTree, 'heading', (node: Heading) => {
+    const start = node.position?.start?.offset
+    if (start === undefined) {
+      throw new Error('LLM chunk export: heading node missing source position')
     }
-  }
+    const text = headingPlainText(node)
+    const slug = slugify(text)
+    headings.push({
+      level: node.depth,
+      text,
+      slug,
+      id: `${docId}#${slug}`,
+      startOffset: start,
+    })
+  })
 
   const chunks: Chunk[] = []
   for (let idx = 0; idx < headings.length; idx++) {
     const h = headings[idx]
     if (h.level < minHeadingLevel) continue
 
-    let end = lines.length
+    let endOffset = markdown.length
     for (let j = idx + 1; j < headings.length; j++) {
       if (headings[j].level <= h.level) {
-        end = headings[j].index
+        endOffset = headings[j].startOffset
         break
       }
     }
 
-    const content = lines.slice(h.index, end).join('\n').trim()
-    if (countWords(content) < minContentWords) continue
+    const content = markdown.slice(h.startOffset, endOffset).trim()
+    if (countWords(content) < minContentWords) {
+      continue
+    }
 
     chunks.push({
       id: h.id,
@@ -59,8 +72,8 @@ export function buildChunks(
       heading_level: h.level,
       content_markdown: `${content}\n`,
       section,
-      path: sourcePath,
       anchors: [h.slug],
+      path: chunkedJsonPath,
       token_estimate: tokenizeCount(content),
     })
   }
