@@ -41,5 +41,11 @@
   "ui-coverage": [
   ],
   "accessibility": [
+    {
+      "label": "Cloud MCP",
+      "href": "/cloud/integrations/cloud-mcp",
+      "description": "Handle accessibility issues with AI agents.",
+      "isNew": true
+    }
   ]
 }
