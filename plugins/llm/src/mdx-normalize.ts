@@ -15,8 +15,6 @@ import { unified } from 'unified'
 import { visit } from 'unist-util-visit'
 import { toString } from 'mdast-util-to-string'
 
-import { mdxTableJsxToHtmlString } from './mdx-jsx-html'
-
 const htmlTableProcessor = unified()
   .use(rehypeParse, { fragment: true })
   .use(rehypeRemark)
@@ -52,9 +50,13 @@ function jsxStringAttribute(
   name: string,
 ): string | undefined {
   for (const attr of attributes) {
-    if (attr.type !== 'mdxJsxAttribute' || attr.name !== name) continue
+    if (attr.type !== 'mdxJsxAttribute' || attr.name !== name) {
+      continue
+    }
     const v = attr.value
-    if (typeof v === 'string') return v
+    if (typeof v === 'string') {
+      return v
+    }
   }
   return undefined
 }
@@ -62,9 +64,13 @@ function jsxStringAttribute(
 /** Inline `<Icon title="…"/>` → `…` for plain-markdown export. */
 function replaceIconTextJsxWithTitle(tree: Root): void {
   walkContentReverse(tree.children as Content[], (n, i, arr) => {
-    if (n.type !== 'mdxJsxTextElement') return
+    if (n.type !== 'mdxJsxTextElement') {
+      return
+    }
     const el = n as MdxJsxTextElement
-    if (el.name !== 'Icon') return
+    if (el.name !== 'Icon') {
+      return
+    }
     const title = jsxStringAttribute(el.attributes, 'title') || jsxStringAttribute(el.attributes, 'aria-label')
     const value = title !== undefined && title !== '' ? `${title}` : ''
     arr.splice(i, 1, { type: 'text', value } as PhrasingContent)
@@ -73,7 +79,9 @@ function replaceIconTextJsxWithTitle(tree: Root): void {
 
 /** Visit from leaves upward so splices on parents do not skip unvisited nodes. */
 function walkContentReverse(nodes: Content[] | undefined, fn: (n: Content, i: number, arr: Content[]) => void): void {
-  if (!nodes?.length) return
+  if (!nodes?.length) {
+    return
+  }
   for (let i = nodes.length - 1; i >= 0; i--) {
     const n = nodes[i]
     if ('children' in n && Array.isArray((n as Parent).children)) {
@@ -93,8 +101,9 @@ function removeMdxEsm(tree: Root): void {
 
 function replaceTableJsxWithMdast(tree: Root): void {
   walkContentReverse(tree.children as Content[], (n, i, arr) => {
+    /** Build HTML from MDX JSX table trees so rehype can turn them into GFM tables. */
     if (n.type === 'mdxJsxFlowElement' && n.name === 'table') {
-      const html = mdxTableJsxToHtmlString(n)
+      const html = flowElementToHtml(n)
       const rep = htmlFragmentToMdastContent(html)
       arr.splice(i, 1, ...rep)
     }
@@ -106,10 +115,14 @@ function replacePartialsAndStripPascalFlow(
   partials: Record<string, string> | null,
 ): void {
   walkContentReverse(tree.children as Content[], (n, i, arr) => {
-    if (n.type !== 'mdxJsxFlowElement') return
+    if (n.type !== 'mdxJsxFlowElement') {
+      return
+    }
     const flow = n as MdxJsxFlowElement
     const name = flow.name
-    if (!isPascalCaseJsxName(name)) return
+    if (!isPascalCaseJsxName(name)) {
+      return
+    }
     if (name === 'Icon') {
       const title = jsxStringAttribute(flow.attributes, 'title')
       const value = title !== undefined && title !== '' ? `${title}` : 'Icon'
@@ -139,7 +152,9 @@ function stripPascalCaseTextJsx(tree: Root): void {
 
 function stripDirectiveParagraphs(tree: Root): void {
   walkContentReverse(tree.children as Content[], (n, i, arr) => {
-    if (n.type !== 'paragraph') return
+    if (n.type !== 'paragraph') {
+      return
+    }
     const t = toString(n).trim()
     if (/^:{3,}/.test(t)) {
       arr.splice(i, 1)
@@ -233,41 +248,128 @@ function cleanHeadings(tree: Root): void {
 export function normalizeContent(
   filepath: string,
   raw: string,
-  inlinePartialsByComponentName: Record<string, string> | null,
+  partials: Record<string, string> | null,
 ): string {
   try {
-  const preprocessed = stripDocusaurusHeadingIds(raw.replace(/<!--[\s\S]*?-->/g, ''))
-  return normalizeContentMdx(preprocessed, inlinePartialsByComponentName)
+    const preprocessed = stripDocusaurusHeadingIds(raw.replace(/<!--[\s\S]*?-->/g, ''))
+    const processor = unified().use(remarkParse).use(remarkMdx).use(remarkGfm)
+    const tree = processor.parse(preprocessed) as Root
+
+    removeMdxEsm(tree)
+    replaceTableJsxWithMdast(tree)
+    replacePartialsAndStripPascalFlow(tree, partials)
+    replaceIconTextJsxWithTitle(tree)
+    stripPascalCaseTextJsx(tree)
+    cleanHeadings(tree)
+    stripDirectiveParagraphs(tree)
+    flattenResidualMdxForMarkdownStringify(tree)
+
+    const stringifier = unified()
+      .use(remarkGfm)
+      .use(remarkStringify, {
+        bullet: '-',
+        fences: true,
+        incrementListMarker: true,
+      })
+
+    const out = stringifier.stringify(tree) as string
+    return out.replace(/\n{3,}/g, '\n\n').trim() + '\n'
   } catch(err) {
     console.error(`Failed to normalize content using MDX`, { filepath, msg: err?.['message'] })
     throw err
   }
 }
 
-function normalizeContentMdx(
-  raw: string,
-  partials: Record<string, string> | null,
+function escapeHtml(s: string): string {
+  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
+}
+
+function escapeAttr(s: string): string {
+  return escapeHtml(s)
+}
+
+function formatJsxAttributes(
+  attrs: Array<MdxJsxAttribute | MdxJsxExpressionAttribute> | null | undefined,
 ): string {
-  const processor = unified().use(remarkParse).use(remarkMdx).use(remarkGfm)
-  const tree = processor.parse(raw) as Root
+  if (!attrs?.length) {
+    return ''
+  }
+  const parts: string[] = []
+  for (const a of attrs) {
+    if (a.type === 'mdxJsxExpressionAttribute') {
+      continue
+    }
+    if (a.type !== 'mdxJsxAttribute') {
+      continue
+    }
+    const v = a.value
+    if (v === null || v === undefined) {
+      parts.push(a.name)
+    } else if (typeof v === 'string') {
+      parts.push(`${a.name}="${escapeAttr(v)}"`)
+    } else if (v && typeof v === 'object' && v.type === 'mdxJsxAttributeValueExpression') {
+      parts.push(`${a.name}="${escapeAttr(v.value)}"`)
+    }
+  }
+  return parts.length ? ' ' + parts.join(' ') : ''
+}
 
-  removeMdxEsm(tree)
-  replaceTableJsxWithMdast(tree)
-  replacePartialsAndStripPascalFlow(tree, partials)
-  replaceIconTextJsxWithTitle(tree)
-  stripPascalCaseTextJsx(tree)
-  cleanHeadings(tree)
-  stripDirectiveParagraphs(tree)
-  flattenResidualMdxForMarkdownStringify(tree)
+function phrasingToHtml(node: PhrasingContent): string {
+  switch (node.type) {
+    case 'text':
+      return escapeHtml(node.value)
+    case 'inlineCode':
+      return `<code>${escapeHtml(node.value)}</code>`
+    case 'link': {
+      const inner = node.children.map((c) => phrasingToHtml(c as PhrasingContent)).join('')
+      const title = node.title ? ` title="${escapeAttr(node.title)}"` : ''
+      return `<a href="${escapeAttr(node.url)}"${title}>${inner}</a>`
+    }
+    case 'strong':
+      return `<strong>${node.children.map((c) => phrasingToHtml(c as PhrasingContent)).join('')}</strong>`
+    case 'emphasis':
+      return `<em>${node.children.map((c) => phrasingToHtml(c as PhrasingContent)).join('')}</em>`
+    case 'delete':
+      return `<del>${node.children.map((c) => phrasingToHtml(c as PhrasingContent)).join('')}</del>`
+    case 'break':
+      return '<br/>'
+    case 'image':
+      return `<img src="${escapeAttr(node.url)}" alt="${escapeAttr(node.alt || '')}" />`
+    case 'mdxJsxTextElement': {
+      const tag = node.name
+      if (!tag) {
+        return node.children.map((c) => phrasingToHtml(c as PhrasingContent)).join('')
+      }
+      const inner = node.children.map((c) => phrasingToHtml(c as PhrasingContent)).join('')
+      const attrs = formatJsxAttributes(node.attributes)
+      return `<${tag}${attrs}>${inner}</${tag}>`
+    }
+    case 'html':
+      return node.value || ''
+    default:
+      return escapeHtml(toString(node))
+  }
+}
 
-  const stringifier = unified()
-    .use(remarkGfm)
-    .use(remarkStringify, {
-      bullet: '-',
-      fences: true,
-      incrementListMarker: true,
-    })
+function flowChildToHtml(node: Content): string {
+  switch (node.type) {
+    case 'paragraph':
+      return node.children.map((c) => phrasingToHtml(c as PhrasingContent)).join('')
+    case 'mdxJsxFlowElement':
+      return flowElementToHtml(node)
+    case 'html':
+      return node.value || ''
+    default:
+      return escapeHtml(toString(node))
+  }
+}
 
-  const out = stringifier.stringify(tree) as string
-  return out.replace(/\n{3,}/g, '\n\n').trim() + '\n'
+function flowElementToHtml(node: MdxJsxFlowElement): string {
+  const tag = node.name
+  if (!tag) {
+    return ''
+  }
+  const inner = node.children.map(flowChildToHtml).join('')
+  const attrs = formatJsxAttributes(node.attributes)
+  return `<${tag}${attrs}>${inner}</${tag}>`
 }

@@ -60,7 +60,8 @@ export class MarkdownExporter {
       metadata,
     }
   }
-/** Recursively writes `index.md` in each directory under `rootDir`, listing sibling `.md` files and subfolders. */
+
+  /** Recursively writes `index.md` in each directory under `rootDir`, listing sibling `.md` files and subfolders. */
   buildMarkdownDirectoryIndexes(): void {
     ensureDir(this.markdownRoot)
     this.processDir(this.markdownRoot)
@@ -77,8 +78,12 @@ export class MarkdownExporter {
   /** Ensures content starts with a single `#` title line (uses `title` if missing). */
   private ensureTopHeading(content: string, title: string): string {
     for (const line of content.split('\n')) {
-      if (line.trim() === '') continue
-      if (/^#\s+/.test(line.trim())) return content
+      if (line.trim() === '') {
+        continue
+      }
+      if (/^#\s+/.test(line.trim())) {
+        return content
+      }
       break
     }
     return `# ${title}\n\n${content}`

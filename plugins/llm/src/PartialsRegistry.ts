@@ -17,7 +17,7 @@ export class PartialsRegistry {
 
   loadPartials(config: LlmExportConfig): void {
     if (config.partialsMode !== 'inline') {
-        return
+      return
     }
 
     if (

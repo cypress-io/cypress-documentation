@@ -312,7 +312,9 @@ export class JsonExporter {
     const chunks: Chunk[] = []
     for (let idx = 0; idx < headings.length; idx++) {
       const h = headings[idx]
-      if (h.level < minHeadingLevel) continue
+      if (h.level < minHeadingLevel) {
+        continue
+      }
 
       let endOffset = markdown.length
       for (let j = idx + 1; j < headings.length; j++) {
