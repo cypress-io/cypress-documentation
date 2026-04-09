@@ -56,12 +56,6 @@ export type LlmExportRunOptions = {
   outDir?: string
 }
 
-export type LlmJsonRoots = {
-  jsonRoot: string
-  chunkedJsonRoot: string
-  fullJsonRoot: string
-}
-
 export type ChunkHeadingEntry = {
   level: number
   text: string

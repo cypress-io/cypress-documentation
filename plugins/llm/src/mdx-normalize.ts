@@ -198,7 +198,7 @@ function mergeAdjacentTextNodes(nodes: PhrasingContent[]): PhrasingContent[] {
  * Headings must keep real mdast `link` nodes (not `[text](url)` stuffed into a `text` node).
  * Otherwise remark-stringify escapes `[` / `(` in heading text, yielding `\\[` / `\\(`.
  */
-function normalizeLinkLabelPhrasing(nodes: PhrasingContent[]): PhrasingContent[] {
+function normalizeChildren(nodes: PhrasingContent[]): PhrasingContent[] {
   const out: PhrasingContent[] = []
   for (const node of nodes) {
     if (node.type === 'link') {
@@ -206,29 +206,7 @@ function normalizeLinkLabelPhrasing(nodes: PhrasingContent[]): PhrasingContent[]
         type: 'link',
         url: node.url,
         title: node.title,
-        children: normalizeLinkLabelPhrasing(node.children as PhrasingContent[]),
-      } as PhrasingContent)
-    } else if (node.type === 'text') {
-      out.push(node)
-    } else if ('children' in node && Array.isArray((node as Parent).children)) {
-      const t = toString(node as Parameters<typeof toString>[0])
-      if (t) out.push({ type: 'text', value: t })
-    } else {
-      out.push({ type: 'text', value: toString(node as Parameters<typeof toString>[0]) })
-    }
-  }
-  return mergeAdjacentTextNodes(out)
-}
-
-function normalizeHeadingChildren(nodes: PhrasingContent[]): PhrasingContent[] {
-  const out: PhrasingContent[] = []
-  for (const node of nodes) {
-    if (node.type === 'link') {
-      out.push({
-        type: 'link',
-        url: node.url,
-        title: node.title,
-        children: normalizeLinkLabelPhrasing(node.children as PhrasingContent[]),
+        children: normalizeChildren(node.children as PhrasingContent[]),
       } as PhrasingContent)
     } else if (node.type === 'text') {
       out.push(node)
@@ -244,7 +222,7 @@ function normalizeHeadingChildren(nodes: PhrasingContent[]): PhrasingContent[] {
 
 function cleanHeadings(tree: Root): void {
   visit(tree, 'heading', (node) => {
-    node.children = normalizeHeadingChildren(node.children as PhrasingContent[])
+    node.children = normalizeChildren(node.children as PhrasingContent[])
   })
 }
 
