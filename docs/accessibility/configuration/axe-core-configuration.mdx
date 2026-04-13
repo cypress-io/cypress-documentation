@@ -24,7 +24,7 @@ In most cases, configuration of these rules as they run in Cypress Cloud isn't n
 
 ## Component Testing
 
-Cypress Accessibility works great with component testing. In addition the rules that are off by default, "page-level" rules do not run for component tests, since a component is usually a fragment mounted in an empty page that would not be expected to have things like headings or a `main` element.
+Cypress Accessibility works great with component testing. In addition to the rules mentioned above that are off by default, "page-level" rules do not run for component tests. Since a component is usually a page fragment, rules related to page structure and expected attributes do no need to run.
 
 ## Updates to the Axe Core® library
 
