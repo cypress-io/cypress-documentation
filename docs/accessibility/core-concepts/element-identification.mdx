@@ -61,3 +61,21 @@ Define custom significant attributes to prioritize specific selectors that align
 ```
 
 Refer to the [Significant Attributes](/accessibility/configuration/significantattributes) guide for detailed instructions.
+
+### Component attributes
+
+When several elements share the same test id or similar structure, require extra attributes (such as a component or slot name) in the **violation target selectors** shown in reports:
+
+```json
+{
+  "accessibility": {
+    "components": {
+      "componentAttributes": [
+        { "attributeName": "data-component-name", "includeInSelector": true }
+      ]
+    }
+  }
+}
+```
+
+See the [components](/accessibility/configuration/components) configuration guide for `componentAttributeFilters`, defaults, and examples.
