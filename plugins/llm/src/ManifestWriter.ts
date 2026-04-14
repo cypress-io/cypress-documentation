@@ -18,7 +18,7 @@ export class ManifestWriter {
       description:
         'Cypress is an open-source, JavaScript-based testing framework for anything that runs in a browser. It targets front-end developers and QA engineers building modern web applications. Unlike WebDriver-based tools, Cypress runs directly inside the browser alongside your application, giving it native access to the DOM, network layer, and application state.',
       last_updated: generatedAt,
-      root_url: 'https://docs.cypress.io',
+      root_url: config.url,
       datasets: [
         {
           url: '/',

@@ -253,7 +253,7 @@ function rewriteLinks(tree: Root): void {
 
     try {
       // Ignore any external links
-      if (node.url.startsWith('http') || node.url.startsWith('//')) {
+      if (node.url.startsWith('http') || node.url.startsWith('//') || node.url.startsWith('#')) {
         return
       }
 

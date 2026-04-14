@@ -66,12 +66,6 @@ describe('buildManifest: fixed fields', () => {
     expect(readJson(path.join(dist, 'llms.json')).site_name).toBe('Cypress Documentation')
   })
 
-  test('root_url is always "https://docs.cypress.io"', () => {
-    const dist = makeTempDir()
-    new ManifestWriter(dist).write({}, '2024-01-01T00:00:00Z')
-    expect(readJson(path.join(dist, 'llms.json')).root_url).toBe('https://docs.cypress.io')
-  })
-
   test('last_updated reflects the generatedAt argument', () => {
     const dist = makeTempDir()
     const ts = '2025-03-22T08:30:00Z'
