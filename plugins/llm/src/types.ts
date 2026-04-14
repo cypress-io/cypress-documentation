@@ -37,6 +37,7 @@ export type LlmFullDocIndexEntry = {
 }
 
 export type LlmExportConfig = {
+  url: string
   includeSections?: string[]
   partialsMode?: 'inline' | 'standalone'
   emit?: {
@@ -50,6 +51,7 @@ export type LlmExportConfig = {
 
 /** Resolved at export time — not tied to `process.cwd()` at module load. */
 export type LlmExportRunOptions = {
+  url: string
   /** Project root (contains `docs/`, `src/`). Defaults to `process.cwd()` when omitted. */
   siteDir?: string
   /** Docusaurus build output directory. Defaults to `<siteDir>/dist` when omitted. */

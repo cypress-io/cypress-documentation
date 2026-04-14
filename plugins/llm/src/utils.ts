@@ -7,6 +7,7 @@ import { LlmExportConfig } from './types'
 export const PARTIALS_SECTION = 'partials'
 
 export const DEFAULT_LLM_EXPORT_CONFIG: LlmExportConfig = {
+  url: 'https://docs.cypress.io',
   includeSections: ['accessibility', 'api', 'app', 'cloud', 'ui-coverage', 'partials'],
   partialsMode: 'inline',
   emit: { json: true },

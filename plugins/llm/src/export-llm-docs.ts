@@ -26,10 +26,11 @@ import {
   walkDocs,
 } from './utils'
 import { PartialsRegistry } from './PartialsRegistry'
+import { writeSitemap } from './sitemap'
 
 export async function runLlmExport(options?: LlmExportRunOptions): Promise<void> {
   const startedAt = performance.now()
-  const config = DEFAULT_LLM_EXPORT_CONFIG
+  const config = { ...DEFAULT_LLM_EXPORT_CONFIG, ...(options ?? {}) }
 
   const siteDir = path.resolve(options?.siteDir ?? process.cwd())
   const distRoot = path.resolve(options?.outDir ?? path.join(siteDir, 'dist'))
@@ -85,6 +86,8 @@ export async function runLlmExport(options?: LlmExportRunOptions): Promise<void>
 
   const manifestWriter = new ManifestWriter(distRoot)
   manifestWriter.write(config, generatedAt)
+
+  writeSitemap(config.url, distRoot)
 
   const elapsedMs = Math.round(performance.now() - startedAt)
   const { markdown: outMarkdown, json: outJson } = countMarkdownAndJsonFiles(exportRoot)

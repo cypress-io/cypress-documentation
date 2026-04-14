@@ -1,5 +1,6 @@
 import path from 'path'
 import { runLlmExport } from './export-llm-docs'
+import { Plugin } from '@docusaurus/types';
 
 /**
  * Docusaurus plugin that runs the LLM export after a successful build.
@@ -24,12 +25,12 @@ function llmExportPlugin(context: any, _options: any) {
         ],
       }
     },
-    async postBuild({ outDir }: { outDir: string }) {
+    async postBuild({ outDir, siteConfig: { url } }) {
       const siteDir = (context as { siteDir?: string }).siteDir ?? path.resolve(__dirname, '../../..')
-      await runLlmExport({ siteDir, outDir })
+      await runLlmExport({ url, siteDir, outDir })
     },
-  }
-}
+  } as Plugin<any>;
+} 
 
 // CommonJS export for Docusaurus
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
