@@ -6,7 +6,7 @@
   "scripts": {
     "prebuild": "rm -rf ./dist",
     "build": "tsc",
-    "test": "npm run build && node --test test/*.cjs"
+    "test": "vitest run"
   },
   "author": "",
   "license": "ISC",

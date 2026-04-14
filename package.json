@@ -20,6 +20,7 @@
     "preserve": "npm run build:plugins",
     "serve": "docusaurus serve --dir dist",
     "test": "cypress run",
+    "test:plugins": "npm --prefix ./plugins/cypressRemarkPlugins run test && npm --prefix ./plugins/llm run test",
     "write-translations": "docusaurus write-translations",
     "write-heading-ids": "docusaurus write-heading-ids",
     "typecheck": "tsc",
@@ -63,6 +64,7 @@
     "rehype-parse": "^9.0.1",
     "rehype-remark": "^10.0.1",
     "typescript": "^5.3.3",
+    "vitest": "^4.1.4",
     "wait-on": "^8.0.1"
   },
   "browserslist": {
