@@ -185,7 +185,7 @@ test('rewriteRootRelativeLinks: absolute site paths get /llm/markdown prefix', (
   expect(out).toMatch(/\[example\]\(\/llm\/markdown\/ui-coverage.md\)/)
   expect(out).toMatch(/\[already\]\(\/llm\/markdown\/docs\/foo.md\)/)
   expect(out).toMatch(/\[external\]\(https:\/\/example\.com\/path\)/)
-  expect(out).toMatch(/\[relative\]\(\/llm\/markdown\/other\.md\)/)
+  expect(out).toMatch(/\[relative\]\(\.\/other\.md\)/)
 })
 
 test('normalizeContent: collapses 3+ consecutive blank lines to a single blank line', () => {

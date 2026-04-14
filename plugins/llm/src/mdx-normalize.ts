@@ -259,18 +259,27 @@ function rewriteLinks(tree: Root): void {
 
       // Okay, we have a docs link, but it could be relative or root-absolute, and could has query params and hash
       const url = new URL(node.url, DUMMY_DOMAIN)
-
-      // Add the LLM markdown site prefix if it's not already there
-      if (!url.pathname.startsWith(LLM_MARKDOWN_SITE_PREFIX)) {
-        url.pathname = `${LLM_MARKDOWN_SITE_PREFIX}${url.pathname}`
-      }
       
-      // Add the .md extension if it's not already there
+      // Add the .md extension if it's not already there.
       if (!/\.[a-zA-Z]+$/.test(url.pathname)) {
         url.pathname = `${url.pathname}.md`
       }
 
-      node.url = url.toString().replace(DUMMY_DOMAIN, '')
+      // If the link is relative then we want to keep the path as-is.
+      // Otherwise, we need to make sure we prefix the `/llm/markdown` path
+      const isRelative = node.url.startsWith('./')
+      if (!isRelative && !url.pathname.startsWith(LLM_MARKDOWN_SITE_PREFIX)) {
+        url.pathname = `${LLM_MARKDOWN_SITE_PREFIX}${url.pathname}`
+      }
+
+      // Drop our dummy domain that may have been added during URL parsing
+      node.url = url.toString()
+        .replace(DUMMY_DOMAIN, '')
+
+      // Coming out of the URL any relative path will have dropped the leading dot, do add it back
+      if (isRelative) {
+        node.url = `.${node.url}`
+      }
     } catch { /* no-op */ }
   })
 }
