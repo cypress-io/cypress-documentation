@@ -267,7 +267,7 @@ function rewriteLinks(tree: Root): void {
 
       // If the link is relative then we want to keep the path as-is.
       // Otherwise, we need to make sure we prefix the `/llm/markdown` path
-      const isRelative = node.url.startsWith('./')
+      const isRelative = node.url.startsWith('./') || node.url.startsWith('../')
       if (!isRelative && !url.pathname.startsWith(LLM_MARKDOWN_SITE_PREFIX)) {
         url.pathname = `${LLM_MARKDOWN_SITE_PREFIX}${url.pathname}`
       }
