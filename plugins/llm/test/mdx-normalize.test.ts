@@ -58,7 +58,9 @@ test('Docusaurus {#heading-id} strips so MDX parses; Icon in link → (title)', 
   expect(out.includes('{#Requirements}')).toBe(false)
   expect(out.includes('<Icon')).toBe(false)
   expect(out).toMatch(/\[Learn about chaining commands\]/)
-  expect(out).toMatch(/\(\/app\/core-concepts\/introduction-to-cypress#Chains-of-Commands\)/)
+  expect(out).toMatch(
+    /\(\/llm\/markdown\/app\/core-concepts\/introduction-to-cypress.md#Chains-of-Commands\)/,
+  )
   expect(out.includes('\\[')).toBe(false)
 })
 
@@ -166,6 +168,24 @@ After.
   expect(out.includes('{')).toBe(false)
   expect(out).toMatch(/# Title/)
   expect(out).toMatch(/After\./)
+})
+
+test('rewriteRootRelativeLinks: absolute site paths get /llm/markdown prefix', () => {
+  const src = `# Title
+
+[example](/ui-coverage)
+
+[already](/llm/markdown/docs/foo)
+
+[external](https://example.com/path)
+
+[relative](./other.md)
+`
+  const out = normalizeContent('', src, null)
+  expect(out).toMatch(/\[example\]\(\/llm\/markdown\/ui-coverage.md\)/)
+  expect(out).toMatch(/\[already\]\(\/llm\/markdown\/docs\/foo.md\)/)
+  expect(out).toMatch(/\[external\]\(https:\/\/example\.com\/path\)/)
+  expect(out).toMatch(/\[relative\]\(\/llm\/markdown\/other\.md\)/)
 })
 
 test('normalizeContent: collapses 3+ consecutive blank lines to a single blank line', () => {

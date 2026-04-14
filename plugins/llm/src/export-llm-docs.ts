@@ -29,6 +29,7 @@ import { PartialsRegistry } from './PartialsRegistry'
 import { writeSitemap } from './sitemap'
 
 export async function runLlmExport(options?: LlmExportRunOptions): Promise<void> {
+  console.log('Running LLM export...')
   const startedAt = performance.now()
   const config = { ...DEFAULT_LLM_EXPORT_CONFIG, ...(options ?? {}) }
 

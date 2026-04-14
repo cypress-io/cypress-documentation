@@ -241,6 +241,40 @@ function cleanHeadings(tree: Root): void {
   })
 }
 
+/** Root-relative doc URLs (`/docs/...`) must point at the static LLM markdown export path. */
+const LLM_MARKDOWN_SITE_PREFIX = '/llm/markdown'
+const DUMMY_DOMAIN = 'https://llm.cypress.io'
+
+function rewriteLinks(tree: Root): void {
+  visit(tree, (node) => {
+    if (node.type !== 'link' && node.type !== 'image') {
+      return
+    }
+
+    try {
+      // Ignore any external links
+      if (node.url.startsWith('http') || node.url.startsWith('//')) {
+        return
+      }
+
+      // Okay, we have a docs link, but it could be relative or root-absolute, and could has query params and hash
+      const url = new URL(node.url, DUMMY_DOMAIN)
+
+      // Add the LLM markdown site prefix if it's not already there
+      if (!url.pathname.startsWith(LLM_MARKDOWN_SITE_PREFIX)) {
+        url.pathname = `${LLM_MARKDOWN_SITE_PREFIX}${url.pathname}`
+      }
+      
+      // Add the .md extension if it's not already there
+      if (!/\.[a-zA-Z]+$/.test(url.pathname)) {
+        url.pathname = `${url.pathname}.md`
+      }
+
+      node.url = url.toString().replace(DUMMY_DOMAIN, '')
+    } catch { /* no-op */ }
+  })
+}
+
 /**
  * Strips MDX-only syntax and optionally replaces imported partial components with their normalized markdown bodies.
  * Uses remark-mdx + AST transforms; falls back to line-based normalization when MDX cannot be parsed.
@@ -261,6 +295,7 @@ export function normalizeContent(
     replaceIconTextJsxWithTitle(tree)
     stripPascalCaseTextJsx(tree)
     cleanHeadings(tree)
+    rewriteLinks(tree)
     stripDirectiveParagraphs(tree)
     flattenResidualMdxForMarkdownStringify(tree)
 
