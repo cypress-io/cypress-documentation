@@ -107,6 +107,7 @@ const config = {
       },
     ],
     require.resolve('docusaurus-plugin-image-zoom'),
+    require.resolve('./plugins/llm'),
     // ....
     function docusaurusTailwindcssPlugin(context, options) {
       return {
