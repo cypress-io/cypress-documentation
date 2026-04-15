@@ -86,7 +86,7 @@ export async function runLlmExport(options?: LlmExportRunOptions): Promise<void>
   }
 
   const manifestWriter = new ManifestWriter(distRoot)
-  manifestWriter.write(config, generatedAt)
+  manifestWriter.write(config)
 
   writeSitemap(config.url, distRoot)
 
