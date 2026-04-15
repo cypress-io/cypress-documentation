@@ -11,15 +11,15 @@ function llmExportPlugin(context: any, _options: any) {
   return {
     name: 'llm-export',
     injectHtmlTags({ content }) {
-      // add a `link` tag to the document head to indicate the llms.json file is available
+      // add a `link` tag to the document head to indicate the llms.txt file is available
       return {
         headTags: [
           {
             tagName: 'link',
             attributes: {
               rel: 'alternate',
-              type: 'application/json',
-              href: '/llms.json',
+              type: 'text/plain',
+              href: '/llms.txt',
             },
           },
         ],

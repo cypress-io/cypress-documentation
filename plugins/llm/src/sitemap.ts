@@ -3,9 +3,9 @@ import path from 'path';
 import { toPosixPath } from './utils';
 
 export function writeSitemap(rootUrl: string, distRoot: string) {
-    // Walk all files under /llm, write all to a `sitemap-llm.xml` file. Also include `llms.json`
+    // Walk all files under /llm, write all to a `sitemap-llm.xml` file. Also include `llms.txt`
     const llmFiles = walkDir(distRoot, path.join(distRoot, 'llm'));
-    llmFiles.push(toPosixPath(path.relative(distRoot, path.join(distRoot, 'llms.json'))));
+    llmFiles.push(toPosixPath(path.relative(distRoot, path.join(distRoot, 'llms.txt'))));
     const llmSitemapUrls = llmFiles.map(file => `<url><loc>${rootUrl}/${file}</loc></url>`).join('\n');
     fs.writeFileSync(
         path.join(distRoot, 'sitemap-llm.xml'),

@@ -1,56 +1,63 @@
 import path from 'path'
 import { LlmExportConfig } from './types'
-import { ensureDir, writeJsonFile } from './utils'
+import { ensureDir, writeFile } from './utils'
 
 export class ManifestWriter {
   constructor(private readonly distRoot: string) {}
 
-  write(config: LlmExportConfig, generatedAt: string): void {
-    const manifest = this.buildManifest(config, generatedAt)
-    writeJsonFile(path.join(this.distRoot, 'llms.json'), manifest)
-    ensureDir(path.join(this.distRoot, '.well-known'))
-    writeJsonFile(path.join(this.distRoot, '.well-known', 'llms.json'), manifest)
+  write(config: LlmExportConfig): void {
+    const manifest = this.buildManifest(config)
+    writeFile(path.join(this.distRoot, 'llms.txt'), manifest)
   }
 
-  private buildManifest(config: LlmExportConfig, generatedAt: string) { 
-    const manifest = {
-      site_name: 'Cypress Documentation',
-      description:
-        'Cypress is an open-source, JavaScript-based testing framework for anything that runs in a browser. It targets front-end developers and QA engineers building modern web applications. Unlike WebDriver-based tools, Cypress runs directly inside the browser alongside your application, giving it native access to the DOM, network layer, and application state.',
-      last_updated: generatedAt,
-      root_url: config.url,
-      datasets: [
-        {
-          url: '/',
-          format: 'html',
-          intended_for: ['human'],
-          description: 'The index page of the Cypress Documentation.',
-        },
-        {
-          url: '/llm/markdown/index.md',
-          format: 'markdown',
-          intended_for: ['human', 'llm'],
-          description: 'The index page of the Cypress Documentation in markdown format.',
-        },
-      ],
-    }
-  
-    if (config.emit?.json) {
-      manifest.datasets.push(
-        {
-          url: '/llm/json/chunked/index.json',
-          format: 'json',
-          intended_for: ['llm'],
-          description: 'Chunk-level index of the Cypress Documentation for retrieval / RAG-style use.',
-        },
-        {
-          url: '/llm/json/full/index.json',
-          format: 'json',
-          intended_for: ['llm'],
-          description: 'Per-document structured JSON index for the Cypress Documentation.',
-        },
-      )
-    }
+  private buildManifest(config: LlmExportConfig) { 
+const manifest = `---
+name: Cypress
+description: Cypress is a modern end-to-end testing framework for web applications, designed for developers to write, run, and debug tests easily.
+category: developer-tools
+repository: https://github.com/cypress-io/cypress
+license: MIT
+company: Cypress.io, Inc.
+
+tags: [testing, e2e, automation, qa]
+
+documentation:
+  - type: primary
+    format: html
+    audience: human
+    url: https://docs.cypress.io
+    canonical: true
+
+  - type: markdown
+    format: markdown
+    audience: [human, llm]
+    url: ${config.url}/llm/markdown/index.md
+${config.emit?.json ? `
+  - type: json
+    format: json
+    audience: llm
+    url: ${config.url}/llm/json/full/index.json
+
+  - type: json_chunked
+    format: json
+    audience: llm
+    url: ${config.url}/llm/json/chunked/index.json
+` : ''}
+llm_guidance:
+  - use chunked JSON for retrieval and embeddings
+  - use full JSON for complete context
+  - use markdown for semantic understanding
+  - use HTML only as a fallback
+---
+
+## Key Features
+- End-to-end and component testing for web applications
+- Time-travel debugging
+- Automatic waiting
+- Cross-browser testing
+- Comprehensive test recording and analytics platform
+- Accessibility and UI coverage testing
+`
 
     return manifest
   }

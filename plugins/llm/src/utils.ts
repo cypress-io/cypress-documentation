@@ -29,9 +29,13 @@ export function ensureDir(dir: string): void {
   fs.mkdirSync(dir, { recursive: true })
 }
 
+export function writeFile(filePath: string, data: string): void {
+  fs.writeFileSync(filePath, data, 'utf8')
+}
+
 /** Writes `data` as formatted JSON (UTF-8). Parent directory must exist. */
 export function writeJsonFile(filePath: string, data: unknown): void {
-  fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf8')
+  writeFile(filePath, JSON.stringify(data, null, 2))
 }
 
 /** Collects all markdown / MDX source files under `dir` (recursive). */

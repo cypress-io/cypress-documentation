@@ -37,7 +37,7 @@ served using any static contents hosting service.
 
 ### LLM Docs
 
-The build process reprocesses the content into both markdown and chunked JSON to be published under `/llm` - these formats strip out unnecessary styling and formatting which can be difficult and/or token-inefficient for use by LLMs. See `/llms.json` for indexing info.
+The build process reprocesses the content into both markdown and chunked JSON to be published under `/llm` - these formats strip out unnecessary styling and formatting which can be difficult and/or token-inefficient for use by LLMs. See `/llms.txt` for indexing info.
 
 ## Contributing
 

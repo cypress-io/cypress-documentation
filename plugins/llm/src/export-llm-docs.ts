@@ -7,7 +7,7 @@
  * 1. Walk `docs/` for `.md`/`.mdx`, filter by configured sections.
  * 2. Normalize MDX (strip imports/exports, inline configured partials) and write flat markdown under `dist/llm/markdown/`.
  * 3. Optionally emit JSON under `dist/llm/json/`: chunked per-doc files + chunk index in `json/chunked/`, and full-document structured JSON in `json/full/`.
- * 4. Write `dist/llms.json` (site manifest) and per-directory `index.md` listings under the markdown export root.
+ * 4. Write `dist/llms.txt` (site manifest) and per-directory `index.md` listings under the markdown export root.
  */
 
 import path from 'path'
