@@ -156,6 +156,7 @@ That means you can use the following methods to bind and unbind from events.
 
 - [on](https://nodejs.org/api/events.html#events_emitter_on_eventname_listener)
 - [once](https://nodejs.org/api/events.html#events_emitter_once_eventname_listener)
+- [off](https://nodejs.org/api/events.html#events_emitter_off_eventname_listener)
 - [removeListener](https://nodejs.org/api/events.html#events_emitter_removelistener_eventname_listener)
 - [removeAllListeners](https://nodejs.org/api/events.html#events_emitter_removealllisteners_eventname)
 
@@ -165,7 +166,9 @@ It's important to understand why you'd want to bind to either `Cypress` or `cy`.
 
 Cypress is a global object that persists for the entirety of all of your tests.
 Any events you bind to Cypress will apply to all tests, and will not be unbound
-unless you manually unbind them.
+unless you manually unbind them. A listener registered inside a hook or an
+`it` is still a **global** listener: it is not limited to that hook invocation
+or to that single test.
 
 This is useful when you're debugging and want to add a single "catch-all" event
 to track down things like test failures, or uncaught exceptions from your
@@ -177,6 +180,36 @@ The `cy` object is bound to each individual test. Events bound to `cy` will
 **automatically** be removed when the test ends. You don't have to worry about
 cleanup, and your event listeners will only be called for the duration of the
 single test.
+
+### Cleanup: `Cypress.on` vs `cy.on`
+
+Every call to `Cypress.on` adds another listener. Cypress does **not** remove
+those listeners between tests or hook runs. If you register the same handler
+in `beforeEach` without unregistering it, you accumulate duplicate listeners,
+so one uncaught exception can invoke your handler many times and behavior can
+drift as the suite runs.
+
+When you only need a global handler for part of a run, register it once (for
+example in a [support file](/app/core-concepts/writing-and-organizing-tests#Support-file)),
+or keep a reference to the same function and unregister it with `Cypress.off` or
+[`removeListener`](https://nodejs.org/api/events.html#events_emitter_removelistener_eventname_listener)
+when the listener is no longer needed.
+
+By contrast, `cy.on` listeners are torn down when the test finishes, so they are
+appropriate when you want per-test behavior (for example a one-off
+`uncaught:exception` handler) without manual cleanup.
+
+### Cypress commands inside `Cypress.on` listeners
+
+`Cypress.on` callbacks run outside Cypress's normal command queue. **`cy`
+commands, assertions, and `cy.task()` are not supported inside these
+listeners**—they do not execute the way they do in a test body. You may see
+misleading errors, Command Log entries that do not reflect real execution, or
+other confusing results. Keep listener code synchronous (for example return
+`false` from `uncaught:exception` to ignore a known error), or capture data in
+the listener and act on it later inside a command chain. See
+[#6316](https://github.com/cypress-io/cypress/issues/6316) for discussion of
+this limitation and of surfacing a clearer error when commands are used here.
 
 ## Examples
 
