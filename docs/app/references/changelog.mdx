@@ -8,9 +8,26 @@ sidebar_label: Changelog
 
 # Changelog
 
+## 15.13.1
+
+_Released 04/07/2026_
+
+**Performance:**
+
+- When recording to Cypress Cloud, the App now sends a smaller snapshot of your project config, which reduces payload size and can make Cloud recording faster. Addressed in [#33517](https://github.com/cypress-io/cypress/pull/33517).
+- Eliminated unnecessary `git status` and `git log` subprocess calls during `cypress run`, which were collecting spec file git metadata only used in the interactive GUI. Fixed in [#33552](https://github.com/cypress-io/cypress/pull/33552).
+
+**Bugfixes:**
+
+- Fixed an issue where [`cy.intercept`](/api/commands/intercept) `delay` values >= 2\*\*31 (approximately 24.8 days) were silently ignored by `setTimeout`. A clear validation error is now thrown for such values. Fixed in [#33377](https://github.com/cypress-io/cypress/pull/33377). Fixes [#33183](https://github.com/cypress-io/cypress/issues/33183).
+
+**Dependency Updates:**
+
+- Upgraded `node-forge` from `1.3.x` to `^1.4.0` to address [CVE-2026-33896](https://security.snyk.io/vuln/SNYK-JS-NODEFORGE-15789771) vulnerability reported in security scans. Addressed in [#33546](https://github.com/cypress-io/cypress/pull/33546).
+
 ## 15.13.0
 
-_Released 03/24/2026_
+_Released Mar 24, 2026_
 
 **Features:**
 
@@ -35,7 +52,7 @@ _Released 03/24/2026_
 
 ## 15.12.0
 
-_Released 03/13/2026_
+_Released Mar 13, 2026_
 
 **Features:**
 
@@ -55,7 +72,7 @@ _Released 03/13/2026_
 
 ## 15.11.0
 
-_Released 02/25/2026_
+_Released Feb 25, 2026_
 
 **Features:**
 
@@ -84,7 +101,7 @@ _Released 02/25/2026_
 
 ## 15.10.0
 
-_Released 02/03/2026_
+_Released Feb 03, 2026_
 
 **Deprecations:**
 
@@ -113,7 +130,7 @@ _Released 02/03/2026_
 
 ## 15.9.0
 
-_Released 01/13/2026_
+_Released Jan 13, 2026_
 
 **Features:**
 
@@ -121,7 +138,7 @@ _Released 01/13/2026_
 
 ## 15.8.2
 
-_Released 01/06/2026_
+_Released Jan 06, 2026_
 
 **Bugfixes:**
 
@@ -134,7 +151,7 @@ _Released 01/06/2026_
 
 ## 15.8.1
 
-_Released 12/18/2025_
+_Released Dec 18, 2025_
 
 **Dependency Updates:**
 
@@ -142,7 +159,7 @@ _Released 12/18/2025_
 
 ## 15.8.0
 
-_Released 12/16/2025_
+_Released Dec 16, 2025_
 
 **Performance:**
 
@@ -170,7 +187,7 @@ _Released 12/16/2025_
 
 ## 15.7.1
 
-_Released 12/02/2025_
+_Released Dec 02, 2025_
 
 **Performance:**
 
@@ -186,7 +203,7 @@ _Released 12/02/2025_
 
 ## 15.7.0
 
-_Released 11/19/2025_
+_Released Nov 19, 2025_
 
 **Performance:**
 
@@ -210,7 +227,7 @@ _Released 11/19/2025_
 
 ## 15.6.0
 
-_Released 11/04/2025_
+_Released Nov 04, 2025_
 
 **Features:**
 
@@ -243,7 +260,7 @@ _Released 11/04/2025_
 
 ## 15.5.0
 
-_Released 10/17/2025_
+_Released Oct 17, 2025_
 
 **Features:**
 
@@ -266,7 +283,7 @@ _Released 10/17/2025_
 
 ## 15.4.0
 
-_Released 10/07/2025_
+_Released Oct 07, 2025_
 
 **Features:**
 
@@ -296,7 +313,7 @@ _Released 10/07/2025_
 
 ## 15.3.0
 
-_Released 09/23/2025_
+_Released Sep 23, 2025_
 
 **Features:**
 
@@ -321,7 +338,7 @@ _Released 09/23/2025_
 
 ## 15.2.0
 
-_Released 09/09/2025_
+_Released Sep 09, 2025_
 
 **Features:**
 
@@ -337,7 +354,7 @@ _Released 09/09/2025_
 
 ## 15.1.0
 
-_Released 09/02/2025_
+_Released Sep 02, 2025_
 
 **Features:**
 
@@ -364,7 +381,7 @@ _Released 09/02/2025_
 
 ## 15.0.0
 
-_Released 08/20/2025_
+_Released Aug 20, 2025_
 
 **Summary**
 
@@ -439,7 +456,7 @@ Refer to the [v15 Migration Guide](/app/references/migration-guide#Migrating-to-
 
 ## 14.5.4
 
-_Released 08/07/2025_
+_Released Aug 07, 2025_
 
 **Dependency Updates:**
 
@@ -447,7 +464,7 @@ _Released 08/07/2025_
 
 ## 14.5.3
 
-_Released 07/25/2025_
+_Released Jul 25, 2025_
 
 **Bugfixes:**
 
@@ -461,7 +478,7 @@ _Released 07/25/2025_
 
 ## 14.5.2
 
-_Released 07/15/2025_
+_Released Jul 15, 2025_
 
 **Bugfixes:**
 
@@ -470,7 +487,7 @@ _Released 07/15/2025_
 
 ## 14.5.1
 
-_Released 07/01/2025_
+_Released Jul 01, 2025_
 
 **Bugfixes:**
 
@@ -482,7 +499,7 @@ _Released 07/01/2025_
 
 ## 14.5.0
 
-_Released 06/17/2025_
+_Released Jun 17, 2025_
 
 **Features:**
 
@@ -494,7 +511,7 @@ _Released 06/17/2025_
 
 ## 14.4.1
 
-_Released 06/03/2025_
+_Released Jun 03, 2025_
 
 **Bugfixes:**
 
@@ -510,7 +527,7 @@ _Released 06/03/2025_
 
 ## 14.4.0
 
-_Released 05/20/2025_
+_Released May 20, 2025_
 
 **Features:**
 
@@ -536,7 +553,7 @@ _Released 05/20/2025_
 
 ## 14.3.3
 
-_Released 05/06/2025_
+_Released May 06, 2025_
 
 **Performance:**
 
@@ -559,7 +576,7 @@ _Released 05/06/2025_
 
 ## 14.3.2
 
-_Released 04/22/2025_
+_Released Apr 22, 2025_
 
 **Bugfixes:**
 
@@ -568,7 +585,7 @@ _Released 04/22/2025_
 
 ## 14.3.1
 
-_Released 04/17/2025_
+_Released Apr 17, 2025_
 
 **Performance:**
 
@@ -587,7 +604,7 @@ _Released 04/17/2025_
 
 ## 14.3.0
 
-_Released 04/08/2025_
+_Released Apr 08, 2025_
 
 **Features:**
 
@@ -612,7 +629,7 @@ _Released 04/08/2025_
 
 ## 14.2.1
 
-_Released 03/26/2025_
+_Released Mar 26, 2025_
 
 **Bugfixes:**
 
@@ -635,7 +652,7 @@ _Released 03/26/2025_
 
 ## 14.2.0
 
-_Released 03/12/2025_
+_Released Mar 12, 2025_
 
 **Features:**
 
@@ -654,7 +671,7 @@ _Released 03/12/2025_
 
 ## 14.1.0
 
-_Released 02/25/2025_
+_Released Feb 25, 2025_
 
 **Features:**
 
@@ -678,7 +695,7 @@ _Released 02/25/2025_
 
 ## 14.0.3
 
-_Released 02/11/2025_
+_Released Feb 11, 2025_
 
 **Bugfixes:**
 
@@ -691,7 +708,7 @@ _Released 02/11/2025_
 
 ## 14.0.2
 
-_Released 02/05/2025_
+_Released Feb 05, 2025_
 
 **Bugfixes:**
 
@@ -710,7 +727,7 @@ _Released 02/05/2025_
 
 ## 14.0.1
 
-_Released 01/28/2025_
+_Released Jan 28, 2025_
 
 **Bugfixes:**
 
@@ -727,7 +744,7 @@ _Released 01/28/2025_
 
 ## 14.0.0
 
-_Released 01/16/2025_
+_Released Jan 16, 2025_
 
 **Summary:**
 
@@ -821,7 +838,7 @@ Refer to the [v14 Migration Guide](/app/references/migration-guide#Migrating-to-
 
 ## 13.17.0
 
-_Released 12/17/2024_
+_Released Dec 17, 2024_
 
 **Features:**
 
@@ -843,7 +860,7 @@ _Released 12/17/2024_
 
 ## 13.16.1
 
-_Released 12/04/2024_
+_Released Dec 04, 2024_
 
 **Bugfixes:**
 
@@ -851,7 +868,7 @@ _Released 12/04/2024_
 
 ## 13.16.0
 
-_Released 11/19/2024_
+_Released Nov 19, 2024_
 
 **Features:**
 
@@ -867,7 +884,7 @@ _Released 11/19/2024_
 
 ## 13.15.2
 
-_Released 11/05/2024_
+_Released Nov 05, 2024_
 
 **Bugfixes:**
 
@@ -884,7 +901,7 @@ _Released 11/05/2024_
 
 ## 13.15.1
 
-_Released 10/24/2024_
+_Released Oct 24, 2024_
 
 **Bugfixes:**
 
@@ -903,7 +920,7 @@ _Released 10/24/2024_
 
 ## 13.15.0
 
-_Released 09/25/2024_
+_Released Sep 25, 2024_
 
 **Features:**
 
@@ -928,7 +945,7 @@ _Released 09/25/2024_
 
 ## 13.14.2
 
-_Released 09/04/2024_
+_Released Sep 04, 2024_
 
 **Bugfixes:**
 
@@ -937,7 +954,7 @@ _Released 09/04/2024_
 
 ## 13.14.1
 
-_Released 08/29/2024_
+_Released Aug 29, 2024_
 
 **Bugfixes:**
 
@@ -945,7 +962,7 @@ _Released 08/29/2024_
 
 ## 13.14.0
 
-_Released 08/27/2024_
+_Released Aug 27, 2024_
 
 **Performance:**
 
@@ -979,7 +996,7 @@ _Released 08/27/2024_
 
 ## 13.13.3
 
-_Released 08/14/2024_
+_Released Aug 14, 2024_
 
 **Bugfixes:**
 
@@ -996,7 +1013,7 @@ _Released 08/14/2024_
 
 ## 13.13.2
 
-_Released 07/31/2024_
+_Released Jul 31, 2024_
 
 **Performance:**
 
@@ -1016,7 +1033,7 @@ _Released 07/31/2024_
 
 ## 13.13.1
 
-_Released 07/16/2024_
+_Released Jul 16, 2024_
 
 **Bugfixes:**
 
@@ -1033,7 +1050,7 @@ _Released 07/16/2024_
 
 ## 13.13.0
 
-_Released 07/02/2024_
+_Released Jul 02, 2024_
 
 **Performance:**
 
@@ -1057,7 +1074,7 @@ _Released 07/02/2024_
 
 ## 13.12.0
 
-_Released 06/18/2024_
+_Released Jun 18, 2024_
 
 **Features:**
 
@@ -1083,7 +1100,7 @@ _Released 06/18/2024_
 
 ## 13.11.0
 
-_Released 06/04/2024_
+_Released Jun 04, 2024_
 
 **Performance:**
 
@@ -1105,7 +1122,7 @@ _Released 06/04/2024_
 
 ## 13.10.0
 
-_Released 05/21/2024_
+_Released May 21, 2024_
 
 **Features:**
 
@@ -1126,7 +1143,7 @@ _Released 05/21/2024_
 
 ## 13.9.0
 
-_Released 05/07/2024_
+_Released May 07, 2024_
 
 **Features:**
 
@@ -1149,7 +1166,7 @@ _Released 05/07/2024_
 
 ## 13.8.1
 
-_Released 04/23/2024_
+_Released Apr 23, 2024_
 
 **Performance:**
 
@@ -1170,7 +1187,7 @@ _Released 04/23/2024_
 
 ## 13.8.0
 
-_Released 04/18/2024_
+_Released Apr 18, 2024_
 
 **Features:**
 
@@ -1186,7 +1203,7 @@ _Released 04/18/2024_
 
 ## 13.7.3
 
-_Released 04/11/2024_
+_Released Apr 11, 2024_
 
 **Bugfixes:**
 
@@ -1200,7 +1217,7 @@ _Released 04/11/2024_
 
 ## 13.7.2
 
-_Released 04/02/2024_
+_Released Apr 02, 2024_
 
 **Performance:**
 
@@ -1219,7 +1236,7 @@ _Released 04/02/2024_
 
 ## 13.7.1
 
-_Released 03/21/2024_
+_Released Mar 21, 2024_
 
 **Bugfixes:**
 
@@ -1232,7 +1249,7 @@ _Released 03/21/2024_
 
 ## 13.7.0
 
-_Released 03/13/2024_
+_Released Mar 13, 2024_
 
 **Features:**
 
@@ -1265,7 +1282,7 @@ _Released 03/13/2024_
 
 ## 13.6.6
 
-_Released 02/22/2024_
+_Released Feb 22, 2024_
 
 **Bugfixes:**
 
@@ -1273,7 +1290,7 @@ _Released 02/22/2024_
 
 ## 13.6.5
 
-_Released 02/20/2024_
+_Released Feb 20, 2024_
 
 **Bugfixes:**
 
@@ -1299,7 +1316,7 @@ _Released 02/20/2024_
 
 ## 13.6.4
 
-_Released 01/30/2024_
+_Released Jan 30, 2024_
 
 **Performance:**
 
@@ -1315,7 +1332,7 @@ _Released 01/30/2024_
 
 ## 13.6.3
 
-_Released 01/16/2024_
+_Released Jan 16, 2024_
 
 **Bugfixes:**
 
@@ -1350,7 +1367,7 @@ _Released 01/16/2024_
 
 ## 13.6.2
 
-_Released 12/26/2023_
+_Released Dec 26, 2023_
 
 **Bugfixes:**
 
@@ -1367,7 +1384,7 @@ _Released 12/26/2023_
 
 ## 13.6.1
 
-_Released 12/05/2023_
+_Released Dec 05, 2023_
 
 **Bugfixes:**
 
@@ -1383,7 +1400,7 @@ _Released 12/05/2023_
 
 ## 13.6.0
 
-_Released 11/21/2023_
+_Released Nov 21, 2023_
 
 **Features:**
 
@@ -1409,7 +1426,7 @@ _Released 11/21/2023_
 
 ## 13.5.1
 
-_Released 11/14/2023_
+_Released Nov 14, 2023_
 
 **Bugfixes:**
 
@@ -1419,7 +1436,7 @@ _Released 11/14/2023_
 
 ## 13.5.0
 
-_Released 11/08/2023_
+_Released Nov 08, 2023_
 
 **Features:**
 
@@ -1439,7 +1456,7 @@ _Released 11/08/2023_
 
 ## 13.4.0
 
-_Released 10/30/2023_
+_Released Oct 30, 2023_
 
 **Features:**
 
@@ -1451,7 +1468,7 @@ _Released 10/30/2023_
 
 ## 13.3.3
 
-_Released 10/24/2023_
+_Released Oct 24, 2023_
 
 **Bugfixes:**
 
@@ -1461,7 +1478,7 @@ _Released 10/24/2023_
 
 ## 13.3.2
 
-_Released 10/18/2023_
+_Released Oct 18, 2023_
 
 **Bugfixes:**
 
@@ -1478,7 +1495,7 @@ _Released 10/18/2023_
 
 ## 13.3.1
 
-_Released 10/11/2023_
+_Released Oct 11, 2023_
 
 **Bugfixes:**
 
@@ -1491,7 +1508,7 @@ _Released 10/11/2023_
 
 ## 13.3.0
 
-_Released 09/27/2023_
+_Released Sep 27, 2023_
 
 **Features:**
 
@@ -1504,7 +1521,7 @@ _Released 09/27/2023_
 
 ## 13.2.0
 
-_Released 09/12/2023_
+_Released Sep 12, 2023_
 
 **Features:**
 
@@ -1524,7 +1541,7 @@ _Released 09/12/2023_
 
 ## 13.1.0
 
-_Released 08/31/2023_
+_Released Aug 31, 2023_
 
 **Features:**
 
@@ -1540,7 +1557,7 @@ _Released 08/31/2023_
 
 ## 13.0.0
 
-_Released 08/29/2023_
+_Released Aug 29, 2023_
 
 **Summary:**
 
@@ -1596,7 +1613,7 @@ Refer to the [v13 Migration Guide](/app/references/migration-guide#Migrating-to-
 
 ## 12.17.4
 
-_Released 08/15/2023_
+_Released Aug 15, 2023_
 
 **Bugfixes:**
 
@@ -1609,7 +1626,7 @@ _Released 08/15/2023_
 
 ## 12.17.3
 
-_Released 08/01/2023_
+_Released Aug 01, 2023_
 
 **Bugfixes:**
 
@@ -1621,7 +1638,7 @@ _Released 08/01/2023_
 
 ## 12.17.2
 
-_Released 07/20/2023_
+_Released Jul 20, 2023_
 
 **Bugfixes:**
 
@@ -1631,7 +1648,7 @@ _Released 07/20/2023_
 
 ## 12.17.1
 
-_Released 07/10/2023_
+_Released Jul 10, 2023_
 
 **Bugfixes:**
 
@@ -1644,7 +1661,7 @@ _Released 07/10/2023_
 
 ## 12.17.0
 
-_Released 07/06/2023_
+_Released Jul 06, 2023_
 
 **Features:**
 
@@ -1666,7 +1683,7 @@ _Released 07/06/2023_
 
 ## 12.16.0
 
-_Released 06/26/2023_
+_Released Jun 26, 2023_
 
 **Features:**
 
@@ -1678,7 +1695,7 @@ _Released 06/26/2023_
 
 ## 12.15.0
 
-_Released 06/20/2023_
+_Released Jun 20, 2023_
 
 **Features:**
 
@@ -1722,7 +1739,7 @@ _Released 06/20/2023_
 
 ## 12.14.0
 
-_Released 06/07/2023_
+_Released Jun 07, 2023_
 
 **Features:**
 
@@ -1762,7 +1779,7 @@ _Released 06/07/2023_
 
 ## 12.13.0
 
-_Released 05/23/2023_
+_Released May 23, 2023_
 
 **Features:**
 
@@ -1805,7 +1822,7 @@ _Released 05/23/2023_
 
 ## 12.12.0
 
-_Released 05/09/2023_
+_Released May 09, 2023_
 
 **Features:**
 
@@ -1842,7 +1859,7 @@ _Released 05/09/2023_
 
 ## 12.11.0
 
-_Released 04/26/2023_
+_Released Apr 26, 2023_
 
 **Features:**
 
@@ -1877,7 +1894,7 @@ _Released 04/26/2023_
 
 ## 12.10.0
 
-_Released 04/17/2023_
+_Released Apr 17, 2023_
 
 **Features:**
 
@@ -1936,7 +1953,7 @@ _Released 04/17/2023_
 
 ## 12.9.0
 
-_Released 03/28/2023_
+_Released Mar 28, 2023_
 
 **Features:**
 
@@ -1972,7 +1989,7 @@ _Released 03/28/2023_
 
 ## 12.8.1
 
-_Released 03/15/2023_
+_Released Mar 15, 2023_
 
 **Bugfixes:**
 
@@ -1993,7 +2010,7 @@ _Released 03/15/2023_
 
 ## 12.8.0
 
-_Released 03/14/2023_
+_Released Mar 14, 2023_
 
 **Features:**
 
@@ -2059,7 +2076,7 @@ _Released 03/14/2023_
 
 ## 12.7.0
 
-_Released 02/24/2023_
+_Released Feb 24, 2023_
 
 **Features:**
 
@@ -2117,7 +2134,7 @@ _Released 02/24/2023_
 
 ## 12.6.0
 
-_Released 02/15/2023_
+_Released Feb 15, 2023_
 
 **Features:**
 
@@ -2183,7 +2200,7 @@ _Released 02/15/2023_
 
 ## 12.5.1
 
-_Released 02/02/2023_
+_Released Feb 02, 2023_
 
 **Bugfixes:**
 
@@ -2203,7 +2220,7 @@ _Released 02/02/2023_
 
 ## 12.5.0
 
-_Released 01/31/2023_
+_Released Jan 31, 2023_
 
 **Features:**
 
@@ -2236,7 +2253,7 @@ _Released 01/31/2023_
 
 ## 12.4.1
 
-_Released 01/27/2023_
+_Released Jan 27, 2023_
 
 **Bugfixes:**
 
@@ -2257,7 +2274,7 @@ _Released 01/27/2023_
 
 ## 12.4.0
 
-_Released 01/24/2023_
+_Released Jan 24, 2023_
 
 **Features:**
 
@@ -2324,7 +2341,7 @@ _Released 01/24/2023_
 
 ## 12.3.0
 
-_Released 01/03/2023_
+_Released Jan 03, 2023_
 
 **Features:**
 
@@ -2408,7 +2425,7 @@ _Released 01/03/2023_
 
 ## 12.2.0
 
-_Released 12/20/2022_
+_Released Dec 20, 2022_
 
 **Features:**
 
@@ -2460,7 +2477,7 @@ _Released 12/20/2022_
 
 ## 12.1.0
 
-_Released 12/12/2022_
+_Released Dec 12, 2022_
 
 **Features:**
 
@@ -2505,7 +2522,7 @@ _Released 12/12/2022_
 
 ## 12.0.2
 
-_Released 12/08/2022_
+_Released Dec 08, 2022_
 
 **Bugfixes:**
 
@@ -2521,7 +2538,7 @@ _Released 12/08/2022_
 
 ## 12.0.1
 
-_Released 12/06/2022_
+_Released Dec 06, 2022_
 
 **Bugfixes:**
 
@@ -2541,7 +2558,7 @@ _Released 12/06/2022_
 
 ## 12.0.0
 
-_Released 12/06/2022_
+_Released Dec 06, 2022_
 
 **Summary:**
 
@@ -2734,7 +2751,7 @@ Read more about 12.0 in
 
 ## 11.2.0
 
-_Released 11/22/2022_
+_Released Nov 22, 2022_
 
 **Features:**
 
@@ -2763,7 +2780,7 @@ _Released 11/22/2022_
 
 ## 11.1.0
 
-_Released 11/14/2022_
+_Released Nov 14, 2022_
 
 **Features:**
 
@@ -2798,7 +2815,7 @@ _Released 11/14/2022_
 
 ## 11.0.1
 
-_Released 11/09/2022_
+_Released Nov 09, 2022_
 
 **Bugfixes:**
 
@@ -2821,7 +2838,7 @@ _Released 11/09/2022_
 
 ## 11.0.0
 
-_Released 11/08/2022_
+_Released Nov 08, 2022_
 
 **Summary:**
 
@@ -2942,7 +2959,7 @@ which explains the breaking changes in more detail.**
 
 ## 10.11.0
 
-_Released 10/25/2022_
+_Released Oct 25, 2022_
 
 **Features:**
 
@@ -3009,7 +3026,7 @@ _Released 10/25/2022_
 
 ## 10.10.0
 
-_Released 10/11/2022_
+_Released Oct 11, 2022_
 
 **Features:**
 
@@ -3058,7 +3075,7 @@ _Released 10/11/2022_
 
 ## 10.9.0
 
-_Released 09/27/2022_
+_Released Sep 27, 2022_
 
 **Features:**
 
@@ -3128,7 +3145,7 @@ _Released 09/27/2022_
 
 ## 10.8.0
 
-_Released 09/13/2022_
+_Released Sep 13, 2022_
 
 **Features:**
 
@@ -3242,7 +3259,7 @@ _Released 09/13/2022_
 
 ## 10.7.0
 
-_Released 08/30/2022_
+_Released Aug 30, 2022_
 
 **Features:**
 
@@ -3324,7 +3341,7 @@ _Released 08/30/2022_
 
 ## 10.6.0
 
-_Released 08/16/2022_
+_Released Aug 16, 2022_
 
 **Features:**
 
@@ -3364,7 +3381,7 @@ _Released 08/16/2022_
 
 ## 10.5.0
 
-_Released 08/15/2022_
+_Released Aug 15, 2022_
 
 **Features:**
 
@@ -3452,7 +3469,7 @@ _Released 08/15/2022_
 
 ## 10.4.0
 
-_Released 08/02/2022_
+_Released Aug 02, 2022_
 
 **Features:**
 
@@ -3518,7 +3535,7 @@ _Released 08/02/2022_
 
 ## 10.3.1
 
-_Released 07/19/2022_
+_Released Jul 19, 2022_
 
 **Bugfixes:**
 
@@ -3597,7 +3614,7 @@ _Released 07/19/2022_
 
 ## 10.3.0
 
-_Released 06/28/2022_
+_Released Jun 28, 2022_
 
 **Features:**
 
@@ -3641,7 +3658,7 @@ _Released 06/28/2022_
 
 ## 10.2.0
 
-_Released 06/21/2022_
+_Released Jun 21, 2022_
 
 **Features:**
 
@@ -3691,7 +3708,7 @@ _Released 06/21/2022_
 
 ## 10.1.0
 
-_Released 06/10/2022_
+_Released Jun 10, 2022_
 
 **Features:**
 
@@ -3728,7 +3745,7 @@ _Released 06/10/2022_
 
 ## 10.0.3
 
-_Released 06/03/2022_
+_Released Jun 03, 2022_
 
 **Bugfixes:**
 
@@ -3753,7 +3770,7 @@ _Released 06/03/2022_
 
 ## 10.0.2
 
-_Released 06/02/2022_
+_Released Jun 02, 2022_
 
 **Bugfixes:**
 
@@ -3780,7 +3797,7 @@ _Released 06/02/2022_
 
 ## 10.0.1
 
-_Released 06/01/2022_
+_Released Jun 01, 2022_
 
 **Bugfixes:**
 
@@ -3814,7 +3831,7 @@ _Released 06/01/2022_
 
 ## 10.0.0
 
-_Released 06/01/2022_
+_Released Jun 01, 2022_
 
 **Summary:**
 
@@ -4139,7 +4156,7 @@ more detail.**
 
 ## 9.7.0
 
-_Released 05/23/2022_
+_Released May 23, 2022_
 
 **Features:**
 
@@ -4184,7 +4201,7 @@ _Released 05/23/2022_
 
 ## 9.6.1
 
-_Released 05/09/2022_
+_Released May 09, 2022_
 
 **Bugfixes:**
 
@@ -4209,7 +4226,7 @@ _Released 05/09/2022_
 
 ## 9.6.0
 
-_Released 04/25/2022_
+_Released Apr 25, 2022_
 
 **Features:**
 
@@ -4263,7 +4280,7 @@ _Released 04/25/2022_
 
 ## 9.5.4
 
-_Released 04/11/2022_
+_Released Apr 11, 2022_
 
 **Bugfixes:**
 
@@ -4334,7 +4351,7 @@ _Released 04/11/2022_
 
 ## 9.5.3
 
-_Released 03/28/2022_
+_Released Mar 28, 2022_
 
 **Bugfixes:**
 
@@ -4378,7 +4395,7 @@ _Released 03/28/2022_
 
 ## 9.5.2
 
-_Released 03/14/2022_
+_Released Mar 14, 2022_
 
 **Bugfixes:**
 
@@ -4421,7 +4438,7 @@ _Released 03/14/2022_
 
 ## 9.5.1
 
-_Released 02/28/2022_
+_Released Feb 28, 2022_
 
 **Bugfixes:**
 
@@ -4456,7 +4473,7 @@ _Released 02/28/2022_
 
 ## 9.5.0
 
-_Released 02/15/2022_
+_Released Feb 15, 2022_
 
 **Features:**
 
@@ -4491,7 +4508,7 @@ _Released 02/15/2022_
 
 ## 9.4.1
 
-_Released 01/31/2022_
+_Released Jan 31, 2022_
 
 **Bugfixes:**
 
@@ -4501,7 +4518,7 @@ _Released 01/31/2022_
 
 ## 9.4.0
 
-_Released 01/31/2022_
+_Released Jan 31, 2022_
 
 **Features**
 
@@ -4539,7 +4556,7 @@ _Released 01/31/2022_
 
 ## 9.3.1
 
-_Released 01/19/2022_
+_Released Jan 19, 2022_
 
 **Bugfixes:**
 
@@ -4548,7 +4565,7 @@ _Released 01/19/2022_
 
 ## 9.3.0
 
-_Released 01/18/2022_
+_Released Jan 18, 2022_
 
 **Features:**
 
@@ -4600,7 +4617,7 @@ _Released 01/18/2022_
 
 ## 9.2.1
 
-_Released 01/10/2022_
+_Released Jan 10, 2022_
 
 **Bugfixes:**
 
@@ -4627,7 +4644,7 @@ _Released 01/10/2022_
 
 ## 9.2.0
 
-_Released 12/20/2021_
+_Released Dec 20, 2021_
 
 **Features:**
 
@@ -4703,7 +4720,7 @@ _Released 12/20/2021_
 
 ## 9.1.1
 
-_Released 12/03/2021_
+_Released Dec 03, 2021_
 
 **Bugfixes:**
 
@@ -4744,7 +4761,7 @@ _Released 12/03/2021_
 
 ## 9.1.0
 
-_Released 11/22/2021_
+_Released Nov 22, 2021_
 
 **Features:**
 
@@ -4774,7 +4791,7 @@ _Released 11/22/2021_
 
 ## 9.0.0
 
-_Released 11/10/2021_
+_Released Nov 10, 2021_
 
 **Breaking Changes:**
 
@@ -4846,7 +4863,7 @@ _Released 11/10/2021_
 
 ## 8.7.0
 
-_Released 10/25/2021_
+_Released Oct 25, 2021_
 
 **Features:**
 
@@ -4893,7 +4910,7 @@ _Released 10/25/2021_
 
 ## 8.6.0
 
-_Released 10/11/2021_
+_Released Oct 11, 2021_
 
 **Features:**
 
@@ -4940,7 +4957,7 @@ _Released 10/11/2021_
 
 ## 8.5.0
 
-_Released 09/27/2021_
+_Released Sep 27, 2021_
 
 **Features:**
 
@@ -4973,7 +4990,7 @@ _Released 09/27/2021_
 
 ## 8.4.1
 
-_Released 09/17/2021_
+_Released Sep 17, 2021_
 
 **Bugfixes:**
 
@@ -4986,7 +5003,7 @@ _Released 09/17/2021_
 
 ## 8.4.0
 
-_Released 09/13/2021_
+_Released Sep 13, 2021_
 
 **Features:**
 
@@ -5010,7 +5027,7 @@ _Released 09/13/2021_
 
 ## 8.3.1
 
-_Released 08/27/2021_
+_Released Aug 27, 2021_
 
 **Performance:**
 
@@ -5048,7 +5065,7 @@ _Released 08/27/2021_
 
 ## 8.3.0
 
-_Released 08/16/2021_
+_Released Aug 16, 2021_
 
 **Features:**
 
@@ -5095,7 +5112,7 @@ _Released 08/16/2021_
 
 ## 8.2.0
 
-_Released 08/04/2021_
+_Released Aug 04, 2021_
 
 **Features:**
 
@@ -5151,7 +5168,7 @@ _Released 08/04/2021_
 
 ## 8.1.0
 
-_Released 07/29/2021_
+_Released Jul 29, 2021_
 
 **Features:**
 
@@ -5183,7 +5200,7 @@ _Released 07/29/2021_
 
 ## 8.0.0
 
-_Released 07/19/2021_
+_Released Jul 19, 2021_
 
 **Summary:**
 
@@ -5259,7 +5276,7 @@ detail and how to change your code to migrate to Cypress 8.0.**
 
 ## 7.7.0
 
-_Released 07/07/2021_
+_Released Jul 07, 2021_
 
 **Features:**
 
@@ -5291,7 +5308,7 @@ _Released 07/07/2021_
 
 ## 7.6.0
 
-_Released 06/23/2021_
+_Released Jun 23, 2021_
 
 **Features:**
 
@@ -5351,7 +5368,7 @@ _Released 06/23/2021_
 
 ## 7.5.0
 
-_Released 06/07/2021_
+_Released Jun 07, 2021_
 
 **Features:**
 
@@ -5386,7 +5403,7 @@ _Released 06/07/2021_
 
 ## 7.4.0
 
-_Released 05/24/2021_
+_Released May 24, 2021_
 
 **Features:**
 
@@ -5442,7 +5459,7 @@ _Released 05/24/2021_
 
 ## 7.3.0
 
-_Released 05/10/2021_
+_Released May 10, 2021_
 
 **Features:**
 
@@ -5544,7 +5561,7 @@ _Released 05/10/2021_
 
 ## 7.2.0
 
-_Released 04/26/2021_
+_Released Apr 26, 2021_
 
 **Features:**
 
@@ -5618,7 +5635,7 @@ _Released 04/26/2021_
 
 ## 7.1.0
 
-_Released 04/12/2021_
+_Released Apr 12, 2021_
 
 **Features:**
 
@@ -5644,7 +5661,7 @@ _Released 04/12/2021_
 
 ## 7.0.1
 
-_Released 04/07/2021_
+_Released Apr 07, 2021_
 
 **Bugfixes:**
 
@@ -5676,7 +5693,7 @@ _Released 04/07/2021_
 
 ## 7.0.0
 
-_Released 04/05/2021_
+_Released Apr 05, 2021_
 
 **Summary:**
 
@@ -5870,7 +5887,7 @@ detail and how to change your code to migrate to Cypress 7.0.**
 
 ## 6.9.1
 
-_Released 04/05/2021_
+_Released Apr 05, 2021_
 
 This release contains the same features as [6.8.0](#6-8-0). It was published to provide a
 non-breaking alternative to [6.9.0](#6-9-0), which was mistakenly published with breaking
@@ -5878,14 +5895,14 @@ changes.
 
 ## 6.9.0
 
-_Released 04/05/2021_
+_Released Apr 05, 2021_
 
 This release was mistakenly published with breaking changes, is deprecated, and
 should not be used. Upgrade to [6.9.1](#6-9-1) or [7.0.0](#7-0-0), or stay on [6.8.0](#6-8-0).
 
 ## 6.8.0
 
-_Released 03/17/2021_
+_Released Mar 17, 2021_
 
 **User Experience:**
 
@@ -5906,7 +5923,7 @@ _Released 03/17/2021_
 
 ## 6.7.1
 
-_Released 03/15/2021_
+_Released Mar 15, 2021_
 
 **Bugfixes:**
 
@@ -5920,7 +5937,7 @@ _Released 03/15/2021_
 
 ## 6.7.0
 
-_Released 03/15/2021_
+_Released Mar 15, 2021_
 
 **Features:**
 
@@ -5994,7 +6011,7 @@ _Released 03/15/2021_
 
 ## 6.6.0
 
-_Released 02/18/2021_
+_Released Feb 18, 2021_
 
 **Features:**
 
@@ -6009,7 +6026,7 @@ _Released 02/18/2021_
 
 ## 6.5.0
 
-_Released 02/15/2021_
+_Released Feb 15, 2021_
 
 **Performance:**
 
@@ -6054,7 +6071,7 @@ _Released 02/15/2021_
 
 ## 6.4.0
 
-_Released 02/01/2021_
+_Released Feb 01, 2021_
 
 **Features:**
 
@@ -6140,7 +6157,7 @@ _Released 02/01/2021_
 
 ## 6.3.0
 
-_Released 01/19/2021_
+_Released Jan 19, 2021_
 
 **Features:**
 
@@ -6211,7 +6228,7 @@ _Released 01/19/2021_
 
 ## 6.2.1
 
-_Released 01/04/2021_
+_Released Jan 04, 2021_
 
 **Bugfixes:**
 
@@ -6255,7 +6272,7 @@ _Released 01/04/2021_
 
 ## 6.2.0
 
-_Released 12/21/2020_
+_Released Dec 21, 2020_
 
 **Features:**
 
@@ -6329,7 +6346,7 @@ _Released 12/21/2020_
 
 ## 6.1.0
 
-_Released 12/07/2020_
+_Released Dec 07, 2020_
 
 **Features:**
 
@@ -6400,7 +6417,7 @@ deprecations.
 
 ## 6.0.1
 
-_Released 11/30/2020_
+_Released Nov 30, 2020_
 
 **Bugfixes:**
 
@@ -6424,7 +6441,7 @@ _Released 11/30/2020_
 
 ## 6.0.0
 
-_Released 11/23/2020_
+_Released Nov 23, 2020_
 
 **Summary:**
 
@@ -6558,7 +6575,7 @@ deprecations.
 
 ## 5.6.0
 
-_Released 11/09/2020_
+_Released Nov 09, 2020_
 
 **Features:**
 
@@ -6636,7 +6653,7 @@ _Released 11/09/2020_
 
 ## 5.5.0
 
-_Released 10/26/2020_
+_Released Oct 26, 2020_
 
 **Features:**
 
@@ -6695,7 +6712,7 @@ _Released 10/26/2020_
 
 ## 5.4.0
 
-_Released 10/14/2020_
+_Released Oct 14, 2020_
 
 **Features:**
 
@@ -6795,7 +6812,7 @@ _Released 10/14/2020_
 
 ## 5.3.0
 
-_Released 09/28/2020_
+_Released Sep 28, 2020_
 
 **Features:**
 
@@ -6852,7 +6869,7 @@ _Released 09/28/2020_
 
 ## 5.2.0
 
-_Released 09/15/2020_
+_Released Sep 15, 2020_
 
 **Features:**
 
@@ -6937,7 +6954,7 @@ _Released 09/15/2020_
 
 ## 5.1.0
 
-_Released 09/01/2020_
+_Released Sep 01, 2020_
 
 **Features:**
 
@@ -7008,7 +7025,7 @@ _Released 09/01/2020_
 
 ## 5.0.0
 
-_Released 08/19/2020_
+_Released Aug 19, 2020_
 
 **Summary:**
 
@@ -7180,7 +7197,7 @@ detail and how to change your code to migrate to Cypress 5.0.**
 
 ## 4.12.1
 
-_Released 08/05/2020_
+_Released Aug 05, 2020_
 
 **Bugfixes:**
 
@@ -7200,7 +7217,7 @@ _Released 08/05/2020_
 
 ## 4.12.0
 
-_Released 08/03/2020_
+_Released Aug 03, 2020_
 
 **Features:**
 
@@ -7280,7 +7297,7 @@ _Released 08/03/2020_
 
 ## 4.11.0
 
-_Released 07/21/2020_
+_Released Jul 21, 2020_
 
 **Features:**
 
@@ -7367,7 +7384,7 @@ _Released 07/21/2020_
 
 ## 4.10.0
 
-_Released 07/07/2020_
+_Released Jul 07, 2020_
 
 **Features:**
 
@@ -7419,7 +7436,7 @@ _Released 07/07/2020_
 
 ## 4.9.0
 
-_Released 06/23/2020_
+_Released Jun 23, 2020_
 
 **Features:**
 
@@ -7510,7 +7527,7 @@ _Released 06/23/2020_
 
 ## 4.8.0
 
-_Released 06/08/2020_
+_Released Jun 08, 2020_
 
 **Features:**
 
@@ -7616,7 +7633,7 @@ _Released 06/08/2020_
 
 ## 4.7.0
 
-_Released 05/26/2020_
+_Released May 26, 2020_
 
 **Features:**
 
@@ -7644,7 +7661,7 @@ _Released 05/26/2020_
 
 ## 4.6.0
 
-_Released 05/20/2020_
+_Released May 20, 2020_
 
 **Features:**
 
@@ -7789,7 +7806,7 @@ _Released 05/20/2020_
 
 ## 4.5.0
 
-_Released 04/28/2020_
+_Released Apr 28, 2020_
 
 **Features:**
 
@@ -7832,7 +7849,7 @@ _Released 04/28/2020_
 
 ## 4.4.1
 
-_Released 04/20/2020_
+_Released Apr 20, 2020_
 
 **Bugfixes:**
 
@@ -7867,7 +7884,7 @@ _Released 04/20/2020_
 
 ## 4.4.0
 
-_Released 04/13/2020_
+_Released Apr 13, 2020_
 
 **Features:**
 
@@ -7911,7 +7928,7 @@ _Released 04/13/2020_
 
 ## 4.3.0
 
-_Released 03/30/2020_
+_Released Mar 30, 2020_
 
 **Features:**
 
@@ -8027,7 +8044,7 @@ _Released 03/30/2020_
 
 ## 4.2.0
 
-_Released 03/16/2020_
+_Released Mar 16, 2020_
 
 **Features:**
 
@@ -8114,7 +8131,7 @@ _Released 03/16/2020_
 
 ## 4.1.0
 
-_Released 02/28/2020_
+_Released Feb 28, 2020_
 
 **Features:**
 
@@ -8190,7 +8207,7 @@ _Released 02/28/2020_
 
 ## 4.0.2
 
-_Released 02/14/2020_
+_Released Feb 14, 2020_
 
 **Bugfixes:**
 
@@ -8226,7 +8243,7 @@ _Released 02/14/2020_
 
 ## 4.0.1
 
-_Released 02/07/2020_
+_Released Feb 07, 2020_
 
 **Bugfixes:**
 
@@ -8254,7 +8271,7 @@ _Released 02/07/2020_
 
 ## 4.0.0
 
-_Released 02/06/2020_
+_Released Feb 06, 2020_
 
 **Summary:**
 
@@ -8427,7 +8444,7 @@ detail and how to change your code to migrate to Cypress 4.0.**
 
 ## 3.8.3
 
-_Released 01/24/2020_
+_Released Jan 24, 2020_
 
 **Bugfixes:**
 
@@ -8467,7 +8484,7 @@ _Released 01/24/2020_
 
 ## 3.8.2
 
-_Released 01/10/2020_
+_Released Jan 10, 2020_
 
 **Bugfixes:**
 
@@ -8523,7 +8540,7 @@ _Released 01/10/2020_
 
 ## 3.8.1
 
-_Released 12/26/2019_
+_Released Dec 26, 2019_
 
 **Bugfixes:**
 
@@ -8578,7 +8595,7 @@ _Released 12/26/2019_
 
 ## 3.8.0
 
-_Released 12/12/2019_
+_Released Dec 12, 2019_
 
 **Features:**
 
@@ -8666,7 +8683,7 @@ _Released 12/12/2019_
 
 ## 3.7.0
 
-_Released 11/27/2019_
+_Released Nov 27, 2019_
 
 **Features:**
 
@@ -8771,7 +8788,7 @@ _Released 11/27/2019_
 
 ## 3.6.1
 
-_Released 11/08/2019_
+_Released Nov 08, 2019_
 
 **Bugfixes:**
 
@@ -8844,7 +8861,7 @@ _Released 11/08/2019_
 
 ## 3.6.0
 
-_Released 10/31/2019_
+_Released Oct 31, 2019_
 
 **Features:**
 
@@ -8918,7 +8935,7 @@ _Released 10/31/2019_
 
 ## 3.5.0
 
-_Released 10/23/2019_
+_Released Oct 23, 2019_
 
 **Features:**
 
@@ -9220,7 +9237,7 @@ _Released 10/23/2019_
 
 ## 3.4.1
 
-_Released 07/29/2019_
+_Released Jul 29, 2019_
 
 **Dashboard Features:**
 
@@ -9364,7 +9381,7 @@ _Released 07/29/2019_
 
 ## 3.4.0
 
-_Released 07/09/2019_
+_Released Jul 09, 2019_
 
 **Features:**
 
@@ -9456,7 +9473,7 @@ _Released 07/09/2019_
 
 ## 3.3.2
 
-_Released 06/27/2019_
+_Released Jun 27, 2019_
 
 **Performance Improvements:**
 
@@ -9658,7 +9675,7 @@ _Released 06/27/2019_
 
 ## 3.3.1
 
-_Released 05/23/2019_
+_Released May 23, 2019_
 
 **News:**
 
@@ -9711,7 +9728,7 @@ _Released 05/23/2019_
 
 ## 3.3.0
 
-_Released 05/17/2019_
+_Released May 17, 2019_
 
 **News:**
 
@@ -9994,7 +10011,7 @@ _Released 05/17/2019_
 
 ## 3.2.0
 
-_Released 03/15/2019_
+_Released Mar 15, 2019_
 
 **Features:**
 
@@ -10230,7 +10247,7 @@ _Released 03/15/2019_
 
 ## 3.1.5
 
-_Released 01/30/2019_
+_Released Jan 30, 2019_
 
 **Bugfixes:**
 
@@ -10327,7 +10344,7 @@ _Released 01/30/2019_
 
 ## 3.1.4
 
-_Released 12/25/2018_
+_Released Dec 25, 2018_
 
 Merry Christmas everyone!
 
@@ -10376,7 +10393,7 @@ Merry Christmas everyone!
 
 ## 3.1.3
 
-_Released 12/03/2018_
+_Released Dec 03, 2018_
 
 **Bugfixes:**
 
@@ -10428,7 +10445,7 @@ _Released 12/03/2018_
 
 ## 3.1.2
 
-_Released 11/18/2018_
+_Released Nov 18, 2018_
 
 **Bugfixes:**
 
@@ -10469,7 +10486,7 @@ _Released 11/18/2018_
 
 ## 3.1.1
 
-_Released 11/02/2018_
+_Released Nov 02, 2018_
 
 **Features:**
 
@@ -10603,7 +10620,7 @@ _Released 11/02/2018_
 
 ## 3.1.0
 
-_Released 08/13/2018_
+_Released Aug 13, 2018_
 
 **Summary:**
 
@@ -10724,7 +10741,7 @@ _Released 08/13/2018_
 
 ## 3.0.3
 
-_Released 07/30/2018_
+_Released Jul 30, 2018_
 
 **Bugfixes:**
 
@@ -10885,7 +10902,7 @@ _Released 07/30/2018_
 
 ## 3.0.2
 
-_Released 06/28/2018_
+_Released Jun 28, 2018_
 
 **Bugfixes:**
 
@@ -11058,7 +11075,7 @@ _Released 06/28/2018_
 
 ## 3.0.1
 
-_Released 05/30/2018_
+_Released May 30, 2018_
 
 **Bugfixes:**
 
@@ -11077,7 +11094,7 @@ _Released 05/30/2018_
 
 ## 3.0.0
 
-_Released 05/29/2018_
+_Released May 29, 2018_
 
 **Summary:**
 
@@ -11326,7 +11343,7 @@ _Released 05/29/2018_
 
 ## 2.1.0
 
-_Released 03/01/2018_
+_Released Mar 01, 2018_
 
 **Bugfixes:**
 
@@ -11358,7 +11375,7 @@ _Released 03/01/2018_
 
 ## 2.0.4
 
-_Released 02/25/2018_
+_Released Feb 25, 2018_
 
 **Bugfixes:**
 
@@ -11369,7 +11386,7 @@ _Released 02/25/2018_
 
 ## 2.0.3
 
-_Released 02/21/2018_
+_Released Feb 21, 2018_
 
 **Bugfixes:**
 
@@ -11389,7 +11406,7 @@ _Released 02/21/2018_
 
 ## 2.0.2
 
-_Released 02/17/2018_
+_Released Feb 17, 2018_
 
 **Bugfixes:**
 
@@ -11409,7 +11426,7 @@ _Released 02/17/2018_
 
 ## 2.0.1
 
-_Released 02/16/2018_
+_Released Feb 16, 2018_
 
 **Bugfixes:**
 
@@ -11425,7 +11442,7 @@ _Released 02/16/2018_
 
 ## 2.0.0
 
-_Released 02/15/2018_
+_Released Feb 15, 2018_
 
 **Breaking Changes:**
 
@@ -11521,7 +11538,7 @@ _Released 02/15/2018_
 
 ## 1.4.2
 
-_Released 02/04/2018_
+_Released Feb 04, 2018_
 
 **Bugfixes:**
 
@@ -11569,7 +11586,7 @@ _Released 02/04/2018_
 
 ## 1.4.1
 
-_Released 12/26/2017_
+_Released Dec 26, 2017_
 
 **Bugfixes:**
 
@@ -11606,7 +11623,7 @@ _Released 12/26/2017_
 
 ## 1.4.0
 
-_Released 12/19/2017_
+_Released Dec 19, 2017_
 
 **Features:**
 
@@ -11631,7 +11648,7 @@ _Released 12/19/2017_
 
 ## 1.3.0
 
-_Released 12/17/2017_
+_Released Dec 17, 2017_
 
 **Features:**
 
@@ -11663,7 +11680,7 @@ Documentation Changes:
 
 ## 1.2.0
 
-_Released 12/14/2017_
+_Released Dec 14, 2017_
 
 **Features:**
 
@@ -11718,7 +11735,7 @@ _Released 12/14/2017_
 
 ## 1.1.4
 
-_Released 12/06/2017_
+_Released Dec 06, 2017_
 
 **Bugfixes:**
 
@@ -11753,7 +11770,7 @@ _Released 12/06/2017_
 
 ## 1.1.3
 
-_Released 12/03/2017_
+_Released Dec 03, 2017_
 
 **Bugfixes:**
 
@@ -11801,7 +11818,7 @@ _Released 12/03/2017_
 
 ## 1.1.2
 
-_Released 11/26/2017_
+_Released Nov 26, 2017_
 
 **Bugfixes:**
 
@@ -11826,7 +11843,7 @@ _Released 11/26/2017_
 
 ## 1.1.1
 
-_Released 11/20/2017_
+_Released Nov 20, 2017_
 
 **Bugfixes:**
 
@@ -11838,7 +11855,7 @@ _Released 11/20/2017_
 
 ## 1.1.0
 
-_Released 11/19/2017_
+_Released Nov 19, 2017_
 
 **Summary:**
 
@@ -11918,7 +11935,7 @@ _Released 11/19/2017_
 
 ## 1.0.3
 
-_Released 10/29/2017_
+_Released Oct 29, 2017_
 
 **Features:**
 
@@ -11967,7 +11984,7 @@ _Released 10/29/2017_
 
 ## 1.0.2
 
-_Released 10/13/2017_
+_Released Oct 13, 2017_
 
 **Bugfixes:**
 
@@ -11995,7 +12012,7 @@ _Released 10/13/2017_
 
 ## 1.0.1
 
-_Released 10/10/2017_
+_Released Oct 10, 2017_
 
 **Bugfixes:**
 
@@ -12006,7 +12023,7 @@ _Released 10/10/2017_
 
 ## 1.0.0
 
-_Released 10/09/2017_
+_Released Oct 09, 2017_
 
 **Summary:**
 
@@ -12064,14 +12081,14 @@ _Released 10/09/2017_
 
 ## 0.20.3
 
-_Released 10/06/2017_
+_Released Oct 06, 2017_
 
 - Improved verifying the binary for the first time after an `npm install`. Fixes
   [#709](https://github.com/cypress-io/cypress/issues/709).
 
 ## 0.20.2
 
-_Released 10/06/2017_
+_Released Oct 06, 2017_
 
 **Possibly Breaking Changes:**
 
@@ -12102,7 +12119,7 @@ _Released 10/06/2017_
 
 ## 0.20.1
 
-_Released 09/17/2017_
+_Released Sep 17, 2017_
 
 **Features:**
 
@@ -12155,7 +12172,7 @@ _Released 09/17/2017_
 
 ## 0.20.0
 
-_Released 09/10/2017_
+_Released Sep 10, 2017_
 
 **Summary:**
 
@@ -12561,7 +12578,7 @@ Note: we are still updating all of the docs to reflect all the `0.20.0` changes.
 
 ## 0.19.4
 
-_Released 06/18/2017_
+_Released Jun 18, 2017_
 
 **Bugfixes:**
 
@@ -12571,7 +12588,7 @@ Fixed [.type()](/api/commands/type) not firing `input` event for
 
 ## 0.19.3
 
-_Released 06/14/2017_
+_Released Jun 14, 2017_
 
 **Bugfixes:**
 
@@ -12581,7 +12598,7 @@ _Released 06/14/2017_
 
 ## 0.19.2
 
-_Released 04/16/2017_
+_Released Apr 16, 2017_
 
 **Features:**
 
@@ -12630,7 +12647,7 @@ _Released 04/16/2017_
 
 ## 0.19.1
 
-_Released 03/09/2017_
+_Released Mar 09, 2017_
 
 **Features:**
 
@@ -12674,7 +12691,7 @@ _Released 03/09/2017_
 
 ## 0.19.0
 
-_Released 02/11/2017_
+_Released Feb 11, 2017_
 
 **Notes:**
 
@@ -12759,7 +12776,7 @@ _Released 02/11/2017_
 
 ## 0.18.8
 
-_Released 02/05/2017_
+_Released Feb 05, 2017_
 
 **Overview:**
 
@@ -12809,7 +12826,7 @@ _Released 02/05/2017_
 
 ## 0.18.7
 
-_Released 01/30/2017_
+_Released Jan 30, 2017_
 
 **Bugfixes:**
 
@@ -12819,7 +12836,7 @@ _Released 01/30/2017_
 
 ## 0.18.6
 
-_Released 01/29/2017_
+_Released Jan 29, 2017_
 
 **Features:**
 
@@ -12857,7 +12874,7 @@ _Released 01/29/2017_
 
 ## 0.18.5
 
-_Released 01/08/2017_
+_Released Jan 08, 2017_
 
 **Features:**
 
@@ -12884,7 +12901,7 @@ _Released 01/08/2017_
 
 ## 0.18.4
 
-_Released 12/28/2016_
+_Released Dec 28, 2016_
 
 **Bugfixes:**
 
@@ -12909,7 +12926,7 @@ _Released 12/28/2016_
 
 ## 0.18.3
 
-_Released 12/18/2016_
+_Released Dec 18, 2016_
 
 **Features:**
 
@@ -12936,7 +12953,7 @@ _Released 12/18/2016_
 
 ## 0.18.2
 
-_Released 12/15/2016_
+_Released Dec 15, 2016_
 
 **Bugfixes:**
 
@@ -12960,7 +12977,7 @@ _Released 12/15/2016_
 
 ## 0.18.1
 
-_Released 12/11/2016_
+_Released Dec 11, 2016_
 
 **Notes:**
 
@@ -13038,7 +13055,7 @@ _Released 12/11/2016_
 
 ## 0.18.0
 
-_Released 11/27/2016_
+_Released Nov 27, 2016_
 
 **Notes:**
 
@@ -13105,7 +13122,7 @@ _Released 11/27/2016_
 
 ## 0.17.12
 
-_Released 11/21/2016_
+_Released Nov 21, 2016_
 
 **Bugfixes:**
 
@@ -13139,7 +13156,7 @@ _Released 11/21/2016_
 
 ## 0.17.11
 
-_Released 11/16/2016_
+_Released Nov 16, 2016_
 
 **Roadmap:**
 
@@ -13196,7 +13213,7 @@ _Released 11/16/2016_
 
 ## 0.17.10
 
-_Released 11/07/2016_
+_Released Nov 07, 2016_
 
 **Bugfixes:**
 
@@ -13219,7 +13236,7 @@ _Released 11/07/2016_
 
 ## 0.17.9
 
-_Released 10/22/2016_
+_Released Oct 22, 2016_
 
 **Bugfixes:**
 
@@ -13245,7 +13262,7 @@ _Released 10/22/2016_
 
 ## 0.17.8
 
-_Released 10/13/2016_
+_Released Oct 13, 2016_
 
 **Bugfixes:**
 
@@ -13275,7 +13292,7 @@ _Released 10/13/2016_
 
 ## 0.17.7
 
-_Released 10/12/2016_
+_Released Oct 12, 2016_
 
 **Features:**
 
@@ -13303,7 +13320,7 @@ _Released 10/12/2016_
 
 ## 0.17.6
 
-_Released 10/04/2016_
+_Released Oct 04, 2016_
 
 **Features:**
 
@@ -13334,7 +13351,7 @@ _Released 10/04/2016_
 
 ## 0.17.5
 
-_Released 10/02/2016_
+_Released Oct 02, 2016_
 
 **Features:**
 
@@ -13402,7 +13419,7 @@ _Released 10/02/2016_
 
 ## 0.17.4
 
-_Released 09/12/2016_
+_Released Sep 12, 2016_
 
 **Breaking Changes:**
 
@@ -13435,7 +13452,7 @@ _Released 09/12/2016_
 
 ## 0.17.3
 
-_Released 09/11/2016_
+_Released Sep 11, 2016_
 
 **Features:**
 
@@ -13462,7 +13479,7 @@ _Released 09/11/2016_
 
 ## 0.17.2
 
-_Released 09/06/2016_
+_Released Sep 06, 2016_
 
 **Notes:**
 
@@ -13526,7 +13543,7 @@ _Released 09/06/2016_
 
 ## 0.17.1
 
-_Released 08/31/2016_
+_Released Aug 31, 2016_
 
 **Features:**
 
@@ -13571,7 +13588,7 @@ _Released 08/31/2016_
 
 ## 0.17.0
 
-_Released 08/30/2016_
+_Released Aug 30, 2016_
 
 **Overview:**
 
@@ -13716,7 +13733,7 @@ _Released 08/30/2016_
 
 ## 0.16.5
 
-_Released 07/31/2016_
+_Released Jul 31, 2016_
 
 **Bugfixes:**
 
@@ -13725,7 +13742,7 @@ _Released 07/31/2016_
 
 ## 0.16.4
 
-_Released 06/17/2016_
+_Released Jun 17, 2016_
 
 **Bugfixes:**
 
@@ -13737,7 +13754,7 @@ _Released 06/17/2016_
 
 ## 0.16.3
 
-_Released 06/17/2016_
+_Released Jun 17, 2016_
 
 **Features:**
 
@@ -13793,7 +13810,7 @@ _Released 06/17/2016_
 
 ## 0.16.2
 
-_Released 06/11/2016_
+_Released Jun 11, 2016_
 
 **Features:**
 
@@ -13853,7 +13870,7 @@ _Released 06/11/2016_
 
 ## 0.16.1
 
-_Released 05/22/2016_
+_Released May 22, 2016_
 
 **Features:**
 
@@ -13882,7 +13899,7 @@ _Released 05/22/2016_
 
 ## 0.16.0
 
-_Released 05/17/2016_
+_Released May 17, 2016_
 
 **Notes:**
 
@@ -14019,7 +14036,7 @@ _Released 05/17/2016_
 
 ## 0.15.4
 
-_Released 04/22/2016_
+_Released Apr 22, 2016_
 
 **Notes:**
 
@@ -14066,7 +14083,7 @@ _Released 04/22/2016_
 
 ## 0.15.3
 
-_Released 04/10/2016_
+_Released Apr 10, 2016_
 
 **Features:**
 
@@ -14123,7 +14140,7 @@ _Released 04/10/2016_
 
 ## 0.15.2
 
-_Released 04/03/2016_
+_Released Apr 03, 2016_
 
 **Features:**
 
@@ -14150,7 +14167,7 @@ _Released 04/03/2016_
 
 ## 0.15.1
 
-_Released 04/01/2016_
+_Released Apr 01, 2016_
 
 **Features:**
 
@@ -14180,7 +14197,7 @@ _Released 04/01/2016_
 
 ## 0.15.0
 
-_Released 03/28/2016_
+_Released Mar 28, 2016_
 
 **Overview:**
 
@@ -14255,7 +14272,7 @@ More Info:
 
 ## 0.14.3
 
-_Released 03/20/2016_
+_Released Mar 20, 2016_
 
 **Features:**
 
@@ -14284,7 +14301,7 @@ _Released 03/20/2016_
 
 ## 0.14.2
 
-_Released 03/14/2016_
+_Released Mar 14, 2016_
 
 **Bugfixes:**
 
@@ -14308,7 +14325,7 @@ _Released 03/14/2016_
 
 ## 0.14.1
 
-_Released 03/13/2016_
+_Released Mar 13, 2016_
 
 **Features:**
 
@@ -14349,7 +14366,7 @@ _Released 03/13/2016_
 
 ## 0.14.0
 
-_Released 03/08/2016_
+_Released Mar 08, 2016_
 
 **Summary:**
 
@@ -14432,7 +14449,7 @@ Known Issues:
 
 ## 0.13.9
 
-_Released 01/28/2016_
+_Released Jan 28, 2016_
 
 **Bugfixes:**
 
@@ -14455,7 +14472,7 @@ _Released 01/28/2016_
 
 ## 0.13.8
 
-_Released 01/24/2016_
+_Released Jan 24, 2016_
 
 **Features:**
 
@@ -14483,7 +14500,7 @@ _Released 01/24/2016_
 
 ## 0.13.7
 
-_Released 01/17/2016_
+_Released Jan 17, 2016_
 
 **Bugfixes:**
 
@@ -14509,7 +14526,7 @@ _Released 01/17/2016_
 
 ## 0.13.6
 
-_Released 01/09/2016_
+_Released Jan 09, 2016_
 
 **Features:**
 
@@ -14532,7 +14549,7 @@ _Released 01/09/2016_
 
 ## 0.13.5
 
-_Released 01/03/2016_
+_Released Jan 03, 2016_
 
 **Features:**
 
@@ -14552,7 +14569,7 @@ _Released 01/03/2016_
 
 ## 0.13.4
 
-_Released 12/31/2015_
+_Released Dec 31, 2015_
 
 **Features:**
 
@@ -14592,7 +14609,7 @@ _Released 12/31/2015_
 
 ## 0.13.3
 
-_Released 12/25/2015_
+_Released Dec 25, 2015_
 
 **Notes:**
 
@@ -14650,7 +14667,7 @@ _Released 12/25/2015_
 
 ## 0.13.2
 
-_Released 12/20/2015_
+_Released Dec 20, 2015_
 
 **Notes:**
 
@@ -14704,7 +14721,7 @@ _Released 12/20/2015_
 
 ## 0.13.1
 
-_Released 12/11/2015_
+_Released Dec 11, 2015_
 
 **Notes:**
 
@@ -14724,7 +14741,7 @@ _Released 12/11/2015_
 
 ## 0.13.0
 
-_Released 12/09/2015_
+_Released Dec 09, 2015_
 
 **Summary:**
 
@@ -14769,7 +14786,7 @@ _Released 12/09/2015_
 
 ## 0.12.8
 
-_Released 12/02/2015_
+_Released Dec 02, 2015_
 
 **Features:**
 
@@ -14805,7 +14822,7 @@ _Released 12/02/2015_
 
 ## 0.12.7
 
-_Released 11/30/2015_
+_Released Nov 30, 2015_
 
 **Bugfixes:**
 
@@ -14818,7 +14835,7 @@ _Released 11/30/2015_
 
 ## 0.12.6
 
-_Released 11/29/2015_
+_Released Nov 29, 2015_
 
 **Features:**
 
@@ -14864,7 +14881,7 @@ _Released 11/29/2015_
 
 ## 0.12.5
 
-_Released 11/22/2015_
+_Released Nov 22, 2015_
 
 **Features:**
 
@@ -14884,7 +14901,7 @@ _Released 11/22/2015_
 
 ## 0.12.4
 
-_Released 11/19/2015_
+_Released Nov 19, 2015_
 
 **Features:**
 
@@ -14918,7 +14935,7 @@ _Released 11/19/2015_
 
 ## 0.12.3
 
-_Released 11/04/2015_
+_Released Nov 04, 2015_
 
 **Bugfixes:**
 
@@ -14929,7 +14946,7 @@ _Released 11/04/2015_
 
 ## 0.12.2
 
-_Released 11/01/2015_
+_Released Nov 01, 2015_
 
 **Features:**
 
@@ -14951,7 +14968,7 @@ _Released 11/01/2015_
 
 ## 0.12.1
 
-_Released 10/28/2015_
+_Released Oct 28, 2015_
 
 **Bugfixes:**
 
@@ -14966,7 +14983,7 @@ _Released 10/28/2015_
 
 ## 0.12.0
 
-_Released 10/23/2015_
+_Released Oct 23, 2015_
 
 **Summary:**
 
@@ -15070,7 +15087,7 @@ _Released 10/23/2015_
 
 ## 0.11.13
 
-_Released 10/08/2015_
+_Released Oct 08, 2015_
 
 **Bugfixes:**
 
@@ -15083,7 +15100,7 @@ _Released 10/08/2015_
 
 ## 0.11.12
 
-_Released 10/07/2015_
+_Released Oct 07, 2015_
 
 **Features:**
 
@@ -15109,7 +15126,7 @@ _Released 10/07/2015_
 
 ## 0.11.11
 
-_Released 10/04/2015_
+_Released Oct 04, 2015_
 
 **Bugfixes:**
 
@@ -15131,7 +15148,7 @@ _Released 10/04/2015_
 
 ## 0.11.10
 
-_Released 10/04/2015_
+_Released Oct 04, 2015_
 
 **Features:**
 
@@ -15151,7 +15168,7 @@ _Released 10/04/2015_
 
 ## 0.11.9
 
-_Released 10/03/2015_
+_Released Oct 03, 2015_
 
 **Features:**
 
@@ -15180,7 +15197,7 @@ _Released 10/03/2015_
 
 ## 0.11.8
 
-_Released 09/25/2015_
+_Released Sep 25, 2015_
 
 **Features:**
 
@@ -15197,7 +15214,7 @@ _Released 09/25/2015_
 
 ## 0.11.7
 
-_Released 09/25/2015_
+_Released Sep 25, 2015_
 
 **Bugfixes:**
 
@@ -15208,7 +15225,7 @@ _Released 09/25/2015_
 
 ## 0.11.6
 
-_Released 09/25/2015_
+_Released Sep 25, 2015_
 
 **Bugfixes:**
 
@@ -15237,7 +15254,7 @@ _Released 09/25/2015_
 
 ## 0.11.5
 
-_Released 09/20/2015_
+_Released Sep 20, 2015_
 
 **Features:**
 
@@ -15272,7 +15289,7 @@ _Released 09/20/2015_
 
 ## 0.11.4
 
-_Released 09/17/2015_
+_Released Sep 17, 2015_
 
 **Features:**
 
@@ -15297,7 +15314,7 @@ _Released 09/17/2015_
 
 ## 0.11.3
 
-_Released 09/16/2015_
+_Released Sep 16, 2015_
 
 **Features:**
 
@@ -15317,7 +15334,7 @@ _Released 09/16/2015_
 
 ## 0.11.2
 
-_Released 09/14/2015_
+_Released Sep 14, 2015_
 
 **Bugfixes:**
 
@@ -15331,7 +15348,7 @@ _Released 09/14/2015_
 
 ## 0.11.1
 
-_Released 09/14/2015_
+_Released Sep 14, 2015_
 
 **Bugfixes:**
 
@@ -15351,7 +15368,7 @@ _Released 09/14/2015_
 
 ## 0.11.0
 
-_Released 09/13/2015_
+_Released Sep 13, 2015_
 
 **Summary:**
 
@@ -15466,7 +15483,7 @@ _Released 09/13/2015_
 
 ## 0.10.8
 
-_Released 08/21/2015_
+_Released Aug 21, 2015_
 
 **Features:**
 
@@ -15475,7 +15492,7 @@ _Released 08/21/2015_
 
 ## 0.10.7
 
-_Released 08/16/2015_
+_Released Aug 16, 2015_
 
 **Features:**
 
@@ -15490,7 +15507,7 @@ _Released 08/16/2015_
 
 ## 0.10.6
 
-_Released 08/15/2015_
+_Released Aug 15, 2015_
 
 **Bugfixes:**
 
@@ -15504,7 +15521,7 @@ _Released 08/15/2015_
 
 ## 0.10.5
 
-_Released 08/13/2015_
+_Released Aug 13, 2015_
 
 **Bugfixes:**
 
@@ -15527,7 +15544,7 @@ _Released 08/13/2015_
 
 ## 0.10.4
 
-_Released 08/11/2015_
+_Released Aug 11, 2015_
 
 **Bugfixes:**
 
@@ -15541,7 +15558,7 @@ _Released 08/11/2015_
 
 ## 0.10.3
 
-_Released 08/10/2015_
+_Released Aug 10, 2015_
 
 **Bugfixes:**
 
@@ -15563,7 +15580,7 @@ _Released 08/10/2015_
 
 ## 0.10.2
 
-_Released 08/10/2015_
+_Released Aug 10, 2015_
 
 **Bugfixes:**
 
@@ -15577,7 +15594,7 @@ _Released 08/10/2015_
 
 ## 0.10.1
 
-_Released 08/07/2015_
+_Released Aug 07, 2015_
 
 **Bugfixes:**
 
@@ -15589,7 +15606,7 @@ _Released 08/07/2015_
 
 ## 0.10.0
 
-_Released 08/06/2015_
+_Released Aug 06, 2015_
 
 **Summary:**
 
@@ -15662,7 +15679,7 @@ _Released 08/06/2015_
 
 ## 0.9.6
 
-_Released 07/27/2015_
+_Released Jul 27, 2015_
 
 **Bugfixes:**
 
@@ -15672,7 +15689,7 @@ _Released 07/27/2015_
 
 ## 0.9.5
 
-_Released 07/14/2015_
+_Released Jul 14, 2015_
 
 **Features:**
 
@@ -15689,7 +15706,7 @@ _Released 07/14/2015_
 
 ## 0.9.4
 
-_Released 07/06/2015_
+_Released Jul 06, 2015_
 
 **Features:**
 
@@ -15713,7 +15730,7 @@ _Released 07/06/2015_
 
 ## 0.9.3
 
-_Released 07/06/2015_
+_Released Jul 06, 2015_
 
 **Features:**
 
@@ -15742,7 +15759,7 @@ _Released 07/06/2015_
 
 ## 0.9.2
 
-_Released 07/04/2015_
+_Released Jul 04, 2015_
 
 **Features:**
 
@@ -15759,7 +15776,7 @@ _Released 07/04/2015_
 
 ## 0.9.1
 
-_Released 07/03/2015_
+_Released Jul 03, 2015_
 
 **Features:**
 
@@ -15796,7 +15813,7 @@ _Released 07/03/2015_
 
 ## 0.9.0
 
-_Released 07/02/2015_
+_Released Jul 02, 2015_
 
 **Summary:**
 
@@ -15834,7 +15851,7 @@ _Released 07/02/2015_
 
 ## 0.8.1
 
-_Released 06/30/2015_
+_Released Jun 30, 2015_
 
 **Bugfixes:**
 
@@ -15850,7 +15867,7 @@ _Released 06/30/2015_
 
 ## 0.8.0
 
-_Released 06/26/2015_
+_Released Jun 26, 2015_
 
 **Summary:**
 
@@ -15910,7 +15927,7 @@ _Released 06/26/2015_
 
 ## 0.7.6
 
-_Released 06/23/2015_
+_Released Jun 23, 2015_
 
 **Bugfixes:**
 
@@ -15921,7 +15938,7 @@ _Released 06/23/2015_
 
 ## 0.7.5
 
-_Released 06/19/2015_
+_Released Jun 19, 2015_
 
 **Bugfixes:**
 
@@ -15937,7 +15954,7 @@ _Released 06/19/2015_
 
 ## 0.7.4
 
-_Released 06/18/2015_
+_Released Jun 18, 2015_
 
 **Misc:**
 
@@ -15952,7 +15969,7 @@ _Released 06/18/2015_
 
 ## 0.7.3
 
-_Released 06/17/2015_
+_Released Jun 17, 2015_
 
 **Features:**
 
@@ -15978,7 +15995,7 @@ _Released 06/17/2015_
 
 ## 0.7.2
 
-_Released 06/17/2015_
+_Released Jun 17, 2015_
 
 **Bugfixes:**
 
@@ -15988,7 +16005,7 @@ _Released 06/17/2015_
 
 ## 0.7.1
 
-_Released 06/16/2015_
+_Released Jun 16, 2015_
 
 **Bugfixes:**
 
@@ -16006,7 +16023,7 @@ _Released 06/16/2015_
 
 ## 0.7.0
 
-_Released 06/15/2015_
+_Released Jun 15, 2015_
 
 **Features:**
 
@@ -16037,7 +16054,7 @@ _Released 06/15/2015_
 
 ## 0.6.14
 
-_Released 06/11/2015_
+_Released Jun 11, 2015_
 
 **Features:**
 
@@ -16066,7 +16083,7 @@ _Released 06/11/2015_
 
 ## 0.6.13
 
-_Released 06/09/2015_
+_Released Jun 09, 2015_
 
 **Bugfixes:**
 
@@ -16079,7 +16096,7 @@ _Released 06/09/2015_
 
 ## 0.6.12
 
-_Released 06/09/2015_
+_Released Jun 09, 2015_
 
 **Bugfixes:**
 
@@ -16102,7 +16119,7 @@ _Released 06/09/2015_
 
 ## 0.6.11
 
-_Released 06/08/2015_
+_Released Jun 08, 2015_
 
 **Bugfixes:**
 
@@ -16121,7 +16138,7 @@ _Released 06/08/2015_
 
 ## 0.6.10
 
-_Released 06/06/2015_
+_Released Jun 06, 2015_
 
 **Bugfixes:**
 
@@ -16145,7 +16162,7 @@ _Released 06/06/2015_
 
 ## 0.6.9
 
-_Released 06/06/2015_
+_Released Jun 06, 2015_
 
 **Bugfixes:**
 
@@ -16153,7 +16170,7 @@ _Released 06/06/2015_
 
 ## 0.6.8
 
-_Released 06/05/2015_
+_Released Jun 05, 2015_
 
 **Features:**
 
@@ -16182,7 +16199,7 @@ _Released 06/05/2015_
 
 ## 0.6.7
 
-_Released 06/04/2015_
+_Released Jun 04, 2015_
 
 **Features:**
 
@@ -16223,7 +16240,7 @@ _Released 06/04/2015_
 
 ## 0.6.6
 
-_Released 05/31/2015_
+_Released May 31, 2015_
 
 **Bugfixes:**
 
@@ -16232,7 +16249,7 @@ _Released 05/31/2015_
 
 ## 0.6.5
 
-_Released 05/23/2015_
+_Released May 23, 2015_
 
 **Features:**
 
@@ -16259,7 +16276,7 @@ _Released 05/23/2015_
 
 ## 0.6.4
 
-_Released 05/21/2015_
+_Released May 21, 2015_
 
 **Bugfixes:**
 
@@ -16269,7 +16286,7 @@ _Released 05/21/2015_
 
 ## 0.6.3
 
-_Released 05/20/2015_
+_Released May 20, 2015_
 
 **Misc:**
 
@@ -16277,7 +16294,7 @@ _Released 05/20/2015_
 
 ## 0.6.2
 
-_Released 05/20/2015_
+_Released May 20, 2015_
 
 **Bugfixes:**
 
@@ -16290,7 +16307,7 @@ _Released 05/20/2015_
 
 ## 0.6.1
 
-_Released 05/15/2015_
+_Released May 15, 2015_
 
 **Bugfixes:**
 
@@ -16308,7 +16325,7 @@ _Released 05/15/2015_
 
 ## 0.6.0
 
-_Released 05/14/2015_
+_Released May 14, 2015_
 
 **Features:**
 
@@ -16349,7 +16366,7 @@ _Released 05/14/2015_
 
 ## 0.5.15
 
-_Released 05/07/2015_
+_Released May 07, 2015_
 
 **Bugfixes:**
 
@@ -16360,7 +16377,7 @@ _Released 05/07/2015_
 
 ## 0.5.14
 
-_Released 05/06/2015_
+_Released May 06, 2015_
 
 **Features:**
 
@@ -16390,7 +16407,7 @@ _Released 05/06/2015_
 
 ## 0.5.13
 
-_Released 05/04/2015_
+_Released May 04, 2015_
 
 **Features:**
 
@@ -16415,7 +16432,7 @@ _Released 05/04/2015_
 
 ## 0.5.12
 
-_Released 04/30/2015_
+_Released Apr 30, 2015_
 
 **Features:**
 
@@ -16437,7 +16454,7 @@ _Released 04/30/2015_
 
 ## 0.5.11
 
-_Released 04/29/2015_
+_Released Apr 29, 2015_
 
 **Bugfixes:**
 
@@ -16451,7 +16468,7 @@ _Released 04/29/2015_
 
 ## 0.5.10
 
-_Released 04/28/2015_
+_Released Apr 28, 2015_
 
 **Features:**
 
@@ -16480,7 +16497,7 @@ _Released 04/28/2015_
 
 ## 0.5.9
 
-_Released 04/26/2015_
+_Released Apr 26, 2015_
 
 **Features:**
 
@@ -16504,7 +16521,7 @@ _Released 04/26/2015_
 
 ## 0.5.8
 
-_Released 04/24/2015_
+_Released Apr 24, 2015_
 
 **Features:**
 
@@ -16535,7 +16552,7 @@ _Released 04/24/2015_
 
 ## 0.5.7
 
-_Released 04/23/2015_
+_Released Apr 23, 2015_
 
 **Features:**
 
@@ -16556,7 +16573,7 @@ _Released 04/23/2015_
 
 ## 0.5.6
 
-_Released 04/22/2015_
+_Released Apr 22, 2015_
 
 **Features:**
 
@@ -16584,7 +16601,7 @@ _Released 04/22/2015_
 
 ## 0.5.5
 
-_Released 04/20/2015_
+_Released Apr 20, 2015_
 
 **Features:**
 
@@ -16601,7 +16618,7 @@ _Released 04/20/2015_
 
 ## 0.5.4
 
-_Released 04/20/2015_
+_Released Apr 20, 2015_
 
 **Features:**
 
@@ -16616,7 +16633,7 @@ _Released 04/20/2015_
 
 ## 0.5.3
 
-_Released 04/19/2015_
+_Released Apr 19, 2015_
 
 **Bugfixes:**
 
@@ -16634,7 +16651,7 @@ Misc
 
 ## 0.5.2
 
-_Released 04/17/2015_
+_Released Apr 17, 2015_
 
 **Bugfixes:**
 
@@ -16642,7 +16659,7 @@ _Released 04/17/2015_
 
 ## 0.5.1
 
-_Released 04/16/2015_
+_Released Apr 16, 2015_
 
 **Misc:**
 
@@ -16651,7 +16668,7 @@ _Released 04/16/2015_
 
 ## 0.5.0
 
-_Released 04/15/2015_
+_Released Apr 15, 2015_
 
 **Misc:**
 
@@ -16659,7 +16676,7 @@ _Released 04/15/2015_
 
 ## 0.4.7
 
-_Released 04/15/2015_
+_Released Apr 15, 2015_
 
 **Misc:**
 
@@ -16668,7 +16685,7 @@ _Released 04/15/2015_
 
 ## 0.4.6
 
-_Released 04/11/2015_
+_Released Apr 11, 2015_
 
 **Features:**
 
@@ -16679,7 +16696,7 @@ _Released 04/11/2015_
 
 ## 0.4.5
 
-_Released 04/10/2015_
+_Released Apr 10, 2015_
 
 **Features:**
 
@@ -16692,7 +16709,7 @@ _Released 04/10/2015_
 
 ## 0.4.4
 
-_Released 04/09/2015_
+_Released Apr 09, 2015_
 
 **Features:**
 
@@ -16709,7 +16726,7 @@ _Released 04/09/2015_
 
 ## 0.4.3
 
-_Released 04/09/2015_
+_Released Apr 09, 2015_
 
 **Features:**
 
@@ -16730,7 +16747,7 @@ _Released 04/09/2015_
 
 ## 0.4.2
 
-_Released 04/09/2015_
+_Released Apr 09, 2015_
 
 **Bugfixes:**
 
@@ -16744,7 +16761,7 @@ _Released 04/09/2015_
 
 ## 0.4.1
 
-_Released 04/08/2015_
+_Released Apr 08, 2015_
 
 **Features:**
 
@@ -16768,7 +16785,7 @@ _Released 04/08/2015_
 
 ## 0.4.0
 
-_Released 04/02/2015_
+_Released Apr 02, 2015_
 
 **Features:**
 
@@ -16803,7 +16820,7 @@ _Released 04/02/2015_
 
 ## 0.3.15
 
-_Released 03/28/2015_
+_Released Mar 28, 2015_
 
 **Misc:**
 
@@ -16813,7 +16830,7 @@ _Released 03/28/2015_
 
 ## 0.3.14
 
-_Released 03/27/2015_
+_Released Mar 27, 2015_
 
 **Bugfixes:**
 
@@ -16823,7 +16840,7 @@ _Released 03/27/2015_
 
 ## 0.3.13
 
-_Released 03/27/2015_
+_Released Mar 27, 2015_
 
 **Features:**
 
@@ -16852,7 +16869,7 @@ _Released 03/27/2015_
 
 ## 0.3.12
 
-_Released 03/26/2015_
+_Released Mar 26, 2015_
 
 **Bugfixes:**
 
@@ -16874,7 +16891,7 @@ _Released 03/26/2015_
 
 ## 0.3.11
 
-_Released 03/25/2015_
+_Released Mar 25, 2015_
 
 **Bugfixes:**
 
@@ -16888,7 +16905,7 @@ _Released 03/25/2015_
 
 ## 0.3.10
 
-_Released 03/24/2015_
+_Released Mar 24, 2015_
 
 **Bugfixes:**
 
@@ -16903,7 +16920,7 @@ _Released 03/24/2015_
 
 ## 0.3.9
 
-_Released 03/24/2015_
+_Released Mar 24, 2015_
 
 **Features:**
 
@@ -16934,7 +16951,7 @@ _Released 03/24/2015_
 
 ## 0.3.8
 
-_Released 03/22/2015_
+_Released Mar 22, 2015_
 
 **Features:**
 
@@ -16947,7 +16964,7 @@ _Released 03/22/2015_
 
 ## 0.3.7
 
-_Released 03/21/2015_
+_Released Mar 21, 2015_
 
 **Features:**
 
@@ -16955,7 +16972,7 @@ _Released 03/21/2015_
 
 ## 0.3.6
 
-_Released 03/20/2015_
+_Released Mar 20, 2015_
 
 **Features:**
 
@@ -16970,7 +16987,7 @@ _Released 03/20/2015_
 
 ## 0.3.5
 
-_Released 03/20/2015_
+_Released Mar 20, 2015_
 
 **Bugfixes:**
 
@@ -16985,7 +17002,7 @@ _Released 03/20/2015_
 
 ## 0.3.4
 
-_Released 03/19/2015_
+_Released Mar 19, 2015_
 
 **Features:**
 
@@ -17011,7 +17028,7 @@ _Released 03/19/2015_
 
 ## 0.3.3
 
-_Released 03/18/2015_
+_Released Mar 18, 2015_
 
 **Features:**
 

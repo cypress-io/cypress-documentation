@@ -4,6 +4,7 @@ import { useNavbarMobileSidebar } from '@docusaurus/theme-common/internal'
 import DocMenu from '@cypress-design/react-docmenu'
 import { cloneSidebarWithActivePathExpanded } from '../utils'
 import { SidebarLink } from '../SidebarLink'
+import WhatsNew from '../WhatsNew'
 
 interface DocSidebarMobileSecondaryMenuProps {
   sidebar: any
@@ -18,19 +19,22 @@ const DocSidebarMobileSecondaryMenu = ({
   const mobileSidebar = useNavbarMobileSidebar()
   const { items } = cloneSidebarWithActivePathExpanded(sidebar, path)
   return (
-    <DocMenu
-      items={items}
-      LinkComponent={(props) => (
-        <SidebarLink
-          {...props}
-          onClick={() => {
-            mobileSidebar.toggle()
-          }}
-        />
-      )}
-      activePath={path}
-      collapsible
-    />
+    <>
+      <DocMenu
+        items={items}
+        LinkComponent={(props) => (
+          <SidebarLink
+            {...props}
+            onClick={() => {
+              mobileSidebar.toggle()
+            }}
+          />
+        )}
+        activePath={path}
+        collapsible
+      />
+      <WhatsNew path={path} onLinkClick={() => mobileSidebar.toggle()} />
+    </>
   )
 }
 

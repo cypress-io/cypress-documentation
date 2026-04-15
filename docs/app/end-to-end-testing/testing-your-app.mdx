@@ -522,6 +522,33 @@ Feel free to [explore these additional logging in](/app/references/recipes) reci
 
 :::
 
+## Testing Apps You Don't Control
+
+:::danger
+
+<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Trying to
+visit or interact with sites or servers you do not control.
+
+:::
+
+The point of Cypress is to be a tool you use every day to build and test your own applications, not a general purpose web automation tool. You should think carefully about testing applications you **don't control** or haven't been invited to test.
+
+Why?
+
+- They may have security features enabled which prevent Cypress from working,
+  such as detecting Cypress script usage. This can block your access and make it
+  appear that the application website is unresponsive.
+- They have the potential to change at any moment which will break tests.
+- They may do A/B testing which makes it impossible to get consistent results.
+
+However, this is a guideline rather than a hard-and-fast rule. There are legitimate exceptions:
+
+- They are specifically designed to integrate with third parties, e.g. SSO providers.
+- They provide you with a complementary service, e.g. SaaS control panels or analytics.
+- They reuse your content or provide plugins for an app you control.
+
+The key is to carefully weigh the benefits of the tests against the possible disruption and flake these sorts of tests can introduce. See also [Visiting External Sites](/app/core-concepts/best-practices#Visiting-External-Sites) for strategies when this is necessary.
+
 ## Get started
 
 Ok, we're done talking. Now dive in and get started testing your app!

@@ -7,7 +7,6 @@ import ComponentOnlyBadge from "@site/src/components/component-only-badge";
 
 import React from 'react';
 
-// Define the types for the props
 interface ProductHeadingProps {
     product: 'app' | 'cloud' | 'accessibility' | 'ui-coverage'
     plan?: 'team' | 'business' | 'enterprise'

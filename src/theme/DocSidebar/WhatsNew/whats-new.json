@@ -1,0 +1,51 @@
+{
+  "app": [
+    {
+      "label": "Cypress Studio AI",
+      "href": "/app/guides/cypress-studio",
+      "description": "Smart recommendations while building tests.",
+      "showAISparkle": true,
+      "isNew": true
+    },
+    {
+      "label": "AI Skills",
+      "href": "/app/tooling/ai-skills",
+      "description": "Instructions to guide your AI agents.",
+      "showAISparkle": true,
+      "isNew": true
+    }
+  ],
+  "api": [
+    {
+      "label": "cy.expose()",
+      "description": "Safely expose public configuration to tests.",
+      "href": "/api/cypress-api/expose",
+      "isNew": true
+    },
+    {
+      "label": "cy.prompt()",
+      "href": "/api/commands/prompt",
+      "description": "Natural language and self-healing tests.",
+      "showAISparkle": true,
+      "isNew": true
+    }
+  ],
+  "cloud": [
+    {
+      "label": "Cloud MCP",
+      "href": "/cloud/integrations/cloud-mcp",
+      "description": "Connect AI agents directly to Cypress Cloud runs.",
+      "isNew": true
+    }
+  ],
+  "ui-coverage": [
+  ],
+  "accessibility": [
+    {
+      "label": "Cloud MCP",
+      "href": "/cloud/integrations/cloud-mcp",
+      "description": "Handle accessibility issues with AI agents.",
+      "isNew": true
+    }
+  ]
+}
