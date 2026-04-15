@@ -6,8 +6,8 @@ variations in Tabs/code-blocks for Cypress config samples.
 This is developed as a separate package so it can be in TS and have its own
 tests/builds outside of the main docs.
 
-To build run `yarn build`
+To build, from the _project root_ run `npm run build:plugins`
 
-To test run `yarn test`
+To test, from the _project root_ run run `npm run test:plugins`
 
 Visit each plugins readme for docs on each individual plugin.

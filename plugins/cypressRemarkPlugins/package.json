@@ -7,7 +7,7 @@
     "prebuild": "rm -rf ./dist",
     "build": "tsc",
     "build:watch": "yarn prebuild && tsc --watch",
-    "test": "vitest",
+    "test": "vitest run",
     "test2": "jest",
     "test:watch": "jest --watch"
   },
@@ -24,7 +24,6 @@
   ],
   "devDependencies": {
     "@types/mdast": "^3.0.10",
-    "@types/unist": "^2.0.6",
-    "vitest": "^0.16.0"
+    "@types/unist": "^2.0.6"
   }
 }
