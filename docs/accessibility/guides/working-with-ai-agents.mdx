@@ -1,0 +1,75 @@
+---
+sidebar_label: Working with AI agents
+title: 'Working with AI agents | Cypress Accessibility Documentation'
+description: 'Use AI assistants alongside Cypress Accessibility: query Cloud results with Cypress Cloud MCP, align reports with component identification settings, and explore local browser LLM workflows.'
+sidebar_position: 55
+---
+
+<ProductHeading product="accessibility" />
+
+# Working with AI agents
+
+AI coding assistants can speed up accessibility work when they have the right context. This guide outlines patterns that teams are adopting today.
+
+## Cypress Cloud MCP
+
+[Cypress Cloud MCP](/cloud/integrations/cloud-mcp) lets compatible agents pull run metadata, test results, and accessibility summaries from Cypress Cloud using structured tools instead of copy-pasting from the UI.
+
+You can ask your LLM about what issues are present, what patterns exist, and how to break the reports into work units or manage other handoffs like reporting issues to your third-party vendors or content authors.
+
+For example, an open-ended question like "Check the newest Cypress Accessibility results for this project and help me make an action plan to resolve them" should help your agent produce a useful summary of the current state and help quickly bucket things according to expected remediation paths and ownership.
+
+## Component identification techniques
+
+Clear component boundaries make both human triage and agent-assisted fixes easier: violations are grouped predictably, and prompts can refer to the same names you see in Cypress Accessibility.
+
+For LLM use-cases, a few lightweight signals from the page where an element locator can turn into a huge efficiency boost, avoiding the context and tokens needed to parse a full page of HTML or crawl large amounts of code. Instead, you can quickly and accurately identify where in your pages component tree a given element is, and what code rendered it.
+
+- How element and component identity shows up in reports; see [Element identification](/accessibility/core-concepts/element-identification)
+- Tuning [`accessibility.components`](/accessibility/configuration/components) (`componentAttributes`, `componentAttributeFilters`, and related options) so agents and developers share one vocabulary for “what broke”
+
+## Your browser's LLM tooling
+
+If you use Google Chrome, you might have noticed the Gemini AI debugging assistant. Since Cypress Cloud provides fully rendered DOM snapshots for accessibility issues, you are only a few clicks from a debugging session with Chrome Developer Tools.
+
+Here are the steps to follow for this process:
+
+### 1. Click the Print-to-Console shortcut
+
+This logs the exact element reference to your developer console, avoiding any need to inspect or move around the DOM manually, or use search tools to locate your element.
+
+<DocsImage
+  src="/img/accessibility/guides/working-with-ai-agents-print-to-console.png"
+  width="75%"
+  alt="Cypress Cloud accessibility issue view for the rule that all page content should be contained by landmarks, showing the failing CSS selector, action icons beside it, the Print to Console control with its tooltip visible, a Solutions summary stating that some content is not inside landmarks, and a narrow app preview with the affected region outlined."
+/>
+
+### 2. Move to the Elements panel
+
+Right-click the element in the console and choose "Open in Elements panel". This will take you to the full DOM view with the element highlighted. You need to be here for the AI chat to correctly start with the element reference.
+
+<DocsImage
+  src="/img/accessibility/guides/working-with-ai-agents-open-in-elements-panel.png"
+  width="75%"
+  alt="Browser developer tools console showing a logged element line and an inline AI prompt labeled NEW that reads 'Write a comment to generate... add red borders to all the divs.' A context menu is open over the console output with 'Open in Elements panel' highlighted."
+/>
+
+### 3. Start a chat about this element
+
+Right-click the highlighted element and choose "Debug with AI" and then "Start a chat". This will open the chat with this specific element.
+
+<DocsImage
+  src="/img/accessibility/guides/working-with-ai-agents-debug-with-ai-start-chat.png"
+  width="75%"
+  alt="Chrome DevTools Elements panel with a Material UI grid item div selected in the tree. A context menu on the element shows Debug with AI expanded to a submenu listing Start a chat, Assess visibility, and Center element. The Accessibility tab and an AI assistance tab appear in the surrounding tool UI."
+/>
+
+### 4. Ask about the issue.
+
+Use the "Share button" or copy the rule that is failing into the chat, and Gemini can explore the DOM, explain the rule in more detail, and offer solution options.
+
+<DocsImage
+  src="/img/accessibility/guides/working-with-ai-agents-test-runner-ai-assistance.png"
+  width="75%"
+  alt="Cypress Test Runner in a three-pane layout: on the left, New Cypress Accessibility Failures lists a moderate landmarks rule and a CSS selector for the failing element; the center shows the Real World App with a highlight on the navigation drawer; on the right, the AI assistance tab lists completed diagnostic steps such as reading styles and listing landmarks, then explains that drawer content sits outside landmark regions and suggests wrapping it in a nav element or role navigation."
+/>
