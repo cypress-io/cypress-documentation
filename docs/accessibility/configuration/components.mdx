@@ -15,14 +15,12 @@ For example, here's a button element in a hero section:
 
 ```html
 <div data-page-area="hero" class="mt-2 hero__1asdK">
-  <button 
-    data-design-system="IconButton" 
-    data-track="analytics-click-id" 
+  <button
+    data-design-system="IconButton"
+    data-track="analytics-click-id"
     id="#button123"
   >
-    <span style="display:none">
-      Sign up now!
-    </span>
+    <span style="display:none"> Sign up now! </span>
   </button>
 </div>
 ```
@@ -173,14 +171,13 @@ Keep both attributes required in general, but **exclude** the component segment 
 
 After saving configuration in the [App Quality settings](/accessibility/configuration/overview), you can [reprocess an existing run](/accessibility/configuration/overview#viewing-configuration-for-a-run) to preview selector changes without a new test run.
 
-
 ## Comparison to other config properties
 
-This is separate from [`attributeFilters`](/accessibility/configuration/attributefilters) and [`significantAttributes`](/accessibility/configuration/significantAttributes): 
+This is separate from [`attributeFilters`](/accessibility/configuration/attributefilters) and [`significantAttributes`](/accessibility/configuration/significantAttributes):
 
 - `attributeFilters` are used to avoid specific attributes and values being used for element identification and tracking
 - `significantAttributes` indicate preferred attributes for element identification and tracking, when the attributes would uniquely identify elements within a given state in a page.
 
-`componentAttributes` and `componentAttributeFilters` specifically 
+`componentAttributes` and `componentAttributeFilters` specifically
 
 For background on how Cypress picks identifiers, see [Element identification](/accessibility/core-concepts/element-identification).
