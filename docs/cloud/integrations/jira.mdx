@@ -15,11 +15,11 @@ sidebar_label: Jira
 
 - What Cypress Cloud's Jira integration does and when to use it
 - How to install the Cypress for Jira app from the Atlassian Marketplace
-- How to create, link, and track Jira issues directly from test results in Cypress Cloud
+- How to create, link, view, and track Jira issues directly from test results in Cypress Cloud
 
 :::
 
-With Cypress Cloud's Jira integration you can create a Jira issue directly from a specific failing test, attach it to that test's result in Cypress Cloud, and view a running history of every issue ever associated with that test, across all runs. The Jira issue links back to the exact test run in Cypress Cloud, so anyone following up has the full picture without hunting for it.
+With Cypress Cloud's Jira integration you can create a Jira issue directly from a specific test (failing, flaky, or passing), attach it to that test in Cypress Cloud, and view a running history of every issue ever associated with that test, across all runs. The Jira issue links back to the exact test run in Cypress Cloud, so anyone following up has the full picture without hunting for it.
 
 This is a native Jira integration built into Cypress Cloud, not a custom reporter or webhook script. No code changes are required in your test suite.
 
@@ -29,7 +29,8 @@ From any test result in Cypress Cloud, you can:
 
 - **Create a Jira issue** for a failing, flaky, or passing test without leaving Cypress Cloud. You choose the project, issue type, assignee, and additional fields.
 - **Link an existing Jira issue** to the test when the ticket already exists in Jira. The issue appears in that test's results panel and issue history the same way as a newly created issue.
-- **View issue history per test.** Every Jira issue ever created for a given test appears in that test result's panel. When the same test regresses across multiple runs, you can see whether a previous issue was filed and what happened to it.
+- **View issue history per test.** Every Jira issue ever created or linked for a given test appears in that test result's panel. When the same test regresses across multiple runs, you can see whether a previous issue was filed and what happened to it.
+- **Inspect a linked issue from the test panel.** Expand **Jira issue** in the results panel to see assignee, status, and when the issue was created, and open the issue in Jira in one click.
 - **Navigate from Jira back to Cypress Cloud.** Every issue created through this integration includes a direct link to the test run in Cypress Cloud where the issue was filed. Anyone triaging in Jira can jump straight to the test replay, error output, and run context.
 
 The most common use case is tracking and prioritizing failing or flaky tests. But the integration works for passing tests too, which is useful for capturing behavioral notes or flagging intermittent behavior before it becomes a consistent failure.
@@ -43,7 +44,7 @@ per organization.
 
 :::
 
-1. Verify that you have a [Team Cypress Cloud plan](https://cypress.io/pricing).
+1. Verify that you have a [Team Cypress Cloud plan](https://cypress.io/pricing) to use this feature.
 
 1. In Cypress Cloud, go to **Integrations → Jira** and click **+ Enable**.
 
@@ -80,7 +81,7 @@ per organization.
      alt="Atlassian Marketplace installation success notification for Cypress for Jira"
    />
 
-1. Click **Click to Finish Installation** to be redirected to Cypress Cloud, where you will select the Cypress organization to connect.
+1. Confirm the installation by clicking **Click to Finish Installation** to be redirected to Cypress Cloud, where you will select the Cypress organization to connect.
 
    <DocsImage
      src="/img/cloud/integrations/jira/dashboard-jira-atlassian-finish-install-step.png"
@@ -101,7 +102,7 @@ per organization.
      alt="Jira integration completed view in Cypress Cloud showing connected projects"
    />
 
-## Create a Jira issue from a test result
+## Create a Jira issue from a test
 
 You can file a Jira issue from any test result. Here is how to do it for a failing test:
 
@@ -130,22 +131,22 @@ You can file a Jira issue from any test result. Here is how to do it for a faili
 
 The Jira issue includes a link back to this test run in Cypress Cloud, so anyone picking up the issue in Jira has direct access to the failure context.
 
-<DocsImage
-  src="/img/cloud/integrations/jira/dashboard-jira-integration-jira-issue.png"
-  alt="Jira issue showing a link back to the failing test in Cypress Cloud"
-/>
+    <DocsImage
+      src="/img/cloud/integrations/jira/dashboard-jira-integration-jira-issue.png"
+      alt="Jira issue showing a link back to the failing test in Cypress Cloud"
+    />
 
-## Link an existing Jira issue to a test result
+## Link an existing Jira issue to a test
 
 If the Jira ticket already exists, you can attach it to a test from Cypress Cloud without creating a duplicate issue.
 
 1. In Cypress Cloud, open a test run and select the test in the **Test Results** view to open its results panel.
 
-1. Click **Create Issue** to open the Jira modal (the same entry point as creating a new issue).
+1. Click **Create Issue** to open the Jira modal.
 
 1. Select the **Link** tab.
 
-1. In **Jira Issue**, start typing to search Jira. Matching issues from your connected projects appear in a dropdown (you can search by issue key, title text, or other terms that match the issue). Select the issue you want. As an alternative, you can paste the full URL of a Jira issue into the same field.
+1. In **Jira Issue**, start typing to search your Jira project. Matching issues from your connected projects appear in a dropdown (you can search by issue key, title text, or other terms that match the issue). Select the issue you want. As an alternative, you can paste the full URL of a Jira issue into the same field.
 
 1. Click **Link issue**. The issue appears in the results panel for that test and is included in issue history on future runs.
 
@@ -153,6 +154,21 @@ If the Jira ticket already exists, you can attach it to a test from Cypress Clou
      src="/img/cloud/integrations/jira/dashboard-jira-integration-link-existing-issue.png"
      alt="Create Jira issue modal on the Link tab: typing in Jira Issue shows a dropdown list of matching Jira issues to choose from"
    />
+
+## View a linked Jira issue from a test
+
+After an issue is created or linked for a test, you can review it from the test's results panel without opening Jira first.
+
+1. In Cypress Cloud, open a test run and select the test in the **Test Results** view so the results panel opens.
+
+1. Find the **Jira issue** section and expand it.
+
+Inside the expanded section, click the issue to open it directly in Jira. The section also lists **assignee**, **status**, and **date created** for that ticket so you can triage from the test result without copying keys into Jira manually.
+
+<DocsImage
+  src="/img/cloud/integrations/jira/dashboard-jira-integration-inline-issue.png"
+  alt="Cypress Cloud test results panel with the Jira issue section expanded, showing issue key as a link, status, assignee, and when the issue was created"
+/>
 
 ## Understand issue history
 
