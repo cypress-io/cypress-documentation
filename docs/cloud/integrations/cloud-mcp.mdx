@@ -257,7 +257,7 @@ Once connected, your AI agent can autonomously use the following tools. You don'
 
 Each time the Cloud MCP connection is established, any new tools become immediately available.
 
-Some tools are relevant for all Cypress Cloud plans (including free), but some others are for **plan-specific data** like flaky test reporting, or **product-specific data** like Cypress Accessibility violation details. These are only available if you organization has subscriptions for the plans and products that would provide the underlying data.
+Some tools are relevant for all Cypress Cloud plans (including free), but some others are for **plan-specific data** like flaky test reporting, or **product-specific data** like Cypress Accessibility violation details. View and component names in those accessibility responses follow your [`accessibility.components`](/accessibility/configuration/components) configuration. These are only available if your organization has subscriptions for the plans and products that would provide the underlying data.
 
 | Tool                                      | Capability                                                                                                                                                         | Best Use Case                                                           |
 | ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------- |
@@ -301,6 +301,12 @@ To get the most out of Cloud MCP, follow these three principles:
 > "Pull the Cypress accessibility report for the latest run on this branch. List any critical or serious violations grouped by rule, and tell me which views are most impacted."
 
 > "Using Cypress Cloud, get the "color-contrast" failures from run #142 scoped to the "/checkout" view. For each failing element, look at the local CSS and suggest a fix."
+
+To keep MCP output aligned with how your app is structured, configure [`accessibility.components`](/accessibility/configuration/components) in your Cypress project - while not required, this can make it easier and faster to trace issues to their source, consuming minimum resources. 
+
+In general, it's a good idea to look carefully at the _inputs_ for your accessibility reports, to make sure the contents are things you are currently interested in having your agent triage. You can learn how exclude pages or elements, mute known issues for certain elements, and reduce duplication in the [Cypress Accessibility configuration overview](/accessibility/configuration/overview).
+
+
 
 ## FAQs
 
