@@ -7,7 +7,7 @@ it(`should strip out any typings`, async () => {
   function foo(bar: string) {}
   `
 
-  const { jsCode } = await transformTsToJs(code, {})
+  const { jsCode } = await transformTsToJs(code, { prettierOptions: { parser: 'typescript' } })
 
   expect(jsCode).toEqual(`const age = 23
 const name = 'joe'
