@@ -2,7 +2,6 @@
 import MDXComponents from "@theme-original/MDXComponents";
 import AnatomyOfAnError from "@site/docs/partials/_anatomy-of-an-error.mdx";
 import AccessibilityPremiumNote from "@site/docs/partials/_accessibility-premium-note.mdx";
-import AccessibilityComponents from "@site/docs/partials/_accessibility-components.mdx";
 import AttributeFilters from "@site/docs/partials/_attributefilters.mdx";
 import AutoCancellationBenefits from "@site/docs/partials/_auto-cancellation-benefits.mdx";
 import Badge from "@site/src/components/badge";
@@ -171,7 +170,6 @@ export default {
   ...MDXComponents,
   AnatomyOfAnError,
   AccessibilityPremiumNote,
-  AccessibilityComponents,
   AttributeFilters,
   AutoCancellationBenefits,
   Badge,
