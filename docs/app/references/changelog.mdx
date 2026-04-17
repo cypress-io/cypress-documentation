@@ -8,6 +8,27 @@ sidebar_label: Changelog
 
 # Changelog
 
+## 15.14.0
+
+_Released 04/16/2026_
+
+**Performance:**
+
+- Reduced browser memory growth during long interactive runs by clearing stored command log data (messages, URLs, snapshots, console props, and other fields—including custom `Cypress.log` properties) once tests age out of `numTestsKeptInMemory`, so the runner can reclaim memory and stay more responsive. Addressed in [#33601](https://github.com/cypress-io/cypress/pull/33601).
+
+**Features:**
+
+- Cypress now officially supports TypeScript 6. Addresses [#33385](https://github.com/cypress-io/cypress/issues/33385) and [#33511](https://github.com/cypress-io/cypress/issues/33511).
+- Adds Vite 8 support for component testing. Addresses [#32550](https://github.com/cypress-io/cypress/issues/32550) and [#33078](https://github.com/cypress-io/cypress/issues/33078).
+
+**Bugfixes:**
+
+- Fixed an issue where Cypress tests in open mode would not pick up on modified `env` values in the user's config file. Fixed in [#33567](https://github.com/cypress-io/cypress/pull/33567). Fixes [#33372](https://github.com/cypress-io/cypress/issues/33372).
+
+**Dependency Updates:**
+
+- Upgraded `axios` to `1.15.0` to address [CVE-2025-62718](https://www.cve.org/CVERecord?id=CVE-2025-62718) and [CVE-2026-40175](https://www.cve.org/CVERecord?id=CVE-2026-40175) vulnerabilities reported in security scans. Fixes [#33590](https://github.com/cypress-io/cypress/issues/33590).
+
 ## 15.13.1
 
 _Released 04/07/2026_
@@ -8727,7 +8748,7 @@ _Released Nov 27, 2019_
 - Cypress now captures the SHA of builds generated through Travis CI during pull
   requests. This should resolve issues with Cypress status checks sometimes not
   running within
-  [GitHub Integration](/cloud/integrations/source-control/github). Fixes
+  [GitHub Integration](/cloud/integrations/github). Fixes
   [#5728](https://github.com/cypress-io/cypress/issues/5728).
 - Cypress now automatically strips double quotes from
   [--ci-build-id](/app/references/command-line#cypress-run-ci-build-id-lt-id-gt)
@@ -9242,7 +9263,7 @@ _Released Jul 29, 2019_
 **Dashboard Features:**
 
 - We’re excited to announce
-  [GitHub integration](/cloud/integrations/source-control/github) for the
+  [GitHub integration](/cloud/integrations/github) for the
   [Cypress Dashboard](https://on.cypress.io/dashboard). You can now get timely
   and useful test run information within pull-requests via status checks and
   pull-request comments. Learn all about it on
@@ -9342,7 +9363,7 @@ _Released Jul 29, 2019_
 **Documentation Changes:**
 
 - We have new instructions on how to set up
-  [GitHub Integration](/cloud/integrations/source-control/github) with
+  [GitHub Integration](/cloud/integrations/github) with
   the Cypress Dashboard.
 - Updated instructions for adding types for custom commands in the
   [TypeScript Support](/app/tooling/typescript-support#Types-for-Custom-Commands)
