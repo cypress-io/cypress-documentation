@@ -169,8 +169,9 @@ const config = {
       // Styles for this are controlled in src/css/announcement-bar.scss
       announcementBar: {
         //give id a unique value to get a new announcement bar to appear
-        id: 'cy-prompt-experimental-live',
-        content: `📢 NEW! cy.prompt() natural language and self-healing tests <a href="https://www.cypress.io/blog/cy-prompt-experimental-launch?utm_source=docs.cypress.io&utm_medium=cyconf&utm_campaign=cypressconf">now available</a> in the Cypress App.`,
+        id: 'webinar-agentic-confidence-april-2026',
+        // Visual content (including Cypress Design icon) is rendered in src/theme/AnnouncementBar/Content
+        content: `📢 Join us for our live webinar on April 26! <a href="https://cypress.registration.goldcast.io/webinar/5503143f-d40d-48ae-9b52-d132a0888ee3?utm_source=docs.cypress.io&utm_medium=announcement-bar">Closing the Agentic Confidence Gap: Quality Governance for AI-Accelerated Teams</a>`,
         isCloseable: true,
       },
       footer: {
