@@ -19,16 +19,59 @@ You can ask your LLM about what issues are present, what patterns exist, and how
 
 For example, an open-ended question like "Check the newest Cypress Accessibility results for this project and help me make an action plan to resolve them" should help your agent produce a useful summary of the current state and help quickly bucket things according to expected remediation paths and ownership.
 
-See some example prompts in the [Accessibility Triage section](/cloud/integrations/cloud-mcp#The-Accessibility-Triage).
+### Example prompts
 
-## Component identification techniques
+#### Basic
+
+Here are some example prompts to try out:
+
+> "Pull the Cypress Cloud Accessibility report for the latest run on this branch. List any critical or serious violations grouped by rule, and tell me which views are most impacted."
+
+> "Using Cypress Cloud, get the "color-contrast" failures from run #142 scoped to the "/checkout" view. For each failing element, look at the local CSS and suggest a fix."
+
+#### Advanced
+
+Deep dive on solving a specific issue:
+
+```
+You are a front-end expert focused on delivering an accessible product.
+
+The <element_id> selector was flagged as inaccessible by the Cypress Accessibility report. It <element_status> the <rule_severity> rule <rule_name> described as <rule_label>. The proposed solution is <proposed_solution>.
+
+First, verify the issue is actually a problem given how the code is constructed.
+
+If it is a valid issue, explain by briefly summarizing the fix in markdown so I can include it in my code review, then generate a plan to fix this issue (I must approve this plan before you make changes).
+
+If it is not an issue, note it and stop. If there are not enough details to reasonably solve this, explain what other information you need before making changes. If the information is within the Cypress Cloud, submit feedback to the Cypress team.
+```
+
+Determine owners for issues based on specific roles at your company, and who needs to be consulted:
+
+```
+Using Cypress Cloud MCP, find the most recent run in this project with failed accessibility results and create an action plan that groups similar problems together and recommends suitable owners.
+
+Our team includes these roles developers, QA engineers, desingers, product managers, marketers, and accessibility specialists. For each role, determine if they need to be Responsible, Accountable, Consulted, Informed, or not involved.
+```
+
+## Optimizing Cypress Accessibility for MCP use cases
+
+In general, it's a good idea to look carefully at the pages and elements included in your accessibility reports, to make sure the contents are things you are currently interested in having your agent triage.
+
+You can learn how exclude pages or elements, mute known issues for certain elements, and reduce duplication in the [Cypress Accessibility configuration overview](/accessibility/configuration/overview).
+
+There is also configuration for how elements are identified when failures are presented, which can flow directly into the MCP tools in a predictable way to speed up element identification in your codebase.
+
+### Component identification techniques
 
 Clear component boundaries make both human triage and agent-assisted fixes easier: violations are grouped predictably, and prompts can refer to the same names you see in Cypress Accessibility.
 
 For LLM use-cases, a few lightweight signals from the page where an element locator can turn into a huge efficiency boost, avoiding the context and tokens needed to parse a full page of HTML or crawl large amounts of code. Instead, you can quickly and accurately identify where in your pages component tree a given element is, and what code rendered it.
 
-- How element and component identity shows up in reports; see [Element identification](/accessibility/core-concepts/element-identification)
-- Tuning [`accessibility.components`](/accessibility/configuration/components) (`componentAttributes`, `componentAttributeFilters`, and related options) so agents and developers share one vocabulary for “what broke”
+If you don't have attributes like this already, you can ask your agent to add some to your builds with a prompt like this:
+
+```
+Add meaningful `data-cy-component` attributes to the container elements of significant areas of the dom. These will be used for later identification of an element's position in a component tree when reporting accessibility issues, so it should be possible to identify just enough structure to easily find the element in the future, but not be overly verbose.
+```
 
 ## Your browser's LLM tooling
 
