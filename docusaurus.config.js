@@ -171,7 +171,7 @@ const config = {
         //give id a unique value to get a new announcement bar to appear
         id: 'webinar-agentic-confidence-april-2026',
         // Visual content (including Cypress Design icon) is rendered in src/theme/AnnouncementBar/Content
-        content: `📢 Join us for our live webinar on April 23rd! <a href="https://cypress.registration.goldcast.io/webinar/5503143f-d40d-48ae-9b52-d132a0888ee3?utm_source=docs.cypress.io&utm_medium=announcement-bar">Closing the Agentic Confidence Gap: Quality Governance for AI-Accelerated Teams</a>`,
+        content: `📢 Join us for our live webinar on April 23rd! <a href="https://cypress.registration.goldcast.io/webinar/5503143f-d40d-48ae-9b52-d132a0888ee3?utm_source=docs.cypress.io&utm_medium=announcement-bar&utm_campaign=webinar&utm_term=04-23-2026">Closing the Agentic Confidence Gap: Quality Governance for AI-Accelerated Teams</a>`,
         isCloseable: true,
       },
       footer: {
