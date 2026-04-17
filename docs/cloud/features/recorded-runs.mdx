@@ -28,7 +28,8 @@ The Project page lists your most recent runs and is filterable by date, status, 
 
 :::tip
 
-<Icon name="plus" color="green" /> Haven't set up your project to record? [Start here](/cloud/get-started/setup#Setup).
+<Icon name="plus" color="green" /> Haven't set up your project to record? [Start
+here](/cloud/get-started/setup#Setup).
 
 :::
 
@@ -44,7 +45,7 @@ Run history is the foundation for the decisions software teams make every day. T
 
 ## Triaging a failed run
 
-A failed CI run usually raises one question first: *where do I start?* The Run Details page is designed to narrow that down in three steps, from the widest view of the run to the exact attempt that failed.
+A failed CI run usually raises one question first: _where do I start?_ The Run Details page is designed to narrow that down in three steps, from the widest view of the run to the exact attempt that failed.
 
 <DocsImage src="/img/cloud/runs/run-details-page.png" alt="Run Details page" />
 
@@ -91,30 +92,29 @@ Each row shows whether the test ultimately failed or was [flaky](/cloud/features
 
 ### Step 3: Open the test detail sidebar
 
-Clicking a test from Tests for Review, the Errors tab, or the [Test Results tab](#the-test-results-tab) opens the **test detail sidebar**. This is where a single test meets its own history: runtime environment, failure and flake rates over time, performance breakdowns, and the test code itself. It's the view that most clearly answers *is this behavior new, or has this test been doing this for a while?*
+Clicking a test from Tests for Review, the Errors tab, or the [Test Results tab](#the-test-results-tab) opens the **test detail sidebar**. This is where a single test meets its own history: runtime environment, failure and flake rates over time, performance breakdowns, and the test code itself. It's the view that most clearly answers _is this behavior new, or has this test been doing this for a while?_
 
 The sidebar brings together everything you need to debug a single test:
 
 - **Test Replay.** When [Test Replay](/cloud/features/test-replay) is available for the run, open it from the sidebar to review how the test executed in CI—the command log, application state, and more—without re-running the test locally.
 
-    <DocsImage
-      src="/img/cloud/features/test-replay/replay_sidebar_magnified.jpg"
-      alt="Test detail sidebar with Test Replay control highlighted"
-    />
-
+  <DocsImage
+    src="/img/cloud/features/test-replay/replay_sidebar_magnified.jpg"
+    alt="Test detail sidebar with Test Replay control highlighted"
+  />
 
 - **Artifacts.** [Screenshots](/app/guides/screenshots-and-videos#Screenshots), [videos](/app/guides/screenshots-and-videos#Videos), and CI log output for the test. Both failure screenshots and screenshots captured with [`cy.screenshot()`](/api/commands/screenshot) appear here. Videos can be downloaded. CI logs come from the Cypress standard output and follow the [reporter](/app/tooling/reporters) you've configured.
 
 - **Create or link a Jira issue from a failing test.** If your project has the Jira integration enabled, the test detail sidebar includes a **Create issue** button. Clicking it opens a dialog with the Project, Summary, and Description prefilled. The person who picks up the ticket lands on the Test Replay, artifacts, and failure history without having to reconstruct context by hand.
 
-  You can also link an existing Jira issue to a failing test instead of creating a new one. 
+  You can also link an existing Jira issue to a failing test instead of creating a new one.
 
   <DocsImage
     src="/img/cloud/integrations/jira/dashboard-jira-integration-create-issue.png"
     alt="Create Issue button in the Cypress Cloud test results panel"
   />
 
-  Once an issue is created or linked, it appears in the sidebar on future runs of the same test, so you can see at a glance whether a failing test already has a ticket open against it. 
+  Once an issue is created or linked, it appears in the sidebar on future runs of the same test, so you can see at a glance whether a failing test already has a ticket open against it.
 
   <DocsImage
     src="/img/cloud/integrations/jira/dashboard-jira-integration-inline-issue.png"
@@ -127,30 +127,28 @@ Don't see the **Create issue** button? Check that Jira is connected for your pro
 
 :::
 
-
 - **Test Intent Summary** :sparkles: An AI-generated summary of the test's purpose, so you can understand the goal without reviewing each command or watching the entire Test Replay.
 
-    <DocsImage
-      src="/img/cloud/runs/sidebar-test-intent-summary.png"
-      alt="Test details sidebar AI-generated Test Intent Summary"
-    />
+  <DocsImage
+    src="/img/cloud/runs/sidebar-test-intent-summary.png"
+    alt="Test details sidebar AI-generated Test Intent Summary"
+  />
 
 - **"At a glance" error summaries** :sparkles: A short, human-readable explanation of what went wrong on the last attempt, alongside stack traces, error messages, and point-of-failure code frames for each attempt. Drill into attempt artifacts to see whether the problem was consistent across attempts or not.
 
-    <DocsImage
-      src="/img/cloud/runs/sidebar-errors-and-attempts.png"
-      alt="Test sidebar attempts and errors"
-    />
+  <DocsImage
+    src="/img/cloud/runs/sidebar-errors-and-attempts.png"
+    alt="Test sidebar attempts and errors"
+  />
 
 - **Test definition.** A collapsible panel that lists the **hooks and test body as they were defined at runtime**—for example `beforeEach`, the test implementation, and related setup—each in its own expandable block with line numbers and syntax highlighting. **Execution time** for that hook or block appears on the right (for example a millisecond badge), so you can see which setup or teardown ran in the attempt without guessing from the command log alone. Use it to see what code was actually executed in the attempt - including global hooks and setup code that is not part of the test body.
 
-    <DocsImage
-      src="/img/cloud/runs/sidebar-test-definition.png"
-      alt="Test definition panel showing BEFORE EACH hook code with per-hook execution time badges"
-    />
+  <DocsImage
+    src="/img/cloud/runs/sidebar-test-definition.png"
+    alt="Test definition panel showing BEFORE EACH hook code with per-hook execution time badges"
+  />
 
 The sidebar also includes **[Previous runs](#previous-runs)** and **Test Code History**; both are covered under [History for a single test](#history-for-a-single-test) in the next section on [trends](#tracking-trends-across-runs).
-
 
 ### The Test Results tab
 
@@ -184,7 +182,7 @@ Inside the [test detail sidebar](#step-3-open-the-test-detail-sidebar), two view
 
 The **Previous runs** panel charts this test's outcomes over time on the **branch** this ran on. For the run you opened, Cloud shows the **run number**, marks it as **this run**, shows when that run executed, and summarizes the latest result—for example **Passed** or **Failed**. When the run finished green overall but still had [flaky](/cloud/features/flaky-test-management) attempts, a **Flaky** badge appears beside the status so you do not mistake an all-green headline for a completely stable test.
 
-When the graph shows a **fork** - a second line splitting from the first - it reflects how this test's history diverged (for example after a merge or when comparing a line of commits against an earlier baseline), which helps you place *this* result in context rather than treating it as an isolated dot.
+When the graph shows a **fork** - a second line splitting from the first - it reflects how this test's history diverged (for example after a merge or when comparing a line of commits against an earlier baseline), which helps you place _this_ result in context rather than treating it as an isolated dot.
 
 <DocsImage
   src="/img/cloud/runs/sidebar-previous-runs-graph.png"
@@ -193,7 +191,7 @@ When the graph shows a **fork** - a second line splitting from the first - it re
 
 #### Test Code History
 
-**Test Code History** lists the git commits that touched this test. Expanding a commit shows the diff at that point. It answers *did someone change this test recently, and is the change the reason it's failing?*
+**Test Code History** lists the git commits that touched this test. Expanding a commit shows the diff at that point. It answers _did someone change this test recently, and is the change the reason it's failing?_
 
 <DocsImage
   src="/img/cloud/runs/sidebar-test-code-history.png"
@@ -289,14 +287,14 @@ When a run is canceled:
 - Canceled runs appear in the [Runs over time](/cloud/features/analytics/project-analytics#Run-status) chart if Analytics is enabled.
 - Incomplete calls to [`cypress run --record`](/app/references/command-line#cypress-run) are marked as canceled and do not run. Existing calls exit with an error.
 
-<DocsImage
-  src="/img/cloud/runs/cancel-run-error.png"
-  alt="cancel-run-error"
-/>
+<DocsImage src="/img/cloud/runs/cancel-run-error.png" alt="cancel-run-error" />
 
 :::tip
 
-<Icon name="check-circle" color="green" /> See the [Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation) guide to learn how to shorten developer resolution time, reduce your monthly CI bill, and free up CI resources automatically.
+<Icon name="check-circle" color="green" /> See the [Auto
+Cancellation](/cloud/features/smart-orchestration/run-cancellation) guide to
+learn how to shorten developer resolution time, reduce your monthly CI bill, and
+free up CI resources automatically.
 
 :::
 
