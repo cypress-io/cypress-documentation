@@ -24,8 +24,6 @@ Recorded runs capture the results of every test run you send to Cypress Cloud. E
 
 Most test reporting tools show you the latest CI run in isolation. Cypress Cloud shows you your suite's behavior over time, and uses that history to help you decide what to investigate, what to fix, and where to spend your CI budget.
 
-The Project page lists your most recent runs and is filterable by date, status, branch, author, tag, or flake status. From there, clicking any run opens the Run Details page, which is the subject of this guide.
-
 :::tip
 
 <Icon name="plus" color="green" /> Haven't set up your project to record? [Start
@@ -33,7 +31,11 @@ here](/cloud/get-started/setup#Setup).
 
 :::
 
-## What you can decide with run history
+## Latest runs {#Latest-Runs}
+
+The Project page lists your most recent runs and is filterable by date, status, branch, author, tag, or flake status. From there, clicking any run opens the Run Details page, which is the subject of this guide.
+
+## What you can decide with run history {#what-you-can-decide-with-run-history}
 
 Run history is the foundation for the decisions software teams make every day. The rest of this page is organized around them:
 
@@ -43,9 +45,11 @@ Run history is the foundation for the decisions software teams make every day. T
 - **What environment and configuration did this run actually use?** See [Reviewing run configuration](#reviewing-run-configuration).
 - **How do I stop, archive, or recover a run?** See [Canceling and archiving runs](#canceling-and-archiving-runs).
 
-## Triaging a failed run
+## Triaging a failed run {#triaging-a-failed-run}
 
 A failed CI run usually raises one question first: _where do I start?_ The Run Details page is designed to narrow that down in three steps, from the widest view of the run to the exact attempt that failed.
+
+### Run details {#Run-Details}
 
 <DocsImage src="/img/cloud/runs/run-details-page.png" alt="Run Details page" />
 
@@ -63,7 +67,7 @@ If the run is still in progress, a panel under the header shows progress and a s
   alt="Run in progress with a panel showing progress and a shortcut to cancel the run"
 />
 
-### Step 1: Start with Tests for Review
+### Step 1: Start with Tests for Review {#Tests-for-Review}
 
 The **Overview tab** is the default view when you open a run, and its **Tests for Review** panel is the fastest path from "this run looks bad" to "here's where to start." It consolidates test results into a single, prioritized list, so you're not scanning a wall of passing tests to find the three that matter.
 
@@ -77,7 +81,7 @@ Each row is grouped by spec and tagged with a badge explaining why it's listed. 
 
 <DocsImage src="/img/cloud/runs/tests-for-review.png" alt="Tests for Review" />
 
-### Step 2: Group by error in the Errors tab
+### Step 2: Group by error in the Errors tab {#step-2-group-by-error-in-the-errors-tab}
 
 When many tests fail at once, the **Errors tab** can be a faster lens. It changes the question from "which tests failed?" to "what broke, and how widely?" by grouping tests around the error messages they hit, showing each error once, and listing every test attempt where that error occurred, including retries.
 
@@ -90,7 +94,7 @@ Each row shows whether the test ultimately failed or was [flaky](/cloud/features
   alt="Errors tab with expanded error groups, flaky badges, failed attempt rows, and Test Replay links"
 />
 
-### Step 3: Open the test detail sidebar
+### Step 3: Open the test detail sidebar {#Test-detail-sidebar}
 
 Clicking a test from Tests for Review, the Errors tab, or the [Test Results tab](#the-test-results-tab) opens the **test detail sidebar**. This is where a single test meets its own history: runtime environment, failure and flake rates over time, performance breakdowns, and the test code itself. It's the view that most clearly answers _is this behavior new, or has this test been doing this for a while?_
 
@@ -103,7 +107,9 @@ The sidebar brings together everything you need to debug a single test:
     alt="Test detail sidebar with Test Replay control highlighted"
   />
 
-- **Artifacts.** [Screenshots](/app/guides/screenshots-and-videos#Screenshots), [videos](/app/guides/screenshots-and-videos#Videos), and CI log output for the test. Both failure screenshots and screenshots captured with [`cy.screenshot()`](/api/commands/screenshot) appear here. Videos can be downloaded. CI logs come from the Cypress standard output and follow the [reporter](/app/tooling/reporters) you've configured.
+#### Artifacts {#Artifacts}
+
+[Screenshots](/app/guides/screenshots-and-videos#Screenshots), [videos](/app/guides/screenshots-and-videos#Videos), and CI log output for the test. Both failure screenshots and screenshots captured with [`cy.screenshot()`](/api/commands/screenshot) appear here. Videos can be downloaded. CI logs come from the Cypress standard output and follow the [reporter](/app/tooling/reporters) you've configured.
 
 - **Create or link a Jira issue from a failing test.** If your project has the Jira integration enabled, the test detail sidebar includes a **Create issue** button. Clicking it opens a dialog with the Project, Summary, and Description prefilled. The person who picks up the ticket lands on the Test Replay, artifacts, and failure history without having to reconstruct context by hand.
 
@@ -150,15 +156,15 @@ Don't see the **Create issue** button? Check that Jira is connected for your pro
 
 The sidebar also includes **[Previous runs](#previous-runs)** and **Test Code History**; both are covered under [History for a single test](#history-for-a-single-test) in the next section on [trends](#tracking-trends-across-runs).
 
-### The Test Results tab
+### The Test Results tab {#the-test-results-tab}
 
 When you want the full, filterable list of every test in the run, use the **Test Results tab**. The dropdowns at the top let you sort and filter by a range of metrics, including [test statuses](/app/core-concepts/writing-and-organizing-tests#Test-statuses) and [flaky tests](/cloud/features/flaky-test-management). Use this tab when Tests for Review doesn't surface the pattern you're looking for, or when you want to inspect a specific test you already have in mind.
 
-## Tracking trends across runs
+## Tracking trends across runs {#tracking-trends-across-runs}
 
 A single failed run answers "what broke right now." Run history answers "is this getting better or worse?" These views are built for the second question.
 
-### Run duration over time
+### Run duration over time {#run-duration-over-time}
 
 The **run duration graph** on the Overview tab plots how long your tests took in this run against previous runs on the same project, with the current run highlighted. Bar color indicates run status, and the dropdown lets you filter by status. Hovering a bar shows more context.
 
@@ -166,7 +172,7 @@ At the bottom of the graph, blue boxes mark points when configuration settings c
 
 <DocsImage src="/img/cloud/runs/run-duration.png" alt="Run duration panel" />
 
-### Recommendations
+### Recommendations {#Recommendations}
 
 Next to the duration graph, Cypress Cloud may show a **recommendations panel** that estimates how specific [Smart Orchestration](/cloud/features/smart-orchestration/overview) features would change your suite's performance based on recent history. To generate these, Cypress Cloud looks at up to 100 of your most recent runs and simulates how they would have performed under different configurations, then reports the total duration difference between the simulated and actual runs.
 
@@ -174,11 +180,11 @@ Use this panel to decide whether parallelization, auto cancellation, or spec pri
 
 <DocsImage src="/img/cloud/runs/recommendations.png" alt="Recommendations" />
 
-### History for a single test
+### History for a single test {#history-for-a-single-test}
 
-Inside the [test detail sidebar](#step-3-open-the-test-detail-sidebar), two views zoom in to a single test's trajectory: how it behaved on recent runs for this branch, and how the test file itself changed in git.
+Inside the [test detail sidebar](#Test-detail-sidebar), two views zoom in to a single test's trajectory: how it behaved on recent runs for this branch, and how the test file itself changed in git.
 
-#### Previous runs
+#### Previous runs {#previous-runs}
 
 The **Previous runs** panel charts this test's outcomes over time on the **branch** this ran on. For the run you opened, Cloud shows the **run number**, marks it as **this run**, shows when that run executed, and summarizes the latest result—for example **Passed** or **Failed**. When the run finished green overall but still had [flaky](/cloud/features/flaky-test-management) attempts, a **Flaky** badge appears beside the status so you do not mistake an all-green headline for a completely stable test.
 
@@ -189,7 +195,7 @@ When the graph shows a **fork** - a second line splitting from the first - it re
   alt="Previous runs panel with branch name, run number labeled this run, Passed status with Flaky badge, and branching timeline of green and warning dots"
 />
 
-#### Test Code History
+#### Test Code History {#test-code-history}
 
 **Test Code History** lists the git commits that touched this test. Expanding a commit shows the diff at that point. It answers _did someone change this test recently, and is the change the reason it's failing?_
 
@@ -198,7 +204,7 @@ When the graph shows a **fork** - a second line splitting from the first - it re
   alt="Test sidebar code history"
 />
 
-#### Performance
+#### Performance {#performance}
 
 For per-test performance over time, the test detail sidebar includes a **Performance** section that plots this test's duration on the current branch against the default branch, which is often the fastest way to catch tests that are quietly getting slower. The section also shows **total execution time** and a **hooks vs. test body** breakdown so you can see whether slowness comes from setup and teardown or from the test itself.
 
@@ -207,19 +213,19 @@ For per-test performance over time, the test detail sidebar includes a **Perform
   alt="Performance section with total execution time, hooks and test body duration bar, branch comparison, and duration chart"
 />
 
-## Planning CI parallelization
+## Planning CI parallelization {#planning-ci-parallelization}
 
 The **Specs tab** zooms out from individual tests to the spec file level, which is where CI budget decisions actually live. A spec file can contain many tests, and spec-level views show you which files dominate run time, which could be split, and how work is distributed across machines.
 
 Spec results can be grouped into [run groups](/cloud/features/smart-orchestration/parallelization#Grouping-test-runs) and viewed three ways. Clicking any spec opens its tests in the Test Results tab.
 
-### Timeline view: is parallelization working?
+### Timeline view: is parallelization working? {#timeline-view-is-parallelization-working}
 
 The Timeline view charts spec files in the order they ran, showing where machines started and stopped work. It's the clearest view of how your tests actually ran in [parallel](/cloud/features/smart-orchestration/parallelization), and where gaps or bottlenecks formed.
 
 <DocsImage src="/img/cloud/runs/specs-timeline.png" alt="Specs Timeline View" />
 
-### Bar chart view: which specs are expensive?
+### Bar chart view: which specs are expensive? {#bar-chart-view-which-specs-are-expensive}
 
 The Bar Chart view ranks spec files by duration. It's the fastest way to spot the specs using most of your CI time, which are usually the best candidates for splitting up or simplifying.
 
@@ -228,13 +234,13 @@ The Bar Chart view ranks spec files by duration. It's the fastest way to spot th
   alt="Specs Bar Chart View"
 />
 
-### Machines view: am I over or under provisioned?
+### Machines view: am I over or under provisioned? {#machines-view-am-i-over-or-under-provisioned}
 
 The Machines view shows which specs ran on which parallel process, giving you the hard data behind decisions to add or remove CI capacity.
 
 <DocsImage src="/img/cloud/runs/specs-machines.png" alt="Specs Machines View" />
 
-## Reviewing run configuration
+## Reviewing run configuration {#reviewing-run-configuration}
 
 When you need to compare environments across failures, confirm which config version was actually applied, or audit a run after the fact, the **Properties tab** is the source of truth. It records when the run started, what it ran on, which git and CI metadata Cypress Cloud received, which Cloud features were in effect, and the configuration snapshot applied when the run began for UI Coverage and Cypress Accessibility.
 
@@ -258,7 +264,7 @@ The tab is organized into four groups:
   alt="Properties tab Smart Orchestration section with Auto Cancellation, Spec Prioritization, and CI build ID"
 />
 
-### Application quality configuration
+### Application quality configuration {#application-quality-configuration}
 
 When accessibility results are part of the run, the **Application quality** section lists the Axe Core® version used. See [Axe Core configuration](/accessibility/configuration/axe-core-configuration) for how Cypress picks the version and how it appears in Cypress Cloud and the Results API.
 
@@ -271,11 +277,11 @@ For a walkthrough of how this appears for UI Coverage and accessibility settings
   alt="Properties tab Application Quality with Axe Core version and configuration JSON including uiCoverage"
 />
 
-## Canceling and archiving runs
+## Canceling and archiving runs {#canceling-and-archiving-runs}
 
 Runs can be stopped mid-flight, hidden from day-to-day views, or restored. These operations are designed to keep your run list focused on what's relevant without losing history permanently.
 
-### Cancel a run in progress
+### Cancel a run in progress {#Run-cancellation}
 
 From a run in progress, click <Icon name="ban" /> **Cancel run** in the upper-right corner, then click **Yes, cancel this run** to confirm. **This cannot be undone.**
 
@@ -298,7 +304,7 @@ free up CI resources automatically.
 
 :::
 
-### Archive a canceled or errored run
+### Archive a canceled or errored run {#Archive-run}
 
 Any run can be archived by clicking the Archive icon to **Archive this run**.
 
@@ -309,7 +315,7 @@ Any run can be archived by clicking the Archive icon to **Archive this run**.
 
 Archived runs no longer appear in the runs list or in [Analytics](/cloud/features/analytics/project-analytics) reporting, but they remain accessible by direct URL: `https://cloud.cypress.io/projects/{project ID}/runs/{run number}`. Any tests recorded to an archived run still count toward your monthly test results limit.
 
-### Restore an archived run
+### Restore an archived run {#restore-an-archived-run}
 
 Visit the archived run using its direct URL and click <Icon name="history" /> **Restore from archive**.
 
@@ -318,17 +324,20 @@ Visit the archived run using its direct URL and click <Icon name="history" /> **
   alt="restore-from-archive"
 />
 
-## Working with run history in the Cypress app
+## Working with run history in the Cypress app {#Cypress-App}
 
 Run history isn't only in Cypress Cloud. The Cypress app surfaces the same information next to your tests while you work, so you don't have to switch contexts to see what CI is doing.
 
 - **[Specs page](/app/core-concepts/open-mode#Specs).** In [open mode](/app/core-concepts/open-mode), the Specs page shows aggregate results from your most recent runs. It's the fastest way to see which specs are flaking or failing in CI without leaving your local environment.
 - **[Runs page](/app/core-concepts/open-mode#Runs).** Lists the most recently recorded test runs in Cypress Cloud, newest first. It uses Git to show runs for your current branch, falling back to all project runs if none exist for the branch. Run titles come from the git commit message. Clicking a run opens it in Cypress Cloud.
-- **[Debug page](/app/core-concepts/open-mode#Debug).** Lets you review, rerun, and debug failed CI test runs directly from the Cypress app, so you can investigate a CI failure without leaving your editor workflow.
+
+### Debug {#Debug}
+
+The **[Debug page](/app/core-concepts/open-mode#Debug)** lets you review, rerun, and debug failed CI test runs directly from the Cypress app, so you can investigate a CI failure without leaving your editor workflow.
 
 <DocsImage src="/img/app/core-concepts/open-mode/debug-page.png" alt="Debug" />
 
-### Notifications
+### Notifications {#Notifications}
 
 Cypress Cloud can notify you about recorded test runs on your branch through system notifications, so you find out about failures when they happen rather than on your next browser check. Clicking a notification opens the [Debug](/app/core-concepts/open-mode#Debug) page in the Cypress app.
 
