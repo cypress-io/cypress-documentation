@@ -9,9 +9,11 @@ sidebar_position: 20
 
 # Element Identification
 
-Cypress Accessibility uniquely identifies elements across views and snapshots using a combination of HTML attributes, location, and other signals in the DOM. Stable and unique identifiers are crucial for accurately tracking and de-duplicating elements throughout the various snapshots captured in your tests.
+Cypress Accessibility identifies elements across views and snapshots using a combination of HTML attributes, location, and other signals in the DOM. Stable and unique identifiers are crucial for accurately tracking and de-duplicating elements throughout the various snapshots captured in your tests.
 
-This process replaces the underlying Axe-Core® library's default mechanism for identifying elements, which also uses strings but focusing on capturing a unique identifier for a given element in a specific DOM context. The default behavior does not account for situations where sometimes tens of thousands of Axe-Core® scans need to be merged together for a single run, or later compared based on different builds of the application. Both of these happen in Cypress Cloud, and are much more effective when the element identification process is controllable by the user and can be customized for your project.
+If your HTML uses attributes about things like component structure, design system versioning, or team ownership of certain DOM areas, Cypress Accessibility can be configured to include those as well. Configuration can also be used to avoid noisy locators that artificially inflate the count of issues, or to declare preferred identifiers that should be used.
+
+Good element identification makes element selectors more readable and meaningful when [reviewing violation details](/accessibility/core-concepts/inspecting-violation-details), and when [creating tickets](/core-concepts/inspecting-violation-details#Create-Jira-issue), or having the selectors interpreted by AI tools (see the we [Work with AI agents](/accessibility/work-with-ai-agents))
 
 ## Significant attributes for identification
 
@@ -34,7 +36,7 @@ Using these configuration properties helps you adjust the amount of deduplicatio
 
 ### Attribute filters
 
-Exclude irrelevant or dynamically generated attributes to reduce noise in Cypress Accessibility reports. For example:
+Exclude irrelevant or dynamically generated attributes to reduce noise in Cypress Accessibility reports. For example, this would avoid certain IDs that are commonly generated in React applications from being used as element references in Cypress Accessibility.
 
 ```json
 {
@@ -48,7 +50,9 @@ Exclude irrelevant or dynamically generated attributes to reduce noise in Cypres
 }
 ```
 
-Learn more about attribute filtering in the [Attribute Filters](/accessibility/configuration/attributefilters) guide.
+Elements with these IDs will still be included in your accessibility report, but they will be identified in a different way.
+
+Learn more about attribute filtering in the [Attribute Filters guide](/accessibility/configuration/attributefilters).
 
 ### Significant attributes
 
@@ -79,3 +83,11 @@ Require extra attributes (such as a component or team identifier) in the **viola
 ```
 
 See the [components](/accessibility/configuration/components) configuration guide for `componentAttributeFilters`, defaults, and examples.
+
+## Differences compared to Axe-Core® element identification
+
+The Cypress Cloud process replaces the underlying Axe-Core® library's default mechanism for identifying elements. 
+
+Axe-Core® captures a unique identifier for a given element in a specific DOM context, focused on one single state. This default behavior is not intended to account for situations where sometimes tens of thousands of Axe-Core® scans need to be merged together for a single run, or later compared based on different builds of the application.
+
+Taking control over how elements are tracked in your reports helps you get the right level of de-duplication across elements when they are truly the same, and track similar elements individually when they are different.

@@ -1,8 +1,8 @@
 ---
-sidebar_label: Working with AI agents
+sidebar_label: Work with AI agents
 title: 'Working with AI agents | Cypress Accessibility Documentation'
 description: 'Use AI assistants alongside Cypress Accessibility: query Cloud results with Cypress Cloud MCP, align reports with component identification settings, and explore local browser LLM workflows.'
-sidebar_position: 55
+sidebar_position: 40
 ---
 
 <ProductHeading product="accessibility" />
@@ -31,27 +31,23 @@ Here are some example prompts to try out:
 
 #### Advanced
 
-Deep dive on solving a specific issue:
+**Deep dive on solving a specific issue:**
 
-```
-You are a front-end expert focused on delivering an accessible product.
+> You are a front-end expert focused on delivering an accessible product.
+> 
+> The `<element_id>` selector was flagged as inaccessible by the Cypress Accessibility report. It `<element_status>` the `<rule_severity>` rule `<rule_name>` described as `<rule_label>`. The proposed solution is `<proposed_solution>`.
+> 
+> First, verify the issue is actually a problem given how the code is constructed.
+> 
+> If it is a valid issue, explain by briefly summarizing the fix in markdown so I can include it in my code review, then generate a plan to fix this issue (I must approve this plan before you make changes).
+> 
+> If it is not an issue, note it and stop. If there are not enough details to reasonably solve this, explain what other information you need before making changes. If the information is within the Cypress Cloud, submit feedback to the Cypress team.
 
-The <element_id> selector was flagged as inaccessible by the Cypress Accessibility report. It <element_status> the <rule_severity> rule <rule_name> described as <rule_label>. The proposed solution is <proposed_solution>.
+**Determine owners for issues based on specific roles at your company, and who needs to be involved or aware:**
 
-First, verify the issue is actually a problem given how the code is constructed.
-
-If it is a valid issue, explain by briefly summarizing the fix in markdown so I can include it in my code review, then generate a plan to fix this issue (I must approve this plan before you make changes).
-
-If it is not an issue, note it and stop. If there are not enough details to reasonably solve this, explain what other information you need before making changes. If the information is within the Cypress Cloud, submit feedback to the Cypress team.
-```
-
-Determine owners for issues based on specific roles at your company, and who needs to be consulted:
-
-```
-Using Cypress Cloud MCP, find the most recent run in this project with failed accessibility results and create an action plan that groups similar problems together and recommends suitable owners.
-
-Our team includes these roles developers, QA engineers, desingers, product managers, marketers, and accessibility specialists. For each role, determine if they need to be Responsible, Accountable, Consulted, Informed, or not involved.
-```
+> Using Cypress Cloud MCP, find the most recent run in this project with failed accessibility results and create an action plan that groups similar problems together and recommends suitable owners.
+> 
+> Our team includes these roles developers, QA engineers, designers, product managers, marketers, and accessibility specialists. For each role, determine if they need to be Responsible, Accountable, Consulted, Informed, or not involved.
 
 ## Optimizing Cypress Accessibility for MCP use cases
 
@@ -69,9 +65,7 @@ For LLM use-cases, a few lightweight signals from the page where an element loca
 
 If you don't have attributes like this already, you can ask your agent to add some to your builds with a prompt like this:
 
-```
-Add meaningful `data-cy-component` attributes to the container elements of significant areas of the dom. These will be used for later identification of an element's position in a component tree when reporting accessibility issues, so it should be possible to identify just enough structure to easily find the element in the future, but not be overly verbose.
-```
+> Add meaningful `data-cy-component` attributes to the container elements of significant areas of the dom. These will be used for later identification of an element's position in a component tree when reporting accessibility issues, so it should be possible to identify just enough structure to easily find the element in the future, but not be overly verbose.
 
 ## Your browser's LLM tooling
 
