@@ -13,7 +13,7 @@ Cypress Accessibility supports three main paths to observing and acting on chang
 
 - Run comparisons with [Branch Review](/accessibility/core-concepts/compare-reports)
 - The [Results API](/accessibility/guides/results-api) to fail builds or trigger alerts when results don't meet your standards
-- [Analytics](/cloud/features/analytics/enterprise-reporting#cypress-accessibility) for high-level trend-spotting and analysis
+- [Analytics](/cloud/features/analytics/enterprise-reporting#Cypress-Accessibility) for high-level trend-spotting and analysis
 
 In this guide we'll discuss how these work and some common situations where we might use them together.
 
@@ -57,7 +57,7 @@ Comparing two runs in detail with Branch Review requires a good understanding of
 
 ## Results API
 
-Cypress Accessibility's [Results API](/accessibility/guides/results-api) provides rich data related to the outcome of any accessibility report for a Cypress run. It supports adding a step in CI to block pull requests or trigger other side effects. To use the Results API, you'll need to [add a step in your CI process](/accessibility/guides/results-api#installation). This comes with a helper function which will automatically match your CI build with the related run in Cypress Cloud.
+Cypress Accessibility's [Results API](/accessibility/guides/results-api) provides rich data related to the outcome of any accessibility report for a Cypress run. It supports adding a step in CI to block pull requests or trigger other side effects. To use the Results API, you'll need to [add a step in your CI process](/accessibility/guides/results-api#Installation). This comes with a helper function which will automatically match your CI build with the related run in Cypress Cloud.
 
 Once you receive the results, you can perform any action you need to. Below are some of the common ones customers have told us about, where the results are compared with expectations.
 
@@ -85,9 +85,9 @@ As an example, customers can use this functionality to trigger Slack webhooks th
 
 ## Analytics
 
-Analytics live under the [Cypress Accessibility](/cloud/features/analytics/enterprise-reporting#cypress-accessibility) tab of [Enterprise Reporting](/cloud/features/analytics/enterprise-reporting) in Cypress Cloud, alongside other org-wide metrics on the same page.
+Analytics live under the [Cypress Accessibility](/cloud/features/analytics/enterprise-reporting#Cypress-Accessibility) tab of [Enterprise Reporting](/cloud/features/analytics/enterprise-reporting) in Cypress Cloud, alongside other org-wide metrics on the same page.
 
-The same aggregates you see in the UI can be pulled programmatically: every chart is backed by data you can [download from Cloud](/cloud/features/analytics/enterprise-reporting#download-data-from-cloud) or request through the [Data Extract API](/cloud/integrations/data-extract-api) (see [Retrieve your test data through API](/cloud/features/analytics/enterprise-reporting#retrieve-your-test-data-through-api) on the Enterprise Reporting page).
+The same aggregates you see in the UI can be pulled programmatically: every chart is backed by data you can [download from Cloud](/cloud/features/analytics/enterprise-reporting#Download-data-from-Cloud) or request through the [Data Extract API](/cloud/integrations/data-extract-api) (see [Retrieve your test data through API](/cloud/features/analytics/enterprise-reporting#retrieve-your-test-data-through-api) on the Enterprise Reporting page).
 
 That API access supports many possible uses, including:
 
