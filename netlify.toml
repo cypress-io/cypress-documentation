@@ -1148,6 +1148,24 @@
   force = true
 
 [[redirects]]
+  from = "/accessibility/results-api"
+  to = "/accessibility/guides/results-api"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/accessibility/guides/block-pull-requests"
+  to = "/accessibility/block-pull-requests"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/accessibility/guides/working-with-ai-agents"
+  to = "/accessibility/work-with-ai-agents"
+  status = 301
+  force = true
+
+[[redirects]]
   from = "/api/plugins/*"
   to = "/api/node-events/:splat"
   status = 301

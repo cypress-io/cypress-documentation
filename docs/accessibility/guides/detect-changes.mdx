@@ -12,7 +12,7 @@ sidebar_position: 70
 Cypress Accessibility supports three main paths to observing and acting on changes in the accessibility report for your projects:
 
 - Run comparisons with [Branch Review](/accessibility/core-concepts/compare-reports)
-- The [Results API](/accessibility/results-api) to fail builds or trigger alerts when results don't meet your standards
+- The [Results API](/accessibility/guides/results-api) to fail builds or trigger alerts when results don't meet your standards
 - [Analytics](/cloud/features/analytics/enterprise-reporting#cypress-accessibility) for high-level trend-spotting and analysis
 
 In this guide we'll discuss how these work and some common situations where we might use them together.
@@ -57,7 +57,7 @@ Comparing two runs in detail with Branch Review requires a good understanding of
 
 ## Results API
 
-Cypress Accessibility's [Results API](/accessibility/results-api) provides rich data related to the outcome of any accessibility report for a Cypress run. It supports adding a step in CI to block pull requests or trigger other side effects. To use the Results API, you'll need to [add a step in your CI process](/accessibility/results-api#Installation). This comes with a helper function which will automatically match your CI build with the related run in Cypress Cloud.
+Cypress Accessibility's [Results API](/accessibility/guides/results-api) provides rich data related to the outcome of any accessibility report for a Cypress run. It supports adding a step in CI to block pull requests or trigger other side effects. To use the Results API, you'll need to [add a step in your CI process](/accessibility/guides/results-api#installation). This comes with a helper function which will automatically match your CI build with the related run in Cypress Cloud.
 
 Once you receive the results, you can perform any action you need to. Below are some of the common ones customers have told us about, where the results are compared with expectations.
 
@@ -65,7 +65,7 @@ Once you receive the results, you can perform any action you need to. Below are 
 
 #### Fail a build based on new failed accessibility rules
 
-The Results API provides a combined report with all the failing rules included. This means you can easily prepare a list of known, permitted failing rules to compare with the results from any run, and choose to fail only if a previously passing rule has started to fail. This is described in detail in the guide related to [blocking pull requests and setting policies](/accessibility/guides/block-pull-requests).
+The Results API provides a combined report with all the failing rules included. This means you can easily prepare a list of known, permitted failing rules to compare with the results from any run, and choose to fail only if a previously passing rule has started to fail. This is described in detail in the guide related to [blocking pull requests and setting policies](/accessibility/block-pull-requests).
 
 This concept is simple but powerful because it provides extremely high confidence that any failed build is related to a specific recent code, content, or testing change. Especially if there are a high number of existing failures, the actual number of failed elements detected can vary from run-to-run, especially if existing broken components are reused in new ways.
 
