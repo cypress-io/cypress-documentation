@@ -88,6 +88,6 @@ See the [components](/accessibility/configuration/components) configuration guid
 
 The Cypress Cloud process replaces the underlying Axe-Core® library's default mechanism for identifying elements.
 
-Axe-Core® captures a unique identifier for a given element in a specific DOM context, focused on one single state. This default behavior is not intended to account for situations where sometimes tens of thousands of Axe-Core® scans need to be merged together for a single run, or later compared based on different builds of the application.
+Axe-Core® captures a unique identifier for a given element in a specific DOM context, focused on one single state. This default behavior does not account for merging thousands of Axe-Core® scans into a single report or for comparing scans of the application as the application changes.
 
 Taking control over how elements are tracked in your reports helps you get the right level of de-duplication across elements when they are truly the same, and track similar elements individually when they are different.
