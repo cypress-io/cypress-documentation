@@ -257,7 +257,7 @@ Once connected, your AI agent can autonomously use the following tools. You don'
 
 Each time the Cloud MCP connection is established, any new tools become immediately available.
 
-Some tools are relevant for all Cypress Cloud plans (including free), but some others are for **plan-specific data** like flaky test reporting, or **product-specific data** like Cypress Accessibility violation details. These are only available if you organization has subscriptions for the plans and products that would provide the underlying data.
+Some tools are relevant for all Cypress Cloud plans (including free), but some others are for **plan-specific data** like flaky test reporting, or **product-specific data** like Cypress Accessibility violation details. These are only available if your organization has subscriptions for the plans and products that would provide the underlying data.
 
 | Tool                                      | Capability                                                                                                                                                         | Best Use Case                                                           |
 | ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------- |
@@ -280,6 +280,10 @@ To get the most out of Cloud MCP, follow these three principles:
 
 ## Example Prompts
 
+:::note
+**Pro-Tip:** If you find a workflow that works well, save it as a Custom Instruction or Skill in your AI client to standardize debugging for your entire team.
+:::
+
 ### The Health Check
 
 > "Check Cypress Cloud for the latest run on this branch. Give me a high-level summary of any failures."
@@ -294,13 +298,9 @@ To get the most out of Cloud MCP, follow these three principles:
 
 ### The Accessibility Triage
 
-> "Pull the Cypress accessibility report for the latest run on this branch. List any critical or serious violations grouped by rule, and tell me which views are most impacted."
+> "Pull the Cypress Cloud Accessibility report for the latest run on this branch. List any critical or serious violations grouped by rule, and tell me which views are most impacted."
 
-> "Using Cypress Cloud, get the "color-contrast" failures from run #142 scoped to the "/checkout" view. For each failing element, look at the local CSS and suggest a fix."
-
-:::note
-**Pro-Tip:** If you find a workflow that works well, save it as a Custom Instruction or Skill in your AI client to standardize debugging for your entire team.
-:::
+For more a deeper exploration of working with Cloud MCP's accessibility tools, read our guide [Cypress Accessibility - Work with AI agents](/accessibility/work-with-ai-agents).
 
 ## FAQs
 

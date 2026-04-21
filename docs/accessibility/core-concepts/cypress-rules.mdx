@@ -3,7 +3,6 @@ title: 'Cypress Rules | Cypress Accessibility Documentation'
 description: 'Review the main areas to pay attention to when first reviewing an accessibility report for a Cypress run.'
 sidebar_position: 70
 sidebar_label: Cypress rules
-sidebar_custom_props: { 'new_label': true }
 ---
 
 <ProductHeading product="accessibility" />
@@ -101,3 +100,7 @@ For each run, this rule can be in one of four states. Most importantly, it will 
 ### False positives
 
 Please use the "Submit Feedback" button in the product to let us know if you see something that you think is a false positive. Our goal with any new rules is to follow the general Axe-Core® philosophy that minimizes false positives, so we will make adjustments for specific situations that are not already known as we learn about them.
+
+#### Shadow DOM false positives
+
+There is a known issue related to interactions that take place within some shadow DOM nodes and how they are reported in this rule. If this issue affects your reports, please reach out to your Cypress point-of-contact.

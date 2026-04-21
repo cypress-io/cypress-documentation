@@ -2,7 +2,7 @@
 sidebar_label: Block pull requests and set policies
 title: 'Block pull requests and set policies | Cypress Accessibility Documentation'
 description: "Set policies and block pull requests automatically with Cypress Accessibility's Results API, enabling custom CI workflows to enforce accessibility standards and prevent regressions."
-sidebar_position: 40
+sidebar_position: 55
 ---
 
 <ProductHeading product="accessibility" />
@@ -13,7 +13,7 @@ Cypress Accessibility reports are generated server-side in Cypress Cloud, based 
 
 ## Using the Results API
 
-The [Cypress Accessibility Results API](/accessibility/results-api) allows you to access accessibility results post-test run, enabling workflows like blocking pull requests or triggering alerts based on specific accessibility criteria. This involves adding a dedicated accessibility verification step to your CI pipeline. With a Cypress helper function, you can automatically fetch the report for the relevant test run within the CI build context. Below is an example of how to block a pull request in GitHub Actions if accessibility violations occur:
+The [Cypress Accessibility Results API](/accessibility/guides/results-api) allows you to access accessibility results post-test run, enabling workflows like blocking pull requests or triggering alerts based on specific accessibility criteria. This involves adding a dedicated accessibility verification step to your CI pipeline. With a Cypress helper function, you can automatically fetch the report for the relevant test run within the CI build context. Below is an example of how to block a pull request in GitHub Actions if accessibility violations occur:
 
 <DocsImage
   src="/img/accessibility/guides/github-actions-a11y-block.png"
@@ -35,7 +35,7 @@ The Results API offers full flexibility to analyze results and take tailored act
 
 ## Defining policies in the verification step
 
-The [Results API Documentation](/accessibility/results-api) provides detailed guidance on the API's capabilities. Here's a simplified example demonstrating how to enforce a "no new failing accessibility rules" policy:
+The [Results API Documentation](/accessibility/guides/results-api) provides detailed guidance on the API's capabilities. Here's a simplified example demonstrating how to enforce a "no new failing accessibility rules" policy:
 
 ```js
 const { getAccessibilityResults } = require('@cypress/extract-cloud-results')
