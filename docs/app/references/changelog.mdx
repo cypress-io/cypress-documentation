@@ -20,6 +20,7 @@ _Released 04/21/2026_
 
 - Increased the limit for decrypted payloads to support large [`cy.prompt`](/api/commands/prompt) requests and responses. Fixed in [#33619](https://github.com/cypress-io/cypress/pull/33619).
 - Fixed a race condition in `@cypress/vite-dev-server` where the Cypress iframe could attempt to import the support file before Vite had finished serving it, causing intermittent "Failed to fetch dynamically imported module" errors in component tests. The dev server now waits until the support file URL returns a successful response before signaling that it is ready. Addressed in [#33487](https://github.com/cypress-io/cypress/pull/33487).
+- Fixed an issue where early-exit crashes (such as config errors or renderer crashes) left the in-flight test with a generic failure instead of the actual fatal error. The fatal error is now attached to the failing test attempt so Cypress Cloud displays the underlying cause. Addressed in [#33617](https://github.com/cypress-io/cypress/pull/33617).
 
 ## 15.14.0
 
