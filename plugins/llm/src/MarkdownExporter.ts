@@ -116,7 +116,7 @@ export class MarkdownExporter {
     }
 
     const relFromRoot = toPosixPath('/'+path.relative(this.rootDir, dir))
-    const isRoot = relFromRoot === '/'
+    const isRoot = relFromRoot === '/llm/markdown'
     const dirName = isRoot ? 'Docs' : path.basename(dir)
     const lines: string[] = [`# ${dirName}`, '']
 
