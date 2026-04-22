@@ -27,6 +27,8 @@ import {
 } from './utils'
 import { PartialsRegistry } from './PartialsRegistry'
 import { writeSitemap } from './sitemap'
+import { writeApiCatalog } from './catalog'
+import { writeSkillsIndex } from './skills'
 
 export async function runLlmExport(options?: LlmExportRunOptions): Promise<void> {
   console.log('Running LLM export...')
@@ -89,6 +91,10 @@ export async function runLlmExport(options?: LlmExportRunOptions): Promise<void>
   manifestWriter.write(config)
 
   writeSitemap(config.url, distRoot)
+
+  writeApiCatalog(config.url, distRoot)
+
+  writeSkillsIndex(distRoot)
 
   const elapsedMs = Math.round(performance.now() - startedAt)
   const { markdown: outMarkdown, json: outJson } = countMarkdownAndJsonFiles(exportRoot)
