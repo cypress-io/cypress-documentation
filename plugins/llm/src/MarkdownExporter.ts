@@ -61,16 +61,15 @@ export class MarkdownExporter {
     const raw = fs.readFileSync(absPath, 'utf8')
     const mdxSource = matter(raw)
     
-    const siteDirPath = path.resolve(this.exportRoot, '../../dist')
     let htmlPath: string
     if (mdxSource.data?.slug) {
       if (mdxSource.data.slug.startsWith('/')) {
-        htmlPath = path.resolve(siteDirPath, `.${mdxSource.data.slug}`, 'index.html')
+        htmlPath = path.resolve(this.rootDir, `.${mdxSource.data.slug}`, 'index.html')
       } else {
-        htmlPath = path.resolve(siteDirPath, id, '..', mdxSource.data.slug, 'index.html')
+        htmlPath = path.resolve(this.rootDir, id, '..', mdxSource.data.slug, 'index.html')
       }
     } else {
-      htmlPath = path.join(siteDirPath, id, 'index.html')
+      htmlPath = path.join(this.rootDir, id, 'index.html')
     }
     const htmlContent = fs.readFileSync(htmlPath, 'utf8')
     const htmlBody = normalizeHtml(htmlContent)

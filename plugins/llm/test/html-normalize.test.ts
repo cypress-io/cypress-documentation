@@ -1,16 +1,5 @@
 import { describe, test, expect } from 'vitest'
-import { allowedAttributes, normalizeHtml } from '../src/html-normalize'
-
-// ---------------------------------------------------------------------------
-// allowedAttributes
-// ---------------------------------------------------------------------------
-
-describe('allowedAttributes', () => {
-  test('allows href and title on anchor tags', () => {
-    expect(allowedAttributes.a).toContain('href')
-    expect(allowedAttributes.a).toContain('title')
-  })
-})
+import { normalizeHtml } from '../src/html-normalize'
 
 // ---------------------------------------------------------------------------
 // normalizeHtml — content extraction
@@ -173,12 +162,6 @@ describe('normalizeHtml — anchor tag handling', () => {
 describe('normalizeHtml — href transformation', () => {
   test('rewrites root-relative href to /llm/markdown path', () => {
     const html = `<main data-cy="content"><a href="/guides/overview">Link</a></main>`
-    const result = normalizeHtml(html)
-    expect(result).toContain('href="/llm/markdown/guides/overview.md"')
-  })
-
-  test('rewrites ../ relative href to /llm/markdown path', () => {
-    const html = `<main data-cy="content"><a href="../guides/overview">Link</a></main>`
     const result = normalizeHtml(html)
     expect(result).toContain('href="/llm/markdown/guides/overview.md"')
   })

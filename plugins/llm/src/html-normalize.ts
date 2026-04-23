@@ -1,12 +1,7 @@
 import sanitizeHtml, { IOptions } from 'sanitize-html'
 
-export const allowedAttributes = {
-  a: ['href', 'title'] as const,
-} as const
-
 // sanitize-html options: keep basic structural tags and safe attributes
 const sanitizeOptions: IOptions = {
-  // allowedAttributes: { a: [...allowedAttributes.a] },
   allowedSchemes: ['http', 'https', 'mailto', 'tel'],
   allowVulnerableTags: false,
   disallowedTagsMode: 'discard',
@@ -53,13 +48,12 @@ const sanitizeOptions: IOptions = {
       if (
         href &&
         (href.startsWith('/') ||
-          href.startsWith('../') ||
           href.startsWith('./'))
       ) {
         // rewrite root-relative and relative hrefs to be relative to the `llm/markdown` directory
+        // ignoring any backtracking "../" as we shouldn't have any of these
         href = href
           .replace(/^\//, '')
-          .replace(/^\.\.\//, '')
           .replace(/^\.\//, '')
 
         // ensure the href points to the `.md` file - note that the href may:
