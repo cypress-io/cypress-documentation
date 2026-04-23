@@ -66,6 +66,8 @@ const sanitizeOptions: IOptions = {
             'https://dummy.cypress.io'
           )
           url.pathname = url.pathname.replace(/\.html$/, '.md')
+          // Drop trailing slash
+          url.pathname = url.pathname.replace(/\/$/, '')
           if (!url.pathname.endsWith('.md')) {
             url.pathname = `${url.pathname}.md`
           }
