@@ -171,7 +171,7 @@ const config = {
         //give id a unique value to get a new announcement bar to appear
         id: 'cloud-mcp-april-2026',
         // Visual content (including Cypress Design icon) is rendered in src/theme/AnnouncementBar/Content
-        content: `🌟 Close the context gap. Bring real-time test data to your AI assistant with <a href="/cloud/integrations/cloud-mcp?utm_medium=announcement-bar">Cloud MCP</a>.`,
+        content: `🌟 Close the context gap. Bring real-time test data to your AI assistant with <a href="/cloud/integrations/cloud-mcp?utm_medium=announcement-bar&utm_campaign=cloud-mcp">Cloud MCP</a>.`,
         isCloseable: true,
       },
       footer: {
