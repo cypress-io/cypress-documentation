@@ -169,9 +169,9 @@ const config = {
       // Styles for this are controlled in src/css/announcement-bar.scss
       announcementBar: {
         //give id a unique value to get a new announcement bar to appear
-        id: 'webinar-agentic-confidence-april-2026',
+        id: 'cloud-mcp-april-2026',
         // Visual content (including Cypress Design icon) is rendered in src/theme/AnnouncementBar/Content
-        content: `📢 Live Webinar: Closing the confidence gap for AI-accelerated teams - <a href="https://cypress.registration.goldcast.io/webinar/5503143f-d40d-48ae-9b52-d132a0888ee3?utm_source=docs.cypress.io&utm_medium=announcement-bar&utm_campaign=webinar&utm_term=04-23-2026">Join us April 23!</a>`,
+        content: `🌟 Close the context gap. Bring real-time test data to your AI assistant with Cloud MCP &mdash; <a href="/cloud/integrations/cloud-mcp?utm_medium=announcement-bar&utm_campaign=cloud-mcp">Learn more</a>`,
         isCloseable: true,
       },
       footer: {
