@@ -14,16 +14,13 @@ sidebar_custom_props: { 'deprecated_label': true }
 `.end()` was deprecated in Cypress `15.15.0` and will be removed in a future
 major version.
 
-Instead of using `.end()` to break a chain, start a new `cy` chain:
+Instead of using `.end()` to break a chain, start a new chain of commands off
+of `cy`:
 
 <Badge type="danger">Before</Badge>
 
 ```javascript
-cy.get('#user-cheryl')
-  .click()
-  .end()
-  .get('#user-charles')
-  .click()
+cy.get('#user-cheryl').click().end().get('#user-charles').click()
 ```
 
 <Badge type="success">After</Badge>
