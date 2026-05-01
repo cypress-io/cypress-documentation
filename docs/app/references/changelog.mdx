@@ -8,6 +8,26 @@ sidebar_label: Changelog
 
 # Changelog
 
+## 16.0.0
+
+_Released TBD_
+
+**Breaking Changes:**
+
+:::info
+
+Refer to the [16 Migration Guide](/app/references/migration-guide#Migrating-to-Cypress-160) for help migrating your code.
+
+:::
+
+- **Component Testing breaking changes:**
+  - Angular
+    - Removed support for Angular 18, 19, and 20. The minimum supported version is now `21.0.0`.
+    - `cypress/angular-zoneless` has been merged upstream into `cypress/angular`. In a corresponding change, the `@cypress/angular-zoneless` npm package is deprecated and no longer supported and `cypress/angular-zoneless` is no longer shipped with the Cypress binary.
+    - The zoneless testing harness is now the default in `cypress/angular`. `zone.js` is no longer required to be installed for your Cypress project.
+    - `@angular/platform-browser-dynamic` has been replaced with `@angular/platform-browser`.
+    - `autoSpyOutputs` and `autoDetectChanges` have been removed from `cypress/angular`.
+
 ## 15.14.0
 
 _Released 04/16/2026_
