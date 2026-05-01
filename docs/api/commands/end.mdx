@@ -1,10 +1,36 @@
 ---
 title: 'end | Cypress Documentation'
-description: End a chain of commands in Cypress.
+description: 'Deprecated: End a chain of commands in Cypress.'
 sidebar_label: end
+sidebar_custom_props: { 'deprecated_label': true }
 ---
 
 <ProductHeading product="app" />
+
+:::caution
+
+<strong>Deprecated</strong>
+
+`.end()` was deprecated in Cypress `15.15.0` and will be removed in a future
+major version.
+
+Instead of using `.end()` to break a chain, start a new chain of commands off
+of `cy`:
+
+<Badge type="danger">Before</Badge>
+
+```javascript
+cy.get('#user-cheryl').click().end().get('#user-charles').click()
+```
+
+<Badge type="success">After</Badge>
+
+```javascript
+cy.get('#user-cheryl').click()
+cy.get('#user-charles').click()
+```
+
+:::
 
 # end
 
@@ -21,7 +47,7 @@ End a chain of commands.
 <Icon name="check-circle" color="green" /> **Correct Usage**
 
 ```javascript
-cy.contains('ul').end() // Yield 'null' instead of 'ul' element
+cy.get('ul').end() // Yield 'null' instead of 'ul' element
 ```
 
 <Icon name="exclamation-triangle" color="red" /> **Incorrect Usage**
@@ -40,18 +66,18 @@ cy.end()
 command to not receive what was yielded in the previous command.
 
 ```javascript
-cy.contains('User: Cheryl')
+cy.get('#user-cheryl')
   .click()
   .end() // yield null
-  .contains('User: Charles')
-  .click() // contains looks for content in document now
+  .get('#user-charles')
+  .click() // get looks for the element in the document now
 ```
 
 Alternatively, you can always start a new chain of commands off of `cy`.
 
 ```javascript
-cy.contains('User: Cheryl').click()
-cy.contains('User: Charles').click() // contains looks for content in document now
+cy.get('#user-cheryl').click()
+cy.get('#user-charles').click() // get looks for the element in the document now
 ```
 
 ## Rules
