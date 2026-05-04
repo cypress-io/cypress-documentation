@@ -81,8 +81,7 @@ When `experimentalFastVisibility` is enabled, an element is considered hidden if
   - `opacity: 0`
   - `display: none`
   - `pointer-events: none`
-- It is positioned fully outside of the browser viewport
-  - _this is a known compatibility issue with the legacy visibility algorithm_ when it comes to asserting visibility. It will be addressed during the course of this experiment.
+- It is positioned outside the scrollable document bounds (e.g. `position: absolute; top: -100px`) and cannot be scrolled into view. Elements that are simply below the fold are scrolled into view per the [`scrollBehavior`](/app/references/configuration#Global) config before visibility is checked.
 - It is fully covered or clipped by another element
 
 Keep up-to-date with the progress of this experiment in the [Cypress repository](https://github.com/cypress-io/cypress/issues/33043).
@@ -92,7 +91,6 @@ Keep up-to-date with the progress of this experiment in the [Cypress repository]
 Experimental fast visibility is an experimental feature that is still under development. It uses different semantics from the legacy visibility algorithm, and does not yet fully support all testing scenarios.
 
 - Shadow DOM is not yet supported. Tests that interact with Shadow DOM elements may fail or behave incorrectly.
-- Elements outside of the browser's viewport are not yet correctly identified as visible. Scroll elements into view before testing.
 
 #### Common Compatibility Issues
 
@@ -100,15 +98,9 @@ When enabling fast visibility, you may encounter differences in how elements are
 
 **Elements Outside Viewport**
 
-Elements positioned outside the viewport are now correctly identified as hidden. Scroll elements into view before testing:
+Elements that are simply below the fold are automatically scrolled into view per the [`scrollBehavior`](/app/references/configuration#Global) config before visibility is checked, matching the behavior of action commands like [`.click()`](/api/commands/click). When `scrollBehavior` is set to `false`, off-screen elements remain hidden.
 
-```javascript
-// Before
-cy.get('.off-screen-element').should('be.visible')
-
-// After
-cy.get('.off-screen-element').scrollIntoView().should('be.visible')
-```
+Elements positioned outside the scrollable document bounds (e.g. `position: absolute; top: -100px`) cannot be scrolled into view and are correctly identified as hidden.
 
 **Covered Elements**
 
