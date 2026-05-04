@@ -102,6 +102,8 @@ Elements that are simply below the fold are automatically scrolled into view per
 
 Elements positioned outside the scrollable document bounds (e.g. `position: absolute; top: -100px`) cannot be scrolled into view and are correctly identified as hidden.
 
+Subjects nested inside an ancestor with `overflow: hidden` or `overflow: clip` are not scrolled into view, since doing so would expose content the parent intentionally clipped (e.g. inputs in a transform-based carousel/slider). These subjects are reported as hidden when they fall outside the parent's clip bounds.
+
 **Covered Elements**
 
 Elements covered by other elements are now correctly identified as hidden. Test the covering element or the user interaction that reveals the covered element:
