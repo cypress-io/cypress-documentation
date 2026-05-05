@@ -1,0 +1,99 @@
+---
+sidebar_label: Work with AI agents
+title: 'Work with AI agents | Cypress UI Coverage Documentation'
+description: 'Use Cypress Cloud MCP to bring UI Coverage results into your AI coding assistant — query coverage scores, identify untested views, drill into specific elements, and generate tests without leaving your editor.'
+sidebar_position: 40
+---
+
+<ProductHeading product="ui-coverage" />
+
+# Work with AI agents
+
+AI coding assistants can close coverage gaps faster when they have direct access to your UI Coverage data. This guide covers how to use [Cypress Cloud MCP](/cloud/integrations/cloud-mcp) to bring UI Coverage results into your agentic workflow — so your agent can identify gaps, prioritize what to test, and generate tests without you copy-pasting from a browser tab.
+
+## Cypress Cloud MCP
+
+[Cloud MCP](/cloud/integrations/cloud-mcp) connects your AI coding assistant to Cypress Cloud through a secure, structured interface. For UI Coverage, this means your agent can query your coverage score, identify the riskiest untested views, and drill into specific interactive elements — all as part of an automated workflow.
+
+### How the tools work together
+
+The three UI Coverage MCP tools are designed to be used as a layered drill-down:
+
+1. **`cypress_get_ui_coverage_report`** — Start here. Returns the overall coverage score, the total counts of tested and untested elements and links, and the top 5 riskiest views sorted by the most untested interactive elements. This is the entry point for any coverage analysis.
+2. **`cypress_get_ui_coverage_views`** — Go wider. Returns every view in the report as a paginated list, sorted by most untested elements and links. Use this after the report summary when you need to look beyond the top 5 views.
+3. **`cypress_get_ui_coverage_elements`** — Go deeper. Returns the specific interactive elements for a given view, filtered by tested or untested. Scope to a single view by name for focused analysis.
+
+Your agent selects and chains these tools automatically based on your prompt. You describe what you want; the agent figures out which tools to call and in what order.
+
+### Requirements
+
+- Your organization must have a [UI Coverage](https://www.cypress.io/ui-coverage) subscription and [Cloud MCP enabled](/cloud/integrations/cloud-mcp#Enable-for-Organization).
+- Runs must be recorded to Cypress Cloud with [Test Replay](/cloud/features/test-replay) enabled (Cypress v13+), which is the same requirement as UI Coverage itself.
+
+### Example prompts
+
+#### Basic
+
+> "Check Cypress Cloud UI Coverage for the latest run on this branch. What is the overall coverage score and which views have the most untested elements?"
+
+> "Using Cypress Cloud, show me the UI Coverage report for run #142 in this project. List the top 5 riskiest views."
+
+> "Using Cypress Cloud MCP, get the untested elements on the '/checkout' view in the latest run. Are any of them inside a form?"
+
+#### Advanced
+
+**Generate tests for specific coverage gaps:**
+
+> You are a front-end engineer responsible for test quality.
+>
+> Using Cypress Cloud MCP, get the UI Coverage report for the latest run on the `main` branch. Find the three views with the most untested interactive elements. For each one, look at the local code that renders those elements and write Cypress tests that cover the most critical untested interactions.
+>
+> Use our existing test patterns and custom commands. Show me the plan before making any changes.
+
+**Prioritize gaps for your team:**
+
+> Using Cypress Cloud, pull the UI Coverage report for the latest run in this project. Group the untested elements by view and sort them by risk (most untested first). For each view, identify whether the gaps are in forms, navigation, or other interaction types. Suggest which gaps a developer should own versus which a QA engineer should own.
+
+**Catch regressions on a feature branch:**
+
+> Using Cypress Cloud MCP, compare the UI Coverage reports for the latest run on `main` and the latest run on this branch. Are there any views where coverage dropped? List elements that are untested on this branch but were tested on `main`.
+
+**Build a coverage sprint backlog:**
+
+> Using Cypress Cloud MCP, get the UI Coverage report for this project's latest run. For each view in the top 10 riskiest, create a summary of untested elements and estimate the testing effort (low/medium/high). Format this as a prioritized task list I can bring to sprint planning.
+
+## Optimizing UI Coverage for MCP use cases
+
+The quality of your agent's analysis depends on the quality of your UI Coverage data. Noisy reports lead agents to spend effort analyzing irrelevant elements — so a little configuration goes a long way toward making MCP queries more useful.
+
+### Filter out irrelevant views and elements
+
+If your reports include routes you don't own — error pages, third-party redirects, authentication callbacks — your agent will process them unnecessarily. Use UI Coverage configuration to exclude them upfront:
+
+- **Ignore views** to remove routes that aren't test targets. See [Ignore views and links](/ui-coverage/guides/ignore-views-and-links).
+- **Ignore elements** to exclude decorative icons, non-interactive placeholders, or third-party widgets. See [Ignore elements](/ui-coverage/guides/ignore-elements).
+- **Group similar elements** to reduce repetitive entries in element lists, like a table of identical action buttons. Grouped elements are returned as a single item with a member count, which is easier for an agent to summarize. See [Reduce noise](/ui-coverage/guides/reduce-noise).
+
+### Use descriptive element identifiers
+
+When an agent sees an untested element named `[data-cy="submit-payment"]`, it can immediately search your codebase for that attribute and locate the component that renders it. When it sees `div:nth-child(4) > button`, it needs to do a lot more reasoning before it can generate a useful test.
+
+Descriptive test attributes make the jump from "this element is untested" to "here's the test I should write" much shorter. If your components don't have them yet, you can ask your agent to add them:
+
+> Add meaningful `data-cy` attributes to the interactive elements in this component. These will appear in Cypress UI Coverage reports and make it straightforward to identify elements when writing tests.
+
+### Scope your prompts to a specific view
+
+The element tool supports filtering by view name. When you know which page you're working on, scoping the query reduces token usage and produces a more focused response:
+
+> "Using Cypress Cloud MCP, show me all untested elements on the '/settings/billing' view in run #88."
+
+rather than pulling all elements across the entire run.
+
+## Also See
+
+- [Cloud MCP](/cloud/integrations/cloud-mcp)
+- [Identify coverage gaps](/ui-coverage/guides/identify-coverage-gaps)
+- [Address coverage gaps](/ui-coverage/guides/address-coverage-gaps)
+- [UI Coverage configuration](/ui-coverage/configuration/overview)
+- [Results API](/ui-coverage/results-api)
