@@ -90,7 +90,10 @@ Keep up-to-date with the progress of this experiment in the [Cypress repository]
 
 Experimental fast visibility is an experimental feature that is still under development. It uses different semantics from the legacy visibility algorithm, and does not yet fully support all testing scenarios.
 
-- Shadow DOM is not yet supported. Tests that interact with Shadow DOM elements may fail or behave incorrectly.
+- Shadow DOM is supported, but a few edge cases still diverge from the legacy algorithm because the fast algorithm relies on `elementFromPoint`:
+  - Subjects whose only visible region is a corner uncovered by a narrower covering element may be reported visible (the fast algorithm samples four corners and the center; the legacy algorithm only samples the center).
+  - Subjects whose `pointer-events` resolve to `none` are skipped by `elementFromPoint`, so the fast algorithm cannot find them at any sample point. Set `pointer-events: auto` on the subject if you need to assert visibility while keeping pointer-events disabled elsewhere.
+  - When a clipping ancestor (`overflow: hidden`, `clip`, `scroll`, or `auto`) sits between the subject and the subject's containing block, the fast algorithm treats the ancestor as clipping, while the legacy algorithm uses `offsetParent` rules to ignore it.
 
 #### Common Compatibility Issues
 
@@ -102,7 +105,7 @@ Elements that are simply below the fold are automatically scrolled into view per
 
 Elements positioned outside the scrollable document bounds (e.g. `position: absolute; top: -100px`) cannot be scrolled into view and are correctly identified as hidden.
 
-Subjects nested inside an ancestor with `overflow: hidden` or `overflow: clip` are not scrolled into view, since doing so would expose content the parent intentionally clipped (e.g. inputs in a transform-based carousel/slider). These subjects are reported as hidden when they fall outside the parent's clip bounds.
+Subjects positioned outside the bounds of an ancestor with `overflow: hidden`, `clip`, `scroll`, or `auto` are not scrolled into view, since doing so would expose content the parent intentionally clipped (e.g. inputs in a transform-based carousel/slider). These subjects are reported as hidden. Subjects that are in-bounds of such an ancestor — they would be visible if the ancestor itself were on-screen — are scrolled into view normally. The check walks shadow root boundaries, so subjects in Shadow DOM are treated the same as light-DOM descendants.
 
 **Covered Elements**
 
