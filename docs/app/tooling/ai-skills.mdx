@@ -68,7 +68,7 @@ Gives your AI tool reliable access to accurate, up-to-date Cypress documentation
 
 Beyond what a generic AI tool knows, this skill:
 
-- **Searches official sources first.** It routes queries to the correct section of docs.cypress.io — commands, guides, configuration, error messages — before drawing on any training data.
+- **Searches official sources first.** It routes queries to the correct section of docs.cypress.io — commands, guides, configuration, error messages — before your model reaches for Cypress data it already knows, which may be outdated.
 - **Uses LLM-optimized documentation.** The skill fetches structured Markdown content from `/llm/*` paths on docs.cypress.io, giving cleaner and more reliable results than scraping HTML.
 - **Refuses to guess.** If a claim cannot be verified in official docs, it says so rather than inventing an API or behavior. You get "I couldn't verify this" instead of a confident hallucination.
 - **Version-aware.** When a Cypress version is detected in your project, it scopes answers to what is actually available in that version and calls out differences explicitly.
@@ -133,7 +133,7 @@ How does cy.intercept() work, and when should I use cy.wait('@alias') with it?
 
 ### Look up official Cypress documentation
 
-Use the cypress-docs skill to get verified answers directly from docs.cypress.io instead of relying on training data that may be outdated.
+Use the cypress-docs skill to get verified answers directly from docs.cypress.io instead of relying on answers that may be outdated.
 
 ```skill
 /cypress-docs What configuration options are available for cy.intercept() in Cypress 13? Show me the full options object with types and defaults.
