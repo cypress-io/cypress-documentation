@@ -1,119 +1,66 @@
 ---
-title: 'Running Cypress in Cloud Development Environments'
-description: 'Learn how to run Cypress tests in cloud development environments like Claude Code on the web, GitHub Codespaces, and Gitpod.'
-sidebar_label: Cloud Dev Environments
+title: 'Running Cypress in Cloud AI Development Environments'
+description: 'Learn how to run Cypress tests in cloud AI development environments like Claude Code on the web.'
+sidebar_label: Cloud AI Environments
 sidebar_position: 75
 ---
 
 <ProductHeading product="app" />
 
-# Running Cypress in Cloud Development Environments
+# Running Cypress in Cloud AI Development Environments
 
 :::info
 
 ##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
 
-- How to run Cypress in cloud development environments
+- How to run Cypress in cloud AI development environments
 - How to configure network access for Cypress downloads
-- How screenshots and video behave in remote environments
+- How screenshots and video behave in these environments
 
 :::
 
-Cloud development environments — such as
-[Claude Code on the web](https://claude.ai/code),
-[GitHub Codespaces](https://github.com/features/codespaces), and
-[Gitpod](https://www.gitpod.io/) — let you write and run code entirely in the
-browser or in a remote container. Cypress `run` mode works in these
-environments, but there are a few things to be aware of before getting started.
+Cloud AI development environments — such as
+[Claude Code on the web](https://claude.ai/code) — let you write, run, and
+debug code entirely through an AI assistant in a remote sandboxed container.
+Cypress `run` mode works in these environments with one important prerequisite:
+network access must be configured to allow Cypress to download its binary.
 
 ## Network configuration
 
-Cypress downloads its binary from a remote download service during installation.
-In cloud development environments, outbound network access may be restricted or
-proxied, which can prevent the binary download from completing.
+Cypress downloads its binary during installation. In cloud AI environments,
+outbound network traffic is typically routed through a sandbox proxy, which may
+require you to explicitly allow new domains before they can be reached.
 
-Before running Cypress, make sure the environment's network configuration
-allows outbound traffic to the required Cypress URLs. For the full list of URLs
-to allowlist, see
+Make sure your environment allows outbound access to the required Cypress URLs
+before running Cypress. For the full list, see
 [Allow Cypress URLs on VPNs](/app/references/troubleshooting#Allow-Cypress-URLs-on-VPNs).
 
-### Claude Code on the web
-
-When running Cypress inside
-[Claude Code on the web](https://claude.ai/code), all network traffic routes
-through a sandbox proxy. New domains trigger a permission prompt before access
-is granted. To avoid interruptions during Cypress installation and test runs,
-approve the Cypress download and Cloud domains when prompted, or pre-configure
-the allowlist in your environment's network settings.
-
-See the
+For Claude Code on the web specifically, new domains trigger a permission prompt
+the first time they are accessed. See the
 [Claude Code on the web — Network access](https://code.claude.com/docs/en/claude-code-on-the-web#network-access)
-documentation for details on configuring proxy and domain permissions.
-
-### GitHub Codespaces and Gitpod
-
-These environments typically allow unrestricted outbound internet access by
-default. If your organization applies egress policies, add the Cypress URLs from
-the [allowlist guide](/app/references/troubleshooting#Allow-Cypress-URLs-on-VPNs)
-to your policy before running Cypress.
+documentation for how to configure domain permissions in that environment.
 
 ## Screenshots
 
-Screenshots work as expected in cloud development environments. Cypress saves
-failure screenshots to the
+Screenshots work as expected. On failure, Cypress automatically saves a
+screenshot to the
 [`screenshotsFolder`](/app/references/configuration#Screenshots) (default:
-`cypress/screenshots`) inside the remote workspace filesystem.
+`cypress/screenshots`) inside the remote workspace.
 
-Screenshots are especially useful when running Cypress inside an AI coding
-assistant environment because the LLM can read the captured images directly and
-use them to diagnose test failures without needing additional tooling.
+In AI coding environments, screenshots are particularly valuable because the AI
+can read the captured images directly to diagnose test failures — no additional
+tooling required.
 
 ## Video recording
 
-Video recording is **disabled by default** in Cypress and we recommend keeping
-it disabled in cloud development environments. While video capture itself works,
-the resulting files are written to the remote filesystem and cannot be easily
-retrieved once the session ends — making them a waste of compute resources.
-
-If you need visual debugging, rely on screenshots and
-[Test Replay](/cloud/features/test-replay) via Cypress Cloud instead.
-
-To explicitly confirm video is off, set the following in your
-[Cypress configuration](/app/references/configuration):
-
-```js
-// cypress.config.js
-const { defineConfig } = require('cypress')
-
-module.exports = defineConfig({
-  video: false,
-})
-```
-
-## Binary caching
-
-Cypress caches its binary to avoid re-downloading it on every install. In
-ephemeral cloud environments, the cache directory (`~/.cache/Cypress`) is
-typically not persisted between sessions, so the binary is re-downloaded each
-time.
-
-To speed up startup, configure your environment to cache `~/.cache/Cypress`
-across sessions where supported. See the
-[Caching](/app/continuous-integration/overview#Caching) section of the CI
-overview for general guidance.
-
-## Quick-start checklist
-
-Before running Cypress in a cloud development environment:
-
-- [ ] Verify outbound network access to [Cypress URLs](/app/references/troubleshooting#Allow-Cypress-URLs-on-VPNs)
-- [ ] Confirm `video` is set to `false` (or left at its default)
-- [ ] Run `npx cypress install` if the binary is not yet cached
-- [ ] Run your tests with `npx cypress run`
+Video recording is **disabled by default** and should stay that way. While
+Cypress can capture video, the file is written to the remote filesystem and
+cannot be retrieved once the session ends. Leave `video` at its default of
+`false` and rely on screenshots and
+[Test Replay](/cloud/features/test-replay) instead.
 
 ## See also
 
 - [Allow Cypress URLs on VPNs](/app/references/troubleshooting#Allow-Cypress-URLs-on-VPNs)
 - [Screenshots and Videos](/app/guides/screenshots-and-videos)
 - [Test Replay](/cloud/features/test-replay)
-- [Continuous Integration Overview](/app/continuous-integration/overview)
