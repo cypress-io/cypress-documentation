@@ -1,0 +1,181 @@
+---
+title: 'Components | Cypress Accessibility'
+description: 'The accessibility `components` configuration controls how component-related HTML attributes appear in stable violation-target selectors.'
+sidebar_label: components
+sidebar_position: 45
+---
+
+<ProductHeading product="accessibility" />
+
+# components
+
+The `accessibility.components` options provide a small but powerful set of controls for how elements are identified in Cypress Accessibility. This helps provide guaranteed "breadcrumbs" to place accessibility findings in context quickly and easily, for fast review by developers and testers, and when using AI agents to triage reports through Cypress Cloud MCP.
+
+For example, here's a button element in a hero section:
+
+```html
+<div data-page-area="hero" class="mt-2 hero__1asdK">
+  <button
+    data-design-system="IconButton"
+    data-track="analytics-click-id"
+    id="#button123"
+  >
+    <span style="display:none"> Sign up now! </span>
+  </button>
+</div>
+```
+
+The button has an accessibility violation because the label text is hidden.
+
+The default Axe-Core® behavior is to capture a any suitable unique selector to refer to the the button element. Typically, for an element like this it would be the ID, since that's both short and unique.
+
+```css
+#button-123
+```
+
+When this selector is viewed in isolation, the problem could be with any button in our application. We would need to go deeper to understand where the issue might be - we might have to search the codebase or go looking for hints in the page HTML output.
+
+`components` configuration lets us tell Cypress about some signals that might be present in the DOM attributes of your pages, and if they are present, Cypress will put them into selectors in a predictable, consistent way. In this case, if we set `data-page-area` and `data-design-system` as `componentAttributes`, the button would be identified in reports like this instead:
+
+```css
+[data-page-area="hero"] [data-design-system="IconButton"]#button-123
+```
+
+## Why use this?
+
+This can improve the readability of selectors and make it easier to work with your accessibility findings. Many teams already have attributes like this for testing purposes or component identification when debugging and tracing things back to the design system or other source. If not, it can be easy to add them.
+
+This is especially useful for handoffs between people or systems, because it can prevent the need to go back to the full page HTML contents just to understand where something is or what code is responsible for it. Here are some examples:
+
+- Reference elements in a Jira ticket
+- Process elements with an LLM to propose solutions or triage them
+- Assign team ownership based on signals in the DOM
+- Cross-reference accessibility issues with design system versions
+
+We have seen that customers have attributes like `data-team`, `data-cy-component`, `data-component-filepath`, `data-design-system-version` in projects currently tested with Cypress Accessibility.
+
+## Scope
+
+:::info
+The `components` object is only valid under `accessibility` in your App Quality configuration. It does not apply to UI Coverage configuration.
+:::
+
+## Syntax
+
+```json
+{
+  "accessibility": {
+    "components": {
+      "componentAttributes": [
+        {
+          "attributeName": string,
+          "includeInSelector": boolean,
+          "comment": string
+        }
+      ],
+      "componentAttributeFilters": [
+        {
+          "attribute": string,
+          "value": string,
+          "include": boolean,
+          "comment": string
+        }
+      ],
+      "comment": string
+    }
+  }
+}
+```
+
+### `componentAttributes`
+
+Each entry names an attribute that may be **required** in the generated selector when it is present on the element. Attribute names are stored case-insensitively and **must be unique** in the list.
+
+| Option              | Required | Default | Description                                                                                    |
+| ------------------- | -------- | ------- | ---------------------------------------------------------------------------------------------- |
+| `attributeName`     | Required |         | The HTML attribute name (for example, `data-component-name`).                                  |
+| `includeInSelector` | Optional | `true`  | When `true`, the attribute is eligible to appear as a required segment in the stable selector. |
+| `comment`           | Optional |         | Optional note for your team explaining why this entry exists.                                  |
+
+When `includeInSelector` is `false`, the attribute is listed for documentation or future use but does not change selector generation (equivalent to omitting it for selector purposes).
+
+### `componentAttributeFilters`
+
+These filters fine-tune **which attribute values** actually receive the required-attribute treatment from `componentAttributes`. They use the same regular-expression style as [`attributeFilters`](/accessibility/configuration/attributefilters): `attribute` and `value` are regex patterns. **The first rule that matches both the attribute name and value** controls whether that value is included.
+
+| Option      | Required | Default | Description                                                                   |
+| ----------- | -------- | ------- | ----------------------------------------------------------------------------- |
+| `attribute` | Required |         | Regex string matched against the attribute name.                              |
+| `value`     | Optional | `.*`    | Regex string matched against the attribute value.                             |
+| `include`   | Optional | `true`  | If `false`, matching values skip required injection for component attributes. |
+| `comment`   | Optional |         | Optional note for maintainers.                                                |
+
+Use `include: false` to omit noisy or redundant segments (for example, skip a slot name on one branch while keeping it on another).
+
+## Examples
+
+### Require a component slot attribute
+
+```json
+{
+  "accessibility": {
+    "components": {
+      "componentAttributes": [
+        { "attributeName": "data-component-name", "includeInSelector": true }
+      ]
+    }
+  }
+}
+```
+
+### Require multiple attributes
+
+Require both a component identifier and Cypress test id when both are present, even if neither would otherwise be unique in the page:
+
+```json
+{
+  "accessibility": {
+    "components": {
+      "componentAttributes": [
+        { "attributeName": "data-component-name", "includeInSelector": true },
+        { "attributeName": "data-cy", "includeInSelector": true }
+      ]
+    }
+  }
+}
+```
+
+### Skip injection for specific attribute values
+
+Keep both attributes required in general, but **exclude** the component segment when the slot is `primary-slot`:
+
+```json
+{
+  "accessibility": {
+    "components": {
+      "componentAttributes": [
+        { "attributeName": "data-component-name", "includeInSelector": true },
+        { "attributeName": "data-cy", "includeInSelector": true }
+      ],
+      "componentAttributeFilters": [
+        {
+          "attribute": "data-component-name",
+          "value": "^primary-slot$",
+          "include": false
+        }
+      ]
+    }
+  }
+}
+```
+
+After saving configuration in the [App Quality settings](/accessibility/configuration/overview), you can [reprocess an existing run](/accessibility/configuration/overview#Viewing-Configuration-for-a-Run) to preview selector changes without a new test run.
+
+## Comparison to other config properties
+
+This is separate from [`attributeFilters`](/accessibility/configuration/attributefilters) and [`significantAttributes`](/accessibility/configuration/significantattributes):
+
+- `attributeFilters` are used to avoid specific attributes and values being used for element identification and tracking
+- `significantAttributes` indicate preferred attributes for element identification and tracking, when the attributes would uniquely identify elements within a given state in a page.
+
+For background on how Cypress picks identifiers, see [Element identification](/accessibility/core-concepts/element-identification).

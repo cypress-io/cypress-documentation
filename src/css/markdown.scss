@@ -167,6 +167,11 @@ div.markdown {
     margin-top: 2px;
   }
 
+  div[class*='language-skill'] pre {
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
   /* add dotted underline to links on tablet and smaller mobile devices */
   @media screen and (max-width: 1024px) and (orientation: landscape) {
     a {

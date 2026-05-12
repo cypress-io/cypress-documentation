@@ -54,6 +54,8 @@ From there, you can integrate with CI to set your own standards for handling the
 
 ## Top Guides
 
+{
+
 <ul class="guidesList">
   <li class="card">
     <a
@@ -61,7 +63,7 @@ From there, you can integrate with CI to set your own standards for handling the
       aria-labelledby="card-title-1"
     >
       <Icon name="chart-line" />
-      <h3 id="card-title-1">Improve Accessibility</h3>
+      <div class="card__title" id="card-title-1">Improve Accessibility</div>
       <p>
         Discover how to break down accessibility reports, prioritize fixes, and
         make impactful progress toward accessible software with Cypress
@@ -75,9 +77,9 @@ From there, you can integrate with CI to set your own standards for handling the
       aria-labelledby="card-title-8"
     >
       <Icon name="shield-halved" />
-      <h3 id="card-title-8">Detect and manage changes</h3>
+      <div class="card__title" id="card-title-8">Detect and manage changes</div>
       <p>
-        Compare reports in detail to review only _new_ accessibility issues, use
+        Compare reports in detail to review only <i>new</i> accessibility issues, use
         our API to react to runs that don't meet your standards, and spot trends
         with analytics.
       </p>
@@ -85,25 +87,30 @@ From there, you can integrate with CI to set your own standards for handling the
   </li>
   <li class="card">
     <a
-      href="/accessibility/guides/maintain-accessibility"
-      aria-labelledby="card-title-2"
+      href="/accessibility/work-with-ai-agents"
+      aria-labelledby="card-title-9"
     >
-      <Icon name="magnifying-glass-chart" />
-      <h3 id="card-title-2">Maintain Accessibility</h3>
+      <Icon
+        useCypressIcon
+        name="general-sparkle-triple"
+        size="24"
+        fillColor="teal-600"
+      />
+      <div class="card__title" id="card-title-9">Work with AI agents</div>
       <p>
-        Learn how to maintain long-term accessibility with Cypress, using
-        continuous feedback and monitoring to prevent regressions and keep your
-        application accessible.
+        Use AI coding assistants with Cypress Cloud MCP to pull accessibility
+        summaries, browse failing views and rules, and debug violations with
+        structured context from your recorded runs.
       </p>
     </a>
   </li>
   <li class="card">
     <a
-      href="/accessibility/guides/block-pull-requests"
+      href="/accessibility/block-pull-requests"
       aria-labelledby="card-title-3"
     >
       <Icon name="bug-slash" />
-      <h3 id="card-title-3">Block pull requests and set policies</h3>
+      <div class="card__title" id="card-title-3">Block pull requests and set policies</div>
       <p>
         Set policies and block pull requests automatically with Cypress
         Accessibility's Results API, enabling custom CI workflows to enforce
@@ -113,26 +120,11 @@ From there, you can integrate with CI to set your own standards for handling the
   </li>
   <li class="card">
     <a
-      href="/accessibility/guides/local-development"
-      aria-labelledby="card-title-4"
-    >
-      <Icon name="laptop-code" />
-      <h3 id="card-title-4">Feedback during local development</h3>
-      <p>
-        Get precise, fast, and scoped accessibility feedback during local
-        development by recording Cypress tests directly to Cypress
-        Cloud—bypassing CI pipelines and ensuring accurate insights with minimal
-        effort.
-      </p>
-    </a>
-  </li>
-  <li class="card">
-    <a
       href="/accessibility/guides/production-monitoring"
       aria-labelledby="card-title-5"
     >
       <Icon name="user-shield" />
-      <h3 id="card-title-5">Production monitoring</h3>
+      <div class="card__title" id="card-title-5">Production monitoring</div>
       <p>
         Monitor accessibility issues in production by running scheduled Cypress
         tests against live environments, capturing dynamic content changes, and
@@ -142,26 +134,11 @@ From there, you can integrate with CI to set your own standards for handling the
   </li>
   <li class="card">
     <a
-      href="/accessibility/guides/maximize-coverage"
-      aria-labelledby="card-title-6"
-    >
-      <Icon name="circle-half-stroke" />
-      <h3 id="card-title-6">Maximize coverage</h3>
-      <p>
-        Expand accessibility testing by combining Cypress Accessibility's
-        automated checks with custom assertions tailored to your application,
-        identifying hotspots for deeper manual review, and ensuring long-term
-        quality with a hybrid testing approach.
-      </p>
-    </a>
-  </li>
-  <li class="card">
-    <a
       href="/accessibility/guides/accessibility-automation"
       aria-labelledby="card-title-7"
     >
       <Icon name="book-open-reader" />
-      <h3 id="card-title-7">Accessibility automation principles</h3>
+      <div class="card__title" id="card-title-7">Accessibility automation principles</div>
       <p>
         Apply these core principles to maximize the impact of Cypress
         Accessibility's automation: complement automation with human judgment
@@ -171,7 +148,7 @@ From there, you can integrate with CI to set your own standards for handling the
     </a>
   </li>
 </ul>
-
+}
 ## What to expect
 
 Cypress Accessibility delivers detailed, actionable accessibility reports directly from your tests, powered by the industry-leading Axe Core® library by Deque Systems. These reports require no extra setup and are automatically generated for every unique state reached during your Cypress tests, whether in end-to-end or component testing.
@@ -182,9 +159,9 @@ Cypress Accessibility delivers detailed, actionable accessibility reports direct
 - **DOM snapshots**: Each detected violation is accompanied by a [full-page, inspectable DOM snapshot](/accessibility/core-concepts/inspecting-violation-details), highlighting the exact location and context of the violation.
 - **Report generation**: [Detailed reports](/accessibility/core-concepts/run-level-reports) are generated, offering sortable and filterable views by page, component, or the entire test run. Rule-based summaries for an aggregated view of accessibility outcomes for the entire run are also available.
 - **Run comparison**: [Compare the results](/accessibility/core-concepts/compare-reports) from two runs and see only the new issues. Know before you merge if a code change is going to cause new accessibility problems.
-- **Deep linking and sharing**: Easily share whatever you are looking at with your team at any time by copying the link, or using built-in sharing functionality and [Jira issue creation](http://localhost:3000/accessibility/core-concepts/inspecting-violation-details#Create-Jira-issue).
+- **Deep linking and sharing**: Easily share whatever you are looking at with your team at any time by copying the link, or using built-in sharing functionality and [Jira issue creation](/accessibility/core-concepts/inspecting-violation-details#Create-Jira-issue).
 - **Selective element handling**: Elements marked as "ignored" in tests are excluded from scoring but remain visible for manual review, ensuring flexibility via [configuration](/accessibility/configuration/overview).
-- **Flexible pipeline integration**: The [Results API](/accessibility/results-api) allows you to programmatically control your CI pipeline's behavior based on accessibility outcomes, enabling enforcement of accessibility policies.
+- **Flexible pipeline integration**: The [Results API](/accessibility/guides/results-api) allows you to programmatically control your CI pipeline's behavior based on accessibility outcomes, enabling enforcement of accessibility policies.
 - **Run-specific configuration**: Use [Profiles](/accessibility/configuration/profiles) to apply different configuration settings based on run tags, enabling team-specific reporting and optimized settings for pull requests versus regression runs.
 
 Learn more about [how it works](/accessibility/core-concepts/how-it-works).

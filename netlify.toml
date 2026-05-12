@@ -355,25 +355,25 @@
 
 [[redirects]]
   from = "/guides/dashboard/github-integration"
-  to = "/cloud/integrations/source-control/github"
+  to = "/cloud/integrations/github"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/cloud/github-integration"
-  to = "/cloud/integrations/source-control/github"
+  to = "/cloud/integrations/github"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/dashboard/gitlab-integration"
-  to = "/cloud/integrations/source-control/gitlab"
+  to = "/cloud/integrations/gitlab"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/cloud/gitlab-integration"
-  to = "/cloud/integrations/source-control/gitlab"
+  to = "/cloud/integrations/gitlab"
   status = 301
   force = true
 
@@ -403,13 +403,49 @@
 
 [[redirects]]
   from = "/guides/dashboard/bitbucket-integration"
-  to = "/cloud/integrations/source-control/bitbucket"
+  to = "/cloud/integrations/bitbucket"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/cloud/bitbucket-integration"
-  to = "/cloud/integrations/source-control/bitbucket"
+  to = "/cloud/integrations/bitbucket"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/cloud/integrations/source-control/github"
+  to = "/cloud/integrations/github"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/cloud/integrations/source-control/gitlab"
+  to = "/cloud/integrations/gitlab"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/cloud/integrations/source-control/bitbucket"
+  to = "/cloud/integrations/bitbucket"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/integrations/source-control/github"
+  to = "/cloud/integrations/github"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/integrations/source-control/gitlab"
+  to = "/cloud/integrations/gitlab"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/cloud/integrations/source-control/bitbucket"
+  to = "/cloud/integrations/bitbucket"
   status = 301
   force = true
 
@@ -495,19 +531,19 @@
 
 [[redirects]]
   from = "/guides/cloud/integrations/github"
-  to = "/guides/cloud/integrations/source-control/github"
+  to = "/cloud/integrations/github"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/cloud/integrations/gitlab"
-  to = "/cloud/integrations/source-control/gitlab"
+  to = "/cloud/integrations/gitlab"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/cloud/integrations/bitbucket"
-  to = "/cloud/integrations/source-control/bitbucket"
+  to = "/cloud/integrations/bitbucket"
   status = 301
   force = true
 
@@ -1108,6 +1144,24 @@
 [[redirects]]
   from = "/accessibility"
   to = "/accessibility/get-started/introduction"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/accessibility/results-api"
+  to = "/accessibility/guides/results-api"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/accessibility/guides/block-pull-requests"
+  to = "/accessibility/block-pull-requests"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/accessibility/guides/working-with-ai-agents"
+  to = "/accessibility/work-with-ai-agents"
   status = 301
   force = true
 

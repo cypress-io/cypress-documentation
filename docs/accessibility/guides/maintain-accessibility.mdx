@@ -37,7 +37,9 @@ In maintenance mode, Cypress Accessibility provides two critical functions:
 
 Accessibility debt tends to accumulate silently over time, leading to large, problematic backlogs that are difficult to work through, and land on your desk all at once after an audit. As you will have learned by going through the remediation process to get to a clean report in the first place: it's not always easy to fix an already-inaccessible experience. Sometimes you have to start a whole feature or component over, because you've built multiple structures on top of an inaccessible foundation.
 
-Early feedback about accessibility on feature branches will allow developers to review small, precise reports, and get all the context they need to either fix issues immediately, or raise problematic patterns for wider discussion. This is especially helpful when a new team member joins, who isn't as familiar with accessibility practices, or when a well-meaning full-stack developer - somebody who can "get by" in the front-end - unintentionally makes a minor change with major accessibility implications.
+Early feedback about accessibility on feature branches will allow developers to review small, precise reports, and get all the context they need to either fix issues immediately, or raise problematic patterns for wider discussion. If you have [Cloud MCP](/cloud/integrations/cloud-mcp) configured, you can ask your AI agent to check the branch report before opening a PR, catching regressions while your recent changes are still fresh:
+
+> "Check Cypress Cloud for the accessibility report for this branch. Are there any violations? If so, list the affected elements."
 
 Detecting problems before code merges allows the training, awareness-building, discussion, and remediation to all happen in the same cycle as regular code review, when everybody has all the context they need, not weeks or months later when it will be difficult to inject a ticket into the backlog to untangle what might have become a "load-bearing" accessibility problem.
 

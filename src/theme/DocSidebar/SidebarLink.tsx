@@ -1,5 +1,6 @@
 import * as React from 'react'
 import Tag from '@cypress-design/react-tag'
+import { IconGeneralSparkleDoubleSmall } from '@cypress-design/react-icon'
 import Link from '@docusaurus/Link'
 
 interface SidebarLinkProps {
@@ -22,6 +23,9 @@ export const SidebarLink: React.FC<SidebarLinkProps> = ({
   return (
     <Link {...{ className, href, style, onClick }}>
       {children}{' '}
+      {customProps?.ai_icon && (
+        <IconGeneralSparkleDoubleSmall fillColor="transparent" className="inline mr-[4px] mt-[-2px]" />
+      )}
       {customProps?.new_label ? (
         <Tag color="indigo" size="16" dark style={{ marginTop: '-2px' }}>
           New

@@ -2,7 +2,6 @@
 title: Enterprise Reporting
 sidebar_position: 30
 description: Enterprise Reporting in Cypress Cloud provides insights and data access to help you spot trends and anomalies, track usage, and govern your overall test program across all projects in your organization.
-sidebar_custom_props: { 'new_label': true }
 ---
 
 <ProductHeading product="cloud" plan="enterprise" />
@@ -146,6 +145,10 @@ See trends in [UI Coverage](https://www.cypress.io/ui-coverage?utm_medium=enterp
 ### Cypress Accessibility
 
 See trends in [Cypress Accessibility](https://www.cypress.io/accessibility?utm_medium=enterprise-reporting&utm_source=docs.cypress.io&utm_content=Cypress%20Accessibility) scores across projects to understand the relative changes in accessibility scores over time.
+
+The screenshot below shows a subset of what you can monitor on this tab: an **overall accessibility score** for the filters you apply, **which projects have the highest scores**, and **score trends over time** (using **Start date**, **End date**, **Team**, **Projects**, and **Branch** to narrow the view).
+
+The same area includes additional charts—for example **severity breakdowns** of issues, **weekly average violations per accessibility rule** (to spot spikes on a specific rule), **weekly average failed rules by impact**, and **weekly average element-level violations by impact**—so you can track breadth and severity of failures, not only the headline percentage. For illustrated walkthroughs of these chart types, how to read them, and how they tie into downloads, the [Data Extract API](/cloud/integrations/data-extract-api), and AI-assisted follow-up, see **[Example accessibility charts](/accessibility/guides/detect-changes#Example-accessibility-charts)** in the Cypress Accessibility guide [Detect and manage changes](/accessibility/guides/detect-changes).
 
 <DocsImage
   src="/img/cloud/features/analytics/a11y-enterprise-reporting.png"

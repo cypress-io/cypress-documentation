@@ -463,61 +463,12 @@ These various timeouts are defined in the
 
 If you want a minimal code approach to creating tests, you can use
 [Cypress Studio](/app/guides/cypress-studio) to record your browser
-interactions and generate tests. Visit our
+interactions and generate tests. With a [Cypress Cloud](/cloud/get-started/introduction) account, you also get **Studio AI**—assertion recommendations as you record. Visit our
 [guide](/app/guides/cypress-studio) for more information.
-
-## Testing Apps You Don't Control
-
-:::danger
-
-<Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Trying to
-visit or interact with sites or servers you do not control.
-
-:::
-
-In this guide we are testing our example application:
-[https://example.cypress.io](https://example.cypress.io).
-However you should think carefully about testing applications you **don't control**
-or you haven't been invited to test by the owner.
-Why?
-
-- They may have security features enabled which prevent Cypress from working,
-  such as detecting Cypress script usage. This can block your access and make it
-  appear that the application website is unresponsive.
-- They have the potential to change at any moment which will break tests.
-- They may do A/B testing which makes it impossible to get consistent results.
-
-Generally speaking, the point of Cypress is to be a tool you use every day to
-build and test your own applications, not a general purpose web automation tool.
-However, this is a guideline rather than a hard-and-fast rule and there are a
-number of good reasons to make exceptions for certain kinds of application:
-
-- They are specifically designed to integrate with third parties, e.g. SSO
-  providers.
-- They provide you with a complementary service, e.g. SaaS control panels or
-  analytics.
-- They reuse your content or provide plugins for an app you control.
-
-The key here is to carefully weigh the benefits of the tests in question against
-the possible disruption and flake these sorts of tests can introduce.
-
-See also [Visiting External Sites](/app/core-concepts/best-practices#Visiting-External-Sites),
-on our [Best Practices](/app/core-concepts/best-practices) page,
-which discusses strategies when this is necessary.
 
 ## Next steps
 
-- Take our free
-  [Testing your first application](https://learn.cypress.io/testing-your-first-application)
-  course.
-- Learn more about the [Cypress App](/app/core-concepts/open-mode) UI.
-- Start [testing your app](/app/end-to-end-testing/testing-your-app).
-- Set up
-  [intelligent code completion](/app/tooling/IDE-integration#Intelligent-Code-Completion)
-  for Cypress commands and assertions.
-- Record your test results to [Cypress Cloud](/cloud/get-started/introduction) for
-  advanced features like parallelization, flake detection, and more.
-- Check out the <Icon name="github" inline="true" contentType="rwa" /> for
-  practical demonstrations of Cypress testing practices, configuration, and
-  strategies in a real-world project.
-- Search Cypress's documentation to quickly find what you need.
+- [Test your own app](/app/end-to-end-testing/testing-your-app) — apply what you learned here to a real project.
+- [Introduction to Cypress](/app/core-concepts/introduction-to-cypress) — understand how Cypress really works under the hood.
+- [Best Practices](/app/core-concepts/best-practices) — learn selector strategies, state management, and patterns for maintainable tests.
+- [Cypress AI Skills](/app/tooling/ai-skills) — use your AI coding tool to write, fix, and review Cypress tests with best practices built in.

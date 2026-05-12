@@ -85,7 +85,7 @@ Attributes for each rule include:
   - **Inapplicable**: No applicable elements detected for this rule.
   - **Ignored by config**: The rule was excluded at the project level.
 - **Description**: A summary of the rule.
-- **Severity**: The Axe Core® impact level for the rule.
+- **Severity**: The Axe Core® impact level for the rule, or equivalent level for [Cypress rules](/accessibility/core-concepts/cypress-rules).
 - **Counts**: The counts of failed, inconclusive, and ignored elements for the rule.
 
 ## Filtering
@@ -103,3 +103,9 @@ This allows a full understanding of what Cypress evaluated during the run, while
   src="/img/accessibility/core-concepts/cypress-accessibility-filter-views-and-rules.png"
   alt="The Cypress Accessibility dropdown filter showing rule severity, rules, element state as well as a search bar"
 />
+
+:::tip
+
+If you have [Cloud MCP](/cloud/integrations/cloud-mcp) configured, your AI agent can query this same data directly—violation counts, failing rules, page and component details, and element-level failures—without leaving your editor.
+
+:::

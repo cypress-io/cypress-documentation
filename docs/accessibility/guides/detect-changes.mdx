@@ -12,7 +12,7 @@ sidebar_position: 70
 Cypress Accessibility supports three main paths to observing and acting on changes in the accessibility report for your projects:
 
 - Run comparisons with [Branch Review](/accessibility/core-concepts/compare-reports)
-- The [Results API](/accessibility/results-api) to fail builds or trigger alerts when results don't meet your standards
+- The [Results API](/accessibility/guides/results-api) to fail builds or trigger alerts when results don't meet your standards
 - [Analytics](/cloud/features/analytics/enterprise-reporting#Cypress-Accessibility) for high-level trend-spotting and analysis
 
 In this guide we'll discuss how these work and some common situations where we might use them together.
@@ -57,7 +57,7 @@ Comparing two runs in detail with Branch Review requires a good understanding of
 
 ## Results API
 
-Cypress Accessibility's [Results API](/accessibility/results-api) provides rich data related to the outcome of any accessibility report for a Cypress run. It supports adding a step in CI to block pull requests or trigger other side effects. To use the Results API, you'll need to [add a step in your CI process](/accessibility/results-api#Installation). This comes with a helper function which will automatically match your CI build with the related run in Cypress Cloud.
+Cypress Accessibility's [Results API](/accessibility/guides/results-api) provides rich data related to the outcome of any accessibility report for a Cypress run. It supports adding a step in CI to block pull requests or trigger other side effects. To use the Results API, you'll need to [add a step in your CI process](/accessibility/guides/results-api#Installation). This comes with a helper function which will automatically match your CI build with the related run in Cypress Cloud.
 
 Once you receive the results, you can perform any action you need to. Below are some of the common ones customers have told us about, where the results are compared with expectations.
 
@@ -65,7 +65,7 @@ Once you receive the results, you can perform any action you need to. Below are 
 
 #### Fail a build based on new failed accessibility rules
 
-The Results API provides a combined report with all the failing rules included. This means you can easily prepare a list of known, permitted failing rules to compare with the results from any run, and choose to fail only if a previously passing rule has started to fail. This is described in detail in the guide related to [blocking pull requests and setting policies](/accessibility/guides/block-pull-requests).
+The Results API provides a combined report with all the failing rules included. This means you can easily prepare a list of known, permitted failing rules to compare with the results from any run, and choose to fail only if a previously passing rule has started to fail. This is described in detail in the guide related to [blocking pull requests and setting policies](/accessibility/block-pull-requests).
 
 This concept is simple but powerful because it provides extremely high confidence that any failed build is related to a specific recent code, content, or testing change. Especially if there are a high number of existing failures, the actual number of failed elements detected can vary from run-to-run, especially if existing broken components are reused in new ways.
 
@@ -85,13 +85,86 @@ As an example, customers can use this functionality to trigger Slack webhooks th
 
 ## Analytics
 
-Analytics are located within the [Cypress Accessibility tab of Enterprise Reporting](/cloud/features/analytics/enterprise-reporting#Cypress-Accessibility) of Cypress Cloud. This provides an overview of accessibility trends across projects, and also supports filtering down to a single project and branch to see where scores have changed over time.
+Analytics live under the [Cypress Accessibility](/cloud/features/analytics/enterprise-reporting#Cypress-Accessibility) tab of [Enterprise Reporting](/cloud/features/analytics/enterprise-reporting) in Cypress Cloud, alongside other org-wide metrics on the same page.
+
+The same aggregates you see in the UI can be pulled programmatically: every chart is backed by data you can [download from Cloud](/cloud/features/analytics/enterprise-reporting#Download-data-from-Cloud) or request through the [Data Extract API](/cloud/integrations/data-extract-api) (see [Retrieve your test data through API](/cloud/features/analytics/enterprise-reporting#Retrieve-your-test-data-through-API) on the Enterprise Reporting page).
+
+That API access supports many possible uses, including:
+
+- Integrating Cypress Accessibility data with other quality metrics in your internal dashboards
+- Creating one-off reports about improvements or successes (for example showing the benefits over time that come from the adoption of your design system)
+- AI workflows: react to trends to find specific runs and drill into views, rules, and elements using [Cloud MCP](/cloud/integrations/cloud-mcp) tools and [Work with AI agents](/accessibility/work-with-ai-agents).
+
+### Example accessibility charts
+
+The following screenshots illustrate typical cards on the Cypress Accessibility tab and how you might interpret them.
+
+#### Overall score, top projects, and score trend
+
+<DocsImage
+  src="/img/accessibility/guides/enterprise-reporting-a11y-overview-scores-trend.png"
+  alt="Enterprise Reporting Cypress Accessibility tab with filters for date range, team, projects, and branch. Widgets show overall accessibility score, horizontal bar chart of projects with highest scores, and a line chart of accessibility score trend by project over time."
+/>
+
+This layout gives a north-star percentage for the filtered scope, a quick comparison of which projects score highest, and trends in topline scores over time. Use **Start date**, **End date**, **Team**, **Projects**, and **Branch** filters to zoom from org-wide trends to a single branch.
+
+#### Severity breakdown for the selected period
+
+<DocsImage
+  src="/img/accessibility/guides/enterprise-reporting-a11y-severity-donut.png"
+  alt="Donut chart titled Total with 39 accessibility issues, with legend: critical 23.08%, serious 46.15%, moderate 23.08%, minor 7.69%."
+/>
+
+The **severity breakdown** summarizes failed rule categories across the entire set of runs included in your filters.
+
+#### Weekly average violations per run by rule
+
+<DocsImage
+  src="/img/accessibility/guides/enterprise-reporting-a11y-weekly-violations-per-rule.png"
+  alt="Line chart titled Accessibility - Weekly average violations per run by rule, from February to April 2026, with one line spiking high for the region rule while other rules stay near zero."
+/>
+
+Tracking the number of failed elements per rule over time helps separate out permanent changes from brief ones.
+
+If something is merged with new accessibility failures, but the failures are quickly fixed, those are unlikely to appear here - they are blips with little impact.
+
+On the other hand, when a rule has new failures introduced that are not quickly repaired, that will be clear in this chart - as the `region` rules above shows.
+
+Likewise, when a rule's failures are fixed, a downward line here means the fix "stuck" and was picked up consistently in later runs.
+
+#### Weekly average failed rules per run by impact
+
+<DocsImage
+  src="/img/accessibility/guides/enterprise-reporting-a11y-weekly-failed-rules-by-impact.png"
+  alt="Stacked bar chart titled Accessibility - Weekly average rule violations per run by impact, February through April 2026, with bars segmented by critical, minor, moderate, and serious impact."
+/>
+
+This view emphasizes how many distinct rules fail per run on average, stacked by impact. It complements severity counts by showing whether breadth of rule failures is growing or shrinking week over the time period in question.
+
+#### Weekly average element violations per run by impact
+
+<DocsImage
+  src="/img/accessibility/guides/enterprise-reporting-a11y-weekly-element-violations-by-impact.png"
+  alt="Line chart titled Accessibility - Weekly average element violations per run by impact, February through April 2026, with separate lines for critical, serious, moderate, and minor impact levels."
+/>
+
+**Element-level violations by impact** highlight volume and volatility: spikes often indicate widespread markup or content issues.
+
+#### Enterprise Reporting
+
+For more context on the Enterprise Reporting product and other tabs, see [Enterprise Reporting](/cloud/features/analytics/enterprise-reporting) and the [Analytics](/cloud/features/analytics/overview) overview. For endpoint details and export formats, use the [Data Extract API](/cloud/integrations/data-extract-api) documentation.
 
 ### Analytics use cases
 
 #### Track progress and spot trends
 
-This level of reporting is ideal for documenting progress and spotting unexpected trends. When you see a project's score dropping over the long term, you can explore further with Branch Review to understand what changes are driving the score. You can compare reports before and after any shifts in scores to determine which accessibility issues were introduced.
+This level of reporting is ideal for documenting progress and spotting unexpected trends. When you see a project's score dropping over the long term, you can explore further with Branch Review to understand what changes are driving the score.
+
+You can compare reports before and after any shifts in scores to determine which accessibility issues were introduced.
+
+#### Pull high level metrics for AI analysis
+
+You can dive deeper with [Cloud MCP](/cloud/integrations/cloud-mcp) for your AI agents to look into issue ownerships remediation planning, and configuration.
 
 #### Set goals and minimum standards
 
