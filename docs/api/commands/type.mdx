@@ -98,7 +98,7 @@ Pass in an options object to change the default behavior of `.type()`.
 | Option                       | Default                                                                     | Description                                                                                                                                     |
 | ---------------------------- | --------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
 | `animationDistanceThreshold` | [`animationDistanceThreshold`](/app/references/configuration#Actionability) | The distance in pixels an element must exceed over time to be [considered animating](/app/core-concepts/interacting-with-elements#Animations).  |
-| `delay`                      | `10`                                                                        | Delay after each keypress                                                                                                                       |
+| `delay`                      | `0`                                                                         | Delay after each keypress                                                                                                                       |
 | `force`                      | `false`                                                                     | Forces the action, disables [waiting for actionability](#Assertions)                                                                            |
 | `log`                        | `true`                                                                      | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log)                                                             |
 | `parseSpecialCharSequences`  | `true`                                                                      | Parse special characters for strings surrounded by `{}`, such as `{esc}`. Set to `false` to type the literal characters instead                 |
@@ -133,11 +133,11 @@ cy.get('textarea').type('Hello world') // yields <textarea>
 
 #### Mimic user typing behavior
 
-Each keypress is delayed 10ms by default in order to simulate how a very fast
-user types!
+By default there is no delay between keypresses. To simulate more realistic
+typing, set the `delay` option.
 
 ```javascript
-cy.get('[contenteditable]').type('some text!')
+cy.get('[contenteditable]').type('some text!', { delay: 10 })
 ```
 
 #### 'Selecting' an option from datalist
@@ -691,6 +691,7 @@ following:
 
 | Version                                      | Changes                                                                                                                                |
 | -------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| [16.0.0](/app/references/changelog#16-0-0)   | Changed default `delay` from `10` to `0`                                                                                               |
 | [13.14.0](/app/references/changelog#13-14-0) | Added support for `.type({upArrow})` and `.type({downArrow})` to work on date, month, week, time, datetime-local and range input types |
 | [6.1.0](/app/references/changelog#6-1-0)     | Added option `scrollBehavior`                                                                                                          |
 | [5.6.0](/app/references/changelog#5-6-0)     | Support single key combination syntax                                                                                                  |
