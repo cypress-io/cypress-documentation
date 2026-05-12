@@ -688,20 +688,19 @@ Cypress will warn that this option is deprecated.
 <Icon name="exclamation-triangle" /> `injectDocumentDomain` will be removed in a
 future version of Cypress.
 
-<Icon name="exclamation-triangle" /> Setting `injectDocumentDomain` to `true`
-may cause certain sites to stop working in Cypress. Please read the
-[configuration notes](/app/references/configuration#injectDocumentDomain) before
-use.
+<Icon name="exclamation-triangle" /> Setting `injectDocumentDomain` to `true` may
+cause certain sites to stop working in Cypress. Please read the [configuration notes](/app/references/configuration#injectDocumentDomain)
+before use.
 
-<Icon name="exclamation-triangle" /> If your test suites require
-`experimentalWebKitSupport`, `injectDocumentDomain` must be set to `true`.
+<Icon name="exclamation-triangle" /> If your test suites require `experimentalWebKitSupport`,
+`injectDocumentDomain` must be set to `true`.
 
-<Icon name="exclamation-triangle" /> Chrome may remove support for
-`document.domain` at any time; if this configuration option is enabled, Cypress
-may cease to work in Chrome at any time. If this occurs, Chrome will raise an
-issue in its developer tools indicating that the deprecated `document.domain` is
-in use. To resolve this issue, set the `injectDocumentDomain` option to `false`
-and issue any newly necessary `cy.origin()` commands.
+<Icon name="exclamation-triangle" /> Chrome may remove support for `document.domain`
+at any time; if this configuration option is enabled, Cypress may cease to work in
+Chrome at any time. If this occurs, Chrome will raise an issue in its developer tools
+indicating that the deprecated `document.domain` is in use. To resolve this issue,
+set the `injectDocumentDomain` option to `false` and issue any newly necessary `cy.origin()`
+commands.
 
 :::
 
@@ -1098,8 +1097,7 @@ in the fourth.
 
 Here's a simplified example of such a test strategy.
 
-<Badge type="danger">Before</Badge> Multiple small tests against different
-origins
+<Badge type="danger">Before</Badge> Multiple small tests against different origins
 
 ```js
 it('logs in', () => {
