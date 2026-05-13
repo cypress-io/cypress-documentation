@@ -66,6 +66,38 @@ import { mount } from 'cypress/angular-zoneless'
 import { mount } from 'cypress/angular'
 ```
 
+### Default `keystrokeDelay` changed from `10` to `0`
+
+The default delay between keystrokes in [`cy.type()`](/api/commands/type) has been changed from `10` to `0` milliseconds to improve performance of typing-heavy test runs. This also affects [`Cypress.Keyboard.defaults()`](/api/cypress-api/keyboard-api), which now defaults `keystrokeDelay` to `0`.
+
+If your tests relied on the implicit 10ms delay between keystrokes, you can restore the previous behavior using any of these approaches:
+
+#### Set `keystrokeDelay` in your Cypress configuration
+
+:::cypress-config-example
+
+```ts
+{
+  keystrokeDelay: 10,
+}
+```
+
+:::
+
+#### Set `keystrokeDelay` via `Cypress.Keyboard.defaults()`
+
+```javascript
+Cypress.Keyboard.defaults({
+  keystrokeDelay: 10,
+})
+```
+
+#### Set `delay` per command
+
+```javascript
+cy.get('input').type('slow typing', { delay: 10 })
+```
+
 ### `@angular/platform-browser-dynamic` has been replaced with `@angular/platform-browser`
 
 As of Cypress `16.0.0`, the `@angular/platform-browser-dynamic` package has been replaced with the `@angular/platform-browser` package.

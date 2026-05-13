@@ -28,6 +28,7 @@ Refer to the [16 Migration Guide](/app/references/migration-guide#Migrating-to-C
     - The zoneless testing harness is now the default in `cypress/angular`. `zone.js` is no longer required to be installed for your Cypress project.
     - `@angular/platform-browser-dynamic` has been replaced with `@angular/platform-browser`.
     - `autoSpyOutputs` and `autoDetectChanges` have been removed from `cypress/angular`.
+- The default `keystrokeDelay` for [`cy.type()`](/api/commands/type) has been changed from `10` to `0` to improve performance of typing-heavy test runs. Users who relied on the implicit 10ms delay can restore it by setting `keystrokeDelay: 10` in their Cypress config or via [`Cypress.Keyboard.defaults()`](/api/cypress-api/keyboard-api). Addresses [#33523](https://github.com/cypress-io/cypress/issues/33523).
 
 ## 15.14.0
 

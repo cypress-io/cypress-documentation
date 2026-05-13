@@ -54,9 +54,9 @@ The following keys are supported:
 
 An object containing the following:
 
-| Option           | Default | Description                                                                                                                                                    |
-| ---------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `keystrokeDelay` | `10`    | The delay, in milliseconds, between keystrokes while typing with [.type()](/api/commands/type). Set to `0` to remove the delay. Must be a non-negative number. |
+| Option           | Default | Description                                                                                                                    |
+| ---------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| `keystrokeDelay` | `0`     | The delay, in milliseconds, between keystrokes while typing with [.type()](/api/commands/type). Must be a non-negative number. |
 
 ## Examples
 
@@ -75,14 +75,6 @@ Cypress.Keyboard.defaults({
 })
 ```
 
-### Remove the keystroke delay
-
-```javascript
-Cypress.Keyboard.defaults({
-  keystrokeDelay: 0,
-})
-```
-
 ## Notes
 
 ### Where to put Keyboard configuration
@@ -97,24 +89,24 @@ which can be useful when setting it for a single test or a subset of tests.
 
 ```javascript
 it(
-  'removes keystroke delay for all typing in this test',
-  { keystrokeDelay: 0 },
+  'adds a keystroke delay for all typing in this test',
+  { keystrokeDelay: 10 },
   () => {
-    cy.get('input').eq(0).type('fast typing')
-    cy.get('input').eq(1).type('more fast typing')
+    cy.get('input').eq(0).type('slow typing')
+    cy.get('input').eq(1).type('more slow typing')
   }
 )
 
 describe(
-  'removes keystroke delay in all tests in this suite',
-  { keystrokeDelay: 0 },
+  'adds a keystroke delay in all tests in this suite',
+  { keystrokeDelay: 10 },
   () => {
-    it('types fast in the first input', () => {
-      cy.get('input').eq(0).type('fast typing')
+    it('types with delay in the first input', () => {
+      cy.get('input').eq(0).type('slow typing')
     })
 
-    it('types fast in the second input', () => {
-      cy.get('input').eq(1).type('more fast typing')
+    it('types with delay in the second input', () => {
+      cy.get('input').eq(1).type('more slow typing')
     })
   }
 )
