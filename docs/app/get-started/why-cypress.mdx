@@ -11,21 +11,26 @@ sidebar_position: 10
 
 ##### <Icon name="question-circle" color="#0097A8" /> What you'll learn
 
-- The solutions Cypress provides for testing
+- What Cypress does, and where it fits as your team grows
+- How Cypress reduces the cost and risk of shipping software
 - The features of Cypress App, Cypress Cloud, UI Coverage, and Cypress Accessibility
 - Our mission and what we believe in
 - Key differences between Cypress and other testing tools
 
 :::
 
-## In a nutshell
+## What is Cypress?
 
-Cypress is a next generation front end testing tool built for the modern web.
-We address the key pain points teams
-face when testing modern applications and maintaining test suites.
+Cypress is a quality platform for teams shipping modern web applications. We bring together end-to-end testing, component testing, accessibility checks, and a clear view of test coverage into a connected workflow that runs locally and in CI, so you can catch problems before your users do.
 
-Our users are typically developers, QA engineers, and teams looking to build web applications
-and increase the quality of their existing applications.
+Most teams come to Cypress looking for a better way to write tests for their front end. They stay because, as the team and the application grow, **Cypress does more than a testing tool would.**
+
+The same platform helps a single developer write their first test, a QA team manage thousands of specs, an accessibility partner track regressions, and an engineering lead see whether a release is safe to ship. 
+
+**What you write in Cypress becomes part of how your team ships software.** Tests run while you build. Results flow into CI. Failures, flake patterns, accessibility issues, and untested areas of your app surface in one place the whole team can act on.
+
+**By the time a change is ready to merge, your team should already know whether it's safe to ship.** That's how Cypress reduces the cost and risk of releasing software: fewer surprises in production, fewer hours lost to test maintenance, and a release cadence you can trust.
+
 
 Cypress provides solutions for:
 
@@ -47,22 +52,53 @@ of your test suite and the quality of your application.
 - [UI Coverage](/ui-coverage/get-started/introduction), a premium solution providing a visual overview of test coverage across every page and component of your app, offering clear insights into uncovered areas that everyone can understand.
 - [Cypress Accessibility](/accessibility/get-started/introduction), a premium solution providing accessibility checks, which helps detect barriers for people with disabilities using your application.
 
-Cypress is a robust solution that can improve the quality of your application.
+## How Cypress grows with your team
 
-- **First:** Cypress helps you set up and start writing tests every day while
-  you build your application locally. _Test Driven Development at its best!_
-- **Next:** After building up a suite of tests and
-  [integrating Cypress](/app/continuous-integration/overview) with your
-  CI Provider, [Cypress Cloud](/cloud/get-started/introduction) can record your test
-  runs surfacing exactly what happened during the test in [Test Replay](/cloud/features/test-replay). Use [Cloud MCP](/cloud/integrations/cloud-mcp) to give your AI coding assistant the same run and failure context in your IDE. You'll never have to wonder: _Why did this fail?_
-- **Finally:** Add on [Cypress Accessibility](/accessibility/get-started/introduction) to get continuous feedback on accessibility issues and regressions, and [UI Coverage](/ui-coverage/get-started/introduction) to ensure you've tested
-  every part of your application.
+**Install the Cypress app and start writing tests as you build.** The app is free and open source.
+
+This is where the day-to-day cost of testing lives. Most teams spend more time debugging broken tests than writing new ones, and most of that time goes to one question: what was the state of the app when the test failed?
+
+Cypress is built around making that question fast to answer:
+
+- **[Time Travel](/app/core-concepts/open-mode#Command-Log)** snapshots let you replay every step of a test locally instead of guessing.
+- **[Automatic waiting](/app/core-concepts/introduction-to-cypress#Cypress-is-Not-Like-jQuery)** removes the timing logic that other tools require you to hand-write and maintain.
+- **[Studio AI](/app/guides/cypress-studio)** records interactions and suggests assertions, so you spend less time authoring boilerplate.
+
+Less time on test maintenance is more time shipping features.
+
+### Move to CI with Cypress Cloud
+
+**When you start running Cypress in your CI pipeline, new problems show up.** Tests pass locally and fail in CI. Someone marks a test as flaky and a week later three more are flaky. Engineers burn afternoons digging through CI logs. Your team lead asks "are we good to merge?" and nobody has a confident answer.
+
+[Cypress Cloud](/cloud/get-started/introduction) replaces guesswork with evidence:
+
+- **[Test Replay](/cloud/features/test-replay)** allows you to replay the test exactly as it executed during the run for zero-configuration debugging.
+- **[Flaky test management](/cloud/features/flaky-test-management)** surfaces flake patterns so they get fixed instead of quietly suppressed.
+- **[Branch Review](/cloud/features/branch-review)** gives every pull request a pre-merge picture of the test signal, so "are we good to merge?" has a real answer before code lands on main.
+- **[Smart Orchestration](/cloud/features/smart-orchestration/parallelization)** keeps CI fast as your suite grows by parallelizing specs, prioritizing the ones most likely to fail, and canceling builds that are clearly broken.
+
+Faster, more trustworthy CI is the difference between a team that ships every day and a team that ships when they get lucky.
+
+If your team uses AI coding assistants, [Cloud MCP](/cloud/integrations/cloud-mcp) <Icon useCypressIcon name="general-sparkle-double-large" className="inline mt-[-4px]" fillColor="white" /> gives them the same run and failure context inside your IDE. You'll never have to wonder: _Why did this fail?_
+
+### Scale quality with premium products
+
+**As your application grows, two harder questions arrive.** Have we actually tested everything that matters? Is what we're shipping accessible to everyone trying to use it?
+
+The stakes grow with the questions. Accessibility issues caught in development cost a few hours of engineering time. The same issues caught by a compliance review, a procurement gate, or a public complaint cost a great deal more. Coverage gaps that hide in plain sight turn into the production incidents that derail your roadmap.
+
+Two premium products meet this stage:
+
+- **[Cypress Accessibility](/accessibility/get-started/introduction)** surfaces accessibility issues continuously during your normal test runs, with no setup, code changes, or performance penalty. Issues get caught in development rather than after launch.
+- **[UI Coverage](/ui-coverage/get-started/introduction)** gives engineers, product, and QA a single shared view of which parts of your app your tests reach and which they don't.
 
 ## Features
 
-Below are listed some of the key features of each product.
+Below are some of the key features of each product.
 
 ### Cypress App
+
+_The day-to-day cost of testing lives in your local dev loop. The Cypress app is built to keep that loop short._
 
 - **Time Travel:** Cypress takes snapshots as your tests run. Hover over
   commands in the [Command Log](/app/core-concepts/open-mode#Command-Log)
@@ -91,6 +127,8 @@ Below are listed some of the key features of each product.
 
 ### Cypress Cloud
 
+_Cypress Cloud turns CI test results from something you hope to interpret correctly into a signal your whole team can act on._
+
 - **Test Replay:** Record to [Cypress Cloud](/cloud/get-started/introduction) and replay the test exactly as it executed during the run for zero-configuration debugging using [Test Replay](/cloud/features/test-replay).
 - **Smart Orchestration:** Once you're set up to record to Cypress Cloud, easily
   [parallelize](/cloud/features/smart-orchestration/parallelization) your test
@@ -105,9 +143,11 @@ Below are listed some of the key features of each product.
 - **Integrations:** Integrate with [GitHub](/cloud/integrations/github), [GitLab](/cloud/integrations/gitlab), or [Bitbucket](/cloud/integrations/bitbucket) to see test results directly on every push or pull request. Cypress Cloud also integrates with
   [Slack](/cloud/integrations/slack), [Jira](/cloud/integrations/jira), and [Microsoft Teams](/cloud/integrations/teams) to keep your team in the loop.
 - **Test Analytics:** Track test results over time with [Test Analytics](/cloud/features/analytics/overview) to identify trends, regressions, and improvements in your test suite. Use our [Data Extract API](/cloud/integrations/data-extract-api) to extract the data that is important to your team.
-- **Cypress Cloud MCP** <Icon useCypressIcon name="general-sparkle-double-large" className="inline mt-[-4px]" fillColor="white" />: Give AI coding assistants a direct window into your application's health and stability by connecting to [Cypress Cloud MCP](/cloud/integrations/cloud-mcp).
+- **Cypress Cloud MCP** <Icon useCypressIcon name="general-sparkle-double-large" className="inline mt-[-4px]" fillColor="white" />: Give AI coding assistants a direct window into your application's health and stability without leaving your IDE by connecting to [Cypress Cloud MCP](/cloud/integrations/cloud-mcp).
 
 ### Cypress Accessibility
+
+_Accessibility issues caught during testing are cheap to fix. The same issues caught by a compliance review, a procurement gate, or a user complaint are not._
 
 - **Accessibility Checks:** Maximize the value of your existing Cypress tests by instantly adding thousands of [accessibility checks](/accessibility/get-started/introduction) with no setup, code changes, or performance penalty.
 - **Run-level reports:** Get a detailed report of accessibility issues found in your test runs with [Run-level reports](/accessibility/core-concepts/run-level-reports).
@@ -116,20 +156,21 @@ Below are listed some of the key features of each product.
 
 ### UI Coverage
 
+_You can't act on coverage gaps you can't see. UI Coverage makes them visible to the whole team._
+
 - **Visualize Coverage:** [UI Coverage](/ui-coverage/get-started/introduction) provides a visual overview of test coverage across every page and component of your app, offering clear insights into uncovered areas that everyone can understand.
-- **Results API:** Use the UI Coverage [Results API](/ui-coverage/results-api) to programmatically access test coverage data and integrate it into your existing workflows.
+- **Results where you work:** Use the [Results API](/accessibility/guides/results-api) to integrate results into CI, and [Cloud MCP](/cloud/integrations/cloud-mcp) to surface them in your AI agent for faster diagnosis and iteration.
 - **Branch Review:** Compare runs to see newly introduced elements in your application or unexpected reductions in test coverage.
 
 ## Solutions
 
-Cypress can be used to ensure several different types of test. This can provide
-even more confidence that your application under test is working as intended and accessible to all users.
+Cypress can be used to ensure several different types of tests. Used together, they give you broader, more dependable coverage before release.
 
 ### End-to-end Testing
 
 Cypress was originally designed to run [end-to-end (E2E) tests](/app/end-to-end-testing/writing-your-first-end-to-end-test) on anything that
 runs in a browser. A typical E2E test visits the application in a browser and
-performs actions via the UI just like a real user would.
+performs actions via the UI just like a real user would. They catch the failures your users would actually see, which is what makes them so valuable in the moments before code ships.
 
 ```js
 it('adds todos', () => {
@@ -143,7 +184,7 @@ it('adds todos', () => {
 ### Component Testing
 
 Cypress [Component Testing](/app/component-testing/get-started) provides a component workbench for you to quickly
-build and test components from multiple front-end UI libraries — no matter how
+build and test components from multiple front-end UI libraries, no matter how
 simple or complex.
 
 Learn more about how to test components for
@@ -217,7 +258,7 @@ it('uses custom text for the button label', () => {
 
 You can write Cypress tests to check the accessibility of your application, and use plugins to run broad accessibility scans.
 When combined with [Cypress Accessibility](/accessibility/get-started/introduction) in Cypress Cloud, insights can be surfaced when specific
-accessibility standards are not met through your testing - with no configuration required. See our [Accessibility Testing guide](/app/guides/accessibility-testing) for more details.
+accessibility standards are not met through your testing, with no configuration required. See our [Accessibility Testing guide](/app/guides/accessibility-testing) for more details.
 
 ```js
 it('adds todos', () => {
@@ -235,7 +276,7 @@ it('adds todos', () => {
 
 ### UI Coverage
 
-You can increase release confidence by closing testing gaps in critical app flows using [UI Coverage](/ui-coverage/get-started/introduction). Leverage data-driven insights to cover untested areas, reduce incidents, and improve app quality.
+You can increase release confidence by closing testing gaps in critical app flows using [UI Coverage](/ui-coverage/get-started/introduction). Use data-driven insights to cover untested areas, reduce incidents, and improve app quality across the team.
 
 <DocsImage
   src="/img/ui-coverage/get-started/uicov-docs-1.gif"
@@ -359,6 +400,8 @@ redirect for every test you run. You can accomplish this once with
 [`cy.origin()`](/api/commands/origin).
 
 ### Flake resistant
+
+Flake is one of the largest hidden costs in any test suite. Reducing it is one of the most direct ways Cypress keeps a suite trustworthy over time.
 
 Cypress knows and understands everything that happens in your application
 synchronously. It is notified the moment the page loads and the moment the page
