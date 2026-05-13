@@ -70,7 +70,7 @@ Beyond what a generic AI tool knows, this skill:
 
 - **Searches official sources first.** It routes queries to the correct section of docs.cypress.io — commands, guides, configuration, error messages — before your model reaches for Cypress data it already knows, which may be outdated.
 - **Uses LLM-optimized documentation.** The skill fetches structured Markdown content from `/llm/*` paths on docs.cypress.io, giving cleaner and more reliable results than scraping HTML.
-- **Refuses to guess.** If a claim cannot be verified in official docs, it says so rather than inventing an API or behavior — reducing the chance of a confident but incorrect answer.
+- **Grounded in docs, not training data.** If a claim cannot be verified in official docs, it says so rather than inventing an API or behavior — reducing the chance of a confident but incorrect answer.
 - **Version-aware.** When a Cypress version is detected in your project, it scopes answers to what is actually available in that version and calls out differences explicitly.
 
 ### [`cypress-explain`](https://github.com/cypress-io/ai-toolkit/tree/main/skills/cypress-explain)
