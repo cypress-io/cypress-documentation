@@ -62,6 +62,17 @@ In practice, that means:
 - **Code that fits your project.** It matches your language (TypeScript or JavaScript) and existing type patterns, and reuses your existing helpers and custom commands rather than reinventing them.
 - **Only APIs your Cypress version supports.** The skill checks your Cypress version and limits suggestions to what is actually available to your project.
 
+### [`cypress-docs`](https://github.com/cypress-io/ai-toolkit/tree/main/skills/cypress-docs)
+
+Gives your AI tool reliable access to accurate, up-to-date Cypress documentation. Use it when you need to look up commands, APIs, configuration options, or confirm how a feature works in a specific Cypress version.
+
+Beyond what a generic AI tool knows, this skill:
+
+- **Searches official sources first.** It routes queries to the correct section of docs.cypress.io — commands, guides, configuration, error messages — before your model reaches for Cypress data it already knows, which may be outdated.
+- **Uses LLM-optimized documentation.** The skill fetches structured Markdown content from `/llm/*` paths on docs.cypress.io, giving cleaner and more reliable results than scraping HTML.
+- **Refuses to guess.** If a claim cannot be verified in official docs, it says so rather than inventing an API or behavior — reducing the chance of a confident but incorrect answer.
+- **Version-aware.** When a Cypress version is detected in your project, it scopes answers to what is actually available in that version and calls out differences explicitly.
+
 ### [`cypress-explain`](https://github.com/cypress-io/ai-toolkit/tree/main/skills/cypress-explain)
 
 Helps you understand, describe, and critique existing tests. Use it when auditing a suite, onboarding a new team member, or investigating a brittle test before rewriting it.
@@ -120,6 +131,14 @@ Write an new Cypress test that uses cy.prompt() to:
 How does cy.intercept() work, and when should I use cy.wait('@alias') with it?
 ```
 
+### Look up official Cypress documentation
+
+Use the cypress-docs skill to get verified answers directly from docs.cypress.io instead of relying on answers that may be outdated.
+
+```skill
+/cypress-docs What configuration options are available for cy.intercept() in Cypress 13? Show me the full options object with types and defaults.
+```
+
 ### Audit a spec for quality issues
 
 ```skill
@@ -171,6 +190,7 @@ or install each skill with:
 
 ```bash
 npx skills add https://github.com/cypress-io/ai-toolkit --skill cypress-author
+npx skills add https://github.com/cypress-io/ai-toolkit --skill cypress-docs
 npx skills add https://github.com/cypress-io/ai-toolkit --skill cypress-explain
 ```
 

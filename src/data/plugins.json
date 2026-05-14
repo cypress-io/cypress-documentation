@@ -69,7 +69,12 @@
           "name": "Cypress AWS Secrets Manager",
           "description": "This plugin integrates AWS Secrets Manager into your Cypress tests, ensuring that sensitive data like API keys, passwords, and tokens remain secure during testing. It allows for secure loading and updating of secrets directly from your tests.",
           "link": "https://github.com/alecmestroni/cypress-aws-secrets-manager/",
-          "keywords": ["aws", "secrets", "aws-secrets-manager", "secrets-manager"],
+          "keywords": [
+            "aws",
+            "secrets",
+            "aws-secrets-manager",
+            "secrets-manager"
+          ],
           "badge": "community"
         }
       ]
@@ -368,7 +373,14 @@
           "name": "cypress-geolocation-locale-faker",
           "description": "A Cypress plugin to mock geolocation, timezone, language, and locale settings for end-to-end testing. Useful for simulating user environments worldwide.",
           "link": "https://github.com/pradapjackie/cypress-geolocation-locale-faker",
-          "keywords": ["geolocation", "timezone", "locale", "language", "plugin", "testing"],
+          "keywords": [
+            "geolocation",
+            "timezone",
+            "locale",
+            "language",
+            "plugin",
+            "testing"
+          ],
           "badge": "community"
         },
         {
@@ -434,7 +446,15 @@
           "name": "cypress-env",
           "description": " This utility simplifies the process of handling different environments (such as test, staging, and production) by providing a environment-specific settings in your Cypress tests.",
           "link": "https://github.com/alecmestroni/cypress-env",
-          "keywords": ["multi", "environment", "env", "multi-environment", "test", "stage", "prod"],
+          "keywords": [
+            "multi",
+            "environment",
+            "env",
+            "multi-environment",
+            "test",
+            "stage",
+            "prod"
+          ],
           "badge": "community"
         },
         {
@@ -483,7 +503,13 @@
           "name": "cypress-dragndrop-kit",
           "description": "A lightweight, Cypress-native plugin that simplifies drag‑and‑drop and movement interactions in end-to-end tests. Perfect for testing sortable lists, draggable elements, and custom UI components.",
           "link": "https://github.com/vergjor/cypress-dragndrop-kit",
-          "keywords": ["dragndrop", "drag-and-drop", "drag", "drop", "commands"],
+          "keywords": [
+            "dragndrop",
+            "drag-and-drop",
+            "drag",
+            "drop",
+            "commands"
+          ],
           "badge": "community"
         },
         {
@@ -694,6 +720,22 @@
             "request"
           ],
           "badge": "community"
+        },
+        {
+          "name": "cypress-perf-baseline",
+          "description": "Measure performance in Cypress tests, keep a baseline in git, and catch regressions in CI.",
+          "link": "https://github.com/vimukthi101/cypress-perf-baseline",
+          "keywords": [
+            "cypress-plugin",
+            "performance",
+            "performance-testing",
+            "web-vitals",
+            "lcp",
+            "fcp",
+            "metrics",
+            "benchmark"
+          ],
+          "badge": "community"
         }
       ]
     },
@@ -744,12 +786,7 @@
           "name": "cypress-get-otp",
           "description": "Cypress custom command for generating OTP codes.",
           "link": "https://github.com/sergiubcn/cypress-get-otp",
-          "keywords": [
-            "authentication",
-            "hmac",
-            "otp",
-            "totp"
-          ],
+          "keywords": ["authentication", "hmac", "otp", "totp"],
           "badge": "community"
         }
       ]
@@ -1009,7 +1046,18 @@
           "name": "cypress-xray-junit-reporter",
           "description": "Enhances your Cypress test suite with the cypress-xray-junit-reporter a specialized custom reporter designed to seamlessly generating comprehensive XRay-compatible JUnit-style XML reports, complete with embedded screenshots on test failures, facilitating a thorough analysis of test execution.",
           "link": "https://github.com/alecmestroni/cypress-xray-junit-reporter",
-          "keywords": ["reporter", "xray", "mochawesome", "jira", "screenshot", "issue", "junit", "screenshots","CI", "CLI"],
+          "keywords": [
+            "reporter",
+            "xray",
+            "mochawesome",
+            "jira",
+            "screenshot",
+            "issue",
+            "junit",
+            "screenshots",
+            "CI",
+            "CLI"
+          ],
           "badge": "community"
         },
         {
@@ -1078,8 +1126,15 @@
         {
           "name": "cypress-xray-plugin",
           "description": "A plugin for uploading Cypress test results to Xray, including evidence such as screenshots, videos or custom data. Fully compatible with Cucumber.",
-          "link": "https://github.com/Qytera-Gmbh/cypress-xray-plugin",
-          "keywords": ["reporter", "xray", "jira", "cucumber", "screenshot", "video"],
+          "link": "https://github.com/csvtuda/cypress-xray-plugin",
+          "keywords": [
+            "reporter",
+            "xray",
+            "jira",
+            "cucumber",
+            "screenshot",
+            "video"
+          ],
           "badge": "community"
         }
       ]
@@ -1126,31 +1181,36 @@
           "name": "cypress-temp-mail",
           "description": "Lightweight npm library designed to generate temporary email addresses for end-to-end testing with Cypress",
           "link": "https://github.com/madhusaran/cypress-temp-mail",
-          "keywords": ["cypress-temp-mail", "email","temp-mail", "test", "commands"],
+          "keywords": [
+            "cypress-temp-mail",
+            "email",
+            "temp-mail",
+            "test",
+            "commands"
+          ],
           "badge": "community"
         },
         {
-          "name":"cymap",
-          "description":"Access email from any email server by leveraging IMAP capabilities inside Cypress.",
-          "link":"https://github.com/FC122/cymap",
-          "keywords":["imap", "email", "test", "commands"],
-          "badge":"community"
+          "name": "cymap",
+          "description": "Access email from any email server by leveraging IMAP capabilities inside Cypress.",
+          "link": "https://github.com/FC122/cymap",
+          "keywords": ["imap", "email", "test", "commands"],
+          "badge": "community"
         },
         {
-          "name":"cypress-mailpit",
-          "description":"A collection of useful Cypress commands for testing Emails utilizing the Mailpit RestAPI. Comes with TypeScript support",
-          "link":"https://github.com/pushpak1300/cypress-mailpit",
-          "keywords":["mailpit", "email", "test", "commands", "email"],
-          "badge":"community"
+          "name": "cypress-mailpit",
+          "description": "A collection of useful Cypress commands for testing Emails utilizing the Mailpit RestAPI. Comes with TypeScript support",
+          "link": "https://github.com/pushpak1300/cypress-mailpit",
+          "keywords": ["mailpit", "email", "test", "commands", "email"],
+          "badge": "community"
         },
         {
-          "name":"cypress-sql",
-          "description":"The @dankieu/cypress-sql package supports the following database connections Sql server, Mysql, OracleDB, Postgress",
-          "link":"https://github.com/testervippro/cypress-sql",
-          "keywords":["sql", "database", "test", "commands", "oracle"],
-          "badge":"community"
+          "name": "cypress-sql",
+          "description": "The @dankieu/cypress-sql package supports the following database connections Sql server, Mysql, OracleDB, Postgress",
+          "link": "https://github.com/testervippro/cypress-sql",
+          "keywords": ["sql", "database", "test", "commands", "oracle"],
+          "badge": "community"
         }
-
       ]
     },
     {
@@ -1160,7 +1220,14 @@
           "name": "cypress-temp-sms",
           "description": "Generates temporary mobile numbers that shall be used for SMS verification (OTP,2FA)",
           "link": "https://github.com/madhusaran/cypress-temp-sms",
-          "keywords": ["cypress-temp-sms", "sms","temp-number", "otp", "2fa", "commands"],
+          "keywords": [
+            "cypress-temp-sms",
+            "sms",
+            "temp-number",
+            "otp",
+            "2fa",
+            "commands"
+          ],
           "badge": "community"
         }
       ]

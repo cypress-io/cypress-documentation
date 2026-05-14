@@ -22,6 +22,14 @@ function llmExportPlugin(context: any, _options: any) {
               href: '/llms.txt',
             },
           },
+          {
+            tagName: 'link',
+            attributes: {
+              rel: 'api-catalog',
+              type: 'application/linkset+json',
+              href: '/.well-known/api-catalog',
+            }
+          },
         ],
       }
     },

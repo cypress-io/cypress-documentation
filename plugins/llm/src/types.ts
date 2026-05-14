@@ -39,7 +39,6 @@ export type LlmFullDocIndexEntry = {
 export type LlmExportConfig = {
   url: string
   includeSections?: string[]
-  partialsMode?: 'inline' | 'standalone'
   emit?: {
     json?: boolean
   }
