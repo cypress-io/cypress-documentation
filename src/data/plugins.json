@@ -720,6 +720,22 @@
             "request"
           ],
           "badge": "community"
+        },
+        {
+          "name": "cypress-perf-baseline",
+          "description": "Measure performance in Cypress tests, keep a baseline in git, and catch regressions in CI.",
+          "link": "https://github.com/vimukthi101/cypress-perf-baseline",
+          "keywords": [
+            "cypress-plugin",
+            "performance",
+            "performance-testing",
+            "web-vitals",
+            "lcp",
+            "fcp",
+            "metrics",
+            "benchmark"
+          ],
+          "badge": "community"
         }
       ]
     },
