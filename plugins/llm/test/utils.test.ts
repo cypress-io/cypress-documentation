@@ -14,7 +14,6 @@ import {
   stripMarkdownExtension,
   replaceMarkdownExtension,
   getGitSha,
-  loadPartialsFileToComponentName,
   countMarkdownAndJsonFiles,
 } from '../src/utils'
 
@@ -340,53 +339,6 @@ describe('getGitSha', () => {
   test('returns null for a non-git directory', () => {
     const dir = makeTempDir()
     expect(getGitSha(dir)).toBeNull()
-  })
-})
-
-// ---------------------------------------------------------------------------
-// loadPartialsFileToComponentName
-// ---------------------------------------------------------------------------
-
-describe('loadPartialsFileToComponentName', () => {
-  test('returns empty map when file does not exist', () => {
-    expect(loadPartialsFileToComponentName('/nonexistent/MDXComponents.js')).toEqual({})
-  })
-
-  test('maps partial filename to component import name', () => {
-    const dir = makeTempDir()
-    const file = path.join(dir, 'MDXComponents.js')
-    fs.writeFileSync(file, 'import FooBar from "@site/docs/partials/_foo-bar.mdx";\n')
-    expect(loadPartialsFileToComponentName(file)).toEqual({ '_foo-bar.mdx': 'FooBar' })
-  })
-
-  test('maps multiple imports', () => {
-    const dir = makeTempDir()
-    const file = path.join(dir, 'MDXComponents.js')
-    fs.writeFileSync(
-      file,
-      [
-        'import Alpha from "@site/docs/partials/_alpha.mdx";',
-        'import BetaComp from "@site/docs/partials/_beta.mdx";',
-      ].join('\n'),
-    )
-    const map = loadPartialsFileToComponentName(file)
-    expect(map['_alpha.mdx']).toBe('Alpha')
-    expect(map['_beta.mdx']).toBe('BetaComp')
-  })
-
-  test('ignores lines that are not matching partials imports', () => {
-    const dir = makeTempDir()
-    const file = path.join(dir, 'MDXComponents.js')
-    fs.writeFileSync(
-      file,
-      [
-        'import React from "react";',
-        'import Foo from "@site/docs/partials/_foo.mdx";',
-        'const bar = 42;',
-      ].join('\n'),
-    )
-    const map = loadPartialsFileToComponentName(file)
-    expect(Object.keys(map)).toEqual(['_foo.mdx'])
   })
 })
 

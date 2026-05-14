@@ -1,0 +1,52 @@
+---
+sidebar_label: Work with AI agents
+title: 'Work with AI agents | Cypress UI Coverage Documentation'
+description: 'Use AI assistants with UI Coverage and Cypress Cloud MCP: pull coverage scores and untested elements from recorded runs, tune reports for clearer signal, and review coverage deltas alongside passing tests.'
+sidebar_position: 110
+---
+
+<ProductHeading product="ui-coverage" />
+
+# Work with AI agents
+
+UI Coverage maps how your Cypress tests use the interface: which [interactive elements and links](/ui-coverage/core-concepts/interactivity) were exercised in each view, how that adds up to a [coverage score](/ui-coverage/get-started/introduction), and the DOM snapshots from [Test Replay](/cloud/features/test-replay) that put each finding in context. That picture is built from what actually ran in the browser, so it is a strong signal for **test completeness** relative to the UI states your suite reaches.
+
+AI agents can use that signal to summarize gaps, draft targeted tests, or correlate a drop in coverage with specific specs—while your team keeps ownership of what “enough coverage” means for each area.
+
+## Cypress Cloud MCP
+
+[Cypress Cloud MCP](/cloud/integrations/cloud-mcp) lets compatible agents query UI Coverage for a run using structured tools.
+
+Use it to turn “something changed in coverage” into a concrete next step: which views regressed, which elements are newly untested, and where to add or restore interactions.
+
+### Example prompts
+
+Here are some example prompts to try out:
+
+> "Using Cypress Cloud, pull the UI Coverage report for the latest run on this branch. Summarize the overall coverage score, the views with the most untested elements, and list the untested elements on the top view."
+
+> "Get UI Coverage for this run URL. For the view named `/checkout`, list untested interactive elements and suggest which existing spec file is the best place to add a test that exercises them."
+
+> "Use this CSV of our most-used pages based on Google Analytics data and create a matrix of risk where pages with large amounts of user interactions have relatively low UI Coverage. Create an action plan around this to backfill missing coverage in small increments starting from the most urgent work and working backwards."
+
+## Tune UI Coverage for agent-friendly signal
+
+Agents work best when reports emphasize the surfaces your team cares about. Use [configuration](/ui-coverage/configuration/overview) to shape what appears in Cloud and in MCP responses:
+
+- Use config [profiles](/ui-coverage/configuration/profiles) for team or owner-based customization,
+- [Reduce noise](/ui-coverage/guides/reduce-noise) with filters to ignore third-party or out-of-scope ui
+- Create clear [element identification](/ui-coverage/core-concepts/element-identification) and [grouping](/ui-coverage/core-concepts/element-grouping) so your agent can quickly make correct assumptions about an elements purpose.
+
+You can also use your agent to help you define and shape your configuration, by referencing the Cypress docs and describing intended changes.
+
+The goal is the same as for human review: high-signal lists of views and elements tied to ownership and critical flows, not an undifferentiated dump of every control on every page.
+
+## Governance: when to involve a human
+
+Treat unexpected coverage movement as a **quality gate on the tests and the UI under test**, not noise to ignore by default.
+
+- Use [Branch Review](/ui-coverage/guides/compare-reports) to see what changed between runs: new untested elements, new links, or new interactables in the application.
+- Use [monitoring and the Results API](/ui-coverage/guides/monitor-changes) to watch trends and wire checks into CI.
+- Use [policies and blocking flows](/ui-coverage/guides/block-pull-requests) when you need explicit thresholds or baselines before merge.
+
+Agents can draft tests, suggest spec placement, or narrate diffs; reviewers should still confirm intent, risk, and whether a drop in coverage is acceptable (for example, after a deliberate scope change). That split keeps velocity while avoiding silent drift in what your suite actually exercises.

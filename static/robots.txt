@@ -1,0 +1,17 @@
+# Allow all user agents
+User-agent: *
+# Explicitly allow common AI crawlers (duplicative with `*` above, but including for clarity)
+User-agent: GPTBot
+User-agent: ChatGPT-User
+User-agent: OAI-SearchBot
+User-agent: Google-Extended
+User-agent: CCBot
+User-agent: anthropic-ai
+User-agent: ClaudeBot
+User-agent: Claude-Web
+# Signal allowable AI consumption
+Content-Signal: ai-train=yes, search=yes, ai-input=yes
+Allow: /
+
+# Sitemap index (primary entry point for all sitemaps)
+Sitemap: https://docs.cypress.io/sitemap-index.xml
