@@ -2,17 +2,45 @@ import fs from 'fs'
 import path from 'path'
 import { ensureDir, parseHeadingLine, replaceMarkdownExtension, stripMarkdownExtension, toPosixPath } from './utils'
 import matter from 'gray-matter'
-import { normalizeContent } from './mdx-normalize'
+import TurndownService from 'turndown'
+import { gfm } from 'turndown-plugin-gfm'
+import { normalizeHtml } from './html-normalize'
 
 export class MarkdownExporter {
   private readonly markdownRoot: string
+  private readonly markdownProcessor: TurndownService
 
   constructor(
     private readonly rootDir: string,
-    exportRoot: string,
-    private readonly partialsByComponentName: Record<string, string>,
+    private readonly exportRoot: string,
   ) {
     this.markdownRoot = path.join(exportRoot, 'markdown')
+    this.markdownProcessor = new TurndownService({
+      headingStyle: 'atx',
+      codeBlockStyle: 'fenced',
+      fence: '```',
+      emDelimiter: '_',
+    })
+    this.markdownProcessor.use(gfm)
+    this.markdownProcessor.addRule('fencedCodeBlocks', {
+      filter: (node) =>
+        node.nodeName === 'PRE' &&
+        !!node.querySelector('code'),
+    
+      replacement: (content, node) => {
+        const codeNode = node.querySelector('code');
+        const className = codeNode?.className || '';
+        
+        const languageMatch = className.match(/language-(\w+)/);
+        const language = languageMatch ? languageMatch[1] : '';
+    
+        const code = (codeNode?.textContent || '')
+          .replace(/\n+$/, '') // trim trailing newlines
+          .replace(/^\n+/, '');
+    
+        return `\n\n\`\`\`${language}\n${code}\n\`\`\`\n\n`;
+      }
+    });
   }
 
   exportFile(params: {
@@ -23,27 +51,43 @@ export class MarkdownExporter {
     generatedAt: string,
     gitSha: string | null,
   }) {
+    // Right now this is source-centric (MDX) - for each MDX file, search for corresponding output HTML file. This is primarily
+    // because we want to extract some of the frontmatter from the MDX file. This data is available in the output HTML file but
+    // requires some extra processing to extract, and we also would need to restructure the output paths a bit, so for now leaving
+    // it this way.
     const { section, siteDir, absPath, relFromDocs, generatedAt, gitSha } = params
     const sourcePath = toPosixPath(path.relative(siteDir, absPath))
     const id = stripMarkdownExtension(relFromDocs)
     const raw = fs.readFileSync(absPath, 'utf8')
-    const parsed = matter(raw)
+    const mdxSource = matter(raw)
     
-    const normalizedBody = normalizeContent(absPath, parsed.content, this.partialsByComponentName)
+    let htmlPath: string
+    if (mdxSource.data?.slug) {
+      if (mdxSource.data.slug.startsWith('/')) {
+        htmlPath = path.resolve(this.rootDir, `.${mdxSource.data.slug}`, 'index.html')
+      } else {
+        htmlPath = path.resolve(this.rootDir, id, '..', mdxSource.data.slug, 'index.html')
+      }
+    } else {
+      htmlPath = path.join(this.rootDir, id, 'index.html')
+    }
+    const htmlContent = fs.readFileSync(htmlPath, 'utf8')
+    const htmlBody = normalizeHtml(htmlContent)
+    const normalizedBody = this.markdownProcessor.turndown(htmlBody)
 
     const titleFromContent = this.extractTitleFromContent(normalizedBody)
     const title =
-      (parsed.data && typeof (parsed.data as { title?: string }).title === 'string'
-        ? (parsed.data as { title: string }).title
+      (mdxSource.data && typeof (mdxSource.data as { title?: string }).title === 'string'
+        ? (mdxSource.data as { title: string }).title
         : titleFromContent) || path.basename(id)
 
     const metadata = {
       id,
       title,
-      description: parsed.data?.description || '',
+      description: mdxSource.data?.description || '',
       section,
       source_path: sourcePath,
-      version: (parsed.data as { version?: string } | undefined)?.version || gitSha || 'N/A',
+      version: (mdxSource.data as { version?: string } | undefined)?.version || gitSha || 'N/A',
       updated_at: generatedAt,
     }
     

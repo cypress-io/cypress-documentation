@@ -4,16 +4,12 @@ import path from 'path'
 
 import { LlmExportConfig } from './types'
 
-export const PARTIALS_SECTION = 'partials'
-
 export const DEFAULT_LLM_EXPORT_CONFIG: LlmExportConfig = {
   url: 'https://docs.cypress.io',
-  includeSections: ['accessibility', 'api', 'app', 'cloud', 'ui-coverage', 'partials'],
-  partialsMode: 'inline',
+  includeSections: ['accessibility', 'api', 'app', 'cloud', 'ui-coverage'],
   emit: { json: true },
   chunk: { minHeadingLevel: 2, minContentWords: 30 },
 }
-
 
 /** Matches `.md`, `.mdx`, or `.markdown` at end of path (case-insensitive). */
 const MARKDOWN_EXT_RE = /\.(md|mdx|markdown)$/i
@@ -113,27 +109,6 @@ export function getGitSha(cwd: string): string | null {
     // non-git checkout or git missing
   }
   return null
-}
-
-/**
- * Reads `MDXComponents.js` and maps partial basenames (e.g. `_foo.mdx`) to React import names.
- */
-export function loadPartialsFileToComponentName(mdxComponentsPath: string): Record<string, string> {
-  const map: Record<string, string> = {}
-  if (!fs.existsSync(mdxComponentsPath)) return map
-
-  const src = fs.readFileSync(mdxComponentsPath, 'utf8')
-  // import Foo from "@site/docs/partials/_bar.mdx";
-  const importRe =
-    /^import\s+([A-Za-z][A-Za-z0-9]*)\s+from\s+["']@site\/docs\/partials\/([^"']+)["']/
-
-  for (const line of src.split('\n')) {
-    const m = importRe.exec(line.trim())
-    if (!m) continue
-    const basename = path.posix.basename(toPosixPath(m[2]))
-    map[basename] = m[1]
-  }
-  return map
 }
 
 /**
