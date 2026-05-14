@@ -35,7 +35,8 @@ following properties
 | `certs`  | `Object[]` | A PEM format certificate/private key pair or PFX certificate container                                                   |
 
 Each object in the `certs` array can define either a **PEM format
-certificate/private key pair** or a **PFX certificate container**.
+certificate/private key pair** or a **PFX certificate container**. Both **RSA**
+and **ECDSA (EC)** keys are supported.
 
 **A PEM format certificate/private key pair can have the following properties:**
 
@@ -102,6 +103,7 @@ shown below:
 
 ## History
 
-| Version                                  | Changes                                         |
-| ---------------------------------------- | ----------------------------------------------- |
-| [8.0.0](/app/references/changelog#8-0-0) | Added Client Certificates configuration options |
+| Version                                      | Changes                                                                       |
+| -------------------------------------------- | ----------------------------------------------------------------------------- |
+| [15.15.1](/app/references/changelog#15-15-1) | Added support for ECDSA (EC) keys in PEM and PFX client certificates          |
+| [8.0.0](/app/references/changelog#8-0-0)     | Added Client Certificates configuration options                               |
