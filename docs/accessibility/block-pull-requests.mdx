@@ -35,6 +35,13 @@ The Results API offers full flexibility to analyze results and take tailored act
 
 ## Defining policies in the verification step
 
+For thresholds and rules you define in **App Quality** configuration, use [`getPolicyResults`](/accessibility/guides/results-api#policy-results) from `@cypress/extract-cloud-results` so Cypress Cloud evaluates [policies](/accessibility/configuration/policies) consistently.
+
+The examples below use [`getAccessibilityResults`](/accessibility/guides/results-api) for **custom** checks in your script (for example allowlists or baseline comparisons) that go beyond Cloud-defined policies.
+
+You may also combine approaches: for example, get the policy results first, 
+and if a policy is failing, then get the detailed accessibility results and process them.
+
 The [Results API Documentation](/accessibility/guides/results-api) provides detailed guidance on the API's capabilities. Here's a simplified example demonstrating how to enforce a "no new failing accessibility rules" policy:
 
 ```js

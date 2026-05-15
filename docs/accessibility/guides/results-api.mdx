@@ -259,6 +259,68 @@ The Accessibility results for the run are returned as an object containing the f
 }
 ```
 
+## Policy results {#policy-results}
+
+When you define [policies](/accessibility/configuration/policies) in App Quality configuration, Cypress Cloud evaluates them after **Accessibility** and **UI Coverage** reports are processed. The `@cypress/extract-cloud-results` package exposes **`getPolicyResults`** so your CI job can retrieve that evaluation without re-implementing threshold logic.
+
+For what you can configure, see [policies](/accessibility/configuration/policies) (shared with UI Coverage).
+
+### Installation and CI context
+
+Use the same installation steps and CI provider support as elsewhere on this page. `getPolicyResults` resolves the Cypress run from the current CI environment and polls until policy evaluation finishes (or surfaces an error), analogous to `getAccessibilityResults` / `getUICoverageResults`.
+
+### Basic example
+
+```javascript title="scripts/verifyPolicyResults.js"
+const { getPolicyResults } = require('@cypress/extract-cloud-results')
+getPolicyResults({
+  projectId: process.env.CYPRESS_PROJECT_ID,
+  recordKey: process.env.CYPRESS_RECORD_KEY,
+  runTags: [process.env.RUN_TAGS],
+}).then((result) => {
+  if (!result) return
+  const { runNumber, runUrl, runStatus, policiesStatus, policies } = result
+  console.log(`Run #${runNumber} (${runStatus}): ${runUrl}`)
+  if (policiesStatus === 'not-configured' || policies === null) {
+    console.log('No policies configured for this project/run.')
+    return
+  }
+  const failed = policies.filter((p) => !p.passed)
+  if (failed.length > 0) {
+    console.error(
+      failed
+        .map(
+          (p) =>
+            `${p.name}: ` +
+            p.validationResults
+              .filter((v) => !v.passed)
+              .map((v) => v.message)
+              .join('; ')
+        )
+        .join('\n')
+    )
+    process.exit(1)
+  }
+  console.log('All configured policies passed.')
+})
+```
+
+### Response shape
+
+- `runNumber`, `runUrl`, `runStatus`: Identify the Cypress run (including terminal run states where policy results may still be available depending on processing).
+- `policiesStatus`: `evaluated` when policies were processed, or `not-configured` when no policies apply.
+- `policies`: `null` when not configured; otherwise an array of `{ name, passed, validationResults }`. Each `validationResults` entry corresponds to one configured validation and includes the `metric`, human-readable `message`, `passed`, and metric-specific fields (for example `score` / `minScore`, `count` / `maxCount`, optional `failedViews`, and optional `viewMatch` / `matchedViewCount`). Each validation also includes a `reportUrl` deep link into the relevant Accessibility or UI Coverage report for investigation.
+
+### When to use policy results vs. report results
+
+Use `getPolicyResults` when your thresholds are defined in App Quality configuration and you want to drive some process in CI based on the defined policy outcomes for that run. It allows you to avoid custom logic if you have multiple projects.
+
+`getPolicyResults` is also useful as a pre-check before invoking the Cypress Cloud MCP, as if a run is within your policy tolerances, you may choose to skip the AI analysis that the MCP supports.
+
+Use `getAccessibilityResults` when you need custom logic (for example comparing against an external baseline file or rule-level allowlists) that goes beyond fixed numeric thresholds, or you want to log more details based on a policy failure.
+
+For end-to-end examples of failing CI when standards are not met, see [Block pull requests and set policies](/accessibility/block-pull-requests).
+
 ## Comparing against a baseline
 
 For comprehensive examples of comparing results against a baseline, including complete code examples, baseline structure, and best practices, see the [Block pull requests and set policies](/accessibility/block-pull-requests#comparing-against-a-baseline) guide.
@@ -513,7 +575,7 @@ pipelines:
           - npx cypress run --record
 +         - npm install --force https://cdn.cypress.io/extract-cloud-results/v1/extract-cloud-results.tgz
 +         - node ./scripts/verifyAccessibilityResults.js
-````
+```
 
 </TabItem>
 
@@ -535,7 +597,3 @@ steps:
 ## Required CI environment variables
 
 <ResultsApiEnvVars />
-
-```
-
-```

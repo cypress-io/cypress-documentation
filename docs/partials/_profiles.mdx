@@ -12,6 +12,8 @@ In many cases, the need for different profiles can be avoided completely by havi
 
 Profiles are selected by matching run tags to profile names. When you run Cypress with the [`--tag`](/app/references/command-line#cypress-run-tag-lt-tag-gt) flag, Cypress Cloud looks for a profile whose `name` matches one of the tags. If a match is found, properties defined in profile's `config` properties override the root configuration. Properties defined in the root that are not referenced in the profile will be inherited, meaning you do not need to repeat config values that you want to keep the same.
 
+You can list `policies` at the root of your App Quality configuration or inside a profile's `config` object. When a profile applies to a run, profile `config` follows the same override behavior described above—use profiles when different run tags should use different policy sets or thresholds.
+
 If more than one tag provided to a run matches a profile in your App Quality profiles array, the first matching profile in the array will be used. The order in which the tags are passed to the run doesn't matter.
 
 ## Best practices
