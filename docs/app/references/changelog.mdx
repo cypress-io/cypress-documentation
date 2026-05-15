@@ -8,13 +8,37 @@ sidebar_label: Changelog
 
 # Changelog
 
+## 16.0.0
+
+_Released TBD_
+
+**Breaking Changes:**
+
+:::info
+
+Refer to the [16 Migration Guide](/app/references/migration-guide#Migrating-to-Cypress-160) for help migrating your code.
+
+:::
+
+- Removed support for Node.js 20 and Node.js 25. Addresses [#33705](https://github.com/cypress-io/cypress/issues/33705) and [#33778](https://github.com/cypress-io/cypress/issues/33778).
+- **Component Testing breaking changes:**
+  - Angular
+    - Removed support for Angular 18, 19, and 20. The minimum supported version is now `21.0.0`. Addresses [#33005](https://github.com/cypress-io/cypress/issues/33005), [#33655](https://github.com/cypress-io/cypress/issues/33655), and [#33656](https://github.com/cypress-io/cypress/issues/33656).
+    - `cypress/angular-zoneless` has been merged upstream into `cypress/angular`. In a corresponding change, the `@cypress/angular-zoneless` npm package is deprecated and no longer supported and `cypress/angular-zoneless` is no longer shipped with the Cypress binary. Addresses [#33007](https://github.com/cypress-io/cypress/issues/33007).
+    - The zoneless testing harness is now the default in `cypress/angular`. `zone.js` is no longer required to be installed for your Cypress project.
+    - `@angular/platform-browser-dynamic` has been replaced with `@angular/platform-browser`. Addresses [#33006](https://github.com/cypress-io/cypress/issues/33006).
+    - `autoSpyOutputs` and `autoDetectChanges` have been removed from `cypress/angular`.
+  - Vite
+    - Removed support for Vite 5, Vite 6, and Vite 7 when using the Vite dev server for component testing. The minimum supported Vite version is now `8.0.0`. Upgrade Vite (and any `@vitejs/*` plugins that pin older major versions) before upgrading Cypress. Addresses [#33724](https://github.com/cypress-io/cypress/issues/33724), [#33725](https://github.com/cypress-io/cypress/issues/33725), and [#33726](https://github.com/cypress-io/cypress/issues/33726).
+- The default `keystrokeDelay` for [`cy.type()`](/api/commands/type) has been changed from `10` to `0` to improve performance of typing-heavy test runs. Users who relied on the implicit 10ms delay can restore it by setting `keystrokeDelay: 10` in their Cypress config or via [`Cypress.Keyboard.defaults()`](/api/cypress-api/keyboard-api). Addresses [#33523](https://github.com/cypress-io/cypress/issues/33523).
+
 ## 15.15.0
 
 _Released May 12, 2026_
 
 **Deprecations:**
 
-- The [`cy.end()`](/api/commands/end) command has been deprecated and will be removed in a future release. Instead of using `.end()` to break a chain, start a new chain of commands off of `cy`. Addressed in [#33707](https://github.com/cypress-io/cypress/pull/33707).
+- The `cy.end()` command has been deprecated and will be removed in a future release. Instead of using `.end()` to break a chain, start a new chain of commands off of `cy`. Addressed in [#33707](https://github.com/cypress-io/cypress/pull/33707).
 
 **Bugfixes:**
 

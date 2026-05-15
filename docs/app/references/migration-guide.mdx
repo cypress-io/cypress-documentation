@@ -8,6 +8,147 @@ sidebar_label: 'Migration Guide'
 
 # Migration Guide
 
+## Migrating to Cypress 16.0
+
+This guide details the code changes needed to migrate to Cypress
+version 16.0.
+[See the full changelog for version v16.0](/app/references/changelog#16-0-0).
+
+### Node.js 20 and 25 no longer supported
+
+Cypress 16 requires [Node.js](https://nodejs.org/en) **22.x**, **24.x**, or **26.x and above** to install the Cypress binary. Node.js 20 and Node.js 25 are no longer supported. See [system requirements](/app/get-started/install-cypress#Nodejs) and [Node's release schedule](https://github.com/nodejs/Release).
+
+### Default `keystrokeDelay` changed from `10` to `0`
+
+The default delay between keystrokes in [`cy.type()`](/api/commands/type) has been changed from `10` to `0` milliseconds to improve performance of typing-heavy test runs. This also affects [`Cypress.Keyboard.defaults()`](/api/cypress-api/keyboard-api), which now defaults `keystrokeDelay` to `0`.
+
+If your tests relied on the implicit 10ms delay between keystrokes, you can restore the previous behavior using any of these approaches:
+
+#### Set `keystrokeDelay` in your Cypress configuration
+
+:::cypress-config-example
+
+```ts
+{
+  keystrokeDelay: 10,
+}
+```
+
+:::
+
+#### Set `keystrokeDelay` via `Cypress.Keyboard.defaults()`
+
+```javascript
+Cypress.Keyboard.defaults({
+  keystrokeDelay: 10,
+})
+```
+
+#### Set `delay` per command
+
+```javascript
+cy.get('input').type('slow typing', { delay: 10 })
+```
+
+### Angular `18`, `19`, and `20` are no longer supported for Component Testing
+
+Angular 18 and 19 have reached [end-of-life](https://angular.dev/reference/releases#actively-supported-versions), and Angular 20 reaches LTS end in November 2026. As a result, the minimum required Angular version for component testing is now `21.0.0`.
+
+This allows us to ship the zoneless testing harness as the new default `cypress/angular` test harness in Cypress 16.0.
+
+Additionally, the [`@cypress/angular-zoneless`](https://www.npmjs.com/package/@cypress/angular-zoneless) npm package is deprecated and no longer supported — it has been merged into [`@cypress/angular`](https://www.npmjs.com/package/@cypress/angular).
+
+#### To continue using Angular below 21.0.0
+
+If you haven't been able to migrate away from an older Angular version and still need that test harness, it can be installed independently via the [`@cypress/angular`](https://www.npmjs.com/package/@cypress/angular) `4.x.x` package from `npm`.
+
+Note that this test harness version is deprecated and no longer supported by Cypress. This version is intended to serve as a temporary workaround to migrate your project to Angular v21.0.0+.
+
+```sh
+npm install --save-dev @cypress/angular@4
+```
+
+Inside your support file (ex: `./cypress/support/component.(js|ts)`), or wherever your mount function is imported, make the following update to add `@`.
+
+<Badge type="danger">Before</Badge>
+
+```ts
+import { mount } from 'cypress/angular'
+```
+
+<Badge type="success">After</Badge>
+
+```ts
+import { mount } from '@cypress/angular'
+```
+
+#### If already using `cypress/angular-zoneless` and Angular 21.0.0
+
+If you are already using `cypress/angular-zoneless`, update your imports to use `cypress/angular` instead. The zoneless harness has been merged into the `cypress/angular` test harness in Cypress 16.0.
+
+<Badge type="danger">Before</Badge>
+
+```ts
+import { mount } from 'cypress/angular-zoneless'
+```
+
+<Badge type="success">After</Badge>
+
+```ts
+import { mount } from 'cypress/angular'
+```
+
+### `@angular/platform-browser-dynamic` has been replaced with `@angular/platform-browser`
+
+As of Cypress `16.0.0`, the `@angular/platform-browser-dynamic` package has been replaced with the `@angular/platform-browser` package.
+
+This is because the `@angular/platform-browser-dynamic` package is deprecated and no longer the default.
+
+To migrate, nothing additional is required as Angular 21 uses `@angular/platform-browser` by default. You can likely uninstall the `@angular/platform-browser-dynamic` package from your project dependencies.
+
+### Vite `5`, `6`, and `7` are no longer supported for Component Testing
+
+As of Cypress `16.0.0`, [`@cypress/vite-dev-server`](https://www.npmjs.com/package/@cypress/vite-dev-server) requires **Vite `8.x`** or above for component testing. Vite `5`, `6`, and `7` are no longer supported when Cypress resolves the Vite version installed in your project.
+
+If an unsupported Vite version is detected, Cypress throws `ViteVersionNotSupportedError`:
+
+```text
+ViteVersionNotSupportedError: Vite 8 is the required version to use cypress/vite-dev-server. Found Vite version v<your-version>
+```
+
+The recommended path is to upgrade your project to Vite `8`.
+
+#### To continue using Vite `5` through `7`
+
+If you are upgrading to Cypress `16` but still need Vite `5`, `6`, or `7` for component testing, install `7.x` of `@cypress/vite-dev-server` from `npm` and configure it explicitly as the dev server:
+
+```sh
+npm install --save-dev @cypress/vite-dev-server@7
+```
+
+Then configure the `devServer` in your `cypress.config.js` or `cypress.config.ts` file:
+
+```js
+import { defineConfig } from 'cypress'
+import { devServer } from '@cypress/vite-dev-server'
+
+export default defineConfig({
+  component: {
+    devServer(devServerConfig) {
+      return devServer({
+        ...devServerConfig,
+        framework: '<YOUR_FRAMEWORK>',
+        bundler: 'vite',
+      })
+    },
+  },
+})
+```
+
+Change `<YOUR_FRAMEWORK>>` to `'react'`, `'vue'`, `'svelte'`, or another [supported framework](/app/component-testing/component-framework-configuration) to match your component testing setup.
+
+Note that `@cypress/vite-dev-server@7` is deprecated and no longer supported by Cypress. It is intended as a temporary workaround until you can migrate to Vite `8`. More information on configuring a custom dev server can be found in the [Cypress Vite Dev Server documentation](https://github.com/cypress-io/cypress/blob/@cypress/vite-dev-server-v7.2.1/npm/vite-dev-server/README.md).
+
 ## Migrating away from Cypress.env()
 
 Starting with Cypress 15.10.0, `Cypress.env()` has been deprecated and will be removed in a future major version. This guide helps you migrate to [`cy.env()`](/api/commands/env) (for sensitive values) or [`Cypress.expose()`](/api/cypress-api/expose) (for public/non-sensitive values), depending on your use case.
