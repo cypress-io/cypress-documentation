@@ -48,6 +48,7 @@ import CiProviderCloudSteps from "@site/docs/partials/_ci_provider_cloud_steps.m
 import UrlAllowList from "@site/docs/partials/_url_allowlist.mdx";
 import UICovPremiumNote from "@site/docs/partials/_ui-coverage-premium-note.mdx";
 import ResultsApiEnvVars from "@site/docs/partials/_results-api-env-vars.mdx";
+import { AppQualityPolicies } from "@site/docs/partials/_app-quality-policies.mdx";
 
 // Font Awesome
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -216,4 +217,5 @@ export default {
   UrlAllowList,
   UICovPremiumNote,
   ResultsApiEnvVars,
+  AppQualityPolicies,
 }
