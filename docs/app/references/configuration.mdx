@@ -165,6 +165,7 @@ For more options regarding screenshots, view the
 | `animationDistanceThreshold` | `5`     | The distance in pixels an element must exceed over time to be considered animating.                                                                                              |
 | `waitForAnimations`          | `true`  | Whether to wait for elements to finish animating before executing commands.                                                                                                      |
 | `scrollBehavior`             | `top`   | Viewport position to which an element should be scrolled before executing commands. Can be `'center'`, `'top'`, `'bottom'`, `'nearest'`, or `false`. `false` disables scrolling. |
+| `visibilityStrategy`         | `modern` | Selects the algorithm Cypress uses to check element visibility. `'modern'` (the default) delegates to the browser's native `Element.checkVisibility()` API. `'legacy'` opts back into the ancestor-walking algorithm from Cypress 15 and earlier. This option is deprecated — the `'legacy'` value and the option itself will be removed in a future major version. |
 
 For more information, see the docs on
 [actionability](/app/core-concepts/interacting-with-elements#Actionability).

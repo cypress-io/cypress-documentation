@@ -67,77 +67,102 @@ will perform the action.
 
 :::
 
-### Experimental Fast Visibility
+### Visibility Strategy
 
-You can enable a faster visibility detection algorithm using [`experimentalFastVisibility`](/app/references/experiments#Experimental-Fast-Visibility).
+As of Cypress 16, the default visibility algorithm delegates to the browser's native [`Element.checkVisibility()`](https://developer.mozilla.org/en-US/docs/Web/API/Element/checkVisibility) API. This algorithm is faster and aligns Cypress's notion of "visible" with the browser's own definition.
 
-This algorithm is more accurate and less resource-intensive than the default behavior, but it has slightly different semantics.
+Configure which algorithm Cypress uses with the [`visibilityStrategy`](/app/references/configuration#Actionability) option, which accepts either `'modern'` (the default) or `'legacy'`.
 
-When `experimentalFastVisibility` is enabled, an element is considered hidden if:
+When `visibilityStrategy` is set to `'modern'`, an element is considered hidden if:
 
-- Its `width` or `height` is `0`
-- Its computed CSS properties prevent it from being clicked on or visible:
-  - `visibility: hidden`
+- Its `width` or `height` is `0` (via the bounding rect zero-dimension guard)
+- Its computed CSS properties hide it (per `checkVisibility()`):
+  - `display: none` (on the element or any ancestor)
+  - `visibility: hidden` or `visibility: collapse`
+  - `content-visibility: hidden` or `content-visibility: auto` (when not rendered)
   - `opacity: 0`
-  - `display: none`
-  - `pointer-events: none`
-- It is positioned fully outside of the browser viewport
-  - _this is a known compatibility issue with the legacy visibility algorithm_ when it comes to asserting visibility. It will be addressed during the course of this experiment.
-- It is fully covered or clipped by another element
+- It is an `<option>` or `<optgroup>` inside a hidden `<select>`
 
-Keep up-to-date with the progress of this experiment in the [Cypress repository](https://github.com/cypress-io/cypress/issues/33043).
+The legacy algorithm additionally considered elements hidden when they were:
 
-#### Limitations
+- Clipped by an ancestor's `overflow: hidden`
+- Scrolled out of view of an `overflow: auto`/`overflow: scroll` ancestor
+- Fully covered by a sibling element
+- Rotated past 90 degrees via `transform` with `backface-visibility: hidden`
+- Clipped by a `clip-path` or legacy `clip` property
 
-Experimental fast visibility is an experimental feature that is still under development. It uses different semantics from the legacy visibility algorithm, and does not yet fully support all testing scenarios.
+The modern algorithm intentionally does **not** detect these cases. If your tests rely on this legacy behavior, you can opt back into the previous algorithm:
 
-- Shadow DOM is not yet supported. Tests that interact with Shadow DOM elements may fail or behave incorrectly.
-- Elements outside of the browser's viewport are not yet correctly identified as visible. Scroll elements into view before testing.
+:::cypress-config-example
 
-#### Common Compatibility Issues
-
-When enabling fast visibility, you may encounter differences in how elements are detected. The fast algorithm provides more geometrically accurate visibility detection, which may reveal that elements previously considered visible are actually hidden.
-
-**Elements Outside Viewport**
-
-Elements positioned outside the viewport are now correctly identified as hidden. Scroll elements into view before testing:
-
-```javascript
-// Before
-cy.get('.off-screen-element').should('be.visible')
-
-// After
-cy.get('.off-screen-element').scrollIntoView().should('be.visible')
+```js
+{
+  visibilityStrategy: 'legacy'
+}
 ```
 
-**Covered Elements**
+:::
 
-Elements covered by other elements are now correctly identified as hidden. Test the covering element or the user interaction that reveals the covered element:
+`visibilityStrategy` can also be set per-suite or per-test:
 
-```javascript
-// Test the user action that reveals the element
-cy.get('.toggle-button').click()
-cy.get('.covered-element').should('be.visible')
+```js
+describe('My Test Suite', { visibilityStrategy: 'legacy' }, () => {
+  it('Requires legacy visibility to pass', () => {
+    // ...
+  })
+})
 ```
-
-**Zero-Dimension Containers**
-
-Containers with zero dimensions are now correctly identified as hidden. Test the child element instead of the container:
-
-```javascript
-// Test the child element that should be visible
-cy.get('.zero-dimension-container .child-element').should('be.visible')
-```
-
-**Elements with `pointer-events: none`**
-
-Elements with `pointer-events: none` may be detected as hidden when they are visible. Do not assert visibility on elements with `pointer-events: none`, as they cannot be interacted with.
 
 :::caution
 
-**Important:** If tests fail after enabling fast visibility, the fast algorithm is likely correct and tests should be updated to match the actual behavior.
+`visibilityStrategy` is deprecated. Both the `'legacy'` value and the option itself will be removed in a future major version of Cypress. Use it only as a temporary migration path while updating tests that depend on legacy visibility semantics.
 
 :::
+
+#### Updating tests that depended on the legacy algorithm
+
+When you encounter a test that fails under the modern algorithm, prefer updating the assertion to verify the same user-visible behavior in an algorithm-agnostic way rather than opting into `'legacy'`.
+
+**Scroll-clipped elements**
+
+The modern algorithm reports elements scrolled out of an `overflow: auto` ancestor as visible (they are technically rendered, just outside the scroll container's visible area). Assert on the geometry directly:
+
+```javascript
+// Before
+cy.get('#scroll-container button').should('not.be.visible')
+
+// After
+cy.get('#scroll-container button').then(($el) => {
+  const container = $el[0].closest('#scroll-container')
+  expect($el[0].getBoundingClientRect().top).to.be.greaterThan(
+    container.getBoundingClientRect().bottom
+  )
+})
+```
+
+**Collapsed containers that hide via `overflow: hidden` + `max-height: 0`**
+
+Many UI libraries hide collapsible content by setting `max-height: 0` and `overflow: hidden`. The modern algorithm doesn't detect this. Most libraries also set `aria-hidden="true"` on the closed container — assert on that instead:
+
+```javascript
+// Before
+cy.get('.collapsible-content').should('not.be.visible')
+
+// After
+cy.get('.collapsible-content')
+  .closest('[aria-hidden]')
+  .should('have.attr', 'aria-hidden', 'true')
+```
+
+**Text truncated with `text-overflow: ellipsis`**
+
+Truncated text is rendered with an ellipsis but the underlying text node is still considered visible by the browser. Assert that the truncating ancestor's `scrollWidth` exceeds its `clientWidth`:
+
+```javascript
+cy.get('.truncate-container').then(($el) => {
+  expect($el[0].scrollWidth).to.be.greaterThan($el[0].clientWidth)
+})
+```
 
 ## Actionability
 

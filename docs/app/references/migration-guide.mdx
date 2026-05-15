@@ -50,6 +50,41 @@ Cypress.Keyboard.defaults({
 cy.get('input').type('slow typing', { delay: 10 })
 ```
 
+### `experimentalFastVisibility` replaced by `visibilityStrategy`
+
+The experimental `experimentalFastVisibility` boolean flag has been removed. Its successor is the new [`visibilityStrategy`](/app/references/configuration#Actionability) configuration option, which accepts `'legacy'` or `'modern'` and defaults to `'modern'`. The modern algorithm — which delegates to the browser's native [`Element.checkVisibility()`](https://developer.mozilla.org/en-US/docs/Web/API/Element/checkVisibility) API — is now the default for **all** users, not just those who opted into the experiment.
+
+If you were previously setting `experimentalFastVisibility: true`, remove it; the modern algorithm is the default. If you were setting `experimentalFastVisibility: false` (or relying on the default of `false` in 15.x) and need to keep the legacy behavior temporarily, opt back in with `visibilityStrategy: 'legacy'`:
+
+:::cypress-config-example
+
+```js
+{
+  visibilityStrategy: 'legacy'
+}
+```
+
+:::
+
+:::caution
+
+`visibilityStrategy` is deprecated. Both the `'legacy'` value and the option itself will be removed in a future major version of Cypress. Treat it as a temporary migration aid while you update tests that depend on legacy visibility semantics.
+
+:::
+
+#### Tests that may fail under the new default
+
+The modern algorithm intentionally drops several legacy behaviors. Tests that assert `should('not.be.visible')` on the following will no longer pass under `'modern'`:
+
+- Elements scrolled out of view in an `overflow: auto`/`overflow: scroll` ancestor
+- Elements clipped by an ancestor `overflow: hidden` (e.g. collapsed UI that uses `max-height: 0`)
+- Elements rotated past 90° with `backface-visibility: hidden`
+- Elements fully covered by a sibling
+- Text clipped by `text-overflow: ellipsis`
+- Elements clipped by `clip-path` or the legacy `clip` property
+
+See [Visibility Strategy](/app/core-concepts/interacting-with-elements#Visibility-Strategy) for the documented behavior of each algorithm and recommended patterns for rewriting tests in an algorithm-agnostic way (geometric checks via `getBoundingClientRect`, `aria-hidden` assertions on collapsible containers, etc.).
+
 ### Angular `18`, `19`, and `20` are no longer supported for Component Testing
 
 Angular 18 and 19 have reached [end-of-life](https://angular.dev/reference/releases#actively-supported-versions), and Angular 20 reaches LTS end in November 2026. As a result, the minimum required Angular version for component testing is now `21.0.0`.
