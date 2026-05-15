@@ -12,13 +12,6 @@
           "badge": "official"
         },
         {
-          "name": "Watch",
-          "description": "Watches your spec files and serves them as-is. Useful as an example reference or if you don't need transpiling/bundling.",
-          "link": "https://github.com/cypress-io/cypress-watch-preprocessor",
-          "keywords": ["file-watcher"],
-          "badge": "official"
-        },
-        {
           "name": "Cucumber",
           "description": "Run cucumber/gherkin-syntaxed specs with cypress.io.",
           "link": "https://github.com/badeball/cypress-cucumber-preprocessor",
