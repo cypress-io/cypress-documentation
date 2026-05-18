@@ -128,23 +128,14 @@ See [Antigravity's documentation](https://antigravity.google/docs/mcp) for more 
 **OAuth (Recommended)**
 
 1. Open Claude Desktop.
-2. Go to Settings > Developer > Edit Config.
-3. Add the following to your `claude_desktop_config.json`:
-   ```json
-   {
-     "mcpServers": {
-       "Cypress Cloud": {
-         "command": "npx",
-         "args": [
-           "-y",
-           "mcp-remote@latest",
-           "https://mcp.cypress.io/mcp"
-         ]
-       }
-     }
-   }
-   ```
-4. Restart Claude Desktop after saving. It will open a browser window to sign in to Cypress Cloud. You should see a tools indicator in the chat input after authenticating.
+2. Click Customize
+3. Click Connectors
+4. Click the + icon and select 'Add custom connector'
+5. Add the connector name, i.e `cypress-cloud`
+6. Add remote MCP url `https://mcp.cypress.io/mcp`
+7. Click add
+8. Click connect to authn
+
 
 **Personal Access Token (Alternative)**
 
@@ -189,8 +180,9 @@ Note: `mcp-remote` requires Node.js v20+ in the path to run successfully.
      https://mcp.cypress.io/mcp \
      --transport http
    ```
-
-2. Claude Code will open a browser window to sign in to Cypress Cloud when the server is first used.
+2. Start claude session `claude`
+3. Prompt `mcp cypress`
+2. Claude Code will open a browser window to sign in to Cypress Cloud
 
 **Personal Access Token (Alternative)**
 
