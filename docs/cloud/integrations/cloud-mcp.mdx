@@ -55,6 +55,8 @@ When you configure your AI client with the Cloud MCP server URL (`https://mcp.cy
 
 OAuth sessions are scoped to your Cypress Cloud user account and respect your existing role and permissions in each MCP-enabled organization. No token expiry management is required on your part.
 
+Your active OAuth sessions are visible on your **[Manage Profile](https://cloud.cypress.io/profile)** page. You can revoke any session from there at any time.
+
 If your AI client does not support OAuth, use a [personal access token](#authenticate-with-a-personal-access-token-alternative) instead.
 
 ### Authenticate with a Personal Access Token (Alternative)
@@ -420,6 +422,13 @@ For more patterns, example prompts, and governance ideas when using UI Coverage 
 - If using OAuth: ensure your browser can reach https://cloud.cypress.io to complete sign-in. If the browser window doesn't open, try removing and re-adding the server config in your AI client.
 - If using a personal access token: verify your PAT hasn't expired (check Manage Profile).
 - Check firewall and proxy settings to ensure https://mcp.cypress.io is allowlisted.
+
+**Switching from a personal access token to OAuth:**
+
+If you previously configured Cloud MCP with a PAT and want to switch to OAuth:
+
+1. Remove the `Authorization` header (or token environment variable) from your AI client's MCP config.
+2. Save the config and reconnect. Your client will detect that no token is present and trigger the OAuth browser sign-in flow automatically.
 
 ### Pricing & Availability
 
