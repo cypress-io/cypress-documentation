@@ -33,17 +33,23 @@
   "cloud": [
     {
       "label": "Cloud MCP",
-      "href": "/cloud/integrations/cloud-mcp",
+      "href": "/cloud/integrations/cloud-mcp?utm_source=nav-promo&utm_medium=docs.cypress.io&utm_campaign=cloud-mcp",
       "description": "Connect AI agents directly to Cypress Cloud runs.",
       "isNew": true
     }
   ],
   "ui-coverage": [
+    {
+      "label": "Cloud MCP",
+      "href": "/cloud/integrations/cloud-mcp?utm_source=nav-promo&utm_medium=docs.cypress.io&utm_campaign=cloud-mcp",
+      "description": "Handle UI Coverage triage with AI agents.",
+      "isNew": true
+    }
   ],
   "accessibility": [
     {
       "label": "Cloud MCP",
-      "href": "/cloud/integrations/cloud-mcp",
+      "href": "/cloud/integrations/cloud-mcp?utm_source=nav-promo&utm_medium=docs.cypress.io&utm_campaign=cloud-mcp",
       "description": "Handle accessibility issues with AI agents.",
       "isNew": true
     }
