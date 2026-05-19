@@ -506,6 +506,22 @@
           "badge": "community"
         },
         {
+          "name": "cypress-real-dnd",
+          "description": "Real HTML5 drag-and-drop via Chrome DevTools Protocol. Triggers the actual dragstart → dragover → drop pipeline, so it works with react-dnd, Sortable.js, dnd-kit's HTML5 sensor, and plain `draggable=\"true\"` elements where synthetic-event and pointer-event plugins do not.",
+          "link": "https://github.com/emidhun/cypress-real-dnd",
+          "keywords": [
+            "dragndrop",
+            "drag-and-drop",
+            "drag",
+            "drop",
+            "react-dnd",
+            "html5",
+            "cdp",
+            "commands"
+          ],
+          "badge": "community"
+        },
+        {
           "name": "cypress-fill-command",
           "description": "A Cypress command for fill inputs.",
           "link": "https://github.com/DanielFerrariR/cypress-fill-command",
