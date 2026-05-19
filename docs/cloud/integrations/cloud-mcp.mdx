@@ -43,7 +43,10 @@ Enable the Cloud MCP integration for your organization from the **Integrations**
 
 Each user who wants to use Cloud MCP must then authenticate — using OAuth or a personal access token.
 
-### Authenticate with OAuth (Recommended)
+### Authenticate
+There are two options for authenticating the Cloud MCP server with your Cloud account: oauth (recommended) and a personal access token (PAT).
+
+#### OAuth (Recommended)
 
 OAuth is the recommended authentication method for Cloud MCP. It uses a browser-based sign-in flow, so no manual token generation or rotation is needed — your AI client manages the session automatically.
 
@@ -59,9 +62,9 @@ Your active OAuth sessions are visible on your **[Manage Profile](https://cloud.
 
 If your AI client does not support OAuth, use a [personal access token](#authenticate-with-a-personal-access-token-alternative) instead.
 
-### Authenticate with a Personal Access Token (Alternative)
+#### Personal Access Token
 
-A personal access token (PAT) is used to securely connect with Cypress Cloud through the Cloud MCP server. You create and manage your PAT from your Cypress Cloud profile.
+A personal access token (PAT) can used to securely connect with Cypress Cloud through the Cloud MCP server. You create and manage your PAT from your Cypress Cloud profile.
 
 1. Sign in to [Cypress Cloud](https://cloud.cypress.io).
 2. In the upper-left corner of any page, click your organization picture.
