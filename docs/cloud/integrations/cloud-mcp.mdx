@@ -6,11 +6,9 @@ sidebar_label: Cloud MCP
 sidebar_custom_props: { 'ai_icon': true, 'new_label': true }
 ---
 
-import Tag from '@cypress-design/react-tag'
-
 <ProductHeading product="cloud" />
 
-# <Icon useCypressIcon name="technology-logo-mcp" size="24" fillColor="indigo-500" /> Cloud MCP: Agentic Debugging <Tag color="jade" dark size="32">Beta</Tag>
+# <Icon useCypressIcon name="technology-logo-mcp" size="24" fillColor="indigo-500" /> Cloud MCP: Agentic Debugging
 
 Cypress Cloud's Model Context Protocol (MCP) server connects your AI coding assistants directly to Cypress Cloud, giving them a window into your application's health and stability.
 
@@ -24,14 +22,14 @@ Think of MCP as the "USB port" for AI. Just as a USB port allows any peripheral 
 
 1. **The Host:** Your AI client (like Cursor, Claude Desktop, or VS Code).
 2. **The Server:** A remote service hosted by Cypress that retrieves Cloud data for the AI.
-3. **The Connection:** A secure pipe authenticated by your personal access token.
+3. **The Connection:** A secure pipe authenticated via OAuth (recommended) or a personal access token.
 
 ## Configuring the Cloud MCP
 
 To use the Cloud MCP:
 
 1. **Enable integration:** An admin will need to enable the integration for your organization
-2. **Generate personal access token:** Each user will need to create a personal access token to authenticate with Cloud MCP
+2. **Authenticate:** Each user authenticates with Cypress Cloud — via OAuth (recommended) or a personal access token
 3. **Configure AI:** Each user will need to add the remote MCP configuration to their preferred AI client
 
 ### Enable for Organization
@@ -43,12 +41,31 @@ Enable the Cloud MCP integration for your organization from the **Integrations**
   alt="Enable Cloud MPC organization integration"
 />
 
-Each user who wants to use Cloud MCP must then generate a personal access token to authenticate.
+Each user who wants to use Cloud MCP must then authenticate — using OAuth or a personal access token.
 
-### Generate personal access token
+### Authenticate
 
-A personal access token (PAT) is used to securely connect with Cypress Cloud through the Cloud MCP server. You create
-and manage your PAT from your Cypress Cloud profile.
+There are two options for authenticating the Cloud MCP server with your Cloud account: oauth (recommended) and a personal access token (PAT).
+
+#### OAuth (Recommended)
+
+OAuth is the recommended authentication method for Cloud MCP. It uses a browser-based sign-in flow, so no manual token generation or rotation is needed — your AI client manages the session automatically.
+
+When you configure your AI client with the Cloud MCP server URL (`https://mcp.cypress.io/mcp`) and your client supports OAuth, it will:
+
+1. Detect that the server requires authentication via OAuth discovery.
+2. Open a browser window and redirect you to the Cypress Cloud sign-in page.
+3. After you sign in, the client stores the session securely and reconnects automatically for 30 days.
+
+OAuth sessions are scoped to your Cypress Cloud user account and respect your existing role and permissions in each MCP-enabled organization. No token expiry management is required on your part.
+
+Your active OAuth sessions are visible on your **[Manage Profile](https://cloud.cypress.io/profile)** page. You can revoke any session from there at any time.
+
+If your AI client does not support OAuth, use a [personal access token](#Personal-Access-Token) instead.
+
+#### Personal Access Token
+
+A personal access token (PAT) can used to securely connect with Cypress Cloud through the Cloud MCP server. You create and manage your PAT from your Cypress Cloud profile.
 
 1. Sign in to [Cypress Cloud](https://cloud.cypress.io).
 2. In the upper-left corner of any page, click your organization picture.
@@ -57,7 +74,7 @@ and manage your PAT from your Cypress Cloud profile.
 5. Select an expiration for the token and click **Continue**.
 6. Your token is generated. Copy it immediately — it is only shown once.
 
-The token access is scoped to your role and permissions in each MCP-enabled organization
+The token access is scoped to your role and permissions in each MCP-enabled organization. Use your PAT in place of OAuth when your AI client does not support browser-based authentication flows.
 
 <DocsImage
   src="/img/cloud/integrations/cloud-mcp/cloud-profile-pat.png"
@@ -68,14 +85,31 @@ The token access is scoped to your role and permissions in each MCP-enabled orga
 
 Configure your agent or AI client to connect to Cloud MCP. Cloud MCP is a remote server hosted by Cypress, so your client must support **tools** and **remote server** (HTTP) connections.
 
-The remote url is: `https://mcp.cypress.io/mcp`. Set the authorization header with `Bearer CYPRESS_MCP_PAT`.
+The remote URL is: `https://mcp.cypress.io/mcp`. Clients that support OAuth will handle authentication automatically via a browser sign-in. For clients that do not support OAuth, set the authorization header with `Bearer YOUR_MCP_TOKEN` using your personal access token.
 
 <AccordionBlock title="Antigravity">
+
+**OAuth (Recommended)**
 
 1. Open the MCP store via the "..." dropdown at the top of the editor's agent panel.
 2. Click on **Manage MCP Servers**
 3. Click on **View raw config**
 4. Modify the `mcp_config.json` with your custom MCP server configuration.
+   ```json
+   {
+     "mcpServers": {
+       "cypress-cloud": {
+         "serverUrl": "https://mcp.cypress.io/mcp"
+       }
+     }
+   }
+   ```
+5. Save `mcp_config.json` and click Refresh. Antigravity will prompt you to sign in to Cypress Cloud via your browser.
+
+**Personal Access Token (Alternative)**
+
+1. Follow steps 1–3 above.
+2. Modify the `mcp_config.json` to include your token:
    ```json
    {
      "mcpServers": {
@@ -88,14 +122,27 @@ The remote url is: `https://mcp.cypress.io/mcp`. Set the authorization header wi
      }
    }
    ```
-5. Replace `YOUR_MCP_TOKEN` with your personal access token.
-6. Save `mcp_config.json` and click Refresh
+3. Replace `YOUR_MCP_TOKEN` with your personal access token.
+4. Save `mcp_config.json` and click Refresh.
 
 See [Antigravity's documentation](https://antigravity.google/docs/mcp) for more details.
 
 </AccordionBlock>
 
 <AccordionBlock title="Claude Desktop">
+
+**OAuth (Recommended)**
+
+1. Open Claude Desktop.
+2. Click Customize
+3. Click Connectors
+4. Click the + icon and select 'Add custom connector'
+5. Add the connector name, i.e `cypress-cloud`
+6. Add remote MCP url `https://mcp.cypress.io/mcp`
+7. Click add
+8. Click connect to authn
+
+**Personal Access Token (Alternative)**
 
 1. Open Claude Desktop.
 2. Go to Settings > Developer > Edit Config.
@@ -129,7 +176,23 @@ Note: `mcp-remote` requires Node.js v20+ in the path to run successfully.
 
 <AccordionBlock title="Claude Code (CLI)">
 
-1. Add the Cloud MCP like:
+**OAuth (Recommended)**
+
+1. Add the Cloud MCP server:
+
+   ```bash
+   claude mcp add cypress-cloud \
+     https://mcp.cypress.io/mcp \
+     --transport http
+   ```
+
+2. Start claude session `claude`
+3. Prompt `mcp cypress`
+4. Claude Code will open a browser window to sign in to Cypress Cloud
+
+**Personal Access Token (Alternative)**
+
+1. Add the Cloud MCP server with your token:
 
    ```bash
    claude mcp add cypress-cloud \
@@ -152,11 +215,28 @@ See [Claude Code's documentation](https://code.claude.com/docs/en/mcp) for more 
 
 <AccordionBlock title="Cursor">
 
+**OAuth (Recommended)**
+
 1. Open Cursor
 2. Open the "Settings" menu and select "Cursor Settings"
 3. Select "Tools & MCPs"
-4. Select "New MCP Sever"
+4. Select "New MCP Server"
 5. Add the following to your `~/.cursor/mcp.json`:
+   ```json
+   {
+     "mcpServers": {
+       "cypress": {
+         "url": "https://mcp.cypress.io/mcp"
+       }
+     }
+   }
+   ```
+6. Save the file and restart Cursor. Cursor will open a browser window to sign in to Cypress Cloud on first use.
+
+**Personal Access Token (Alternative)**
+
+1. Follow steps 1–4 above.
+2. Add the following to your `~/.cursor/mcp.json`:
    ```json
    {
      "mcpServers": {
@@ -169,8 +249,8 @@ See [Claude Code's documentation](https://code.claude.com/docs/en/mcp) for more 
      }
    }
    ```
-6. Replace `YOUR_MCP_TOKEN` with your personal access token.
-7. Save the file and restart Cursor.
+3. Replace `YOUR_MCP_TOKEN` with your personal access token.
+4. Save the file and restart Cursor.
 
 See [Cursor's documentation](https://cursor.com/docs/mcp) for more details.
 
@@ -179,6 +259,23 @@ See [Cursor's documentation](https://cursor.com/docs/mcp) for more details.
 <AccordionBlock title="GitHub Copilot in VS Code">
 
 You can install the Cloud MCP server in your user profile or a specific workspace. See [VS Code's MCP installation options](https://code.visualstudio.com/docs/copilot/customization/mcp-servers).
+
+**OAuth (Recommended)**
+
+1. Add the following to your `.vscode/mcp.json`:
+   ```json
+   {
+     "servers": {
+       "cypress": {
+         "type": "http",
+         "url": "https://mcp.cypress.io/mcp"
+       }
+     }
+   }
+   ```
+2. VS Code will handle authentication via a browser-based Cypress Cloud sign-in when the server is first used.
+
+**Personal Access Token (Alternative)**
 
 1. Add the following to your `.vscode/mcp.json`:
    ```json
@@ -210,6 +307,8 @@ See [VS Code's documentation](https://code.visualstudio.com/docs/copilot/customi
 
 <AccordionBlock title="GitHub Copilot CLI">
 
+GitHub Copilot CLI uses a personal access token for Cloud MCP authentication.
+
 1. Add the following to your global config (`~/.copilot/mcp-config.json`) or project config (`.copilot/mcp-config.json`):
    ```json
    {
@@ -224,7 +323,7 @@ See [VS Code's documentation](https://code.visualstudio.com/docs/copilot/customi
      }
    }
    ```
-2. Set the Environment Variable: Before launching the CLI, ensure the token is exported in your terminal, replacing `YOUR_MCP_TOKEN` with your personal access token.
+2. Set the environment variable before launching the CLI, replacing `YOUR_MCP_TOKEN` with your personal access token.
    - macOS/Linux: `export CYPRESS_MCP_TOKEN=YOUR_MCP_TOKEN`
    - Windows (Powershell): `$env:CYPRESS_MCP_TOKEN="YOUR_MCP_TOKEN"`
 3. Verify the connection. Run `/mcp` show inside the Copilot CLI to confirm the server is loaded and the variable is resolved.
@@ -235,13 +334,41 @@ See [GitHub Copilot's documentation](https://docs.github.com/en/copilot/how-tos/
 
 <AccordionBlock title="OpenAI Codex CLI">
 
-1. Add the following to `~/.codex/config.toml` (shared between CLI and Codex IDE extension):
+Codex stores MCP configuration in `~/.codex/config.toml`, which is shared between the CLI and Codex IDE extension.
+
+**OAuth (Recommended)**
+
+1. Add the Cloud MCP server:
+
+   ```bash
+   codex mcp add cypress-cloud --url https://mcp.cypress.io/mcp
+   ```
+
+2. Start the OAuth flow:
+
+   ```bash
+   codex mcp login cypress-cloud
+   ```
+
+3. Sign in to Cypress Cloud in the browser window that opens.
+4. Start a new Codex session. In the CLI, run `/mcp` to confirm the `cypress-cloud` server is connected.
+
+You can also add the server manually to `~/.codex/config.toml` and then run `codex mcp login cypress-cloud`:
+
+```toml
+[mcp_servers.cypress-cloud]
+url = "https://mcp.cypress.io/mcp"
+```
+
+**Personal Access Token (Alternative)**
+
+1. Add the following to `~/.codex/config.toml`:
    ```toml
    [mcp_servers.cypress-cloud]
    url = "https://mcp.cypress.io/mcp"
    bearer_token_env_var = "CYPRESS_MCP_TOKEN"
    ```
-2. Set your token in your environment:
+2. Set your token in your environment, replacing `YOUR_MCP_TOKEN` with your personal access token:
    - macOS/Linux: `export CYPRESS_MCP_TOKEN=YOUR_MCP_TOKEN`
    - Windows (Powershell): `$env:CYPRESS_MCP_TOKEN="YOUR_MCP_TOKEN"`
 
@@ -318,12 +445,20 @@ For more patterns, example prompts, and governance ideas when using UI Coverage 
 **Agent can't find your run:**
 
 - Verify the organization has the Cloud MCP integration enabled in Cypress Cloud.
-- Ensure your Git branch name in CI matches the branch name you're telling the AI.
+- Ensure your Git branch name in CI matches the branch name you're telling agent.
 
 **Connection errors:**
 
-- Verify your PAT hasn't expired (check Manage Profile).
+- If using OAuth: ensure your browser can reach https://cloud.cypress.io to complete sign-in. If the browser window doesn't open, try removing and re-adding the server config in your AI client.
+- If using a personal access token: verify your PAT hasn't expired (check Manage Profile).
 - Check firewall and proxy settings to ensure https://mcp.cypress.io is allowlisted.
+
+**Switching from a personal access token to OAuth:**
+
+If you previously configured Cloud MCP with a PAT and want to switch to OAuth:
+
+1. Remove the `Authorization` header (or token environment variable) from your AI client's MCP config.
+2. Save the config and reconnect. Your client will detect that no token is present and trigger the OAuth browser sign-in flow automatically.
 
 ### Pricing & Availability
 
@@ -349,7 +484,7 @@ If you need to increase your limits, contact support at support@cypress.io.
 
 Remove the Cloud MCP integration at any time by going to the **Integrations** page for your organization and selecting **Disable** in the Cypress MCP section.
 
-Disabling the integration immediately prevents any users who have previously generated a PAT from accessing data for that organization.
+Disabling the integration immediately revokes access for all users in that organization, regardless of whether they authenticated via OAuth or a personal access token.
 
 ## Send feedback
 
