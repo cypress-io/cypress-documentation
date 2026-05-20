@@ -334,9 +334,35 @@ See [GitHub Copilot's documentation](https://docs.github.com/en/copilot/how-tos/
 
 <AccordionBlock title="OpenAI Codex CLI">
 
-OpenAI Codex CLI uses a personal access token for Cloud MCP authentication.
+Codex stores MCP configuration in `~/.codex/config.toml`, which is shared between the CLI and Codex IDE extension.
 
-1. Add the following to `~/.codex/config.toml` (shared between CLI and Codex IDE extension):
+**OAuth (Recommended)**
+
+1. Add the Cloud MCP server:
+
+   ```bash
+   codex mcp add cypress-cloud --url https://mcp.cypress.io/mcp
+   ```
+
+2. Start the OAuth flow:
+
+   ```bash
+   codex mcp login cypress-cloud
+   ```
+
+3. Sign in to Cypress Cloud in the browser window that opens.
+4. Start a new Codex session. In the CLI, run `/mcp` to confirm the `cypress-cloud` server is connected.
+
+You can also add the server manually to `~/.codex/config.toml` and then run `codex mcp login cypress-cloud`:
+
+```toml
+[mcp_servers.cypress-cloud]
+url = "https://mcp.cypress.io/mcp"
+```
+
+**Personal Access Token (Alternative)**
+
+1. Add the following to `~/.codex/config.toml`:
    ```toml
    [mcp_servers.cypress-cloud]
    url = "https://mcp.cypress.io/mcp"
