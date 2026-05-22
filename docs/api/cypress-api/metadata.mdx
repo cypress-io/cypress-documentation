@@ -1,0 +1,213 @@
+---
+title: 'Cypress.metadata | Cypress Documentation'
+description: 'Store arbitrary per-test state in Cypress with Cypress.metadata. Set values at runtime or via suite and test config overrides.'
+sidebar_label: metadata
+sidebar_position: 125
+sidebar_custom_props: { 'new_label': true }
+---
+
+<ProductHeading product="app" />
+
+# Cypress.metadata
+
+Store arbitrary per-test state in your spec.
+
+`Cypress.metadata` is a spec-scoped [`Map`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) intended primarily for **plugin authors** who need a convenient place to keep internal state during one test run. Because metadata persists through [hooks](/app/core-concepts/writing-and-organizing-tests#Hooks), plugins can set values in `beforeEach`, read them in the test body, and clean up in `afterEach` without routing that state through [`Cypress.config()`](/api/cypress-api/config) or [`Cypress.expose()`](/api/cypress-api/expose).
+
+:::info
+
+<strong>Primary use case</strong>
+
+Most test authors do not need `Cypress.metadata` directly. Plugins and preprocessors use it to pass per-test context between hooks and the test body within the same test.
+
+:::
+
+:::info
+
+<strong>Scope</strong>
+
+`Cypress.metadata` is scoped to the current spec file in the primary origin. Cypress runs each spec in isolation, so metadata does not carry over to other spec files (unless `experimentalSingleTabRunMode` is enabled). Values are meant to live for a single test (including its hooks), not as long-lived shared configuration.
+
+:::
+
+## Syntax
+
+`Cypress.metadata` exposes the standard `Map` API:
+
+```javascript
+Cypress.metadata.get(key)
+Cypress.metadata.set(key, value)
+Cypress.metadata.has(key)
+Cypress.metadata.delete(key)
+Cypress.metadata.clear()
+```
+
+### Arguments
+
+<Icon name="angle-right" /> **key _(String)_**
+
+The metadata key to get, set, check, or delete.
+
+<Icon name="angle-right" /> **value _(any)_**
+
+The value to store for the given key. Values can be any type, including objects and arrays.
+
+## Examples
+
+### Share state between hooks and the test body
+
+A common plugin pattern is to prepare context in a hook, use it during the test, and remove it afterward:
+
+```javascript
+const key = '@my-plugin/context'
+
+beforeEach(() => {
+  Cypress.metadata.set(key, { feature: 'checkout', step: 'login' })
+})
+
+afterEach(() => {
+  Cypress.metadata.delete(key)
+})
+
+it('completes checkout', () => {
+  const context = Cypress.metadata.get(key)
+
+  expect(context).to.deep.eq({ feature: 'checkout', step: 'login' })
+})
+```
+
+### Set and read metadata at runtime
+
+Plugins can also read or update metadata anywhere during a test:
+
+```javascript
+it('stores plugin context', () => {
+  Cypress.metadata.set('@my-plugin/feature', {
+    enabled: true,
+    name: 'checkout',
+  })
+
+  expect(Cypress.metadata.get('@my-plugin/feature')).to.deep.eq({
+    enabled: true,
+    name: 'checkout',
+  })
+})
+```
+
+### Declare metadata with test configuration
+
+Plugins and preprocessors can also pass a `metadata` object as part of suite- or test-level [test configuration](/app/references/configuration#Test-Configuration). This is useful when a plugin injects per-test context through `describe()` or `it()` config. Override keys are applied at test start and restored after the test completes.
+
+```javascript
+describe('checkout', { metadata: { flow: 'guest' } }, () => {
+  it('applies suite metadata', () => {
+    expect(Cypress.metadata.get('flow')).to.eq('guest')
+  })
+
+  it(
+    'merges test-level metadata with suite metadata',
+    { metadata: { step: 'payment' } },
+    () => {
+      expect(Cypress.metadata.get('flow')).to.eq('guest')
+      expect(Cypress.metadata.get('step')).to.eq('payment')
+    }
+  )
+})
+```
+
+When suite- and test-level metadata define the same key, the test-level value takes precedence:
+
+```javascript
+describe('orders', { metadata: { status: 'pending' } }, () => {
+  it('uses the test-level value', { metadata: { status: 'complete' } }, () => {
+    expect(Cypress.metadata.get('status')).to.eq('complete')
+  })
+})
+```
+
+### Metadata persists through hooks
+
+Values set in hooks remain available for the rest of the test, including `afterEach` and `after` hooks. Only keys declared in test configuration overrides are restored after each test.
+
+```javascript
+describe('hook lifecycle', { metadata: { source: 'suite' } }, () => {
+  beforeEach(() => {
+    Cypress.metadata.set('source', 'beforeEach')
+  })
+
+  afterEach(() => {
+    expect(Cypress.metadata.get('source')).to.eq('beforeEach')
+  })
+
+  it('sees hook mutations during the test body', () => {
+    expect(Cypress.metadata.get('source')).to.eq('beforeEach')
+  })
+})
+```
+
+### Clear metadata during a test
+
+Call `Cypress.metadata.clear()` to remove all entries from the map.
+
+:::caution
+
+<strong>Shared state</strong>
+
+`Cypress.metadata` is a single map shared by every plugin and test in the spec. Calling `clear()` removes **all** metadata, not just keys your code set. If another plugin or hook still expects its entries to exist, those values will be missing and can cause state collisions or flaky failures.
+
+Prefer deleting only the keys you own with `Cypress.metadata.delete(key)` instead of clearing the entire map.
+
+:::
+
+```javascript
+it('clears metadata', { metadata: { token: 'abc' } }, () => {
+  expect(Cypress.metadata.has('token')).to.be.true
+  Cypress.metadata.clear()
+  expect(Cypress.metadata.has('token')).to.be.false
+})
+```
+
+When multiple plugins use metadata in the same spec, namespace your keys (for example, `@my-plugin/context`) and clean up with `delete()`:
+
+```javascript
+const key = '@my-plugin/context'
+
+Cypress.metadata.set(key, { step: 'login' })
+// ... later in the same test or hook
+Cypress.metadata.delete(key)
+```
+
+## Notes
+
+### Test configuration overrides vs runtime changes
+
+Metadata declared in suite or test configuration is applied at test start. After the test finishes, only the overridden keys are restored to their previous values.
+
+Values set at runtime with `Cypress.metadata.set()` outside of test configuration overrides are not automatically restored between tests. Plugin authors should clean up their own keys with `Cypress.metadata.delete(key)`. Avoid `Cypress.metadata.clear()` unless you control all metadata usage in the spec, since it removes entries other plugins may still depend on.
+
+### Not available in `cy.origin()` by default
+
+`Cypress.metadata` is not serialized into [`cy.origin()`](/api/commands/origin) callbacks by default. Secondary origins do not automatically receive metadata from the primary origin.
+
+### When to use `Cypress.metadata`
+
+`Cypress.metadata` is for **internal plugin state** during a single test. Typical examples include:
+
+- A preprocessor storing context for the current example so hooks and step definitions can read it
+- Sharing temporary values between a plugin's `beforeEach` hook and the test body
+- Keeping plugin bookkeeping out of Cypress configuration APIs
+
+This API is not a replacement for user-facing configuration. For public values that application code may read, use [`Cypress.expose()`](/api/cypress-api/expose). For sensitive values, use [`cy.env()`](/api/commands/env).
+
+## History
+
+| Version                                      | Changes                      |
+| -------------------------------------------- | ---------------------------- |
+| [15.16.0](/app/references/changelog#15-16-0) | `Cypress.metadata` API added |
+
+## See also
+
+- [Test Configuration](/app/references/configuration#Test-Configuration)
+- [`Cypress.config()`](/api/cypress-api/config)
+- [`Cypress.expose()`](/api/cypress-api/expose)
+- [`cy.env()`](/api/commands/env)

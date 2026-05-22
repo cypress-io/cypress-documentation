@@ -8,6 +8,14 @@ sidebar_label: Changelog
 
 # Changelog
 
+## 15.16.0
+
+_Released TBD_
+
+**Features:**
+
+- Added [`Cypress.metadata`](/api/cypress-api/metadata), a spec-scoped `Map<string, any>` for storing internal plugin state across a single test in the primary origin. Set values at runtime with `Cypress.metadata.set()`, or declare them in suite- or test-level config overrides (for example, `describe()`, `context()`, `it()`, or `test()`) via `{ metadata: { key: value } }`. Suite- and test-level overrides are merged, with test-level keys taking precedence; override keys are applied at test start and restored after each test without affecting unrelated values set in hooks. `Cypress.metadata` is not serialized into [`cy.origin()`](/api/commands/origin) callbacks by default. Addresses [#33356](https://github.com/cypress-io/cypress/issues/33356). Addressed in [#33871](https://github.com/cypress-io/cypress/pull/33871).
+
 ## 15.15.0
 
 _Released May 12, 2026_

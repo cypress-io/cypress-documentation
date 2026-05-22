@@ -373,6 +373,11 @@ The configuration values passed in will only take effect during the suite or
 test where they are set. The values will then reset to the previous default
 values after the suite or test is complete.
 
+You can also pass a `metadata` object so plugins can declare internal per-test
+state with [`Cypress.metadata`](/api/cypress-api/metadata). Metadata overrides
+are merged across nested suites and tests, with test-level keys taking
+precedence.
+
 #### Syntax
 
 ```javascript
