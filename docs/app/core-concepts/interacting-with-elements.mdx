@@ -87,9 +87,9 @@ The legacy algorithm additionally considered elements hidden when they were:
 
 - Clipped by an ancestor's `overflow: hidden`
 - Scrolled out of view of an `overflow: auto`/`overflow: scroll` ancestor
-- Fully covered by a sibling element
+- Scaled to zero in one axis via a `transform` (e.g. `transform: scale(0)`)
 - Rotated past 90 degrees via `transform` with `backface-visibility: hidden`
-- Clipped by a `clip-path` or legacy `clip` property
+- Covered by another element while positioned `fixed` or `sticky` (legacy only checks coverage for fixed- or sticky-positioned elements via `document.elementFromPoint`)
 
 The modern algorithm intentionally does **not** detect these cases. If your tests rely on this legacy behavior, you can opt back into the previous algorithm:
 
@@ -140,16 +140,16 @@ cy.get('#scroll-container button').then(($el) => {
 })
 ```
 
-**Collapsed containers that hide via `overflow: hidden` + `max-height: 0`**
+**Children inside a collapsed container that hides via `overflow: hidden` + `max-height: 0`**
 
-Many UI libraries hide collapsible content by setting `max-height: 0` and `overflow: hidden`. The modern algorithm doesn't detect this. Most libraries also set `aria-hidden="true"` on the closed container — assert on that instead:
+Many UI libraries hide collapsible content by setting `max-height: 0` and `overflow: hidden` on a wrapper. The wrapper itself reports as hidden under the modern algorithm (its bounding rect collapses to zero), but children with their own non-zero dimensions inside that wrapper are not detected as hidden — `checkVisibility()` doesn't account for ancestor clipping. Most libraries also set `aria-hidden="true"` on the closed wrapper — assert on that instead:
 
 ```javascript
 // Before
-cy.get('.collapsible-content').should('not.be.visible')
+cy.get('.collapsible-content .nested-item').should('not.be.visible')
 
 // After
-cy.get('.collapsible-content')
+cy.get('.collapsible-content .nested-item')
   .closest('[aria-hidden]')
   .should('have.attr', 'aria-hidden', 'true')
 ```
