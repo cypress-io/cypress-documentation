@@ -20,7 +20,7 @@ Cypress 16 requires [Node.js](https://nodejs.org/en) **22.x**, **24.x**, or **26
 
 ### Default `keystrokeDelay` changed from `10` to `0`
 
-The default delay between keystrokes in [`cy.type()`](/api/commands/type) has been changed from `10` to `0` milliseconds to improve performance of typing-heavy test runs. This also affects [`Cypress.Keyboard.defaults()`](/api/cypress-api/keyboard-api), which now defaults `keystrokeDelay` to `0`.
+The default delay between keystrokes in [`cy.type()`](/api/commands/type) has been changed from `10` to `0` milliseconds to improve performance of typing-heavy test runs.
 
 If your tests relied on the implicit 10ms delay between keystrokes, you can restore the previous behavior using any of these approaches. The resolved `keystrokeDelay` is read from your Cypress [configuration](/app/references/configuration#Keyboard) first, then [`Cypress.Keyboard.defaults()`](/api/cypress-api/keyboard-api), and falls back to the built-in default of `0` if neither is set. A per-command `delay` passed to [`.type()`](/api/commands/type) is independent of this and overrides the resolved value for that single call.
 
