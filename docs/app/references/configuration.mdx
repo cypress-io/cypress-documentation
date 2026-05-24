@@ -169,6 +169,12 @@ For more options regarding screenshots, view the
 For more information, see the docs on
 [actionability](/app/core-concepts/interacting-with-elements#Actionability).
 
+### Keyboard
+
+| Option            | Default | Description                                                                                                                                                                                                                  |
+| ----------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `keystrokeDelay`  | `0`     | The delay, in milliseconds, between keystrokes while typing with [`.type()`](/api/commands/type). Must be a non-negative number. Can also be set via [`Cypress.Keyboard.defaults()`](/api/cypress-api/keyboard-api).         |
+
 ### Experiments
 
 Configuration might include experimental options currently being tested. See
@@ -712,6 +718,7 @@ DEBUG=cypress:cli,cypress:data-context:sources:FileDataSource,cypress:data-conte
 
 | Version                                      | Changes                                                                                                                                       |
 | -------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| [16.0.0](/app/references/changelog#16-0-0)   | Default `keystrokeDelay` changed from `10` to `0`.                                                                                            |
 | [15.10.0](/app/references/changelog#15-10-0) | Updated `env` to no longer be settable via test configuration.                                                                                |
 | [15.10.0](/app/references/changelog#15-10-0) | Added `expose` option for exposing public configuration values.                                                                               |
 | [14.0.0](/app/references/changelog#14-0-0)   | Added support for re-enabling superdomain navigation with the `injectDocumentDomain` configuration option                                     |
