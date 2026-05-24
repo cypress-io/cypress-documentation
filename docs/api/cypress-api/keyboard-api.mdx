@@ -58,6 +58,8 @@ An object containing the following:
 | ---------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------ |
 | `keystrokeDelay` | `0`     | The delay, in milliseconds, between keystrokes while typing with [.type()](/api/commands/type). Must be a non-negative number. |
 
+`keystrokeDelay` can also be set in the [Cypress configuration](/app/references/configuration#Keyboard). The resolved value is read from the configuration first, then from `Cypress.Keyboard.defaults()`, and falls back to the built-in default of `0` if neither is set. A per-command `delay` passed to [`.type()`](/api/commands/type) is independent of this and overrides the resolved value for that single call.
+
 ## Examples
 
 ### Press tab key

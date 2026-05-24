@@ -175,6 +175,8 @@ For more information, see the docs on
 | ----------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `keystrokeDelay`  | `0`     | The delay, in milliseconds, between keystrokes while typing with [`.type()`](/api/commands/type). Must be a non-negative number. Can also be set via [`Cypress.Keyboard.defaults()`](/api/cypress-api/keyboard-api).         |
 
+The resolved `keystrokeDelay` value is read from this configuration first, then [`Cypress.Keyboard.defaults()`](/api/cypress-api/keyboard-api), and falls back to the built-in default of `0` if neither is set. A per-command `delay` passed to [`.type()`](/api/commands/type) is independent of this and overrides the resolved value for that single call.
+
 ### Experiments
 
 Configuration might include experimental options currently being tested. See
