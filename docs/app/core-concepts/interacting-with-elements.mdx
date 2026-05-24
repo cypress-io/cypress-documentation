@@ -30,7 +30,7 @@ inform your testing strategy, and ship high-quality code with confidence.
 
 ### Default Behavior
 
-As of Cypress 16, the default visibility algorithm delegates to the browser's native [`Element.checkVisibility()`](https://developer.mozilla.org/en-US/docs/Web/API/Element/checkVisibility) API and aligns Cypress's notion of "visible" with the browser's own definition. See [Visibility Strategy](#Visibility-Strategy) below to configure or opt back into the previous algorithm.
+As of Cypress 16, the default visibility algorithm delegates to the browser's native [`Element.checkVisibility()`](https://developer.mozilla.org/en-US/docs/Web/API/Element/checkVisibility) API. This is faster than the previous DOM-walking algorithm and aligns Cypress's notion of "visible" with the browser's own definition, making results more predictable across layouts. See [Visibility Strategy](#Visibility-Strategy) below to configure or opt back into the previous algorithm.
 
 #### An element is considered hidden if:
 
