@@ -22,25 +22,25 @@ Cypress 16 requires [Node.js](https://nodejs.org/en) **22.x**, **24.x**, or **26
 
 The default delay between keystrokes in [`cy.type()`](/api/commands/type) has been changed from `10` to `0` milliseconds to improve performance of typing-heavy test runs. This also affects [`Cypress.Keyboard.defaults()`](/api/cypress-api/keyboard-api), which now defaults `keystrokeDelay` to `0`.
 
-If your tests relied on the implicit 10ms delay between keystrokes, you can restore the previous behavior using any of these approaches:
+If your tests relied on the implicit 10ms delay between keystrokes, you can restore the previous behavior using any of these approaches. The more specific the override, the higher its precedence: a per-command `delay` overrides a test/suite-level `keystrokeDelay`, which overrides the global default set via [`Cypress.Keyboard.defaults()`](/api/cypress-api/keyboard-api).
 
-#### Set `keystrokeDelay` in your Cypress configuration
+#### Set `keystrokeDelay` globally via `Cypress.Keyboard.defaults()` (recommended)
 
-:::cypress-config-example
-
-```ts
-{
-  keystrokeDelay: 10,
-}
-```
-
-:::
-
-#### Set `keystrokeDelay` via `Cypress.Keyboard.defaults()`
+Set the default in a [support file](/app/core-concepts/writing-and-organizing-tests#Support-file) so it applies to every test:
 
 ```javascript
 Cypress.Keyboard.defaults({
   keystrokeDelay: 10,
+})
+```
+
+#### Set `keystrokeDelay` for a single test or suite
+
+`keystrokeDelay` is a [test-configuration override](/app/references/configuration#Test-Configuration), so it can be scoped to an individual test or suite:
+
+```javascript
+it('types with a delay', { keystrokeDelay: 10 }, () => {
+  cy.get('input').type('slow typing')
 })
 ```
 
