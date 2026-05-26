@@ -8,6 +8,14 @@ sidebar_label: Changelog
 
 # Changelog
 
+## 15.17.0
+
+_Released TBD_
+
+**Features:**
+
+- [`Cypress.expose()`](/api/cypress-api/expose) values can now be overridden per suite or test via test config overrides (for example, `describe()`, `context()`, `it()`, or `test()`) using `{ expose: { key: value } }`. Suite- and test-level overrides are merged, with test-level keys taking precedence; override keys are applied at test start and restored after each test without affecting unrelated values set in hooks. Addresses [#33356](https://github.com/cypress-io/cypress/issues/33356). Addressed in [#33925](https://github.com/cypress-io/cypress/pull/33925).
+
 ## 15.16.0
 
 _Released May 26, 2026_

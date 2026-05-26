@@ -373,6 +373,12 @@ The configuration values passed in will only take effect during the suite or
 test where they are set. The values will then reset to the previous default
 values after the suite or test is complete.
 
+You can also pass an `expose` object so plugins can declare public configuration
+per suite or test with [`Cypress.expose()`](/api/cypress-api/expose). Expose
+overrides are merged across nested suites and tests, with test-level keys taking
+precedence. Override keys are applied at test start and restored after each test
+without affecting unrelated values set in hooks.
+
 #### Syntax
 
 ```javascript
@@ -713,6 +719,7 @@ DEBUG=cypress:cli,cypress:data-context:sources:FileDataSource,cypress:data-conte
 
 | Version                                      | Changes                                                                                                                                       |
 | -------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| [15.17.0](/app/references/changelog#15-17-0) | Added support for overriding [`Cypress.expose()`](/api/cypress-api/expose) values via test configuration.                                     |
 | [15.10.0](/app/references/changelog#15-10-0) | Updated `env` to no longer be settable via test configuration.                                                                                |
 | [15.10.0](/app/references/changelog#15-10-0) | Added `expose` option for exposing public configuration values.                                                                               |
 | [14.0.0](/app/references/changelog#14-0-0)   | Added support for re-enabling superdomain navigation with the `injectDocumentDomain` configuration option                                     |
