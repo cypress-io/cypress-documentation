@@ -171,9 +171,9 @@ For more information, see the docs on
 
 ### Keyboard
 
-| Option            | Default | Description                                                                                                                                                                                                                  |
-| ----------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `keystrokeDelay`  | `null`  | The delay, in milliseconds, between keystrokes while typing with [`.type()`](/api/commands/type). Must be a non-negative number.                                                                                             |
+| Option           | Default | Description                                                                                                                      |
+| ---------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| `keystrokeDelay` | `null`  | The delay, in milliseconds, between keystrokes while typing with [`.type()`](/api/commands/type). Must be a non-negative number. |
 
 The resolved `keystrokeDelay` value is read from this configuration first, then [`Cypress.Keyboard.defaults()`](/api/cypress-api/keyboard-api), and falls back to `0` if neither is set. A per-command `delay` passed to [`.type()`](/api/commands/type) is independent of this and overrides the resolved value for that single call.
 
@@ -718,30 +718,30 @@ DEBUG=cypress:cli,cypress:data-context:sources:FileDataSource,cypress:data-conte
 
 ## History
 
-| Version                                      | Changes                                                                                                                                       |
-| -------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| Version                                      | Changes                                                                                                                                                     |
+| -------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [16.0.0](/app/references/changelog#16-0-0)   | `keystrokeDelay` resolved fallback changed from `10` to `0` when unset in configuration and [`Cypress.Keyboard.defaults()`](/api/cypress-api/keyboard-api). |
-| [15.10.0](/app/references/changelog#15-10-0) | Updated `env` to no longer be settable via test configuration.                                                                                |
-| [15.10.0](/app/references/changelog#15-10-0) | Added `expose` option for exposing public configuration values.                                                                               |
-| [14.0.0](/app/references/changelog#14-0-0)   | Added support for re-enabling superdomain navigation with the `injectDocumentDomain` configuration option                                     |
-| [13.16.0](/app/references/changelog#13-16-0) | Added `defaultBrowser` option.                                                                                                                |
-| [13.4.0](/app/references/changelog#13-4-0)   | Added support for configuring the Experimental Flake Detection strategy via `retries.experimentalStrategy` and `retries.experimentalOptions`. |
-| [13.0.0](/app/references/changelog#13-0-0)   | Removed `nodeVersion` option.                                                                                                                 |
-| [13.0.0](/app/references/changelog#13-0-0)   | Removed `videoUploadOnPasses` option.                                                                                                         |
-| [11.0.0](/app/references/changelog#11-0-0)   | Removed `e2e.experimentalSessionAndOrigin` option.                                                                                            |
-| [10.4.0](/app/references/changelog#10-4-0)   | Added `e2e.testIsolation` option.                                                                                                             |
-| [10.0.0](/app/references/changelog#10-0-0)   | Reworked page to support new `cypress.config.js` and deprecated `cypress.json` files.                                                         |
-| [8.7.0](/app/references/changelog#8-7-0)     | Added `slowTestThreshold` option.                                                                                                             |
-| [8.0.0](/app/references/changelog#8-0-0)     | Added `clientCertificates` option and removed `firefoxGcInterval` configuration.                                                              |
-| [7.0.0](/app/references/changelog#7-0-0)     | Added `e2e` and `component` options.                                                                                                          |
-| [7.0.0](/app/references/changelog#7-0-0)     | Added `redirectionLimit` option.                                                                                                              |
-| [6.1.0](/app/references/changelog#6-1-0)     | Added `scrollBehavior` option.                                                                                                                |
-| [5.2.0](/app/references/changelog#5-2-0)     | Added `includeShadowDom` option.                                                                                                              |
-| [5.0.0](/app/references/changelog#5-0-0)     | Added `retries` configuration.                                                                                                                |
-| [5.0.0](/app/references/changelog#5-0-0)     | Renamed `blacklistHosts` configuration to `blockHosts`.                                                                                       |
-| [4.1.0](/app/references/changelog#4-12-0)    | Added `screenshotOnRunFailure` configuration.                                                                                                 |
-| [4.0.0](/app/references/changelog#4-0-0)     | Added `firefoxGcInterval` configuration.                                                                                                      |
-| [3.5.0](/app/references/changelog#3-5-0)     | Added `nodeVersion` configuration.                                                                                                            |
+| [15.10.0](/app/references/changelog#15-10-0) | Updated `env` to no longer be settable via test configuration.                                                                                              |
+| [15.10.0](/app/references/changelog#15-10-0) | Added `expose` option for exposing public configuration values.                                                                                             |
+| [14.0.0](/app/references/changelog#14-0-0)   | Added support for re-enabling superdomain navigation with the `injectDocumentDomain` configuration option                                                   |
+| [13.16.0](/app/references/changelog#13-16-0) | Added `defaultBrowser` option.                                                                                                                              |
+| [13.4.0](/app/references/changelog#13-4-0)   | Added support for configuring the Experimental Flake Detection strategy via `retries.experimentalStrategy` and `retries.experimentalOptions`.               |
+| [13.0.0](/app/references/changelog#13-0-0)   | Removed `nodeVersion` option.                                                                                                                               |
+| [13.0.0](/app/references/changelog#13-0-0)   | Removed `videoUploadOnPasses` option.                                                                                                                       |
+| [11.0.0](/app/references/changelog#11-0-0)   | Removed `e2e.experimentalSessionAndOrigin` option.                                                                                                          |
+| [10.4.0](/app/references/changelog#10-4-0)   | Added `e2e.testIsolation` option.                                                                                                                           |
+| [10.0.0](/app/references/changelog#10-0-0)   | Reworked page to support new `cypress.config.js` and deprecated `cypress.json` files.                                                                       |
+| [8.7.0](/app/references/changelog#8-7-0)     | Added `slowTestThreshold` option.                                                                                                                           |
+| [8.0.0](/app/references/changelog#8-0-0)     | Added `clientCertificates` option and removed `firefoxGcInterval` configuration.                                                                            |
+| [7.0.0](/app/references/changelog#7-0-0)     | Added `e2e` and `component` options.                                                                                                                        |
+| [7.0.0](/app/references/changelog#7-0-0)     | Added `redirectionLimit` option.                                                                                                                            |
+| [6.1.0](/app/references/changelog#6-1-0)     | Added `scrollBehavior` option.                                                                                                                              |
+| [5.2.0](/app/references/changelog#5-2-0)     | Added `includeShadowDom` option.                                                                                                                            |
+| [5.0.0](/app/references/changelog#5-0-0)     | Added `retries` configuration.                                                                                                                              |
+| [5.0.0](/app/references/changelog#5-0-0)     | Renamed `blacklistHosts` configuration to `blockHosts`.                                                                                                     |
+| [4.1.0](/app/references/changelog#4-12-0)    | Added `screenshotOnRunFailure` configuration.                                                                                                               |
+| [4.0.0](/app/references/changelog#4-0-0)     | Added `firefoxGcInterval` configuration.                                                                                                                    |
+| [3.5.0](/app/references/changelog#3-5-0)     | Added `nodeVersion` configuration.                                                                                                                          |
 
 ## See also
 
