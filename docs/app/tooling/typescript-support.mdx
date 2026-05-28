@@ -350,16 +350,38 @@ and Cypress provide the clashing types for the `describe` and `it` functions.
 Both Jest and Expect (bundled inside Cypress) provide the clashing types for the
 `expect` assertion, etc.
 
-You may want to consider configuring your app with separate `tsconfig.json` to solve
-[clashing types with jest](/app/tooling/typescript-support#Clashing-types-with-Jest).
-You will need to exclude `cypress.config.ts`, `cypress`, `node_modules` in your
-root `tsconfig.json` file.
+The recommended solution is to use **separate `tsconfig.json` files** for your
+Jest tests and your Cypress tests.
+
+**Step 1:** Create (or ensure you have) a `cypress/tsconfig.json` that explicitly
+limits types to only what Cypress needs. See
+[Configure tsconfig.json](#configure-tsconfigjson) above for the recommended
+content:
+
+```json title="cypress/tsconfig.json"
+{
+  "compilerOptions": {
+    "target": "es6",
+    "lib": ["es6", "dom"],
+    "sourceMap": true,
+    "types": ["cypress", "node"]
+  },
+  "include": ["**/*.ts"]
+}
+```
+
+**Step 2:** Exclude the `cypress` folder (and `cypress.config.ts`) from your
+root `tsconfig.json` so that Jest does not pick up Cypress global types:
 
 ```json title="tsconfig.json"
 {
   "exclude": ["cypress.config.ts", "cypress", "node_modules"]
 }
 ```
+
+With this setup, Jest uses the root `tsconfig.json` (without Cypress types) and
+Cypress uses its own `cypress/tsconfig.json` (with Cypress types), so the two
+sets of globals no longer interfere with each other.
 
 ## History
 

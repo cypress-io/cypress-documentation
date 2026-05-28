@@ -182,6 +182,17 @@ help installing Cypress in CI. When running in Linux you may need to install som
 or you can use our [Docker images](#Docker-Prerequisites) which have everything you
 need prebuilt.
 
+## TypeScript users: Jest and Cypress in the same project
+
+If your project uses both **Jest** and **Cypress** with TypeScript, the two
+test runners register conflicting global types (`describe`, `it`, `expect`,
+etc.). This can cause TypeScript errors immediately after installing Cypress.
+
+The fix is to use separate `tsconfig.json` files — one for Jest (the root
+`tsconfig.json`) and one for Cypress (`cypress/tsconfig.json`). See
+[Clashing types with Jest](/app/tooling/typescript-support#Clashing-types-with-Jest)
+in the TypeScript Support guide for full instructions.
+
 ## Next Steps
 
 [Open the app](/app/get-started/open-the-app) and take it for a test drive!
