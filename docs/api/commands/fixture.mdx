@@ -276,6 +276,70 @@ describe('User page', () => {
 })
 ```
 
+### Large Files
+
+#### Memory and Transfer Constraints
+
+`cy.fixture()` reads the **entire file into memory** and transfers its contents
+from the Cypress Node.js server process to the browser test runner over an
+internal WebSocket connection. There is no explicit file size limit in Cypress
+itself, but large files — especially binary files like `.zip` archives — can
+cause Cypress to crash or become unresponsive due to:
+
+- **Memory pressure**: The complete file must fit in available RAM and is held
+  in the fixture cache for the duration of the test run.
+- **WebSocket message size**: File contents are sent as a single message over
+  the internal socket. Payloads that approach or exceed 100 MB can exceed
+  socket-level buffer limits.
+
+As a practical guideline, avoid using `cy.fixture()` with files larger than a
+few megabytes. Smaller test fixtures (representative subsets of production data)
+are preferable wherever possible.
+
+#### Uploading Large Files via a File Input
+
+If your goal is to simulate a file upload through an `<input type="file">`
+element, use [`.selectFile()`](/api/commands/selectfile) with a path string
+rather than loading the fixture first and then setting the input manually:
+
+```javascript
+// ✅ Preferred for file upload simulation
+cy.get('input[type="file"]').selectFile('cypress/fixtures/large.zip')
+```
+
+#### Keeping Large File Operations Server-Side
+
+For scenarios where you must work with large files but do not need to transfer
+their full contents to the browser (for example, verifying file metadata or
+invoking a server-side operation), use [`cy.task()`](/api/commands/task) to
+keep the operation in the Node.js context:
+
+```javascript
+// cypress.config.js
+const { defineConfig } = require('cypress')
+const fs = require('fs')
+
+module.exports = defineConfig({
+  e2e: {
+    setupNodeEvents(on, config) {
+      on('task', {
+        getFileSize(filePath) {
+          const { size } = fs.statSync(filePath)
+          return size
+        },
+      })
+    },
+  },
+})
+```
+
+```javascript
+// in your test
+cy.task('getFileSize', 'cypress/fixtures/large.zip').then((size) => {
+  expect(size).to.be.greaterThan(0)
+})
+```
+
 ### Loaded just once
 
 Please keep in mind that fixture files are assumed to be unchanged during the
@@ -355,4 +419,8 @@ practical purposes it should never happen.
 - [`.then()`](/api/commands/then)
 - [`.readFile()`](/api/commands/readfile) for a similar command without caching
   and with builtin retryability
+- [`.selectFile()`](/api/commands/selectfile) for simulating file uploads,
+  including with large files
+- [`cy.task()`](/api/commands/task) for keeping large file operations in the
+  Node.js context
 - [Recipe: Bootstrapping App Test Data](/app/references/recipes#Server-Communication)
