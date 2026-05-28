@@ -70,6 +70,34 @@ with the following configuration:
 }
 ```
 
+:::info
+
+**Using `"type": "module"` in `package.json`**
+
+If your project sets `"type": "module"` in `package.json`, Node.js treats `.js`
+files as ES modules. In this case, add `"module": "nodenext"` to your Cypress
+`tsconfig.json` so TypeScript generates module-compatible output:
+
+```json title="cypress/tsconfig.json"
+{
+  "compilerOptions": {
+    "target": "es6",
+    "lib": ["es6", "dom"],
+    "sourceMap": true,
+    "types": ["cypress", "node"],
+    "module": "nodenext"
+  },
+  "include": ["**/*.ts"]
+}
+```
+
+For bundler-based projects (such as Vite), your framework's `tsconfig.json`
+likely already sets a compatible `module` and `moduleResolution` (e.g.
+`"moduleResolution": "bundler"`), so the Cypress `tsconfig.json` can extend it
+or rely on those settings.
+
+:::
+
 The `"types"` will tell the TypeScript compiler to only include type definitions
 from Cypress. This will address instances where the project also uses
 `@types/chai` or `@types/jquery`. Since
