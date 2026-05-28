@@ -1,5 +1,5 @@
 ---
-title: 'Install using npm, Yarn, or pnpm | Cypress Documentation'
+title: 'Install using npm, Yarn, pnpm, or Bun | Cypress Documentation'
 description: 'The fastest way to get Cypress running. Check requirements, install it in your project, and start testing today.'
 sidebar_label: Install Cypress
 sidebar_position: 30
@@ -13,7 +13,7 @@ sidebar_position: 30
 
 ##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
 
-- How to install Cypress using npm, Yarn, or pnpm
+- How to install Cypress using npm, Yarn, pnpm, or Bun
 - What you need before installing
 - Advanced installation options
 
@@ -73,6 +73,7 @@ Cypress is installed using one of the following supported package managers:
 | [Yarn 1 (Classic)](https://classic.yarnpkg.com/) | >=1.22.22 | [Install Yarn Classic](https://classic.yarnpkg.com/en/docs/install)              |
 | [Yarn (Modern aka berry)](https://yarnpkg.com/)  | >=4.x     | [Install Yarn Modern](https://yarnpkg.com/getting-started/install)               |
 | [pnpm](https://pnpm.io/)                         | >=8.x     | [Install pnpm](https://pnpm.io/installation)                                     |
+| [Bun](https://bun.sh/)                           | >=1.1.x   | [Install Bun](https://bun.sh/docs/installation)                                  |
 
 #### Yarn users
 
@@ -98,6 +99,18 @@ In [pnpm@10.4.0](https://github.com/pnpm/pnpm/releases/tag/v10.4.0) and above, t
 ```shell
 pnpm --allow-build=cypress add --save-dev cypress
 ```
+
+#### Bun configuration
+
+[Bun](https://bun.sh/) blocks lifecycle scripts (including `postinstall`) by default for packages that are not in its `trustedDependencies` allowlist. Cypress relies on its `postinstall` script to download the Cypress binary into the [binary cache](/app/references/advanced-installation#Binary-cache), so `cypress` must be added to `trustedDependencies` in your `package.json`:
+
+```json title="package.json"
+{
+  "trustedDependencies": ["cypress"]
+}
+```
+
+After updating `trustedDependencies`, re-run `bun install` so that Cypress' `postinstall` script executes and downloads the binary. Refer to the [Bun lifecycle scripts](https://bun.sh/docs/install/lifecycle) documentation for additional information.
 
 ### Browsers
 

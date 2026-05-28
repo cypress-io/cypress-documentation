@@ -91,6 +91,7 @@ The Cypress [Life Cycle script](https://docs.npmjs.com/cli/using-npm/scripts) `p
     {label: 'npm', value: 'npm'},
     {label: 'Yarn', value: 'yarn'},
     {label: 'pnpm', value: 'pnpm'},
+    {label: 'Bun', value: 'bun'},
   ]}>
   <TabItem value="npm">
 
@@ -116,6 +117,14 @@ DEBUG=cypress:cli* pnpm cypress install
 ```
 
   </TabItem>
+  <TabItem value="bun">
+
+```shell
+CYPRESS_INSTALL_BINARY=0 bun add --dev cypress
+DEBUG=cypress:cli* bunx cypress install
+```
+
+  </TabItem>
 </Tabs>
 
 To set environment variables `CYPRESS_INSTALL_BINARY` and `DEBUG` in Windows CMD or PowerShell terminals, refer to examples in [Print DEBUG Logs](./troubleshooting#Print-DEBUG-logs).
@@ -128,6 +137,7 @@ In Continuous Integration (CI) use the following commands to display debug logs 
     {label: 'npm', value: 'npm'},
     {label: 'Yarn', value: 'yarn'},
     {label: 'pnpm', value: 'pnpm'},
+    {label: 'Bun', value: 'bun'},
   ]}>
   <TabItem value="npm">
 
@@ -149,6 +159,14 @@ DEBUG=cypress:cli* yarn cypress install
 ```shell
 pnpm install --frozen-lockfile --ignore-scripts
 DEBUG=cypress:cli* pnpm cypress install
+```
+
+  </TabItem>
+  <TabItem value="bun">
+
+```shell
+bun install --frozen-lockfile --ignore-scripts
+DEBUG=cypress:cli* bunx cypress install
 ```
 
   </TabItem>
@@ -463,6 +481,7 @@ To uninstall Cypress from a project, use the same package manager you used to [i
     {label: 'npm', value: 'npm'},
     {label: 'Yarn', value: 'yarn'},
     {label: 'pnpm', value: 'pnpm'},
+    {label: 'Bun', value: 'bun'},
   ]}>
   <TabItem value="npm">
 
@@ -485,6 +504,13 @@ pnpm remove cypress
 ```
 
   </TabItem>
+  <TabItem value="bun">
+
+```shell
+bun remove cypress
+```
+
+  </TabItem>
 </Tabs>
 
 To uninstall all cached Cypress binary versions, use the [cypress cache clear](./command-line#cypress-cache-clear) command with the appropriate package manager prefix described in [How to run commands](./command-line#How-to-run-commands).
@@ -496,4 +522,4 @@ To delete cached [Cypress App Data](./troubleshooting#Clear-App-Data), manually 
 - Linux: `~/.config/Cypress`
 - Windows: `$APPDATA/Cypress` (POSIX-syntax) or `%APPDATA%\Cypress` (Windows-syntax)
 
-Refer to your package manager documentation for details of package manager `cache clean` commands to remove other packages cached by npm, Yarn or pnpm.
+Refer to your package manager documentation for details of package manager `cache clean` commands to remove other packages cached by npm, Yarn, pnpm or Bun.
