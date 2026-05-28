@@ -64,14 +64,14 @@ const hits = getHits() // Defined elsewhere
 // Run commands in secondary origin, passing in serializable values
 cy.origin('https://example.cypress.io', { args: { hits } }, ({ hits }) => {
   // Inside callback baseUrl is https://example.cypress.io
-  cy.visit('/history/founder')
+  cy.visit('/')
   // Commands are executed in secondary origin
-  cy.get('h1').contains('About our Founder')
+  cy.get('h1').contains('Kitchen Sink')
   // Passed in values are accessed via callback args
   cy.get('#hitcounter').contains(hits)
 })
 // Even though we're outside the secondary origin block,
-// we're still on cypress.io so return to baseUrl
+// return to primary origin
 cy.visit('/')
 // Continue running commands on primary origin
 cy.get('h1').contains('My cool site under test')
@@ -81,18 +81,18 @@ cy.get('h1').contains('My cool site under test')
 
 ```js
 const hits = getHits()
-cy.visit('https://example.cypress.io/history/founder')
+cy.visit('https://example.cypress.io/')
 // To interact with cross-origin content, move this inside cy.origin() callback
-cy.get('h1').contains('Kitchen Sink')
-// Origin must be a precise match including scheme, subdomain and port, i.e. https://www.cypress.io
-cy.origin('https://www.cypress.io', () => {
-  cy.visit('/about-us')
-  cy.get('h1').contains('About us')
+cy.get('h1').contains('My cool site under test')
+// Origin must be a precise match including scheme, subdomain and port, i.e. https://example.cypress.io
+cy.origin('https://example.cypress.io', () => {
+  cy.visit('/commands/querying')
+  cy.get('h1').contains('Querying')
   // Fails because downloads is not passed in via args
   cy.contains(downloads)
 })
-// Won't work because still on www.cypress.io
-cy.get('h1').contains('Kitchen Sink')
+// Won't work because still on example.cypress.io
+cy.get('h1').contains('My cool site under test')
 ```
 
 ### Arguments
@@ -218,27 +218,27 @@ page.
 // Do things in primary origin...
 
 cy.origin('example.cypress.io', () => {
-  // Visit https://example.cypress.io/history/founder
-  cy.visit('/history/founder')
-  cy.get('h1').contains('About our Founder')
+  // Visit https://example.cypress.io/commands/querying
+  cy.visit('/commands/querying')
+  cy.get('h1').contains('Querying')
 })
 ```
 
 Here the `baseUrl` inside the `cy.origin()` callback is set to `example.cypress.io`
 and the protocol defaults to `https`. When `cy.visit()` is called with the path
-`/history/founder`, the three are concatenated to make
-`https://example.cypress.io/history/founder`.
+`/commands/querying`, the three are concatenated to make
+`https://example.cypress.io/commands/querying`.
 
 #### Alternative navigation
 
 ```js
 // Do things in primary origin...
 
-cy.visit('https://example.cypress.io/history/founder')
+cy.visit('https://example.cypress.io/commands/querying')
 
 // The cy.origin block is required to interact with the cross-origin page.
 cy.origin('example.cypress.io', () => {
-  cy.get('h1').contains('About our Founder')
+  cy.get('h1').contains('Querying')
 })
 ```
 
@@ -251,15 +251,15 @@ communicate with the cross-origin page
 ```js
 // Do things in primary origin...
 
-cy.visit('https://www.cypress.io/history/founder')
+cy.visit('https://example.cypress.io/commands/querying')
 
-// This command will fail, it's executed on localhost but the application is at cypress.io
-cy.get('h1').contains('About our Founder, Marvin Acme')
+// This command will fail, it's executed on localhost but the application is at example.cypress.io
+cy.get('h1').contains('Querying')
 ```
 
 Here `cy.get('h1')` fails because we are trying to interact with a cross-origin
 page outside of the cy.origin block, due to 'same-origin' restrictions, the
-'localhost' javascript context can't communicate with 'cypress.io'.
+'localhost' javascript context can't communicate with 'example.cypress.io'.
 
 ### Navigating to secondary origin with UI
 
