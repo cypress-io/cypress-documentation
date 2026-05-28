@@ -10,6 +10,8 @@ import ComponentOnlyBadge from "@site/src/components/component-only-badge";
 import TestReplayInfo from "@site/docs/partials/_test-replay-info.mdx";
 import CypressConfigFileTabs from "@site/src/components/cypress-config-file-tabs";
 import CypressInstallCommands from "@site/docs/partials/_cypress-install-commands.mdx";
+import CypressCacheClearCommands from "@site/docs/partials/_cypress-cache-clear-commands.mdx";
+import CypressInstallBinaryCommands from "@site/docs/partials/_cypress-install-binary-commands.mdx";
 import CypressEnvVsCypressExpose from "@site/docs/partials/_cy-env-vs-cypress-expose.mdx";
 import CypressOpenCommands from "@site/docs/partials/_cypress-open-commands.mdx";
 import CypressRunCommands from "@site/docs/partials/_cypress-run-commands.mdx";
@@ -177,6 +179,8 @@ export default {
   ComponentOnlyBadge,
   CypressConfigFileTabs,
   CypressInstallCommands,
+  CypressCacheClearCommands,
+  CypressInstallBinaryCommands,
   CypressEnvVsCypressExpose,
   CypressOpenCommands,
   CypressRunCommands,
