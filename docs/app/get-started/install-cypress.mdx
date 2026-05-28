@@ -73,7 +73,7 @@ Cypress is installed using one of the following supported package managers:
 | [Yarn 1 (Classic)](https://classic.yarnpkg.com/) | >=1.22.22 | [Install Yarn Classic](https://classic.yarnpkg.com/en/docs/install)              |
 | [Yarn (Modern aka berry)](https://yarnpkg.com/)  | >=4.x     | [Install Yarn Modern](https://yarnpkg.com/getting-started/install)               |
 | [pnpm](https://pnpm.io/)                         | >=8.x     | [Install pnpm](https://pnpm.io/installation)                                     |
-| [Bun](https://bun.sh/)                           | >=1.1.x   | [Install Bun](https://bun.sh/docs/installation)                                  |
+| [Bun](https://bun.sh/)                           | >=1.2.22  | [Install Bun](https://bun.sh/docs/installation)                                  |
 
 #### Yarn users
 
@@ -102,7 +102,9 @@ pnpm --allow-build=cypress add --save-dev cypress
 
 #### Bun configuration
 
-[Bun](https://bun.sh/) blocks lifecycle scripts (including `postinstall`) by default for packages that are not in its `trustedDependencies` allowlist. Cypress relies on its `postinstall` script to download the Cypress binary into the [binary cache](/app/references/advanced-installation#Binary-cache), so `cypress` must be added to `trustedDependencies` in your `package.json`:
+Cypress is detected automatically from a `bun.lock` (text, Bun >=1.2) or `bun.lockb` (binary) lockfile. When you install Cypress with `bun add`, Bun trusts the package and runs its `postinstall` script to download the Cypress binary into the [binary cache](/app/references/advanced-installation#Binary-cache).
+
+When restoring dependencies from an existing manifest with `bun install` (for example in CI), Bun does not run `postinstall` scripts for packages that aren't in its [trustedDependencies](https://bun.sh/docs/install/lifecycle) allowlist. Add `cypress` to `trustedDependencies` in `package.json` so the binary downloads on install:
 
 ```json title="package.json"
 {
@@ -110,7 +112,7 @@ pnpm --allow-build=cypress add --save-dev cypress
 }
 ```
 
-After updating `trustedDependencies`, re-run `bun install` so that Cypress' `postinstall` script executes and downloads the binary. Refer to the [Bun lifecycle scripts](https://bun.sh/docs/install/lifecycle) documentation for additional information.
+To override the location of the Bun package cache, use [`BUN_INSTALL_CACHE_DIR`](https://bun.sh/docs/install/cache). This is independent of [`CYPRESS_CACHE_FOLDER`](/app/references/advanced-installation#Binary-cache), which controls where the Cypress binary itself is stored.
 
 ### Browsers
 
