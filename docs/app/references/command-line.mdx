@@ -23,7 +23,7 @@ You can alternatively require and run Cypress as a node module using our
 ## How to run commands
 
 You can run Cypress from your **project root** using a command which
-depends on the package manager you are using: npm, Yarn or pnpm.
+depends on the package manager you are using: npm, Yarn, pnpm or Bun.
 For example, you would prefix the command
 [cypress run](#cypress-run) as shown:
 
@@ -39,6 +39,7 @@ and record the results with Cypress Cloud, the command should be:
     {label: 'npm', value: 'npm'},
     {label: 'Yarn', value: 'yarn'},
     {label: 'pnpm', value: 'pnpm'},
+    {label: 'Bun', value: 'bun'},
   ]}>
   <TabItem value="npm">
 
@@ -58,6 +59,13 @@ yarn cypress run --record --spec "cypress/e2e/my-spec.cy.js"
 
 ```shell
 pnpm cypress run --record --spec "cypress/e2e/my-spec.cy.js"
+```
+
+  </TabItem>
+  <TabItem value="bun">
+
+```shell
+bunx cypress run --record --spec "cypress/e2e/my-spec.cy.js"
 ```
 
   </TabItem>
@@ -97,6 +105,7 @@ Running the script `e2e:chrome` as follows will run the command you defined:
     {label: 'npm', value: 'npm'},
     {label: 'Yarn', value: 'yarn'},
     {label: 'pnpm', value: 'pnpm'},
+    {label: 'Bun', value: 'bun'},
   ]}>
   <TabItem value="npm">
 
@@ -116,6 +125,13 @@ yarn e2e:chrome
 
 ```shell
 pnpm e2e:chrome
+```
+
+  </TabItem>
+  <TabItem value="bun">
+
+```shell
+bun run e2e:chrome
 ```
 
   </TabItem>
@@ -146,6 +162,7 @@ The option [`--spec`](#cypress-run-spec-lt-spec-gt) allows you to specify which 
     {label: 'npm', value: 'npm'},
     {label: 'Yarn', value: 'yarn'},
     {label: 'pnpm', value: 'pnpm'},
+    {label: 'Bun', value: 'bun'},
   ]}>
   <TabItem value="npm">
 
@@ -168,6 +185,13 @@ pnpm e2e:chrome --spec "cypress/e2e/my-spec.cy.js"
 ```
 
   </TabItem>
+  <TabItem value="bun">
+
+```shell
+bun run e2e:chrome --spec "cypress/e2e/my-spec.cy.js"
+```
+
+  </TabItem>
 </Tabs>
 
 Refer to each package manager's documentation for full details of command and script usage:
@@ -177,6 +201,7 @@ Refer to each package manager's documentation for full details of command and sc
   [`npm-run-script`](https://docs.npmjs.com/cli/run-script.html)).
 - [Yarn CLI](https://classic.yarnpkg.com/lang/en/docs/cli/)
 - [pnpm CLI](https://pnpm.io/pnpm-cli)
+- [Bun CLI](https://bun.sh/docs/cli/run)
 
 ## Commands
 
