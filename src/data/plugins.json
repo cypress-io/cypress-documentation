@@ -216,13 +216,6 @@
           "badge": "community"
         },
         {
-          "name": "cypress-audit",
-          "description": "Run Lighthouse audit directly in your E2E test suites.",
-          "link": "https://github.com/mfrachet/cypress-audit",
-          "keywords": ["lighthouse"],
-          "badge": "community"
-        },
-        {
           "name": "cypress-hmr-restarter",
           "description": "Restarts tests when receiving webpack-dev-server HMR updates.",
           "link": "https://github.com/Svish/cypress-hmr-restarter",
