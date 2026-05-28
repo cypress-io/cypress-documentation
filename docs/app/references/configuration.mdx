@@ -26,15 +26,25 @@ will create a Cypress configuration file for you. This file will be
 [TypeScript](/app/tooling/typescript-support) apps. This file is used to
 store any configuration specific to Cypress.
 
-Cypress additionally supports config files with `.mjs` or `.cjs` extensions.
+For `cypress.config.js`, the module syntax used depends on the
+[`type`](https://nodejs.org/api/packages.html#type) field in your project's
+`package.json`:
+
+| `package.json` `type` | Config file syntax |
+| --------------------- | ------------------ |
+| `"module"`            | ESM (`import`/`export default`) |
+| `"commonjs"` or not set | CommonJS (`require`/`module.exports`) |
+
+Cypress additionally supports config files with `.mjs` or `.cjs` extensions to
+explicitly set the module format regardless of `package.json`.
 
 Using a `.mjs` file will allow you to use
-[ESM Module](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)
+[ESM](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)
 syntax in your config without the need of a transpiler step.
 
-A '.cjs' file uses the [CommonJS](https://nodejs.org/api/modules.html) module
-syntax, which is the default for JavaScript files. All JavaScript config
-examples in our docs use the CommonJS format.
+A `.cjs` file uses the [CommonJS](https://nodejs.org/api/modules.html) module
+syntax explicitly. All JavaScript config examples in our docs use the CommonJS
+format.
 
 If you [configure your tests to record](/cloud/get-started/setup#Setup) the
 results to [Cypress Cloud](/cloud/get-started/introduction) the
@@ -46,6 +56,16 @@ The `defineConfig` helper function is exported by Cypress, and it provides
 automatic code completion for configuration in many popular code editors. While
 it's not strictly necessary for Cypress to parse your configuration, we
 recommend wrapping your config object with `defineConfig()` like this:
+
+:::info
+
+The `cypress.config.js` tab below shows CommonJS syntax (`require`/`module.exports`),
+which applies when `"type"` in `package.json` is `"commonjs"` or not set. If
+your project sets `"type": "module"`, your `cypress.config.js` will instead use
+ESM syntax (`import`/`export default`) — the same syntax shown in the
+`cypress.config.ts` tab.
+
+:::
 
 :::cypress-config-example
 

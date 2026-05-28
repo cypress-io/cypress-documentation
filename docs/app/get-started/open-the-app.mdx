@@ -114,6 +114,15 @@ to review. For more information about the generated config check out the
 [Cypress configuration reference](/app/references/configuration), or you can
 just scroll down and hit "Continue".
 
+The format of the scaffolded `cypress.config.js` is determined by the
+[`type`](https://nodejs.org/api/packages.html#type) field in your project's
+`package.json`:
+
+| `package.json` `type` | Config file syntax |
+| --------------------- | ------------------ |
+| `"module"`            | ESM (`import`/`export default`) |
+| `"commonjs"` or not set | CommonJS (`require`/`module.exports`) |
+
 ### Launching a Browser
 
 <DocsImage
