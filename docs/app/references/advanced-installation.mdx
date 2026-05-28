@@ -202,6 +202,8 @@ environment:
   CYPRESS_CACHE_FOLDER: '~/.cache/Cypress'
 ```
 
+If you use Bun, [`BUN_INSTALL_CACHE_DIR`](https://bun.sh/docs/install/cache) controls Bun's package cache and is independent of `CYPRESS_CACHE_FOLDER`, which stores the Cypress binary.
+
 See also
 [Continuous Integration - Caching](/app/continuous-integration/overview#Caching)
 section in the documentation.
