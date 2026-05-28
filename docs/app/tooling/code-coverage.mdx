@@ -320,7 +320,11 @@ import '@cypress/code-coverage/support'
 :::cypress-config-plugin-example
 
 ```js
-require('@cypress/code-coverage/task')(on, config)
+import registerCodeCoverageTasks from '@cypress/code-coverage/task'
+```
+
+```js
+registerCodeCoverageTasks(on, config)
 // include any other plugin code...
 
 // It's IMPORTANT to return the config object
@@ -531,12 +535,17 @@ again to do this by adding the code below to the
 :::cypress-config-plugin-example
 
 ```javascript
-require('@cypress/code-coverage/task')(on, config)
+import registerCodeCoverageTasks from '@cypress/code-coverage/task'
+import babelrcPreprocessor from '@cypress/code-coverage/use-babelrc'
+```
+
+```javascript
+registerCodeCoverageTasks(on, config)
 // tell Cypress to use .babelrc file
 // and instrument the specs files
 // only the extra application files will be instrumented
 // not the spec files themselves
-on('file:preprocessor', require('@cypress/code-coverage/use-babelrc'))
+on('file:preprocessor', babelrcPreprocessor)
 
 return config
 ```
