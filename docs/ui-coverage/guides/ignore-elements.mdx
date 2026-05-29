@@ -9,46 +9,57 @@ sidebar_position: 50
 
 # Ignore elements
 
-Not all elements in your application are relevant to your test coverage. Cypress UI Coverage lets you exclude specific elements from coverage reports so you can focus on what matters without chasing down false gaps.
+UI Coverage tracks every interactive element it detects in your app. Most of the time that's exactly what you want — but some elements create false signals that make reports harder to read and act on.
 
-Common candidates for exclusion include:
+The two most common sources of noise are:
 
-- **Third-party and embedded widgets** — chat launchers, cookie consent banners, analytics overlays, or auth iframes
-- **Transitional or loading elements** — spinners, skeletons, and progress indicators that don't represent a stable UI state
+- **Non-interactive wrapper elements** — container `div`s, overlays, and shadow shields that capture clicks intended for a child element, causing them to appear as tested or untested when they aren't real user-facing controls
+- **Third-party and embedded widgets** — chat launchers, cookie consent banners, analytics overlays, or auth iframes that aren't your code to test
 
-## Why ignore elements?
-
-Filtering known, stable elements keeps your reports focused on real coverage gaps. When your team sees an untested element, it should signal _work to do_ — not noise from a widget or control that isn't part of the workflows you're testing.
+[Element Filters](/ui-coverage/configuration/elementfilters) let you exclude these elements so your report reflects actual coverage of your application.
 
 :::caution Preserve visibility into new elements
-Element filters remove matching elements entirely from coverage tracking. If a developer later adds a **new** button inside a section you've ignored, that new element will also be hidden. Use specific selectors rather than broad ones, and pair filters with [change monitoring](/ui-coverage/guides/monitor-changes) to stay aware of what's new.
+Element filters remove matching elements entirely from coverage tracking. If a developer later adds a **new** button inside a section you've filtered, that new element will also be hidden. Use specific selectors rather than broad ones, and pair filters with [change monitoring](/ui-coverage/guides/monitor-changes) to stay aware of what's new.
 :::
 
-## Step 1: Identify elements to ignore
+## Step 1: Identify elements to filter
 
-After recording your tests to Cypress Cloud, review the UI Coverage report to find recurring untested elements that aren't part of the workflows you're focused on.
+**For wrapper elements:** Open [Test Replay](/guides/cloud/test-replay) for a test run and observe which elements Cypress highlights during interactions. If clicking one control causes a nearby container `div` or overlay to also appear as interacted with, that wrapper is a candidate for filtering.
 
-1. In Cypress Cloud, open your project and go to a recent test run.
-2. Select the **UI Coverage** tab.
-3. Open the **Untested elements** section.
-4. Look for elements that appear across many views without being part of the workflows you care about — for example, a third-party chat widget that appears on every page.
-5. Click an element to open its detail panel. The detail panel shows the CSS selector Cypress uses to identify the element — copy this as your starting point for a filter rule.
+**For third-party widgets:** Go to the **Untested elements** section of the UI Coverage report and look for elements that are clearly outside your application — chat widgets, consent banners, or embedded iframes from external domains.
 
-## Step 2: Configure ignored elements
+In both cases, click the element in the UI Coverage detail panel to see the CSS selector Cypress assigned to it. Use that as the starting point for your filter rule.
 
-[Element Filters](/ui-coverage/configuration/elementfilters) in the **App Quality** configuration exclude elements by CSS selector.
+## Step 2: Configure element filters
 
 To add or update your configuration:
 
 1. In Cypress Cloud, open your project settings.
 2. Go to the **App Quality** tab.
-3. Add or edit the `elementFilters` array under your `uiCoverage` configuration.
+3. Add or edit the `elementFilters` array.
 
-### Example: Ignoring third-party widgets
+**Filter order matters.** Filters are evaluated top-down and the first match wins — list specific selectors before broad catch-alls, otherwise a general rule will shadow more targeted ones.
 
-External integrations like live chat or cookie consent banners are not your code to test. Exclude them by their container element or `iframe` title.
+### Example: Filtering wrapper elements
 
-The exact selector varies by provider — use DevTools to inspect the widget's outermost container and find a stable `id` or `class` to target. Most third-party widgets inject a wrapper element with a predictable `id`.
+A common case: clicking a navigation item causes both the link itself and a surrounding `div` wrapper to appear as interacted with. Filter the wrappers while leaving the actual links tracked:
+
+```json
+{
+  "elementFilters": [
+    { "selector": "div.submenu-wrapper", "include": false },
+    { "selector": "div.menu-overlay", "include": false }
+  ]
+}
+```
+
+Use Test Replay to confirm which selector Cypress is capturing — the selector shown in the element detail panel is the one to target.
+
+### Example: Filtering third-party widgets
+
+External integrations are not your code to test. Exclude them by their container element or `iframe` title.
+
+The exact selector varies by provider. Use your browser's DevTools to inspect the widget's outermost container and find a stable `id` or `class`. Most third-party widgets inject a wrapper with a predictable `id`.
 
 ```json
 {
@@ -67,19 +78,19 @@ The exact selector varies by provider — use DevTools to inspect the widget's o
 }
 ```
 
-### Example: Ignoring elements using a custom data attribute
+### Example: Filtering elements using a custom data attribute
 
-If your team has access to the application source code, the most maintainable approach is to mark elements directly in the HTML using a `data` attribute. This keeps the exclusion intent visible in the code itself and doesn't depend on class names that might change.
+If your team has access to the application source code, the most maintainable approach is to mark elements directly in the HTML. This keeps the exclusion intent explicit in the code and avoids depending on class names that might change.
 
 **In your application HTML:**
 
 ```html
 <div data-uic-ignore="true">
-  <!-- third-party widget or out-of-scope component -->
+  <!-- non-interactive wrapper or out-of-scope component -->
 </div>
 ```
 
-**In your UI Coverage configuration:**
+**In your configuration:**
 
 ```json
 {
@@ -94,22 +105,10 @@ If your team has access to the application source code, the most maintainable ap
 
 ## Step 3: Validate the result
 
-After saving your configuration, trigger a new test run (or wait for the next scheduled run) and open the updated UI Coverage report.
+After saving your configuration, record a new test run and open the updated UI Coverage report.
 
-1. Go to the **Untested elements** section.
-2. Confirm the elements you filtered no longer appear.
-3. If a filtered element still shows up, use your browser's DevTools to confirm your CSS selector actually matches that element on the page. Open the Console and run `document.querySelectorAll('your-selector')` to verify.
+1. Go to the **Untested elements** section and confirm the filtered elements no longer appear.
+2. Check the **Tested elements** section to confirm no legitimate elements were accidentally removed.
+3. If a filtered element still shows up, open your browser's Console and run `document.querySelectorAll('your-selector')` to confirm your selector matches the right element.
 
-## Balancing noise reduction with new-element visibility
-
-A common concern is: _"If I ignore elements now, will I miss new UI components added by developers?"_
-
-The key is to use **specific, targeted selectors** rather than broad ones:
-
-| Approach | Effect |
-|----------|--------|
-| `#chat-widget *` | Excludes everything inside the container, including any future additions |
-| `#chat-widget > button.launcher` | Only excludes the specific launcher button |
-| `[data-uic-ignore='true'] *` | Only excludes what developers explicitly opt out of |
-
-For teams that want broad noise reduction _without_ losing sight of new elements, consider using [profiles](/ui-coverage/configuration/profiles) — apply a stricter filter in daily CI runs and a less-filtered profile for weekly audit runs, so new elements surface on a regular cadence without cluttering day-to-day reports.
+If a previously-tracked element disappears unexpectedly, check whether a new broad filter rule is inadvertently matching it, and narrow the selector.
