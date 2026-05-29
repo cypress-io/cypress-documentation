@@ -11,8 +11,13 @@ sidebar_label: each
 Iterate through an array like structure (arrays or objects with a `length`
 property).
 
-It is [unsafe](/app/core-concepts/retry-ability#Only-queries-are-retried) to
-chain further commands that rely on the subject after `.each()`.
+`.each()` yields the same subject it was given and is not a
+[query](/app/core-concepts/retry-ability#Only-queries-are-retried), so Cypress
+will not retry it or re-run the queries that produced its subject. Reading the
+yielded value in a following [`.then()`](/api/commands/then) callback is safe,
+but it is unsafe to chain commands or assertions that act on DOM elements after
+`.each()` — those elements may have re-rendered during iteration, leaving the
+references stale. Re-query the elements with a Cypress query instead.
 
 ## Syntax
 
@@ -50,8 +55,12 @@ Pass a function that is invoked with the following arguments:
 <HeaderYields />
 
 - `.each()` yields the same subject it was given.
-- It is [unsafe](/app/core-concepts/retry-ability#Only-queries-are-retried)
-  to chain further commands that rely on the subject after `.each()`.
+- Because `.each()` is not a
+  [query](/app/core-concepts/retry-ability#Only-queries-are-retried), it is
+  unsafe to chain further commands that act or assert on DOM elements after
+  `.each()`, as those elements may have re-rendered and gone stale during
+  iteration. Reading the yielded subject in a
+  [`.then()`](/api/commands/then) callback (as in the example below) is safe.
 
 ## Examples
 
@@ -87,6 +96,11 @@ cy.get('li')
     expect($lis).to.have.length(3) // true
   })
 ```
+
+Here the `.then()` callback only _reads_ the yielded array, which is safe. If
+instead you needed to act or assert on DOM elements that your application may
+have re-rendered during iteration, re-query them with a Cypress query rather
+than reusing the subject yielded by `.each()`.
 
 ### Promises
 
