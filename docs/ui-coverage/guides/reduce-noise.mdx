@@ -83,11 +83,11 @@ When you define `commands` for a selector, those become the **only** commands th
 
 When an element consistently appears as uncovered, choose the right strategy based on what your tests do with it:
 
-| Scenario | Recommended approach |
-|---|---|
-| Tests run `.should()` on this element | Add `"assert"` to `allowedInteractionCommands` for this selector |
+| Scenario                                                 | Recommended approach                                                               |
+| -------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| Tests run `.should()` on this element                    | Add `"assert"` to `allowedInteractionCommands` for this selector                   |
 | Tests never reference this element and it's out of scope | Use `elementFilters` to [exclude it](/ui-coverage/guides/ignore-elements) entirely |
-| Tests _should_ interact with it but don't yet | Leave it uncovered — it's a real gap to address |
+| Tests _should_ interact with it but don't yet            | Leave it uncovered — it's a real gap to address                                    |
 
 ## Group views by URL pattern
 
