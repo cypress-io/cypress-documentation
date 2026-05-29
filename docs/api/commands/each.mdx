@@ -11,14 +11,6 @@ sidebar_label: each
 Iterate through an array like structure (arrays or objects with a `length`
 property).
 
-`.each()` yields the same subject it was given and is not a
-[query](/app/core-concepts/retry-ability#Only-queries-are-retried), so Cypress
-will not retry it or re-run the queries that produced its subject. Reading the
-yielded value in a following [`.then()`](/api/commands/then) callback is safe,
-but it is unsafe to chain commands or assertions that act on DOM elements after
-`.each()` — those elements may have re-rendered during iteration, leaving the
-references stale. Re-query the elements with a Cypress query instead.
-
 ## Syntax
 
 ```javascript
@@ -37,7 +29,6 @@ cy.getCookies().each(() => {...}) // Iterate through each cookie
 <Icon name="exclamation-triangle" color="red" /> **Incorrect Usage**
 
 ```javascript
-
 cy.each(() => {...})            // Errors, cannot be chained off 'cy'
 cy.clock().each(() => {...})    // Errors, 'clock' does not yield an array
 ```
