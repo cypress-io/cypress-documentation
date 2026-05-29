@@ -118,7 +118,7 @@ you should understand well. The default values listed here are meaningful.
 | ------------------------ | --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `screenshotOnRunFailure` | `true`                | Whether Cypress will take a screenshot when a test fails during `cypress run`.                                                                        |
 | `screenshotsFolder`      | `cypress/screenshots` | Path to folder where screenshots will be saved from [`cy.screenshot()`](/api/commands/screenshot) command or after a test fails during `cypress run`. |
-| `trashAssetsBeforeRuns`  | `true`                | Whether Cypress will trash assets within the `downloadsFolder`, `screenshotsFolder`, and `videosFolder` before tests run with `cypress run`. This clears the **entire contents** of those folders, including all files and nested subfolders—not only screenshots and videos. [Please read the notes for more details.](#trashAssetsBeforeRuns)          |
+| `trashAssetsBeforeRuns`  | `true`                | Whether Cypress will trash assets within the `downloadsFolder`, `screenshotsFolder`, and `videosFolder` before tests run with `cypress run`. This clears the **entire contents** of those folders, including all files and nested subfolders.          |
 
 For more options regarding screenshots, view the
 [Cypress.Screenshot API](/api/cypress-api/screenshot-api).
@@ -702,7 +702,7 @@ See the [plugins guide](/app/plugins/plugins-guide) for more information.
 
 When `trashAssetsBeforeRuns` is `true` (the default), Cypress clears out old
 assets before each `cypress run` so that the results you collect only come from
-the current run. This **only** happens during `cypress run`—assets are never
+the current run. This **only** happens during `cypress run`. Assets are never
 trashed when using `cypress open`.
 
 Cypress trashes the following three folders:
@@ -712,9 +712,7 @@ Cypress trashes the following three folders:
 - [`videosFolder`](#Videos) (`cypress/videos` by default)
 
 For each of these folders, Cypress removes the **entire contents** of the
-folder—**every** file and **every** nested subfolder, regardless of file type.
-It does _not_ only remove screenshots or videos, and it does _not_ limit itself
-to the top level of the folder. The folder itself is preserved; only its
+folder, every file and every nested subfolder. The folder itself is preserved; only its
 contents are cleared.
 
 How the contents are removed depends on the operating system:
@@ -723,22 +721,6 @@ How the contents are removed depends on the operating system:
   Bin, so it can be recovered if needed.
 - On **Linux**, the folders are emptied directly and the contents are
   **permanently deleted**.
-
-:::caution
-
-Because Cypress removes the _entire contents_ of these folders, be careful when
-nesting one run's output inside another's. For example, if a daily run writes to
-`cypress/screenshots` and a second run writes to `cypress/screenshots/otherRun`,
-then the daily run will delete the `otherRun` subfolder (and everything inside
-it) when it trashes `cypress/screenshots`.
-
-To keep assets from separate runs, either point each run at a folder that is
-**not** nested inside another run's folder (e.g. `cypress/screenshots/daily` and
-`cypress/screenshots/otherRun` as siblings, with neither run using the parent
-`cypress/screenshots` directly), or set `trashAssetsBeforeRuns` to `false` and
-manage cleanup yourself.
-
-:::
 
 ### Test files not found when using `spec` parameter
 
