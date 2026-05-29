@@ -23,7 +23,7 @@ sidebar_label: Configuration
 
 When you launch Cypress for the first time in a project, the app will
 automatically guide you through setup and configuration. The Launchpad detects
-your UI framework and bundler, installs the required dependencies, and scaffolds
+your UI framework and bundler, lists the required dependencies needed for you to install, and scaffolds
 a `cypress.config` file with a `component.devServer` block.
 
 The sections below explain what that configuration does and how to customize it.
@@ -44,38 +44,28 @@ server** that compiles and serves your component specs on demand.
 The dev server is responsible for:
 
 1. Compiling each spec file (and your support file) with the same transforms your
-   app uses in development — JSX/TSX, Vue SFCs, CSS modules, path aliases, and
-   so on.
-2. Serving those compiled files over HTTP so the Cypress iframe can load them.
+   app uses in development (JSX/TSX, Vue SFCs, CSS modules, path aliases, and
+   so on).
+2. Serving those compiled files over HTTP so Cypress App can load them.
 3. Shutting down cleanly when you close the Cypress App or finish a test run.
 
 Cypress ships with built-in dev server implementations for **Vite** and
 **Webpack**. You do not need to install `@cypress/vite-dev-server` or
-`@cypress/webpack-dev-server` separately — they are bundled with the Cypress
-binary.
+`@cypress/webpack-dev-server` separately, they are bundled with the Cypress App.
 
 ### How it works at runtime
 
 When you open or run component tests, Cypress:
 
-1. Reads `component.devServer` from your config file.
+1. Reads `component.devServer` from your Cypress config file.
 2. Starts the matching dev server (Vite or Webpack) on an available port.
 3. Sets `baseUrl` to `http://localhost:<port>`.
 4. Loads your component index HTML (by default
-   `cypress/support/component-index.html`) at
-   `<baseUrl><devServerPublicPathRoute>/index.html`.
-5. Injects a small bootstrap script that dynamically imports your support file
-   (if configured) and the active spec, then hands control to Cypress.
+   `cypress/support/component-index.html`) and dynamically imports your support file (if configured) and the active spec, then hands control to Cypress.
 
-By default, `devServerPublicPathRoute` is `/__cypress/src`. This keeps component
-test assets separate from your app's normal public path. See
-[devServerPublicPathRoute](#devserverpublicpathroute) if you need to change it.
+### Recommended configuration
 
-### Recommended configuration (object syntax)
-
-The recommended way to configure component testing is the **object syntax** for
-`component.devServer`. Specify your UI framework and bundler — Cypress wires up
-the correct dev server implementation for you:
+The recommended way to configure component testing is to use the `component.devServer` object. Specify your UI framework and bundler and Cypress will wire up the correct dev server implementation for you:
 
 :::cypress-config-example
 
@@ -92,7 +82,7 @@ the correct dev server implementation for you:
 
 :::
 
-This is the configuration the Launchpad scaffolds during project setup. It is
+This is the configuration that Cypress App scaffolds during project setup. It is
 all most projects need.
 
 #### Supported `framework` and `bundler` values
@@ -111,37 +101,22 @@ a supported bundler. See [Custom Frameworks](/app/component-testing/custom-frame
 
 ### Automatic bundler configuration detection
 
-When you use the object syntax, Cypress tries to reuse the same bundler
+When you use the `component.devServer` object, Cypress tries to reuse the same bundler
 configuration you already use to develop your app. You usually do **not** need
-to duplicate your entire Vite or Webpack config in `cypress.config`.
+to duplicate your entire Vite or Webpack config in your Cypress config file.
 
 #### Vite
 
-If you omit `viteConfig`, Cypress searches upward from your project root for
-the first matching file:
-
-- `vite.config.ts`
-- `vite.config.js`
-- `vite.config.mjs`
-- `vite.config.cjs`
-- `vite.config.mts`
-- `vite.config.cts`
+If you omit `viteConfig`, Cypress searches upward from your project root for a `vite.config.ts|js|mjs|cjs|mts|cts` file.
 
 When a config file is found, Cypress loads it and merges in Cypress-specific
 settings (plugins, public path, spec entries, and file-system allow rules).
 
-If no Vite config is found, Cypress shows an error asking you to add a
-`vite.config` file or pass a `viteConfig` option explicitly.
+If no config file is found, Cypress shows an error asking you to add a `vite.config` file or pass a `viteConfig` option explicitly.
 
 #### Webpack
 
-If you omit `webpackConfig`, Cypress searches upward from your project root for
-the first matching file:
-
-- `webpack.config.ts`
-- `webpack.config.js`
-- `webpack.config.mjs`
-- `webpack.config.cjs`
+If you omit `webpackConfig`, Cypress searches upward from your project root for a `webpack.config.ts|js|mjs|cjs|mts|cts` file.
 
 For meta-frameworks like **Next.js** and **Angular**, Cypress applies
 framework-specific presets before merging your config. For React, Vue, and
@@ -155,11 +130,10 @@ shows an error asking you to add a `webpack.config` file or pass a
 ### Overriding bundler configuration
 
 Pass `viteConfig` or `webpackConfig` when you need to customize what Cypress
-uses — for example, to add plugins, tweak aliases, or point at a config file
+uses. For example, to add plugins, tweak aliases, or point to a config file
 outside the project root.
 
-Both options accept either a config object or an async function that returns
-one.
+Both options accept either a config object or an async function that returns a config object.
 
 #### Vite overrides
 
@@ -221,34 +195,19 @@ import webpackConfig from './webpack.config'
 
 :::
 
-:::tip
-
-When you pass `viteConfig` directly, Cypress sets `configFile: false` and uses
-your provided config as the starting point (still merged with Cypress-specific
-overrides). When you omit `viteConfig`, Cypress auto-discovers your
-`vite.config.*` file instead.
-
-For Webpack, explicitly passed `webpackConfig` is merged with any
-framework-specific preset and Cypress overrides.
-
-:::
-
 ### Function syntax (advanced)
 
 If you need direct access to the dev server API — for example, to pass options
 that are not exposed on the object syntax — use the **function syntax** and
 import the dev server from the appropriate package:
 
-:::cypress-config-example
-
-```ts
+```ts title=cypress.config.ts
+import { defineConfig } from 'cypress'
 import { devServer as viteDevServer } from '@cypress/vite-dev-server'
-```
 
-```ts
-{
+export default defineConfig({
   component: {
-    devServer (cypressDevServerConfig) {
+    devServer(cypressDevServerConfig) {
       return viteDevServer({
         ...cypressDevServerConfig,
         framework: 'react',
@@ -259,12 +218,11 @@ import { devServer as viteDevServer } from '@cypress/vite-dev-server'
       })
     },
   },
-}
+})
 ```
 
-:::
-
-```ts
+```ts title=cypress.config.ts
+import { defineConfig } from 'cypress'
 import { devServer as webpackDevServer } from '@cypress/webpack-dev-server'
 
 export default defineConfig({
