@@ -230,6 +230,61 @@ cy.get('button')
 
 <ThenShouldAndDifference />
 
+### Multiple actions on the same element
+
+A common pattern is to perform several sequential actions on the same element —
+for example, focusing an input, clearing its value, typing a new value, and then
+blurring it. Because [`.focus()`](/api/commands/focus),
+[`.clear()`](/api/commands/clear), [`.type()`](/api/commands/type), and
+[`.blur()`](/api/commands/blur) each yield the same subject they were given, you
+can chain them directly without needing `.then()`:
+
+```javascript
+// ✅ Preferred: direct chaining
+cy.get('input').focus().clear().type('new value').blur()
+```
+
+You might be tempted to wrap multiple actions inside `.then()` to avoid
+re-querying the element:
+
+```javascript
+// ⚠️ Unnecessary: .then() is not retried and does not improve retry-ability
+cy.get('input').then(($input) => {
+  cy.wrap($input).focus()
+  cy.wrap($input).clear()
+  cy.wrap($input).type('new value')
+  cy.wrap($input).blur()
+})
+```
+
+This pattern is unnecessary and can be misleading. The `.then()` callback is
+**not** retried — so it does not protect against detached DOM errors any better
+than direct chaining. In addition, `$input` inside the callback is a snapshot of
+the element at the time `.then()` ran; if the DOM updates and the element is
+replaced, the wrapped reference becomes stale.
+
+For sequential actions that need to be split across separate chains (for
+example, when each action might trigger a re-render), use separate `cy.get()`
+calls or an [alias](/app/core-concepts/variables-and-aliases):
+
+```javascript
+// ✅ Separate queries re-run before each action, protecting against re-renders
+cy.get('input').focus()
+cy.get('input').clear()
+cy.get('input').type('new value')
+cy.get('input').blur()
+
+// ✅ Equivalent with an alias
+cy.get('input').as('field')
+cy.get('@field').focus()
+cy.get('@field').clear()
+cy.get('@field').type('new value')
+cy.get('@field').blur()
+```
+
+See the [Retry-ability guide](/app/core-concepts/retry-ability) for a deeper
+explanation of how Cypress retries queries before each action.
+
 ## Rules
 
 <HeaderRequirements />
@@ -266,3 +321,5 @@ cy.get('button')
 - [`.spread()`](/api/commands/spread)
 - [Guide: Using Closures to compare values](/app/core-concepts/variables-and-aliases#Closures)
 - [Guide: Chains of Commands](/app/core-concepts/introduction-to-cypress#Chains-of-Commands)
+- [Guide: Retry-ability](/app/core-concepts/retry-ability)
+- [Guide: Only queries are retried](/app/core-concepts/retry-ability#Only-queries-are-retried)

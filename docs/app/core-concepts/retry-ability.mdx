@@ -317,6 +317,48 @@ cy.get('@new').type('todo B{enter}')
 cy.get('@new').should('have.class', 'active')
 ```
 
+### Multiple sequential actions on the same element
+
+When performing several actions on a single element — such as focusing an input,
+clearing it, typing a value, and blurring — you have two good options.
+
+**Option 1: Direct chaining.** Action commands like
+[`.focus()`](/api/commands/focus), [`.clear()`](/api/commands/clear),
+[`.type()`](/api/commands/type), and [`.blur()`](/api/commands/blur) each yield
+the same element they received, so you can chain them in a single expression:
+
+```javascript
+// ✅ Recommended for stable elements
+cy.get('#payment-input').focus().clear().type('new value').blur()
+```
+
+**Option 2: Separate `cy.get()` calls.** If your application re-renders between
+actions and might replace the DOM node, use a separate query for each action.
+Cypress re-runs all queries leading up to each action, so a fresh element
+reference is used every time:
+
+```javascript
+// ✅ Recommended when the element may re-render between actions
+cy.get('#payment-input').focus()
+cy.get('#payment-input').clear()
+cy.get('#payment-input').type('new value')
+cy.get('#payment-input').blur()
+```
+
+Avoid wrapping multiple actions in a `.then()` callback with `cy.wrap()`. The
+`.then()` callback is **not** retried and does not add retry-ability protection.
+The element reference captured by `.then()` can become stale if the DOM updates:
+
+```javascript
+// ❌ Avoid: .then() is not retried; $el can become stale
+cy.get('#payment-input').then(($el) => {
+  cy.wrap($el).focus()
+  cy.wrap($el).clear()
+  cy.wrap($el).type('new value')
+  cy.wrap($el).blur()
+})
+```
+
 :::caution
 
 Very rarely you may want to retry a command like `.click()`. We describe one
