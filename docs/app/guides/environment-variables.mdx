@@ -125,6 +125,23 @@ The environment variable `CYPRESS_INTERNAL_ENV` is reserved and should not be se
 
 :::
 
+:::caution
+
+`CYPRESS_env` cannot be used to set an individual environment variable named `env`. Because `env` is a Cypress configuration option name, `CYPRESS_env` overrides the **entire** `env` configuration object and expects a JSON-encoded object value:
+
+```shell
+# Sets Cypress.env('apiUrl') to 'http://localhost:3000'
+export CYPRESS_env='{"apiUrl":"http://localhost:3000"}'
+```
+
+Setting a plain string (e.g., `export CYPRESS_env=staging`) will fail silently — Cypress validates that the value is a plain object and discards invalid values. To set an environment variable key literally named `env`, use `cypress.env.json` or the `--env` CLI flag instead:
+
+```shell
+cypress run --env env=staging
+```
+
+:::
+
 ### 4. `--env` CLI flag
 
 Pass environment variables via the command line. Multiple values must be separated by a comma, not a space. In some shells, like Windows PowerShell, you may need to surround the key/value pair with quotes.
