@@ -13,17 +13,16 @@ Not all elements in your application are relevant to your test coverage. Cypress
 
 Common candidates for exclusion include:
 
-- **Global navigation and sidebars** — menus, breadcrumbs, and header/footer links that appear on every page
 - **Data grid and table controls** — column filter icons, sort arrows, or pagination buttons that are secondary concerns
 - **Third-party and embedded widgets** — chat launchers, cookie consent banners, analytics overlays, or auth iframes
 - **Transitional or loading elements** — spinners, skeletons, and progress indicators that don't represent a stable UI state
 
 ## Why ignore elements?
 
-Filtering known, stable elements keeps your reports focused on real coverage gaps. When your team sees an untested element, it should signal _work to do_ — not noise from a sidebar that has been present and unchanged for months.
+Filtering known, stable elements keeps your reports focused on real coverage gaps. When your team sees an untested element, it should signal _work to do_ — not noise from a widget or control that isn't part of the workflows you're testing.
 
 :::caution Preserve visibility into new elements
-Element filters remove matching elements entirely from coverage tracking. If a developer later adds a **new** button inside a section you've ignored (for example, a new action inside `#sidebar`), that new element will also be hidden. Use specific selectors rather than broad ones, and pair filters with [change monitoring](/ui-coverage/guides/monitor-changes) to stay aware of what's new.
+Element filters remove matching elements entirely from coverage tracking. If a developer later adds a **new** button inside a section you've ignored, that new element will also be hidden. Use specific selectors rather than broad ones, and pair filters with [change monitoring](/ui-coverage/guides/monitor-changes) to stay aware of what's new.
 :::
 
 ## Step 1: Identify elements to ignore
@@ -33,7 +32,7 @@ After recording your tests to Cypress Cloud, review the UI Coverage report to fi
 1. In Cypress Cloud, open your project and go to a recent test run.
 2. Select the **UI Coverage** tab.
 3. Open the **Untested elements** section.
-4. Look for elements that appear across many views without being part of the workflows you care about — for example, a sidebar navigation menu that appears on every page, or filter icons on every data grid column.
+4. Look for elements that appear across many views without being part of the workflows you care about — for example, filter icons on every data grid column, or a third-party chat widget.
 5. Click an element to open its detail panel. The detail panel shows the CSS selector Cypress uses to identify the element — copy this as your starting point for a filter rule.
 
 ## Step 2: Configure ignored elements
@@ -46,33 +45,19 @@ To add or update your configuration:
 2. Go to the **App Quality** tab.
 3. Add or edit the `elementFilters` array under your `uiCoverage` configuration.
 
-### Example: Ignoring a global sidebar
-
-If your app has a persistent sidebar that appears on every page, exclude all of its interactive children at once using a descendant selector:
-
-```json
-{
-  "elementFilters": [
-    {
-      "selector": "#sidebar *",
-      "include": false,
-      "comment": "Global sidebar — has its own dedicated nav test suite"
-    }
-  ]
-}
-```
-
 ### Example: Ignoring data grid filter icons
 
-Data grids often generate a large number of untested elements from per-column controls. Exclude the controls while keeping the cell content visible:
+Data grids often generate a large number of untested elements from per-column controls. If these controls are a secondary concern, exclude them while keeping the cell content tracked.
+
+The exact selector depends on your grid library or component. Use your browser's DevTools to find the right selector for your app — right-click the filter icon in the browser and choose **Inspect** to see its class names or attributes.
 
 ```json
 {
   "elementFilters": [
     {
-      "selector": ".ag-header-icon, .ag-filter-icon, [data-testid='column-filter-btn']",
+      "selector": "[data-testid='column-filter-btn']",
       "include": false,
-      "comment": "Column filter and sort icons — out of scope for current test suite"
+      "comment": "Column filter icons — out of scope for current test suite"
     }
   ]
 }
@@ -80,18 +65,17 @@ Data grids often generate a large number of untested elements from per-column co
 
 ### Example: Ignoring third-party widgets
 
-External integrations like live chat or cookie consent banners are not your code to test. Exclude them by their container or `iframe` title:
+External integrations like live chat or cookie consent banners are not your code to test. Exclude them by their container element or `iframe` title.
+
+The exact selector varies by provider — use DevTools to inspect the widget's outermost container and find a stable `id` or `class` to target. Most third-party widgets inject a wrapper element with a predictable `id`.
 
 ```json
 {
   "elementFilters": [
     {
-      "selector": "#intercom-container *",
-      "include": false
-    },
-    {
-      "selector": ".CookieConsent *",
-      "include": false
+      "selector": "#live-chat-widget *",
+      "include": false,
+      "comment": "Third-party chat widget — replace with your provider's actual container ID"
     },
     {
       "selector": "iframe[title='Login']",
@@ -104,14 +88,14 @@ External integrations like live chat or cookie consent banners are not your code
 
 ### Example: Ignoring elements using a custom data attribute
 
-If your team has access to the application source code, the most maintainable approach is to mark elements directly in the HTML using a `data` attribute. This keeps the exclusion intent visible in the code itself.
+If your team has access to the application source code, the most maintainable approach is to mark elements directly in the HTML using a `data` attribute. This keeps the exclusion intent visible in the code itself and doesn't depend on class names that might change.
 
 **In your application HTML:**
 
 ```html
-<aside data-uic-ignore="true">
-  <!-- sidebar content -->
-</aside>
+<div data-uic-ignore="true">
+  <!-- third-party widget or out-of-scope component -->
+</div>
 ```
 
 **In your UI Coverage configuration:**
@@ -133,7 +117,7 @@ After saving your configuration, trigger a new test run (or wait for the next sc
 
 1. Go to the **Untested elements** section.
 2. Confirm the elements you filtered no longer appear.
-3. If a filtered element still shows up, use your browser's DevTools to confirm your CSS selector actually matches that element on the page. The **Elements** panel in DevTools lets you run `document.querySelectorAll('your-selector')` in the Console to verify.
+3. If a filtered element still shows up, use your browser's DevTools to confirm your CSS selector actually matches that element on the page. Open the Console and run `document.querySelectorAll('your-selector')` to verify.
 
 ## Balancing noise reduction with new-element visibility
 
@@ -143,8 +127,8 @@ The key is to use **specific, targeted selectors** rather than broad ones:
 
 | Approach | Effect |
 |----------|--------|
-| `#sidebar *` | Excludes everything inside `#sidebar`, including future additions |
-| `#sidebar > nav > ul > li > a` | Only excludes the current top-level sidebar links |
+| `#chat-widget *` | Excludes everything inside the container, including any future additions |
+| `#chat-widget > button.launcher` | Only excludes the specific launcher button |
 | `[data-uic-ignore='true'] *` | Only excludes what developers explicitly opt out of |
 
 For teams that want broad noise reduction _without_ losing sight of new elements, consider using [profiles](/ui-coverage/configuration/profiles) — apply a stricter filter in daily CI runs and a less-filtered profile for weekly audit runs, so new elements surface on a regular cadence without cluttering day-to-day reports.
