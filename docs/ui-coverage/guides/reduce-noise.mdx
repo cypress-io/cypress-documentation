@@ -23,7 +23,7 @@ Many QA teams write tests that verify elements exist and look correct using Cypr
 - **Read-only display elements** like status badges, data labels, and section headers
 - **Navigation items** that tests confirm are present, but only some of which are actually clicked
 
-By default, UI Coverage marks an element as "tested" only when a [Cypress interaction command](/ui-coverage/core-concepts/interactivity#interaction-commands) such as `click`, `type`, or `check` is used on it. **Assertions alone — `.should()`, `.contains()` — do not count as interactions.** This means elements your team routinely checks with assertions will still show as uncovered in reports, which can be a significant source of confusion.
+By default, UI Coverage marks an element as "tested" only when a [Cypress interaction command](/ui-coverage/core-concepts/interactivity#Interaction-Commands) such as `click`, `type`, or `check` is used on it. **Assertions alone — `.should()`, `.contains()` — do not count as interactions.** This means elements your team routinely checks with assertions will still show as uncovered in reports, which can be a significant source of confusion.
 
 ### How to count assertions as coverage
 
