@@ -824,7 +824,8 @@ response to a request:
 
 - `req.reply()` - stub out a response requiring no dependency on a real back-end
 - `req.continue()` - modify or make assertions on the real response
-- `req.destroy()` - destroy the request and respond with a network error
+- `req.destroy()` - destroy the request and respond with a network error (not supported in
+  [experimental WebKit](/app/references/launching-browsers#WebKit-Experimental))
 - `req.redirect()` - respond to the request with a redirect to a specified
   location
 - `req.on()` - modify the response by attaching to events
@@ -906,6 +907,15 @@ cy.intercept('POST', '/users', (req) => {
 See also [Controlling the outbound request with `req.continue()`][req-continue]
 
 Responding with a network error (`destroy`):
+
+:::caution
+
+`req.destroy()` is not supported in
+[experimental WebKit](/app/references/launching-browsers#WebKit-Experimental).
+Use `req.reply()` with a specific status code instead to simulate error responses
+in WebKit.
+
+:::
 
 ```js
 // dynamically destroy the request and
@@ -1164,6 +1174,7 @@ There are also two convenience functions available on `req`:
 {
   /**
    * Destroy the request and respond with a network error.
+   * Not supported in experimental WebKit.
    */
   destroy(): void
   /**
@@ -1364,7 +1375,7 @@ The following properties are available on `StaticResponse`.
 | headers           | HTTP response headers                                                                                                                                                                                                             |
 | body              | Serve a static response body (`object`, `string`, `ArrayBuffer`) (when `fixture` is omitted).                                                                                                                                     |
 | fixture           | Serve a fixture as the HTTP response body (allowed when `body` is omitted). Read the contents with an encoding other than the [default for the file type](/api/commands/fixture#Encoding), pass the fixture like `path,encoding`. |
-| forceNetworkError | Force an error by destroying the browser connection                                                                                                                                                                               |
+| forceNetworkError | Force an error by destroying the browser connection. Not supported in [experimental WebKit](/app/references/launching-browsers#WebKit-Experimental).                                                                              |
 | delay             | Minimum network latency or delay to add to the response time (milliseconds)                                                                                                                                                       |
 | throttleKbps      | Maximum data transfer rate of the response (kilobits/second)                                                                                                                                                                      |
 
