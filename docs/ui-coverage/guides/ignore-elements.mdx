@@ -13,7 +13,6 @@ Not all elements in your application are relevant to your test coverage. Cypress
 
 Common candidates for exclusion include:
 
-- **Data grid and table controls** — column filter icons, sort arrows, or pagination buttons that are secondary concerns
 - **Third-party and embedded widgets** — chat launchers, cookie consent banners, analytics overlays, or auth iframes
 - **Transitional or loading elements** — spinners, skeletons, and progress indicators that don't represent a stable UI state
 
@@ -32,7 +31,7 @@ After recording your tests to Cypress Cloud, review the UI Coverage report to fi
 1. In Cypress Cloud, open your project and go to a recent test run.
 2. Select the **UI Coverage** tab.
 3. Open the **Untested elements** section.
-4. Look for elements that appear across many views without being part of the workflows you care about — for example, filter icons on every data grid column, or a third-party chat widget.
+4. Look for elements that appear across many views without being part of the workflows you care about — for example, a third-party chat widget that appears on every page.
 5. Click an element to open its detail panel. The detail panel shows the CSS selector Cypress uses to identify the element — copy this as your starting point for a filter rule.
 
 ## Step 2: Configure ignored elements
@@ -44,24 +43,6 @@ To add or update your configuration:
 1. In Cypress Cloud, open your project settings.
 2. Go to the **App Quality** tab.
 3. Add or edit the `elementFilters` array under your `uiCoverage` configuration.
-
-### Example: Ignoring data grid filter icons
-
-Data grids often generate a large number of untested elements from per-column controls. If these controls are a secondary concern, exclude them while keeping the cell content tracked.
-
-The exact selector depends on your grid library or component. Use your browser's DevTools to find the right selector for your app — right-click the filter icon in the browser and choose **Inspect** to see its class names or attributes.
-
-```json
-{
-  "elementFilters": [
-    {
-      "selector": "[data-testid='column-filter-btn']",
-      "include": false,
-      "comment": "Column filter icons — out of scope for current test suite"
-    }
-  ]
-}
-```
 
 ### Example: Ignoring third-party widgets
 
