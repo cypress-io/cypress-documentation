@@ -1091,6 +1091,14 @@ If you interact with the same iframe across multiple tests, extract the frame
 access into a custom command to avoid repeating the boilerplate:
 
 ```ts title="cypress/support/commands.ts"
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      getIframeBody(selector: string): Chainable<JQuery<HTMLElement>>
+    }
+  }
+}
+
 Cypress.Commands.add('getIframeBody', (selector: string) => {
   return cy
     .get(selector)
@@ -1462,6 +1470,14 @@ export const test = base.extend({
 <Badge type="success">After: Cypress</Badge>
 
 ```ts title="support.cy.ts"
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      login(username: string, password: string): Chainable<void>
+    }
+  }
+}
+
 Cypress.Commands.add('login', (username: string, password: string) => {
   cy.session([username, password], () => {
     cy.visit('/login')

@@ -122,17 +122,43 @@ Examples of parent commands:
 
 #### Click link containing text
 
+<Tabs>
+<TabItem value="cypress/support/commands.js">
+
 ```js
 Cypress.Commands.add('clickLink', (label) => {
   cy.get('a').contains(label).click()
 })
 ```
 
-```js
+</TabItem>
+<TabItem value="cypress/support/commands.ts">
+
+```typescript
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      clickLink(label: string): Chainable<JQuery<HTMLElement>>
+    }
+  }
+}
+
+Cypress.Commands.add('clickLink', (label) => {
+  cy.get('a').contains(label).click()
+})
+```
+
+</TabItem>
+</Tabs>
+
+```js title="spec.cy.js"
 cy.clickLink('Buy Now')
 ```
 
 #### Check a token
+
+<Tabs>
+<TabItem value="cypress/support/commands.js">
 
 ```js
 Cypress.Commands.add('checkToken', (token) => {
@@ -140,7 +166,27 @@ Cypress.Commands.add('checkToken', (token) => {
 })
 ```
 
-```js
+</TabItem>
+<TabItem value="cypress/support/commands.ts">
+
+```typescript
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      checkToken(token: string): Chainable<JQuery<HTMLElement>>
+    }
+  }
+}
+
+Cypress.Commands.add('checkToken', (token) => {
+  cy.window().its('localStorage.token').should('eq', token)
+})
+```
+
+</TabItem>
+</Tabs>
+
+```js title="spec.cy.js"
 cy.checkToken('abc123')
 ```
 
@@ -149,6 +195,9 @@ cy.checkToken('abc123')
 Originally used in
 [cypress-downloadfile](https://github.com/Xvier/cypress-downloadfile), this
 command calls other Cypress commands.
+
+<Tabs>
+<TabItem value="cypress/support/commands.js">
 
 ```javascript
 Cypress.Commands.add('downloadFile', (url, directory, fileName) => {
@@ -163,11 +212,45 @@ Cypress.Commands.add('downloadFile', (url, directory, fileName) => {
 })
 ```
 
-```js
+</TabItem>
+<TabItem value="cypress/support/commands.ts">
+
+```typescript
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      downloadFile(
+        url: string,
+        directory: string,
+        fileName: string
+      ): Chainable<unknown>
+    }
+  }
+}
+
+Cypress.Commands.add('downloadFile', (url, directory, fileName) => {
+  return cy.getCookies().then((cookies) => {
+    return cy.task('downloadFile', {
+      url,
+      directory,
+      cookies,
+      fileName,
+    })
+  })
+})
+```
+
+</TabItem>
+</Tabs>
+
+```js title="spec.cy.js"
 cy.downloadFile('https://path_to_file.pdf', 'mydownloads', 'demo.pdf')
 ```
 
 #### Commands to work with `sessionStorage`
+
+<Tabs>
+<TabItem value="cypress/support/commands.js">
 
 ```js
 Cypress.Commands.add('getSessionStorage', (key) => {
@@ -181,12 +264,42 @@ Cypress.Commands.add('setSessionStorage', (key, value) => {
 })
 ```
 
-```js
+</TabItem>
+<TabItem value="cypress/support/commands.ts">
+
+```typescript
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      getSessionStorage(key: string): Chainable<void>
+      setSessionStorage(key: string, value: string): Chainable<void>
+    }
+  }
+}
+
+Cypress.Commands.add('getSessionStorage', (key) => {
+  cy.window().then((window) => window.sessionStorage.getItem(key))
+})
+
+Cypress.Commands.add('setSessionStorage', (key, value) => {
+  cy.window().then((window) => {
+    window.sessionStorage.setItem(key, value)
+  })
+})
+```
+
+</TabItem>
+</Tabs>
+
+```js title="spec.cy.js"
 cy.setSessionStorage('token', 'abc123')
 cy.getSessionStorage('token').should('eq', 'abc123')
 ```
 
 #### Log in command using UI
+
+<Tabs>
+<TabItem value="cypress/support/commands.js">
 
 ```js
 Cypress.Commands.add('loginViaUi', (user) => {
@@ -208,11 +321,54 @@ Cypress.Commands.add('loginViaUi', (user) => {
 })
 ```
 
-```js
+</TabItem>
+<TabItem value="cypress/support/commands.ts">
+
+```typescript
+interface LoginUser {
+  email: string
+  password: string
+  name: string
+}
+
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      loginViaUi(user: LoginUser): Chainable<null>
+    }
+  }
+}
+
+Cypress.Commands.add('loginViaUi', (user) => {
+  cy.session(
+    user,
+    () => {
+      cy.visit('/login')
+      cy.get('input[name=email]').type(user.email)
+      cy.get('input[name=password]').type(user.password)
+      cy.get('button#login').click()
+      cy.get('h1').contains(`Welcome back ${user.name}!`)
+    },
+    {
+      validate: () => {
+        cy.getCookie('auth_key').should('exist')
+      },
+    }
+  )
+})
+```
+
+</TabItem>
+</Tabs>
+
+```js title="spec.cy.js"
 cy.loginViaUi({ email: 'fake@email.com', password: '$ecret1', name: 'johndoe' })
 ```
 
 #### Log in command using request
+
+<Tabs>
+<TabItem value="cypress/support/commands.js">
 
 ```javascript
 Cypress.Commands.add('loginViaApi', (userType, options = {}) => {
@@ -258,7 +414,60 @@ Cypress.Commands.add('loginViaApi', (userType, options = {}) => {
 })
 ```
 
-```javascript
+</TabItem>
+<TabItem value="cypress/support/commands.ts">
+
+```typescript
+type UserType = 'admin' | 'user'
+
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      loginViaApi(
+        userType: UserType,
+        options?: Partial<Cypress.Loggable>
+      ): Chainable<Cypress.Response<unknown>>
+    }
+  }
+}
+
+Cypress.Commands.add('loginViaApi', (userType, options = {}) => {
+  const types = {
+    admin: {
+      name: 'Jane Lane',
+      admin: true,
+    },
+    user: {
+      name: 'Jim Bob',
+      admin: false,
+    },
+  }
+
+  const user = types[userType]
+
+  cy.request({
+    url: '/seed/users',
+    method: 'POST',
+    body: user,
+  })
+    .its('body')
+    .then((body) => {
+      cy.request({
+        url: '/login',
+        method: 'POST',
+        body: {
+          email: body.email,
+          password: body.password,
+        },
+      })
+    })
+})
+```
+
+</TabItem>
+</Tabs>
+
+```js title="spec.cy.js"
 // can start a chain off of cy
 cy.loginViaApi('admin')
 
@@ -267,6 +476,9 @@ cy.get('button').loginViaApi('user')
 ```
 
 #### Log out command using UI
+
+<Tabs>
+<TabItem value="cypress/support/commands.js">
 
 ```js
 Cypress.Commands.add('logout', () => {
@@ -278,7 +490,34 @@ Cypress.Commands.add('logout', () => {
 })
 ```
 
+</TabItem>
+<TabItem value="cypress/support/commands.ts">
+
+```typescript
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      logout(): Chainable<JQuery<HTMLElement>>
+    }
+  }
+}
+
+Cypress.Commands.add('logout', () => {
+  cy.contains('Login').should('not.exist')
+  cy.get('.avatar').click()
+  cy.contains('Logout').click()
+  cy.get('h1').contains('Login')
+  cy.getCookie('auth_key').should('not.exist')
+})
+```
+
+</TabItem>
+</Tabs>
+
 #### Log out command using `localStorage` <E2EOnlyBadge />
+
+<Tabs>
+<TabItem value="cypress/support/commands.js">
 
 ```js
 Cypress.Commands.add('logout', () => {
@@ -288,11 +527,36 @@ Cypress.Commands.add('logout', () => {
 })
 ```
 
-```js
+</TabItem>
+<TabItem value="cypress/support/commands.ts">
+
+```typescript
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      logout(): Chainable<Cypress.AUTWindow>
+    }
+  }
+}
+
+Cypress.Commands.add('logout', () => {
+  cy.window().its('localStorage').invoke('removeItem', 'session')
+
+  cy.visit('/login')
+})
+```
+
+</TabItem>
+</Tabs>
+
+```js title="spec.cy.js"
 cy.logout()
 ```
 
 #### Create a user
+
+<Tabs>
+<TabItem value="cypress/support/commands.js">
 
 ```js
 Cypress.Commands.add('createUser', (user) => {
@@ -314,7 +578,46 @@ Cypress.Commands.add('createUser', (user) => {
 })
 ```
 
-```js
+</TabItem>
+<TabItem value="cypress/support/commands.ts">
+
+```typescript
+interface User {
+  id: number
+  name: string
+}
+
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      createUser(user: User): Chainable<Cypress.Response<unknown>>
+    }
+  }
+}
+
+Cypress.Commands.add('createUser', (user) => {
+  cy.request({
+    method: 'POST',
+    url: 'https://www.example.com/tokens',
+    body: {
+      email: 'admin_username',
+      password: 'admin_password',
+    },
+  }).then((resp) => {
+    cy.request({
+      method: 'POST',
+      url: 'https://www.example.com/users',
+      headers: { Authorization: 'Bearer ' + resp.body.token },
+      body: user,
+    })
+  })
+})
+```
+
+</TabItem>
+</Tabs>
+
+```js title="spec.cy.js"
 cy.createUser({
   id: 123,
   name: 'Jane Lane',
@@ -345,6 +648,9 @@ Examples of child commands:
 
 #### Custom `console` command
 
+<Tabs>
+<TabItem value="cypress/support/commands.js">
+
 ```javascript
 // not a super useful custom command
 // but demonstrates how subject is passed
@@ -373,7 +679,35 @@ Cypress.Commands.add(
 )
 ```
 
-```javascript
+</TabItem>
+<TabItem value="cypress/support/commands.ts">
+
+```typescript
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      console(method?: keyof Console): Chainable<JQuery<HTMLElement>>
+    }
+  }
+}
+
+Cypress.Commands.add(
+  'console',
+  {
+    prevSubject: 'element',
+  },
+  (subject, method) => {
+    method = method || 'log'
+    console[method]('The subject is', subject)
+    return subject
+  }
+)
+```
+
+</TabItem>
+</Tabs>
+
+```js title="spec.cy.js"
 cy.get('button')
   .console('info')
   .then(($button) => {
@@ -386,7 +720,7 @@ require a subject.
 
 Invoking it like this would error:
 
-```javascript
+```js title="spec.cy.js"
 cy.console() // error about how you can't call console without a subject
 ```
 
@@ -416,6 +750,9 @@ Examples of dual commands:
 
 #### Custom Dual Command
 
+<Tabs>
+<TabItem value="cypress/support/commands.js">
+
 ```javascript
 Cypress.Commands.add('dismiss', {
   prevSubject: 'optional'
@@ -435,7 +772,34 @@ Cypress.Commands.add('dismiss', {
 })
 ```
 
-```javascript
+</TabItem>
+<TabItem value="cypress/support/commands.ts">
+
+```typescript
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      dismiss(arg1?: string, arg2?: string): Chainable<JQuery<HTMLElement>>
+    }
+  }
+}
+
+Cypress.Commands.add('dismiss', {
+  prevSubject: 'optional'
+}, (subject, arg1, arg2) => {
+  if (subject) {
+    cy.wrap(subject)
+    ...
+  } else {
+    ...
+  }
+})
+```
+
+</TabItem>
+</Tabs>
+
+```js title="spec.cy.js"
 cy.dismiss() // no subject
 cy.get('#dialog').dismiss() // with subject
 ```
@@ -456,6 +820,9 @@ want to modify the behavior of a query, you'll need to use
 
 #### Overwrite `visit` command
 
+<Tabs>
+<TabItem value="cypress/support/commands.js">
+
 ```javascript
 Cypress.Commands.overwrite('visit', (originalFn, url, options) => {
   const domain = Cypress.expose('BASE_DOMAIN')
@@ -475,6 +842,39 @@ Cypress.Commands.overwrite('visit', (originalFn, url, options) => {
   return originalFn(url, options)
 })
 ```
+
+</TabItem>
+<TabItem value="cypress/support/commands.ts">
+
+```typescript
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      visit(
+        url: string,
+        options?: Partial<Cypress.VisitOptions>
+      ): Chainable<AUTWindow>
+    }
+  }
+}
+
+Cypress.Commands.overwrite('visit', (originalFn, url, options) => {
+  const domain = Cypress.expose('BASE_DOMAIN')
+
+  if (domain === '...') {
+    url = '...'
+  }
+
+  if (options?.something === 'else') {
+    url = '...'
+  }
+
+  return originalFn(url, options)
+})
+```
+
+</TabItem>
+</Tabs>
 
 :::info
 
@@ -513,6 +913,9 @@ command so that sensitive data does not display in screenshots or videos of your
 test run. This example overwrites the [.type()](/api/commands/type) command to
 allow you to mask sensitive data in the Cypress Command Log.
 
+<Tabs>
+<TabItem value="cypress/support/commands.js">
+
 ```js
 Cypress.Commands.overwrite('type', (originalFn, element, text, options) => {
   if (options && options.sensitive) {
@@ -530,7 +933,46 @@ Cypress.Commands.overwrite('type', (originalFn, element, text, options) => {
 })
 ```
 
-```js
+</TabItem>
+<TabItem value="cypress/support/commands.ts">
+
+```typescript
+interface TypeOptions extends Cypress.TypeOptions {
+  sensitive?: boolean
+}
+
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      type(
+        text: string,
+        options?: Partial<TypeOptions>
+      ): Chainable<JQuery<HTMLElement>>
+    }
+  }
+}
+
+Cypress.Commands.overwrite<'type', 'element'>(
+  'type',
+  (originalFn, element, text, options?: Partial<TypeOptions>) => {
+    if (options?.sensitive) {
+      options.log = false
+      Cypress.log({
+        $el: element,
+        name: 'type',
+        message: '*'.repeat(text.length),
+      })
+    }
+
+    return originalFn(element, text, options)
+  }
+)
+```
+
+</TabItem>
+</Tabs>
+
+```js title="spec.cy.js"
 cy.get('#username').type('username@email.com')
 cy.get('#password').type('superSecret123', { sensitive: true })
 ```
@@ -547,6 +989,9 @@ Now our sensitive password is not printed to the Cypress Command Log when
 
 This example overwrites [cy.screenshot()](/api/commands/screenshot) to always
 wait until a certain element is visible.
+
+<Tabs>
+<TabItem value="cypress/support/commands.js">
 
 ```javascript
 Cypress.Commands.overwrite(
@@ -566,10 +1011,43 @@ Cypress.Commands.overwrite(
 )
 ```
 
+</TabItem>
+<TabItem value="cypress/support/commands.ts">
+
+```typescript
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      screenshot(
+        fileName?: string,
+        options?: Partial<Cypress.ScreenshotOptions>
+      ): Chainable<Subject>
+    }
+  }
+}
+
+Cypress.Commands.overwrite(
+  'screenshot',
+  (originalFn, subject, fileName, options) => {
+    cy.get('.app')
+      .should('be.visible')
+      .then({ timeout: Cypress.config('responseTimeout') }, () => {
+        return originalFn(subject, fileName, options)
+      })
+  }
+)
+```
+
+</TabItem>
+</Tabs>
+
 #### Overwrite `click` command
 
 This example overwrites [.click()](/api/commands/click) to always have the
 `waitForAnimations` option set to `false`.
+
+<Tabs>
+<TabItem value="cypress/support/commands.js">
 
 ```js
 Cypress.Commands.overwrite(
@@ -580,6 +1058,33 @@ Cypress.Commands.overwrite(
   }
 )
 ```
+
+</TabItem>
+<TabItem value="cypress/support/commands.ts">
+
+```typescript
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      click(
+        position?: Cypress.PositionType,
+        options?: Partial<Cypress.ClickOptions>
+      ): Chainable<JQuery<HTMLElement>>
+    }
+  }
+}
+
+Cypress.Commands.overwrite<'click', 'element'>(
+  'click',
+  (originalFn, subject, positionOrX, y, options = {}) => {
+    options.waitForAnimations = false
+    return originalFn(subject, positionOrX, y, options)
+  }
+)
+```
+
+</TabItem>
+</Tabs>
 
 ## Validations
 
@@ -604,6 +1109,9 @@ subject, but not validate its type.
 
 Require subject be of type: `element`.
 
+<Tabs>
+<TabItem value="cypress/support/commands.js">
+
 ```javascript
 // this is how .click() is implemented
 Cypress.Commands.add(
@@ -617,6 +1125,36 @@ Cypress.Commands.add(
   }
 )
 ```
+
+</TabItem>
+<TabItem value="cypress/support/commands.ts">
+
+```typescript
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      click(
+        position?: Cypress.PositionType,
+        options?: Partial<Cypress.ClickOptions>
+      ): Chainable<JQuery<HTMLElement>>
+    }
+  }
+}
+
+Cypress.Commands.add(
+  'click',
+  {
+    prevSubject: 'element',
+  },
+  (subject, options) => {
+    // receives the previous subject and it's
+    // guaranteed to be an element
+  }
+)
+```
+
+</TabItem>
+</Tabs>
 
 <Icon name="check-circle" color="green" /> **Valid Usage**
 
@@ -637,6 +1175,9 @@ cy.wrap([]).click() // has subject, but not `element`, will error
 
 Require subject be one of the following types: `element`, `document` or `window`
 
+<Tabs>
+<TabItem value="cypress/support/commands.js">
+
 ```javascript
 // this is how .trigger() is implemented
 Cypress.Commands.add(
@@ -651,9 +1192,39 @@ Cypress.Commands.add(
 )
 ```
 
+</TabItem>
+<TabItem value="cypress/support/commands.ts">
+
+```typescript
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      trigger(
+        eventName: string,
+        options?: Partial<Cypress.TriggerOptions>
+      ): Chainable<JQuery<HTMLElement>>
+    }
+  }
+}
+
+Cypress.Commands.add(
+  'trigger',
+  {
+    prevSubject: ['element', 'document', 'window'],
+  },
+  (subject, eventName, options) => {
+    // receives the previous subject and it's
+    // guaranteed to be an element, document, or window
+  }
+)
+```
+
+</TabItem>
+</Tabs>
+
 <Icon name="check-circle" color="green" /> **Valid Usage**
 
-```javascript
+```javascript title="spec.cy.js"
 cy.get('button').trigger() // has subject, and is `element`
 cy.document().trigger() // has subject, and is `document`
 cy.window().trigger() // has subject, and is `window`
@@ -671,6 +1242,9 @@ Validations always work as "or" not "and".
 ### Optional with Types
 
 You can also mix optional commands **with** validations.
+
+<Tabs>
+<TabItem value="cypress/support/commands.js">
 
 ```javascript
 // this is how .scrollTo() is implemented
@@ -695,9 +1269,42 @@ Cypress.Commands.add(
 )
 ```
 
+</TabItem>
+<TabItem value="cypress/support/commands.ts">
+
+```typescript
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      scrollTo(
+        position: Cypress.PositionType | number,
+        options?: Partial<Cypress.ScrollToOptions>
+      ): Chainable<JQuery<HTMLElement>>
+    }
+  }
+}
+
+Cypress.Commands.add(
+  'scrollTo',
+  {
+    prevSubject: ['optional', 'element', 'window'],
+  },
+  (subject, ...args) => {
+    if (subject) {
+      // ...
+    } else {
+      // ...
+    }
+  }
+)
+```
+
+</TabItem>
+</Tabs>
+
 <Icon name="check-circle" color="green" /> **Valid Usage**
 
-```javascript
+```javascript title="spec.cy.js"
 cy.scrollTo() // no subject, but valid because it's optional
 cy.get('#main').scrollTo() // has subject, and is `element`
 cy.visit().scrollTo() // has subject, and since visit yields `window` it's ok
@@ -902,27 +1509,67 @@ Cypress [12.17.4](/app/references/changelog#12-17-4) includes a Webpack upgrade 
 
 If you are using TypeScript and have Webpack's `sideEffects:false` set in your package.json, custom Cypress commands will not be registered by the common pattern of writing the commands in one file and having them be run as a side effect of importing the file. For example:
 
-```typescript
-// cypress/support/commands.ts
-Cypress.Commands.add("login", (email, password) => { ... })
+<Tabs>
+<TabItem value="cypress/support/commands.js">
+
+```javascript
+Cypress.Commands.add('login', (email, password) => { ... })
 ```
 
+</TabItem>
+<TabItem value="cypress/support/commands.ts">
+
 ```typescript
-// cypress/support/e2e.ts
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      login(email: string, password: string): Chainable<void>
+    }
+  }
+}
+
+Cypress.Commands.add('login', (email, password) => { ... })
+```
+
+</TabItem>
+</Tabs>
+
+```typescript title="cypress/support/e2e.ts"
 import './commands'
 ```
 
 To support `sideEffects:false`, you can wrap the Cypress commands in a function that will be imported by the support file.
 
-```typescript
-// cypress/support/commands.ts
-export function registerCommands(){
-  Cypress.Commands.add("login", (email, password) => { ... })
+<Tabs>
+<TabItem value="cypress/support/commands.js">
+
+```javascript
+export function registerCommands() {
+  Cypress.Commands.add('login', (email, password) => { ... })
 }
 ```
 
+</TabItem>
+<TabItem value="cypress/support/commands.ts">
+
 ```typescript
-// cypress/support/e2e.ts
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      login(email: string, password: string): Chainable<void>
+    }
+  }
+}
+
+export function registerCommands() {
+  Cypress.Commands.add('login', (email, password) => { ... })
+}
+```
+
+</TabItem>
+</Tabs>
+
+```typescript title="cypress/support/e2e.ts"
 import { registerCommands } from './commands'
 
 registerCommands()
@@ -938,6 +1585,7 @@ registerCommands()
 
 - See how to add
   [TypeScript support for custom commands](/app/tooling/typescript-support#Types-for-Custom-Commands)
+  and [custom queries](/app/tooling/typescript-support#Types-for-Custom-Queries)
 - <a href="/app/plugins/plugins-list#custom-commands">
     Plugins using custom commands
   </a>

@@ -38,6 +38,9 @@ Pass in an options object to `Cypress.log()`.
 We want the Command Log and the console in the DevTools to log specific
 properties of our custom command.
 
+<Tabs>
+<TabItem value="cypress/support/commands.js">
+
 ```javascript
 Cypress.Commands.add('setSessionStorage', (key, value) => {
   // Turn off logging of the cy.window() to command log
@@ -62,6 +65,45 @@ Cypress.Commands.add('setSessionStorage', (key, value) => {
   })
 })
 ```
+
+</TabItem>
+<TabItem value="cypress/support/commands.ts">
+
+```typescript
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      setSessionStorage(key: string, value: string): Chainable<void>
+    }
+  }
+}
+
+Cypress.Commands.add('setSessionStorage', (key, value) => {
+  // Turn off logging of the cy.window() to command log
+  cy.window({ log: false }).then((window) => {
+    window.sessionStorage.setItem(key, value)
+  })
+
+  const log = Cypress.log({
+    name: 'setSessionStorage',
+    // shorter name for the Command Log
+    displayName: 'setSS',
+    message: `${key}, ${value}`,
+    consoleProps: () => {
+      // return an object which will
+      // print to dev tools console on click
+      return {
+        Key: key,
+        Value: value,
+        'Session Storage': window.sessionStorage,
+      }
+    },
+  })
+})
+```
+
+</TabItem>
+</Tabs>
 
 The code above displays in the Command Log as shown below, with the console
 properties shown on click of the command.
