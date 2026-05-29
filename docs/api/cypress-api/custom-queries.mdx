@@ -59,6 +59,9 @@ Cypress.Commands.overwriteQuery(name, callbackFn)
 
 <Icon name="check-circle" color="green" /> **Correct Usage**
 
+<Tabs>
+<TabItem value="cypress/support/commands.js">
+
 ```javascript
 Cypress.Commands.addQuery('getById', function (id) {
   return (subject) => newSubject
@@ -68,6 +71,30 @@ Cypress.Commands.overwriteQuery('get', function (originalFn, ...args) {
   return originalFn.apply(this, args)
 })
 ```
+
+</TabItem>
+<TabItem value="cypress/support/commands.ts">
+
+```typescript
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      getById(id: string): Chainable<JQuery<HTMLElement>>
+    }
+  }
+}
+
+Cypress.Commands.addQuery('getById', function (id) {
+  return (subject) => newSubject
+})
+
+Cypress.Commands.overwriteQuery('get', function (originalFn, ...args) {
+  return originalFn.apply(this, args)
+})
+```
+
+</TabItem>
+</Tabs>
 
 ### Arguments
 
@@ -98,10 +125,14 @@ The callback function can be thought of as two separate parts. The _outer
 function_, which is invoked once, where you perform setup and state management,
 and the _query function_, which might be called repeatedly.
 
-Let's look at an example. This is actual Cypress code - how `.focused()` is
+Let's look at an example. This is actual Cypress code — how `.focused()` is
 implemented internally, with some small adjustments to make it work from a
-support file. The only thing omitted here for simplicity is the TypeScript
-definitions.
+support file. Use the TypeScript tab for a version that type-checks under strict
+TypeScript, or see [Types for Custom Queries](/app/tooling/typescript-support#Types-for-Custom-Queries)
+for additional guidance.
+
+<Tabs>
+<TabItem value="cypress/support/commands.js">
 
 ```javascript
 Cypress.Commands.addQuery('focused2', function focused2(options = {}) {
@@ -133,6 +164,70 @@ Cypress.Commands.addQuery('focused2', function focused2(options = {}) {
   }
 })
 ```
+
+</TabItem>
+<TabItem value="cypress/support/commands.ts">
+
+```typescript
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      /**
+       * Gets the currently focused DOM element.
+       * @example cy.focused2()
+       */
+      focused2(
+        options?: Partial<Cypress.Loggable & Cypress.Timeoutable>
+      ): Chainable<JQuery>
+    }
+
+    interface EnqueuedCommandAttributes {
+      timeout?: number
+    }
+  }
+}
+
+Cypress.Commands.addQuery(
+  'focused2',
+  function focused2(
+    options: Partial<Cypress.Loggable & Cypress.Timeoutable> = {}
+  ) {
+    const log =
+      options.log !== false &&
+      Cypress.log({
+        ...(options.timeout !== undefined && { timeout: options.timeout }),
+      })
+
+    this.set('timeout', options.timeout)
+
+    return () => {
+      let $el = cy.getFocused()
+
+      log &&
+        cy.state('current') === this &&
+        log.set({
+          $el,
+          consoleProps: () => {
+            return {
+              Yielded: $el?.length ? $el[0] : '--nothing--',
+              Elements: $el != null ? $el.length : 0,
+            }
+          },
+        })
+
+      if (!$el) {
+        $el = cy.$$(null)
+        $el.selector = 'focused'
+      }
+
+      return $el
+    }
+  }
+)
+```
+
+</TabItem>
+</Tabs>
 
 #### The outer function
 
@@ -172,7 +267,11 @@ This is a general pattern: when something goes wrong, queries just throw an
 error. Cypress will handle displaying the error in the Command Log.
 
 ```javascript
-const log = options.log !== false && Cypress.log({ timeout: options.timeout })
+const log =
+  options.log !== false &&
+  Cypress.log({
+    ...(options.timeout !== undefined && { timeout: options.timeout }),
+  })
 ```
 
 If the user has not set `{ log: false }`, we create a new `Cypress.log()`
@@ -310,6 +409,9 @@ sure to use `.call` or `.apply`.
 
 :::
 
+<Tabs>
+<TabItem value="cypress/support/commands.js">
+
 ```js
 Cypress.Commands.overwriteQuery('get', function (originalFn, ...args) {
   console.log('get called with args:', args)
@@ -324,6 +426,37 @@ Cypress.Commands.overwriteQuery('get', function (originalFn, ...args) {
 })
 ```
 
+</TabItem>
+<TabItem value="cypress/support/commands.ts">
+
+```typescript
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      get(
+        selector: string,
+        options?: Partial<Cypress.Loggable & Cypress.Timeoutable>
+      ): Chainable<JQuery<HTMLElement>>
+    }
+  }
+}
+
+Cypress.Commands.overwriteQuery('get', function (originalFn, ...args) {
+  console.log('get called with args:', args)
+
+  const innerFn = originalFn.apply(this, args)
+
+  return (subject) => {
+    console.log('get inner function called with subject:', subject)
+
+    return innerFn(subject)
+  }
+})
+```
+
+</TabItem>
+</Tabs>
+
 The `originalFn` is the function originally passed to
 `Cypress.Commands.addQuery` - it is a **function that returns a function.** This
 gives you access to both the outer arguments (before you call `originalFn`) and
@@ -334,6 +467,9 @@ of control over how the query executes.
 
 In this example, `cy.contains()` is extended to support querying for aliased
 subjects, like `cy.contains('@foo')`.
+
+<Tabs>
+<TabItem value="cypress/support/commands.js">
 
 ```js
 Cypress.Commands.overwriteQuery(
@@ -360,6 +496,45 @@ cy.wrap('asdf 1').as('content')
 
 cy.contains('@element', '@content')
 ```
+
+</TabItem>
+<TabItem value="cypress/support/commands.ts">
+
+```typescript
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      contains(
+        selector: JQuery.Selector,
+        text: string | number | RegExp,
+        options?: Partial<Cypress.Loggable & Cypress.Timeoutable>
+      ): Chainable<JQuery<HTMLElement>>
+    }
+  }
+}
+
+Cypress.Commands.overwriteQuery(
+  'contains',
+  function (originalFn, filter, text, userOptions) {
+    if (_.isString(filter) && filter[0] === '@') {
+      let alias = cy.state('aliases')[filter.slice(1)]
+      let subject = cy.getSubjectFromChain(alias?.subjectChain)
+      filter = subject
+    }
+
+    if (_.isString(text) && text[0] === '@') {
+      let alias = cy.state('aliases')[text.slice(1)]
+      let subject = cy.getSubjectFromChain(alias?.subjectChain)
+      text = subject
+    }
+
+    return originalFn.call(this, filter, text, userOptions)
+  }
+)
+```
+
+</TabItem>
+</Tabs>
 
 ## Validation
 
@@ -441,6 +616,7 @@ Try not to overcomplicate things and create too many abstractions.
 
 - See how to add
   [TypeScript support for custom commands](/app/tooling/typescript-support#Types-for-Custom-Commands)
+  and [custom queries](/app/tooling/typescript-support#Types-for-Custom-Queries)
 - <a href="/app/plugins/plugins-list#custom-commands">
     Plugins using custom commands
   </a>

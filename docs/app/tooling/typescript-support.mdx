@@ -13,7 +13,7 @@ sidebar_label: 'TypeScript'
 ##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
 
 - How to set up TypeScript in Cypress
-- How to configure TypeScript for custom commands, assertions, and plugins
+- How to configure TypeScript for custom commands, custom queries, assertions, and plugins
 - How to use TypeScript with Cypress component testing
 - How to avoid clashing types with Jest
 - How to set up your development environment for TypeScript
@@ -108,8 +108,7 @@ object, you can manually add their types to avoid TypeScript errors.
 For example if you add the command `cy.dataCy` into your
 [supportFile](/app/references/configuration#Testing-Type-Specific-Options) like this:
 
-```typescript
-// cypress/support/index.ts
+```typescript title="cypress/support/index.ts"
 Cypress.Commands.add('dataCy', (value) => {
   return cy.get(`[data-cy=${value}]`)
 })
@@ -118,8 +117,7 @@ Cypress.Commands.add('dataCy', (value) => {
 Then you can add the `dataCy` command to the global Cypress Chainable interface
 (so called because commands are chained together).
 
-```typescript
-// cypress/support/index.ts
+```typescript title="cypress/support/index.ts"
 declare global {
   namespace Cypress {
     interface Chainable {
@@ -170,8 +168,7 @@ it('works', () => {
 When you add a custom command with `prevSubject`, Cypress will infer the subject
 type automatically based on the specified `prevSubject`.
 
-```typescript
-// cypress/support/index.ts
+```typescript title="cypress/support/index.ts"
 declare global {
   namespace Cypress {
     interface Chainable {
@@ -189,8 +186,7 @@ declare global {
 }
 ```
 
-```typescript
-// cypress/support/index.ts
+```typescript title="cypress/support/index.ts"
 Cypress.Commands.add(
   'typeRandomWords',
   { prevSubject: 'element' },
@@ -206,7 +202,7 @@ When overwriting either built-in or custom commands which make use of
 `prevSubject`, you must specify generic parameters to help the type-checker to
 understand the type of the `prevSubject`.
 
-```typescript
+```typescript title="cypress/support/index.ts"
 interface TypeOptions extends Cypress.TypeOptions {
   sensitive: boolean
 }
@@ -247,6 +243,95 @@ As you can see there are generic parameters `<'type', 'element'>` are used:
   [Adding Custom Commands (TS)](https://github.com/cypress-io/cypress-example-recipes#fundamentals)
   example recipe.
 
+### Types for Custom Queries
+
+When adding [custom queries](/api/cypress-api/custom-queries) with
+`Cypress.Commands.addQuery()`, you must declare the query on the `Chainable`
+interface **before** registering it. Cypress infers the query callback's
+argument types from that declaration.
+
+Unlike custom commands, query callbacks receive `this` as a `Cypress.Command`
+(not `Mocha.Context`), and the callback must return an inner function that
+performs the query synchronously.
+
+```typescript title="cypress/support/commands.ts"
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      /**
+       * Gets the currently focused DOM element.
+       * @example cy.focused2()
+       */
+      focused2(
+        options?: Partial<Cypress.Loggable & Cypress.Timeoutable>
+      ): Chainable<JQuery>
+    }
+
+    // Required so this.set('timeout', ...) type-checks in query callbacks
+    interface EnqueuedCommandAttributes {
+      timeout?: number
+    }
+  }
+}
+
+Cypress.Commands.addQuery(
+  'focused2',
+  function focused2(
+    options: Partial<Cypress.Loggable & Cypress.Timeoutable> = {}
+  ) {
+    const log =
+      options.log !== false &&
+      Cypress.log({
+        ...(options.timeout !== undefined && { timeout: options.timeout }),
+      })
+
+    this.set('timeout', options.timeout)
+
+    return () => {
+      let $el = cy.getFocused()
+      // ...
+      return $el
+    }
+  }
+)
+```
+
+:::info
+
+When passing optional `timeout` to `Cypress.log()`, avoid writing
+`{ timeout: options.timeout }` directly if `options.timeout` may be `undefined`.
+With strict TypeScript settings such as `exactOptionalPropertyTypes`, explicitly
+passing `undefined` is not assignable to an optional property. Use a conditional
+spread instead, as shown above.
+
+:::
+
+For queries that accept additional options, combine the relevant Cypress option
+interfaces with `Partial<>`, matching how built-in queries are typed. For
+example, a query with timeout and shadow DOM support might use
+`Partial<Cypress.Loggable & Cypress.Timeoutable & Cypress.Shadow>`.
+
+To overwrite an existing query, declare the query on `Chainable` as usual and
+use `Cypress.Commands.overwriteQuery()`. The first argument to your callback is
+the original query function:
+
+```typescript title="cypress/support/commands.ts"
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      get(
+        selector: string,
+        options?: Partial<Cypress.Loggable & Cypress.Timeoutable>
+      ): Chainable<JQuery<HTMLElement>>
+    }
+  }
+}
+
+Cypress.Commands.overwriteQuery('get', function (originalFn, ...args) {
+  return originalFn.apply(this, args)
+})
+```
+
 ### Types for custom assertions
 
 If you extend Cypress assertions, you can extend the assertion types to make the
@@ -260,9 +345,7 @@ You can utilize Cypress's type declarations in your
 [plugins file](/app/plugins/plugins-guide) by annotating it like the
 following:
 
-```javascript
-// cypress/plugins/index.ts
-
+```javascript title="cypress/plugins/index.ts"
 /**
  * @type {Cypress.PluginConfig}
  */

@@ -77,7 +77,51 @@ Okta. This command will use
    [Cypress Real World App](https://github.com/cypress-io/cypress-realworld-app)
 4. Cache the results with [`cy.session()`](/api/commands/session)
 
-```jsx title="cypress/support/auth-provider-commands/okta.ts"
+<Tabs>
+<TabItem value="cypress/support/commands.js">
+
+```js title="cypress/support/auth-provider-commands/okta.js"
+// Okta
+const loginToOkta = (username, password) => {
+  Cypress.log({
+    displayName: 'OKTA LOGIN',
+    message: [`🔐 Authenticating | ${username}`],
+    autoEnd: false,
+  })
+
+  cy.visit('/')
+  cy.origin(
+    Cypress.expose('okta_domain'),
+    { args: { username, password } },
+    ({ username, password }) => {
+      cy.get('input[name="identifier"]').type(username)
+      cy.get('input[name="credentials.passcode"]').type(password, {
+        log: false,
+      })
+      cy.get('[type="submit"]').click()
+    }
+  )
+
+  cy.get('[data-test="sidenav-username"]').should('contain', username)
+}
+// right now our custom command is light. More on this later!
+Cypress.Commands.add('loginByOkta', (username, password) => {
+  return loginToOkta(username, password)
+})
+```
+
+</TabItem>
+<TabItem value="cypress/support/commands.ts">
+
+```ts
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      loginByOkta(username: string, password: string): Chainable<void>
+    }
+  }
+}
+
 // Okta
 const loginToOkta = (username: string, password: string) => {
   Cypress.log({
@@ -106,6 +150,9 @@ Cypress.Commands.add('loginByOkta', (username: string, password: string) => {
   return loginToOkta(username, password)
 })
 ```
+
+</TabItem>
+</Tabs>
 
 Now, we can use our `loginByOkta` command in the test. Below is our test to
 login as a user via Okta and run a few basic sanity checks.
@@ -145,7 +192,38 @@ Lastly, we can refactor our login command to take advantage of
 [`cy.session()`](/api/commands/session) to store our logged in user so we don't
 have to reauthenticate with everything test.
 
-```jsx title="cypress/support/commands.js"
+<Tabs>
+<TabItem value="cypress/support/commands.js">
+
+```js title="cypress/support/commands.js"
+Cypress.Commands.add('loginByOkta', (username, password) => {
+  cy.session(
+    `okta-${username}`,
+    () => {
+      return loginToOkta(username, password)
+    },
+    {
+      validate() {
+        cy.visit('/')
+        cy.get('[data-test="sidenav-username"]').should('contain', username)
+      },
+    }
+  )
+})
+```
+
+</TabItem>
+<TabItem value="cypress/support/commands.ts">
+
+```ts
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      loginByOkta(username: string, password: string): Chainable<void>
+    }
+  }
+}
+
 Cypress.Commands.add('loginByOkta', (username: string, password: string) => {
   cy.session(
     `okta-${username}`,
@@ -161,6 +239,9 @@ Cypress.Commands.add('loginByOkta', (username: string, password: string) => {
   )
 })
 ```
+
+</TabItem>
+</Tabs>
 
 <DocsVideo
   src="https://vimeo.com/789093688"
@@ -188,7 +269,10 @@ The `loginByOktaApi` command will execute the following steps:
 3. Finally the `oktaCypress` localStorage item is set with the `access token`
    and user profile.
 
-```jsx title="cypress/support/commands.js"
+<Tabs>
+<TabItem value="cypress/support/commands.js">
+
+```js title="cypress/support/commands.js"
 import { OktaAuth } from '@okta/okta-auth-js'
 
 // Okta
@@ -233,6 +317,66 @@ Cypress.Commands.add('loginByOktaApi', (username, password) => {
   })
 })
 ```
+
+</TabItem>
+<TabItem value="cypress/support/commands.ts">
+
+```ts
+import { OktaAuth } from '@okta/okta-auth-js'
+
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      loginByOktaApi(username: string, password: string): Chainable<void>
+    }
+  }
+}
+
+// Okta
+Cypress.Commands.add('loginByOktaApi', (username: string, password: string) => {
+  cy.request({
+    method: 'POST',
+    url: `https://${Cypress.expose('okta_domain')}/api/v1/authn`,
+    body: {
+      username,
+      password,
+    },
+  }).then(({ body }) => {
+    const user = body._embedded.user
+    const config = {
+      issuer: `https://${Cypress.expose('okta_domain')}/oauth2/default`,
+      clientId: Cypress.expose('okta_client_id'),
+      redirectUri: 'http://localhost:3000/implicit/callback',
+      scopes: ['openid', 'email', 'profile'],
+    }
+
+    const authClient = new OktaAuth(config)
+
+    return authClient.token
+      .getWithoutPrompt({ sessionToken: body.sessionToken })
+      .then(({ tokens }) => {
+        const userItem = {
+          token: tokens.accessToken.value,
+          user: {
+            sub: user.id,
+            email: user.profile.login,
+            given_name: user.profile.firstName,
+            family_name: user.profile.lastName,
+            preferred_username: user.profile.login,
+          },
+        }
+
+        window.localStorage.setItem('oktaCypress', JSON.stringify(userItem))
+
+        log.snapshot('after')
+        log.end()
+      })
+  })
+})
+```
+
+</TabItem>
+</Tabs>
 
 With our Okta app setup properly in Okta Developer console, necessary
 environment variables in place, and our `loginByOktaApi` command implemented, we

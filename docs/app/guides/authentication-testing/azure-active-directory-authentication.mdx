@@ -101,7 +101,81 @@ This command will use [`cy.origin()`](/api/commands/origin) to
 3. Sign in and redirect back to the demo application
 4. Cache the results with [`cy.session()`](/api/commands/session)
 
-```js title="cypress/support/commands.ts"
+<Tabs>
+<TabItem value="cypress/support/commands.js">
+
+```js title="cypress/support/commands.js"
+function loginViaAAD(username, password) {
+  cy.visit('http://localhost:3000/')
+  cy.get('button#signIn').click()
+
+  // Login to your AAD tenant.
+  cy.origin(
+    'login.microsoftonline.com',
+    {
+      args: {
+        username,
+      },
+    },
+    ({ username }) => {
+      cy.get('input[type="email"]').type(username, {
+        log: false,
+      })
+      cy.get('input[type="submit"]').click()
+    }
+  )
+
+  // depending on the user and how they are registered with Microsoft, the origin may go to live.com
+  cy.origin(
+    'login.live.com',
+    {
+      args: {
+        password,
+      },
+    },
+    ({ password }) => {
+      cy.get('input[type="password"]').type(password, {
+        log: false,
+      })
+      cy.get('input[type="submit"]').click()
+      cy.get('#idBtn_Back').click()
+    }
+  )
+
+  // Ensure Microsoft has redirected us back to the sample app with our logged in user.
+  cy.url().should('equal', 'http://localhost:3000/')
+  cy.env(['AAD_USERNAME']).then(({ username }) => {
+    cy.get('#welcome-div').should('contain', `Welcome ${username}!`)
+  })
+}
+
+Cypress.Commands.add('loginToAAD', (username, password) => {
+  const log = Cypress.log({
+    displayName: 'Azure Active Directory Login',
+    message: [`🔐 Authenticating | ${username}`],
+    autoEnd: false,
+  })
+  log.snapshot('before')
+
+  loginViaAAD(username, password)
+
+  log.snapshot('after')
+  log.end()
+})
+```
+
+</TabItem>
+<TabItem value="cypress/support/commands.ts">
+
+```ts
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      loginToAAD(username: string, password: string): Chainable<void>
+    }
+  }
+}
+
 function loginViaAAD(username: string, password: string) {
   cy.visit('http://localhost:3000/')
   cy.get('button#signIn').click()
@@ -142,10 +216,7 @@ function loginViaAAD(username: string, password: string) {
   // Ensure Microsoft has redirected us back to the sample app with our logged in user.
   cy.url().should('equal', 'http://localhost:3000/')
   cy.env(['AAD_USERNAME']).then(({ username }) => {
-    cy.get('#welcome-div').should(
-      'contain',
-      `Welcome ${username}!`
-    )
+    cy.get('#welcome-div').should('contain', `Welcome ${username}!`)
   })
 }
 
@@ -163,6 +234,9 @@ Cypress.Commands.add('loginToAAD', (username: string, password: string) => {
   log.end()
 })
 ```
+
+</TabItem>
+</Tabs>
 
 Now, we can use our `loginToAAD` command in the test. Below is our test to login
 as a user via Azure Active Directory and run a basic sanity check.
@@ -208,6 +282,14 @@ For this, we can refactor our login command to take advantage of
 and/or cookies so we don't have to reauthenticate before every test.
 
 ```ts title="cypress/support/commands.ts"
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      loginToAAD(username: string, password: string): Chainable<void>
+    }
+  }
+}
+
 Cypress.Commands.add('loginToAAD', (username: string, password: string) => {
   cy.session(
     `aad-${username}`,

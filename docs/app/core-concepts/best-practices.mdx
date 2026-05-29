@@ -317,8 +317,21 @@ custom commands for selecting elements for testing:
 - `getBySelLike` yields elements with a `data-test` attribute that **contains**
   a specified selector.
 
-```ts
-// cypress/support/commands.ts
+```typescript title="cypress/support/commands.ts"
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      getBySel(
+        selector: string,
+        ...args: any[]
+      ): Chainable<JQuery<HTMLElement>>
+      getBySelLike(
+        selector: string,
+        ...args: any[]
+      ): Chainable<JQuery<HTMLElement>>
+    }
+  }
+}
 
 Cypress.Commands.add('getBySel', (selector, ...args) => {
   return cy.get(`[data-test=${selector}]`, ...args)

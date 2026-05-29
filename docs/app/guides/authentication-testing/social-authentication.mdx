@@ -275,6 +275,16 @@ function logIntoMicrosoft(username: string, password: string, name: string) {
 We can wire these functions together in a single command, like so:
 
 ```ts title="cypress/support/commands.ts"
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      loginToAuth0ViaSocial(
+        SOCIAL_PROVIDER: 'microsoft' | 'google' | 'facebook'
+      ): Chainable<void>
+    }
+  }
+}
+
 Cypress.Commands.add(
   'loginToAuth0ViaSocial',
   (SOCIAL_PROVIDER: 'microsoft' | 'google' | 'facebook') => {
@@ -353,6 +363,16 @@ likelihood your account is blocked for frequent authentication attempts. Feel
 free to DRY this up a bit!
 
 ```ts title="cypress/support/commands.ts"
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      loginToAuth0ViaSocial(
+        SOCIAL_PROVIDER: 'microsoft' | 'google' | 'facebook'
+      ): Chainable<void>
+    }
+  }
+}
+
 Cypress.Commands.add(
   'loginToAuth0ViaSocial',
   (SOCIAL_PROVIDER: 'microsoft' | 'google' | 'facebook') => {
