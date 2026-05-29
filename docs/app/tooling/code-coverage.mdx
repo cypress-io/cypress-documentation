@@ -286,6 +286,58 @@ not 3rd party dependencies from `node_modules`.
 
 :::
 
+### Using Vite
+
+If your project uses [Vite](https://vitejs.dev/) (for example, a Vue 3 or React
+app scaffolded with `npm create vite`), use
+[`vite-plugin-istanbul`](https://github.com/iFaxity/vite-plugin-istanbul) to
+instrument your code as part of the Vite build pipeline instead of
+`babel-plugin-istanbul`.
+
+```shell
+npm install vite-plugin-istanbul --save-dev
+```
+
+Add the plugin to your Vite configuration. The example below shows a Vue 3 +
+TypeScript project, but the same approach works for any Vite-based framework:
+
+```ts title='vite.config.ts'
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+import istanbul from 'vite-plugin-istanbul'
+
+export default defineConfig({
+  plugins: [
+    vue(),
+    istanbul({
+      include: 'src/*',
+      exclude: ['node_modules', 'test/'],
+      extension: ['.js', '.ts', '.vue'],
+      requireEnv: false,
+    }),
+  ],
+})
+```
+
+The `extension` option tells the plugin which file types to instrument —
+include `.vue` for Vue single-file components and `.ts` for TypeScript source
+files. Setting `requireEnv: false` enables instrumentation unconditionally; set
+it to `true` and export `VITE_COVERAGE=true` if you only want coverage during
+CI runs.
+
+Once the plugin is in place, `window.__coverage__` will be populated when the
+app runs in the browser, and the
+[`@cypress/code-coverage`](https://github.com/cypress-io/code-coverage) plugin
+will collect it automatically — no additional Babel configuration is required.
+
+:::info
+
+See
+[`@cypress/code-coverage#external-examples`](https://github.com/cypress-io/code-coverage#external-examples)
+for community example projects covering Vite, Vue, Angular, and other setups.
+
+:::
+
 ## E2E code coverage
 
 To handle code coverage collected during each test, there is a
@@ -313,7 +365,7 @@ Then add the code below to the
 [setupNodeEvents](/app/plugins/plugins-guide#Using-a-plugin) function.
 
 ```js
-// cypress/support/e2e.js
+// cypress/support/e2e.js (or e2e.ts for TypeScript projects)
 import '@cypress/code-coverage/support'
 ```
 
@@ -770,8 +822,6 @@ following repositories:
   The RWA achieves full code coverage with end-to-end tests
   [across multiple browsers](/app/guides/cross-browser-testing) and
   [device sizes](/api/commands/viewport).
-- [lluia/cypress-typescript-coverage-example](https://github.com/lluia/cypress-typescript-coverage-example)
-  shows coverage for a React App that uses TypeScript.
 - [ericorruption/cypress-code-coverage-typescript-webpack-ts-loader](https://github.com/ericorruption/cypress-code-coverage-typescript-webpack-ts-loader)
   shows how to collect coverage for a TypeScript + webpack project using
   `ts-loader` instead of `babel-loader`.
