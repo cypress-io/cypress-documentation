@@ -536,12 +536,15 @@ the `withOktaAuth` higher order component (HOC).
 
 A `useEffect` hook is added to get the access token for the authenticated user
 and send an `OKTA` event with the `user` and `token` objects to work with the
-existing authentication layer (`authMachine.ts`). We define a route for
+existing authentication layer (`authMachine.ts`). `authService` is the
+[XState](https://xstate.js.org/) interpreted service instance of `authMachine`,
+imported from the app's authentication state machine. We define a route for
 `implicit/callback` to render the `LoginCallback` component and a `SecureRoute`
 for the root path.
 
 ```jsx title="src/containers/AppOkta.tsx"
 // initial imports ...
+import { authService } from '../machines/authMachine'
 import {
   LoginCallback,
   SecureRoute,
@@ -643,6 +646,7 @@ development/production but not when under test in Cypress.
 
 ```jsx title="src/containers/AppOkta.tsx"
 // initial imports ...
+import { authService } from '../machines/authMachine'
 import { LoginCallback, SecureRoute, useOktaAuth, withOktaAuth } from "@okta/okta-react";
 
 // ...
