@@ -8,7 +8,7 @@ sidebar_label: Introduction
 
 # Scale your testing with confidence on every release
 
-Cypress Cloud unlocks the full potential of Cypress test automation tools in your CI pipeline. Scale every facet of Cypress testing, and push your code with confidence every time.
+Cypress Cloud is the companion service to the open-source Cypress app, and the place your team manages the quality of its tests and your application. Cypress Cloud shows how reliable your tests and app are over time, and orchestrates runs so feedback stays fast as your suite grows. You keep writing tests the same way you do today. Cypress Cloud gives your team one place to debug failures, track quality trends, and decide whether a release is ready to ship.
 
 <Btn
   label="Sign up ➜"
@@ -23,7 +23,7 @@ Cypress Cloud unlocks the full potential of Cypress test automation tools in you
   href="https://www.youtube.com/watch?v=vFLShoCM8pA"
 />
 <Btn
-  label=" Explore an example project"
+  label="Explore an example project"
   icon="technology-terminal-log"
   href="https://cloud.cypress.io/projects/7s5okt"
 />
@@ -33,39 +33,45 @@ Cypress Cloud unlocks the full potential of Cypress test automation tools in you
   title="View and debug past test results"
 />
 
+## Costs and risks Cypress Cloud helps you reduce
+
+Most of the value of Cypress Cloud is the time, money, and risk it removes from running tests in CI:
+
+- Slow feedback and rising CI spend: [Smart Orchestration](/cloud/features/smart-orchestration/overview) runs specs across multiple machines and [balances the load](/cloud/features/smart-orchestration/load-balancing#Balance-strategy), [Spec Prioritization](/cloud/features/smart-orchestration/spec-prioritization) runs recently failed specs first, and [Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation) stops a run once it has already failed, so each pipeline uses less time and compute.
+- Flaky tests that erode trust in the suite: [Flaky Test Management](/cloud/features/flaky-test-management) surfaces unreliable tests before your team starts ignoring real failures.
+- Slow debugging of failures you cannot reproduce locally: [Test Replay](/cloud/features/test-replay) reproduces the exact run with full debug capability, so triage does not depend on guesswork.
+- Regressions reaching your main branch: status checks from the [GitHub](/cloud/integrations/github), [GitLab](/cloud/integrations/gitlab), and [Bitbucket](/cloud/integrations/bitbucket) integrations block failing code from merging.
+- Blind spots in quality over time: [analytics](/cloud/features/analytics/overview) track test health at the project and organization level, so you can see when reliability or speed starts to slip.
+
 ## Benefits
 
-[Cypress Cloud](https://on.cypress.io/about-cypress-cloud?utm_medium=cloud-benefits&utm_source=docs.cypress.io&utm_term=&utm_content=Cypress+Cloud) is our enterprise-ready companion
-to the open-source Cypress app, allowing you to:
+[Cypress Cloud](https://on.cypress.io/about-cypress-cloud?utm_medium=cloud-benefits&utm_source=docs.cypress.io&utm_term=&utm_content=Cypress+Cloud) brings test results, analytics, orchestration, and integrations together in one platform. With it, you can:
 
 - [View and debug past test results](#View-and-debug-past-test-results) from your CI environment.
 - [Analyze and diagnose](#Analyze-and-diagnose-test-health) test health.
-- [Reduce test time and save money](#Reduce-test-time--CI-costs) by smartly
-  orchestrating future runs across multiple machines.
-- [Integrate with your favorite developer tools](#Integrate-with-your-favorite-tools)
-  to help streamline your workflows.
-- [View CI runs and test health](#Cypress-app-integration) directly from the
-  Cypress app.
-- [Configure Cypress Cloud how you want](#Flexible-enterprise-configuration-and-single-sign-on) and enable enterprise single sign on.
+- [Reduce test time and CI costs](#Reduce-test-time--CI-costs) by orchestrating future runs across multiple machines.
+- [Integrate with the developer tools you already use](#Integrate-with-your-favorite-tools) to streamline your workflows.
+- [View CI runs and test health](#Cypress-app-integration) directly from the Cypress app.
+- [Configure Cypress Cloud the way your team works](#Flexible-enterprise-configuration-and-single-sign-on) and enable enterprise single sign-on.
 - Use [AI at Cypress](/cloud/features/cypress-ai-features) for test authoring ([Studio AI](/app/guides/cypress-studio), [cy.prompt()](/api/commands/prompt)), test analysis (Test Intent and Error Summaries), and UI Coverage test generation.
-- Add premium solutions like [UI Coverage](https://on.cypress.io/ui-coverage-trial?utm_medium=cloud-benefits&utm_source=docs.cypress.io&utm_term=&utm_content=UI+Coverage) and [Cypress Accessibility](http://on.cypress.io/accessibility-trial?utm_medium=cloud-benefits&utm_source=docs.cypress.io&utm_term=&utm_content=Cypress+Accessibility) to get new insights into test and application quality with no code, setup, or impact on your test runs.
+- Add premium solutions like [UI Coverage](https://on.cypress.io/ui-coverage-trial?utm_medium=cloud-benefits&utm_source=docs.cypress.io&utm_term=&utm_content=UI+Coverage) and [Cypress Accessibility](http://on.cypress.io/accessibility-trial?utm_medium=cloud-benefits&utm_source=docs.cypress.io&utm_term=&utm_content=Cypress+Accessibility) for new insights into test and application quality, with no code, setup, or impact on your test runs.
 
 ### View and debug past test results
 
 Each test run is stored in Cypress Cloud, where you can see past results and the
 current state of your app on the [Latest Runs](/cloud/features/recorded-runs) page.
 
-Replay the test as it executed during the recorded run with full debug capability using [<Logo src="/img/cloud/features/test-replay/replay-icon.svg"  alt="Replay Icon"/> Test Replay](/cloud/features/test-replay).
+Replay the test exactly as it ran during the recorded run, with full debug capability, using [<Logo src="/img/cloud/features/test-replay/replay-icon.svg"  alt="Replay Icon"/> Test Replay](/cloud/features/test-replay).
 
-Or view each test's
+You can also view each test's
 [command logs, screenshots, video replays, stack traces, and CI logs](/cloud/features/recorded-runs#Test-detail-sidebar).
-Quickly identifying a test failure in CI is just a click away.
+Pinpointing a CI test failure takes a single click.
 
 ### Analyze and diagnose test health
 
-View each [run's overview](/cloud/features/recorded-runs#Overview-tab) to see and compare
-past runs and analyze trends over time. You can quickly analyze changes in your
-setup that might introduce problematic trends as well as identify unreliable
+View each [run's overview](/cloud/features/recorded-runs#Overview-tab) to compare
+past runs and analyze trends over time. You can spot changes in your
+setup that might introduce problematic trends, and identify unreliable
 tests with [Flaky Test Management](/cloud/features/flaky-test-management).
 
 <DocsVideo
@@ -74,9 +80,9 @@ tests with [Flaky Test Management](/cloud/features/flaky-test-management).
 />
 
 The [analytics](/cloud/features/analytics/overview) capabilities show test metrics over time,
-helping determine the overall health of your test suite. Quickly see which tests
-are problematic, getting slower, or growing over time. Monitor your test health at both
-the project and organization level. Retrieve your test data through Cypress Cloud APIs.
+helping you determine the overall health of your test suite. You can see which tests
+are problematic, getting slower, or growing over time, and monitor test health at both
+the project and organization level. You can also retrieve your test data through Cypress Cloud APIs.
 
 <DocsImage
   src="/img/cloud/features/analytics/analytics-runstatus.png"
@@ -90,56 +96,46 @@ the project and organization level. Retrieve your test data through Cypress Clou
 
 ### Reduce test time & CI costs
 
-[Smart Orchestration](/cloud/features/smart-orchestration/overview) enables you to run
-tests across multiple machines simultaneously in your CI environment while
-Cypress Cloud coordinates runners and
-[balances test loads](/cloud/features/smart-orchestration/load-balancing#Balance-strategy) -
-no setup required! You can prioritize recently failed specs with
-[Spec Prioritization](/cloud/features/smart-orchestration/spec-prioritization) to
-surface problems earlier, and cancel whole test runs on failure with
-[Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation) to save
-on resource usage. You can also
+[Smart Orchestration](/cloud/features/smart-orchestration/overview) lets you run
+tests across multiple machines at the same time in your CI environment, while
+Cypress Cloud coordinates the runners and
+[balances test loads](/cloud/features/smart-orchestration/load-balancing#Balance-strategy)
+with no setup required. To surface problems earlier, you can prioritize recently failed specs with
+[Spec Prioritization](/cloud/features/smart-orchestration/spec-prioritization), so they run sooner on their next run.
+To save time and resource usage, you can cancel a whole run on failure with
+[Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation), or
 [cancel in-progress runs](/cloud/features/recorded-runs#Run-cancellation) manually
-from Cypress Cloud if you need to.
+from Cypress Cloud when you need to.
 
 <DocsImage
   src="/img/cloud/get-started/introduction/orchestration-diagram.png"
   alt="Diagram comparing serial and parallel test configurations"
 />
 
-Cypress Cloud's
-[Spec Prioritization](/cloud/features/smart-orchestration/spec-prioritization)
-lets you prioritize recently failed specs so they run faster on their next run.
-The [Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation)
-feature will cancel a whole test run on failure, saving time and resource usage.
-You can also [cancel in-progress runs](/cloud/features/recorded-runs#Run-cancellation)
-manually from Cypress Cloud if you need to.
-
 ### Integrate with your favorite tools
 
-#### Source Control providers
+#### Source control providers
 
 Cypress Cloud integrates with [GitHub](/cloud/integrations/github),
 [GitLab](/cloud/integrations/gitlab), and
-[Bitbucket](/cloud/integrations/bitbucket) to provide rock-solid
-reliability by keeping failing code out of your main branch. Use status checks
-to block commits from being merged until your Cypress tests are green, and
-surface test results directly in your PRs with pull request comments that
+[Bitbucket](/cloud/integrations/bitbucket) to help keep failing code out of your
+main branch. Use status checks
+to block commits from merging until your Cypress tests are green, and
+surface test results directly in your pull requests with comments that
 include test run statistics, specific failure details, and deep links to results
 in Cypress Cloud for fast debugging.
 
-[Business and Enterprise plans](https://www.cypress.io/pricing/) include secure
+[Business and Enterprise plans](https://www.cypress.io/pricing/) also include secure
 integration with self-managed
 [GitHub](https://docs.github.com/en/enterprise-server@3.5/admin/overview/about-github-enterprise-server)
-and [GitLab](https://docs.gitlab.com/ee/subscriptions/self_managed/) instances
-too.
+and [GitLab](https://docs.gitlab.com/ee/subscriptions/self_managed/) instances.
 
 <DocsImage
   src="/img/cloud/integrations/github/status-checks-per-spec.jpg"
   alt="Status checks per spec"
 />
 
-#### Team Communication
+#### Team communication
 
 Get notified on test progress directly in your team's
 [Slack](/cloud/integrations/slack) or
@@ -151,24 +147,24 @@ Get notified on test progress directly in your team's
   width={560}
 />
 
-#### Issue Management
+#### Issue management
 
-Keep the whole team up-to-date with [Jira](/cloud/integrations/jira)
+Keep the whole team up to date with [Jira](/cloud/integrations/jira)
 integration. You can
 [create bidirectionally linked Jira tickets](/cloud/integrations/jira#Create-a-Jira-issue-from-a-test)
 directly from specific test failures.
 
-#### AI Coding Assistants
+#### AI coding assistants
 
-Give your AI coding assistant and AI agents a direct window into your application’s health and stability by connecting to [Cypress Cloud MCP ](/cloud/integrations/cloud-mcp).
+Give your AI coding assistant and agents a direct window into your application's health and stability by connecting to the [Cypress Cloud Model Context Protocol (MCP) server](/cloud/integrations/cloud-mcp).
 
-Eliminating the context gap between CI and your editor to you remove the manual triage that makes testing a bottleneck. Instead of manually providing context, let AI independently query run results, analyze stack traces, and audit flaky tests to verify and diagnose issues directly within your development loop. Works with Claude, Cursor, GitHub Copilot, and more.
+This closes the context gap between CI and your editor, so you remove the manual triage that slows testing down. Instead of pasting in context by hand, your AI tools can query run results, analyze stack traces, and audit flaky tests to diagnose issues inside your development loop. It works with Claude, Cursor, GitHub Copilot, and more.
 
 ### Cypress app integration
 
 The [Cypress app](/cloud/features/recorded-runs#Cypress-App) integrates directly with
-Cypress Cloud to provide developers with the latest test results without having
-to switch tools. This provides notifications about new failing tests in CI, so you can then
+Cypress Cloud to give developers the latest test results without
+switching tools. You get notifications about new failing tests in CI, so you can
 re-run them immediately in your local environment to debug.
 
 <DocsImage
@@ -176,13 +172,13 @@ re-run them immediately in your local environment to debug.
   alt="Debug page showing test results and failure details in the Cypress App"
 />
 
-### Flexible enterprise configuration and single sign on
+### Flexible enterprise configuration and single sign-on
 
-You can use our flexible administrative functions to configure Cypress Cloud however you want, grouping
+You can use our flexible administrative functions to configure Cypress Cloud the way your team works. Group
 [projects](/cloud/account-management/projects) into multiple
 [organizations](/cloud/account-management/organizations) if you have a
-lot, checking [usage](/cloud/account-management/billing-and-usage), and
-administering
+lot, check [usage](/cloud/account-management/billing-and-usage), and
+administer
 [users and permissions](/cloud/account-management/users#User-roles).
 
 We also provide [SSO integration](/cloud/account-management/enterprise-sso)
@@ -192,9 +188,9 @@ for teams on [Business or Enterprise plans](https://www.cypress.io/pricing/).
 
 The Cypress
 [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app)
-leverages [Cypress Cloud in CI](https://cloud.cypress.io/projects/7s5okt) to
+uses [Cypress Cloud in CI](https://cloud.cypress.io/projects/7s5okt) to
 test over 300 test cases in parallel across 25 machines, multiple browsers,
-multiple device sizes and multiple operating systems.
+multiple device sizes, and multiple operating systems.
 
 :::info
 
