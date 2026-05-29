@@ -101,6 +101,12 @@ click "Continue".
 Next, Cypress generates all the necessary configuration files and gives you a
 list of all the changes it made to your project. Click "Continue".
 
+The most important generated setting is `component.devServer` in
+`cypress.config`, which tells Cypress which UI framework and bundler to use.
+For most projects, the scaffolded values are all you need. See
+[Dev Server and Bundler](/app/component-testing/component-framework-configuration#dev-server-and-bundler)
+for how this works and how to customize it.
+
 <DocsImage
   src="/img/app/component-testing/scaffolded-files.jpg"
   caption="The Cypress launchpad will scaffold all of these files for you"
