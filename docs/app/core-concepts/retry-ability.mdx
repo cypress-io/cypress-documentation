@@ -205,9 +205,11 @@ such as cy.children().
 
 ```javascript
 cy.get('.list')
-  .find('li').eq(2)
+  .find('li')
+  .eq(2)
   .should('contain', 'Header') // once this passes, the li element is locked in
-  .children('.child').eq(3) // if the DOM re-renders, this li may be detached
+  .children('.child')
+  .eq(3) // if the DOM re-renders, this li may be detached
   .should('contain', 'child') // retry only reruns from .children(), not .get()
 ```
 
@@ -223,17 +225,25 @@ top:
 
 ```javascript
 cy.get('.list').find('li').eq(2).should('contain', 'Header')
-cy.get('.list').find('li').eq(2).children('.child').eq(3).should('contain', 'child')
+cy.get('.list')
+  .find('li')
+  .eq(2)
+  .children('.child')
+  .eq(3)
+  .should('contain', 'child')
 ```
 
 Or use a [`.should(callbackFn)`](/api/commands/should#Function) to keep all
 assertions retrying together against a freshly-queried element:
 
 ```javascript
-cy.get('.list').find('li').eq(2).should(($li) => {
-  expect($li).to.contain('Header')
-  expect($li.children('.child').eq(3)).to.contain('child')
-})
+cy.get('.list')
+  .find('li')
+  .eq(2)
+  .should(($li) => {
+    expect($li).to.contain('Header')
+    expect($li.children('.child').eq(3)).to.contain('child')
+  })
 ```
 
 ## Implicit Assertions
