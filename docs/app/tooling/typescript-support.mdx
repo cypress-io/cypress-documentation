@@ -598,19 +598,6 @@ practice: list the file explicitly or use `"include": ["**/*.ts", "**/*.d.ts"]`.
 
 :::
 
-#### Separate `tsconfig.json` for projects with `isolatedModules`
-
-Some project templates (Create React App, certain Vite configurations) set
-`"isolatedModules": true` in the root `tsconfig.json`. This setting does not
-prevent Cypress typings from working, but it does mean each file is checked in
-isolation. When Cypress files share a tsconfig with `"isolatedModules": true`,
-you may see unexpected errors.
-
-The recommended fix is to give Cypress its own `tsconfig.json` inside the
-`cypress/` folder (see [Configure tsconfig.json](#configure-tsconfigjson)). This
-scopes Cypress types to only the Cypress test files and avoids the
-`isolatedModules` setting from propagating into the Cypress compilation context.
-
 ### Set up your dev environment
 
 Please refer to your code editor in
