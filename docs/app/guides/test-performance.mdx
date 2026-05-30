@@ -182,6 +182,20 @@ cy.intercept('POST', '/api/orders').as('createOrder')
 
 A page that fires 50 network requests — images, analytics pings, feature flag polls, error monitoring payloads — will route all 50 through the intercept handler when using `*`. The proxy cost per request is small, but it compounds across every page visit in every test. Intercept only the requests your test explicitly needs to observe, stub, or wait on.
 
+### Querying the Entire DOM to Filter Down
+
+Using an overly broad selector to grab a large set of elements and then filtering to a subset forces Cypress to collect and evaluate the entire matched set before the filter runs:
+
+```js
+// ❌ Anti-pattern: queries every element in the DOM, then filters
+cy.get('*').filter('[data-cy="submit"]')
+
+// ✅ Query specifically for the element you need
+cy.get('[data-cy="submit"]')
+```
+
+Selectors like `*`, `div`, or `section` that match hundreds or thousands of DOM nodes create unnecessary work for both the browser's query engine and Cypress's element processing. The broader the selector, the more nodes get collected — even if the final `.filter()` or `.find()` narrows it to one element. Always write the most specific selector that uniquely identifies the element you need.
+
 ### Missing `baseUrl`
 
 Without a `baseUrl`, Cypress loads a blank page on startup then reloads when `cy.visit()` is first called. This causes a visible flash and wastes several hundred milliseconds at the start of every test file.
@@ -825,6 +839,14 @@ From the [Kitchen Sink example](/cloud/features/smart-orchestration/parallelizat
 
 For large suites, 4–8 machines typically brings runs under 10 minutes. Diminishing returns set in when per-spec overhead (browser launch, video encoding) dominates over actual test time.
 
+:::tip
+
+**How many machines should you run?** The **Machines** view in Cypress Cloud shows you how each parallel machine spent its time on a given run — which specs it ran, how long each took, and how balanced the workload was across machines. If one machine finishes in 3 minutes while another is still running at 12, the distribution is uneven and you may benefit from more machines or from reorganizing long-running specs. The view also surfaces the projected time savings from adding additional machines, so you can make a data-driven decision about whether the added CI cost is worth it.
+
+:::
+
+
+
 ### Spec Prioritization
 
 [Spec Prioritization](/cloud/features/smart-orchestration/spec-prioritization) runs specs that failed in the last run first. When combined with [Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation), this surfaces failures faster and cancels the rest of the run early — saving CI machine-minutes on runs that are already broken.
@@ -833,7 +855,7 @@ A suite that normally fails at the 20-minute mark can surface that failure in 2�
 
 ### Auto Cancellation
 
-[Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation) terminates a run once a configurable number of test failures is reached. If your suite has a systemic failure (a broken build, a missing environment variable), there's no value in running 200 more tests — cancel early and let developers fix the root cause.
+[Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation) terminates a run once a configurable number of test failures is reached. If your suite has a systemic failure — a broken build, a missing environment variable, a service that failed to start, or a deployment that went out in a bad state — there's no value in running 200 more tests. Cancel early, surface the failure immediately, and let developers fix the root cause rather than waiting for the full suite to exhaust itself.
 
 ### Disable Video — Use Test Replay Instead
 
@@ -965,10 +987,11 @@ The most impactful optimizations, roughly in order:
 9. **Slim support file and specific imports** — avoids bundling unused code that inflates compile time and browser payload on every spec startup
 10. **Block third-party requests with `blockHosts`** — prevents analytics, monitoring, and chat services from consuming time in test environments; blocks resolve immediately with a 503
 11. **Avoid wildcard `cy.intercept('*')`** — limits proxy overhead to only the requests the test actually needs
-12. **`experimentalFastVisibility`** — replaces the layout-thrashing legacy visibility algorithm with a constant-time point-sampling approach; high impact on complex DOMs
-13. **`experimentalMemoryManagement`** — reduces GC pauses and browser crashes in long runs against memory-heavy apps; measure before committing, as the cleanup cost can exceed the benefit on lighter suites
-14. **Test retries (`runMode: 1`)** — prevents flaky tests from blocking CI runs; keep the count low and use Cypress Cloud flake data to fix root causes rather than absorbing the retry cost permanently
-15. **`cy.prompt` for selector maintenance** — eliminates recurring manual fix time when the UI changes; cached commands run without AI overhead in CI
+12. **Use specific DOM selectors** — broad selectors like `*` or `div` force the browser to collect every matching node before filtering; always write the most targeted selector that uniquely identifies the element
+13. **`experimentalFastVisibility`** — replaces the layout-thrashing legacy visibility algorithm with a constant-time point-sampling approach; high impact on complex DOMs
+14. **`experimentalMemoryManagement`** — reduces GC pauses and browser crashes in long runs against memory-heavy apps; measure before committing, as the cleanup cost can exceed the benefit on lighter suites
+15. **Test retries (`runMode: 1`)** — prevents flaky tests from blocking CI runs; keep the count low and use Cypress Cloud flake data to fix root causes rather than absorbing the retry cost permanently
+16. **`cy.prompt` for selector maintenance** — eliminates recurring manual fix time when the UI changes; cached commands run without AI overhead in CI
 
 A team starting from scratch applying all of these has routinely achieved 3–5x improvements in end-to-end suite runtime without deleting a single test.
 
