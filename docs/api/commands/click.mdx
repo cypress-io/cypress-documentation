@@ -223,8 +223,10 @@ then the element will not receive focus as per the spec.
 
 - `.click()` will automatically wait for the element to reach an
   [actionable state](/app/core-concepts/interacting-with-elements).
-- `.click()`will automatically [retry](/app/core-concepts/retry-ability)
-  until all chained assertions have passed.
+- `.click()` itself will not be retried — it fires once when the element is
+  actionable. Assertions chained after `.click()` will be retried until they
+  pass or time out. See
+  [Only queries are retried](/app/core-concepts/retry-ability#Only-queries-are-retried).
 
 <HeaderTimeouts />
 
