@@ -1,6 +1,6 @@
 ---
 title: 'Component Testing in Cypress | Cypress Documentation'
-description: 'Write Cypress component tests in React, Angular, Vue, or Svelte. Learn how to set up, write, and run your first component test.'
+description: 'Write Cypress component tests in React, Angular, Vue, or Svelte. Learn how to set up, write, and run your first component test in a real browser with full debugging capabilities.'
 sidebar_position: 20
 sidebar_label: Get Started
 ---
@@ -13,14 +13,31 @@ sidebar_label: Get Started
 
 ##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
 
+- What makes Cypress Component Testing different from other component testing tools
 - How to set up Component Testing for React, Angular, Vue, or Svelte
 - How to write your first component test
 - How to run your component test
-  :::
+
+:::
+
+Cypress Component Testing mounts your components directly in a **real browser** — not a simulated DOM — so you test them exactly as they will behave for your users. Every component renders visually during the test run, and you can use browser DevTools to inspect, interact, and debug just as you would during development.
+
+## Why Cypress for Component Testing?
+
+Teams that adopt Cypress for component testing typically come looking for faster feedback on their UI components. They stay because Cypress brings together capabilities that would otherwise require assembling several separate tools:
+
+- **See your component in action.** Components render visually inside the Cypress App as each test runs. You can interact with them manually, inspect elements with DevTools, and use [Time Travel](/app/core-concepts/open-mode#Command-Log) to step back through exactly what happened at each point in the test — no guessing, no `console.log` archaeology.
+- **Write less test boilerplate.** [Automatic waiting](/app/core-concepts/introduction-to-cypress#Cypress-is-Not-Like-jQuery) means your assertions run only after your component has rendered and updated. There is no need for `waitFor`, `act()`, or manual timeouts. You describe what should be true; Cypress waits until it is.
+- **Use powerful testing primitives — built in.** [Spies and stubs](/app/guides/stubs-spies-and-clocks) to verify event handlers and isolate dependencies. [Network interception](/app/guides/network-requests) to test how your component handles any server response without a running backend. [Clock control](/api/commands/clock) to test time-sensitive logic instantly, without sleeping.
+- **One project, one quality signal.** Component tests live in the same Cypress project as your end-to-end tests. When connected to [Cypress Cloud](/cloud/get-started/introduction), results, flake patterns, and [coverage data](/ui-coverage/get-started/introduction) flow into a single view — so your team has clear evidence of quality at every layer before a release ships.
+
+Catching a component bug in isolation is far cheaper than catching the same bug in an end-to-end test or, worse, in production. Teams that test components with Cypress close that feedback loop earlier, reduce the cost of fixing defects, and ship with more confidence.
+
+## Configuring Component Testing
 
 Assuming you've successfully
 [installed Cypress](/app/get-started/install-cypress) and
-[opened Cypress](/app/get-started/open-the-app), now it's time to setup component testing.
+[opened Cypress](/app/get-started/open-the-app), now it's time to set up component testing.
 
 The Cypress App will guide you through configuring your project.
 
@@ -28,8 +45,6 @@ The Cypress App will guide you through configuring your project.
   src="/img/snippets/getting-started-with-ct.mp4"
   title="Getting Started With Component Testing"
 />
-
-## Configuring Component Testing
 
 ### Supported Frameworks
 
