@@ -24,6 +24,7 @@ import E2EOrCtTabs from "@site/src/components/e2e-or-ct-tabs";
 import ElementFilters from "@site/docs/partials/_elementfilters.mdx";
 import VueSyntaxTabs from "@site/src/components/vue-syntax-tabs";
 import HeaderAssertions from "@site/docs/partials/_header-assertions.mdx";
+import InterceptAliasIndex from "@site/docs/partials/_intercept-alias-index.mdx";
 import HeaderRequirements from "@site/docs/partials/_header-requirements.mdx";
 import HeaderTimeouts from "@site/docs/partials/_header-timeouts.mdx";
 import HeaderYields from "@site/docs/partials/_header-yields.mdx";
@@ -193,6 +194,7 @@ export default {
   ElementFilters,
   VueSyntaxTabs,
   HeaderAssertions,
+  InterceptAliasIndex,
   HeaderRequirements,
   HeaderTimeouts,
   HeaderYields,

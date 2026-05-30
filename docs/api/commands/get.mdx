@@ -225,6 +225,15 @@ it('disables on click', () => {
 })
 ```
 
+#### Get all aliased intercepts
+
+When using [`cy.intercept()`](/api/commands/intercept) with an alias, you can
+retrieve **all** intercepted requests for that alias by appending `.all` to the
+alias name. This returns an array of
+[interception objects](/api/commands/intercept#Using-the-yielded-object).
+
+<InterceptAliasIndex />
+
 ## Rules
 
 <HeaderRequirements />
