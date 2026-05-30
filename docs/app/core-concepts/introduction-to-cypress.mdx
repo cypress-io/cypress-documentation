@@ -1107,9 +1107,10 @@ that may cause it to fail without needing an explicit assertion you've added.
 Certain commands may have a specific requirement that causes them to immediately
 fail without retrying, such as [`cy.request()`](/api/commands/request).
 
-Others, such as DOM queries automatically
-[retry](/app/core-concepts/retry-ability) and wait for their corresponding
-elements to exist before failing.
+Others, such as DOM
+[queries](/app/core-concepts/retry-ability#Commands-Queries-and-Assertions),
+automatically [retry](/app/core-concepts/retry-ability) and wait for their
+corresponding elements to exist before failing.
 
 Action commands automatically wait for their element to reach an
 [actionable state](/app/core-concepts/interacting-with-elements) before
@@ -1119,10 +1120,11 @@ failing.
 
 <strong>Core Concept</strong>
 
-All DOM commands automatically wait for their elements to exist in the DOM.
+All DOM [queries](/app/core-concepts/retry-ability#Commands-Queries-and-Assertions)
+automatically wait for their elements to exist in the DOM.
 
-You **never** need to write [`.should('exist')`](/api/commands/should) after
-querying the DOM.
+You **never** need to write [`.should('exist')`](/api/commands/should) after a
+DOM query.
 
 :::
 
