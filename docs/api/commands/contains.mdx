@@ -38,6 +38,25 @@ cy.get('.nav').contains('About') // Yield el in .nav containing 'About'
 cy.contains('Hello') // Yield first el in document containing 'Hello'
 ```
 
+:::caution
+
+`cy.get('.nav').contains('About')` is technically correct but can lead to
+flaky tests. Only the last command in a chain retries, so `.get('.nav')` runs
+once while only `.contains('About')` retries within the already-found element.
+If the DOM re-renders and replaces that element, the retry may operate on a
+stale reference. Prefer the single-command selector form, which retries the
+entire query from the document root:
+
+```javascript
+cy.contains('.nav a', 'About')
+```
+
+See
+[Use retry-ability correctly](/app/core-concepts/retry-ability#Use-retry-ability-correctly)
+for more details.
+
+:::
+
 <Icon name="exclamation-triangle" color="red" /> **Incorrect Usage**
 
 ```javascript

@@ -33,6 +33,24 @@ The querying behavior of this command matches exactly how
 cy.get('.article').find('footer') // Yield 'footer' within '.article'
 ```
 
+:::caution
+
+`cy.get('.article').find('footer')` is technically correct but can lead to
+flaky tests. Only `.find()` retries — `.get('.article')` runs once and fixes
+the scope. If the DOM re-renders and replaces `.article`, `.find()` may operate
+on a stale element reference. Add an assertion on the parent element before
+chaining `.find()` to ensure the subject is in the expected state:
+
+```javascript
+cy.get('.article').should('exist').find('footer')
+```
+
+See
+[Use retry-ability correctly](/app/core-concepts/retry-ability#Use-retry-ability-correctly)
+for more details.
+
+:::
+
 <Icon name="exclamation-triangle" color="red" /> **Incorrect Usage**
 
 ```javascript
