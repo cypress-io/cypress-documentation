@@ -211,7 +211,7 @@ match many URLs at once, either with globs or with regex. See
 cy.intercept('https://prod.cypress.io/users')
 
 // match any request that satisfies a glob pattern
-cy.intercept('/users?_limit=*')
+cy.intercept('/users\\?_limit=*')
 
 // match any request that satisfies a regex pattern
 cy.intercept(/\/users\?_limit=(3|5)$/)
@@ -1483,11 +1483,25 @@ cy.intercept('/users')
 //   https://staging.cypress.io/users
 //   http://localhost/users
 
-cy.intercept('/users?_limit=+(3|5)')
+cy.intercept('/users\\?_limit=+(3|5)')
 // matches all of these:
 //   https://prod.cypress.io/users?_limit=3
 //   http://localhost/users?_limit=5
 ```
+
+:::caution
+
+In minimatch glob syntax, `?` is a wildcard that matches **any single character** — it does not represent a literal `?`. To match a literal question mark (such as the `?` that begins a URL query string), escape it with a backslash: use `\\?` in your JavaScript string so that minimatch receives the pattern character `\?`.
+
+```js
+// INCORRECT – the unescaped ? is a wildcard matching any single character
+cy.intercept('/users?_limit=*')
+
+// CORRECT – \\? in the JS string sends \? to minimatch, matching a literal ?
+cy.intercept('/users\\?_limit=*')
+```
+
+:::
 
 ### Cypress.minimatch
 
@@ -1502,15 +1516,15 @@ then you have a match!
 
 ```javascript
 expect(
-  Cypress.minimatch('http://localhost/users?_limit=3', '**/users?_limit=+(3|5)')
+  Cypress.minimatch('http://localhost/users?_limit=3', '**/users\\?_limit=+(3|5)')
 ).to.be.true
 expect(
-  Cypress.minimatch('http://localhost/users?_limit=5', '/users?_limit=+(3|5)', {
+  Cypress.minimatch('http://localhost/users?_limit=5', '/users\\?_limit=+(3|5)', {
     matchBase: true,
   })
 ).to.be.true
 expect(
-  Cypress.minimatch('http://localhost/users?_limit=7', '**/users?_limit=+(3|5)')
+  Cypress.minimatch('http://localhost/users?_limit=7', '**/users\\?_limit=+(3|5)')
 ).to.be.false
 ```
 
@@ -1521,7 +1535,7 @@ You can also pass in options (`object`) as the third argument, one of which is
 understand why your pattern isn't working as you expect:
 
 ```js
-Cypress.minimatch('http://localhost/users?_limit=3', '**/users?_limit=+(3|5)', {
+Cypress.minimatch('http://localhost/users?_limit=3', '**/users\\?_limit=+(3|5)', {
   debug: true,
 })
 // true (plus debug messages)
