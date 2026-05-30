@@ -643,43 +643,6 @@ If you're not sure which third-party domains your application is calling, open t
 
 :::
 
-### Manage Test Isolation Deliberately
-
-By default, Cypress clears the browser context (cookies, `localStorage`, `sessionStorage`, DOM) before each test. This ensures test independence but adds overhead for suites where isolation between tests is not needed.
-
-For a suite of tests that share the same authenticated session and application state, you can disable test isolation:
-
-```js
-// These tests all start from the same authenticated dashboard state.
-// Disabling isolation avoids repeated browser context resets.
-describe('Dashboard widgets', { testIsolation: false }, () => {
-  before(() => {
-    cy.login('admin@example.com', 'password')
-    cy.visit('/dashboard')
-  })
-
-  it('shows the revenue chart', () => {
-    cy.get('[data-cy="revenue-chart"]').should('be.visible')
-  })
-
-  it('shows the user count', () => {
-    cy.get('[data-cy="user-count"]').should('exist')
-  })
-
-  it('shows pending orders', () => {
-    cy.get('[data-cy="pending-orders"]').should('exist')
-  })
-})
-```
-
-:::caution
-
-Disabling test isolation means tests can affect each other. Verify that each test still passes when run with `.only()` before relying on this pattern. See [Test Isolation](/app/core-concepts/test-isolation) for a full discussion of the trade-offs.
-
-:::
-
-When test isolation is enabled and you're using `cy.session()`, Cypress restores the cached browser context (cookies, storage) rather than logging in again — giving you the benefits of isolation without the cost of repeated logins.
-
 ### Reduce Timeout Values for Expected-Fast Operations
 
 The default command timeout is 4 seconds ([`defaultCommandTimeout`](/app/references/configuration#Timeouts)). For operations you know should be nearly instant, a lower timeout fails the test faster and gives clearer signal when something is genuinely wrong:
@@ -1307,7 +1270,6 @@ A team starting from scratch applying all of these has routinely achieved 3–5x
 
 - [Best Practices](/app/core-concepts/best-practices)
 - [Retry-ability](/app/core-concepts/retry-ability)
-- [Test Isolation](/app/core-concepts/test-isolation)
 - [Network Requests](/app/guides/network-requests)
 - [cy.session()](/api/commands/session)
 - [cy.intercept()](/api/commands/intercept)
