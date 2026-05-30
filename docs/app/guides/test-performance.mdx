@@ -566,6 +566,54 @@ Shadow DOM elements are not yet supported by the fast visibility algorithm. If y
 
 This flag is most impactful on suites with many visibility assertions or suites that run against applications with large, deeply-nested component trees. If you're already experiencing slow actionability checks or intermittent browser memory issues, enabling it globally is a low-effort first step.
 
+### Manage Memory Accumulation with `experimentalMemoryManagement`
+
+In a long-running Cypress test suite, the browser accumulates memory across tests. References to DOM nodes, event listeners, and application state from earlier tests can linger in the browser's heap even after Cypress clears the page. As memory pressure builds, the browser's garbage collector runs more frequently and for longer pauses, and in severe cases the browser can crash mid-run — aborting all remaining tests.
+
+[`experimentalMemoryManagement`](/app/references/experiments) enables improved memory management for Chromium-based browsers, actively clearing memory between tests to reduce this accumulation.
+
+Enable it in your Cypress configuration:
+
+:::cypress-config-example
+
+```js
+{
+  experimentalMemoryManagement: true
+}
+```
+
+:::
+
+:::info
+
+`experimentalMemoryManagement` only applies to Chromium-based browsers (Chrome, Edge, Electron). It has no effect in Firefox or WebKit.
+
+:::
+
+#### The trade-off: memory clearing itself takes time
+
+This flag is not a blanket speed improvement — it's a targeted remedy for a specific problem. Clearing memory between tests is not free: each cleanup cycle takes time, which gets paid on every test transition. If your suite is not under meaningful memory pressure, enabling this flag will slow it down rather than speed it up.
+
+The right question to ask before enabling it is: **does your suite get slower over time as it progresses, or does the browser crash before completion?** Either symptom points to memory accumulation. If your suite runs at a consistent pace from start to finish and doesn't crash, memory is not the bottleneck and this flag will only add overhead.
+
+#### How to evaluate whether it helps
+
+Compare a full CI run with the flag disabled against one with it enabled — looking at total suite duration, not individual test duration. Useful signals:
+
+- **Suite gets faster overall** — memory was a bottleneck; the cleanup overhead is smaller than the GC pauses it prevents
+- **Suite gets slower overall** — memory was not a bottleneck; disable the flag
+- **Browser stops crashing** — the flag is doing its job regardless of the timing delta; keep it enabled
+
+If you record runs to [Cypress Cloud](/cloud/get-started/introduction), the per-spec duration timeline makes it straightforward to see whether tests in the second half of a run are slower than those in the first half — a clear sign of memory accumulation.
+
+#### When it's most useful
+
+- Suites with 100+ tests running against a memory-heavy single-page application
+- Suites that intermittently crash in CI with no clear failure message
+- Any suite where you observe tests getting progressively slower as the run continues
+
+For shorter suites or applications with modest DOM complexity, the overhead of cleanup will likely outweigh any benefit. Start with it disabled, enable it if you see the symptoms above, and measure before committing to it permanently.
+
 ### Reduce Selector Maintenance Overhead with cy.prompt
 
 Broken selectors are one of the quietest drags on test suite throughput. When a developer renames a class, changes a data attribute, or restructures a component, every test that referenced the old selector fails. Diagnosing and updating those selectors takes time — often during a CI run everyone is waiting on. Over a large enough suite, selector maintenance becomes a non-trivial fraction of your team's testing time.
@@ -704,7 +752,8 @@ The most impactful optimizations, roughly in order:
 6. **Eliminate arbitrary `cy.wait()`** — removes seconds of dead time
 7. **Slim support file and specific imports** — avoids bundling unused code that inflates compile time and browser payload on every spec startup
 8. **`experimentalFastVisibility`** — replaces the layout-thrashing legacy visibility algorithm with a constant-time point-sampling approach; high impact on complex DOMs
-9. **`cy.prompt` for selector maintenance** — eliminates recurring manual fix time when the UI changes; cached commands run without AI overhead in CI
+9. **`experimentalMemoryManagement`** — reduces GC pauses and browser crashes in long runs against memory-heavy apps; measure before committing, as the cleanup cost can exceed the benefit on lighter suites
+10. **`cy.prompt` for selector maintenance** — eliminates recurring manual fix time when the UI changes; cached commands run without AI overhead in CI
 
 A team starting from scratch applying all of these has routinely achieved 3–5x improvements in end-to-end suite runtime without deleting a single test.
 
@@ -720,6 +769,7 @@ A team starting from scratch applying all of these has routinely achieved 3–5x
 - [cy.task()](/api/commands/task)
 - [cy.prompt()](/api/commands/prompt)
 - [experimentalFastVisibility](/app/references/experiments#Experimental-Fast-Visibility)
+- [experimentalMemoryManagement](/app/references/experiments)
 - [Interacting with Elements](/app/core-concepts/interacting-with-elements)
 - [Parallelization](/cloud/features/smart-orchestration/parallelization)
 - [Spec Prioritization](/cloud/features/smart-orchestration/spec-prioritization)
