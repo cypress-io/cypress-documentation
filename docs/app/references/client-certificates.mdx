@@ -8,16 +8,25 @@ sidebar_label: 'Client Certificates'
 
 # Client Certificates
 
-Configure certificate authority (CA) and client certificates to use within tests
-on a per-URL basis.
+Many enterprise, government, and regulated-industry systems require clients to
+present a certificate to authenticate at the TLS layer — before your application
+code even runs. Without this, you face an unpleasant choice: disable certificate
+requirements in your test environment (meaning your tests run against a system
+that doesn't match production), or rely on slow and inconsistent manual testing.
+
+The `clientCertificates` configuration lets you supply the certificates Cypress
+needs to authenticate against these protected endpoints, so your automated E2E
+tests exercise the real security boundary. Misconfigurations, expired
+certificates, or changed server requirements get caught in CI — not in
+production, where the cost is highest.
 
 :::info
 
 <strong>Document Scope</strong>
 
-This document merely offers guidance on how to specify certificate file paths
-for given test URLs. Details around the content and purpose of such files are
-not within the scope of Cypress documentation.
+This document covers how to configure certificate file paths for use in your
+tests. The creation and management of certificate files themselves are outside
+the scope of Cypress documentation.
 
 :::
 
