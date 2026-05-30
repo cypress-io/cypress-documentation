@@ -825,6 +825,70 @@ Test Replay data is uploaded to Cypress Cloud as part of the recorded run. The u
 
 If you see upload times that concern you, the terminal output gives you the numbers to compare directly against what you were spending on video encoding and upload previously.
 
+### Allocate Enough CI Machine Resources
+
+A CI machine running Cypress is hosting several resource-hungry processes simultaneously: Cypress itself, the browser, your application server, and any background services your app depends on. If the machine doesn't have enough CPU or memory to run all of these comfortably, they start competing — and the result is slower tests, not a clean error message telling you why.
+
+Resource starvation is one of the hardest performance problems to diagnose because it presents as flaky, slow, or apparently random failures rather than an obvious configuration issue. The machine is doing the work, just far too slowly.
+
+#### Signs your machine is resource-constrained
+
+- Tests get progressively slower as the run continues (the machine is under increasing load)
+- The browser crashes mid-run with no clear test failure
+- Parallelized runs don't scale as expected when you add machines — if each machine is already at its limit, adding more of the same doesn't help
+- CI provider analytics show CPU or memory consistently near 100% during runs
+
+#### How to diagnose it
+
+**Check available resources with `cypress info`:**
+
+```shell
+npx cypress info
+```
+
+This prints the system memory Cypress can see:
+
+```
+System Memory: 16.8 GB free 15.5 GB
+```
+
+**Check CPU with Node:**
+
+```shell
+node -p 'os.cpus()'
+```
+
+This shows the number of cores and their model — useful for comparing against your CI provider's documented resource classes.
+
+**Log live CPU and memory usage during a run:**
+
+Cypress can print a summary of CPU and memory consumption for itself and all its subprocesses at a regular interval:
+
+```shell
+DEBUG=cypress:server:util:process_profiler npx cypress run
+```
+
+Output is printed every 10 seconds by default. If you consistently see CPU above 100% in the logs, the machine is saturated. This is the most direct way to confirm resource exhaustion rather than guessing from symptoms.
+
+**Check your CI provider's analytics:** Most CI platforms (GitHub Actions, CircleCI, GitLab CI, etc.) expose CPU and memory utilization graphs for individual job runs. These are usually the fastest way to spot a machine that's running hot without needing to add debug flags to your Cypress command.
+
+#### What to do when you see it maxing out
+
+Increase the resource class for the job that runs Cypress. The exact mechanism varies by CI provider, but the principle is the same: give the machine more vCPUs and RAM.
+
+As a reference point, the [Cypress Real World App](https://github.com/cypress-io/cypress-realworld-app) — a full-stack application with a substantial test suite — runs comfortably on:
+
+- **CircleCI**: `resource_class: large` — 4 vCPUs, 8 GB RAM
+- **GitHub Actions**: standard Ubuntu runner — 4 vCPUs, 16 GB RAM
+
+If your application is more resource-intensive than the RWA (large bundles, a database-heavy backend, memory-intensive data processing), plan accordingly.
+
+:::tip
+
+Bumping machine size and adding parallel machines are complementary strategies. If a single machine is saturated, making it bigger reduces per-test overhead. If a single machine is healthy but the suite is just long, adding parallel machines reduces wall-clock time. The right answer is often both: right-size each machine, then parallelize across as many as needed to hit your target run time.
+
+:::
+
 ### Record to Cypress Cloud for Insights
 
 Recording runs to [Cypress Cloud](/cloud/get-started/introduction) unlocks the analytics needed to systematically improve performance:
@@ -847,7 +911,8 @@ The most impactful optimizations, roughly in order:
 4. **Parallelization** — linear scaling with the number of machines
 5. **Spec prioritization + auto cancellation** — reduces the cost of broken builds
 6. **Disable video, use Test Replay** — removes per-spec encoding and upload overhead from CI; Test Replay provides better debugging capability at lower cost
-7. **Eliminate arbitrary `cy.wait()`** — removes seconds of dead time
+7. **Right-size CI machine resources** — resource starvation shows up as slow, flaky, or crashing runs; bump vCPUs and RAM before other optimizations if the machine is saturated
+8. **Eliminate arbitrary `cy.wait()`** — removes seconds of dead time
 7. **Slim support file and specific imports** — avoids bundling unused code that inflates compile time and browser payload on every spec startup
 8. **`experimentalFastVisibility`** — replaces the layout-thrashing legacy visibility algorithm with a constant-time point-sampling approach; high impact on complex DOMs
 9. **`experimentalMemoryManagement`** — reduces GC pauses and browser crashes in long runs against memory-heavy apps; measure before committing, as the cleanup cost can exceed the benefit on lighter suites
@@ -873,6 +938,8 @@ A team starting from scratch applying all of these has routinely achieved 3–5x
 - [Flaky Test Management](/cloud/features/flaky-test-management)
 - [Screenshots and Videos](/app/guides/screenshots-and-videos)
 - [Test Replay](/cloud/features/test-replay)
+- [Continuous Integration Overview](/app/continuous-integration/overview)
+- [Troubleshooting: Log Memory and CPU Usage](/app/references/troubleshooting#Log-memory-and-CPU-usage)
 - [Interacting with Elements](/app/core-concepts/interacting-with-elements)
 - [Parallelization](/cloud/features/smart-orchestration/parallelization)
 - [Spec Prioritization](/cloud/features/smart-orchestration/spec-prioritization)
