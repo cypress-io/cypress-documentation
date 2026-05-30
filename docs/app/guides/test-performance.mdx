@@ -412,6 +412,91 @@ Conversely, for operations with known latency (large file uploads, slow reports)
 cy.get('[data-cy="report-ready"]', { timeout: 30000 }).should('be.visible')
 ```
 
+### Reduce Selector Maintenance Overhead with cy.prompt
+
+Broken selectors are one of the quietest drags on test suite throughput. When a developer renames a class, changes a data attribute, or restructures a component, every test that referenced the old selector fails. Diagnosing and updating those selectors takes time — often during a CI run everyone is waiting on. Over a large enough suite, selector maintenance becomes a non-trivial fraction of your team's testing time.
+
+[`cy.prompt`](/api/commands/prompt) is a Cypress Cloud feature that approaches this problem from both directions: it eliminates the time spent initially writing selectors, and it reduces the time spent repairing them when the UI changes.
+
+#### How caching makes cy.prompt fast after the first run
+
+When `cy.prompt` runs for the first time, it calls an AI model to interpret your natural language steps, evaluate the DOM, and generate Cypress commands. That generated code is then **cached and shared across all machines and CI environments**. Every subsequent run — by any team member or any CI agent — uses the cached code without calling the AI at all.
+
+```js
+// First run: AI generates the commands and caches them
+// All future runs: cache is used, no AI call
+cy.prompt([
+  'visit /products',
+  'filter by category "Electronics"',
+  'sort by price high to low',
+  'verify the product count is 25',
+])
+```
+
+This means `cy.prompt` steps are fast in CI — effectively the same as hand-written commands — after the warm-up run.
+
+#### Self-healing: automatic repair of broken selectors
+
+When a selector in the cached code becomes invalid (an attribute was renamed, an element was restructured), `cy.prompt` self-heals automatically on the next run rather than failing.
+
+There are two kinds of self-healing, with different performance profiles:
+
+| Self-heal type | What happened | Performance |
+| -------------- | ------------- | ----------- |
+| **Self-Healed via Cache** | Selector changed, but the existing cache entry resolved the new element | Fast — no AI call |
+| **Self-Healed via AI** | Selector changed, no matching cache entry — AI regenerates the step | Slower — requires an AI call, then caches the new result |
+
+Self-healing surfaces as a visible tag in the Command Log, so you can immediately see which steps healed and what element they resolved to — without digging through failure logs.
+
+The practical performance benefit: minor UI changes that would previously break 10–20 tests and require a developer to manually update selectors are instead handled automatically, keeping CI green and your team unblocked.
+
+#### Placeholders preserve cache efficiency with dynamic values
+
+Any change to a prompt string — including dynamic values like timestamps or IDs embedded directly in the text — invalidates the cache and forces a new AI call. Placeholders solve this by substituting runtime values without altering the cached prompt string:
+
+```js
+// ❌ Cache is invalidated every run because the campaign name changes
+cy.prompt([`type "${campaignName}" in the name field`])
+
+// ✅ Cache stays valid — only the runtime value changes
+cy.prompt(['type {{campaignName}} in the name field'], {
+  placeholders: { campaignName },
+})
+```
+
+Placeholders are also the right approach for sensitive values like passwords and API keys, since placeholder values are never sent to the AI model.
+
+This matters especially in loops. `cy.prompt` generates and caches the commands on the first iteration; every subsequent iteration reuses the cache with different placeholder values, making the loop as fast as if the commands were hand-written:
+
+```js
+const products = ['Widget A', 'Widget B', 'Widget C']
+
+// Only the first iteration triggers an AI call.
+// The cache is reused for all subsequent iterations.
+products.forEach((productName) => {
+  cy.prompt(
+    ['type {{productName}} in the search field', 'verify results include {{productName}}'],
+    { placeholders: { productName } }
+  )
+})
+```
+
+#### Choosing between workflows
+
+`cy.prompt` supports two workflows with different performance characteristics:
+
+**Generate once, export to source control** — Use `cy.prompt` to generate the Cypress commands, then click the **Code** button in the Command Log to export the generated code into your spec file. After that, `cy.prompt` is no longer in the test; it runs exactly like hand-written commands with no AI dependency or caching overhead at all.
+
+**Continuous self-healing** — Keep `cy.prompt` in the test permanently and let it adapt when your app changes. Best for apps in active development where selectors change frequently. The cache makes this fast in practice; self-healing via AI only fires when the cached selectors genuinely no longer work.
+
+For apps with stable, well-tested UIs, exporting the generated code is the lower-overhead choice. For apps in rapid iteration, continuous self-healing keeps tests passing without manual intervention.
+
+:::note
+
+`cy.prompt` requires a [Cypress Cloud account](/cloud/get-started/introduction) and is available on all plan types. It is limited to E2E tests on Chromium-based browsers. See the full [cy.prompt reference](/api/commands/prompt) for limitations and setup.
+
+:::
+
 ---
 
 ## Speeding Up Tests in CI
@@ -463,6 +548,7 @@ The most impactful optimizations, roughly in order:
 4. **Parallelization** — linear scaling with the number of machines
 5. **Spec prioritization + auto cancellation** — reduces the cost of broken builds
 6. **Eliminate arbitrary `cy.wait()`** — removes seconds of dead time
+7. **`cy.prompt` for selector maintenance** — eliminates recurring manual fix time when the UI changes; cached commands run without AI overhead in CI
 
 A team starting from scratch applying all of these has routinely achieved 3–5x improvements in end-to-end suite runtime without deleting a single test.
 
@@ -476,6 +562,7 @@ A team starting from scratch applying all of these has routinely achieved 3–5x
 - [cy.intercept()](/api/commands/intercept)
 - [cy.request()](/api/commands/request)
 - [cy.task()](/api/commands/task)
+- [cy.prompt()](/api/commands/prompt)
 - [Parallelization](/cloud/features/smart-orchestration/parallelization)
 - [Spec Prioritization](/cloud/features/smart-orchestration/spec-prioritization)
 - [Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation)
