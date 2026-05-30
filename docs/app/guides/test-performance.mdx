@@ -19,6 +19,7 @@ sidebar_label: Test Performance
 - Strategies to speed up authentication, network calls, and state setup
 - How to parallelize and orchestrate tests in CI to maximize throughput
 - How to use Cloud MCP to reduce the time spent triaging CI failures
+- How to use UI Coverage to find over-tested UI and eliminate redundant test overhead
 
 :::
 
@@ -833,6 +834,74 @@ The correct use of retries is to keep CI moving while flaky tests are identified
 
 A healthy relationship with retries looks like this: a low global `runMode` retry count (1), active monitoring of flake rate in Cypress Cloud, and a team practice of treating frequently-retrying tests as a technical debt item to resolve — not a permanently acceptable state.
 
+### Find and Eliminate Over-Tested UI with UI Coverage
+
+Test suites grow organically. A welcome screen, an onboarding modal, or a cookie consent banner gets tested in every spec because every spec visits the page — not because every spec is intentionally testing that element. Over time, dozens of tests accumulate interactions with the same piece of UI that only needs to be verified once. Each of those redundant interactions adds setup time, and the element being touched repeatedly means the test either navigates through it (slow) or fights it (flaky).
+
+[Cypress UI Coverage](/ui-coverage/get-started/introduction) surfaces this from the other direction. While most test coverage tools tell you what's _not_ tested, UI Coverage also shows you what's tested far _more_ than it needs to be — elements with disproportionately high interaction counts that signal redundancy across your suite.
+
+#### How to find over-tested elements
+
+In [Cypress Cloud](/cloud/get-started/introduction), open any recorded run and navigate to the **UI Coverage** tab. In the **Tested elements** section, elements are listed with their interaction counts and the number of snapshots they appear in. Sort by highest interaction count and look for elements whose numbers are far out of proportion with how important they are.
+
+An element interacted with 5 times in a suite of 50 tests makes sense. An element interacted with 184 times in 327 snapshots — like the **Continue** button on a first-time welcome screen — is a signal that most of those tests are passing _through_ the element, not _testing_ it.
+
+Clicking through to the Test Replay snapshots for that element confirms the pattern: the majority of tests just click through the welcome screen to get where they're actually going. They're not testing the welcome flow — they're paying the welcome flow tax on every test run.
+
+#### The fix: test once, bypass everywhere else
+
+Once you've identified an over-tested element, the fix is the same in every case:
+
+1. **Write one test** that deliberately exercises the full first-time flow — verifying the welcome screen appears, its content is correct, and the continue action works as expected.
+2. **Add a bypass** for all other tests — a custom command that sets the application state (a cookie, a `localStorage` flag, an API call) to mark the user as having already seen the flow, so subsequent tests start past it.
+
+```js
+// cypress/support/commands.js
+
+// One test verifies the welcome flow end-to-end
+it('shows the welcome screen to first-time visitors', () => {
+  cy.visit('/')
+  cy.contains('Welcome').should('be.visible')
+  cy.get('[data-cy="continue"]').click()
+  cy.contains('Dashboard').should('be.visible')
+})
+
+// All other tests skip it programmatically
+Cypress.Commands.add('skipWelcome', () => {
+  // Set the cookie or flag your app checks to determine first-time status
+  cy.setCookie('welcome_dismissed', 'true')
+})
+```
+
+```js
+// In every spec that doesn't test the welcome screen
+beforeEach(() => {
+  cy.skipWelcome()
+  cy.visit('/')
+})
+```
+
+The cookie or flag approach works because it mirrors exactly what your application does when a returning user visits — the app itself checks that state and skips the screen, so setting it in tests reproduces real returning-user behavior. This is preferable to using `{ force: true }` or visually hiding the element: it eliminates the element from the test entirely rather than working around it.
+
+After updating your tests and recording a new run, the UI Coverage report shows the immediate impact: the element appears in far fewer snapshots, the interaction count drops to match the tests that actually need it, and all those bypassed tests start and finish faster.
+
+#### Other patterns UI Coverage surfaces
+
+The welcome screen example is the most common, but the same technique applies to any flow your tests repeatedly pass through without intending to test:
+
+- **Cookie consent banners** — one test verifies the banner appears and the accept/reject actions work; all others set the consent cookie in `beforeEach`
+- **Trial expiry or upgrade prompts** — one test verifies the modal appears under the right conditions; all others set the account state to bypass it via API or cookie
+- **Onboarding checklists** — one test verifies the checklist and completion flow; all others seed the database or set flags to mark onboarding complete
+- **"What's new" modals** — one test verifies the modal content; all others dismiss it programmatically via the same state the app uses to track whether a user has seen it
+
+In every case, the pattern is the same: UI Coverage identifies the redundancy from interaction count data, Test Replay confirms which tests are passing through rather than testing, and a custom command eliminates the overhead for the tests that don't need it.
+
+:::note
+
+UI Coverage requires a [Cypress Cloud](https://cloud.cypress.io) account and is available as a premium add-on. See [UI Coverage: Introduction](/ui-coverage/get-started/introduction) for setup details — no code instrumentation is required, only that you're already recording runs with Test Replay enabled.
+
+:::
+
 ### Reduce Selector Maintenance Overhead with cy.prompt
 
 Broken selectors are one of the quietest drags on test suite throughput. When a developer renames a class, changes a data attribute, or restructures a component, every test that referenced the old selector fails. Diagnosing and updating those selectors takes time — often during a CI run everyone is waiting on. Over a large enough suite, selector maintenance becomes a non-trivial fraction of your team's testing time.
@@ -1203,7 +1272,8 @@ The most impactful optimizations, roughly in order:
 16. **`experimentalFastVisibility`** — replaces the layout-thrashing legacy visibility algorithm with a constant-time point-sampling approach; high impact on complex DOMs
 17. **`experimentalMemoryManagement`** — reduces GC pauses and browser crashes in long runs against memory-heavy apps; measure before committing, as the cleanup cost can exceed the benefit on lighter suites
 18. **Test retries (`runMode: 1`)** — prevents flaky tests from blocking CI runs; keep the count low and use Cypress Cloud flake data to fix root causes rather than absorbing the retry cost permanently
-19. **`cy.prompt` for selector maintenance** — eliminates recurring manual fix time when the UI changes; cached commands run without AI overhead in CI
+19. **UI Coverage to find over-tested elements** — interaction count data in Cypress Cloud identifies UI your tests repeatedly pass through without intending to test; eliminating that redundancy speeds every test that was paying the cost
+20. **`cy.prompt` for selector maintenance** — eliminates recurring manual fix time when the UI changes; cached commands run without AI overhead in CI
 
 A team starting from scratch applying all of these has routinely achieved 3–5x improvements in end-to-end suite runtime without deleting a single test.
 
@@ -1234,3 +1304,5 @@ A team starting from scratch applying all of these has routinely achieved 3–5x
 - [Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation)
 - [blockHosts Configuration](/app/references/configuration#blockHosts)
 - [Cloud MCP: Agentic Debugging](/cloud/integrations/cloud-mcp)
+- [UI Coverage: Introduction](/ui-coverage/get-started/introduction)
+- [UI Coverage: Reduce Test Duplication](/ui-coverage/guides/reduce-test-duplication)
