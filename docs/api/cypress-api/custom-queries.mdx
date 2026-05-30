@@ -311,8 +311,9 @@ performs no validation on this - it could be any type, including `null` or
 
 `.focused2()` ignores any previous subject, but many queries do not - for
 example, `.contains()` accepts only certain types of subjects. You can use
-Cypress' builtin `ensures` functions, as `.contains()` does:
-`cy.ensureSubjectByType(subject, ['optional', 'element', 'window', 'document'], this)`
+Cypress' builtin [`Cypress.ensure`](/api/cypress-api/ensure) functions, as
+`.contains()` does:
+`Cypress.ensure.isType(subject, ['optional', 'element', 'window', 'document'], 'contains', cy)`
 
 or you can perform your own validation and simply throw an error:
 `if (!_.isString(subject)) { throw new Error('MyCustomCommand only accepts strings as a subject!') }`
@@ -542,28 +543,33 @@ As noted in the examples above, Cypress performs very little validation around
 queries - it is the responsibility of each implementation to ensure that its
 arguments and subject are of the correct type.
 
-Cypress has several builtin 'ensures' which can be helpful in this regard:
+[`Cypress.ensure`](/api/cypress-api/ensure) provides several builtin methods
+which can be helpful in this regard:
 
-- `cy.ensureSubjectByType(subject, types, this)`: Accepts an array with any of
-  the strings `optional`, `element`, `document`, or `window`.
-  `ensureSubjectByType` is how
-  [`prevSubject` validation](/api/cypress-api/custom-commands#Validations) is
-  implemented for commmands.
-- `cy.ensureElement(subject, queryName)`: Ensure that the passed in `subject` is
-  one or more DOM elements.
-- `cy.ensureWindow(subject)`: Ensure that the passed in `subject` is a `window`.
-- `cy.ensureDocument(subject)`: Ensure that the passed in `subject` is a
-  `document`.
-- `cy.ensureAttached(subject, queryName)`: Ensure that DOM element(s) are
-  attached to the page.
-- `cy.ensureNotDisabled(subject)`: Ensure that form elements aren't disabled.
-- `cy.ensureVisibility(subject)`: Ensure that a DOM element is visible on the
-  page.
+- `Cypress.ensure.isType(subject, types, commandName, cy)`: Accepts an array
+  with any of the strings `optional`, `element`, `document`, or `window`. This
+  is how [`prevSubject` validation](/api/cypress-api/custom-commands#Validations)
+  is implemented for commands.
+- `Cypress.ensure.isElement(subject, commandName, cy)`: Ensure that the passed
+  in `subject` is one or more DOM elements.
+- `Cypress.ensure.isWindow(subject, commandName, cy)`: Ensure that the passed in
+  `subject` is a `window`.
+- `Cypress.ensure.isDocument(subject, commandName, cy)`: Ensure that the passed
+  in `subject` is a `document`.
+- `Cypress.ensure.isAttached(subject, commandName, cy)`: Ensure that DOM
+  element(s) are attached to the page.
+- `Cypress.ensure.isNotDisabled(subject, commandName)`: Ensure that form
+  elements aren't disabled.
+- `Cypress.ensure.isVisible(subject, commandName)`: Ensure that a DOM element is
+  visible on the page.
 
 There's nothing special about these functions - they simply validate their
 argument and throw an error if the check fails. You can throw errors of any type
 at any time inside your queries - Cypress will catch and handle it
 appropriately.
+
+See [`Cypress.ensure`](/api/cypress-api/ensure) for the full list of available
+methods.
 
 ## Notes
 
@@ -620,4 +626,5 @@ Try not to overcomplicate things and create too many abstractions.
 - <a href="/app/plugins/plugins-list#custom-commands">
     Plugins using custom commands
   </a>
+- [Cypress.ensure](/api/cypress-api/ensure)
 - [Cypress.log()](/api/cypress-api/cypress-log)
