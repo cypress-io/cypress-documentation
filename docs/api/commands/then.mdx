@@ -134,10 +134,12 @@ cy.get('button')
 #### The number subject is changed with another command
 
 ```javascript
-cy.wrap(1).then((num) => {
-  cy.wrap(num).should('equal', 1) // true
-  cy.wrap(2)
-}).should('equal', 2) // true
+cy.wrap(1)
+  .then((num) => {
+    cy.wrap(num).should('equal', 1) // true
+    cy.wrap(2)
+  })
+  .should('equal', 2) // true
 ```
 
 #### The number subject is changed by returning
