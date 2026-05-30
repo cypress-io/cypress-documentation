@@ -343,9 +343,31 @@ Everything else — helpers, factories, utilities, Node.js integrations — belo
 
 Before tuning configuration or restructuring tests, make sure you're running the latest version of Cypress. The Cypress team continuously works on performance improvements to the App — faster test execution, reduced memory overhead, more efficient visibility checks, and improvements to the underlying browser automation. Older versions don't get these improvements.
 
+<Tabs>
+  <TabItem value="npm">
+
 ```shell
 npm install cypress@latest --save-dev
 ```
+
+  </TabItem>
+
+  <TabItem value="yarn">
+
+```shell
+yarn add cypress@latest --dev
+```
+
+  </TabItem>
+
+  <TabItem value="pnpm">
+
+```shell
+pnpm add --save-dev cypress@latest
+```
+
+  </TabItem>
+</Tabs>
 
 Upgrading is the lowest-effort, highest-confidence change you can make. Check the [Changelog](https://docs.cypress.io/app/references/changelog) for performance-related improvements in recent releases before evaluating other optimizations — the fix you're looking for may already be in the latest version.
 
