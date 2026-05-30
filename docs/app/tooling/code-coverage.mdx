@@ -471,6 +471,60 @@ the browser.
   alt="coverage HTML report on CircleCI"
 />
 
+## Component Testing code coverage
+
+Setting up code coverage for component tests uses the same
+[`@cypress/code-coverage`](https://github.com/cypress-io/code-coverage) plugin
+as [E2E code coverage](#e2e-code-coverage). The configuration is almost
+identical, with one critical difference: you must add the support import to
+your **component testing support file**.
+
+### Configure the support file
+
+Add the import to your component testing support file:
+
+```js
+// cypress/support/component.js (or component.ts for TypeScript projects)
+import '@cypress/code-coverage/support'
+```
+
+:::caution
+
+Adding the import only to `cypress/support/e2e.js` will **not** collect
+coverage during component tests. The import must be present in the component
+support file.
+
+:::
+
+The task registration in `setupNodeEvents` is the same as for E2E tests:
+
+:::cypress-config-plugin-example
+
+```js
+import registerCodeCoverageTasks from '@cypress/code-coverage/task'
+```
+
+```js
+registerCodeCoverageTasks(on, config)
+// It's IMPORTANT to return the config object
+// with any changed environment variables
+return config
+```
+
+:::
+
+### Instrumentation for component tests
+
+**Vite**: The [`vite-plugin-istanbul`](#using-vite) plugin configured in your
+`vite.config.ts` is automatically used by the Cypress component testing dev
+server. No additional configuration is needed beyond
+[the standard Vite setup described above](#using-vite).
+
+**Webpack**: Add
+[`babel-plugin-istanbul`](#using-code-transpilation-pipeline) to the Babel
+configuration or Webpack rules used by the component testing dev server so
+that source files are instrumented before the browser loads them.
+
 ## Code coverage as a guide
 
 Even a single test can cover a lot of the application code. For example, let's
