@@ -1,0 +1,481 @@
+---
+title: Optimizing Test Performance
+description: Learn how Cypress is designed for speed, what test performance benchmarks to aim for, and how to identify and eliminate patterns that slow your tests down.
+sidebar_label: Test Performance
+---
+
+<ProductHeading product="app" />
+
+# Optimizing Test Performance
+
+:::info
+
+##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
+
+- What test speed benchmarks to aim for
+- How Cypress's architecture is designed for fast tests
+- Patterns that slow tests down and how to fix them
+- Strategies to speed up authentication, network calls, and state setup
+- How to parallelize and orchestrate tests in CI to maximize throughput
+
+:::
+
+## Why Test Speed Matters
+
+Slow tests are more than a productivity inconvenience — they fundamentally change how your team works. When a CI run takes 30+ minutes, developers stop waiting for feedback, start batching unrelated changes together, and lose the tight iteration loop that makes testing valuable in the first place.
+
+Fast tests enable the opposite: frequent, low-friction feedback that catches regressions close to when they're introduced. The goal is a test suite that runs fast enough that developers _want_ to run it — and that CI can complete a full run before a pull request goes stale.
+
+## How Cypress Is Designed for Speed
+
+Cypress has several architectural advantages over traditional end-to-end testing tools that make it faster by default.
+
+### In-Browser Execution
+
+Cypress runs your tests _inside_ the browser, in the same run loop as your application. Unlike WebDriver-based tools that issue commands over a network protocol (typically HTTP), Cypress communicates directly with the browser using native APIs. This eliminates the network round-trip overhead on every command.
+
+### Automatic Waiting and Retry
+
+Cypress [automatically retries queries and assertions](/app/core-concepts/retry-ability) until they pass or time out. This means you never need `cy.wait(5000)` to wait for an element to appear — Cypress polls the DOM efficiently and proceeds the moment the condition is met. A well-written test has no artificial delays.
+
+### Direct Network Intercept
+
+[`cy.intercept()`](/api/commands/intercept) intercepts and stubs HTTP requests at the network layer before they leave the browser. Stubbed responses return in under 20ms compared to a real server call that might take hundreds of milliseconds. Replacing real network calls with stubs for the majority of your tests is one of the highest-leverage speed improvements available.
+
+### Native Browser APIs
+
+Cypress has direct access to `localStorage`, `sessionStorage`, `cookies`, `window`, and other browser APIs from within tests. This lets you set up state programmatically rather than driving a UI through multiple screens.
+
+## What Speed Should You Aim For?
+
+There is no universal benchmark, but these ranges reflect healthy test suites across many real-world projects.
+
+### Individual Test Duration
+
+| Duration | Assessment |
+| -------- | ---------- |
+| < 3 seconds | Excellent — typical for tests using stubs and programmatic setup |
+| 3–10 seconds | Acceptable — common for end-to-end tests hitting a real server |
+| 10–30 seconds | Investigate — likely contains unnecessary waits or heavy UI-driven setup |
+| > 30 seconds | Poor — almost certainly has architectural issues |
+
+Component tests should consistently run in under 2 seconds each.
+
+### Full Test Suite Duration
+
+| Suite Size | Target (Serial) | Target (Parallel, 4+ machines) |
+| ---------- | --------------- | ------------------------------ |
+| < 50 tests | < 3 minutes | — |
+| 50–200 tests | < 10 minutes | < 3 minutes |
+| 200–500 tests | 15–30 minutes | < 10 minutes |
+| 500+ tests | Use parallelization | < 15 minutes |
+
+:::tip
+
+**How to find your slowest tests**: If you're recording runs to [Cypress Cloud](/cloud/get-started/introduction), the **Tests** tab on any run shows test duration sorted from slowest to fastest. The **Analytics** section surfaces duration trends over time, making it easy to spot tests that are getting slower across runs.
+
+:::
+
+## Patterns That Slow Tests Down
+
+### Arbitrary `cy.wait(number)`
+
+The most common performance anti-pattern is waiting for a fixed number of milliseconds:
+
+```js
+// ❌ Anti-pattern: wastes time even when the element appears in 200ms
+cy.get('[data-cy="results"]').click()
+cy.wait(3000)
+cy.get('[data-cy="modal"]').should('be.visible')
+
+// ✅ Let Cypress retry until the assertion passes
+cy.get('[data-cy="results"]').click()
+cy.get('[data-cy="modal"]').should('be.visible')
+```
+
+If you find yourself reaching for `cy.wait(number)`, the right fix is almost always to add an explicit assertion that Cypress can retry. See the [Unnecessary Waiting](/app/core-concepts/best-practices#Unnecessary-Waiting) section of Best Practices for more examples.
+
+### Logging In Through the UI for Every Test
+
+A full login flow — filling a form, submitting, waiting for a redirect — typically takes 2–5 seconds per test. Run this in 100 tests and you've added 5–8 minutes of pure authentication overhead to your suite.
+
+```js
+// ❌ Anti-pattern: full UI login in beforeEach
+beforeEach(() => {
+  cy.visit('/login')
+  cy.get('[data-cy="username"]').type('admin@example.com')
+  cy.get('[data-cy="password"]').type('password123')
+  cy.get('[data-cy="submit"]').click()
+  cy.url().should('include', '/dashboard')
+})
+```
+
+See [Cache Authentication with cy.session()](#cache-authentication-with-cysession) below for the fix.
+
+### Tiny Tests With Excessive Per-Test Setup
+
+Writing one assertion per test causes Cypress to reset the browser context, run all hooks, and navigate to the test page for each assertion:
+
+```js
+// ❌ Anti-pattern: unnecessary overhead from per-test browser resets
+describe('user profile', () => {
+  beforeEach(() => {
+    cy.visit('/profile')
+  })
+
+  it('shows the avatar', () => {
+    cy.get('[data-cy="avatar"]').should('be.visible')
+  })
+
+  it('shows the username', () => {
+    cy.get('[data-cy="username"]').should('exist')
+  })
+
+  it('shows the email', () => {
+    cy.get('[data-cy="email"]').should('exist')
+  })
+})
+
+// ✅ Group related assertions in a single test
+it('shows profile information', () => {
+  cy.visit('/profile')
+  cy.get('[data-cy="avatar"]').should('be.visible')
+  cy.get('[data-cy="username"]').should('exist')
+  cy.get('[data-cy="email"]').should('exist')
+})
+```
+
+Each Cypress test incurs a fixed overhead (browser context reset, hook execution, encoding). Grouping related assertions eliminates this overhead without sacrificing clarity. See [Creating Tiny Tests With A Single Assertion](/app/core-concepts/best-practices#Creating-Tiny-Tests-With-A-Single-Assertion) for a deeper discussion.
+
+### Not Stubbing Slow Network Requests
+
+Tests that wait for real API responses are bounded by server latency — database queries, downstream services, and network transit all add up. Stub the responses in tests that aren't specifically testing server behavior:
+
+```js
+// ❌ Anti-pattern: test waits for a real API call that takes 800ms+
+cy.visit('/dashboard')
+cy.get('[data-cy="transactions"]').should('have.length.greaterThan', 0)
+
+// ✅ Stub the response — returns in < 20ms
+cy.intercept('GET', '/api/transactions', { fixture: 'transactions.json' }).as(
+  'getTransactions'
+)
+cy.visit('/dashboard')
+cy.wait('@getTransactions')
+cy.get('[data-cy="transactions"]').should('have.length.greaterThan', 0)
+```
+
+See the [Network Requests guide](/app/guides/network-requests) for a full discussion of when to stub vs. use real server responses.
+
+### Missing `baseUrl`
+
+Without a `baseUrl`, Cypress loads a blank page on startup then reloads when `cy.visit()` is first called. This causes a visible flash and wastes several hundred milliseconds at the start of every test file.
+
+```js
+// cypress.config.js
+export default defineConfig({
+  e2e: {
+    baseUrl: 'http://localhost:3000',
+  },
+})
+```
+
+With `baseUrl` set, Cypress opens directly to your application. See [Setting a Global baseUrl](/app/core-concepts/best-practices#Setting-a-Global-baseUrl) for details.
+
+### Using `afterEach` for Cleanup
+
+`afterEach` runs even when a test fails, and if it touches the server it adds latency to every test transition. More importantly, if Cypress is reloaded mid-test, `afterEach` won't run at all, leaving your state inconsistent.
+
+Move cleanup to `beforeEach` so it always runs before each test — whether the previous test passed, failed, or was interrupted:
+
+```js
+// ❌ Anti-pattern
+afterEach(() => {
+  cy.request('POST', '/api/reset-db')
+})
+
+// ✅ Reset before each test so state is always clean
+beforeEach(() => {
+  cy.request('POST', '/api/reset-db')
+})
+```
+
+See [Using after or afterEach Hooks](/app/core-concepts/best-practices#Using-after-Or-afterEach-Hooks) for more.
+
+---
+
+## Strategies to Speed Up Your Tests
+
+### Cache Authentication with `cy.session()`
+
+[`cy.session()`](/api/commands/session) captures the full browser context (cookies, `localStorage`, `sessionStorage`) after a login sequence and restores that snapshot in subsequent tests — without repeating the login flow. A session that takes 3 seconds to establish the first time is restored in milliseconds on every subsequent test.
+
+```js
+// cypress/support/commands.js
+Cypress.Commands.add('login', (username, password) => {
+  cy.session(
+    [username, password],
+    () => {
+      cy.visit('/login')
+      cy.get('[data-cy="username"]').type(username)
+      cy.get('[data-cy="password"]').type(password)
+      cy.get('[data-cy="submit"]').click()
+      cy.url().should('include', '/dashboard')
+    },
+    {
+      validate() {
+        // Optional: confirm the session cookie is still valid
+        cy.getCookie('session').should('exist')
+      },
+    }
+  )
+})
+
+// In your spec files
+beforeEach(() => {
+  cy.login('admin@example.com', 'password123')
+  cy.visit('/dashboard')
+})
+```
+
+`cy.session()` is the single highest-impact change most teams can make to their suite. A 200-test suite with 3-second logins saves **10 minutes** of wall-clock time by caching the session.
+
+#### Multiple roles with `cy.session()`
+
+When your tests need different user roles, give each session a unique key:
+
+```js
+Cypress.Commands.add('loginAs', (role) => {
+  const credentials = {
+    admin: { username: 'admin@example.com', password: 'adminpass' },
+    viewer: { username: 'viewer@example.com', password: 'viewerpass' },
+  }
+
+  const { username, password } = credentials[role]
+
+  cy.session(role, () => {
+    cy.visit('/login')
+    cy.get('[data-cy="username"]').type(username)
+    cy.get('[data-cy="password"]').type(password)
+    cy.get('[data-cy="submit"]').click()
+  })
+})
+```
+
+### Set Up State Programmatically, Not Through the UI
+
+Navigating through multiple screens to build state for a test is slow and brittle. Use `cy.request()` or `cy.task()` to seed state directly, then navigate straight to the page under test.
+
+#### Use `cy.request()` for API seeding
+
+```js
+// ❌ Anti-pattern: navigating through UI to create test data
+beforeEach(() => {
+  cy.login('admin@example.com', 'password123')
+  cy.visit('/products/new')
+  cy.get('[data-cy="name"]').type('Widget Pro')
+  cy.get('[data-cy="price"]').type('49.99')
+  cy.get('[data-cy="save"]').click()
+  cy.url().should('match', /\/products\/\d+/)
+  // Now navigate to the page we actually want to test...
+})
+
+// ✅ Seed data via API, then visit the page directly
+beforeEach(() => {
+  cy.login('admin@example.com', 'password123')
+  cy.request('POST', '/api/products', {
+    name: 'Widget Pro',
+    price: 49.99,
+  }).then(({ body }) => {
+    cy.visit(`/products/${body.id}`)
+  })
+})
+```
+
+#### Use `cy.task()` for database seeding
+
+For operations that can't go through an HTTP API — direct database writes, file system operations, or third-party service setup — use [`cy.task()`](/api/commands/task) to run Node.js code in your Cypress config:
+
+```js
+// cypress.config.js
+import { defineConfig } from 'cypress'
+import { db } from './src/db'
+
+export default defineConfig({
+  e2e: {
+    setupNodeEvents(on) {
+      on('task', {
+        async seedUser(userData) {
+          const user = await db.users.create(userData)
+          return user.id
+        },
+        async resetDatabase() {
+          await db.truncateAll()
+          return null
+        },
+      })
+    },
+  },
+})
+
+// In your spec
+beforeEach(() => {
+  cy.task('resetDatabase')
+  cy.task('seedUser', { email: 'test@example.com', role: 'admin' })
+})
+```
+
+Direct database operations are typically 10–100x faster than driving the same action through the UI.
+
+### Stub Network Requests Strategically
+
+Not every test needs to exercise the real server. Reserve true end-to-end tests for critical paths (login, checkout, core workflows), and stub responses for the remaining tests that focus on UI behavior:
+
+```js
+// Only a handful of tests need real server responses
+it('creates a new order (integration)', () => {
+  // Uses real API — tests the contract between client and server
+  cy.request('POST', '/api/orders', { productId: 1, qty: 2 }).then(
+    ({ body }) => {
+      expect(body).to.have.property('orderId')
+    }
+  )
+})
+
+// The majority of UI tests can use stubs
+it('shows an error message when the order fails', () => {
+  cy.intercept('POST', '/api/orders', {
+    statusCode: 422,
+    body: { error: 'Insufficient stock' },
+  }).as('createOrder')
+
+  cy.visit('/checkout')
+  cy.get('[data-cy="place-order"]').click()
+  cy.wait('@createOrder')
+  cy.get('[data-cy="error-message"]').should('contain', 'Insufficient stock')
+})
+```
+
+Stubbed requests return in < 20ms. Real requests to a local dev server typically return in 100–500ms; requests to a remote staging server may take 500ms–2 seconds each.
+
+### Manage Test Isolation Deliberately
+
+By default, Cypress clears the browser context (cookies, `localStorage`, `sessionStorage`, DOM) before each test. This ensures test independence but adds overhead for suites where isolation between tests is not needed.
+
+For a suite of tests that share the same authenticated session and application state, you can disable test isolation:
+
+```js
+// These tests all start from the same authenticated dashboard state.
+// Disabling isolation avoids repeated browser context resets.
+describe('Dashboard widgets', { testIsolation: false }, () => {
+  before(() => {
+    cy.login('admin@example.com', 'password')
+    cy.visit('/dashboard')
+  })
+
+  it('shows the revenue chart', () => {
+    cy.get('[data-cy="revenue-chart"]').should('be.visible')
+  })
+
+  it('shows the user count', () => {
+    cy.get('[data-cy="user-count"]').should('exist')
+  })
+
+  it('shows pending orders', () => {
+    cy.get('[data-cy="pending-orders"]').should('exist')
+  })
+})
+```
+
+:::caution
+
+Disabling test isolation means tests can affect each other. Verify that each test still passes when run with `.only()` before relying on this pattern. See [Test Isolation](/app/core-concepts/test-isolation) for a full discussion of the trade-offs.
+
+:::
+
+When test isolation is enabled and you're using `cy.session()`, Cypress restores the cached browser context (cookies, storage) rather than logging in again — giving you the benefits of isolation without the cost of repeated logins.
+
+### Reduce Timeout Values for Expected-Fast Operations
+
+The default command timeout is 4 seconds ([`defaultCommandTimeout`](/app/references/configuration#Timeouts)). For operations you know should be nearly instant, a lower timeout fails the test faster and gives clearer signal when something is genuinely wrong:
+
+```js
+// A synchronous DOM assertion after a user action
+// should not take 4 seconds — fail fast if it does
+cy.get('[data-cy="toast-success"]', { timeout: 1000 }).should('be.visible')
+```
+
+Conversely, for operations with known latency (large file uploads, slow reports), increase the timeout rather than adding a fixed `cy.wait()`:
+
+```js
+// Give a slow report generation up to 30 seconds
+cy.get('[data-cy="report-ready"]', { timeout: 30000 }).should('be.visible')
+```
+
+---
+
+## Speeding Up Tests in CI
+
+Single-machine, serial test runs have a ceiling. Once your suite exceeds 10–15 minutes, the right lever is distributing the work across multiple machines.
+
+### Parallelization
+
+[Parallelization](/cloud/features/smart-orchestration/parallelization) distributes your spec files across multiple CI machines, with Cypress Cloud orchestrating which machine runs which spec based on historical duration data. Adding 2 machines roughly halves your run time; the gains compound as you add more.
+
+```shell
+# Run with parallelization across however many machines your CI spins up
+cypress run --record --key=<record-key> --parallel
+```
+
+From the [Kitchen Sink example](/cloud/features/smart-orchestration/parallelization#Example): a 1:51 serial run became a **59-second** run by adding a second machine — a 53% reduction.
+
+For large suites, 4–8 machines typically brings runs under 10 minutes. Diminishing returns set in when per-spec overhead (browser launch, video encoding) dominates over actual test time.
+
+### Spec Prioritization
+
+[Spec Prioritization](/cloud/features/smart-orchestration/spec-prioritization) runs specs that failed in the last run first. When combined with [Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation), this surfaces failures faster and cancels the rest of the run early — saving CI machine-minutes on runs that are already broken.
+
+A suite that normally fails at the 20-minute mark can surface that failure in 2–3 minutes if the failing spec runs first.
+
+### Auto Cancellation
+
+[Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation) terminates a run once a configurable number of test failures is reached. If your suite has a systemic failure (a broken build, a missing environment variable), there's no value in running 200 more tests — cancel early and let developers fix the root cause.
+
+### Record to Cypress Cloud for Insights
+
+Recording runs to [Cypress Cloud](/cloud/get-started/introduction) unlocks the analytics needed to systematically improve performance:
+
+- **Test duration trends** — see which tests are getting slower over time
+- **Flaky test detection** — flaky tests often hide retry loops that inflate runtime
+- **Machine utilization** — see if your parallel machines are balanced or if one is a bottleneck
+
+---
+
+## Measuring Your Improvements
+
+Before optimizing, establish a baseline. Record a full CI run to Cypress Cloud, note the total duration and the slowest 10 specs, then apply changes and compare.
+
+The most impactful optimizations, roughly in order:
+
+1. **`cy.session()` for authentication** — eliminates 2–5 seconds per test
+2. **Stub network requests** — replaces 100–2000ms real calls with < 20ms stubs
+3. **Programmatic state setup** — replaces minutes of UI navigation with seconds of API calls
+4. **Parallelization** — linear scaling with the number of machines
+5. **Spec prioritization + auto cancellation** — reduces the cost of broken builds
+6. **Eliminate arbitrary `cy.wait()`** — removes seconds of dead time
+
+A team starting from scratch applying all of these has routinely achieved 3–5x improvements in end-to-end suite runtime without deleting a single test.
+
+## See Also
+
+- [Best Practices](/app/core-concepts/best-practices)
+- [Retry-ability](/app/core-concepts/retry-ability)
+- [Test Isolation](/app/core-concepts/test-isolation)
+- [Network Requests](/app/guides/network-requests)
+- [cy.session()](/api/commands/session)
+- [cy.intercept()](/api/commands/intercept)
+- [cy.request()](/api/commands/request)
+- [cy.task()](/api/commands/task)
+- [Parallelization](/cloud/features/smart-orchestration/parallelization)
+- [Spec Prioritization](/cloud/features/smart-orchestration/spec-prioritization)
+- [Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation)
