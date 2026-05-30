@@ -107,7 +107,8 @@ Elements positioned outside the viewport are now correctly identified as hidden.
 cy.get('.off-screen-element').should('be.visible')
 
 // After
-cy.get('.off-screen-element').scrollIntoView().should('be.visible')
+cy.get('.off-screen-element').scrollIntoView()
+cy.get('.off-screen-element').should('be.visible')
 ```
 
 **Covered Elements**

@@ -234,14 +234,15 @@ cy.get('button')
 
 A common pattern is to perform several sequential actions on the same element —
 for example, focusing an input, clearing its value, typing a new value, and then
-blurring it. Because [`.focus()`](/api/commands/focus),
-[`.clear()`](/api/commands/clear), [`.type()`](/api/commands/type), and
-[`.blur()`](/api/commands/blur) each yield the same subject they were given, you
-can chain them directly without needing `.then()`:
+blurring it. Issue each action as a separate command — there is no need to wrap
+them in `.then()`:
 
 ```javascript
-// ✅ Preferred: direct chaining
-cy.get('input').focus().clear().type('new value').blur()
+// ✅ Preferred: separate commands
+cy.get('input').focus()
+cy.get('input').clear()
+cy.get('input').type('new value')
+cy.get('input').blur()
 ```
 
 You might be tempted to wrap multiple actions inside `.then()` to avoid
