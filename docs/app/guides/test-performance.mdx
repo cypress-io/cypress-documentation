@@ -202,6 +202,103 @@ beforeEach(() => {
 
 See [Using after or afterEach Hooks](/app/core-concepts/best-practices#Using-after-Or-afterEach-Hooks) for more.
 
+### Heavy Imports in Support and Spec Files
+
+Before Cypress runs any test, it [preprocesses](/api/node-events/preprocessors-api) your support file and spec files — compiling and bundling them with webpack (by default). Everything your files import gets pulled into that bundle. A bloated bundle means a slower compile step, a larger payload shipped to the browser, and more time before the first test can start.
+
+The support file (`cypress/support/e2e.js`) is the highest-risk location because **it runs before every single spec file**. An import added there is paid on every startup, not just once.
+
+#### Node.js-only modules in the browser bundle
+
+Importing modules that only work in Node.js — database drivers, the built-in `fs`/`path` modules, ORMs, server-side SDKs — forces the bundler to either throw an error or shim them with heavy polyfills. Either way, they have no place in a browser-executed file.
+
+```js
+// ❌ Anti-pattern: importing Node.js-only code into a support file
+// cypress/support/e2e.js
+import { db } from '../../src/db'       // database driver — Node.js only
+import fs from 'fs'                      // built-in — not available in browser
+import { sendEmail } from '../../src/mailer' // server SDK — Node.js only
+
+beforeEach(() => {
+  db.seed()
+})
+
+// ✅ Move Node.js code to cy.task() in cypress.config.js —
+// task code runs in Node and is never bundled into the browser
+// cypress.config.js
+setupNodeEvents(on) {
+  on('task', {
+    async seedDatabase() {
+      await db.seed()
+      return null
+    }
+  })
+}
+
+// cypress/support/e2e.js
+beforeEach(() => {
+  cy.task('seedDatabase')
+})
+```
+
+See [cy.task()](/api/commands/task) for the full API. Unlike support file imports, task code runs in the Node.js process of the Cypress config file and is never sent to the browser.
+
+#### Barrel imports that pull in your entire codebase
+
+Barrel files (`index.js` that re-export everything from a directory) are convenient in application code but expensive in test files. Importing a single named export from a barrel causes the bundler to process every module the barrel re-exports — even the ones your test never uses.
+
+```js
+// ❌ Anti-pattern: barrel import drags in the entire utils module graph
+import { formatDate } from '../../src/utils'
+// utils/index.js re-exports 40 other modules, all of which get bundled
+
+// ✅ Import directly from the specific file
+import { formatDate } from '../../src/utils/formatDate'
+```
+
+This is especially common when test helpers import from the application's shared utilities, constants, or type definitions. Each seemingly small import can drag in a large transitive dependency graph.
+
+#### Importing application source when an API call would do
+
+A common pattern is importing application-layer functions (factories, schema validators, state helpers) directly into test files to set up test data. If the same result can be achieved through `cy.request()` or `cy.task()`, the import is unnecessary overhead.
+
+```js
+// ❌ Anti-pattern: importing app source to build test fixtures
+import { buildUser } from '../../src/factories/user'
+import { UserSchema } from '../../src/models/user'
+
+it('creates a user', () => {
+  const user = buildUser({ role: 'admin' })
+  cy.request('POST', '/api/users', user)
+})
+
+// ✅ Build the fixture inline or via cy.task() — no app source imported
+it('creates a user', () => {
+  cy.request('POST', '/api/users', { name: 'Admin', role: 'admin' })
+})
+```
+
+#### What a lean support file looks like
+
+The support file should contain only what genuinely needs to run before every test:
+
+```js
+// cypress/support/e2e.js — keep this slim
+
+// Custom commands and queries
+import './commands'
+
+// Third-party Cypress plugins (e.g. accessibility, code coverage)
+import '@cypress/code-coverage/support'
+
+// Global hooks that apply to every test
+beforeEach(() => {
+  cy.task('resetDatabase')
+})
+```
+
+Everything else — helpers, factories, utilities, Node.js integrations — belongs in `cypress.config.js` (as tasks) or imported directly in the individual spec files that need them.
+
 ---
 
 ## Strategies to Speed Up Your Tests
@@ -548,7 +645,8 @@ The most impactful optimizations, roughly in order:
 4. **Parallelization** — linear scaling with the number of machines
 5. **Spec prioritization + auto cancellation** — reduces the cost of broken builds
 6. **Eliminate arbitrary `cy.wait()`** — removes seconds of dead time
-7. **`cy.prompt` for selector maintenance** — eliminates recurring manual fix time when the UI changes; cached commands run without AI overhead in CI
+7. **Slim support file and specific imports** — avoids bundling unused code that inflates compile time and browser payload on every spec startup
+8. **`cy.prompt` for selector maintenance** — eliminates recurring manual fix time when the UI changes; cached commands run without AI overhead in CI
 
 A team starting from scratch applying all of these has routinely achieved 3–5x improvements in end-to-end suite runtime without deleting a single test.
 
