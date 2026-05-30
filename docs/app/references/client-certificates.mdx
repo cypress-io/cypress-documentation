@@ -100,6 +100,66 @@ shown below:
 
 :::
 
+## How Certificates Are Applied
+
+Cypress automatically applies the correct client certificate for every outgoing
+network request — including those initiated by
+[`cy.visit()`](/api/commands/visit) and
+[`cy.request()`](/api/commands/request) — based on URL pattern matching.
+**No additional options need to be passed to these commands.**
+
+When Cypress makes a request, it compares the target URL against each `url`
+pattern in the `clientCertificates` array. If a matching entry is found, its
+certificates are attached to the request automatically.
+
+If more than one entry matches the same URL, Cypress selects the entry with the
+**most specific (longest) path** pattern.
+
+:::info
+
+The `url` field in each `clientCertificates` entry supports
+[minimatch](https://github.com/isaacs/minimatch) glob patterns (for example
+`https://a.host.com/api/**`), so a single entry can cover an entire path
+hierarchy.
+
+:::
+
+### Testing with multiple client identities
+
+Cypress does not support passing a specific certificate to `cy.visit()` or any
+other command at call time. Certificate selection is always URL-pattern-based
+and configured statically in `clientCertificates`.
+
+If your tests need to authenticate as different users against the **same base
+URL**, you can work around this limitation in a couple of ways:
+
+- **Distinct path patterns** – If your server exposes user-specific base paths,
+  configure a separate `clientCertificates` entry for each path pattern:
+
+  :::cypress-config-example
+
+  ```ts
+  {
+    clientCertificates: [
+      {
+        url: 'https://example.com/users/alice/**',
+        certs: [{ pfx: 'certs/alice.pfx', passphrase: 'certs/alice-passphrase.txt' }],
+      },
+      {
+        url: 'https://example.com/users/bob/**',
+        certs: [{ pfx: 'certs/bob.pfx', passphrase: 'certs/bob-passphrase.txt' }],
+      },
+    ],
+  }
+  ```
+
+  :::
+
+- **Separate configuration files** – Maintain separate Cypress configuration
+  files (for example `cypress.alice.config.ts` and `cypress.bob.config.ts`),
+  each specifying the appropriate `clientCertificates`, and run them as separate
+  test suites.
+
 ## History
 
 | Version                                  | Changes                                         |
