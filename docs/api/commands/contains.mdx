@@ -34,7 +34,7 @@ cy.contains(selector, content, options)
 <Icon name="check-circle" color="green" /> **Correct Usage**
 
 ```javascript
-cy.get('.nav').contains('About') // Yield el in .nav containing 'About'
+cy.contains('.nav a', 'About') // Yield anchor in .nav containing 'About'
 cy.contains('Hello') // Yield first el in document containing 'Hello'
 ```
 
