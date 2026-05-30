@@ -334,6 +334,16 @@ Everything else — helpers, factories, utilities, Node.js integrations — belo
 
 ## Strategies to Speed Up Your Tests
 
+### Keep Cypress Up to Date
+
+Before tuning configuration or restructuring tests, make sure you're running the latest version of Cypress. The Cypress team continuously works on performance improvements to the App — faster test execution, reduced memory overhead, more efficient visibility checks, and improvements to the underlying browser automation. Older versions don't get these improvements.
+
+```shell
+npm install cypress@latest --save-dev
+```
+
+Upgrading is the lowest-effort, highest-confidence change you can make. Check the [Changelog](https://docs.cypress.io/app/references/changelog) for performance-related improvements in recent releases before evaluating other optimizations — the fix you're looking for may already be in the latest version.
+
 ### Choose the Right Test Level
 
 The most impactful performance decision you make isn't a configuration flag — it's choosing the right kind of test for each scenario. Writing a full end-to-end test when a component test or API test would do the same job is the source of enormous accumulated overhead in many test suites.
@@ -914,6 +924,96 @@ For apps with stable, well-tested UIs, exporting the generated code is the lower
 
 Single-machine, serial test runs have a ceiling. Once your suite exceeds 10–15 minutes, the right lever is distributing the work across multiple machines.
 
+### Cache the Cypress Binary in CI
+
+Every Cypress installation includes two pieces: the `cypress` npm package and a platform-specific binary that Cypress downloads separately during `postinstall`. The binary is large — over 100 MB — and downloading it from scratch on every CI run is pure overhead that has nothing to do with your tests.
+
+Most CI environments start from a clean state on every job. Without caching, each run pays the full binary download cost before the first test command ever runs. With caching keyed to your lock file, the binary is only re-downloaded when you upgrade Cypress.
+
+#### What to cache
+
+| Path | What it contains | When to invalidate |
+| ---- | ---------------- | ------------------ |
+| `~/.cache/Cypress` | Cypress binary (Linux) | Lock file changes |
+| `~/Library/Caches/Cypress` | Cypress binary (macOS) | Lock file changes |
+| `~/.npm` | npm's package cache | Lock file changes |
+| `~/.cache/yarn` | Yarn's package cache | Lock file changes |
+
+:::caution
+
+**Do not cache `node_modules` directly.** Caching `node_modules` bypasses npm's and yarn's integrity checks and can cause the Cypress binary to not be downloaded when the `postinstall` hook is skipped from a cache hit. Cache the package manager's own cache directory instead and let `npm ci` or `yarn install --frozen-lockfile` reconstruct `node_modules` from it.
+
+:::
+
+#### GitHub Actions
+
+The [Cypress GitHub Action](https://github.com/cypress-io/github-action) handles caching automatically — it caches the npm and Cypress binary directories using the lock file as the cache key. No additional configuration is needed:
+
+```yaml
+- name: Cypress run
+  uses: cypress-io/github-action@v7
+  with:
+    build: npm run build
+    start: npm start
+```
+
+When running parallel jobs, use a separate install job so all worker jobs share the cached install rather than each downloading independently:
+
+```yaml
+jobs:
+  install:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v6
+      - uses: cypress-io/github-action@v7
+        with:
+          runTests: false  # install and cache only — tests run in worker jobs
+          build: npm run build
+
+  cypress-run:
+    runs-on: ubuntu-24.04
+    needs: install
+    steps:
+      - uses: actions/checkout@v6
+      - uses: cypress-io/github-action@v7
+        with:
+          start: npm start
+```
+
+#### GitLab CI and other providers
+
+For providers without a Cypress-specific action, set `CYPRESS_CACHE_FOLDER` to a project-relative path so your CI's cache configuration can reach it, then cache both the binary folder and the npm cache:
+
+```yaml
+# GitLab CI example
+variables:
+  npm_config_cache: '$CI_PROJECT_DIR/.npm'
+  CYPRESS_CACHE_FOLDER: '$CI_PROJECT_DIR/cache/Cypress'
+
+cache:
+  key: $CI_COMMIT_REF_SLUG
+  paths:
+    - .npm/
+    - cache/Cypress
+
+install:
+  script:
+    - npm ci
+```
+
+For CircleCI, use the built-in [Cypress Orb](https://circleci.com/developer/orbs/orb/cypress-io/cypress) which handles caching for you, or configure caching manually using `~/.cache` as the path (which covers both yarn and Cypress caches).
+
+#### Cache key strategy
+
+Key your cache on the lock file (`package-lock.json` or `yarn.lock`). This means:
+
+- **Cache hit**: the lock file hasn't changed → binary is already present → install is fast
+- **Cache miss**: the lock file changed (e.g., Cypress version bumped) → full install runs, new cache entry stored
+
+A stale or incorrectly configured cache key is the most common reason caching "doesn't seem to work." If you're unsure, use your CI provider's UI to delete the cache and force a clean run to confirm the install time without cache — then compare against subsequent runs to verify the cache is being restored correctly.
+
+See [Caching](/app/continuous-integration/overview#Caching) in the CI overview for additional details and tips.
+
 ### Parallelization
 
 [Parallelization](/cloud/features/smart-orchestration/parallelization) distributes your spec files across multiple CI machines, with Cypress Cloud orchestrating which machine runs which spec based on historical duration data. Adding 2 machines roughly halves your run time; the gains compound as you add more.
@@ -1085,23 +1185,25 @@ Before optimizing, establish a baseline. Record a full CI run to Cypress Cloud, 
 
 The most impactful optimizations, roughly in order:
 
-1. **Choose the right test level** — moving tests from E2E to component or API level is the single highest-leverage change; a component test runs in 1–2 seconds vs. 5–15 seconds for E2E
-2. **`cy.session()` for authentication** — eliminates 2–5 seconds per test
-2. **Stub network requests** — replaces 100–2000ms real calls with < 20ms stubs
-3. **Programmatic state setup** — replaces minutes of UI navigation with seconds of API calls
-4. **Parallelization** — linear scaling with the number of machines
-5. **Spec prioritization + auto cancellation** — reduces the cost of broken builds
-6. **Disable video, use Test Replay** — removes per-spec encoding and upload overhead from CI; Test Replay provides better debugging capability at lower cost
-7. **Right-size CI machine resources** — resource starvation shows up as slow, flaky, or crashing runs; bump vCPUs and RAM before other optimizations if the machine is saturated
-8. **Eliminate arbitrary `cy.wait()`** — removes seconds of dead time
-9. **Slim support file and specific imports** — avoids bundling unused code that inflates compile time and browser payload on every spec startup
-10. **Block third-party requests with `blockHosts`** — prevents analytics, monitoring, and chat services from consuming time in test environments; blocks resolve immediately with a 503
-11. **Avoid wildcard `cy.intercept('*')`** — limits proxy overhead to only the requests the test actually needs
-12. **Use specific DOM selectors** — broad selectors like `*` or `div` force the browser to collect every matching node before filtering; always write the most targeted selector that uniquely identifies the element
-13. **`experimentalFastVisibility`** — replaces the layout-thrashing legacy visibility algorithm with a constant-time point-sampling approach; high impact on complex DOMs
-14. **`experimentalMemoryManagement`** — reduces GC pauses and browser crashes in long runs against memory-heavy apps; measure before committing, as the cleanup cost can exceed the benefit on lighter suites
-15. **Test retries (`runMode: 1`)** — prevents flaky tests from blocking CI runs; keep the count low and use Cypress Cloud flake data to fix root causes rather than absorbing the retry cost permanently
-16. **`cy.prompt` for selector maintenance** — eliminates recurring manual fix time when the UI changes; cached commands run without AI overhead in CI
+1. **Upgrade to the latest Cypress** — the team ships ongoing performance improvements; older versions don't get them
+2. **Choose the right test level** — moving tests from E2E to component or API level is the single highest-leverage change; a component test runs in 1–2 seconds vs. 5–15 seconds for E2E
+3. **`cy.session()` for authentication** — eliminates 2–5 seconds per test
+4. **Stub network requests** — replaces 100–2000ms real calls with < 20ms stubs
+5. **Programmatic state setup** — replaces minutes of UI navigation with seconds of API calls
+6. **Parallelization** — linear scaling with the number of machines
+7. **Spec prioritization + auto cancellation** — reduces the cost of broken builds
+8. **Disable video, use Test Replay** — removes per-spec encoding and upload overhead from CI; Test Replay provides better debugging capability at lower cost
+9. **Cache the Cypress binary in CI** — prevents a 100 MB+ binary download on every run; use the lock file as the cache key
+10. **Right-size CI machine resources** — resource starvation shows up as slow, flaky, or crashing runs; bump vCPUs and RAM before other optimizations if the machine is saturated
+11. **Eliminate arbitrary `cy.wait()`** — removes seconds of dead time
+12. **Slim support file and specific imports** — avoids bundling unused code that inflates compile time and browser payload on every spec startup
+13. **Block third-party requests with `blockHosts`** — prevents analytics, monitoring, and chat services from consuming time in test environments; blocks resolve immediately with a 503
+14. **Avoid wildcard `cy.intercept('*')`** — limits proxy overhead to only the requests the test actually needs
+15. **Use specific DOM selectors** — broad selectors like `*` or `div` force the browser to collect every matching node before filtering; always write the most targeted selector that uniquely identifies the element
+16. **`experimentalFastVisibility`** — replaces the layout-thrashing legacy visibility algorithm with a constant-time point-sampling approach; high impact on complex DOMs
+17. **`experimentalMemoryManagement`** — reduces GC pauses and browser crashes in long runs against memory-heavy apps; measure before committing, as the cleanup cost can exceed the benefit on lighter suites
+18. **Test retries (`runMode: 1`)** — prevents flaky tests from blocking CI runs; keep the count low and use Cypress Cloud flake data to fix root causes rather than absorbing the retry cost permanently
+19. **`cy.prompt` for selector maintenance** — eliminates recurring manual fix time when the UI changes; cached commands run without AI overhead in CI
 
 A team starting from scratch applying all of these has routinely achieved 3–5x improvements in end-to-end suite runtime without deleting a single test.
 
@@ -1123,6 +1225,8 @@ A team starting from scratch applying all of these has routinely achieved 3–5x
 - [Screenshots and Videos](/app/guides/screenshots-and-videos)
 - [Test Replay](/cloud/features/test-replay)
 - [Continuous Integration Overview](/app/continuous-integration/overview)
+- [CI Caching](/app/continuous-integration/overview#Caching)
+- [Changelog](/app/references/changelog)
 - [Troubleshooting: Log Memory and CPU Usage](/app/references/troubleshooting#Log-memory-and-CPU-usage)
 - [Interacting with Elements](/app/core-concepts/interacting-with-elements)
 - [Parallelization](/cloud/features/smart-orchestration/parallelization)
