@@ -316,15 +316,20 @@ If your project uses a bundler other than Vite or Webpack, or you need complete
 control over compilation, pass a custom function to `component.devServer`. This
 is how community integrations and preview-server setups work.
 
-The function's signature takes in an object with the following properties as its
-only parameter and needs to resolve an object containing the port of your dev
-server and a callback to shut it down.
+The function receives a single `DevServerOptions` argument and must return (or
+resolve to) a `ResolvedDevServerConfig` describing how Cypress should connect to
+and stop the server.
 
 ```ts
 interface DevServerOptions {
   specs: Cypress.Spec[]
   cypressConfig: Cypress.PluginConfigOptions
   devServerEvents: NodeJS.EventEmitter
+}
+
+interface ResolvedDevServerConfig {
+  port: number                         // port the dev server is listening on
+  close?: (done?: () => void) => void  // called by Cypress to shut the server down
 }
 ```
 
@@ -436,10 +441,24 @@ CypressInstance.action('app:window:before:load', window)
 For a more complete example you can check out the
 [kickstart script used in the vite-devserver.](https://github.com/cypress-io/cypress/blob/develop/npm/vite-dev-server/client/initCypressTests.js)
 
-The `devServerEvents` event emitter should be used to notify cypress about
-finished builds by emitting a `dev-server:compile:success` event and to listen
-for the `dev-server:specs:changed` event that will notify you about changed
-entry points.
+The `devServerEvents` event emitter is used to communicate compile lifecycle
+events between your server and Cypress:
+
+- Emit `dev-server:compile:success` to notify Cypress that a build finished and
+  tests can run.
+- Listen for `dev-server:specs:changed` to be notified when Cypress updates the
+  set of active spec files (e.g. when a new spec is added), so you can
+  recompile the new entry points.
+
+```ts
+// signal to Cypress that compilation is done
+devServerEvents.emit('dev-server:compile:success')
+
+// recompile when the active spec list changes
+devServerEvents.on('dev-server:specs:changed', ({ specs }) => {
+  recompile(specs)
+})
+```
 
 ## Spec Pattern for Component Tests
 
