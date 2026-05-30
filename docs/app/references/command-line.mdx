@@ -565,6 +565,16 @@ Run tests specifying a single test file to run instead of all tests. The spec
 path should be an absolute path or can be relative to the current working
 directory.
 
+:::caution
+
+`--spec` only runs specs that **also match the configured
+[`specPattern`](/app/references/configuration#e2e)**. Specs located
+outside the configured `specPattern` will not be found. See
+[Test files not found when using `spec` parameter](/app/references/configuration#Test-files-not-found-when-using-spec-parameter)
+for details.
+
+:::
+
 ```shell
 cypress run --spec "cypress/e2e/examples/actions.cy.js"
 ```
