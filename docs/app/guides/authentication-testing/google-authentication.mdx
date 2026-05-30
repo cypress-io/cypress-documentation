@@ -50,6 +50,15 @@ Once saved, note the **client ID** and **client secret**. You can find these und
 [Google API Credentials](https://console.developers.google.com/apis/credentials)
 page.
 
+:::info
+
+You must also configure an **OAuth Consent Screen** and add your test account(s)
+as test users before the credentials will work. Refer to
+[Google's OAuth setup documentation](https://developers.google.com/identity/protocols/oauth2)
+for instructions.
+
+:::
+
 ## Using the Google OAuth 2.0 Playground to Create Testing Credentials
 
 :::info
@@ -140,7 +149,7 @@ Cypress.Commands.add('loginByGoogleApi', () => {
   cy.env(['googleClientId', 'googleClientSecret', 'googleRefreshToken']).then(({ clientId, clientSecret, refreshToken }) => {
     cy.request({
       method: 'POST',
-      url: 'https://www.googleapis.com/oauth2/v4/token',
+      url: 'https://oauth2.googleapis.com/token',
       body: {
         grant_type: 'refresh_token',
         client_id: clientId,
@@ -192,7 +201,7 @@ Cypress.Commands.add('loginByGoogleApi', () => {
     ({ clientId, clientSecret, refreshToken }) => {
       cy.request({
         method: 'POST',
-        url: 'https://www.googleapis.com/oauth2/v4/token',
+        url: 'https://oauth2.googleapis.com/token',
         body: {
           grant_type: 'refresh_token',
           client_id: clientId,
