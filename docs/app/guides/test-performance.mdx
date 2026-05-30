@@ -614,6 +614,64 @@ If you record runs to [Cypress Cloud](/cloud/get-started/introduction), the per-
 
 For shorter suites or applications with modest DOM complexity, the overhead of cleanup will likely outweigh any benefit. Start with it disabled, enable it if you see the symptoms above, and measure before committing to it permanently.
 
+### Use Test Retries Deliberately
+
+Test retries are a genuine performance tool for your team's overall velocity — but they come with an execution cost that compounds quickly if configured carelessly. Understanding the trade-off is what makes them effective.
+
+#### The team velocity benefit
+
+When a flaky test fails — a timing issue, a network hiccup, an animation that resolved 50ms too late — without retries the entire CI run fails. A developer has to notice, investigate, determine it's likely flake rather than a real regression, and manually re-trigger the run. Depending on how long the suite takes, this can cost 30–60 minutes of a developer's time, and in a busy team it can create a queue of blocked pull requests.
+
+With retries enabled, Cypress automatically re-runs the failing test up to the configured number of additional attempts. A test that fails on the first attempt but passes on the second is marked as passed and the run continues. The team gets unblocked without anyone having to intervene.
+
+Cypress Cloud surfaces these automatically-recovered tests with a **Flaky** badge in the run results. Over time, the flaky rate data tells you which tests are retrying most often — pointing you directly to the tests worth actually fixing, rather than discovering flake randomly at inconvenient moments.
+
+#### The execution cost
+
+Every retry is a full re-execution of the test, including its `beforeEach` and `afterEach` hooks. A test configured with `retries: 2` can run up to three times before being marked as failed. On a slow test, that multiplier is significant:
+
+| Test duration | Retries | Worst-case added time per flaky test |
+| ------------- | ------- | ------------------------------------ |
+| 5s test | `retries: 1` | +5s |
+| 5s test | `retries: 2` | +10s |
+| 15s test | `retries: 2` | +30s |
+| 15s test | `retries: 5` | +75s |
+
+Applied globally across a suite where 10% of tests have some flakiness, a high retry count can add many minutes to every CI run — even when no tests ultimately fail.
+
+#### Configure retries deliberately
+
+Set retries differently for CI runs and local development. During `cypress open`, you want to see failures immediately so you can fix them at the source; retrying during local dev masks the problem. In `cypress run` (CI), a small number of retries provides a safety net without excessive overhead:
+
+```js
+// cypress.config.js
+export default defineConfig({
+  retries: {
+    runMode: 1, // one retry in CI — catches most transient flake
+    openMode: 0, // no retries locally — fail fast so you fix the root cause
+  },
+})
+```
+
+One retry in `runMode` handles the vast majority of genuine transient flake. Going above 2 is rarely justified and should be treated as a signal that the test has an underlying problem worth fixing.
+
+You can also apply retries at the suite or test level when a specific area of your application is known to be flakier than the rest — without inflating the retry count across the entire suite:
+
+```js
+// Target higher retries only at the tests that need it
+describe('Payment flow', { retries: { runMode: 2, openMode: 0 } }, () => {
+  it('processes a card payment', () => {
+    // ...
+  })
+})
+```
+
+#### Retries are a safety net, not a fix
+
+The correct use of retries is to keep CI moving while flaky tests are identified and fixed — not to make flaky tests permanently ignorable. A test that retries on every run is costing your suite time on every run. Cypress Cloud's [Flake Detection](/cloud/features/flaky-test-management#Flake-Detection) gives you the data to prioritize which tests to address: tests with the highest flake rate and the most retries are the ones adding the most cumulative overhead.
+
+A healthy relationship with retries looks like this: a low global `runMode` retry count (1), active monitoring of flake rate in Cypress Cloud, and a team practice of treating frequently-retrying tests as a technical debt item to resolve — not a permanently acceptable state.
+
 ### Reduce Selector Maintenance Overhead with cy.prompt
 
 Broken selectors are one of the quietest drags on test suite throughput. When a developer renames a class, changes a data attribute, or restructures a component, every test that referenced the old selector fails. Diagnosing and updating those selectors takes time — often during a CI run everyone is waiting on. Over a large enough suite, selector maintenance becomes a non-trivial fraction of your team's testing time.
@@ -753,7 +811,8 @@ The most impactful optimizations, roughly in order:
 7. **Slim support file and specific imports** — avoids bundling unused code that inflates compile time and browser payload on every spec startup
 8. **`experimentalFastVisibility`** — replaces the layout-thrashing legacy visibility algorithm with a constant-time point-sampling approach; high impact on complex DOMs
 9. **`experimentalMemoryManagement`** — reduces GC pauses and browser crashes in long runs against memory-heavy apps; measure before committing, as the cleanup cost can exceed the benefit on lighter suites
-10. **`cy.prompt` for selector maintenance** — eliminates recurring manual fix time when the UI changes; cached commands run without AI overhead in CI
+10. **Test retries (`runMode: 1`)** — prevents flaky tests from blocking CI runs; keep the count low and use Cypress Cloud flake data to fix root causes rather than absorbing the retry cost permanently
+11. **`cy.prompt` for selector maintenance** — eliminates recurring manual fix time when the UI changes; cached commands run without AI overhead in CI
 
 A team starting from scratch applying all of these has routinely achieved 3–5x improvements in end-to-end suite runtime without deleting a single test.
 
@@ -770,6 +829,8 @@ A team starting from scratch applying all of these has routinely achieved 3–5x
 - [cy.prompt()](/api/commands/prompt)
 - [experimentalFastVisibility](/app/references/experiments#Experimental-Fast-Visibility)
 - [experimentalMemoryManagement](/app/references/experiments)
+- [Test Retries](/app/guides/test-retries)
+- [Flaky Test Management](/cloud/features/flaky-test-management)
 - [Interacting with Elements](/app/core-concepts/interacting-with-elements)
 - [Parallelization](/cloud/features/smart-orchestration/parallelization)
 - [Spec Prioritization](/cloud/features/smart-orchestration/spec-prioritization)
