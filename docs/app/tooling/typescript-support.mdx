@@ -178,9 +178,7 @@ declare global {
 }
 ```
 
-:::caution
-
-**`declare global` requires a TypeScript module file**
+#### `declare global` requires a TypeScript module file
 
 TypeScript distinguishes between two kinds of files:
 
@@ -215,8 +213,6 @@ Conversely, if you use `declare namespace Cypress { ... }` **without** the
 `declare global` wrapper inside a file that _does_ have imports, TypeScript will
 **not** augment the global `Cypress` namespace — your custom commands will still
 appear as unknown.
-
-:::
 
 :::info
 
