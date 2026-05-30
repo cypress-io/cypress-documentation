@@ -71,6 +71,11 @@ flow into the next command (with the exception of `undefined` or `null`).
 - If the callback returns `undefined` or `null` (or there is no return value)
   and the callback does not call any Cypress commands, the subject will not be
   modified, and the previous subject will carry over to the next command.
+- If the callback calls Cypress commands **and** returns a non-`undefined`,
+  non-`null` synchronous value, Cypress will throw an error: _"cy.then() failed
+  because you are mixing up async and sync code."_ To return a new synchronous
+  value while also using Cypress commands, wrap the return value in a nested
+  `.then()` that contains no Cypress commands (see example below).
 
 The callback function of `.then()` is not retried. It is
 [unsafe](/app/core-concepts/retry-ability#Only-queries-are-retried) to return
@@ -130,7 +135,7 @@ cy.get('button')
 
 ```javascript
 cy.wrap(1).then((num) => {
-  cy.wrap(num)).should('equal', 1) // true
+  cy.wrap(num).should('equal', 1) // true
   cy.wrap(2)
 }).should('equal', 2) // true
 ```
