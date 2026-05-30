@@ -258,6 +258,46 @@ intermediate folder, but the result is the same instrumented code loaded by the
 browser, with the same `window.__coverage__` object keeping track of the
 original statements.
 
+:::caution
+
+**Using Jest alongside Cypress?** Adding `babel-plugin-istanbul` directly to
+the top-level `plugins` array in `.babelrc` will cause a **"Duplicate
+plugin/preset detected"** error when Jest runs. Jest automatically instruments
+code with Istanbul (via `babel-jest`) and sets `BABEL_ENV=test`, so loading the
+plugin a second time through `.babelrc` triggers the conflict.
+
+To avoid this, scope the plugin to a separate Babel environment that is only
+active during Cypress runs:
+
+```json title='.babelrc'
+{
+  "presets": ["@babel/preset-react"],
+  "plugins": ["@babel/plugin-proposal-class-properties"],
+  "env": {
+    "cypress": {
+      "plugins": ["istanbul"]
+    }
+  }
+}
+```
+
+Then activate this environment when launching Cypress by setting `BABEL_ENV`
+in your npm script:
+
+```json title='package.json'
+{
+  "scripts": {
+    "test:e2e": "BABEL_ENV=cypress cypress run",
+    "test:ct": "BABEL_ENV=cypress cypress run --component"
+  }
+}
+```
+
+Because Jest never sets `BABEL_ENV=cypress`, the istanbul plugin will only be
+loaded during Cypress runs, and there will be no duplicate-plugin conflict.
+
+:::
+
 :::info
 
 Check out
