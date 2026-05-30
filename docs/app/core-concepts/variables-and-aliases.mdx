@@ -559,7 +559,7 @@ history Cypress was already keeping.
 This is useful in several situations:
 
 **Asserting request count.** The most common need is proving your app made
-*exactly* the expected number of requests — not just that it made at least one.
+_exactly_ the expected number of requests — not just that it made at least one.
 For example, verifying a polling interval doesn't fire again after some time:
 
 ```js
@@ -581,15 +581,15 @@ cy.get('@getUsers.2').its('request.url').should('include', 'page=2')
 ```
 
 **Why not multiple `cy.wait()` calls?** `cy.wait('@alias')` called twice will
-consume two requests in order, which is useful for *sequencing* — but it doesn't
+consume two requests in order, which is useful for _sequencing_ — but it doesn't
 catch a third unexpected request, and once consumed you can't go back to inspect
 an earlier one. `cy.get('@alias.all')` is backward-looking: it queries everything
 Cypress has already captured. The two complement each other — use `cy.wait()` to
 let requests settle, then `cy.get('@alias.all')` to assert on the full history:
 
 ```js
-cy.wait('@getUsers')            // let requests settle
-cy.get('@getUsers.all')         // then assert on everything captured
+cy.wait('@getUsers') // let requests settle
+cy.get('@getUsers.all') // then assert on everything captured
   .should('have.length', 2)
 ```
 
