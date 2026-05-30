@@ -764,9 +764,33 @@ How the contents are removed depends on the operating system:
 ### Test files not found when using `spec` parameter
 
 When using the `--spec <path or mask>` argument, make it relative to the
-project's folder. If the specs are still missing, run Cypress with
-[DEBUG logs](/app/references/troubleshooting#Print-DEBUG-logs) with the
-following setting to see how Cypress is looking for spec files:
+project's folder.
+
+The `--spec` argument only runs specs that **also match the configured
+[`specPattern`](#e2e)**. Cypress computes the intersection of the
+`--spec` value and `specPattern`, so any spec file outside the configured
+`specPattern` will not be found — even if you pass its exact path.
+
+For example, the default `e2e.specPattern` is
+`cypress/e2e/**/*.cy.{js,jsx,ts,tsx}`. If your spec lives outside
+`cypress/e2e/`, passing its path via `--spec` will not run it until you also
+update `specPattern` in your Cypress config to include that location:
+
+```js
+// cypress.config.js
+module.exports = defineConfig({
+  e2e: {
+    specPattern: [
+      'cypress/e2e/**/*.cy.{js,jsx,ts,tsx}',
+      'tests/**/*.cy.{js,jsx,ts,tsx}',
+    ],
+  },
+})
+```
+
+If the specs are still missing after verifying the path and `specPattern`, run
+Cypress with [DEBUG logs](/app/references/troubleshooting#Print-DEBUG-logs)
+with the following setting to see how Cypress is looking for spec files:
 
 ```shell
 DEBUG=cypress:cli,cypress:data-context:sources:FileDataSource,cypress:data-context:sources:ProjectDataSource
