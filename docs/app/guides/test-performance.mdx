@@ -509,6 +509,63 @@ Conversely, for operations with known latency (large file uploads, slow reports)
 cy.get('[data-cy="report-ready"]', { timeout: 30000 }).should('be.visible')
 ```
 
+### Enable Faster Visibility Checks with `experimentalFastVisibility`
+
+Every time Cypress asserts or checks that an element is visible — through `.should('be.visible')`, actionability checks before `.click()`, `.type()`, and similar commands — it runs a visibility detection algorithm. In applications with complex, deeply-nested DOM structures, this check can be expensive: the legacy algorithm walks up the ancestor tree and reads CSS properties at each level, repeatedly triggering layout recalculation. On large DOMs, this adds up across hundreds of checks per test.
+
+[`experimentalFastVisibility`](/app/references/experiments#Experimental-Fast-Visibility) replaces the legacy algorithm with a two-stage approach: it first calls the browser's built-in `checkVisibility()` method, then uses an adaptive point-sampling algorithm to confirm coverage. This is constant-time in the best case and avoids repeated layout-triggering CSS reads.
+
+The performance benefits from the experiments docs:
+
+- **Constant-time best case** — the legacy algorithm's per-ancestor traversal is replaced by a single `checkVisibility()` call for most elements
+- **Reduced layout thrashing** — avoids repeatedly reading CSS properties that force the browser to recalculate layout
+- **Lower memory pressure** — reduces the risk of browser crashes during visibility checks on complex DOM trees
+- **More accurate coverage detection** — catches cases where an element is fully covered by a positioned element outside its ancestor tree, which the legacy algorithm missed
+
+#### Enabling it
+
+Set `experimentalFastVisibility: true` in your Cypress configuration to apply it globally:
+
+:::cypress-config-example
+
+```js
+{
+  experimentalFastVisibility: true
+}
+```
+
+:::
+
+You can also enable or disable it at the suite or test level when you need to migrate incrementally or exclude specific tests:
+
+```js
+// Enable for the whole suite, but opt one test out
+describe('Dashboard', { experimentalFastVisibility: true }, () => {
+  it('loads correctly', () => {
+    // uses fast visibility
+  })
+
+  it('legacy edge case', { experimentalFastVisibility: false }, () => {
+    // uses legacy algorithm for this one test
+  })
+})
+```
+
+#### What to watch for when enabling it
+
+The fast algorithm is more geometrically precise than the legacy one, which means some tests may fail when you first enable it — and those failures are likely correct. Common cases:
+
+- Elements positioned outside the browser viewport are now correctly identified as hidden; call `.scrollIntoView()` before asserting visibility on them
+- Elements with zero-dimension containers, `pointer-events: none`, or full coverage by another element are now correctly flagged as hidden
+
+:::caution
+
+Shadow DOM elements are not yet supported by the fast visibility algorithm. If your tests interact with Shadow DOM, either disable `experimentalFastVisibility` for those suites or wait until Shadow DOM support is added. See the [Experimental Fast Visibility](/app/references/experiments#Experimental-Fast-Visibility) reference for the current limitations.
+
+:::
+
+This flag is most impactful on suites with many visibility assertions or suites that run against applications with large, deeply-nested component trees. If you're already experiencing slow actionability checks or intermittent browser memory issues, enabling it globally is a low-effort first step.
+
 ### Reduce Selector Maintenance Overhead with cy.prompt
 
 Broken selectors are one of the quietest drags on test suite throughput. When a developer renames a class, changes a data attribute, or restructures a component, every test that referenced the old selector fails. Diagnosing and updating those selectors takes time — often during a CI run everyone is waiting on. Over a large enough suite, selector maintenance becomes a non-trivial fraction of your team's testing time.
@@ -646,7 +703,8 @@ The most impactful optimizations, roughly in order:
 5. **Spec prioritization + auto cancellation** — reduces the cost of broken builds
 6. **Eliminate arbitrary `cy.wait()`** — removes seconds of dead time
 7. **Slim support file and specific imports** — avoids bundling unused code that inflates compile time and browser payload on every spec startup
-8. **`cy.prompt` for selector maintenance** — eliminates recurring manual fix time when the UI changes; cached commands run without AI overhead in CI
+8. **`experimentalFastVisibility`** — replaces the layout-thrashing legacy visibility algorithm with a constant-time point-sampling approach; high impact on complex DOMs
+9. **`cy.prompt` for selector maintenance** — eliminates recurring manual fix time when the UI changes; cached commands run without AI overhead in CI
 
 A team starting from scratch applying all of these has routinely achieved 3–5x improvements in end-to-end suite runtime without deleting a single test.
 
@@ -661,6 +719,8 @@ A team starting from scratch applying all of these has routinely achieved 3–5x
 - [cy.request()](/api/commands/request)
 - [cy.task()](/api/commands/task)
 - [cy.prompt()](/api/commands/prompt)
+- [experimentalFastVisibility](/app/references/experiments#Experimental-Fast-Visibility)
+- [Interacting with Elements](/app/core-concepts/interacting-with-elements)
 - [Parallelization](/cloud/features/smart-orchestration/parallelization)
 - [Spec Prioritization](/cloud/features/smart-orchestration/spec-prioritization)
 - [Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation)
