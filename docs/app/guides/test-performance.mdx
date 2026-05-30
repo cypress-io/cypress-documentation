@@ -786,6 +786,45 @@ A suite that normally fails at the 20-minute mark can surface that failure in 2�
 
 [Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation) terminates a run once a configurable number of test failures is reached. If your suite has a systemic failure (a broken build, a missing environment variable), there's no value in running 200 more tests — cancel early and let developers fix the root cause.
 
+### Disable Video — Use Test Replay Instead
+
+Video recording is one of the most common sources of hidden CI overhead. When `video: true` is set and you're recording to Cypress Cloud, Cypress captures a video for every spec file, then encodes it and uploads it to the Cloud after the spec completes — before the next spec can start. On machines with limited CPU (typical of CI environments), the encoding step is the most expensive part: the gap between a spec finishing and the next spec beginning is Cypress encoding and uploading the previous spec's video. This overhead is paid even for specs where every test passed and no one will ever watch the recording.
+
+:::info
+
+Video recording is **disabled by default** in Cypress. If you've never set `video: true` in your configuration, you're already skipping this overhead. This recommendation applies if you currently have video enabled.
+
+:::
+
+**Disable video in your Cypress configuration:**
+
+:::cypress-config-example
+
+```js
+{
+  video: false
+}
+```
+
+:::
+
+#### Use Test Replay for CI debugging instead
+
+The reason teams enable video is to have something to look at when a CI test fails. [Test Replay](/cloud/features/test-replay) is a better answer to that problem. It's available on all Cypress Cloud plans at no additional cost and requires no configuration changes — it's automatically available for any run recorded to Cypress Cloud.
+
+Where a video gives you a passive playback of what the screen looked like, Test Replay gives you an interactive, time-travel debugger: you can inspect the DOM at any point during the test, examine network requests and their responses, read console logs, and see JavaScript errors — exactly as they occurred in CI. This is the context that actually resolves failures quickly, especially for environment-specific failures that are difficult to reproduce locally.
+
+```
+Video: passive playback of the screen
+Test Replay: full interactive access to DOM, network, console, and errors at every moment of the run
+```
+
+#### If you're concerned about Test Replay upload time
+
+Test Replay data is uploaded to Cypress Cloud as part of the recorded run. The upload time is visible in the terminal output at the end of each spec — you can see exactly how long it takes for your suite. In the large majority of cases it is minimal: Test Replay captures structured event data rather than encoding video frames, so the payload is typically far smaller than a compressed video file.
+
+If you see upload times that concern you, the terminal output gives you the numbers to compare directly against what you were spending on video encoding and upload previously.
+
 ### Record to Cypress Cloud for Insights
 
 Recording runs to [Cypress Cloud](/cloud/get-started/introduction) unlocks the analytics needed to systematically improve performance:
@@ -807,7 +846,8 @@ The most impactful optimizations, roughly in order:
 3. **Programmatic state setup** — replaces minutes of UI navigation with seconds of API calls
 4. **Parallelization** — linear scaling with the number of machines
 5. **Spec prioritization + auto cancellation** — reduces the cost of broken builds
-6. **Eliminate arbitrary `cy.wait()`** — removes seconds of dead time
+6. **Disable video, use Test Replay** — removes per-spec encoding and upload overhead from CI; Test Replay provides better debugging capability at lower cost
+7. **Eliminate arbitrary `cy.wait()`** — removes seconds of dead time
 7. **Slim support file and specific imports** — avoids bundling unused code that inflates compile time and browser payload on every spec startup
 8. **`experimentalFastVisibility`** — replaces the layout-thrashing legacy visibility algorithm with a constant-time point-sampling approach; high impact on complex DOMs
 9. **`experimentalMemoryManagement`** — reduces GC pauses and browser crashes in long runs against memory-heavy apps; measure before committing, as the cleanup cost can exceed the benefit on lighter suites
@@ -831,6 +871,8 @@ A team starting from scratch applying all of these has routinely achieved 3–5x
 - [experimentalMemoryManagement](/app/references/experiments)
 - [Test Retries](/app/guides/test-retries)
 - [Flaky Test Management](/cloud/features/flaky-test-management)
+- [Screenshots and Videos](/app/guides/screenshots-and-videos)
+- [Test Replay](/cloud/features/test-replay)
 - [Interacting with Elements](/app/core-concepts/interacting-with-elements)
 - [Parallelization](/cloud/features/smart-orchestration/parallelization)
 - [Spec Prioritization](/cloud/features/smart-orchestration/spec-prioritization)
