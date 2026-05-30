@@ -335,7 +335,7 @@ generated based on endpoint, version, platform and architecture.
 
 - `${endpoint}` is replaced with the full base URL including the version path
   segment: `<base>/desktop/<version>` (e.g.
-  `https://download.cypress.io/desktop/10.11.0`).
+  `https://download.cypress.io/desktop/15.16.0`).
   If `CYPRESS_DOWNLOAD_MIRROR` is set, its value is used as `<base>` instead of
   `https://download.cypress.io` (note that `/desktop/<version>` is still
   appended).
@@ -344,7 +344,7 @@ generated based on endpoint, version, platform and architecture.
 - `${arch}` is replaced with the architecture the installation is running on
   (e.g. `x64`, `arm64`). On Windows ARM64, this is always `x64`.
 - `${version}` is replaced with the version number
-  that's being installed (e.g. `10.11.0`)
+  that's being installed (e.g. `15.16.0`)
 
 **Examples:**
 
@@ -354,14 +354,14 @@ structure of `https://cdn.cypress.io`:
 ```shell
 export CYPRESS_DOWNLOAD_MIRROR=https://cypress-download.local
 export CYPRESS_DOWNLOAD_PATH_TEMPLATE='${endpoint}/${platform}-${arch}/cypress.zip'
-# Example of a resulting URL: https://cypress-download.local/desktop/10.11.0/linux-x64/cypress.zip
+# Example of a resulting URL: https://cypress-download.local/desktop/15.16.0/linux-x64/cypress.zip
 ```
 
 To install the binary from a download server with a custom file structure:
 
 ```shell
 export CYPRESS_DOWNLOAD_PATH_TEMPLATE='https://software.local/cypress/${platform}/${arch}/${version}/cypress.zip'
-# Example of a resulting URL: https://software.local/cypress/linux/x64/10.11.0/cypress.zip
+# Example of a resulting URL: https://software.local/cypress/linux/x64/15.16.0/cypress.zip
 ```
 
 To define `CYPRESS_DOWNLOAD_PATH_TEMPLATE` in `.npmrc`, put a backslash before
