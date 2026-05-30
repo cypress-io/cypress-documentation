@@ -67,13 +67,6 @@ helps you choose the right combination for your project:
 | **Manual QA** | Visible UX defects and end-user workflows | Doesn't scale; expensive per release; misses regressions and edge cases |
 | **Mutation testing** | Whether your tests actually detect code changes | Slow to run; typically too expensive for CI on every commit |
 
-Code coverage occupies a practical middle ground. The instrumentation adds only
-lightweight counters to your code, so it runs fast and integrates directly into
-CI. Unlike manual QA, the analysis scales infinitely — the same check runs on
-every commit at no additional cost. Unlike static analysis, it reflects actual
-runtime behavior. And unlike mutation testing, it is cheap enough to run on
-every pull request.
-
 Code coverage and UI Coverage are complementary rather than competing. Code
 coverage answers "which source code lines did the tests execute?", while UI
 Coverage answers "which parts of the UI did the tests touch?" — using both
