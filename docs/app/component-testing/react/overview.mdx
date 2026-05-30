@@ -192,6 +192,45 @@ end-to-end test would execute and test a page entirely.
 Because of this, we recommend using E2E Testing over Component Testing for
 Next.js pages and Component Testing for individual components in a Next.js app.
 
+#### Next.js App Router Navigation
+
+When testing components that use hooks from `next/navigation` — such as
+[`useRouter`](https://nextjs.org/docs/app/api-reference/functions/use-router),
+[`usePathname`](https://nextjs.org/docs/app/api-reference/functions/use-pathname),
+or
+[`useSearchParams`](https://nextjs.org/docs/app/api-reference/functions/use-search-params)
+— these hooks require a router context that is not present by default in
+component tests.
+
+The recommended approach is to use
+[`next-router-mock`](https://www.npmjs.com/package/next-router-mock), which
+provides mock implementations compatible with the Next.js App Router:
+
+```shell
+npm install --save-dev next-router-mock
+```
+
+Wrap your component with `MemoryRouterProvider` and set the initial URL with
+`mockRouter.push()` before mounting:
+
+```tsx
+import mockRouter from 'next-router-mock'
+import { MemoryRouterProvider } from 'next-router-mock/MemoryRouterProvider'
+
+it('navigates on button click', () => {
+  mockRouter.push('/initial-path')
+
+  cy.mount(
+    <MemoryRouterProvider>
+      <MyComponent />
+    </MemoryRouterProvider>
+  )
+
+  cy.get('button').click()
+  cy.wrap(mockRouter).its('pathname').should('eq', '/expected-path')
+})
+```
+
 #### Sample Next.js Apps
 
 - [Next.js 15 with TypeScript](https://github.com/cypress-io/cypress-component-testing-apps/tree/main/react-next15-ts)
