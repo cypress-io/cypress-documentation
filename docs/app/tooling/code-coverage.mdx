@@ -51,13 +51,13 @@ one you can enforce as a quality gate on every pull request and trend over time.
 Different quality tools answer different questions. Understanding the tradeoffs
 helps you choose the right combination for your project:
 
-| Approach | What it tells you | Key limitation |
-|---|---|---|
-| **Code coverage** | Which lines, branches, and functions were executed by tests | Requires instrumentation; a line being executed doesn't guarantee the assertion is meaningful |
-| **[UI Coverage](/ui-coverage/get-started/introduction)** | Which interactive elements across your UI were exercised by tests | No instrumentation needed; shows UI-level gaps rather than code-level logic gaps |
-| **Static analysis / linters** | Type errors, style violations, and common code smells | Cannot find runtime logic gaps or missing test scenarios |
-| **Manual QA** | Visible UX defects and end-user workflows | Doesn't scale; expensive per release; misses regressions and edge cases |
-| **Mutation testing** | Whether your tests actually detect code changes | Slow to run; typically too expensive for CI on every commit |
+| Approach                                                 | What it tells you                                                 | Key limitation                                                                                |
+| -------------------------------------------------------- | ----------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| **Code coverage**                                        | Which lines, branches, and functions were executed by tests       | Requires instrumentation; a line being executed doesn't guarantee the assertion is meaningful |
+| **[UI Coverage](/ui-coverage/get-started/introduction)** | Which interactive elements across your UI were exercised by tests | No instrumentation needed; shows UI-level gaps rather than code-level logic gaps              |
+| **Static analysis / linters**                            | Type errors, style violations, and common code smells             | Cannot find runtime logic gaps or missing test scenarios                                      |
+| **Manual QA**                                            | Visible UX defects and end-user workflows                         | Doesn't scale; expensive per release; misses regressions and edge cases                       |
+| **Mutation testing**                                     | Whether your tests actually detect code changes                   | Slow to run; typically too expensive for CI on every commit                                   |
 
 Code coverage and UI Coverage are complementary rather than competing. Code
 coverage answers "which source code lines did the tests execute?", while UI
