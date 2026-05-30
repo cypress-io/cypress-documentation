@@ -25,6 +25,52 @@ Cypress ships with
 for [TypeScript](https://www.typescriptlang.org/). This allows you to write your
 tests in TypeScript.
 
+## Why TypeScript with Cypress?
+
+Writing Cypress tests in TypeScript gives your team a tight feedback loop that
+catches problems before a single browser opens — and long before a bug reaches
+production.
+
+### Catch errors at the editor, not in CI
+
+TypeScript surfaces mismatched selectors, wrong argument types, and missing
+return values as red underlines in your editor the moment you type them. Without
+TypeScript, those same mistakes surface as a failing test run minutes or hours
+later — or worse, a bug reported by a user. Moving that feedback earlier
+eliminates a whole class of debugging cycles.
+
+### IntelliSense makes the API self-documenting
+
+When your test file is TypeScript, your editor can autocomplete every `cy.*`
+command, show its accepted parameters, and display the inline JSDoc as you type.
+Your team spends less time reading reference docs and less time guessing whether
+the third argument is optional. For custom commands you expose to the rest of
+the team, typed declarations act as a lightweight contract: the name, parameters,
+and return type are machine-verified so callers always get correct usage.
+
+### Safer refactoring across the codebase
+
+When a selector utility, a fixture type, or a page-object method changes, the
+TypeScript compiler points to every test that is now broken — across the entire
+project — before you run anything. On a large team, this makes refactoring a
+planned, predictable operation rather than a game of grep-and-hope.
+
+### Lower cost of onboarding and review
+
+New engineers can explore the test suite with editor assistance rather than
+reading every helper file to understand what it does. Code reviewers can focus
+on intent rather than hunting for type mismatches. Both effects compound over
+time: less ramp-up cost, fewer back-and-forth review cycles, and a test suite
+that stays readable as it grows.
+
+### Shared types between app code and tests
+
+Because your Cypress support files are plain TypeScript, they can import the
+same type definitions your application uses — API response shapes, domain
+models, enum values. A type change in the app propagates into the tests
+automatically, so your tests stay aligned with the code they exercise without
+manual synchronization.
+
 ## Get Started
 
 ### Install TypeScript
@@ -343,11 +389,13 @@ augment to tell TypeScript about properties your application adds to `window`.
 Extend the interface in your support file or a `*.d.ts` file:
 
 ```typescript title="cypress/support/e2e.ts"
-declare namespace Cypress {
-  interface ApplicationWindow {
-    // add the properties your app sets on window
-    env: {
-      DISABLE: boolean
+declare global {
+  namespace Cypress {
+    interface ApplicationWindow {
+      // add the properties your app sets on window
+      env: {
+        DISABLE: boolean
+      }
     }
   }
 }
