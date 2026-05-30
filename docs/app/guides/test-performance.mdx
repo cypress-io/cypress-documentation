@@ -214,6 +214,10 @@ export default defineConfig({
 
 With `baseUrl` set, Cypress opens directly to your application. See [Setting a Global baseUrl](/app/core-concepts/best-practices#Setting-a-Global-baseUrl) for details.
 
+There is a second, more significant benefit: **Cypress verifies that `baseUrl` is reachable before running any tests.** If the URL is not available — because your dev server failed to start, a deployment didn't complete, an environment variable is wrong, or the app crashed on startup — Cypress exits immediately with a clear error rather than starting the suite. This kills an entirely broken run before it wastes any CI time or obscures the real problem behind a cascade of confusing test failures.
+
+This early-exit behavior is one of the most practical reasons to always set `baseUrl`. A missing or misconfigured server URL is a systemic problem, not a test problem — surfacing it in the first second of a run rather than 10 minutes in saves everyone's time.
+
 ### Using `afterEach` for Cleanup
 
 `afterEach` runs even when a test fails, and if it touches the server it adds latency to every test transition. More importantly, if Cypress is reloaded mid-test, `afterEach` won't run at all, leaving your state inconsistent.
