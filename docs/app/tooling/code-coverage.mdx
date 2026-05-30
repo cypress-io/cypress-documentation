@@ -12,6 +12,8 @@ sidebar_label: 'Code Coverage'
 
 ##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
 
+- Why code coverage helps you ship higher quality software with less risk
+- How code coverage compares to other quality tools
 - The difference between Code Coverage and Cypress's UI Coverage
 - How to instrument your application code for code coverage
 - How to collect code coverage from Cypress tests
@@ -30,6 +32,52 @@ Cypress offers a couple of solutions to help answer these questions:
 
 - **[Code coverage](#Code-Coverage)** - find out which lines of the application's source code were executed
 - **[UI coverage](#UI-Coverage)** - find out which parts of the UI were tested
+
+### Why code coverage matters
+
+Every application ships with code that nobody has explicitly tested. Some of it
+is dead code that should be deleted. Some of it is critical logic — conditional
+branches, error handlers, edge cases — that simply never had a test written for
+it. The difference matters, because untested logic that reaches production is a
+primary source of expensive, hard-to-diagnose bugs.
+
+Code coverage makes the gap visible. It tells you precisely which lines,
+branches, and functions were executed during your test run. It turns "do we have
+enough tests?" from a matter of opinion into a measurable, trackable signal —
+one you can enforce as a quality gate on every pull request and trend over time.
+
+**Bugs are cheapest to fix when they're caught earliest.** A branch left
+uncovered in a test suite can be found and fixed in minutes by the developer who
+wrote it. The same defect found in QA takes hours to reproduce and report. The
+same defect found in production may cost orders of magnitude more — in engineer
+time, incident response, and lost user trust. Code coverage closes that loop
+earlier: when a pull request introduces a new code path with no corresponding
+test, you know *before merge*, not after.
+
+### How code coverage compares to alternatives
+
+Different quality tools answer different questions. Understanding the tradeoffs
+helps you choose the right combination for your project:
+
+| Approach | What it tells you | Key limitation |
+|---|---|---|
+| **Code coverage** | Which lines, branches, and functions were executed by tests | Requires instrumentation; a line being executed doesn't guarantee the assertion is meaningful |
+| **[UI Coverage](/ui-coverage/get-started/introduction)** | Which interactive elements across your UI were exercised by tests | No instrumentation needed; shows UI-level gaps rather than code-level logic gaps |
+| **Static analysis / linters** | Type errors, style violations, and common code smells | Cannot find runtime logic gaps or missing test scenarios |
+| **Manual QA** | Visible UX defects and end-user workflows | Doesn't scale; expensive per release; misses regressions and edge cases |
+| **Mutation testing** | Whether your tests actually detect code changes | Slow to run; typically too expensive for CI on every commit |
+
+Code coverage occupies a practical middle ground. The instrumentation adds only
+lightweight counters to your code, so it runs fast and integrates directly into
+CI. Unlike manual QA, the analysis scales infinitely — the same check runs on
+every commit at no additional cost. Unlike static analysis, it reflects actual
+runtime behavior. And unlike mutation testing, it is cheap enough to run on
+every pull request.
+
+Code coverage and UI Coverage are complementary rather than competing. Code
+coverage answers "which source code lines did the tests execute?", while UI
+Coverage answers "which parts of the UI did the tests touch?" — using both
+together gives you a more complete picture of test quality.
 
 ### Code Coverage
 
