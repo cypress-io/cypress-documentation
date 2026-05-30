@@ -167,6 +167,21 @@ cy.get('[data-cy="transactions"]').should('have.length.greaterThan', 0)
 
 See the [Network Requests guide](/app/guides/network-requests) for a full discussion of when to stub vs. use real server responses.
 
+### Intercepting All Network Requests with `*`
+
+Using a wildcard pattern to observe or intercept every HTTP request sounds like a harmless convenience, but it creates real overhead. Cypress routes every intercepted request through its proxy — which means every network call the page makes is inspected, matched, and processed. Broad wildcard patterns that match dozens or hundreds of requests per page load multiply that cost across the entire suite.
+
+```js
+// ❌ Anti-pattern: intercepts every request — Cypress proxies each one
+cy.intercept('*').as('anyRequest')
+
+// ✅ Only intercept the specific requests your test intends to work with
+cy.intercept('GET', '/api/users*').as('getUsers')
+cy.intercept('POST', '/api/orders').as('createOrder')
+```
+
+A page that fires 50 network requests — images, analytics pings, feature flag polls, error monitoring payloads — will route all 50 through the intercept handler when using `*`. The proxy cost per request is small, but it compounds across every page visit in every test. Intercept only the requests your test explicitly needs to observe, stub, or wait on.
+
 ### Missing `baseUrl`
 
 Without a `baseUrl`, Cypress loads a blank page on startup then reloads when `cy.visit()` is first called. This causes a visible flash and wastes several hundred milliseconds at the start of every test file.
@@ -454,6 +469,40 @@ it('shows an error message when the order fails', () => {
 ```
 
 Stubbed requests return in < 20ms. Real requests to a local dev server typically return in 100–500ms; requests to a remote staging server may take 500ms–2 seconds each.
+
+### Block Third-Party Requests with `blockHosts`
+
+Most web applications load resources from third-party services in production: analytics platforms, error monitoring (Sentry, Datadog), A/B testing tools, customer chat widgets. In a test environment these requests are noise — they have nothing to do with your application's behavior under test — but they still consume time: the browser initiates the connection, waits for a response, or sits through a timeout before moving on.
+
+Use [`blockHosts`](/app/references/configuration#blockHosts) to block these domains at the Cypress network layer. Blocked requests are never sent; Cypress responds immediately with a `503` status code, freeing the browser to continue without waiting.
+
+:::cypress-config-example
+
+```js
+{
+  e2e: {
+    blockHosts: [
+      '*google-analytics.com',
+      '*sentry.io',
+      '*datadoghq.com',
+      '*.optimizely.com',
+      '*.intercom.io',
+    ],
+  }
+}
+```
+
+:::
+
+The effect is immediate: those requests never leave the test machine. Application code that depends on these services receives a quick `503` and fails gracefully, exactly as it would in an environment with no connectivity to those services. Tests that aren't testing analytics or monitoring behavior don't need these services to respond.
+
+`blockHosts` accepts a string or an array of strings. Glob patterns (`*`) are matched using [minimatch](https://github.com/isaacs/minimatch). The `x-cypress-matched-blocked-host` response header on each blocked request identifies which rule matched — useful if a block is matching something you didn't intend.
+
+:::tip
+
+If you're not sure which third-party domains your application is calling, open the Cypress App, run a test, and inspect the **Network** tab in the browser's Developer Tools. Any request to a domain you don't own and aren't testing is a candidate for `blockHosts`.
+
+:::
 
 ### Manage Test Isolation Deliberately
 
@@ -913,11 +962,13 @@ The most impactful optimizations, roughly in order:
 6. **Disable video, use Test Replay** — removes per-spec encoding and upload overhead from CI; Test Replay provides better debugging capability at lower cost
 7. **Right-size CI machine resources** — resource starvation shows up as slow, flaky, or crashing runs; bump vCPUs and RAM before other optimizations if the machine is saturated
 8. **Eliminate arbitrary `cy.wait()`** — removes seconds of dead time
-7. **Slim support file and specific imports** — avoids bundling unused code that inflates compile time and browser payload on every spec startup
-8. **`experimentalFastVisibility`** — replaces the layout-thrashing legacy visibility algorithm with a constant-time point-sampling approach; high impact on complex DOMs
-9. **`experimentalMemoryManagement`** — reduces GC pauses and browser crashes in long runs against memory-heavy apps; measure before committing, as the cleanup cost can exceed the benefit on lighter suites
-10. **Test retries (`runMode: 1`)** — prevents flaky tests from blocking CI runs; keep the count low and use Cypress Cloud flake data to fix root causes rather than absorbing the retry cost permanently
-11. **`cy.prompt` for selector maintenance** — eliminates recurring manual fix time when the UI changes; cached commands run without AI overhead in CI
+9. **Slim support file and specific imports** — avoids bundling unused code that inflates compile time and browser payload on every spec startup
+10. **Block third-party requests with `blockHosts`** — prevents analytics, monitoring, and chat services from consuming time in test environments; blocks resolve immediately with a 503
+11. **Avoid wildcard `cy.intercept('*')`** — limits proxy overhead to only the requests the test actually needs
+12. **`experimentalFastVisibility`** — replaces the layout-thrashing legacy visibility algorithm with a constant-time point-sampling approach; high impact on complex DOMs
+13. **`experimentalMemoryManagement`** — reduces GC pauses and browser crashes in long runs against memory-heavy apps; measure before committing, as the cleanup cost can exceed the benefit on lighter suites
+14. **Test retries (`runMode: 1`)** — prevents flaky tests from blocking CI runs; keep the count low and use Cypress Cloud flake data to fix root causes rather than absorbing the retry cost permanently
+15. **`cy.prompt` for selector maintenance** — eliminates recurring manual fix time when the UI changes; cached commands run without AI overhead in CI
 
 A team starting from scratch applying all of these has routinely achieved 3–5x improvements in end-to-end suite runtime without deleting a single test.
 
@@ -944,3 +995,4 @@ A team starting from scratch applying all of these has routinely achieved 3–5x
 - [Parallelization](/cloud/features/smart-orchestration/parallelization)
 - [Spec Prioritization](/cloud/features/smart-orchestration/spec-prioritization)
 - [Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation)
+- [blockHosts Configuration](/app/references/configuration#blockHosts)
