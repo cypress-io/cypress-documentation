@@ -431,9 +431,12 @@ minutes off install time by preventing a large binary download.
   [`npm ci`](https://docs.npmjs.com/cli/ci) or equivalents as demonstrated in
   the configs below.
 
-- **Do not** cache `node_modules` across builds. This bypasses more intelligent
-  caching packaged with `npm` or `yarn`, and can cause issues with Cypress not
-  downloading the Cypress binary on `npm install`.
+- **Do not** cache `node_modules` across builds. Instead, cache the package
+  manager's own cache directory (`~/.npm` for npm or `~/.cache/yarn` for yarn).
+  These tools maintain package-level caches that track installed versions,
+  validate integrity, and only re-download packages that have changed. Caching
+  `node_modules` directly bypasses these built-in mechanisms and can cause
+  issues such as Cypress not downloading the Cypress binary on `npm install`.
 
 - If you are using `npm install` in your build process, consider
   [switching to `npm ci`](https://blog.npmjs.org/post/171556855892/introducing-npm-ci-for-faster-more-reliable)
