@@ -1,6 +1,6 @@
 ---
 title: 'Enterprise SSO | Cypress Cloud'
-description: 'Configure SSO with Okta, SAML, or Azure AD in Cypress for your Cloud organization.'
+description: 'Configure SSO with Okta, SAML, Azure AD, or OneLogin in Cypress for your Cloud organization.'
 sidebar_label: Enterprise SSO
 sidebar_position: 40
 ---
@@ -14,9 +14,29 @@ sidebar_position: 40
 ##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
 
 - How to enable Enterprise SSO for your organization
-- How to configure SSO with Okta, SAML, or Azure AD
+- How to configure SSO with Okta, SAML, Azure AD, or OneLogin
 
 :::
+
+Cypress Cloud is your team's quality hub — the place where test results are
+reviewed, flaky tests are tracked, and CI pipelines are monitored. Connecting it
+to your organization's identity provider via SSO keeps that hub secure and
+removes friction from every developer's daily workflow:
+
+- **Faster onboarding** — new engineers are provisioned through your IdP and
+  can immediately run and review tests without waiting for manual Cypress Cloud
+  invitations, keeping quality checks part of the workflow from day one.
+- **Automatic offboarding** — revoking a user in your IdP immediately removes
+  their access to test results, run history, and project configuration, closing
+  the gap that standalone credentials leave open when team members depart.
+- **Enforce your security baseline** — MFA, conditional access, and session
+  policies defined in your IdP apply automatically to Cypress Cloud, so your
+  quality data is protected by the same controls as the rest of your toolchain
+  without any extra configuration.
+- **Less credential sprawl** — developers sign in with their existing corporate
+  identity, eliminating a separate username and password to manage, rotate, and
+  potentially lose — and removing one more reason for login friction that slows
+  down test review and incident response.
 
 ## Getting Started
 
@@ -51,6 +71,7 @@ support at support@cypress.io for assistance.
 - [Okta](#Okta)
 - [SAML](#SAML)
 - [Azure AD](#Azure-AD)
+- [OneLogin](#OneLogin)
 
 ### **Okta**
 
@@ -133,6 +154,33 @@ addition to the documentation below, refer to the Microsoft Guides for
 1. Enter the domain used for your Active Directory, as well as the list of SSO
    domains you wish to allow user to authenticate with, in Cypress Cloud. This
    is used for SSO discovery from the login screen.
+1. [Save Configuration](#Save-Configuration).
+
+### **OneLogin**
+
+Cypress Cloud can integrate with OneLogin via SAML. In addition to the
+documentation below, refer to
+[OneLogin's official documentation for configuring a SAML custom connector.](https://onelogin.service-now.com/support?id=kb_article&sys_id=912bb23edbde7810fe39dde7489619de)
+
+1. Log into your OneLogin portal as an administrator and navigate to
+   **Applications > Applications**, then click **Add App**.
+1. Search for **SAML Custom Connector (Advanced)** and select it.
+1. Set the **Display Name** to `Cypress Cloud` and click **Save**.
+1. Open the **Configuration** tab and supply the following:
+   - **Audience (EntityID):** The Audience URI provided in Cypress Cloud
+   - **ACS (Consumer) URL:** The Single sign-on URL provided in Cypress Cloud
+   - **ACS (Consumer) URL Validator:** A regex that matches the ACS URL, for
+     example `^https://cloud\.cypress\.io.*`
+1. Open the **Parameters** tab and add the following attribute mappings. Each
+   mapping must be marked **Include in SAML assertion**:
+   - `User.Email` → **Email**
+   - `User.FirstName` → **First Name**
+   - `User.LastName` → **Last Name**
+1. Open the **SSO** tab and collect the following:
+   - Copy the **SAML 2.0 Endpoint (HTTP)** and paste it as the Identity
+     Provider Single sign-on URL in Cypress Cloud.
+   - Click **View Details** under the X.509 certificate, download the
+     certificate, and upload it to Cypress Cloud.
 1. [Save Configuration](#Save-Configuration).
 
 ## Save Configuration
