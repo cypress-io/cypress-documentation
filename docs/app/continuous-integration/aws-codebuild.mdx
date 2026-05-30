@@ -336,90 +336,24 @@ phases:
         "$CY_CONFIG"
 ```
 
-## Git Commit Information in AWS CodeBuild
-
-The `buildspec.yml` examples above use `git` CLI commands to populate the
-`COMMIT_INFO_*` environment variables that
-[Cypress Cloud uses for recording](/app/continuous-integration/overview#Git-information).
-These commands require a `.git` directory to be present.
-
-By default, AWS CodeBuild may download your source code as a **zip archive**
-rather than performing a `git clone`, which means no `.git` directory exists
-and the `git` commands will fail with a `fatal: not a git repository` error.
-
-### Option 1: Enable git clone depth in CodeBuild
-
-The simplest fix is to configure your CodeBuild project to clone the repository
-instead of downloading a zip:
-
-1. Open your project in the **AWS CodeBuild Console**
-2. Click **Edit** → **Source**
-3. Under **Additional configuration**, set **Git clone depth** to **Full clone**
-   (or a specific depth such as **1** — depth 1 is sufficient for the `git log -1`
-   commands used above)
-4. Click **Update source**
-
-After this change, the `git` commands in the `buildspec.yml` examples will work
-without any other modifications.
-
-### Option 2: Use the CodeBuild environment variable and GitHub API
-
-If you cannot enable git clone (for example, when the source is provided via an
-S3 artifact or another mechanism), you can retrieve commit information using the
-`CODEBUILD_RESOLVED_SOURCE_VERSION` environment variable, which CodeBuild always
-populates with the resolved commit SHA, combined with the GitHub API.
-
-This approach requires:
-
-- A GitHub Personal Access Token stored in AWS SSM Parameter Store or Secrets Manager
-- The `jq` command-line tool (available by default on CodeBuild Amazon Linux images)
-
-```yaml title="buildspec.yml"
-phases:
-  install:
-    commands:
-      # Retrieve the GitHub PAT from SSM / Secrets Manager
-      # - GITHUB_USER=$(aws ssm get-parameter --name PIPELINES_GITHUB_USER | jq -r .Parameter.Value)
-      # - GITHUB_TOKEN=$(aws secretsmanager get-secret-value --secret-id PIPELINES_GITHUB_TOKEN | jq -r .SecretString)
-
-      # Fetch commit metadata from the GitHub API using the resolved SHA
-      - GITHUB_COMMIT="$CODEBUILD_RESOLVED_SOURCE_VERSION"
-      - COMMIT_INFO=$(curl -s -u ${GITHUB_USER}:${GITHUB_TOKEN} -X GET
-        https://api.github.com/repos/${GITHUB_ORG}/${GITHUB_REPO}/git/commits/${GITHUB_COMMIT})
-      - export COMMIT_INFO_MESSAGE="$(echo $COMMIT_INFO | jq -r .message)"
-      - export COMMIT_INFO_EMAIL="$(echo $COMMIT_INFO | jq -r .author.email)"
-      - export COMMIT_INFO_AUTHOR="$(echo $COMMIT_INFO | jq -r .author.name)"
-      - export COMMIT_INFO_SHA="$(echo $COMMIT_INFO | jq -r .sha)"
-      - export COMMIT_INFO_REMOTE="$(echo $COMMIT_INFO | jq -r .html_url)"
-      - npm ci
-```
-
-Set the `GITHUB_ORG` and `GITHUB_REPO` environment variables in your CodeBuild
-project configuration to match your repository (e.g. `GITHUB_ORG=my-org`,
-`GITHUB_REPO=my-repo`).
-
-:::info
-
-The GitHub API approach only works for repositories hosted on **GitHub**. For
-other source providers, refer to their equivalent APIs or consider using
-Option 1 instead.
-
-:::
-
 ## Using Cypress Cloud with AWS CodeBuild
 
 :::caution
 
-Dashboard analytics are dependent on your CI environment reliably providing
-commit SHA data (typically via a system environment variable) which is not always
-present by default. This is not a problem for most users, but if you are facing
-integration issues with your CodeBuild setup, please make sure the git
-information is being sent properly by following
-[these guidelines](/app/continuous-integration/overview#Git-information),
-or just see
-[the example `buildspec.yml` file at the top of this page](#Basic-Setup) or
-[the section above](#Git-Commit-Information-in-AWS-CodeBuild) for CodeBuild-specific
-guidance. If you are still facing issues after this, please
+Dashboard analytics depend on Cypress receiving
+[git commit information](/app/continuous-integration/overview#Git-information).
+The `buildspec.yml` examples above export this via `git` CLI commands, which
+require a `.git` directory. If CodeBuild downloads your source as a zip archive
+instead of performing a `git clone`, those commands will fail with
+`fatal: not a git repository`.
+
+To fix this, configure your CodeBuild project to clone the repository using the
+[Git clone depth setting](https://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref-env-vars.html)
+in the AWS Console. If git clone is not an option, CodeBuild always populates
+`CODEBUILD_RESOLVED_SOURCE_VERSION` with the commit SHA, which you can use to
+retrieve commit metadata from your source provider's API instead.
+
+If you are still facing issues, please
 [contact us](mailto:hello@cypress.io).
 
 :::
