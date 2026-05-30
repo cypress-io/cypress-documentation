@@ -343,11 +343,13 @@ augment to tell TypeScript about properties your application adds to `window`.
 Extend the interface in your support file or a `*.d.ts` file:
 
 ```typescript title="cypress/support/e2e.ts"
-declare namespace Cypress {
-  interface ApplicationWindow {
-    // add the properties your app sets on window
-    env: {
-      DISABLE: boolean
+declare global {
+  namespace Cypress {
+    interface ApplicationWindow {
+      // add the properties your app sets on window
+      env: {
+        DISABLE: boolean
+      }
     }
   }
 }
