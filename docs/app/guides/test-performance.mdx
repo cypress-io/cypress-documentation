@@ -14,9 +14,11 @@ sidebar_label: Test Performance
 
 - What test speed benchmarks to aim for
 - How Cypress's architecture is designed for fast tests
+- When to use API tests, component tests, and end-to-end tests for maximum speed
 - Patterns that slow tests down and how to fix them
 - Strategies to speed up authentication, network calls, and state setup
 - How to parallelize and orchestrate tests in CI to maximize throughput
+- How to use Cloud MCP to reduce the time spent triaging CI failures
 
 :::
 
@@ -331,6 +333,92 @@ Everything else — helpers, factories, utilities, Node.js integrations — belo
 ---
 
 ## Strategies to Speed Up Your Tests
+
+### Choose the Right Test Level
+
+The most impactful performance decision you make isn't a configuration flag — it's choosing the right kind of test for each scenario. Writing a full end-to-end test when a component test or API test would do the same job is the source of enormous accumulated overhead in many test suites.
+
+The **testing pyramid** is a useful model: a large base of fast, isolated tests; a smaller middle layer of integration-level tests; and a narrow top layer of full end-to-end tests reserved for critical user journeys.
+
+```
+        ▲
+       /E2E\         ← Slowest: full stack, real server, real routing
+      /─────\           Use for critical user paths only
+     /  Comp \       ← Medium: UI components in isolation, no server
+    /─────────\         Use for component behavior, visual states, events
+   / API Tests \     ← Fast: HTTP calls, no browser, no UI
+  /─────────────\       Use for backend contracts, data validation
+ /─────────────────\
+```
+
+#### API Tests with `cy.request()`
+
+[`cy.request()`](/api/commands/request) makes HTTP calls directly from the Cypress Node process — no browser rendering, no UI interactions, no full application stack. A local API call returns in under 100ms.
+
+```js
+// Testing that the API correctly rejects duplicate emails —
+// no need to drive a registration form through the UI
+it('rejects duplicate email registration', () => {
+  cy.request('POST', '/api/users', { email: 'test@example.com', password: 'pw' })
+
+  cy.request({
+    method: 'POST',
+    url: '/api/users',
+    body: { email: 'test@example.com', password: 'other' },
+    failOnStatusCode: false,
+  }).its('status').should('eq', 422)
+})
+```
+
+Use API tests for: verifying request/response contracts, testing validation rules, seeding state for other tests, and any behavior that surfaces through the API rather than the UI.
+
+#### Component Tests with Cypress Component Testing
+
+[Cypress Component Testing](/app/core-concepts/testing-types#What-is-Component-Testing) mounts your UI components directly in the browser — without a full application server, routing, or global state. Component tests are typically 5–10x faster than equivalent end-to-end tests and run in 1–2 seconds each.
+
+```js
+// Testing a button component in isolation — no server, no routing, no auth
+import { mount } from 'cypress/react'
+import { SubmitButton } from './SubmitButton'
+
+it('shows a loading spinner while submitting', () => {
+  mount(<SubmitButton isLoading={true} label="Save" />)
+  cy.get('[data-cy="spinner"]').should('be.visible')
+  cy.get('[data-cy="label"]').should('not.exist')
+})
+```
+
+Use component tests for: individual component behavior, prop-driven visual states, user interaction events, and any UI logic that doesn't require a running backend.
+
+If you currently have an end-to-end test with fully stubbed network requests testing a single component's rendering, a component test is almost always a better fit — faster, more isolated, and easier to maintain.
+
+#### End-to-End Tests
+
+E2E tests run the full stack: real browser, real server, real routing, real network. They're the slowest category (typically 3–15 seconds per test) and the most expensive to maintain. Reserve them for scenarios where the value of testing the full integration outweighs the cost.
+
+```
+End-to-end tests are the right choice when:
+  ✅ The critical user journey spans multiple systems (auth, API, database, email)
+  ✅ You're testing a cross-system flow that can't be meaningfully stubbed
+  ✅ You need confidence that the full stack works together before deploying
+
+Component or API tests are a better fit when:
+  ✅ You're testing UI behavior in isolation from the server
+  ✅ You're testing an API contract without caring about the UI
+  ✅ The scenario can be reproduced fully with mocked or stubbed data
+```
+
+#### A healthy distribution
+
+A well-structured Cypress suite often looks roughly like this:
+
+| Test type | Share | Typical duration |
+| --------- | ----- | ---------------- |
+| API (`cy.request()`) | 30–40% | < 100ms each |
+| Component tests | 30–40% | 1–2 seconds each |
+| End-to-end tests | 20–30% | 3–15 seconds each |
+
+The exact ratios depend on your application, but the principle holds: every test you move from E2E to component or API level is a test that gets faster, cheaper to run, and easier to keep green.
 
 ### Cache Authentication with `cy.session()`
 
@@ -960,6 +1048,27 @@ Bumping machine size and adding parallel machines are complementary strategies. 
 
 :::
 
+### Speed Up Failure Triage with Cloud MCP
+
+Test execution time is only part of the total cost of a failing test. The other part is the time a developer spends diagnosing the failure — opening Cypress Cloud, finding the right run, navigating to the failing test, reading the stack trace, opening Test Replay, and then forming a hypothesis about the root cause. For a complex or environment-specific failure, this triage loop can easily take 20–40 minutes.
+
+[Cypress Cloud MCP](/cloud/integrations/cloud-mcp) eliminates that context-switching overhead by connecting your AI coding assistant directly to Cypress Cloud. Once configured, your agent (in Claude, Cursor, VS Code, or any MCP-compatible client) can query run statuses, pull failure details, surface flaky test data, and retrieve Test Replay links — all without leaving your editor.
+
+```
+"Check Cypress Cloud for the latest run on this branch. For each failure,
+look at the stack trace, check my local code, and propose a fix."
+```
+
+The AI agent does the initial triage for you: it queries the run, fetches the failure details and stack traces, reads the relevant local code, and surfaces a diagnosis. What used to be 30 minutes of manual investigation becomes a prompt.
+
+This is particularly valuable for:
+
+- **Environment-specific failures** — CI failures that don't reproduce locally are the hardest to debug; Cloud MCP gives the agent direct access to the error context without requiring the developer to reproduce it
+- **Flaky test audits** — `"List all flaky tests from the last 5 runs. Are there common patterns in the error messages?"` surfaces systemic issues across the test suite, not just the current run
+- **Team-wide standardization** — effective triage prompts can be saved as Custom Instructions in your AI client and shared across the team, making fast debugging a team-wide practice rather than an individual skill
+
+Cloud MCP is available on all Cypress Cloud plans including the free Starter plan and requires no additional configuration beyond enabling the integration for your organization. See [Cloud MCP](/cloud/integrations/cloud-mcp) for setup instructions and example prompts.
+
 ### Record to Cypress Cloud for Insights
 
 Recording runs to [Cypress Cloud](/cloud/get-started/introduction) unlocks the analytics needed to systematically improve performance:
@@ -976,7 +1085,8 @@ Before optimizing, establish a baseline. Record a full CI run to Cypress Cloud, 
 
 The most impactful optimizations, roughly in order:
 
-1. **`cy.session()` for authentication** — eliminates 2–5 seconds per test
+1. **Choose the right test level** — moving tests from E2E to component or API level is the single highest-leverage change; a component test runs in 1–2 seconds vs. 5–15 seconds for E2E
+2. **`cy.session()` for authentication** — eliminates 2–5 seconds per test
 2. **Stub network requests** — replaces 100–2000ms real calls with < 20ms stubs
 3. **Programmatic state setup** — replaces minutes of UI navigation with seconds of API calls
 4. **Parallelization** — linear scaling with the number of machines
@@ -1019,3 +1129,4 @@ A team starting from scratch applying all of these has routinely achieved 3–5x
 - [Spec Prioritization](/cloud/features/smart-orchestration/spec-prioritization)
 - [Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation)
 - [blockHosts Configuration](/app/references/configuration#blockHosts)
+- [Cloud MCP: Agentic Debugging](/cloud/integrations/cloud-mcp)
