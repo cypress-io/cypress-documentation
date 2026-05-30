@@ -1516,15 +1516,25 @@ then you have a match!
 
 ```javascript
 expect(
-  Cypress.minimatch('http://localhost/users?_limit=3', '**/users\\?_limit=+(3|5)')
+  Cypress.minimatch(
+    'http://localhost/users?_limit=3',
+    '**/users\\?_limit=+(3|5)'
+  )
 ).to.be.true
 expect(
-  Cypress.minimatch('http://localhost/users?_limit=5', '/users\\?_limit=+(3|5)', {
-    matchBase: true,
-  })
+  Cypress.minimatch(
+    'http://localhost/users?_limit=5',
+    '/users\\?_limit=+(3|5)',
+    {
+      matchBase: true,
+    }
+  )
 ).to.be.true
 expect(
-  Cypress.minimatch('http://localhost/users?_limit=7', '**/users\\?_limit=+(3|5)')
+  Cypress.minimatch(
+    'http://localhost/users?_limit=7',
+    '**/users\\?_limit=+(3|5)'
+  )
 ).to.be.false
 ```
 
@@ -1535,9 +1545,13 @@ You can also pass in options (`object`) as the third argument, one of which is
 understand why your pattern isn't working as you expect:
 
 ```js
-Cypress.minimatch('http://localhost/users?_limit=3', '**/users\\?_limit=+(3|5)', {
-  debug: true,
-})
+Cypress.minimatch(
+  'http://localhost/users?_limit=3',
+  '**/users\\?_limit=+(3|5)',
+  {
+    debug: true,
+  }
+)
 // true (plus debug messages)
 ```
 
