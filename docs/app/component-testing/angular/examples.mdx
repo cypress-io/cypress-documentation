@@ -1,6 +1,6 @@
 ---
 title: Angular Examples
-description: Learn how to mount an Angular component, pass data to an Angular component, test multiple scenarios of Angular components, test Angular signals, and customize `cy.mount()` for Angular.
+description: Learn how to mount an Angular component, pass data to an Angular component, test multiple scenarios of Angular components, test Angular signals, mock services with RxJS observables, and customize `cy.mount()` for Angular.
 sidebar_position: 30
 sidebar_label: Examples
 ---
@@ -17,6 +17,7 @@ sidebar_label: Examples
 - How to pass data to an Angular component
 - How to test multiple scenarios of Angular components
 - How to test Angular signals
+- How to mock services that use RxJS observables
 - How to customize the `cy.mount()` for Angular
 
 :::
@@ -89,6 +90,114 @@ See
 [Default Declarations, Providers, or Imports](/app/component-testing/angular/examples#Default-Declarations-Providers-or-Imports)
 to set up common options in a custom `cy.mount()` command to avoid having to
 repeat this boilerplate for each test.
+
+### Mocking Services with RxJS Observables
+
+A common Angular pattern is a component that subscribes to an observable from a
+service to react to application state changes. To test this, provide a mock
+service backed by a `Subject` or `ReplaySubject` and use
+[`cy.then()`](/api/commands/then) to emit values at the right point in the
+Cypress command queue.
+
+Consider a component that displays a count of active items by subscribing to an
+observable on a service:
+
+```ts
+// active-count.component.ts
+@Component({
+  selector: 'app-active-count',
+  template: '<span data-cy="count">{{ count }}</span>',
+})
+export class ActiveCountComponent implements OnInit {
+  count = 0
+
+  constructor(private itemService: ItemService) {}
+
+  ngOnInit() {
+    this.itemService.activeItems$.subscribe((items) => {
+      this.count = items.length
+    })
+  }
+}
+```
+
+In the test, provide a `ReplaySubject` as the observable on the mock service, then
+emit values inside `cy.then()` so they are dispatched after the component has
+mounted:
+
+```ts
+import { ReplaySubject } from 'rxjs'
+import { MountConfig } from 'cypress/angular'
+import { ActiveCountComponent } from './active-count.component'
+import { ItemService } from './item.service'
+
+describe('ActiveCountComponent', () => {
+  let activeItems$: ReplaySubject<string[]>
+  let config: MountConfig<ActiveCountComponent>
+
+  beforeEach(() => {
+    activeItems$ = new ReplaySubject<string[]>(1)
+    config = {
+      providers: [
+        {
+          provide: ItemService,
+          useValue: { activeItems$: activeItems$.asObservable() },
+        },
+      ],
+    }
+  })
+
+  it('updates count when the service emits new items', () => {
+    cy.mount(ActiveCountComponent, config)
+    cy.then(() => activeItems$.next(['apple']))
+    cy.get('[data-cy=count]').should('have.text', '1')
+    cy.then(() => activeItems$.next(['apple', 'banana']))
+    cy.get('[data-cy=count]').should('have.text', '2')
+  })
+})
+```
+
+:::caution
+
+**Do not call `subject.next()` outside of `cy.then()`** when you need to emit
+values after the component has mounted. Cypress commands are queued and do not
+execute immediately. Any synchronous code between `cy.*` calls runs _before_ the
+Cypress queue starts, so multiple emissions made outside of `cy.then()` will all
+fire before the component mounts — only the final value will be replayed by a
+`ReplaySubject`, and earlier assertions will fail.
+
+```ts
+// ❌ Both next() calls run synchronously before any cy command executes.
+// The component only sees ['apple', 'banana'] when it mounts.
+cy.mount(ActiveCountComponent, config)
+activeItems$.next(['apple'])
+cy.get('[data-cy=count]').should('have.text', '1') // fails — count is already 2
+activeItems$.next(['apple', 'banana'])
+cy.get('[data-cy=count]').should('have.text', '2')
+
+// ✅ Wrap each emission in cy.then() so it runs in the correct order.
+cy.mount(ActiveCountComponent, config)
+cy.then(() => activeItems$.next(['apple']))
+cy.get('[data-cy=count]').should('have.text', '1')
+cy.then(() => activeItems$.next(['apple', 'banana']))
+cy.get('[data-cy=count]').should('have.text', '2')
+```
+
+:::
+
+If you want the component to start with an initial value as soon as it mounts,
+emit from the `ReplaySubject` before calling `cy.mount()`. Because `cy.mount()`
+is only queued at that point (not yet executed), a synchronous `next()` call
+beforehand is safe — the value will be replayed to the component when it
+subscribes during `ngOnInit`:
+
+```ts
+it('shows the initial count on mount', () => {
+  activeItems$.next(['apple', 'banana', 'cherry'])
+  cy.mount(ActiveCountComponent, config)
+  cy.get('[data-cy=count]').should('have.text', '3')
+})
+```
 
 ### Using Standalone
 
