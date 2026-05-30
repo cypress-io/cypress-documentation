@@ -13,6 +13,54 @@ This is the internal API for controlling what gets printed to the Command Log.
 Useful when writing your own
 [custom commands](/api/cypress-api/custom-commands).
 
+## Overview
+
+Custom commands are a powerful way to encapsulate repeated logic in your test
+suite, but without `Cypress.log` they appear as a black box in the Command Log.
+When a test fails inside a custom command, all you see is the command name —
+there is no indication of which internal step failed, what data was used, or
+what the application looked like at that moment. `Cypress.log` solves this by
+giving your custom commands the same first-class visibility as built-in Cypress
+commands.
+
+### Catch bugs earlier, before they reach production
+
+Transparent command logs surface failures at the exact step where something went
+wrong rather than several steps downstream. When a custom `login` command fails,
+a well-structured log entry tells you immediately whether the failure was in the
+network request, the DOM interaction, or the redirect — without any guesswork.
+Finding the root cause earlier in the development cycle means fixing it while
+the context is fresh, before the bug is compounded by subsequent changes or
+discovered by users in production.
+
+### Reduce debugging time and CI costs
+
+Time spent investigating a failing test is time not spent building features. The
+`snapshot()` method captures the state of your application's DOM at named points
+in time — `'before'` and `'after'` an action, for example — and makes those
+snapshots available for time-travel inspection directly in the Cypress UI, just
+like built-in commands. Instead of re-running a test locally with added
+`console.log` statements and artificial pauses, a developer can pinpoint the
+exact DOM state that caused the failure in the initial run. Fewer re-runs
+translates directly into reduced CI infrastructure costs and faster feedback
+loops.
+
+The `consoleProps` option extends this further by placing structured,
+context-rich data — API response bodies, user IDs, session tokens, form values
+— a single click away in the browser's DevTools console. This eliminates the
+need to manually reproduce the exact conditions of a failure, which is
+especially valuable for intermittent issues that are hard to reproduce on demand.
+
+### Build confidence in your test suite
+
+When custom commands log clearly and consistently, the entire team can read a
+failing test run and understand what happened — not just the author of the
+command. This shared legibility reduces the risk of misdiagnosed failures, where
+a test bug is mistaken for an application bug (or vice versa), and lowers the
+cost of onboarding new team members to an existing test suite. A command log
+that looks and behaves like Cypress's own built-in commands signals that the
+tests are maintained to the same standard as the application code they protect.
+
 ## Syntax
 
 ```javascript
