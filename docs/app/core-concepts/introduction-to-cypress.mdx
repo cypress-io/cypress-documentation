@@ -748,7 +748,7 @@ while (!found7) {
   cy.get('#result')
     .should('not.be.empty')
     .invoke('text')
-    .then(parseInt)
+    .then((text) => parseInt(text, 10))
     .then((number) => {
       if (number === 7) {
         found7 = true
@@ -776,7 +776,7 @@ const checkAndReload = () => {
   cy.get('#result')
     .should('not.be.empty')
     .invoke('text')
-    .then(parseInt)
+    .then((text) => parseInt(text, 10))
     .then((number) => {
       // if the expected number is found
       // stop adding any more commands
