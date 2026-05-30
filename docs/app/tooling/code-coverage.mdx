@@ -12,6 +12,8 @@ sidebar_label: 'Code Coverage'
 
 ##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
 
+- Why code coverage helps you ship higher quality software with less risk
+- How code coverage compares to other quality tools
 - The difference between Code Coverage and Cypress's UI Coverage
 - How to instrument your application code for code coverage
 - How to collect code coverage from Cypress tests
@@ -30,6 +32,37 @@ Cypress offers a couple of solutions to help answer these questions:
 
 - **[Code coverage](#Code-Coverage)** - find out which lines of the application's source code were executed
 - **[UI coverage](#UI-Coverage)** - find out which parts of the UI were tested
+
+### Why code coverage matters
+
+Every application ships with code that nobody has explicitly tested. Some of it
+is dead code that should be deleted. Some of it is critical logic — conditional
+branches, error handlers, edge cases — that simply never had a test written for
+it. The difference matters, because untested logic that reaches production is a
+primary source of expensive, hard-to-diagnose bugs.
+
+Code coverage makes the gap visible. It tells you precisely which lines,
+branches, and functions were executed during your test run. It turns "do we have
+enough tests?" from a matter of opinion into a measurable, trackable signal —
+one you can enforce as a quality gate on every pull request and trend over time.
+
+### How code coverage compares to alternatives
+
+Different quality tools answer different questions. Understanding the tradeoffs
+helps you choose the right combination for your project:
+
+| Approach                                                 | What it tells you                                                 | Key limitation                                                                                |
+| -------------------------------------------------------- | ----------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| **Code coverage**                                        | Which lines, branches, and functions were executed by tests       | Requires instrumentation; a line being executed doesn't guarantee the assertion is meaningful |
+| **[UI Coverage](/ui-coverage/get-started/introduction)** | Which interactive elements across your UI were exercised by tests | No instrumentation needed; shows UI-level gaps rather than code-level logic gaps              |
+| **Static analysis / linters**                            | Type errors, style violations, and common code smells             | Cannot find runtime logic gaps or missing test scenarios                                      |
+| **Manual QA**                                            | Visible UX defects and end-user workflows                         | Doesn't scale; expensive per release; misses regressions and edge cases                       |
+| **Mutation testing**                                     | Whether your tests actually detect code changes                   | Slow to run; typically too expensive for CI on every commit                                   |
+
+Code coverage and UI Coverage are complementary rather than competing. Code
+coverage answers "which source code lines did the tests execute?", while UI
+Coverage answers "which parts of the UI did the tests touch?" — using both
+together gives you a more complete picture of test quality.
 
 ### Code Coverage
 
@@ -239,7 +272,7 @@ statements were each executed once and the last statement was never executed (it
 probably was inside an `if` statement). By using the application, we can both
 increment the counters and flip some of the zero counters into positive numbers.
 
-### Using code transpilation pipeline
+### Using code transpilation pipeline {#using-code-transpilation-pipeline}
 
 Instead of using the `npx instrument` command, we can use
 [`babel-plugin-istanbul`](https://github.com/istanbuljs/babel-plugin-istanbul)
@@ -324,7 +357,7 @@ not 3rd party dependencies from `node_modules`.
 
 :::
 
-### Using Vite
+### Using Vite {#using-vite}
 
 If your project uses [Vite](https://vitejs.dev/) (for example, a Vue 3 or React
 app scaffolded with `npm create vite`), use
@@ -376,7 +409,7 @@ for community example projects covering Vite, Vue, Angular, and other setups.
 
 :::
 
-## E2E code coverage
+## E2E code coverage {#e2e-code-coverage}
 
 To handle code coverage collected during each test, there is a
 [`@cypress/code-coverage`](https://github.com/cypress-io/code-coverage) Cypress
@@ -470,6 +503,60 @@ the browser.
   src="/img/app/code-coverage/circleci-coverage-report.png"
   alt="coverage HTML report on CircleCI"
 />
+
+## Component Testing code coverage {#component-testing-code-coverage}
+
+Setting up code coverage for component tests uses the same
+[`@cypress/code-coverage`](https://github.com/cypress-io/code-coverage) plugin
+as [E2E code coverage](#e2e-code-coverage). The configuration is almost
+identical, with one critical difference: you must add the support import to
+your **component testing support file**.
+
+### Configure the support file
+
+Add the import to your component testing support file:
+
+```js
+// cypress/support/component.js (or component.ts for TypeScript projects)
+import '@cypress/code-coverage/support'
+```
+
+:::caution
+
+Adding the import only to `cypress/support/e2e.js` will **not** collect
+coverage during component tests. The import must be present in the component
+support file.
+
+:::
+
+The task registration in `setupNodeEvents` is the same as for E2E tests:
+
+:::cypress-config-plugin-example
+
+```js
+import registerCodeCoverageTasks from '@cypress/code-coverage/task'
+```
+
+```js
+registerCodeCoverageTasks(on, config)
+// It's IMPORTANT to return the config object
+// with any changed environment variables
+return config
+```
+
+:::
+
+### Instrumentation for component tests
+
+**Vite**: The [`vite-plugin-istanbul`](#using-vite) plugin configured in your
+`vite.config.ts` is automatically used by the Cypress component testing dev
+server. No additional configuration is needed beyond
+[the standard Vite setup described above](#using-vite).
+
+**Webpack**: Add
+[`babel-plugin-istanbul`](#using-code-transpilation-pipeline) to the Babel
+configuration or Webpack rules used by the component testing dev server so
+that source files are instrumented before the browser loads them.
 
 ## Code coverage as a guide
 
