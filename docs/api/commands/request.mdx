@@ -70,8 +70,10 @@ cy.request('seed/admin') // URL is http://localhost:1234/seed/admin
 
 <Icon name="angle-right" /> **body _(String, Object)_**
 
-A request `body` to be sent in the request. Cypress sets the `Accepts` request
-header and serializes the response body by the `encoding` option.
+A request `body` to be sent in the request. When `body` is a JavaScript object
+or boolean, Cypress automatically JSON-serializes it and sets the
+`Content-Type: application/json` request header. When `body` is a string, it is
+sent as-is with no automatic content-type.
 
 <Icon name="angle-right" /> **method _(String)_**
 
@@ -145,6 +147,11 @@ such as:
 - `headers`
 - `duration`
 
+The `response.body` is automatically parsed as a JavaScript object when the
+response has a `Content-Type` header whose value ends in `json` (such as
+`application/json` or `application/vnd.api+json`). Otherwise, `response.body`
+is a string.
+
 ## Examples
 
 ### URL
@@ -197,7 +204,8 @@ cy.get('@comments').should((response) => {
 ```javascript
 cy.request('POST', 'http://localhost:8888/users/admin', { name: 'Jane' }).then(
   (response) => {
-    // response.body is automatically serialized into JSON
+    // response.body is automatically parsed from JSON when the server responds
+    // with a Content-Type ending in "json" (e.g. application/json)
     expect(response.body).to.have.property('name', 'Jane') // true
   }
 )
@@ -328,6 +336,30 @@ cy
 ```
 
 ## Notes
+
+### JSON request and response bodies
+
+#### Request body serialization
+
+When `body` is a JavaScript **object or boolean** and `form` is not `true`,
+Cypress automatically:
+
+1. JSON-serializes the request body.
+2. Adds a `Content-Type: application/json` header to the request.
+
+When `body` is a **string**, it is sent as-is and no `Content-Type` header is
+added automatically.
+
+#### Response body parsing
+
+Cypress always inspects the `Content-Type` header of the response. If that
+header's value ends in `json` (for example `application/json` or
+`application/vnd.api+json`), `response.body` is automatically parsed into a
+JavaScript object. Otherwise `response.body` is a string.
+
+This means the automatic JSON parsing of `response.body` depends entirely on
+what the server returns in its `Content-Type` header — it is **not** affected
+by the type of the request `body`.
 
 ### Debugging
 
