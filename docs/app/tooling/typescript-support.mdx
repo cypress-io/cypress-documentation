@@ -178,6 +178,46 @@ declare global {
 }
 ```
 
+:::caution
+
+**`declare global` requires a TypeScript module file**
+
+TypeScript distinguishes between two kinds of files:
+
+- **Module** — any file with at least one top-level `import` or `export` statement
+- **Script (ambient)** — a file with no imports or exports
+
+`declare global { ... }` is only valid inside a **module** file. If your
+`commands.ts` has no imports, TypeScript will raise an error such as:
+_"Augmentations for the global scope can only be directly nested in external
+modules or ambient module declarations."_
+
+The simplest fix is to add `export {}` at the bottom of the file so TypeScript
+treats it as a module:
+
+```typescript title="cypress/support/commands.ts"
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      dataCy(value: string): Chainable<JQuery<HTMLElement>>
+    }
+  }
+}
+
+export {} // turns this file into a module so declare global is valid
+```
+
+Alternatively, move your type declarations into a standalone
+[external typings file](#using-an-external-typings-file) where no `import` or
+`export` is needed.
+
+Conversely, if you use `declare namespace Cypress { ... }` **without** the
+`declare global` wrapper inside a file that _does_ have imports, TypeScript will
+**not** augment the global `Cypress` namespace — your custom commands will still
+appear as unknown.
+
+:::
+
 :::info
 
 A nice detailed JSDoc comment above the method type will be really appreciated
@@ -452,9 +492,51 @@ You might find it easier to organize your types by moving them from the support
 file into an external
 [declaration (\*.d.ts) file](https://www.typescriptlang.org/docs/handbook/declaration-files/introduction.html).
 To do so, create a new file, like _cypress.d.ts_, and cut the types for your
-custom commands/assertions from the _support_ file and into the new file. Below
-is an example of moving the custom `cy.mount` typings that come by default with
-a component testing app into a root level _cypress.d.ts_ file.
+custom commands/assertions from the _support_ file and into the new file.
+
+#### Ambient declaration file (no imports needed)
+
+A plain `.d.ts` file with no `import` or `export` statements is treated by
+TypeScript as an _ambient script_. In this context you can declare the namespace
+**directly** — the `declare global` wrapper is not required:
+
+<Tabs>
+<TabItem value="cypress/support/commands.d.ts" active>
+
+```ts
+// No imports — TypeScript treats this as an ambient declaration file.
+// Declare the namespace directly (no declare global wrapper needed).
+declare namespace Cypress {
+  interface Chainable {
+    /**
+     * Custom command to select DOM element by data-cy attribute.
+     * @example cy.dataCy('greeting')
+     */
+    dataCy(value: string): Chainable<JQuery<HTMLElement>>
+  }
+}
+```
+
+</TabItem>
+</Tabs>
+
+:::info
+
+If TypeScript does not resolve Cypress types automatically (for example when the
+`types` field in your `tsconfig.json` does not include `"cypress"`), add a
+triple-slash reference at the top of the declaration file:
+
+```typescript
+/// <reference types="cypress" />
+```
+
+:::
+
+#### File with imports (e.g. `cy.mount`)
+
+When the declaration file imports something — such as `cy.mount` for component
+testing — the `import` turns it into a TypeScript module and `declare global` is
+required:
 
 <Tabs>
 <TabItem value="cypress.d.ts" active>
@@ -506,6 +588,32 @@ _tsconfig.json_ files in your project for TypeScript to pick up the new types:
 
 </TabItem>
 </Tabs>
+
+:::caution
+
+**TypeScript must be able to find the declaration file**
+
+If you rename or move a declaration file, verify that its path is covered by the
+`include` globs in every `tsconfig.json` that needs to see it. A common mistake
+is placing a `global.d.ts` inside `cypress/support/` while the
+`cypress/tsconfig.json` only includes `**/*.ts` — `.d.ts` files are matched by
+`**/*.ts` only if the glob is `**/*.{ts,d.ts}` or simply `**/*`. Safest
+practice: list the file explicitly or use `"include": ["**/*.ts", "**/*.d.ts"]`.
+
+:::
+
+#### Separate `tsconfig.json` for projects with `isolatedModules`
+
+Some project templates (Create React App, certain Vite configurations) set
+`"isolatedModules": true` in the root `tsconfig.json`. This setting does not
+prevent Cypress typings from working, but it does mean each file is checked in
+isolation. When Cypress files share a tsconfig with `"isolatedModules": true`,
+you may see unexpected errors.
+
+The recommended fix is to give Cypress its own `tsconfig.json` inside the
+`cypress/` folder (see [Configure tsconfig.json](#configure-tsconfigjson)). This
+scopes Cypress types to only the Cypress test files and avoids the
+`isolatedModules` setting from propagating into the Cypress compilation context.
 
 ### Set up your dev environment
 
