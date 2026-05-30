@@ -105,8 +105,9 @@ This allows Cypress to run your TypeScript configuration inside the Cypress runt
 When adding [custom commands](/api/cypress-api/custom-commands) to the `cy`
 object, you can manually add their types to avoid TypeScript errors.
 
-For example if you add the command `cy.dataCy` into your
-[supportFile](/app/references/configuration#Testing-Type-Specific-Options) like this:
+For example, if you add the command `cy.dataCy` to
+`cypress/support/commands.ts` (which is imported by your
+[support entry file](/app/references/configuration#Testing-Type-Specific-Options) `cypress/support/e2e.ts`) like this:
 
 ```typescript title="cypress/support/commands.ts"
 Cypress.Commands.add('dataCy', (value) => {
