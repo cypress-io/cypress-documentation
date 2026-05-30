@@ -479,6 +479,42 @@ Cypress.io does not specifically support the use of Cypress under Windows Subsys
 
 :::
 
+## Dev Containers and GitHub Codespaces
+
+[Dev Containers](https://containers.dev/) (VS Code Dev Containers) and [GitHub Codespaces](https://github.com/features/codespaces) provide containerized Linux development environments.
+
+**Running tests headlessly** with `cypress run` works without any extra display configuration when the container image includes the required [Linux prerequisites](/app/get-started/install-cypress#Linux-Prerequisites). The official [Cypress Docker images](/app/continuous-integration/overview#Cypress-Docker-Images) already include all prerequisites.
+
+**Running the interactive Test Runner** with `cypress open` requires a graphical display, which containers do not provide by default. The simplest solution is the [`desktop-lite` Dev Container feature](https://github.com/devcontainers/features/tree/main/src/desktop-lite), which installs a lightweight browser-accessible desktop inside the container.
+
+Add the feature to your `devcontainer.json` and forward the necessary ports:
+
+```json
+{
+  "image": "cypress/included",
+  "forwardPorts": [6080, 5901],
+  "features": {
+    "ghcr.io/devcontainers/features/desktop-lite:1": {}
+  },
+  "portsAttributes": {
+    "6080": {
+      "label": "desktop"
+    }
+  },
+  "postCreateCommand": "npm install && cypress install"
+}
+```
+
+After rebuilding the container, open `http://localhost:6080` in your browser and log in with the default password `vscode`. Running `cypress open` in the terminal will display the Cypress UI in that browser-based desktop.
+
+Replace `cypress/included` with the specific [Cypress Docker image tag](https://github.com/cypress-io/cypress-docker-images) that matches your required Cypress and Node.js versions (for example, `cypress/included:14.0.0`).
+
+:::caution
+
+Cypress.io does not specifically support the use of Cypress in Dev Containers or GitHub Codespaces. If you want to report an issue, please ensure that you can reproduce it without a containerized environment on one of the Cypress [supported operating systems](/app/get-started/install-cypress#Operating-System).
+
+:::
+
 ## Uninstall Cypress
 
 To uninstall Cypress from a project, use the same package manager you used to [install Cypress](/app/get-started/install-cypress):
