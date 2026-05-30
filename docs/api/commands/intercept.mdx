@@ -1531,10 +1531,7 @@ full URL — to replicate the fallback behavior accurately:
 Cypress.minimatch('/api/users/1', '/api/users*', { matchBase: true }) // true
 
 // full-URL pattern (** absorbs the hostname): test with the full URL
-Cypress.minimatch(
-  'http://localhost/api/users/1',
-  '**/api/users*'
-) // true
+Cypress.minimatch('http://localhost/api/users/1', '**/api/users*') // true
 ```
 
 Passing the full URL to `Cypress.minimatch()` with a path-only pattern may
