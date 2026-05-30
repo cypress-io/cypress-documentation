@@ -157,9 +157,11 @@ cy.contains('My first client')
 
 ### Temporarily escape
 
-You can temporarily escape the `.within` context by starting a new command chain
-with [cy.root](/api/commands/root) followed by [.closest](/api/commands/closest)
-commands.
+Inside a `.within()` callback, [`cy.root()`](/api/commands/root) returns the
+scoped element itself (not the `<html>` root), so it cannot be used to escape
+the scope. To access elements outside the scoped element, use
+[`cy.document()`](/api/commands/document) to get the full document and traverse
+from there.
 
 ```html
 <section class="example">
@@ -175,9 +177,9 @@ commands.
 
 ```javascript
 cy.get('form').within(($form) => {
-  // temporarily escape the .within context
-  cy.root().closest('.example').find('#name').type('Joe')
-  // continue using the .within context
+  // use cy.document() to access elements outside of the within scope
+  cy.document().its('body').find('#name').type('Joe')
+  // cy.get() is still scoped to the form
   cy.get('input[name="email"]').type('john.doe@email.com')
   cy.get('input[name="password"]').type('password')
   cy.root().submit()
