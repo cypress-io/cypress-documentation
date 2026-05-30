@@ -333,6 +333,34 @@ Cypress.Commands.overwriteQuery('get', function (originalFn, ...args) {
 })
 ```
 
+### Types for custom window properties
+
+[`cy.window()`](/api/commands/window) yields an `AUTWindow` object, which is
+typed as `Window & typeof globalThis & Cypress.ApplicationWindow`. The
+`Cypress.ApplicationWindow` interface is an empty extension point that you can
+augment to tell TypeScript about properties your application adds to `window`.
+
+Extend the interface in your support file or a `*.d.ts` file:
+
+```typescript title="cypress/support/e2e.ts"
+declare namespace Cypress {
+  interface ApplicationWindow {
+    // add the properties your app sets on window
+    env: {
+      DISABLE: boolean
+    }
+  }
+}
+```
+
+TypeScript will now recognize those properties inside `cy.window()` callbacks:
+
+```typescript
+cy.window().then((win) => {
+  win.env.DISABLE = true // no TypeScript error
+})
+```
+
 ### Types for custom assertions
 
 If you extend Cypress assertions, you can extend the assertion types to make the
