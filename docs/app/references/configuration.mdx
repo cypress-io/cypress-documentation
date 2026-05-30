@@ -148,6 +148,7 @@ For more options regarding screenshots, view the
 | `defaultBrowser`        | `null`  | The default browser to launch if the "--browser" command line option is not provided. This option only affects the first browser launch; changing this option after the browser is already launched will have no effect.                                                                                                                              |
 | `chromeWebSecurity`     | `true`  | Whether to enable Chromium-based browser's Web Security for same-origin policy and insecure mixed content.                                                                                                                                                                                                                                            |
 | `blockHosts`            | `null`  | A String or Array of hosts that you wish to block traffic for. [Please read the notes for examples on using this.](#blockHosts)                                                                                                                                                                                                                       |
+| `hosts`                 | `null`  | An Object of hostname patterns to IP addresses. Acts like a Cypress-specific `/etc/hosts` file, letting Cypress resolve custom hostnames within tests. [Please read the notes for examples on using this.](#hosts)                                                                                                                                    |
 | `modifyObstructiveCode` | `true`  | Whether Cypress will search for and replace obstructive JS code in `.js` or `.html` files. [Please read the notes for more information on this setting.](#modifyObstructiveCode)                                                                                                                                                                      |
 | `userAgent`             | `null`  | Enables you to override the default user agent the browser sends in all request headers. User agent values are typically used by servers to help identify the operating system, browser, and browser version. See [User-Agent MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent) for example user agent values. |
 
@@ -516,6 +517,44 @@ matched.
   src="/img/app/references/blocked-host.png"
   alt="Network tab of dev tools showing blocked host"
 />
+
+### hosts
+
+By passing an object with hostname patterns as keys and IP addresses as values,
+you can resolve custom hostnames to specific IP addresses within Cypress. This
+is the equivalent of adding entries to your machine's `/etc/hosts` file, but
+scoped to Cypress's network proxy — no changes to your OS are required.
+
+To map a hostname:
+
+- ✅ Pass an exact hostname
+- ✅ Use wildcard `*` patterns (e.g., `*.example.com`)
+- ❌ Do **NOT** include protocol: `http://` or `https://`
+
+:::info
+
+Wildcard patterns use the same glob syntax supported by
+[`minimatch`](/api/utilities/minimatch). When in doubt you can test whether a
+pattern matches yourself.
+
+:::
+
+:::cypress-config-example
+
+```ts
+{
+  hosts: {
+    "not.public.host.com": "191.1.191.111",
+    "*.loc": "127.0.0.1",
+  },
+}
+```
+
+:::
+
+This is useful when testing against hostnames that have no public DNS entries,
+or when you need multiple domain names to resolve to local test servers without
+editing your system hosts file.
 
 ### devServer
 
