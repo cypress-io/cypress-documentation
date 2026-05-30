@@ -780,7 +780,10 @@ update `specPattern` in your Cypress config to include that location:
 // cypress.config.js
 module.exports = defineConfig({
   e2e: {
-    specPattern: ['cypress/e2e/**/*.cy.{js,jsx,ts,tsx}', 'tests/**/*.cy.{js,jsx,ts,tsx}'],
+    specPattern: [
+      'cypress/e2e/**/*.cy.{js,jsx,ts,tsx}',
+      'tests/**/*.cy.{js,jsx,ts,tsx}',
+    ],
   },
 })
 ```
