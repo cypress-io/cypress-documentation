@@ -22,11 +22,11 @@ apart of [Amazon Web Services (AWS)](https://aws.amazon.com).
 
 The documentation for [Amazon Cognito](https://aws.amazon.com/cognito)
 recommends using the
-[AWS Amplify Framework Authentication Library](https://aws-amplify.github.io/amplify-js/api/classes/authclass.html)
+[AWS Amplify Framework Authentication Library](https://docs.amplify.aws/javascript/build-a-backend/auth/)
 from the [AWS Amplify Framework](https://aws.amazon.com/amplify/framework/) to
 interact with a deployed [Amazon Cognito](https://aws.amazon.com/cognito)
 instance. Using the
-[AWS Amplify Framework Authentication Library](https://aws-amplify.github.io/amplify-js/api/classes/authclass.html),
+[AWS Amplify Framework Authentication Library](https://docs.amplify.aws/javascript/build-a-backend/auth/),
 we are able to programmatically drive the creation and authentication of users
 against a fully deployed back end.
 
@@ -107,9 +107,9 @@ The
 <Icon name="github" inline="true" contentType="rwa" /> is configured with an
 optional [Amazon Cognito](https://aws.amazon.com/cognito) instance via the [AWS
 Amplify Framework Authentication
-Library](https://aws-amplify.github.io/amplify-js/api/classes/authclass.html).
-The [AWS Amazon Amplify CLI](https://docs.amplify.aws/cli) is used to provision
-the [Amazon Web Services (AWS)](https://aws.amazon.com) infrastructure needed to
+Library](https://docs.amplify.aws/javascript/build-a-backend/auth/). The [AWS
+Amazon Amplify CLI](https://docs.amplify.aws/cli) is used to provision the
+[Amazon Web Services (AWS)](https://aws.amazon.com) infrastructure needed to
 configure your environment and cloud resources.
 
 First, run the
@@ -689,7 +689,7 @@ The
 configuration and runnable code for both the React SPA and the Express back end.
 
 The front end uses the
-[AWS Amplify Framework Authentication Library](https://aws-amplify.github.io/amplify-js/api/classes/authclass.html).
+[AWS Amplify Framework Authentication Library](https://docs.amplify.aws/javascript/build-a-backend/auth/).
 The back end uses the [express-jwt](https://github.com/auth0/express-jwt) to
 validate JWTs from [Amazon Cognito](https://aws.amazon.com/cognito).
 
@@ -774,7 +774,7 @@ if (process.env.REACT_APP_AWS_COGNITO) {
 
 We need to update our front end React app to allow for authentication with
 [Amazon Cognito](https://aws.amazon.com/cognito) using the
-[AWS Amplify Framework Authentication Library](https://aws-amplify.github.io/amplify-js/api/classes/authclass.html).
+[AWS Amplify Framework Authentication Library](https://docs.amplify.aws/javascript/build-a-backend/auth/).
 
 First, we create a `AppCognito.tsx` container, based off of the `App.tsx`
 component.
