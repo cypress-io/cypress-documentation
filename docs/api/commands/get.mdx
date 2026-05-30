@@ -271,6 +271,9 @@ The `.all` suffix and numeric index notation only apply to
 [`cy.intercept()`](/api/commands/intercept) aliases. Index `0` is not valid —
 indices start at `1`.
 
+These suffixes are not supported by [`cy.wait()`](/api/commands/wait). Use
+`cy.get('@alias.all')` instead of `cy.wait('@alias.all')`.
+
 :::
 
 ## Rules

@@ -585,6 +585,13 @@ cy.get('@getUsers.2').its('response.statusCode').should('eq', 200)
 Without an index, `cy.get('@alias')` returns the **most recent** intercepted
 request.
 
+:::caution
+
+These suffixes are **not** supported by [`cy.wait()`](/api/commands/wait). Use
+`cy.get('@alias.all')` instead of `cy.wait('@alias.all')`.
+
+:::
+
 ### Requests
 
 Aliases can also be used with [requests](/api/commands/request).

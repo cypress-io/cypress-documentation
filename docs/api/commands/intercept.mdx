@@ -356,6 +356,10 @@ cy.get('@getUsers.2').its('response.statusCode').should('eq', 200)
 Index `0` is not valid — indices start at `1`. Use `.all` to get the complete
 array of intercepted requests.
 
+The `.all` and numeric index suffixes are **not** supported by
+[`cy.wait()`](/api/commands/wait). Use `cy.get('@alias.all')` instead of
+`cy.wait('@alias.all')`.
+
 :::
 
 ### Aliasing individual requests
