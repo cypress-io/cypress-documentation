@@ -55,23 +55,23 @@ There is no universal benchmark, but these ranges reflect healthy test suites ac
 
 ### Individual Test Duration
 
-| Duration | Assessment |
-| -------- | ---------- |
-| < 3 seconds | Excellent — typical for tests using stubs and programmatic setup |
-| 3–10 seconds | Acceptable — common for end-to-end tests hitting a real server |
+| Duration      | Assessment                                                               |
+| ------------- | ------------------------------------------------------------------------ |
+| < 3 seconds   | Excellent — typical for tests using stubs and programmatic setup         |
+| 3–10 seconds  | Acceptable — common for end-to-end tests hitting a real server           |
 | 10–30 seconds | Investigate — likely contains unnecessary waits or heavy UI-driven setup |
-| > 30 seconds | Poor — almost certainly has architectural issues |
+| > 30 seconds  | Poor — almost certainly has architectural issues                         |
 
 Component tests should consistently run in under 2 seconds each.
 
 ### Full Test Suite Duration
 
-| Suite Size | Target (Serial) | Target (Parallel, 4+ machines) |
-| ---------- | --------------- | ------------------------------ |
-| < 50 tests | < 3 minutes | — |
-| 50–200 tests | < 10 minutes | < 3 minutes |
-| 200–500 tests | 15–30 minutes | < 10 minutes |
-| 500+ tests | Use parallelization | < 15 minutes |
+| Suite Size    | Target (Serial)     | Target (Parallel, 4+ machines) |
+| ------------- | ------------------- | ------------------------------ |
+| < 50 tests    | < 3 minutes         | —                              |
+| 50–200 tests  | < 10 minutes        | < 3 minutes                    |
+| 200–500 tests | 15–30 minutes       | < 10 minutes                   |
+| 500+ tests    | Use parallelization | < 15 minutes                   |
 
 :::tip
 
@@ -396,14 +396,19 @@ The **testing pyramid** is a useful model: a large base of fast, isolated tests;
 // Testing that the API correctly rejects duplicate emails —
 // no need to drive a registration form through the UI
 it('rejects duplicate email registration', () => {
-  cy.request('POST', '/api/users', { email: 'test@example.com', password: 'pw' })
+  cy.request('POST', '/api/users', {
+    email: 'test@example.com',
+    password: 'pw',
+  })
 
   cy.request({
     method: 'POST',
     url: '/api/users',
     body: { email: 'test@example.com', password: 'other' },
     failOnStatusCode: false,
-  }).its('status').should('eq', 422)
+  })
+    .its('status')
+    .should('eq', 422)
 })
 ```
 
@@ -449,11 +454,11 @@ Component or API tests are a better fit when:
 
 A well-structured Cypress suite often looks roughly like this:
 
-| Test type | Share | Typical duration |
-| --------- | ----- | ---------------- |
-| API (`cy.request()`) | 30–40% | < 100ms each |
-| Component tests | 30–40% | 1–2 seconds each |
-| End-to-end tests | 20–30% | 3–15 seconds each |
+| Test type            | Share  | Typical duration  |
+| -------------------- | ------ | ----------------- |
+| API (`cy.request()`) | 30–40% | < 100ms each      |
+| Component tests      | 30–40% | 1–2 seconds each  |
+| End-to-end tests     | 20–30% | 3–15 seconds each |
 
 The exact ratios depend on your application, but the principle holds: every test you move from E2E to component or API level is a test that gets faster, cheaper to run, and easier to keep green.
 
@@ -781,12 +786,12 @@ Cypress Cloud surfaces these automatically-recovered tests with a **Flaky** badg
 
 Every retry is a full re-execution of the test, including its `beforeEach` and `afterEach` hooks. A test configured with `retries: 2` can run up to three times before being marked as failed. On a slow test, that multiplier is significant:
 
-| Test duration | Retries | Worst-case added time per flaky test |
-| ------------- | ------- | ------------------------------------ |
-| 5s test | `retries: 1` | +5s |
-| 5s test | `retries: 2` | +10s |
-| 15s test | `retries: 2` | +30s |
-| 15s test | `retries: 5` | +75s |
+| Test duration | Retries      | Worst-case added time per flaky test |
+| ------------- | ------------ | ------------------------------------ |
+| 5s test       | `retries: 1` | +5s                                  |
+| 5s test       | `retries: 2` | +10s                                 |
+| 15s test      | `retries: 2` | +30s                                 |
+| 15s test      | `retries: 5` | +75s                                 |
 
 Applied globally across a suite where 10% of tests have some flakiness, a high retry count can add many minutes to every CI run — even when no tests ultimately fail.
 
@@ -920,10 +925,10 @@ When a selector in the cached code becomes invalid (an attribute was renamed, an
 
 There are two kinds of self-healing, with different performance profiles:
 
-| Self-heal type | What happened | Performance |
-| -------------- | ------------- | ----------- |
-| **Self-Healed via Cache** | Selector changed, but the existing cache entry resolved the new element | Fast — no AI call |
-| **Self-Healed via AI** | Selector changed, no matching cache entry — AI regenerates the step | Slower — requires an AI call, then caches the new result |
+| Self-heal type            | What happened                                                           | Performance                                              |
+| ------------------------- | ----------------------------------------------------------------------- | -------------------------------------------------------- |
+| **Self-Healed via Cache** | Selector changed, but the existing cache entry resolved the new element | Fast — no AI call                                        |
+| **Self-Healed via AI**    | Selector changed, no matching cache entry — AI regenerates the step     | Slower — requires an AI call, then caches the new result |
 
 Self-healing surfaces as a visible tag in the Command Log, so you can immediately see which steps healed and what element they resolved to — without digging through failure logs.
 
@@ -954,7 +959,10 @@ const products = ['Widget A', 'Widget B', 'Widget C']
 // The cache is reused for all subsequent iterations.
 products.forEach((productName) => {
   cy.prompt(
-    ['type {{productName}} in the search field', 'verify results include {{productName}}'],
+    [
+      'type {{productName}} in the search field',
+      'verify results include {{productName}}',
+    ],
     { placeholders: { productName } }
   )
 })
@@ -990,12 +998,12 @@ Most CI environments start from a clean state on every job. Without caching, eac
 
 #### What to cache
 
-| Path | What it contains | When to invalidate |
-| ---- | ---------------- | ------------------ |
-| `~/.cache/Cypress` | Cypress binary (Linux) | Lock file changes |
-| `~/Library/Caches/Cypress` | Cypress binary (macOS) | Lock file changes |
-| `~/.npm` | npm's package cache | Lock file changes |
-| `~/.cache/yarn` | Yarn's package cache | Lock file changes |
+| Path                       | What it contains       | When to invalidate |
+| -------------------------- | ---------------------- | ------------------ |
+| `~/.cache/Cypress`         | Cypress binary (Linux) | Lock file changes  |
+| `~/Library/Caches/Cypress` | Cypress binary (macOS) | Lock file changes  |
+| `~/.npm`                   | npm's package cache    | Lock file changes  |
+| `~/.cache/yarn`            | Yarn's package cache   | Lock file changes  |
 
 :::caution
 
@@ -1025,7 +1033,7 @@ jobs:
       - uses: actions/checkout@v6
       - uses: cypress-io/github-action@v7
         with:
-          runTests: false  # install and cache only — tests run in worker jobs
+          runTests: false # install and cache only — tests run in worker jobs
           build: npm run build
 
   cypress-run:
@@ -1090,8 +1098,6 @@ For large suites, 4–8 machines typically brings runs under 10 minutes. Diminis
 **How many machines should you run?** The **Machines** view in Cypress Cloud shows you how each parallel machine spent its time on a given run — which specs it ran, how long each took, and how balanced the workload was across machines. If one machine finishes in 3 minutes while another is still running at 12, the distribution is uneven and you may benefit from more machines or from reorganizing long-running specs. The view also surfaces the projected time savings from adding additional machines, so you can make a data-driven decision about whether the added CI cost is worth it.
 
 :::
-
-
 
 ### Spec Prioritization
 
