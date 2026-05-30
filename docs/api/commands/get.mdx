@@ -225,6 +225,54 @@ it('disables on click', () => {
 })
 ```
 
+#### Get all aliased intercepts
+
+When using [`cy.intercept()`](/api/commands/intercept) with an alias, you can
+retrieve **all** intercepted requests for that alias by appending `.all` to the
+alias name. This returns an array of
+[interception objects](/api/commands/intercept#Using-the-yielded-object).
+
+```javascript
+cy.intercept('GET', '/users').as('getUsers')
+
+// trigger two requests
+cy.visit('/users')
+cy.visit('/users')
+
+// yields an array of all matching interceptions
+cy.get('@getUsers.all').then((interceptions) => {
+  expect(interceptions).to.have.length(2)
+})
+```
+
+#### Get a specific aliased intercept by index
+
+You can retrieve a specific intercepted request by appending a 1-based numeric
+index to the alias name. Without an index, `cy.get('@alias')` returns the most
+recent intercepted request.
+
+```javascript
+cy.intercept('GET', '/users').as('getUsers')
+
+// trigger two requests
+cy.visit('/users')
+cy.visit('/users')
+
+// yields the first intercepted request
+cy.get('@getUsers.1').its('response.statusCode').should('eq', 200)
+
+// yields the second intercepted request
+cy.get('@getUsers.2').its('response.statusCode').should('eq', 200)
+```
+
+:::info
+
+The `.all` suffix and numeric index notation only apply to
+[`cy.intercept()`](/api/commands/intercept) aliases. Index `0` is not valid —
+indices start at `1`.
+
+:::
+
 ## Rules
 
 <HeaderRequirements />

@@ -548,6 +548,43 @@ cy.contains('Successfully created user: Brian')
 
 :::
 
+#### Accessing multiple intercepted requests
+
+When your application makes multiple requests matching the same alias, you can
+retrieve all of them using the `.all` suffix with
+[`cy.get()`](/api/commands/get). This yields an array of all matching
+[interception objects](/api/commands/intercept#Using-the-yielded-object).
+
+```js
+cy.intercept('GET', '/users').as('getUsers')
+
+// trigger multiple requests
+cy.visit('/users')
+cy.visit('/users')
+
+// assert on the total number of matching requests
+cy.get('@getUsers.all').then((interceptions) => {
+  expect(interceptions).to.have.length(2)
+})
+```
+
+You can also target a specific request using a 1-based numeric index:
+
+```js
+cy.intercept('GET', '/users').as('getUsers')
+
+cy.visit('/users')
+cy.visit('/users')
+
+// assert on the first request
+cy.get('@getUsers.1').its('response.statusCode').should('eq', 200)
+// assert on the second request
+cy.get('@getUsers.2').its('response.statusCode').should('eq', 200)
+```
+
+Without an index, `cy.get('@alias')` returns the **most recent** intercepted
+request.
+
 ### Requests
 
 Aliases can also be used with [requests](/api/commands/request).
