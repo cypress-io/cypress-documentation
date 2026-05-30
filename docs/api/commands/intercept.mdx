@@ -321,46 +321,7 @@ intercepted requests using the `.all` suffix with
 [`cy.get()`](/api/commands/get). This is useful when your application makes
 multiple requests to the same route and you need to assert on all of them.
 
-```js
-cy.intercept('GET', '/users').as('getUsers')
-
-// trigger multiple requests
-cy.visit('/users')
-cy.visit('/users')
-
-// yields an array of all interceptions for this alias
-cy.get('@getUsers.all').then((interceptions) => {
-  expect(interceptions).to.have.length(2)
-})
-```
-
-You can also retrieve a **specific** intercept by appending a 1-based numeric
-index. Without any suffix, `cy.get('@alias')` returns the most recent
-intercepted request.
-
-```js
-cy.intercept('GET', '/users').as('getUsers')
-
-cy.visit('/users')
-cy.visit('/users')
-
-// yields the first intercepted request
-cy.get('@getUsers.1').its('response.statusCode').should('eq', 200)
-
-// yields the second intercepted request
-cy.get('@getUsers.2').its('response.statusCode').should('eq', 200)
-```
-
-:::caution
-
-Index `0` is not valid — indices start at `1`. Use `.all` to get the complete
-array of intercepted requests.
-
-The `.all` and numeric index suffixes are **not** supported by
-[`cy.wait()`](/api/commands/wait). Use `cy.get('@alias.all')` instead of
-`cy.wait('@alias.all')`.
-
-:::
+<InterceptAliasIndex />
 
 ### Aliasing individual requests
 
