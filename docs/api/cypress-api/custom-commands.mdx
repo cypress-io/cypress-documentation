@@ -1330,6 +1330,20 @@ to those commands, and programmatically controlling your custom command. This
 will cleanup the Command Log and be much more visually appealing and
 understandable.
 
+:::caution
+
+`{ log: false }` is not honored by every Cypress command. Commands like
+`.its()` may still emit their own log entries regardless of this option. When a
+custom command times out inside an internal `.then()`, the error message will
+reference the internal command (`then`) rather than your custom command's name.
+If precise log control is critical, use `cy.state('window')` to read window
+properties synchronously inside a `new Promise` instead of chaining
+`cy.window().its(...)`. See
+[Wrapping a Callback-Based API](/api/cypress-api/cypress-log#Wrapping-a-Callback-Based-RPC-API)
+for a worked example.
+
+:::
+
 ### `cy.hover()` and `cy.mount()`
 
 Cypress does not have `cy.hover()` or `cy.mount()` commands out-of-the-box. See
