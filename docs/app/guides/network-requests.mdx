@@ -560,6 +560,100 @@ WebSocket messages during a test, consider the following strategies:
 See the [Multiple browsers open at the same time](/app/references/trade-offs#Multiple-browsers-open-at-the-same-time)
 section of the Trade-offs guide for detailed examples of these patterns.
 
+## Working with Server-Sent Events
+
+Cypress transparently proxies Server-Sent Event (SSE) connections made via the
+browser's [`EventSource`](https://developer.mozilla.org/en-US/docs/Web/API/EventSource)
+API, so real SSE traffic will work as expected during end-to-end tests.
+
+### Limitations
+
+`cy.intercept()` **cannot** be used to stub or mock SSE streams. There are two
+reasons for this:
+
+- When you provide a **static reply**, Cypress's network layer writes the
+  response body and immediately closes the stream. The `EventSource` client
+  treats a closed connection as a failure and automatically reconnects, creating
+  an infinite reconnect loop rather than delivering your stubbed messages.
+- When you intercept a **live SSE response**, Cypress buffers the entire response
+  body before processing it. Because SSE streams are long-lived and never fully
+  close until the server ends the connection, this buffering causes Cypress to
+  wait indefinitely and the messages never reach the browser.
+
+### Stubbing EventSource
+
+The correct approach is to replace the `EventSource` constructor with a fake
+implementation **before** your application code runs. Use the `onBeforeLoad`
+option of [`cy.visit()`](/api/commands/visit) to inject the stub:
+
+```js
+cy.visit('/your-page', {
+  onBeforeLoad(win) {
+    class FakeEventSource {
+      constructor(url) {
+        this.url = url
+        this.readyState = 0 // CONNECTING
+
+        setTimeout(() => {
+          this.readyState = 1 // OPEN
+
+          if (typeof this.onopen === 'function') {
+            this.onopen({ type: 'open' })
+          }
+
+          // Deliver stubbed messages to the application
+          const messages = ['first payload', 'second payload', 'third payload']
+
+          messages.forEach((data) => {
+            if (typeof this.onmessage === 'function') {
+              this.onmessage(new MessageEvent('message', { data }))
+            }
+          })
+        }, 0)
+      }
+
+      close() {
+        this.readyState = 2 // CLOSED
+      }
+    }
+
+    win.EventSource = FakeEventSource
+  },
+})
+```
+
+This gives you full control over:
+
+- **Which messages arrive** — specify the exact `data` payloads your application
+  will receive
+- **Message timing** — use multiple `setTimeout` calls with different delays to
+  spread events over time
+- **Error simulation** — call `this.onerror({ type: 'error' })` to exercise your
+  application's error-handling paths
+- **Connection state** — drive `readyState` through 0 (CONNECTING), 1 (OPEN),
+  and 2 (CLOSED) as needed
+
+If your application creates the `EventSource` after the initial page load (for
+example, in response to a button click), set the stub before the triggering
+action with [`cy.window()`](/api/commands/window):
+
+```js
+cy.window().then((win) => {
+  win.EventSource = FakeEventSource
+})
+
+// then trigger whatever action creates the EventSource
+cy.get('[data-testid="connect-button"]').click()
+```
+
+:::caution
+
+The stub must be in place **before** the code that calls `new EventSource()`
+runs. Any `EventSource` instances created before the stub is set will use the
+real browser implementation and make actual network requests.
+
+:::
+
 ## Working with GraphQL
 
 The strategies below follow best known practices for waiting and asserting
