@@ -77,7 +77,28 @@ testing).
 
 ### <Icon name="angle-right" /> We use WebSockets; will Cypress work with that?
 
-Yes.
+Yes. Cypress transparently proxies WebSocket connections, so your application's
+WebSocket traffic will work as expected during tests.
+
+You can use [`cy.intercept()`](/api/commands/intercept) to detect and spy on
+WebSocket upgrade requests by matching on `resourceType: 'websocket'`:
+
+```js
+cy.intercept({ resourceType: 'websocket' }, (req) => {
+  // observe the WebSocket upgrade request
+  req.continue()
+}).as('wsConnection')
+```
+
+However, **stubbing or mocking individual WebSocket frames/messages** is not
+natively supported. If your tests need to control the messages sent over a
+WebSocket connection, see the
+[Multiple browsers open at the same time](/app/references/trade-offs#Multiple-browsers-open-at-the-same-time)
+section of the Trade-offs guide for recommended strategies such as:
+
+- Stubbing callbacks in your application code directly
+- Using your server to simulate the other participant
+- Introducing a helper HTTP server that acts as a WebSocket client
 
 ### <Icon name="angle-right" /> Is it possible to use cypress on `.jspa`?
 
