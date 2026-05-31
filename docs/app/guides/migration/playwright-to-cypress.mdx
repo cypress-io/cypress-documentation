@@ -184,6 +184,12 @@ option reference.
 | `use.video`      | `video`                                  | Default is `false`                                                                          |
 | `use.viewport`   | `viewportWidth` / `viewportHeight`       | Set at top level or scoped under testing type                                               |
 
+For Cypress-specific anti-patterns not covered by configuration options — such as hard-coded
+`cy.wait()` calls, assigning command return values, and unsafe chaining — the official
+[`eslint-plugin-cypress`](https://github.com/cypress-io/eslint-plugin-cypress) provides lint
+rules that catch these issues in-editor. See the
+[full rules list](https://github.com/cypress-io/eslint-plugin-cypress#rules).
+
 ## CLI/Command line migration
 
 Playwright and Cypress use different commands and flag structures. This
