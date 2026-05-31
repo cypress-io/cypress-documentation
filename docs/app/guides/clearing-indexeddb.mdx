@@ -1,0 +1,171 @@
+---
+title: 'Clearing IndexedDB: Cypress Guide'
+description: 'Cypress does not clear IndexedDB between tests. Learn how to clear a single database, clear all databases, and wrap the logic in a reusable custom command.'
+sidebar_label: 'Clearing IndexedDB'
+sidebar_position: 95
+---
+
+<ProductHeading product="app" />
+
+# Clearing IndexedDB
+
+:::info
+
+##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
+
+- Why Cypress does not clear `IndexedDB` between tests
+- How to clear a single `IndexedDB` database
+- How to clear all `IndexedDB` databases for the current origin
+- How to wrap the logic in a reusable custom command and run it before each
+  test
+
+:::
+
+When [test isolation](/app/core-concepts/test-isolation) is enabled, Cypress
+clears `cookies`, `localStorage`, and `sessionStorage` before each test to give
+every test a clean slate.
+
+However, Cypress does **not** clear
+[`IndexedDB`](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API)
+automatically. If your application stores data in `IndexedDB`, that data
+persists between tests and can leak state from one test into the next. This
+makes tests harder to reason about and can cause them to pass or fail depending
+on the order they run in.
+
+This guide shows how to clear `IndexedDB` yourself.
+
+:::info
+
+There is no built-in `cy.clearIndexedDB()` command. The examples below use the
+standard
+[`IndexedDB` browser API](https://developer.mozilla.org/en-US/docs/Web/API/IDBFactory)
+inside Cypress commands.
+
+:::
+
+## Clearing a single database
+
+Use
+[`indexedDB.deleteDatabase()`](https://developer.mozilla.org/en-US/docs/Web/API/IDBFactory/deleteDatabase)
+to delete a database by name. Because the request is asynchronous, wrap it in a
+promise and return it so that Cypress waits for the deletion to finish before
+moving on:
+
+```js
+cy.window().then((win) => {
+  return new Cypress.Promise((resolve, reject) => {
+    const request = win.indexedDB.deleteDatabase('my-database')
+
+    request.onsuccess = resolve
+    request.onerror = reject
+    // `onblocked` fires when another open connection prevents the delete.
+    // Resolve so the test isn't stuck waiting on a connection that may never
+    // close.
+    request.onblocked = resolve
+  })
+})
+```
+
+:::caution
+
+Deleting a database is **blocked** while the page has an open connection to it.
+For this reason, clear `IndexedDB` **before** you call
+[`cy.visit()`](/api/commands/visit) — so your application has not yet opened a
+connection — rather than after.
+
+:::
+
+## Clearing all databases
+
+To remove every database for the current origin, list them with
+[`indexedDB.databases()`](https://developer.mozilla.org/en-US/docs/Web/API/IDBFactory/databases)
+and delete each one:
+
+```js
+cy.window().then((win) => {
+  // `indexedDB.databases()` is not supported in every browser (for example,
+  // Firefox). When it is unavailable, delete known databases by name instead.
+  if (!win.indexedDB.databases) {
+    return
+  }
+
+  return win.indexedDB.databases().then((databases) => {
+    return Promise.all(
+      databases.map(({ name }) => {
+        return new Cypress.Promise((resolve, reject) => {
+          const request = win.indexedDB.deleteDatabase(name)
+
+          request.onsuccess = resolve
+          request.onerror = reject
+          request.onblocked = resolve
+        })
+      })
+    )
+  })
+})
+```
+
+## Creating a reusable custom command
+
+If you clear `IndexedDB` in more than one place, wrap the logic in a
+[custom command](/api/cypress-api/custom-commands) so it reads like any other
+Cypress command. Add the command in your support file (for example,
+`cypress/support/commands.js`):
+
+```js
+Cypress.Commands.add('clearIndexedDb', (databaseName) => {
+  return cy.window({ log: false }).then((win) => {
+    return new Cypress.Promise((resolve, reject) => {
+      const request = win.indexedDB.deleteDatabase(databaseName)
+
+      request.onsuccess = resolve
+      request.onerror = reject
+      request.onblocked = resolve
+    })
+  })
+})
+```
+
+If you are using TypeScript, add the command to the global `cy` interface so it
+is typed (for example, in `cypress/support/index.d.ts`):
+
+```ts
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      /**
+       * Delete the IndexedDB database with the given name.
+       * @example cy.clearIndexedDb('my-database')
+       */
+      clearIndexedDb(databaseName: string): Chainable<void>
+    }
+  }
+}
+
+export {}
+```
+
+## Clearing IndexedDB before each test
+
+Call your command (or the inline snippet) in a `beforeEach` hook, **before**
+visiting your application, so each test starts with an empty database:
+
+```js
+beforeEach(() => {
+  cy.clearIndexedDb('my-database')
+  cy.visit('/')
+})
+```
+
+This mirrors how Cypress clears `cookies`, `localStorage`, and `sessionStorage`
+automatically, restoring test isolation for applications that rely on
+`IndexedDB`.
+
+## See also
+
+- [Test Isolation](/app/core-concepts/test-isolation)
+- [`cy.clearAllLocalStorage()`](/api/commands/clearalllocalstorage)
+- [`cy.clearAllSessionStorage()`](/api/commands/clearallsessionstorage)
+- [`cy.clearLocalStorage()`](/api/commands/clearlocalstorage)
+- [`cy.clearCookies()`](/api/commands/clearcookies)
+- [Custom Commands](/api/cypress-api/custom-commands)
