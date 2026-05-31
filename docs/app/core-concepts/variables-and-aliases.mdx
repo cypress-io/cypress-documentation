@@ -407,9 +407,10 @@ By using [`cy.get()`](/api/commands/get) we avoid the use of `this`.
 Keep in mind that there are use cases for both approaches because they have one
 major difference.
 
-When using `this.users`, it is stored on the context when it is first evaluated.
-But when using `cy.get('@users')`, any queries are re-evaluated every time the
-alias is accessed.
+`this.users` is stored on the Mocha context when `.as()` first runs and never
+re-evaluates — it behaves like a static snapshot. `cy.get('@users')` re-executes
+the full query chain every time it is accessed, returning fresh results. See
+[Dynamic vs. Static Aliases](#dynamic-vs-static-aliases) below for more detail.
 
 ```javascript
 const favorites = { color: 'blue' }
@@ -442,26 +443,26 @@ After you alias DOM elements, you can then later access them for reuse.
 cy.get('table').find('tr').as('rows')
 ```
 
-Internally, Cypress has made a reference to the `<tr>` collection returned as
-the alias "rows". To reference these same "rows" later, you can use the
-[`cy.get()`](/api/commands/get) command.
+Internally, Cypress stores the **query chain** that produced the `<tr>`
+collection — not the elements themselves. To access the alias later, use the
+[`cy.get()`](/api/commands/get) command with the `@` prefix.
 
 ```javascript
-// Cypress returns the reference to the <tr>'s
-// which allows us to continue to chain commands
-// finding the 1st row.
+// Cypress re-runs the query chain to get fresh <tr>'s,
+// then chains .first() and .click() on the result.
 cy.get('@rows').first().click()
 ```
 
-Because we've used the `@` character in [`cy.get()`](/api/commands/get), instead
-of querying the DOM for elements, [`cy.get()`](/api/commands/get) looks for an
-existing alias called `rows` and returns the reference (if it finds it).
+Because we've used the `@` character in [`cy.get()`](/api/commands/get), Cypress
+looks up the alias called `rows` and **re-executes its query chain** against the
+current DOM — it does not return a cached element reference.
 
 #### Stale Elements:
 
 In many single-page applications, the JavaScript re-renders parts of the DOM
-constantly. This is why we always re-run queries when you fetch an alias, so you
-never end up with stale elements.
+constantly. Because Cypress stores the **query chain** — not the resolved
+elements — every access of a default alias re-runs those queries against the
+current DOM, so you never end up with stale element references.
 
 ```html
 <ul id="todos">
@@ -510,6 +511,51 @@ always. It is recommended that you **alias elements before running commands**.
   <Icon name="exclamation-triangle" color="red" /> (bad)
 
 :::
+
+#### Dynamic vs. Static Aliases:
+
+There are two alias types that control whether Cypress re-queries on each
+access:
+
+| Type | Set via | Behavior |
+|------|---------|----------|
+| **`query`** (default) | `.as('name')` | Stores the query chain. Re-executes queries on every access — always returns fresh DOM elements. |
+| **`static`** | `.as('name', { type: 'static' })` | Stores the already-resolved value. Returns the same snapshot every time — never re-queries. |
+
+Use `type: 'static'` when you deliberately want to capture a value at a
+specific point in time and compare it against later state:
+
+```js
+// Capture the text value *before* an action
+cy.get('.username').invoke('val').as('originalName', { type: 'static' })
+
+cy.get('.username').clear().type('Jane')
+
+cy.get('@originalName').then((original) => {
+  cy.get('.username').invoke('val').should('not.eq', original)
+})
+```
+
+:::info
+
+**How `this.alias` relates to alias types**
+
+Accessing an alias as `this.alias` (via Mocha's shared context) always
+reflects the **value that was resolved when `.as()` first ran** — it never
+re-queries. This is the same behavior as `type: 'static'`. By contrast,
+`cy.get('@alias')` uses the default `query` type and re-runs the chain on
+every access.
+
+:::
+
+If an alias stores a **query** type (the default) and the re-query returns
+different elements than you expected, check that:
+
+1. The alias is defined **before** any action that mutates the DOM.
+2. The full traversal path from a stable root is included in the aliased chain.
+3. The aliased query does not contain conditions that will no longer match after
+   the DOM changes (e.g. `findByRole('button', { expanded: true })` won't match
+   after the button is collapsed).
 
 ### Intercepts
 
