@@ -233,8 +233,10 @@ time, identical to how built-in Cypress commands work.
 
 ### Marking a Log as Failed with `error()`
 
-Use `log.error()` when you need to explicitly mark a custom command log as
-failed — for example, after catching an error in an asynchronous operation.
+Use `log.error()` to turn the log entry red when an async operation fails.
+**`log.error()` only updates the visual state of the log — it does not fail
+the test.** To fail the test, you must also rethrow the error (or reject the
+Promise).
 
 ```javascript
 Cypress.Commands.add('myAsyncCommand', (url) => {
@@ -250,8 +252,10 @@ Cypress.Commands.add('myAsyncCommand', (url) => {
       log.end()
     },
     (err) => {
-      // mark the log as failed so it appears red in the Command Log
+      // Mark the log entry red in the Command Log…
       log.error(err)
+      // …but also rethrow so Cypress knows the command failed.
+      throw err
     }
   )
 })
