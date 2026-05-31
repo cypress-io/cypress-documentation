@@ -80,16 +80,6 @@ testing).
 Yes. Cypress transparently proxies WebSocket connections, so your application's
 WebSocket traffic will work as expected during tests.
 
-You can use [`cy.intercept()`](/api/commands/intercept) to detect and spy on
-WebSocket upgrade requests by matching on `resourceType: 'websocket'`:
-
-```js
-cy.intercept({ resourceType: 'websocket' }, (req) => {
-  // observe the WebSocket upgrade request
-  req.continue()
-}).as('wsConnection')
-```
-
 However, **stubbing or mocking individual WebSocket frames/messages** is not
 natively supported. If your tests need to control the messages sent over a
 WebSocket connection, see the

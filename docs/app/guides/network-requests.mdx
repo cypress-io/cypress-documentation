@@ -538,17 +538,6 @@ cy.wait('@new-user').then(console.log)
 Cypress transparently proxies WebSocket connections, so your application's
 WebSocket traffic will work as expected during tests.
 
-### Detecting WebSocket connections
-
-You can use [`cy.intercept()`](/api/commands/intercept) to observe WebSocket
-upgrade requests by filtering on `resourceType: 'websocket'`:
-
-```js
-cy.intercept({ resourceType: 'websocket' }, (req) => {
-  req.continue()
-}).as('wsConnection')
-```
-
 ### Limitations
 
 Stubbing or mocking individual WebSocket messages/frames is **not** natively
