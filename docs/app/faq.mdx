@@ -1411,10 +1411,28 @@ described in the [Working with GraphQL](/app/guides/network-requests#Working-wit
 
 ### <Icon name="angle-right" /> Is there an ESLint plugin for Cypress or a list of globals?
 
-Yes! Check out our
-[ESLint plugin](https://github.com/cypress-io/eslint-plugin-cypress). It will
-set up all the globals you need for running Cypress, including browser globals
-and [Mocha](https://mochajs.org/) globals.
+Yes! Check out our official
+[`eslint-plugin-cypress`](https://github.com/cypress-io/eslint-plugin-cypress).
+It does two things:
+
+**1. Globals setup** — configures `cy`, `Cypress`, `expect`, and all
+[Mocha](https://mochajs.org/) globals (`it`, `describe`, `before`, `beforeEach`,
+etc.) so ESLint stops flagging them as undefined. Without this, linting fails on
+every Cypress spec file, blocking CI pipelines and adding noise to code reviews.
+
+**2. Best-practice lint rules** — catches Cypress anti-patterns in your editor
+_before_ tests ever run, which reduces flaky tests and avoids wasted CI time:
+
+| Rule | What it catches | Why it matters |
+|------|-----------------|----------------|
+| `cypress/no-unnecessary-waiting` | `cy.wait(5000)` hard-coded delays | Inflate CI run time; hide real timing issues |
+| `cypress/no-assigning-return-values` | `const el = cy.get(...)` | Cypress commands are async — assigning them is a silent no-op that causes subtle test bugs |
+| `cypress/unsafe-to-chain-command` | Chaining after subject-changing commands | Prevents unpredictable behavior when the subject changes mid-chain |
+| `cypress/no-async-await` | `async/await` in test bodies | Mixing async patterns with Cypress's command queue causes hard-to-debug failures |
+
+Catching these issues at lint time (in-editor or pre-commit) is far cheaper than
+debugging a failing CI run — especially for flaky-test patterns like hard-coded
+waits that fail intermittently under load.
 
 ## Component Testing
 
@@ -1503,10 +1521,14 @@ If something appears missing from the spec list, make sure the files have the
 
 ### <Icon name="angle-right" /> How do I fix ESLint errors for things like using the global Cypress objects?
 
-If you experience ESLint errors in your code editor around Cypress globals,
-install the
+If you experience ESLint errors in your code editor around Cypress globals (`cy`,
+`Cypress`, `expect`, `it`, `describe`, etc.), install the official
 [`eslint-plugin-cypress`](https://www.npmjs.com/package/eslint-plugin-cypress)
-ESLint plugin.
+plugin. It registers all Cypress and Mocha globals so ESLint recognizes them,
+and it also ships rules that flag common Cypress anti-patterns before your tests
+run. See the
+[ESLint plugin FAQ entry](#is-there-an-eslint-plugin-for-cypress-or-a-list-of-globals)
+for the full list of rules and the value each provides.
 
 ### <Icon name="angle-right" /> Why isn't TypeScript recognizing the global Cypress objects or custom cypress commands (eg: `cy.mount`)?
 
