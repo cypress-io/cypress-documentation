@@ -84,7 +84,7 @@
         },
         {
           "name": "eslint-plugin-cypress",
-          "description": "ESLint plugin that sets globals for writing tests in Cypress.",
+          "description": "Official ESLint plugin that configures Cypress and Mocha globals and enforces best-practice rules to prevent flaky tests and common Cypress anti-patterns — catching issues in-editor before CI runs.",
           "link": "https://github.com/cypress-io/eslint-plugin-cypress",
           "keywords": ["eslint"],
           "badge": "official"
