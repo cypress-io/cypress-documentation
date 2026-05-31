@@ -97,6 +97,17 @@ With that said, except in the most unusual and rare circumstances, you can still
 test most application behavior without opening multiple browsers at the same
 time.
 
+:::info
+
+**WebSocket support:** Cypress transparently proxies WebSocket connections, and
+[`cy.intercept()`](/api/commands/intercept) can observe the WebSocket upgrade
+request via `resourceType: 'websocket'`. However, stubbing or mocking
+individual WebSocket **frames/messages** is not natively supported. The
+strategies described below are the recommended way to test real-time,
+message-driven features.
+
+:::
+
 You may ask about this functionality like this:
 
 > I'm trying to test a chat application. Can I run more than one browser at a
