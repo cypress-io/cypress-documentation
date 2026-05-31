@@ -56,6 +56,7 @@
     "@prettier/sync": "^0.6.1",
     "@types/turndown": "^5.0.6",
     "cypress": "^15.16.0",
+    "eslint-plugin-cypress": "^6.4.1",
     "gray-matter": "^4.0.3",
     "husky": "^9.1.7",
     "lint-staged": "^16.2.3",
