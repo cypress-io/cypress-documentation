@@ -1422,25 +1422,9 @@ every Cypress spec file, blocking CI pipelines and adding noise to code reviews.
 
 **2. Best-practice lint rules** — catches Cypress anti-patterns in your editor
 _before_ tests ever run, which reduces flaky tests and avoids wasted CI time.
-Rules marked ✅ are enabled by the `recommended` config; others must be opted in.
-
-| Rule | ✅ | What it catches | Why it matters |
-|------|----|-----------------|----------------|
-| `cypress/no-unnecessary-waiting` | ✅ | `cy.wait(5000)` hard-coded delays | Inflate CI run time and hide real timing issues, leading to intermittently failing tests |
-| `cypress/no-assigning-return-values` | ✅ | `const el = cy.get(...)` | Cypress commands are async — assigning them is a silent no-op that causes subtle bugs |
-| `cypress/unsafe-to-chain-command` | ✅ | Actions chained mid-command | The subject changes unpredictably, causing tests to pass locally but fail in CI |
-| `cypress/no-async-tests` | ✅ | `async/await` in test cases | Mixing async patterns with Cypress's command queue causes hard-to-debug ordering failures |
-| `cypress/no-async-before` | | `async/await` in `before` hooks | Same problem as above, in setup hooks |
-| `cypress/no-debug` | | `cy.debug()` left in source | Debug calls committed to the repo pause or slow automated runs |
-| `cypress/no-pause` | | `cy.pause()` left in source | Hangs CI indefinitely waiting for user input |
-| `cypress/no-force` | | `force: true` on action commands | Masks real actionability failures — tests pass even when UI elements are broken or hidden |
-| `cypress/assertion-before-screenshot` | | Screenshots without a preceding assertion | Screenshots without assertions don't verify state, reducing their diagnostic value |
-| `cypress/require-data-selectors` | | Non-`data-*` attribute selectors | Encourages stable selectors that don't break when CSS classes or structure change |
-| `cypress/no-chained-get` | | `cy.get().get()` chains | Scoped queries are clearer and less fragile than chained gets |
-| `cypress/no-xpath` | | `cy.xpath()` calls | XPath selectors are brittle and couple tests tightly to DOM structure |
-
-For the authoritative and up-to-date rule list, see the
-[`eslint-plugin-cypress` README](https://github.com/cypress-io/eslint-plugin-cypress#rules).
+See the [full rules list](https://github.com/cypress-io/eslint-plugin-cypress#rules)
+in the official repo for what's available and which rules are enabled by the
+`recommended` config.
 
 Catching these issues at lint time (in-editor or pre-commit) is far cheaper than
 debugging a failing CI run — especially for flaky-test patterns like hard-coded
