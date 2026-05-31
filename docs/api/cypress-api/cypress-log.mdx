@@ -93,7 +93,7 @@ control the log lifecycle.
 | Method                        | Description                                                                                                                                                                                                 |
 | ----------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `log.end()`                   | Marks the log as passed and complete. Use this when `autoEnd: false` to signal that the command succeeded. Returns the `Log` object.                                                                        |
-| `log.error(error)`            | Marks the log entry red and associates the given `Error` object with it. **Does not fail the test by itself** — you must also reject the Promise or rethrow the error. Returns the `Log` object.            |
+| `log.error(error)`            | Marks the log as failed and associates the given `Error` object with it. Returns the `Log` object.                                                                                                          |
 | `log.finish()`                | Finalizes the log automatically: takes a final snapshot (unless disabled) then calls `end()`. This is called internally by Cypress on command completion; prefer `end()` in custom commands.                |
 | `log.get()`                   | Returns all of the log's current attributes as an object.                                                                                                                                                   |
 | `log.get(attr)`               | Returns the value of a single attribute by name (e.g. `log.get('consoleProps')`).                                                                                                                           |
@@ -259,135 +259,6 @@ Cypress.Commands.add('myAsyncCommand', (url) => {
     }
   )
 })
-```
-
-### Wrapping a Callback-Based (RPC) API
-
-When your custom command wraps a Node-style callback API — where the result
-arrives via `(error, result)` rather than a returned Promise — return a
-`new Promise` from the command so Cypress waits for it. Use `autoEnd: false`
-to keep the log's pending indicator active until the callback fires, then
-call `log.end()` on success or use `Cypress.utils.throwErr` (passing `{ onFail: log }`)
-on failure so the error is linked to the correct log entry.
-
-Use `cy.state('window')` to access the window object synchronously inside the
-Promise constructor; `cy.window().then(...)` would add a separate async step
-and would not trigger the pending spinner.
-
-```javascript
-Cypress.Commands.add('call', (methodName, ...args) => {
-  const log = Cypress.log({
-    name: 'call',
-    message: `${methodName}(${Cypress.utils.stringify(args)})`,
-    autoEnd: false,
-    consoleProps() {
-      return { methodName, arguments: args }
-    },
-  })
-
-  return new Promise((resolve, reject) => {
-    // Access the window object synchronously so the pending spinner works.
-    const RPC = cy.state('window').RPC
-
-    RPC.call(methodName, ...args, (error, result) => {
-      // Update consoleProps with data available only after the callback fires.
-      log.set({
-        consoleProps() {
-          return { methodName, arguments: args, error, result }
-        },
-      })
-
-      if (error) {
-        reject(error)
-      } else {
-        log.end()
-        resolve(result)
-      }
-    })
-  }).catch((error) => {
-    // Link the error to this log entry so it appears red, then rethrow.
-    Cypress.utils.throwErr(error, { onFail: log })
-  })
-})
-```
-
-The resolved value of the Promise becomes the subject yielded to the next
-command in the chain:
-
-```javascript
-cy.call('getUser', 42).should('have.property', 'name', 'Jane')
-```
-
-### Making a Custom Command Retryable with `verifyUpcomingAssertions`
-
-:::caution
-
-`cy.verifyUpcomingAssertions` is an internal Cypress API. It is not covered
-by Cypress's semantic versioning guarantees and may change between minor
-releases. Use it only when built-in retry-ability from
-[custom queries](/api/cypress-api/custom-queries) is not sufficient.
-
-:::
-
-By default, custom commands execute once and do not retry. If your command
-needs to keep re-running until any chained assertions pass — the same
-behaviour as built-in queries like `cy.get()` — call
-`cy.verifyUpcomingAssertions(subject, options, callbacks)` and supply an
-`onRetry` callback that re-invokes the resolution function.
-
-`verifyUpcomingAssertions` checks the assertions chained after your command.
-If they have not yet passed it waits and calls `onRetry`, which lets you
-re-fetch the value and try again until the timeout is reached.
-
-```javascript
-Cypress.Commands.add('getAnalyticsCall', (method, options = {}) => {
-  const timeout =
-    options.timeout || Cypress.config('defaultCommandTimeout') || 4000
-  let timedOut = false
-
-  setTimeout(() => {
-    timedOut = true
-  }, timeout)
-
-  const log = Cypress.log({
-    name: 'getAnalyticsCall',
-    message: method,
-    autoEnd: false,
-  })
-
-  // Read the current value from the window synchronously so the function
-  // can be called again on each retry without creating new Cypress commands.
-  const getValue = () => {
-    try {
-      return cy.state('window').analytics[method].lastCall.args
-    } catch {
-      return []
-    }
-  }
-
-  const resolve = () => {
-    const value = getValue()
-
-    return cy.verifyUpcomingAssertions(value, options, {
-      onRetry: resolve,
-      onFail: (err) => {
-        log.error(err)
-        throw err
-      },
-    })
-  }
-
-  return resolve().then((result) => {
-    log.end()
-    return result
-  })
-})
-```
-
-```javascript
-// Retries until analytics.track was called with the expected argument,
-// or until the default command timeout is reached.
-cy.getAnalyticsCall('track').should('deep.include', { event: 'Purchase' })
 ```
 
 ### Reading Log Attributes with `get()`
