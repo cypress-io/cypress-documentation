@@ -990,6 +990,109 @@ For apps with stable, well-tested UIs, exporting the generated code is the lower
 
 Single-machine, serial test runs have a ceiling. Once your suite exceeds 10–15 minutes, the right lever is distributing the work across multiple machines.
 
+### Run the Right Tests at the Right Time with `@cypress/grep`
+
+Not every CI event warrants a full test suite run. A push to a feature branch needs fast feedback — enough confidence to catch obvious regressions. A merge to `main` warrants the full suite. Running everything on every event wastes CI time and slows developer feedback loops.
+
+[`@cypress/grep`](https://github.com/cypress-io/cypress/tree/develop/npm/grep) is the official Cypress plugin for filtering tests by title or tag. Used with a tagging strategy, it lets you define tiered CI pipelines: a fast smoke suite that runs on every PR and a comprehensive suite that runs before merging.
+
+#### Installation and setup
+
+```shell
+npm install --save-dev @cypress/grep
+```
+
+Register the plugin in your support file:
+
+```js
+// cypress/support/e2e.js
+import { register as registerCypressGrep } from '@cypress/grep'
+registerCypressGrep()
+```
+
+Add the node plugin to your config to enable spec pre-filtering (required for the key performance feature described below):
+
+```js
+// cypress.config.js
+import { plugin as cypressGrepPlugin } from '@cypress/grep/plugin'
+
+export default defineConfig({
+  e2e: {
+    setupNodeEvents(on, config) {
+      cypressGrepPlugin(config)
+      return config
+    },
+  },
+})
+```
+
+#### Tag your tests
+
+Add tags to tests and describe blocks using the test configuration object:
+
+```js
+it('logs in with valid credentials', { tags: '@smoke' }, () => { ... })
+
+it('exports a report as CSV', { tags: ['@regression', '@slow'] }, () => { ... })
+
+describe('Checkout flow', { tags: '@critical' }, () => {
+  it('processes a card payment', () => { ... })
+  it('applies a discount code', () => { ... })
+})
+```
+
+Common tagging strategies:
+
+| Tag           | When to run                                      |
+| ------------- | ------------------------------------------------ |
+| `@smoke`      | Every PR — fast coverage of critical paths       |
+| `@critical`   | Every PR — core user flows that must always pass |
+| `@regression` | Before merging to main — full coverage           |
+| `@slow`       | Nightly or scheduled runs only                   |
+
+#### Run tagged subsets in CI
+
+```shell
+# PR check — only smoke and critical tests
+npx cypress run --expose grepTags="@smoke @critical",grepFilterSpecs=true,grepOmitFiltered=true
+
+# Pre-merge — full suite minus known slow tests
+npx cypress run --expose grepTags="-@slow",grepFilterSpecs=true
+
+# Nightly — everything
+npx cypress run
+```
+
+#### `grepFilterSpecs` — the key performance option
+
+Without `grepFilterSpecs`, Cypress loads and compiles every spec file before filtering. Even if only 5 of your 80 spec files contain `@smoke` tests, all 80 are preprocessed — paying the full bundling cost before a single test runs.
+
+With `grepFilterSpecs: true`, Cypress reads the spec files first, identifies which ones contain matching tests, and only loads and compiles those. For a large suite where a smoke tag covers 10–15% of tests, this eliminates the preprocessor overhead for the other 85–90% of spec files on every PR run.
+
+`grepOmitFiltered: true` is a complementary option: without it, non-matching tests are marked as pending (still loaded, still visible in output). With it, they are skipped entirely, keeping the run output clean and removing the minor overhead of pending test bookkeeping.
+
+#### Package.json scripts for common CI tiers
+
+```json
+{
+  "scripts": {
+    "cy:smoke": "cypress run --expose grepTags=@smoke,grepFilterSpecs=true,grepOmitFiltered=true",
+    "cy:critical": "cypress run --expose grepTags=@critical,grepFilterSpecs=true,grepOmitFiltered=true",
+    "cy:regression": "cypress run --expose grepTags=-@slow,grepFilterSpecs=true"
+  }
+}
+```
+
+:::tip
+
+You can also filter by test title without tags — useful during development to run a single test or group without adding `.only`:
+
+```shell
+npx cypress run --expose grep="login"
+```
+
+:::
+
 ### Cache the Cypress Binary in CI
 
 Every Cypress installation includes two pieces: the `cypress` npm package and a platform-specific binary that Cypress downloads separately during `postinstall`. The binary is large — over 100 MB — and downloading it from scratch on every CI run is pure overhead that has nothing to do with your tests.
@@ -1257,18 +1360,19 @@ The most impactful optimizations, roughly in order:
 6. **Parallelization** — linear scaling with the number of machines
 7. **Spec prioritization + auto cancellation** — reduces the cost of broken builds
 8. **Disable video, use Test Replay** — removes per-spec encoding and upload overhead from CI; Test Replay provides better debugging capability at lower cost
-9. **Cache the Cypress binary in CI** — prevents a 100 MB+ binary download on every run; use the lock file as the cache key
-10. **Right-size CI machine resources** — resource starvation shows up as slow, flaky, or crashing runs; bump vCPUs and RAM before other optimizations if the machine is saturated
-11. **Eliminate arbitrary `cy.wait()`** — removes seconds of dead time
-12. **Slim support file and specific imports** — avoids bundling unused code that inflates compile time and browser payload on every spec startup
-13. **Block third-party requests with `blockHosts`** — prevents analytics, monitoring, and chat services from consuming time in test environments; blocks resolve immediately with a 503
-14. **Avoid wildcard `cy.intercept('*')`** — limits proxy overhead to only the requests the test actually needs
-15. **Use specific DOM selectors** — broad selectors like `*` or `div` force the browser to collect every matching node before filtering; always write the most targeted selector that uniquely identifies the element
-16. **`experimentalFastVisibility`** — replaces the layout-thrashing legacy visibility algorithm with a constant-time point-sampling approach; high impact on complex DOMs
-17. **`experimentalMemoryManagement`** — reduces GC pauses and browser crashes in long runs against memory-heavy apps; measure before committing, as the cleanup cost can exceed the benefit on lighter suites
-18. **Test retries (`runMode: 1`)** — prevents flaky tests from blocking CI runs; keep the count low and use Cypress Cloud flake data to fix root causes rather than absorbing the retry cost permanently
-19. **UI Coverage to find over-tested elements** — interaction count data in Cypress Cloud identifies UI your tests repeatedly pass through without intending to test; eliminating that redundancy speeds every test that was paying the cost
-20. **`cy.prompt` for selector maintenance** — eliminates recurring manual fix time when the UI changes; cached commands run without AI overhead in CI
+9. **Tag tests with `@cypress/grep` for CI tiers** — run a fast `@smoke`/`@critical` subset on every PR; `grepFilterSpecs` skips loading and compiling specs that contain no matching tests
+10. **Cache the Cypress binary in CI** — prevents a 100 MB+ binary download on every run; use the lock file as the cache key
+11. **Right-size CI machine resources** — resource starvation shows up as slow, flaky, or crashing runs; bump vCPUs and RAM before other optimizations if the machine is saturated
+12. **Eliminate arbitrary `cy.wait()`** — removes seconds of dead time
+13. **Slim support file and specific imports** — avoids bundling unused code that inflates compile time and browser payload on every spec startup
+14. **Block third-party requests with `blockHosts`** — prevents analytics, monitoring, and chat services from consuming time in test environments; blocks resolve immediately with a 503
+15. **Avoid wildcard `cy.intercept('*')`** — limits proxy overhead to only the requests the test actually needs
+16. **Use specific DOM selectors** — broad selectors like `*` or `div` force the browser to collect every matching node before filtering; always write the most targeted selector that uniquely identifies the element
+17. **`experimentalFastVisibility`** — replaces the layout-thrashing legacy visibility algorithm with a constant-time point-sampling approach; high impact on complex DOMs
+18. **`experimentalMemoryManagement`** — reduces GC pauses and browser crashes in long runs against memory-heavy apps; measure before committing, as the cleanup cost can exceed the benefit on lighter suites
+19. **Test retries (`runMode: 1`)** — prevents flaky tests from blocking CI runs; keep the count low and use Cypress Cloud flake data to fix root causes rather than absorbing the retry cost permanently
+20. **UI Coverage to find over-tested elements** — interaction count data in Cypress Cloud identifies UI your tests repeatedly pass through without intending to test; eliminating that redundancy speeds every test that was paying the cost
+21. **`cy.prompt` for selector maintenance** — eliminates recurring manual fix time when the UI changes; cached commands run without AI overhead in CI
 
 A team starting from scratch applying all of these has routinely achieved 3–5x improvements in end-to-end suite runtime without deleting a single test.
 
@@ -1276,6 +1380,7 @@ A team starting from scratch applying all of these has routinely achieved 3–5x
 
 - [Best Practices](/app/core-concepts/best-practices)
 - [Retry-ability](/app/core-concepts/retry-ability)
+- [`@cypress/grep`](https://github.com/cypress-io/cypress/tree/develop/npm/grep)
 - [Network Requests](/app/guides/network-requests)
 - [cy.session()](/api/commands/session)
 - [cy.intercept()](/api/commands/intercept)
