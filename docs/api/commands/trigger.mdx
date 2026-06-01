@@ -280,17 +280,15 @@ native setter before dispatching the event. This ensures framework `onChange`
 handlers fire correctly.
 
 ```js
-cy.get('input[type=range]').then(($range) => {
-  const el = $range[0]
-  const nativeInputValueSetter = Object.getOwnPropertyDescriptor(
-    window.HTMLInputElement.prototype,
-    'value',
-  ).set
+const nativeInputValueSetter = Object.getOwnPropertyDescriptor(
+  window.HTMLInputElement.prototype,
+  'value',
+).set
 
-  nativeInputValueSetter.call(el, 70)
-  el.dispatchEvent(new Event('input', { bubbles: true }))
-  el.dispatchEvent(new Event('change', { bubbles: true }))
-})
+cy.get('input[type=range]')
+  .then(($range) => nativeInputValueSetter.call($range[0], 70))
+  .trigger('input')
+  .trigger('change')
 ```
 
 ## Rules
