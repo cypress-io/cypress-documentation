@@ -1003,6 +1003,20 @@ npx cypress run --expose grep="login"
 
 :::
 
+#### Tradeoffs of selective test runs
+
+Filtering tests is a powerful technique for faster CI feedback, but it comes with a cost: Cypress Cloud comparisons are most meaningful when the same set of tests runs across branches. Before committing to a tiered strategy, consider how filtered runs affect each Cloud feature:
+
+- **[Branch Review](/cloud/features/branch-review)**: Branch Review compares test results between your PR branch and the base branch to surface regressions. If your PR branch runs only `@smoke` while `main` runs the full suite, tests that exist on `main` but weren't selected on the PR branch show up as missing — not as passing. The comparison loses accuracy when the test sets are asymmetric.
+
+- **[Test Replay](/cloud/features/test-replay)**: Tests that are filtered out never run, so they produce no replay. If a previously passing test is excluded from every PR run via `@smoke`, failures in that test won't surface until a full run — and there will be no replay to debug with.
+
+- **[UI Coverage](/ui-coverage/get-started/introduction)**: UI Coverage scores are derived from the set of tests that ran. A filtered run covers a narrower portion of your UI, producing a lower score than a full run would. Comparing a `@smoke`-only PR run against a full nightly run makes coverage appear to regress when it hasn't — the numbers simply reflect different test scopes.
+
+- **[Accessibility scores](/accessibility/get-started/introduction)**: The same issue applies to Accessibility scores. Partial runs produce partial a11y coverage. Cross-branch score comparisons are only meaningful when the same test scope runs on both sides.
+
+The recommended approach is to run filtered subsets for fast pre-flight checks, but ensure at least one full-suite run (on merge to `main` or nightly) that feeds the Cloud comparison features. Use [run tags](/cloud/features/smart-orchestration/run-grouping) or separate Cypress Cloud projects to keep full runs and filtered runs distinct, so your dashboards and comparisons always reflect complete data.
+
 ### Cache the Cypress binary in CI
 
 Every Cypress installation includes two pieces: the `cypress` npm package and a platform-specific binary downloaded separately during `postinstall`. The binary is over 100 MB. Downloading it from scratch on every CI run is pure overhead.
