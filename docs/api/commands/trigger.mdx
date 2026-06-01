@@ -282,7 +282,7 @@ handlers fire correctly.
 ```js
 const nativeInputValueSetter = Object.getOwnPropertyDescriptor(
   window.HTMLInputElement.prototype,
-  'value',
+  'value'
 ).set
 
 cy.get('input[type=range]')
