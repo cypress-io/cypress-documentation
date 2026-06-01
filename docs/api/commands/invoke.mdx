@@ -192,15 +192,6 @@ The above example can be written simply as:
 cy.contains('The code example').should('have.attr', 'id', 'code-snippet')
 ```
 
-:::caution
-
-**`.invoke('val', value)` does not simulate user input** and may not fire
-`onChange` handlers in controlled components (e.g. React sliders). See
-[Interact with a range input in a controlled component](/api/commands/trigger#interact-with-a-range-input-in-a-controlled-component-react-vue-etc)
-for the recommended approach.
-
-:::
-
 ## Notes
 
 ### Third Party Plugins
