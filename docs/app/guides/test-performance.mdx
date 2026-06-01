@@ -462,7 +462,7 @@ A well-structured Cypress suite often looks roughly like this:
 
 The exact ratios depend on your application, but the principle holds: every test you move from E2E to component or API level is a test that gets faster, cheaper to run, and easier to keep green.
 
-### Cache Authentication with `cy.session()`
+### Cache Authentication with `cy.session()` {#cache-authentication-with-cysession}
 
 [`cy.session()`](/api/commands/session) captures the full browser context (cookies, `localStorage`, `sessionStorage`) after a login sequence and restores that snapshot in subsequent tests — without repeating the login flow. A session that takes 3 seconds to establish the first time is restored in milliseconds on every subsequent test.
 
