@@ -330,7 +330,7 @@ There is a second, more significant benefit: Cypress verifies that `baseUrl` is 
 
 ### Cache authentication
 
-A full login flow (filling a form, submitting, waiting for a redirect) typically takes 2-5 seconds per test. Run this in 100 tests and you've added 5-8 minutes of pure authentication overhead to your suite:
+A full login flow (filling a form, submitting, waiting for a redirect) typically takes 2-5 seconds per test. Run this in 100 tests and you've added 3-8 minutes of pure authentication overhead to your suite:
 
 ```js
 // ❌ Slower approach: full UI login in beforeEach
