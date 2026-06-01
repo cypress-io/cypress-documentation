@@ -243,20 +243,6 @@ to confirm that a certificate was attached.
 | `bad decrypt` / `wrong final block length` | Passphrase file content is incorrect or has trailing whitespace |
 | Certificate works locally but not in CI | Certificate files not committed or not present at the expected path in CI |
 
-### Verifying your certificate files
-
-You can verify that your `.pem` certificate and key are a matching pair before
-running Cypress:
-
-```shell
-# Confirm the public key fingerprints match
-openssl x509 -noout -modulus -in certs/cert.pem | openssl md5
-openssl rsa  -noout -modulus -in certs/private.key | openssl md5
-
-# Inspect a PFX container
-openssl pkcs12 -info -in certs/cert.pfx -nokeys
-```
-
 ## Using Client Certificates in CI
 
 ### Storing certificates securely
