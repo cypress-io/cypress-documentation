@@ -1,6 +1,6 @@
 ---
 title: Optimizing Test Performance
-description: Learn how Cypress is designed for speed, what test performance benchmarks to aim for, and how to identify and eliminate patterns that slow your tests down.
+description: Learn how Cypress is designed for speed, what test performance benchmarks to aim for, and strategies to eliminate common sources of test slowdown.
 sidebar_label: Test Performance
 ---
 
@@ -15,8 +15,7 @@ sidebar_label: Test Performance
 - What test speed benchmarks to aim for
 - How Cypress's architecture is designed for fast tests
 - When to use API tests, component tests, and end-to-end tests for maximum speed
-- Patterns that slow tests down and how to fix them
-- Strategies to speed up authentication, network calls, and state setup
+- Strategies to speed up tests, from authentication and network calls to selectors and imports
 - How to parallelize and orchestrate tests in CI to maximize throughput
 - How to use UI Coverage to find over-tested UI and eliminate redundant test overhead
 
@@ -57,284 +56,53 @@ There is no universal benchmark, but these ranges reflect healthy test suites ac
 | Duration      | Assessment                                                              |
 | ------------- | ----------------------------------------------------------------------- |
 | < 3 seconds   | Excellent: typical for tests using stubs and programmatic setup         |
-| 3–10 seconds  | Acceptable: common for end-to-end tests hitting a real server           |
-| 10–30 seconds | Investigate: likely contains unnecessary waits or heavy UI-driven setup |
+| 3-10 seconds  | Acceptable: common for end-to-end tests hitting a real server           |
+| 10-30 seconds | Investigate: likely contains unnecessary waits or heavy UI-driven setup |
 | > 30 seconds  | Poor: almost certainly has architectural issues                         |
 
 Component tests should consistently run in under 2 seconds each.
+
+### Spec File Duration
+
+A spec file is a single file containing one or more tests. Spec duration is the total wall-clock time to run every test in that file, including `before`/`after` hooks. This matters most for [parallelization](#parallelization): Cypress distributes whole spec files across CI machines, so one long-running spec can leave other machines idle even when most of the suite has finished.
+
+| Duration    | Assessment                                                     |
+| ----------- | -------------------------------------------------------------- |
+| < 1 minute  | Excellent: keeps memory pressure low and parallelizes well     |
+| 1-3 minutes | Acceptable: typical for feature-focused spec files             |
+| 3-5 minutes | Investigate: may bottleneck parallel runs; consider splitting  |
+| > 5 minutes | Poor: split into smaller specs or reduce shared setup overhead |
+
+Aim for spec files with similar durations across your suite so parallel machines finish around the same time. Specs under ~10 seconds rarely improve total run time—the fixed per-spec overhead (browser launch, video encoding) often exceeds any savings from splitting further.
 
 ### Full Test Suite Duration
 
 | Suite Size    | Target (Serial)     | Target (Parallel, 4+ machines) |
 | ------------- | ------------------- | ------------------------------ |
 | < 50 tests    | < 3 minutes         | -                              |
-| 50–200 tests  | < 10 minutes        | < 3 minutes                    |
-| 200–500 tests | 15–30 minutes       | < 10 minutes                   |
+| 50-200 tests  | < 10 minutes        | < 3 minutes                    |
+| 200-500 tests | 15-30 minutes       | < 10 minutes                   |
 | 500+ tests    | Use parallelization | < 15 minutes                   |
 
-:::tip
+### How to find your slowest tests
 
-**How to find your slowest tests**: If you're recording runs to [Cypress Cloud](/cloud/get-started/introduction), the **Tests** tab on any run shows test duration sorted from slowest to fastest. The **Analytics** section surfaces duration trends over time, making it easy to spot tests that are getting slower across runs.
+If you record runs to [Cypress Cloud](/cloud/get-started/introduction), open the **Slowest Tests** analytics report. This view shows test duration sorted from slowest to fastest. The longest tests are your best candidates to split up or simplify.
 
-:::
+<DocsImage
+  src="/img/cloud/features/analytics/dashboard-analytics-slowest-tests.png"
+  alt="Cloud Analytics Slowest Tests Screenshot"
+/>
 
-## Patterns That Slow Tests Down
+This report shows the slowest tests in a test suite.
 
-### Arbitrary `cy.wait(number)`
+### How to find your slowest specs
 
-The most common performance anti-pattern is waiting for a fixed number of milliseconds:
+If you record runs to [Cypress Cloud](/cloud/get-started/introduction), open any run and select the **Specs** tab. This view zooms out from individual tests to show results at the spec file level. Use the **Views** button bar in the top right to switch to **Bar Chart**, which charts the length of each spec file. The longest bars are your best candidates to split up or simplify. Click any spec to open its tests in the Test Results tab.
 
-```js
-// ❌ Anti-pattern: wastes time even when the element appears in 200ms
-cy.get('[data-cy="results"]').click()
-cy.wait(3000)
-cy.get('[data-cy="modal"]').should('be.visible')
-
-// ✅ Let Cypress retry until the assertion passes
-cy.get('[data-cy="results"]').click()
-cy.get('[data-cy="modal"]').should('be.visible')
-```
-
-If you find yourself reaching for `cy.wait(number)`, the right fix is almost always to add an explicit assertion that Cypress can retry. See the [Unnecessary Waiting](/app/core-concepts/best-practices#Unnecessary-Waiting) section of Best Practices for more examples.
-
-### Logging In Through the UI for Every Test
-
-A full login flow (filling a form, submitting, waiting for a redirect) typically takes 2–5 seconds per test. Run this in 100 tests and you've added 5–8 minutes of pure authentication overhead to your suite.
-
-```js
-// ❌ Anti-pattern: full UI login in beforeEach
-beforeEach(() => {
-  cy.visit('/login')
-  cy.get('[data-cy="username"]').type('admin@example.com')
-  cy.get('[data-cy="password"]').type('password123')
-  cy.get('[data-cy="submit"]').click()
-  cy.url().should('include', '/dashboard')
-})
-```
-
-See [Cache Authentication with cy.session()](#cache-authentication-with-cysession) below for the fix.
-
-### Tiny Tests With Excessive Per-Test Setup
-
-Writing one assertion per test causes Cypress to reset the browser context, run all hooks, and navigate to the test page for each assertion:
-
-```js
-// ❌ Anti-pattern: unnecessary overhead from per-test browser resets
-describe('user profile', () => {
-  beforeEach(() => {
-    cy.visit('/profile')
-  })
-
-  it('shows the avatar', () => {
-    cy.get('[data-cy="avatar"]').should('be.visible')
-  })
-
-  it('shows the username', () => {
-    cy.get('[data-cy="username"]').should('exist')
-  })
-
-  it('shows the email', () => {
-    cy.get('[data-cy="email"]').should('exist')
-  })
-})
-
-// ✅ Group related assertions in a single test
-it('shows profile information', () => {
-  cy.visit('/profile')
-  cy.get('[data-cy="avatar"]').should('be.visible')
-  cy.get('[data-cy="username"]').should('exist')
-  cy.get('[data-cy="email"]').should('exist')
-})
-```
-
-Each Cypress test incurs a fixed overhead (browser context reset, hook execution, encoding). Grouping related assertions eliminates this overhead without sacrificing clarity. See [Creating Tiny Tests With A Single Assertion](/app/core-concepts/best-practices#Creating-Tiny-Tests-With-A-Single-Assertion) for a deeper discussion.
-
-### Not Stubbing Slow Network Requests
-
-Tests that wait for real API responses are bounded by server latency: database queries, downstream services, and network transit all add up. Stub the responses in tests that aren't specifically testing server behavior:
-
-```js
-// ❌ Anti-pattern: test waits for a real API call that takes 800ms+
-cy.visit('/dashboard')
-cy.get('[data-cy="transactions"]').should('have.length.greaterThan', 0)
-
-// ✅ Stub the response: returns in < 20ms
-cy.intercept('GET', '/api/transactions', { fixture: 'transactions.json' }).as(
-  'getTransactions'
-)
-cy.visit('/dashboard')
-cy.wait('@getTransactions')
-cy.get('[data-cy="transactions"]').should('have.length.greaterThan', 0)
-```
-
-See the [Network Requests guide](/app/guides/network-requests) for a full discussion of when to stub vs. use real server responses.
-
-### Intercepting All Network Requests with `*`
-
-Using a wildcard pattern to observe or intercept every HTTP request sounds like a harmless convenience, but it creates real overhead. Cypress routes every intercepted request through its proxy, which means every network call the page makes is inspected, matched, and processed. Broad wildcard patterns that match dozens or hundreds of requests per page load multiply that cost across the entire suite.
-
-```js
-// ❌ Anti-pattern: intercepts every request: Cypress proxies each one
-cy.intercept('*').as('anyRequest')
-
-// ✅ Only intercept the specific requests your test intends to work with
-cy.intercept('GET', '/api/users*').as('getUsers')
-cy.intercept('POST', '/api/orders').as('createOrder')
-```
-
-A page that fires 50 network requests (images, analytics pings, feature flag polls, error monitoring payloads) will route all 50 through the intercept handler when using `*`. The proxy cost per request is small, but it compounds across every page visit in every test. Intercept only the requests your test explicitly needs to observe, stub, or wait on.
-
-### Querying the Entire DOM to Filter Down
-
-Using an overly broad selector to grab a large set of elements and then filtering to a subset forces Cypress to collect and evaluate the entire matched set before the filter runs:
-
-```js
-// ❌ Anti-pattern: queries every element in the DOM, then filters
-cy.get('*').filter('[data-cy="submit"]')
-
-// ✅ Query specifically for the element you need
-cy.get('[data-cy="submit"]')
-```
-
-Selectors like `*`, `div`, or `section` that match hundreds or thousands of DOM nodes create unnecessary work for both the browser's query engine and Cypress's element processing. The broader the selector, the more nodes get collected, even if the final `.filter()` or `.find()` narrows it to one element. Always write the most specific selector that uniquely identifies the element you need.
-
-### Missing `baseUrl`
-
-Without a `baseUrl`, Cypress loads a blank page on startup then reloads when `cy.visit()` is first called. This causes a visible flash and wastes several hundred milliseconds at the start of every test file.
-
-```js
-// cypress.config.js
-export default defineConfig({
-  e2e: {
-    baseUrl: 'http://localhost:3000',
-  },
-})
-```
-
-With `baseUrl` set, Cypress opens directly to your application. See [Setting a Global baseUrl](/app/core-concepts/best-practices#Setting-a-Global-baseUrl) for details.
-
-There is a second, more significant benefit: **Cypress verifies that `baseUrl` is reachable before running any tests.** If the URL is not available (because your dev server failed to start, a deployment didn't complete, an environment variable is wrong, or the app crashed on startup), Cypress exits immediately with a clear error rather than starting the suite. This kills an entirely broken run before it wastes any CI time or obscures the real problem behind a cascade of confusing test failures.
-
-This early-exit behavior is one of the most practical reasons to always set `baseUrl`. A missing or misconfigured server URL is a systemic problem, not a test problem: surfacing it in the first second of a run rather than 10 minutes in saves everyone's time.
-
-### Using `afterEach` for Cleanup
-
-`afterEach` runs even when a test fails, and if it touches the server it adds latency to every test transition. More importantly, if Cypress is reloaded mid-test, `afterEach` won't run at all, leaving your state inconsistent.
-
-Move cleanup to `beforeEach` so it always runs before each test, whether the previous test passed, failed, or was interrupted:
-
-```js
-// ❌ Anti-pattern
-afterEach(() => {
-  cy.request('POST', '/api/reset-db')
-})
-
-// ✅ Reset before each test so state is always clean
-beforeEach(() => {
-  cy.request('POST', '/api/reset-db')
-})
-```
-
-See [Using after or afterEach Hooks](/app/core-concepts/best-practices#Using-after-Or-afterEach-Hooks) for more.
-
-### Heavy Imports in Support and Spec Files
-
-Before Cypress runs any test, it [preprocesses](/api/node-events/preprocessors-api) your support file and spec files: compiling and bundling them with webpack (by default). Everything your files import gets pulled into that bundle. A bloated bundle means a slower compile step, a larger payload shipped to the browser, and more time before the first test can start.
-
-The support file (`cypress/support/e2e.js`) is the highest-risk location because **it runs before every single spec file**. An import added there is paid on every startup, not just once.
-
-#### Node.js-only modules in the browser bundle
-
-Importing modules that only work in Node.js (database drivers, the built-in `fs`/`path` modules, ORMs, server-side SDKs) forces the bundler to either throw an error or shim them with heavy polyfills. Either way, they have no place in a browser-executed file.
-
-```js
-// ❌ Anti-pattern: importing Node.js-only code into a support file
-// cypress/support/e2e.js
-import { db } from '../../src/db'       // database driver: Node.js only
-import fs from 'fs'                      // built-in: not available in browser
-import { sendEmail } from '../../src/mailer' // server SDK: Node.js only
-
-beforeEach(() => {
-  db.seed()
-})
-
-// ✅ Move Node.js code to cy.task() in cypress.config.js:
-// task code runs in Node and is never bundled into the browser
-// cypress.config.js
-setupNodeEvents(on) {
-  on('task', {
-    async seedDatabase() {
-      await db.seed()
-      return null
-    }
-  })
-}
-
-// cypress/support/e2e.js
-beforeEach(() => {
-  cy.task('seedDatabase')
-})
-```
-
-See [cy.task()](/api/commands/task) for the full API. Unlike support file imports, task code runs in the Node.js process of the Cypress config file and is never sent to the browser.
-
-#### Barrel imports that pull in your entire codebase
-
-Barrel files (`index.js` that re-export everything from a directory) are convenient in application code but expensive in test files. Importing a single named export from a barrel causes the bundler to process every module the barrel re-exports: even the ones your test never uses.
-
-```js
-// ❌ Anti-pattern: barrel import drags in the entire utils module graph
-import { formatDate } from '../../src/utils'
-// utils/index.js re-exports 40 other modules, all of which get bundled
-
-// ✅ Import directly from the specific file
-import { formatDate } from '../../src/utils/formatDate'
-```
-
-This is especially common when test helpers import from the application's shared utilities, constants, or type definitions. Each seemingly small import can drag in a large transitive dependency graph.
-
-#### Importing application source when an API call would do
-
-A common pattern is importing application-layer functions (factories, schema validators, state helpers) directly into test files to set up test data. If the same result can be achieved through `cy.request()` or `cy.task()`, the import is unnecessary overhead.
-
-```js
-// ❌ Anti-pattern: importing app source to build test fixtures
-import { buildUser } from '../../src/factories/user'
-import { UserSchema } from '../../src/models/user'
-
-it('creates a user', () => {
-  const user = buildUser({ role: 'admin' })
-  cy.request('POST', '/api/users', user)
-})
-
-// ✅ Build the fixture inline or via cy.task(): no app source imported
-it('creates a user', () => {
-  cy.request('POST', '/api/users', { name: 'Admin', role: 'admin' })
-})
-```
-
-#### What a lean support file looks like
-
-The support file should contain only what genuinely needs to run before every test:
-
-```js
-// cypress/support/e2e.js: keep this slim
-
-// Custom commands and queries
-import './commands'
-
-// Third-party Cypress plugins (e.g. accessibility, code coverage)
-import '@cypress/code-coverage/support'
-
-// Global hooks that apply to every test
-beforeEach(() => {
-  cy.task('resetDatabase')
-})
-```
-
-Everything else (helpers, factories, utilities, Node.js integrations) belongs in `cypress.config.js` (as tasks) or imported directly in the individual spec files that need them.
-
----
+<DocsImage
+  src="/img/cloud/runs/specs-bar-chart.png"
+  alt="Specs Bar Chart View"
+/>
 
 ## Strategies to Speed Up Your Tests
 
@@ -461,7 +229,39 @@ A well-structured Cypress suite often looks roughly like this:
 
 The exact ratios depend on your application, but the principle holds: every test you move from E2E to component or API level is a test that gets faster, cheaper to run, and easier to keep green.
 
+### Set a Global `baseUrl`
+
+Without a `baseUrl`, Cypress loads a blank page on startup then reloads when `cy.visit()` is first called. This causes a visible flash and wastes several hundred milliseconds at the start of every test file.
+
+```js
+// cypress.config.js
+export default defineConfig({
+  e2e: {
+    baseUrl: 'http://localhost:3000',
+  },
+})
+```
+
+With `baseUrl` set, Cypress opens directly to your application. See [Setting a Global baseUrl](/app/core-concepts/best-practices#Setting-a-Global-baseUrl) for details.
+
+There is a second, more significant benefit: **Cypress verifies that `baseUrl` is reachable before running any tests.** If the URL is not available (because your dev server failed to start, a deployment didn't complete, an environment variable is wrong, or the app crashed on startup), Cypress exits immediately with a clear error rather than starting the suite. This kills an entirely broken run before it wastes any CI time or obscures the real problem behind a cascade of confusing test failures.
+
+This early-exit behavior is one of the most practical reasons to always set `baseUrl`. A missing or misconfigured server URL is a systemic problem, not a test problem: surfacing it in the first second of a run rather than 10 minutes in saves everyone's time.
+
 ### Cache Authentication with `cy.session()` {#cache-authentication-with-cysession}
+
+A full login flow (filling a form, submitting, waiting for a redirect) typically takes 2–5 seconds per test. Run this in 100 tests and you've added 5–8 minutes of pure authentication overhead to your suite:
+
+```js
+// ❌ Anti-pattern: full UI login in beforeEach
+beforeEach(() => {
+  cy.visit('/login')
+  cy.get('[data-cy="username"]').type('admin@example.com')
+  cy.get('[data-cy="password"]').type('password123')
+  cy.get('[data-cy="submit"]').click()
+  cy.url().should('include', '/dashboard')
+})
+```
 
 [`cy.session()`](/api/commands/session) captures the full browser context (cookies, `localStorage`, `sessionStorage`) after a login sequence and restores that snapshot in subsequent tests, without repeating the login flow. A session that takes 3 seconds to establish the first time is restored in milliseconds on every subsequent test.
 
@@ -582,7 +382,78 @@ beforeEach(() => {
 
 Direct database operations are typically 10–100x faster than driving the same action through the UI.
 
+#### Prefer `beforeEach` for cleanup
+
+`afterEach` runs even when a test fails, and if it touches the server it adds latency to every test transition. More importantly, if Cypress is reloaded mid-test, `afterEach` won't run at all, leaving your state inconsistent.
+
+Move cleanup to `beforeEach` so it always runs before each test, whether the previous test passed, failed, or was interrupted:
+
+```js
+// ❌ Anti-pattern
+afterEach(() => {
+  cy.request('POST', '/api/reset-db')
+})
+
+// ✅ Reset before each test so state is always clean
+beforeEach(() => {
+  cy.request('POST', '/api/reset-db')
+})
+```
+
+See [Using after or afterEach Hooks](/app/core-concepts/best-practices#Using-after-Or-afterEach-Hooks) for more.
+
+### Group Related Assertions to Reduce Per-Test Overhead
+
+Writing one assertion per test causes Cypress to reset the browser context, run all hooks, and navigate to the test page for each assertion:
+
+```js
+// ❌ Anti-pattern: unnecessary overhead from per-test browser resets
+describe('user profile', () => {
+  beforeEach(() => {
+    cy.visit('/profile')
+  })
+
+  it('shows the avatar', () => {
+    cy.get('[data-cy="avatar"]').should('be.visible')
+  })
+
+  it('shows the username', () => {
+    cy.get('[data-cy="username"]').should('exist')
+  })
+
+  it('shows the email', () => {
+    cy.get('[data-cy="email"]').should('exist')
+  })
+})
+
+// ✅ Group related assertions in a single test
+it('shows profile information', () => {
+  cy.visit('/profile')
+  cy.get('[data-cy="avatar"]').should('be.visible')
+  cy.get('[data-cy="username"]').should('exist')
+  cy.get('[data-cy="email"]').should('exist')
+})
+```
+
+Each Cypress test incurs a fixed overhead (browser context reset, hook execution, encoding). Grouping related assertions eliminates this overhead without sacrificing clarity. See [Creating Tiny Tests With A Single Assertion](/app/core-concepts/best-practices#Creating-Tiny-Tests-With-A-Single-Assertion) for a deeper discussion.
+
 ### Stub Network Requests Strategically
+
+Tests that wait for real API responses are bounded by server latency: database queries, downstream services, and network transit all add up. Stub the responses in tests that aren't specifically testing server behavior:
+
+```js
+// ❌ Anti-pattern: test waits for a real API call that takes 800ms+
+cy.visit('/dashboard')
+cy.get('[data-cy="transactions"]').should('have.length.greaterThan', 0)
+
+// ✅ Stub the response: returns in < 20ms
+cy.intercept('GET', '/api/transactions', { fixture: 'transactions.json' }).as(
+  'getTransactions'
+)
+cy.visit('/dashboard')
+cy.wait('@getTransactions')
+cy.get('[data-cy="transactions"]').should('have.length.greaterThan', 0)
+```
 
 Not every test needs to exercise the real server. Reserve true end-to-end tests for critical paths (login, checkout, core workflows), and stub responses for the remaining tests that focus on UI behavior:
 
@@ -612,6 +483,23 @@ it('shows an error message when the order fails', () => {
 ```
 
 Stubbed requests return in < 20ms. Real requests to a local dev server typically return in 100–500ms; requests to a remote staging server may take 500ms–2 seconds each.
+
+See the [Network Requests guide](/app/guides/network-requests) for a full discussion of when to stub vs. use real server responses.
+
+#### Intercept only the requests you need
+
+Using a wildcard pattern to observe or intercept every HTTP request sounds like a harmless convenience, but it creates real overhead. Cypress routes every intercepted request through its proxy, which means every network call the page makes is inspected, matched, and processed. Broad wildcard patterns that match dozens or hundreds of requests per page load multiply that cost across the entire suite.
+
+```js
+// ❌ Anti-pattern: intercepts every request: Cypress proxies each one
+cy.intercept('*').as('anyRequest')
+
+// ✅ Only intercept the specific requests your test intends to work with
+cy.intercept('GET', '/api/users*').as('getUsers')
+cy.intercept('POST', '/api/orders').as('createOrder')
+```
+
+A page that fires 50 network requests (images, analytics pings, feature flag polls, error monitoring payloads) will route all 50 through the intercept handler when using `*`. The proxy cost per request is small, but it compounds across every page visit in every test. Intercept only the requests your test explicitly needs to observe, stub, or wait on.
 
 ### Block Third-Party Requests with `blockHosts`
 
@@ -647,7 +535,133 @@ If you're not sure which third-party domains your application is calling, open t
 
 :::
 
-### Reduce Timeout Values for Expected-Fast Operations
+### Use Specific Selectors
+
+Using an overly broad selector to grab a large set of elements and then filtering to a subset forces Cypress to collect and evaluate the entire matched set before the filter runs:
+
+```js
+// ❌ Anti-pattern: queries every element in the DOM, then filters
+cy.get('*').filter('[data-cy="submit"]')
+
+// ✅ Query specifically for the element you need
+cy.get('[data-cy="submit"]')
+```
+
+Selectors like `*`, `div`, or `section` that match hundreds or thousands of DOM nodes create unnecessary work for both the browser's query engine and Cypress's element processing. The broader the selector, the more nodes get collected, even if the final `.filter()` or `.find()` narrows it to one element. Always write the most specific selector that uniquely identifies the element you need.
+
+### Keep Support and Spec Imports Lean
+
+Before Cypress runs any test, it [preprocesses](/api/node-events/preprocessors-api) your support file and spec files: compiling and bundling them with webpack (by default). Everything your files import gets pulled into that bundle. A bloated bundle means a slower compile step, a larger payload shipped to the browser, and more time before the first test can start.
+
+The support file (`cypress/support/e2e.js`) is the highest-risk location because **it runs before every single spec file**. An import added there is paid on every startup, not just once.
+
+#### Node.js-only modules in the browser bundle
+
+Importing modules that only work in Node.js (database drivers, the built-in `fs`/`path` modules, ORMs, server-side SDKs) forces the bundler to either throw an error or shim them with heavy polyfills. Either way, they have no place in a browser-executed file.
+
+```js
+// ❌ Anti-pattern: importing Node.js-only code into a support file
+// cypress/support/e2e.js
+import { db } from '../../src/db'       // database driver: Node.js only
+import fs from 'fs'                      // built-in: not available in browser
+import { sendEmail } from '../../src/mailer' // server SDK: Node.js only
+
+beforeEach(() => {
+  db.seed()
+})
+
+// ✅ Move Node.js code to cy.task() in cypress.config.js:
+// task code runs in Node and is never bundled into the browser
+// cypress.config.js
+setupNodeEvents(on) {
+  on('task', {
+    async seedDatabase() {
+      await db.seed()
+      return null
+    }
+  })
+}
+
+// cypress/support/e2e.js
+beforeEach(() => {
+  cy.task('seedDatabase')
+})
+```
+
+See [cy.task()](/api/commands/task) for the full API. Unlike support file imports, task code runs in the Node.js process of the Cypress config file and is never sent to the browser.
+
+#### Barrel imports that pull in your entire codebase
+
+Barrel files (`index.js` that re-export everything from a directory) are convenient in application code but expensive in test files. Importing a single named export from a barrel causes the bundler to process every module the barrel re-exports: even the ones your test never uses.
+
+```js
+// ❌ Anti-pattern: barrel import drags in the entire utils module graph
+import { formatDate } from '../../src/utils'
+// utils/index.js re-exports 40 other modules, all of which get bundled
+
+// ✅ Import directly from the specific file
+import { formatDate } from '../../src/utils/formatDate'
+```
+
+This is especially common when test helpers import from the application's shared utilities, constants, or type definitions. Each seemingly small import can drag in a large transitive dependency graph.
+
+#### Importing application source when an API call would do
+
+A common pattern is importing application-layer functions (factories, schema validators, state helpers) directly into test files to set up test data. If the same result can be achieved through `cy.request()` or `cy.task()`, the import is unnecessary overhead.
+
+```js
+// ❌ Anti-pattern: importing app source to build test fixtures
+import { buildUser } from '../../src/factories/user'
+import { UserSchema } from '../../src/models/user'
+
+it('creates a user', () => {
+  const user = buildUser({ role: 'admin' })
+  cy.request('POST', '/api/users', user)
+})
+
+// ✅ Build the fixture inline or via cy.task(): no app source imported
+it('creates a user', () => {
+  cy.request('POST', '/api/users', { name: 'Admin', role: 'admin' })
+})
+```
+
+#### What a lean support file looks like
+
+The support file should contain only what genuinely needs to run before every test:
+
+```js
+// cypress/support/e2e.js: keep this slim
+
+// Custom commands and queries
+import './commands'
+
+// Third-party Cypress plugins (e.g. accessibility, code coverage)
+import '@cypress/code-coverage/support'
+
+// Global hooks that apply to every test
+beforeEach(() => {
+  cy.task('resetDatabase')
+})
+```
+
+Everything else (helpers, factories, utilities, Node.js integrations) belongs in `cypress.config.js` (as tasks) or imported directly in the individual spec files that need them.
+
+### Avoid Arbitrary Waits and Tune Timeouts
+
+The most common performance anti-pattern is waiting for a fixed number of milliseconds:
+
+```js
+// ❌ Anti-pattern: wastes time even when the element appears in 200ms
+cy.get('[data-cy="results"]').click()
+cy.wait(3000)
+cy.get('[data-cy="modal"]').should('be.visible')
+
+// ✅ Let Cypress retry until the assertion passes
+cy.get('[data-cy="results"]').click()
+cy.get('[data-cy="modal"]').should('be.visible')
+```
+
+If you find yourself reaching for `cy.wait(number)`, the right fix is almost always to add an explicit assertion that Cypress can retry. See the [Unnecessary Waiting](/app/core-concepts/best-practices#Unnecessary-Waiting) section of Best Practices for more examples.
 
 The default command timeout is 4 seconds ([`defaultCommandTimeout`](/app/references/configuration#Timeouts)). For operations you know should be nearly instant, a lower timeout fails the test faster and gives clearer signal when something is genuinely wrong:
 
