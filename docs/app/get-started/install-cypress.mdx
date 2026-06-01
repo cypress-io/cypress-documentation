@@ -113,7 +113,13 @@ bun install --ignore-scripts
 bunx cypress install
 ```
 
-Alternatively, add `cypress` to `trustedDependencies` in `package.json` so Bun runs the `postinstall` script on install:
+Alternatively, trust Cypress so Bun runs the `postinstall` script on install. You can use the CLI:
+
+```shell
+bun pm trust cypress
+```
+
+Or add `cypress` to `trustedDependencies` in `package.json` manually:
 
 ```json title="package.json"
 {
