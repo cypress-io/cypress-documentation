@@ -41,6 +41,9 @@ In the example below, the launchpad within Cypress App shows that the **Continue
 
 Now we can focus on consolidating tests and optimizing our test suite to avoid unnecessary duplication.
 
+<Tabs>
+<TabItem value="cypress/support/commands.js">
+
 ```js
 // This example is simplified for demonstration purposes
 // In a real-world scenario, you would change the properties that are checked
@@ -62,6 +65,26 @@ it('shows projects page', () => {
   cy.contains('Projects')
 })
 ```
+
+</TabItem>
+<TabItem value="cypress/support/commands.ts">
+
+```ts
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      skipWelcome(): Chainable<void>
+    }
+  }
+}
+
+Cypress.Commands.add('skipWelcome', () => {
+  cy.setCookie('welcome', 'dismissed')
+})
+```
+
+</TabItem>
+</Tabs>
 
 After updating our tests and recording a new run, we can visit the **Tested elements** section to see the impact of our changes. The **Continue** button now appears in fewer snapshots and less interactions, indicating that we've successfully reduced duplication.
 

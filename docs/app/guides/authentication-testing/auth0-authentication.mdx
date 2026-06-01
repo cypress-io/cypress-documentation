@@ -126,7 +126,56 @@ Next, we'll write a custom command called `loginToAuth0` to perform a login to
    [Cypress Real World App](https://github.com/cypress-io/cypress-realworld-app)
 4. Cache the results with [`cy.session()`](/api/commands/session)
 
-```js title="cypress/support/auth-provider-commands/auth0.ts"
+<Tabs>
+<TabItem value="cypress/support/commands.js">
+
+```js title="cypress/support/auth-provider-commands/auth0.js"
+function loginViaAuth0Ui(username, password) {
+  // App landing page redirects to Auth0.
+  cy.visit('/')
+
+  // Login on Auth0.
+  cy.origin(
+    Cypress.expose('auth0_domain'),
+    { args: { username, password } },
+    ({ username, password }) => {
+      cy.get('input#username').type(username)
+      cy.get('input#password').type(password, { log: false })
+      cy.contains('button[value=default]', 'Continue').click()
+    }
+  )
+
+  // Ensure Auth0 has redirected us back to the RWA.
+  cy.url().should('equal', 'http://localhost:3000/')
+}
+
+Cypress.Commands.add('loginToAuth0', (username, password) => {
+  const log = Cypress.log({
+    displayName: 'AUTH0 LOGIN',
+    message: [`🔐 Authenticating | ${username}`],
+    autoEnd: false,
+  })
+  log.snapshot('before')
+
+  loginViaAuth0Ui(username, password)
+
+  log.snapshot('after')
+  log.end()
+})
+```
+
+</TabItem>
+<TabItem value="cypress/support/commands.ts">
+
+```ts
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      loginToAuth0(username: string, password: string): Chainable<void>
+    }
+  }
+}
+
 function loginViaAuth0Ui(username: string, password: string) {
   // App landing page redirects to Auth0.
   cy.visit('/')
@@ -161,6 +210,9 @@ Cypress.Commands.add('loginToAuth0', (username: string, password: string) => {
   log.end()
 })
 ```
+
+</TabItem>
+</Tabs>
 
 Now, we can use our `loginToAuth0` command in the test. Below is our test to
 login as a user via Auth0 and run a basic sanity check.
@@ -202,7 +254,50 @@ Lastly, we can refactor our login command to take advantage of
 [`cy.session()`](/api/commands/session) to store our logged in user so we don't
 have to reauthenticate before every test.
 
+<Tabs>
+<TabItem value="cypress/support/commands.js">
+
 ```js title="cypress/support/commands.js"
+Cypress.Commands.add('loginToAuth0', (username, password) => {
+  const log = Cypress.log({
+    displayName: 'AUTH0 LOGIN',
+    message: [`🔐 Authenticating | ${username}`],
+    autoEnd: false,
+  })
+  log.snapshot('before')
+
+  cy.session(
+    `auth0-${username}`,
+    () => {
+      loginViaAuth0Ui(username, password)
+    },
+    {
+      validate: () => {
+        // Validate presence of access token in localStorage.
+        cy.wrap(localStorage)
+          .invoke('getItem', 'authAccessToken')
+          .should('exist')
+      },
+    }
+  )
+
+  log.snapshot('after')
+  log.end()
+})
+```
+
+</TabItem>
+<TabItem value="cypress/support/commands.ts">
+
+```ts
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      loginToAuth0(username: string, password: string): Chainable<void>
+    }
+  }
+}
+
 Cypress.Commands.add('loginToAuth0', (username: string, password: string) => {
   const log = Cypress.log({
     displayName: 'AUTH0 LOGIN',
@@ -232,6 +327,9 @@ Cypress.Commands.add('loginToAuth0', (username: string, password: string) => {
 })
 ```
 
+</TabItem>
+</Tabs>
+
 <DocsVideo
   src="https://vimeo.com/789093910"
   title="Auth0 authentication with cy.session()"
@@ -253,29 +351,30 @@ The `loginByAuth0Api` command will execute the following steps:
 2. Finally the `auth0Cypress` `localStorage` item is set with the
    `access token`, `id_token` and user profile.
 
-```jsx title="cypress/support/commands.js"
-Cypress.Commands.add(
-  'loginByAuth0Api',
-  (username: string, password: string) => {
-    cy.log(`Logging in as ${username}`)
-    const client_id = Cypress.expose('auth0_client_id')
-    const audience = Cypress.expose('auth0_audience')
-    const scope = Cypress.expose('auth0_scope')
+<Tabs>
+<TabItem value="cypress/support/commands.js">
 
-    cy.env(['AUTH0_CLIENT_SECRET']).then(({ client_secret }) => {
-      cy.request({
-        method: 'POST',
-        url: `https://${Cypress.expose('auth0_domain')}/oauth/token`,
-        body: {
-          grant_type: 'password',
-          username,
-          password,
-          audience,
-          scope,
-          client_id,
-          client_secret,
-        },
-      }).then(({ body }) => {
+```js title="cypress/support/commands.js"
+Cypress.Commands.add('loginByAuth0Api', (username, password) => {
+  cy.log(`Logging in as ${username}`)
+  const client_id = Cypress.expose('auth0_client_id')
+  const audience = Cypress.expose('auth0_audience')
+  const scope = Cypress.expose('auth0_scope')
+
+  cy.env(['AUTH0_CLIENT_SECRET']).then(({ client_secret }) => {
+    cy.request({
+      method: 'POST',
+      url: `https://${Cypress.expose('auth0_domain')}/oauth/token`,
+      body: {
+        grant_type: 'password',
+        username,
+        password,
+        audience,
+        scope,
+        client_id,
+        client_secret,
+      },
+    }).then(({ body }) => {
       const claims = jwt.decode(body.id_token)
       const {
         nickname,
@@ -312,11 +411,89 @@ Cypress.Commands.add(
       window.localStorage.setItem('auth0Cypress', JSON.stringify(item))
 
       cy.visit('/')
+    })
+  })
+})
+```
+
+</TabItem>
+<TabItem value="cypress/support/commands.ts">
+
+```ts
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      loginByAuth0Api(username: string, password: string): Chainable<void>
+    }
+  }
+}
+
+Cypress.Commands.add(
+  'loginByAuth0Api',
+  (username: string, password: string) => {
+    cy.log(`Logging in as ${username}`)
+    const client_id = Cypress.expose('auth0_client_id')
+    const audience = Cypress.expose('auth0_audience')
+    const scope = Cypress.expose('auth0_scope')
+
+    cy.env(['AUTH0_CLIENT_SECRET']).then(({ client_secret }) => {
+      cy.request({
+        method: 'POST',
+        url: `https://${Cypress.expose('auth0_domain')}/oauth/token`,
+        body: {
+          grant_type: 'password',
+          username,
+          password,
+          audience,
+          scope,
+          client_id,
+          client_secret,
+        },
+      }).then(({ body }) => {
+        const claims = jwt.decode(body.id_token)
+        const {
+          nickname,
+          name,
+          picture,
+          updated_at,
+          email,
+          email_verified,
+          sub,
+          exp,
+        } = claims
+
+        const item = {
+          body: {
+            ...body,
+            decodedToken: {
+              claims,
+              user: {
+                nickname,
+                name,
+                picture,
+                updated_at,
+                email,
+                email_verified,
+                sub,
+              },
+              audience,
+              client_id,
+            },
+          },
+          expiresAt: exp,
+        }
+
+        window.localStorage.setItem('auth0Cypress', JSON.stringify(item))
+
+        cy.visit('/')
       })
     })
   }
 )
 ```
+
+</TabItem>
+</Tabs>
 
 With our Auth0 app setup properly in the Auth0 Developer console, necessary
 environment variables in place, and our `loginByAuth0Api` command implemented,
@@ -640,6 +817,9 @@ system's current external IP address.
 
 :::
 
+<Tabs>
+<TabItem value="cypress/support/commands.js">
+
 ```jsx title='cypress/support/commands.js'
 Cypress.Commands.add('loginByAuth0Api', (username, password) => {
   // Useful when rate limited by Auth0
@@ -662,3 +842,43 @@ Cypress.Commands.add('loginByAuth0Api', (username, password) => {
   // ... remaining loginByAuth0Api command
 })
 ```
+
+</TabItem>
+<TabItem value="cypress/support/commands.ts">
+
+```ts
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      loginByAuth0Api(username: string, password: string): Chainable<void>
+    }
+  }
+}
+
+Cypress.Commands.add(
+  'loginByAuth0Api',
+  (username: string, password: string) => {
+    // Useful when rate limited by Auth0
+    cy.exec('curl -4 icanhazip.com')
+      .its('stdout')
+      .then((ip) => {
+        cy.env(['AUTH0_MGMT_API_TOKEN']).then(({ token }) => {
+          cy.request({
+            method: 'DELETE',
+            url: `https://${Cypress.expose(
+              'auth0_domain'
+            )}/api/v2/anomaly/blocks/ips/${ip}`,
+            auth: {
+              bearer: token,
+            },
+          })
+        })
+      })
+
+    // ... remaining loginByAuth0Api command
+  }
+)
+```
+
+</TabItem>
+</Tabs>

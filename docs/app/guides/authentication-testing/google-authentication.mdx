@@ -50,6 +50,15 @@ Once saved, note the **client ID** and **client secret**. You can find these und
 [Google API Credentials](https://console.developers.google.com/apis/credentials)
 page.
 
+:::info
+
+You must also configure an **OAuth Consent Screen** and add your test account(s)
+as test users before the credentials will work. Refer to
+[Google's OAuth setup documentation](https://developers.google.com/identity/protocols/oauth2)
+for instructions.
+
+:::
+
 ## Using the Google OAuth 2.0 Playground to Create Testing Credentials
 
 :::info
@@ -131,13 +140,16 @@ The `loginByGoogleApi` command will execute the following steps:
 3. Finally the `googleCypress` localStorage item is set with the `access token`
    and user profile.
 
-```jsx title="cypress/support/commands.js"
+<Tabs>
+<TabItem value="cypress/support/commands.js">
+
+```js title="cypress/support/commands.js"
 Cypress.Commands.add('loginByGoogleApi', () => {
   cy.log('Logging in to Google')
   cy.env(['googleClientId', 'googleClientSecret', 'googleRefreshToken']).then(({ clientId, clientSecret, refreshToken }) => {
     cy.request({
       method: 'POST',
-      url: 'https://www.googleapis.com/oauth2/v4/token',
+      url: 'https://oauth2.googleapis.com/token',
       body: {
         grant_type: 'refresh_token',
         client_id: clientId,
@@ -170,6 +182,63 @@ Cypress.Commands.add('loginByGoogleApi', () => {
   })
 })
 ```
+
+</TabItem>
+<TabItem value="cypress/support/commands.ts">
+
+```ts
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      loginByGoogleApi(): Chainable<void>
+    }
+  }
+}
+
+Cypress.Commands.add('loginByGoogleApi', () => {
+  cy.log('Logging in to Google')
+  cy.env(['googleClientId', 'googleClientSecret', 'googleRefreshToken']).then(
+    ({ clientId, clientSecret, refreshToken }) => {
+      cy.request({
+        method: 'POST',
+        url: 'https://oauth2.googleapis.com/token',
+        body: {
+          grant_type: 'refresh_token',
+          client_id: clientId,
+          client_secret: clientSecret,
+          refresh_token: refreshToken,
+        },
+      }).then(({ body }) => {
+        const { access_token, id_token } = body
+
+        cy.request({
+          method: 'GET',
+          url: 'https://www.googleapis.com/oauth2/v3/userinfo',
+          headers: { Authorization: `Bearer ${access_token}` },
+        }).then(({ body }) => {
+          cy.log(body)
+          const userItem = {
+            token: id_token,
+            user: {
+              googleId: body.sub,
+              email: body.email,
+              givenName: body.given_name,
+              familyName: body.family_name,
+              imageUrl: body.picture,
+            },
+          }
+
+          window.localStorage.setItem('googleCypress', JSON.stringify(userItem))
+          cy.visit('/')
+        })
+      })
+    }
+  )
+})
+```
+
+</TabItem>
+</Tabs>
 
 With our Google app setup properly, necessary environment variables in place,
 and our `loginByGoogleApi` command implemented, we'll be able to authenticate

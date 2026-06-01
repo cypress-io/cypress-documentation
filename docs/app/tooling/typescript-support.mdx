@@ -13,7 +13,7 @@ sidebar_label: 'TypeScript'
 ##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
 
 - How to set up TypeScript in Cypress
-- How to configure TypeScript for custom commands, assertions, and plugins
+- How to configure TypeScript for custom commands, custom queries, assertions, and plugins
 - How to use TypeScript with Cypress component testing
 - How to avoid clashing types with Jest
 - How to set up your development environment for TypeScript
@@ -24,6 +24,52 @@ Cypress ships with
 [official type declarations](https://github.com/cypress-io/cypress/tree/develop/cli/types)
 for [TypeScript](https://www.typescriptlang.org/). This allows you to write your
 tests in TypeScript.
+
+## Why TypeScript with Cypress?
+
+Writing Cypress tests in TypeScript gives your team a tight feedback loop that
+catches problems before a single browser opens — and long before a bug reaches
+production.
+
+### Catch errors at the editor, not in CI
+
+TypeScript surfaces mismatched selectors, wrong argument types, and missing
+return values as red underlines in your editor the moment you type them. Without
+TypeScript, those same mistakes surface as a failing test run minutes or hours
+later — or worse, a bug reported by a user. Moving that feedback earlier
+eliminates a whole class of debugging cycles.
+
+### IntelliSense makes the API self-documenting
+
+When your test file is TypeScript, your editor can autocomplete every `cy.*`
+command, show its accepted parameters, and display the inline JSDoc as you type.
+Your team spends less time reading reference docs and less time guessing whether
+the third argument is optional. For custom commands you expose to the rest of
+the team, typed declarations act as a lightweight contract: the name, parameters,
+and return type are machine-verified so callers always get correct usage.
+
+### Safer refactoring across the codebase
+
+When a selector utility, a fixture type, or a page-object method changes, the
+TypeScript compiler points to every test that is now broken — across the entire
+project — before you run anything. On a large team, this makes refactoring a
+planned, predictable operation rather than a game of grep-and-hope.
+
+### Lower cost of onboarding and review
+
+New engineers can explore the test suite with editor assistance rather than
+reading every helper file to understand what it does. Code reviewers can focus
+on intent rather than hunting for type mismatches. Both effects compound over
+time: less ramp-up cost, fewer back-and-forth review cycles, and a test suite
+that stays readable as it grows.
+
+### Shared types between app code and tests
+
+Because your Cypress support files are plain TypeScript, they can import the
+same type definitions your application uses — API response shapes, domain
+models, enum values. A type change in the app propagates into the tests
+automatically, so your tests stay aligned with the code they exercise without
+manual synchronization.
 
 ## Get Started
 
@@ -119,11 +165,11 @@ This allows Cypress to run your TypeScript configuration inside the Cypress runt
 When adding [custom commands](/api/cypress-api/custom-commands) to the `cy`
 object, you can manually add their types to avoid TypeScript errors.
 
-For example if you add the command `cy.dataCy` into your
-[supportFile](/app/references/configuration#Testing-Type-Specific-Options) like this:
+For example, if you add the command `cy.dataCy` to
+`cypress/support/commands.ts` (which is imported by your
+[support entry file](/app/references/configuration#Testing-Type-Specific-Options) `cypress/support/e2e.ts`) like this:
 
-```typescript
-// cypress/support/index.ts
+```typescript title="cypress/support/commands.ts"
 Cypress.Commands.add('dataCy', (value) => {
   return cy.get(`[data-cy=${value}]`)
 })
@@ -132,8 +178,7 @@ Cypress.Commands.add('dataCy', (value) => {
 Then you can add the `dataCy` command to the global Cypress Chainable interface
 (so called because commands are chained together).
 
-```typescript
-// cypress/support/index.ts
+```typescript title="cypress/support/commands.ts"
 declare global {
   namespace Cypress {
     interface Chainable {
@@ -146,6 +191,42 @@ declare global {
   }
 }
 ```
+
+#### `declare global` requires a TypeScript module file
+
+TypeScript distinguishes between two kinds of files:
+
+- **Module** — any file with at least one top-level `import` or `export` statement
+- **Script (ambient)** — a file with no imports or exports
+
+`declare global { ... }` is only valid inside a **module** file. If your
+`commands.ts` has no imports, TypeScript will raise an error such as:
+_"Augmentations for the global scope can only be directly nested in external
+modules or ambient module declarations."_
+
+The simplest fix is to add `export {}` at the bottom of the file so TypeScript
+treats it as a module:
+
+```typescript title="cypress/support/commands.ts"
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      dataCy(value: string): Chainable<JQuery<HTMLElement>>
+    }
+  }
+}
+
+export {} // turns this file into a module so declare global is valid
+```
+
+Alternatively, move your type declarations into a standalone
+[external typings file](#Using-an-External-Typings-File) where no `import` or
+`export` is needed.
+
+Conversely, if you use `declare namespace Cypress { ... }` **without** the
+`declare global` wrapper inside a file that _does_ have imports, TypeScript will
+**not** augment the global `Cypress` namespace — your custom commands will still
+appear as unknown.
 
 :::info
 
@@ -184,8 +265,7 @@ it('works', () => {
 When you add a custom command with `prevSubject`, Cypress will infer the subject
 type automatically based on the specified `prevSubject`.
 
-```typescript
-// cypress/support/index.ts
+```typescript title="cypress/support/commands.ts"
 declare global {
   namespace Cypress {
     interface Chainable {
@@ -203,8 +283,7 @@ declare global {
 }
 ```
 
-```typescript
-// cypress/support/index.ts
+```typescript title="cypress/support/commands.ts"
 Cypress.Commands.add(
   'typeRandomWords',
   { prevSubject: 'element' },
@@ -220,7 +299,7 @@ When overwriting either built-in or custom commands which make use of
 `prevSubject`, you must specify generic parameters to help the type-checker to
 understand the type of the `prevSubject`.
 
-```typescript
+```typescript title="cypress/support/commands.ts"
 interface TypeOptions extends Cypress.TypeOptions {
   sensitive: boolean
 }
@@ -261,6 +340,125 @@ As you can see there are generic parameters `<'type', 'element'>` are used:
   [Adding Custom Commands (TS)](https://github.com/cypress-io/cypress-example-recipes#fundamentals)
   example recipe.
 
+### Types for Custom Queries
+
+When adding [custom queries](/api/cypress-api/custom-queries) with
+`Cypress.Commands.addQuery()`, you must declare the query on the `Chainable`
+interface **before** registering it. Cypress infers the query callback's
+argument types from that declaration.
+
+Unlike custom commands, query callbacks receive `this` as a `Cypress.Command`
+(not `Mocha.Context`), and the callback must return an inner function that
+performs the query synchronously.
+
+```typescript title="cypress/support/commands.ts"
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      /**
+       * Gets the currently focused DOM element.
+       * @example cy.focused2()
+       */
+      focused2(
+        options?: Partial<Cypress.Loggable & Cypress.Timeoutable>
+      ): Chainable<JQuery>
+    }
+
+    // Required so this.set('timeout', ...) type-checks in query callbacks
+    interface EnqueuedCommandAttributes {
+      timeout?: number
+    }
+  }
+}
+
+Cypress.Commands.addQuery(
+  'focused2',
+  function focused2(
+    options: Partial<Cypress.Loggable & Cypress.Timeoutable> = {}
+  ) {
+    const log =
+      options.log !== false &&
+      Cypress.log({
+        ...(options.timeout !== undefined && { timeout: options.timeout }),
+      })
+
+    this.set('timeout', options.timeout)
+
+    return () => {
+      let $el = cy.getFocused()
+      // ...
+      return $el
+    }
+  }
+)
+```
+
+:::info
+
+When passing optional `timeout` to `Cypress.log()`, avoid writing
+`{ timeout: options.timeout }` directly if `options.timeout` may be `undefined`.
+With strict TypeScript settings such as `exactOptionalPropertyTypes`, explicitly
+passing `undefined` is not assignable to an optional property. Use a conditional
+spread instead, as shown above.
+
+:::
+
+For queries that accept additional options, combine the relevant Cypress option
+interfaces with `Partial<>`, matching how built-in queries are typed. For
+example, a query with timeout and shadow DOM support might use
+`Partial<Cypress.Loggable & Cypress.Timeoutable & Cypress.Shadow>`.
+
+To overwrite an existing query, declare the query on `Chainable` as usual and
+use `Cypress.Commands.overwriteQuery()`. The first argument to your callback is
+the original query function:
+
+```typescript title="cypress/support/commands.ts"
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      get(
+        selector: string,
+        options?: Partial<Cypress.Loggable & Cypress.Timeoutable>
+      ): Chainable<JQuery<HTMLElement>>
+    }
+  }
+}
+
+Cypress.Commands.overwriteQuery('get', function (originalFn, ...args) {
+  return originalFn.apply(this, args)
+})
+```
+
+### Types for custom window properties
+
+[`cy.window()`](/api/commands/window) yields an `AUTWindow` object, which is
+typed as `Window & typeof globalThis & Cypress.ApplicationWindow`. The
+`Cypress.ApplicationWindow` interface is an empty extension point that you can
+augment to tell TypeScript about properties your application adds to `window`.
+
+Extend the interface in your support file or a `*.d.ts` file:
+
+```typescript title="cypress/support/e2e.ts"
+declare global {
+  namespace Cypress {
+    interface ApplicationWindow {
+      // add the properties your app sets on window
+      env: {
+        DISABLE: boolean
+      }
+    }
+  }
+}
+```
+
+TypeScript will now recognize those properties inside `cy.window()` callbacks:
+
+```typescript
+cy.window().then((win) => {
+  win.env.DISABLE = true // no TypeScript error
+})
+```
+
 ### Types for custom assertions
 
 If you extend Cypress assertions, you can extend the assertion types to make the
@@ -270,17 +468,32 @@ instructions.
 
 ### Types for plugins
 
-You can utilize Cypress's type declarations in your
-[plugins file](/app/plugins/plugins-guide) by annotating it like the
-following:
+When using [`defineConfig`](/app/references/configuration) in your
+`cypress.config.ts` file, TypeScript types for
+[`setupNodeEvents`](/app/references/configuration#setupNodeEvents) are inferred
+automatically — no additional annotation is needed:
 
-```javascript
-// cypress/plugins/index.ts
+```typescript title="cypress.config.ts"
+import { defineConfig } from 'cypress'
 
-/**
- * @type {Cypress.PluginConfig}
- */
-module.exports = (on, config) => {}
+export default defineConfig({
+  e2e: {
+    setupNodeEvents(on, config) {
+      // implement node event listeners here
+    },
+  },
+})
+```
+
+If you extract your plugin setup into a separate function or file, you can
+annotate it with the `Cypress.PluginConfig` type:
+
+```typescript title="cypress/plugins/index.ts"
+const setupNodeEvents: Cypress.PluginConfig = (on, config) => {
+  // implement node event listeners here
+}
+
+export default setupNodeEvents
 ```
 
 ### Using an External Typings File
@@ -289,9 +502,51 @@ You might find it easier to organize your types by moving them from the support
 file into an external
 [declaration (\*.d.ts) file](https://www.typescriptlang.org/docs/handbook/declaration-files/introduction.html).
 To do so, create a new file, like _cypress.d.ts_, and cut the types for your
-custom commands/assertions from the _support_ file and into the new file. Below
-is an example of moving the custom `cy.mount` typings that come by default with
-a component testing app into a root level _cypress.d.ts_ file.
+custom commands/assertions from the _support_ file and into the new file.
+
+#### Ambient declaration file (no imports needed)
+
+A plain `.d.ts` file with no `import` or `export` statements is treated by
+TypeScript as an _ambient script_. In this context you can declare the namespace
+**directly** — the `declare global` wrapper is not required:
+
+<Tabs>
+<TabItem value="cypress/support/commands.d.ts" active>
+
+```ts
+// No imports — TypeScript treats this as an ambient declaration file.
+// Declare the namespace directly (no declare global wrapper needed).
+declare namespace Cypress {
+  interface Chainable {
+    /**
+     * Custom command to select DOM element by data-cy attribute.
+     * @example cy.dataCy('greeting')
+     */
+    dataCy(value: string): Chainable<JQuery<HTMLElement>>
+  }
+}
+```
+
+</TabItem>
+</Tabs>
+
+:::info
+
+If TypeScript does not resolve Cypress types automatically (for example when the
+`types` field in your `tsconfig.json` does not include `"cypress"`), add a
+triple-slash reference at the top of the declaration file:
+
+```typescript
+/// <reference types="cypress" />
+```
+
+:::
+
+#### File with imports (e.g. `cy.mount`)
+
+When the declaration file imports something — such as `cy.mount` for component
+testing — the `import` turns it into a TypeScript module and `declare global` is
+required:
 
 <Tabs>
 <TabItem value="cypress.d.ts" active>
@@ -344,6 +599,19 @@ _tsconfig.json_ files in your project for TypeScript to pick up the new types:
 </TabItem>
 </Tabs>
 
+:::caution
+
+**TypeScript must be able to find the declaration file**
+
+If you rename or move a declaration file, verify that its path is covered by the
+`include` globs in every `tsconfig.json` that needs to see it. A common mistake
+is placing a `global.d.ts` inside `cypress/support/` while the
+`cypress/tsconfig.json` only includes `**/*.ts` — `.d.ts` files are matched by
+`**/*.ts` only if the glob is `**/*.{ts,d.ts}` or simply `**/*`. Safest
+practice: list the file explicitly or use `"include": ["**/*.ts", "**/*.d.ts"]`.
+
+:::
+
 ### Set up your dev environment
 
 Please refer to your code editor in
@@ -364,16 +632,36 @@ and Cypress provide the clashing types for the `describe` and `it` functions.
 Both Jest and Expect (bundled inside Cypress) provide the clashing types for the
 `expect` assertion, etc.
 
-You may want to consider configuring your app with separate `tsconfig.json` to solve
-[clashing types with jest](/app/tooling/typescript-support#Clashing-types-with-Jest).
-You will need to exclude `cypress.config.ts`, `cypress`, `node_modules` in your
-root `tsconfig.json` file.
+The recommended solution is to use **separate `tsconfig.json` files** for your
+Jest tests and your Cypress tests.
+
+**Step 1:** Create (or ensure you have) a `cypress/tsconfig.json` that explicitly
+limits types to only what Cypress needs:
+
+```json title="cypress/tsconfig.json"
+{
+  "compilerOptions": {
+    "target": "es6",
+    "lib": ["es6", "dom"],
+    "sourceMap": true,
+    "types": ["cypress", "node"]
+  },
+  "include": ["**/*.ts"]
+}
+```
+
+**Step 2:** Exclude the `cypress` folder (and `cypress.config.ts`) from your
+root `tsconfig.json` so that Jest does not pick up Cypress global types:
 
 ```json title="tsconfig.json"
 {
   "exclude": ["cypress.config.ts", "cypress", "node_modules"]
 }
 ```
+
+With this setup, Jest uses the root `tsconfig.json` (without Cypress types) and
+Cypress uses its own `cypress/tsconfig.json` (with Cypress types), so the two
+sets of globals no longer interfere with each other.
 
 ## History
 

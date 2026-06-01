@@ -504,8 +504,11 @@ cypress run --posix-exit-codes
 
 #### `cypress run --project <project-path>` {#cypress-run-project-lt-project-path-gt}
 
-To see this in action we've set up an
-[example repo to demonstrate this here](https://github.com/cypress-io/cypress-test-nested-projects).
+By default, Cypress expects your `cypress.config.js` (or `cypress.config.ts`) to
+be found in the current working directory. Use `--project` to point Cypress at a
+different directory. This is useful when you have multiple Cypress projects in
+one repository and want to run a specific one without changing your working
+directory.
 
 ```shell
 cypress run --project ./some/nested/folder
@@ -586,6 +589,16 @@ Useful for when [Test Replay](/cloud/features/test-replay) is enabled and you wo
 Run tests specifying a single test file to run instead of all tests. The spec
 path should be an absolute path or can be relative to the current working
 directory.
+
+:::caution
+
+`--spec` only runs specs that **also match the configured
+[`specPattern`](/app/references/configuration#e2e)**. Specs located
+outside the configured `specPattern` will not be found. See
+[Test files not found when using `spec` parameter](/app/references/configuration#Test-files-not-found-when-using-spec-parameter)
+for details.
+
+:::
 
 ```shell
 cypress run --spec "cypress/e2e/examples/actions.cy.js"
@@ -809,8 +822,11 @@ cypress open --port 8080
 
 #### `cypress open --project <project-path>` {#cypress-open-project-lt-project-path-gt}
 
-To see this in action we've set up an
-[example repo to demonstrate this here](https://github.com/cypress-io/cypress-test-nested-projects).
+By default, Cypress looks for your `cypress.config.js` (or `cypress.config.ts`)
+in the current working directory. Use `--project` to open Cypress for a project
+located in a different directory. This is useful when you have multiple Cypress
+projects in one repository and want to open a specific one without changing your
+working directory.
 
 ```shell
 cypress open --project ./some/nested/folder

@@ -31,7 +31,6 @@ cypress/videos
 .vercel
 
 .nuxt
-.husky
 themes
 .eslintcache
 db.json

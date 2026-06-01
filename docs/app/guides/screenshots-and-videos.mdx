@@ -43,10 +43,13 @@ Screenshots are stored in the
 [`screenshotsFolder`](/app/references/configuration#Screenshots) which is set
 to `cypress/screenshots` by default.
 
-Cypress clears any existing screenshots before `cypress run`. If you do not want
-to clear your screenshots folder before a run, you can set
-[`trashAssetsBeforeRuns`](/app/references/configuration#Screenshots) to
-`false`.
+Before `cypress run`, Cypress clears the **entire contents** of the
+`screenshotsFolder`—every file and nested subfolder, not just images. If you do
+not want to clear your screenshots folder before a run, you can set
+[`trashAssetsBeforeRuns`](/app/references/configuration#Screenshots) to `false`.
+See the
+[`trashAssetsBeforeRuns` notes](/app/references/configuration#trashAssetsBeforeRuns)
+for more details.
 
 ## Videos
 
@@ -80,9 +83,13 @@ videos in the case that tests fail, see how to
 [delete videos for specs without failing or retried tests](/app/guides/screenshots-and-videos#Delete-videos-for-specs-without-failing-or-retried-tests).
 Deleting the video will cause the video to not be uploaded to Cypress Cloud.
 
-Cypress clears any existing videos before a `cypress run`. If you do not want to
-clear your videos folder before a run, you can set
-[`trashAssetsBeforeRuns`](/app/references/configuration#Videos) to `false`.
+Before `cypress run`, Cypress clears the **entire contents** of the
+`videosFolder`—every file and nested subfolder, not just videos. If you do not
+want to clear your videos folder before a run, you can set
+[`trashAssetsBeforeRuns`](/app/references/configuration#Videos) to `false`. See
+the
+[`trashAssetsBeforeRuns` notes](/app/references/configuration#trashAssetsBeforeRuns)
+for more details.
 
 ### Video encoding
 

@@ -309,7 +309,7 @@ https://download.cypress.io/desktop/12.17.4?platform=win32&arch=x64
 
 ## Mirroring
 
-If you choose to mirror the entire Cypress download site, you can specify
+If you choose to mirror the Cypress download site, you can specify
 `CYPRESS_DOWNLOAD_MIRROR` to set the download server URL from
 `https://download.cypress.io` to your own mirror.
 
@@ -320,7 +320,30 @@ CYPRESS_DOWNLOAD_MIRROR="https://www.example.com" cypress install
 ```
 
 Cypress will then attempt to download a binary with this format:
-`https://www.example.com/desktop/:version?platform=p`
+`https://www.example.com/desktop/:version?platform=p&arch=a`
+
+Your mirror server must handle requests to `/desktop/:version` with `platform`
+and `arch` query parameters, and serve the appropriate Cypress binary as a
+`.zip` file.
+
+**Supported platform and architecture combinations:**
+
+| `platform` | `arch`  | Notes                                                         |
+| ---------- | ------- | ------------------------------------------------------------- |
+| `linux`    | `x64`   |                                                               |
+| `darwin`   | `x64`   | macOS Intel                                                   |
+| `darwin`   | `arm64` | macOS Apple Silicon                                           |
+| `win32`    | `x64`   | Windows; also used for ARM64 Windows (no native ARM64 binary) |
+
+:::note
+On Windows ARM64 machines, Cypress automatically substitutes `arm64` with `x64`
+when building the download URL, so your mirror will only ever receive `win32`
+requests with `arch=x64`.
+:::
+
+If your mirror uses a different URL structure than `download.cypress.io`, use
+`CYPRESS_DOWNLOAD_PATH_TEMPLATE` together with `CYPRESS_DOWNLOAD_MIRROR`.
+See [Download path template](#Download-path-template) for examples.
 
 ## Download path template
 
@@ -330,15 +353,18 @@ generated based on endpoint, version, platform and architecture.
 
 **The following replacements are supported:**
 
-- `${endpoint}` is replaced with `https://download.cypress.io/desktop/:version`.
-  If `CYPRESS_DOWNLOAD_MIRROR` is set, its value is used instead of
-  `https://download.cypress.io` (note that the `/desktop` remains!)
+- `${endpoint}` is replaced with the full base URL including the version path
+  segment: `<base>/desktop/<version>` (e.g.
+  `https://download.cypress.io/desktop/15.16.0`).
+  If `CYPRESS_DOWNLOAD_MIRROR` is set, its value is used as `<base>` instead of
+  `https://download.cypress.io` (note that `/desktop/<version>` is still
+  appended).
 - `${platform}` is replaced with the platform the installation is running on
   (e.g. `win32`, `linux`, `darwin`)
 - `${arch}` is replaced with the architecture the installation is running on
-  (e.g. `x64`, `arm64`)
+  (e.g. `x64`, `arm64`). On Windows ARM64, this is always `x64`.
 - `${version}` is replaced with the version number
-  that's being installed (e.g. `10.11.0`)
+  that's being installed (e.g. `15.16.0`)
 
 **Examples:**
 
@@ -348,14 +374,14 @@ structure of `https://cdn.cypress.io`:
 ```shell
 export CYPRESS_DOWNLOAD_MIRROR=https://cypress-download.local
 export CYPRESS_DOWNLOAD_PATH_TEMPLATE='${endpoint}/${platform}-${arch}/cypress.zip'
-# Example of a resulting URL: https://cypress-download.local/desktop/10.11.0/linux-x64/cypress.zip
+# Example of a resulting URL: https://cypress-download.local/desktop/15.16.0/linux-x64/cypress.zip
 ```
 
 To install the binary from a download server with a custom file structure:
 
 ```shell
 export CYPRESS_DOWNLOAD_PATH_TEMPLATE='https://software.local/cypress/${platform}/${arch}/${version}/cypress.zip'
-# Example of a resulting URL: https://software.local/cypress/linux/x64/10.11.0/cypress.zip
+# Example of a resulting URL: https://software.local/cypress/linux/x64/15.16.0/cypress.zip
 ```
 
 To define `CYPRESS_DOWNLOAD_PATH_TEMPLATE` in `.npmrc`, put a backslash before
@@ -470,6 +496,42 @@ Refer to Microsoft Learn [Windows Subsystem for Linux Documentation](https://lea
 :::info
 
 Cypress.io does not specifically support the use of Cypress under Windows Subsystem for Linux (WSL). If you want to report an issue, please ensure that you can reproduce it without using WSL on one of the Cypress [supported operating systems](/app/get-started/install-cypress#Operating-System).
+
+:::
+
+## Dev Containers and GitHub Codespaces
+
+[Dev Containers](https://containers.dev/) (VS Code Dev Containers) and [GitHub Codespaces](https://github.com/features/codespaces) provide containerized Linux development environments.
+
+**Running tests headlessly** with `cypress run` works without any extra display configuration when the container image includes the required [Linux prerequisites](/app/get-started/install-cypress#Linux-Prerequisites). The official [Cypress Docker images](/app/continuous-integration/overview#Cypress-Docker-Images) already include all prerequisites.
+
+**Running the interactive Test Runner** with `cypress open` requires a graphical display, which containers do not provide by default. The simplest solution is the [`desktop-lite` Dev Container feature](https://github.com/devcontainers/features/tree/main/src/desktop-lite), which installs a lightweight browser-accessible desktop inside the container.
+
+Add the feature to your `devcontainer.json` and forward the necessary ports:
+
+```json
+{
+  "image": "cypress/included",
+  "forwardPorts": [6080, 5901],
+  "features": {
+    "ghcr.io/devcontainers/features/desktop-lite:1": {}
+  },
+  "portsAttributes": {
+    "6080": {
+      "label": "desktop"
+    }
+  },
+  "postCreateCommand": "npm install && cypress install"
+}
+```
+
+After rebuilding the container, open `http://localhost:6080` in your browser and log in with the default password `vscode`. Running `cypress open` in the terminal will display the Cypress UI in that browser-based desktop.
+
+Replace `cypress/included` with the specific [Cypress Docker image tag](https://github.com/cypress-io/cypress-docker-images) that matches your required Cypress and Node.js versions (for example, `cypress/included:14.0.0`).
+
+:::caution
+
+Cypress.io does not specifically support the use of Cypress in Dev Containers or GitHub Codespaces. If you want to report an issue, please ensure that you can reproduce it without a containerized environment on one of the Cypress [supported operating systems](/app/get-started/install-cypress#Operating-System).
 
 :::
 

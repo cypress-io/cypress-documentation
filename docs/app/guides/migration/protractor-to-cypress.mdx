@@ -1052,12 +1052,36 @@ it('should display the username of a logged in user', () => {
 Cypress also provides a [Custom Command](/api/cypress-api/custom-commands) API
 to enable you to add methods to the `cy` global directly:
 
+<Tabs>
+<TabItem value="cypress/support/commands.js">
+
 ```js
 Cypress.Commands.add('login', (username, password) => {
   cy.get('.username').type(username)
   cy.get('.password').type(password)
 })
 ```
+
+</TabItem>
+<TabItem value="cypress/support/commands.ts">
+
+```ts
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      login(username: string, password: string): Chainable<void>
+    }
+  }
+}
+
+Cypress.Commands.add('login', (username: string, password: string) => {
+  cy.get('.username').type(username)
+  cy.get('.password').type(password)
+})
+```
+
+</TabItem>
+</Tabs>
 
 You can use your own custom commands in any of your tests:
 

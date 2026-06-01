@@ -71,6 +71,11 @@ flow into the next command (with the exception of `undefined` or `null`).
 - If the callback returns `undefined` or `null` (or there is no return value)
   and the callback does not call any Cypress commands, the subject will not be
   modified, and the previous subject will carry over to the next command.
+- If the callback calls Cypress commands **and** returns a non-`undefined`,
+  non-`null` synchronous value, Cypress will throw an error: _"cy.then() failed
+  because you are mixing up async and sync code."_ To return a new synchronous
+  value while also using Cypress commands, wrap the return value in a nested
+  `.then()` that contains no Cypress commands (see example below).
 
 The callback function of `.then()` is not retried. It is
 [unsafe](/app/core-concepts/retry-ability#Only-queries-are-retried) to return
@@ -129,10 +134,12 @@ cy.get('button')
 #### The number subject is changed with another command
 
 ```javascript
-cy.wrap(1).then((num) => {
-  cy.wrap(num)).should('equal', 1) // true
-  cy.wrap(2)
-}).should('equal', 2) // true
+cy.wrap(1)
+  .then((num) => {
+    cy.wrap(num).should('equal', 1) // true
+    cy.wrap(2)
+  })
+  .should('equal', 2) // true
 ```
 
 #### The number subject is changed by returning
@@ -230,6 +237,62 @@ cy.get('button')
 
 <ThenShouldAndDifference />
 
+### Multiple actions on the same element
+
+A common pattern is to perform several sequential actions on the same element —
+for example, focusing an input, clearing its value, typing a new value, and then
+blurring it. Issue each action as a separate command — there is no need to wrap
+them in `.then()`:
+
+```javascript
+// ✅ Preferred: separate commands
+cy.get('input').focus()
+cy.get('input').clear()
+cy.get('input').type('new value')
+cy.get('input').blur()
+```
+
+You might be tempted to wrap multiple actions inside `.then()` to avoid
+re-querying the element:
+
+```javascript
+// ⚠️ Unnecessary: .then() is not retried and does not improve retry-ability
+cy.get('input').then(($input) => {
+  cy.wrap($input).focus()
+  cy.wrap($input).clear()
+  cy.wrap($input).type('new value')
+  cy.wrap($input).blur()
+})
+```
+
+This pattern is unnecessary and can be misleading. The `.then()` callback is
+**not** retried — so it does not protect against detached DOM errors any better
+than direct chaining. In addition, `$input` inside the callback is a snapshot of
+the element at the time `.then()` ran; if the DOM updates and the element is
+replaced, the wrapped reference becomes stale.
+
+For sequential actions that need to be split across separate chains (for
+example, when each action might trigger a re-render), use separate `cy.get()`
+calls or an [alias](/app/core-concepts/variables-and-aliases):
+
+```javascript
+// ✅ Separate queries re-run before each action, protecting against re-renders
+cy.get('input').focus()
+cy.get('input').clear()
+cy.get('input').type('new value')
+cy.get('input').blur()
+
+// ✅ Equivalent with an alias
+cy.get('input').as('field')
+cy.get('@field').focus()
+cy.get('@field').clear()
+cy.get('@field').type('new value')
+cy.get('@field').blur()
+```
+
+See the [Retry-ability guide](/app/core-concepts/retry-ability) for a deeper
+explanation of how Cypress retries queries before each action.
+
 ## Rules
 
 <HeaderRequirements />
@@ -266,3 +329,5 @@ cy.get('button')
 - [`.spread()`](/api/commands/spread)
 - [Guide: Using Closures to compare values](/app/core-concepts/variables-and-aliases#Closures)
 - [Guide: Chains of Commands](/app/core-concepts/introduction-to-cypress#Chains-of-Commands)
+- [Guide: Retry-ability](/app/core-concepts/retry-ability)
+- [Guide: Only queries are retried](/app/core-concepts/retry-ability#Only-queries-are-retried)
