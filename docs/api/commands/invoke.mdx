@@ -192,6 +192,18 @@ The above example can be written simply as:
 cy.contains('The code example').should('have.attr', 'id', 'code-snippet')
 ```
 
+:::caution
+
+**`.invoke('val', value)` does not simulate user input.** It calls jQuery's
+`.val()` directly, which updates the value but does not fire `input`/`change`
+events. Following it with `.trigger('change')` will also fail to fire `onChange`
+on controlled framework components (e.g. React sliders), because setting the
+value through jQuery updates React's internal value tracker. See
+[Triggering events on controlled framework components](/api/commands/trigger#triggering-events-on-controlled-framework-components-react-vue-etc)
+and issue [#1570](https://github.com/cypress-io/cypress/issues/1570).
+
+:::
+
 ## Notes
 
 ### Third Party Plugins
