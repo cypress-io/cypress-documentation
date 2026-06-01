@@ -207,9 +207,9 @@ describe('mTLS API', () => {
   })
 
   it('returns the expected payload', () => {
-    cy.request('POST', 'https://api.example.com/records', { name: 'test' }).its(
-      'body.id'
-    ).should('be.a', 'string')
+    cy.request('POST', 'https://api.example.com/records', { name: 'test' })
+      .its('body.id')
+      .should('be.a', 'string')
   })
 })
 ```
@@ -235,13 +235,13 @@ to confirm that a certificate was attached.
 
 ### Common errors
 
-| Symptom | Likely cause |
-| ------- | ------------ |
-| `400 Bad Request` from server | Certificate not presented — URL pattern mismatch |
-| `SSL_ERROR_HANDSHAKE_FAILURE` | Wrong certificate, expired cert, or CA chain mismatch |
-| `ENOENT: no such file or directory` | Certificate file path is incorrect or relative path is wrong |
-| `bad decrypt` / `wrong final block length` | Passphrase file content is incorrect or has trailing whitespace |
-| Certificate works locally but not in CI | Certificate files not committed or not present at the expected path in CI |
+| Symptom                                    | Likely cause                                                              |
+| ------------------------------------------ | ------------------------------------------------------------------------- |
+| `400 Bad Request` from server              | Certificate not presented — URL pattern mismatch                          |
+| `SSL_ERROR_HANDSHAKE_FAILURE`              | Wrong certificate, expired cert, or CA chain mismatch                     |
+| `ENOENT: no such file or directory`        | Certificate file path is incorrect or relative path is wrong              |
+| `bad decrypt` / `wrong final block length` | Passphrase file content is incorrect or has trailing whitespace           |
+| Certificate works locally but not in CI    | Certificate files not committed or not present at the expected path in CI |
 
 ## Using Client Certificates in CI
 
