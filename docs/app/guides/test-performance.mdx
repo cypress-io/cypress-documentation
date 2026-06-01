@@ -24,9 +24,9 @@ sidebar_label: Test Performance
 
 Most performance problems fall into a small number of categories: wrong test type for the job, repeated login overhead, slow real network calls, bloated CI setup, or resource-constrained machines. This page is organized around diagnosing those problems first, then fixing them.
 
-**If you're starting from scratch:** record a baseline run to [Cypress Cloud](/cloud/get-started/introduction), then work through the [priority checklist](#priority-checklist) in order. The checklist links to detailed guidance for each item.
+**If you're starting from scratch:** record a baseline run to [Cypress Cloud](/cloud/get-started/introduction), then work through the [priority checklist](#Priority-checklist) in order. The checklist links to detailed guidance for each item.
 
-**If you have a specific symptom:** use the [diagnostic tools](#diagnosing-your-suite) section to identify the bottleneck, then jump to the relevant strategy.
+**If you have a specific symptom:** use the [diagnostic tools](#Diagnosing-your-suite) section to identify the bottleneck, then jump to the relevant strategy.
 
 ## Why test speed matters
 
@@ -36,7 +36,7 @@ Fast tests enable the opposite: frequent, low-friction feedback that catches reg
 
 ## Benchmarks
 
-Use these ranges to evaluate where your suite stands. If your tests are consistently outside the healthy range, look at the [strategies](#strategies-to-speed-up-tests) for that level.
+Use these ranges to evaluate where your suite stands. If your tests are consistently outside the healthy range, look at the [strategies](#Strategies-to-speed-up-tests) for that level.
 
 ### Individual test duration
 
@@ -49,11 +49,11 @@ Use these ranges to evaluate where your suite stands. If your tests are consiste
 
 Component tests should consistently run in under 2 seconds each.
 
-If your tests are in the 10-30 second range, start with [choosing the right test level](#choose-the-right-test-level) and [caching authentication with `cy.session()`](#cache-authentication-with-cysession).
+If your tests are in the 10-30 second range, start with [choosing the right test level](#Choose-the-right-test-level) and [caching authentication with `cy.session()`](#Cache-authentication).
 
 ### Spec file duration
 
-A spec file is a single file containing one or more tests. Spec duration matters most for [parallelization](#parallelization): Cypress distributes whole spec files across CI machines, so one long-running spec can leave other machines idle even when most of the suite has finished.
+A spec file is a single file containing one or more tests. Spec duration matters most for [parallelization](#Parallelization): Cypress distributes whole spec files across CI machines, so one long-running spec can leave other machines idle even when most of the suite has finished.
 
 | Duration    | Assessment                                                     |
 | ----------- | -------------------------------------------------------------- |
@@ -106,7 +106,7 @@ Tests that retry on every run are costing your suite time on every run. Open **F
 
 ### Over-tested UI
 
-Open the **UI Coverage** tab on any run. In the **Tested elements** section, sort by interaction count. Elements with counts far out of proportion with their importance are being passed through by tests that aren't intentionally testing them. See [Eliminate over-tested UI with UI Coverage](#find-and-eliminate-over-tested-ui-with-ui-coverage) for the fix.
+Open the **UI Coverage** tab on any run. In the **Tested elements** section, sort by interaction count. Elements with counts far out of proportion with their importance are being passed through by tests that aren't intentionally testing them. See [Eliminate over-tested UI with UI Coverage](#Find-and-eliminate-over-tested-UI-with-UI-Coverage) for the fix.
 
 <Btn
   label="Request trial ➜"
@@ -134,7 +134,7 @@ Open the **UI Coverage** tab on any run. In the **Tested elements** section, sor
 
 ### Parallel machine balance
 
-If you're running tests in parallel and your total run time isn't improving as expected when you add machines, open the **Machines** view in Cypress Cloud on any recorded run. It charts spec files by the machine that executed them, showing which specs each machine ran and how long each took. An unbalanced distribution (one machine idle while another is still running long specs) is the most common reason parallelization underperforms. See [Parallelization](#parallelization) for how to act on what you find.
+If you're running tests in parallel and your total run time isn't improving as expected when you add machines, open the **Machines** view in Cypress Cloud on any recorded run. It charts spec files by the machine that executed them, showing which specs each machine ran and how long each took. An unbalanced distribution (one machine idle while another is still running long specs) is the most common reason parallelization underperforms. See [Parallelization](#Parallelization) for how to act on what you find.
 
 <DocsImage
   src="/img/app/parallelization/machines-view.png"
@@ -163,27 +163,27 @@ node -p 'os.cpus()'
 
 Apply these optimizations in order. The highest-impact changes are at the top.
 
-1. [Upgrade to the latest Cypress](#keep-cypress-up-to-date)
-2. [Choose the right test level](#choose-the-right-test-level) — moving tests from E2E to component or API level is often the single largest gain
-3. [cy.session() for authentication caching](#cache-authentication-with-cysession) — eliminates 2-5 seconds per test
-4. [Stub network requests](#stub-network-requests-strategically) — replaces 100-2000ms real calls with < 20ms stubs
-5. [Programmatic state setup](#set-up-state-programmatically-not-through-the-ui) — replaces minutes of UI navigation with seconds of API calls
-6. [Parallelization](#parallelization) — linear scaling with the number of machines
-7. [Spec prioritization and auto cancellation](#spec-prioritization) — surfaces failures faster; reduces cost of broken builds
-8. [Disable video, use Test Replay](#disable-video-use-test-replay-instead) — removes per-spec encoding overhead from CI; Test Replay provides better debugging at lower cost
-9. [Tag tests with @cypress/grep for CI tiers](#run-the-right-tests-at-the-right-time-with-cypressgrep) — run a fast smoke or critical subset on every PR; `grepFilterSpecs` skips loading specs that contain no matching tests
-10. [Cache the Cypress binary in CI](#cache-the-cypress-binary-in-ci) — prevents a 100 MB+ binary download on every run
-11. [Right-size CI machine resources](#allocate-enough-ci-machine-resources) — resource starvation presents as slow or flaky tests, not a clear error; fix this before other CI tuning
-12. [Eliminate arbitrary cy.wait()](#avoid-arbitrary-waits-and-tune-timeouts)
-13. [Slim support file and imports](#keep-support-and-spec-imports-lean) — avoids bundling unused code on every spec startup
-14. [Block third-party requests with blockHosts](#block-third-party-requests-with-blockhosts) — analytics and monitoring services consume time in test environments; blocked requests resolve immediately
-15. [Avoid wildcard cy.intercept('\*')](#intercept-only-the-requests-you-need) — limits proxy overhead to requests the test actually needs
-16. [Use specific DOM selectors](#use-specific-selectors) — broad selectors like `*` or `div` force the browser to collect every matching node before filtering
-17. [experimentalFastVisibility](#enable-faster-visibility-checks-with-experimentalfastvisibility) — high impact on complex DOMs; replaces the layout-thrashing legacy visibility algorithm
-18. [experimentalMemoryManagement](#manage-memory-accumulation-with-experimentalmemorymanagement) — targeted remedy for suites that slow down over time or crash; measure before committing, as the cleanup cost can exceed the benefit on lighter suites
-19. [Test retries (runMode: 1)](#use-test-retries-deliberately) — prevents flaky tests from blocking CI; keep the count low and use flake data to fix root causes
-20. [UI Coverage to identify over-tested elements](#find-and-eliminate-over-tested-ui-with-ui-coverage) — interaction count data identifies UI your tests repeatedly pass through without intending to test
-21. [cy.prompt for selector maintenance](#reduce-selector-maintenance-overhead-with-cyprompt) — reduces recurring fix time when the UI changes; cached commands run without AI overhead in CI
+1. [Upgrade to the latest Cypress](#Keep-Cypress-up-to-date)
+2. [Choose the right test level](#Choose-the-right-test-level) — moving tests from E2E to component or API level is often the single largest gain
+3. [cy.session() for authentication caching](#Cache-authentication) — eliminates 2-5 seconds per test
+4. [Stub network requests](#Stub-network-requests-strategically) — replaces 100-2000ms real calls with < 20ms stubs
+5. [Programmatic state setup](#Set-up-state-programmatically-not-through-the-UI) — replaces minutes of UI navigation with seconds of API calls
+6. [Parallelization](#Parallelization) — linear scaling with the number of machines
+7. [Spec prioritization and auto cancellation](#Spec-prioritization) — surfaces failures faster; reduces cost of broken builds
+8. [Disable video, use Test Replay](#Disable-video-use-Test-Replay-instead) — removes per-spec encoding overhead from CI; Test Replay provides better debugging at lower cost
+9. [Tag tests with @cypress/grep for CI tiers](#Run-the-right-tests-at-the-right-time) — run a fast smoke or critical subset on every PR; `grepFilterSpecs` skips loading specs that contain no matching tests
+10. [Cache the Cypress binary in CI](#Cache-the-Cypress-binary-in-CI) — prevents a 100 MB+ binary download on every run
+11. [Right-size CI machine resources](#Allocate-enough-CI-machine-resources) — resource starvation presents as slow or flaky tests, not a clear error; fix this before other CI tuning
+12. [Eliminate arbitrary cy.wait()](#Avoid-arbitrary-waits-and-tune-timeouts)
+13. [Slim support file and imports](#Keep-support-and-spec-imports-lean) — avoids bundling unused code on every spec startup
+14. [Block third-party requests with blockHosts](#Block-third-party-requests-with-blockHosts) — analytics and monitoring services consume time in test environments; blocked requests resolve immediately
+15. [Avoid wildcard cy.intercept('\*')](#Intercept-only-the-requests-you-need) — limits proxy overhead to requests the test actually needs
+16. [Use specific DOM selectors](#Use-specific-selectors) — broad selectors like `*` or `div` force the browser to collect every matching node before filtering
+17. [experimentalFastVisibility](#Enable-faster-visibility-checks) — high impact on complex DOMs; replaces the layout-thrashing legacy visibility algorithm
+18. [experimentalMemoryManagement](#Manage-memory-accumulation) — targeted remedy for suites that slow down over time or crash; measure before committing, as the cleanup cost can exceed the benefit on lighter suites
+19. [Test retries (runMode: 1)](#Use-test-retries-deliberately) — prevents flaky tests from blocking CI; keep the count low and use flake data to fix root causes
+20. [UI Coverage to identify over-tested elements](#Find-and-eliminate-over-tested-UI-with-UI-Coverage) — interaction count data identifies UI your tests repeatedly pass through without intending to test
+21. [cy.prompt for selector maintenance](#Reduce-selector-maintenance-overhead-with-cyprompt) — reduces recurring fix time when the UI changes; cached commands run without AI overhead in CI
 
 ## Strategies to speed up tests
 
@@ -1097,7 +1097,7 @@ From the [Kitchen Sink example](/cloud/features/smart-orchestration/parallelizat
 
 For large suites, 4-8 machines typically brings runs under 10 minutes. Diminishing returns set in when per-spec overhead (browser launch, video encoding) dominates over actual test time.
 
-To evaluate whether your machines are being used efficiently, use the [Machines view](#parallel-machine-balance) in Cypress Cloud. It shows which specs each machine ran, how long each took, and how balanced the workload was across the run. If one machine finishes in 3 minutes while another is still running at 12, the distribution is uneven and adding more machines won't help until the imbalance is resolved.
+To evaluate whether your machines are being used efficiently, use the [Machines view](#Parallel-machine-balance) in Cypress Cloud. It shows which specs each machine ran, how long each took, and how balanced the workload was across the run. If one machine finishes in 3 minutes while another is still running at 12, the distribution is uneven and adding more machines won't help until the imbalance is resolved.
 
 ### Spec prioritization
 
@@ -1157,7 +1157,7 @@ Resource starvation is one of the hardest performance problems to diagnose becau
 - Parallelized runs don't scale as expected when you add machines; if each machine is already at its limit, adding more of the same doesn't help
 - CI provider analytics show CPU or memory consistently near 100% during runs
 
-See [Diagnosing your suite](#diagnosing-your-suite) for how to confirm this with `DEBUG=cypress:server:util:process_profiler`.
+See [Diagnosing your suite](#Diagnosing-your-suite) for how to confirm this with `DEBUG=cypress:server:util:process_profiler`.
 
 #### What to do when you see it maxing out
 
