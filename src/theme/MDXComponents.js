@@ -10,6 +10,8 @@ import ComponentOnlyBadge from "@site/src/components/component-only-badge";
 import TestReplayInfo from "@site/docs/partials/_test-replay-info.mdx";
 import CypressConfigFileTabs from "@site/src/components/cypress-config-file-tabs";
 import CypressInstallCommands from "@site/docs/partials/_cypress-install-commands.mdx";
+import CypressCacheClearCommands from "@site/docs/partials/_cypress-cache-clear-commands.mdx";
+import CypressInstallBinaryCommands from "@site/docs/partials/_cypress-install-binary-commands.mdx";
 import CypressEnvVsCypressExpose from "@site/docs/partials/_cy-env-vs-cypress-expose.mdx";
 import CypressOpenCommands from "@site/docs/partials/_cypress-open-commands.mdx";
 import CypressRunCommands from "@site/docs/partials/_cypress-run-commands.mdx";
@@ -22,6 +24,7 @@ import E2EOrCtTabs from "@site/src/components/e2e-or-ct-tabs";
 import ElementFilters from "@site/docs/partials/_elementfilters.mdx";
 import VueSyntaxTabs from "@site/src/components/vue-syntax-tabs";
 import HeaderAssertions from "@site/docs/partials/_header-assertions.mdx";
+import InterceptAliasIndex from "@site/docs/partials/_intercept-alias-index.mdx";
 import HeaderRequirements from "@site/docs/partials/_header-requirements.mdx";
 import HeaderTimeouts from "@site/docs/partials/_header-timeouts.mdx";
 import HeaderYields from "@site/docs/partials/_header-yields.mdx";
@@ -177,6 +180,8 @@ export default {
   ComponentOnlyBadge,
   CypressConfigFileTabs,
   CypressInstallCommands,
+  CypressCacheClearCommands,
+  CypressInstallBinaryCommands,
   CypressEnvVsCypressExpose,
   CypressOpenCommands,
   CypressRunCommands,
@@ -189,6 +194,7 @@ export default {
   ElementFilters,
   VueSyntaxTabs,
   HeaderAssertions,
+  InterceptAliasIndex,
   HeaderRequirements,
   HeaderTimeouts,
   HeaderYields,

@@ -298,6 +298,20 @@ centered during scrolling of action commands. Accepted values are `'center'`,
 `'top'`, `'bottom'`, `'nearest'`, and `false`, with `false` disabling scrolling
 altogether.
 
+Each value controls where in the viewport the element is aligned after
+scrolling, using the browser's
+[`scrollIntoView()`](https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView)
+method under the hood:
+
+- `'top'` — aligns the element to the top of the scrollable container.
+- `'bottom'` — aligns the element to the bottom of the scrollable container.
+- `'center'` — centers the element within the scrollable container.
+- `'nearest'` — scrolls the minimum amount needed to bring the element into
+  view. If the element is above the visible area it aligns to the top; if it is
+  below, it aligns to the bottom; if it is already fully visible, no scrolling
+  occurs.
+- `false` — disables scrolling entirely before executing the command.
+
 ### Coordinates
 
 After we verify the element is actionable, Cypress will then fire all of the

@@ -22,11 +22,11 @@ apart of [Amazon Web Services (AWS)](https://aws.amazon.com).
 
 The documentation for [Amazon Cognito](https://aws.amazon.com/cognito)
 recommends using the
-[AWS Amplify Framework Authentication Library](https://aws-amplify.github.io/amplify-js/api/classes/authclass.html)
+[AWS Amplify Framework Authentication Library](https://docs.amplify.aws/javascript/build-a-backend/auth/)
 from the [AWS Amplify Framework](https://aws.amazon.com/amplify/framework/) to
 interact with a deployed [Amazon Cognito](https://aws.amazon.com/cognito)
 instance. Using the
-[AWS Amplify Framework Authentication Library](https://aws-amplify.github.io/amplify-js/api/classes/authclass.html),
+[AWS Amplify Framework Authentication Library](https://docs.amplify.aws/javascript/build-a-backend/auth/),
 we are able to programmatically drive the creation and authentication of users
 against a fully deployed back end.
 
@@ -107,9 +107,9 @@ The
 <Icon name="github" inline="true" contentType="rwa" /> is configured with an
 optional [Amazon Cognito](https://aws.amazon.com/cognito) instance via the [AWS
 Amplify Framework Authentication
-Library](https://aws-amplify.github.io/amplify-js/api/classes/authclass.html).
-The [AWS Amazon Amplify CLI](https://docs.amplify.aws/cli) is used to provision
-the [Amazon Web Services (AWS)](https://aws.amazon.com) infrastructure needed to
+Library](https://docs.amplify.aws/javascript/build-a-backend/auth/). The [AWS
+Amazon Amplify CLI](https://docs.amplify.aws/cli) is used to provision the
+[Amazon Web Services (AWS)](https://aws.amazon.com) infrastructure needed to
 configure your environment and cloud resources.
 
 First, run the
@@ -199,9 +199,12 @@ We'll write a custom command called `loginByCognito` to perform a login to
    <Icon name="github" inline="true" contentType="rwa" />
 4. Cache the results with [`cy.session()`](/api/commands/session)
 
-```jsx title="cypress/support/auth-provider-commands/cognito.ts"
+<Tabs>
+<TabItem value="cypress/support/commands.js">
+
+```js title="cypress/support/auth-provider-commands/cognito.js"
 // Amazon Cognito
-const loginToCognito = (username: string, password: string) => {
+const loginToCognito = (username, password) => {
   Cypress.log({
     displayName: 'COGNITO LOGIN',
     message: [`🔐 Authenticating | ${username}`],
@@ -243,6 +246,65 @@ Cypress.Commands.add('loginByCognito', (username, password) => {
   return loginToCognito(username, password)
 })
 ```
+
+</TabItem>
+<TabItem value="cypress/support/commands.ts">
+
+```ts
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      loginByCognito(username: string, password: string): Chainable<void>
+    }
+  }
+}
+
+// Amazon Cognito
+const loginToCognito = (username: string, password: string) => {
+  Cypress.log({
+    displayName: 'COGNITO LOGIN',
+    message: [`🔐 Authenticating | ${username}`],
+    autoEnd: false,
+  })
+
+  cy.visit('/')
+
+  cy.origin(
+    Cypress.expose('cognito_domain'),
+    {
+      args: {
+        username,
+        password,
+      },
+    },
+    ({ username, password }) => {
+      cy.contains('Sign in with your email and password')
+      // Cognito log in page has some elements of the same id but are off screen.
+      // We only want the visible elements to log in
+      cy.get('input[name="username"]:visible').type(username)
+      cy.get('input[name="password"]:visible').type(password, {
+        // use log: false to prevent your password from showing in the Command Log
+        log: false,
+      })
+      cy.get('input[name="signInSubmitButton"]:visible').click()
+    }
+  )
+
+  // give a few seconds for redirect to settle
+  cy.wait(2000)
+
+  // verify we have made it passed the login screen
+  cy.contains('Get Started').should('be.visible')
+}
+
+// right now our custom command is light. More on this later!
+Cypress.Commands.add('loginByCognito', (username: string, password: string) => {
+  return loginToCognito(username, password)
+})
+```
+
+</TabItem>
+</Tabs>
 
 Now, we can use our `loginByCognito` command in the test. Below is our test to
 login as a user via [Amazon Cognito](https://aws.amazon.com/cognito), complete
@@ -287,7 +349,10 @@ Now, we can refactor our login command to take advantage of
 [`cy.session()`](/api/commands/session) to store our logged in user so we don't
 have to reauthenticate with every test.
 
-```jsx title="cypress/support/auth-provider-commands/cognito.ts"
+<Tabs>
+<TabItem value="cypress/support/commands.js">
+
+```js title="cypress/support/auth-provider-commands/cognito.js"
 // Amazon Cognito
 Cypress.Commands.add(
   'loginByCognito, cy.origin() login',
@@ -309,6 +374,45 @@ Cypress.Commands.add(
 )
 ```
 
+</TabItem>
+<TabItem value="cypress/support/commands.ts">
+
+```ts
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      'loginByCognito, cy.origin() login'(
+        username: string,
+        password: string
+      ): Chainable<void>
+    }
+  }
+}
+
+// Amazon Cognito
+Cypress.Commands.add(
+  'loginByCognito, cy.origin() login',
+  (username: string, password: string) => {
+    cy.session(
+      `cognito-${username}`,
+      () => {
+        return loginToCognito(username, password)
+      },
+      {
+        validate() {
+          cy.visit('/')
+          // revalidate our session to make sure we are logged in
+          cy.contains('Get Started').should('be.visible')
+        },
+      }
+    )
+  }
+)
+```
+
+</TabItem>
+</Tabs>
+
 <DocsVideo
   src="https://vimeo.com/789093817"
   title="AWS Cognito Authentication with cy.session()"
@@ -329,7 +433,10 @@ user is logged into the application.
 
   <TabItem value="v5" label="Amplify v5.x.x" default>
 
-```jsx title="cypress/support/auth-provider-commands/cognito.ts"
+<Tabs>
+<TabItem value="cypress/support/commands.js">
+
+```js title="cypress/support/auth-provider-commands/cognito.js"
 import Amplify, { Auth } from 'aws-amplify'
 
 Amplify.configure(Cypress.expose('awsConfig'))
@@ -384,6 +491,78 @@ Cypress.Commands.add('loginByCognitoApi', (username, password) => {
 })
 ```
 
+</TabItem>
+<TabItem value="cypress/support/commands.ts">
+
+```ts
+import Amplify, { Auth } from 'aws-amplify'
+
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      loginByCognitoApi(username: string, password: string): Chainable<void>
+    }
+  }
+}
+
+Amplify.configure(Cypress.expose('awsConfig'))
+
+// Amazon Cognito
+Cypress.Commands.add(
+  'loginByCognitoApi',
+  (username: string, password: string) => {
+    const log = Cypress.log({
+      displayName: 'COGNITO LOGIN',
+      message: [`🔐 Authenticating | ${username}`],
+      // @ts-ignore
+      autoEnd: false,
+    })
+
+    log.snapshot('before')
+
+    const signIn = Auth.signIn({ username, password })
+
+    cy.wrap(signIn, { log: false }).then((cognitoResponse) => {
+      const keyPrefixWithUsername = `${cognitoResponse.keyPrefix}.${cognitoResponse.username}`
+
+      window.localStorage.setItem(
+        `${keyPrefixWithUsername}.idToken`,
+        cognitoResponse.signInUserSession.idToken.jwtToken
+      )
+
+      window.localStorage.setItem(
+        `${keyPrefixWithUsername}.accessToken`,
+        cognitoResponse.signInUserSession.accessToken.jwtToken
+      )
+
+      window.localStorage.setItem(
+        `${keyPrefixWithUsername}.refreshToken`,
+        cognitoResponse.signInUserSession.refreshToken.token
+      )
+
+      window.localStorage.setItem(
+        `${keyPrefixWithUsername}.clockDrift`,
+        cognitoResponse.signInUserSession.clockDrift
+      )
+
+      window.localStorage.setItem(
+        `${cognitoResponse.keyPrefix}.LastAuthUser`,
+        cognitoResponse.username
+      )
+
+      window.localStorage.setItem('amplify-authenticator-authState', 'signedIn')
+      log.snapshot('after')
+      log.end()
+    })
+
+    cy.visit('/')
+  }
+)
+```
+
+</TabItem>
+</Tabs>
+
   </TabItem>
 
   <TabItem value="v6" label="Amplify v6.x.x">
@@ -408,6 +587,14 @@ const fetchJwts = async (username: string, password: string) => {
   }
 }
 type JwtResponse = Awaited<ReturnType<typeof fetchJwts>>
+
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      loginByCognitoApi(username: string, password: string): Chainable<void>
+    }
+  }
+}
 
 // Amazon Cognito
 Cypress.Commands.add(
@@ -502,7 +689,7 @@ The
 configuration and runnable code for both the React SPA and the Express back end.
 
 The front end uses the
-[AWS Amplify Framework Authentication Library](https://aws-amplify.github.io/amplify-js/api/classes/authclass.html).
+[AWS Amplify Framework Authentication Library](https://docs.amplify.aws/javascript/build-a-backend/auth/).
 The back end uses the [express-jwt](https://github.com/auth0/express-jwt) to
 validate JWTs from [Amazon Cognito](https://aws.amazon.com/cognito).
 
@@ -587,7 +774,7 @@ if (process.env.REACT_APP_AWS_COGNITO) {
 
 We need to update our front end React app to allow for authentication with
 [Amazon Cognito](https://aws.amazon.com/cognito) using the
-[AWS Amplify Framework Authentication Library](https://aws-amplify.github.io/amplify-js/api/classes/authclass.html).
+[AWS Amplify Framework Authentication Library](https://docs.amplify.aws/javascript/build-a-backend/auth/).
 
 First, we create a `AppCognito.tsx` container, based off of the `App.tsx`
 component.

@@ -381,19 +381,36 @@ Below is a sample that registers several default component declarations while
 still allowing additional ones to be passed in via the config param. The same
 pattern can also be applied to providers and module imports.
 
-```ts title=support/component.ts
-import { Type } from '@angular/core'
-import { mount, MountConfig } from 'cypress/angular'
+<Tabs>
+<TabItem value="cypress/support/component.js">
+
+```js
+import { mount } from 'cypress/angular'
 import { ButtonComponent } from 'src/app/button/button.component'
 import { CardComponent } from 'src/app/card/card.component'
 
-declare global {
-  namespace Cypress {
-    interface Chainable {
-      mount: typeof customMount
-    }
+const declarations = [ButtonComponent, CardComponent]
+
+function customMount(component, config) {
+  if (!config) {
+    config = { declarations }
+  } else {
+    config.declarations = [...(config?.declarations || []), ...declarations]
   }
+  return mount(component, config)
 }
+
+Cypress.Commands.add('mount', customMount)
+```
+
+</TabItem>
+<TabItem value="cypress/support/component.ts">
+
+```ts
+import { Type } from '@angular/core'
+import { mount, MountConfig, MountResponse } from 'cypress/angular'
+import { ButtonComponent } from 'src/app/button/button.component'
+import { CardComponent } from 'src/app/card/card.component'
 
 const declarations = [ButtonComponent, CardComponent]
 
@@ -406,8 +423,27 @@ function customMount<T>(component: string | Type<T>, config?: MountConfig<T>) {
   return mount<T>(component, config)
 }
 
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      /**
+       * Helper mount function for Angular Components
+       * @param component Angular Component or template string to mount
+       * @param config Options passed to Angular TestBed
+       */
+      mount<T>(
+        component: string | Type<T>,
+        config?: MountConfig<T>
+      ): Cypress.Chainable<MountResponse<T>>
+    }
+  }
+}
+
 Cypress.Commands.add('mount', customMount)
 ```
+
+</TabItem>
+</Tabs>
 
 This custom mount command will allow you to skip manually passing in the
 `ButtonComponent` and `CardComponent` as declarations into each `cy.mount()`
