@@ -81,7 +81,8 @@ Pass in an options object to change the default behavior of `.select()`.
 
 ```javascript
 // yields <option value="456">apples</option>
-cy.get('select').select('apples').should('have.value', '456')
+cy.get('select').select('apples')
+cy.get('select').should('have.value', '456')
 ```
 
 ### Value
@@ -98,7 +99,8 @@ cy.get('select').select('apples').should('have.value', '456')
 
 ```javascript
 // yields <option value="456">apples</option>
-cy.get('select').select('456').should('have.value', '456')
+cy.get('select').select('456')
+cy.get('select').should('have.value', '456')
 ```
 
 ### Index
@@ -115,7 +117,8 @@ cy.get('select').select('456').should('have.value', '456')
 
 ```javascript
 // yields <option value="456">apples</option>
-cy.get('select').select(0).should('have.value', '456')
+cy.get('select').select(0)
+cy.get('select').should('have.value', '456')
 ```
 
 ### Select multiple options

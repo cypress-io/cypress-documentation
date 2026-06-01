@@ -50,6 +50,9 @@ error thrown, write your own `ensure` function instead.
 
 <Icon name="check-circle" color="green" /> **Correct Usage**
 
+<Tabs>
+<TabItem value="cypress/support/commands.js">
+
 ```javascript
 Cypress.Commands.addQuery('getChildById', function (id) {
   return (subject) => {
@@ -79,6 +82,51 @@ Cypress.Commands.addQuery(queryName, function (...args) {
   }
 })
 ```
+
+</TabItem>
+<TabItem value="cypress/support/commands.ts">
+
+```typescript
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      getChildById(id: string): Chainable<JQuery>
+      verifyElementActionable(...args: any[]): Chainable<JQuery>
+    }
+  }
+}
+
+Cypress.Commands.addQuery('getChildById', function (id) {
+  return (subject) => {
+    // Verify that the subject is an element, document, or window object
+    Cypress.ensure.isType(
+      subject,
+      ['element', 'document', 'window'],
+      'getChildById',
+      cy
+    )
+
+    return $$(`#${id}`, subject)
+  }
+})
+
+const queryName = 'verifyElementActionable'
+
+Cypress.Commands.addQuery(queryName, function (...args) {
+  return (subject) => {
+    // Verify that the subject fulfills a variety of conditions
+    Cypress.ensure.isElement(subject, queryName, cy)
+    Cypress.ensure.isVisible(subject, queryName, cy)
+    Cypress.ensure.isNotDisabled(subject, queryName, cy)
+    Cypress.ensure.isNotReadonly(subject, queryName, cy)
+
+    return subject
+  }
+})
+```
+
+</TabItem>
+</Tabs>
 
 ## See also
 

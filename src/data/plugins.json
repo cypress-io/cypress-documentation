@@ -12,13 +12,6 @@
           "badge": "official"
         },
         {
-          "name": "Watch",
-          "description": "Watches your spec files and serves them as-is. Useful as an example reference or if you don't need transpiling/bundling.",
-          "link": "https://github.com/cypress-io/cypress-watch-preprocessor",
-          "keywords": ["file-watcher"],
-          "badge": "official"
-        },
-        {
           "name": "Cucumber",
           "description": "Run cucumber/gherkin-syntaxed specs with cypress.io.",
           "link": "https://github.com/badeball/cypress-cucumber-preprocessor",
@@ -91,7 +84,7 @@
         },
         {
           "name": "eslint-plugin-cypress",
-          "description": "ESLint plugin that sets globals for writing tests in Cypress.",
+          "description": "Official ESLint plugin that configures Cypress and Mocha globals and enforces best-practice rules to prevent flaky tests and common Cypress anti-patterns — catching issues in-editor before CI runs.",
           "link": "https://github.com/cypress-io/eslint-plugin-cypress",
           "keywords": ["eslint"],
           "badge": "official"
@@ -220,13 +213,6 @@
           "description": "Cypress helper that checks number of expected and actual assertions in the test.",
           "link": "https://github.com/bahmutov/cypress-expect-n-assertions",
           "keywords": ["test", "assertion"],
-          "badge": "community"
-        },
-        {
-          "name": "cypress-audit",
-          "description": "Run Lighthouse audit directly in your E2E test suites.",
-          "link": "https://github.com/mfrachet/cypress-audit",
-          "keywords": ["lighthouse"],
           "badge": "community"
         },
         {
@@ -508,6 +494,22 @@
             "drag-and-drop",
             "drag",
             "drop",
+            "commands"
+          ],
+          "badge": "community"
+        },
+        {
+          "name": "cypress-real-dnd",
+          "description": "Real HTML5 drag-and-drop via Chrome DevTools Protocol. Triggers the actual dragstart → dragover → drop pipeline, so it works with react-dnd, Sortable.js, dnd-kit's HTML5 sensor, and plain `draggable=\"true\"` elements where synthetic-event and pointer-event plugins do not.",
+          "link": "https://github.com/emidhun/cypress-real-dnd",
+          "keywords": [
+            "dragndrop",
+            "drag-and-drop",
+            "drag",
+            "drop",
+            "react-dnd",
+            "html5",
+            "cdp",
             "commands"
           ],
           "badge": "community"

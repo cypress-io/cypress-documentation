@@ -90,18 +90,60 @@ Although Cypress does not have a built-in `cy.hover()` command, you can create
 your own custom command using
 [`Cypress.Commands.add()`](/api/cypress-api/custom-commands).
 
+<Tabs>
+<TabItem value="cypress/support/commands.js">
+
 ```javascript
 Cypress.Commands.add('hover', (...args) => {})
 ```
+
+</TabItem>
+<TabItem value="cypress/support/commands.ts">
+
+```typescript
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      hover(...args: any[]): Chainable<JQuery>
+    }
+  }
+}
+
+Cypress.Commands.add('hover', (...args) => {})
+```
+
+</TabItem>
+</Tabs>
 
 Note that while `Cypress.Commands.add()` is the recommended way to define a
 custom `cy.hover()` command,
 [`Cypress.Commands.overwrite()`](/api/cypress-api/custom-commands#Overwrite-Existing-Commands)
 will still work.
 
+<Tabs>
+<TabItem value="cypress/support/commands.js">
+
 ```javascript
 Cypress.Commands.overwrite('hover', (originalFn, ...otherArgs) => {})
 ```
+
+</TabItem>
+<TabItem value="cypress/support/commands.ts">
+
+```typescript
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      hover(...args: any[]): Chainable<JQuery>
+    }
+  }
+}
+
+Cypress.Commands.overwrite('hover', (originalFn, ...otherArgs) => {})
+```
+
+</TabItem>
+</Tabs>
 
 ## See also
 
