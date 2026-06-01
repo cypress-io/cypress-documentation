@@ -273,6 +273,24 @@ the browser to actually "do" anything for these events. For the most part, it
 shouldn't matter, which is why `.trigger()` is an excellent stop-gap if the
 command / event you're looking for hasn't been implemented yet.
 
+### Interact with a range input in a controlled component (React, Vue, etc.)
+
+To set a range input to a specific value in a controlled component, use the
+native setter before dispatching the event. This ensures framework `onChange`
+handlers fire correctly.
+
+```js
+const nativeInputValueSetter = Object.getOwnPropertyDescriptor(
+  window.HTMLInputElement.prototype,
+  'value'
+).set
+
+cy.get('input[type=range]')
+  .then(($range) => nativeInputValueSetter.call($range[0], 70))
+  .trigger('input')
+  .trigger('change')
+```
+
 ## Rules
 
 <HeaderRequirements />
