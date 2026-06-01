@@ -76,6 +76,7 @@ default values.
 | `includeShadowDom`     | `false`                               | Whether to traverse shadow DOM boundaries and include elements within the shadow DOM in the results of query commands (e.g. [`cy.get()`](/api/commands/get)).                                                                                                                                              |
 | `numTestsKeptInMemory` | Default based on `run` or `open` mode | The number of tests for which snapshots and command data are kept in memory. `numTestsKeptInMemory` is set to `50` by default during `cypress open` and set to `0` by default during `cypress run`. Reduce this number if you are experiencing high memory consumption in your browser during a test run.  |
 | `port`                 | `null`                                | Port used to host Cypress. Normally this is a randomly generated port.                                                                                                                                                                                                                                     |
+| `projectId`            | `null`                                | The unique ID used to record test results to [Cypress Cloud](/cloud/get-started/introduction). Set automatically when you [connect your project to Cypress Cloud](/cloud/get-started/setup#Setup).                                                                                                         |
 | `redirectionLimit`     | `20`                                  | The number of times that the application under test can redirect before erroring.                                                                                                                                                                                                                          |
 | `reporter`             | `spec`                                | The [reporter](/app/tooling/reporters) used during `cypress run`.                                                                                                                                                                                                                                          |
 | `reporterOptions`      | `null`                                | The [reporter options](/app/tooling/reporters#Reporter-Options) used. Supported options depend on the reporter.                                                                                                                                                                                            |
@@ -170,6 +171,19 @@ For more options regarding screenshots, view the
 
 For more information, see the docs on
 [actionability](/app/core-concepts/interacting-with-elements#Actionability).
+
+### System
+
+These values are set by Cypress at startup and are read-only — they cannot be changed in your Cypress configuration file. They can be accessed via [`Cypress.config()`](/api/cypress-api/config). The `browsers` property is an exception: it can also be modified in [`setupNodeEvents`](#setupNodeEvents) to filter or add custom browsers.
+
+| Option                | Default         | Description                                                                                                                                          |
+| --------------------- | --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `arch`                | `os.arch()`     | The underlying OS CPU architecture. Common values are `x64`, `arm`, and `arm64`.                                                                     |
+| `browsers`            | `[]`            | A list of browsers found on your system. Populated by Cypress at startup. Can be filtered or extended in [`setupNodeEvents`](#setupNodeEvents).      |
+| `isInteractive`       | `true`          | Whether Cypress is running in interactive mode (`cypress open`). Set to `false` during `cypress run`. See [Notes](#isInteractive) for usage.         |
+| `platform`            | `os.platform()` | The underlying OS platform name (e.g. `linux`, `darwin`, `win32`).                                                                                   |
+| `resolvedNodePath`    | `null`          | The path to the Node.js binary used for [`cy.task()`](/api/commands/task) and [`cy.exec()`](/api/commands/exec) commands. Set by Cypress at startup. |
+| `resolvedNodeVersion` | `null`          | The version of Node.js used by Cypress. Set by Cypress at startup.                                                                                   |
 
 ### Experiments
 
