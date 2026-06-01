@@ -1,6 +1,6 @@
 ---
 title: 'Configure Client Certificates in Cypress'
-description: 'Configure certificate authority (CA) and client certificates to use within tests on a per-URL basis.'
+description: 'Configure certificate authority (CA) and client certificates to test mTLS (mutual TLS) protected endpoints in Cypress on a per-URL basis.'
 sidebar_label: 'Client Certificates'
 ---
 
@@ -10,12 +10,16 @@ sidebar_label: 'Client Certificates'
 
 Many enterprise, government, and regulated-industry systems require clients to
 present a certificate to authenticate at the TLS layer — before your application
-code even runs. Without this, you face an unpleasant choice: disable certificate
+code even runs. This pattern is called **mutual TLS (mTLS)**: unlike standard
+HTTPS where only the server proves its identity, mTLS requires _both_ sides to
+present certificates, so the server can verify the caller is a trusted client.
+
+Without mTLS support, you face an unpleasant choice: disable certificate
 requirements in your test environment (meaning your tests run against a system
 that doesn't match production), or rely on slow and inconsistent manual testing.
 
 The `clientCertificates` configuration lets you supply the certificates Cypress
-needs to authenticate against these protected endpoints, so your automated E2E
+needs to authenticate against mTLS-protected endpoints, so your automated E2E
 tests exercise the real security boundary. Misconfigurations, expired
 certificates, or changed server requirements get caught in CI — not in
 production, where the cost is highest.
@@ -169,6 +173,139 @@ URL**, you can work around this limitation in a couple of ways:
   files (for example `cypress.alice.config.ts` and `cypress.bob.config.ts`),
   each specifying the appropriate `clientCertificates`, and run them as separate
   test suites.
+
+## Testing mTLS-Protected Endpoints
+
+Once `clientCertificates` is configured, Cypress attaches the correct
+certificate automatically. Your test code looks the same as any other E2E test —
+no special options are required on individual commands.
+
+### Visiting an mTLS endpoint
+
+```js
+// cypress/e2e/mtls.cy.js
+describe('mTLS-protected app', () => {
+  it('loads the dashboard', () => {
+    // Cypress attaches the client cert automatically based on the URL
+    cy.visit('https://secure.example.com/dashboard')
+    cy.get('h1').should('contain', 'Welcome')
+  })
+})
+```
+
+### Making API requests to an mTLS endpoint
+
+[`cy.request()`](/api/commands/request) also benefits from the configured
+certificates, making it straightforward to test REST APIs behind mTLS:
+
+```js
+describe('mTLS API', () => {
+  it('returns 200 for an authenticated request', () => {
+    cy.request('GET', 'https://api.example.com/data').then((response) => {
+      expect(response.status).to.eq(200)
+    })
+  })
+
+  it('returns the expected payload', () => {
+    cy.request('POST', 'https://api.example.com/records', { name: 'test' }).its(
+      'body.id'
+    ).should('be.a', 'string')
+  })
+})
+```
+
+:::tip
+
+A `400 Bad Request` response (or a TLS handshake error in the Cypress log) when
+hitting an endpoint is the most common sign that the client certificate was not
+presented. Double-check that the `url` pattern in `clientCertificates` matches
+the full URL of your target — including any port number if the server runs on a
+non-standard port (e.g. `https://secure.example.com:8443/**`).
+
+:::
+
+## Debugging Certificate Issues
+
+### Inspecting the Cypress log
+
+When Cypress makes a request to a URL that matches a `clientCertificates`
+entry, it logs `clientCertificates` details in the **Cypress App** network
+panel. Open the panel and look for the lock icon next to the matching request
+to confirm that a certificate was attached.
+
+### Common errors
+
+| Symptom | Likely cause |
+| ------- | ------------ |
+| `400 Bad Request` from server | Certificate not presented — URL pattern mismatch |
+| `SSL_ERROR_HANDSHAKE_FAILURE` | Wrong certificate, expired cert, or CA chain mismatch |
+| `ENOENT: no such file or directory` | Certificate file path is incorrect or relative path is wrong |
+| `bad decrypt` / `wrong final block length` | Passphrase file content is incorrect or has trailing whitespace |
+| Certificate works locally but not in CI | Certificate files not committed or not present at the expected path in CI |
+
+### Verifying your certificate files
+
+You can verify that your `.pem` certificate and key are a matching pair before
+running Cypress:
+
+```shell
+# Confirm the public key fingerprints match
+openssl x509 -noout -modulus -in certs/cert.pem | openssl md5
+openssl rsa  -noout -modulus -in certs/private.key | openssl md5
+
+# Inspect a PFX container
+openssl pkcs12 -info -in certs/cert.pfx -nokeys
+```
+
+## Using Client Certificates in CI
+
+### Storing certificates securely
+
+Never commit unencrypted private keys to your repository. Instead, store
+certificate material as **CI secrets** and write them to disk at the start of
+your pipeline.
+
+**GitHub Actions example:**
+
+```yaml
+- name: Write client certificates
+  run: |
+    mkdir -p certs
+    echo "${{ secrets.CLIENT_CERT }}"       | base64 --decode > certs/cert.pem
+    echo "${{ secrets.CLIENT_KEY }}"        | base64 --decode > certs/private.key
+    echo "${{ secrets.CLIENT_PASSPHRASE }}" > certs/pem-passphrase.txt
+```
+
+Then reference those paths in `cypress.config.ts`:
+
+```ts
+clientCertificates: [
+  {
+    url: 'https://secure.example.com/**',
+    certs: [
+      {
+        cert: 'certs/cert.pem',
+        key: 'certs/private.key',
+        passphrase: 'certs/pem-passphrase.txt',
+      },
+    ],
+  },
+]
+```
+
+### Adding the certificates directory to `.gitignore`
+
+```
+# .gitignore
+certs/
+```
+
+:::caution
+
+Make sure the `certs/` directory (or whichever path you use) is in `.gitignore`
+so that private keys are never accidentally committed.
+
+:::
 
 ## History
 
