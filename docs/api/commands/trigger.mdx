@@ -273,101 +273,25 @@ the browser to actually "do" anything for these events. For the most part, it
 shouldn't matter, which is why `.trigger()` is an excellent stop-gap if the
 command / event you're looking for hasn't been implemented yet.
 
-### Triggering events on controlled framework components (React, Vue, etc.)
+### Interact with a range input in a controlled component (React, Vue, etc.)
 
-Combining `.invoke('val', value)` with `.trigger('change')` (or `.trigger('input')`)
-**will not** fire the `onChange` handler of a controlled component in frameworks
-like React. This commonly affects `<input type="range">` sliders.
-
-```js
-// ⚠️ Moves the slider visually, but React's onChange does NOT fire
-cy.get('input[type=range]').invoke('val', 70).trigger('change')
-```
-
-**Why this happens**
-
-This is not a Cypress limitation — it is how React's synthetic event system works:
-
-- React installs its own setter over the input's `value` property to maintain an
-  internal value tracker. `.invoke('val', 70)` calls jQuery's `.val()`, which goes
-  **through** that setter and updates React's tracker to `70`.
-- `.trigger('change')` then dispatches a real, bubbling DOM event. A plain
-  `addEventListener('change', …)` would fire — but React only dispatches its
-  synthetic `onChange` when the element's value **differs** from its tracked value.
-  Since the tracker already reads `70`, React treats it as "no change" and skips
-  the handler.
-- React also maps `onChange` for these inputs to the native **`input`** event, so
-  even `.trigger('input')` is gated by the same tracker check.
-
-**What to do instead**
-
-Use commands that simulate real user interaction. These go through native value
-setters, leaving React's tracker stale so the change is detected:
+To set a range input to a specific value in a controlled component, use the
+native setter before dispatching the event. This ensures framework `onChange`
+handlers fire correctly.
 
 ```js
-// Use arrow keys to nudge a range/number input (fires input + change)
-cy.get('input[type=range]').type('{rightArrow}')
-cy.get('input[type=range]').type('{leftArrow}')
-```
-
-To jump a controlled input to an arbitrary value, set it through the **native**
-setter (bypassing the framework's wrapper) before dispatching the event:
-
-```js
-const nativeInputValueSetter = Object.getOwnPropertyDescriptor(
-  window.HTMLInputElement.prototype,
-  'value',
-).set
-
 cy.get('input[type=range]').then(($range) => {
   const el = $range[0]
+  const nativeInputValueSetter = Object.getOwnPropertyDescriptor(
+    window.HTMLInputElement.prototype,
+    'value',
+  ).set
 
   nativeInputValueSetter.call(el, 70)
   el.dispatchEvent(new Event('input', { bubbles: true }))
   el.dispatchEvent(new Event('change', { bubbles: true }))
 })
 ```
-
-This pattern can be wrapped in a custom command for reuse:
-
-```js
-// cypress/support/commands.js
-Cypress.Commands.add(
-  'setSliderValue',
-  { prevSubject: 'element' },
-  (subject, value) => {
-    const el = subject[0]
-
-    const nativeInputValueSetter = Object.getOwnPropertyDescriptor(
-      window.HTMLInputElement.prototype,
-      'value',
-    ).set
-
-    nativeInputValueSetter.call(el, value)
-    el.dispatchEvent(new Event('input', { bubbles: true }))
-    el.dispatchEvent(new Event('change', { bubbles: true }))
-
-    return subject
-  },
-)
-```
-
-```ts
-// cypress/support/index.d.ts (TypeScript)
-declare namespace Cypress {
-  interface Chainable {
-    setSliderValue(value: number | string): Chainable<JQuery<HTMLElement>>
-  }
-}
-```
-
-Usage:
-
-```js
-cy.get('input[type=range]').setSliderValue(70)
-```
-
-See issue [#1570](https://github.com/cypress-io/cypress/issues/1570) for more detail.
 
 ## Rules
 
