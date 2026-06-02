@@ -1092,7 +1092,7 @@ Filtering tests is a powerful technique for faster CI feedback, but it comes wit
 - **[UI Coverage](/ui-coverage/get-started/introduction)**: UI Coverage scores are derived from the set of tests that ran. A filtered run covers a narrower portion of your UI, producing a lower score than a full run would. Comparing a `@smoke`-only PR run against a full nightly run makes coverage appear to regress when it hasn't; the numbers simply reflect different test scopes.
 - **[Accessibility scores](/accessibility/get-started/introduction)**: The same issue applies to Accessibility scores. Partial runs produce partial a11y coverage. Cross-branch score comparisons are only meaningful when the same test scope runs on both sides.
 
-The recommended approach is to run filtered subsets for fast pre-flight checks, but ensure at least one full-suite run (on merge to `main` or nightly) that feeds the Cloud comparison features. Use [run tags](/cloud/features/smart-orchestration/run-grouping) or separate Cypress Cloud projects to keep full runs and filtered runs distinct, so your dashboards and comparisons always reflect complete data.
+The recommended approach is to run filtered subsets for fast pre-flight checks, but ensure at least one full-suite run (on merge to `main` or nightly) that feeds the Cloud comparison features. Use [run tags](/app/references/command-line#cypress-run-tag-lt-tag-gt) or separate Cypress Cloud projects to keep full runs and filtered runs distinct, so your dashboards and comparisons always reflect complete data.
 
 ### Cache the Cypress binary in CI
 
