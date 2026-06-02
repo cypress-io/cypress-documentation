@@ -548,6 +548,53 @@ cy.contains('Successfully created user: Brian')
 
 :::
 
+#### Accessing multiple intercepted requests
+
+When you alias a `cy.intercept()` route, Cypress silently tracks **every**
+request that matches it — not just the most recent one. By default,
+`cy.get('@alias')` and `cy.wait('@alias')` only surface the most recent
+matching request. The `.all` suffix and numeric index notation expose the full
+history Cypress was already keeping.
+
+This is useful in several situations:
+
+**Asserting request count.** The most common need is proving your app made
+_exactly_ the expected number of requests — not just that it made at least one.
+For example, verifying a polling interval doesn't fire again after some time:
+
+```js
+cy.wait('@getList')
+cy.tick(10000)
+cy.get('@getList.all').should('have.length', 1) // still only one request
+```
+
+Without `.all` there is no clean way to assert count. You can only assert
+whether a request happened, not how many times.
+
+**Sequential requests with different data.** When your app paginates or retries,
+requests share a route but carry different parameters. The numeric index lets you
+validate each one independently:
+
+```js
+cy.get('@getUsers.1').its('request.url').should('include', 'page=1')
+cy.get('@getUsers.2').its('request.url').should('include', 'page=2')
+```
+
+**Why not multiple `cy.wait()` calls?** `cy.wait('@alias')` called twice will
+consume two requests in order, which is useful for _sequencing_ — but it doesn't
+catch a third unexpected request, and once consumed you can't go back to inspect
+an earlier one. `cy.get('@alias.all')` is backward-looking: it queries everything
+Cypress has already captured. The two complement each other — use `cy.wait()` to
+let requests settle, then `cy.get('@alias.all')` to assert on the full history:
+
+```js
+cy.wait('@getUsers') // let requests settle
+cy.get('@getUsers.all') // then assert on everything captured
+  .should('have.length', 2)
+```
+
+<InterceptAliasIndex />
+
 ### Requests
 
 Aliases can also be used with [requests](/api/commands/request).

@@ -533,6 +533,33 @@ console
 cy.wait('@new-user').then(console.log)
 ```
 
+## Working with WebSockets
+
+Cypress transparently proxies WebSocket connections, so your application's
+WebSocket traffic will work as expected during tests.
+
+### Limitations
+
+Stubbing or mocking individual WebSocket messages/frames is **not** natively
+supported by `cy.intercept()`. If your application relies on receiving specific
+WebSocket messages during a test, consider the following strategies:
+
+1. **Stub application callbacks directly** — Use [`cy.stub()`](/api/commands/stub)
+   to intercept the handlers your application registers (e.g. `onmessage`)
+   and call them with the payload you want to simulate.
+
+2. **Control messages from your server** — Have your server send the desired
+   messages in response to actions your test triggers (e.g. a
+   [`cy.request()`](/api/commands/request) to a test-only endpoint).
+
+3. **Use a helper WebSocket client** — Run a small Node.js server outside the
+   browser that connects to your application's WebSocket server and exposes a
+   REST API that your Cypress tests can call with
+   [`cy.request()`](/api/commands/request).
+
+See the [Multiple browsers open at the same time](/app/references/trade-offs#Multiple-browsers-open-at-the-same-time)
+section of the Trade-offs guide for detailed examples of these patterns.
+
 ## Working with GraphQL
 
 The strategies below follow best known practices for waiting and asserting

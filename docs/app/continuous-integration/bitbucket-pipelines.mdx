@@ -42,6 +42,19 @@ example, this allows us to run the tests in Firefox by passing the
 
 Read about [Cypress Docker variants](/app/continuous-integration/overview#Cypress-Docker-variants) to decide which image is best for your project.
 
+:::info
+
+When starting a local server in CI, use
+[`wait-on`](https://github.com/jeffbski/wait-on) or
+[`start-server-and-test`](https://github.com/bahmutov/start-server-and-test)
+to ensure the server is ready before running Cypress tests. Running
+`npm start & cypress run` without waiting for the server can cause tests to fail
+if the server hasn't finished booting. See
+[Boot your server](/app/continuous-integration/overview#Boot-your-server) for
+more details.
+
+:::
+
 ```yaml title="bitbucket-pipelines.yml"
 image: cypress/browsers:22.15.0
 
@@ -53,6 +66,8 @@ pipelines:
           - npm ci
           # start the server in the background
           - npm run start &
+          # wait for the server to respond (replace with your server's URL)
+          - npx wait-on http://localhost:3000
           # run Cypress tests in Firefox
           - npx cypress run --browser firefox
 ```
@@ -65,7 +80,8 @@ pipelines:
 - The code is checked out from the Bitbucket repository.
 - Finally, our scripts will:
   - Install npm dependencies
-  - Start the project web server (`npm start`)
+  - Start the project web server (`npm start`) in the background
+  - Wait for the server to be available using `wait-on`
   - Run the Cypress tests within the Bitbucket repository using Firefox
 
 ## Caching Dependencies and Build Artifacts
@@ -94,6 +110,8 @@ pipelines:
           - npm ci
           # start the server in the background
           - npm run start &
+          # wait for the server to respond (replace with your server's URL)
+          - npx wait-on http://localhost:3000
           # run Cypress tests in Firefox
           - npx cypress run --browser firefox
         artifacts:
@@ -156,6 +174,7 @@ e2e: &e2e
     - cypress
   script:
     - npm run start &
+    - npx wait-on http://localhost:3000
     - npm run e2e:record -- --parallel --group UI-Chrome --ci-build-id $BITBUCKET_BUILD_NUMBER
   artifacts:
     # store any generates images and videos as artifacts
@@ -215,6 +234,7 @@ e2e: &e2e
     - cypress
   script:
     - npm run start &
+    - npx wait-on http://localhost:3000
     - npm run e2e:record -- --parallel --group UI-Chrome --ci-build-id $BITBUCKET_BUILD_NUMBER
   artifacts:
     # store any generates images and videos as artifacts

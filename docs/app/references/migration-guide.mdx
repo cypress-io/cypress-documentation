@@ -50,6 +50,32 @@ Cypress.Keyboard.defaults({
 cy.get('input').type('slow typing', { delay: 10 })
 ```
 
+### `experimentalFastVisibility` replaced by `visibilityStrategy`
+
+The experimental `experimentalFastVisibility` boolean flag has been removed. Its successor is the new [`visibilityStrategy`](/app/references/configuration#Actionability) configuration option, which accepts `'legacy'` or `'modern'` and defaults to `'modern'`. The modern algorithm is now the default for **all** users, not just those who opted into the experiment.
+
+**If you were setting `experimentalFastVisibility: true`:** remove it. The modern algorithm is now the default.
+
+**If you were setting `experimentalFastVisibility: false` (or relying on the 15.x default) and a test now fails:** the modern algorithm intentionally drops some behaviors the legacy algorithm had (ancestor `overflow` clipping, transform-based hiding, and coverage detection for fixed/sticky elements). Prefer rewriting the affected assertions to verify the same user-visible behavior in an algorithm-agnostic way — see [Visibility Strategy](/app/core-concepts/interacting-with-elements#Visibility-Strategy) for what each algorithm checks and recommended rewrite patterns.
+
+If you need a temporary escape hatch while you update those tests, opt back into the legacy algorithm:
+
+:::cypress-config-example
+
+```js
+{
+  visibilityStrategy: 'legacy'
+}
+```
+
+:::
+
+:::caution
+
+`visibilityStrategy` is deprecated. Both the `'legacy'` value and the option itself will be removed in a future major version of Cypress. Treat it as a temporary migration aid only.
+
+:::
+
 ### Angular `18`, `19`, and `20` are no longer supported for Component Testing
 
 Angular 18 and 19 have reached [end-of-life](https://angular.dev/reference/releases#actively-supported-versions), and Angular 20 reaches LTS end in November 2026. As a result, the minimum required Angular version for component testing is now `21.0.0`.
@@ -538,7 +564,7 @@ export default defineConfig({
 })
 ```
 
-Note that this package version is deprecated and no longer supported by Cypress and is intended as a workaround until you can migrate to Webpack `5`. More information on how to configure the dev server `v4 `can be found in the [Cypress Webpack Dev Server documentation](https://github.com/cypress-io/cypress/blob/@cypress/webpack-dev-server-v4.0.2/npm/webpack-dev-server/README.md) and [Custom Dev Server documentation](/app/component-testing/component-framework-configuration#Custom-Dev-Server).
+Note that this package version is deprecated and no longer supported by Cypress and is intended as a workaround until you can migrate to Webpack `5`. More information on how to configure the dev server `v4 `can be found in the [Cypress Webpack Dev Server documentation](https://github.com/cypress-io/cypress/blob/@cypress/webpack-dev-server-v4.0.2/npm/webpack-dev-server/README.md) and [Custom Dev Server documentation](/app/component-testing/component-framework-configuration#Fully-Custom-Dev-Server).
 
 ##### End-to-End Testing
 

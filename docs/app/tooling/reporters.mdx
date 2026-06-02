@@ -333,7 +333,7 @@ Then we can combine them using the
 [mochawesome-merge](https://github.com/antontelesh/mochawesome-merge) utility.
 
 ```shell
-npx mochawesome-merge "cypress/results/*.json" > mochawesome.json
+npx mochawesome-merge cypress/results/*.json -o mochawesome.json
 ```
 
 We can now generate a combined HTML report from the `mochawesome.json` file

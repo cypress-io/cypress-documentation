@@ -136,6 +136,9 @@ command with a call to `cy.session()`.
 
 **Before**
 
+<Tabs>
+<TabItem value="cypress/support/commands.js">
+
 ```javascript
 Cypress.Commands.add('login', (username, password) => {
   cy.visit('/login')
@@ -146,7 +149,34 @@ Cypress.Commands.add('login', (username, password) => {
 })
 ```
 
+</TabItem>
+<TabItem value="cypress/support/commands.ts">
+
+```typescript
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      login(username: string, password: string): Chainable<void>
+    }
+  }
+}
+
+Cypress.Commands.add('login', (username, password) => {
+  cy.visit('/login')
+  cy.get('[data-test=name]').type(username)
+  cy.get('[data-test=password]').type(password)
+  cy.get('form').contains('Log In').click()
+  cy.url().should('contain', '/login-successful')
+})
+```
+
+</TabItem>
+</Tabs>
+
 **After**
+
+<Tabs>
+<TabItem value="cypress/support/commands.js">
 
 ```javascript
 Cypress.Commands.add('login', (username, password) => {
@@ -160,7 +190,36 @@ Cypress.Commands.add('login', (username, password) => {
 })
 ```
 
+</TabItem>
+<TabItem value="cypress/support/commands.ts">
+
+```typescript
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      login(username: string, password: string): Chainable<void>
+    }
+  }
+}
+
+Cypress.Commands.add('login', (username, password) => {
+  cy.session([username, password], () => {
+    cy.visit('/login')
+    cy.get('[data-test=name]').type(username)
+    cy.get('[data-test=password]').type(password)
+    cy.get('form').contains('Log In').click()
+    cy.url().should('contain', '/login-successful')
+  })
+})
+```
+
+</TabItem>
+</Tabs>
+
 **With session validation**
+
+<Tabs>
+<TabItem value="cypress/support/commands.js">
 
 ```javascript
 Cypress.Commands.add('login', (username, password) => {
@@ -181,6 +240,40 @@ Cypress.Commands.add('login', (username, password) => {
   )
 })
 ```
+
+</TabItem>
+<TabItem value="cypress/support/commands.ts">
+
+```typescript
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      login(username: string, password: string): Chainable<void>
+    }
+  }
+}
+
+Cypress.Commands.add('login', (username, password) => {
+  cy.session(
+    [username, password],
+    () => {
+      cy.visit('/login')
+      cy.get('[data-test=name]').type(username)
+      cy.get('[data-test=password]').type(password)
+      cy.get('form').contains('Log In').click()
+      cy.url().should('contain', '/login-successful')
+    },
+    {
+      validate() {
+        cy.request('/whoami').its('status').should('eq', 200)
+      },
+    }
+  )
+})
+```
+
+</TabItem>
+</Tabs>
 
 ### Updating an existing login helper function
 
@@ -504,6 +597,9 @@ to solve this by refactoring the login code to assert directly inside `setup`.
 
 **Before**
 
+<Tabs>
+<TabItem value="cypress/support/commands.js">
+
 ```javascript
 Cypress.Commands.add('loginByApi', (username, password) => {
   return cy.request('POST', `/api/login`, {
@@ -519,7 +615,42 @@ it('should return the correct value', () => {
 })
 ```
 
+</TabItem>
+<TabItem value="cypress/support/commands.ts">
+
+```typescript
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      loginByApi(
+        username: string,
+        password: string
+      ): Chainable<Cypress.Response<any>>
+    }
+  }
+}
+
+Cypress.Commands.add('loginByApi', (username, password) => {
+  return cy.request('POST', `/api/login`, {
+    username,
+    password,
+  })
+})
+
+it('should return the correct value', () => {
+  cy.loginByApi('user', 's3cr3t').then((response) => {
+    expect(response.status).to.eq(200)
+  })
+})
+```
+
+</TabItem>
+</Tabs>
+
 **After**
+
+<Tabs>
+<TabItem value="cypress/support/commands.js">
 
 ```javascript
 Cypress.Commands.add('loginByApi', (username, password) => {
@@ -537,6 +668,37 @@ it('is a redundant test', () => {
   /* which you can now delete! */
 })
 ```
+
+</TabItem>
+<TabItem value="cypress/support/commands.ts">
+
+```typescript
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      loginByApi(username: string, password: string): Chainable<void>
+    }
+  }
+}
+
+Cypress.Commands.add('loginByApi', (username, password) => {
+  cy.session(username, () => {
+    cy.request('POST', `/api/login`, {
+      username,
+      password,
+    }).then((response) => {
+      expect(response.status).to.eq(200)
+    })
+  })
+})
+
+it('is a redundant test', () => {
+  /* which you can now delete! */
+})
+```
+
+</TabItem>
+</Tabs>
 
 ### Cross-domain sessions
 
