@@ -174,7 +174,7 @@ Apply these optimizations in order. The highest-impact changes are at the top.
 9. [Tag tests with @cypress/grep for CI tiers](#Run-the-right-tests-at-the-right-time) — run a fast smoke or critical subset on every PR; `grepFilterSpecs` skips loading specs that contain no matching tests
 10. [Cache the Cypress binary in CI](#Cache-the-Cypress-binary-in-CI) — prevents a 100 MB+ binary download on every run
 11. [Right-size CI machine resources](#Allocate-enough-CI-machine-resources) — resource starvation presents as slow or flaky tests, not a clear error; fix this before other CI tuning
-12. [Eliminate arbitrary cy.wait()](#Avoid-arbitrary-waits-and-tune-timeouts)
+12. [Eliminate arbitrary cy.wait()](#Avoid-arbitrary-waits-and-adjust-timeouts)
 13. [Slim support file and imports](#Keep-support-and-spec-imports-lean) — avoids bundling unused code on every spec startup
 14. [Block third-party requests with blockHosts](#Block-third-party-requests-with-blockHosts) — analytics and monitoring services consume time in test environments; blocked requests resolve immediately
 15. [Avoid wildcard cy.intercept('\*')](#Intercept-only-the-requests-you-need) — limits proxy overhead to requests the test actually needs
@@ -815,7 +815,7 @@ Test suites grow organically. A welcome screen, an onboarding modal, or a cookie
 
 In [Cypress Cloud](/cloud/get-started/introduction), open any recorded run and navigate to the **UI Coverage** tab. In the **Tested elements** section, elements are listed with their interaction counts and the number of snapshots they appear in. Sort by highest interaction count and look for elements whose numbers are far out of proportion with how important they are.
 
-An element interacted with 5 times in a suite of 50 tests makes sense. An element interacted with 184 times in 327 snapshots, like a **Continue** button on a first-time welcome screen, signals that most of those tests are passing through the element, not testing it.
+An element interacted with 5 times in a suite of 50 tests makes sense. An element interacted with 184 times, like a **Continue** button on a first-time welcome screen, signals that most of those tests are passing through the element, not testing it.
 
 <DocsImage
   src="/img/ui-coverage/guides/cypress-ui-coverage-tested-elements-with-high-interactions.png"
@@ -881,7 +881,7 @@ cy.prompt([
 
 When a selector in the cached code becomes invalid, `cy.prompt` self-heals automatically on the next run rather than failing.
 
-Self-healing surfaces as a visible tag in the Command Log, so you can immediately see which steps healed and what element they resolved to.
+Self-healing surfaces as a visible tag in the Command Log and in your Cypress Cloud run results, so you can immediately see which steps healed and what element they resolved to.
 
 :::note
 
