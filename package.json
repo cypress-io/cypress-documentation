@@ -41,7 +41,7 @@
     "@mdx-js/react": "^3.0.0",
     "autoprefixer": "^10.4.17",
     "clsx": "^2.1.0",
-    "docusaurus-plugin-copy-page-button": "^0.6.1",
+    "docusaurus-plugin-copy-page-button": "^0.8.0",
     "docusaurus-plugin-image-zoom": "^2.0.0",
     "docusaurus-plugin-sass": "0.2.5",
     "postcss": "^8.4.34",
