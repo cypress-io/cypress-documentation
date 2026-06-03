@@ -516,6 +516,106 @@ the end of the path:
 cypress open --browser C:/User/Application/browser.exe:chrome
 ```
 
+### Error: read ECONNRESET
+
+If Cypress and/or the browser closes unexpectedly with an error like:
+
+```
+Error: read ECONNRESET
+at TCP.onStreamRead (node:internal/stream_base_commons:217:20) {
+  errno: -4077,
+  code: 'ECONNRESET',
+  syscall: 'read'
+}
+```
+
+…the connection between the browser and Cypress's local proxy is being
+**forcibly reset by software outside of Cypress**. This is an OS/network-layer
+reset, not a Cypress defect — Cypress cannot keep a connection alive that a
+third-party product tears down.
+
+Typical signals that point to this class of problem:
+
+- It "started out of nowhere" without any change to your tests.
+- It happens in Chrome / Edge / Firefox, but the **Electron** browser still works.
+- It reproduces on Windows but not on macOS, or locally but not in CI.
+
+Work through the causes below — they account for essentially all reports of this error.
+
+#### 1. Security / antivirus software intercepting loopback traffic
+
+Endpoint-protection products that scan local network traffic are the most
+common cause. They inspect the loopback (`127.0.0.1`) connections Cypress uses
+and reset them.
+
+**Sophos ("Network Threat Protection")**
+
+This was confirmed and fixed by Sophos (see
+[Sophos KB-000044041](https://support.sophos.com/support/s/article/KB-000044041?language=en_US)).
+
+- Update **Sophos Core Agent to 2022.1.1 or later**, and/or
+- Add `127.0.0.1` as an exclusion in the **Network Threat Protection** policy
+  (web/threat-protection exclusion for the loopback address).
+
+**Other antivirus / endpoint protection**
+
+If you use a different product, temporarily disable its **web/network
+threat-scanning** feature to confirm it's the cause, then add a loopback
+(`127.0.0.1`) exclusion rather than leaving protection off.
+
+#### 2. Packet-capture / debugging proxies running in the background
+
+Tools that hook into local HTTP traffic interfere with Node's connections and
+will trigger this error even when no antivirus is involved. Quit them (or their
+background services) before running Cypress:
+
+- HTTP Debugger
+- Fiddler
+- Charles Proxy
+- Wireshark (and similar packet sniffers)
+
+After closing the tool, confirm its background service is fully stopped, then
+re-run Cypress.
+
+#### 3. Make sure you're on a current Cypress version
+
+Some historical `ECONNRESET` reports were caused by a bug in Chrome 117's old
+headless mode, fixed in **Cypress 13.2.0+**. If you're on an older release,
+upgrade to the latest Cypress:
+
+```bash
+npm install --save-dev cypress@latest
+```
+
+Current Cypress (`13.2.0`+, including `15.x`) is unaffected by this cause.
+
+#### Quick fastest-path check
+
+To confirm the problem is external and unblock yourself immediately, run with
+the bundled Electron browser, which doesn't go through the same proxied path:
+
+```bash
+npx cypress run --browser electron
+```
+
+If Electron works but Chrome/Edge/Firefox fail with `ECONNRESET`, the cause is
+almost certainly local security or packet-capture software (sections 1–2 above).
+
+#### Still stuck?
+
+Capture full debug logs and include your OS, Cypress version, browser version,
+and any security/proxy software you run:
+
+```bash
+# macOS / Linux
+DEBUG=cypress:* npx cypress run --browser chrome
+
+# Windows (PowerShell)
+$env:DEBUG='cypress:*'; npx cypress run --browser chrome
+```
+
+See [Print DEBUG logs](#Print-DEBUG-logs) for details.
+
 ## Hacking on Cypress
 
 If you want to dive into Cypress and edit the code yourself, you can do that.
