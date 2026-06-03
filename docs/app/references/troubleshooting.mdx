@@ -540,7 +540,7 @@ Typical signals that point to this class of problem:
 - It happens in Chrome / Edge / Firefox, but the **Electron** browser still works.
 - It reproduces on Windows but not on macOS, or locally but not in CI.
 
-Work through the causes below — they account for essentially all reports of this error.
+Work through some potential causes below.
 
 #### 1. Security / antivirus software intercepting loopback traffic
 
@@ -548,18 +548,7 @@ Endpoint-protection products that scan local network traffic are the most
 common cause. They inspect the loopback (`127.0.0.1`) connections Cypress uses
 and reset them.
 
-**Sophos ("Network Threat Protection")**
-
-This was confirmed and fixed by Sophos (see
-[Sophos KB-000044041](https://support.sophos.com/support/s/article/KB-000044041?language=en_US)).
-
-- Update **Sophos Core Agent to 2022.1.1 or later**, and/or
-- Add `127.0.0.1` as an exclusion in the **Network Threat Protection** policy
-  (web/threat-protection exclusion for the loopback address).
-
-**Other antivirus / endpoint protection**
-
-If you use a different product, temporarily disable its **web/network
+If you use antivirus software, temporarily disable its **web/network
 threat-scanning** feature to confirm it's the cause, then add a loopback
 (`127.0.0.1`) exclusion rather than leaving protection off.
 
@@ -579,15 +568,12 @@ re-run Cypress.
 
 #### 3. Make sure you're on a current Cypress version
 
-Some historical `ECONNRESET` reports were caused by a bug in Chrome 117's old
-headless mode, fixed in **Cypress 13.2.0+**. If you're on an older release,
+Some historical `ECONNRESET` reports were caused bugs in older versions of Cypress. If you're on an older release,
 upgrade to the latest Cypress:
 
 ```bash
 npm install --save-dev cypress@latest
 ```
-
-Current Cypress (`13.2.0`+, including `15.x`) is unaffected by this cause.
 
 #### Quick fastest-path check
 
@@ -599,7 +585,7 @@ npx cypress run --browser electron
 ```
 
 If Electron works but Chrome/Edge/Firefox fail with `ECONNRESET`, the cause is
-almost certainly local security or packet-capture software (sections 1–2 above).
+almost certainly local security or packet-capture software (sections 1-2 above).
 
 #### Still stuck?
 
