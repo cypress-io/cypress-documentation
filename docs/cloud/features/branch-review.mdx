@@ -22,13 +22,13 @@ sidebar_position: 50
 
 ## Why Branch Review
 
-Every Pull Request changes your application — and your test suite along with it. The critical question before merging is: **did this change make things better or worse?** Answering it manually means hunting through two separate sets of runs, eyeballing pass/fail counts, and guessing whether a failure is new or pre-existing. It's slow, error-prone, and easy to skip under deadline pressure.
+Every Pull Request changes your application, and your test suite along with it. The critical question before merging is: **did this change make things better or worse?** Answering it manually means hunting through two separate sets of runs, eyeballing pass/fail counts, and guessing whether a failure is new or pre-existing. It's slow, error-prone, and easy to skip under deadline pressure.
 
 Branch Review answers _what changed_ and _why_ in a single view, so you can:
 
 - **Catch regressions before they merge.** Instantly see new failures introduced by a branch instead of discovering them after they reach `main`.
 - **Stop chasing pre-existing flake.** Distinguish problems your PR _introduced_ from noise that was already there, so reviewers spend time on what actually changed.
-- **Confirm coverage moved in the right direction.** See tests that were added or modified, and — if enabled — how [UI Coverage](https://on.cypress.io/ui-coverage-trial?utm_medium=cloud-br&utm_source=docs.cypress.io&utm_term=&utm_content=UI+Coverage) and [Cypress Accessibility](http://on.cypress.io/accessibility-trial?utm_medium=cloud-br&utm_source=docs.cypress.io&utm_term=&utm_content=Cypress+Accessibility) shifted between the two branches.
+- **Confirm coverage moved in the right direction.** See tests that were added or modified, and (if enabled) how [UI Coverage](https://on.cypress.io/ui-coverage-trial?utm_medium=cloud-br&utm_source=docs.cypress.io&utm_term=&utm_content=UI+Coverage) and [Cypress Accessibility](http://on.cypress.io/accessibility-trial?utm_medium=cloud-br&utm_source=docs.cypress.io&utm_term=&utm_content=Cypress+Accessibility) shifted between the two branches.
 - **Review with confidence.** Give reviewers and authors a shared, objective picture of a PR's impact, turning "looks fine to me" into a verifiable comparison.
 
 Cypress Branch Review surfaces all of these impacts a Pull Request might have on your test suite in one place.
@@ -54,9 +54,9 @@ Without Branch Review, pinpointing changes in your test suite's results requires
 A typical review of an incoming Pull Request looks like this:
 
 1. **Open Branch Review for the PR.** From the Cypress comment on the Pull Request, click **"View all changes introduced in this branch"** to land in Branch Review with the PR's latest run pre-selected as the Changed run.
-1. **Scan the status tabs.** Check the **Failures** and **Flaky** tabs for anything marked _new_ — these are the tests your branch impacted, as opposed to problems that already existed on the base branch.
+1. **Scan the status tabs.** Check the **Failures** and **Flaky** tabs for anything marked _new_. These are the tests your branch impacted, as opposed to problems that already existed on the base branch.
 1. **Drill into a new failure.** Open the test to see the base branch (passing) and feature branch (failing) results side by side, then use [Test Replay](/cloud/features/test-replay) and the code diff to understand exactly what your change broke.
-1. **Confirm coverage moved the right way.** Review the **Added** and **Modified** tabs, plus any UI Coverage or Cypress Accessibility changes, to verify the PR improved — rather than regressed — quality.
+1. **Confirm coverage moved the right way.** Review the **Added** and **Modified** tabs, plus any UI Coverage or Cypress Accessibility changes, to verify the PR improved, rather than regressed, quality.
 1. **Merge with confidence**, or push a fix and re-review once the new run records.
 
 ## Getting Started
@@ -193,7 +193,7 @@ The numbered callouts above correspond to:
 
 ### Review Test Comparison
 
-Navigating into the test detail view reveals a side-by-side comparison of the test results on both branches, along with artifacts so you can compare before vs. after your PR. Pairing the failure on your branch with the passing result on the base branch — and with [Test Replay](/cloud/features/test-replay), screenshots, and videos for each attempt — lets you pinpoint exactly what your change broke without re-running anything locally. This narrows the focus to changes introduced or resolved on either branch and helps surface the source of flake across different attempts. Review the test definition panel for diff snapshots to quickly determine changes in test code.
+Navigating into the test detail view reveals a side-by-side comparison of the test results on both branches, along with artifacts so you can compare before vs. after your PR. Pairing the failure on your branch with the passing result on the base branch, along with [Test Replay](/cloud/features/test-replay), screenshots, and videos for each attempt, lets you pinpoint exactly what your change broke without re-running anything locally. This narrows the focus to changes introduced or resolved on either branch and helps surface the source of flake across different attempts. Review the test definition panel for diff snapshots to quickly determine changes in test code.
 
 <DocsImage
   src="/img/cloud/features/branch-review/test-comparison.png"
