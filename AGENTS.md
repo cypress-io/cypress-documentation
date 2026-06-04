@@ -71,6 +71,12 @@ instead of bolded inline asides. Pick the type by intent:
   its alias `:::warning`, so prefer `:::caution` for consistency.
 - `:::danger` — reserved for the strongest warnings: data loss, security
   pitfalls, or actions that are hard to undo.
+- `:::success` — positive highlights such as a newly added capability or a
+  feature being free / available to everyone (see
+  `docs/cloud/features/test-replay.mdx`). Used sparingly. Note it is not a
+  built-in Docusaurus type, so it falls back to default styling unless a custom
+  admonition type is configured — reach for `:::tip` or `:::info` unless you
+  specifically want the "good news" framing.
 
 Keep them short and infrequent; a page wall-to-wall with call-outs dilutes them.
 
