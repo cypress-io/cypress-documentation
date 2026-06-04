@@ -39,7 +39,7 @@ See `CONTRIBUTING.md` for full detail. The essentials:
 
 - Prefer the provided MDX components over raw HTML:
   - `<DocsImage src="/img/..." alt="..." title="..." />` — always set `alt` and
-    `title` for accessibility.
+    `title` (see the alt-text guidance below).
   - `<DocsVideo src="..." title="..." />` — supports local files, YouTube, Vimeo.
   - `<Icon name="..." />` — the Font Awesome icon must be imported under the
     `fontawesome` key in `src/theme/MDXComponents.js`.
@@ -51,6 +51,43 @@ See `CONTRIBUTING.md` for full detail. The essentials:
   `community` (unverified) → `deprecated` (unmaintained / incompatible with v10+).
 - Header anchor casing is intentionally preserved via a `patch-package` patch to
   `@docusaurus/mdx-loader` (see `patches/`) — this is expected, not a bug.
+
+### Writing accessible image alt text
+
+`alt` text is read aloud by screen readers and shown when an image fails to
+load, so write it to convey the image's _purpose_, not just its existence.
+
+- **Describe the meaning, not the medium.** Convey what the image shows in
+  context. Avoid filler like "image of", "screenshot of", or "picture of" — the
+  screen reader already announces it as an image.
+- **Be specific and concise.** Aim for roughly one sentence (~125 characters).
+  If a screenshot needs a long explanation, put that detail in the surrounding
+  prose and keep `alt` short.
+- **Capture the salient detail.** For a UI screenshot, name what the reader is
+  meant to notice (e.g. the failing command, the highlighted button), not every
+  element on screen.
+- **Don't repeat nearby text.** If an adjacent caption or sentence already
+  states what the image shows, don't duplicate it word-for-word in `alt`.
+- **Include text shown in the image** when that text matters to understanding
+  it (e.g. an error message or a specific config value).
+- **Decorative images get empty alt** (`alt=""`) so screen readers skip them —
+  but in these docs images are almost always meaningful, so this is rare.
+- **`title` vs `alt`:** `alt` is the accessible description; `title` is a short
+  caption/tooltip. They can differ — don't just copy one into the other.
+
+Examples:
+
+```jsx
+<!-- weak -->
+<DocsImage src="/img/app/test-runner.png" alt="screenshot" title="Test Runner" />
+
+<!-- better -->
+<DocsImage
+  src="/img/app/test-runner.png"
+  alt="Cypress Test Runner showing a failed cy.get assertion highlighted in red in the command log"
+  title="Inspecting a failed command"
+/>
+```
 
 ## Linking
 
