@@ -43,7 +43,11 @@ This is the **Cypress Documentation** site, built with
   - `sidebar_label`: keep short; it is the sidebar text, not an SEO field.
 - **Sidebar ordering** is controlled by `sidebar_position` in a page's
   frontmatter and by `_category_.json` (`label` + `position`) in each folder, not
-  by hand-editing `sidebars.js`.
+  by hand-editing `sidebars.js`. When `sidebar_position` is absent, Docusaurus
+  falls back to **alphabetical** order. So check the sibling files first: if they
+  don't set a `sidebar_position`, leave it off your new page too and let it sort
+  alphabetically rather than introducing positions into a folder that doesn't use
+  them. Only add `sidebar_position` where the folder already relies on it.
 - **Moving, renaming, or deleting a page requires a redirect.** Add a `301` entry
   to `netlify.toml` (it already holds ~200) so existing bookmarks and inbound
   links keep working:

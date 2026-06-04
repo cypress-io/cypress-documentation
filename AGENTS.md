@@ -39,7 +39,9 @@ Each rule is a hard convention. See the linked section for the how and why.
   the page's `<title>` and meta description, so make them **SEO-friendly**:
   lead with the key term, keep `title` ~50–60 chars and `description` a
   ~150–160 char sentence that states what the page covers.
-- Order with `sidebar_position` and `_category_.json`, not `sidebars.js`.
+- Order with `sidebar_position` and `_category_.json`, not `sidebars.js`. Without
+  a `sidebar_position`, pages sort alphabetically; if sibling files don't define
+  one, match them and skip it rather than introducing positions.
 - Moving/renaming/deleting a page **requires** a `301` in `netlify.toml`, plus
   updating in-repo links to it.
 
