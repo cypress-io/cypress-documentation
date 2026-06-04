@@ -98,8 +98,10 @@ Rules for building the hash:
   `#File-Opener-Preference` (not `#file-opener-preference`).
 - Replace spaces with hyphens.
 - Version-number headings replace dots with dashes: `## 14.0.0` → `#14-0-0`.
-- You can pin an explicit, stable anchor with `{#CustomId}` at the end of a
-  heading (see the `docs/partials/_header-*.mdx` files, e.g. `{#Yields}`).
+- **Avoid custom heading anchors.** Prefer the auto-generated, case-preserved
+  anchors above. Only fall back to an explicit `{#CustomId}` at the end of a
+  heading in the rare cases where the regular casing-based reference does not
+  work (see the `docs/partials/_header-*.mdx` files, e.g. `{#Yields}`).
 - `npm run write-heading-ids` generates explicit IDs for headings if you want
   them materialized.
 
