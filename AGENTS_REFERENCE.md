@@ -59,6 +59,7 @@ This is the **Cypress Documentation** site, built with
     characters). Don't reuse the same description across pages.
   - `sidebar_label`: keep short; it is the sidebar text, not an SEO field.
   - When in doubt, open a sibling file and mirror its title/description shape.
+
 - **Sidebar ordering** is controlled by `sidebar_position` in a page's
   frontmatter and by `_category_.json` (`label` + `position`) in each folder, not
   by hand-editing `sidebars.js`. When `sidebar_position` is absent, Docusaurus
