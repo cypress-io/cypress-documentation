@@ -10,8 +10,9 @@ This is the **Cypress Documentation** site, built with
 
 - Docs content lives in `docs/**/*.mdx`.
 - Custom remark plugins live in `plugins/cypressRemarkPlugins`.
-- The LLM-docs pipeline (publishes stripped-down markdown/JSON under `/llm`)
-  lives in `plugins/llm`.
+- The LLM-docs pipeline lives in `plugins/llm`. At build time it reprocesses
+  content into stripped-down markdown and chunked JSON published under `/llm`,
+  with `/llms.txt` as the index (both are build output, not committed files).
 - Reusable React/MDX components live in `src/components` and are registered in
   `src/theme/MDXComponents.js`.
 
@@ -55,3 +56,10 @@ See `CONTRIBUTING.md` for full detail. The essentials:
 - Documentation for **unreleased** features → target the matching
   `X.Y.Z-release` branch (merged into `main` at release time).
 - Reference issues with `closes #NNN` in the PR description.
+
+## CI & deployment
+
+- **CircleCI** runs the build and checks on PRs and the `main` branch.
+- **Netlify** builds a deploy preview for every PR (and a branch preview at
+  `https://$BRANCH_NAME--cypress-docs.netlify.app`); merges to `main` publish to
+  [docs.cypress.io](https://docs.cypress.io).
