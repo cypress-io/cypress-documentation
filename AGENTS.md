@@ -104,21 +104,3 @@ Rules for building the hash:
   work (see the `docs/partials/_header-*.mdx` files, e.g. `{#Yields}`).
 - `npm run write-heading-ids` generates explicit IDs for headings if you want
   them materialized.
-
-## PR & branch conventions
-
-- Documentation changes **not** tied to a release → target `main`.
-- Documentation for **unreleased** features → target the matching
-  `X.Y.Z-release` branch (merged into `main` at release time).
-- Reference issues with `closes #NNN` in the PR description.
-- Enable "Allow edits from maintainers" on PRs so maintainers can make minor
-  adjustments.
-- Contributions require signing the Cypress CLA (handled automatically by the
-  cla-assistant bot on your first PR).
-
-## CI & deployment
-
-- **CircleCI** runs the build and checks on PRs and the `main` branch.
-- **Netlify** builds a deploy preview for every PR (and a branch preview at
-  `https://$BRANCH_NAME--cypress-docs.netlify.app`); merges to `main` publish to
-  [docs.cypress.io](https://docs.cypress.io).
