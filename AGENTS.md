@@ -245,3 +245,32 @@ Rules for building the hash:
   work (see the `docs/partials/_header-*.mdx` files, e.g. `{#Yields}`).
 - `npm run write-heading-ids` generates explicit IDs for headings if you want
   them materialized.
+
+### Linking to other Cypress domains (UTM params)
+
+Outbound links to **Cypress marketing / product properties** carry UTM tracking
+query params so the team can attribute traffic from the docs. Add them when you
+link to `www.cypress.io`, `on.cypress.io`, or `learn.cypress.io`.
+
+Required params (order them `utm_source` → `utm_medium`, then optional content):
+
+- `utm_source=docs.cypress.io` — always this exact value.
+- `utm_medium=<placement>` — a short kebab-case description of _where this
+  specific link lives_, not the destination. Reuse an existing value when one
+  fits; examples in the repo: `intro-cta`, `get-started-page`, `cloud-benefits`,
+  `premium-solution-tip`, `enterprise-reporting`, `app-docs-a11y-article`,
+  `footer`, `nav`, `announcement-bar`.
+- `utm_content=<Label>` — optional but common; mirrors the link/button text or
+  action, e.g. `Request+trial`, `Cypress+Cloud`, `Schedule a demo`
+  (URL-encode spaces as `+` or `%20`).
+- `utm_campaign` — only for a major launch/campaign (e.g. `cloud-mcp`); omit
+  otherwise. `utm_term` is effectively unused — leave it out.
+
+```markdown
+[Request a trial](https://www.cypress.io/accessibility?utm_medium=intro-cta&utm_source=docs.cypress.io&utm_content=Request+trial)
+```
+
+Do **not** add UTM params to internal doc-to-doc links, to `cloud.cypress.io`
+sign-up/login links, or to non-Cypress third-party links. For repeated CTAs,
+prefer the shared partials (e.g. `docs/partials/_ui-coverage-premium-note.mdx`)
+that already embed the correct params rather than re-writing the URL.
