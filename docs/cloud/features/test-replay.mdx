@@ -31,7 +31,10 @@ but these artifacts provide limited information. Developers often need more cont
 root cause of failures, requiring them to reproduce the issue locally, which may not always
 be possible due to environmental or network conditions.
 This knowledge gap between test failures and debugging capabilities leads to increased debugging
-time and potentially deploying unresolved bugs to production. Test Replay solves these problems by providing the following features.
+time and potentially deploying unresolved bugs to production.
+
+Test Replay closes that gap by capturing every detail of the run so you can debug it exactly
+as it happened in CI:
 
 <Icon name="star" color="#69D3A7" /> Time travel to the exact moment of test
 failure during runs that happened during Continuous Integration
@@ -42,27 +45,12 @@ logs, JavaScript errors, and element rendering
 <Icon name="star" color="#69D3A7" /> Debug failed and flaky test runs with more
 context and accuracy
 
-<Icon name="star" color="#69D3A7" /> Eliminate the need to reproduce test
-failures locally
-
-<Icon name="star" color="#69D3A7" /> Shareable and collaborative debugging
-experience
-
-Test Replay complements the existing visual artifacts provided by Cypress Cloud. It eliminates the need for
-local test replication by enabling developers to time-travel to the exact moment of test failure.
-Developers gain access to previously inaccessible details and feedback loops, enabling
-faster and more accurate debugging, and instilling confidence in handling test failures in CI.
-Replacing video recordings with Test Replay provides a superior debugging experience that is
-sharable and supports team collaboration with efficient workflows.
-
 <DocsVideo
   src="https://youtube.com/embed/hX9Br8QSYgc"
   title="Unlocking the Power of Test Replay!"
 />
 
-## Why Test Replay Matters
-
-Beyond the day-to-day debugging experience, Test Replay changes the economics of
+Beyond the debugging experience itself, Test Replay changes the economics of
 shipping software. The cost of a bug grows the further it travels down the release
 pipeline — an issue caught in CI is dramatically cheaper to resolve than the same issue
 discovered in staging, and orders of magnitude cheaper than one that reaches production
@@ -78,8 +66,7 @@ and frequently can't because the environment, timing, or network conditions diff
 That cycle can consume anywhere from minutes to hours per failure, and it repeats across
 every developer, every flaky test, and every run.
 
-Test Replay collapses that cycle. Because the entire run — the DOM, network requests,
-console logs, JavaScript errors, and element rendering — is captured and replayable exactly
+Test Replay collapses that cycle. Because the entire run is captured and replayable exactly
 as it happened in CI, the root cause is usually visible on first inspection. No local
 reproduction, no guessing, no "works on my machine."
 
