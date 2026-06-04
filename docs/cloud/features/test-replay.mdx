@@ -60,6 +60,74 @@ sharable and supports team collaboration with efficient workflows.
   title="Unlocking the Power of Test Replay!"
 />
 
+## Why Test Replay Matters
+
+Beyond the day-to-day debugging experience, Test Replay changes the economics of
+shipping software. The cost of a bug grows the further it travels down the release
+pipeline — an issue caught in CI is dramatically cheaper to resolve than the same issue
+discovered in staging, and orders of magnitude cheaper than one that reaches production
+and your users. Test Replay's value comes from closing the gap between a failure happening
+in CI and an engineer understanding it, so more bugs are caught and fixed _before_ release
+without slowing your team down.
+
+### Lower the cost of every failure
+
+When a CI test fails, the traditional response is expensive: an engineer context-switches
+away from their current work, pulls the branch, tries to reproduce the failure locally,
+and frequently can't because the environment, timing, or network conditions differ from CI.
+That cycle can consume anywhere from minutes to hours per failure, and it repeats across
+every developer, every flaky test, and every run.
+
+Test Replay collapses that cycle. Because the entire run — the DOM, network requests,
+console logs, JavaScript errors, and element rendering — is captured and replayable exactly
+as it happened in CI, the root cause is usually visible on first inspection. No local
+reproduction, no guessing, no "works on my machine."
+
+<Icon name="star" color="#69D3A7" /> **Less engineering time per failure** —
+diagnose directly from the captured run instead of reproducing it locally.
+
+<Icon name="star" color="#69D3A7" /> **Faster, less expensive CI** — Test Replay
+replaces video recording, removing the overhead of rendering, compressing, and storing
+video while delivering richer debugging data.
+
+<Icon name="star" color="#69D3A7" /> **Fewer reruns** — confidently distinguish real
+regressions from flake so you spend less compute re-running pipelines just to gather context.
+
+### Reduce risk before release
+
+The most costly bugs are the ones that ship. Test Replay strengthens your release gate by
+making CI failures actionable rather than ignorable. When developers can immediately
+understand why a test failed, they fix the underlying issue instead of retrying the run,
+disabling the test, or merging around a "known flaky" failure — the shortcuts that let real
+regressions slip into production.
+
+<Icon name="star" color="#69D3A7" /> **Catch issues earlier** — surface and resolve
+defects in CI, where they are cheapest to fix, instead of in staging or production.
+
+<Icon name="star" color="#69D3A7" /> **Trustworthy test suites** — accurate flake
+diagnosis keeps your suite reliable, so a red build is a signal your team acts on rather
+than ignores.
+
+<Icon name="star" color="#69D3A7" /> **Confident releases** — ship knowing failures
+were genuinely understood and resolved, not worked around.
+
+### Maintain quality without slowing down
+
+Quality and velocity are often treated as a trade-off — slow down to be safe, or move fast
+and accept regressions. Test Replay lets teams keep both. Faster debugging shortens the
+feedback loop so developers stay in flow, while the shared, link-driven debugging experience
+lets anyone on the team — or a reviewer, or support — open the exact failing run without
+setup. The result is higher quality sustained at the speed your team already ships at.
+
+<Icon name="star" color="#69D3A7" /> **Shorter feedback loops** — keep developers
+moving instead of stalled on hard-to-reproduce CI failures.
+
+<Icon name="star" color="#69D3A7" /> **Shared context** — every replay is a shareable
+link, turning debugging into a collaborative, asynchronous workflow across the team.
+
+<Icon name="star" color="#69D3A7" /> **No added cost or configuration** — Test Replay
+is included with all Cypress Cloud plans and requires no changes to your existing tests.
+
 ## Get Started
 
 :::success
