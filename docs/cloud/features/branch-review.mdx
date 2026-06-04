@@ -49,6 +49,16 @@ repo's **develop** or **main** branch. Here's how this scenario appears in Branc
 
 Without Branch Review, pinpointing changes in your test suite's results requires a manual side-by-side comparison between your newly-introduced branch's test runs and your base branch's test runs. This sub-optimal workflow often fails to answer the fundamental questions, _what changed_ and _why?_ You might be left wondering if the same tests are flaky between branches, when new failures were introduced, or if you added sufficient test coverage to your new branch.
 
+### Example: reviewing a Pull Request
+
+A typical review of an incoming Pull Request looks like this:
+
+1. **Open Branch Review for the PR.** From the Cypress comment on the Pull Request, click **"View all changes introduced in this branch"** to land in Branch Review with the PR's latest run pre-selected as the Changed run.
+1. **Scan the status tabs.** Check the **Failures** and **Flaky** tabs for anything marked _new_ — these are the tests your branch impacted, as opposed to problems that already existed on the base branch.
+1. **Drill into a new failure.** Open the test to see the base branch (passing) and feature branch (failing) results side by side, then use [Test Replay](/cloud/features/test-replay) and the code diff to understand exactly what your change broke.
+1. **Confirm coverage moved the right way.** Review the **Added** and **Modified** tabs, plus any UI Coverage or Cypress Accessibility changes, to verify the PR improved — rather than regressed — quality.
+1. **Merge with confidence**, or push a fix and re-review once the new run records.
+
 ## Getting Started
 
 The key to the Branch Review area is a comparison between a **Base** run and a **Changed** run.
@@ -63,7 +73,7 @@ There are a number of ways to get to Branch Review depending on where you are lo
 The project card shows three active branches for the project. You can click through to any of these to enter Branch Review focused on that branch.
 
 <DocsImage
-  src="/img/accessibility/core-concepts/branch-review-project-card.png"
+  src="/img/cloud/features/branch-review/branch-review-project-card.png"
   width="40%"
   alt="A card showing the name of an example project and related branches to choose."
 />
@@ -73,7 +83,7 @@ The project card shows three active branches for the project. You can click thro
 When a project is open, select "Branches" in the main navigation to see a full, filterable list of available branches and choose one to set as the source of the Changed run.
 
 <DocsImage
-  src="/img/accessibility/core-concepts/branch-review-side-nav.png"
+  src="/img/cloud/features/branch-review/branch-review-side-nav.png"
   width="40%"
   alt="The main Cypress Cloud navigation showing Latest Runs, Branches, and Analytics menu items. An arrow points to Branches."
 />
@@ -83,7 +93,7 @@ When a project is open, select "Branches" in the main navigation to see a full, 
 Click the branch name associated with the run. This will take you to Branch Review with that run pre-selected as the Changed run. This is a great way to investigate a specific run with an unexpected outcome in the tests.
 
 <DocsImage
-  src="/img/accessibility/core-concepts/branch-review-run-card.png"
+  src="/img/cloud/features/branch-review/branch-review-run-card.png"
   alt="Two cards showing various details about Cypress test runs, including pass/fail counts and metadata. An arrow points to the branch name."
 />
 
@@ -92,7 +102,7 @@ Click the branch name associated with the run. This will take you to Branch Revi
 Click the "View all changes introduced in this branch" link at the bottom of the Test Results table. You will enter branch review with the current PR's branch and latest run pre-selected as the Changed run.
 
 <DocsImage
-  src="/img/accessibility/core-concepts/branch-review-pull-request.png"
+  src="/img/cloud/features/branch-review/branch-review-pull-request.png"
   alt="A Pull Request comment from Cypress with an arrow pointing to the 'View all changes introduced in this branch' link. Test results and some accessibility score and violation information is also visible in the comment. The project has an 86.86% accessibility score, with  9 failed elements. Failed rule counts are 1 critical, 1 serious, 3 moderate, and 0 minor."
 />
 
@@ -154,39 +164,32 @@ When on the review screen, you will see the Failures, Flaky, Pending, Added, and
   alt="Branch Review Details"
 />
 
-:::note
+The numbered callouts above correspond to:
 
-**Review Test Status**
+| #   | Description                                                                                                                                                           |
+| --- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1   | Details of which branches and runs are compared. If a Pull Request is detected, Pull Request details will be here.                                                    |
+| 2   | Links to key differences in test information like new failures and flaky tests. Note that all numbers and scores refer to the Changed run.                            |
+| 3   | [UI Coverage](https://on.cypress.io/ui-coverage-trial?utm_medium=cloud-br&utm_source=docs.cypress.io&utm_term=&utm_content=UI+Coverage) changes.                      |
+| 4   | [Cypress Accessibility](http://on.cypress.io/accessibility-trial?utm_medium=cloud-br&utm_source=docs.cypress.io&utm_term=&utm_content=Cypress+Accessibility) changes. |
+| 5   | What has changed in the status you have opened, shown with the count indicators below.                                                                                |
+| 6   | The test state (failed, flaky, pending) at the spec level, described below.                                                                                           |
 
-1. Details of which branches and runs are compared. If a Pull Request is detected, Pull Request details will be here.
-1. Links to key differences in test information like new failures and flaky tests. Note that all numbers and scores refer to the Changed run.
-1. [UI Coverage](https://on.cypress.io/ui-coverage-trial?utm_medium=cloud-br&utm_source=docs.cypress.io&utm_term=&utm_content=UI+Coverage) changes.
-1. [Cypress Accessibility](http://on.cypress.io/accessibility-trial?utm_medium=cloud-br&utm_source=docs.cypress.io&utm_term=&utm_content=Cypress+Accessibility) changes.
-1. See what has changed in the specific status you have opened, for example:
-   - <img
-       className="br-ui inline-block"
-       src="/img/cloud/features/branch-review/test-status-up.png"
-       alt="up arrow and number 3 marked in red colored text"
-     />
-     total number introduced in your branch
-   - <img
-       className="br-ui inline-block"
-       src="/img/cloud/features/branch-review/test-status-down.png"
-       alt="down arrow and number 4 marked in green colored text"
-     />
-     total number decreased or resolved in your branch
-   - <img
-       className="br-ui inline-block"
-       src="/img/cloud/features/branch-review/test-status-total.png"
-       alt="number 4 marked in gray colored text"
-     />
-     total count, for example, _3 new and 1 existing_
-1. The test state (failed, flaky, pending) is also indicated at the spec level
-   - _new_ = the state was <u>not</u> previously captured, but now <u>is</u> captured<br />(newly pending tests can imply an `it.skip()` was not removed)
-   - _existing_ = the state <u>was</u> previously captured and now <u>is still</u> captured
-   - _resolved_ = the state <u>was</u> previously captured but now is <u>no longer</u> captured
+**Count indicators** show how a status shifted in your branch:
 
-:::
+| Indicator                                                                                                                                  | Meaning                                           |
+| ------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------- |
+| <img className="br-ui inline-block" src="/img/cloud/features/branch-review/test-status-up.png" alt="up arrow and number 3 in red" />       | Total number introduced in your branch            |
+| <img className="br-ui inline-block" src="/img/cloud/features/branch-review/test-status-down.png" alt="down arrow and number 4 in green" /> | Total number decreased or resolved in your branch |
+| <img className="br-ui inline-block" src="/img/cloud/features/branch-review/test-status-total.png" alt="number 4 in gray" />                | Total count, for example, _3 new and 1 existing_  |
+
+**Test states** indicate how a spec's result compares to the base run:
+
+| State      | Meaning                                                                                                                         |
+| ---------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| _new_      | The state was <u>not</u> previously captured, but now <u>is</u> (newly pending tests can imply an `it.skip()` was not removed). |
+| _existing_ | The state <u>was</u> previously captured and now <u>is still</u> captured.                                                      |
+| _resolved_ | The state <u>was</u> previously captured but now is <u>no longer</u> captured.                                                  |
 
 ### Review Test Comparison
 
@@ -197,21 +200,15 @@ Navigating into the test detail view reveals a side-by-side comparison of the te
   alt="Test Comparison View"
 />
 
-:::note
+The numbered callouts above correspond to:
 
-**Review Test Comparison**
-
-1. Base branch results
-
-2. Feature branch results
-
-3. Test Replay and artifacts
-
-4. Test attempts (descending order)
-
-5. Code change diffs
-
-:::
+| #   | Description                      |
+| --- | -------------------------------- |
+| 1   | Base branch results              |
+| 2   | Feature branch results           |
+| 3   | Test Replay and artifacts        |
+| 4   | Test attempts (descending order) |
+| 5   | Code change diffs                |
 
 ## Troubleshooting
 
