@@ -56,6 +56,24 @@ See `CONTRIBUTING.md` for full detail. The essentials:
   reaching for a dash. Keep an em dash only when it's clearly the best fit, and
   rarely more than one per paragraph.
 
+### Admonition blocks (`:::info`, `:::caution`, …)
+
+Call-outs use Docusaurus admonition directives: `:::type` to open, `:::` to
+close, with an optional custom title (`:::note Requirements`). Reach for these
+instead of bolded inline asides. Pick the type by intent:
+
+- `:::info` — neutral, helpful context or background. The default workhorse and
+  by far the most common in this repo.
+- `:::tip` — an optional best practice, shortcut, or recommendation.
+- `:::note` — a side remark or clarification the reader can note but not act on.
+- `:::caution` — something that can bite the reader (gotchas, deprecations,
+  easy-to-miss requirements). This repo standardizes on `:::caution` rather than
+  its alias `:::warning`, so prefer `:::caution` for consistency.
+- `:::danger` — reserved for the strongest warnings: data loss, security
+  pitfalls, or actions that are hard to undo.
+
+Keep them short and infrequent; a page wall-to-wall with call-outs dilutes them.
+
 ### Tabs
 
 `<Tabs>` and `<TabItem>` are globally available via `src/theme/MDXComponents.js`
