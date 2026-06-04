@@ -77,7 +77,16 @@ See `CONTRIBUTING.md` for full detail. The essentials:
   - `<Icon name="..." />` — the Font Awesome icon must be imported under the
     `fontawesome` key in `src/theme/MDXComponents.js`.
 - Images go in `static/img/...` and are referenced via `/img/...`.
-- Reuse repeated content via Markdown partials (imported `.mdx`).
+- Reuse repeated content via partials in `docs/partials/`, named with a leading
+  underscore (`_my-partial.mdx`) so they are not built as standalone pages. Most
+  are registered in `src/theme/MDXComponents.js` and used as components (e.g.
+  `<CloudFreePlan />`) with no per-file import.
+- **Start every product doc page with `<ProductHeading />`** (used on 300+
+  pages), e.g. `<ProductHeading product="app" />`. Valid `product` values are
+  `app`, `cloud`, `accessibility`, `ui-coverage`; `cloud` also takes an optional
+  `plan` (`team` / `business` / `enterprise`). Use the canonical product names in
+  prose: **Cypress App**, **Cypress Cloud**, **Cypress Accessibility**, and
+  **UI Coverage** (UI Coverage has no "Cypress" prefix).
 - To add a plugin to the plugins list, add an entry to `src/data/plugins.json`
   (name, description, repo link, keywords). Entries are grouped in this order:
   `official` (Cypress-owned) → `verified` (community, verified by Cypress) →
@@ -88,6 +97,17 @@ See `CONTRIBUTING.md` for full detail. The essentials:
   a period, comma, parentheses, or a colon, and rework the sentence instead of
   reaching for a dash. Keep an em dash only when it's clearly the best fit, and
   rarely more than one per paragraph.
+
+### Code blocks
+
+- Always tag a fenced block with its language (`ts`, `js`, `jsx`, `shell`,
+  `yaml`, etc.) so it gets syntax highlighting.
+- Add a `title="..."` to show a filename header when the snippet represents a
+  file, e.g. ` ```ts title="cypress/support/commands.ts" `. Spec examples
+  commonly use `title="test.cy.ts"` / `title="spec.cy.js"`.
+- For Cypress config snippets use the `:::cypress-config-example` directive
+  (below), and for TypeScript examples prefer the `copyTsToJs` plugin rather than
+  maintaining a separate JS block (see the Tabs section).
 
 ### Admonition blocks (`:::info`, `:::caution`, …)
 
@@ -217,6 +237,26 @@ Notes:
 - Write the inner block as `ts`; the JS equivalent is produced automatically via
   the `copyTsToJs` plugin, so never maintain a JS copy by hand.
 
+### E2E vs component examples (`:::visit-mount-example`)
+
+When a snippet is identical for end-to-end and component testing except for how
+the app is loaded, use the `:::visit-mount-example` directive instead of writing
+two near-duplicate blocks. Write one code block and mark the differing line with
+a `-{ visit code :: mount code }-` token; the plugin emits both variants in
+`E2EOrCtTabs` (End-to-End tab first):
+
+````markdown
+:::visit-mount-example
+
+```js
+cy.clock(now)
+-{cy.visit('/index.html')::cy.mount(<DatePicker id="date" />)}-
+cy.get('#date').should('have.value', '04/14/2021')
+```
+
+:::
+````
+
 ### Writing accessible image alt text
 
 `alt` text is read aloud by screen readers and shown when an image fails to
@@ -335,3 +375,19 @@ Do **not** add UTM params to internal doc-to-doc links, to `cloud.cypress.io`
 sign-up/login links, or to non-Cypress third-party links. For repeated CTAs,
 prefer the shared partials (e.g. `docs/partials/_ui-coverage-premium-note.mdx`)
 that already embed the correct params rather than re-writing the URL.
+
+## Testing
+
+- **End-to-end tests** (`cypress/e2e/`) crawl the built site: `basic_tests.cy.ts`
+  checks routing and the main nav, and the `all_*_pages.cy.ts` specs visit every
+  page in each section to confirm it loads. So most content changes are exercised
+  simply by the page rendering without errors.
+- To run them locally, start the site in one terminal (`npm run start`, served at
+  `http://localhost:3000`, the configured `baseUrl`) and in another run
+  `npm test` (headless) or `npx cypress open` (interactive).
+- **Plugin unit tests** (Vitest) cover the remark plugins in `plugins/`. Run them
+  with `npm run test:plugins`, and run them whenever you change anything under
+  `plugins/`.
+- The surest pre-push check for a content change is still `npm run build`, since
+  the strict `onBrokenLinks` / `onBrokenMarkdownLinks` settings turn bad links
+  and anchors into build failures.
