@@ -31,46 +31,33 @@ Branch Review answers _what changed_ and _why_ in a single view, so you can:
 - **Confirm coverage moved in the right direction.** See tests that were added or modified, and (if enabled) how [UI Coverage](/ui-coverage/get-started/introduction) and [Cypress Accessibility](/accessibility/get-started/introduction) shifted between the two branches.
 - **Review with confidence.** Give reviewers and authors a shared, objective picture of a PR's impact, turning "looks fine to me" into a verifiable comparison.
 
-Cypress Branch Review surfaces all of these impacts a Pull Request might have on your test suite in one place.
-Compare which tests are failing, flaky, pending, added, or modified between the source and base branches. If enabled on your account,
-UI Coverage or Cypress Accessibility changes between runs will also appear here.
-
-Branch Review is valuable even if you do not have a Pull Request workflow, because it allows you to compare any two runs of your choice.
-These might represent different builds of the application, changes in test code, or results from nightly runs. This page will use
-the example of a Pull Request made using the GitHub integration, but this integration is not required in order to use Branch Review.
-
-A common scenario throughout the software development lifecycle (SDLC) is an engineer's **feature** branch that will be merged into the
-repo's **develop** or **main** branch. Here's how this scenario appears in Branch Review:
+Branch Review is valuable even if you don't have a Pull Request workflow, because it allows you to compare **any** two runs of your choice.
+These might represent different builds of the application, changes in test code, or results from nightly runs.
 
 <DocsImage
   src="/img/cloud/features/branch-review/branch-review.png"
   alt="Cypress Branch Review"
 />
 
-Without Branch Review, pinpointing changes in your test suite's results requires a manual side-by-side comparison between your newly-introduced branch's test runs and your base branch's test runs. This sub-optimal workflow often fails to answer the fundamental questions, _what changed_ and _why?_ You might be left wondering if the same tests are flaky between branches, when new failures were introduced, or if you added sufficient test coverage to your new branch.
-
 ### Example: reviewing a Pull Request
 
 A typical review of an incoming Pull Request looks like this:
 
-1. **Open Branch Review for the PR.** From the Cypress comment on the Pull Request, click **"View all changes introduced in this branch"** to land in Branch Review with the PR's latest run pre-selected as the Changed run.
+1. **Open Branch Review for the PR.** This path requires VCS integration with [pull request comments](/cloud/integrations/github#pull-request-comments) enabled. From the Cypress comment on the Pull Request, click **"View all changes introduced in this branch"** to land in Branch Review with the PR's latest run pre-selected as the Changed run.
 1. **Scan the status tabs.** Check the **Failures** and **Flaky** tabs for anything marked _new_. These are the tests your branch impacted, as opposed to problems that already existed on the base branch.
 1. **Drill into a new failure.** Open the test to see the base branch (passing) and feature branch (failing) results side by side, then use [Test Replay](/cloud/features/test-replay) and the code diff to understand exactly what your change broke.
 1. **Confirm coverage moved the right way.** Review the **Added** and **Modified** tabs, plus any UI Coverage or Cypress Accessibility changes, to verify the PR improved, rather than regressed, quality.
 1. **Merge with confidence**, or push a fix and re-review once the new run records.
 
-## Getting Started
+## Get Started
 
-The key to the Branch Review area is a comparison between a **Base** run and a **Changed** run.
-The Changed run is the main subject of the comparison, often associated with an incoming Pull Request. The Base run is the starting point for comparison.
+The key to the Branch Review area is a comparison between a **base** run and a **changed** run. The changed run is the main subject of the comparison, often associated with an incoming Pull Request. The base run is the starting point for comparison.
 
-### Accessing Branch Review
-
-There are a number of ways to get to Branch Review depending on where you are looking at your Cypress results. In all cases, once you've picked a Changed run, you can adjust the automatically-selected Base run to any branch or run in the project to dial in the comparison you are most interested in.
+There are a number of ways to get to Branch Review depending on where you are looking at your Cypress results. In all cases, once you've picked a Changed run, you can adjust the automatically-selected base run to any branch or run in the project to dial in the comparison you are most interested in.
 
 ### From the project list
 
-The project card shows three active branches for the project. You can click through to any of these to enter Branch Review focused on that branch.
+The project card shows three active branches for the project. You can click on any of these to enter Branch Review focused on that branch.
 
 <DocsImage
   src="/img/cloud/features/branch-review/branch-review-project-card.png"
@@ -99,7 +86,7 @@ Click the branch name associated with the run. This will take you to Branch Revi
 
 ### From a Pull Request
 
-Click the "View all changes introduced in this branch" link at the bottom of the Test Results table. You will enter branch review with the current PR's branch and latest run pre-selected as the Changed run.
+Click the **"View all changes introduced in this branch"** link at the bottom of the Test Results table. You will enter branch review with the current PR's branch and latest run pre-selected as the Changed run.
 
 <DocsImage
   src="/img/cloud/features/branch-review/branch-review-pull-request.png"
@@ -110,7 +97,7 @@ Click the "View all changes introduced in this branch" link at the bottom of the
 
 Pull Requests in Branch Review work by leveraging the Cypress Cloud GitHub integration to query the GitHub API for branches with Pull Requests. Your project will first need to be connected to a GitHub repository. If you haven't already, follow the steps in [Install the Cypress GitHub app](/cloud/integrations/github#Install-the-Cypress-GitHub-app) to connect your project to GitHub.
 
-When Pull Requests are connected, you will be able to select runs by the associated PR:
+When Pull Requests are connected, you'll be able to select runs by the associated PR:
 
 <DocsImage
   src="/img/cloud/features/branch-review/pr-in-branch-review.png"
@@ -136,9 +123,7 @@ If the selected branch has a PR associated and a PR # passed via CI, there is an
 
 ## Branch Details
 
-### Review Header
-
-The header includes the Git commit message, PR selector, PR status, and base and feature branch labels with the Cypress Cloud test run ID number (#).
+The selected run includes the Git commit message, PR selector, PR status, and base and feature branch labels with the Cypress Cloud test run number.
 
 If there are multiple Pull Requests open for the same branch, you can select the Pull Request you want to review from the dropdown to the right of the commit message.
 
