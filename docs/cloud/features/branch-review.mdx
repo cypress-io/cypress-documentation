@@ -43,7 +43,7 @@ These might represent different builds of the application, changes in test code,
 
 A typical review of an incoming Pull Request looks like this:
 
-1. **Open Branch Review for the PR.** This path requires VCS integration with [pull request comments](/cloud/integrations/github#pull-request-comments) enabled. From the Cypress comment on the Pull Request, click **"View all changes introduced in this branch"** to land in Branch Review with the PR's latest run pre-selected as the Changed run.
+1. **Open Branch Review for the PR.** This path requires VCS integration with [pull request comments](/cloud/integrations/github#Pull-request-comments) enabled. From the Cypress comment on the Pull Request, click **"View all changes introduced in this branch"** to land in Branch Review with the PR's latest run pre-selected as the Changed run.
 1. **Scan the status tabs.** Check the **Failures** and **Flaky** tabs for anything marked _new_. These are the tests your branch impacted, as opposed to problems that already existed on the base branch.
 1. **Drill into a new failure.** Open the test to see the base branch (passing) and feature branch (failing) results side by side, then use [Test Replay](/cloud/features/test-replay) and the code diff to understand exactly what your change broke.
 1. **Confirm coverage moved the right way.** Review the **Added** and **Modified** tabs, plus any UI Coverage or Cypress Accessibility changes, to verify the PR improved, rather than regressed, quality.
