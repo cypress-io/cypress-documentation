@@ -12,14 +12,28 @@ sidebar_position: 30
 
 ##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
 
+- How recorded runs help your team catch failures and flake before they reach production
 - How to view and analyze recorded test runs in Cypress Cloud
+- How tracking runs over time surfaces trends that save CI cost and reduce release risk
 - How to cancel, archive, and restore archived runs
 - How to view and analyze recorded test runs in the Cypress App
 
 :::
 
-Recorded runs capture the results from your test runs. Each specific area of
-this highly informative view is described below.
+Recorded runs are the historical record of your test suite's health. Every time
+you run your tests in CI with `--record`, Cypress Cloud captures the complete
+results — every pass, failure, flaky attempt, screenshot, video, and CI log — and
+keeps them in one place so your team never has to dig through CI output or
+re-run tests to understand what happened.
+
+Individually, each run tells you whether your application is ready to ship.
+Together, recorded runs build a picture of your suite's health **over time**:
+which tests are getting slower, which ones fail intermittently, and where your
+CI spend is going. That history is what lets your team catch regressions and
+flake **before** a release rather than after — reducing the risk of shipping a
+bug and the cost of chasing it down later.
+
+Each specific area of this highly informative view is described below.
 
 :::tip
 
@@ -33,6 +47,12 @@ record, [read here](/cloud/get-started/setup#Setup).
 The Project entry point provides a high-level overview of your most recent runs.
 This view presents a paginated summary of runs which are filterable and can be
 manually refreshed in the top right corner.
+
+At a glance, your team can see whether the latest changes are safe to release and
+spot a developing problem — a sudden spike in failures or a run that's taking far
+longer than usual — before it blocks a deploy. Because the history is always
+here, anyone on the team can answer "is `main` healthy right now?" without
+re-running anything.
 
 ## Run Details
 
@@ -89,10 +109,18 @@ color of the bars, which may be filtered by status with the dropdown to the top
 right of that graph. Hovering over a run displays a popover with more
 information.
 
+Tracking duration over time makes runaway CI cost visible before it shows up on
+your bill. A steady upward trend tells you the suite is getting more expensive to
+run on every commit, and a sudden jump points you straight at the change that
+caused it — so you can decide whether to split a spec, trim a test, or apply
+[Smart Orchestration](/cloud/features/smart-orchestration/overview) rather than
+simply paying for more CI minutes.
+
 At the bottom of the run duration graph you may see one or more blue boxes.
 These represent points in time when configuration settings were changed,
 possibly impacting test performance. Hovering over them reveals the specific
-changes made.
+changes made, so you can correlate a shift in performance with the exact
+configuration change behind it.
 
 <DocsImage src="/img/cloud/runs/run-duration.png" alt="Run duration panel" />
 
@@ -116,7 +144,10 @@ simulated tests and the actual tests as they happened.
 ### Tests for Review
 
 The Tests for Review panel consolidates disparate test results into a single
-view, focusing attention on the specs producing the most relevant results.
+view, focusing attention on the specs producing the most relevant results. Rather
+than scanning an entire run, your team goes straight to the handful of tests that
+actually need a human — the fastest path to deciding whether a run is safe to
+release.
 
 It orders results by:
 
@@ -239,7 +270,10 @@ of a test. Drill into the attempt artifacts to see if the problem was consistent
 ### Previous runs
 
 A graphical history of previous runs of this test, indicating failures and
-successes on the current branch.
+successes on the current branch. This timeline tells you whether you're looking
+at a brand-new regression or a long-standing flaky test, and exactly when its
+behavior changed — context that turns "is this safe to merge?" into a quick,
+evidence-based decision instead of a guess.
 
 <DocsImage
   src="/img/cloud/runs/sidebar-previous-runs.png"
@@ -273,7 +307,9 @@ have set. By default it is the `spec` reporter.
 Shows git commits that included changes to the current test, providing insights
 into the development of this test, helping to diagnose test failures, and track
 down regressions. Expanding a specific commit shows the diff at that point in
-time.
+time. Pairing a failure with the exact commit that introduced it collapses the
+time spent hunting for a root cause — your team fixes the right thing the first
+time instead of bisecting through history.
 
 Note that the diff is based on the state of the code **after** transpilation,
 since we are not currently collecting source maps.
@@ -401,7 +437,10 @@ in Cypress Cloud.
 The [Debug](/app/core-concepts/open-mode#Debug) page allows you to easily
 debug failed CI test runs from within the Cypress app. From this page, you can
 review, rerun, and debug failed CI test runs that are recorded to Cypress
-Cloud - all without leaving the Cypress app.
+Cloud - all without leaving the Cypress app. Closing the loop between a CI
+failure and a local fix in one place is how teams keep a red build from stalling
+a release — the developer who can fix it sees it, reproduces it, and resolves it
+without waiting on a CI round-trip.
 
 <DocsImage src="/img/app/core-concepts/open-mode/debug-page.png" alt="Debug" />
 
