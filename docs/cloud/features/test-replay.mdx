@@ -52,7 +52,7 @@ context and accuracy
 
 Beyond the debugging experience itself, Test Replay changes the economics of
 shipping software. The cost of a bug grows the further it travels down the release
-pipeline — an issue caught in CI is dramatically cheaper to resolve than the same issue
+pipeline. An issue caught in CI is dramatically cheaper to resolve than the same issue
 discovered in staging, and orders of magnitude cheaper than one that reaches production
 and your users. Test Replay's value comes from closing the gap between a failure happening
 in CI and an engineer understanding it, so more bugs are caught and fixed _before_ release
@@ -70,14 +70,14 @@ Test Replay collapses that cycle. Because the entire run is captured and replaya
 as it happened in CI, the root cause is usually visible on first inspection. No local
 reproduction, no guessing, no "works on my machine."
 
-<Icon name="star" color="#69D3A7" /> **Less engineering time per failure** —
+<Icon name="star" color="#69D3A7" /> **Less engineering time per failure**:
 diagnose directly from the captured run instead of reproducing it locally.
 
-<Icon name="star" color="#69D3A7" /> **Faster, less expensive CI** — Test Replay
+<Icon name="star" color="#69D3A7" /> **Faster, less expensive CI**: Test Replay
 replaces video recording, removing the overhead of rendering, compressing, and storing
 video while delivering richer debugging data.
 
-<Icon name="star" color="#69D3A7" /> **Fewer reruns** — confidently distinguish real
+<Icon name="star" color="#69D3A7" /> **Fewer reruns**: confidently distinguish real
 regressions from flake so you spend less compute re-running pipelines just to gather context.
 
 ### Reduce risk before release
@@ -85,34 +85,34 @@ regressions from flake so you spend less compute re-running pipelines just to ga
 The most costly bugs are the ones that ship. Test Replay strengthens your release gate by
 making CI failures actionable rather than ignorable. When developers can immediately
 understand why a test failed, they fix the underlying issue instead of retrying the run,
-disabling the test, or merging around a "known flaky" failure — the shortcuts that let real
-regressions slip into production.
+disabling the test, or merging around a "known flaky" failure. These shortcuts are what let
+real regressions slip into production.
 
-<Icon name="star" color="#69D3A7" /> **Catch issues earlier** — surface and resolve
+<Icon name="star" color="#69D3A7" /> **Catch issues earlier**: surface and resolve
 defects in CI, where they are cheapest to fix, instead of in staging or production.
 
-<Icon name="star" color="#69D3A7" /> **Trustworthy test suites** — accurate flake
+<Icon name="star" color="#69D3A7" /> **Trustworthy test suites**: accurate flake
 diagnosis keeps your suite reliable, so a red build is a signal your team acts on rather
 than ignores.
 
-<Icon name="star" color="#69D3A7" /> **Confident releases** — ship knowing failures
+<Icon name="star" color="#69D3A7" /> **Confident releases**: ship knowing failures
 were genuinely understood and resolved, not worked around.
 
 ### Maintain quality without slowing down
 
-Quality and velocity are often treated as a trade-off — slow down to be safe, or move fast
+Quality and velocity are often treated as a trade-off: slow down to be safe, or move fast
 and accept regressions. Test Replay lets teams keep both. Faster debugging shortens the
 feedback loop so developers stay in flow, while the shared, link-driven debugging experience
-lets anyone on the team — or a reviewer, or support — open the exact failing run without
+lets anyone on the team (or a reviewer, or support) open the exact failing run without
 setup. The result is higher quality sustained at the speed your team already ships at.
 
-<Icon name="star" color="#69D3A7" /> **Shorter feedback loops** — keep developers
+<Icon name="star" color="#69D3A7" /> **Shorter feedback loops**: keep developers
 moving instead of stalled on hard-to-reproduce CI failures.
 
-<Icon name="star" color="#69D3A7" /> **Shared context** — every replay is a shareable
+<Icon name="star" color="#69D3A7" /> **Shared context**: every replay is a shareable
 link, turning debugging into a collaborative, asynchronous workflow across the team.
 
-<Icon name="star" color="#69D3A7" /> **No added cost or configuration** — Test Replay
+<Icon name="star" color="#69D3A7" /> **No added cost or configuration**: Test Replay
 is included with all Cypress Cloud plans and requires no changes to your existing tests.
 
 ## Test Replay vs. Video Recording
@@ -129,7 +129,7 @@ recreation of the run. The table below summarizes the difference.
 | View console logs & JavaScript errors       | <Icon name="times" color="#E45770" />                       | <Icon name="check" color="#69D3A7" />                                       |
 | Step through the command log & time travel  | <Icon name="times" color="#E45770" />                       | <Icon name="check" color="#69D3A7" />                                       |
 | Reproduce locally to debug                  | Often required                   | Not required                                         |
-| CI performance overhead                     | Recording, compressing, storing video | Lighter — no video encoding                     |
+| CI performance overhead                     | Recording, compressing, storing video | Lighter, no video encoding                     |
 | Shareable with the team                     | <Icon name="check" color="#69D3A7" /> (file)                     | <Icon name="check" color="#69D3A7" /> (link to the live replay)                |
 
 Because Test Replay captures richer data with less overhead, we recommend
@@ -152,8 +152,8 @@ at no additional cost, subject to usage limits.
 Test Replay works out of the box when the following are true. Most of these are the
 defaults, so no extra setup is typically required:
 
-- **Cypress `v13` or later** — runs recorded with earlier versions are not supported.
-- **A Chromium-based browser** — Chrome, Edge, or Electron. Firefox
+- **Cypress `v13` or later**: runs recorded with earlier versions are not supported.
+- **A Chromium-based browser**: Chrome, Edge, or Electron. Firefox
   ([see issue](https://github.com/cypress-io/cypress/issues/28894)) and WebKit/Safari
   ([see issue](https://github.com/cypress-io/cypress/issues/28895)) are not currently supported for capture.
 - **Runs [recorded to Cypress Cloud](/cloud/get-started/setup)** with a valid project and record key.
@@ -436,11 +436,11 @@ The exact error message can be seen by viewing the spec's output.
 ## See also
 
 - [Test Replay FAQ](/cloud/faq#Test-Replay)
-- [Recorded Runs](/cloud/features/recorded-runs) — where you access Test Replay alongside other run artifacts
-- [Flaky Test Management](/cloud/features/flaky-test-management) — detect flake, then debug it with Test Replay
-- [Debugging Guide](/app/guides/debugging) — debugging strategies for Cypress tests
-- [Continuous Integration Overview](/app/continuous-integration/overview) — recording runs in CI
-- [Data Storage and Controls](/cloud/account-management/data-storage-and-masking) — control and mask data sent to Cypress Cloud
+- [Recorded Runs](/cloud/features/recorded-runs): where you access Test Replay alongside other run artifacts
+- [Flaky Test Management](/cloud/features/flaky-test-management): detect flake, then debug it with Test Replay
+- [Debugging Guide](/app/guides/debugging): debugging strategies for Cypress tests
+- [Continuous Integration Overview](/app/continuous-integration/overview): recording runs in CI
+- [Data Storage and Controls](/cloud/account-management/data-storage-and-masking): control and mask data sent to Cypress Cloud
 - [Cypress v13 changelog](/app/references/changelog#13-0-0)
 - [Cypress Default Video Configuration](/app/references/configuration#Videos)
 - [Cypress Video Artifacts](/app/guides/screenshots-and-videos#Videos)
