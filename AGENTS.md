@@ -51,6 +51,10 @@ See `CONTRIBUTING.md` for full detail. The essentials:
   `community` (unverified) → `deprecated` (unmaintained / incompatible with v10+).
 - Header anchor casing is intentionally preserved via a `patch-package` patch to
   `@docusaurus/mdx-loader` (see `patches/`) — this is expected, not a bug.
+- **Go easy on em dashes (`—`).** They read as AI-generated when overused. Prefer
+  a period, comma, parentheses, or a colon, and rework the sentence instead of
+  reaching for a dash. Keep an em dash only when it's clearly the best fit, and
+  rarely more than one per paragraph.
 
 ### Tabs
 
