@@ -128,6 +128,27 @@ link, turning debugging into a collaborative, asynchronous workflow across the t
 <Icon name="star" color="#69D3A7" /> **No added cost or configuration** — Test Replay
 is included with all Cypress Cloud plans and requires no changes to your existing tests.
 
+## Test Replay vs. Video Recording
+
+Historically, debugging `cypress run` failures meant scrubbing through a recorded video
+of the run. Test Replay replaces that workflow with an interactive, fully-inspectable
+recreation of the run. The table below summarizes the difference.
+
+| Capability                                  | Video Recording                  | Test Replay                                          |
+| ------------------------------------------- | -------------------------------- | ---------------------------------------------------- |
+| Format                                      | Flat video (pixels)              | Interactive replay of the real DOM                   |
+| Inspect the DOM & CSS                       | <Icon name="times" color="#E45770" />                       | <Icon name="check" color="#69D3A7" />                                       |
+| Inspect network requests                    | <Icon name="times" color="#E45770" />                       | <Icon name="check" color="#69D3A7" />                                       |
+| View console logs & JavaScript errors       | <Icon name="times" color="#E45770" />                       | <Icon name="check" color="#69D3A7" />                                       |
+| Step through the command log & time travel  | <Icon name="times" color="#E45770" />                       | <Icon name="check" color="#69D3A7" />                                       |
+| Reproduce locally to debug                  | Often required                   | Not required                                         |
+| CI performance overhead                     | Recording, compressing, storing video | Lighter — no video encoding                     |
+| Shareable with the team                     | <Icon name="check" color="#69D3A7" /> (file)                     | <Icon name="check" color="#69D3A7" /> (link to the live replay)                |
+
+Because Test Replay captures richer data with less overhead, we recommend
+[disabling video recording](#Recording) when Test Replay is enabled. See
+[Performance](#Performance) below for details.
+
 ## Get Started
 
 :::success
@@ -136,6 +157,25 @@ Test Replay is available to **all** Cypress Cloud plans
 at no additional cost, subject to usage limits.
 
 <CloudFreePlan />
+
+:::
+
+### Requirements
+
+Test Replay works out of the box when the following are true. Most of these are the
+defaults, so no extra setup is typically required:
+
+- **Cypress `v13` or later** — runs recorded with earlier versions are not supported.
+- **A Chromium-based browser** — Chrome, Edge, or Electron. Firefox
+  ([see issue](https://github.com/cypress-io/cypress/issues/28894)) and WebKit/Safari
+  ([see issue](https://github.com/cypress-io/cypress/issues/28895)) are not currently supported for capture.
+- **Runs [recorded to Cypress Cloud](/cloud/get-started/setup)** with a valid project and record key.
+- **Test Replay enabled** in your Cypress Cloud [project settings](#Opt-out-of-Test-Replay) (on by default).
+
+:::info
+
+Test Replay supports both **end-to-end** and **component** testing. See
+[Component vs. end-to-end testing](#Component-vs-end-to-end-testing) below for details.
 
 :::
 
@@ -211,6 +251,15 @@ Toggle each test attempt, play back errors at a variety of speeds or scrub throu
 Our aim is to create an impactful debugging experience that covers the most ground for users.
 Cypress captures a wide range of data during end-to-end and component test runs.
 This data is then uploaded and stored in Cypress Cloud and replayed for debugging through Test Replay.
+
+#### Component vs. end-to-end testing
+
+Test Replay supports both [end-to-end](/app/core-concepts/testing-types#What-is-End-to-end-Testing)
+and [component](/app/core-concepts/testing-types#What-is-Component-Testing) testing. The capture
+mechanism is the same for both: as long as the run is recorded to Cypress Cloud from a
+Chromium-based browser using Cypress `v13` or later, the replay is available regardless of
+testing type. For component tests, the replay recreates the mounted component and its
+surrounding harness exactly as it rendered during the run.
 
 ### What is captured
 
@@ -400,6 +449,11 @@ The exact error message can be seen by viewing the spec's output.
 ## See also
 
 - [Test Replay FAQ](/cloud/faq#Test-Replay)
+- [Recorded Runs](/cloud/features/recorded-runs) — where you access Test Replay alongside other run artifacts
+- [Flaky Test Management](/cloud/features/flaky-test-management) — detect flake, then debug it with Test Replay
+- [Debugging Guide](/app/guides/debugging) — debugging strategies for Cypress tests
+- [Continuous Integration Overview](/app/continuous-integration/overview) — recording runs in CI
+- [Data Storage and Controls](/cloud/account-management/data-storage-and-masking) — control and mask data sent to Cypress Cloud
 - [Cypress v13 changelog](/app/references/changelog#13-0-0)
 - [Cypress Default Video Configuration](/app/references/configuration#Videos)
 - [Cypress Video Artifacts](/app/guides/screenshots-and-videos#Videos)
