@@ -1,6 +1,6 @@
 ---
 title: Branch Review
-description: Branch Review in Cypress Cloud surfaces the impact of Pull Requests on your test suite. Compare test results between branches and learn best practices for grouping test runs.
+description: Branch Review in Cypress Cloud surfaces the impact of Pull Requests on your test suite so you can catch regressions before they merge. Compare test results between branches and learn best practices for grouping test runs.
 sidebar_position: 50
 ---
 
@@ -12,6 +12,7 @@ sidebar_position: 50
 
 ##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
 
+- How Branch Review helps you catch regressions before a Pull Request merges
 - How to compare test results between branches in Cypress Cloud
 - How Branch Review surfaces the impact of Pull Requests on your test suite
 - How to compare **any** two runs, if not using a Pull Request workflow
@@ -19,11 +20,22 @@ sidebar_position: 50
 
 :::
 
-Cypress Branch Review allows you to quickly identify the different impacts a Pull Request might have on your test suite in a single view.
+## Why Branch Review
+
+Every Pull Request changes your application — and your test suite along with it. The critical question before merging is: **did this change make things better or worse?** Answering it manually means hunting through two separate sets of runs, eyeballing pass/fail counts, and guessing whether a failure is new or pre-existing. It's slow, error-prone, and easy to skip under deadline pressure.
+
+Branch Review answers _what changed_ and _why_ in a single view, so you can:
+
+- **Catch regressions before they merge.** Instantly see new failures introduced by a branch instead of discovering them after they reach `main`.
+- **Stop chasing pre-existing flake.** Distinguish problems your PR _introduced_ from noise that was already there, so reviewers spend time on what actually changed.
+- **Confirm coverage moved in the right direction.** See tests that were added or modified, and — if enabled — how [UI Coverage](https://on.cypress.io/ui-coverage-trial?utm_medium=cloud-br&utm_source=docs.cypress.io&utm_term=&utm_content=UI+Coverage) and [Cypress Accessibility](http://on.cypress.io/accessibility-trial?utm_medium=cloud-br&utm_source=docs.cypress.io&utm_term=&utm_content=Cypress+Accessibility) shifted between the two branches.
+- **Review with confidence.** Give reviewers and authors a shared, objective picture of a PR's impact, turning "looks fine to me" into a verifiable comparison.
+
+Cypress Branch Review surfaces all of these impacts a Pull Request might have on your test suite in one place.
 Compare which tests are failing, flaky, pending, added, or modified between the source and base branches. If enabled on your account,
 UI Coverage or Cypress Accessibility changes between runs will also appear here.
 
-Branch Review is useful even if you do not have a Pull Request workflow, because it allows you to compare any two runs of your choice.
+Branch Review is valuable even if you do not have a Pull Request workflow, because it allows you to compare any two runs of your choice.
 These might represent different builds of the application, changes in test code, or results from nightly runs. This page will use
 the example of a Pull Request made using the GitHub integration, but this integration is not required in order to use Branch Review.
 
@@ -44,7 +56,7 @@ The Changed run is the main subject of the comparison, often associated with an 
 
 ### Accessing Branch Review
 
-There are a number of ways to get to Branch Review depending on where you are looking at your Cypress results. In all cases, once you've picked Changed run, you can adjust the automatically-selected Base run to any branch or run in the project to dial in the comparison you are most interested in.
+There are a number of ways to get to Branch Review depending on where you are looking at your Cypress results. In all cases, once you've picked a Changed run, you can adjust the automatically-selected Base run to any branch or run in the project to dial in the comparison you are most interested in.
 
 ### From the project list
 
@@ -178,7 +190,7 @@ When on the review screen, you will see the Failures, Flaky, Pending, Added, and
 
 ### Review Test Comparison
 
-Navigating into the test detail view reveals a side-by-side comparison of the test results on both branches, as well as, artifacts so you can compare before vs. after your PR. This can help narrow the focus on changes introduced or resolved on either branch and elevate the source of flake within tests throughout different attempts. Review the test definition panel for diff snapshots to help quickly determine changes in test code.
+Navigating into the test detail view reveals a side-by-side comparison of the test results on both branches, along with artifacts so you can compare before vs. after your PR. Pairing the failure on your branch with the passing result on the base branch — and with [Test Replay](/cloud/features/test-replay), screenshots, and videos for each attempt — lets you pinpoint exactly what your change broke without re-running anything locally. This narrows the focus to changes introduced or resolved on either branch and helps surface the source of flake across different attempts. Review the test definition panel for diff snapshots to quickly determine changes in test code.
 
 <DocsImage
   src="/img/cloud/features/branch-review/test-comparison.png"
@@ -232,4 +244,4 @@ If a run is missing on either the merge base or feature commit of the PR, a bann
 
 ## See Also
 
-- Read about [multi-repo implementation](/cloud/account-management/projects#Multi-repo-Implementation) best practices in Cypress Cloud. Even if your test code and application code are not colocated, you maybe be able to connect your test runs to specific commits and pull requests in your application.
+- Read about [multi-repo implementation](/cloud/account-management/projects#Multi-repo-Implementation) best practices in Cypress Cloud. Even if your test code and application code are not colocated, you may be able to connect your test runs to specific commits and pull requests in your application.
