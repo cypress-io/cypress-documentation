@@ -52,6 +52,75 @@ See `CONTRIBUTING.md` for full detail. The essentials:
 - Header anchor casing is intentionally preserved via a `patch-package` patch to
   `@docusaurus/mdx-loader` (see `patches/`) — this is expected, not a bug.
 
+### Tabs
+
+`<Tabs>` and `<TabItem>` are globally available via `src/theme/MDXComponents.js`
+— **no import needed** in `.mdx`. Use a shared `groupId` so a reader's choice
+syncs across every tab group on the page (and is remembered between visits).
+
+Established conventions — match them so selections stay in sync:
+
+- **Package-manager commands** (install / CLI): one tab per manager with
+  `groupId="package-manager"` and `defaultValue="npm"`. Order is always
+  **npm → Yarn → pnpm** (labels `npm`, `Yarn`, `pnpm`). Reach for the shared
+  `docs/partials/_cypress-install-commands.mdx` partial when showing the basic
+  install rather than re-authoring it.
+
+  ````mdx
+  <Tabs groupId="package-manager" defaultValue="npm" values={[
+    {label: 'npm', value: 'npm'},
+    {label: 'Yarn', value: 'yarn'},
+    {label: 'pnpm', value: 'pnpm'},
+  ]}>
+    <TabItem value="npm">
+
+  ```shell
+  npm install cypress --save-dev
+  ```
+
+    </TabItem>
+    <TabItem value="yarn">
+
+  ```shell
+  yarn add cypress --dev
+  ```
+
+    </TabItem>
+    <TabItem value="pnpm">
+
+  ```shell
+  pnpm add --save-dev cypress
+  ```
+
+    </TabItem>
+  </Tabs>
+  ````
+
+- **TypeScript / JavaScript examples.** Prefer **not** to hand-write a JS tab.
+  Author a single TypeScript block tagged `copyTsToJs` and the `copyTsToJs`
+  remark plugin generates the JavaScript version automatically, **JS tab first,
+  then TS**:
+
+  ````mdx
+  ```typescript copyTsToJs
+  const name: string = 'joe'
+
+  export default name
+  ```
+  ````
+
+  Only fall back to explicit `<Tabs>` with separate `.js`/`.ts` `<TabItem>`s
+  when the two versions differ by more than types (e.g. a `declare global`
+  block) and the plugin can't derive one from the other. When you do, keep the
+  **JS tab first**.
+
+- **Frameworks:** use `groupId="frameworks"`, ordered **React → Angular → Vue →
+  Svelte**.
+
+The TabItem **order is a convention, not enforced** by Docusaurus — keep it
+consistent with the lists above. `groupId`/`defaultValue` are what actually
+drive syncing and the initial selection.
+
 ### Cypress config examples (`:::cypress-config-example`)
 
 Whenever you show a snippet of Cypress configuration, **do not hand-write the
