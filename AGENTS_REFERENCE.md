@@ -32,8 +32,15 @@ This is the **Cypress Documentation** site, built with
   slug: /api/commands/click
   ---
   ```
-  Keep the `| Cypress Documentation` suffix on `title`, and write a real
-  `description` (used for SEO and the LLM docs).
+  `title` and `description` are emitted as the page's HTML `<title>` and
+  `<meta name="description">`, so write them for **search engines and the LLM
+  docs**, not just internally:
+  - `title`: lead with the primary term, keep it concise (~50–60 characters
+    before the ` | Cypress Documentation` suffix), and always keep that suffix.
+  - `description`: one natural-language sentence (~150–160 characters) that
+    accurately summarizes the page and includes the terms a reader would search
+    for. Avoid duplicating the same description across pages.
+  - `sidebar_label`: keep short; it is the sidebar text, not an SEO field.
 - **Sidebar ordering** is controlled by `sidebar_position` in a page's
   frontmatter and by `_category_.json` (`label` + `position`) in each folder, not
   by hand-editing `sidebars.js`.
