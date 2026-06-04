@@ -28,7 +28,7 @@ Branch Review answers _what changed_ and _why_ in a single view, so you can:
 
 - **Catch regressions before they merge.** Instantly see new failures introduced by a branch instead of discovering them after they reach `main`.
 - **Stop chasing pre-existing flake.** Distinguish problems your PR _introduced_ from noise that was already there, so reviewers spend time on what actually changed.
-- **Confirm coverage moved in the right direction.** See tests that were added or modified, and (if enabled) how [UI Coverage](https://on.cypress.io/ui-coverage-trial?utm_medium=cloud-br&utm_source=docs.cypress.io&utm_term=&utm_content=UI+Coverage) and [Cypress Accessibility](http://on.cypress.io/accessibility-trial?utm_medium=cloud-br&utm_source=docs.cypress.io&utm_term=&utm_content=Cypress+Accessibility) shifted between the two branches.
+- **Confirm coverage moved in the right direction.** See tests that were added or modified, and (if enabled) how [UI Coverage](/ui-coverage/get-started/introduction) and [Cypress Accessibility](/accessibility/get-started/introduction) shifted between the two branches.
 - **Review with confidence.** Give reviewers and authors a shared, objective picture of a PR's impact, turning "looks fine to me" into a verifiable comparison.
 
 Cypress Branch Review surfaces all of these impacts a Pull Request might have on your test suite in one place.
@@ -166,14 +166,14 @@ When on the review screen, you will see the Failures, Flaky, Pending, Added, and
 
 The numbered callouts above correspond to:
 
-| #   | Description                                                                                                                                                           |
-| --- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 1   | Details of which branches and runs are compared. If a Pull Request is detected, Pull Request details will be here.                                                    |
-| 2   | Links to key differences in test information like new failures and flaky tests. Note that all numbers and scores refer to the Changed run.                            |
-| 3   | [UI Coverage](https://on.cypress.io/ui-coverage-trial?utm_medium=cloud-br&utm_source=docs.cypress.io&utm_term=&utm_content=UI+Coverage) changes.                      |
-| 4   | [Cypress Accessibility](http://on.cypress.io/accessibility-trial?utm_medium=cloud-br&utm_source=docs.cypress.io&utm_term=&utm_content=Cypress+Accessibility) changes. |
-| 5   | What has changed in the status you have opened, shown with the count indicators below.                                                                                |
-| 6   | The test state (failed, flaky, pending) at the spec level, described below.                                                                                           |
+| #   | Description                                                                                                                                |
+| --- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| 1   | Details of which branches and runs are compared. If a Pull Request is detected, Pull Request details will be here.                         |
+| 2   | Links to key differences in test information like new failures and flaky tests. Note that all numbers and scores refer to the Changed run. |
+| 3   | [UI Coverage](/ui-coverage/get-started/introduction) changes.                                                                              |
+| 4   | [Cypress Accessibility](/accessibility/get-started/introduction) changes.                                                                  |
+| 5   | What has changed in the status you have opened, shown with the count indicators below.                                                     |
+| 6   | The test state (failed, flaky, pending) at the spec level, described below.                                                                |
 
 **Count indicators** show how a status shifted in your branch:
 
