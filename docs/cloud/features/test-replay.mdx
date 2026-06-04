@@ -131,6 +131,7 @@ recreation of the run. The table below summarizes the difference.
 | Step through the command log & time travel  | <Icon name="times" color="#E45770" />                       | <Icon name="check" color="#69D3A7" />                                       |
 | Reproduce locally to debug                  | Often required                   | Not required                                         |
 | CI performance overhead                     | Recording, compressing, storing video | Lighter, no video encoding                     |
+| CI storage footprint & cost                 | Written to the file system; when kept as CI artifacts, consumes billed artifact storage and retention quota | Written to a temp directory that is deleted after the run; no local or CI artifact storage cost |
 | Shareable with the team                     | <Icon name="check" color="#69D3A7" /> (file)                     | <Icon name="check" color="#69D3A7" /> (link to the live replay)                |
 
 Because Test Replay captures richer data with less overhead, we recommend
@@ -302,6 +303,9 @@ You can inspect the size of the Test Replay data that is uploaded to the Cloud
 and the time spent uploading the Test Replay data by inspecting the standard output of the test run.
 
 The only assets stored to your file system are in a temporary directory and deleted after the run.
+Unlike video files, which teams often retain as CI artifacts and which accrue billed artifact storage
+over their retention window, Test Replay leaves nothing behind on your CI runners, so it adds no local
+or CI artifact storage cost.
 
 ```shell
   (Uploading Cloud Artifacts)
