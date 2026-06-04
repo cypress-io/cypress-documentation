@@ -52,6 +52,41 @@ See `CONTRIBUTING.md` for full detail. The essentials:
 - Header anchor casing is intentionally preserved via a `patch-package` patch to
   `@docusaurus/mdx-loader` (see `patches/`) — this is expected, not a bug.
 
+### Cypress config examples (`:::cypress-config-example`)
+
+Whenever you show a snippet of Cypress configuration, **do not hand-write the
+full `cypress.config` file or its tabs.** Use the `:::cypress-config-example`
+remark directive (handled by `plugins/cypressRemarkPlugins`) and write only the
+config _object_. The plugin wraps it in `defineConfig()`, generates both the
+TypeScript and JavaScript forms, and renders them in synced
+`CypressConfigFileTabs` (JS tab first). This keeps every config example on the
+site consistent — boilerplate, import style, and TS/JS parity are all generated.
+
+````markdown
+:::cypress-config-example
+
+```ts
+{
+  e2e: {
+    baseUrl: 'http://localhost:1234',
+  },
+}
+```
+
+:::
+````
+
+Notes:
+
+- One code block = the object passed to `defineConfig()`. Supply **two** blocks
+  when you also need code _above_ `defineConfig` (e.g. imports): the first block
+  goes after the imports, the second is the config object.
+- For documenting a **plugin's** `setupNodeEvents` usage, use the sibling
+  directive `:::cypress-config-plugin-example` instead — one block goes inside
+  `setupNodeEvents`, or two blocks for imports + `setupNodeEvents` body.
+- Write the inner block as `ts`; the JS equivalent is produced automatically via
+  the `copyTsToJs` plugin, so never maintain a JS copy by hand.
+
 ### Writing accessible image alt text
 
 `alt` text is read aloud by screen readers and shown when an image fails to
