@@ -46,7 +46,9 @@ See `CONTRIBUTING.md` for full detail. The essentials:
 - Images go in `static/img/...` and are referenced via `/img/...`.
 - Reuse repeated content via Markdown partials (imported `.mdx`).
 - To add a plugin to the plugins list, add an entry to `src/data/plugins.json`
-  (name, description, repo link, keywords).
+  (name, description, repo link, keywords). Entries are grouped in this order:
+  `official` (Cypress-owned) → `verified` (community, verified by Cypress) →
+  `community` (unverified) → `deprecated` (unmaintained / incompatible with v10+).
 - Header anchor casing is intentionally preserved via a `patch-package` patch to
   `@docusaurus/mdx-loader` (see `patches/`) — this is expected, not a bug.
 
@@ -56,6 +58,10 @@ See `CONTRIBUTING.md` for full detail. The essentials:
 - Documentation for **unreleased** features → target the matching
   `X.Y.Z-release` branch (merged into `main` at release time).
 - Reference issues with `closes #NNN` in the PR description.
+- Enable "Allow edits from maintainers" on PRs so maintainers can make minor
+  adjustments.
+- Contributions require signing the Cypress CLA (handled automatically by the
+  cla-assistant bot on your first PR).
 
 ## CI & deployment
 
