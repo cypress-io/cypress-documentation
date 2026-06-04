@@ -52,6 +52,57 @@ See `CONTRIBUTING.md` for full detail. The essentials:
 - Header anchor casing is intentionally preserved via a `patch-package` patch to
   `@docusaurus/mdx-loader` (see `patches/`) — this is expected, not a bug.
 
+## Linking
+
+`onBrokenLinks` and `onBrokenMarkdownLinks` are both set to `throw`, so a broken
+link **fails the build**. Get the path and the anchor casing exactly right.
+
+### Linking to another doc
+
+Use an **absolute site path** rooted at the section, **without** the `.mdx`
+extension — not a relative file path:
+
+```markdown
+<!-- correct -->
+
+[`cy.origin()`](/api/commands/origin)
+[support file](/app/references/configuration)
+
+<!-- avoid -->
+
+[support file](../app/references/configuration.mdx)
+```
+
+Sections map to the top-level `docs/` folders: `/api/...`, `/app/...`,
+`/cloud/...`, `/accessibility/...`, `/ui-coverage/...`.
+
+### Linking to a heading (anchor / hash link)
+
+Anchor IDs **preserve the heading's original casing** (because of the
+`mdx-loader` patch above) and replace spaces with hyphens. This is the part that
+most often breaks the build — do **not** lowercase the anchor.
+
+```markdown
+<!-- heading: ## Disabling Web Security -->
+
+[disable web security](/app/guides/cross-origin-testing#Disabling-Web-Security)
+
+<!-- same-page link to ### Yields -->
+
+[what it yields](#Yields)
+```
+
+Rules for building the hash:
+
+- Keep the exact case of the heading text: `## File Opener Preference` →
+  `#File-Opener-Preference` (not `#file-opener-preference`).
+- Replace spaces with hyphens.
+- Version-number headings replace dots with dashes: `## 14.0.0` → `#14-0-0`.
+- You can pin an explicit, stable anchor with `{#CustomId}` at the end of a
+  heading (see the `docs/partials/_header-*.mdx` files, e.g. `{#Yields}`).
+- `npm run write-heading-ids` generates explicit IDs for headings if you want
+  them materialized.
+
 ## PR & branch conventions
 
 - Documentation changes **not** tied to a release → target `main`.
