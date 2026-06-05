@@ -14,6 +14,11 @@ import Tag from '@cypress-design/react-tag'
 
 Cypress offers AI capabilities across the platform to help teams write tests faster, understand failures more clearly, and keep tests running as apps change. These capabilities are built into and for the tools you already use - the Cypress App and Cypress Cloud - and are designed to reduce the manual effort that can slow down testing.
 
+Cypress AI includes two categories of functionality, and they have different default behaviors by design.
+
+- **AI Capabilities**: features built into Cypress that operate within the platform and are enabled by default.
+- **AI Tooling:** interfaces, integrations, and packaged behaviors that enable AI agents and assistants to work with Cypress. You must opt-in to use these tools.
+
 This page explains what's available, how each capability fits into your workflow, and how Cypress handles your data.
 
 ## The Problem Developers Face
@@ -27,14 +32,15 @@ Writing tests, maintaining them, and debugging failures is time-consuming and re
 
 Cypress AI is designed to solve these problems without changing how you already work.
 
+## Getting Started
+
+AI Capabilities are enabled by default for all users in your organization on an applicable plan. Login to your Cypress Cloud account to get started.
+
+Each AI Tool must be enabled and installed individually. See each tool's documentation for instructions.
+
 ## How Cypress AI Fits Into the Workflow
 
 Cypress AI are easy-to-use capabilities and tools across your testing lifecycle. They are woven into the core workflow.
-
-Cypress AI includes two categories of functionality, and they have different default behaviors by design.
-
-- **AI Capabilities**: features built into Cypress that operate within the platform and are enabled by default.
-- **AI Tooling:** interfaces, integrations, and packaged behaviors that enable AI agents and assistants to work with Cypress. You must opt-in to use these tools.
 
 ### AI Capabilities
 
@@ -46,19 +52,13 @@ Cypress AI includes two categories of functionality, and they have different def
 | Test maintenance   | cy.prompt()                 | Automatically adapt to UI changes that would otherwise break selectors                |
 | Fill Coverage Gaps | UI Coverage Test Generation | Identify untested flows and automatically generate new tests                          |
 
-### AI Tooling
+### AI Tools
 
 | When To Use      | AI Tool                                    | Outcome                                                                                               |
 | ---------------- | ------------------------------------------ | ----------------------------------------------------------------------------------------------------- |
 | Author Tests     | `cypress-author` and `cypress-docs` Skills | Improves how AI tools create, update, and fix Cypress tests.                                          |
 | Understand Tests | `cypress-explain` Skill                    | Helps AI describe, and critique existing tests.                                                       |
 | Analyze & Triage | Cloud MCP                                  | Gives AI coding assistants and AI agents a direct window into your application's health and stability |
-
-## Getting Started
-
-AI Capabilities are enabled by default for all users in your organization on an applicable plan. Login to your Cypress Cloud account to get started.
-
-Each AI Tool must be enabled and installed individually. See each tool's documentation for instructions.
 
 ## Capabilities in detail
 
