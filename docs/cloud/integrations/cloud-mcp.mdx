@@ -484,9 +484,21 @@ If you need to increase your limits, contact support at support@cypress.io.
 
 ### Security & Privacy
 
-- **Read-Only Access:** The Cloud MCP server is designed for data retrieval and debugging. It cannot modify your test code or delete runs.
-- **User-Scoped:** The AI only sees the projects and data that your specific Cypress Cloud user has permission to access. Whether you're part of a specific team or just have access to certain projects, your AI assistant stays within those same boundaries.
-- **Local Control:** You control exactly when the server is active by managing the configuration in your local AI client.
+Cloud MCP is an API for AI agents. When your AI assistant needs information about your Cypress test runs, it calls Cloud MCP the same way any application calls an API — it sends a request, and Cypress returns data.
+
+**What Cypress can and cannot see:**
+
+- **Cypress cannot see your AI conversation:** Cypress has no access to your AI assistant's context window, chat history, or anything it generates. The only thing Cypress receives are the inputs to a tool call — for example, `getRuns(projectId: 100, runNumber: 45, limit: 10)`.
+- **Cypress does not train on your data:** Test results, stack traces, and replay links returned through Cloud MCP are used only to fulfill the request. Your data is never used to train or improve any LLM.
+- **You control the connection:** Cloud MCP is opt-in. Enabling it means your AI assistant can request Cypress data and enabling the integration does not give Cypress any visibility into your AI's context, conversation, or outputs.
+
+**How access is controlled:**
+
+- **Read-only:** Cloud MCP is designed for data retrieval and debugging. It cannot modify your test code or delete runs.
+- **User-scoped:** Your AI assistant can only access the projects and data your Cypress Cloud user has permission to see. It operates within the same access boundaries as you do.
+- **Locally managed:** You control when the server is active by managing the configuration in your local AI client.
+
+Cloud MCP implements the standard MCP authorization specification with OAuth 2.0 and uses streamable HTTP transport. It falls under our [AI security practices →](https://on.cypress.io/ai-security)
 
 ### Remove the integration
 
