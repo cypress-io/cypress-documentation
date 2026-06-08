@@ -12,6 +12,8 @@ sidebar_label: 'Code Coverage'
 
 ##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
 
+- Why code coverage helps you ship higher quality software with less risk
+- How code coverage compares to other quality tools
 - The difference between Code Coverage and Cypress's UI Coverage
 - How to instrument your application code for code coverage
 - How to collect code coverage from Cypress tests
@@ -30,6 +32,37 @@ Cypress offers a couple of solutions to help answer these questions:
 
 - **[Code coverage](#Code-Coverage)** - find out which lines of the application's source code were executed
 - **[UI coverage](#UI-Coverage)** - find out which parts of the UI were tested
+
+### Why code coverage matters
+
+Every application ships with code that nobody has explicitly tested. Some of it
+is dead code that should be deleted. Some of it is critical logic — conditional
+branches, error handlers, edge cases — that simply never had a test written for
+it. The difference matters, because untested logic that reaches production is a
+primary source of expensive, hard-to-diagnose bugs.
+
+Code coverage makes the gap visible. It tells you precisely which lines,
+branches, and functions were executed during your test run. It turns "do we have
+enough tests?" from a matter of opinion into a measurable, trackable signal —
+one you can enforce as a quality gate on every pull request and trend over time.
+
+### How code coverage compares to alternatives
+
+Different quality tools answer different questions. Understanding the tradeoffs
+helps you choose the right combination for your project:
+
+| Approach                                                 | What it tells you                                                 | Key limitation                                                                                |
+| -------------------------------------------------------- | ----------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| **Code coverage**                                        | Which lines, branches, and functions were executed by tests       | Requires instrumentation; a line being executed doesn't guarantee the assertion is meaningful |
+| **[UI Coverage](/ui-coverage/get-started/introduction)** | Which interactive elements across your UI were exercised by tests | No instrumentation needed; shows UI-level gaps rather than code-level logic gaps              |
+| **Static analysis / linters**                            | Type errors, style violations, and common code smells             | Cannot find runtime logic gaps or missing test scenarios                                      |
+| **Manual QA**                                            | Visible UX defects and end-user workflows                         | Doesn't scale; expensive per release; misses regressions and edge cases                       |
+| **Mutation testing**                                     | Whether your tests actually detect code changes                   | Slow to run; typically too expensive for CI on every commit                                   |
+
+Code coverage and UI Coverage are complementary rather than competing. Code
+coverage answers "which source code lines did the tests execute?", while UI
+Coverage answers "which parts of the UI did the tests touch?" — using both
+together gives you a more complete picture of test quality.
 
 ### Code Coverage
 
@@ -239,7 +272,7 @@ statements were each executed once and the last statement was never executed (it
 probably was inside an `if` statement). By using the application, we can both
 increment the counters and flip some of the zero counters into positive numbers.
 
-### Using code transpilation pipeline
+### Using code transpilation pipeline {#using-code-transpilation-pipeline}
 
 Instead of using the `npx instrument` command, we can use
 [`babel-plugin-istanbul`](https://github.com/istanbuljs/babel-plugin-istanbul)
@@ -249,7 +282,7 @@ to instrument the code as part of its transpilation. Add this plugin to the
 ```json title='.babelrc'"
 {
   "presets": ["@babel/preset-react"],
-  "plugins": ["transform-class-properties", "istanbul"]
+  "plugins": ["@babel/plugin-proposal-class-properties", "istanbul"]
 }
 ```
 
@@ -257,6 +290,44 @@ We can now serve the application and get instrumented code without an
 intermediate folder, but the result is the same instrumented code loaded by the
 browser, with the same `window.__coverage__` object keeping track of the
 original statements.
+
+#### Avoiding conflicts with Jest
+
+Adding `babel-plugin-istanbul` directly to the top-level `plugins` array in
+`.babelrc` will cause a **"Duplicate plugin/preset detected"** error when Jest
+runs. Jest automatically instruments code with Istanbul (via `babel-jest`) and
+sets `BABEL_ENV=test`, so loading the plugin a second time through `.babelrc`
+triggers the conflict.
+
+To avoid this, scope the plugin to a separate Babel environment that is only
+active during Cypress runs:
+
+```json title='.babelrc'
+{
+  "presets": ["@babel/preset-react"],
+  "plugins": ["@babel/plugin-proposal-class-properties"],
+  "env": {
+    "cypress": {
+      "plugins": ["istanbul"]
+    }
+  }
+}
+```
+
+Then activate this environment when launching Cypress by setting `BABEL_ENV`
+in your npm script:
+
+```json title='package.json'
+{
+  "scripts": {
+    "test:e2e": "BABEL_ENV=cypress cypress run",
+    "test:ct": "BABEL_ENV=cypress cypress run --component"
+  }
+}
+```
+
+Because Jest never sets `BABEL_ENV=cypress`, the istanbul plugin will only be
+loaded during Cypress runs, and there will be no duplicate-plugin conflict.
 
 :::info
 
@@ -286,7 +357,59 @@ not 3rd party dependencies from `node_modules`.
 
 :::
 
-## E2E code coverage
+### Using Vite {#using-vite}
+
+If your project uses [Vite](https://vitejs.dev/) (for example, a Vue 3 or React
+app scaffolded with `npm create vite`), use
+[`vite-plugin-istanbul`](https://github.com/iFaxity/vite-plugin-istanbul) to
+instrument your code as part of the Vite build pipeline instead of
+`babel-plugin-istanbul`.
+
+```shell
+npm install vite-plugin-istanbul --save-dev
+```
+
+Add the plugin to your Vite configuration. The example below shows a Vue 3 +
+TypeScript project, but the same approach works for any Vite-based framework:
+
+```ts title='vite.config.ts'
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+import istanbul from 'vite-plugin-istanbul'
+
+export default defineConfig({
+  plugins: [
+    vue(),
+    istanbul({
+      include: 'src/*',
+      exclude: ['node_modules', 'test/'],
+      extension: ['.js', '.ts', '.vue'],
+      requireEnv: false,
+    }),
+  ],
+})
+```
+
+The `extension` option tells the plugin which file types to instrument —
+include `.vue` for Vue single-file components and `.ts` for TypeScript source
+files. Setting `requireEnv: false` enables instrumentation unconditionally; set
+it to `true` and export `VITE_COVERAGE=true` if you only want coverage during
+CI runs.
+
+Once the plugin is in place, `window.__coverage__` will be populated when the
+app runs in the browser, and the
+[`@cypress/code-coverage`](https://github.com/cypress-io/code-coverage) plugin
+will collect it automatically — no additional Babel configuration is required.
+
+:::info
+
+See
+[`@cypress/code-coverage#external-examples`](https://github.com/cypress-io/code-coverage#external-examples)
+for community example projects covering Vite, Vue, Angular, and other setups.
+
+:::
+
+## E2E code coverage {#e2e-code-coverage}
 
 To handle code coverage collected during each test, there is a
 [`@cypress/code-coverage`](https://github.com/cypress-io/code-coverage) Cypress
@@ -313,14 +436,18 @@ Then add the code below to the
 [setupNodeEvents](/app/plugins/plugins-guide#Using-a-plugin) function.
 
 ```js
-// cypress/support/e2e.js
+// cypress/support/e2e.js (or e2e.ts for TypeScript projects)
 import '@cypress/code-coverage/support'
 ```
 
 :::cypress-config-plugin-example
 
 ```js
-require('@cypress/code-coverage/task')(on, config)
+import registerCodeCoverageTasks from '@cypress/code-coverage/task'
+```
+
+```js
+registerCodeCoverageTasks(on, config)
 // include any other plugin code...
 
 // It's IMPORTANT to return the config object
@@ -376,6 +503,60 @@ the browser.
   src="/img/app/code-coverage/circleci-coverage-report.png"
   alt="coverage HTML report on CircleCI"
 />
+
+## Component Testing code coverage {#component-testing-code-coverage}
+
+Setting up code coverage for component tests uses the same
+[`@cypress/code-coverage`](https://github.com/cypress-io/code-coverage) plugin
+as [E2E code coverage](#e2e-code-coverage). The configuration is almost
+identical, with one critical difference: you must add the support import to
+your **component testing support file**.
+
+### Configure the support file
+
+Add the import to your component testing support file:
+
+```js
+// cypress/support/component.js (or component.ts for TypeScript projects)
+import '@cypress/code-coverage/support'
+```
+
+:::caution
+
+Adding the import only to `cypress/support/e2e.js` will **not** collect
+coverage during component tests. The import must be present in the component
+support file.
+
+:::
+
+The task registration in `setupNodeEvents` is the same as for E2E tests:
+
+:::cypress-config-plugin-example
+
+```js
+import registerCodeCoverageTasks from '@cypress/code-coverage/task'
+```
+
+```js
+registerCodeCoverageTasks(on, config)
+// It's IMPORTANT to return the config object
+// with any changed environment variables
+return config
+```
+
+:::
+
+### Instrumentation for component tests
+
+**Vite**: The [`vite-plugin-istanbul`](#using-vite) plugin configured in your
+`vite.config.ts` is automatically used by the Cypress component testing dev
+server. No additional configuration is needed beyond
+[the standard Vite setup described above](#using-vite).
+
+**Webpack**: Add
+[`babel-plugin-istanbul`](#using-code-transpilation-pipeline) to the Babel
+configuration or Webpack rules used by the component testing dev server so
+that source files are instrumented before the browser loads them.
 
 ## Code coverage as a guide
 
@@ -467,7 +648,7 @@ you. If you do want to merge the reports yourself:
   command
 
 You can find an example of merging partial reports in our
-[cypress-io/cypress-example-conduit-app](https://github.com/cypress-io/cypress-example-conduit-app)
+[RealWorld App](https://github.com/cypress-io/cypress-realworld-app).
 
 ## E2E and unit code coverage
 
@@ -531,12 +712,17 @@ again to do this by adding the code below to the
 :::cypress-config-plugin-example
 
 ```javascript
-require('@cypress/code-coverage/task')(on, config)
+import registerCodeCoverageTasks from '@cypress/code-coverage/task'
+import babelrcPreprocessor from '@cypress/code-coverage/use-babelrc'
+```
+
+```javascript
+registerCodeCoverageTasks(on, config)
 // tell Cypress to use .babelrc file
 // and instrument the specs files
 // only the extra application files will be instrumented
 // not the spec files themselves
-on('file:preprocessor', require('@cypress/code-coverage/use-babelrc'))
+on('file:preprocessor', babelrcPreprocessor)
 
 return config
 ```
@@ -550,7 +736,7 @@ code is transpiled.
 ```json
 {
   "presets": ["@babel/preset-react"],
-  "plugins": ["transform-class-properties", "istanbul"]
+  "plugins": ["@babel/plugin-proposal-class-properties", "istanbul"]
 }
 ```
 
@@ -600,7 +786,7 @@ coverage, creating a single full stack report.
 :::info
 
 The full source code for this section can be found in the
-[cypress-io/cypress-example-conduit-app](https://github.com/cypress-io/cypress-example-conduit-app)
+[RealWorld App](https://github.com/cypress-io/cypress-realworld-app)
 repository.
 
 :::
@@ -681,18 +867,14 @@ application back end is running at port 3000 and we are using the default "GET
 
 From now on, the front end code coverage collected during end-to-end tests will
 be merged with the code coverage from the instrumented back end code and saved
-in a single report. Here is an example report from the
-[cypress-io/cypress-example-conduit-app](https://github.com/cypress-io/cypress-example-conduit-app)
-example:
+in a single report. Here is an example combined full stack coverage report:
 
 <DocsImage
   src="/img/app/code-coverage/full-coverage.png"
   alt="Combined code coverage report from front and back end code"
 />
 
-You can explore the above combined full stack coverage report at the
-[coveralls.io/github/cypress-io/cypress-example-conduit-app](https://coveralls.io/github/cypress-io/cypress-example-conduit-app)
-dashboard. You can also find full stack code coverage in our
+You can also find full stack code coverage in our
 [RealWorld App](https://github.com/cypress-io/cypress-realworld-app).
 
 Even if you only want to measure the back end code coverage Cypress can help.
@@ -761,8 +943,6 @@ following repositories:
   The RWA achieves full code coverage with end-to-end tests
   [across multiple browsers](/app/guides/cross-browser-testing) and
   [device sizes](/api/commands/viewport).
-- [lluia/cypress-typescript-coverage-example](https://github.com/lluia/cypress-typescript-coverage-example)
-  shows coverage for a React App that uses TypeScript.
 - [ericorruption/cypress-code-coverage-typescript-webpack-ts-loader](https://github.com/ericorruption/cypress-code-coverage-typescript-webpack-ts-loader)
   shows how to collect coverage for a TypeScript + webpack project using
   `ts-loader` instead of `babel-loader`.

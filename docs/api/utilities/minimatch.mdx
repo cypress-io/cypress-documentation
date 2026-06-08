@@ -77,6 +77,31 @@ Cypress.minimatch('/foo/bar/baz/123/quux?a=b&c=2', '/foo/*', {
 })
 ```
 
+## Notes
+
+:::caution
+
+In minimatch glob syntax, `?` is a wildcard that matches **any single
+character** — it does not represent a literal `?`. If your pattern needs to
+match the literal `?` that precedes a URL query string, escape it with a
+backslash. In a JavaScript string you write `\\?` so that minimatch receives
+the character sequence `\?`:
+
+```js
+// INCORRECT – unescaped ? is a wildcard, not a literal question mark
+Cypress.minimatch('/users?_limit=3', '/users?_limit=*', { matchBase: true })
+// false — the ? in the pattern matches any single character, not the
+// literal ? in the URL
+
+// CORRECT – \\? sends \? to minimatch, which matches a literal ?
+Cypress.minimatch('/users?_limit=3', '/users\\?_limit=*', {
+  matchBase: true,
+}) // true
+```
+
+:::
+
 ## See also
 
 - [Bundled Libraries](/app/references/bundled-libraries)
+- [cy.intercept() – Glob Pattern Matching URLs](/api/commands/intercept#Glob-Pattern-Matching-URLs)

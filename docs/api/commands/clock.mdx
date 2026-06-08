@@ -73,6 +73,11 @@ Pass in an options object to change the default behavior of `cy.clock()`.
   Restore all overridden native functions. This is automatically called between
   tests, so should not generally be needed.
 
+  `clock.restore()` returns native timer APIs (`setTimeout`, `setInterval`, etc.)
+  to the `window`. New timers created _after_ `restore()` will run in real time.
+  However, any intervals or timeouts registered before or during the fake clock's
+  lifetime are discarded — they will not resume automatically.
+
 - **`clock.setSystemTime(now)`**
 
   Change the system time to the new `now`. Now can be a timestamp, date object,
@@ -207,6 +212,17 @@ cy.clock(Date.UTC(2018, 10, 30), ['Date'])
 You can restore the clock and allow your application to resume normally without
 manipulating native global functions related to time. This is automatically
 called between tests.
+
+:::caution
+
+`clock.restore()` returns native timer APIs (`setTimeout`, `setInterval`, etc.)
+to the `window`. New timers created _after_ `restore()` will run in real time.
+However, any intervals or timeouts that were registered before or during the
+fake clock's lifetime are discarded — they will not resume automatically. If
+your application code needs to keep running after `restore()`, it must
+re-register those timers itself.
+
+:::
 
 ```javascript
 cy.clock()

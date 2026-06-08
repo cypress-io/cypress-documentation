@@ -211,7 +211,7 @@ match many URLs at once, either with globs or with regex. See
 cy.intercept('https://prod.cypress.io/users')
 
 // match any request that satisfies a glob pattern
-cy.intercept('/users?_limit=*')
+cy.intercept('/users\\?_limit=*')
 
 // match any request that satisfies a regex pattern
 cy.intercept(/\/users\?_limit=(3|5)$/)
@@ -313,6 +313,15 @@ to [wait on a request](#Waiting-on-a-request).
 cy.intercept('GET', '/users').as('getAllUsers')
 cy.intercept('POST', '/users').as('createUser')
 ```
+
+### Accessing all intercepted requests
+
+When an intercepted route is aliased, you can retrieve **all** matching
+intercepted requests using the `.all` suffix with
+[`cy.get()`](/api/commands/get). This is useful when your application makes
+multiple requests to the same route and you need to assert on all of them.
+
+<InterceptAliasIndex />
 
 ### Aliasing individual requests
 
@@ -1483,11 +1492,25 @@ cy.intercept('/users')
 //   https://staging.cypress.io/users
 //   http://localhost/users
 
-cy.intercept('/users?_limit=+(3|5)')
+cy.intercept('/users\\?_limit=+(3|5)')
 // matches all of these:
 //   https://prod.cypress.io/users?_limit=3
 //   http://localhost/users?_limit=5
 ```
+
+:::caution
+
+In minimatch glob syntax, `?` is a wildcard that matches **any single character** — it does not represent a literal `?`. To match a literal question mark (such as the `?` that begins a URL query string), escape it with a backslash: use `\\?` in your JavaScript string so that minimatch receives the pattern character `\?`.
+
+```js
+// INCORRECT – the unescaped ? is a wildcard matching any single character
+cy.intercept('/users?_limit=*')
+
+// CORRECT – \\? in the JS string sends \? to minimatch, matching a literal ?
+cy.intercept('/users\\?_limit=*')
+```
+
+:::
 
 ### Cypress.minimatch
 
@@ -1500,19 +1523,83 @@ You can invoke the `Cypress.minimatch` with just two arguments - the URL
 (`string`) and the pattern (`string`), respectively - and if it yields `true`,
 then you have a match!
 
+:::info
+
+`cy.intercept()` matches patterns against the **full request URL** (including
+protocol and hostname). If the full URL does not match, it also tries matching
+against the **URL path** — everything after the hostname, including any query
+string — as a fallback.
+
+Because of this fallback, path-only patterns like `/api/users*` work with
+`cy.intercept()` even though they omit the hostname. However, when verifying
+such a pattern with `Cypress.minimatch()`, pass **just the path** — not the
+full URL — to replicate the fallback behavior accurately:
+
+```js
+// path-only pattern: test with the path
+Cypress.minimatch('/api/users/1', '/api/users*', { matchBase: true }) // true
+
+// full-URL pattern (** absorbs the hostname): test with the full URL
+Cypress.minimatch('http://localhost/api/users/1', '**/api/users*') // true
+```
+
+Passing the full URL to `Cypress.minimatch()` with a path-only pattern may
+return `false` even though `cy.intercept()` would match via its path fallback.
+
+:::
+
 ```javascript
 expect(
-  Cypress.minimatch('http://localhost/users?_limit=3', '**/users?_limit=+(3|5)')
+  Cypress.minimatch(
+    'http://localhost/users?_limit=3',
+    '**/users\\?_limit=+(3|5)'
+  )
 ).to.be.true
 expect(
-  Cypress.minimatch('http://localhost/users?_limit=5', '/users?_limit=+(3|5)', {
-    matchBase: true,
-  })
+  Cypress.minimatch(
+    'http://localhost/users?_limit=5',
+    '/users\\?_limit=+(3|5)',
+    {
+      matchBase: true,
+    }
+  )
 ).to.be.true
 expect(
-  Cypress.minimatch('http://localhost/users?_limit=7', '**/users?_limit=+(3|5)')
+  Cypress.minimatch(
+    'http://localhost/users?_limit=7',
+    '**/users\\?_limit=+(3|5)'
+  )
 ).to.be.false
 ```
+
+:::tip
+
+When intercepting URLs that have complex or encoded query strings, using a
+URL glob for the entire URL (path + query string) can be error-prone. The
+`pathname` and `query`
+[routeMatcher](#routeMatcher-RouteMatcher) properties provide a more
+reliable alternative:
+
+```js
+// Instead of matching the full path + query string with a glob:
+cy.intercept('/api/v3/upload_status/**/process**')
+
+// Match just the path, and optionally assert the query separately:
+cy.intercept({
+  pathname: '/api/v3/upload_status/**/process',
+})
+
+// Or pin specific query parameter values:
+cy.intercept({
+  pathname: '/api/v3/upload_status/**/process',
+  query: { json: '{"count":12,"offset":0}' },
+})
+```
+
+`pathname` never includes the query string, so encoded or complex query
+parameters cannot interfere with path-segment glob matching.
+
+:::
 
 #### minimatch options
 
@@ -1521,9 +1608,13 @@ You can also pass in options (`object`) as the third argument, one of which is
 understand why your pattern isn't working as you expect:
 
 ```js
-Cypress.minimatch('http://localhost/users?_limit=3', '**/users?_limit=+(3|5)', {
-  debug: true,
-})
+Cypress.minimatch(
+  'http://localhost/users?_limit=3',
+  '**/users\\?_limit=+(3|5)',
+  {
+    debug: true,
+  }
+)
 // true (plus debug messages)
 ```
 

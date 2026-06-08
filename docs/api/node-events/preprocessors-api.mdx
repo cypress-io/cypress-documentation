@@ -60,6 +60,70 @@ Editing the options allows you to do things like:
 - Modify options for TypeScript compilation
 - Add support for CoffeeScript `2.x.x`
 
+## Excluding files from being watched
+
+Certain tools generate files as a side effect of a build (for example,
+`*.d.ts` files emitted by `css-modules-typescript-loader`, or `*.hot-update.js`
+HMR files). If Cypress watches those generated files and they are re-emitted on
+each build, you can end up in an **infinite reload loop**: Cypress detects a
+change → rebuilds → the tool generates new files → Cypress detects another
+change → …
+
+To break this cycle, pass a `watchOptions.ignored` glob pattern (or array of
+patterns) to the webpack preprocessor. The value is forwarded directly to
+webpack's file watcher, which uses
+[`anymatch`](https://github.com/micromatch/anymatch) internally and therefore
+accepts glob strings, regular expressions, or functions.
+
+:::cypress-config-plugin-example
+
+```javascript
+const webpackPreprocessor = require('@cypress/webpack-preprocessor')
+
+on(
+  'file:preprocessor',
+  webpackPreprocessor({
+    watchOptions: {
+      // Ignore TypeScript declaration files generated during builds
+      ignored: '**/*.d.ts',
+    },
+  })
+)
+```
+
+:::
+
+You can also provide an array to ignore several patterns at once:
+
+:::cypress-config-plugin-example
+
+```javascript
+const webpackPreprocessor = require('@cypress/webpack-preprocessor')
+
+on(
+  'file:preprocessor',
+  webpackPreprocessor({
+    watchOptions: {
+      ignored: ['**/*.d.ts', '**/*.hot-update.js'],
+    },
+  })
+)
+```
+
+:::
+
+For more details on the available `watchOptions` values, see
+[webpack's watch configuration docs](https://webpack.js.org/configuration/watch/#watchoptionsignored).
+
+:::note
+
+The `excludeSpecPattern` configuration option hides files from the **list of
+specs** shown in the Cypress UI — it does not affect which files the preprocessor
+watches. Use `watchOptions.ignored` (shown above) when you need to prevent
+specific files from triggering a test rerun.
+
+:::
+
 ## Usage
 
 <WarningSetupNodeEvents />

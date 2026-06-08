@@ -1,6 +1,6 @@
 ---
 title: 'Configure Client Certificates in Cypress'
-description: 'Configure certificate authority (CA) and client certificates to use within tests on a per-URL basis.'
+description: 'Configure certificate authority (CA) and client certificates to test mTLS (mutual TLS) protected endpoints in Cypress on a per-URL basis.'
 sidebar_label: 'Client Certificates'
 ---
 
@@ -8,16 +8,29 @@ sidebar_label: 'Client Certificates'
 
 # Client Certificates
 
-Configure certificate authority (CA) and client certificates to use within tests
-on a per-URL basis.
+Many enterprise, government, and regulated-industry systems require clients to
+present a certificate to authenticate at the TLS layer — before your application
+code even runs. This pattern is called **mutual TLS (mTLS)**: unlike standard
+HTTPS where only the server proves its identity, mTLS requires _both_ sides to
+present certificates, so the server can verify the caller is a trusted client.
+
+Without mTLS support, you face an unpleasant choice: disable certificate
+requirements in your test environment (meaning your tests run against a system
+that doesn't match production), or rely on slow and inconsistent manual testing.
+
+The `clientCertificates` configuration lets you supply the certificates Cypress
+needs to authenticate against mTLS-protected endpoints, so your automated E2E
+tests exercise the real security boundary. Misconfigurations, expired
+certificates, or changed server requirements get caught in CI — not in
+production, where the cost is highest.
 
 :::info
 
 <strong>Document Scope</strong>
 
-This document merely offers guidance on how to specify certificate file paths
-for given test URLs. Details around the content and purpose of such files are
-not within the scope of Cypress documentation.
+This document covers how to configure certificate file paths for use in your
+tests. The creation and management of certificate files themselves are outside
+the scope of Cypress documentation.
 
 :::
 
@@ -35,7 +48,8 @@ following properties
 | `certs`  | `Object[]` | A PEM format certificate/private key pair or PFX certificate container                                                   |
 
 Each object in the `certs` array can define either a **PEM format
-certificate/private key pair** or a **PFX certificate container**.
+certificate/private key pair** or a **PFX certificate container**. Both **RSA**
+and **ECDSA (EC)** keys are supported.
 
 **A PEM format certificate/private key pair can have the following properties:**
 
@@ -100,8 +114,188 @@ shown below:
 
 :::
 
+## How Certificates Are Applied
+
+Cypress automatically applies the correct client certificate for every outgoing
+network request — including those initiated by
+[`cy.visit()`](/api/commands/visit) and
+[`cy.request()`](/api/commands/request) — based on URL pattern matching.
+**No additional options need to be passed to these commands.**
+
+When Cypress makes a request, it compares the target URL against each `url`
+pattern in the `clientCertificates` array. If a matching entry is found, its
+certificates are attached to the request automatically.
+
+If more than one entry matches the same URL, Cypress selects the entry with the
+**most specific (longest) path** pattern.
+
+:::info
+
+The `url` field in each `clientCertificates` entry supports
+[minimatch](https://github.com/isaacs/minimatch) glob patterns (for example
+`https://a.host.com/api/**`), so a single entry can cover an entire path
+hierarchy.
+
+:::
+
+### Testing with multiple client identities
+
+Cypress does not support passing a specific certificate to `cy.visit()` or any
+other command at call time. Certificate selection is always URL-pattern-based
+and configured statically in `clientCertificates`.
+
+If your tests need to authenticate as different users against the **same base
+URL**, you can work around this limitation in a couple of ways:
+
+- **Distinct path patterns** – If your server exposes user-specific base paths,
+  configure a separate `clientCertificates` entry for each path pattern:
+
+  :::cypress-config-example
+
+  ```ts
+  {
+    clientCertificates: [
+      {
+        url: 'https://example.com/users/alice/**',
+        certs: [{ pfx: 'certs/alice.pfx', passphrase: 'certs/alice-passphrase.txt' }],
+      },
+      {
+        url: 'https://example.com/users/bob/**',
+        certs: [{ pfx: 'certs/bob.pfx', passphrase: 'certs/bob-passphrase.txt' }],
+      },
+    ],
+  }
+  ```
+
+  :::
+
+- **Separate configuration files** – Maintain separate Cypress configuration
+  files (for example `cypress.alice.config.ts` and `cypress.bob.config.ts`),
+  each specifying the appropriate `clientCertificates`, and run them as separate
+  test suites.
+
+## Testing mTLS-Protected Endpoints
+
+Once `clientCertificates` is configured, Cypress attaches the correct
+certificate automatically. Your test code looks the same as any other E2E test —
+no special options are required on individual commands.
+
+### Visiting an mTLS endpoint
+
+```js
+// cypress/e2e/mtls.cy.js
+describe('mTLS-protected app', () => {
+  it('loads the dashboard', () => {
+    // Cypress attaches the client cert automatically based on the URL
+    cy.visit('https://secure.example.com/dashboard')
+    cy.get('h1').should('contain', 'Welcome')
+  })
+})
+```
+
+### Making API requests to an mTLS endpoint
+
+[`cy.request()`](/api/commands/request) also benefits from the configured
+certificates, making it straightforward to test REST APIs behind mTLS:
+
+```js
+describe('mTLS API', () => {
+  it('returns 200 for an authenticated request', () => {
+    cy.request('GET', 'https://api.example.com/data').then((response) => {
+      expect(response.status).to.eq(200)
+    })
+  })
+
+  it('returns the expected payload', () => {
+    cy.request('POST', 'https://api.example.com/records', { name: 'test' })
+      .its('body.id')
+      .should('be.a', 'string')
+  })
+})
+```
+
+:::tip
+
+A `400 Bad Request` response (or a TLS handshake error in the Cypress log) when
+hitting an endpoint is the most common sign that the client certificate was not
+presented. Double-check that the `url` pattern in `clientCertificates` matches
+the full URL of your target — including any port number if the server runs on a
+non-standard port (e.g. `https://secure.example.com:8443/**`).
+
+:::
+
+## Debugging Certificate Issues
+
+### Inspecting the Cypress log
+
+When Cypress makes a request to a URL that matches a `clientCertificates`
+entry, it logs `clientCertificates` details in the **Cypress App** network
+panel. Open the panel and look for the lock icon next to the matching request
+to confirm that a certificate was attached.
+
+### Common errors
+
+| Symptom                                    | Likely cause                                                              |
+| ------------------------------------------ | ------------------------------------------------------------------------- |
+| `400 Bad Request` from server              | Certificate not presented — URL pattern mismatch                          |
+| `SSL_ERROR_HANDSHAKE_FAILURE`              | Wrong certificate, expired cert, or CA chain mismatch                     |
+| `ENOENT: no such file or directory`        | Certificate file path is incorrect or relative path is wrong              |
+| `bad decrypt` / `wrong final block length` | Passphrase file content is incorrect or has trailing whitespace           |
+| Certificate works locally but not in CI    | Certificate files not committed or not present at the expected path in CI |
+
+## Using Client Certificates in CI
+
+### Storing certificates securely
+
+Never commit unencrypted private keys to your repository. Instead, store
+certificate material as **CI secrets** and write them to disk at the start of
+your pipeline.
+
+**GitHub Actions example:**
+
+```yaml
+- name: Write client certificates
+  run: |
+    mkdir -p certs
+    echo "${{ secrets.CLIENT_CERT }}"       | base64 --decode > certs/cert.pem
+    echo "${{ secrets.CLIENT_KEY }}"        | base64 --decode > certs/private.key
+    echo "${{ secrets.CLIENT_PASSPHRASE }}" > certs/pem-passphrase.txt
+```
+
+Then reference those paths in `cypress.config.ts`:
+
+```ts
+clientCertificates: [
+  {
+    url: 'https://secure.example.com/**',
+    certs: [
+      {
+        cert: 'certs/cert.pem',
+        key: 'certs/private.key',
+        passphrase: 'certs/pem-passphrase.txt',
+      },
+    ],
+  },
+]
+```
+
+### Adding the certificates directory to `.gitignore`
+
+```
+# .gitignore
+certs/
+```
+
+:::caution
+
+Make sure the `certs/` directory (or whichever path you use) is in `.gitignore`
+so that private keys are never accidentally committed.
+
+:::
+
 ## History
 
-| Version                                  | Changes                                         |
-| ---------------------------------------- | ----------------------------------------------- |
-| [8.0.0](/app/references/changelog#8-0-0) | Added Client Certificates configuration options |
+| Version                                      | Changes                                                              |
+| -------------------------------------------- | -------------------------------------------------------------------- |
+| [15.16.0](/app/references/changelog#15-16-0) | Added support for ECDSA (EC) keys in PEM and PFX client certificates |
+| [8.0.0](/app/references/changelog#8-0-0)     | Added Client Certificates configuration options                      |

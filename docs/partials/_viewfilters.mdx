@@ -12,7 +12,7 @@ By default, every URL visited within a test run is included in reports. However,
 :::info
 **Note:** setting `viewFilters` impacts both Accessibility and UI Coverage reports.
 Nesting this property under an `accessibility` or `uiCoverage` key is
-supported, if you need to split them up.
+supported, if you need to split them up. If a nested value exists it will override one defined at the root level for that product.
 :::
 
 ## Note on product-specific behavior

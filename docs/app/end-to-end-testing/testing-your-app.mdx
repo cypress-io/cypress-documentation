@@ -430,6 +430,9 @@ as the built-in Cypress commands. Lets make the above login example a custom
 command and add it to `cypress/support/commands.js` so it can be leveraged in
 any spec file:
 
+<Tabs>
+<TabItem value="cypress/support/commands.js">
+
 ```js
 // In cypress/support/commands.js
 
@@ -461,6 +464,40 @@ it('does something on a secured page', function () {
 })
 ```
 
+</TabItem>
+<TabItem value="cypress/support/commands.ts">
+
+```ts
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      login(username: string, password: string): Chainable<void>
+    }
+  }
+}
+
+Cypress.Commands.add('login', (username: string, password: string) => {
+  cy.visit('/login')
+
+  cy.get('input[name=username]').type(username)
+
+  // {enter} causes the form to submit
+  cy.get('input[name=password]').type(`${password}{enter}`, { log: false })
+
+  // we should be redirected to /dashboard
+  cy.url().should('include', '/dashboard')
+
+  // our auth cookie should be present
+  cy.getCookie('your-session-cookie').should('exist')
+
+  // UI should reflect this user being logged in
+  cy.get('h1').should('contain', username)
+})
+```
+
+</TabItem>
+</Tabs>
+
 #### Improving performance
 
 You're probably wondering what happened to our advice about logging in "only
@@ -473,6 +510,9 @@ powerful performance tool that lets you cache the browser context associated
 with your user and reuse it for multiple tests without going through multiple
 login flows! Let's modify the custom `cy.login()` command from our previous
 example to use `cy.session()`:
+
+<Tabs>
+<TabItem value="cypress/support/commands.js">
 
 ```js
 Cypress.Commands.add('login', (username, password) => {
@@ -493,6 +533,40 @@ Cypress.Commands.add('login', (username, password) => {
   )
 })
 ```
+
+</TabItem>
+<TabItem value="cypress/support/commands.ts">
+
+```ts
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      login(username: string, password: string): Chainable<void>
+    }
+  }
+}
+
+Cypress.Commands.add('login', (username: string, password: string) => {
+  cy.session(
+    username,
+    () => {
+      cy.visit('/login')
+      cy.get('input[name=username]').type(username)
+      cy.get('input[name=password]').type(`${password}{enter}`, { log: false })
+      cy.url().should('include', '/dashboard')
+      cy.get('h1').should('contain', username)
+    },
+    {
+      validate: () => {
+        cy.getCookie('your-session-cookie').should('exist')
+      },
+    }
+  )
+})
+```
+
+</TabItem>
+</Tabs>
 
 :::info
 

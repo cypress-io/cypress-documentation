@@ -1,0 +1,1202 @@
+---
+title: Optimizing test performance
+description: Diagnose slow Cypress tests and fix them. Covers benchmarks, high-leverage optimizations, CI configuration, and parallelization.
+sidebar_label: Test Performance
+---
+
+<ProductHeading product="app" />
+
+# Optimizing test performance
+
+:::info
+
+##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
+
+- How to diagnose where your suite is losing time
+- What test speed benchmarks to aim for
+- Which optimizations have the highest impact, and in what order to apply them
+- How to parallelize and orchestrate tests in CI to maximize throughput
+- How to use UI Coverage to find over-tested UI and eliminate redundant overhead
+
+:::
+
+## How to use this page
+
+Most performance problems fall into a small number of categories: wrong test type for the job, repeated login overhead, slow real network calls, bloated CI setup, or resource-constrained machines. This page is organized around diagnosing those problems first, then fixing them.
+
+**If you're starting from scratch:** record a baseline run to [Cypress Cloud](/cloud/get-started/introduction), then work through the [priority checklist](#Priority-checklist) in order. The checklist links to detailed guidance for each item.
+
+**If you have a specific symptom:** use the [diagnostic tools](#Diagnosing-your-suite) section to identify the bottleneck, then jump to the relevant strategy.
+
+## Why test speed matters
+
+Slow tests change how your team works. When a CI run takes 30 or more minutes, developers stop waiting for feedback, batch unrelated changes together, and lose the tight iteration loop that makes testing valuable in the first place.
+
+Fast tests enable the opposite: frequent, low-friction feedback that catches regressions close to when they're introduced.
+
+## Benchmarks
+
+Use these ranges to evaluate where your suite stands. If your tests are consistently outside the healthy range, look at the [strategies](#Strategies-to-speed-up-tests) for that level.
+
+### Individual test duration
+
+| Duration      | Assessment                                                              |
+| ------------- | ----------------------------------------------------------------------- |
+| < 3 seconds   | Excellent: typical for tests using stubs and programmatic setup         |
+| 3-10 seconds  | Acceptable: common for end-to-end tests hitting a real server           |
+| 10-30 seconds | Investigate: likely contains unnecessary waits or heavy UI-driven setup |
+| > 30 seconds  | Poor: almost certainly has architectural issues                         |
+
+Component tests should consistently run in under 2 seconds each.
+
+If your tests are in the 10-30 second range, start with [choosing the right test level](#Choose-the-right-test-level) and [caching authentication with `cy.session()`](#Cache-authentication).
+
+### Spec file duration
+
+A spec file is a single file containing one or more tests. Spec duration matters most for [parallelization](#Parallelization): Cypress distributes whole spec files across CI machines, so one long-running spec can leave other machines idle even when most of the suite has finished.
+
+| Duration    | Assessment                                                     |
+| ----------- | -------------------------------------------------------------- |
+| < 1 minute  | Excellent: keeps memory pressure low and parallelizes well     |
+| 1-3 minutes | Acceptable: typical for feature-focused spec files             |
+| 3-5 minutes | Investigate: may bottleneck parallel runs; consider splitting  |
+| > 5 minutes | Poor: split into smaller specs or reduce shared setup overhead |
+
+Aim for spec files with similar durations so parallel machines finish around the same time. Specs under 10 seconds rarely benefit from further splitting: the fixed per-spec overhead (browser launch, video encoding) often exceeds any time savings.
+
+### Full suite duration
+
+| Suite size    | Target (serial)     | Target (parallel, 4+ machines) |
+| ------------- | ------------------- | ------------------------------ |
+| < 50 tests    | < 3 minutes         | --                             |
+| 50-200 tests  | < 10 minutes        | < 3 minutes                    |
+| 200-500 tests | 15-30 minutes       | < 10 minutes                   |
+| 500+ tests    | Use parallelization | < 15 minutes                   |
+
+## Diagnosing your suite
+
+Before optimizing, identify where time is actually going. These tools give you the data.
+
+### Slowest tests
+
+In [Cypress Cloud](/cloud/get-started/introduction), open the **Slowest Tests** analytics report. Tests are sorted by duration. The longest tests are your best candidates to simplify or restructure.
+
+<DocsImage
+  src="/img/cloud/features/analytics/dashboard-analytics-slowest-tests.png"
+  alt="Cloud Analytics Slowest Tests Screenshot"
+/>
+
+### Slowest specs
+
+Open any run, select the **Specs** tab, and switch to **Bar Chart** view. The longest bars are your best candidates to split or simplify. Click any spec to see its individual test results.
+
+<DocsImage
+  src="/img/cloud/runs/specs-bar-chart.png"
+  alt="Specs Bar Chart View"
+/>
+
+### Flaky tests
+
+Tests that retry on every run are costing your suite time on every run. Open **Flaky Test Management** in Cypress Cloud to see which tests have the highest flake rate. Frequently retrying tests are a technical debt item to fix, not a permanently acceptable state.
+
+<DocsImage
+  src="/img/cloud/features/flaky-test-management/flake-analytics.png"
+  alt="Flaky tests analytics"
+/>
+
+### Over-tested UI
+
+Open the **UI Coverage** tab on any run. In the **Tested elements** section, sort by interaction count. Elements with counts far out of proportion with their importance are being passed through by tests that aren't intentionally testing them. See [Eliminate over-tested UI with UI Coverage](#Find-and-eliminate-over-tested-UI-with-UI-Coverage) for the fix.
+
+<Btn
+  label="Request trial ➜"
+  variant="indigo-dark"
+  className="mr-1"
+  href="https://www.cypress.io/ui-coverage?utm_medium=intro-cta&utm_source=docs.cypress.io&utm_content=Request%20trial"
+/>
+<Btn
+  label="See a demo"
+  icon="action-play-small"
+  className="mr-1"
+  href="https://on.cypress.io/ui-coverage-demo-video"
+/>
+<Btn
+  label=" Explore an example project"
+  icon="object-tested-element"
+  className="mr-1"
+  href="https://on.cypress.io/rwa-ui-coverage-views?utm_source=docs.cypress.io&utm_medium=intro-cta&utm_content=Explore%20an%20example%20project"
+/>
+
+<DocsImage
+  src="/img/ui-coverage/guides/cypress-ui-coverage-tested-elements-with-high-interactions.png"
+  alt="Cypress Cloud screenshot showing the Welcome Screen of the Cypress App with the Continue button highlighted and the number of snapshots it appears in"
+/>
+
+### Parallel machine balance
+
+If you're running tests in parallel and your total run time isn't improving as expected when you add machines, open the **Machines** view in Cypress Cloud on any recorded run. It charts spec files by the machine that executed them, showing which specs each machine ran and how long each took. An unbalanced distribution (one machine idle while another is still running long specs) is the most common reason parallelization underperforms. See [Parallelization](#Parallelization) for how to act on what you find.
+
+<DocsImage
+  src="/img/app/parallelization/machines-view.png"
+  alt="Machines view with parallelization"
+/>
+
+### CPU and memory in CI
+
+Run Cypress App with debug logs enabled to print CPU and memory consumption every 10 seconds. If CPU is consistently above 100%, the machine is saturated. Most CI providers also expose utilization graphs in their job UI.
+
+```shell
+DEBUG=cypress:server:util:process_profiler npx cypress run
+```
+
+### Available system resources
+
+```shell
+npx cypress info
+```
+
+```shell
+node -p 'os.cpus()'
+```
+
+## Priority checklist
+
+Apply these optimizations in order. The highest-impact changes are at the top.
+
+1. [Upgrade to the latest Cypress](#Keep-Cypress-up-to-date)
+2. [Choose the right test level](#Choose-the-right-test-level) — moving tests from E2E to component or API level is often the single largest gain
+3. [cy.session() for authentication caching](#Cache-authentication) — eliminates 2-5 seconds per test
+4. [Stub network requests](#Stub-network-requests-strategically) — replaces 100-2000ms real calls with < 20ms stubs
+5. [Programmatic state setup](#Set-up-state-programmatically-not-through-the-UI) — replaces minutes of UI navigation with seconds of API calls
+6. [Parallelization](#Parallelization) — linear scaling with the number of machines
+7. [Spec prioritization and auto cancellation](#Spec-prioritization) — surfaces failures faster; reduces cost of broken builds
+8. [Disable video, use Test Replay](#Disable-video-use-Test-Replay-instead) — removes per-spec encoding overhead from CI; Test Replay provides better debugging at lower cost
+9. [Tag tests with @cypress/grep for CI tiers](#Run-the-right-tests-at-the-right-time) — run a fast smoke or critical subset on every PR; `grepFilterSpecs` skips loading specs that contain no matching tests
+10. [Cache the Cypress binary in CI](#Cache-the-Cypress-binary-in-CI) — prevents a 100 MB+ binary download on every run
+11. [Right-size CI machine resources](#Allocate-enough-CI-machine-resources) — resource starvation presents as slow or flaky tests, not a clear error; fix this before other CI tuning
+12. [Eliminate arbitrary cy.wait()](#Avoid-arbitrary-waits-and-adjust-timeouts)
+13. [Slim support file and imports](#Keep-support-and-spec-imports-lean) — avoids bundling unused code on every spec startup
+14. [Block third-party requests with blockHosts](#Block-third-party-requests-with-blockHosts) — analytics and monitoring services consume time in test environments; blocked requests resolve immediately
+15. [Avoid wildcard cy.intercept('\*')](#Intercept-only-the-requests-you-need) — limits proxy overhead to requests the test actually needs
+16. [Use specific DOM selectors](#Use-specific-selectors) — broad selectors like `*` or `div` force the browser to collect every matching node before filtering
+17. [experimentalFastVisibility](#Enable-faster-visibility-checks) — high impact on complex DOMs; replaces the layout-thrashing legacy visibility algorithm
+18. [experimentalMemoryManagement](#Manage-memory-accumulation) — targeted remedy for suites that slow down over time or crash; measure before committing, as the cleanup cost can exceed the benefit on lighter suites
+19. [Test retries (runMode: 1)](#Use-test-retries-deliberately) — prevents flaky tests from blocking CI; keep the count low and use flake data to fix root causes
+20. [UI Coverage to identify over-tested elements](#Find-and-eliminate-over-tested-UI-with-UI-Coverage) — interaction count data identifies UI your tests repeatedly pass through without intending to test
+21. [cy.prompt for selector maintenance](#Reduce-selector-maintenance-overhead-with-cyprompt) — reduces recurring fix time when the UI changes; cached commands run without AI overhead in CI
+
+## Strategies to speed up tests
+
+### Keep Cypress up to date
+
+Before tuning configuration or restructuring tests, make sure you're running the latest version of Cypress. The Cypress team continuously ships performance improvements: faster test execution, reduced memory overhead, more efficient visibility checks, and improvements to the underlying browser automation. Older versions don't get these improvements.
+
+<Tabs>
+  <TabItem value="npm">
+
+```shell
+npm install cypress@latest --save-dev
+```
+
+  </TabItem>
+
+  <TabItem value="yarn">
+
+```shell
+yarn add cypress@latest --dev
+```
+
+  </TabItem>
+
+  <TabItem value="pnpm">
+
+```shell
+pnpm add --save-dev cypress@latest
+```
+
+  </TabItem>
+</Tabs>
+
+Check the [changelog](/app/references/changelog) for performance-related improvements in recent releases before evaluating other optimizations. The fix you're looking for may already be in the latest version.
+
+### Choose the right test level
+
+The most impactful performance decision you make isn't a configuration flag: it's choosing the right kind of test for each scenario. Writing a full end-to-end test when a component test or API test would do the same job is the source of enormous accumulated overhead in many test suites.
+
+The **testing pyramid** is a useful model: a large base of fast, isolated tests; a smaller middle layer of integration-level tests; and a narrow top layer of full end-to-end tests reserved for critical user journeys.
+
+```
+         ▲
+       /E2E\         ← Slowest: full stack, real server, real routing
+      /─────\           Use for critical user paths only
+     / Comp  \       ← Medium: UI components in isolation, no server
+    /─────────\         Use for component behavior, visual states, events
+   / API Tests \     ← Fast: HTTP calls, no browser, no UI
+  /─────────────\       Use for backend contracts, data validation
+ /───────────────\
+```
+
+#### API tests with `cy.request()`
+
+[`cy.request()`](/api/commands/request) makes HTTP calls directly from the Cypress Node process: no browser rendering, no UI interactions, no full application stack. A local API call returns in under 100ms.
+
+```js
+// Testing that the API correctly rejects duplicate emails:
+// no need to drive a registration form through the UI
+it('rejects duplicate email registration', () => {
+  cy.request('POST', '/api/users', {
+    email: 'test@example.com',
+    password: 'pw',
+  })
+
+  cy.request({
+    method: 'POST',
+    url: '/api/users',
+    body: { email: 'test@example.com', password: 'other' },
+    failOnStatusCode: false,
+  })
+    .its('status')
+    .should('eq', 422)
+})
+```
+
+Use API tests for: verifying request/response contracts, testing validation rules, seeding state for other tests, and any behavior that surfaces through the API rather than the UI.
+
+#### Component tests with Cypress Component Testing
+
+[Cypress Component Testing](/app/core-concepts/testing-types#What-is-Component-Testing) mounts your UI components directly in the browser, without a full application server, routing, or global state. Component tests are typically 5-10x faster than equivalent end-to-end tests and run in 1-2 seconds each.
+
+```js
+// Testing a button component in isolation: no server, no routing, no auth
+import { mount } from 'cypress/react'
+import { SubmitButton } from './SubmitButton'
+
+it('shows a loading spinner while submitting', () => {
+  mount(<SubmitButton isLoading={true} label="Save" />)
+  cy.get('[data-cy="spinner"]').should('be.visible')
+  cy.get('[data-cy="label"]').should('not.exist')
+})
+```
+
+Use component tests for: individual component behavior, prop-driven visual states, user interaction events, and any UI logic that doesn't require a running backend.
+
+If you currently have an end-to-end test with fully stubbed network requests testing a single component's rendering, a component test is almost always a better fit: faster, more isolated, and easier to maintain.
+
+#### End-to-end tests
+
+E2E tests run the full stack: real browser, real server, real routing, real network. They're the slowest category (typically 3-15 seconds per test) and the most expensive to maintain. Reserve them for scenarios where the value of testing the full integration outweighs the cost.
+
+```
+End-to-end tests are the right choice when:
+  ✅ The critical user journey spans multiple systems (auth, API, database, email)
+  ✅ You're testing a cross-system flow that can't be meaningfully stubbed
+  ✅ You need confidence that the full stack works together before deploying
+
+Component or API tests are a better fit when:
+  ✅ You're testing UI behavior in isolation from the server
+  ✅ You're testing an API contract without caring about the UI
+  ✅ The scenario can be reproduced fully with mocked or stubbed data
+```
+
+#### A healthy distribution
+
+| Test type            | Share  | Typical duration  |
+| -------------------- | ------ | ----------------- |
+| API (`cy.request()`) | 30-40% | < 100ms each      |
+| Component tests      | 30-40% | 1-2 seconds each  |
+| End-to-end tests     | 20-30% | 3-15 seconds each |
+
+The exact ratios depend on your application, but the principle holds: every test you move from E2E to component or API level gets faster, cheaper to run, and easier to keep green.
+
+### Set a global `baseUrl`
+
+Without a `baseUrl`, Cypress loads a blank page on startup then reloads when `cy.visit()` is first called. This causes a visible delay and wastes several hundred milliseconds at the start of every test file.
+
+:::cypress-config-example
+
+```ts
+{
+  e2e: {
+    baseUrl: 'http://localhost:1234', // ✅ Faster approach: set a global baseUrl
+  },
+}
+```
+
+:::
+
+With `baseUrl` set, Cypress opens directly to your application. See [Setting a Global baseUrl](/app/core-concepts/best-practices#Setting-a-Global-baseUrl) for details.
+
+There is a second, more significant benefit: Cypress verifies that `baseUrl` is reachable before running any tests. If the URL is not available, Cypress exits immediately with a clear error rather than starting the suite. This surfaces a broken server or bad environment variable in the first second of a run rather than 10 minutes in, behind a cascade of confusing failures.
+
+### Cache authentication
+
+A full login flow (filling a form, submitting, waiting for a redirect) typically takes 2-5 seconds per test. Run this in 100 tests and you've added 3-8 minutes of pure authentication overhead to your suite:
+
+```js
+// ❌ Slower approach: full UI login in beforeEach
+beforeEach(() => {
+  cy.visit('/login')
+  cy.get('[data-cy="username"]').type('admin@example.com')
+  cy.get('[data-cy="password"]').type('password123')
+  cy.get('[data-cy="submit"]').click()
+  cy.url().should('include', '/dashboard')
+})
+```
+
+[`cy.session()`](/api/commands/session) captures the full browser context (cookies, `localStorage`, `sessionStorage`) after a login sequence and restores that snapshot in subsequent tests, without repeating the login flow. A session that takes 3 seconds to establish the first time is restored in milliseconds on every subsequent test.
+
+```js title="cypress/support/commands.js"
+// ✅ Faster approach: cache authentication with cy.session()
+Cypress.Commands.add('login', (username, password) => {
+  cy.session(
+    [username, password],
+    () => {
+      cy.visit('/login')
+      cy.get('[data-cy="username"]').type(username)
+      cy.get('[data-cy="password"]').type(password)
+      cy.get('[data-cy="submit"]').click()
+      cy.url().should('include', '/dashboard')
+    },
+    {
+      validate() {
+        cy.getCookie('session').should('exist')
+      },
+    }
+  )
+})
+```
+
+```js title="cypress/e2e/test.cy.js"
+beforeEach(() => {
+  cy.login('admin@example.com', 'password123')
+  cy.visit('/dashboard')
+})
+```
+
+`cy.session()` is the single highest-impact change most teams can make to their suite. A 200-test suite with 3-second logins saves 10 minutes of wall-clock time by caching the session.
+
+### Set up state programmatically, not through the UI
+
+Navigating through multiple screens to build state for a test is slow and brittle. Use `cy.request()` or `cy.task()` to seed state directly, then navigate straight to the page under test.
+
+#### Use `cy.request()` for API seeding
+
+```js
+// ❌ Slower approach: navigating through UI to create test data
+beforeEach(() => {
+  cy.login('admin@example.com', 'password123')
+  cy.visit('/products/new')
+  cy.get('[data-cy="name"]').type('Widget Pro')
+  cy.get('[data-cy="price"]').type('49.99')
+  cy.get('[data-cy="save"]').click()
+  cy.url().should('match', /\/products\/\d+/)
+})
+
+// ✅ Faster approach: seed data via API, then visit the page directly
+beforeEach(() => {
+  cy.login('admin@example.com', 'password123')
+  cy.request('POST', '/api/products', {
+    name: 'Widget Pro',
+    price: '49.99',
+  }).then(({ body }) => {
+    cy.visit(`/products/${body.id}`)
+  })
+})
+```
+
+#### Use `cy.task()` for database seeding
+
+For operations that can't go through an HTTP API (direct database writes, file system operations, or third-party service setup), use [`cy.task()`](/api/commands/task) to run Node.js code in your Cypress config:
+
+```js title="cypress.config.js"
+import { defineConfig } from 'cypress'
+import { db } from './src/db'
+
+export default defineConfig({
+  e2e: {
+    setupNodeEvents(on) {
+      on('task', {
+        // ✅ Faster approach: seed data via API, then visit the page directly
+        async seedUser(userData) {
+          const user = await db.users.create(userData)
+          return user.id
+        },
+        async resetDatabase() {
+          await db.truncateAll()
+          return null
+        },
+      })
+    },
+  },
+})
+```
+
+```js title="cypress/e2e/test.cy.js"
+beforeEach(() => {
+  cy.task('resetDatabase')
+  cy.task('seedUser', { email: 'test@example.com', role: 'admin' })
+})
+```
+
+Direct database operations are typically 10-100x faster than driving the same action through the UI.
+
+#### Prefer `beforeEach` for cleanup
+
+`afterEach` runs even when a test fails, and if it touches the server it adds latency to every test transition. More importantly, if Cypress is reloaded mid-test, `afterEach` won't run at all, leaving your state inconsistent.
+
+Move cleanup to `beforeEach` so it always runs before each test, whether the previous test passed, failed, or was interrupted:
+
+```js
+// ❌ Anti-pattern: cleanup in afterEach
+afterEach(() => {
+  cy.request('POST', '/api/reset-db')
+})
+
+// ✅ Faster approach: cleanup in beforeEach
+beforeEach(() => {
+  cy.request('POST', '/api/reset-db')
+})
+```
+
+See [Using after or afterEach Hooks](/app/core-concepts/best-practices#Using-after-Or-afterEach-Hooks) for more.
+
+### Group related assertions to reduce per-test overhead
+
+Writing one assertion per test causes Cypress to reset the browser context, run all hooks, and navigate to the test page for each assertion:
+
+```js
+// ❌ Slower approach: unnecessary overhead from per-test browser resets
+describe('user profile', () => {
+  beforeEach(() => {
+    cy.visit('/profile')
+  })
+
+  it('shows the avatar', () => {
+    cy.get('[data-cy="avatar"]').should('be.visible')
+  })
+
+  it('shows the username', () => {
+    cy.get('[data-cy="username"]').should('be.visible')
+  })
+
+  it('shows the email', () => {
+    cy.get('[data-cy="email"]').should('be.visible')
+  })
+})
+
+// ✅ Faster approach: group related assertions in a single test
+it('shows profile information', () => {
+  cy.visit('/profile')
+  cy.get('[data-cy="avatar"]').should('be.visible')
+  cy.get('[data-cy="username"]').should('be.visible')
+  cy.get('[data-cy="email"]').should('be.visible')
+})
+```
+
+Each Cypress test incurs a fixed overhead for browser context reset and hook execution. Grouping related assertions eliminates this overhead without sacrificing clarity. See [Creating Tiny Tests With A Single Assertion](/app/core-concepts/best-practices#Creating-Tiny-Tests-With-A-Single-Assertion) for a deeper discussion.
+
+### Stub network requests strategically
+
+Tests that wait for real API responses are bounded by server latency: database queries, downstream services, and network transit all add up. Stub the responses in tests that aren't specifically testing server behavior:
+
+```js
+// ❌ Slower approach: test waits for a real API call that takes 800ms+
+cy.visit('/dashboard')
+cy.get('[data-cy="transactions"]').should('have.length.greaterThan', 0)
+
+// ✅ Faster approach: stub the response: returns in < 20ms
+cy.intercept('GET', '/api/transactions', { fixture: 'transactions.json' }).as(
+  'getTransactions'
+)
+cy.visit('/dashboard')
+cy.wait('@getTransactions')
+cy.get('[data-cy="transactions"]').should('have.length.greaterThan', 0)
+```
+
+Reserve true end-to-end tests for critical paths (login, checkout, core workflows), and stub responses for the remaining tests that focus on UI behavior:
+
+```js
+// ✅ Faster approach: only a handful of tests need real server responses
+it('creates a new order (integration)', () => {
+  cy.request('POST', '/api/orders', { productId: 1, qty: 2 }).then(
+    ({ body }) => {
+      expect(body).to.have.property('orderId')
+    }
+  )
+})
+
+// ✅ Faster approach: the majority of UI tests can use stubs
+it('shows an error message when the order fails', () => {
+  cy.intercept('POST', '/api/orders', {
+    statusCode: 422,
+    body: { error: 'Insufficient stock' },
+  }).as('createOrder')
+
+  cy.visit('/checkout')
+  cy.get('[data-cy="place-order"]').click()
+  cy.wait('@createOrder')
+  cy.get('[data-cy="error-message"]').should('contain', 'Insufficient stock')
+})
+```
+
+Stubbed requests return in < 20ms. Real requests to a local dev server typically return in 100-500ms; requests to a remote staging server may take 500ms-2 seconds each.
+
+See the [Network Requests guide](/app/guides/network-requests) for a full discussion of when to stub vs. use real server responses.
+
+#### Intercept only the requests you need
+
+Using a wildcard pattern to observe or intercept every HTTP request creates real overhead. Cypress routes every intercepted request through its proxy, so every network call the page makes is inspected, matched, and processed. Broad wildcard patterns that match dozens or hundreds of requests per page load multiply that cost across the entire suite.
+
+```js
+// ❌ Anti-pattern: intercepts every request; Cypress proxies each one
+cy.intercept('*').as('anyRequest')
+
+// ✅ Faster approach: only intercept the specific requests your test needs
+cy.intercept('GET', '/api/users*').as('getUsers')
+cy.intercept('POST', '/api/orders').as('createOrder')
+```
+
+A page that fires 50 network requests (images, analytics pings, feature flag polls, error monitoring payloads) routes all 50 through the intercept handler when using `*`. Intercept only the requests your test explicitly needs to observe, stub, or wait on.
+
+### Block third-party requests with `blockHosts`
+
+Most web applications load resources from third-party services in production: analytics platforms, error monitoring (Sentry, Datadog), A/B testing tools, customer chat widgets. In a test environment these requests are noise: they have nothing to do with your application's behavior under test, but they still consume time.
+
+Use [`blockHosts`](/app/references/configuration#blockHosts) to block these domains at the Cypress network layer. Blocked requests are never sent; Cypress responds immediately with a `503` status code.
+
+:::cypress-config-example
+
+```js
+// ✅ Faster approach: block third-party requests with blockHosts
+{
+  e2e: {
+    blockHosts: [
+      '*google-analytics.com',
+      '*sentry.io',
+      '*datadoghq.com',
+      '*.optimizely.com',
+      '*.intercom.io',
+    ],
+  }
+}
+```
+
+:::
+
+`blockHosts` accepts a string or an array of strings. Glob patterns (`*`) are matched using [minimatch](https://github.com/isaacs/minimatch). The `x-cypress-matched-blocked-host` response header on each blocked request identifies which rule matched, which is useful if a block is matching something unintended.
+
+### Use specific selectors
+
+Using an overly broad selector forces Cypress to collect and evaluate the entire matched set before any filter runs:
+
+```js
+// ❌ Anti-pattern: queries every element in the DOM, then filters
+cy.get('*').filter('[data-cy="submit"]')
+
+// ✅ Faster approach: query specifically for the element you need
+cy.get('[data-cy="submit"]')
+```
+
+Selectors like `*`, `div`, or `section` that match hundreds or thousands of DOM nodes create unnecessary work for both the browser's query engine and Cypress's element processing. Always write the most specific selector that uniquely identifies the element you need.
+
+### Keep support and spec imports lean
+
+Before Cypress runs any test, it [preprocesses](/api/node-events/preprocessors-api) your support file and spec files: compiling and bundling them. Everything your files import gets pulled into that bundle.
+
+The support file (`cypress/support/e2e.js`) is the highest-risk location because it runs before every single spec file. An import added there is paid on every startup.
+
+#### Node.js-only modules in the browser bundle
+
+Importing modules that only work in Node.js (database drivers, `fs`, `path`, ORMs, server-side SDKs) forces the bundler to either throw an error or shim them with heavy polyfills.
+
+```js title="cypress/support/e2e.js"
+// ❌ Anti-pattern: importing Node.js-only code into a support file
+import { db } from '../../src/db' // database driver: Node.js only
+import fs from 'fs' // built-in: not available in browser
+import { sendEmail } from '../../src/mailer' // server SDK: Node.js only
+```
+
+```js title="cypress.config.js"
+// ✅ Faster approach: move Node.js code to cy.task() in cypress.config.js:
+// task code runs in Node and is never bundled into the browser
+setupNodeEvents(on) {
+  on('task', {
+    async seedDatabase() {
+      await db.seed()
+      return null
+    }
+  })
+}
+```
+
+See [cy.task()](/api/commands/task) for the full API.
+
+#### Avoid barrel imports that pull in your entire codebase
+
+Importing a single named export from a barrel file causes the bundler to process every module the barrel re-exports, even the ones your test never uses.
+
+```js title="cypress/support/e2e.js"
+// ❌ Anti-pattern: barrel import drags in the entire utils module graph
+import { formatDate } from '../../src/utils'
+
+// ✅ Faster approach: import directly from the specific file
+import { formatDate } from '../../src/utils/formatDate'
+```
+
+#### What a lean support file looks like
+
+```js title="cypress/support/e2e.js"
+// Custom commands and queries
+import './commands'
+
+// Third-party Cypress plugins
+import '@cypress/code-coverage/support'
+
+// Global hooks that apply to every test
+beforeEach(() => {
+  cy.task('resetDatabase')
+})
+```
+
+Everything else belongs in `cypress.config.js` (as tasks) or imported directly in the individual spec files that need them.
+
+### Avoid arbitrary waits and adjust timeouts
+
+The most common performance anti-pattern is waiting for a fixed number of milliseconds:
+
+```js
+// ❌ Slower approach: wastes time even when the element appears in 200ms
+cy.get('[data-cy="results"]').click()
+cy.wait(3000)
+cy.get('[data-cy="modal"]').should('be.visible')
+
+// ✅ Faster approach: let Cypress retry until the assertion passes
+cy.get('[data-cy="results"]').click()
+cy.get('[data-cy="modal"]').should('be.visible')
+```
+
+If you find yourself reaching for `cy.wait(number)`, the right fix is almost always to add an explicit assertion that Cypress can retry. See [Unnecessary Waiting](/app/core-concepts/best-practices#Unnecessary-Waiting) in Best Practices for more examples.
+
+The default command timeout is 4 seconds ([`defaultCommandTimeout`](/app/references/configuration#Timeouts)). For operations you know should be nearly instant, a lower timeout fails the test faster:
+
+```js
+// ✅ Faster approach: a synchronous DOM assertion after a user action should not take 4 seconds
+cy.get('[data-cy="toast-success"]', { timeout: 1000 }).should('be.visible')
+```
+
+Conversely, for operations with known latency (large file uploads, slow reports), increase the timeout rather than adding a fixed `cy.wait()`:
+
+```js
+// ✅ Faster approach: give slow report generation up to 30 seconds
+cy.get('[data-cy="report-ready"]', { timeout: 30000 }).should('be.visible')
+```
+
+### Enable faster visibility checks
+
+Every time Cypress asserts or checks that an element is visible, it runs a visibility detection algorithm. In applications with complex, deeply nested DOM structures, this check can be expensive: the legacy visibility check walks up the ancestor tree and reads CSS properties at each level, repeatedly triggering layout recalculation.
+
+[`experimentalFastVisibility`](/app/references/experiments#Experimental-Fast-Visibility) replaces the legacy visibility check with a two-stage approach: it first calls the browser's built-in `checkVisibility()` method, then uses an adaptive point-sampling algorithm to confirm coverage.
+
+Enable it globally in your Cypress configuration:
+
+:::cypress-config-example
+
+```js
+{
+  experimentalFastVisibility: true // ✅ Faster approach: enable fast visibility
+}
+```
+
+:::
+
+You can also enable or disable it at the suite or test level when migrating incrementally:
+
+```js
+describe('Dashboard', { experimentalFastVisibility: true }, () => {
+  it('loads correctly', () => {
+    // uses fast visibility
+  })
+
+  it('legacy edge case', { experimentalFastVisibility: false }, () => {
+    // uses legacy algorithm for this one test
+  })
+})
+```
+
+This flag is most impactful on suites with many visibility assertions or suites that run against applications with large, deeply nested component trees.
+
+### Manage memory accumulation
+
+In a long-running Cypress test suite, the browser accumulates memory across tests. References to DOM nodes, event listeners, and application state from earlier tests can linger in the browser's heap even after Cypress clears the page. As memory pressure builds, the browser can slow down and in severe cases crash mid-run.
+
+[`experimentalMemoryManagement`](/app/references/experiments) enables improved memory management for Chromium-based browsers, actively clearing memory between tests. It does this by clearing the browser's heap after each test.
+
+:::cypress-config-example
+
+```js
+{
+  experimentalMemoryManagement: true // ✅ Faster approach: enable memory management
+}
+```
+
+:::
+
+:::info
+
+`experimentalMemoryManagement` only applies to Chromium-based browsers (Chrome, Edge, Electron). It has no effect in Firefox or WebKit.
+
+:::
+
+This flag is not a blanket speed improvement. Clearing memory between tests takes time, paid on every test transition. If your suite is not under meaningful memory pressure, enabling this flag may slow it down rather than speed it up. You should measure the performance impact before and after enabling this flag.
+
+Enable it only if your suite gets progressively slower as it runs, or if the browser crashes before completion. Both symptoms point to memory accumulation. If your suite runs at a consistent pace from start to finish and doesn't crash, memory is not the bottleneck.
+
+### Use test retries deliberately
+
+Test retries keep CI moving when flaky tests fail, but they come with an execution cost that compounds quickly if configured carelessly.
+
+#### The team velocity benefit
+
+When a flaky test fails, without retries the entire CI run fails. A developer has to notice, investigate, determine it's likely flake rather than a real regression, and manually re-trigger the run. Depending on suite duration, this can cost 30-60 minutes per occurrence, and in a busy team it creates a queue of blocked pull requests.
+
+With retries enabled, Cypress automatically re-runs the failing test up to the configured number of additional attempts. A test that fails on the first attempt but passes on the second is marked as passed and the run continues. Cypress Cloud surfaces these automatically-recovered tests with a **Flaky** badge so you can track which tests are retrying most often.
+
+#### The execution cost
+
+Every retry is a full re-execution of the test, including its `beforeEach` and `afterEach` hooks. A test configured with `retries: 2` can run up to three times before being marked as failed.
+
+| Test duration | Retries      | Worst-case added time per flaky test |
+| ------------- | ------------ | ------------------------------------ |
+| 5s test       | `retries: 1` | +5s                                  |
+| 5s test       | `retries: 2` | +10s                                 |
+| 15s test      | `retries: 2` | +30s                                 |
+| 15s test      | `retries: 5` | +75s                                 |
+
+Applied globally across a suite where 10% of tests have some flakiness, a high retry count can add many minutes to every CI run.
+
+#### Configure retries deliberately
+
+Set retries differently for CI runs and local development. During `cypress open`, you want to see failures immediately so you can fix them at the source. In `cypress run` , a small number of retries provides a safety net without excessive overhead:
+
+:::cypress-config-example
+
+```ts
+{
+  retries: {
+    runMode: 1,    // ✅ Faster approach: one retry in CI catches most transient flake
+    openMode: 0,  // no retries locally: fail fast so you fix the root cause
+  },
+}
+```
+
+:::
+
+One retry in `runMode` handles the vast majority of genuine transient flake.
+
+You can also apply retries at the suite level when a specific area of your application is known to be flakier than the rest:
+
+```js
+describe('Payment flow', { retries: { runMode: 2, openMode: 0 } }, () => {
+  it('processes a card payment', () => {
+    // ...
+  })
+})
+```
+
+Retries are a safety net, not a fix. A test that retries on every run is costing your suite time on every run. Use Cypress Cloud's [Flake Detection](/cloud/features/flaky-test-management#Flake-Detection) to prioritize which tests to address: the highest flake rate and most retries are the ones adding the most cumulative overhead.
+
+### Find and eliminate over-tested UI with UI Coverage
+
+Test suites grow organically. A welcome screen, an onboarding modal, or a cookie consent banner gets tested in every spec because every spec visits the page, not because every spec is intentionally testing that element. Over time, dozens of tests accumulate interactions with the same piece of UI that only needs to be verified once.
+
+[Cypress UI Coverage](/ui-coverage/get-started/introduction) surfaces this from the other direction. While most test coverage tools tell you what's not tested, UI Coverage also shows you what's tested far more than it needs to be: elements with disproportionately high interaction counts that signal redundancy across your suite.
+
+#### How to find over-tested elements
+
+In [Cypress Cloud](/cloud/get-started/introduction), open any recorded run and navigate to the **UI Coverage** tab. In the **Tested elements** section, elements are listed with their interaction counts and the number of snapshots they appear in. Sort by highest interaction count and look for elements whose numbers are far out of proportion with how important they are.
+
+An element interacted with 5 times in a suite of 50 tests makes sense. An element interacted with 184 times, like a **Continue** button on a first-time welcome screen, signals that most of those tests are passing through the element, not testing it.
+
+<DocsImage
+  src="/img/ui-coverage/guides/cypress-ui-coverage-tested-elements-with-high-interactions.png"
+  alt="Cypress Cloud screenshot showing the Welcome Screen of the Cypress App with the Continue button highlighted and the number of snapshots it appears in"
+/>
+
+#### The fix: test once, bypass everywhere else
+
+Once you've identified an over-tested element:
+
+1. Write one test that deliberately exercises the full flow: verifying the welcome screen appears, its content is correct, and the continue action works as expected.
+2. Add a bypass for all other tests: a custom command that sets the application state (a cookie, a `localStorage` flag, an API call) to mark the user as having already seen the flow.
+
+```js title="cypress/support/commands.js"
+// One test verifies the welcome flow end-to-end
+it('shows the welcome screen to first-time visitors', () => {
+  cy.visit('/')
+  cy.contains('Welcome').should('be.visible')
+  cy.get('[data-cy="continue"]').click()
+  cy.contains('Dashboard').should('be.visible')
+})
+```
+
+```ts title="cypress/support/commands.ts"
+// All other tests skip it programmatically
+Cypress.Commands.add('skipWelcome', () => {
+  cy.setCookie('welcome_dismissed', 'true')
+})
+```
+
+```js title="cypress/e2e/user-flow.cy.js"
+// In every spec that doesn't test the welcome screen
+beforeEach(() => {
+  cy.visit('/')
+  cy.skipWelcome()
+})
+```
+
+The cookie or flag approach mirrors exactly what your application does when a returning user visits. After updating your tests and recording a new run, the UI Coverage report shows the immediate impact: the element appears in far fewer snapshots, the interaction count drops to match the tests that actually need it, and all those bypassed tests start and finish faster.
+
+### Reduce selector maintenance overhead with cy.prompt
+
+Broken selectors are one of the quietest drags on test suite throughput. When a developer renames a class, changes a data attribute, or restructures a component, every test that referenced the old selector fails. Diagnosing and updating those selectors takes time, often during a CI run everyone is waiting on.
+
+[`cy.prompt`](/api/commands/prompt) approaches this problem from both directions: it eliminates the time spent initially writing selectors, and it reduces the time spent repairing them when the UI changes.
+
+#### How caching makes cy.prompt fast after the first run
+
+When `cy.prompt` runs for the first time, it calls an AI model to interpret your natural language steps, evaluate the DOM, and generate Cypress commands. That generated code is then cached and shared across all machines and CI environments. Every subsequent run uses the cached code without calling the AI at all.
+
+```js
+// First run: AI generates the commands and caches them
+// All future runs: cache is used, no AI call
+cy.prompt([
+  'Visit /products',
+  'Filter by category "Electronics"',
+  'Sort by price high to low',
+  'Verify the product count is 25',
+])
+```
+
+#### Self-healing: automatic repair of broken selectors
+
+When a selector in the cached code becomes invalid, `cy.prompt` self-heals automatically on the next run rather than failing.
+
+Self-healing surfaces as a visible tag in the Command Log and in your Cypress Cloud run results, so you can immediately see which steps healed and what element they resolved to.
+
+:::note
+
+`cy.prompt` requires a [Cypress Cloud account](/cloud/get-started/introduction) and is available on all plan types. See the full [cy.prompt reference](/api/commands/prompt) for limitations and setup.
+
+:::
+
+## Speeding up tests in CI
+
+Single-machine, serial test runs have a ceiling. Once your suite exceeds 10-15 minutes, the right lever is distributing the work across multiple machines.
+
+### Parallelization
+
+[Parallelization](/cloud/features/smart-orchestration/parallelization) distributes your spec files across multiple CI machines, with Cypress Cloud orchestrating which machine runs which spec based on historical duration data. Adding a second machine roughly halves your run time; the gains compound as you add more.
+
+```shell
+cypress run --record --key=<record-key> --parallel
+```
+
+From the [Kitchen Sink example](/cloud/features/smart-orchestration/parallelization#Example): a 1:51 serial run became a 59-second run by adding a second machine, a 53% reduction.
+
+For large suites, 4-8 machines typically brings runs under 10 minutes. Diminishing returns set in when per-spec overhead (browser launch, video encoding) dominates over actual test time.
+
+To evaluate whether your machines are being used efficiently, use the [Machines view](#Parallel-machine-balance) in Cypress Cloud. It shows which specs each machine ran, how long each took, and how balanced the workload was across the run. If one machine finishes in 3 minutes while another is still running at 12, the distribution is uneven and adding more machines won't help until the imbalance is resolved.
+
+<DocsImage
+  src="/img/app/parallelization/machines-view.png"
+  alt="Machines view in Cypress Cloud showing the Machines tab with the Machines view"
+/>
+
+### Allocate enough CI machine resources
+
+A CI machine running Cypress hosts several resource-hungry processes simultaneously: Cypress itself, the browser, your application server, and any background services your app depends on. If the machine doesn't have enough CPU or memory to run all of these comfortably, they start competing, and the result is slower tests.
+
+Resource starvation is one of the hardest performance problems to diagnose because it presents as flaky, slow, or apparently random failures rather than a clear configuration error.
+
+#### Signs your machine is resource-constrained
+
+- Tests get progressively slower as the run continues
+- The browser crashes mid-run with no clear test failure
+- CI provider analytics show CPU or memory consistently near 100% during runs
+- Video recording is choppy or missing frames (although we recommend using Test Replay instead)
+
+See [Diagnosing your suite](#Diagnosing-your-suite) for how to confirm this with `DEBUG=cypress:server:util:process_profiler`.
+
+#### What to do when you see it maxing out
+
+Increase the resource class for the job that runs Cypress. You'll find the most up-to-date information on how to do this in your CI provider's documentation. For example, as a reference point, the [Cypress Real World App](https://github.com/cypress-io/cypress-realworld-app) runs comfortably on:
+
+- **CircleCI**: `resource_class: large`: 4 vCPUs, 8 GB RAM
+- **GitHub Actions**: standard Ubuntu runner: 4 vCPUs, 16 GB RAM
+
+Also see [experimentalMemoryManagement](#Manage-memory-accumulation) for information on how to improve memory management.
+
+### Spec prioritization
+
+[Spec Prioritization](/cloud/features/smart-orchestration/spec-prioritization) runs specs that failed in the last run first. When combined with [Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation), this surfaces failures faster and cancels the rest of the run early, saving CI machine-minutes on runs that are already broken.
+
+A suite that normally surfaces a failure at the 20-minute mark can surface it in 2-3 minutes if the failing spec runs first.
+
+### Auto cancellation
+
+[Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation) terminates a run once a configurable number of test failures is reached. If your suite has a systemic failure (a broken build, a missing environment variable, a service that failed to start, or a bad deployment), there's no value in running 200 more tests. Cancel early, surface the failure immediately, and let developers fix the root cause.
+
+<DocsImage
+  src="/img/cloud/features/smart-orchestration/auto-cancellation-active.png"
+  alt="Enable Auto Cancellation"
+/>
+
+### Disable video: use Test Replay instead
+
+Video recording is one of the most common sources of hidden CI overhead. When `video: true` is set and you're recording to Cypress Cloud, Cypress captures a video for every spec file, then compresses it and uploads it before the next spec can start. On machines with limited CPU (typical of CI environments), the compression step is the most expensive part. This overhead is paid even for specs where every test passed and no one will ever watch the recording.
+
+:::info
+
+Video recording is disabled by default in Cypress. If you've never set `video: true` in your configuration, you're already skipping this overhead. This recommendation applies if you currently have video enabled.
+
+:::
+
+Disable video in your Cypress configuration:
+
+:::cypress-config-example
+
+```js
+{
+  video: false // ✅ Faster approach: disable video, use Test Replay instead
+}
+```
+
+:::
+
+#### Use Test Replay for CI debugging instead
+
+The reason teams enable video is to have something to look at when a CI test fails. [Test Replay](/cloud/features/test-replay) is a better answer to that problem. It's available on all Cypress Cloud plans at no additional cost and requires no configuration changes: it's automatically available for any run recorded to Cypress Cloud.
+
+Where a video gives you a passive playback of the screen, Test Replay gives you an interactive, time-travel debugger: you can inspect the DOM at any point during the test, examine network requests and their responses, read console logs, and see JavaScript errors, exactly as they occurred in CI.
+
+```
+Video: passive playback of the screen
+Test Replay: full interactive access to DOM, network, console, and errors at every moment of the run
+```
+
+<DocsVideo
+  src="https://youtube.com/embed/vFLShoCM8pA"
+  title="Test Replay Product Demo"
+/>
+
+Test Replay captures structured event data rather than encoding video frames, so the payload is typically far smaller than a compressed video file. You can inspect the size of the Test Replay data that is uploaded to the Cloud
+and the time spent uploading the Test Replay data by inspecting the standard output of the test run.
+
+```shell
+  (Uploading Cloud Artifacts)
+
+  - Video - Nothing to upload
+  - Screenshot - Nothing to upload
+  - Test Replay - 298 kB
+
+  Uploading Cloud Artifacts: .
+
+  (Uploaded Cloud Artifacts)
+
+  - Test Replay - Done Uploading 298 kB in 633.40ms 1/1
+```
+
+### Run the right tests at the right time
+
+Not every CI event warrants a full test suite run. A push to a feature branch needs fast feedback. A merge to `main` warrants the full suite. Running everything on every event may waste CI time and slows developer feedback loops.
+
+[`@cypress/grep`](https://github.com/cypress-io/cypress/tree/develop/npm/grep) is the official Cypress plugin for filtering tests by title or tag. Used with a tagging strategy, it lets you define tiered CI pipelines: a fast smoke suite that runs on every PR and a comprehensive suite that runs before merging.
+
+#### Installation and setup
+
+```shell
+npm install --save-dev @cypress/grep
+```
+
+Register the plugin in your support file:
+
+```js title="cypress/support/e2e.js"
+import { register as registerCypressGrep } from '@cypress/grep'
+registerCypressGrep()
+```
+
+Add the node plugin to your config to enable spec pre-filtering (required for the key performance feature described below):
+
+```js title="cypress.config.js"
+import { plugin as cypressGrepPlugin } from '@cypress/grep/plugin'
+
+export default defineConfig({
+  e2e: {
+    setupNodeEvents(on, config) {
+      cypressGrepPlugin(config)
+      return config
+    },
+  },
+})
+```
+
+#### Tag your tests
+
+Add tags to tests and describe blocks using the test configuration object:
+
+```js
+it('logs in with valid credentials', { tags: '@smoke' }, () => { ... })
+
+it('exports a report as CSV', { tags: ['@regression', '@slow'] }, () => { ... })
+
+describe('Checkout flow', { tags: '@critical' }, () => {
+  it('processes a card payment', () => { ... })
+  it('applies a discount code', () => { ... })
+})
+```
+
+Common tagging strategies:
+
+| Tag           | When to run                                     |
+| ------------- | ----------------------------------------------- |
+| `@smoke`      | Every PR: fast coverage of critical paths       |
+| `@critical`   | Every PR: core user flows that must always pass |
+| `@regression` | Before merging to main: full coverage           |
+| `@slow`       | Nightly or scheduled runs only                  |
+
+#### Run tagged subsets in CI
+
+```shell
+# PR check: only smoke and critical tests
+npx cypress run --expose grepTags="@smoke @critical",grepFilterSpecs=true,grepOmitFiltered=true
+
+# Pre-merge: full suite minus known slow tests
+npx cypress run --expose grepTags="-@slow",grepFilterSpecs=true
+
+# Nightly: everything
+npx cypress run
+```
+
+#### `grepFilterSpecs`: the key performance option
+
+Without `grepFilterSpecs`, Cypress loads and compiles every spec file before filtering. Even if only 5 of your 80 spec files contain `@smoke` tests, all 80 are preprocessed before a single test runs.
+
+With `grepFilterSpecs: true`, Cypress reads the spec files first, identifies which ones contain matching tests, and only loads and compiles those. For a large suite where a smoke tag covers 10-15% of tests, this eliminates preprocessor overhead for the other 85-90% of spec files on every PR run.
+
+`grepOmitFiltered: true` is a complementary option: without it, non-matching tests are marked as pending. With it, they are skipped entirely, keeping run output clean.
+
+#### Tradeoffs of selective test runs
+
+Filtering tests is a powerful technique for faster CI feedback, but it comes with a cost: Cypress Cloud comparisons are most meaningful when the same set of tests runs across branches. Before committing to a tiered strategy, consider how filtered runs affect each Cloud feature:
+
+- **[Branch Review](/cloud/features/branch-review)**: Branch Review compares test results between your PR branch and the base branch to surface regressions. If your PR branch runs only `@smoke` while `main` runs the full suite, tests that exist on `main` but weren't selected on the PR branch show up as missing — not as passing. The comparison loses accuracy when the test sets are asymmetric.
+- **[Test Replay](/cloud/features/test-replay)**: Tests that are filtered out never run, so they produce no replay. If a previously passing test is excluded from every PR run via `@smoke`, failures in that test won't surface until a full run and there will be no replay to compare against.
+- **[UI Coverage](/ui-coverage/get-started/introduction)**: UI Coverage scores are derived from the set of tests that ran. A filtered run covers a narrower portion of your UI, producing a lower score than a full run would. Comparing a `@smoke`-only PR run against a full nightly run makes coverage appear to regress when it hasn't; the numbers simply reflect different test scopes.
+- **[Accessibility scores](/accessibility/get-started/introduction)**: The same issue applies to Accessibility scores. Partial runs produce partial a11y coverage. Cross-branch score comparisons are only meaningful when the same test scope runs on both sides.
+
+The recommended approach is to run filtered subsets for fast pre-flight checks, but ensure at least one full-suite run (on merge to `main` or nightly) that feeds the Cloud comparison features. Use [run tags](/app/references/command-line#cypress-run-tag-lt-tag-gt) or separate Cypress Cloud projects to keep full runs and filtered runs distinct, so your dashboards and comparisons always reflect complete data.
+
+### Cache the Cypress binary in CI
+
+Every Cypress installation includes two pieces: the `cypress` npm package and a platform-specific binary downloaded separately during `postinstall`. The binary is over 100 MB. Downloading it from scratch on every CI run is pure overhead.
+
+Most CI environments start from a clean state on every job. Without caching, each run pays the full binary download cost before the first test command ever runs. With caching keyed to your lock file, the binary is only re-downloaded when you upgrade Cypress.
+
+#### What to cache
+
+| Path                       | What it contains       | When to invalidate |
+| -------------------------- | ---------------------- | ------------------ |
+| `~/.cache/Cypress`         | Cypress binary (Linux) | Lock file changes  |
+| `~/Library/Caches/Cypress` | Cypress binary (macOS) | Lock file changes  |
+| `~/.npm`                   | npm's package cache    | Lock file changes  |
+| `~/.cache/yarn`            | Yarn's package cache   | Lock file changes  |
+
+:::caution
+
+Do not cache `node_modules` directly. Caching `node_modules` bypasses npm's and yarn's integrity checks and can cause the Cypress binary to not be downloaded when the `postinstall` hook is skipped from a cache hit. Cache the package manager's own cache directory instead and let `npm ci` or `yarn install --frozen-lockfile` reconstruct `node_modules` from it.
+
+:::
+
+#### Cypress GitHub Action handles caching automatically
+
+The [Cypress GitHub Action](https://github.com/cypress-io/github-action) handles caching automatically: it caches the npm and Cypress binary directories using the lock file as the cache key. No additional configuration is needed:
+
+```yaml title=".github/workflows/cypress.yml"
+- name: Cypress run
+  uses: cypress-io/github-action@v7
+  with:
+    build: npm run build
+    start: npm start
+```
+
+When running parallel jobs, use a separate install job so all worker jobs share the cached install rather than each downloading independently:
+
+```yaml title=".github/workflows/cypress.yml"
+jobs:
+  install:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v6
+      - uses: cypress-io/github-action@v7
+        with:
+          runTests: false
+          build: npm run build
+
+  cypress-run:
+    runs-on: ubuntu-24.04
+    needs: install
+    steps:
+      - uses: actions/checkout@v6
+      - uses: cypress-io/github-action@v7
+        with:
+          start: npm start
+```
+
+#### Other providers
+
+For CircleCI, use the built-in [Cypress Orb](https://circleci.com/developer/orbs/orb/cypress-io/cypress) which handles caching for you, or configure caching manually using `~/.cache` as the path.
+
+For providers without a Cypress-specific action, set `CYPRESS_CACHE_FOLDER` to a project-relative path so your CI's cache configuration can reach it:
+
+```yaml title=".gitlab-ci.yml"
+variables:
+  npm_config_cache: '$CI_PROJECT_DIR/.npm'
+  CYPRESS_CACHE_FOLDER: '$CI_PROJECT_DIR/cache/Cypress'
+
+cache:
+  key: $CI_COMMIT_REF_SLUG
+  paths:
+    - .npm/
+    - cache/Cypress
+
+install:
+  script:
+    - npm ci
+```
+
+See [Caching](/app/continuous-integration/overview#Caching) in the CI overview for additional details.
+
+### Record to Cypress Cloud for insights
+
+Recording runs to [Cypress Cloud](/cloud/get-started/introduction) unlocks the analytics needed to systematically improve performance:
+
+- **Test duration trends**: see which tests are getting slower over time
+- **Flaky test detection**: flaky tests often hide retry loops that inflate runtime
+- **Machine utilization**: see if your parallel machines are balanced or if one is a bottleneck
+
+## See also
+
+- [Best Practices](/app/core-concepts/best-practices)
+- [Retry-ability](/app/core-concepts/retry-ability)
+- [`@cypress/grep`](https://github.com/cypress-io/cypress/tree/develop/npm/grep)
+- [cy.session()](/api/commands/session)
+- [cy.prompt()](/api/commands/prompt)
+- [Test Retries](/app/guides/test-retries)
+- [Flaky Test Management](/cloud/features/flaky-test-management)
+- [Test Replay](/cloud/features/test-replay)
+- [CI Caching](/app/continuous-integration/overview#Caching)
+- [Troubleshooting: Log Memory and CPU Usage](/app/references/troubleshooting#Log-memory-and-CPU-usage)
+- [Parallelization](/cloud/features/smart-orchestration/parallelization)
+- [Spec Prioritization](/cloud/features/smart-orchestration/spec-prioritization)
+- [Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation)
+- [UI Coverage: Reduce Test Duplication](/ui-coverage/guides/reduce-test-duplication)
