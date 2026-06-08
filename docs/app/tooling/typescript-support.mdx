@@ -154,9 +154,41 @@ If that does not work, try restarting the IDE.
 
 ### Processing your Cypress configuration and plugins
 
-Under the hood, Cypress uses [tsx](https://tsx.is/) to parse and run the `cypress.config.ts` file.
+Cypress supports TypeScript configuration files with `.ts`, `.mts`, and `.cts`
+extensions. Under the hood, Cypress uses [tsx](https://tsx.is/) to transpile and
+run them inside the Cypress runtime without being bound to limitations of Node
+or other loaders.
 
-This allows Cypress to run your TypeScript configuration inside the Cypress runtime without being bound to limitations of Node or other loaders.
+Whether a TypeScript config loads as ESM or CommonJS follows the same
+[Node.js module rules](/app/references/configuration#ESM-vs-CommonJS) as
+JavaScript configs. Use `.mts` and `.cts` the same way you would use `.mjs` and
+`.cjs` — to force ESM or CommonJS regardless of `package.json` `"type"`.
+
+#### Align `tsconfig.json` with your module format
+
+Cypress does not use `compilerOptions.module` when deciding how to load your
+config — that comes from the file extension and nearest `package.json` `"type"`.
+Your `tsconfig.json` should still align so TypeScript and your editor match how
+Cypress runs the file:
+
+**CommonJS** — set `compilerOptions.module` to `"commonjs"`, then either:
+
+- name the config `cypress.config.cts`, or
+- use `cypress.config.ts` with `package.json` `"type"` omitted or set to
+  `"commonjs"`
+
+**ESM** — set `compilerOptions.module` to an ESM-compatible option (for example
+`"NodeNext"` or `"ES2022"`), then either:
+
+- set `package.json` `"type"` to `"module"` and use `cypress.config.ts`, or
+- name the config `cypress.config.mts`
+
+`import` and `export` syntax in a `.ts` config does not by itself mean the file
+loads as ESM. With `compilerOptions.module` set to `"commonjs"`, TypeScript
+transpiles those statements to `require()` and `module.exports` — so you can
+use `import` in a config that Cypress loads as CommonJS. What matters is the
+alignment between `compilerOptions.module`, your config file extension, and
+`package.json` `"type"`.
 
 ## Extending TypeScript Support
 
