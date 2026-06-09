@@ -33,6 +33,10 @@ Refer to the [16 Migration Guide](/app/references/migration-guide#Migrating-to-C
 - The default `keystrokeDelay` for [`cy.type()`](/api/commands/type) has been changed from `10` to `0` to improve performance of typing-heavy test runs. Users who relied on the implicit 10ms delay can restore it by setting `keystrokeDelay: 10` in their [Cypress configuration](/app/references/configuration#Keyboard) or via [`Cypress.Keyboard.defaults()`](/api/cypress-api/keyboard-api). Addresses [#33523](https://github.com/cypress-io/cypress/issues/33523).
 - The experimental `experimentalFastVisibility` flag has been replaced by a new [`visibilityStrategy`](/app/references/configuration#Actionability) configuration option that accepts `'legacy'` or `'modern'` and defaults to `'modern'`. The modern visibility algorithm (based on the browser's native `Element.checkVisibility()` API) is now the default for all users. `visibilityStrategy` is deprecated — set `visibilityStrategy: 'legacy'` only as a temporary migration path. See the [Visibility Strategy](/app/core-concepts/interacting-with-elements#Visibility-Strategy) guide for migration help. Addressed in [#33794](https://github.com/cypress-io/cypress/pull/33794).
 
+**Features:**
+
+- `Angular` version 22 is now supported within component testing, including Launchpad project detection and the `@cypress/schematic` Angular CLI integration. Addresses [#33753](https://github.com/cypress-io/cypress/issues/33753). Addressed in [#34043](https://github.com/cypress-io/cypress/pull/34043).
+
 ## 15.17.0
 
 _Released Jun 9, 2026_
