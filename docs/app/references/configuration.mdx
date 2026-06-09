@@ -13,6 +13,7 @@ sidebar_label: Configuration
 ##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
 
 - How to configure Cypress to change the default behavior of Cypress
+- How Cypress loads config files as ESM or CommonJS
 - Configuration options available in Cypress
 - How to view and override configuration at runtime
 
@@ -26,19 +27,98 @@ will create a Cypress configuration file for you. This file will be
 [TypeScript](/app/tooling/typescript-support) apps. This file is used to
 store any configuration specific to Cypress.
 
-Cypress additionally supports config files with `.mjs` or `.cjs` extensions.
+Cypress additionally supports config files with `.mjs` and `.cjs` extensions.
 
 Using a `.mjs` file will allow you to use
-[ESM Module](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)
+[ESM](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)
 syntax in your config without the need of a transpiler step.
 
-A '.cjs' file uses the [CommonJS](https://nodejs.org/api/modules.html) module
+A `.cjs` file uses [CommonJS](https://nodejs.org/api/modules.html) module
 syntax, which is the default for JavaScript files. All JavaScript config
 examples in our docs use the CommonJS format.
+
+For TypeScript config files (`.ts`, `.mts`, `.cts`), see
+[TypeScript Support](/app/tooling/typescript-support#Processing-your-Cypress-configuration-and-plugins).
 
 If you [configure your tests to record](/cloud/get-started/setup#Setup) the
 results to [Cypress Cloud](/cloud/get-started/introduction) the
 `projectId` will be stored in the config file as well.
+
+### ESM vs CommonJS
+
+Starting in Cypress [15.17.0](/app/references/changelog#15-17-0), Cypress
+determines whether your config loads as **ESM** or **CommonJS** _before_ running
+it, using the same rules as Node.js. Cypress then loads the file with only
+`import()` (ESM) or `require()` (CommonJS) and does **not** fall back to the
+other format if loading fails.
+
+The same rules apply to plugin code in `setupNodeEvents` — Cypress evaluates your
+config and plugins in a Node.js child process, so the module system for that
+file determines which APIs are available (for example `import.meta.resolve` in
+ESM or `require()` in CommonJS).
+
+| Config file extension | Nearest `package.json` `"type"` | Loaded as |
+| --------------------- | ------------------------------- | --------- |
+| `.mjs`                | (any)                           | ESM       |
+| `.cjs`                | (any)                           | CommonJS  |
+| `.js`                 | `"module"`                      | ESM       |
+| `.js`                 | omitted or `"commonjs"`         | CommonJS  |
+
+Cypress walks up from the config file to find the **nearest** `package.json`.
+If a parent directory has its own `package.json` without `"type": "module"`, that
+scope wins over an ancestor that is ESM-only.
+
+Use the file extension and `package.json` `"type"` that match how the config is
+written:
+
+- **ESM config** — use `import` / `export default` and ESM-only APIs such as
+  `import.meta.resolve` and `import.meta.dirname`:
+
+```javascript title="cypress.config.js (ESM project)"
+import { defineConfig } from 'cypress'
+
+export default defineConfig({
+  e2e: {
+    setupNodeEvents(on, config) {
+      // import.meta is available in ESM configs
+      return config
+    },
+  },
+})
+```
+
+- **CommonJS config** — use `require()` and `module.exports`:
+
+```javascript title="cypress.config.js (CommonJS project)"
+const { defineConfig } = require('cypress')
+
+module.exports = defineConfig({
+  e2e: {
+    setupNodeEvents(on, config) {
+      // require() is available in CommonJS configs
+      return config
+    },
+  },
+})
+```
+
+If your project has `"type": "module"` but you need CommonJS syntax in the
+config, rename the file to `cypress.config.cjs`. If your project is CommonJS
+but you want ESM syntax, use `cypress.config.mjs` or set `"type": "module"`
+in `package.json`.
+
+To call CommonJS-only dependencies from an ESM config (or the reverse), use
+Node's interoperability helpers — for example `createRequire(import.meta.url)`
+to `require()` from an ESM file.
+
+:::caution
+
+Configs that previously loaded only because Cypress retried the alternate module
+format may now fail with a clear load error. That behavior is intentional: it
+matches Node.js and ensures ESM-only APIs such as `import.meta.resolve` work
+reliably in config and plugin code.
+
+:::
 
 ## Intelligent Code Completion
 
@@ -125,8 +205,6 @@ For more options regarding screenshots, view the
 [Cypress.Screenshot API](/api/cypress-api/screenshot-api).
 
 ### Videos
-
-<VideoRecordingSupportedBrowsers />
 
 | Option                  | Default          | Description                                                                                                                                                                                                                                                                                                                                     |
 | ----------------------- | ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -387,6 +465,12 @@ function as the second argument.
 The configuration values passed in will only take effect during the suite or
 test where they are set. The values will then reset to the previous default
 values after the suite or test is complete.
+
+You can also pass an `expose` object so plugins can declare public configuration
+per suite or test with [`Cypress.expose()`](/api/cypress-api/expose). Expose
+overrides are merged across nested suites and tests, with test-level keys taking
+precedence. Override keys are applied at test start and restored after each test
+without affecting unrelated values set in hooks.
 
 #### Syntax
 
@@ -812,29 +896,31 @@ DEBUG=cypress:cli,cypress:data-context:sources:FileDataSource,cypress:data-conte
 
 ## History
 
-| Version                                      | Changes                                                                                                                                       |
-| -------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
-| [15.10.0](/app/references/changelog#15-10-0) | Updated `env` to no longer be settable via test configuration.                                                                                |
-| [15.10.0](/app/references/changelog#15-10-0) | Added `expose` option for exposing public configuration values.                                                                               |
-| [14.0.0](/app/references/changelog#14-0-0)   | Added support for re-enabling superdomain navigation with the `injectDocumentDomain` configuration option                                     |
-| [13.16.0](/app/references/changelog#13-16-0) | Added `defaultBrowser` option.                                                                                                                |
-| [13.4.0](/app/references/changelog#13-4-0)   | Added support for configuring the Experimental Flake Detection strategy via `retries.experimentalStrategy` and `retries.experimentalOptions`. |
-| [13.0.0](/app/references/changelog#13-0-0)   | Removed `nodeVersion` option.                                                                                                                 |
-| [13.0.0](/app/references/changelog#13-0-0)   | Removed `videoUploadOnPasses` option.                                                                                                         |
-| [11.0.0](/app/references/changelog#11-0-0)   | Removed `e2e.experimentalSessionAndOrigin` option.                                                                                            |
-| [10.4.0](/app/references/changelog#10-4-0)   | Added `e2e.testIsolation` option.                                                                                                             |
-| [10.0.0](/app/references/changelog#10-0-0)   | Reworked page to support new `cypress.config.js` and deprecated `cypress.json` files.                                                         |
-| [8.7.0](/app/references/changelog#8-7-0)     | Added `slowTestThreshold` option.                                                                                                             |
-| [8.0.0](/app/references/changelog#8-0-0)     | Added `clientCertificates` option and removed `firefoxGcInterval` configuration.                                                              |
-| [7.0.0](/app/references/changelog#7-0-0)     | Added `e2e` and `component` options.                                                                                                          |
-| [7.0.0](/app/references/changelog#7-0-0)     | Added `redirectionLimit` option.                                                                                                              |
-| [6.1.0](/app/references/changelog#6-1-0)     | Added `scrollBehavior` option.                                                                                                                |
-| [5.2.0](/app/references/changelog#5-2-0)     | Added `includeShadowDom` option.                                                                                                              |
-| [5.0.0](/app/references/changelog#5-0-0)     | Added `retries` configuration.                                                                                                                |
-| [5.0.0](/app/references/changelog#5-0-0)     | Renamed `blacklistHosts` configuration to `blockHosts`.                                                                                       |
-| [4.1.0](/app/references/changelog#4-12-0)    | Added `screenshotOnRunFailure` configuration.                                                                                                 |
-| [4.0.0](/app/references/changelog#4-0-0)     | Added `firefoxGcInterval` configuration.                                                                                                      |
-| [3.5.0](/app/references/changelog#3-5-0)     | Added `nodeVersion` configuration.                                                                                                            |
+| Version                                      | Changes                                                                                                                                                                         |
+| -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [15.17.0](/app/references/changelog#15-17-0) | Cypress config and plugin files now load as ESM or CommonJS using Node.js module semantics (file extension and nearest `package.json` `"type"`), with no cross-format fallback. |
+| [15.17.0](/app/references/changelog#15-17-0) | Added support for overriding [`Cypress.expose()`](/api/cypress-api/expose) values via test configuration.                                                                       |
+| [15.10.0](/app/references/changelog#15-10-0) | Updated `env` to no longer be settable via test configuration.                                                                                                                  |
+| [15.10.0](/app/references/changelog#15-10-0) | Added `expose` option for exposing public configuration values.                                                                                                                 |
+| [14.0.0](/app/references/changelog#14-0-0)   | Added support for re-enabling superdomain navigation with the `injectDocumentDomain` configuration option                                                                       |
+| [13.16.0](/app/references/changelog#13-16-0) | Added `defaultBrowser` option.                                                                                                                                                  |
+| [13.4.0](/app/references/changelog#13-4-0)   | Added support for configuring the Experimental Flake Detection strategy via `retries.experimentalStrategy` and `retries.experimentalOptions`.                                   |
+| [13.0.0](/app/references/changelog#13-0-0)   | Removed `nodeVersion` option.                                                                                                                                                   |
+| [13.0.0](/app/references/changelog#13-0-0)   | Removed `videoUploadOnPasses` option.                                                                                                                                           |
+| [11.0.0](/app/references/changelog#11-0-0)   | Removed `e2e.experimentalSessionAndOrigin` option.                                                                                                                              |
+| [10.4.0](/app/references/changelog#10-4-0)   | Added `e2e.testIsolation` option.                                                                                                                                               |
+| [10.0.0](/app/references/changelog#10-0-0)   | Reworked page to support new `cypress.config.js` and deprecated `cypress.json` files.                                                                                           |
+| [8.7.0](/app/references/changelog#8-7-0)     | Added `slowTestThreshold` option.                                                                                                                                               |
+| [8.0.0](/app/references/changelog#8-0-0)     | Added `clientCertificates` option and removed `firefoxGcInterval` configuration.                                                                                                |
+| [7.0.0](/app/references/changelog#7-0-0)     | Added `e2e` and `component` options.                                                                                                                                            |
+| [7.0.0](/app/references/changelog#7-0-0)     | Added `redirectionLimit` option.                                                                                                                                                |
+| [6.1.0](/app/references/changelog#6-1-0)     | Added `scrollBehavior` option.                                                                                                                                                  |
+| [5.2.0](/app/references/changelog#5-2-0)     | Added `includeShadowDom` option.                                                                                                                                                |
+| [5.0.0](/app/references/changelog#5-0-0)     | Added `retries` configuration.                                                                                                                                                  |
+| [5.0.0](/app/references/changelog#5-0-0)     | Renamed `blacklistHosts` configuration to `blockHosts`.                                                                                                                         |
+| [4.1.0](/app/references/changelog#4-12-0)    | Added `screenshotOnRunFailure` configuration.                                                                                                                                   |
+| [4.0.0](/app/references/changelog#4-0-0)     | Added `firefoxGcInterval` configuration.                                                                                                                                        |
+| [3.5.0](/app/references/changelog#3-5-0)     | Added `nodeVersion` configuration.                                                                                                                                              |
 
 ## See also
 
