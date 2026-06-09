@@ -74,13 +74,9 @@ Cypress retries the entire chain (re-querying the cookie) until they pass.
 
 On each read, `cy.getCookie()` yields the cookie object, or `null` if no cookie
 with that name exists yet. The yielded value is the subject your chained
-assertions run against. If an assertion fails — because the cookie is `null`, or
-because it exists but a property doesn't match yet — the query re-reads the
+assertions run against. If an assertion fails, either because the cookie is `null`, or
+because it exists but a property doesn't match yet, the query re-reads the
 cookie and re-runs the assertion, looping until it passes or the command times
-out.
-
-This means `cy.getCookie('session_id').should('exist')` no longer fails on the
-first missing read — it retries until the cookie is written or the command times
 out.
 
 ## Examples
