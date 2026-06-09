@@ -204,7 +204,20 @@ flaky tests are detected:
   alt="Slack flake alert"
 />
 
+## Compare flake across branches with Branch Review
+
+When evaluating whether a Pull Request is safe to merge, the key question is often _did my changes introduce new flake, or was this test already unstable?_ [Branch Review](/cloud/features/branch-review) answers this directly by comparing the changed branch against its base in a single view.
+
+The **Flaky** tab lists every spec that flaked, marking each result as:
+
+- **new** - flake that was not previously captured, and may have been introduced by this branch
+- **existing** - flake that was already present on the base branch
+- **resolved** - flake that was present before but no longer appears
+
+This lets reviewers focus only on the flake a branch is responsible for, and confirm that a stability fix actually took effect. From there you can open a test to compare attempts side by side with [Test Replay](/cloud/features/test-replay) and the code diff to track down the root cause.
+
 ## See Also
 
+- Compare flake between branches before merging with [Branch Review](/cloud/features/branch-review).
 - Read our blog posts about fighting
   [the test flake](https://cypress.io/blog/tag/flake/).

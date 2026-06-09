@@ -14,6 +14,12 @@ Cypress Cloud's Model Context Protocol (MCP) server connects your AI coding assi
 
 By eliminating the context gap between CI and your editor, you remove the manual triage that makes testing a bottleneck. Cloud MCP gives your AI agent real-time access to your test results. It allows agents to query run statuses, identify flaky tests, and retrieve failure details—including Test Replay links—directly within your agentic workflow.
 
+:::note
+
+Cloud MCP reached general availability on May 20, 2026. It is included on every Cypress Cloud plan at no additional cost.
+
+:::
+
 ## How it Works
 
 The [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) is an open standard that enables AI models to safely access external data and tools.
@@ -390,7 +396,7 @@ Some tools are relevant for all Cypress Cloud plans (including free), but some o
 | ----------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
 | `cypress_get_projects`                    | Lists all projects in your Org.                                                                                                                                                                    | Helping the agent find the correct `projectId` for subsequent queries.  |
 | `cypress_get_runs`                        | Returns run summaries for a project, run URL, or git branch. Summaries include project name, run number, status, run URL, tags, and test status counts.                                            | "Check the status of the last CI run on main"                           |
-| `cypress_get_failed_test_details`         | Retrieves attempt details: test name, spec, attempt error and stack trace, and a Test Replay link for quick debugging. Does not return test artifacts.                                             | "Analyze why the checkout test failed in the latest run."               |
+| `cypress_get_failed_tests`                | Retrieves attempt details: test name, spec, attempt error and stack trace, and a Test Replay link for quick debugging. Does not return test artifacts.                                             | "Analyze why the checkout test failed in the latest run."               |
 | `cypress_get_flaky_tests`                 | Identifies the flaky tests in a run.                                                                                                                                                               | "Are these failures regressions or known flakiness?"                    |
 | `cypress_get_accessibility_report`        | Returns a high-level accessibility report for a run: violation counts by severity, failing rules with element counts, and the top 5 views sorted by failure count.                                 | "Summarize accessibility violations for the latest run on this branch." |
 | `cypress_get_accessibility_views`         | Returns paginated views from an accessibility report, sorted by number of failing rules. Use to browse all views beyond the top 5 in the report summary.                                           | "Which pages have the most accessibility failures in this run?"         |
@@ -466,6 +472,8 @@ Cloud MCP is available for free to all Cypress Cloud plans, including the Starte
 
 No minimum Cypress App version is required to get started.
 
+Cloud MCP reached generally available on May 20th, 2026.
+
 ### Usage Limits
 
 Current limits include 100 tool requests per hour for all plans.
@@ -476,9 +484,21 @@ If you need to increase your limits, contact support at support@cypress.io.
 
 ### Security & Privacy
 
-- **Read-Only Access:** The Cloud MCP server is designed for data retrieval and debugging. It cannot modify your test code or delete runs.
-- **User-Scoped:** The AI only sees the projects and data that your specific Cypress Cloud user has permission to access. Whether you're part of a specific team or just have access to certain projects, your AI assistant stays within those same boundaries.
-- **Local Control:** You control exactly when the server is active by managing the configuration in your local AI client.
+Cloud MCP is an API for AI agents. When your AI assistant needs information about your Cypress test runs, it calls Cloud MCP the same way any application calls an API — it sends a request, and Cypress returns data.
+
+**What Cypress can and cannot see:**
+
+- **Cypress cannot see your AI conversation:** Cypress has no access to your AI assistant's context window, chat history, or anything it generates. The only thing Cypress receives are the inputs to a tool call — for example, `getRuns(projectId: 100, runNumber: 45, limit: 10)`.
+- **Cypress does not train on your data:** Test results, stack traces, and replay links returned through Cloud MCP are used only to fulfill the request. Your data is never used to train or improve any LLM.
+- **You control the connection:** Cloud MCP is opt-in. Enabling it means your AI assistant can request Cypress data and enabling the integration does not give Cypress any visibility into your AI's context, conversation, or outputs.
+
+**How access is controlled:**
+
+- **Read-only:** Cloud MCP is designed for data retrieval and debugging. It cannot modify your test code or delete runs.
+- **User-scoped:** Your AI assistant can only access the projects and data your Cypress Cloud user has permission to see. It operates within the same access boundaries as you do.
+- **Locally managed:** You control when the server is active by managing the configuration in your local AI client.
+
+Cloud MCP implements the standard MCP authorization specification with OAuth 2.0 and uses streamable HTTP transport. It falls under our [AI security practices →](https://on.cypress.io/ai-security)
 
 ### Remove the integration
 

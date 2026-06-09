@@ -407,9 +407,9 @@ By using [`cy.get()`](/api/commands/get) we avoid the use of `this`.
 Keep in mind that there are use cases for both approaches because they have one
 major difference.
 
-When using `this.users`, it is stored on the context when it is first evaluated.
-But when using `cy.get('@users')`, any queries are re-evaluated every time the
-alias is accessed.
+`this.users` is stored on the Mocha context when `.as()` first runs and never
+re-evaluates — it behaves like a static snapshot. `cy.get('@users')` re-executes
+the full query chain every time it is accessed, returning fresh results.
 
 ```javascript
 const favorites = { color: 'blue' }
@@ -442,26 +442,26 @@ After you alias DOM elements, you can then later access them for reuse.
 cy.get('table').find('tr').as('rows')
 ```
 
-Internally, Cypress has made a reference to the `<tr>` collection returned as
-the alias "rows". To reference these same "rows" later, you can use the
-[`cy.get()`](/api/commands/get) command.
+Internally, Cypress stores the **query chain** that produced the `<tr>`
+collection — not the elements themselves. To access the alias later, use the
+[`cy.get()`](/api/commands/get) command with the `@` prefix.
 
 ```javascript
-// Cypress returns the reference to the <tr>'s
-// which allows us to continue to chain commands
-// finding the 1st row.
+// Cypress re-runs the query chain to get fresh <tr>'s,
+// then chains .first() and .click() on the result.
 cy.get('@rows').first().click()
 ```
 
-Because we've used the `@` character in [`cy.get()`](/api/commands/get), instead
-of querying the DOM for elements, [`cy.get()`](/api/commands/get) looks for an
-existing alias called `rows` and returns the reference (if it finds it).
+Because we've used the `@` character in [`cy.get()`](/api/commands/get), Cypress
+looks up the alias called `rows` and **re-executes its query chain** against the
+current DOM — it does not return a cached element reference.
 
 #### Stale Elements:
 
 In many single-page applications, the JavaScript re-renders parts of the DOM
-constantly. This is why we always re-run queries when you fetch an alias, so you
-never end up with stale elements.
+constantly. Because Cypress stores the **query chain** — not the resolved
+elements — every access of a default alias re-runs those queries against the
+current DOM, so you never end up with stale element references.
 
 ```html
 <ul id="todos">
