@@ -72,13 +72,9 @@ Cypress retries the entire chain (re-querying the cookies) until they pass.
 
 On each read, `cy.getCookies()` yields the current array of cookie objects, or an
 empty array if none exist yet. The yielded array is the subject your chained
-assertions run against. If an assertion fails — because the array is empty, or
-because its contents don't match yet — the query re-reads the cookies and re-runs
+assertions run against. If an assertion fails, because the array is empty, or
+because its contents don't match yet, the query re-reads the cookies and re-runs
 the assertion, looping until it passes or the command times out.
-
-This means `cy.getCookies().should('have.length', 1)` no longer fails on the
-first read when the cookie hasn't been written yet — it retries until a cookie is
-present or the command times out.
 
 ## Examples
 
