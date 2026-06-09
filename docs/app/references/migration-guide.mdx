@@ -50,6 +50,49 @@ Cypress.Keyboard.defaults({
 cy.get('input').type('slow typing', { delay: 10 })
 ```
 
+### `cy.getCookie()` and `cy.getCookies()` are now queries
+
+[`cy.getCookie()`](/api/commands/getcookie) and
+[`cy.getCookies()`](/api/commands/getcookies) are now retry-able
+[query commands](/app/core-concepts/retry-ability), just like
+[`cy.get()`](/api/commands/get) and [`cy.contains()`](/api/commands/contains).
+Previously they were one-shot commands that resolved a single value and ran any
+chained assertions only once. As of Cypress 16 they retry their built-in and
+chained assertions until they pass or time out.
+
+This changes which timeout governs them:
+
+- **Query commands** — `cy.getCookie()` and `cy.getCookies()` — are now governed
+  by [`defaultCommandTimeout`](/app/references/configuration#Timeouts) (default
+  `4000` ms), the same timeout used by every other query.
+- **Cookie action commands** — [`cy.setCookie()`](/api/commands/setcookie),
+  [`cy.clearCookie()`](/api/commands/clearcookie),
+  [`cy.clearCookies()`](/api/commands/clearcookies),
+  [`cy.getAllCookies()`](/api/commands/getallcookies), and
+  [`cy.clearAllCookies()`](/api/commands/clearallcookies) — are unchanged. They
+  make a single automation round-trip, do not retry assertions, and remain
+  governed by [`responseTimeout`](/app/references/configuration#Timeouts)
+  (default `30000` ms).
+
+Because the yielded cookie (or array of cookies) is now re-queried on every
+retry, do not treat the value captured inside a
+[`.then()`](/api/commands/then) callback as a stable snapshot. If you relied on
+the previous one-shot behavior, chain [`.should()`](/api/commands/should)
+assertions instead so Cypress retries the entire chain until they pass:
+
+```javascript
+// Retries until the cookie exists and its value matches, or times out
+cy.getCookie('session_id').should('have.property', 'value', '189jd09su')
+```
+
+If you specifically need the old non-retrying behavior — for example, to assert
+synchronously that a cookie does **not** yet exist — set the command `timeout`
+to `0`:
+
+```javascript
+cy.getCookie('session_id', { timeout: 0 }).should('not.exist')
+```
+
 ### `experimentalFastVisibility` replaced by `visibilityStrategy`
 
 The experimental `experimentalFastVisibility` boolean flag has been removed. Its successor is the new [`visibilityStrategy`](/app/references/configuration#Actionability) configuration option, which accepts `'legacy'` or `'modern'` and defaults to `'modern'`. The modern algorithm is now the default for **all** users, not just those who opted into the experiment.
