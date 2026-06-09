@@ -49,6 +49,8 @@ to make sure the DOM element or other data they yield is always up to date.
 | [`.first()`](/api/commands/first)               | Select the first item in a collection.                                                                     |
 | [`.focused()`](/api/commands/focused)           | Get the DOM element that is currently focused.                                                             |
 | [`.get()`](/api/commands/get)                   | Find DOM elements by selector, or read an alias previously created with the `.as()` command.               |
+| [`.getCookie()`](/api/commands/getcookie)       | Get a browser cookie by its name.                                                                          |
+| [`.getCookies()`](/api/commands/getcookies)     | Get browser cookies for the current domain or a specified domain.                                          |
 | [`.hash()`](/api/commands/hash)                 | Get the URL hash of the active page.                                                                       |
 | [`.invoke()`](/api/commands/invoke)             | Invoke a function on the previously yielded subject.                                                       |
 | [`.its()`](/api/commands/its)                   | Get a property's value on the previously yielded subject.                                                  |
@@ -130,8 +132,6 @@ Cypress has a variety of additional commands to help write tests.
 | [`.getAllCookies()`](/api/commands/getallcookies)                   | Get all browser cookies.                                                                                                                                                        |
 | [`.getAllLocalStorage()`](/api/commands/getalllocalstorage)         | Get `localStorage` data for all origins with which the test has interacted.                                                                                                     |
 | [`.getAllSessionStorage()`](/api/commands/getallsessionstorage)     | Get `sessionStorage` data for all origins with which the test has interacted.                                                                                                   |
-| [`.getCookie()`](/api/commands/getcookie)                           | Get a browser cookie by its name.                                                                                                                                               |
-| [`.getCookies()`](/api/commands/getcookies)                         | Get browser cookies for the current domain or a specified domain.                                                                                                               |
 | [`.go()`](/api/commands/go)                                         | Navigate back or forward using the browser's history.                                                                                                                           |
 | [`.hover()`](/api/commands/hover)                                   | Cypress does not have a cy.hover() command. See [Issue #10](https://github.com/cypress-io/cypress/issues/10).                                                                   |
 | [`.intercept()`](/api/commands/intercept)                           | Spy and stub network requests and responses.                                                                                                                                    |
