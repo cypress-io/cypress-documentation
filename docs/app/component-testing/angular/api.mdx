@@ -14,11 +14,6 @@ sidebar_label: API
 ### mount
 
 ```js
-// for Angular 20 and 21 using zoneless configuration
-import { mount } from 'cypress/angular-zoneless'
-```
-
-```js
 import { mount } from 'cypress/angular'
 ```
 
@@ -146,25 +141,6 @@ providers, declarations, imports and even component @Inputs()
     <td>Type</td>
     <td>Description</td>
   </thead>
-  <tr>
-    <td>autoSpyOutputs (deprecated)</td>
-    <td>boolean (optional)</td>
-    <td>
-      flag to automatically create a cy.spy() for every component @Output()
-      property. This is deprecated and not supported in
-      `cypress/angular-zoneless` and will be removed in a future version
-    </td>
-  </tr>
-  <tr>
-    <td>autoDetectChanges (deprecated)</td>
-    <td>boolean (optional)</td>
-    <td>
-      flag defaulted to true to automatically detect changes in your components.
-      This is deprecated and not supported in `cypress/angular-zoneless` and
-      will be removed in a future version as it is not needed with zoneless
-      configuration
-    </td>
-  </tr>
   <tr>
     <td>componentProperties</td>
     <td>
