@@ -68,6 +68,16 @@ Cypress retries the entire chain (re-querying the cookies) until they pass.
 
 :::
 
+:::note
+
+Because `cy.getCookies()` is a query as of Cypress 16, it must be overwritten
+with
+[`Cypress.Commands.overwriteQuery()`](/api/cypress-api/custom-queries#Overwriting-Existing-Queries)
+rather than
+[`Cypress.Commands.overwrite()`](/api/cypress-api/custom-commands#Overwrite-Existing-Commands).
+
+:::
+
 ## Examples
 
 ### Get Cookies

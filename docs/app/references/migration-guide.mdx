@@ -60,6 +60,16 @@ Previously they were one-shot commands that resolved a single value and ran any
 chained assertions only once. As of Cypress 16 they retry their built-in and
 chained assertions until they pass or time out.
 
+#### Reads are now retried
+
+A read such as `cy.getCookie('x').should('exist')` no longer fails on the first
+missing read. The command re-reads the cookie and retries the assertion until it
+passes or the command times out, so you no longer need to manually wait for a
+cookie to be written before asserting on it
+([cypress-io/cypress#4802](https://github.com/cypress-io/cypress/issues/4802)).
+
+#### Timeouts now follow `defaultCommandTimeout`
+
 This changes which timeout governs them:
 
 - **Query commands** — `cy.getCookie()` and `cy.getCookies()` — are now governed
@@ -92,6 +102,16 @@ to `0`:
 ```javascript
 cy.getCookie('session_id', { timeout: 0 }).should('not.exist')
 ```
+
+#### `cy.getCookie()` and `cy.getCookies()` can no longer be overwritten with `Cypress.Commands.overwrite()`
+
+Queries must be overwritten using `Cypress.Commands.overwriteQuery()`. If you
+were previously overwriting `cy.getCookie()` or `cy.getCookies()`, update your
+code to use
+`Cypress.Commands.overwriteQuery('getCookie', function () { ... })` rather than
+`Cypress.Commands.overwrite('getCookie', () => { ... })`. For more details on
+overwriting queries, see
+[Overwriting Existing Queries](/api/cypress-api/custom-queries#Overwriting-Existing-Queries).
 
 ### `experimentalFastVisibility` replaced by `visibilityStrategy`
 

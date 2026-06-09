@@ -70,10 +70,22 @@ Cypress retries the entire chain (re-querying the cookie) until they pass.
 
 :::
 
+:::note
+
+Because `cy.getCookie()` is a query as of Cypress 16, it must be overwritten with
+[`Cypress.Commands.overwriteQuery()`](/api/cypress-api/custom-queries#Overwriting-Existing-Queries)
+rather than
+[`Cypress.Commands.overwrite()`](/api/cypress-api/custom-commands#Overwrite-Existing-Commands).
+
+:::
+
 #### When a cookie matching the name could not be found:
 
 `cy.getCookie()` yields `null`. When chained with assertions such as
 `.should('exist')`, it will retry until the cookie is found or it times out.
+This means `cy.getCookie('session_id').should('exist')` no longer fails on the
+first missing read — it retries until the cookie is written or the command times
+out.
 
 ## Examples
 
