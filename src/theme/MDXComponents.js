@@ -40,7 +40,6 @@ import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 import ThenShouldAndDifference from "@site/docs/partials/_then-should-and-difference.mdx";
 import WarningSetupNodeEvents from "@site/docs/partials/_warning-setup-node-events.mdx";
-import VideoRecordingSupportedBrowsers from "@site/docs/partials/_video-recording-supported-browsers.mdx"
 import ViewFilters from "@site/docs/partials/_viewfilters.mdx";
 import Views from "@site/docs/partials/_views.mdx";
 import LineBreak from "@site/src/components/line-break";
@@ -211,7 +210,6 @@ export default {
   TestReplayInfo,
   ThenShouldAndDifference,
   WarningSetupNodeEvents,
-  VideoRecordingSupportedBrowsers,
   ViewFilters,
   Views,
   Logo,

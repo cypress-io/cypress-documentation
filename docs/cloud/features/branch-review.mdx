@@ -1,6 +1,6 @@
 ---
 title: Branch Review
-description: Branch Review in Cypress Cloud surfaces the impact of Pull Requests on your test suite. Compare test results between branches and learn best practices for grouping test runs.
+description: Branch Review in Cypress Cloud surfaces the impact of Pull Requests on your test suite so you can catch regressions before they merge. Compare test results between branches and learn best practices for grouping test runs.
 sidebar_position: 50
 ---
 
@@ -12,6 +12,7 @@ sidebar_position: 50
 
 ##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
 
+- How Branch Review helps you catch regressions before a Pull Request merges
 - How to compare test results between branches in Cypress Cloud
 - How Branch Review surfaces the impact of Pull Requests on your test suite
 - How to compare **any** two runs, if not using a Pull Request workflow
@@ -19,39 +20,47 @@ sidebar_position: 50
 
 :::
 
-Cypress Branch Review allows you to quickly identify the different impacts a Pull Request might have on your test suite in a single view.
-Compare which tests are failing, flaky, pending, added, or modified between the source and base branches. If enabled on your account,
-UI Coverage or Cypress Accessibility changes between runs will also appear here.
+## Why Branch Review
 
-Branch Review is useful even if you do not have a Pull Request workflow, because it allows you to compare any two runs of your choice.
-These might represent different builds of the application, changes in test code, or results from nightly runs. This page will use
-the example of a Pull Request made using the GitHub integration, but this integration is not required in order to use Branch Review.
+Every Pull Request changes your application, and your test suite along with it. The critical question before merging is: **did this change make things better or worse?** Answering it manually means hunting through two separate sets of runs, eyeballing pass/fail counts, and guessing whether a failure is new or pre-existing. It's slow, error-prone, and easy to skip under deadline pressure.
 
-A common scenario throughout the software development lifecycle (SDLC) is an engineer's **feature** branch that will be merged into the
-repo's **develop** or **main** branch. Here's how this scenario appears in Branch Review:
+Branch Review answers _what changed_ and _why_ in a single view, so you can:
+
+- **Catch regressions before they merge.** Instantly see new failures introduced by a branch instead of discovering them after they reach `main`.
+- **Stop chasing pre-existing flake.** Distinguish problems your PR _introduced_ from noise that was already there, so reviewers spend time on what actually changed.
+- **Confirm coverage moved in the right direction.** See tests that were added or modified, and (if enabled) how [UI Coverage](/ui-coverage/get-started/introduction) and [Cypress Accessibility](/accessibility/get-started/introduction) shifted between the two branches.
+- **Review with confidence.** Give reviewers and authors a shared, objective picture of a PR's impact, turning "looks fine to me" into a verifiable comparison.
+
+Branch Review is valuable even if you don't have a Pull Request workflow, because it allows you to compare **any** two runs of your choice.
+These might represent different builds of the application, changes in test code, or results from nightly runs.
 
 <DocsImage
   src="/img/cloud/features/branch-review/branch-review.png"
   alt="Cypress Branch Review"
 />
 
-Without Branch Review, pinpointing changes in your test suite's results requires a manual side-by-side comparison between your newly-introduced branch's test runs and your base branch's test runs. This sub-optimal workflow often fails to answer the fundamental questions, _what changed_ and _why?_ You might be left wondering if the same tests are flaky between branches, when new failures were introduced, or if you added sufficient test coverage to your new branch.
+### Example: reviewing a Pull Request
 
-## Getting Started
+A typical review of an incoming Pull Request looks like this:
 
-The key to the Branch Review area is a comparison between a **Base** run and a **Changed** run.
-The Changed run is the main subject of the comparison, often associated with an incoming Pull Request. The Base run is the starting point for comparison.
+1. **Open Branch Review for the PR.** This path requires VCS integration with [pull request comments](/cloud/integrations/github#Pull-request-comments) enabled. From the Cypress comment on the Pull Request, click **"View all changes introduced in this branch"** to land in Branch Review with the PR's latest run pre-selected as the Changed run.
+1. **Scan the status tabs.** Check the **Failures** and **Flaky** tabs for anything marked _new_. These are the tests your branch impacted, as opposed to problems that already existed on the base branch.
+1. **Drill into a new failure.** Open the test to see the base branch (passing) and feature branch (failing) results side by side, then use [Test Replay](/cloud/features/test-replay) and the code diff to understand exactly what your change broke.
+1. **Confirm coverage moved the right way.** Review the **Added** and **Modified** tabs, plus any UI Coverage or Cypress Accessibility changes, to verify the PR improved, rather than regressed, quality.
+1. **Merge with confidence**, or push a fix and re-review once the new run records.
 
-### Accessing Branch Review
+## Get started
 
-There are a number of ways to get to Branch Review depending on where you are looking at your Cypress results. In all cases, once you've picked Changed run, you can adjust the automatically-selected Base run to any branch or run in the project to dial in the comparison you are most interested in.
+The key to the Branch Review area is a comparison between a **base** run and a **changed** run. The changed run is the main subject of the comparison, often associated with an incoming Pull Request. The base run is the starting point for comparison.
+
+There are a number of ways to get to Branch Review depending on where you are looking at your Cypress results. In all cases, once you've picked a Changed run, you can adjust the automatically-selected base run to any branch or run in the project to dial in the comparison you are most interested in.
 
 ### From the project list
 
-The project card shows three active branches for the project. You can click through to any of these to enter Branch Review focused on that branch.
+The project card shows three active branches for the project. You can click on any of these to enter Branch Review focused on that branch.
 
 <DocsImage
-  src="/img/accessibility/core-concepts/branch-review-project-card.png"
+  src="/img/cloud/features/branch-review/branch-review-project-card.png"
   width="40%"
   alt="A card showing the name of an example project and related branches to choose."
 />
@@ -61,7 +70,7 @@ The project card shows three active branches for the project. You can click thro
 When a project is open, select "Branches" in the main navigation to see a full, filterable list of available branches and choose one to set as the source of the Changed run.
 
 <DocsImage
-  src="/img/accessibility/core-concepts/branch-review-side-nav.png"
+  src="/img/cloud/features/branch-review/branch-review-side-nav.png"
   width="40%"
   alt="The main Cypress Cloud navigation showing Latest Runs, Branches, and Analytics menu items. An arrow points to Branches."
 />
@@ -71,16 +80,16 @@ When a project is open, select "Branches" in the main navigation to see a full, 
 Click the branch name associated with the run. This will take you to Branch Review with that run pre-selected as the Changed run. This is a great way to investigate a specific run with an unexpected outcome in the tests.
 
 <DocsImage
-  src="/img/accessibility/core-concepts/branch-review-run-card.png"
+  src="/img/cloud/features/branch-review/branch-review-run-card.png"
   alt="Two cards showing various details about Cypress test runs, including pass/fail counts and metadata. An arrow points to the branch name."
 />
 
 ### From a Pull Request
 
-Click the "View all changes introduced in this branch" link at the bottom of the Test Results table. You will enter branch review with the current PR's branch and latest run pre-selected as the Changed run.
+Click the **"View all changes introduced in this branch"** link at the bottom of the Test Results table. You will enter branch review with the current PR's branch and latest run pre-selected as the Changed run.
 
 <DocsImage
-  src="/img/accessibility/core-concepts/branch-review-pull-request.png"
+  src="/img/cloud/features/branch-review/branch-review-pull-request.png"
   alt="A Pull Request comment from Cypress with an arrow pointing to the 'View all changes introduced in this branch' link. Test results and some accessibility score and violation information is also visible in the comment. The project has an 86.86% accessibility score, with  9 failed elements. Failed rule counts are 1 critical, 1 serious, 3 moderate, and 0 minor."
 />
 
@@ -88,7 +97,7 @@ Click the "View all changes introduced in this branch" link at the bottom of the
 
 Pull Requests in Branch Review work by leveraging the Cypress Cloud GitHub integration to query the GitHub API for branches with Pull Requests. Your project will first need to be connected to a GitHub repository. If you haven't already, follow the steps in [Install the Cypress GitHub app](/cloud/integrations/github#Install-the-Cypress-GitHub-app) to connect your project to GitHub.
 
-When Pull Requests are connected, you will be able to select runs by the associated PR:
+When Pull Requests are connected, you'll be able to select runs by the associated PR:
 
 <DocsImage
   src="/img/cloud/features/branch-review/pr-in-branch-review.png"
@@ -114,9 +123,7 @@ If the selected branch has a PR associated and a PR # passed via CI, there is an
 
 ## Branch Details
 
-### Review Header
-
-The header includes the Git commit message, PR selector, PR status, and base and feature branch labels with the Cypress Cloud test run ID number (#).
+The selected run includes the Git commit message, PR selector, PR status, and base and feature branch labels with the Cypress Cloud test run number.
 
 If there are multiple Pull Requests open for the same branch, you can select the Pull Request you want to review from the dropdown to the right of the commit message.
 
@@ -142,64 +149,51 @@ When on the review screen, you will see the Failures, Flaky, Pending, Added, and
   alt="Branch Review Details"
 />
 
-:::note
+The numbered callouts above correspond to:
 
-**Review Test Status**
+| #   | Description                                                                                                                                |
+| --- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| 1   | Details of which branches and runs are compared. If a Pull Request is detected, Pull Request details will be here.                         |
+| 2   | Links to key differences in test information like new failures and flaky tests. Note that all numbers and scores refer to the Changed run. |
+| 3   | [UI Coverage](/ui-coverage/get-started/introduction) changes.                                                                              |
+| 4   | [Cypress Accessibility](/accessibility/get-started/introduction) changes.                                                                  |
+| 5   | What has changed in the status you have opened, shown with the count indicators below.                                                     |
+| 6   | The test state (failed, flaky, pending) at the spec level, described below.                                                                |
 
-1. Details of which branches and runs are compared. If a Pull Request is detected, Pull Request details will be here.
-1. Links to key differences in test information like new failures and flaky tests. Note that all numbers and scores refer to the Changed run.
-1. [UI Coverage](https://on.cypress.io/ui-coverage-trial?utm_medium=cloud-br&utm_source=docs.cypress.io&utm_term=&utm_content=UI+Coverage) changes.
-1. [Cypress Accessibility](http://on.cypress.io/accessibility-trial?utm_medium=cloud-br&utm_source=docs.cypress.io&utm_term=&utm_content=Cypress+Accessibility) changes.
-1. See what has changed in the specific status you have opened, for example:
-   - <img
-       className="br-ui inline-block"
-       src="/img/cloud/features/branch-review/test-status-up.png"
-       alt="up arrow and number 3 marked in red colored text"
-     />
-     total number introduced in your branch
-   - <img
-       className="br-ui inline-block"
-       src="/img/cloud/features/branch-review/test-status-down.png"
-       alt="down arrow and number 4 marked in green colored text"
-     />
-     total number decreased or resolved in your branch
-   - <img
-       className="br-ui inline-block"
-       src="/img/cloud/features/branch-review/test-status-total.png"
-       alt="number 4 marked in gray colored text"
-     />
-     total count, for example, _3 new and 1 existing_
-1. The test state (failed, flaky, pending) is also indicated at the spec level
-   - _new_ = the state was <u>not</u> previously captured, but now <u>is</u> captured<br />(newly pending tests can imply an `it.skip()` was not removed)
-   - _existing_ = the state <u>was</u> previously captured and now <u>is still</u> captured
-   - _resolved_ = the state <u>was</u> previously captured but now is <u>no longer</u> captured
+**Count indicators** show how a status shifted in your branch:
 
-:::
+| Indicator                                                                                                                                  | Meaning                                           |
+| ------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------- |
+| <img className="br-ui inline-block" src="/img/cloud/features/branch-review/test-status-up.png" alt="up arrow and number 3 in red" />       | Total number introduced in your branch            |
+| <img className="br-ui inline-block" src="/img/cloud/features/branch-review/test-status-down.png" alt="down arrow and number 4 in green" /> | Total number decreased or resolved in your branch |
+| <img className="br-ui inline-block" src="/img/cloud/features/branch-review/test-status-total.png" alt="number 4 in gray" />                | Total count, for example, _3 new and 1 existing_  |
+
+**Test states** indicate how a spec's result compares to the base run:
+
+| State      | Meaning                                                                                                                         |
+| ---------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| _new_      | The state was <u>not</u> previously captured, but now <u>is</u> (newly pending tests can imply an `it.skip()` was not removed). |
+| _existing_ | The state <u>was</u> previously captured and now <u>is still</u> captured.                                                      |
+| _resolved_ | The state <u>was</u> previously captured but now is <u>no longer</u> captured.                                                  |
 
 ### Review Test Comparison
 
-Navigating into the test detail view reveals a side-by-side comparison of the test results on both branches, as well as, artifacts so you can compare before vs. after your PR. This can help narrow the focus on changes introduced or resolved on either branch and elevate the source of flake within tests throughout different attempts. Review the test definition panel for diff snapshots to help quickly determine changes in test code.
+Navigating into the test detail view reveals a side-by-side comparison of the test results on both branches, along with artifacts so you can compare before vs. after your PR. Pairing the failure on your branch with the passing result on the base branch, along with [Test Replay](/cloud/features/test-replay), screenshots, and videos for each attempt, lets you pinpoint exactly what your change broke without re-running anything locally. This narrows the focus to changes introduced or resolved on either branch and helps surface the source of flake across different attempts. Review the test definition panel for diff snapshots to quickly determine changes in test code.
 
 <DocsImage
   src="/img/cloud/features/branch-review/test-comparison.png"
   alt="Test Comparison View"
 />
 
-:::note
+The numbered callouts above correspond to:
 
-**Review Test Comparison**
-
-1. Base branch results
-
-2. Feature branch results
-
-3. Test Replay and artifacts
-
-4. Test attempts (descending order)
-
-5. Code change diffs
-
-:::
+| #   | Description                      |
+| --- | -------------------------------- |
+| 1   | Base branch results              |
+| 2   | Feature branch results           |
+| 3   | Test Replay and artifacts        |
+| 4   | Test attempts (descending order) |
+| 5   | Code change diffs                |
 
 ## Troubleshooting
 
@@ -232,4 +226,4 @@ If a run is missing on either the merge base or feature commit of the PR, a bann
 
 ## See Also
 
-- Read about [multi-repo implementation](/cloud/account-management/projects#Multi-repo-Implementation) best practices in Cypress Cloud. Even if your test code and application code are not colocated, you maybe be able to connect your test runs to specific commits and pull requests in your application.
+- Read about [multi-repo implementation](/cloud/account-management/projects#Multi-repo-Implementation) best practices in Cypress Cloud. Even if your test code and application code are not colocated, you may be able to connect your test runs to specific commits and pull requests in your application.
