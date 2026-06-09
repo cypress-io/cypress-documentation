@@ -56,17 +56,17 @@ cy.get('input').type('slow typing', { delay: 10 })
 [`cy.getCookies()`](/api/commands/getcookies) are now retry-able
 [query commands](/app/core-concepts/retry-ability), just like
 [`cy.get()`](/api/commands/get) and [`cy.contains()`](/api/commands/contains).
+
 Previously they were one-shot commands that resolved a single value and ran any
 chained assertions only once. As of Cypress 16 they retry their built-in and
 chained assertions until they pass or time out.
 
 #### Reads are now retried
 
-A read such as `cy.getCookie('x').should('exist')` no longer fails on the first
+A read such as `cy.getCookie('session_id').should('exist')` no longer fails on the first
 missing read. The command re-reads the cookie and retries the assertion until it
 passes or the command times out, so you no longer need to manually wait for a
-cookie to be written before asserting on it
-([cypress-io/cypress#4802](https://github.com/cypress-io/cypress/issues/4802)).
+cookie to be written before asserting on it.
 
 #### Timeouts now follow `defaultCommandTimeout`
 
