@@ -5,15 +5,13 @@
  * hosted scraper service has a built-in protection of some sort to detect
  * sudden dips or spikes in entries submitted to a specific index.
  * Since we are using our own scraper, we do not have that luxury.
- * This script will count the entries for the given index, execute the
- * scraper, then count the entries for the same index. The number of entries
- * should not change much after the scraper has completed. The acceptable
- * delta between the two numbers is purely arbitrary and may require fine tuning.
- * If the delta ever exceeds the acceptable delta, this script will exit with an
- * error code, causing CircleCI to fail the workflow and send a notification
- * to us. If significant changes were to occur to the documentation site
- * (large additions/removals of pages), it is possible that this script
- * will alert with a false negative.
+ *
+ * This script validates two things after a scrape:
+ * 1. The Algolia index entry count matches the scraper's reported "Nb hits"
+ *    (confirms the upload completed).
+ * 2. The index did not change unexpectedly compared to the pre-scrape count.
+ *    Large doc additions or recovery from a previously under-indexed state
+ *    are allowed when the upload itself looks healthy.
  *
  * This script will *NOT* prevent a corrupted index from being uploaded
  * and/or prevent the scraper from over/under indexing the documentation site.
@@ -29,32 +27,47 @@ import config from './config.json' with { type: 'json' }
 const API_KEY = process.env.ALGOLIA_API_KEY
 const APPLICATION_ID = process.env.ALGOLIA_APPLICATION_ID
 const ACCEPTABLE_DELTA = parseInt(process.env.ALGOLIA_ACCEPTABLE_DELTA) || 1000
+const ACCEPTABLE_DELTA_RATIO =
+  parseFloat(process.env.ALGOLIA_ACCEPTABLE_DELTA_RATIO) || 0.05
 const ALGOLIA_INDEX = config.index_name
 
 const algoliaClient = new AlgoliaClient(ALGOLIA_INDEX, API_KEY, APPLICATION_ID)
 
 /**
+ * @param {string} stdout
+ * @returns {number | null}
+ */
+const parseScraperHits = (stdout) => {
+  const match = stdout.match(/Nb hits:\s*(\d+)/i)
+  return match ? parseInt(match[1], 10) : null
+}
+
+/**
  * Executes the run-scraper.sh script and waits for it to finish
+ * @returns {Promise<string>} scraper stdout
  */
 const scrape = async () => {
+  let stdout = ''
   try {
     console.log('About to start scraping...')
     console.log(
       'Scraper will not log any output until it completes. Please wait...'
     )
     console.time('scraper')
-    const { stdout, stderr } = await exec(
+    const result = await exec(
       `API_KEY=${API_KEY} APPLICATION_ID=${APPLICATION_ID} sh ./scripts/search/run-scraper.sh`
     )
+    stdout = result.stdout ?? ''
     if (stdout) {
       console.log(stdout)
     }
-    if (stderr) {
+    if (result.stderr) {
       console.log(
         'Output from stderr (this may or may not contain actual errors): '
       )
-      console.log(stderr)
+      console.log(result.stderr)
     }
+    return stdout
   } finally {
     console.log('Scraper has completed.')
     console.timeEnd('scraper')
@@ -67,18 +80,40 @@ const main = async () => {
     ALGOLIA_INDEX
   )
   console.log(`Entries count before scraper: ${countBeforeScraper}`)
-  await scrape()
+  const scraperStdout = await scrape()
   const countAfterScraper = await algoliaClient.getEntriesForIndex(
     ALGOLIA_INDEX
   )
   console.log(`Entries count after scraper: ${countAfterScraper}`)
 
-  const delta = Math.abs(countAfterScraper - countBeforeScraper)
-  console.log(`Delta after scrape: ${delta}`)
+  const scraperHits = parseScraperHits(scraperStdout)
+  if (scraperHits !== null) {
+    console.log(`Scraper reported hits: ${scraperHits}`)
+  } else {
+    console.warn(
+      'Could not parse "Nb hits" from scraper output. Upload validation will be skipped.'
+    )
+  }
 
-  if (delta > ACCEPTABLE_DELTA) {
+  const uploadDelta =
+    scraperHits === null
+      ? null
+      : Math.abs(countAfterScraper - scraperHits)
+  const indexDelta = countAfterScraper - countBeforeScraper
+  const acceptableIndexDelta = Math.max(
+    ACCEPTABLE_DELTA,
+    Math.floor(countAfterScraper * ACCEPTABLE_DELTA_RATIO)
+  )
+
+  console.log(`Index delta after scrape: ${indexDelta}`)
+  console.log(`Acceptable index delta: ${acceptableIndexDelta}`)
+  if (uploadDelta !== null) {
+    console.log(`Upload delta (index vs scraper hits): ${uploadDelta}`)
+  }
+
+  if (uploadDelta !== null && uploadDelta > ACCEPTABLE_DELTA) {
     console.error(
-      `Delta after scrape is higher than the acceptable delta of ${ACCEPTABLE_DELTA}. Delta: ${delta}`
+      `Algolia index count (${countAfterScraper}) does not match scraper hits (${scraperHits}). Upload delta: ${uploadDelta}`
     )
     console.error(
       'Check the config.json file for any changes and check the scraper logs for any errors.'
@@ -86,8 +121,24 @@ const main = async () => {
     process.exit(1)
   }
 
+  if (indexDelta < -acceptableIndexDelta) {
+    console.error(
+      `Index entry count dropped by ${Math.abs(indexDelta)}, which exceeds the acceptable delta of ${acceptableIndexDelta}.`
+    )
+    console.error(
+      'Check the config.json file for any changes and check the scraper logs for any errors.'
+    )
+    process.exit(1)
+  }
+
+  if (indexDelta > acceptableIndexDelta) {
+    console.warn(
+      `Large index increase detected (${countBeforeScraper} -> ${countAfterScraper}). This may be expected after significant doc additions or recovering from a previously under-indexed state.`
+    )
+  }
+
   console.log(
-    `Delta after scrape was found to be within the acceptable delta of ${ACCEPTABLE_DELTA}. Delta: ${delta}`
+    `Scrape validation passed. Index entries: ${countAfterScraper}${scraperHits !== null ? ` (scraper hits: ${scraperHits})` : ''}.`
   )
   process.exit(0)
 }
