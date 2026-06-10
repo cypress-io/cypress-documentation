@@ -21,6 +21,7 @@ Refer to the [16 Migration Guide](/app/references/migration-guide#Migrating-to-C
 :::
 
 - Removed support for Node.js 20 and Node.js 25. Addresses [#33705](https://github.com/cypress-io/cypress/issues/33705) and [#33778](https://github.com/cypress-io/cypress/issues/33778).
+- Removed `Cypress.env()`. Use [`Cypress.expose()`](/api/cypress-api/expose) for non-sensitive values that need to be readable in the browser, and [`cy.env()`](/api/commands/env) for sensitive values that must remain in the Node process. The `env` key is no longer supported in per-test or suite config overrides; use `expose: { KEY: value }` instead if absolutely necessary. The `allowCypressEnv` configuration option has also been removed. See the [Migration Guide](/app/references/migration-guide#Migrating-away-from-Cypressenv). Addresses [#33889](https://github.com/cypress-io/cypress/issues/33889). Addressed in [#33963](https://github.com/cypress-io/cypress/pull/33963).
 - **Component Testing breaking changes:**
   - Angular
     - Removed support for Angular 18, 19, and 20. The minimum supported version is now `21.0.0`. Addresses [#33005](https://github.com/cypress-io/cypress/issues/33005), [#33655](https://github.com/cypress-io/cypress/issues/33655), and [#33656](https://github.com/cypress-io/cypress/issues/33656).
@@ -293,7 +294,7 @@ _Released Feb 03, 2026_
 
 **Deprecations:**
 
-[`Cypress.env()`](/api/cypress-api/env) is now deprecated and will be removed in a future major release of Cypress. To understand why, and how to migrate, please read our [Migration Guide](https://on.cypress.io/cypress-env-migration). Addressed in [#33181](https://github.com/cypress-io/cypress/pull/33181).
+`Cypress.env()` is now deprecated and will be removed in a future major release of Cypress. To understand why, and how to migrate, please read our [Migration Guide](https://on.cypress.io/cypress-env-migration). Addressed in [#33181](https://github.com/cypress-io/cypress/pull/33181).
 
 **Features:**
 

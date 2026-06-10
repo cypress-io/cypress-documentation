@@ -175,23 +175,84 @@ Change `<YOUR_FRAMEWORK>>` to `'react'`, `'vue'`, `'svelte'`, or another [suppor
 
 Note that `@cypress/vite-dev-server@7` is deprecated and no longer supported by Cypress. It is intended as a temporary workaround until you can migrate to Vite `8`. More information on configuring a custom dev server can be found in the [Cypress Vite Dev Server documentation](https://github.com/cypress-io/cypress/blob/@cypress/vite-dev-server-v7.2.1/npm/vite-dev-server/README.md).
 
+### `Cypress.env()` removed
+
+`Cypress.env()` has been removed in Cypress 16.0. Use [`cy.env()`](/api/commands/env) for sensitive values (API keys, tokens, secrets) or [`Cypress.expose()`](/api/cypress-api/expose) for non-sensitive configuration that needs synchronous browser access.
+
+See [Migrating away from Cypress.env()](#Migrating-away-from-Cypressenv) below for detailed before/after examples.
+
+### `env` removed from test config overrides
+
+The `env` key is no longer valid in per-test or suite config overrides. Test config overrides run in the browser, so `env` values set there could never be applied server-side. If absolutely necessary, `expose` can be used instead.
+
+<Badge type="danger">Before</Badge>
+
+```javascript
+it(
+  'runs with feature flag',
+  {
+    env: {
+      FEATURE_FLAG: true,
+      API_VERSION: 'v2',
+    },
+  },
+  () => {
+    expect(Cypress.env('FEATURE_FLAG')).to.be.true
+    expect(Cypress.env('API_VERSION')).eq('v2')
+  }
+)
+```
+
+<Badge type="success">After</Badge>
+
+```javascript
+it(
+  'runs with feature flag',
+  {
+    expose: {
+      FEATURE_FLAG: true,
+      API_VERSION: 'v2',
+    },
+  },
+  () => {
+    expect(Cypress.expose('FEATURE_FLAG')).to.be.true
+    expect(Cypress.expose('API_VERSION')).eq('v2')
+  }
+)
+```
+
+### `allowCypressEnv` config option removed
+
+The `allowCypressEnv` configuration option has been removed. If your `cypress.config` still includes it, Cypress will print a warning telling you to remove it — no behavior change, just remove the key.
+
+:::cypress-config-example
+
+```ts
+{
+  // Remove this line
+  allowCypressEnv: true,
+}
+```
+
+:::
+
 ## Migrating away from Cypress.env()
 
-Starting with Cypress 15.10.0, `Cypress.env()` has been deprecated and will be removed in a future major version. This guide helps you migrate to [`cy.env()`](/api/commands/env) (for sensitive values) or [`Cypress.expose()`](/api/cypress-api/expose) (for public/non-sensitive values), depending on your use case.
+`Cypress.env()` was deprecated in Cypress 15.10.0 and removed in Cypress 16.0. This guide helps you migrate to [`cy.env()`](/api/commands/env) (for sensitive values) or [`Cypress.expose()`](/api/cypress-api/expose) (for public/non-sensitive values), depending on your use case.
 
-### Why Cypress.env() is deprecated
+### Why Cypress.env() was removed
 
-`Cypress.env()` makes it easy to accidentally expose more data than intended because Cypress hydrates all configured environment variables into the browser context. That includes values your test never reads.
+`Cypress.env()` made it easy to accidentally expose more data than intended because Cypress hydrated all configured environment variables into the browser context — including values your test never reads.
 
-This deprecation is a precaution to reduce the risk of unintentionally exposing secrets in the browser-accessible state when run within the Cypress browser. This is about ensuring safer defaults and preventing accidental exposure of sensitive data.
+Removing it reduces the risk of unintentionally exposing secrets in the browser-accessible state. This enforces safer defaults and prevents accidental exposure of sensitive data.
 
-#### What's the risk
+#### What was the risk
 
-When Cypress environment values are available in the browser, they can be inspected through normal browser tooling and may be accessible to code running in that context (for example, app code, third-party scripts, or extensions). The core issues are:
+With `Cypress.env()`, environment values available in the browser could be inspected through normal browser tooling and accessed by code running in that context (for example, app code, third-party scripts, or extensions). The core issues were:
 
-1. **All-or-nothing exposure**: All environment variables are serialized and sent to the browser where they can be accessed via `Cypress.env()` or inspected in the browser's developer tools.
-1. **Cross-origin risks**: When using [`cy.origin()`](/api/commands/origin) for cross-origin testing, all environment variables are automatically passed to the cross-origin context, potentially exposing sensitive data to untrusted origins.
-1. **Application code access**: Since environment variables are available in the browser context when tests run, your application code or third-party scripts could potentially access them if it checks for `window.Cypress` or similar patterns.
+1. **All-or-nothing exposure**: All environment variables were serialized and sent to the browser where they could be accessed via `Cypress.env()` or inspected in the browser's developer tools.
+1. **Cross-origin risks**: When using [`cy.origin()`](/api/commands/origin) for cross-origin testing, all environment variables were automatically passed to the cross-origin context, potentially exposing sensitive data to untrusted origins.
+1. **Application code access**: Since environment variables were available in the browser context when tests ran, application code or third-party scripts could potentially access them by checking for `window.Cypress` or similar patterns.
 
 ### Choose the right migration path
 
@@ -437,11 +498,11 @@ describe('API tests', () => {
 
 ### Migrate plugins that use Cypress.env()
 
-If you're using Cypress plugins that reference `Cypress.env()`, you should check for updated versions that support the new API. When `allowCypressEnv: false` is set, plugins that still use `Cypress.env()` will throw errors.
+If you're using Cypress plugins that reference `Cypress.env()`, you should check for updated versions that support the new API. Starting in Cypress 15.10.0, plugins using `Cypress.env()` would throw errors when `allowCypressEnv: false` was set. In Cypress 16.0, `allowCypressEnv` has been removed and `Cypress.env()` is no longer available — plugins that still call it will always throw errors.
 
 #### Check for plugin updates
 
-Before setting `allowCypressEnv: false`, review your installed plugins and update them to their latest versions. Many popular plugins need to be updated to use `Cypress.expose()` or `cy.env()` instead of `Cypress.env()`.
+Review your installed plugins and update them to their latest versions. Many popular plugins need to be updated to use `Cypress.expose()` or `cy.env()` instead of `Cypress.env()`.
 
 #### Plugins requiring migration
 
@@ -455,9 +516,15 @@ Update to version 4.0.0+ of `@cypress/code-coverage` and follow its [migration g
 
 Update to version 6.0.0+ of `@cypress/grep` and follow its [migration guide](https://github.com/cypress-io/cypress/tree/develop/npm/grep#migration) to move from environment variables to `--expose` CLI flags and `expose` config.
 
-### Lock it down with `allowCypressEnv: false`
+### Lock it down with `allowCypressEnv: false` (Cypress ^15.10.0)
 
-Once you've migrated all `Cypress.env()` invocations to either `cy.env()` or `Cypress.expose()`, you should set `allowCypressEnv: false` in your Cypress configuration.
+:::info
+
+`allowCypressEnv` was introduced in Cypress 15.10.0 as a migration gate and **removed in Cypress 16.0**. If you are already on Cypress 16.0, skip this step — `Cypress.env()` is gone and `allowCypressEnv` is no longer a valid config option.
+
+:::
+
+On Cypress ^15.10.0, once you've migrated all `Cypress.env()` invocations to either `cy.env()` or `Cypress.expose()`, you can set `allowCypressEnv: false` to enforce the new APIs and catch any remaining usages.
 
 :::cypress-config-example
 
@@ -476,10 +543,10 @@ Once you've migrated all `Cypress.env()` invocations to either `cy.env()` or `Cy
 
 :::
 
-When `allowCypressEnv` is set to `false`:
+When `allowCypressEnv` is set to `false` on Cypress ^15.10.0:
 
 1. `Cypress.env()` calls will throw an error
-2. Test configuration overrides are disabled
+2. `env` test configuration overrides are disabled
 
 #### Migration Checklist
 
@@ -487,8 +554,8 @@ When `allowCypressEnv` is set to `false`:
 1. ✅ Replace each `Cypress.env()` call with either `cy.env()` or `Cypress.expose()`
 1. ✅ Update code to handle the asynchronous nature of `cy.env()`
 1. ✅ Migrate plugins that use `Cypress.env()`
-1. ✅ Set `allowCypressEnv: false` in your Cypress configuration
-1. ✅ Verify that no errors are thrown
+1. ✅ **Cypress ^15.10.0 only**: Set `allowCypressEnv: false` in your Cypress configuration and verify no errors are thrown
+1. ✅ **Cypress 16.0+**: Remove `allowCypressEnv` from your configuration if present
 
 ## Migrating to Cypress 15.0
 
