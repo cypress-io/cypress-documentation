@@ -68,6 +68,8 @@ All configuration objects support an optional `comment` property that you can us
 
 The `profiles` property allows you to use different configuration settings for different runs based on [run tags](/app/references/command-line#cypress-run-tag-lt-tag-gt). See the [Profiles](/ui-coverage/configuration/profiles) guide for more details.
 
+For optional **policies** that gate runs on UI Coverage and Accessibility thresholds in Cloud, see the dedicated [policies](/ui-coverage/configuration/policies) guide.
+
 ### Complete configuration example
 
 A complete configuration with all available options looks as follows:
@@ -95,6 +97,21 @@ A complete configuration with all available options looks as follows:
     {
       "pattern": string,
       "include": boolean,
+      "comment": string
+    }
+  ],
+  "policies": [
+    {
+      "name": string,
+      "validations": [
+        {
+          "metric": "accessibility.score" | "uiCoverage.score" | "accessibility.failedElements" | "uiCoverage.untestedElements",
+          "minScore": number,
+          "maxCount": number,
+          "viewMatch": string,
+          "comment": string
+        }
+      ],
       "comment": string
     }
   ],
@@ -130,6 +147,8 @@ A complete configuration with all available options looks as follows:
 }
 ```
 
+Fields `minScore` and `maxCount` apply only to the score and count metrics respectively (the Cloud configuration editor validates allowed fields for each metric).
+
 ## Configuration scope
 
 The root-level properties `elementFilters`, `viewFilters`, `attributeFilters`, and `significantAttributes` apply to both UI Coverage and Accessibility. These properties can also be nested under `uiCoverage` or `accessibility` to apply to only that product, with nested configuration taking precedence over root-level configuration.
@@ -159,5 +178,4 @@ Check out the following configuration guides.
 - [Additional Interaction Commands](/ui-coverage/configuration/additionalinteractioncommands)
 - [Allowed Interaction Commands](/ui-coverage/configuration/allowedinteractioncommands)
 - [Profiles](/ui-coverage/configuration/profiles)
-
-UI Coverage now supports defining custom commands that will count towards coverage scores, restricting which kinds of interactions are allowed for certain elements, and including assertions in the UI Coverage calculations. See the following new properties for more details:
+- [policies](/ui-coverage/configuration/policies)
