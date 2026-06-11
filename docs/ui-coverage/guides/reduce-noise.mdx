@@ -1,7 +1,7 @@
 ---
 sidebar_label: Reduce noise
 title: 'Reduce noise | Cypress UI Coverage Documentation'
-description: 'Learn how to exclude irrelevant elements from your UI Coverage reports to focus on meaningful insights.'
+description: 'Learn how to reduce noise in your UI Coverage reports by handling assertion-only tests, grouping elements and views, and tuning attribute handling.'
 sidebar_position: 60
 ---
 
@@ -9,42 +9,122 @@ sidebar_position: 60
 
 # Reduce noise
 
-A clean and focused UI Coverage report enables you to make informed decisions about your testing strategy. Cypress UI Coverage provides tools to reduce noise in your reports by properly grouping elements, special attribute handling, and grouping views that share common URL patterns. This guide explains how and why to create a streamlined report.
+A focused UI Coverage report helps your team make better decisions about testing priorities. Noise in a report — elements or views that appear "uncovered" for reasons unrelated to gaps in your test logic — makes it harder to act on real coverage data.
 
-## Group views by URL patterns
+This guide covers the most common sources of noise and how to address each one.
 
-Cypress attempts to groups views with similar URL patterns (like when a URL contains a user ID) to provide a more consolidated view of coverage metrics.
+## Handle assertion-only and layout verification tests
 
-Customozing views with similar URL patterns allows you to consolidate coverage metrics for pages you know are related. To add or modify the configuration for your project, navigate to the **App Quality** tab in your project settings and add an **viewGroups** configuration.
+### Why assertion-only elements appear uncovered
 
-### Example: Grouping user profiles
+Many QA teams write tests that verify elements exist and look correct using Cypress assertions like `.should('be.visible')` or `.should('contain.text', 'Submit')`. This is a valid and common pattern, especially for:
+
+- **Layout verification tests** that confirm UI elements render correctly without exercising them
+- **Read-only display elements** like status badges, data labels, and section headers
+- **Navigation items** that tests confirm are present, but only some of which are actually clicked
+
+By default, UI Coverage marks an element as "tested" only when a [Cypress interaction command](/ui-coverage/core-concepts/interactivity#Interaction-Commands) such as `click`, `type`, or `check` is used on it. **Assertions alone — `.should()`, `.contains()` — do not count as interactions.** This means elements your team routinely checks with assertions will still show as uncovered in reports, which can be a significant source of confusion.
+
+### How to count assertions as coverage
+
+You can configure UI Coverage to treat Cypress assertions as valid coverage for specific elements using [`allowedInteractionCommands`](/ui-coverage/configuration/allowedinteractioncommands). This lets you tell UI Coverage: _"for these elements, an assertion is enough — I don't need a click to count them as tested."_
+
+To add or modify this configuration, go to the **App Quality** tab in your project settings in Cypress Cloud and update the `uiCoverage.allowedInteractionCommands` array.
+
+#### Example: Read-only status badges
+
+Your tests assert that a status indicator shows the correct value, but never click it:
+
+```json
+{
+  "uiCoverage": {
+    "allowedInteractionCommands": [
+      {
+        "selector": "[data-cy='status-badge'], .status-chip",
+        "commands": ["assert"],
+        "comment": "Read-only status elements — verified via assertion, no interaction needed"
+      }
+    ]
+  }
+}
+```
+
+In your tests:
+
+```javascript
+// This assertion will now count as coverage for elements matching the selector
+cy.get('[data-cy="status-badge"]').should('contain.text', 'Active') // ✓ Tracked
+cy.get('.status-chip').should('be.visible') // ✓ Tracked
+```
+
+#### Example: Navigation links verified but not all clicked
+
+If tests confirm navigation items are present and visible, but only some paths are clicked during a run:
+
+```json
+{
+  "uiCoverage": {
+    "allowedInteractionCommands": [
+      {
+        "selector": "nav a, .sidebar-link",
+        "commands": ["assert", "click"],
+        "comment": "Nav links: assertion counts as coverage; clicks still tracked too"
+      }
+    ]
+  }
+}
+```
+
+:::caution allowedInteractionCommands replaces, not extends, the defaults
+When you define `commands` for a selector, those become the **only** commands that count for matching elements — the defaults (`click`, `type`, etc.) are replaced. If you want assertions to count _in addition to_ clicks, include both `"assert"` and `"click"` (or whichever other commands apply) in the same rule.
+:::
+
+### Deciding between asserting and ignoring
+
+When an element consistently appears as uncovered, choose the right strategy based on what your tests do with it:
+
+| Scenario                                                 | Recommended approach                                                               |
+| -------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| Tests run `.should()` on this element                    | Add `"assert"` to `allowedInteractionCommands` for this selector                   |
+| Tests never reference this element and it's out of scope | Use `elementFilters` to [exclude it](/ui-coverage/guides/ignore-elements) entirely |
+| Tests _should_ interact with it but don't yet            | Leave it uncovered — it's a real gap to address                                    |
+
+## Group views by URL pattern
+
+Cypress automatically groups views with similar URL patterns (such as `/users/1`, `/users/2`), but you can customize this grouping to consolidate coverage metrics for pages you know are related.
+
+To add or modify view grouping, go to the **App Quality** tab in your project settings and add a `views` configuration.
+
+### Example: Grouping user profile pages
 
 ```
-https://cypress.io/users/alice
-https://cypress.io/users/alice?foo=bar
-https://cypress.io/users/bob
-https://cypress.io/users/bob#baz
+https://app.example.com/users/alice
+https://app.example.com/users/alice?tab=settings
+https://app.example.com/users/bob
+https://app.example.com/users/bob#activity
 ```
 
 ```json
 {
   "views": [
     {
-      "pattern": "https://cypress.io/users/*"
+      "pattern": "https://app.example.com/users/*"
     }
   ]
 }
 ```
 
-To learn more about the configuration options, refer to the [Views](/ui-coverage/configuration/views) documentation.
+This consolidates all user profile pages into a single coverage view instead of showing each user's URL separately. See [Views configuration](/ui-coverage/configuration/views) for full details.
 
 ## Group similar elements
 
-Grouping elements improves clarity by reducing repetitive entries for elements with the same functionality. This is especially useful for elements like buttons, links, or form fields that appear across multiple views. By grouping similar elements, you can focus on the overall coverage of a specific element type rather than individual instances.
+Repeated elements that represent the same component can create many separate entries in the report. Grouping them reduces visual clutter and surfaces coverage at the component level rather than per-instance.
 
-### Example: Grouping dynamic IDs
+This is especially useful for lists, tables, and navigation menus where the same element type appears many times with different IDs or generated attributes.
 
-In the example below, the UI Coverage report shows multiple buttons that represent the same button due to a dynamically generated ID. By grouping these buttons, you can reduce noise and see the total coverage for the buttons with similar functionality in your application.
+### Example: Grouping dynamically generated navigation buttons
+
+In the example below, three navigation buttons share the same pattern but have different generated IDs, causing them to appear as three separate uncovered elements:
 
 ```html
 <nav>
@@ -54,49 +134,47 @@ In the example below, the UI Coverage report shows multiple buttons that represe
 </nav>
 ```
 
-To add or modify the configuration for your project, navigate to the **App Quality** tab in your project settings and add an **elementGroups** configuration under **uiCoverage**.
+Add an `elementGroups` rule to collapse them into a single entry:
 
 ```json
 {
   "uiCoverage": {
     "elementGroups": [
       {
-        "selector": "nav [id^=nav-button]"
+        "selector": "nav [id^='nav-button']"
       }
     ]
   }
 }
 ```
 
-Now instead of 3 separate elements in the UI Coverage report, the report will show a single entry for all buttons with the `nav-button` ID prefix, simplifying the view and providing a clearer picture of the coverage.
+The report will now show a single grouped entry instead of three separate items:
 
 ```
 nav [id^=nav-button] (3 instances)
 ```
 
-To learn more about the configuration options, refer to the [Element Groups](/ui-coverage/configuration/elementgroups) documentation.
+See [Element Groups configuration](/ui-coverage/configuration/elementgroups) for full details.
 
 ## Configure attribute handling
 
-Attribute configuration ensures that Cypress surfaces element attributes that are most meaningful to your project.
-
 ### Define significant attributes
 
-Specify which attributes Cypress should prioritize when identifying elements. To add or modify the configuration for your project, navigate to the **App Quality** tab in your project settings and add an **significantAttributes** configuration under **uiCoverage**.
+By default, Cypress uses a standard set of attributes to identify elements. If your application uses custom `data-*` attributes as stable, reliable identifiers, you can tell Cypress to prioritize those instead. This reduces noise caused by auto-generated class names or IDs changing between test runs.
 
 ```json
 {
   "uiCoverage": {
-    "significantAttributes": ["data-custom-id"]
+    "significantAttributes": ["data-testid", "data-cy", "data-automation-id"]
   }
 }
 ```
 
-To learn more about the configuration options, refer to the [Significant Attributes](/ui-coverage/configuration/significantattributes) documentation.
+See [Significant Attributes configuration](/ui-coverage/configuration/significantattributes) for full details.
 
-### Use Attribute Filters
+### Use attribute filters
 
-Exclude auto-generated or irrelevant attributes that add unnecessary noise. To add or modify the configuration for your project, navigate to the **App Quality** tab in your project settings and add an **attributeFilters** configuration under **uiCoverage**.
+Auto-generated attributes like Angular's `ng-*` directives or jQuery Sizzle IDs can make element identifiers unstable or misleading. Exclude them so Cypress relies on more stable selectors:
 
 ```json
 {
@@ -117,4 +195,4 @@ Exclude auto-generated or irrelevant attributes that add unnecessary noise. To a
 }
 ```
 
-To learn more about the configuration options, refer to the [Attribute Filters](/ui-coverage/configuration/attributefilters) documentation.
+See [Attribute Filters configuration](/ui-coverage/configuration/attributefilters) for full details.
