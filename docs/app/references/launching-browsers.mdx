@@ -84,6 +84,21 @@ with [Electron](https://electron.atom.io/).
 The Electron browser has the advantage of coming baked into Cypress and does not
 need to be installed separately.
 
+:::caution
+
+<Icon name="exclamation-triangle" /> **Electron is deprecated as a test browser**
+and will be removed in a future version of Cypress. Switch to Chrome or another
+installed browser to avoid a breaking change when you upgrade. Set a
+[`defaultBrowser`](/app/references/configuration#Browser) (for example,
+`'chrome'`) and/or pass [`--browser`](/app/references/command-line#cypress-run)
+so your runs don't rely on the bundled Electron default.
+
+After Electron is removed, runs that target it (`--browser electron`, or an
+implicit fallback to Electron) will fail with a clear error. See
+[Migrating away from the Electron browser](/app/references/migration-guide#Migrating-away-from-the-Electron-browser).
+
+:::
+
 By default, when running [cypress run](/app/references/command-line#cypress-run)
 from the CLI, we will launch all browsers headlessly.
 
@@ -93,8 +108,12 @@ from the CLI, we will launch all browsers headlessly.
 cypress run --headed
 ```
 
-Because Electron is the default browser - it is typically run in CI. If you are
-seeing failures in CI, to easily debug them you may want to run locally with the
+Historically, Electron has been the browser Cypress launches when no
+`--browser` is specified, so it is often what runs in CI. Because it is now
+deprecated, we recommend launching an installed browser in CI instead — for
+example, `cypress run --browser chrome`, or by setting a
+[`defaultBrowser`](/app/references/configuration#Browser). If you are seeing
+failures in CI, to easily debug them you may want to run locally with the
 `--headed` option.
 
 ### Chrome Browsers
