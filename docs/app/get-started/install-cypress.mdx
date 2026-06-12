@@ -131,14 +131,28 @@ Refer to [Advanced Installation](/app/references/advanced-installation#Troublesh
 
 ### Browsers
 
-Each Cypress release includes the Electron-bundled Chromium [browser](/app/references/launching-browsers#Electron-Browser).
-
-The latest 3 major versions of the following browsers are also supported:
+We recommend running your tests in an installed browser. Cypress supports the
+latest 3 major versions of the following:
 
 - [Google Chrome](/app/references/launching-browsers#Chrome-Browsers)
 - [Microsoft Edge](/app/references/launching-browsers#Edge-Browsers)
 - [Mozilla Firefox](/app/references/launching-browsers#Firefox-Browsers) (_Firefox >=[141.0](https://developer.mozilla.org/en-US/docs/Mozilla/Firefox/Releases/141) requires Cypress >=[14.1.0](https://docs.cypress.io/app/references/changelog#14-1-0)_)
 - [WebKit](https://docs.cypress.io/app/references/launching-browsers#WebKit-Experimental) support is experimental
+
+Each Cypress release also includes a bundled, Electron-based Chromium
+[browser](/app/references/launching-browsers#Electron-Browser).
+
+:::caution
+
+<Icon name="exclamation-triangle" /> **Electron is deprecated as a test browser**
+and will be removed in a future version of Cypress. Switch to Chrome or another
+installed browser to avoid a breaking change when you upgrade. Set a
+[`defaultBrowser`](/app/references/configuration#Browser) (for example,
+`'chrome'`) and/or pass [`--browser`](/app/references/command-line#cypress-run)
+so your runs don't rely on the bundled Electron default. See
+[Migrating away from the Electron browser](/app/references/migration-guide#Migrating-away-from-the-Electron-browser).
+
+:::
 
 ### Hardware
 
