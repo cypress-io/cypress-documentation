@@ -76,6 +76,98 @@ If you need a temporary escape hatch while you update those tests, opt back into
 
 :::
 
+### `cy.getCookie()` and `cy.getCookies()` are now queries
+
+[`cy.getCookie()`](/api/commands/getcookie) and
+[`cy.getCookies()`](/api/commands/getcookies) are now retry-able
+[query commands](/app/core-concepts/retry-ability), just like
+[`cy.get()`](/api/commands/get) and [`cy.contains()`](/api/commands/contains).
+
+Previously they were one-shot commands that resolved a single value and ran any
+chained assertions only once. As of Cypress 16 they retry their built-in and
+chained assertions until they pass or time out.
+
+#### Reads are now retried
+
+A read such as `cy.getCookie('session_id').should('exist')` no longer fails on the first
+missing read. The command re-reads the cookie and retries the assertion until it
+passes or the command times out, so you no longer need to manually wait for a
+cookie to be written before asserting on it.
+
+#### Timeouts now follow `defaultCommandTimeout`
+
+This changes which timeout governs them:
+
+- **Query commands** — `cy.getCookie()` and `cy.getCookies()` — are now governed
+  by [`defaultCommandTimeout`](/app/references/configuration#Timeouts) (default
+  `4000` ms), the same timeout used by every other query.
+- **Cookie action commands** — [`cy.setCookie()`](/api/commands/setcookie),
+  [`cy.clearCookie()`](/api/commands/clearcookie),
+  [`cy.clearCookies()`](/api/commands/clearcookies),
+  [`cy.getAllCookies()`](/api/commands/getallcookies), and
+  [`cy.clearAllCookies()`](/api/commands/clearallcookies) — are unchanged. They
+  make a single automation round-trip, do not retry assertions, and remain
+  governed by [`responseTimeout`](/app/references/configuration#Timeouts)
+  (default `30000` ms).
+
+Because the yielded cookie (or array of cookies) is now re-queried on every
+retry, do not treat the value captured inside a
+[`.then()`](/api/commands/then) callback as a stable snapshot. If you relied on
+the previous one-shot behavior, chain [`.should()`](/api/commands/should)
+assertions instead so Cypress retries the entire chain until they pass:
+
+<Badge type="danger">Before</Badge>
+
+```javascript
+// Retries until the cookie exists and its value matches or times out
+cy.getCookie('session_id').then((cookie) => {
+  expect(cookie).to.have.property('value', '189jd09su')
+})
+```
+
+<Badge type="success">After</Badge>
+
+```javascript
+// Retries until the cookie exists and its value matches or times out
+cy.getCookie('session_id').should('have.property', 'value', '189jd09su')
+```
+
+If you specifically need the old non-retrying behavior — for example, to assert
+synchronously that a cookie does **not** yet exist — set the command `timeout`
+to `0`:
+
+```javascript
+cy.getCookie('session_id', { timeout: 0 }).should('not.exist')
+```
+
+#### `cy.getCookie()` and `cy.getCookies()` can no longer be overwritten with `Cypress.Commands.overwrite()`
+
+Queries must be overwritten using `Cypress.Commands.overwriteQuery()`. If you
+were previously overwriting `cy.getCookie()` or `cy.getCookies()`, update your
+code to use
+`Cypress.Commands.overwriteQuery('getCookie', function () { ... })` rather than
+`Cypress.Commands.overwrite('getCookie', () => { ... })`. For more details on
+overwriting queries, see
+[Overwriting Existing Queries](/api/cypress-api/custom-queries#Overwriting-Existing-Queries).
+
+<Badge type="danger">Before</Badge>
+
+```javascript
+Cypress.Commands.overwrite('getCookie', (name, options) => {
+  return cy.getCookie(name, options)
+})
+```
+
+<Badge type="success">After</Badge>
+
+```javascript
+Cypress.Commands.overwriteQuery('getCookie', (name, options) => {
+  return cy.getCookie(name, options)
+})
+```
+
+See [Overwriting Existing Queries](/api/cypress-api/custom-queries#Overwriting-Existing-Queries) for more details.
+
 ### Angular `18`, `19`, and `20` are no longer supported for Component Testing
 
 Angular 18 and 19 have reached [end-of-life](https://angular.dev/reference/releases#actively-supported-versions), and Angular 20 reaches LTS end in November 2026. As a result, the minimum required Angular version for component testing is now `21.0.0`.
