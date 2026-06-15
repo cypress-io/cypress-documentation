@@ -31,8 +31,8 @@ Detailed documentation is available in the
 
 The example below is basic CI setup and job using
 [GitLab CI/CD](https://about.gitlab.com/stages-devops-lifecycle/continuous-integration/)
-to run Cypress tests within the Electron browser. This GitLab CI configuration
-is placed within `.gitlab-ci.yml`.
+to run Cypress tests. This GitLab CI configuration is placed within
+`.gitlab-ci.yml`.
 
 ```yaml
 stages:
@@ -59,7 +59,12 @@ test:
 - Finally, our scripts will:
   - Install npm dependencies
   - Start the project web server (`npm start`)
-  - Run the Cypress tests within the GitLab repository using Electron.
+  - Run the Cypress tests within the GitLab repository. Because `node:latest`
+    has no browser installed, this basic setup uses the bundled Electron
+    browser, which is
+    [deprecated](/app/references/migration-guide#Migrating-away-from-the-Electron-browser);
+    see [Testing with Cypress Docker Images](#Testing-with-Cypress-Docker-Images)
+    below to run in an installed browser like Chrome or Firefox.
 
 ## Testing with Cypress Docker Images
 

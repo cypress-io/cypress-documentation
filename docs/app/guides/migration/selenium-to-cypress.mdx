@@ -300,13 +300,13 @@ the structure of the spec file and the framework's architecture.
 
 ### Integration with the current Pipeline
 
-Cypress can be integrated into any pipeline technology using its headless runner. This headless runner leverages
-the Electron browser, ensuring minimal adaptation of the current CI/CD. Given the widespread usage of Docker in
+Cypress can be integrated into any pipeline technology using its headless runner. This headless runner can run in
+any installed browser, ensuring minimal adaptation of the current CI/CD. Given the widespread usage of Docker in
 most pipelines today, the Cypress pipeline is no exception. Integration becomes effortless by employing a Node.js
 docker image or one provided by Cypress via Docker Hub. These Docker images, not only furnished by Cypress,
 include various versions of Chrome, Firefox, and Edge.
 
-Executing the following command initiates a headless run against the Electron browser. Upon completion, a succinct
+Executing the following command initiates a headless run. We recommend passing `--browser` (for example, `--browser chrome`) so runs don't rely on the deprecated Electron default. Upon completion, a succinct
 table is generated, detailing the number of tests for each 'cy.js' file, in addition to the failed, skipped and passed
 tests with the run time of each specific 'cy.js' file. At the bottom of the table, a comprehensive summary displays the
 total number of tests run, the duration of the run, and the counts of failed, passed, and skipped tests.

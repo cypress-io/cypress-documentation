@@ -280,6 +280,11 @@ The "browser" argument can be set to `chrome`, `chromium`, `edge`, `electron`,
 `firefox` to launch a browser detected on your system. Cypress will attempt to
 automatically find the installed browser for you.
 
+The bundled `electron` browser is
+[deprecated](/app/references/migration-guide#Migrating-away-from-the-Electron-browser)
+as of Cypress 16.0 and will be removed in a future major version. Pass an
+installed browser such as `--browser chrome` instead.
+
 To launch non-stable browsers, add a colon and the desired release channel. For
 example, to launch Chrome Canary, use `chrome:canary`.
 

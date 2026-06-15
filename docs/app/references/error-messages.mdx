@@ -1337,7 +1337,10 @@ Here are some potential workarounds:
 1. Ask your administrator to disable these policies so that you can use Cypress
    with Chrome.
 2. Use the built-in Electron browser for tests, since it is not affected by
-   these policies.
+   these policies. Note that the Electron browser is
+   [deprecated](/app/references/migration-guide#Migrating-away-from-the-Electron-browser)
+   and will be removed in a future major version, so prefer the Chromium option
+   below for the long term.
    [See the guide to launching browsers for more information.](/app/references/launching-browsers#Electron-Browser)
 3. Try using Chromium instead of Google Chrome for your tests, since it may be
    unaffected by GPO. You can

@@ -258,7 +258,7 @@ Cypress Docker images are available from:
 
 ### Cypress Docker variants
 
-- [cypress/base](https://github.com/cypress-io/cypress-docker-images/tree/master/base) is the entry-level Cypress Docker image, allowing you to test in the Electron browser, built in to Cypress.
+- [cypress/base](https://github.com/cypress-io/cypress-docker-images/tree/master/base) is the entry-level Cypress Docker image. It includes the bundled Electron browser, which is [deprecated](/app/references/migration-guide#Migrating-away-from-the-Electron-browser) as of Cypress 16.0 — to test in an installed browser such as Chrome or Firefox, use the `cypress/browsers` image described below.
   It contains a complete Linux (Debian) operating system, together with the
   [prerequisite operating system packages](/app/get-started/install-cypress#UbuntuDebian) for Cypress,
   Node.js, npm and Yarn v1 Classic.
