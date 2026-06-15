@@ -175,6 +175,10 @@ Change `<YOUR_FRAMEWORK>>` to `'react'`, `'vue'`, `'svelte'`, or another [suppor
 
 Note that `@cypress/vite-dev-server@7` is deprecated and no longer supported by Cypress. It is intended as a temporary workaround until you can migrate to Vite `8`. More information on configuring a custom dev server can be found in the [Cypress Vite Dev Server documentation](https://github.com/cypress-io/cypress/blob/@cypress/vite-dev-server-v7.2.1/npm/vite-dev-server/README.md).
 
+### Electron browser deprecated
+
+The bundled Electron browser is deprecated as a test browser in Cypress 16.0.0 and will be removed in a future major version. If your runs rely on the implicit Electron default, set a [`defaultBrowser`](/app/references/configuration#Browser) (for example, `'chrome'`) and/or pass [`--browser`](/app/references/command-line#cypress-run) to switch to an installed browser. See [Migrating away from the Electron browser](#Migrating-away-from-the-Electron-browser) for the full guide.
+
 ## Migrating away from Cypress.env()
 
 Starting with Cypress 15.10.0, `Cypress.env()` has been deprecated and will be removed in a future major version. This guide helps you migrate to [`cy.env()`](/api/commands/env) (for sensitive values) or [`Cypress.expose()`](/api/cypress-api/expose) (for public/non-sensitive values), depending on your use case.
