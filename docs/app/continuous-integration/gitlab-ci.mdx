@@ -59,12 +59,10 @@ test:
 - Finally, our scripts will:
   - Install npm dependencies
   - Start the project web server (`npm start`)
-  - Run the Cypress tests within the GitLab repository. Because `node:latest`
-    has no browser installed, this basic setup uses the bundled Electron
-    browser, which is
-    [deprecated](/app/references/migration-guide#Migrating-away-from-the-Electron-browser);
-    see [Testing with Cypress Docker Images](#Testing-with-Cypress-Docker-Images)
-    below to run in an installed browser like Chrome or Firefox.
+  - Run the Cypress tests within the GitLab repository. To run in an installed
+    browser like Chrome or Firefox, see
+    [Testing with Cypress Docker Images](#Testing-with-Cypress-Docker-Images)
+    below.
 
 ## Testing with Cypress Docker Images
 

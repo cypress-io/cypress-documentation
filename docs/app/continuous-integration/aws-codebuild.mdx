@@ -67,11 +67,9 @@ phases:
 - Finally, our `buildspec.yml` configuration will:
   - Install npm dependencies
   - Start the project web server (`npm start:ci`)
-  - Run the Cypress tests within our GitHub repository. This basic setup uses
-    the bundled Electron browser, which is
-    [deprecated](/app/references/migration-guide#Migrating-away-from-the-Electron-browser);
-    install a browser and pass `--browser` (for example, `--browser chrome`) to
-    run in an installed browser instead.
+  - Run the Cypress tests within our GitHub repository. To run in an installed
+    browser such as Chrome, install the browser and pass `--browser` (for
+    example, `--browser chrome`); see the example below.
 
 :::tip
 
