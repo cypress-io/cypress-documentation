@@ -429,10 +429,8 @@ and the deployment is still in progress,
 the workflow "Set up job" phase randomly uses either an old or a new runner image version.
 Your test run might fail if Cypress Cloud detects differences in the browser versions between parallel jobs.
 
-To work around this issue,
-and if you specify a browser other than the default browser in parallel mode,
-we recommend using a
-[cypress/browsers](#Testing-with-Cypress-Docker-Images) Docker image which then uses one consistent browser version.
+To work around this issue, we recommend using a
+[cypress/browsers](#Testing-with-Cypress-Docker-Images) Docker image, which uses one consistent browser version.
 This shields the workflow from browser version changes due to possible incomplete GitHub runner image deployments.
 
 As mentioned in [Testing with Cypress Docker Images](#Testing-with-Cypress-Docker-Images),

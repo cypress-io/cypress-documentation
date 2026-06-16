@@ -25,7 +25,7 @@ When you run tests in Cypress, we launch a browser for you. This enables us to:
 2. Access the privileged browser APIs for automation.
 
 Cypress currently supports Firefox and Chrome-family browsers (including Edge
-and Chromium). To run tests optimally across these browsers in CI, check out the
+and Chrome for Testing). To run tests optimally across these browsers in CI, check out the
 strategies demonstrated in the
 [cross browser Testing](/app/guides/cross-browser-testing) guide.
 
@@ -101,18 +101,10 @@ or another installed browser to avoid a breaking change when you upgrade. Set a
 so your runs don't rely on the bundled Electron default.
 
 After Electron is removed, runs that target it (`--browser electron`, or an
-implicit fallback to Electron) will fail with a clear error. See
+implicit fallback to Electron) will fail. See
 [Migrating away from the Electron browser](/app/references/migration-guide#Migrating-away-from-the-Electron-browser).
 
 :::
-
-Historically, Electron has been the browser Cypress launches when no
-`--browser` is specified, so it is often what runs in CI. Because it is now
-deprecated, we recommend launching an installed browser in CI instead — for
-example, `cypress run --browser chrome`, or by setting a
-[`defaultBrowser`](/app/references/configuration#Browser). If you are seeing
-failures in CI, to easily debug them you may want to run locally with the
-`--headed` option.
 
 ### Chrome Browsers
 

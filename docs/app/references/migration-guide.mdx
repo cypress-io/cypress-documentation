@@ -505,8 +505,8 @@ removal.
 
 The Electron browser ships inside Cypress as a version of Chromium bundled with
 [Electron](https://www.electronjs.org/). It was convenient because it required no
-separate install, but maintaining it as a test browser has grown costly and the
-trade-offs no longer favor keeping it:
+separate install, but it no longer gives you a representative testing
+environment:
 
 - **It lags Chromium.** Electron's Chromium version is tied to the Electron
   release Cypress bundles, so it trails the current stable Chrome by weeks or
@@ -514,9 +514,6 @@ trade-offs no longer favor keeping it:
 - **Its behavior diverges from Chrome.** Because it is an embedded Chromium
   rather than the browser your users run, test behavior in Electron can differ
   from real Chrome — which undermines confidence in the results.
-- **It carries separate maintenance.** The bundled browser needs its own
-  security, configuration, and compatibility upkeep that is independent of the
-  installed browsers Cypress already supports.
 
 Standardizing on installed browsers means your tests run in the same engines
 your users do, on a predictable, evergreen update cadence.
@@ -524,10 +521,10 @@ your users do, on a predictable, evergreen update cadence.
 ### What happens after removal
 
 Until removal, targeting Electron continues to work but emits a deprecation
-warning (error code `BROWSER_ELECTRON_DEPRECATED`) in `cypress run` output and in
-the Cypress app. After Electron is removed, runs that target it — whether through
-`--browser electron`, a `defaultBrowser: 'electron'` setting, or an implicit
-fallback to Electron when no browser is specified — will fail with a clear error.
+warning in `cypress run` output and in the Cypress app. After Electron is
+removed, runs that target it — whether through `--browser electron`, a
+`defaultBrowser: 'electron'` setting, or an implicit fallback to Electron when no
+browser is specified — will fail with an error.
 
 ### Migrate to an installed browser
 
@@ -556,6 +553,9 @@ fallback to Electron when no browser is specified — will fail with a clear err
    implicit Electron default, switch it to an installed browser. This includes
    any [`cypress-io/github-action`](https://github.com/cypress-io/github-action)
    steps and Docker-based jobs that previously ran without a `browser` argument.
+   See [Continuous Integration](/app/continuous-integration/overview) for setup
+   details, including [Docker images](/app/continuous-integration/overview#Cypress-Docker-Images)
+   that come with browsers preinstalled.
 1. **Remove any explicit Electron usage** — `--browser electron`,
    `defaultBrowser: 'electron'`, or `{ browser: 'electron' }` test/suite
    overrides — and replace it with an installed browser.
@@ -566,7 +566,7 @@ fallback to Electron when no browser is specified — will fail with a clear err
 1. ✅ Set `defaultBrowser` (or pass `--browser`) so runs don't fall back to Electron
 1. ✅ Replace any `--browser electron` / `defaultBrowser: 'electron'` usage
 1. ✅ Update CI examples (GitHub Action, Docker) to target an installed browser
-1. ✅ Verify your runs no longer emit the `BROWSER_ELECTRON_DEPRECATED` warning
+1. ✅ Verify your runs no longer emit the Electron deprecation warning
 
 ## Migrating to Cypress 15.0
 
