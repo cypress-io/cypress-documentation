@@ -297,7 +297,9 @@ CLI flag.
 
 No. Specs that are already in progress when the threshold is reached finish
 running so you still get their complete results. Cypress only stops handing out
-_new_ specs, and in a parallelized run every machine stops together.
+_new_ specs. In a parallelized run, this means machines can keep running the
+specs they had already started at the moment of cancellation, but none of them
+will pick up a new spec once the run is canceled.
 
 ### <Icon name="angle-right" /> How do I disable Auto Cancellation for a single run?
 

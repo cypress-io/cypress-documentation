@@ -59,9 +59,9 @@ run as canceled, and reports how much CI time the cancellation saved.
 - Any specs that are already in progress when the threshold is reached will
   **finish running** so you still get their complete results.
 - The cancellation applies to the whole run, across every machine, not just the
-  one that reported the failure. In a parallelized run, each machine and group
-  sees the cancellation on its next request for a spec and stops together, so no
-  worker keeps running once the run is canceled.
+  one that reported the failure. In a parallelized run, machines that are already
+  mid-spec will finish those specs, but **no machine starts a new spec** once the
+  run is canceled.
 
 This means the slower and more expensive your suite is, the more each
 cancellation saves you.
