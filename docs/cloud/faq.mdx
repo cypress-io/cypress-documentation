@@ -290,7 +290,9 @@ the Business and Enterprise plans.
 By default, a single failure cancels the run. You can set a higher threshold in
 your project's Smart Orchestration settings, or override it per run with the
 [`--auto-cancel-after-failures`](/app/references/command-line#auto-cancel-after-runs)
-CLI flag.
+CLI flag. Only genuinely failed tests count toward the threshold; flaky tests (which
+fail an attempt but then pass on retry) are not considered and never trigger an
+auto cancellation.
 
 ### <Icon name="angle-right" /> Does Auto Cancellation stop tests that are already running?
 

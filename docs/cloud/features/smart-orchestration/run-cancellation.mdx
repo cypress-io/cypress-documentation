@@ -52,6 +52,9 @@ run as canceled, and reports how much CI time the cancellation saved.
 
 - The default threshold is **1 failure**, so you fail fast and move on. You can
   raise the threshold if you'd rather let more failures surface first.
+- Only genuinely failed tests count toward the threshold. **Flaky tests are not
+  considered at all.** A test that fails an attempt but then passes on retry is
+  recorded as flaky, not failed, so it never contributes to auto cancellation.
 - Any specs that are already in progress when the threshold is reached will
   **finish running** so you still get their complete results.
 - The cancellation applies to the whole run, across every machine, not just the
