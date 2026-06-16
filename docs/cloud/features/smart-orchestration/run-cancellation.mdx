@@ -55,7 +55,7 @@ your configured threshold, Cypress Cloud stops handing out new specs, marks the
 run as canceled, and reports how much CI time the cancellation saved.
 
 - The default threshold is **1 failure**, so you fail fast and move on. You can
-  configure any threshold from **1 to 9999** failures.
+  raise the threshold if you'd rather let more failures surface first.
 - Any specs that are already in progress when the threshold is reached will
   **finish running** so you still get their complete results.
 - The cancellation applies to the whole run, across every machine, not just the
