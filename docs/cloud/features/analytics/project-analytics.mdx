@@ -1,6 +1,6 @@
 ---
 title: Project Analytics & Insights
-description: Project Analytics in Cypress Cloud turn your recorded run history into actionable insight — track CI health and speed over time, and pinpoint exactly which tests are failing, slow, or flaky.
+description: Project Analytics in Cypress Cloud turn your recorded run history into actionable insight, so you can track CI health and speed over time and pinpoint exactly which tests are failing, slow, or flaky.
 sidebar_position: 20
 ---
 
@@ -14,7 +14,7 @@ asks about its test suite:
 
 - **Is my CI healthy and fast?** Are runs passing, how long do they take, and is
   the suite growing in a sustainable way?
-- **What specifically is broken, slow, or flaky — and who or what is
+- **What specifically is broken, slow, or flaky, and who or what is
   responsible?** Which tests, specs, branches, browsers, or commits are dragging
   the suite down?
 
@@ -71,14 +71,14 @@ depends on the report family.
 
 ### Additional controls on Trend reports
 
-- **Time interval** — chart bucket granularity: Daily, Weekly, Monthly, or
-  Quarterly.
-- **Build interval** — for by-build views, group results by 1, 5, 10, 50, or
+- **Time interval**: the chart bucket granularity (Daily, Weekly, Monthly, or
+  Quarterly).
+- **Build interval**: for by-build views, group results by 1, 5, 10, 50, or
   100 runs.
 
 ### Additional controls on Ranking & breakdown reports
 
-- **View by** — regroup the ranking by Test Case, Spec File, Tag, or Branch.
+- **View by**: regroup the ranking by Test Case, Spec File, Tag, or Branch.
 - Slice results by **Run Group**, **Committer**, **Spec File**, **Browser**,
   **Cypress Version**, **Operating System**, and (where applicable) **Status**.
 
@@ -95,7 +95,7 @@ on a local machine.
 - **What it shows:** A stacked bar chart of run outcomes over time (or by build
   number).
 - **Measures:** Total runs, average runs per day, passed count, and failed
-  count — plus a breakdown of every run status: Passed, Failed, Running, Timed
+  count, plus a breakdown of every run status: Passed, Failed, Running, Timed
   out, Errored, No tests, Over limit, and Canceled. Includes the delta versus
   the previous period.
 - **Use it to:** Track overall run volume and pass/fail health trends.
@@ -110,8 +110,8 @@ on a local machine.
 `/analytics/run-duration`
 
 See how long your runs take and how much parallelization is helping. Only
-passing runs are included here — failing or errored runs can sway the average
-away from its typical duration.
+passing runs are included here, since failing or errored runs can sway the
+average away from its typical duration.
 
 - **What it shows:** The run duration trend over time.
 - **Measures:** Average run duration, typical concurrency (the median number of
@@ -128,8 +128,8 @@ away from its typical duration.
 `/analytics/run-duration-by-build`
 
 The same duration metrics as the Run duration report, but plotted **per build
-number** rather than per time bucket — useful when you want to inspect specific
-builds rather than a smoothed trend.
+number** rather than per time bucket. This is useful when you want to inspect
+specific builds rather than a smoothed trend.
 
 - **What it shows:** Duration metrics plotted per build number instead of per
   time bucket.
