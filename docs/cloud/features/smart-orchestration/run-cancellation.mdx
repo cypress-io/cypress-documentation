@@ -152,10 +152,11 @@ granular control where it matters most:
 Specifying the flag overrides the project setting in Cypress Cloud. Omitting it
 falls back to the project default.
 
-To set a numeric threshold, pass the flag to `cypress run`:
+To set a numeric threshold, pass the flag to `cypress run`. For example, to
+cancel the run after 5 test failures:
 
 ```shell
-npx cypress run --record --key <<your_record_key>> --auto-cancel-after-failures 1
+npx cypress run --record --key <<your_record_key>> --auto-cancel-after-failures 5
 ```
 
 To disable Auto Cancellation entirely for a run, pass `false`:
