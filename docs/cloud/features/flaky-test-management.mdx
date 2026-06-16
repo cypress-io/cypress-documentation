@@ -1,7 +1,7 @@
 ---
 title: Flaky Test Management
 sidebar_position: 60
-description: Detect and manage flaky tests in Cypress Cloud
+description: Flaky Test Management in Cypress Cloud automatically detects, scores, and alerts on flaky tests so teams can quantify test suite reliability, protect developer velocity, and prioritize the fixes that matter most.
 sidebar_label: Flake Management
 ---
 
@@ -13,27 +13,54 @@ sidebar_label: Flake Management
 
 ##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
 
-- How to detect and manage flaky tests in Cypress Cloud
-- How to enable flake detection and alerting
-- The benefits of using flaky test management features
+- Why flaky tests are a business problem, not just an engineering annoyance
+- How Cypress Cloud automatically detects, scores, and tracks flaky tests
+- How to turn flake data into prioritized, measurable action
+- How to alert the right people the moment flake appears
 
 :::
 
-By enabling [test retries](/app/guides/test-retries), Cypress Cloud can
-detect, flag, and track flaky tests from your recorded Cypress test runs in your
-CI/CD pipeline.
+## Why Flaky Test Management
 
-A test is considered to be **flaky** when it can pass and fail across multiple
-retry attempts without any code changes. For example, a test is executed and fails, then the test is executed again,
-without any change to the code, but this time it passes.
+A **flaky test** passes and fails across retries without any code change — it
+"fails" once, runs again on the same code, and passes. A single flaky test
+seems harmless. At scale, flake is one of the most expensive and corrosive
+problems a software organization faces:
+
+- **It erodes trust in the entire test suite.** Once developers learn that a
+  red build might just be "the flaky one," they start ignoring failures — and
+  real regressions slip through to production.
+- **It drains engineering time and budget.** Teams burn hours re-running
+  pipelines, investigating failures that aren't real, and manually triaging
+  which tests can be trusted. That's velocity spent on noise instead of
+  shipping.
+- **It slows down delivery.** Flake blocks merges, delays releases, and forces
+  developers to context-switch away from feature work to babysit CI.
+- **It hides accountability.** Without data, "the tests are flaky" is a vague
+  complaint. There's no way to know whether reliability is improving or
+  degrading over time, or which tests are actually responsible.
+
+Flaky Test Management turns flake from an invisible, anecdotal cost into a
+**measurable, prioritized, and assignable** stream of work. Cypress Cloud
+automatically detects flake from your existing CI runs, scores each test by
+severity, tracks suite-wide reliability over time, and alerts the right people
+the moment new flake appears — so engineering leaders can quantify the health
+of their test suite, protect developer velocity, and direct effort at the few
+tests causing the most disruption.
+
+By enabling [test retries](/app/guides/test-retries), Cypress Cloud can detect,
+flag, and track flaky tests from your recorded Cypress test runs in your CI/CD
+pipeline.
 
 :::info
 
 <strong>What are test retries?</strong>
 
-Cypress has the ability to automatically
-[retry failed tests](/app/guides/test-retries#Configure-Test-Retries) to
-mitigate flaky tests from failing entire test runs or CI builds.
+Cypress can automatically
+[retry failed tests](/app/guides/test-retries#Configure-Test-Retries) to keep a
+single flaky test from failing an entire run or CI build. Retries are also the
+signal Cypress Cloud uses to identify flake — a test that fails then passes on
+retry, with no code change, is flaky by definition.
 
 :::
 
@@ -48,36 +75,41 @@ mitigate flaky tests from failing entire test runs or CI builds.
 
 :::
 
-One way to battle flaky tests is to detect and monitor them as they occur in an
-organized and methodical manner such that you can assess their severity to
-assist with prioritizing their fix.
+You can't fix what you can't see. Flake Detection gives you a continuous,
+automated record of every flaky test in your suite — captured as it happens in
+CI, so you can assess severity and prioritize fixes instead of relying on
+developers to remember and report intermittent failures.
 
 ### Enable test retries
 
-Test retries is the _fundamental mechanism_ that enables the detection of flaky
-tests by Cypress Cloud. Therefore, **enabling
+Test retries are the _fundamental mechanism_ that enables Cypress Cloud to
+detect flaky tests. **Enabling
 [test retries](/app/guides/test-retries#Configure-Test-Retries) is required**
-to take advantage of any flaky test management feature.
+to take advantage of any Flaky Test Management feature.
 
 :::caution
-If you want more control over the pass/fail result of any test deemed flaky by test retries, you may want to use [experimental test retries](/app/references/experiments#Experimental-Flake-Detection-Features), which is available as of Cypress `13.4.0`.
+If you want more control over the pass/fail result of any test deemed flaky by
+test retries, you may want to use
+[experimental test retries](/app/references/experiments#Experimental-Flake-Detection-Features),
+available as of Cypress `13.4.0`.
 :::
 
-### Flagging Flaky Tests
+### Flagging flaky tests
 
-Test runs with flaky tests will be flagged with the number of flaky of tests
-within Cypress Cloud "Latest runs" page. Flaky tests runs can also be filtered
-in and out via the "Flaky" filter within this page.
+Test runs containing flaky tests are flagged with a flaky-test count on the
+Cypress Cloud **Latest Runs** page, and can be filtered in or out with the
+**Flaky** filter. This gives teams an at-a-glance view of how much flake is
+reaching their pipeline on any given day.
 
 <DocsImage
   src="/img/cloud/features/flaky-test-management/flaky-runs-view.png"
   alt="Flagging flaky tests runs in Cypress Cloud"
 />
 
-Any failure across multiple test run attempts triggered by test retrying will
-result in a given test case to be flagged as flaky.
+Any failure across multiple retry attempts triggered by test retrying flags the
+test case as flaky.
 
-### Flaky Test Analytics
+### Flaky test analytics
 
 :::tip
 
@@ -88,21 +120,27 @@ result in a given test case to be flagged as flaky.
 
 :::
 
-The flaky tests analytics page provides a birds-eye-view on the state of flake
-within your project by showing:
+The flaky test analytics page is the reporting layer leadership and team leads
+use to understand — and prove — the state of test suite reliability. It gives a
+bird's-eye view of flake across your project, including:
 
-- Plot of the **number of flaky tests over time**.
-- Overall **flakiness level** of the entire project.
-- **Number of flake tests** grouped by their severity.
-- Filterable **log of all flaky test** cases ordered by severity.
+- A plot of the **number of flaky tests over time**, so you can show reliability
+  trending up or down release over release.
+- The overall **flakiness level** of the entire project — a single health
+  metric you can track and set goals against.
+- The **number of flaky tests grouped by severity**, so effort goes where the
+  pain is greatest.
+- A filterable **log of every flaky test**, ordered by severity, ready to triage
+  and assign.
 
 :::info
 
-<strong>Flake Severity</strong>
+<strong>Flake severity</strong>
 
-Test flake **severity** is determined by the frequency of flake or the **flake
-rate** of a given test. Flake severity level can be used to prioritize the work
-needed to resolve flake issues.
+Flake **severity** is determined by how often a test flakes — its **flake
+rate**. Severity lets teams prioritize objectively: fix the handful of
+high-severity tests disrupting the most builds before chasing rare,
+low-impact flake.
 
 :::
 
@@ -111,43 +149,43 @@ needed to resolve flake issues.
   alt="Flaky tests analytics"
 />
 
-Selecting any of the flaky test cases in the analytics page will reveal a test
-case details panel that shows:
+Selecting any flaky test case opens a details panel with the context engineers
+need to find and fix the root cause quickly:
 
-- Historical log of latest flaky runs
-- Most common errors across the runs of the test case
-- Related test case changelog
-- Plot of failure rate and flaky rate over time.
+- A historical log of the latest flaky runs
+- The most common errors across the test case's runs
+- The related test case changelog
+- A plot of failure rate and flake rate over time
 
-All these test case level details provide deeper context around the occurrences
-of flake over time to assist with debugging the root cause.
+Together, these test-level details shorten the time from "this test is flaky"
+to "here's why," reducing the investigation cost of every fix.
 
 <DocsImage
   src="/img/cloud/features/flaky-test-management/flake-panel.png"
   alt="Flaky tests analytics details panel"
 />
 
-### Failure Rate vs Flake Rate
+### Failure rate vs. flake rate
 
-It is important to understand the distinction between failure rate and flake
-rate when test retries is enabled. These two metrics are tracked over time for
-each flaky test case within the flaky tests analytics page:
+When test retries are enabled, it's important to distinguish **failure rate**
+from **flake rate**. Both are tracked over time for each flaky test on the
+analytics page:
 
 <DocsImage
   src="/img/cloud/features/flaky-test-management/flake-v-fail-2.png"
   alt="flake rate vs fail rate"
 />
 
-A test case flagged as flaky could have still passed after multiple test retry
-attempts. The test result status of individual test retry attempts is separate
-and distinct from the final test status.
+A test flagged as flaky may still have ultimately passed after retries. The
+status of an individual retry attempt is separate from the final test status.
 
-For example, a project is configured to retry failing tests up to 3 times. The
-first two attempts fail, but the last and third attempt passes, resulting in a
-final status of passing.
+For example, a project configured to retry failing tests up to three times may
+fail the first two attempts and pass on the third — a final status of passing.
 
-With this concept in mind, it is possible to always have zero final failure rate
-while exhibiting flake as demonstrated below:
+Because of this, a test can show a **zero final failure rate while still
+exhibiting flake**, as shown below. This is exactly why flake is so easy to
+miss without dedicated tracking: the build goes green, but the underlying
+instability — and its cost — is still there.
 
 <DocsImage
   src="/img/cloud/features/flaky-test-management/flake-v-fail-1.png"
@@ -165,12 +203,18 @@ while exhibiting flake as demonstrated below:
 
 :::
 
-Cypress Cloud can provide alerts via source control ([GitHub](/cloud/integrations/github), [GitLab](/cloud/integrations/gitlab), [BitBucket](/cloud/integrations/bitbucket)), [Slack](/cloud/integrations/slack), and [Microsoft Teams](/cloud/integrations/teams) integrations to further assist with
-staying on top of flake occurrences.
+Detection only pays off if the right people know about flake when it matters.
+Flake Alerting pushes flake notifications directly into the tools your team
+already works in — source control
+([GitHub](/cloud/integrations/github), [GitLab](/cloud/integrations/gitlab),
+[Bitbucket](/cloud/integrations/bitbucket)),
+[Slack](/cloud/integrations/slack), and
+[Microsoft Teams](/cloud/integrations/teams) — so flake is caught in the review
+process instead of compounding silently over time.
 
 ### GitHub
 
-Flake alerting via GitHub PR comments and status checks can be enabled within a
+Flake alerting via GitHub PR comments and status checks can be enabled in a
 project's GitHub integration settings:
 
 <DocsImage
@@ -178,9 +222,10 @@ project's GitHub integration settings:
   alt="GitHub flake alert settings"
 />
 
-After enabling GitHub flake alerting, GitHub PR comments will show the number of
-flaky tests associated with the PR within the test summary, and include a
-"Flakiness" section highlighting the specific tests that flaked.
+Once enabled, GitHub PR comments show the number of flaky tests associated with
+the PR in the test summary and include a **Flakiness** section highlighting the
+specific tests that flaked — putting reliability data in front of reviewers
+before they merge.
 
 <DocsImage
   src="/img/cloud/features/flaky-test-management/flake-pr-comment.png"
@@ -189,15 +234,15 @@ flaky tests associated with the PR within the test summary, and include a
 
 ### Slack
 
-Flake alerting via Slack can be enabled within Slack integration settings:
+Flake alerting via Slack can be enabled in Slack integration settings:
 
 <DocsImage
   src="/img/cloud/features/flaky-test-management/slack-flake.png"
   alt="Slack flake alert settings"
 />
 
-After enabling Slack alerts, Cypress Cloud will send Slack messages whenever
-flaky tests are detected:
+Once enabled, Cypress Cloud sends a Slack message whenever flaky tests are
+detected, so teams can respond in real time:
 
 <DocsImage
   src="/img/cloud/features/flaky-test-management/flake-slack-alert.png"
@@ -206,18 +251,29 @@ flaky tests are detected:
 
 ## Compare flake across branches with Branch Review
 
-When evaluating whether a Pull Request is safe to merge, the key question is often _did my changes introduce new flake, or was this test already unstable?_ [Branch Review](/cloud/features/branch-review) answers this directly by comparing the changed branch against its base in a single view.
+When deciding whether a Pull Request is safe to merge, the key question is
+usually: _did my changes introduce new flake, or was this test already
+unstable?_ [Branch Review](/cloud/features/branch-review) answers this directly
+by comparing the changed branch against its base in a single view — so reviewers
+hold authors accountable for the flake they introduce without getting blocked
+by flake they didn't.
 
 The **Flaky** tab lists every spec that flaked, marking each result as:
 
-- **new** - flake that was not previously captured, and may have been introduced by this branch
-- **existing** - flake that was already present on the base branch
-- **resolved** - flake that was present before but no longer appears
+- **new** — flake not previously captured, and possibly introduced by this
+  branch
+- **existing** — flake already present on the base branch
+- **resolved** — flake that was present before but no longer appears
 
-This lets reviewers focus only on the flake a branch is responsible for, and confirm that a stability fix actually took effect. From there you can open a test to compare attempts side by side with [Test Replay](/cloud/features/test-replay) and the code diff to track down the root cause.
+This lets reviewers focus only on the flake a branch is responsible for, and
+confirm that a stability fix actually took effect. From there you can open a
+test to compare attempts side by side with
+[Test Replay](/cloud/features/test-replay) and the code diff to track down the
+root cause.
 
 ## See Also
 
-- Compare flake between branches before merging with [Branch Review](/cloud/features/branch-review).
+- Compare flake between branches before merging with
+  [Branch Review](/cloud/features/branch-review).
 - Read our blog posts about fighting
-  [the test flake](https://cypress.io/blog/tag/flake/).
+  [test flake](https://cypress.io/blog/tag/flake/).
