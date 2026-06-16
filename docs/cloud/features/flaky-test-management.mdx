@@ -176,16 +176,6 @@ to "here's why," reducing the investigation cost of every fix.
   alt="Flaky tests analytics details panel"
 />
 
-:::tip
-
-Need flake metrics in your own dashboards? The
-[Data Extract API](/cloud/integrations/data-extract-api#Flaky) exposes
-organization-wide flake reports, including flake count and flake rate per
-project over time, so you can track reliability alongside your other
-engineering KPIs.
-
-:::
-
 ### Failure rate vs. flake rate
 
 When test retries are enabled, it's important to distinguish **failure rate**
@@ -309,6 +299,60 @@ confirm that a stability fix actually took effect. From there you can open a
 test to compare attempts side by side with
 [Test Replay](/cloud/features/test-replay) and the code diff to track down the
 root cause.
+
+## Export flake data with the Data Extract API
+
+The in-app analytics answer "how healthy is this project?" The
+[Data Extract API](/cloud/integrations/data-extract-api) answers the same
+question across your _entire organization_, in a format you own. It lets you
+pull flake metrics into BI tools, executive dashboards, and engineering
+scorecards, so test reliability sits next to your other KPIs and trends can be
+tracked release over release without anyone logging into Cypress Cloud.
+
+:::tip
+
+<Icon name="star" /> **Premium Cypress Cloud Feature**
+
+The **Data Extract API** is available to users with an
+[Enterprise Cypress Cloud plan](https://cypress.io/pricing).
+
+:::
+
+### Available flake reports
+
+The API exposes five flake-focused reports. Each is requested with its
+`report_id` and returns CSV, JSON, or XLSX for a date range you specify.
+
+| Report | `report_id` | Answers |
+| ------ | ----------- | ------- |
+| Flake detail over time | `flake-per-project-over-time` | How does flaky test **count** per project change day over day and week over week? |
+| Flaky rate per project | `flake-rate-per-project` | What **percentage** of runs flake in each project, normalizing out projects that simply run more often? |
+| Flaky rate per project over time | `flake-rate-per-project-over-time` | How is each project's flaky **rate** trending over the period? |
+| Flaky test details | `flaky-test-details` | Every individual flaky result, including commit, branch, author, errors, and a `test_replay_url` to jump straight to the failure. |
+| Top flaky tests per project | `top-flaky-per-project` | Which specs flake the most, with a Test Replay link to a recent occurrence for triage? |
+
+:::info
+
+**Flaky rate** is reported as a whole number. For example, 1 flaky test over 4
+runs has a flaky rate of `25`. This mirrors the
+[flake rate](#Flake-Detection) used in the in-app analytics.
+
+:::
+
+### Example request
+
+Substitute your organization's API key for `YOUR-API-KEY` and choose the report
+with `report_id`:
+
+```
+https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=flake-rate-per-project&export_format=csv&start_date=2025-03-01
+```
+
+The `flaky-test-details` report is available in near real time, roughly 30
+minutes after a run completes, so it is well suited to automated pipelines that
+react to new flake. For the full list of parameters, formats, and limits, see
+the [Data Extract API](/cloud/integrations/data-extract-api#Flaky)
+documentation.
 
 ## See Also
 
