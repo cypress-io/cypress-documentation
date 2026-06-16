@@ -126,6 +126,16 @@ links back to the source run whose failures were moved to the front of the line.
 Following that link shows exactly which previous failures Cypress Cloud was
 reacting to.
 
+To see prioritization at the individual spec level, open the
+[Specs tab](/cloud/features/recorded-runs#Specs-tab). Each spec that was moved up
+is marked with the Smart Orchestration (lightning/A) icon, and hovering it shows
+a **"Prioritized by failed specs"** tooltip.
+
+<DocsImage
+  src="/img/cloud/features/smart-orchestration/spec-prioritization-spec-icon.png"
+  alt="Specs tab row marked with the Smart Orchestration lightning icon and a 'Prioritized by failed specs' tooltip indicating the spec was run first by Spec Prioritization"
+/>
+
 If the status reads anything other than **Applied**, double-check that Spec
 Prioritization is toggled on in your
 [project settings](#Enable-Spec-Prioritization) and that the previous run
