@@ -1,6 +1,6 @@
 ---
 title: Rerun Optimization | Re-run Failed Specs Only
-description: Re-run only the specs that failed in CI and skip the specs that already passed to reach a passing build faster and cut CI cost, with Cypress Cloud's experimental Rerun Optimization feature.
+description: Re-run only the specs that failed in CI and skip the ones that already passed — reach a passing build faster and cut CI cost with Cypress Cloud.
 sidebar_label: Rerun Optimization
 sidebar_position: 60
 ---
@@ -17,6 +17,22 @@ sidebar_position: 60
 - How to cut CI compute cost and billed test results on every rerun
 - How to enable Rerun Optimization at the organization and project level
 - How Cypress Cloud decides which specs to skip on a rerun
+
+:::
+
+**Rerun Optimization is a Cypress Cloud
+[Smart Orchestration](/cloud/features/smart-orchestration/overview) feature that
+re-runs only the spec files that failed in CI and skips the specs that already
+passed**, getting you to a passing build faster and at lower CI cost.
+
+:::info
+
+##### Prerequisites
+
+- Runs must be [recorded to Cypress Cloud](/cloud/features/recorded-runs) with the
+  `--record` flag.
+- A [Business or Enterprise tier Cypress Cloud plan](https://cypress.io/pricing),
+  or an active free trial.
 
 :::
 
@@ -56,7 +72,7 @@ critical pipelines.
 
 :::
 
-### How it works
+## How does Rerun Optimization work? {#how-it-works}
 
 1. A run fails in CI, and you trigger a rerun from your CI provider (for example,
    "Re-run jobs" or "Re-run failed jobs"). Rerun Optimization behaves the same way
@@ -90,7 +106,7 @@ identify reruns at a glance and confirm that Rerun Optimization was applied.
   alt="A run in Cypress Cloud showing a Re-run tag indicating the run was rerun"
 />
 
-### Availability
+## Availability
 
 Rerun Optimization is a _Smart Orchestration_ feature available to users on a
 [Business or Enterprise tier Cypress Cloud plan](https://cypress.io/pricing), as
@@ -138,7 +154,7 @@ Each project can inherit the organization default or override it.
   alt="Re-run optimization project setting in Cypress Cloud, showing the Organization default, Run everything again, and Run only failed specs options"
 />
 
-## CI provider support
+## Which CI providers support Rerun Optimization? {#CI-provider-support}
 
 On supported providers, Cypress detects reruns automatically and builds the rerun
 group ID for you. Support depends on your Cypress version:
@@ -189,7 +205,7 @@ construct for you.
 
 :::
 
-## How the anchor run is selected
+## How is the anchor run selected?
 
 The anchor run is the completed run that determines which specs to skip. Common
 scenarios:
@@ -205,7 +221,7 @@ scenarios:
 Cypress Cloud does not block parallel reruns. If several reruns are triggered in quick
 succession, each one anchors on whichever completed run exists at the time the run begins.
 
-## Opting out in CI
+## How do I opt out and force a full run? {#opting-out}
 
 To force a full run and skip the optimization, set the `CYPRESS_RERUN_ALL_TESTS`
 environment variable to `true`. Cloud then treats the run as a full run and runs
@@ -246,3 +262,50 @@ stops early once they do, and with Rerun Optimization the retry replays only the
 failed specs — so each layer gets you to a passing build faster and cheaper.
 
 :::
+
+## Frequently asked questions
+
+### How is Rerun Optimization different from test retries?
+
+They solve different problems. [Test retries](/app/guides/test-retries)
+automatically re-attempt an _individual test_ within a single run, in real time,
+to absorb flake before the run finishes. **Rerun Optimization** changes what
+happens when you re-run an _entire CI build_ after it has completed, re-executing
+only the spec files that contained failures. You can use both together: test
+retries reduce flake within a run, and Rerun Optimization speeds up the reruns you
+still need.
+
+### Does Rerun Optimization carry forward my passing test results?
+
+No. A rerun-optimized run shows only the specs that were re-executed. Specs that
+passed in the anchor run are skipped and do not appear in the rerun's results.
+
+### Why does my CI report show fewer tests after a rerun?
+
+Reporter output (JUnit/XML and custom reporters) reflects only the re-executed
+specs, so a rerun-optimized run reports fewer specs and tests than a full run.
+Adjust any CI guardrails that assert on fixed test counts.
+
+### Does Rerun Optimization require recording to Cypress Cloud?
+
+Yes. Runs must be recorded to Cypress Cloud with the `--record` flag, and the
+feature is available on Business or Enterprise plans, or during a free trial.
+
+### What happens if the rerun has no failed specs?
+
+If the anchor run contained no failing specs, there is nothing to re-execute and
+the optimized rerun completes without running any specs.
+
+### How do I know Rerun Optimization was applied?
+
+The Cypress App prints a notice in the CLI output naming the run it is retrying
+from, and the run is labeled with a **Re-run** tag in Cypress Cloud.
+
+## See also
+
+- [Smart Orchestration Overview](/cloud/features/smart-orchestration/overview) - all of the Smart Orchestration features for speeding up CI runs and reducing costs
+- [Spec Prioritization](/cloud/features/smart-orchestration/spec-prioritization) - run failed specs first to surface failures earlier
+- [Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation) - stop a run early once failures cross a threshold
+- [Parallelization](/cloud/features/smart-orchestration/parallelization) - split your suite across multiple machines to run specs in parallel
+- [Test Replay](/cloud/features/test-replay) - debug the failing specs surfaced by a rerun
+- [Cypress Command Line](/app/references/command-line) - reference for the environment variables and flags used above
