@@ -169,16 +169,7 @@ CircleCI and Bitbucket Pipelines require Cypress v15.15.0 or later.
 
 ## Setting the rerun group ID manually
 
-**CI providers that require manual setup:**
-
-- [Jenkins](/app/continuous-integration/overview#Jenkins)
-- [AWS CodeBuild](/app/continuous-integration/aws-codebuild)
-- [Drone](/app/continuous-integration/drone)
-- [GitLab](/app/continuous-integration/gitlab-ci)
-- [AppVeyor](/app/continuous-integration/appveyor)
-- [Codeship](/app/continuous-integration/codeship)
-- [Codeship Basic](/app/continuous-integration/codeship-basic)
-- [Buildkite](/app/continuous-integration/buildkite)
+**All other CI providers that require manual setup**
 
 For these providers, `CYPRESS_RERUN_GROUP_ID` is the rerun group ID that links an original CI run to
 all of its reruns. Set it when your CI provider isn't automatically supported, or
