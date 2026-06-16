@@ -132,7 +132,14 @@ cypress run --record --key=abc123 --parallel
 ```
 
 From there, Cypress Cloud takes care of distributing your specs across every
-available machine, with no further setup needed.
+available machine.
+
+Load balancing only helps when there is more than one machine to balance across,
+so the real prerequisite is running in parallel on multiple CI machines. See the
+[Parallelization guide](/cloud/features/smart-orchestration/parallelization) for
+how to turn on parallelization, and the
+[Continuous Integration guide](/app/continuous-integration/overview) for how to
+provision multiple machines with your CI provider.
 
 ## Verifying your time savings
 
