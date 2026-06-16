@@ -114,6 +114,22 @@ each browser a spec file was tested against.
 
 :::
 
+### Smart Orchestration layered on top
+
+Load balancing decides the default ordering, but two optional, user-configurable
+behaviors can modify it:
+
+- **[Spec Prioritization](/cloud/features/smart-orchestration/spec-prioritization)**
+  moves specs that failed in the previous run to the front of the queue, so you
+  get fast feedback on the specs most likely to be broken.
+- **[Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation)**
+  cancels the remaining specs once a configured number of tests fail. It works
+  alongside load balancing and is configured separately.
+
+Both are complementary to load balancing: prioritization changes _which_ specs
+run first, while auto cancellation decides _when_ to stop a run that's already
+failing.
+
 ## Get started
 
 Load balancing works automatically once your project is
