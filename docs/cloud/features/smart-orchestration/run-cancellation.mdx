@@ -9,6 +9,12 @@ sidebar_position: 50
 
 # Auto Cancellation
 
+**Auto Cancellation is a Cypress Cloud Smart Orchestration feature that
+automatically cancels a recorded test run once the number of failed tests
+reaches a threshold you set (1 by default).** It prevents CI from wasting time
+and money finishing a run that has already failed, and it is available on the
+Business and Enterprise plans.
+
 :::info
 
 ##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
@@ -143,6 +149,45 @@ npx cypress run --record --key <<your_record_key>> --auto-cancel-after-failures 
 
 For more info on passing CLI flags, see our guide on the
 [Cypress Command Line](/app/references/command-line).
+
+## Frequently asked questions
+
+### What is Auto Cancellation in Cypress?
+
+Auto Cancellation is a Cypress Cloud Smart Orchestration feature that
+automatically cancels a recorded run once the number of failed tests reaches a
+threshold you configure. It stops Cypress from handing out new specs, marks the
+run as canceled, and reports how much CI time was saved.
+
+### How many test failures trigger a cancellation?
+
+By default, a single failure cancels the run. You can set any threshold from
+**1 to 9999** failures in your project's Smart Orchestration settings, or
+override it per run with the `--auto-cancel-after-failures` CLI flag.
+
+### Does Auto Cancellation stop tests that are already running?
+
+No. Specs that are already in progress when the threshold is reached finish
+running so you still get their complete results. Cypress only stops handing out
+_new_ specs, and in a parallelized run every machine stops together.
+
+### How do I disable Auto Cancellation for a single run?
+
+Pass `--auto-cancel-after-failures false` to `cypress run`. This overrides the
+project setting for that run only, which is useful for important branches that
+need the full suite to run every time.
+
+### Is Auto Cancellation free?
+
+No. Auto Cancellation is a paid Smart Orchestration feature available on the
+[Business and Enterprise Cypress Cloud plans](https://cypress.io/pricing).
+
+### What is the difference between Auto Cancellation and manual cancellation?
+
+Auto Cancellation is triggered automatically when a run reaches the configured
+failure threshold, and the UI labels it _"canceled due to auto-cancellation."_
+A manual cancellation happens when a user cancels the run from Cypress Cloud,
+which the UI labels _"manually canceled"_ and attributes to that user.
 
 ## What a canceled run looks like
 
