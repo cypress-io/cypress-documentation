@@ -111,100 +111,6 @@ reaching their pipeline on any given day.
 Any failure across multiple retry attempts triggered by test retrying flags the
 test case as flaky.
 
-### Flaky test analytics
-
-:::tip
-
-<Icon name="star" /> **Premium Cypress Cloud Feature**
-
-**Test flake analytics** are available to users with a
-[Team Cypress Cloud plan](https://cypress.io/pricing).
-
-:::
-
-The flaky test analytics page gives a bird's-eye view of flake across your
-project, making it easy to understand reliability at a glance and back it up
-with data. It includes:
-
-- A plot of the **number of flaky tests over time**, so you can see reliability
-  trending up or down release over release.
-- The overall **flakiness level** of the entire project: a single health
-  metric you can track and set goals against.
-- The **number of flaky tests grouped by severity**, so effort goes where the
-  pain is greatest.
-- A filterable **log of every flaky test**, ordered by severity, ready to triage
-  and assign.
-
-:::info
-
-<strong>Flake severity</strong>
-
-Flake **severity** is determined by how often a test flakes, its **flake
-rate**. Severity lets teams prioritize objectively: fix the handful of
-high-severity tests disrupting the most builds before chasing rare,
-low-impact flake.
-
-Flake rate is the share of recent runs affected by flake, calculated as the
-number of runs where the spec had a flaky test divided by the total number of
-runs in the current window.
-
-| Severity | Flake rate |
-| -------- | ---------- |
-| —        | 0%         |
-| Low      | >0–10%     |
-| Medium   | >10–50%    |
-| High     | >50%       |
-
-:::
-
-<DocsImage
-  src="/img/cloud/features/flaky-test-management/flake-analytics.png"
-  alt="Flaky tests analytics"
-/>
-
-Selecting any flaky test case opens a details panel with the context engineers
-need to find and fix the root cause quickly:
-
-- A historical log of the latest flaky runs
-- The most common errors across the test case's runs
-- The related test case changelog
-- A plot of failure rate and flake rate over time
-
-Together, these test-level details shorten the time from "this test is flaky"
-to "here's why," reducing the investigation cost of every fix.
-
-<DocsImage
-  src="/img/cloud/features/flaky-test-management/flake-panel.png"
-  alt="Flaky tests analytics details panel"
-/>
-
-### Failure rate vs. flake rate
-
-When test retries are enabled, it's important to distinguish **failure rate**
-from **flake rate**. Both are tracked over time for each flaky test on the
-analytics page:
-
-<DocsImage
-  src="/img/cloud/features/flaky-test-management/flake-v-fail-2.png"
-  alt="flake rate vs fail rate"
-/>
-
-A test flagged as flaky may still have ultimately passed after retries. The
-status of an individual retry attempt is separate from the final test status.
-
-For example, a project configured to retry failing tests up to three times may
-fail the first two attempts and pass on the third, a final status of passing.
-
-Because of this, a test can show a **zero final failure rate while still
-exhibiting flake**, as shown below. This is exactly why flake is so easy to
-miss without dedicated tracking: the build goes green, but the underlying
-instability, and its cost, is still there.
-
-<DocsImage
-  src="/img/cloud/features/flaky-test-management/flake-v-fail-1.png"
-  alt="flake rate vs fail rate"
-/>
-
 ## Flake Alerting
 
 :::tip
@@ -387,6 +293,129 @@ root cause.
   alt="Comparing a test between the base and changed branch in Branch Review"
 />
 
+## Flaky test analytics
+
+:::tip
+
+<Icon name="star" /> **Premium Cypress Cloud Feature**
+
+**Test flake analytics** are available to users with a
+[Team Cypress Cloud plan](https://cypress.io/pricing).
+
+:::
+
+The flaky test analytics page gives a bird's-eye view of flake across your
+project, making it easy to understand reliability at a glance and back it up
+with data. It includes:
+
+- A plot of the **number of flaky tests over time**, so you can see reliability
+  trending up or down release over release.
+- The overall **flakiness level** of the entire project: a single health
+  metric you can track and set goals against.
+- The **number of flaky tests grouped by severity**, so effort goes where the
+  pain is greatest.
+- A filterable **log of every flaky test**, ordered by severity, ready to triage
+  and assign.
+
+:::info
+
+<strong>Flake severity</strong>
+
+Flake **severity** is determined by how often a test flakes, its **flake
+rate**. Severity lets teams prioritize objectively: fix the handful of
+high-severity tests disrupting the most builds before chasing rare,
+low-impact flake.
+
+Flake rate is the share of recent runs affected by flake, calculated as the
+number of runs where the spec had a flaky test divided by the total number of
+runs in the current window.
+
+| Severity | Flake rate |
+| -------- | ---------- |
+| —        | 0%         |
+| Low      | >0–10%     |
+| Medium   | >10–50%    |
+| High     | >50%       |
+
+:::
+
+<DocsImage
+  src="/img/cloud/features/flaky-test-management/flake-analytics.png"
+  alt="Flaky tests analytics"
+/>
+
+Selecting any flaky test case opens a details panel with the context engineers
+need to find and fix the root cause quickly:
+
+- A historical log of the latest flaky runs
+- The most common errors across the test case's runs
+- The related test case changelog
+- A plot of failure rate and flake rate over time
+
+Together, these test-level details shorten the time from "this test is flaky"
+to "here's why," reducing the investigation cost of every fix.
+
+<DocsImage
+  src="/img/cloud/features/flaky-test-management/flake-panel.png"
+  alt="Flaky tests analytics details panel"
+/>
+
+### Failure rate vs. flake rate
+
+When test retries are enabled, it's important to distinguish **failure rate**
+from **flake rate**. Both are tracked over time for each flaky test on the
+analytics page:
+
+<DocsImage
+  src="/img/cloud/features/flaky-test-management/flake-v-fail-2.png"
+  alt="flake rate vs fail rate"
+/>
+
+A test flagged as flaky may still have ultimately passed after retries. The
+status of an individual retry attempt is separate from the final test status.
+
+For example, a project configured to retry failing tests up to three times may
+fail the first two attempts and pass on the third, a final status of passing.
+
+Because of this, a test can show a **zero final failure rate while still
+exhibiting flake**, as shown below. This is exactly why flake is so easy to
+miss without dedicated tracking: the build goes green, but the underlying
+instability, and its cost, is still there.
+
+<DocsImage
+  src="/img/cloud/features/flaky-test-management/flake-v-fail-1.png"
+  alt="flake rate vs fail rate"
+/>
+
+## Flake analytics across all projects with Enterprise Reporting
+
+The analytics above focus on a single project. To understand flake across your
+_entire organization_,
+[Enterprise Reporting](/cloud/features/analytics/enterprise-reporting#Flaky-Tests)
+provides a dedicated **Flaky Tests** dashboard in Cypress Cloud.
+
+:::tip
+
+<Icon name="star" /> **Premium Cypress Cloud Feature**
+
+**Enterprise Reporting** is available to users with an
+[Enterprise Cypress Cloud plan](https://cypress.io/pricing).
+
+:::
+
+The **Flaky Tests** tab surfaces flaky test occurrences and rates for your whole
+organization or a selected set of projects, as a point-in-time snapshot or
+trended over time. Because it reports flake **rate** (the percentage of runs
+that flake), you can compare projects fairly regardless of how often each one
+runs, so a high-volume project doesn't look worse simply because it executes
+more tests. The raw data behind every chart can also be downloaded for use in
+your own tools.
+
+<DocsImage
+  src="/img/cloud/features/analytics/enterprise-reporting-flaky-tests.png"
+  alt="Enterprise Reporting Flaky Tests dashboard"
+/>
+
 ## Export flake data with the Data Extract API
 
 The in-app analytics answer "how healthy is this project?" The
@@ -422,7 +451,7 @@ The API exposes five flake-focused reports. Each is requested with its
 
 **Flaky rate** is reported as a whole number. For example, 1 flaky test over 4
 runs has a flaky rate of `25`. This mirrors the
-[flake rate](#Flake-Detection) used in the in-app analytics.
+[flake rate](#Flaky-test-analytics) used in the in-app analytics.
 
 :::
 
