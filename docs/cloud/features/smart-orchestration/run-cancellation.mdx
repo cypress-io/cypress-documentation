@@ -23,7 +23,7 @@ sidebar_position: 50
 
 Once a test run has failed in CI, every additional minute spent running the rest
 of the suite is a minute you pay for but can't use. The fix still has to be
-written, pushed, and validated by a _brand new_ run — so the original run keeps
+written, pushed, and validated by a _brand new_ run, so the original run keeps
 burning compute, holding CI machines, and recording billable tests long after
 you already know the outcome.
 
@@ -42,7 +42,7 @@ When Auto Cancellation is enabled, Cypress Cloud watches the number of failed
 tests across all of your parallelized machines. As soon as that count goes over
 your configured threshold, the run is canceled.
 
-- The default threshold is **1 failure** — fail fast and move on.
+- The default threshold is **1 failure**, so you fail fast and move on.
 - Any specs that are already in progress when the threshold is reached will
   **finish running** so you still get their complete results.
 - The cancellation applies to the whole run, across every machine, not just the
@@ -89,7 +89,7 @@ The right threshold depends on how your team works:
 - **Surface more failures (higher threshold).** If your development, testing, or
   QA teams work in a highly collaborative workflow where multiple people fix
   different failures at the same time, raising the threshold lets a single run
-  surface more of them before it cancels — so people aren't each waiting on a
+  surface more of them before it cancels, so people aren't each waiting on a
   fresh run to see their own failure.
 
 :::info
@@ -99,7 +99,7 @@ The right threshold depends on how your team works:
 Combine Auto Cancellation with
 [Spec Prioritization](/cloud/features/smart-orchestration/spec-prioritization) to
 run previously failed specs first. Failures surface earlier in the run, which
-means Auto Cancellation triggers earlier too — shortening runs even further and
+means Auto Cancellation triggers earlier too, shortening runs even further and
 driving down CI costs.
 
 :::
