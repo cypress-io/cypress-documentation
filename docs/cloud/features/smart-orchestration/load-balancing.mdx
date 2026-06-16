@@ -125,6 +125,61 @@ cypress run --record --key=abc123 --parallel
 From there, Cypress Cloud takes care of distributing your specs across every
 available machine — no further setup needed.
 
+## Verifying your time savings
+
+You don't have to take the savings on faith — Cypress Cloud measures them for
+you.
+
+- **Run Duration analytics.** The
+  [Run Duration report](/cloud/features/analytics/project-analytics#Run-duration)
+  shows your **average run duration**, **average parallelization (concurrency)**,
+  and the **time saved from parallelization** over time. This is the most direct
+  way to confirm that load balancing is paying off, and to watch the trend as
+  your suite and machine count change. (Only passing runs are included, so
+  failures don't skew the numbers.)
+- **Machines View.** Open any run, select the **Specs** tab, and switch to the
+  [Machines View](/cloud/features/smart-orchestration/parallelization#Machines-View).
+  When load balancing is working well, every machine finishes at roughly the
+  same time. If one machine finishes in 3 minutes while another runs for 12, the
+  run is bottlenecked by a single long spec — and adding more machines won't help
+  until that imbalance is resolved.
+- **Bar Chart and Timeline Views.** The
+  [Bar Chart View](/cloud/features/smart-orchestration/parallelization#Bar-Chart-View)
+  ranks specs by duration so you can spot the longest ones, while the
+  [Timeline View](/cloud/features/smart-orchestration/parallelization#Timeline-View)
+  shows machines running in parallel versus sitting idle.
+
+## Getting the most out of load balancing
+
+Load balancing is automatic, but it can only distribute the spec files you give
+it. A few practices help Cypress balance your runs as efficiently as possible:
+
+- **Keep spec durations similar.** Cypress balances _whole spec files_, so a
+  single long spec can't be split across machines mid-run — it strands a machine
+  while the others wait. Aim for spec files with comparable durations. See the
+  [test performance guide](/app/guides/test-performance) for duration benchmarks
+  and splitting strategies.
+- **Split your slowest specs.** Use the **Slowest Tests** analytics report or the
+  [Bar Chart View](/cloud/features/smart-orchestration/parallelization#Bar-Chart-View)
+  to find the specs dominating your run time, and break them into smaller,
+  similarly sized files. Specs under ~10 seconds rarely benefit from further
+  splitting, since per-spec overhead (browser launch, video encoding) outweighs
+  the savings.
+- **Match machine count to suite size.** Adding machines speeds runs up only
+  until the workload is evenly balanced. Use the
+  [Machines View](/cloud/features/smart-orchestration/parallelization#Machines-View)
+  to confirm machines are well utilized before scaling further.
+- **Stay within your plan's test limit.** When a project reaches its test-results
+  limit, [parallelization is disabled](/cloud/faq) — and load balancing along
+  with it. Monitor usage on the
+  [Billing & Usage page](/cloud/account-management/billing-and-usage) so balancing
+  keeps working.
+- **Combine with the other Smart Orchestration features.**
+  [Spec Prioritization](/cloud/features/smart-orchestration/spec-prioritization)
+  and [Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation)
+  surface failures faster and stop wasting machine-minutes on runs that are
+  already broken.
+
 ## Next steps
 
 - [Parallelization](/cloud/features/smart-orchestration/parallelization): Run
