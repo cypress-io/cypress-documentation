@@ -273,6 +273,54 @@ it might be good enough for the job.
 
 <UrlAllowList />
 
+## Spec Prioritization
+
+### <Icon name="angle-right" /> What is Spec Prioritization?
+
+[Spec Prioritization](/cloud/features/smart-orchestration/spec-prioritization) is
+a [Smart Orchestration](/cloud/features/smart-orchestration/overview) feature
+that automatically runs the specs that failed in your previous Cypress run
+first. Instead of waiting for the same failures to resurface late in a run,
+Cypress Cloud surfaces them right away so you learn whether your latest change
+worked in minutes rather than at the end of the run.
+
+### <Icon name="angle-right" /> Does Spec Prioritization make my tests run faster?
+
+On its own, Spec Prioritization changes the _order_ specs run in, not the total
+duration, so it surfaces failures earlier without shortening the run. To turn
+that earlier feedback into shorter runs and lower CI costs, pair it with
+[Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation): when
+the prioritized failures reappear at the start of a run, the run is canceled
+right away, avoiding wasted compute on specs you already know will need another
+pass.
+
+### <Icon name="angle-right" /> What plan do I need to use Spec Prioritization?
+
+Spec Prioritization is available on the
+[Business and Enterprise tiers](https://cypress.io/pricing). Not sure if
+upgrading is worth it? The
+[recommendations](/cloud/features/recorded-runs#Recommendations) on the run
+overview page predict how much time Smart Orchestration features would save your
+suite.
+
+### <Icon name="angle-right" /> How do I enable Spec Prioritization?
+
+An admin can toggle it on at the project level: open the project in Cypress
+Cloud, go to **Project Settings**, scroll to the **Smart Orchestration** section,
+and toggle **Spec Prioritization**. See the
+[Spec Prioritization guide](/cloud/features/smart-orchestration/spec-prioritization#Enable-Spec-Prioritization)
+for the full steps.
+
+### <Icon name="angle-right" /> How do I know Spec Prioritization took effect?
+
+When Spec Prioritization fires, the run's detail tab displays a **"Prioritized
+failed specs from run #X"** label, where **#X** links back to the source run
+whose failures were moved to the front. The label only appears when Cypress Cloud
+actually reordered specs, so its presence confirms prioritization took effect and
+lets you trace which previous failures drove the order. If you don't see it,
+confirm the feature is toggled on and that the previous run recorded failures to
+prioritize.
+
 ## Cypress Cloud Account
 
 ### <Icon name="angle-right" /> What is my Organization ID?

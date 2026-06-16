@@ -1,7 +1,15 @@
 ---
-title: Spec Prioritization
-description: Run failed specs first to surface failures sooner, accelerate debugging, and reduce CI costs with Cypress Cloud's Spec Prioritization feature.
+title: 'Spec Prioritization: Run Failed Specs First | Cypress Cloud'
+sidebar_label: Spec Prioritization
+description: Run previously failed specs first with Cypress Cloud Spec Prioritization to surface failures sooner, debug faster, and cut CI costs.
 sidebar_position: 40
+keywords:
+  - spec prioritization
+  - run failed tests first
+  - rerun failed specs
+  - faster CI feedback
+  - Cypress Smart Orchestration
+  - last-failed
 ---
 
 <ProductHeading product="cloud" plan="business" />
@@ -44,7 +52,7 @@ failed specs first will:
    runs stop as soon as the prioritized failures reappear, cutting wasted
    compute and lowering your bill.
 
-## Why it matters
+## Why does Spec Prioritization matter?
 
 Consider a test suite of several spec files that takes **30 minutes** to run,
 where a failure first occurs **20 minutes** in. Without Spec Prioritization,
@@ -82,7 +90,7 @@ project's settings.
 
 <DocsImage
   src="/img/cloud/features/smart-orchestration/spec-prioritization-active.png"
-  alt="Enable Spec Prioritization"
+  alt="Spec Prioritization toggle enabled in Cypress Cloud project settings under the Smart Orchestration section"
 />
 
 :::info
@@ -99,7 +107,7 @@ another pass.
 
 :::
 
-### Confirm Spec Prioritization took effect
+### How do I know Spec Prioritization took effect?
 
 When Spec Prioritization fires, Cypress Cloud tells you directly on the run's
 detail tab. The run displays a **"Prioritized failed specs from run #X"** label,
