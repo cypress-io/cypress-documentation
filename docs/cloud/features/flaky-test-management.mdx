@@ -129,6 +129,10 @@ rate**. Severity lets teams prioritize objectively: fix the handful of
 high-severity tests disrupting the most builds before chasing rare,
 low-impact flake.
 
+Flake rate is the share of recent runs affected by flake, calculated as the
+number of runs where the spec had a flaky test divided by the total number of
+runs in the current window.
+
 | Severity | Flake rate |
 | -------- | ---------- |
 | —        | 0%         |
