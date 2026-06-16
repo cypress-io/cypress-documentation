@@ -549,7 +549,7 @@ browser is specified — will fail with an error.
    cypress run --browser chrome
    ```
 
-1. **Update your CI configuration and examples.** If your pipeline relied on the
+1. **Update your CI configuration.** If your pipeline relied on the
    implicit Electron default, switch it to an installed browser. This includes
    any [`cypress-io/github-action`](https://github.com/cypress-io/github-action)
    steps and Docker-based jobs that previously ran without a `browser` argument.
@@ -565,7 +565,7 @@ browser is specified — will fail with an error.
 1. ✅ Install a supported browser locally and in CI
 1. ✅ Set `defaultBrowser` (or pass `--browser`) so runs don't fall back to Electron
 1. ✅ Replace any `--browser electron` / `defaultBrowser: 'electron'` usage
-1. ✅ Update CI examples (GitHub Action, Docker) to target an installed browser
+1. ✅ Update your CI config (GitHub Action, Docker) to target an installed browser
 1. ✅ Verify your runs no longer emit the Electron deprecation warning
 
 ## Migrating to Cypress 15.0
