@@ -1,6 +1,6 @@
 ---
 title: Rerun Optimization | Re-run Failed Specs Only
-description: Re-run only the specs that failed in CI and skip the ones that already passed — reach a passing build faster and cut CI cost with Cypress Cloud.
+description: Re-run only the specs that failed in CI and skip the ones that already passed to reach a passing build faster and cut CI cost with Cypress Cloud.
 sidebar_label: Rerun Optimization
 sidebar_position: 60
 ---
@@ -209,7 +209,7 @@ construct for you.
 
 Every rerun is compared against your **most recent completed run** in the rerun
 group, and re-executes only the specs that were still failing there. That means
-you can trust a rerun to always work from your latest results — it never re-runs
+you can trust a rerun to always work from your latest results: it never re-runs
 specs that already passed, and it never reverts to an older, larger set of
 failures. (Internally, that most-recent completed run is called the **anchor
 run**.)
@@ -225,7 +225,7 @@ Knowing this lets you predict exactly what a rerun will do:
   _completed_ run, since the in-progress one has no final results yet.
 - **You rerun within the run-completion delay window** → Cloud hasn't marked the
   previous run complete yet, so the rerun safely runs the **full** suite. **Set a
-  short run-completion delay so more of your reruns get optimized** — this is the
+  short run-completion delay so more of your reruns get optimized**. This is the
   main lever for getting consistent savings.
 
 Cloud never blocks parallel reruns: if several start at once, each one anchors on
@@ -269,7 +269,7 @@ savings. With
 failures surface first, with
 [Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation) the run
 stops early once they do, and with Rerun Optimization the retry replays only the
-failed specs — so each layer gets you to a passing build faster and cheaper.
+failed specs, so each layer gets you to a passing build faster and cheaper.
 
 :::
 
