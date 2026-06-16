@@ -259,6 +259,15 @@ This spec and its tests were skipped because the run has been canceled.
   alt="CI terminal output showing multiple specs each reporting: This spec and its tests were skipped because the run has been canceled."
 />
 
+The **Run Finished** summary table at the end of the output lists those specs as
+**SKIPPED**, with dashes in place of their test counts, alongside the specs that
+actually ran:
+
+<DocsImage
+  src="/img/cloud/features/smart-orchestration/auto-cancellation-ci-run-summary.png"
+  alt="CI Run Finished summary table listing a failed spec with test counts and several specs marked SKIPPED with dashes for their tests, passing, failing, pending, and skipped columns"
+/>
+
 ### Impact on Accessibility and UI Coverage scoring
 
 Because a canceled run skips the specs that never started, your
