@@ -190,6 +190,15 @@ error, AI Error Summary, and previous-runs history, then use
 [Test Replay](/cloud/features/test-replay) to time-travel to the moment of
 failure and inspect the DOM, network, and console as they happened in CI.
 
+Without leaving your editor, you can also ask your AI assistant via
+[Cloud MCP](/cloud/integrations/cloud-mcp) to surface them for you:
+
+> "Check Cypress Cloud for [Run URL]. If it was automatically canceled, list the
+> failing tests that triggered the cancellation."
+
+See [Check for auto cancellation with Cloud MCP](#check-for-auto-cancellation-with-cloud-mcp)
+for more.
+
 :::info
 
 Because in-progress specs finish but no new specs start, a canceled run only
