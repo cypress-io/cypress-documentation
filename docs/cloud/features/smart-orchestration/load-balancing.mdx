@@ -73,8 +73,14 @@ Rather than receiving a fixed, pre-assigned list of specs, each machine pulls
 the next spec from a shared, intelligently ordered queue as soon as it's free.
 Because work is handed out one spec at a time to whichever machine becomes
 available next, it naturally flows to wherever there's free capacity, so a
-single slow spec can't leave a machine idle while others keep working. This also
-means the run order of spec files is not guaranteed when parallelized.
+single slow spec can't leave a machine idle while others keep working.
+
+:::info
+
+Because specs are distributed dynamically based on available capacity, the run
+order of spec files is not guaranteed when parallelized.
+
+:::
 
 ### Spec duration history analysis
 
