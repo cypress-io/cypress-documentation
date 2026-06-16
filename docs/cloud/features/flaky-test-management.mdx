@@ -218,21 +218,19 @@ instability, and its cost, is still there.
 Detection only pays off if the right people know about flake when it matters.
 Flake Alerting pushes flake notifications directly into the tools your team
 already works in, so flake is caught in the review process instead of
-compounding silently over time:
+compounding silently over time. Each integration below links to its full setup
+instructions.
 
-- **Source control:** [GitHub](/cloud/integrations/github),
-  [GitLab](/cloud/integrations/gitlab),
-  [Bitbucket](/cloud/integrations/bitbucket)
-- **Chat:** [Slack](/cloud/integrations/slack),
-  [Microsoft Teams](/cloud/integrations/teams)
+Source control integrations surface flake right where code is reviewed, and can
+even **block merges** while flaky tests are present:
 
 ### GitHub
 
-Flake alerting via GitHub PR comments and status checks can be enabled in a
-project's GitHub integration settings. For full setup instructions, see
+Enable flake alerting on GitHub PR comments and commit status checks in your
+project's GitHub integration settings. See
 [Status checks](/cloud/integrations/github#Status-checks) and
-[Pull request comments](/cloud/integrations/github#Pull-request-comments) in the
-GitHub integration guide.
+[Pull request comments](/cloud/integrations/github#Pull-request-comments) for
+full setup instructions.
 
 <DocsImage
   src="/img/cloud/features/flaky-test-management/gh-flake.png"
@@ -249,12 +247,36 @@ before they merge.
   alt="GitHub flake alert pr comment"
 />
 
+### GitLab
+
+Cypress can post a **`cypress/flake`** commit status check that reports whether a
+run contained flaky tests, so you can stop merge requests with flaky tests from
+merging, along with merge request comments that summarize the run. Enable both in
+your project's GitLab integration settings. See
+[Status checks](/cloud/integrations/gitlab#Status-checks) and
+[Merge Request comments](/cloud/integrations/gitlab#Merge-Request-comments) for
+full setup instructions.
+
+### Bitbucket
+
+Cypress can post a **`cypress/flake`** commit status check that reports whether a
+run contained flaky tests, so you can stop pull requests with flaky tests from
+merging, along with pull request comments that summarize the run. Enable both in
+your project's Bitbucket integration settings. See
+[Status checks](/cloud/integrations/bitbucket#Status-checks) and
+[Pull Request comments](/cloud/integrations/bitbucket#Pull-Request-comments) for
+full setup instructions.
+
+Chat integrations push flake notifications to your team's channels in real time,
+even on otherwise passing runs:
+
 ### Slack
 
-Flake alerting via Slack can be enabled in your Slack integration settings. For
-full setup instructions, see
-[Flaky test alerts](/cloud/integrations/slack#Flaky-test-alerts) in the Slack
-integration guide.
+Enable the **Flaky tests** notification preference in your Slack integration
+settings to be alerted whenever a run contains flaky tests, independent of
+whether the run passed or failed. See
+[Flaky test alerts](/cloud/integrations/slack#Flaky-test-alerts) for full setup
+instructions.
 
 <DocsImage
   src="/img/cloud/features/flaky-test-management/slack-flake.png"
@@ -268,6 +290,14 @@ detected, so teams can respond in real time:
   src="/img/cloud/features/flaky-test-management/flake-slack-alert.png"
   alt="Slack flake alert"
 />
+
+### Microsoft Teams
+
+Enable the **Flaky tests** notification preference in your Microsoft Teams
+integration settings to post a message to your channel whenever a run contains
+flaky tests, independent of the run's pass/fail status. See
+[Flaky test alerts](/cloud/integrations/teams#Flaky-test-alerts) for full setup
+instructions.
 
 ## Debug and fix flaky tests
 
