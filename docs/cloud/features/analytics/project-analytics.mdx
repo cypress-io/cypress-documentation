@@ -1,6 +1,6 @@
 ---
 title: Project Analytics & Insights
-description: Cypress Cloud provides Analytics to offer insight into metrics like runs over time, run duration and visibility into tests suite size over time.
+description: Project Analytics in Cypress Cloud turn your recorded run history into actionable insight — track CI health and speed over time, and pinpoint exactly which tests are failing, slow, or flaky.
 sidebar_position: 20
 ---
 
@@ -8,331 +8,219 @@ sidebar_position: 20
 
 # Project Analytics & Insights
 
-Cypress Cloud provides Analytics to offer insight into metrics like runs over
-time, run duration and visibility into tests suite size over time.
+Every time you run `cypress run --record`, Cypress Cloud captures the result.
+Project Analytics turn that history into answers to the two questions every team
+asks about its test suite:
+
+- **Is my CI healthy and fast?** Are runs passing, how long do they take, and is
+  the suite growing in a sustainable way?
+- **What specifically is broken, slow, or flaky — and who or what is
+  responsible?** Which tests, specs, branches, browsers, or commits are dragging
+  the suite down?
+
+Instead of digging through individual runs, you get trends and rankings across
+your whole project so you can spot regressions early, prioritize the fixes that
+matter most, and prove that investments like parallelization are paying off.
 
 <DocsImage
   src="/img/cloud/features/analytics/dashboard-analytics-overview.png"
   alt="Cloud Analytics Screenshot"
 />
 
-## Run status
+Project Analytics live under each project at
+`/projects/:projectId/analytics/…` and are scoped to a **single project**. (For
+a cross-project, organization-wide view, see
+[Enterprise Reporting](/cloud/features/analytics/enterprise-reporting).)
 
-<DocsImage
-  src="/img/cloud/features/analytics/dashboard-analytics-runs-over-time.png"
-  alt="Cloud Analytics Runs Over Time Screenshot"
-/>
+## How analytics is organized
 
-This report shows the number of runs your organization has recorded to Cypress
-Cloud, broken down by the final status of the run. Each run represents a single
-invocation of `cypress run --record` for this project, whether in CI or on a
-local machine.
+There are eight reports, grouped into two families based on the question they
+answer.
 
-### Filters
+| Family                          | Answers                                                       | Reports                                                             |
+| ------------------------------- | ------------------------------------------------------------- | ------------------------------------------------------------------- |
+| **Trend reports**               | _"Is my CI healthy and fast?"_                                | Run status, Run duration, Past builds run duration, Test suite size |
+| **Ranking & breakdown reports** | _"What's broken/slow/flaky, and who or what is responsible?"_ | Top failures, Slowest tests, Most common errors, Flaky tests        |
 
-<DocsImage
-  src="/img/cloud/features/analytics/dashboard-analytics-runs-over-time-filters.png"
-  alt="Cloud Analytics Runs Over Time Filters Screenshot"
-/>
+- **Trend reports** are time-series views of how your run history behaves over
+  time, with a broader default window (up to a year). Use them to monitor the
+  overall direction of the suite.
+- **Ranking & breakdown reports** are _"which tests are worst"_ views with a
+  shorter default window (7 days), richer per-test filtering, a **View by**
+  toggle, and drill-ins. This is where you slice by browser, OS, committer,
+  spec, or Cypress version, then drill into individual tests with
+  [Test Replay](/cloud/features/test-replay) and Jira issue linking.
 
-Results may be filtered by:
+Every report shares a common filter bar, exports its results to a
+comma-separated values (CSV) file (via the download icon to the right of the
+filters), keeps filter state in the URL so views are easy to share, and
+normalizes all dates to UTC.
 
-- Branch
-- Time Range
-- Time Interval (Hourly, Daily, Weekly, Monthly, Quarterly)
+## Filters & controls
 
-### Results
+Every report shares a common filter bar, but the set of available filters
+depends on the report family.
+
+### Available on every report
+
+| Filter         | What it does                                                                                                                                                        |
+| -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Branch**     | Multi-select, searchable. Limit results to specific git branches.                                                                                                   |
+| **Tags**       | Multi-select of run tags (with colors, inline-editable). Includes a **match mode**: `ANY` (OR) vs `ALL` (AND).                                                      |
+| **Time range** | Date-range picker. Presets: Today, Last 7 days, Last 30 days, Last 3 months, Last 6 months, Last year, All time. Minimum is 1 year ago, maximum is today (all UTC). |
+
+### Additional controls on Trend reports
+
+- **Time interval** — chart bucket granularity: Daily, Weekly, Monthly, or
+  Quarterly.
+- **Build interval** — for by-build views, group results by 1, 5, 10, 50, or
+  100 runs.
+
+### Additional controls on Ranking & breakdown reports
+
+- **View by** — regroup the ranking by Test Case, Spec File, Tag, or Branch.
+- Slice results by **Run Group**, **Committer**, **Spec File**, **Browser**,
+  **Cypress Version**, **Operating System**, and (where applicable) **Status**.
+
+## Trend reports
+
+### Run status
+
+`/analytics/runs-over-time`
+
+Track overall run volume and pass/fail health trends. Each run represents a
+single invocation of `cypress run --record` for this project, whether in CI or
+on a local machine.
+
+- **What it shows:** A stacked bar chart of run outcomes over time (or by build
+  number).
+- **Measures:** Total runs, average runs per day, passed count, and failed
+  count — plus a breakdown of every run status: Passed, Failed, Running, Timed
+  out, Errored, No tests, Over limit, and Canceled. Includes the delta versus
+  the previous period.
+- **Use it to:** Track overall run volume and pass/fail health trends.
 
 <DocsImage
   src="/img/cloud/features/analytics/dashboard-analytics-runs-over-time-graph.png"
   alt="Cloud Analytics Runs Over Time Graph Screenshot"
 />
 
-The total runs over time are displayed for passed, failed, running, timed out
-and errored tests, respective of the filters selected.
+### Run duration
 
-The results may be downloaded as a comma-separated values (CSV) file for further
-analysis.
+`/analytics/run-duration`
 
-This can be done via the download icon to the right of the filters.
-
-### Key Performance Indicators
-
-<DocsImage
-  src="/img/cloud/features/analytics/dashboard-analytics-runs-over-time-kpi.png"
-  alt="Cloud Analytics Runs Over Time KPI Screenshot"
-/>
-
-Total runs, average per day, passed runs and failed runs are the computed
-respective of the filters selected.
-
-<DocsImage
-  src="/img/cloud/features/analytics/dashboard-analytics-runs-over-time-table.png"
-  alt="Cloud Analytics Runs Over Time Table Screenshot"
-/>
-
-A table of results grouped by date for the time range filter is displayed with
-passed, failed, running, timed out and errored columns.
-
-## Run duration
-
-<DocsImage
-  src="/img/cloud/features/analytics/dashboard-analytics-run-duration.png"
-  alt="Cloud Analytics Run Duration Screenshot"
-/>
-
-This report shows the average duration of a Cypress run for your project,
-including how test parallelization is impacting your total run time. Note that
-we only include passing runs here — failing or errored runs can sway the average
+See how long your runs take and how much parallelization is helping. Only
+passing runs are included here — failing or errored runs can sway the average
 away from its typical duration.
 
-### Filters
-
-<DocsImage
-  src="/img/cloud/features/analytics/dashboard-analytics-run-duration-filters.png"
-  alt="Cloud Analytics Run Duration Filters Screenshot"
-/>
-
-Results may be filtered by:
-
-- Branch
-- Tag
-- Time Range
-- Time Interval (Hourly, Daily, Weekly, Monthly, Quarterly)
-
-### Results
+- **What it shows:** The run duration trend over time.
+- **Measures:** Average run duration, typical concurrency (the median number of
+  machines / parallel agents used), and **time saved from parallelization**.
+- **Use it to:** See how long runs take and how much parallelization is helping.
 
 <DocsImage
   src="/img/cloud/features/analytics/dashboard-analytics-run-duration-graph.png"
   alt="Cloud Analytics Run Duration Graph Screenshot"
 />
 
-The average run duration over time is displayed respective of the filters
-selected.
+### Past builds run duration
 
-The results may be downloaded as a comma-separated values (CSV) file for further
-analysis. This can be done via the download icon to the right of the filters.
+`/analytics/run-duration-by-build`
 
-### Key Performance Indicators
+The same duration metrics as the Run duration report, but plotted **per build
+number** rather than per time bucket — useful when you want to inspect specific
+builds rather than a smoothed trend.
 
-<DocsImage
-  src="/img/cloud/features/analytics/dashboard-analytics-run-duration-kpi.png"
-  alt="Cloud Analytics Run Duration KPI Screenshot"
-/>
+- **What it shows:** Duration metrics plotted per build number instead of per
+  time bucket.
+- **Measures:** Average run duration, typical concurrency (mean machines), and
+  time saved from parallelization.
+- **Use it to:** Inspect duration build-by-build rather than smoothed over time.
 
-Average parallelization, average run duration and time saved from
-parallelization are computed respective of the filters selected.
+### Test suite size
 
-<DocsImage
-  src="/img/cloud/features/analytics/dashboard-analytics-run-duration-table.png"
-  alt="Cloud Analytics Run Duration Table Screenshot"
-/>
+`/analytics/test-suite-size`
 
-A table of results grouped by date for the time range filter is displayed with
-average runtime, concurrency and time saved from parallelization columns.
+Watch how your test suite grows (or shrinks) across releases. It calculates the
+average number of test cases executed per run for the given time period, and
+excludes runs that errored or timed out since they don't accurately represent
+the size of your suite.
 
-## Test suite size
-
-<DocsImage
-  src="/img/cloud/features/analytics/dashboard-analytics-test-suite-size.png"
-  alt="Cloud Analytics Test Suite Size Screenshot"
-/>
-
-This report shows how your test suite is growing over time. It calculates the
-average number of test cases executed per run for each day in the given time
-period. It excludes runs that errored or timed out since they don't accurately
-represent the size of your test suite.
-
-### Filters
-
-<DocsImage
-  src="/img/cloud/features/analytics/dashboard-analytics-test-suite-size-filters.png"
-  alt="Cloud Analytics Test Suite Size Filters Screenshot"
-/>
-
-Results may be filtered by:
-
-- Branch
-- Tag
-- Time Range
-- Time Interval (Hourly, Daily, Weekly, Monthly, Quarterly)
-
-### Results
+- **What it shows:** Growth of the test suite over time.
+- **Measures:** Total test cases, number of spec files, and the delta change.
+- **Use it to:** Watch how the suite grows (or shrinks) across releases.
 
 <DocsImage
   src="/img/cloud/features/analytics/dashboard-analytics-test-suite-size-graph.png"
   alt="Cloud Analytics Test Suite Size Graph Screenshot"
 />
 
-The average test suite size over time is displayed respective of the filters
-selected.
+## Ranking & breakdown reports
 
-The results may be downloaded as a comma-separated values (CSV) file for further
-analysis. This can be done via the download icon to the right of the filters.
+### Top failures
 
-### Key Performance Indicators
+`/analytics/top-failures`
 
-<DocsImage
-  src="/img/cloud/features/analytics/dashboard-analytics-test-suite-size-kpi.png"
-  alt="Cloud Analytics Test Suite Size KPI Screenshot"
-/>
+Find the worst offenders dragging down your suite.
 
-Unique tests and number of spec files are computed respective of the filters
-selected.
-
-<DocsImage
-  src="/img/cloud/features/analytics/dashboard-analytics-test-suite-size-table.png"
-  alt="Cloud Analytics Test Suite Size Table Screenshot"
-/>
-
-A table of results grouped by date for the time range filter is displayed with
-unique tests and spec files.
-
-## Top failures
-
-<DocsImage
-  src="/img/cloud/features/analytics/dashboard-analytics-top-failures.png"
-  alt="Cloud Analytics Top Failures Screenshot"
-/>
-
-This report shows the top failures in your test suite.
-
-### Filters and Views
-
-<DocsImage
-  src="/img/cloud/features/analytics/dashboard-analytics-top-failures-filters.png"
-  alt="Cloud Analytics Top Failures Filters Screenshot"
-/>
-
-Results can be seen through custom grouping by using the "View By" dropdown. It
-can be grouped by:
-
-- Test Case
-- Spec File
-- Tag
-- Branch
-
-Results may also be filtered by:
-
-- Branch
-- Tag
-- Time Range
-- Run Group
-- Committer
-- Spec File
-- Browser
-- Cypress Version
-- Operating System
-
-### Results
+- **What it shows:** A horizontal bar chart ranking the most-failing tests or
+  specs, with drill-in.
+- **Measures:** Median failure rate (%) and number of failures.
+- **Drill-ins:** Latest failures, error details, Jira issue linking, and
+  [Test Replay](/cloud/features/test-replay).
+- **Use it to:** Find the worst offenders dragging down your suite.
 
 <DocsImage
   src="/img/cloud/features/analytics/dashboard-analytics-top-failures-graph.png"
   alt="Cloud Analytics Top Failures Graph Screenshot"
 />
 
-The number of tests by failure rate is displayed respective of the filters
-selected.
+### Slowest tests
 
-The results may be downloaded as a comma-separated values (CSV) file for further
-analysis.
+`/analytics/slowest-tests`
 
-This can be done via the download icon to the right of the filters.
+Target the biggest contributors to your run time.
 
-### Key Performance Indicators
-
-<DocsImage
-  src="/img/cloud/features/analytics/dashboard-analytics-top-failures-kpi.png"
-  alt="Cloud Analytics Top Failures KPI Screenshot"
-/>
-
-The main key performance indicators tracked are:
-
-- Median failure rate
-- Number of failures (measured by test cases)
-
-<DocsImage
-  src="/img/cloud/features/analytics/dashboard-analytics-top-failures-table.png"
-  alt="Cloud Analytics Top Failures Table Screenshot"
-/>
-
-A table of results grouped by failure rate is displayed with spec files and
-total runs.
-
-## Slowest tests
-
-<DocsImage
-  src="/img/cloud/features/analytics/dashboard-analytics-slowest-tests.png"
-  alt="Cloud Analytics Slowest Tests Screenshot"
-/>
-
-This report shows the slowest tests in a test suite.
-
-### Filters and Views
-
-<DocsImage
-  src="/img/cloud/features/analytics/dashboard-analytics-slowest-tests-filters.png"
-  alt="Cloud Analytics Slowest Tests Filters Screenshot"
-/>
-
-Results can be seen through custom grouping by using the "View By" dropdown. It
-can be grouped by:
-
-- Test Case
-- Spec File
-- Tag
-- Branch
-
-Results may also be filtered by:
-
-- Branch
-- Tag
-- Time Range
-- Status
-- Run Group
-- Committer
-- Spec File
-- Browser
-- Cypress Version
-- Operating System
-
-### Results
+- **What it shows:** A horizontal bar chart ranking the slowest tests or specs,
+  with a chart-range selector to filter by a duration band.
+- **Measures:** Median duration and number of tests / specs.
+- **Use it to:** Target the biggest contributors to run time.
 
 <DocsImage
   src="/img/cloud/features/analytics/dashboard-analytics-slowest-tests-graph.png"
   alt="Cloud Analytics Slowest Tests Graph Screenshot"
 />
 
-The slowest tests are displayed by duration of time.
+### Most common errors
 
-The results may be downloaded as a comma-separated values (CSV) file for further
-analysis. This can be done via the download icon to the right of the filters.
+`/analytics/most-common-errors`
 
-### Key Performance Indicators
+Spot systemic error patterns rather than individual test failures.
 
-<DocsImage
-  src="/img/cloud/features/analytics/dashboard-analytics-slowest-tests-kpi.png"
-  alt="Cloud Analytics Slowest Tests KPI Screenshot"
-/>
-
-The main key performance indicators tracked are:
-
-- Median duration
-- Total number of test cases
-
-<DocsImage
-  src="/img/cloud/features/analytics/dashboard-analytics-slowest-tests-table.png"
-  alt="Cloud Analytics Slowest Tests Table Screenshot"
-/>
-
-A table of results grouped by median duration and total runs.
-
-## Most common errors
-
-This report shows the impact of the most common types of errors across the test
-suite.
+- **What it shows:** A color breakdown / stacked bar of error classes by
+  frequency; click an error class for detail.
+- **Measures:** Number of failures and number of distinct error types, with
+  proportions.
+- **Drill-ins:** Error-class details and test history.
+- **Use it to:** Spot systemic error patterns rather than chasing individual
+  test failures.
 
 <DocsImage
   src="/img/cloud/features/analytics/dashboard-analytics-common-errors.png"
-  alt="Cloud Analytics Slowest Tests Table Screenshot"
+  alt="Cloud Analytics Most Common Errors Screenshot"
 />
+
+### Flaky tests
+
+`/analytics/flaky-tests`
+
+Track flakiness trends and triage your most unstable tests. For more on how
+Cypress identifies and manages flake, see
+[Flaky Test Management](/cloud/features/flaky-test-management).
+
+- **What it shows:** A time-series of flakiness, color-coded by severity.
+- **Measures:** Overall flakiness (%) and counts of High / Medium / Low severity
+  flaky tests. Buckets auto-adjust (hourly or daily) to the chosen range.
+- **Drill-ins:** Latest flakiness, error details, Jira issue linking, and
+  [Test Replay](/cloud/features/test-replay).
+- **Use it to:** Track flakiness trends and triage the most unstable tests.
