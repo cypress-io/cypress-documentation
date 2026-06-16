@@ -187,7 +187,12 @@ it. A few practices help Cypress balance your runs as efficiently as possible:
 - **Match machine count to suite size.** Adding machines speeds runs up only
   until the workload is evenly balanced. Use the
   [Machines View](/cloud/features/smart-orchestration/parallelization#Machines-View)
-  to confirm machines are well utilized before scaling further.
+  to confirm machines are well utilized before scaling further. Cypress Cloud
+  also surfaces a
+  [Recommendations](/cloud/features/recorded-runs#Recommendations) panel on each
+  run that models your run time at different machine counts — for example,
+  estimating how much faster a run would be with more machines, or flagging when
+  you're using more than you need.
 - **Stay within your plan's test limit.** When a project reaches its test-results
   limit, [parallelization is disabled](/cloud/faq) — and load balancing along
   with it. Monitor usage on the
