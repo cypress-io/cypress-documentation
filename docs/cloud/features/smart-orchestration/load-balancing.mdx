@@ -85,9 +85,12 @@ affecting the duration prediction, Cypress doesn't use old historical run data
 regarding the spec file — keeping estimates accurate as your application and
 tests evolve.
 
-Because specs are handed out one at a time to whichever machine becomes
-available next, work naturally flows to wherever there's free capacity. This
-also means the run order of spec files is not guaranteed when parallelized.
+Rather than receiving a fixed, pre-assigned list of specs, each machine pulls
+the next spec from a shared, intelligently ordered queue as soon as it's free.
+Because work is handed out one spec at a time to whichever machine becomes
+available next, it naturally flows to wherever there's free capacity — so a
+single slow spec can't leave a machine idle while others keep working. This also
+means the run order of spec files is not guaranteed when parallelized.
 
 ### Spec duration history analysis
 
