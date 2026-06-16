@@ -303,6 +303,40 @@ A run can be canceled in two ways, and Cypress Cloud distinguishes between them:
 For more common questions, see the Smart Orchestration section of the
 [Cypress Cloud FAQ](/cloud/faq#Smart-Orchestration).
 
+## Check for auto cancellation with Cloud MCP
+
+[Cloud MCP](/cloud/integrations/cloud-mcp) lets your AI coding assistant query
+Cypress Cloud directly, so you can ask an agent whether a run was auto-canceled
+without opening the Cloud UI. The `cypress_get_runs` tool returns run summaries
+that include the run's status and test-status counts.
+
+A canceled run reports a status of `cancelled`. From there, Cloud MCP
+distinguishes an Auto Cancellation from any other cancellation:
+
+- When the run was canceled because it reached the failure threshold, the agent
+  reports something like: _"Run automatically canceled by Smart Orchestration
+  after 7 test failure(s). 616 of 1319 specs skipped."_ The skipped count is the
+  number of specs that never ran (the expected specs minus the ones that
+  completed).
+- When the run was canceled some other way (for example, from CI or by a user),
+  the agent reports a plain _"Run canceled. N of M specs skipped"_ without the
+  Smart Orchestration attribution.
+
+This makes it easy to confirm, in your editor, that a red build was an
+intentional early cancellation rather than a different kind of failure.
+
+**Example prompts:**
+
+> "Using Cypress Cloud, was the latest run on this branch auto-canceled by Smart
+> Orchestration? If so, how many failures triggered it and how many specs were
+> skipped?"
+
+> "Check Cypress Cloud for [Run URL]. If it was automatically canceled, list the
+> failing tests that triggered the cancellation."
+
+For setup and the full tool list, see the
+[Cloud MCP guide](/cloud/integrations/cloud-mcp).
+
 ## See also
 
 - [Smart Orchestration Overview](/cloud/features/smart-orchestration/overview)
@@ -315,4 +349,6 @@ For more common questions, see the Smart Orchestration section of the
   flag in the Cypress Command Line reference
 - [Recorded Runs](/cloud/features/recorded-runs) for navigating run results and
   finding failed tests
+- [Cloud MCP](/cloud/integrations/cloud-mcp) for querying run status from your AI
+  coding assistant
 - [Smart Orchestration FAQ](/cloud/faq#Smart-Orchestration)
