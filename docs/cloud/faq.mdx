@@ -318,6 +318,20 @@ failure threshold, and the UI labels it _"canceled due to auto-cancellation."_
 A manual cancellation happens when a user cancels the run from Cypress Cloud,
 which the UI labels _"manually canceled"_ and attributes to that user.
 
+### <Icon name="angle-right" /> How do I find the tests that triggered an auto cancellation?
+
+The failed tests that triggered the cancellation are the ones counted toward
+your threshold. The fastest way to reach them is to click the **failed** test
+indicator in the [run header](/cloud/features/recorded-runs#Run-header), which
+opens the [Test Results tab](/cloud/features/recorded-runs#Test-Results-tab)
+pre-filtered to the failures, or to use the
+[Tests for Review](/cloud/features/recorded-runs#Tests-for-Review) panel, which
+orders results by failures first. Open a failed test's
+[detail sidebar](/cloud/features/recorded-runs#Test-detail-sidebar) and
+[Test Replay](/cloud/features/test-replay) to debug it. Note that a canceled run
+only includes results for specs that had already started, so it may not contain
+every failure the full suite would have produced.
+
 ## Cypress Cloud Account
 
 ### <Icon name="angle-right" /> What is my Organization ID?

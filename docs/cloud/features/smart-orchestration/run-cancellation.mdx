@@ -146,6 +146,39 @@ npx cypress run --record --key <<your_record_key>> --auto-cancel-after-failures 
 For more info on passing CLI flags, see our guide on the
 [Cypress Command Line](/app/references/command-line).
 
+## Find the tests that triggered the cancellation
+
+After a run is auto-canceled, the failures you care about are the ones that
+counted toward the threshold, often just one since the default threshold is 1.
+Cypress Cloud takes you straight to them:
+
+1. **Click the failed-test indicator in the run header.** The
+   [run header](/cloud/features/recorded-runs#Run-header) shows counts of flaky,
+   skipped, pending, passed, and failed tests. Clicking the failed count opens
+   the **Test Results** tab pre-filtered to just the failures.
+2. **Or use the [Tests for Review](/cloud/features/recorded-runs#Tests-for-Review)
+   panel** on the Overview tab, which orders results by failures first so you
+   land directly on the handful of tests that triggered the cancellation.
+3. **Filter the [Test Results tab](/cloud/features/recorded-runs#Test-Results-tab)**
+   by status to list exactly the failing tests if you arrived another way.
+
+To understand _why_ a test failed, open its
+[test detail sidebar](/cloud/features/recorded-runs#Test-detail-sidebar) for the
+error, AI Error Summary, and previous-runs history, then use
+[Test Replay](/cloud/features/test-replay) to time-travel to the moment of
+failure and inspect the DOM, network, and console as they happened in CI.
+
+:::info
+
+Because in-progress specs finish but no new specs start, a canceled run only
+contains results for the specs that had already started. The failures you see
+are the ones that triggered the cancellation plus any specs that were already
+running, not necessarily every failure the full suite would have produced. The
+[Errors tab](/cloud/features/recorded-runs#Errors-tab) is a quick way to confirm
+you've reviewed every error that was actually recorded.
+
+:::
+
 ## What a canceled run looks like
 
 When a run is auto-canceled, Cypress Cloud makes it clear what happened and how
