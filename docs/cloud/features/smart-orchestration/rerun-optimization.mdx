@@ -1,0 +1,204 @@
+---
+title: Rerun Optimization
+description: Speed up CI reruns by re-running only the specs that failed, skipping specs that already passed, with Cypress Cloud's experimental Rerun Optimization feature.
+sidebar_label: Rerun Optimization
+sidebar_position: 60
+---
+
+<ProductHeading product="cloud" plan="business" />
+
+# Rerun Optimization <Badge type="info">Experimental</Badge>
+
+:::info
+
+##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
+
+- What Rerun Optimization does and how it speeds up CI reruns
+- How to enable it at the organization and project level
+- How Cypress Cloud decides which specs to skip on a rerun
+
+:::
+
+:::caution
+
+**Rerun Optimization is experimental.** We are shipping an early version to learn
+how it performs across real CI setups, and we expect it to evolve. You may need to request access from your Cypress representative if you do not see this available in your settings page yet.
+
+Review the
+[behavior and limitations](#Behavior-and-limitations) before enabling it on
+critical pipelines.
+
+:::
+
+When a CI run fails, it's common to rerun the job to confirm a fix or clear a
+flaky failure. Normally that rerun executes your entire test suite again,
+including the specs that already passed. **Rerun Optimization re-runs only the
+specs that contained failures and skips the specs that already passed**, so you
+spend CI time re-testing what actually failed instead of re-validating work that
+was already green.
+
+This can speed up the path to a passing build, reduce CI compute cost, and lower
+the number of billed test results, since skipped specs are never executed.
+
+Rerun Optimization operates at the **spec level**. If a spec contains at least one
+failing test, the entire spec is re-run (including any tests within it that
+passed). Specs where every test passed are skipped.
+
+### How it works
+
+1. A run fails in CI, and you trigger a rerun from your CI provider (for example,
+   "Re-run jobs" or "Re-run failed jobs"). Rerun Optimization behaves the same way
+   for both.
+2. Cypress Cloud groups an original run with all of its reruns using a stable
+   **rerun group ID**. On
+   [supported CI providers](#CI-provider-support) this is derived automatically
+   from CI environment variables. On other providers you can set it manually with
+   [`CYPRESS_RERUN_GROUP_ID`](#Setting-the-rerun-group-ID-manually).
+3. Cloud finds the most recent _completed_ run with the same rerun group ID. That
+   run becomes the **anchor run** and determines which specs still need to run.
+4. Cloud sends only the failing specs from the anchor run to the Cypress App for
+   re-execution. The previously passing specs are skipped.
+
+When this happens, the Cypress App prints a notice near the start of the run's CLI
+output, for example:
+
+```text
+Warning from Cypress Cloud: This run is only retrying failed specs from run 1234.
+It will not include specs that passed in that run.
+```
+
+The anchor is always the **latest completed run** for the rerun group, regardless
+of which specific run you clicked "rerun" on in your CI provider's UI.
+
+### Availability
+
+Rerun Optimization is a _Smart Orchestration_ feature available to users on a
+[Business or Enterprise tier Cypress Cloud plan](https://cypress.io/pricing), as
+well as during a free trial. If you do not see this feature in your settings page during the experimental period, request access from your Cypress representative.
+
+## Enable Rerun Optimization
+
+Rerun Optimization is configured in the **Smart Orchestration** section of your
+organization and project settings. Only **Owners** and **Admins** can change the
+setting; **Members** and **Viewers** have read-only access.
+
+### Organization setting
+
+Sets the default behavior for every project in the organization.
+
+- **Run everything again** rebuilds the full suite on a rerun. This is the default
+  for existing organizations.
+- **Run only failed specs** enables Rerun Optimization. This will be the default for
+  newly created organizations.
+
+### Project setting
+
+Each project can inherit the organization default or override it.
+
+- **Organization default** (selected by default) follows the org-level setting.
+- **Run everything again** disables Rerun Optimization for the project.
+- **Run only failed specs** enables Rerun Optimization for the project.
+
+## CI provider support
+
+On supported providers, Cypress detects reruns automatically and builds the rerun
+group ID for you. Support depends on your Cypress version:
+
+| CI Provider    | Minimum Cypress Version |
+| -------------- | ----------------------- |
+| GitHub Actions | 4.0.2                   |
+| Azure          | 3.1.1                   |
+| CircleCI       | 15.15.0                 |
+| Bitbucket      | 15.15.0                 |
+
+For any other provider, use the
+[`CYPRESS_RERUN_GROUP_ID`](#Setting-the-rerun-group-ID-manually) environment
+variable to enable Rerun Optimization manually.
+
+## Setting the rerun group ID manually
+
+`CYPRESS_RERUN_GROUP_ID` is the rerun group ID that links an original CI run to
+all of its reruns. Set it when your CI provider isn't automatically supported, or
+when you want explicit control over grouping.
+
+The value must be:
+
+- **Shared** across an original run and all of its reruns.
+- **Unique** between builds that are not related to one another.
+
+A CI build identifier that persists across retries is usually a good fit. When
+Cloud receives a run with `CYPRESS_RERUN_GROUP_ID` set, it uses that value to find
+the anchor run and, if Rerun Optimization is enabled, skips the specs that passed
+there.
+
+```yaml title="GitHub Actions (manual override)"
+env:
+  CYPRESS_RERUN_GROUP_ID: ${{ github.run_id }}
+```
+
+```groovy title="Jenkins (unsupported provider, manual setup)"
+environment {
+  CYPRESS_RERUN_GROUP_ID = "${env.BUILD_TAG}"
+}
+```
+
+:::note
+
+`CYPRESS_RERUN_GROUP_ID` takes precedence over automatic detection. On supported
+providers, setting it overrides the rerun group ID that Cypress would otherwise
+construct for you.
+
+:::
+
+## How the anchor run is selected
+
+The anchor run is the completed run that determines which specs to skip. Common
+scenarios:
+
+- **Simple rerun:** Run A completes and you rerun it. The anchor is Run A.
+- **Chained reruns:** Run A completes, then Run B (a rerun of A) completes, then
+  you rerun again. The anchor is Run B, the latest completed run.
+- **Rerun while a run is in progress:** Run A completes, Run B starts but hasn't
+  finished, and you rerun. The anchor is Run A, since Run B isn't complete yet.
+- **Run completion delay:** Cypress Cloud waits a short, configurable window before treating a run as complete. If you rerun while the previous run is still within that window, Cloud
+  doesn't yet see it as completed and the rerun executes as a full run. To make the most of this feature, set a very short run completion delay.
+
+Cypress Cloud does not block parallel reruns. If several reruns are triggered in quick
+succession, each one anchors on whichever completed run exists at the time the run begins.
+
+## Opting out in CI
+
+To force a full run and skip the optimization, set the `CYPRESS_RERUN_ALL_TESTS`
+environment variable to `true`. Cloud then treats the run as a full run and runs
+every spec, even if a matching anchor run exists. This is useful for specific
+branches or pipelines where you always want the complete suite to run.
+
+```yaml
+env:
+  CYPRESS_RERUN_ALL_TESTS: true
+```
+
+## Behavior and limitations
+
+Because this is an early, experimental release, keep the following in mind:
+
+- **Passing results are not carried forward.** A rerun-optimized run shows only the
+  specs that were re-executed. Specs that passed in the anchor run do not appear in
+  the rerun's results.
+- **Reporter output reflects only the re-executed specs.** CI guardrails based on
+  test counts (JUnit/XML reporters, custom reporters, threshold checks) will see
+  fewer specs and tests than a full run. You may need to adjust these on your end.
+- **CLI messaging is limited.** The CLI prints a notice for the specs being
+  re-run, but the skipped specs are not listed in the output.
+- **Analytics may be incomplete.** Analytics features such as App Quality won't be
+  fully accurate for rerun-optimized runs, because those runs contain only a subset
+  of specs.
+
+:::tip
+
+Pair Rerun Optimization with other _Smart Orchestration_ features. With
+[Spec Prioritization](/cloud/features/smart-orchestration/spec-prioritization) and
+[Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation), failures
+surface earlier and reruns finish faster.
+
+:::

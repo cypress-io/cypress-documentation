@@ -1,6 +1,6 @@
 ---
 title: Overview
-description: Cypress Cloud provides four distinct Smart Orchestration features for use in CI to speed up test runs, accelerate debugging workflows, and reduce costs.
+description: Cypress Cloud provides Smart Orchestration features for use in CI to speed up test runs, accelerate debugging workflows, and reduce costs.
 sidebar_position: 10
 ---
 
@@ -8,7 +8,7 @@ sidebar_position: 10
 
 # Smart Orchestration Overview
 
-Cypress Cloud provides four distinct Smart Orchestration features for use in CI
+Cypress Cloud provides several Smart Orchestration features for use in CI
 to speed up test runs, accelerate debugging workflows, and reduce costs:
 
 - [Parallelization](/cloud/features/smart-orchestration/parallelization): Reduce
@@ -25,3 +25,7 @@ to speed up test runs, accelerate debugging workflows, and reduce costs:
   early reduces the number of “tests recorded” and thus your
   monthly bill as you won't be billed for tests that aren't valuable once your run
   has failed. This will also free up CI resources for validating fixes, and helping other users.
+- [Rerun Optimization](/cloud/features/smart-orchestration/rerun-optimization)
+  (experimental): When you rerun a failed CI run, re-run only the specs that
+  contained failures and skip the specs that already passed, speeding up the path
+  to a passing build.
