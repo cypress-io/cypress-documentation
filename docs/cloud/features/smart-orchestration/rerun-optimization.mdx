@@ -205,21 +205,31 @@ construct for you.
 
 :::
 
-## How is the anchor run selected?
+## What a rerun will execute {#how-the-anchor-run-is-selected}
 
-The anchor run is the completed run that determines which specs to skip. Common
-scenarios:
+Every rerun is compared against your **most recent completed run** in the rerun
+group, and re-executes only the specs that were still failing there. That means
+you can trust a rerun to always work from your latest results — it never re-runs
+specs that already passed, and it never reverts to an older, larger set of
+failures. (Internally, that most-recent completed run is called the **anchor
+run**.)
 
-- **Simple rerun:** Run A completes and you rerun it. The anchor is Run A.
-- **Chained reruns:** Run A completes, then Run B (a rerun of A) completes, then
-  you rerun again. The anchor is Run B, the latest completed run.
-- **Rerun while a run is in progress:** Run A completes, Run B starts but hasn't
-  finished, and you rerun. The anchor is Run A, since Run B isn't complete yet.
-- **Run completion delay:** Cypress Cloud waits a short, configurable window before treating a run as complete. If you rerun while the previous run is still within that window, Cloud
-  doesn't yet see it as completed and the rerun executes as a full run. To make the most of this feature, set a very short run completion delay.
+Knowing this lets you predict exactly what a rerun will do:
 
-Cypress Cloud does not block parallel reruns. If several reruns are triggered in quick
-succession, each one anchors on whichever completed run exists at the time the run begins.
+- **You rerun a finished run** → it retries that run's failing specs. The common
+  case, and where you see the biggest time and cost savings.
+- **You rerun after several attempts** → each rerun anchors on the _latest_
+  completed run, so chained reruns keep narrowing toward what's still broken
+  instead of replaying earlier failures you've already fixed.
+- **You rerun while another run is still in progress** → Cloud anchors on the last
+  _completed_ run, since the in-progress one has no final results yet.
+- **You rerun within the run-completion delay window** → Cloud hasn't marked the
+  previous run complete yet, so the rerun safely runs the **full** suite. **Set a
+  short run-completion delay so more of your reruns get optimized** — this is the
+  main lever for getting consistent savings.
+
+Cloud never blocks parallel reruns: if several start at once, each one anchors on
+whichever run is complete at the time it begins.
 
 ## How do I opt out and force a full run? {#opting-out}
 
