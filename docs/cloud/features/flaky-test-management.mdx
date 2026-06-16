@@ -16,6 +16,7 @@ sidebar_label: Flake Management
 - Why flaky tests are a business problem, not just an engineering annoyance
 - How Cypress Cloud automatically detects, scores, and tracks flaky tests
 - How to turn flake data into prioritized, measurable action
+- How to debug a flaky test down to its root cause with Test Replay
 - How to alert the right people the moment flake appears
 
 :::
@@ -51,6 +52,18 @@ tests causing the most disruption.
 By enabling [test retries](/app/guides/test-retries), Cypress Cloud can detect,
 flag, and track flaky tests from your recorded Cypress test runs in your CI/CD
 pipeline.
+
+:::info
+
+<strong>Prerequisites</strong>
+
+Flaky Test Management works on runs
+[recorded to Cypress Cloud](/cloud/get-started/setup) from your CI/CD pipeline,
+with [test retries](/app/guides/test-retries#Configure-Test-Retries) enabled.
+Detection, analytics, and alerting require a
+[Team Cypress Cloud plan](https://cypress.io/pricing).
+
+:::
 
 ## Flake Detection
 
@@ -163,6 +176,16 @@ to "here's why," reducing the investigation cost of every fix.
   alt="Flaky tests analytics details panel"
 />
 
+:::tip
+
+Need flake metrics in your own dashboards? The
+[Data Extract API](/cloud/integrations/data-extract-api#Flaky) exposes
+organization-wide flake reports, including flake count and flake rate per
+project over time, so you can track reliability alongside your other
+engineering KPIs.
+
+:::
+
 ### Failure rate vs. flake rate
 
 When test retries are enabled, it's important to distinguish **failure rate**
@@ -189,6 +212,22 @@ instability, and its cost, is still there.
   src="/img/cloud/features/flaky-test-management/flake-v-fail-1.png"
   alt="flake rate vs fail rate"
 />
+
+## Debug and fix flaky tests
+
+Detecting and scoring flake tells you _which_ tests to fix and in what order.
+The next step is finding _why_ a test flaked, and that is where
+[Test Replay](/cloud/features/test-replay) comes in.
+
+From a flaky test's details panel, open any flaky run in Test Replay to replay
+the exact attempts as they ran in CI, with full access to the DOM, network
+requests, console logs, and element state at the moment of failure. Comparing a
+passing attempt against a failing one on the same code is often the fastest way
+to pinpoint the timing issue, race condition, or environmental dependency
+causing the flake.
+
+For common root causes and patterns to make your tests more deterministic, see
+our blog posts on [fighting test flake](https://cypress.io/blog/tag/flake/).
 
 ## Flake Alerting
 
@@ -273,7 +312,11 @@ root cause.
 
 ## See Also
 
+- Debug flaky runs by replaying the exact CI attempt with
+  [Test Replay](/cloud/features/test-replay).
 - Compare flake between branches before merging with
   [Branch Review](/cloud/features/branch-review).
+- Export organization-wide flake reports with the
+  [Data Extract API](/cloud/integrations/data-extract-api#Flaky).
 - Read our blog posts about fighting
   [test flake](https://cypress.io/blog/tag/flake/).
