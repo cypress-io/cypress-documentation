@@ -22,13 +22,13 @@ sidebar_label: Flake Management
 
 ## Why Flaky Test Management
 
-A **flaky test** passes and fails across retries without any code change — it
+A **flaky test** passes and fails across retries without any code change. It
 "fails" once, runs again on the same code, and passes. A single flaky test
 seems harmless. At scale, flake is one of the most expensive and corrosive
 problems a software organization faces:
 
 - **It erodes trust in the entire test suite.** Once developers learn that a
-  red build might just be "the flaky one," they start ignoring failures — and
+  red build might just be "the flaky one," they start ignoring failures, and
   real regressions slip through to production.
 - **It drains engineering time and budget.** Teams burn hours re-running
   pipelines, investigating failures that aren't real, and manually triaging
@@ -44,7 +44,7 @@ Flaky Test Management turns flake from an invisible, anecdotal cost into a
 **measurable, prioritized, and assignable** stream of work. Cypress Cloud
 automatically detects flake from your existing CI runs, scores each test by
 severity, tracks suite-wide reliability over time, and alerts the right people
-the moment new flake appears — so engineering leaders can quantify the health
+the moment new flake appears, so engineering leaders can quantify the health
 of their test suite, protect developer velocity, and direct effort at the few
 tests causing the most disruption.
 
@@ -59,7 +59,7 @@ pipeline.
 Cypress can automatically
 [retry failed tests](/app/guides/test-retries#Configure-Test-Retries) to keep a
 single flaky test from failing an entire run or CI build. Retries are also the
-signal Cypress Cloud uses to identify flake — a test that fails then passes on
+signal Cypress Cloud uses to identify flake. A test that fails then passes on
 retry, with no code change, is flaky by definition.
 
 :::
@@ -76,7 +76,7 @@ retry, with no code change, is flaky by definition.
 :::
 
 You can't fix what you can't see. Flake Detection gives you a continuous,
-automated record of every flaky test in your suite — captured as it happens in
+automated record of every flaky test in your suite, captured as it happens in
 CI, so you can assess severity and prioritize fixes instead of relying on
 developers to remember and report intermittent failures.
 
@@ -121,12 +121,12 @@ test case as flaky.
 :::
 
 The flaky test analytics page is the reporting layer leadership and team leads
-use to understand — and prove — the state of test suite reliability. It gives a
+use to understand, and prove, the state of test suite reliability. It gives a
 bird's-eye view of flake across your project, including:
 
 - A plot of the **number of flaky tests over time**, so you can show reliability
   trending up or down release over release.
-- The overall **flakiness level** of the entire project — a single health
+- The overall **flakiness level** of the entire project: a single health
   metric you can track and set goals against.
 - The **number of flaky tests grouped by severity**, so effort goes where the
   pain is greatest.
@@ -137,7 +137,7 @@ bird's-eye view of flake across your project, including:
 
 <strong>Flake severity</strong>
 
-Flake **severity** is determined by how often a test flakes — its **flake
+Flake **severity** is determined by how often a test flakes, its **flake
 rate**. Severity lets teams prioritize objectively: fix the handful of
 high-severity tests disrupting the most builds before chasing rare,
 low-impact flake.
@@ -180,12 +180,12 @@ A test flagged as flaky may still have ultimately passed after retries. The
 status of an individual retry attempt is separate from the final test status.
 
 For example, a project configured to retry failing tests up to three times may
-fail the first two attempts and pass on the third — a final status of passing.
+fail the first two attempts and pass on the third, a final status of passing.
 
 Because of this, a test can show a **zero final failure rate while still
 exhibiting flake**, as shown below. This is exactly why flake is so easy to
 miss without dedicated tracking: the build goes green, but the underlying
-instability — and its cost — is still there.
+instability, and its cost, is still there.
 
 <DocsImage
   src="/img/cloud/features/flaky-test-management/flake-v-fail-1.png"
@@ -205,11 +205,11 @@ instability — and its cost — is still there.
 
 Detection only pays off if the right people know about flake when it matters.
 Flake Alerting pushes flake notifications directly into the tools your team
-already works in — source control
+already works in: source control
 ([GitHub](/cloud/integrations/github), [GitLab](/cloud/integrations/gitlab),
 [Bitbucket](/cloud/integrations/bitbucket)),
 [Slack](/cloud/integrations/slack), and
-[Microsoft Teams](/cloud/integrations/teams) — so flake is caught in the review
+[Microsoft Teams](/cloud/integrations/teams), so flake is caught in the review
 process instead of compounding silently over time.
 
 ### GitHub
@@ -224,7 +224,7 @@ project's GitHub integration settings:
 
 Once enabled, GitHub PR comments show the number of flaky tests associated with
 the PR in the test summary and include a **Flakiness** section highlighting the
-specific tests that flaked — putting reliability data in front of reviewers
+specific tests that flaked, putting reliability data in front of reviewers
 before they merge.
 
 <DocsImage
@@ -254,16 +254,16 @@ detected, so teams can respond in real time:
 When deciding whether a Pull Request is safe to merge, the key question is
 usually: _did my changes introduce new flake, or was this test already
 unstable?_ [Branch Review](/cloud/features/branch-review) answers this directly
-by comparing the changed branch against its base in a single view — so reviewers
+by comparing the changed branch against its base in a single view, so reviewers
 hold authors accountable for the flake they introduce without getting blocked
 by flake they didn't.
 
 The **Flaky** tab lists every spec that flaked, marking each result as:
 
-- **new** — flake not previously captured, and possibly introduced by this
+- **new**: flake not previously captured, and possibly introduced by this
   branch
-- **existing** — flake already present on the base branch
-- **resolved** — flake that was present before but no longer appears
+- **existing**: flake already present on the base branch
+- **resolved**: flake that was present before but no longer appears
 
 This lets reviewers focus only on the flake a branch is responsible for, and
 confirm that a stability fix actually took effect. From there you can open a
