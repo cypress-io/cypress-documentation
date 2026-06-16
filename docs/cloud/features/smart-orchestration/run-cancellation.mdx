@@ -117,12 +117,12 @@ The right threshold depends on how your team works:
   - **Runs you rely on for complete [Accessibility](/accessibility/get-started/introduction)
     or [UI Coverage](/ui-coverage/get-started/introduction) reports**, since a
     canceled run only scores the specs that ran. See
-    [Impact on Accessibility and UI Coverage scoring](#impact-on-accessibility-and-ui-coverage-scoring).
+    [Impact on Accessibility and UI Coverage scoring](#Impact-on-Accessibility-and-UI-Coverage-scoring).
   - **Compliance or audit workflows** that require evidence the entire suite ran.
 
   You can disable it per run with `--auto-cancel-after-failures false` without
   changing the project default. See
-  [Override the threshold from the CLI](#override-the-threshold-from-the-cli).
+  [Override the threshold from the CLI](#Override-the-threshold-from-the-CLI).
 
 :::info
 
@@ -291,10 +291,10 @@ this in mind when reading the scores:
 For this reason, treat scores from a canceled run as a partial sample rather than
 the run-over-run trend you compare against. If you rely on these scores to
 [block pull requests](/accessibility/block-pull-requests) or track regressions,
-consider [disabling Auto Cancellation](#tuning-the-threshold-for-your-team) on
+consider [disabling Auto Cancellation](#Tuning-the-threshold-for-your-team) on
 the branches or runs where you need complete coverage.
 
-### Auto Cancellation vs. manual cancellation
+### Auto Cancellation vs manual cancellation
 
 A run can be canceled in two ways, and Cypress Cloud distinguishes between them:
 
@@ -306,6 +306,33 @@ A run can be canceled in two ways, and Cypress Cloud distinguishes between them:
 
 For more common questions, see the Smart Orchestration section of the
 [Cypress Cloud FAQ](/cloud/faq#Smart-Orchestration).
+
+## Canceled runs in analytics and the Data Extract API
+
+A canceled run is recorded with a terminal status of `cancelled`, and that status
+flows through to [Analytics](/cloud/features/analytics/overview) and the
+[Data Extract API](/cloud/integrations/data-extract-api). Because a canceled run
+only ever recorded part of its tests, it carries **partial data**, which is
+treated differently depending on the report:
+
+| Surface | How a canceled run is handled |
+| --- | --- |
+| [Run status](/cloud/features/analytics/project-analytics#Run-status) analytics | Counted in its own canceled bucket. Pass and fail rates are calculated against all runs, so canceled runs sit in the denominator and dilute those rates. |
+| [Run duration](/cloud/features/analytics/project-analytics#Run-duration) and [Test suite size](/cloud/features/analytics/project-analytics#Test-suite-size) analytics | Excluded. These reports only consider completed (passed/failed) runs so partial runs don't skew the averages. |
+| [Top failures](/cloud/features/analytics/project-analytics#Top-failures), [Slowest tests](/cloud/features/analytics/project-analytics#Slowest-tests), most common errors, and flakiness analytics | Included implicitly. They aggregate individual test results, so any results recorded before cancellation count, and canceled runs contribute to failure-rate denominators. |
+| [Data Extract API](/cloud/integrations/data-extract-api#Run-status) | Included. Run-level reports return a `cancelled` status, and test-level data reflects whatever completed before cancellation. |
+
+The key thing to keep in mind: a canceled run's **partial results still count** in
+the test-level reports above, so a run that auto-canceled after a few failures can
+nudge aggregate failure rates and trends. If you track these metrics closely,
+consider [disabling Auto Cancellation](#Tuning-the-threshold-for-your-team) on the
+runs you rely on for complete analytics.
+
+Note that analytics and the Data Extract API only know that a run was
+`cancelled`; they do not distinguish an **Auto Cancellation** from a manual one.
+That distinction is available in the Cloud dashboard (see
+[Auto Cancellation vs manual cancellation](#Auto-Cancellation-vs-manual-cancellation))
+and through [Cloud MCP](#Check-for-auto-cancellation-with-Cloud-MCP).
 
 ## Check for auto cancellation with Cloud MCP
 
