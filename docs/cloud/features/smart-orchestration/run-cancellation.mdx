@@ -114,6 +114,10 @@ The right threshold depends on how your team works:
     rather than fast feedback.
   - **Flaky-test investigation or quarantine runs**, where you need every test
     to execute to gather reliable pass/fail history.
+  - **Runs you rely on for complete [Accessibility](/accessibility/get-started/introduction)
+    or [UI Coverage](/ui-coverage/get-started/introduction) reports**, since a
+    canceled run only scores the specs that ran. See
+    [Impact on Accessibility and UI Coverage scoring](#impact-on-accessibility-and-ui-coverage-scoring).
   - **Compliance or audit workflows** that require evidence the entire suite ran.
 
   You can disable it per run with `--auto-cancel-after-failures false` without
