@@ -334,6 +334,25 @@ That distinction is available in the Cloud dashboard (see
 [Auto Cancellation vs manual cancellation](#Auto-Cancellation-vs-manual-cancellation))
 and through [Cloud MCP](#Check-for-auto-cancellation-with-Cloud-MCP).
 
+## Canceled runs in source control and messaging integrations
+
+Cypress Cloud's integrations report a canceled run wherever they report run
+results, but, like analytics, they only convey that the run was _canceled_. None
+of them distinguish an Auto Cancellation from a manual one.
+
+| Integration | How a canceled run is surfaced |
+| --- | --- |
+| [GitHub](/cloud/integrations/github) status checks | Reported as a completed check with a `failure` state and a description such as _"This {spec/group/run} was cancelled."_ |
+| [GitLab](/cloud/integrations/gitlab) status checks | Reported with GitLab's native `canceled` state and the same description. |
+| [Bitbucket](/cloud/integrations/bitbucket) status checks | Reported with Bitbucket's native `STOPPED` state and the same description. |
+| Pull request and merge request comments (GitHub, GitLab, Bitbucket) | The run's properties show a canceled icon labeled _"Cancelled,"_ and any canceled specs are grouped under **Failed tests** with the failed icon. |
+| [Slack](/cloud/integrations/slack#Notification-preferences) and [Microsoft Teams](/cloud/integrations/teams#Notification-preferences) | A canceled run only notifies a channel when its **Canceled runs** notification preference is enabled. It then appears as _"Canceled run"_ with a gray skipped icon. |
+
+Because these integrations don't differentiate auto from manual cancellation, use
+the [Cloud dashboard](#Auto-Cancellation-vs-manual-cancellation) or
+[Cloud MCP](#Check-for-auto-cancellation-with-Cloud-MCP) when you need to confirm
+that a run was specifically auto-canceled by Smart Orchestration.
+
 ## Check for auto cancellation with Cloud MCP
 
 [Cloud MCP](/cloud/integrations/cloud-mcp) lets your AI coding assistant query
