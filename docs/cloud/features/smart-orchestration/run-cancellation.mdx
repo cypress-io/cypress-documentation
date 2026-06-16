@@ -204,12 +204,24 @@ you've reviewed every error that was actually recorded.
 ## What a canceled run looks like
 
 When a run is auto-canceled, Cypress Cloud makes it clear what happened and how
-much it saved you:
+much it saved you. The Run Overview displays a banner summarizing the
+cancellation:
 
-- The run displays a banner: **"Automatically canceled by Smart
-  Orchestration"**, showing how many test failures triggered the cancellation,
-  how many specs were skipped (for example, _"X of Y specs skipped"_), and the
-  amount of _time saved in CI_.
+<DocsImage
+  src="/img/cloud/features/smart-orchestration/auto-cancellation-run-banner.png"
+  alt="Run Overview banner reading: Automatically canceled by Smart Orchestration, After 7 test failure(s), 856 of 1319 specs skipped, 01:02:08 saved in CI, with a Project Settings link"
+/>
+
+The banner reports:
+
+- **What canceled the run:** _"Automatically canceled by Smart Orchestration."_
+- **How many failures triggered it:** for example, _"After 7 test failure(s)."_
+- **How many specs were skipped:** for example, _"856 of 1319 specs skipped."_
+- **How much CI time was saved:** for example, _"01:02:08 saved in CI."_
+- A **Project Settings** link for adjusting your Auto Cancellation configuration.
+
+Elsewhere in the run:
+
 - The run's **Properties → Smart Orchestration** table shows an Auto
   Cancellation status of **Disabled**, **Not applied**, or **Applied**, along
   with detail such as _"Configured by project to cancel after 2 test failures."_
