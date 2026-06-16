@@ -1,6 +1,6 @@
 ---
 title: Auto Cancellation
-description: Cancel entire test runs upon the first failure with Cypress Cloud's Auto Cancellation feature.
+description: Stop wasting CI minutes on runs that have already failed. Auto Cancellation cancels a Cypress run once failures cross a threshold you control, saving time and money.
 sidebar_position: 50
 ---
 
@@ -12,23 +12,45 @@ sidebar_position: 50
 
 ##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
 
-- How to enable Auto Cancellation in Cypress Cloud
-- How to save time by canceling test runs upon the first failure
-- How to reduce CI costs by using Auto Cancellation with Spec Prioritization
+- Why Auto Cancellation saves you time and money on every failed run
+- How to enable Auto Cancellation and tune the failure threshold for your team
+- How to pair Auto Cancellation with Spec Prioritization to fail fast and recover faster
 
 :::
 
-Continuous Integration (CI) pipelines are typically costly processes that can
-demand significant compute time. **When a test failure occurs in CI, it often
-does not make sense to continue running the remainder of a test suite** since
-the process has to start again upon merging of subsequent fixes and other code
-changes. When Auto Cancellation is enabled, once the number of failed tests goes
-over a preset threshold, the entire test run is canceled. Note that any
-in-progress specs will continue to run to completion.
+## Why Auto Cancellation
+
+Once a test run has failed in CI, every additional minute spent running the rest
+of the suite is a minute you pay for but can't use. The fix still has to be
+written, pushed, and validated by a _brand new_ run — so the original run keeps
+burning compute, holding CI machines, and recording billable tests long after
+you already know the outcome.
+
+**Auto Cancellation stops that waste.** When the number of failed tests crosses
+a threshold you set, Cypress Cloud cancels the entire run automatically. You get
+the signal you need, you stop paying for tests you'll never look at, and your CI
+pipeline is freed up to validate the fix.
+
+The value compounds with the size of your suite and the size of your team:
 
 <AutoCancellationBenefits />
 
-### Activate Auto Cancellation in Cypress Cloud
+## How it works
+
+When Auto Cancellation is enabled, Cypress Cloud watches the number of failed
+tests across all of your parallelized machines. As soon as that count goes over
+your configured threshold, the run is canceled.
+
+- The default threshold is **1 failure** — fail fast and move on.
+- Any specs that are already in progress when the threshold is reached will
+  **finish running** so you still get their complete results.
+- The cancellation applies to the whole run, across every machine, not just the
+  one that reported the failure.
+
+This means the slower and more expensive your suite is, the more each
+cancellation saves you.
+
+## Activate Auto Cancellation in Cypress Cloud
 
 :::tip
 
@@ -36,28 +58,18 @@ in-progress specs will continue to run to completion.
 a [Business or Enterprise tier Cypress Cloud plan](https://cypress.io/pricing).
 Wondering if upgrading your Team tier subscription is worth it? Check out the
 [recommendations](/cloud/features/recorded-runs#Recommendations) on the run
-overview page to see how much time we predict these features would save you.
+overview page to see how much time and money we predict these features would
+save you.
 
 :::
 
-Auto Cancellation is a _Smart Orchestration_ feature that is managed within a
-project's settings.
-
-:::info
-
-<strong>Consideration for Teams</strong>
-
-If your development, testing, or QA teams operate in a highly collaborative
-workflow where multiple people are working on various test failures at the same
-time, it may make sense to increase the failures threshold to surface more failures on each test run.
-
-:::
+Auto Cancellation is managed within a project's settings.
 
 **To enable or disable this feature at the Project level (must be an admin user):**
 
 1. Select the desired project within **Projects** view to visit Cypress Cloud.
-2. Click **Project Settings** with the right-hand sidebar.
-3. Scroll to the Smart Orchestration section within Project Settings page.
+2. Click **Project Settings** within the right-hand sidebar.
+3. Scroll to the **Smart Orchestration** section within the Project Settings page.
 4. Toggle **Auto Cancellation**.
 5. Set the **failures before auto canceling** threshold (or just leave it at the
    default value of 1).
@@ -67,43 +79,53 @@ time, it may make sense to increase the failures threshold to surface more failu
   alt="Enable Auto Cancellation"
 />
 
+### Tuning the threshold for your team
+
+The right threshold depends on how your team works:
+
+- **Fail fast (threshold of 1).** Best when you want the earliest possible
+  signal and the lowest possible CI spend. The run stops on the first failure.
+- **Surface more failures (higher threshold).** If your development, testing, or
+  QA teams work in a highly collaborative workflow where multiple people fix
+  different failures at the same time, raising the threshold lets a single run
+  surface more of them before it cancels — so people aren't each waiting on a
+  fresh run to see their own failure.
+
 :::info
 
-<strong>CI Tip: Save Time</strong>
+<strong>Maximize the savings: pair with Spec Prioritization</strong>
 
-In addition to Auto Cancellation, consider reducing CI costs further by enabling
+Combine Auto Cancellation with
 [Spec Prioritization](/cloud/features/smart-orchestration/spec-prioritization) to
-surface test failures earlier in the run, and reduce the time it takes to fix
-issues and deploy changes.
+run previously failed specs first. Failures surface earlier in the run, which
+means Auto Cancellation triggers earlier too — shortening runs even further and
+driving down CI costs.
 
 :::
 
-### Specifying failures before auto canceling in the CLI
+## Override the threshold from the CLI
 
-With the Cypress CLI, you can specify the number of test failures to execute
-before canceling the run via a command flag. This allows more granular control
-of Auto Cancellation on a per-run basis.
+The project setting is a sensible default, but you can override it on a
+per-run basis with the `--auto-cancel-after-failures` flag. This gives you
+granular control where it matters most:
 
-**Some common use cases for doing so might be:**
+- Set a **lower** value on dev environments to fail the suite early and get
+  faster feedback.
+- **Disable** Auto Cancellation on important branches (like `main` or release
+  branches) that need the full suite to run every time.
+- **Override** the project value for a one-off run without changing project
+  settings.
 
-- Setting a lower-than-normal value on dev environments to fail a test suite
-  early for faster feedback
-- Disabling Auto Cancellation on important branches that need the full test
-  suite to run every time
-- Overriding the project value on a case-by-case basis
+Specifying the flag overrides the project setting in Cypress Cloud. Omitting it
+falls back to the project default.
 
-Specifying the flag will override the project setting in Cypress Cloud, and not
-specifying it will default to the value in the project settings.
-
-To set it, pass the `--auto-cancel-after-failures` flag to the `cypress run`
-command, and give it a numeric value:
+To set a numeric threshold, pass the flag to `cypress run`:
 
 ```shell
 npx cypress run --record --key <<your_record_key>> --auto-cancel-after-failures 1
 ```
 
-You can also specify `false` for the value to disable Auto Cancellation for the
-run:
+To disable Auto Cancellation entirely for a run, pass `false`:
 
 ```shell
 npx cypress run --record --key <<your_record_key>> --auto-cancel-after-failures false
