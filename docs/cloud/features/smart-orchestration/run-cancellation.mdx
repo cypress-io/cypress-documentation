@@ -232,9 +232,15 @@ Elsewhere in the run:
     alt="Properties tab Smart Orchestration table showing Auto Cancellation with an Applied status and the detail: Configured by project to cancel after 7 test failures"
   />
 
-- Intelligence reports such as Accessibility and UI Coverage note when results
-  are partial because _the run was canceled due to auto-cancellation and one or
-  more specs did not run._
+- Intelligence reports such as Accessibility and UI Coverage flag a **Partial
+  report** badge next to the report title. Hovering it explains what happened,
+  for example: _"The run was canceled due to auto-cancellation and 616 specs did
+  not run."_
+
+  <DocsImage
+    src="/img/cloud/features/smart-orchestration/auto-cancellation-partial-report.png"
+    alt="Cypress Accessibility report with a Partial report badge and a tooltip reading: Accessibility has a partial report. The following problems occurred: The run was canceled due to auto-cancellation and 616 specs did not run."
+  />
 
 ### Impact on Accessibility and UI Coverage scoring
 
@@ -270,3 +276,17 @@ A run can be canceled in two ways, and Cypress Cloud distinguishes between them:
 
 For more common questions, see the Smart Orchestration section of the
 [Cypress Cloud FAQ](/cloud/faq#Smart-Orchestration).
+
+## See also
+
+- [Smart Orchestration Overview](/cloud/features/smart-orchestration/overview)
+- [Spec Prioritization](/cloud/features/smart-orchestration/spec-prioritization),
+  which surfaces previously failed specs first so Auto Cancellation can trigger
+  even earlier
+- [Parallelization](/cloud/features/smart-orchestration/parallelization) and
+  [Load Balancing](/cloud/features/smart-orchestration/load-balancing)
+- The [`--auto-cancel-after-failures`](/app/references/command-line#auto-cancel-after-runs)
+  flag in the Cypress Command Line reference
+- [Recorded Runs](/cloud/features/recorded-runs) for navigating run results and
+  finding failed tests
+- [Smart Orchestration FAQ](/cloud/faq#Smart-Orchestration)
