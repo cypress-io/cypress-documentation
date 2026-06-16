@@ -242,6 +242,23 @@ Elsewhere in the run:
     alt="Cypress Accessibility report with a Partial report badge and a tooltip reading: Accessibility has a partial report. The following problems occurred: The run was canceled due to auto-cancellation and 616 specs did not run."
   />
 
+### In your CI output
+
+In the terminal output of your CI provider, each spec that was skipped because of
+the cancellation is reported in place of its results:
+
+```text
+Running:  commands/storage.cy.ts                                    (58 of 220)
+Estimated: 7 seconds
+
+This spec and its tests were skipped because the run has been canceled.
+```
+
+<DocsImage
+  src="/img/cloud/features/smart-orchestration/auto-cancellation-ci-skipped-specs.png"
+  alt="CI terminal output showing multiple specs each reporting: This spec and its tests were skipped because the run has been canceled."
+/>
+
 ### Impact on Accessibility and UI Coverage scoring
 
 Because a canceled run skips the specs that never started, your
