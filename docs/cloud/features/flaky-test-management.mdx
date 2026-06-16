@@ -13,7 +13,7 @@ sidebar_label: Flake Management
 
 ##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
 
-- Why flaky tests are a business problem, not just an engineering annoyance
+- Why flaky tests are more costly than they look, for teams and the business
 - How Cypress Cloud automatically detects, scores, and tracks flaky tests
 - How to turn flake data into prioritized, measurable action
 - How to debug a flaky test down to its root cause with Test Replay
@@ -32,23 +32,22 @@ problems a software organization faces:
 - **It erodes trust in the entire test suite.** Once developers learn that a
   red build might just be "the flaky one," they start ignoring failures, and
   real regressions slip through to production.
-- **It drains engineering time and budget.** Teams burn hours re-running
-  pipelines, investigating failures that aren't real, and manually triaging
-  which tests can be trusted. That's velocity spent on noise instead of
-  shipping.
+- **It drains engineering time.** Teams burn hours re-running pipelines,
+  investigating failures that aren't real, and manually triaging which tests can
+  be trusted. That's velocity spent on noise instead of shipping.
 - **It slows down delivery.** Flake blocks merges, delays releases, and forces
   developers to context-switch away from feature work to babysit CI.
-- **It hides accountability.** Without data, "the tests are flaky" is a vague
-  complaint. There's no way to know whether reliability is improving or
+- **It hides the real picture.** Without data, "the tests are flaky" is just a
+  vague complaint. There's no way to know whether reliability is improving or
   degrading over time, or which tests are actually responsible.
 
-Flaky Test Management turns flake from an invisible, anecdotal cost into a
-**measurable, prioritized, and assignable** stream of work. Cypress Cloud
-automatically detects flake from your existing CI runs, scores each test by
-severity, tracks suite-wide reliability over time, and alerts the right people
-the moment new flake appears, so engineering leaders can quantify the health
-of their test suite, protect developer velocity, and direct effort at the few
-tests causing the most disruption.
+Flaky Test Management turns flake from an invisible, anecdotal cost into
+**measurable, prioritized** work. Cypress Cloud automatically detects flake from
+your existing CI runs, scores each test by severity, tracks suite-wide
+reliability over time, and alerts the right people the moment new flake appears.
+The result is a clear picture of test suite health that helps teams keep
+shipping, focus effort on the few tests causing the most disruption, and show
+reliability trending in the right direction.
 
 By enabling [test retries](/app/guides/test-retries), Cypress Cloud can detect,
 flag, and track flaky tests from your recorded Cypress test runs in your CI/CD
@@ -121,11 +120,11 @@ test case as flaky.
 
 :::
 
-The flaky test analytics page is the reporting layer leadership and team leads
-use to understand, and prove, the state of test suite reliability. It gives a
-bird's-eye view of flake across your project, including:
+The flaky test analytics page gives a bird's-eye view of flake across your
+project, making it easy to understand reliability at a glance and back it up
+with data. It includes:
 
-- A plot of the **number of flaky tests over time**, so you can show reliability
+- A plot of the **number of flaky tests over time**, so you can see reliability
   trending up or down release over release.
 - The overall **flakiness level** of the entire project: a single health
   metric you can track and set goals against.
@@ -391,9 +390,9 @@ root cause.
 The in-app analytics answer "how healthy is this project?" The
 [Data Extract API](/cloud/integrations/data-extract-api) answers the same
 question across your _entire organization_, in a format you own. It lets you
-pull flake metrics into BI tools, executive dashboards, and engineering
-scorecards, so test reliability sits next to your other KPIs and trends can be
-tracked release over release without anyone logging into Cypress Cloud.
+pull flake metrics into your own dashboards and reports, so test reliability
+sits alongside the other metrics your team tracks and trends can be followed
+release over release without anyone logging into Cypress Cloud.
 
 :::tip
 
