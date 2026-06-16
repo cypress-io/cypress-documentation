@@ -323,6 +323,67 @@ the optimized rerun completes without running any specs.
 The Cypress App prints a notice in the CLI output naming the run it is retrying
 from, and the run is labeled with a **Re-run** tag in Cypress Cloud.
 
+## Auto Cancellation
+
+### <Icon name="angle-right" /> What is Auto Cancellation in Cypress?
+
+[Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation) is a
+Cypress Cloud [Smart Orchestration](/cloud/features/smart-orchestration/overview)
+feature that automatically cancels a recorded run once the number of failed
+tests reaches a threshold you configure. It stops Cypress from handing out new
+specs, marks the run as canceled, and reports how much CI time was saved, so you
+don't pay for tests that run after a run has already failed. It is available on
+the Business and Enterprise plans.
+
+### <Icon name="angle-right" /> How many test failures trigger an auto cancellation?
+
+By default, a single failure cancels the run. You can set a higher threshold in
+your project's Smart Orchestration settings, or override it per run with the
+[`--auto-cancel-after-failures`](/app/references/command-line#auto-cancel-after-runs)
+CLI flag. Only genuinely failed tests count toward the threshold; flaky tests (which
+fail an attempt but then pass on retry) are not considered and never trigger an
+auto cancellation.
+
+### <Icon name="angle-right" /> Does Auto Cancellation stop tests that are already running?
+
+No. Specs that are already in progress when the threshold is reached finish
+running so you still get their complete results. Cypress only stops handing out
+_new_ specs. In a parallelized run, this means machines can keep running the
+specs they had already started at the moment of cancellation, but none of them
+will pick up a new spec once the run is canceled.
+
+### <Icon name="angle-right" /> How do I disable Auto Cancellation for a single run?
+
+Pass `--auto-cancel-after-failures false` to `cypress run`. This overrides the
+project setting for that run only, which is useful for important branches that
+need the full suite to run every time.
+
+### <Icon name="angle-right" /> Is Auto Cancellation free?
+
+No. Auto Cancellation is a paid Smart Orchestration feature available on the
+[Business and Enterprise Cypress Cloud plans](https://cypress.io/pricing).
+
+### <Icon name="angle-right" /> What is the difference between Auto Cancellation and manual cancellation?
+
+Auto Cancellation is triggered automatically when a run reaches the configured
+failure threshold, and the UI labels it _"canceled due to auto-cancellation."_
+A manual cancellation happens when a user cancels the run from Cypress Cloud,
+which the UI labels _"manually canceled"_ and attributes to that user.
+
+### <Icon name="angle-right" /> How do I find the tests that triggered an auto cancellation?
+
+The failed tests that triggered the cancellation are the ones counted toward
+your threshold. The fastest way to reach them is to click the **failed** test
+indicator in the [run header](/cloud/features/recorded-runs#Run-header), which
+opens the [Test Results tab](/cloud/features/recorded-runs#Test-Results-tab)
+pre-filtered to the failures, or to use the
+[Tests for Review](/cloud/features/recorded-runs#Tests-for-Review) panel, which
+orders results by failures first. Open a failed test's
+[detail sidebar](/cloud/features/recorded-runs#Test-detail-sidebar) and
+[Test Replay](/cloud/features/test-replay) to debug it. Note that a canceled run
+only includes results for specs that had already started, so it may not contain
+every failure the full suite would have produced.
+
 ## Cypress Cloud Account
 
 ### <Icon name="angle-right" /> What is my Organization ID?

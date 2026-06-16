@@ -21,10 +21,9 @@ to speed up test runs, accelerate debugging workflows, and reduce costs:
   Quickly verify that your latest changes fixed a build by prioritizing the
   specs that failed in the previous Cypress run.
 - [Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation):
-  Automatically cancel a Cypress run when tests fail. Canceling tests
-  early reduces the number of “tests recorded” and thus your
-  monthly bill as you won't be billed for tests that aren't valuable once your run
-  has failed. This will also free up CI resources for validating fixes, and helping other users.
+  Automatically cancel a Cypress run once failures cross a threshold you set, so
+  you stop paying for tests you'll never look at and free up CI resources to
+  validate the fix.
 - [Rerun Optimization](/cloud/features/smart-orchestration/rerun-optimization)
   (experimental): When you rerun a failed CI run, re-run only the specs that
   contained failures and skip the specs that already passed, speeding up the path

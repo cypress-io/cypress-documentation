@@ -1,6 +1,7 @@
 ---
-title: Auto Cancellation
-description: Cancel entire test runs upon the first failure with Cypress Cloud's Auto Cancellation feature.
+title: 'Auto Cancellation: Stop Failed CI Runs Early | Cypress Cloud'
+sidebar_label: Auto Cancellation
+description: Stop wasting CI minutes on runs that have already failed. Auto Cancellation cancels a Cypress run once failures cross a threshold you control, saving time and money.
 sidebar_position: 50
 ---
 
@@ -8,27 +9,63 @@ sidebar_position: 50
 
 # Auto Cancellation
 
+**Auto Cancellation is a Cypress Cloud Smart Orchestration feature that
+automatically cancels a recorded test run once the number of failed tests
+reaches a threshold you set (1 by default).** It prevents CI from wasting time
+and money finishing a run that has already failed, and it is available on the
+Business and Enterprise plans.
+
 :::info
 
 ##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
 
-- How to enable Auto Cancellation in Cypress Cloud
-- How to save time by canceling test runs upon the first failure
-- How to reduce CI costs by using Auto Cancellation with Spec Prioritization
+- Why Auto Cancellation saves you time and money on every failed run
+- How to enable Auto Cancellation and tune the failure threshold for your team
+- How to pair Auto Cancellation with Spec Prioritization to fail fast and recover faster
+- How to recognize an auto-canceled run and tell it apart from a manual cancellation
 
 :::
 
-Continuous Integration (CI) pipelines are typically costly processes that can
-demand significant compute time. **When a test failure occurs in CI, it often
-does not make sense to continue running the remainder of a test suite** since
-the process has to start again upon merging of subsequent fixes and other code
-changes. When Auto Cancellation is enabled, once the number of failed tests goes
-over a preset threshold, the entire test run is canceled. Note that any
-in-progress specs will continue to run to completion.
+## Why Auto Cancellation
+
+Once a test run has failed in CI, every additional minute spent running the rest
+of the suite is a minute you pay for but can't use. The fix still has to be
+written, pushed, and validated by a _brand new_ run, so the original run keeps
+burning compute, holding CI machines, and recording billable tests long after
+you already know the outcome.
+
+**Auto Cancellation stops that waste.** When the number of failed tests crosses
+a threshold you set, Cypress Cloud cancels the entire run automatically. You get
+the signal you need, you stop paying for tests you'll never look at, and your CI
+pipeline is freed up to validate the fix.
+
+The value compounds with the size of your suite and the size of your team:
 
 <AutoCancellationBenefits />
 
-### Activate Auto Cancellation in Cypress Cloud
+## How it works
+
+When Auto Cancellation is enabled, Cypress Cloud watches the number of failed
+tests across all of your parallelized machines. As soon as that count reaches
+your configured threshold, Cypress Cloud stops handing out new specs, marks the
+run as canceled, and reports how much CI time the cancellation saved.
+
+- The default threshold is **1 failure**, so you fail fast and move on. You can
+  raise the threshold if you'd rather let more failures surface first.
+- Only genuinely failed tests count toward the threshold. **Flaky tests are not
+  considered at all.** A test that fails an attempt but then passes on retry is
+  recorded as flaky, not failed, so it never contributes to auto cancellation.
+- Any specs that are already in progress when the threshold is reached will
+  **finish running** so you still get their complete results.
+- The cancellation applies to the whole run, across every machine, not just the
+  one that reported the failure. In a parallelized run, machines that are already
+  mid-spec will finish those specs, but **no machine starts a new spec** once the
+  run is canceled.
+
+This means the slower and more expensive your suite is, the more each
+cancellation saves you.
+
+## Activate Auto Cancellation in Cypress Cloud
 
 :::tip
 
@@ -36,28 +73,18 @@ in-progress specs will continue to run to completion.
 a [Business or Enterprise tier Cypress Cloud plan](https://cypress.io/pricing).
 Wondering if upgrading your Team tier subscription is worth it? Check out the
 [recommendations](/cloud/features/recorded-runs#Recommendations) on the run
-overview page to see how much time we predict these features would save you.
+overview page to see how much time and money we predict these features would
+save you.
 
 :::
 
-Auto Cancellation is a _Smart Orchestration_ feature that is managed within a
-project's settings.
-
-:::info
-
-<strong>Consideration for Teams</strong>
-
-If your development, testing, or QA teams operate in a highly collaborative
-workflow where multiple people are working on various test failures at the same
-time, it may make sense to increase the failures threshold to surface more failures on each test run.
-
-:::
+Auto Cancellation is managed within a project's settings.
 
 **To enable or disable this feature at the Project level (must be an admin user):**
 
 1. Select the desired project within **Projects** view to visit Cypress Cloud.
-2. Click **Project Settings** with the right-hand sidebar.
-3. Scroll to the Smart Orchestration section within Project Settings page.
+2. Click **Project Settings** within the right-hand sidebar.
+3. Scroll to the **Smart Orchestration** section within the Project Settings page.
 4. Toggle **Auto Cancellation**.
 5. Set the **failures before auto canceling** threshold (or just leave it at the
    default value of 1).
@@ -67,43 +94,72 @@ time, it may make sense to increase the failures threshold to surface more failu
   alt="Enable Auto Cancellation"
 />
 
+### Tuning the threshold for your team
+
+The right threshold depends on how your team works:
+
+- **Fail fast (threshold of 1).** Best when you want the earliest possible
+  signal and the lowest possible CI spend. The run stops on the first failure.
+- **Surface more failures (higher threshold).** If your development, testing, or
+  QA teams work in a highly collaborative workflow where multiple people fix
+  different failures at the same time, raising the threshold lets a single run
+  surface more of them before it cancels, so people aren't each waiting on a
+  fresh run to see their own failure.
+- **Disable Auto Cancellation entirely.** Some branches and workflows benefit
+  from always running the full suite, even after failures. Consider disabling it
+  for:
+  - **Protected branches** like `main` or release branches, where you want a
+    complete picture of every failure before merging or shipping.
+  - **Scheduled or nightly runs** whose purpose is full coverage and trend data
+    rather than fast feedback.
+  - **Flaky-test investigation or quarantine runs**, where you need every test
+    to execute to gather reliable pass/fail history.
+  - **Runs you rely on for complete [Accessibility](/accessibility/get-started/introduction)
+    or [UI Coverage](/ui-coverage/get-started/introduction) reports**, since a
+    canceled run only scores the specs that ran. See
+    [Impact on Accessibility and UI Coverage scoring](#Impact-on-Accessibility-and-UI-Coverage-scoring).
+  - **Compliance or audit workflows** that require evidence the entire suite ran.
+
+  You can disable it per run with `--auto-cancel-after-failures false` without
+  changing the project default. See
+  [Override the threshold from the CLI](#Override-the-threshold-from-the-CLI).
+
 :::info
 
-<strong>CI Tip: Save Time</strong>
+<strong>Maximize the savings: pair with Spec Prioritization</strong>
 
-In addition to Auto Cancellation, consider reducing CI costs further by enabling
+Combine Auto Cancellation with
 [Spec Prioritization](/cloud/features/smart-orchestration/spec-prioritization) to
-surface test failures earlier in the run, and reduce the time it takes to fix
-issues and deploy changes.
+run previously failed specs first. Failures surface earlier in the run, which
+means Auto Cancellation triggers earlier too, shortening runs even further and
+driving down CI costs.
 
 :::
 
-### Specifying failures before auto canceling in the CLI
+## Override the threshold from the CLI
 
-With the Cypress CLI, you can specify the number of test failures to execute
-before canceling the run via a command flag. This allows more granular control
-of Auto Cancellation on a per-run basis.
+The project setting is a sensible default, but you can override it on a
+per-run basis with the `--auto-cancel-after-failures` flag. This gives you
+granular control where it matters most:
 
-**Some common use cases for doing so might be:**
+- Set a **lower** value on dev environments to fail the suite early and get
+  faster feedback.
+- **Disable** Auto Cancellation on important branches (like `main` or release
+  branches) that need the full suite to run every time.
+- **Override** the project value for a one-off run without changing project
+  settings.
 
-- Setting a lower-than-normal value on dev environments to fail a test suite
-  early for faster feedback
-- Disabling Auto Cancellation on important branches that need the full test
-  suite to run every time
-- Overriding the project value on a case-by-case basis
+Specifying the flag overrides the project setting in Cypress Cloud. Omitting it
+falls back to the project default.
 
-Specifying the flag will override the project setting in Cypress Cloud, and not
-specifying it will default to the value in the project settings.
-
-To set it, pass the `--auto-cancel-after-failures` flag to the `cypress run`
-command, and give it a numeric value:
+To set a numeric threshold, pass the flag to `cypress run`. For example, to
+cancel the run after 5 test failures:
 
 ```shell
-npx cypress run --record --key <<your_record_key>> --auto-cancel-after-failures 1
+npx cypress run --record --key <<your_record_key>> --auto-cancel-after-failures 5
 ```
 
-You can also specify `false` for the value to disable Auto Cancellation for the
-run:
+To disable Auto Cancellation entirely for a run, pass `false`:
 
 ```shell
 npx cypress run --record --key <<your_record_key>> --auto-cancel-after-failures false
@@ -111,3 +167,238 @@ npx cypress run --record --key <<your_record_key>> --auto-cancel-after-failures 
 
 For more info on passing CLI flags, see our guide on the
 [Cypress Command Line](/app/references/command-line).
+
+## Find the tests that triggered the cancellation
+
+After a run is auto-canceled, the failures you care about are the ones that
+counted toward the threshold. You can find them in several ways:
+
+1. **Click the failed-test indicator in the run header.** The
+   [run header](/cloud/features/recorded-runs#Run-header) shows counts of flaky,
+   skipped, pending, passed, and failed tests. Clicking the failed count opens
+   the **Test Results** tab pre-filtered to just the failures.
+2. **Or use the [Tests for Review](/cloud/features/recorded-runs#Tests-for-Review)
+   panel** on the Overview tab, which orders results by failures first so you
+   land directly on the handful of tests that triggered the cancellation.
+3. **Filter the [Test Results tab](/cloud/features/recorded-runs#Test-Results-tab)**
+   by status to list exactly the failing tests if you arrived another way.
+4. **Without leaving your editor, you can ask your AI assistant via
+   [Cloud MCP](/cloud/integrations/cloud-mcp) to surface them for you.** Example prompt for Cloud MCP:
+
+   > "Check Cypress Cloud for [Run URL]. If it was automatically canceled, list the
+   > failing tests that triggered the cancellation."
+
+To understand _why_ a test failed, open its
+[test detail sidebar](/cloud/features/recorded-runs#Test-detail-sidebar) for the
+error, AI Error Summary, and previous-runs history, then use
+[Test Replay](/cloud/features/test-replay) to time-travel to the moment of
+failure and inspect the DOM, network, and console as they happened in CI.
+
+:::info
+
+Because in-progress specs finish but no new specs start, a canceled run only
+contains results for the specs that had already started. The failures you see
+are the ones that triggered the cancellation plus any specs that were already
+running, not necessarily every failure the full suite would have produced. The
+[Errors tab](/cloud/features/recorded-runs#Errors-tab) is a quick way to confirm
+you've reviewed every error that was actually recorded.
+
+:::
+
+## What a canceled run looks like
+
+When a run is auto-canceled, Cypress Cloud makes it clear what happened and how
+much it saved you. A banner summarizing the cancellation appears on the run's
+**Overview**, **Test Results**, and **Specs** tabs:
+
+<DocsImage
+  src="/img/cloud/features/smart-orchestration/auto-cancellation-run-banner.png"
+  alt="Run Overview banner reading: Automatically canceled by Smart Orchestration, After 7 test failure(s), 856 of 1319 specs skipped, 01:02:08 saved in CI, with a Project Settings link"
+/>
+
+The banner reports:
+
+- **What canceled the run:** _"Automatically canceled by Smart Orchestration."_
+- **How many failures triggered it:** for example, _"After 7 test failure(s)."_
+- **How many specs were skipped:** for example, _"856 of 1319 specs skipped."_
+- **How much CI time was saved:** for example, _"01:02:08 saved in CI."_
+- A **Project Settings** link for adjusting your Auto Cancellation configuration.
+
+Elsewhere in the run:
+
+- The run's **Properties** tab includes a **Smart Orchestration** table showing
+  an Auto Cancellation status of **Disabled**, **Not applied**, or **Applied**,
+  along with detail such as _"Configured by project to cancel after 7 test
+  failures."_
+
+  <DocsImage
+    src="/img/cloud/features/smart-orchestration/auto-cancellation-properties.png"
+    alt="Properties tab Smart Orchestration table showing Auto Cancellation with an Applied status and the detail: Configured by project to cancel after 7 test failures"
+  />
+
+- Intelligence reports such as Accessibility and UI Coverage flag a **Partial
+  report** badge next to the report title. Hovering it explains what happened,
+  for example: _"The run was canceled due to auto-cancellation and 616 specs did
+  not run."_
+
+  <DocsImage
+    src="/img/cloud/features/smart-orchestration/auto-cancellation-partial-report.png"
+    alt="Cypress Accessibility report with a Partial report badge and a tooltip reading: Accessibility has a partial report. The following problems occurred: The run was canceled due to auto-cancellation and 616 specs did not run."
+  />
+
+### In your CI output
+
+In the terminal output of your CI provider, each spec that was skipped because of
+the cancellation is reported in place of its results:
+
+```text
+Running:  commands/storage.cy.ts                                    (58 of 220)
+Estimated: 7 seconds
+
+This spec and its tests were skipped because the run has been canceled.
+```
+
+<DocsImage
+  src="/img/cloud/features/smart-orchestration/auto-cancellation-ci-skipped-specs.png"
+  alt="CI terminal output showing multiple specs each reporting: This spec and its tests were skipped because the run has been canceled."
+/>
+
+The **Run Finished** summary table at the end of the output lists those specs as
+**SKIPPED**, with dashes in place of their test counts, alongside the specs that
+actually ran:
+
+<DocsImage
+  src="/img/cloud/features/smart-orchestration/auto-cancellation-ci-run-summary.png"
+  alt="CI Run Finished summary table listing a failed spec with test counts and several specs marked SKIPPED with dashes for their tests, passing, failing, pending, and skipped columns"
+/>
+
+### Impact on Accessibility and UI Coverage scoring
+
+Because a canceled run skips the specs that never started, your
+[Accessibility](/accessibility/get-started/introduction) and
+[UI Coverage](/ui-coverage/get-started/introduction) reports are calculated from
+only the part of your application that was exercised before cancellation. Keep
+this in mind when reading the scores:
+
+- **Accessibility score** is the average score across all snapshots captured
+  during the run. A canceled run captures fewer snapshots, so the score reflects
+  only the pages and states that ran, and is not directly comparable to a score
+  from a complete run of the same suite.
+- **UI Coverage** measures the interactive elements your tests exercised. Skipped
+  specs mean those elements are never visited, so coverage will appear lower than
+  a full run and will not represent your suite's true coverage.
+
+For this reason, treat scores from a canceled run as a partial sample rather than
+the run-over-run trend you compare against. If you rely on these scores to
+[block pull requests](/accessibility/block-pull-requests) or track regressions,
+consider [disabling Auto Cancellation](#Tuning-the-threshold-for-your-team) on
+the branches or runs where you need complete coverage.
+
+### Auto Cancellation vs manual cancellation
+
+A run can be canceled in two ways, and Cypress Cloud distinguishes between them:
+
+- **Auto Cancellation**: the run reached the configured failure threshold and
+  Cypress Cloud canceled it. The UI describes the run as _"canceled due to
+  auto-cancellation."_
+- **Manual cancellation**: a user canceled the run from Cypress Cloud. The UI
+  describes the run as _"manually canceled"_ and records who canceled it.
+
+For more common questions, see the Smart Orchestration section of the
+[Cypress Cloud FAQ](/cloud/faq#Smart-Orchestration).
+
+## Canceled runs in analytics and the Data Extract API
+
+A canceled run is recorded with a terminal status of `cancelled`, and that status
+flows through to [Analytics](/cloud/features/analytics/overview) and the
+[Data Extract API](/cloud/integrations/data-extract-api). Because a canceled run
+only ever recorded part of its tests, it carries **partial data**, which is
+treated differently depending on the report:
+
+| Surface                                                                                                                                                                                           | How a canceled run is handled                                                                                                                                              |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Run status](/cloud/features/analytics/project-analytics#Run-status) analytics                                                                                                                    | Counted in its own canceled bucket. Pass and fail rates are calculated against all runs, so canceled runs sit in the denominator and dilute those rates.                   |
+| [Run duration](/cloud/features/analytics/project-analytics#Run-duration) and [Test suite size](/cloud/features/analytics/project-analytics#Test-suite-size) analytics                             | Excluded. These reports only consider completed (passed/failed) runs so partial runs don't skew the averages.                                                              |
+| [Top failures](/cloud/features/analytics/project-analytics#Top-failures), [Slowest tests](/cloud/features/analytics/project-analytics#Slowest-tests), most common errors, and flakiness analytics | Included implicitly. They aggregate individual test results, so any results recorded before cancellation count, and canceled runs contribute to failure-rate denominators. |
+| [Data Extract API](/cloud/integrations/data-extract-api#Run-status)                                                                                                                               | Included. Run-level reports return a `cancelled` status, and test-level data reflects whatever completed before cancellation.                                              |
+
+The key thing to keep in mind: a canceled run's **partial results still count** in
+the test-level reports above, so a run that auto-canceled after a few failures can
+nudge aggregate failure rates and trends. If you track these metrics closely,
+consider [disabling Auto Cancellation](#Tuning-the-threshold-for-your-team) on the
+runs you rely on for complete analytics.
+
+Note that analytics and the Data Extract API only know that a run was
+`cancelled`; they do not distinguish an **Auto Cancellation** from a manual one.
+That distinction is available in the Cloud dashboard (see
+[Auto Cancellation vs manual cancellation](#Auto-Cancellation-vs-manual-cancellation))
+and through [Cloud MCP](#Check-for-auto-cancellation-with-Cloud-MCP).
+
+## Canceled runs in source control and messaging integrations
+
+Cypress Cloud's integrations report a canceled run wherever they report run
+results, but, like analytics, they only convey that the run was _canceled_. None
+of them distinguish an Auto Cancellation from a manual one.
+
+| Integration                                                                                                                           | How a canceled run is surfaced                                                                                                                                      |
+| ------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [GitHub](/cloud/integrations/github) status checks                                                                                    | Reported as a completed check with a `failure` state and a description such as `This {spec/group/run} was cancelled`                                                |
+| [GitLab](/cloud/integrations/gitlab) status checks                                                                                    | Reported with GitLab's native `canceled` state and the same description.                                                                                            |
+| [Bitbucket](/cloud/integrations/bitbucket) status checks                                                                              | Reported with Bitbucket's native `STOPPED` state and the same description.                                                                                          |
+| Pull request and merge request comments (GitHub, GitLab, Bitbucket)                                                                   | The run's properties show a canceled icon labeled _"Cancelled,"_ and any canceled specs are grouped under **Failed tests** with the failed icon.                    |
+| [Slack](/cloud/integrations/slack#Notification-preferences) and [Microsoft Teams](/cloud/integrations/teams#Notification-preferences) | A canceled run only notifies a channel when its **Canceled runs** notification preference is enabled. It then appears as _"Canceled run"_ with a gray skipped icon. |
+
+Because these integrations don't differentiate auto from manual cancellation, use
+the [Cloud dashboard](#Auto-Cancellation-vs-manual-cancellation) or
+[Cloud MCP](#Check-for-auto-cancellation-with-Cloud-MCP) when you need to confirm
+that a run was specifically auto-canceled by Smart Orchestration.
+
+## Check for auto cancellation with Cloud MCP
+
+[Cloud MCP](/cloud/integrations/cloud-mcp) lets your AI coding assistant query
+Cypress Cloud directly, so you can ask an agent whether a run was auto-canceled
+without opening the Cloud UI. The `cypress_get_runs` tool returns run summaries
+that include the run's status and test-status counts.
+
+A canceled run reports a status of `cancelled`. From there, Cloud MCP
+distinguishes an Auto Cancellation from any other cancellation:
+
+- When the run was canceled because it reached the failure threshold, the agent
+  reports something like: _"Run automatically canceled by Smart Orchestration
+  after 7 test failure(s). 616 of 1319 specs skipped."_ The skipped count is the
+  number of specs that never ran (the expected specs minus the ones that
+  completed).
+- When the run was canceled some other way (for example, from CI or by a user),
+  the agent reports a plain _"Run canceled. N of M specs skipped"_ without the
+  Smart Orchestration attribution.
+
+This makes it easy to confirm, in your editor, that a red build was an
+intentional early cancellation rather than a different kind of failure.
+
+**Example prompts:**
+
+> "Using Cypress Cloud, was the latest run on this branch auto-canceled by Smart
+> Orchestration? If so, how many failures triggered it and how many specs were
+> skipped?"
+
+> "Check Cypress Cloud for [Run URL]. If it was automatically canceled, list the
+> failing tests that triggered the cancellation."
+
+For setup and the full tool list, see the
+[Cloud MCP guide](/cloud/integrations/cloud-mcp).
+
+## See also
+
+- [Smart Orchestration Overview](/cloud/features/smart-orchestration/overview)
+- [Spec Prioritization](/cloud/features/smart-orchestration/spec-prioritization),
+  which surfaces previously failed specs first so Auto Cancellation can trigger
+  even earlier
+- [Parallelization](/cloud/features/smart-orchestration/parallelization) and
+  [Load Balancing](/cloud/features/smart-orchestration/load-balancing)
+- The [`--auto-cancel-after-failures`](/app/references/command-line#auto-cancel-after-runs)
+  flag in the Cypress Command Line reference
+- [Recorded Runs](/cloud/features/recorded-runs) for navigating run results and
+  finding failed tests
+- [Cloud MCP](/cloud/integrations/cloud-mcp) for querying run status from your AI
+  coding assistant
+- [Smart Orchestration FAQ](/cloud/faq#Smart-Orchestration)
