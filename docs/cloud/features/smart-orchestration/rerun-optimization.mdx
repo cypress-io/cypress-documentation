@@ -1,32 +1,22 @@
 ---
-title: Rerun Optimization
-description: Speed up CI reruns by re-running only the specs that failed, skipping specs that already passed, with Cypress Cloud's experimental Rerun Optimization feature.
+title: Rerun Optimization | Re-run Failed Specs Only
+description: Re-run only the specs that failed in CI and skip the specs that already passed to reach a passing build faster and cut CI cost, with Cypress Cloud's experimental Rerun Optimization feature.
 sidebar_label: Rerun Optimization
 sidebar_position: 60
 ---
 
 <ProductHeading product="cloud" plan="business" />
 
-# Rerun Optimization <Badge type="info">Experimental</Badge>
+# Rerun Optimization <Badge type="caution">Experimental</Badge>
 
 :::info
 
 ##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
 
-- What Rerun Optimization does and how it speeds up CI reruns
-- How to enable it at the organization and project level
+- How to get to a passing build faster by re-running only failed specs
+- How to cut CI compute cost and billed test results on every rerun
+- How to enable Rerun Optimization at the organization and project level
 - How Cypress Cloud decides which specs to skip on a rerun
-
-:::
-
-:::caution
-
-**Rerun Optimization is experimental.** We are shipping an early version to learn
-how it performs across real CI setups, and we expect it to evolve. You may need to request access from your Cypress representative if you do not see this available in your settings page yet.
-
-Review the
-[behavior and limitations](#Behavior-and-limitations) before enabling it on
-critical pipelines.
 
 :::
 
@@ -37,12 +27,34 @@ specs that contained failures and skips the specs that already passed**, so you
 spend CI time re-testing what actually failed instead of re-validating work that
 was already green.
 
-This can speed up the path to a passing build, reduce CI compute cost, and lower
-the number of billed test results, since skipped specs are never executed.
+For example, a 40-spec suite where only 2 specs fail normally re-runs all 40
+specs on a retry. With Rerun Optimization, the rerun executes just those 2 specs, turning a full rerun that might take 30 minutes into a couple of minutes, and
+billing you for 2 specs instead of 40. **The more reliable your suite, the bigger
+the win on each retry.**
+
+Enabling Rerun Optimization gives you:
+
+- **A faster path to green**: reruns finish in a fraction of the time because
+  passing specs are skipped entirely.
+- **Lower CI compute cost**: skipped specs never spin up machines or consume CI
+  minutes.
+- **Fewer billed test results**: you aren't charged for re-validating work that
+  already passed, since skipped specs are never executed.
 
 Rerun Optimization operates at the **spec level**. If a spec contains at least one
 failing test, the entire spec is re-run (including any tests within it that
 passed). Specs where every test passed are skipped.
+
+:::caution
+
+**Rerun Optimization is experimental.** We are shipping an early version to learn
+how it performs across real CI setups, and we expect it to evolve. Request access from your Cypress representative if you don't see this available in your organization or project settings pages.
+
+Review the
+[behavior and limitations](#Behavior-and-limitations) before enabling it on
+critical pipelines.
+
+:::
 
 ### How it works
 
@@ -76,11 +88,33 @@ Rerun Optimization is a _Smart Orchestration_ feature available to users on a
 [Business or Enterprise tier Cypress Cloud plan](https://cypress.io/pricing), as
 well as during a free trial. If you do not see this feature in your settings page during the experimental period, request access from your Cypress representative.
 
+:::tip
+
+Wondering if upgrading your Team tier subscription is worth it? Check out the
+[recommendations](/cloud/features/recorded-runs#Recommendations) on the run
+overview page to see how much time we predict Smart Orchestration features would
+save you.
+
+:::
+
 ## Enable Rerun Optimization
 
 Rerun Optimization is configured in the **Smart Orchestration** section of your
 organization and project settings. Only **Owners** and **Admins** can change the
-setting; **Members** and **Viewers** have read-only access.
+setting. **Members** and **Viewers** have read-only access.
+
+### Project setting
+
+Each project can inherit the organization default or override it.
+
+- **Organization default** (selected by default) follows the org-level setting.
+- **Run everything again** disables Rerun Optimization for the project.
+- **Run only failed specs** enables Rerun Optimization for the project.
+
+<DocsImage
+  src="/img/cloud/features/smart-orchestration/rerun-optimization-org-setting.png"
+  alt="Re-run optimization organization setting in the Smart Orchestration section of Cypress Cloud, showing the Run everything again and Run only failed specs options"
+/>
 
 ### Organization setting
 
@@ -91,13 +125,10 @@ Sets the default behavior for every project in the organization.
 - **Run only failed specs** enables Rerun Optimization. This will be the default for
   newly created organizations.
 
-### Project setting
-
-Each project can inherit the organization default or override it.
-
-- **Organization default** (selected by default) follows the org-level setting.
-- **Run everything again** disables Rerun Optimization for the project.
-- **Run only failed specs** enables Rerun Optimization for the project.
+<DocsImage
+  src="/img/cloud/features/smart-orchestration/rerun-optimization-project-setting.png"
+  alt="Re-run optimization project setting in Cypress Cloud, showing the Organization default, Run everything again, and Run only failed specs options"
+/>
 
 ## CI provider support
 
@@ -180,7 +211,9 @@ env:
 
 ## Behavior and limitations
 
-Because this is an early, experimental release, keep the following in mind:
+These tradeoffs are why the feature is experimental and opt-in. For most reruns
+the speed and cost savings far outweigh them, but it's worth understanding them
+before enabling Rerun Optimization on critical pipelines:
 
 - **Passing results are not carried forward.** A rerun-optimized run shows only the
   specs that were re-executed. Specs that passed in the anchor run do not appear in
@@ -196,9 +229,12 @@ Because this is an early, experimental release, keep the following in mind:
 
 :::tip
 
-Pair Rerun Optimization with other _Smart Orchestration_ features. With
-[Spec Prioritization](/cloud/features/smart-orchestration/spec-prioritization) and
-[Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation), failures
-surface earlier and reruns finish faster.
+Pair Rerun Optimization with other _Smart Orchestration_ features for compounding
+savings. With
+[Spec Prioritization](/cloud/features/smart-orchestration/spec-prioritization)
+failures surface first, with
+[Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation) the run
+stops early once they do, and with Rerun Optimization the retry replays only the
+failed specs — so each layer gets you to a passing build faster and cheaper.
 
 :::
