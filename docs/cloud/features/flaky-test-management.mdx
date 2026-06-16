@@ -17,6 +17,7 @@ sidebar_label: Flake Management
 - How Cypress Cloud automatically detects, scores, and tracks flaky tests
 - How to turn flake data into prioritized, measurable action
 - How to debug a flaky test down to its root cause with Test Replay
+- How to investigate flake from your editor with Cloud MCP and AI agents
 - How to alert the right people the moment flake appears
 
 :::
@@ -216,6 +217,48 @@ passing attempt against a failing one on the same code is often the fastest way
 to pinpoint the timing issue, race condition, or environmental dependency
 causing the flake.
 
+## Investigate flake with Cloud MCP
+
+[Cloud MCP](/cloud/integrations/cloud-mcp) connects your AI coding assistant
+(Cursor, Claude, VS Code Copilot, and others) directly to Cypress Cloud, closing
+the gap between CI results and your editor. Instead of manually triaging which
+failures are real, you can ask your agent to pull flake data from Cloud and act
+on it without leaving your workflow.
+
+For flake, the agent can use the `cypress_get_flaky_tests` tool to identify the
+flaky tests in a run, which directly answers the question reviewers ask most:
+**"Are these failures real regressions, or known flakiness?"** Paired with
+`cypress_get_failed_tests`, which returns error details, stack traces, and a
+Test Replay link for each attempt, your agent can separate signal from noise and
+jump straight to a root-cause investigation.
+
+:::info
+
+Cloud MCP is included on **every Cypress Cloud plan at no additional cost**.
+Flaky test data returned through MCP is plan-specific, so it is available only
+when your organization is on a plan that includes flake reporting (the
+[Team plan](https://cypress.io/pricing) or higher).
+
+:::
+
+### How to use it
+
+1. **Connect Cloud MCP.** Have an admin enable the integration, then authenticate
+   and add the server to your AI client. See the
+   [Cloud MCP setup guide](/cloud/integrations/cloud-mcp#Configuring-the-Cloud-MCP).
+2. **Prompt your agent.** Mention **"Cypress Cloud"** so the agent selects the
+   right tools, give it context (a branch, commit, or Run URL), and define the
+   workflow you want, not just the question.
+
+For example, to audit recent flake and look for patterns:
+
+> "List all flaky tests from the last 5 runs in Cypress Cloud. Are there any
+> common patterns in the error messages?"
+
+This turns flake triage into a conversation: the agent surfaces the flaky tests,
+groups the errors, and can follow up with the Test Replay context needed to fix
+them.
+
 ## Flake Alerting
 
 :::tip
@@ -355,6 +398,8 @@ documentation.
 
 - Debug flaky runs by replaying the exact CI attempt with
   [Test Replay](/cloud/features/test-replay).
+- Query flake from your AI coding assistant with
+  [Cloud MCP](/cloud/integrations/cloud-mcp).
 - Compare flake between branches before merging with
   [Branch Review](/cloud/features/branch-review).
 - Export organization-wide flake reports with the
