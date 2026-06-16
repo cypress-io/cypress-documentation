@@ -29,8 +29,8 @@ finish.
 
 The longer it takes to learn that a test is still broken, the slower your whole
 team moves. Every minute spent waiting on CI is a minute not spent shipping.
-Spec Prioritization shrinks that wait by putting the specs most likely to fail —
-the ones that _just_ failed — at the front of the line.
+Spec Prioritization shrinks that wait by putting the specs most likely to fail,
+the ones that _just_ failed, at the front of the line.
 
 <Icon name="check-circle" color="green" /> **Benefits:** Running previously
 failed specs first will:
@@ -41,7 +41,7 @@ failed specs first will:
    iterations progress faster.
 3. **Reduce CI costs.** Paired with
    [Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation),
-   runs stop as soon as the prioritized failures reappear — cutting wasted
+   runs stop as soon as the prioritized failures reappear, cutting wasted
    compute and lowering your bill.
 4. **Optimize every retry.** Each attempt automatically leads with the most
    relevant specs, so you spend less time validating fixes and more time
@@ -52,7 +52,7 @@ failed specs first will:
 Consider a test suite of several spec files that takes **30 minutes** to run,
 where a failure first occurs **20 minutes** in. Without Spec Prioritization,
 every attempt to fix that failure means kicking off CI and waiting **20
-minutes** all over again just to see whether the change worked — and repeating
+minutes** all over again just to see whether the change worked, repeating
 that cycle until it's resolved.
 
 With Spec Prioritization, the spec that failed runs **first**. That 20-minute
@@ -61,7 +61,7 @@ a suite with multiple spec files and multiple debugging iterations, **this time
 savings compounds with every run**.
 
 The result is a faster feedback loop: catch issues sooner, debug them faster, and
-deploy fixes with confidence — without the dead time spent waiting on CI.
+deploy fixes with confidence, without the dead time spent waiting on CI.
 
 ### Activate Spec Prioritization in Cypress Cloud
 
@@ -95,7 +95,7 @@ project's settings.
 
 <strong>CI Tip: Maximize Your Savings</strong>
 
-On its own, Spec Prioritization changes the _order_ specs run in — surfacing
+On its own, Spec Prioritization changes the _order_ specs run in, surfacing
 failures earlier so you can react sooner. To turn that earlier feedback into
 shorter runs and lower CI bills, pair it with
 [Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation). When
