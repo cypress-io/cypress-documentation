@@ -530,8 +530,12 @@ browser is specified — will fail with an error.
 
 1. **Install a supported browser** in your local and CI environments (for
    example, [Google Chrome](/app/references/launching-browsers#Chrome-Browsers)).
-   The Cypress [Docker images](/app/continuous-integration/overview#Cypress-Docker-Images)
-   include browsers if you don't want to install one yourself.
+   If you don't want to install one yourself, our
+   [Continuous Integration](/app/continuous-integration/overview) guides cover
+   browser options for CI, including the Cypress
+   [Docker images](/app/continuous-integration/overview#Cypress-Docker-Images),
+   the [GitHub Action](https://github.com/cypress-io/github-action), and the
+   [CircleCI Orb](https://github.com/cypress-io/circleci-orb).
 1. **Set a `defaultBrowser`** so Cypress no longer falls back to Electron when no
    browser is specified:
 
@@ -549,13 +553,11 @@ browser is specified — will fail with an error.
    cypress run --browser chrome
    ```
 
-1. **Update your CI configuration.** If your pipeline relied on the
-   implicit Electron default, switch it to an installed browser. This includes
-   any [`cypress-io/github-action`](https://github.com/cypress-io/github-action)
-   steps and Docker-based jobs that previously ran without a `browser` argument.
-   See [Continuous Integration](/app/continuous-integration/overview) for setup
-   details, including [Docker images](/app/continuous-integration/overview#Cypress-Docker-Images)
-   that come with browsers preinstalled.
+1. **Update your CI configuration.** If your pipeline relied on the implicit
+   Electron default, update any jobs that previously ran without a browser
+   argument to target an installed browser. See
+   [Continuous Integration](/app/continuous-integration/overview) for
+   provider-specific setup details.
 1. **Remove any explicit Electron usage** — `--browser electron`,
    `defaultBrowser: 'electron'`, or `{ browser: 'electron' }` test/suite
    overrides — and replace it with an installed browser.
