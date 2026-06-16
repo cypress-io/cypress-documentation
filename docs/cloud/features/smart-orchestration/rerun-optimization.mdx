@@ -56,7 +56,7 @@ critical pipelines.
 
 :::
 
-### How it works
+## How it works
 
 1. A run fails in CI, and you trigger a rerun from your CI provider (for example,
    "Re-run jobs" or "Re-run failed jobs"). Rerun Optimization behaves the same way
@@ -90,7 +90,7 @@ identify reruns at a glance and confirm that Rerun Optimization was applied.
   alt="A run in Cypress Cloud showing a Re-run tag indicating the run was rerun"
 />
 
-### Availability
+## Availability
 
 Rerun Optimization is a _Smart Orchestration_ feature available to users on a
 [Business or Enterprise tier Cypress Cloud plan](https://cypress.io/pricing), as
@@ -120,8 +120,9 @@ Each project can inherit the organization default or override it.
 - **Run only failed specs** enables Rerun Optimization for the project.
 
 <DocsImage
-  src="/img/cloud/features/smart-orchestration/rerun-optimization-org-setting.png"
-  alt="Re-run optimization organization setting in the Smart Orchestration section of Cypress Cloud, showing the Run everything again and Run only failed specs options"
+  src="/img/cloud/features/smart-orchestration/rerun-optimization-project-settings.png"
+  alt="Re-run optimization project setting in Cypress Cloud, showing the Organization default, Run everything again, and Run only failed specs options"
+  width="80%"
 />
 
 ### Organization setting
@@ -134,29 +135,45 @@ Sets the default behavior for every project in the organization.
   newly created organizations.
 
 <DocsImage
-  src="/img/cloud/features/smart-orchestration/rerun-optimization-project-setting.png"
-  alt="Re-run optimization project setting in Cypress Cloud, showing the Organization default, Run everything again, and Run only failed specs options"
+  src="/img/cloud/features/smart-orchestration/rerun-optimization-org-setting.png"
+  alt="Re-run optimization organization setting in the Smart Orchestration section of Cypress Cloud, showing the Run everything again and Run only failed specs options"
+  width="80%"
 />
 
 ## CI provider support
 
 On supported providers, Cypress detects reruns automatically and builds the rerun
-group ID for you. Support depends on your Cypress version:
-
-| CI Provider    | Minimum Cypress Version |
-| -------------- | ----------------------- |
-| GitHub Actions | 4.0.2                   |
-| Azure          | 3.1.1                   |
-| CircleCI       | 15.15.0                 |
-| Bitbucket      | 15.15.0                 |
-
-For any other provider, use the
+group ID for you. For any other provider, use the
 [`CYPRESS_RERUN_GROUP_ID`](#Setting-the-rerun-group-ID-manually) environment
 variable to enable Rerun Optimization manually.
 
+**CI providers that don't require manual setup:**
+
+- [GitHub Actions](/app/continuous-integration/github-actions)
+- [Azure Pipelines](/app/continuous-integration/overview#Azure-Pipelines)
+- [CircleCI](/app/continuous-integration/circleci)
+- [Bitbucket Pipelines](/app/continuous-integration/bitbucket-pipelines)
+
+:::note
+
+CircleCI and Bitbucket Pipelines require Cypress v15.15.0 or later.
+
+:::
+
 ## Setting the rerun group ID manually
 
-`CYPRESS_RERUN_GROUP_ID` is the rerun group ID that links an original CI run to
+**CI providers that require manual setup:**
+
+- [Jenkins](/app/continuous-integration/overview#Jenkins)
+- [AWS CodeBuild](/app/continuous-integration/aws-codebuild)
+- [Drone](/app/continuous-integration/drone)
+- [GitLab](/app/continuous-integration/gitlab-ci)
+- [AppVeyor](/app/continuous-integration/appveyor)
+- [Codeship](/app/continuous-integration/codeship)
+- [Codeship Basic](/app/continuous-integration/codeship-basic)
+- [Buildkite](/app/continuous-integration/buildkite)
+
+For these providers, `CYPRESS_RERUN_GROUP_ID` is the rerun group ID that links an original CI run to
 all of its reruns. Set it when your CI provider isn't automatically supported, or
 when you want explicit control over grouping.
 
@@ -170,16 +187,60 @@ Cloud receives a run with `CYPRESS_RERUN_GROUP_ID` set, it uses that value to fi
 the anchor run and, if Rerun Optimization is enabled, skips the specs that passed
 there.
 
-```yaml title="GitHub Actions (manual override)"
-env:
-  CYPRESS_RERUN_GROUP_ID: ${{ github.run_id }}
-```
+<Tabs groupId="rerun-group-id">
 
-```groovy title="Jenkins (unsupported provider, manual setup)"
+<TabItem value="Jenkins">
+
+```groovy
 environment {
   CYPRESS_RERUN_GROUP_ID = "${env.BUILD_TAG}"
 }
 ```
+
+</TabItem>
+
+<TabItem value="GitHub Actions" active>
+
+```yaml
+env:
+  CYPRESS_RERUN_GROUP_ID: ${{ github.run_id }}
+```
+
+</TabItem>
+
+<TabItem value="Azure">
+
+```yaml
+steps:
+  - script: npx cypress run --record
+    env:
+      CYPRESS_RERUN_GROUP_ID: $(System.PlanId)
+```
+
+</TabItem>
+
+<TabItem value="CircleCI">
+
+```yaml
+environment:
+  CYPRESS_RERUN_GROUP_ID: ${CIRCLE_PIPELINE_ID}
+```
+
+</TabItem>
+
+<TabItem value="Bitbucket">
+
+```yaml
+pipelines:
+  default:
+    - step:
+        script:
+          - export CYPRESS_RERUN_GROUP_ID=$BITBUCKET_BUILD_NUMBER
+```
+
+</TabItem>
+
+</Tabs>
 
 :::note
 
@@ -189,25 +250,9 @@ construct for you.
 
 :::
 
-## How the anchor run is selected
-
-The anchor run is the completed run that determines which specs to skip. Common
-scenarios:
-
-- **Simple rerun:** Run A completes and you rerun it. The anchor is Run A.
-- **Chained reruns:** Run A completes, then Run B (a rerun of A) completes, then
-  you rerun again. The anchor is Run B, the latest completed run.
-- **Rerun while a run is in progress:** Run A completes, Run B starts but hasn't
-  finished, and you rerun. The anchor is Run A, since Run B isn't complete yet.
-- **Run completion delay:** Cypress Cloud waits a short, configurable window before treating a run as complete. If you rerun while the previous run is still within that window, Cloud
-  doesn't yet see it as completed and the rerun executes as a full run. To make the most of this feature, set a very short run completion delay.
-
-Cypress Cloud does not block parallel reruns. If several reruns are triggered in quick
-succession, each one anchors on whichever completed run exists at the time the run begins.
-
 ## Opting out in CI
 
-To force a full run and skip the optimization, set the `CYPRESS_RERUN_ALL_TESTS`
+To force a full run and skip the optimization, set the `CYPRESS_RERUN_ALL_TESTS`  
 environment variable to `true`. Cloud then treats the run as a full run and runs
 every spec, even if a matching anchor run exists. This is useful for specific
 branches or pipelines where you always want the complete suite to run.
@@ -216,6 +261,21 @@ branches or pipelines where you always want the complete suite to run.
 env:
   CYPRESS_RERUN_ALL_TESTS: true
 ```
+
+## How is the reference run selected?
+
+The reference run is the completed run that determines which specs to skip. Common scenarios:
+
+- **Simple rerun:** Run A completes and you rerun it. The reference is Run A.
+- **Chained reruns:** Run A completes, then Run B (a rerun of A) completes, then
+  you rerun again. The reference is Run B, the latest completed run.
+- **Rerun while a run is in progress:** Run A completes, Run B starts but hasn't
+  finished, and you rerun. The reference is Run A, since Run B isn't complete yet.
+- **Run completion delay:** Cypress Cloud waits a short, configurable window before treating a run as complete. If you rerun while the previous run is still within that window, Cloud
+  doesn't yet see it as completed and the rerun executes as a full run. To make the most of this feature, set a very short run completion delay.
+
+Cypress Cloud does not block parallel reruns. If several reruns are triggered in quick
+succession, each one anchors on whichever completed run exists at the time the run begins.
 
 ## Behavior and limitations
 
