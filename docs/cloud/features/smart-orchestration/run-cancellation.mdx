@@ -212,6 +212,28 @@ much it saved you:
   are partial because _the run was canceled due to auto-cancellation and one or
   more specs did not run._
 
+### Impact on Accessibility and UI Coverage scoring
+
+Because a canceled run skips the specs that never started, your
+[Accessibility](/accessibility/get-started/introduction) and
+[UI Coverage](/ui-coverage/get-started/introduction) reports are calculated from
+only the part of your application that was exercised before cancellation. Keep
+this in mind when reading the scores:
+
+- **Accessibility score** is the average score across all snapshots captured
+  during the run. A canceled run captures fewer snapshots, so the score reflects
+  only the pages and states that ran, and is not directly comparable to a score
+  from a complete run of the same suite.
+- **UI Coverage** measures the interactive elements your tests exercised. Skipped
+  specs mean those elements are never visited, so coverage will appear lower than
+  a full run and will not represent your suite's true coverage.
+
+For this reason, treat scores from a canceled run as a partial sample rather than
+the run-over-run trend you compare against. If you rely on these scores to
+[block pull requests](/accessibility/block-pull-requests) or track regressions,
+consider [disabling Auto Cancellation](#tuning-the-threshold-for-your-team) on
+the branches or runs where you need complete coverage.
+
 ### Auto Cancellation vs. manual cancellation
 
 A run can be canceled in two ways, and Cypress Cloud distinguishes between them:
