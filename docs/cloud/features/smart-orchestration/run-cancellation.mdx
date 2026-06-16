@@ -105,6 +105,20 @@ The right threshold depends on how your team works:
   different failures at the same time, raising the threshold lets a single run
   surface more of them before it cancels, so people aren't each waiting on a
   fresh run to see their own failure.
+- **Disable Auto Cancellation entirely.** Some branches and workflows benefit
+  from always running the full suite, even after failures. Consider disabling it
+  for:
+  - **Protected branches** like `main` or release branches, where you want a
+    complete picture of every failure before merging or shipping.
+  - **Scheduled or nightly runs** whose purpose is full coverage and trend data
+    rather than fast feedback.
+  - **Flaky-test investigation or quarantine runs**, where you need every test
+    to execute to gather reliable pass/fail history.
+  - **Compliance or audit workflows** that require evidence the entire suite ran.
+
+  You can disable it per run with `--auto-cancel-after-failures false` without
+  changing the project default. See
+  [Override the threshold from the CLI](#override-the-threshold-from-the-cli).
 
 :::info
 
