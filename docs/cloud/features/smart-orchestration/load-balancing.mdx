@@ -38,38 +38,21 @@ for allows, with no manual configuration.
 
 ## Why load balancing matters
 
-### For engineering leaders
+Balanced runs finish in the shortest time your machine count allows, so pull
+requests are verified sooner and developers spend less time waiting on CI. Just
+as importantly, keeping every machine busy until the run ends means you aren't
+paying for idle machines. Load balancing gets the full value out of the CI
+resources you've already provisioned, which is often the difference between
+needing more machines and getting more out of the ones you have.
 
-- **Faster feedback, shipped sooner.** Balanced runs finish in the shortest
-  time your machine count allows, so pull requests are verified sooner and
-  developers spend less time waiting on CI.
-- **Lower CI spend.** Idle machines are wasted money. By keeping every machine
-  working until the run ends, load balancing extracts the full value of the CI
-  resources you've already provisioned. This is often the difference between needing
-  more machines and getting more out of the ones you have.
-- **Predictable scaling.** As you add machines to keep up with a growing suite,
-  Cypress redistributes work to match. You scale capacity without re-tuning how
-  tests are split.
-- **Zero maintenance overhead.** There are no hand-maintained spec lists,
-  shard manifests, or "machine 3 is always slow" tickets. The work that would
-  otherwise fall on your team is handled by Cypress Cloud automatically.
-
-### For practitioners
-
-- **No configuration required.** Load balancing is on by default whenever you
-  run with `--record --parallel`. There's nothing to set up and nothing to
-  keep up to date.
-- **Self-correcting as your suite changes.** Add a spec, delete a spec, or
-  watch one get slower over time, and Cypress keeps balancing correctly because it
-  learns from recent run history rather than a static configuration you have to
-  maintain.
-- **No flaky, hand-tuned sharding.** You don't have to guess which specs to
-  group together or rebalance shards by hand. Cypress assigns specs one at a
-  time to whichever machine is free next, so a single long spec can't strand a
-  machine.
-- **Browser-aware accuracy.** Predictions are made per browser, so runs stay
-  balanced even when the same spec behaves differently across Chrome, Firefox,
-  Edge, or Electron.
+All of this happens automatically. Load balancing is on by default whenever you
+run with `--record --parallel`, with nothing to set up and nothing to keep up to
+date. Because Cypress balances from recent run history rather than a static
+configuration, it self-corrects as your suite changes: add a spec, delete a spec,
+or watch one get slower over time, and runs stay balanced without any
+hand-maintained spec lists or manual resharding. Duration is even predicted
+separately per browser, so runs stay balanced when the same spec behaves
+differently across Chrome, Firefox, Edge, or Electron.
 
 ## How it works
 
