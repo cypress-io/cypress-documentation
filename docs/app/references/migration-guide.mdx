@@ -270,6 +270,7 @@ Note that `@cypress/vite-dev-server@7` is deprecated and no longer supported by 
 ### Electron browser deprecated
 
 The bundled Electron browser is deprecated as a test browser in Cypress 16.0.0 and will be removed in a future major version. If your runs rely on the implicit Electron default, set a [`defaultBrowser`](/app/references/configuration#Browser) (for example, `'chrome'`) and/or pass [`--browser`](/app/references/command-line#cypress-run) to switch to an installed browser. See [Migrating away from the Electron browser](#Migrating-away-from-the-Electron-browser) for the full guide.
+
 ### `Cypress.env()` removed
 
 `Cypress.env()` has been removed in Cypress 16.0. Use [`cy.env()`](/api/commands/env) for sensitive values (API keys, tokens, secrets) or [`Cypress.expose()`](/api/cypress-api/expose) for non-sensitive configuration that needs synchronous browser access.
