@@ -171,8 +171,7 @@ For more info on passing CLI flags, see our guide on the
 ## Find the tests that triggered the cancellation
 
 After a run is auto-canceled, the failures you care about are the ones that
-counted toward the threshold, often just one since the default threshold is 1.
-Cypress Cloud takes you straight to them:
+counted toward the threshold. You can find them in several ways:
 
 1. **Click the failed-test indicator in the run header.** The
    [run header](/cloud/features/recorded-runs#Run-header) shows counts of flaky,
@@ -183,21 +182,17 @@ Cypress Cloud takes you straight to them:
    land directly on the handful of tests that triggered the cancellation.
 3. **Filter the [Test Results tab](/cloud/features/recorded-runs#Test-Results-tab)**
    by status to list exactly the failing tests if you arrived another way.
+4. **Without leaving your editor, you can ask your AI assistant via
+   [Cloud MCP](/cloud/integrations/cloud-mcp) to surface them for you.** Example prompt for Cloud MCP:
+
+   > "Check Cypress Cloud for [Run URL]. If it was automatically canceled, list the
+   > failing tests that triggered the cancellation."
 
 To understand _why_ a test failed, open its
 [test detail sidebar](/cloud/features/recorded-runs#Test-detail-sidebar) for the
 error, AI Error Summary, and previous-runs history, then use
 [Test Replay](/cloud/features/test-replay) to time-travel to the moment of
 failure and inspect the DOM, network, and console as they happened in CI.
-
-Without leaving your editor, you can also ask your AI assistant via
-[Cloud MCP](/cloud/integrations/cloud-mcp) to surface them for you:
-
-> "Check Cypress Cloud for [Run URL]. If it was automatically canceled, list the
-> failing tests that triggered the cancellation."
-
-See [Check for auto cancellation with Cloud MCP](#check-for-auto-cancellation-with-cloud-mcp)
-for more.
 
 :::info
 
