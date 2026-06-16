@@ -110,23 +110,26 @@ another pass.
 
 ## How do I know Spec Prioritization took effect?
 
-When Spec Prioritization fires, Cypress Cloud tells you directly on the run's
-detail tab. The run displays a **"Prioritized failed specs from run #X"** label,
-where **#X** links back to the source run whose failures were moved to the front
-of the line.
+The quickest way to check is the **Properties** tab of a run. Its **Smart
+Orchestration** section lists each feature with its status for that run, so a
+**Spec Prioritization** value of **Applied** confirms Cypress Cloud reordered the
+specs.
 
-This makes prioritization easy to verify and trace:
+<DocsImage
+  src="/img/cloud/features/smart-orchestration/spec-prioritization-applied.png"
+  alt="Run Properties tab showing the Smart Orchestration section with Spec Prioritization marked Applied and Auto Cancellation marked Disabled"
+/>
 
-- **See that it fired.** The label only appears when Cypress Cloud actually
-  reordered specs, so its presence confirms Spec Prioritization took effect for
-  the run.
-- **Trace why.** Following the link to run **#X** shows exactly which previous
-  failures drove the new order, connecting the prioritized run to the failures it
-  was reacting to.
+You can also trace _which_ run drove the order: when Spec Prioritization fires,
+the run displays a **"Prioritized failed specs from run #X"** label, where **#X**
+links back to the source run whose failures were moved to the front of the line.
+Following that link shows exactly which previous failures Cypress Cloud was
+reacting to.
 
-If you don't see the label, double-check that Spec Prioritization is toggled on
-in your [project settings](#Enable-Spec-Prioritization) and
-that the previous run actually recorded failures for Cypress Cloud to prioritize.
+If the status reads anything other than **Applied**, double-check that Spec
+Prioritization is toggled on in your
+[project settings](#Enable-Spec-Prioritization) and that the previous run
+actually recorded failures for Cypress Cloud to prioritize.
 
 ## See also
 
