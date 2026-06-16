@@ -101,19 +101,20 @@ another pass.
 
 ### Confirm Spec Prioritization took effect
 
-Because Spec Prioritization only reorders specs, the proof that it worked is in
-the order specs actually ran. You can verify this from the run's details in
-Cypress Cloud:
+When Spec Prioritization fires, Cypress Cloud tells you directly on the run's
+detail tab. The run displays a **"Prioritized failed specs from run #X"** label,
+where **#X** links back to the source run whose failures were moved to the front
+of the line.
 
-1. Open the run that followed a run with failures.
-2. Go to the [Specs tab](/cloud/features/recorded-runs#Specs-tab) and select the
-   **Run order** view.
-3. Confirm that the specs that failed in the previous run appear **first**,
-   ahead of specs that previously passed.
+This makes prioritization easy to verify and trace:
 
-If those previously failed specs ran at the top of the run, Spec Prioritization
-is in effect. If the specs ran in their usual
-[load-balanced](/cloud/features/smart-orchestration/load-balancing) order
-instead, double-check that Spec Prioritization is toggled on in your
-[project settings](#Activate-Spec-Prioritization-in-Cypress-Cloud) and that the
-previous run actually recorded failures for Cypress Cloud to prioritize.
+- **See that it fired.** The label only appears when Cypress Cloud actually
+  reordered specs, so its presence confirms Spec Prioritization took effect for
+  the run.
+- **Trace why.** Following the link to run **#X** shows exactly which previous
+  failures drove the new order, connecting the prioritized run to the failures it
+  was reacting to.
+
+If you don't see the label, double-check that Spec Prioritization is toggled on
+in your [project settings](#Activate-Spec-Prioritization-in-Cypress-Cloud) and
+that the previous run actually recorded failures for Cypress Cloud to prioritize.
