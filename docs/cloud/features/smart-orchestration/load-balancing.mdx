@@ -34,14 +34,14 @@ distributes your spec files across the available machines in your CI provider,
 using data from previous runs to predict how long each spec will take and
 assign work accordingly. The goal is simple: keep every machine busy until the
 last spec finishes, so your run completes as fast as the hardware you're paying
-for allows — with no manual configuration.
+for allows, with no manual configuration.
 
 :::tip
 
 In our
 [Kitchen Sink example](/cloud/features/smart-orchestration/parallelization#With-parallelization),
 a suite that took **1:51** on a single machine finished in **59 seconds** when
-load-balanced across two — nearly a 50% reduction, with no changes to the tests
+load-balanced across two, nearly a 50% reduction, with no changes to the tests
 themselves.
 
 :::
@@ -55,7 +55,7 @@ themselves.
   developers spend less time waiting on CI.
 - **Lower CI spend.** Idle machines are wasted money. By keeping every machine
   working until the run ends, load balancing extracts the full value of the CI
-  resources you've already provisioned — often the difference between needing
+  resources you've already provisioned. This is often the difference between needing
   more machines and getting more out of the ones you have.
 - **Predictable scaling.** As you add machines to keep up with a growing suite,
   Cypress redistributes work to match. You scale capacity without re-tuning how
@@ -70,7 +70,7 @@ themselves.
   run with `--record --parallel`. There's nothing to set up and nothing to
   keep up to date.
 - **Self-correcting as your suite changes.** Add a spec, delete a spec, or
-  watch one get slower over time — Cypress keeps balancing correctly because it
+  watch one get slower over time, and Cypress keeps balancing correctly because it
   learns from recent run history rather than a static configuration you have to
   maintain.
 - **No flaky, hand-tuned sharding.** You don't have to guess which specs to
@@ -93,13 +93,13 @@ total run finishes as quickly as possible.
 As more and more tests are recorded to the Cloud, Cypress can better predict
 how long a given spec file will take to run. To prevent irrelevant data from
 affecting the duration prediction, Cypress doesn't use old historical run data
-regarding the spec file — keeping estimates accurate as your application and
+regarding the spec file, keeping estimates accurate as your application and
 tests evolve.
 
 Rather than receiving a fixed, pre-assigned list of specs, each machine pulls
 the next spec from a shared, intelligently ordered queue as soon as it's free.
 Because work is handed out one spec at a time to whichever machine becomes
-available next, it naturally flows to wherever there's free capacity — so a
+available next, it naturally flows to wherever there's free capacity, so a
 single slow spec can't leave a machine idle while others keep working. This also
 means the run order of spec files is not guaranteed when parallelized.
 
@@ -153,11 +153,11 @@ cypress run --record --key=abc123 --parallel
 ```
 
 From there, Cypress Cloud takes care of distributing your specs across every
-available machine — no further setup needed.
+available machine, with no further setup needed.
 
 ## Verifying your time savings
 
-You don't have to take the savings on faith — Cypress Cloud measures them for
+You don't have to take the savings on faith. Cypress Cloud measures them for
 you.
 
 - **Run Duration analytics.** The
@@ -171,7 +171,7 @@ you.
   [Machines View](/cloud/features/smart-orchestration/parallelization#Machines-View).
   When load balancing is working well, every machine finishes at roughly the
   same time. If one machine finishes in 3 minutes while another runs for 12, the
-  run is bottlenecked by a single long spec — and adding more machines won't help
+  run is bottlenecked by a single long spec, and adding more machines won't help
   until that imbalance is resolved.
 - **Bar Chart and Timeline Views.** The
   [Bar Chart View](/cloud/features/smart-orchestration/parallelization#Bar-Chart-View)
@@ -185,7 +185,7 @@ Load balancing is automatic, but it can only distribute the spec files you give
 it. A few practices help Cypress balance your runs as efficiently as possible:
 
 - **Keep spec durations similar.** Cypress balances _whole spec files_, so a
-  single long spec can't be split across machines mid-run — it strands a machine
+  single long spec can't be split across machines mid-run, so it strands a machine
   while the others wait. Aim for spec files with comparable durations. See the
   [test performance guide](/app/guides/test-performance) for duration benchmarks
   and splitting strategies.
@@ -203,11 +203,11 @@ it. A few practices help Cypress balance your runs as efficiently as possible:
   to confirm machines are well utilized before scaling further. Cypress Cloud
   also surfaces a
   [Recommendations](/cloud/features/recorded-runs#Recommendations) panel on each
-  run that models your run time at different machine counts — for example,
+  run that models your run time at different machine counts. For example, it
   estimating how much faster a run would be with more machines, or flagging when
   you're using more than you need.
 - **Stay within your plan's test limit.** When a project reaches its test-results
-  limit, [parallelization is disabled](/cloud/faq) — and load balancing along
+  limit, [parallelization is disabled](/cloud/faq), and load balancing along
   with it. Monitor usage on the
   [Billing & Usage page](/cloud/account-management/billing-and-usage) so balancing
   keeps working.
