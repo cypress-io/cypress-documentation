@@ -717,6 +717,10 @@ browser is specified — will fail with an error.
    argument to target an installed browser. See
    [Continuous Integration](/app/continuous-integration/overview) for
    provider-specific setup details.
+1. **Update your Docker image, if you use one.** If you use the `cypress/base`
+   [Docker image](/app/continuous-integration/overview#Cypress-Docker-variants)
+   and don't explicitly install a browser, you'll need to switch to
+   `cypress/browsers` or install a browser yourself.
 1. **Remove any explicit Electron usage** — `--browser electron`,
    `defaultBrowser: 'electron'`, or `{ browser: 'electron' }` test/suite
    overrides — and replace it with an installed browser.
