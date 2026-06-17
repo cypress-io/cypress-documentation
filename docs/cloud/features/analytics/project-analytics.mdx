@@ -85,8 +85,6 @@ depends on the report family.
 
 ### Run status
 
-`/analytics/runs-over-time`
-
 Track overall run volume and pass/fail health trends. Each run represents a
 single invocation of `cypress run --record` for this project, whether in CI or
 on a local machine.
@@ -106,8 +104,6 @@ on a local machine.
 
 ### Run duration
 
-`/analytics/run-duration`
-
 See how long your runs take and how much parallelization is helping. Only
 passing runs are included here, since failing or errored runs can sway the
 average away from its typical duration.
@@ -124,8 +120,6 @@ average away from its typical duration.
 
 ### Past builds run duration
 
-`/analytics/run-duration-by-build`
-
 The same duration metrics as the Run duration report, but plotted **per build
 number** rather than per time bucket. This is useful when you want to inspect
 specific builds rather than a smoothed trend.
@@ -137,8 +131,6 @@ specific builds rather than a smoothed trend.
 - **Use it to:** Inspect duration build-by-build rather than smoothed over time.
 
 ### Test suite size
-
-`/analytics/test-suite-size`
 
 Watch how your test suite grows (or shrinks) across releases. It calculates the
 average number of test cases executed per run for the given time period, and
@@ -158,8 +150,6 @@ the size of your suite.
 
 ### Top failures
 
-`/analytics/top-failures`
-
 Find the worst offenders dragging down your suite.
 
 - **What it shows:** A horizontal bar chart ranking the most-failing tests or
@@ -176,8 +166,6 @@ Find the worst offenders dragging down your suite.
 
 ### Slowest tests
 
-`/analytics/slowest-tests`
-
 Target the biggest contributors to your run time.
 
 - **What it shows:** A horizontal bar chart ranking the slowest tests or specs,
@@ -191,8 +179,6 @@ Target the biggest contributors to your run time.
 />
 
 ### Most common errors
-
-`/analytics/most-common-errors`
 
 Spot systemic error patterns rather than individual test failures.
 
@@ -210,8 +196,6 @@ Spot systemic error patterns rather than individual test failures.
 />
 
 ### Flaky tests
-
-`/analytics/flaky-tests`
 
 Track flakiness trends and triage your most unstable tests. For more on how
 Cypress identifies and manages flake, see
