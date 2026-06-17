@@ -382,6 +382,58 @@ orders results by failures first. Open a failed test's
 only includes results for specs that had already started, so it may not contain
 every failure the full suite would have produced.
 
+## Flaky Test Management
+
+### <Icon name="angle-right" /> What is a flaky test?
+
+A flaky test is one that both passes and fails across retry attempts without any
+change to the code. It fails once, runs again on the same code, and passes. See
+[Flaky Test Management](/cloud/features/flaky-test-management) for how Cypress
+Cloud detects and tracks them.
+
+### <Icon name="angle-right" /> How does Cypress detect flaky tests?
+
+With [test retries](/app/guides/test-retries) enabled, Cypress Cloud records
+every retry attempt from your recorded CI runs and flags any test that fails an
+attempt before ultimately passing as flaky, then scores it by
+[severity](/cloud/features/flaky-test-management#Flake-severity) based on its
+flake rate.
+
+### <Icon name="angle-right" /> What causes flaky tests?
+
+Flake usually comes from timing issues, race conditions, or differences between
+your local and CI environments. [Test Replay](/cloud/features/test-replay) lets
+you compare a passing and failing attempt on the same code to find the cause.
+
+### <Icon name="angle-right" /> How do I fix a flaky test?
+
+Open a failing attempt from the flaky test details panel in
+[Test Replay](/cloud/features/test-replay) to inspect the DOM, network requests,
+and console at the moment of failure, then compare it against a passing attempt
+on the same code to pinpoint the root cause.
+
+### <Icon name="angle-right" /> How is flake rate calculated?
+
+Flake rate is the share of recent runs affected by flake: the number of runs
+where the spec had a flaky test divided by the total number of runs in the
+current window. See
+[Flake severity](/cloud/features/flaky-test-management#Flake-severity) for how
+flake rate maps to severity levels.
+
+### <Icon name="angle-right" /> Do I need test retries enabled to detect flaky tests?
+
+Yes. [Test retries](/app/guides/test-retries#Configure-Test-Retries) are the
+fundamental mechanism that lets Cypress Cloud detect flaky tests, so enabling
+them is required for any Flaky Test Management feature.
+
+### <Icon name="angle-right" /> Which Cypress Cloud plan is required for Flaky Test Management?
+
+Flake detection, analytics, and alerting require a
+[Team Cypress Cloud plan](https://cypress.io/pricing). Enterprise Reporting and
+the Data Extract API require an Enterprise plan, and
+[Cloud MCP](/cloud/integrations/cloud-mcp) is included on every Cypress Cloud
+plan.
+
 ## Cypress Cloud Account
 
 ### <Icon name="angle-right" /> What is my Organization ID?
