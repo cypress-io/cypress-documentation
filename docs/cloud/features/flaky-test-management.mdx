@@ -71,9 +71,7 @@ Detection, analytics, and alerting require a
 
 :::tip
 
-<Icon name="star" /> **Premium Cypress Cloud Feature**
-
-**Test flake detection** is available to users with a
+**Cypress Cloud Feature:** Test flake insights are available to organizations with a
 [Team Cypress Cloud plan](https://cypress.io/pricing).
 
 :::
@@ -86,9 +84,22 @@ developers to remember and report intermittent failures.
 ### Enable test retries
 
 Test retries are the _fundamental mechanism_ that enables Cypress Cloud to
-detect flaky tests. **Enabling
-[test retries](/app/guides/test-retries#Configure-Test-Retries) is required**
-to take advantage of any Flaky Test Management feature.
+detect flaky tests. Enabling
+test retries in your Cypress configuration is required
+to take advantage of any Flaky Test Management feature. Read more about [test retries](/app/guides/test-retries) in the Cypress App guide.
+
+:::cypress-config-example
+
+```js
+{
+  retries: {
+    runMode: 2,
+    openMode: 0
+  }
+}
+```
+
+:::
 
 :::caution
 If you want more control over the pass/fail result of any test deemed flaky by
@@ -99,25 +110,27 @@ test retries, you may want to use
 ### Flagging flaky tests
 
 Test runs containing flaky tests are flagged with a flaky-test count on the
-Cypress Cloud **Latest Runs** page, and can be filtered in or out with the
-**Flaky** filter. This gives teams an at-a-glance view of how much flake is
-reaching their pipeline on any given day.
+Cypress Cloud **Latest Runs** page.
 
 <DocsImage
   src="/img/cloud/features/flaky-test-management/flaky-runs-view.png"
   alt="Flagging flaky tests runs in Cypress Cloud"
 />
 
-Any failure across multiple retry attempts triggered by test retrying flags the
-test case as flaky.
+Runs containing flaky tests can be filtered in or out with the
+**Flaky** filter. This gives teams an at-a-glance view of how much flake is
+reaching their pipeline on any given day.
+
+<DocsImage
+  src="/img/cloud/features/flaky-test-management/flaky-filtered-runs-view.png"
+  alt="Filtering flaky tests runs in Cypress Cloud"
+/>
 
 ## Flake Alerting
 
 :::tip
 
-<Icon name="star" /> **Premium Cypress Cloud Feature**
-
-**Test flake alerting** is available to users with a
+**Cypress Cloud Feature:** Test flake alerting is available to organizations with a
 [Team Cypress Cloud plan](https://cypress.io/pricing).
 
 :::
@@ -133,14 +146,15 @@ even **block merges** while flaky tests are present:
 
 ### GitHub
 
-Enable flake alerting on GitHub PR comments and commit status checks in your
-project's GitHub integration settings. See
-[Status checks](/cloud/integrations/github#Status-checks) and
-[Pull request comments](/cloud/integrations/github#Pull-request-comments) for
+Enable flake alerting on GitHub status checks in your
+project's GitHub integration settings.
+
+See
+[Status checks](/cloud/integrations/github#Status-checks) for
 full setup instructions.
 
 <DocsImage
-  src="/img/cloud/features/flaky-test-management/gh-flake.png"
+  src="/img/cloud/features/flaky-test-management/github-flake-status-checks-cypress.png"
   alt="GitHub flake alert settings"
 />
 
@@ -150,8 +164,8 @@ specific tests that flaked, putting reliability data in front of reviewers
 before they merge.
 
 <DocsImage
-  src="/img/cloud/features/flaky-test-management/flake-pr-comment.png"
-  alt="GitHub flake alert pr comment"
+  src="/img/cloud/features/flaky-test-management/github-cypress-flake-status-check.png"
+  alt="GitHub flake alert status check"
 />
 
 ### GitLab
@@ -159,34 +173,40 @@ before they merge.
 Cypress can post a **`cypress/flake`** commit status check that reports whether a
 run contained flaky tests, so you can stop merge requests with flaky tests from
 merging, along with merge request comments that summarize the run. Enable both in
-your project's GitLab integration settings. See
-[Status checks](/cloud/integrations/gitlab#Status-checks) and
-[Merge Request comments](/cloud/integrations/gitlab#Merge-Request-comments) for
+your project's GitLab integration settings.
+
+See
+[status checks](/cloud/integrations/gitlab#Status-checks) for
 full setup instructions.
+
+<DocsImage
+  src="/img/cloud/features/flaky-test-management/cypress-gitlab-integration-flaky.png"
+  alt="Cypress GitLab integration setup for reporting flaky tests"
+/>
 
 ### Bitbucket
 
 Cypress can post a **`cypress/flake`** commit status check that reports whether a
 run contained flaky tests, so you can stop pull requests with flaky tests from
 merging, along with pull request comments that summarize the run. Enable both in
-your project's Bitbucket integration settings. See
-[Status checks](/cloud/integrations/bitbucket#Status-checks) and
-[Pull Request comments](/cloud/integrations/bitbucket#Pull-Request-comments) for
-full setup instructions.
+your project's Bitbucket integration settings.
 
-Chat integrations push flake notifications to your team's channels in real time,
-even on otherwise passing runs:
+See
+[status checks](/cloud/integrations/bitbucket#Status-checks) for
+full setup instructions.
 
 ### Slack
 
 Enable the **Flaky tests** notification preference in your Slack integration
 settings to be alerted whenever a run contains flaky tests, independent of
-whether the run passed or failed. See
+whether the run passed or failed.
+
+See
 [Flaky test alerts](/cloud/integrations/slack#Flaky-test-alerts) for full setup
 instructions.
 
 <DocsImage
-  src="/img/cloud/features/flaky-test-management/slack-flake.png"
+  src="/img/cloud/features/flaky-test-management/slack-flake-report-setup.png"
   alt="Slack flake alert settings"
 />
 
@@ -297,9 +317,7 @@ root cause.
 
 :::tip
 
-<Icon name="star" /> **Premium Cypress Cloud Feature**
-
-**Test flake analytics** are available to users with a
+**Cypress Cloud Feature:** Test flake analytics are available to organizations with a
 [Team Cypress Cloud plan](https://cypress.io/pricing).
 
 :::
@@ -331,8 +349,8 @@ runs in the current window.
 | Severity | Flake rate |
 | -------- | ---------- |
 | —        | 0%         |
-| Low      | >0–10%     |
-| Medium   | >10–50%    |
+| Low      | >0-10%     |
+| Medium   | >10-50%    |
 | High     | >50%       |
 
 <DocsImage
@@ -360,10 +378,10 @@ to "here's why," reducing the investigation cost of every fix.
 
 When test retries are enabled, it's important to distinguish **failure rate**
 from **flake rate**. Both are tracked over time for each flaky test on the
-analytics page:
+analytics page as shown below.
 
 <DocsImage
-  src="/img/cloud/features/flaky-test-management/flake-v-fail-2.png"
+  src="/img/cloud/features/flaky-test-management/flake-vs-failed-rate.png"
   alt="flake rate vs fail rate"
 />
 
@@ -374,14 +392,11 @@ For example, a project configured to retry failing tests up to three times may
 fail the first two attempts and pass on the third, a final status of passing.
 
 Because of this, a test can show a **zero final failure rate while still
-exhibiting flake**, as shown below. This is exactly why flake is so easy to
+exhibiting flake**.
+
+This is exactly why flake is so easy to
 miss without dedicated tracking: the build goes green, but the underlying
 instability, and its cost, is still there.
-
-<DocsImage
-  src="/img/cloud/features/flaky-test-management/flake-v-fail-1.png"
-  alt="flake rate vs fail rate"
-/>
 
 ## Flake analytics across all projects with Enterprise Reporting
 
@@ -392,9 +407,7 @@ provides a dedicated **Flaky Tests** dashboard in Cypress Cloud.
 
 :::tip
 
-<Icon name="star" /> **Premium Cypress Cloud Feature**
-
-**Enterprise Reporting** is available to users with an
+**Cypress Cloud Feature:** Enterprise Reporting is available to organizations with an
 [Enterprise Cypress Cloud plan](https://cypress.io/pricing).
 
 :::
@@ -423,9 +436,7 @@ release over release without anyone logging into Cypress Cloud.
 
 :::tip
 
-<Icon name="star" /> **Premium Cypress Cloud Feature**
-
-The **Data Extract API** is available to users with an
+**Cypress Cloud Feature:** The **Data Extract API** is available to organizations with an
 [Enterprise Cypress Cloud plan](https://cypress.io/pricing).
 
 :::
@@ -435,13 +446,13 @@ The **Data Extract API** is available to users with an
 The API exposes five flake-focused reports. Each is requested with its
 `report_id` and returns CSV, JSON, or XLSX for a date range you specify.
 
-| Report | `report_id` | Answers |
-| ------ | ----------- | ------- |
-| Flake detail over time | `flake-per-project-over-time` | How does flaky test **count** per project change day over day and week over week? |
-| Flaky rate per project | `flake-rate-per-project` | What **percentage** of runs flake in each project, normalizing out projects that simply run more often? |
-| Flaky rate per project over time | `flake-rate-per-project-over-time` | How is each project's flaky **rate** trending over the period? |
-| Flaky test details | `flaky-test-details` | Every individual flaky result, including commit, branch, author, errors, and a `test_replay_url` to jump straight to the failure. |
-| Top flaky tests per project | `top-flaky-per-project` | Which specs flake the most, with a Test Replay link to a recent occurrence for triage? |
+| Report                           | `report_id`                        | Answers                                                                                                                           |
+| -------------------------------- | ---------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| Flake detail over time           | `flake-per-project-over-time`      | How does flaky test **count** per project change day over day and week over week?                                                 |
+| Flaky rate per project           | `flake-rate-per-project`           | What **percentage** of runs flake in each project, normalizing out projects that simply run more often?                           |
+| Flaky rate per project over time | `flake-rate-per-project-over-time` | How is each project's flaky **rate** trending over the period?                                                                    |
+| Flaky test details               | `flaky-test-details`               | Every individual flaky result, including commit, branch, author, errors, and a `test_replay_url` to jump straight to the failure. |
+| Top flaky tests per project      | `top-flaky-per-project`            | Which specs flake the most, with a Test Replay link to a recent occurrence for triage?                                            |
 
 :::info
 
@@ -474,5 +485,5 @@ documentation.
   [Cloud MCP](/cloud/integrations/cloud-mcp).
 - Compare flake between branches before merging with
   [Branch Review](/cloud/features/branch-review).
-- Export organization-wide flake reports with the
+- Access organization-wide flake reports with the
   [Data Extract API](/cloud/integrations/data-extract-api#Flaky).
