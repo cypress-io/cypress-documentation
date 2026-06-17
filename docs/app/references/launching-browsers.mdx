@@ -25,7 +25,7 @@ When you run tests in Cypress, we launch a browser for you. This enables us to:
 2. Access the privileged browser APIs for automation.
 
 Cypress currently supports Firefox and Chrome-family browsers (including Edge
-and Electron). To run tests optimally across these browsers in CI, check out the
+and Chrome for Testing). To run tests optimally across these browsers in CI, check out the
 strategies demonstrated in the
 [cross browser Testing](/app/guides/cross-browser-testing) guide.
 
@@ -43,7 +43,7 @@ using number of browsers including:
 - [Edge Beta](https://www.microsoftedgeinsider.com/download)
 - [Edge Canary](https://www.microsoftedgeinsider.com/download)
 - [Edge Dev](https://www.microsoftedgeinsider.com/download)
-- [Electron](https://electron.atom.io/)
+- [Electron](https://electron.atom.io/) (deprecated)
 - [Firefox](https://www.mozilla.org/firefox/)
 - [Firefox Developer Edition](https://www.mozilla.org/firefox/developer/)
 - [Firefox Nightly](https://www.mozilla.org/firefox/nightly/)
@@ -56,6 +56,16 @@ browser by using the drop down near the top right corner:
   src="/img/app/launching-browsers/browser-list-dropdown.png"
   alt="Select a different browser"
 />
+
+### Launching headed or headless
+
+By default, when running [cypress run](/app/references/command-line#cypress-run)
+from the CLI, Cypress launches browsers headlessly. To run headed, pass the
+`--headed` argument:
+
+```shell
+cypress run --headed
+```
 
 ### Browser versions supported
 
@@ -75,27 +85,26 @@ sometimes causing a breaking change in your automated tests.
 You can use the information in [Download Chromium](https://on.cypress.io/chromium-downloads) to download a
 specific released version of Chrome for Testing or Chromium for every platform.
 
-### Electron Browser
+### Electron Browser (deprecated) {#Electron-Browser}
 
 In addition to the browsers found on your system, you'll notice that Electron is
 an available browser. The Electron browser is a version of Chromium that comes
 with [Electron](https://electron.atom.io/).
 
-The Electron browser has the advantage of coming baked into Cypress and does not
-need to be installed separately.
+:::caution
 
-By default, when running [cypress run](/app/references/command-line#cypress-run)
-from the CLI, we will launch all browsers headlessly.
+<Icon name="exclamation-triangle" /> **Electron is deprecated as a test
+browser** and will be removed in a future version of Cypress. Switch to Chrome
+or another installed browser to avoid a breaking change when you upgrade. Set a
+[`defaultBrowser`](/app/references/configuration#Browser) (for example,
+`'chrome'`) and/or pass [`--browser`](/app/references/command-line#cypress-run)
+so your runs don't rely on the bundled Electron default.
 
-#### You can also launch Electron headed:
+After Electron is removed, runs that target it (`--browser electron`, or an
+implicit fallback to Electron) will fail. See
+[Migrating away from the Electron browser](/app/references/migration-guide#Migrating-away-from-the-Electron-browser).
 
-```shell
-cypress run --headed
-```
-
-Because Electron is the default browser - it is typically run in CI. If you are
-seeing failures in CI, to easily debug them you may want to run locally with the
-`--headed` option.
+:::
 
 ### Chrome Browsers
 

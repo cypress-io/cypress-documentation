@@ -135,14 +135,14 @@ workflows:
     jobs:
       - cypress/run:
           start-command: 'npm run start'
-          cypress-command: 'npx cypress run --record'
+          cypress-command: 'npx cypress run --record --browser chrome'
 ```
 
 Cypress runs all 19 spec files one by one alphabetically. It takes **1:51** to
 complete all of the tests.
 
 ```text
-1x-electron, Machine #1
+1x-chrome, Machine #1
 --------------------------
 -- actions.cy.js (14s)
 -- aliasing.cy.js (1s)
@@ -193,13 +193,13 @@ workflows:
       - cypress/run:
           parallelism: 2
           start-command: 'npm run start'
-          cypress-command: 'npx cypress run --record --parallel'
+          cypress-command: 'npx cypress run --record --parallel --browser chrome'
 ```
 
 It finished in **59 seconds**.
 
 ```text
-2x-electron, Machine #1, 9 specs          2x-electron, Machine #2, 10 specs
+2x-chrome, Machine #1, 9 specs            2x-chrome, Machine #2, 10 specs
 --------------------------------          -----------------------------------
 -- actions.cy.js (14s)                    -- waiting.cy.js (6s)
 -- traversal.cy.js (4s)                   -- navigation.cy.js (3s)
@@ -278,11 +278,10 @@ The second group can be called `Mac/Chrome 70`.
 cypress run --record --group Mac/Chrome-70 --browser chrome
 ```
 
-The third group can be called `Linux/Electron`. _Electron is the default
-browser used in Cypress runs_.
+The third group can be called `Linux/Firefox`.
 
 ```shell
-cypress run --record --group Linux/Electron
+cypress run --record --group Linux/Firefox --browser firefox
 ```
 
 <DocsImage src="/img/app/parallelization/browser.png" alt="browser" />
@@ -291,11 +290,11 @@ cypress run --record --group Linux/Electron
 
 We also have the power of Cypress parallelization with our groups. For the sake
 of demonstration, let's run a group to test against Chrome with 2 machines, a
-group to test against Electron with 4 machines, and another group to test
-against Electron again, but only with one machine:
+group to test against Firefox with 4 machines, and another group to test
+against Firefox again, but only with one machine:
 
 ```shell
-cypress run --record --group 1x-electron
+cypress run --record --group 1x-firefox --browser firefox
 ```
 
 ```shell
@@ -303,7 +302,7 @@ cypress run --record --group 2x-chrome --browser chrome --parallel
 ```
 
 ```shell
-cypress run --record --group 4x-electron --parallel
+cypress run --record --group 4x-firefox --browser firefox --parallel
 ```
 
 The `1x`, `2x`, `4x` group prefix used here is an adopted convention to indicate

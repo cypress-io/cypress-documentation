@@ -23,8 +23,7 @@ Chrome-family browsers, Firefox, and
 WebKit (Safari's
 browser engine).
 
-Excluding [Electron](/app/references/launching-browsers#Electron-Browser), any
-browser you want to run Cypress tests in needs to be installed on your local
+Any browser you want to run Cypress tests in needs to be installed on your local
 system or CI environment. A full list of detected browsers is displayed within
 the browser selection menu of [Cypress](/app/core-concepts/open-mode).
 
@@ -255,8 +254,8 @@ test within the
 
 ```js title='test.cy.js'
 // Run the test if Cypress is running
-// using the built-in Electron browser
-it('has access to clipboard', { browser: 'electron' }, () => {
+// using Chrome
+it('has access to clipboard', { browser: 'chrome' }, () => {
   // ...
 })
 
