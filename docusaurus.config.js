@@ -108,7 +108,12 @@ const config = {
     ],
     require.resolve('docusaurus-plugin-image-zoom'),
     require.resolve('./plugins/llm'),
-    'docusaurus-plugin-copy-page-button',
+    [
+      'docusaurus-plugin-copy-page-button',
+      {
+        injectButton: false,
+      },
+    ],
     // ....
     function docusaurusTailwindcssPlugin(context, options) {
       return {
