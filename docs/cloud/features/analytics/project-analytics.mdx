@@ -97,6 +97,11 @@ on a local machine.
   the previous period.
 - **Use it to:** Track overall run volume and pass/fail health trends.
 
+**Example workflow:** After a busy week of merges, you open Run status filtered
+to your `main` branch and notice failed runs spiked over the weekend. You switch
+the time interval to daily to pinpoint the day it started, then drill into that
+day's runs to find the change that broke the build and revert it.
+
 <DocsImage
   src="/img/cloud/features/analytics/dashboard-analytics-runs-over-time-graph.png"
   alt="Cloud Analytics Runs Over Time Graph Screenshot"
@@ -112,6 +117,12 @@ average away from its typical duration.
 - **Measures:** Average run duration, typical concurrency (the median number of
   machines / parallel agents used), and **time saved from parallelization**.
 - **Use it to:** See how long runs take and how much parallelization is helping.
+
+**Example workflow:** Runs have started to feel slow. You open Run duration for
+the last 30 days and see average duration creeping up while time saved from
+parallelization stays flat, a sign the suite is growing faster than your
+parallelization can absorb. You add CI machines (or raise concurrency) and
+watch the trend flatten back out.
 
 <DocsImage
   src="/img/cloud/features/analytics/dashboard-analytics-run-duration-graph.png"
@@ -130,6 +141,11 @@ specific builds rather than a smoothed trend.
   time saved from parallelization.
 - **Use it to:** Inspect duration build-by-build rather than smoothed over time.
 
+**Example workflow:** A single nightly build took twice as long as usual, but a
+smoothed daily average hides it. You open Past builds run duration, set the
+build interval to 1 so every run is plotted individually, find the exact build
+where duration jumped, and open that run to see which spec ran long.
+
 ### Test suite size
 
 Watch how your test suite grows (or shrinks) across releases. It calculates the
@@ -140,6 +156,11 @@ the size of your suite.
 - **What it shows:** Growth of the test suite over time.
 - **Measures:** Total test cases, number of spec files, and the delta change.
 - **Use it to:** Watch how the suite grows (or shrinks) across releases.
+
+**Example workflow:** Before a release, you open Test suite size and notice the
+total test count dropped last week even though no specs were intentionally
+removed, a hint that tests were accidentally skipped or deleted. You track down
+the affected spec files and restore the missing coverage before shipping.
 
 <DocsImage
   src="/img/cloud/features/analytics/dashboard-analytics-test-suite-size-graph.png"
@@ -159,6 +180,11 @@ Find the worst offenders dragging down your suite.
   [Test Replay](/cloud/features/test-replay).
 - **Use it to:** Find the worst offenders dragging down your suite.
 
+**Example workflow:** CI has been red all week. You open Top failures for the
+last 7 days, sort by failure rate, and find one test failing in most runs. You
+drill into its latest failures and watch the Test Replay to see the root cause,
+then file a Jira issue straight from the report so it gets assigned and fixed.
+
 <DocsImage
   src="/img/cloud/features/analytics/dashboard-analytics-top-failures-graph.png"
   alt="Cloud Analytics Top Failures Graph Screenshot"
@@ -172,6 +198,11 @@ Target the biggest contributors to your run time.
   with a chart-range selector to filter by a duration band.
 - **Measures:** Median duration and number of tests / specs.
 - **Use it to:** Target the biggest contributors to run time.
+
+**Example workflow:** Your run-duration trend is climbing and you want quick
+wins. You open Slowest tests, group by spec file, and focus on the handful of
+specs with the highest median duration, then split or optimize them to bring
+overall run time back down.
 
 <DocsImage
   src="/img/cloud/features/analytics/dashboard-analytics-slowest-tests-graph.png"
@@ -190,6 +221,11 @@ Spot systemic error patterns rather than individual test failures.
 - **Use it to:** Spot systemic error patterns rather than chasing individual
   test failures.
 
+**Example workflow:** Dozens of tests start failing at once. Instead of triaging
+each one, you open Most common errors and see a single error class (such as a
+network timeout) accounts for most of the failures, pointing to one systemic
+cause to fix rather than many separate bugs.
+
 <DocsImage
   src="/img/cloud/features/analytics/dashboard-analytics-common-errors.png"
   alt="Cloud Analytics Most Common Errors Screenshot"
@@ -207,3 +243,8 @@ Cypress identifies and manages flake, see
 - **Drill-ins:** Latest flakiness, error details, Jira issue linking, and
   [Test Replay](/cloud/features/test-replay).
 - **Use it to:** Track flakiness trends and triage the most unstable tests.
+
+**Example workflow:** At the end of a sprint you open Flaky tests and see overall
+flakiness rising, with a few new high-severity flaky tests. You drill into each
+with Test Replay to diagnose the nondeterminism, link Jira issues to assign the
+fixes, then watch the high-severity count fall in the weeks that follow.
