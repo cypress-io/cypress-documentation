@@ -191,13 +191,13 @@ access to any projects. This will help you avoid mistakes when assigning users t
 ## Example team structures
 
 There is no single correct way to organize teams. The right shape depends on how your
-organization is structured and what you are trying to protect. The examples below show
+organization is structured and what you're trying to protect. The examples below show
 realistic end states that organizations commonly land on.
 
 #### Product squads
 
-A single engineering organization where each squad owns a set of repositories. This is the
-most common shape for product-focused teams.
+A single engineering organization where each squad owns a set of repositories. Each squad sees only the projects it owns, while the Admins team retains full visibility for
+leadership and platform-wide debugging.
 
 | Team     | Members                       | Project access                |
 | -------- | ----------------------------- | ----------------------------- |
@@ -206,13 +206,10 @@ most common shape for product-focused teams.
 | Search   | Search squad engineers + QA   | Search API, Search UI         |
 | Platform | Platform/infra engineers      | Design System, CI Tooling     |
 
-Each squad sees only the projects it owns, while the Admins team retains full visibility for
-leadership and platform-wide debugging.
-
 #### Multiple business units sharing one organization
 
 A parent company or agency where several business units (or clients) share one Cypress Cloud
-organization but should not see each other's projects.
+organization but should not see each other's projects. This keeps each unit's work cleanly separated while preserving a single billing relationship.
 
 | Team    | Members           | Project access           |
 | ------- | ----------------- | ------------------------ |
@@ -220,21 +217,15 @@ organization but should not see each other's projects.
 | Brand A | Brand A team      | Brand A web, Brand A app |
 | Brand B | Brand B team      | Brand B web, Brand B app |
 
-This keeps each unit's work cleanly separated while preserving a single billing relationship.
-
 #### Restricted access for sensitive projects
 
-A mostly-open organization that needs to lock down a small number of sensitive projects (for
-example, payments or anything under compliance scope).
+A mostly-open organization that needs to lock down a small number of sensitive projects. Here the broad **Everyone** team is kept for general projects, and a small, explicitly-managed
+team gates the sensitive ones.
 
 | Team     | Members                       | Project access             |
 | -------- | ----------------------------- | -------------------------- |
 | Everyone | All organization members      | All non-sensitive projects |
 | Payments | Payments engineers + auditors | Payments, Billing          |
-
-Here the broad **Everyone** team is kept for general projects, and a small, explicitly-managed
-team gates the sensitive ones. Whatever shape you choose, the goal is the same: enough
-separation to stay focused and secure, without more teams than you can comfortably maintain.
 
 ## See also
 
