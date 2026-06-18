@@ -72,12 +72,25 @@ The **By project** tab shows your usage per project during the selected billing 
 
 A **usage notification** emails your organization's owner and admins when your recorded test results reach a number you choose in the current billing cycle. Instead of remembering to check this page, you get told when you are approaching your limit, so you can upgrade or adjust before [parallelization is disabled and new results are hidden](/cloud/faq#What-happens-once-I-reach-the-test-results-limit). That early warning is the difference between a planned upgrade and a surprise interruption to your CI feedback, and it keeps owners and admins aware of usage trends without anyone having to monitor the dashboard manually.
 
-From the **Usage notification** card, click **Create notification** and choose the threshold that triggers the email:
+From the **Usage notification** card, click **Create notification**
+
+<DocsImage
+  src="/img/cloud/billing/usage-notification.png"
+  alt="Usage notification card with create notification button"
+  noBorder={true}
+/>
+
+Choose the threshold that triggers the email:
 
 - **Included with your plan** — notify when you reach the test results already included in your plan, so you hear about it right as you hit the ceiling.
 - **Custom** — notify at a number you set, which is useful for getting an earlier heads-up (for example, at 80% of your allowance) while you still have room to act.
 
 Click **Save notification** to enable it. The notification email is sent to the organization's owner and admins.
+
+<DocsImage
+  src="/img/cloud/billing/usage-notification-custom-test-results.png"
+  alt="Usage notification card with custom test results threshold"
+/>
 
 ## Prompt executions
 
