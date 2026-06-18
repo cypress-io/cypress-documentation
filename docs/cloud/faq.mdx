@@ -307,8 +307,8 @@ instead.
 
 Yes, though the cleanest experience comes from keeping a project's runs tied to a
 single `.git` repository. When tests and application code live in separate repos,
-the recommended approach is to create two Cypress Cloud projects — one for the
-application repo and one for the test repo — and link each to the matching
+the recommended approach is to create two Cypress Cloud projects, one for the
+application repo and one for the test repo, and link each to the matching
 repository. See
 [Multi-repo Implementation](/cloud/account-management/projects#Multi-repo-Implementation)
 for the full pattern.
@@ -326,8 +326,9 @@ for public projects only. See
 
 Both control when Cypress Cloud considers a run finished. The **run completion
 delay** is a short grace period (default 60 seconds) that holds a run open so test
-groups starting at slightly different times can still join the same run — useful
-for [parallelized](/cloud/features/smart-orchestration/parallelization) setups.
+groups starting at slightly different times can still join the same run. This is
+useful for [parallelized](/cloud/features/smart-orchestration/parallelization)
+setups.
 The **run timeout** (default 90 minutes) is the longest Cypress Cloud will wait
 for any activity before marking a stalled or hung run as timed out, so status
 checks always resolve. Both are configured in

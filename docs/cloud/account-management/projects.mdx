@@ -23,13 +23,13 @@ sidebar_position: 20
 
 A **project** is how Cypress Cloud organizes everything it knows about a single
 test suite: its recorded runs, analytics, settings, and integrations. Connecting
-a project unlocks the value of Cypress Cloud — instead of test results that
+a project unlocks the value of Cypress Cloud. Instead of test results that
 vanish in CI logs, you get a durable, searchable history of every run, the
 tools to make those runs faster and cheaper, and the integrations to surface
 results where your team already works.
 
 This page walks through each project-level feature and, just as importantly,
-**why you'd use it** — so you can decide which settings deliver the most value
+**why you'd use it**, so you can decide which settings deliver the most value
 for your team.
 
 ## Identification
@@ -213,7 +213,7 @@ canceling.
 **Why it's valuable:** Spec Prioritization puts the specs most likely to fail at
 the front of the line, so a developer learns their change is broken in the first
 minute of a run instead of the last. Auto Cancellation stops a run once it has
-seen enough failures to know it won't pass — there's no reason to burn ten more
+seen enough failures to know it won't pass, since there's no reason to burn ten more
 minutes of machine time proving a build is already red. Together they shorten the
 feedback loop, free up CI machines for the next job, and cut the number of billed
 tests on doomed runs.
@@ -231,7 +231,7 @@ and [Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation) gu
 
 Parallelization splits your specs across multiple machines so a suite that takes
 30 minutes on one machine can finish in a few. The settings here exist to keep
-that distributed run reliable — making sure every machine's results are counted
+that distributed run reliable, making sure every machine's results are counted
 in a single, coherent run no matter when each one starts.
 
 #### Run completion delay
@@ -240,7 +240,7 @@ Control how long the Cypress Cloud should wait for new groups to join a run befo
 
 **Why it's valuable:** In a parallel setup, your CI machines rarely boot at the
 exact same moment. Without a grace period, a fast-starting machine could finish
-and close the run before a slower machine even joins — splitting one logical run
+and close the run before a slower machine even joins, splitting one logical run
 into two and skewing your results. The completion delay holds the run open just
 long enough for every group to report in, so you get one accurate run instead of
 fragmented, misleading data.
@@ -303,8 +303,8 @@ while not waiting indefinitely for runs that have failed or hung:
 
 ### Transfer ownership
 
-Transferring a project moves it — along with its entire run history, settings,
-and integrations — to another user or organization without losing any data.
+Transferring a project moves it, along with its entire run history, settings,
+and integrations, to another user or organization without losing any data.
 This is valuable when teams reorganize, when a project graduates from an
 individual's account to a shared org, or when ownership changes hands: the
 historical context that makes Cloud useful stays intact instead of starting
@@ -467,7 +467,7 @@ Integrations bring your test results to where your team already works, so no one
 has to go looking for them. Connecting a **source control provider** posts run
 status directly on your pull requests, so a failing test blocks a merge before
 broken code reaches your main branch. An **issue management** integration turns a
-failure into a tracked ticket — complete with a link back to the failing run — in
+failure into a tracked ticket, complete with a link back to the failing run, in
 a couple of clicks. **Team communication** integrations push run results into the
 channels you already watch, so the right people hear about a failure in seconds
 instead of discovering it hours later. In short, integrations close the loop
