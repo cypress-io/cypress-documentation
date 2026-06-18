@@ -142,8 +142,26 @@ failures are linked to tickets, and the right people are notified automatically.
 Owner and admin roles can configure these under **Organization > Integrations**, and adjust the
 settings from within the **Project settings** page.
 
-Cypress Cloud integrates with source control providers, issue management, team communication, and
-enterprise SSO. Explore the guides for each below to learn how to set them up.
+Cypress Cloud integrates with AI coding assistants, enterprise data and reporting, source control
+providers, issue management, team communication, and enterprise SSO. Explore the guides for each
+below to learn how to set them up.
+
+{/* prettier-ignore-start */}
+
+### AI coding assistants
+
+Give your AI coding assistants and agents real-time context on your application's health by
+connecting them to the [Cypress Cloud MCP](/cloud/integrations/cloud-mcp) server, so they can query
+run results, analyze failures, and audit flaky tests without manual copy-paste.
+
+- <Logo src="/img/logo/cypress-logo.svg" alt="Cypress Logo" /> [Cypress Cloud MCP guide](/cloud/integrations/cloud-mcp)
+
+### Enterprise data and reporting
+
+Generate an API key to pull your enterprise test data, such as run status, spec results, run
+durations, and flaky test rates, into your own reporting and business intelligence tools.
+
+- <Logo src="/img/logo/cypress-logo.svg" alt="Cypress Logo" /> [Data Extract API guide](/cloud/integrations/data-extract-api)
 
 <DocsImage
   src="/img/cloud/organizations/organization-integrations.png"
@@ -154,8 +172,6 @@ enterprise SSO. Explore the guides for each below to learn how to set them up.
 
 Connect your repository to surface test results directly in pull requests and block failing code from
 merging with status checks, so regressions are caught before they reach your main branch.
-
-{/* prettier-ignore-start */}
 
 - <Logo src="/img/logo/github.svg" alt="GitHub Logo"/> [GitHub integration guide](/cloud/integrations/github)
 - <Logo src="/img/logo/gitlab.svg" alt="GitLab Logo" /> [GitLab integration guide](/cloud/integrations/gitlab)
