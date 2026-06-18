@@ -181,6 +181,22 @@ The `getUICoverageResults` utility returns the following data:
 }
 ```
 
+## Waiting for results
+
+Reports are generated asynchronously after a run finishes. If you call `getUICoverageResults` before the report
+has finished processing, the package does not fail — it polls for you automatically:
+
+- It checks the report status, and while the report is still processing it waits and retries.
+- Polling runs for up to 30 attempts at 30-second intervals, i.e. up to ~15 minutes.
+- While polling, it logs progress (how many specs of the total have been processed) so your CI log shows it's
+  still working.
+- If the report is still processing after the maximum number of attempts, it throws a polling-exhausted error
+  that includes the processed/total spec counts and a link to check the report, advising you to run the script
+  again.
+
+This means you can safely call `getUICoverageResults` immediately after your Cypress run completes — you don't
+need to add your own sleep/wait logic.
+
 ## Comparing against a baseline
 
 For comprehensive examples of comparing results against a baseline, including complete code examples, baseline structure, and best practices, see the [Block pull requests and set policies](/ui-coverage/guides/block-pull-requests#comparing-against-a-baseline) guide.
