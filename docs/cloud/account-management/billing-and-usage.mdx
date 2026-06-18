@@ -67,9 +67,9 @@ Keeping an eye on this card matters because of what happens at the limit. Once y
 
 Reviewing usage here lets you [upgrade](https://www.cypress.io/pricing) ahead of time and avoid any interruption.
 
-Click the **Usage details** button in order to view graphs of your test results usage.
-
 ### Usage over time
+
+Click the **Usage details** button in order to view graphs of your test results usage.
 
 The **Detailed** tab shows your usage over time during the selected billing period. Use it to spot trends: a steadily rising line tells you when it's time to move to a larger plan, while a sudden spike can reveal a misconfigured pipeline recording far more than you expected.
 
@@ -91,18 +91,11 @@ The **By project** tab shows your usage per project during the selected billing 
 
 The **AI Prompts** card tracks [cy.prompt](/api/commands/prompt) usage in your organization for the current billing period, both the number of prompt executions and the number of steps those prompts ran. `cy.prompt` is the AI capability that turns natural-language steps into executable Cypress commands and can [self-heal](/api/commands/prompt) tests when selectors change. Its value is in the manual work it removes: faster test authoring from plain English, and fewer broken tests to fix when your UI evolves. This card shows you how broadly that value is being adopted across your organization.
 
-Hover over the **info icon** next to the number of prompt steps used to see a summarized breakdown of the usage.
-
-<DocsImage
-  src="/img/cloud/billing/billing-and-usage-prompt-info.png"
-  alt="Hover over the info icon to see AI cy.prompt usage"
-/>
-
 The "Prompt execution" information conveys how many times the [cy.prompt](/api/commands/prompt) command has been executed in your organization, either on developer machines or in CI. Each [cy.prompt](/api/commands/prompt) command can define more than one step to be executed. We also break down the number of commands that took place in "Open mode" or in "Run mode". Together this tells you not just how much AI is being used, but _where_: whether developers are authoring tests interactively, or whether self-healing is running in CI, so you can see how your team is putting AI to work.
 
-Click the **Usage details** button in order to view graphs of your cy.prompt AI usage.
-
 ### Usage over time
+
+Click the **Usage details** button in order to view graphs of your cy.prompt AI usage.
 
 The **Detailed** tab shows your prompt usage over time during the selected billing period, so you can watch AI adoption grow as more of your team picks it up.
 
@@ -134,8 +127,8 @@ From the **Usage notification** card, click **Create notification**
 
 Choose the threshold that triggers the email:
 
-- **Included with your plan** — notify when you reach the test results already included in your plan, so you hear about it right as you hit the ceiling.
-- **Custom** — notify at a number you set, which is useful for getting an earlier heads-up (for example, at 80% of your allowance) while you still have room to act.
+- **Included with your plan:** notify when you reach the test results already included in your plan, so you hear about it right as you hit the ceiling.
+- **Custom:** notify at a number you set, which is useful for getting an earlier heads-up while you still have room to act.
 
 Click **Save notification** to enable it. The notification email is sent to the organization's owner and admins.
 
