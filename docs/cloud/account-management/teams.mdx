@@ -181,7 +181,7 @@ The value of teams comes from matching their structure to how your organization 
 operates, with enough separation to stay focused and secure, without so much granularity
 that upkeep becomes a burden. Separating project access between multiple teams in Cypress Cloud
 is an optional setup. If your organization has no concerns or reasons to define teams,
-simply keep the default _Everyone_ team as it is defined. All users added to Cypress Cloud
+keep the default _Everyone_ team as it is defined. All users added to Cypress Cloud
 will automatically be associated with the Everyone team, and that team has access to all
 projects.
 
@@ -207,9 +207,10 @@ focus, security, and low maintenance is as follows:
 5. Ensure that all users have access to at least one project. This is easiest to see on the **Users** page
    where labels will appear in the _Teams_ columns if a user is not assigned to any teams, or if a user is
    assigned only to teams which cannot access projects. Remember: public projects are outside the scope of Teams
-   and will always be visible to all users in your organization.
+   and are visible to all Cypress Cloud users, including those outside of your organization.
 
-6. When a new project is created, make sure that it is granted access to one or more teams.
-   - The new project will automatically be accessible to all users in a team assigned to _All projects_
-   - Cypress is considering an additional feature to require a user who creates a new project to select teams
-     at the time of project creation.
+6. When a new project is created, make sure that it is granted access to one or more teams. The new project
+   will automatically be accessible to all users in a team assigned to _All projects_.
+
+7. Review your teams periodically. As people change roles and projects come and go, revisit team membership
+   and project assignments so that access continues to reflect how your organization operates.
