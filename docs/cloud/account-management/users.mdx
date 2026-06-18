@@ -19,14 +19,24 @@ sidebar_label: Users
 
 :::
 
-A user is anyone who logs in to Cypress Cloud.
+A user is anyone who logs in to Cypress Cloud. Managing users well is how you
+turn Cypress Cloud from a single-developer tool into a shared source of truth
+for your whole team: everyone sees the same test results, the right people get
+the right level of access, and onboarding a new teammate takes minutes instead
+of a support ticket. The features below — invitations, roles, self-service
+requests, and account updates — exist to make that growth fast and safe.
 
 ## Invite users
 
+Inviting users is how you bring your team into Cypress Cloud so they can see
+test results, debug failures together, and act on insights instead of waiting
+for a screenshot in chat. Because invited users only see the projects and tests
+they have [team permissions](/cloud/account-management/teams#Assign-projects-to-a-team)
+to view, you can grow your organization without exposing every project to
+everyone — people get exactly the visibility their work requires.
+
 Organization [owner or admin](#User-roles) roles can invite
-[Cypress Cloud](https://on.cypress.io/cloud) users. Those invited will see
-the projects and tests the user has [team permissions](/cloud/account-management/teams#Assign-projects-to-a-team)
-to view.
+[Cypress Cloud](https://on.cypress.io/cloud) users.
 
 _Note: only owners can give other users 'owner' access._
 
@@ -83,14 +93,29 @@ See
 
 ## User roles
 
+Roles let you grant access on a need-to-know basis, following the principle of
+least privilege. Instead of an all-or-nothing model, each person gets exactly
+the capabilities their job calls for: stakeholders can review results without
+risking accidental changes, developers can do their day-to-day work, and only a
+trusted few can touch billing, SSO, or destructive actions. This keeps your
+organization secure as it scales and makes it obvious who can do what.
+
 Users can be assigned roles that affect their access to certain features of
 [Cypress Cloud](https://on.cypress.io/cloud).
 
-- **Viewer:** Can see projects and runs but not make any changes.
-- **Member:** Can see projects, runs, record keys, and adjust App Quality configuration.
-- **Team Admin:** Can manage the member list for projects where the Team Admin is a member, and edit project configurations.
-- **Org Admin:** Can manage all users within the organization, and edit both organization and project configurations.
-- **Org Owner:** Can manage all aspects of the organization and projects.
+- **Viewer:** Can see projects and runs but not make any changes — ideal for
+  managers, QA stakeholders, or anyone who needs visibility without edit access.
+- **Member:** Can see projects, runs, record keys, and adjust App Quality
+  configuration — the everyday role for developers contributing to the team.
+- **Team Admin:** Can manage the member list for projects where the Team Admin is
+  a member, and edit project configurations — gives team leads control over their
+  own projects without organization-wide power.
+- **Org Admin:** Can manage all users within the organization, and edit both
+  organization and project configurations — for people who run the account
+  day to day.
+- **Org Owner:** Can manage all aspects of the organization and projects,
+  including billing, SSO, and deletion — reserved for those ultimately
+  accountable for the account.
 
 The permissions for each user role for Cypress Cloud:
 
@@ -142,6 +167,12 @@ The permissions for each user role for Cypress Cloud:
 
 ## User requests
 
+User requests flip onboarding from a push to a pull: rather than admins having to
+track down and invite every new teammate up front, developers who already have
+access to Cypress and your project's source code can ask to join — and you simply
+approve or deny. This removes admin bottlenecks, gets developers productive
+faster, and still keeps you in control of exactly who gets in.
+
 Cypress App users can "request" access to a given organization. If a developer on
 your team has access to Cypress and your project's source code - they can request
 to be given access to your organization from within the Cypress App. This means
@@ -156,6 +187,10 @@ _Note: this option is not available if your Cloud organization is configured for
 />
 
 ## User updates
+
+Keeping user and billing details current ensures access and invoices always
+reach the right place — important when people change emails, switch teams, or
+when finance needs receipts to go to a shared inbox rather than an individual.
 
 To change a user email, an **Owner** or **Admin** can invite the new user/email
 address and delete the previous user/email address.
