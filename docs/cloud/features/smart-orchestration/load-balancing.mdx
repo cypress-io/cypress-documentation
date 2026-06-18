@@ -146,24 +146,40 @@ provision multiple machines with your CI provider.
 You don't have to estimate the savings yourself. Cypress Cloud measures them for
 you.
 
-- **Run Duration analytics.** The
-  [Run Duration report](/cloud/features/analytics/project-analytics#Run-duration)
-  shows your **average run duration**, **average parallelization (concurrency)**,
-  and the **time saved from parallelization** over time. This is the most direct
-  way to confirm that load balancing is paying off, and to watch the trend as
-  your suite and machine count change. (Only passing runs are included, so
-  failures don't skew the numbers.)
-- **Machines View.** Open any run, select the **Specs** tab, and switch to the
-  [Machines View](/cloud/features/smart-orchestration/parallelization#Machines-View).
-  When load balancing is working well, every machine finishes at roughly the
-  same time. If one machine finishes in 3 minutes while another runs for 12, the
-  run is bottlenecked by a single long spec, and adding more machines won't help
-  until that imbalance is resolved.
-- **Bar Chart and Timeline Views.** The
-  [Bar Chart View](/cloud/features/smart-orchestration/parallelization#Bar-Chart-View)
-  ranks specs by duration so you can spot the longest ones, while the
-  [Timeline View](/cloud/features/smart-orchestration/parallelization#Timeline-View)
-  shows machines running in parallel versus sitting idle.
+### Run Duration analytics
+
+The [Run Duration report](/cloud/features/analytics/project-analytics#Run-duration)
+shows your **average run duration**, **average parallelization (concurrency)**,
+and the **time saved from parallelization** over time. This is the most direct
+way to confirm that load balancing is paying off, and to watch the trend as
+your suite and machine count change. (Only passing runs are included, so
+failures don't skew the numbers.)
+
+<DocsImage
+  src="/img/app/parallelization/machines-view.png"
+  alt="Machines view with parallelization"
+/>
+
+### Machines View
+
+Open any run, select the **Specs** tab, and switch to the
+[Machines View](/cloud/features/smart-orchestration/parallelization#Machines-View).
+When load balancing is working well, every machine finishes at roughly the
+same time. If one machine finishes in 3 minutes while another runs for 12, the
+run is bottlenecked by a single long spec, and adding more machines won't help
+until that imbalance is resolved.
+
+<DocsImage
+  src="/img/app/parallelization/machines-view.png"
+  alt="Machines view with parallelization"
+/>
+
+### Bar Chart and Timeline Views
+
+The [Bar Chart View](/cloud/features/smart-orchestration/parallelization#Bar-Chart-View)
+ranks specs by duration so you can spot the longest ones, while the
+[Timeline View](/cloud/features/smart-orchestration/parallelization#Timeline-View)
+shows machines running in parallel versus sitting idle.
 
 ## Getting the most out of load balancing
 
