@@ -79,7 +79,7 @@ Cypress is installed using one of the following supported package managers:
 
 npm runs Cypress' `postinstall` script on install by default, which downloads the Cypress binary into the [binary cache](/app/references/advanced-installation#Binary-cache).
 
-Starting in npm version 12 ([npm RFC #868](https://github.com/npm/rfcs/pull/868)), npm blocks dependency install scripts (`preinstall`, `install`, and `postinstall`) by default. When install scripts are blocked, npm skips Cypress' `postinstall` script and the Cypress binary is not downloaded. To allow Cypress to run its `postinstall` script, use one of the following approaches.
+Starting in npm version 12, npm blocks dependency install scripts (`preinstall`, `install`, and `postinstall`) by default. When install scripts are blocked, npm skips Cypress' `postinstall` script and the Cypress binary is not downloaded. To allow Cypress to run its `postinstall` script, use one of the following approaches.
 
 Allowlist `cypress` so npm runs its `postinstall` script on install. You can use the CLI:
 
