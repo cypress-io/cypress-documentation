@@ -75,6 +75,32 @@ Cypress is installed using one of the following supported package managers:
 | [pnpm](https://pnpm.io/)                         | >=8.x     | [Install pnpm](https://pnpm.io/installation)                                     |
 | [Bun](https://bun.sh/)                           | >=1.2.22  | [Install Bun](https://bun.sh/docs/installation)                                  |
 
+#### npm configuration
+
+npm runs Cypress' `postinstall` script on install by default, which downloads the Cypress binary into the [binary cache](/app/references/advanced-installation#Binary-cache).
+
+Starting in npm version 12, npm blocks dependency install scripts (`preinstall`, `install`, and `postinstall`) by default. When install scripts are blocked, npm skips Cypress' `postinstall` script and the Cypress binary is not downloaded. To allow Cypress to run its `postinstall` script, use one of the following approaches.
+
+Allowlist `cypress` so npm runs its `postinstall` script on install. You can use the CLI:
+
+```shell
+npm approve-scripts cypress
+```
+
+Or add `cypress` to `allowScripts` in `package.json` manually:
+
+```json title="package.json"
+{
+  "allowScripts": ["cypress"]
+}
+```
+
+Alternatively, if you'd rather not modify your allowlist, install the Cypress binary explicitly after install completes:
+
+```shell
+npx cypress install
+```
+
 #### Yarn users
 
 [Yarn (Modern)](https://yarnpkg.com/) configuration using [nodeLinker: "node-modules"](https://yarnpkg.com/configuration/yarnrc#nodeLinker)
