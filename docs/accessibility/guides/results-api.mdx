@@ -375,8 +375,8 @@ don't need to add your own sleep/wait logic.
 
 ## Errors
 
-All errors are thrown to the caller as plain `Error` objects with a clear, actionable message (stack traces are
-stripped to avoid leaking internal paths). The errors you may encounter include:
+If something goes wrong, the function throws an error with a clear, actionable message that explains what
+happened and how to fix it. The errors you may encounter include:
 
 - **Missing project ID / record key**: neither the option nor the corresponding environment variable was provided.
 - **Invalid run tags**: `runTags` contained non-string values.
