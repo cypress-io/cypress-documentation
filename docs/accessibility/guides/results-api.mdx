@@ -259,7 +259,17 @@ The Accessibility results for the run are returned as an object containing the f
         // The accessibility score for this particular view
         score: number
         // The list of violated rules for this specific view
-        rules: Rule[]
+        rules: [{
+          // The name of the rule. See https://github.com/dequelabs/axe-core/blob/develop/doc/rule-descriptions.md.
+          name: string
+          // The likely impact the rule has on a user with a disability.
+          // e.g. 'critical', 'serious', 'moderate', or 'minor'
+          severity: string
+          // The status of the rule for the run, e.g. 'violation'.
+          status: string
+          // The url that deep links the report for this specific rule violation.
+          accessibilityReportUrl: 'https://cloud.cypress.io/[...]'
+        }]
       }
     ]
 
