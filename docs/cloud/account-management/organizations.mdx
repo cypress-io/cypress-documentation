@@ -44,7 +44,26 @@ those decisions apply consistently across every project your team records to Cyp
 - **Understand cost and usage.** Track [billing and usage](/cloud/account-management/billing-and-usage)
   across all projects so you can plan capacity and attribute spend.
 
-## Managing Organizations
+## What's in an organization
+
+An organization brings several areas of Cypress Cloud together. Each one has its own dedicated guide:
+
+- **[Projects](/cloud/account-management/projects)** organize your recorded runs. A new organization
+  starts with a "Default Project" that you can rename and configure in
+  [Project Settings](/cloud/account-management/projects#Project-settings), and you can add as many
+  projects as you need.
+- **[Users and teams](/cloud/account-management/users)** control who can access what. Inviting users
+  gives them shared visibility into test health, while
+  [teams](/cloud/account-management/teams) and [roles](/cloud/account-management/users#User-roles)
+  grant each person access to exactly the projects they need, no more, no less. This is what lets
+  multiple business units share one organization, and lets you understand usage per team through
+  [Enterprise Reporting](/cloud/features/analytics/enterprise-reporting).
+- **[Billing and usage](/cloud/account-management/billing-and-usage)** rolls up across every project
+  so you can review your plan, track usage, and attribute spend in one place.
+- **[Integrations](#Integrations)** connect Cypress to the source control, issue tracking, and chat
+  tools your team already uses, set up once and applied across every project.
+
+## Manage your organization
 
 ### Create organization
 
@@ -74,31 +93,6 @@ with Cypress teams.
   src="/img/cloud/organizations/cypress-organization-UUID.gif"
   alt="Locating and copying your Cypress Cloud Organization ID in Organization settings"
 />
-
-### Manage projects
-
-Projects are how Cypress Cloud organizes recorded runs, and grouping them under an organization is
-what lets results, analytics, and usage roll up across your whole team. Once you create an
-organization, a new "Default Project" will be created for you. From here, you can adjust your
-[Project Settings](/cloud/account-management/projects#Project-settings) to fit your needs, including
-renaming the project to something more meaningful than "Default Project".
-
-### Manage users and teams
-
-Users and teams are how you turn an organization into a place where the right people see the right
-work. Inviting people into the organization gives them shared visibility into test health, while
-teams and roles let you grant access precisely, protecting sensitive projects and reducing clutter
-for everyone else.
-
-Organization owner or admin roles can [invite Cypress Cloud users](/cloud/account-management/users)
-to their organization. Those invited can be [assigned to a team](/cloud/account-management/teams),
-which controls exactly which projects and tests they can access. Each user's
-[role](/cloud/account-management/users#User-roles) then determines what they can do, from read-only
-viewers to owners who manage the entire organization.
-
-This combination of teams and roles is what makes an organization scale: multiple business units can
-share one organization without stepping on each other, and you can understand Cypress usage per team
-through [Enterprise Reporting](/cloud/features/analytics/enterprise-reporting).
 
 ### Manage Cloud AI
 
@@ -135,7 +129,7 @@ that still has an active subscription, contact [support@cypress.io](mailto:suppo
   width="80%"
 />
 
-### Integrations
+## Integrations
 
 Integrations are where an organization delivers value beyond Cypress Cloud itself: by connecting the
 tools your team already uses, your test results,
