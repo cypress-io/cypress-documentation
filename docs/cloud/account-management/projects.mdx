@@ -39,7 +39,9 @@ together to uniquely identify projects. This two-part identity is what keeps
 your data trustworthy: the `projectId` tells Cypress Cloud _which_ project a run
 belongs to, while the record key proves the run is _authorized_ to write to it.
 Together they ensure your run history stays accurate and can't be polluted by
-unauthorized recordings.
+unauthorized recordings. This also protects your bill: because Cypress charges
+based on the number of recorded tests, keeping your record key private prevents
+unauthorized runs from consuming your test allotment and driving up usage.
 
 ### Project ID
 
