@@ -89,16 +89,6 @@ teams in Cypress Cloud. Other roles will not see the button to create a new team
 
 3. On the _Create new team_ modal, enter the team name and click **Save**
 
-### Delete a team
-
-To delete a team, click on the **X** icon at the right side of the team's row.
-You will be prompted for confirmation before the team is deleted.
-
-<DocsImage
-  src="/img/cloud/teams/delete-team.png"
-  alt="Click the X icon in the team's row to delete a Cypress Cloud team."
-/>
-
 ### Assign projects to a team
 
 Project assignment is the heart of what makes teams valuable: it is the control that
@@ -181,12 +171,48 @@ at hand.
      width="60%"
    />
 
-:::caution
+:::tip
 
-Note: The label 'No project access' will appear if a team has not yet been configured to have
+The label 'No project access' will appear if a team has not yet been configured to have
 access to any projects. This will help you avoid mistakes when assigning users to teams.
 
 :::
+
+### Delete a team
+
+To delete a team, click on the **X** icon at the right side of the team's row.
+You will be prompted for confirmation before the team is deleted.
+
+<DocsImage
+  src="/img/cloud/teams/delete-team.png"
+  alt="Click the X icon in the team's row to delete a Cypress Cloud team."
+/>
+
+## Best practices
+
+Defining teams is optional. If your organization has no need to separate project access,
+keep the default _Everyone_ team as-is, since all organization members belong to it and it
+has access to all projects. For organizations that want to divide into teams, the following
+setup balances focus, security, and low maintenance:
+
+1. **Give organization-level users full visibility.** Create a team (for example, _Admins_)
+   that is assigned _All projects_, and add your Owners and Admins to it. This keeps
+   leadership able to see every project even after you tighten access elsewhere.
+2. **Mirror your organizational structure.** Create teams that align with how your
+   organization actually works. Resist creating many narrowly-scoped teams, as that
+   increases maintenance over time.
+3. **Delegate with team admins.** Assign at least one **Team admin** per team so regular
+   members can manage their own projects, removing that burden from organization Owners and
+   Admins.
+4. **Enforce your structure.** Once teams are configured, remove the _All projects_
+   assignment from the _Everyone_ team so users receive access only through their teams.
+5. **Verify coverage.** Make sure every user has access to at least one project. The
+   **Users** page flags users with no team or with teams that have no project access.
+6. **Account for new projects.** When a project is created, grant it to one or more teams.
+   Projects are automatically visible to any team assigned to _All projects_.
+7. **Review periodically.** As people change roles and projects come and go, revisit team
+   membership and project assignments so access continues to reflect how your organization
+   operates.
 
 ## Example team structures
 
@@ -194,7 +220,7 @@ There is no single correct way to organize teams. The right shape depends on how
 organization is structured and what you're trying to protect. The examples below show
 realistic end states that organizations commonly land on.
 
-#### Product squads
+### Product squads
 
 A single engineering organization where each squad owns a set of repositories. Each squad sees only the projects it owns, while the Admins team retains full visibility for
 leadership and platform-wide debugging.
@@ -206,7 +232,7 @@ leadership and platform-wide debugging.
 | Search   | Search squad engineers + QA   | Search API, Search UI         |
 | Platform | Platform/infra engineers      | Design System, CI Tooling     |
 
-#### Multiple business units sharing one organization
+### Multiple business units sharing one organization
 
 A parent company or agency where several business units (or clients) share one Cypress Cloud
 organization but should not see each other's projects. This keeps each unit's work cleanly separated while preserving a single billing relationship.
@@ -217,7 +243,7 @@ organization but should not see each other's projects. This keeps each unit's wo
 | Brand A | Brand A team      | Brand A web, Brand A app |
 | Brand B | Brand B team      | Brand B web, Brand B app |
 
-#### Restricted access for sensitive projects
+### Restricted access for sensitive projects
 
 A mostly-open organization that needs to lock down a small number of sensitive projects. Here the broad **Everyone** team is kept for general projects, and a small, explicitly-managed
 team gates the sensitive ones.
