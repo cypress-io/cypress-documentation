@@ -349,7 +349,7 @@ jobs:
       - checkout
       - run: npm install
       - run: npx run cypress:run --record
-+     - run: npm install --force https://cdn.cypress.io/extract-cloud-results/beta/v1/extract-cloud-results.tgz
++     - run: npm install --force https://cdn.cypress.io/extract-cloud-results/v1/extract-cloud-results.tgz
 +     - run: node ./scripts/verifyUICoverageResults.js
 
 workflows:
