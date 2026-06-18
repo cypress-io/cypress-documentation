@@ -125,6 +125,21 @@ Adjust this under **Organization settings > Member Privileges**, then click **Up
   noBorder={true}
 />
 
+### Smart Orchestration settings
+
+[Smart Orchestration](/cloud/features/smart-orchestration/overview) settings apply across every
+project in the organization, so you can tune how runs behave from one place rather than per project.
+
+**Re-run optimization** controls what Cypress executes when the same CI build is rerun. Reusing
+previous results saves CI minutes and Cloud usage:
+
+- **Run everything again** (safest, slowest) — re-execute all specs and tests, ignoring previous
+  results. Choose this when you want a completely fresh run every time.
+- **Run only failed specs** — re-execute only the spec files that contained a failure, and reuse the
+  passed specs from the previous run. This is faster and cheaper when you only need to retry failures.
+
+Set this under **Organization settings > Smart Orchestration**.
+
 ### Transfer an organization to another owner
 
 There is no single "transfer organization" button. Instead, you transfer ownership by giving the
