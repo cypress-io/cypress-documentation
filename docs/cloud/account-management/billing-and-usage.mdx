@@ -15,6 +15,7 @@ sidebar_position: 50
 
 - What your Cypress Cloud plan meters and why those metrics matter
 - How to read your test result usage to right-size your plan and avoid interruptions
+- How to set up usage notifications so you hear about limits before they interrupt CI
 - How to track cy.prompt AI adoption across your organization, and where Studio AI limits are documented
 - How to request a free Open Source Plan and what it unlocks
 
@@ -65,6 +66,17 @@ The **By project** tab shows your usage per project during the selected billing 
   src="/img/cloud/billing/billing-and-usage-tests-byproject.png"
   alt="A graph is displayed showing Test Result usage, per project, for your selected billing period"
 />
+
+## Usage notification
+
+A **usage notification** emails your organization's owner and admins when your recorded test results reach a number you choose in the current billing cycle. Instead of remembering to check this page, you get told when you are approaching your limit, so you can upgrade or adjust before [parallelization is disabled and new results are hidden](/cloud/faq#What-happens-once-I-reach-the-test-results-limit). That early warning is the difference between a planned upgrade and a surprise interruption to your CI feedback, and it keeps owners and admins aware of usage trends without anyone having to monitor the dashboard manually.
+
+From the **Usage notification** card, click **Create notification** and choose the threshold that triggers the email:
+
+- **Included with your plan** — notify when you reach the test results already included in your plan, so you hear about it right as you hit the ceiling.
+- **Custom** — notify at a number you set, which is useful for getting an earlier heads-up (for example, at 80% of your allowance) while you still have room to act.
+
+Click **Save notification** to enable it. The notification email is sent to the organization's owner and admins.
 
 ## Prompt executions
 
