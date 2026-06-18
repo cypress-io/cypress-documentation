@@ -187,7 +187,13 @@ The `getUICoverageResults` utility returns the following data:
     uiCoverageReportUrl: 'https://cloud.cypress.io/[...]'
   }]
   // The resolved UI Coverage configuration that was applied to this run.
-  config: object
+  // Optional - omitted when no configuration was applied.
+  config?: {
+    // When the configuration was last updated.
+    updatedAt: string
+    // The configuration value that was applied.
+    value: any
+  }
 }
 ```
 

@@ -263,7 +263,13 @@ The Accessibility results for the run are returned as an object containing the f
     ]
 
   // The resolved Accessibility configuration that was applied to this run.
-  config: object
+  // Optional - omitted when no configuration was applied.
+  config?: {
+    // When the configuration was last updated.
+    updatedAt: string
+    // The configuration value that was applied.
+    value: any
+  }
 
 }
 ```
