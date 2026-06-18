@@ -1,6 +1,6 @@
 ---
 title: 'Frequently Asked Questions (FAQ) | Cypress Accessibility'
-description: 'Get answers to common questions about Cypress Accessibility.'
+description: 'Answers to common questions about Cypress Accessibility: how it works, what standards it checks, how scoring works, requirements, and the Results API.'
 sidebar_position: 150
 sidebar_label: FAQ
 ---
@@ -9,7 +9,93 @@ sidebar_label: FAQ
 
 # Cypress Accessibility FAQ
 
+## General
+
+### <Icon name="angle-right" /> What is Cypress Accessibility?
+
+Cypress Accessibility is a feature of [Cypress Cloud](/cloud/get-started/introduction) that automatically runs
+accessibility checks against every state of every test you record, with no extra code and no impact on test
+execution. It produces organized, visual, and actionable accessibility reports powered by Axe Core® by Deque
+Systems.
+
+Because the checks run on Cypress Cloud servers using [Test Replay](/cloud/features/test-replay) data, you get
+full accessibility reports for your existing tests without writing any assertions or changing your test setup.
+
+### <Icon name="angle-right" /> How does Cypress Accessibility work?
+
+As your run records to Cypress Cloud, Cypress Accessibility analyzes the captured Test Replay data on the server,
+groups the pages and components ("Views") rendered during the run, and runs Axe Core® checks against every unique
+DOM state. It then generates a combined report of violations that you can sort and filter by page, component, or
+the whole run.
+
+The checks happen entirely server-side after the run, so there is no test slowdown or added flakiness. See
+[How it works](/accessibility/core-concepts/how-it-works) for the full pipeline.
+
+### <Icon name="angle-right" /> What accessibility standards does Cypress Accessibility check against?
+
+Cypress Accessibility uses Axe Core® by Deque Systems, the industry-standard accessibility engine, to detect
+violations based on common standards such as the WCAG guidelines. Axe Core® can detect up to 57% of the issues
+that would appear in a manual accessibility audit.
+
+Automated checks cannot catch every possible issue, especially those requiring human judgment, so a clean report
+is a strong foundation rather than a guarantee of full compliance. Learn more in
+[About Axe Core®](/accessibility/core-concepts/how-it-works#About-Axe-Core).
+
+### <Icon name="angle-right" /> Does Cypress Accessibility slow down or change my tests?
+
+No. Accessibility checks run on Cypress Cloud servers using data already captured by Test Replay, so there is no
+impact on test execution speed and no risk of added flakiness. You do not need to add any code, assertions, or
+configuration to your tests to get accessibility results.
+
+## Requirements
+
+### <Icon name="angle-right" /> What do I need to use Cypress Accessibility?
+
+You need to be on Cypress v13 or later and record your runs to Cypress Cloud with [Test Replay](/cloud/features/test-replay)
+enabled. If you already record runs with Test Replay, you are ready to start, with no additional setup. See the
+[setup guide](/accessibility/get-started/setup) to get started.
+
+Cypress Accessibility is a premium Cypress Cloud feature. See [Cypress pricing](https://www.cypress.io/pricing)
+for plan availability.
+
+### <Icon name="angle-right" /> Which browsers are supported?
+
+Cypress Accessibility relies on data captured by Test Replay, so it supports the same browsers as Test Replay.
+See [How Test Replay works](/cloud/features/test-replay#How-Test-Replay-Works) for the current list of supported
+browsers and captured data.
+
+## Scoring
+
+### <Icon name="angle-right" /> How is the accessibility score calculated?
+
+The accessibility score is a top-line percentage that reflects the average score of all application snapshots
+captured during a run. Each snapshot's score is the ratio of passing to failing checks, weighted by severity:
+Critical issues are weighted 10, Serious 7, Moderate 3, and Minor 1. View and run scores are the average of their
+snapshot scores.
+
+Incomplete and ignored elements do not affect the score; only clear rule failures are counted. See
+[Accessibility score](/accessibility/core-concepts/accessibility-score) for the full algorithm.
+
+### <Icon name="angle-right" /> What does a 100% accessibility score mean?
+
+A 100% score (also called "Axe-clean") means Axe Core® detected no violations in the tested scope. It does not
+guarantee full compliance, but it indicates the team has actively addressed common accessibility issues and is
+well-positioned to handle findings from manual audits.
+
+### <Icon name="angle-right" /> Can I ignore specific rules or elements?
+
+Yes. You can update your [configuration](/accessibility/configuration/overview) to ignore issues you have decided
+not to fix, which keeps your score focused on actionable problems while ignored elements remain visible for
+transparency. You can also use [Profiles](/accessibility/configuration/profiles) to apply different settings based
+on run tags.
+
 ## Results API
+
+### <Icon name="angle-right" /> How do I fail a CI build based on accessibility results?
+
+Use the [Results API](/accessibility/guides/results-api) to programmatically fetch a run's accessibility results
+in CI and assert against them, failing the pipeline when your standards are not met. See
+[Block pull requests and set policies](/accessibility/block-pull-requests) for complete examples.
 
 ### <Icon name="angle-right" /> What errors can the Results API throw?
 
@@ -27,10 +113,10 @@ clear, actionable message that explains what happened and how to fix it. The err
   you to Project Settings.
 - **No report found**: the run exists but has no report of the requested type.
 - **Polling exhausted**: the report was still processing after the maximum polling window (~15 minutes). See
-  [Waiting for results](/accessibility/guides/results-api#waiting-for-results).
+  [Waiting for results](/accessibility/guides/results-api#Waiting-for-results).
 - **Report errored**: report generation failed on Cypress Cloud's side (Cypress is notified automatically).
 - **App Quality disabled**: the product isn't enabled for the project.
 
 In addition, a version-compatibility guard validates the package's major version against the current internal Cloud
 script and aborts with an "unsupported version" error if the installed package is too old or too new. Install the
-[tarball for the correct major version](/accessibility/guides/results-api#installation) to resolve this.
+[tarball for the correct major version](/accessibility/guides/results-api#Installation) to resolve this.

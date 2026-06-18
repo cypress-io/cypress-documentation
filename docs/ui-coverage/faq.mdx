@@ -1,6 +1,6 @@
 ---
 title: 'Frequently Asked Questions (FAQ) | Cypress UI Coverage'
-description: 'Get answers to common questions about Cypress UI Coverage.'
+description: 'Answers to common questions about Cypress UI Coverage: what it is, how it differs from code coverage, how it works, how scoring works, requirements, and the Results API.'
 sidebar_position: 175
 sidebar_label: FAQ
 ---
@@ -9,7 +9,99 @@ sidebar_label: FAQ
 
 # Cypress UI Coverage FAQ
 
+## General
+
+### <Icon name="angle-right" /> What is UI Coverage?
+
+UI Coverage is a feature of [Cypress Cloud](/cloud/get-started/introduction) that gives you a visual, interactive
+map of how much of your application's UI is exercised by your tests. It identifies every interactive element across
+your pages and components, marks each one as tested or untested, and produces a coverage score so you can find and
+close gaps before they become regressions.
+
+It works with your existing tests, requires no code instrumentation, and is powered by
+[Test Replay](/cloud/features/test-replay) data captured during your runs.
+
+### <Icon name="angle-right" /> How is UI Coverage different from code coverage?
+
+Code coverage measures which lines or branches of source code run during your tests. UI Coverage measures which
+interactive elements a user could actually use, such as buttons, links, and inputs, are tested from the user's
+perspective. This means UI Coverage reflects real user-facing flows even when you don't have access to instrument
+the application's source code.
+
+Because it is based on the rendered DOM rather than source files, UI Coverage works the same way regardless of the
+framework or language your application is built with.
+
+### <Icon name="angle-right" /> How does UI Coverage work?
+
+As your run records to Cypress Cloud, UI Coverage analyzes the captured Test Replay data on the server, identifies
+the interactive elements rendered during the run, and determines which ones were interacted with by your tests. It
+then generates sortable, filterable reports with full-page DOM snapshots showing exactly where tested and untested
+elements appear.
+
+The analysis happens entirely server-side, so there is no impact on test execution. See
+[How it works](/ui-coverage/get-started/introduction#How-it-Works) for more detail.
+
+### <Icon name="angle-right" /> Which elements count toward UI Coverage?
+
+UI Coverage tracks interactive elements, determined from HTML semantics, WHATWG standards, and Cypress-specific
+rules. This includes elements with implicit interactive roles (such as `a`, `button`, `input`, `select`,
+`textarea`), elements with an explicit interactive `role` (such as `button`, `checkbox`, `tab`, `textbox`), and
+elements that are tab-navigable (`tabindex >= 0`).
+
+You can also declare custom interactive elements with a `data-cy-ui-interactive="include"` attribute. See
+[Interactivity](/ui-coverage/core-concepts/interactivity) for the full set of rules.
+
+### <Icon name="angle-right" /> When is an element marked as tested?
+
+An interactive element is marked as tested when one of your tests interacts with it using a Cypress command such as
+`click`, `type`, `check`, `select`, `focus`, `trigger`, or `scrollIntoView`. If no such command targets the
+element during the run, it is reported as untested.
+
+You can extend or restrict which commands count toward coverage using
+[additional interaction commands](/ui-coverage/configuration/additionalinteractioncommands) and
+[allowed interaction commands](/ui-coverage/configuration/allowedinteractioncommands).
+
+## Requirements
+
+### <Icon name="angle-right" /> What do I need to use UI Coverage?
+
+You need to be on Cypress v13 or later and record your runs to Cypress Cloud with [Test Replay](/cloud/features/test-replay)
+enabled. If you already record runs with Test Replay, UI Coverage works instantly with no setup or code changes.
+See the [setup guide](/ui-coverage/get-started/setup) to get started.
+
+UI Coverage is a premium Cypress Cloud feature. See [Cypress pricing](https://www.cypress.io/pricing) for plan
+availability.
+
+### <Icon name="angle-right" /> Does UI Coverage require code instrumentation or changes to my app?
+
+No. UI Coverage requires no instrumentation, build changes, or test code changes. It uses the same capture protocol
+as Test Replay, analyzing the rendered DOM from your recorded runs on Cypress Cloud servers.
+
+## Scoring
+
+### <Icon name="angle-right" /> How is the UI Coverage score calculated?
+
+The UI Coverage score is the ratio of tested interactive elements to the total interactive elements rendered during
+your run, expressed as a percentage. Comparing the number of tested elements between runs is often a more precise
+signal than the percentage alone, because testing a new area can reveal many more untested elements at once.
+
+See [Overall Score](/ui-coverage/guides/identify-coverage-gaps#Overall-Score) for how to interpret and act on the
+score.
+
+### <Icon name="angle-right" /> Can I exclude elements, views, or links from UI Coverage?
+
+Yes. You can refine reports by ignoring [elements](/ui-coverage/guides/ignore-elements),
+[views and links](/ui-coverage/guides/ignore-views-and-links), and by grouping similar elements to reduce noise.
+Ignored items are excluded from the score while remaining available for review. You can also use
+[Profiles](/ui-coverage/configuration/profiles) to apply different settings based on run tags.
+
 ## Results API
+
+### <Icon name="angle-right" /> How do I block pull requests based on UI Coverage?
+
+Use the [Results API](/ui-coverage/results-api) to programmatically fetch a run's UI Coverage results in CI and
+assert against them, failing the pipeline or blocking a merge when coverage drops below your standard. See
+[Block pull requests and set policies](/ui-coverage/guides/block-pull-requests) for complete examples.
 
 ### <Icon name="angle-right" /> What errors can the Results API throw?
 
@@ -27,10 +119,10 @@ actionable message that explains what happened and how to fix it. The errors you
   you to Project Settings.
 - **No report found**: the run exists but has no report of the requested type.
 - **Polling exhausted**: the report was still processing after the maximum polling window (~15 minutes). See
-  [Waiting for results](/ui-coverage/results-api#waiting-for-results).
+  [Waiting for results](/ui-coverage/results-api#Waiting-for-results).
 - **Report errored**: report generation failed on Cypress Cloud's side (Cypress is notified automatically).
 - **App Quality disabled**: the product isn't enabled for the project.
 
 In addition, a version-compatibility guard validates the package's major version against the current internal Cloud
 script and aborts with an "unsupported version" error if the installed package is too old or too new. Install the
-[tarball for the correct major version](/ui-coverage/results-api#installation) to resolve this.
+[tarball for the correct major version](/ui-coverage/results-api#Installation) to resolve this.
