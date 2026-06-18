@@ -9,6 +9,15 @@ sidebar_position: 10
 
 # Cypress Cloud Organizations
 
+An organization is the home for everything your team does in Cypress Cloud. It groups your
+[projects](/cloud/account-management/projects), the [users](/cloud/account-management/users) who
+work on them, the [teams](/cloud/account-management/teams) that control access, your billing and
+usage, and the [integrations](#Integrations) that connect Cypress to the rest of your toolchain.
+
+The value of an organization is **central control**: instead of managing settings project by
+project, you administer access, AI capabilities, billing, and integrations once, in one place, and
+those decisions apply consistently across every project your team records to Cypress Cloud.
+
 :::info
 
 ##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
@@ -19,15 +28,6 @@ sidebar_position: 10
 - How to create, configure, and manage an organization
 
 :::
-
-An organization is the home for everything your team does in Cypress Cloud. It groups your
-[projects](/cloud/account-management/projects), the [users](/cloud/account-management/users) who
-work on them, the [teams](/cloud/account-management/teams) that control access, your billing and
-usage, and the [integrations](#Integrations) that connect Cypress to the rest of your toolchain.
-
-The value of an organization is **central control**: instead of managing settings project by
-project, you administer access, AI capabilities, billing, and integrations once, in one place, and
-those decisions apply consistently across every project your team records to Cypress Cloud.
 
 ## Why use organizations
 
@@ -46,7 +46,7 @@ those decisions apply consistently across every project your team records to Cyp
 
 ## Managing Organizations
 
-### Create Org
+### Create organization
 
 Creating an organization gives your team a shared, persistent place to record runs and review
 quality together, rather than scattering results across individual accounts. You can create an
@@ -55,7 +55,7 @@ organization from within
 switcher and clicking **<Icon name="plus" /> Create new organization**.
 
 <DocsImage
-  src="/img/cloud/organizations/create-org.jpg"
+  src="/img/cloud/organizations/create-new-organization.png"
   alt="Creating a new organization from the organization switcher in Cypress Cloud"
 />
 
@@ -75,7 +75,7 @@ with Cypress teams.
   alt="Locating and copying your Cypress Cloud Organization ID in Organization settings"
 />
 
-### Manage Projects
+### Manage projects
 
 Projects are how Cypress Cloud organizes recorded runs, and grouping them under an organization is
 what lets results, analytics, and usage roll up across your whole team. Once you create an
@@ -83,7 +83,7 @@ organization, a new "Default Project" will be created for you. From here, you ca
 [Project Settings](/cloud/account-management/projects#Project-settings) to fit your needs, including
 renaming the project to something more meaningful than "Default Project".
 
-### Manage Users and Teams
+### Manage users and teams
 
 Users and teams are how you turn an organization into a place where the right people see the right
 work. Inviting people into the organization gives them shared visibility into test health, while
@@ -116,7 +116,7 @@ entire organization from the organization settings.
   alt="Enabling or disabling Cloud AI for an entire organization in Cypress Cloud organization settings"
 />
 
-### Delete Org
+### Delete organization
 
 When an organization is no longer needed, removing it keeps your Cypress Cloud account tidy and
 ensures projects live where they belong. You can delete organizations that you own as long as they
@@ -135,7 +135,7 @@ that still has an active subscription, contact [support@cypress.io](mailto:suppo
   width="80%"
 />
 
-## Integrations
+### Integrations
 
 Integrations are where an organization delivers value beyond Cypress Cloud itself: by connecting the
 tools your team already uses, your test results,
@@ -152,7 +152,7 @@ settings from within the **Project settings** page.
 Cypress Cloud integrates with source control providers, issue management, team communication, and
 enterprise SSO. Explore the guides for each below to learn how to set them up.
 
-### Source Control Providers
+### Source control providers
 
 Connect your repository to surface test results directly in pull requests and block failing code from
 merging with status checks, so regressions are caught before they reach your main branch.
@@ -163,14 +163,14 @@ merging with status checks, so regressions are caught before they reach your mai
 - <Logo src="/img/logo/gitlab.svg" alt="GitLab Logo" /> [GitLab integration guide](/cloud/integrations/gitlab)
 - <Logo src="/img/logo/bitbucket.svg" alt="Bitbucket Logo" /> [Bitbucket integration guide](/cloud/integrations/bitbucket)
 
-### Issue Management
+### Issue management
 
 Turn test failures into tracked, actionable work by creating bidirectionally linked tickets, so
 nothing slips through the cracks.
 
 - <Logo src="/img/logo/jira.svg" alt="Jira Logo" /> [Jira integration guide](/cloud/integrations/jira)
 
-### Team Communication
+### Team communication
 
 Keep your team informed in real time by sending run progress and results to the channels they already
 watch, so failures get attention without anyone refreshing a dashboard.
@@ -178,7 +178,7 @@ watch, so failures get attention without anyone refreshing a dashboard.
 - <Logo src="/img/logo/slack.svg" alt="Slack Logo" /> [Cypress integration for Slack guide](/cloud/integrations/slack)
 - <Logo src="/img/logo/ms-teams.svg" alt="Microsoft Teams Logo" /> [Cypress integration for Microsoft Teams guide](/cloud/integrations/teams)
 
-### Enterprise SSO Authentication
+### Enterprise SSO authentication
 
 Enforce access through your existing identity provider so the right people get in, offboarding is
 automatic, and you meet your organization's security requirements.
