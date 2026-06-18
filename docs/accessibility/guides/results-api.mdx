@@ -373,30 +373,6 @@ report has finished processing, the package does not fail. It polls for you auto
 This means you can safely call `getAccessibilityResults` immediately after your Cypress run completes, so you
 don't need to add your own sleep/wait logic.
 
-## Errors
-
-If something goes wrong, the function throws an error with a clear, actionable message that explains what
-happened and how to fix it. The errors you may encounter include:
-
-- **Missing project ID / record key**: neither the option nor the corresponding environment variable was provided.
-- **Invalid run tags**: `runTags` contained non-string values.
-- **Not running in a supported CI provider**: the environment couldn't be detected as one of the supported providers.
-- **No run found**: no run matching the current CI context and tags was recorded in the last seven days. (On Azure
-  and CircleCI, the message also notes that Cypress 13.13.1+ is required.)
-- **Multiple runs found**: more than one run matched and they couldn't be disambiguated. The message lists the
-  candidate runs and instructs you to set distinct `--tag` values and pass them in via `runTags`.
-- **Test Replay disabled**: the report wasn't generated because Test Replay was off for that run. The message points
-  you to Project Settings.
-- **No report found**: the run exists but has no report of the requested type.
-- **Polling exhausted**: the report was still processing after the maximum polling window (~15 minutes). See
-  [Waiting for results](#waiting-for-results).
-- **Report errored**: report generation failed on Cypress Cloud's side (Cypress is notified automatically).
-- **App Quality disabled**: the product isn't enabled for the project.
-
-In addition, a version-compatibility guard validates the package's major version against the current internal Cloud
-script and aborts with an "unsupported version" error if the installed package is too old or too new. Install the
-[tarball for the correct major version](#installation) to resolve this.
-
 ## Comparing against a baseline
 
 For comprehensive examples of comparing results against a baseline, including complete code examples, baseline structure, and best practices, see the [Block pull requests and set policies](/accessibility/block-pull-requests#comparing-against-a-baseline) guide.
