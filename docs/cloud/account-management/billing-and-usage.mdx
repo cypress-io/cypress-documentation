@@ -1,6 +1,6 @@
 ---
 title: 'Billing & Usage | Cypress Cloud'
-description: 'Understand what your Cypress Cloud plan includes, how test results and AI prompts are metered, and how to right-size your plan from the Billing & Usage page.'
+description: 'Understand your Cypress Cloud plan: how test results and AI prompts are metered, what counts as a test result, what happens when you reach your limit, how billing cycles renew, and how to upgrade or request a free Open Source plan.'
 sidebar_label: Billing & Usage
 sidebar_position: 50
 ---
@@ -20,15 +20,13 @@ sidebar_position: 50
 
 :::
 
-The **Billing & Usage** section of [Cypress Cloud](https://on.cypress.io/cloud) is where you see your current plan, what it includes, and how much of it your team has used in the current billing period. More than a receipt, it is the page that tells you whether your plan still fits how your team works — so you can upgrade before you hit a limit, attribute usage to the right projects, and see where your team is adopting AI.
+The **Billing & Usage** section of [Cypress Cloud](https://on.cypress.io/cloud) shows your current plan, what it includes, and how much your team has used in the current billing period. It is more than a receipt: it tells you whether your plan still fits how your team works — so you can upgrade before you hit a limit, attribute usage to the right projects, and see where your team is adopting AI.
 
-Your plan determines two things that matter day to day: how many **test results** you can record each month, and the limits on **AI** capabilities. Watching both here keeps the value of Cloud flowing without surprises.
-
-Billing and usage information can be found under the **Billing & Usage** section. Here you can view your current plan, usage, and billing information.
+Your plan meters two things that matter day to day: how many **test results** you can record each month, and the limits on **AI** capabilities. Watching both here keeps the value of Cloud flowing without surprises.
 
 ## Cloud test results
 
-A **test result** is the core unit Cypress Cloud meters, and it is what unlocks everything Cloud does for your team. Every time you record a run with [`cypress run --record`](/app/references/command-line#cypress-run), each passed or failed test is counted as a test result (see [what counts as a test result](/cloud/faq#What-counts-as-a-test-result)). In exchange, that run becomes debuggable and measurable: you get [Test Replay](/cloud/features/test-replay) to reproduce failures exactly as they happened in CI, [Flaky Test Management](/cloud/features/flaky-test-management) to catch unreliable tests, [analytics](/cloud/features/analytics/overview) to track quality over time, and [Smart Orchestration](/cloud/features/smart-orchestration/overview) to run specs in parallel and cut CI time. Test results are the meter behind all of that value.
+A **test result** is each passed or failed test recorded when you run [`cypress run --record`](/app/references/command-line#cypress-run); pending and skipped tests are not counted (see [what counts as a test result](/cloud/faq#What-counts-as-a-test-result)). It is the core unit Cypress Cloud meters, and it is what unlocks everything Cloud does for your team. In exchange for recording, each run becomes debuggable and measurable: you get [Test Replay](/cloud/features/test-replay) to reproduce failures exactly as they happened in CI, [Flaky Test Management](/cloud/features/flaky-test-management) to catch unreliable tests, [analytics](/cloud/features/analytics/overview) to track quality over time, and [Smart Orchestration](/cloud/features/smart-orchestration/overview) to run specs in parallel and cut CI time. Test results are the meter behind all of that value.
 
 The **Test results** card highlights the number of used and included test results in your current billing period. It will also show how many additional test results have been purchased and used, if applicable.
 
@@ -37,7 +35,16 @@ The **Test results** card highlights the number of used and included test result
   alt="Billing and Usage Results shows visuals of usage in your current billing period"
 />
 
-Keeping an eye on this card matters because of what happens at the limit. Once you reach your included test results, tests with the `--record` flag still run, but [parallelization is disabled and new results are hidden from the dashboard](/cloud/faq#What-happens-once-I-reach-the-test-results-limit) until your plan is upgraded or the usage cycle resets the next month. That means slower CI and a blind spot in your results at exactly the moment you can least afford one. Reviewing usage here lets you [upgrade](https://www.cypress.io/pricing) ahead of time and avoid any interruption.
+Keeping an eye on this card matters because of what happens at the limit. Once you reach your included test results, recording keeps working but [parallelization is disabled and new results are hidden from the dashboard](/cloud/faq#What-happens-once-I-reach-the-test-results-limit) until you upgrade or the cycle resets:
+
+| At your test result limit   | Behavior                                  |
+| --------------------------- | ----------------------------------------- |
+| Recording (`--record`)      | Still runs                                |
+| Parallelization             | Disabled                                  |
+| New results in dashboard    | Hidden until upgrade or cycle reset        |
+| Usage cycle                 | Resets monthly                            |
+
+That means slower CI and a blind spot in your results at exactly the moment you can least afford one. Reviewing usage here lets you [upgrade](https://www.cypress.io/pricing) ahead of time and avoid any interruption.
 
 Click the **Usage details** button in order to view graphs of your test results usage.
 
@@ -61,7 +68,7 @@ The **By project** tab shows your usage per project during the selected billing 
 
 ## Prompt executions
 
-The **AI Prompts** card tracks usage of [cy.prompt](/api/commands/prompt), the AI capability that turns natural-language steps into executable Cypress commands and can [self-heal](/api/commands/prompt) tests when selectors change. Its value is in the manual work it removes: faster test authoring from plain English, and fewer broken tests to fix when your UI evolves. This card shows you how broadly that value is being adopted across your organization.
+The **AI Prompts** card tracks how many [cy.prompt](/api/commands/prompt) steps your organization has used in the current billing period. `cy.prompt` is the AI capability that turns natural-language steps into executable Cypress commands and can [self-heal](/api/commands/prompt) tests when selectors change. Its value is in the manual work it removes: faster test authoring from plain English, and fewer broken tests to fix when your UI evolves. This card shows you how broadly that value is being adopted across your organization.
 
 <DocsImage
   src="/img/cloud/billing/billing-and-usage-prompt-info.jpg"
@@ -96,7 +103,7 @@ Studio AI recommendation limits (per user, per hour) are documented in [AI at Cy
 
 ## Open Source Plan
 
-To support the community, we provide the Open Source Software (OSS) plan, a free upgrade that gives qualifying projects the same capabilities that help commercial teams ship faster. It includes 5 free users, 100k test results/month, [parallelization with load balancing](/cloud/features/smart-orchestration/parallelization) to keep CI fast as your suite grows, and access to numerous [integrations](/cloud/integrations/github) — so open source maintainers get the orchestration and debugging power of Cloud without the cost.
+The Open Source Software (OSS) plan is a free upgrade for qualifying public, non-commercial projects. It includes 5 free users, 100k test results/month, [parallelization with load balancing](/cloud/features/smart-orchestration/parallelization) to keep CI fast as your suite grows, and access to numerous [integrations](/cloud/integrations/github) — so open source maintainers get the orchestration and debugging power that helps commercial teams ship faster, without the cost.
 
 To qualify, all Projects in your Organization must meet the following criteria:
 
@@ -154,3 +161,12 @@ an OSS plan.
 
 If you have any questions regarding the OSS plan, please feel free
 [contact us](mailto:hello@cypress.io).
+
+## Common billing questions
+
+- [What counts as a test result?](/cloud/faq#What-counts-as-a-test-result)
+- [What happens once I reach the test results limit?](/cloud/faq#What-happens-once-I-reach-the-test-results-limit)
+- [When does my billing period reset?](/cloud/faq#When-does-my-billing-period-reset)
+- [How do I reduce my Cypress Cloud usage or lower my bill?](/cloud/faq#How-do-I-reduce-my-Cypress-Cloud-usage-or-lower-my-bill)
+- [What happens if I downgrade my account?](/cloud/faq#What-happens-if-I-downgrade-my-account)
+- [How much does it cost?](/cloud/faq#How-much-does-it-cost)
