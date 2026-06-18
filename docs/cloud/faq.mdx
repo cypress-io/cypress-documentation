@@ -170,9 +170,19 @@ fewer, more meaningful tests. A few common approaches:
 - Record only the runs you need insight into, rather than every local run.
 - Remove redundant or obsolete tests, and avoid recording the same suite
   multiple times against the same commit.
+- [Choose the right test level](/app/guides/test-performance#Choose-the-right-test-level)
+  so behavior is covered where it is cheapest to test, instead of duplicating it
+  across many end-to-end tests.
+- [Find and eliminate over-tested UI with UI Coverage](/app/guides/test-performance#Find-and-eliminate-over-tested-UI-with-UI-Coverage)
+  to cut redundant tests that cover the same flows.
+- [Run the right tests at the right time](/app/guides/test-performance#Run-the-right-tests-at-the-right-time),
+  for example a smaller smoke suite on every PR and the full suite less often.
 - Use the **By project** tab on the
   [Billing & Usage](/cloud/account-management/billing-and-usage) page to find
   which projects consume the most of your plan, then focus there.
+
+For more ways to trim and streamline your suite, see the
+[Optimizing test performance](/app/guides/test-performance) guide.
 
 If your usage consistently exceeds your plan, compare options on the
 [pricing page](https://www.cypress.io/pricing); moving to a larger plan is
