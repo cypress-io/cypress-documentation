@@ -273,6 +273,66 @@ it might be good enough for the job.
 
 <UrlAllowList />
 
+## Projects
+
+### <Icon name="angle-right" /> What is a project in Cypress Cloud?
+
+A project is how Cypress Cloud organizes everything tied to a single test suite:
+its recorded runs, analytics, settings, and integrations. Connecting a project
+gives you a durable, searchable history of every run instead of results that
+disappear in CI logs. See the
+[Projects guide](/cloud/account-management/projects) for setup and settings.
+
+### <Icon name="angle-right" /> How do I transfer a Cypress Cloud project to another organization or user?
+
+Open the project in [Cypress Cloud](https://on.cypress.io/cloud), go to **Project
+Settings**, scroll to the **Transfer Ownership** section, and select the
+destination user or organization. The project's full run history, settings, and
+integrations move with it, so nothing is lost. You can't transfer a project to an
+organization that is currently in a
+[free trial](/cloud/get-started/free-trial). See
+[Transfer ownership](/cloud/account-management/projects#Transfer-ownership) for
+the full steps.
+
+### <Icon name="angle-right" /> Can I delete a Cypress Cloud project?
+
+Yes. The project owner can remove a project from **Project Settings** in
+[Cypress Cloud](https://on.cypress.io/cloud). Deleting a project also deletes all
+of its recorded test runs and cannot be undone. See
+[Delete Project](/cloud/account-management/projects#Delete-Project). If you only
+want to hide a single run, [archive the run](/cloud/features/recorded-runs#Archive-run)
+instead.
+
+### <Icon name="angle-right" /> Can I record runs when my Cypress tests live in a separate repository from my application?
+
+Yes, though the cleanest experience comes from keeping a project's runs tied to a
+single `.git` repository. When tests and application code live in separate repos,
+the recommended approach is to create two Cypress Cloud projects — one for the
+application repo and one for the test repo — and link each to the matching
+repository. See
+[Multi-repo Implementation](/cloud/account-management/projects#Multi-repo-Implementation)
+for the full pattern.
+
+### <Icon name="angle-right" /> What is a Cypress README badge and how do I add one?
+
+A README badge displays your project's latest test status and test count directly
+in your repository's README, giving viewers an at-a-glance signal of project
+health. Configure one from the **README Badges** section of **Project Settings**,
+then copy the generated markdown into your README. Badges are currently available
+for public projects only. See
+[README Badges](/cloud/account-management/projects#README-Badges).
+
+### <Icon name="angle-right" /> What do the run completion delay and run timeout settings do?
+
+Both control when Cypress Cloud considers a run finished. The **run completion
+delay** is a short grace period (default 60 seconds) that holds a run open so test
+groups starting at slightly different times can still join the same run — useful
+for [parallelized](/cloud/features/smart-orchestration/parallelization) setups.
+The **run timeout** (default 90 minutes) is the longest Cypress Cloud will wait
+for any activity before marking a stalled or hung run as timed out, so status
+checks always resolve. Both are configured in
+[Project settings](/cloud/account-management/projects#Project-settings).
+
 ## Spec Prioritization
 
 ### <Icon name="angle-right" /> What is Spec Prioritization?
