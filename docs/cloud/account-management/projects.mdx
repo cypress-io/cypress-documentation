@@ -158,13 +158,11 @@ App.
 4. Here you will see a **Record Keys** section
 5. Click **Delete** beside the record key you want to delete.
 
-## Project settings
+## Access and visibility
 
-Project settings are where you tune Cypress Cloud to fit your team's workflow.
-The settings below control who can see your results, how quickly you get
-feedback, how much you spend on CI, and how Cypress decides when a run is
-finished. Each one is optional, but together they let you trade off speed,
-cost, and visibility deliberately rather than living with the defaults.
+These settings control who can see your project's runs and how you advertise
+their status. Set them deliberately to match your audience, whether that's a
+private team or the public.
 
 ### Access to Runs
 
@@ -200,14 +198,69 @@ only invited teammates can view runs, screenshots, and test code.
      alt="access-to-runs"
    />
 
+### README Badges
+
+README badges allow you to increase visibility of your project's test status and
+test count to other developers viewing your project's README file.
+
+**Why it's valuable:** A badge turns your latest run into an at-a-glance signal
+of quality right where people decide whether to trust or contribute to your
+project. For open-source maintainers it builds confidence with potential users
+and contributors; for any team it advertises test coverage and current health
+without anyone having to open Cypress Cloud.
+
+#### Create a README badge
+
+1. In your Cypress Cloud account, select the project for which you'd like to add
+   a badge.
+2. On the Project Settings page, scroll down to the README Badges section and
+   click “Configure Badge”.
+
+:::caution
+
+**Note**: README badges are currently only available for public projects.
+
+:::
+
+3. A configuration modal will appear. The Project ID will be pre-filled with the
+   ID associated with the project you selected. You can choose to designate a
+   specific branch, or leave this field blank to always use the latest build in
+   the project.
+4. Next, style your badge. Flat is the default styling and is most commonly
+   used, but 5 style options are available.
+5. Select the badge type to change the amount and type of information that's
+   displayed. Simple status will show only whether tests are passing or failing.
+   Detailed status will show the number of tests that were passed, failed, or
+   skipped. Test count will show how many tests are included in your project.
+6. Once you've selected all your settings, check out the preview and make sure
+   everything looks just the way you like it.
+7. 🎉 Your badge is ready to be embedded. Copy the markdown at the bottom of the
+   Configure Badge modal, and embed it in your project's README file for
+   everyone to see!
+
+   {/* prettier-ignore */}
+    <DocsImage
+      src="/img/cloud/projects/cloud-badge-configuration.jpg"
+      alt="README Badge configuration form"
+      width="80%"
+    />
+
+See also
+[Highlight your project's test status with Cypress README badges](https://www.cypress.io/blog/2020/09/02/highlight-your-projects-test-status-with-cypress-readme-badges/)
+announcement.
+
+## Optimizing your runs
+
+These settings tune how Cypress Cloud runs and finalizes your suite so you get
+feedback faster, spend less on CI, and never wait on a run that has stalled. They
+matter most for large suites and parallelized CI pipelines.
+
 ### Smart Orchestration
 
 Smart Orchestration is about getting answers faster and paying for less CI.
 Rather than running every spec in a fixed order until the suite finishes, Cypress
 Cloud uses the history of your runs to surface failures sooner and stop work that
 no longer needs to happen.
-
-#### Spec Prioritization & Auto Cancellation
 
 Toggle Spec Prioritization to reduce feedback time by running previously failed test specs first. Enabling Auto Cancellation to reduce run duration by canceling the run when tests fail. Adjust the number of test failures before auto
 canceling.
@@ -303,6 +356,12 @@ while not waiting indefinitely for runs that have failed or hung:
 - **Run timeout** (minutes): How long to wait for any activity from a run before
   marking it timed out. Applies throughout the entire run.
 
+## Managing your project
+
+These actions change who owns a project or remove it entirely. Because they
+affect a project's whole run history, they're handled separately from the
+day-to-day settings above.
+
 ### Transfer ownership
 
 Transferring a project moves it, along with its entire run history, settings,
@@ -382,58 +441,18 @@ test runs. Deleting projects can only be done from
 5. Confirm that you want to delete the project by clicking **Yes, Remove
    Project**.
 
-### README Badges
-
-README badges allow you to increase visibility of your project's test status and
-test count to other developers viewing your project's README file.
-
-**Why it's valuable:** A badge turns your latest run into an at-a-glance signal
-of quality right where people decide whether to trust or contribute to your
-project. For open-source maintainers it builds confidence with potential users
-and contributors; for any team it advertises test coverage and current health
-without anyone having to open Cypress Cloud.
-
-#### Create a README badge
-
-1. In your Cypress Cloud account, select the project for which you'd like to add
-   a badge.
-2. On the Project Settings page, scroll down to the README Badges section and
-   click “Configure Badge”.
-
-:::caution
-
-**Note**: README badges are currently only available for public projects.
-
-:::
-
-3. A configuration modal will appear. The Project ID will be pre-filled with the
-   ID associated with the project you selected. You can choose to designate a
-   specific branch, or leave this field blank to always use the latest build in
-   the project.
-4. Next, style your badge. Flat is the default styling and is most commonly
-   used, but 5 style options are available.
-5. Select the badge type to change the amount and type of information that's
-   displayed. Simple status will show only whether tests are passing or failing.
-   Detailed status will show the number of tests that were passed, failed, or
-   skipped. Test count will show how many tests are included in your project.
-6. Once you've selected all your settings, check out the preview and make sure
-   everything looks just the way you like it.
-7. 🎉 Your badge is ready to be embedded. Copy the markdown at the bottom of the
-   Configure Badge modal, and embed it in your project's README file for
-   everyone to see!
-
-   {/* prettier-ignore */}
-    <DocsImage
-      src="/img/cloud/projects/cloud-badge-configuration.jpg"
-      alt="README Badge configuration form"
-      width="80%"
-    />
-
-See also
-[Highlight your project's test status with Cypress README badges](https://www.cypress.io/blog/2020/09/02/highlight-your-projects-test-status-with-cypress-readme-badges/)
-announcement.
-
 ## Best Practices
+
+A few habits keep your Cypress Cloud projects organized, secure, and
+cost-effective as your team and test suite grow.
+
+### Keep one project per test suite
+
+Record all of a suite's runs to a single project tied to a single `.git`
+repository. Consistent commit and branch data is what makes your run history,
+analytics, and [flaky test detection](/cloud/features/flaky-test-management)
+meaningful, so avoid pointing several unrelated suites at one project or
+splitting one suite across many.
 
 ### Multi-repo Implementation
 
@@ -459,6 +478,34 @@ If this is not possible, there are some measures to help organize your data:
    - Link the GitHub integration to the Cypress config/tests repo
    - Ensure any runs recorded to **Test Project** are related to test code changes in the Cypress config/tests repo
      - The Application code repo state that the tests are executed against could likewise be captured as tags here, if necessary.
+
+### Protect your record key
+
+Store your [record key](#Record-key) as a CI secret or
+[environment variable](/app/continuous-integration/overview#Environment-variables)
+instead of committing it, and [rotate it](#Delete-record-key) if it is ever
+exposed. This keeps unauthorized runs from polluting your history or consuming
+the test allotment you are billed for.
+
+### Commit your projectId to source control
+
+Check your [`projectId`](#Project-ID) into your Cypress configuration so every
+contributor and CI machine records to the same project. If you would rather not
+expose it in source, set it as the `CYPRESS_PROJECT_ID` environment variable
+instead.
+
+### Match project access to your audience
+
+Set your project [public or private](#Public-vs-Private) deliberately: public for
+open-source suites you want contributors and users to see, private for commercial
+code that should stay limited to invited teammates.
+
+### Let Smart Orchestration manage CI time and cost
+
+On the Business and Enterprise plans, enable
+[Spec Prioritization and Auto Cancellation](#Smart-Orchestration) so failing runs
+surface fast and stop early, cutting wasted CI minutes and billed tests on runs
+you already know will fail.
 
 ## Third party integrations
 
