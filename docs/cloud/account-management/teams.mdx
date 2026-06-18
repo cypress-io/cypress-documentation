@@ -3,7 +3,6 @@ title: 'Manage Teams & Project Access | Cypress Cloud'
 description: 'Cypress Cloud teams group users to control which projects they can access. Learn to create teams, assign users and projects, and follow setup best practices.'
 sidebar_position: 35
 sidebar_label: Teams
-sidebar_custom_props: { 'new_label': true }
 ---
 
 <ProductHeading product="cloud" />
@@ -13,6 +12,9 @@ sidebar_custom_props: { 'new_label': true }
 **A Cypress Cloud team is a reusable group of users that is granted access to a specific
 set of projects.** Teams let you control project access once at the team level instead of
 project by project, user by user.
+
+Teams let you shape your organization so that every person sees the projects relevant to
+their work, and nothing else.
 
 :::info
 
@@ -24,9 +26,6 @@ project by project, user by user.
 - Best practices for getting the most out of team setup
 
 :::
-
-Teams let you shape your organization so that every person sees the projects relevant to
-their work, and nothing else.
 
 ## Why use teams
 
@@ -75,12 +74,12 @@ expand your structure as your organization grows:
 - The same project can be assigned to multiple teams
 - Team-based project access only controls what users can view in Cypress Cloud. It does not affect the ability to record runs to a project from the Cypress App
 
-### Create or delete teams
+### Create a team
 
 Only organization [owner or admin](/cloud/account-management/users#User-roles) roles can create
 teams in Cypress Cloud. Other roles will not see the button to create a new team.
 
-1. On the Users & Teams page, select the _Teams_ tab
+1. On the Users & Teams page, select the **Teams** tab
 2. Click **+ Create team**
 
    <DocsImage
@@ -90,10 +89,15 @@ teams in Cypress Cloud. Other roles will not see the button to create a new team
 
 3. On the _Create new team_ modal, enter the team name and click **Save**
 
-_Note: team names must be unique_
+### Delete a team
 
-To delete a team, click on the _X_ icon at the right side of the team's row.
+To delete a team, click on the **X** icon at the right side of the team's row.
 You will be prompted for confirmation before the team is deleted.
+
+<DocsImage
+  src="/img/cloud/teams/delete-team.png"
+  alt="Click the X icon in the team's row to delete a Cypress Cloud team."
+/>
 
 ### Assign projects to a team
 
@@ -111,21 +115,22 @@ any projects in Cypress Cloud.
   alt="Click the + icon in the Project access column to assign projects to a Cypress Cloud team."
 />
 
-On the _Teams_ tab, assign projects to a team by clicking the **+** icon in the
-_Project access_ column. In the modal that appears there will be two options:
+On the **Teams** tab, assign projects to a team by clicking the **+** icon in the
+**Project access** column. In the modal that appears there will be two options:
 
-1. Assign all projects to team
+1. **Assign all projects to team**
 
    Use this option if you have a team that should access all projects, including projects that
    already exist and ones that will be created in the future. This is the default selection for
-   the _Everyone_ team.
+   the **Everyone** team.
 
    <DocsImage
      src="/img/cloud/teams/assign-projects-to-team-modal-all.png"
      alt="Grant team project access to all existing and future projects when assigning projects to a team."
+     width="70%"
    />
 
-2. Assign selected projects to team
+2. **Assign selected projects to team**
 
    Use this option if you want to assign specific projects to a team. Search for projects by name
    and select (or unselect) them to assign projects to the team.
@@ -133,6 +138,7 @@ _Project access_ column. In the modal that appears there will be two options:
    <DocsImage
      src="/img/cloud/teams/assign-projects-to-team-modal-selected.png"
      alt="Select individual projects from a list to control a team's project access in Cypress Cloud."
+     width="70%"
    />
 
 ### Assign users to a team
@@ -143,79 +149,46 @@ team level rather than repeating it for every project. Cypress Cloud gives you t
 convenient places to manage membership so you can work from whichever view fits the task
 at hand.
 
-1. On the _Teams_ tab, select users for a team by clicking the **+** icon in the _Members_ column
-
-   This makes it easy to add multiple users to a team at the same time. Simply browse the user list
-   or search by name, and then select (or unselect) them to assign users as members of this team.
+1. On the **Teams** tab, select users for a team by clicking the **+** icon in the **Members** column
 
    <DocsImage
      src="/img/cloud/teams/assign-members-to-team.png"
      alt="Click the + icon in the Members column to assign Cypress Cloud users to a team."
    />
+
+   This makes it easy to add multiple users to a team at the same time. Simply browse the user list
+   or search by name, and then select (or unselect) them to assign users as members of this team.
+
    <DocsImage
      src="/img/cloud/teams/assign-members-to-team-modal.png"
      alt="Select individual users from a list to add them as members of a Cypress Cloud team."
+     width="70%"
    />
 
-2. On the _Users_ tab, select teams for a user by clicking the **+** icon in the _Teams_ column
-
-   You can manage the team(s) assigned to a user directly on the _Users_ page. On the edit modal
-   you you can search by team name and then select (or unselect) them to assign the user to
-   additional teams.
-
-   _Note: The label 'No project access' will appear if a team has not yet been configured to have
-   access to any projects. This will help you avoid mistakes when assigning users to teams._
+2. On the **Users** tab, select teams for a user by clicking the **+** icon in the **Teams** column
 
    <DocsImage
      src="/img/cloud/teams/assign-team-to-user.png"
      alt="Click the + icon in the Teams column to assign a team to a specific Cypress Cloud user."
    />
+
+   On the edit modal, you can search by team name and then select (or unselect) them to assign the user to
+   additional teams.
+
    <DocsImage
      src="/img/cloud/teams/assign-team-to-user-modal.png"
      alt="Select individual teams from a list to assign them to a specific Cypress Cloud user."
+     width="60%"
    />
 
-## Best practices
+:::caution
 
-The value of teams comes from matching their structure to how your organization actually
-operates, with enough separation to stay focused and secure, without so much granularity
-that upkeep becomes a burden. Separating project access between multiple teams in Cypress Cloud
-is an optional setup. If your organization has no concerns or reasons to define teams,
-keep the default _Everyone_ team as it is defined. All users added to Cypress Cloud
-will automatically be associated with the Everyone team, and that team has access to all
-projects.
+Note: The label 'No project access' will appear if a team has not yet been configured to have
+access to any projects. This will help you avoid mistakes when assigning users to teams.
 
-For organizations that have a desire to divide into teams, a common setup that balances
-focus, security, and low maintenance is as follows:
+:::
 
-1. Create a team that will be assigned to all organization-level users (Owner or Admin) and assign
-   all projects to this team. This will provide visibility to all projects to your organization-level users.
-   - For example: create a team named 'Admins' and give it access to all projects. Then assign any
-     existing and new organization-level users to this team.
-
-2. Create teams that will align with your organizational structure and teams. It may be tempting to create
-   a lot of teams with access to very specific projects, but that can increase your maintenance over time.
-
-3. Once teams have been created, choose at least one member of each team who can be assigned the **Team admin**
-   role. This will allow users who are regular participants of the team to perform administration tasks for the
-   projects. It also removes this responsibility from your organization-level Admins and Owners.
-
-4. After teams have been configured, you can remove the _All projects_ assignment from the _Everyone_ team.
-   This will enforce your new team structure since users are no longer receiving project access from the default
-   _Everyone_ team.
-
-5. Ensure that all users have access to at least one project. This is easiest to see on the **Users** page
-   where labels will appear in the _Teams_ columns if a user is not assigned to any teams, or if a user is
-   assigned only to teams which cannot access projects. Remember: public projects are outside the scope of Teams
-   and are visible to all Cypress Cloud users, including those outside of your organization.
-
-6. When a new project is created, make sure that it is granted access to one or more teams. The new project
-   will automatically be accessible to all users in a team assigned to _All projects_.
-
-7. Review your teams periodically. As people change roles and projects come and go, revisit team membership
-   and project assignments so that access continues to reflect how your organization operates.
-
-### Example team structures
+## Example team structures
 
 There is no single correct way to organize teams. The right shape depends on how your
 organization is structured and what you are trying to protect. The examples below show
@@ -226,12 +199,12 @@ realistic end states that organizations commonly land on.
 A single engineering organization where each squad owns a set of repositories. This is the
 most common shape for product-focused teams.
 
-| Team           | Members                          | Project access                    |
-| -------------- | -------------------------------- | --------------------------------- |
-| Admins         | Owners and Admins                | All projects                      |
-| Checkout       | Checkout squad engineers + QA    | Cart, Payments, Order History     |
-| Search         | Search squad engineers + QA      | Search API, Search UI             |
-| Platform       | Platform/infra engineers         | Design System, CI Tooling         |
+| Team     | Members                       | Project access                |
+| -------- | ----------------------------- | ----------------------------- |
+| Admins   | Owners and Admins             | All projects                  |
+| Checkout | Checkout squad engineers + QA | Cart, Payments, Order History |
+| Search   | Search squad engineers + QA   | Search API, Search UI         |
+| Platform | Platform/infra engineers      | Design System, CI Tooling     |
 
 Each squad sees only the projects it owns, while the Admins team retains full visibility for
 leadership and platform-wide debugging.
@@ -241,11 +214,11 @@ leadership and platform-wide debugging.
 A parent company or agency where several business units (or clients) share one Cypress Cloud
 organization but should not see each other's projects.
 
-| Team        | Members                  | Project access            |
-| ----------- | ------------------------ | ------------------------- |
-| Admins      | Owners and Admins        | All projects              |
-| Brand A     | Brand A team             | Brand A web, Brand A app  |
-| Brand B     | Brand B team             | Brand B web, Brand B app  |
+| Team    | Members           | Project access           |
+| ------- | ----------------- | ------------------------ |
+| Admins  | Owners and Admins | All projects             |
+| Brand A | Brand A team      | Brand A web, Brand A app |
+| Brand B | Brand B team      | Brand B web, Brand B app |
 
 This keeps each unit's work cleanly separated while preserving a single billing relationship.
 
@@ -254,10 +227,10 @@ This keeps each unit's work cleanly separated while preserving a single billing 
 A mostly-open organization that needs to lock down a small number of sensitive projects (for
 example, payments or anything under compliance scope).
 
-| Team        | Members                       | Project access              |
-| ----------- | ----------------------------- | --------------------------- |
-| Everyone    | All organization members      | All non-sensitive projects  |
-| Payments    | Payments engineers + auditors | Payments, Billing           |
+| Team     | Members                       | Project access             |
+| -------- | ----------------------------- | -------------------------- |
+| Everyone | All organization members      | All non-sensitive projects |
+| Payments | Payments engineers + auditors | Payments, Billing          |
 
 Here the broad _Everyone_ team is kept for general projects, and a small, explicitly-managed
 team gates the sensitive ones. Whatever shape you choose, the goal is the same: enough
