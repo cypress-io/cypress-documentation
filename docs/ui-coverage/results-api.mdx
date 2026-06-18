@@ -164,6 +164,10 @@ The `getUICoverageResults` utility returns the following data:
     testedElementsCount:number
     // The number of interactive elements that were not tested.
     untestedElementsCount: number
+    // The number of links that were tested.
+    testedLinksCount: number
+    // The number of links that were not tested.
+    untestedLinksCount: number
   }
   // The list of tested views and the coverage of each page.
   views: [{
@@ -175,6 +179,10 @@ The `getUICoverageResults` utility returns the following data:
     testedElementsCount:number
     // The number of interactive elements that were not tested on this view.
     untestedElementsCount: number
+    // The number of links that were tested on this view.
+    testedLinksCount: number
+    // The number of links that were not tested on this view.
+    untestedLinksCount: number
     // The url that links the report for this view.
     uiCoverageReportUrl: 'https://cloud.cypress.io/[...]'
   }]
@@ -182,6 +190,57 @@ The `getUICoverageResults` utility returns the following data:
   config: object
 }
 ```
+
+## Policy results
+
+The package also exports `getPolicyResults`, which evaluates the policies configured for your project against a
+run. It uses the same call signature as `getUICoverageResults` and is product-agnostic — a single policy can
+check both UI Coverage and Accessibility metrics.
+
+```javascript
+const { getPolicyResults } = require('@cypress/extract-cloud-results')
+
+getPolicyResults().then((results) => {
+  console.log(results)
+})
+```
+
+`getPolicyResults` resolves to an object with the following data:
+
+```javascript
+{
+  // The run number of the identified build.
+  runNumber: number
+  // The run url for the identified build.
+  runUrl: 'https://cloud.cypress.io/projects/:project_id/runs/:run_number'
+  // The status of the identified build.
+  runStatus: 'passed' | 'failed' | 'errored' | 'timedOut' | 'cancelled' | 'noTests'
+
+  // 'evaluated' when the project has policies that were checked, or
+  // 'not-configured' when the project has no policies (in which case `policies` is null).
+  policiesStatus: 'evaluated' | 'not-configured'
+
+  // The evaluated policies, or null when policiesStatus is 'not-configured'.
+  policies: [{
+    // The name of the policy.
+    name: string
+    // true only if every validation result for this policy passed.
+    passed: boolean
+    // The individual checks that make up this policy (see below).
+    validationResults: ValidationResult[]
+  }] | null
+}
+```
+
+Each entry in `validationResults` reports:
+
+- the metric it checked — one of `accessibility.score`, `uiCoverage.score`, `accessibility.failedElements`, or
+  `uiCoverage.untestedElements`
+- whether the check passed
+- a human-readable message describing the result
+- the measured value and the configured threshold it was compared against
+- a link to the relevant report
+- where relevant, the specific views that failed the check
 
 ## Waiting for results
 
