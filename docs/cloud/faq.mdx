@@ -129,7 +129,9 @@ to your runs unless you have invited them.
 Tests running with the `--record` flag will run as normal when the limit is
 reached, but parallelization will be disabled and new test results will be
 hidden from the dashboard until your plan is upgraded or a new usage cycle
-begins. The usage cycle resets each month.
+begins. The usage cycle resets at the start of each billing period, which is
+monthly on most plans, though some annual plans use an annual test results
+allowance.
 
 In order to avoid any interruption in service, we recommend that you review your
 usage and select a plan that satisfies your usage requirements. You can do this
@@ -148,6 +150,45 @@ Downgrading your account will **not** result in loss of access to Cypress Cloud.
 However, it will make your Cypress Cloud account subject to the limitations of
 your new plan. For example, downgrading to the _Starter_ plan will limit data
 retention to 30 days and test results to 500 per billing period.
+
+### <Icon name="angle-right" /> When does my billing period reset?
+
+Your usage cycle resets at the start of each billing period, at which point
+your recorded [test result](#What-counts-as-a-test-result) and AI usage counters
+return to zero for the new period. Most plans bill monthly, though some annual
+plans use an annual test results allowance. You can confirm the dates of your
+current period on your organization's
+[Billing & Usage](/cloud/account-management/billing-and-usage) page.
+
+### <Icon name="angle-right" /> How do I reduce my Cypress Cloud usage or lower my bill?
+
+Because Cypress Cloud meters
+[test results](#What-counts-as-a-test-result) (each passed or failed test
+recorded with `--record`), the most effective way to reduce usage is to record
+fewer, more meaningful tests. A few common approaches:
+
+- Record only the runs you need insight into, rather than every local run.
+- Remove redundant or obsolete tests, and avoid recording the same suite
+  multiple times against the same commit.
+- [Choose the right test level](/app/guides/test-performance#Choose-the-right-test-level)
+  so behavior is covered where it is cheapest to test, instead of duplicating it
+  across many end-to-end tests.
+- [Find and eliminate over-tested UI with UI Coverage](/app/guides/test-performance#Find-and-eliminate-over-tested-UI-with-UI-Coverage)
+  to cut redundant tests that cover the same flows.
+- [Run the right tests at the right time](/app/guides/test-performance#Run-the-right-tests-at-the-right-time),
+  for example a smaller smoke suite on every PR and the full suite less often.
+- Use the **By project** tab on the
+  [Billing & Usage](/cloud/account-management/billing-and-usage) page to find
+  which projects consume the most of your plan, then focus there.
+
+For more ways to trim and streamline your suite, see the
+[Optimizing test performance](/app/guides/test-performance) guide.
+
+If your usage consistently exceeds your plan, compare options on the
+[pricing page](https://www.cypress.io/pricing); moving to a larger plan is
+often more cost-effective than purchasing additional test results. You can also
+**schedule a demo** from the pricing page to talk through the plan that best
+fits your usage.
 
 ### <Icon name="angle-right" /> Can I choose not to use Cypress Cloud?
 
@@ -436,6 +477,44 @@ plan.
 
 ## Cypress Cloud Account
 
+### <Icon name="angle-right" /> What is a Cypress Cloud organization?
+
+A Cypress Cloud organization is the top-level container that groups your
+[projects](/cloud/account-management/projects),
+[users](/cloud/account-management/users),
+[teams](/cloud/account-management/teams), billing and usage, and
+[integrations](/cloud/account-management/organizations#Integrations). It lets you manage access
+control and application quality across every project from one place instead of configuring each
+project individually.
+
+### <Icon name="angle-right" /> How do I create an organization in Cypress Cloud?
+
+Open the organization switcher in [Cypress Cloud](https://on.cypress.io/cloud) and click
+**Create new organization**. A "Default Project" is created automatically, which you can rename and
+configure in [Project Settings](/cloud/account-management/projects#Project-settings).
+
+### <Icon name="angle-right" /> Can I have more than one organization?
+
+Yes. You can create multiple organizations to separate projects by team, business unit, or client,
+and switch between them using the organization switcher. Usage and
+[enterprise analytics](/cloud/features/analytics/enterprise-reporting) roll up within each
+organization.
+
+### <Icon name="angle-right" /> Who can manage an organization?
+
+Organization owners and admins can invite users, create teams, configure
+[Cloud AI](/cloud/account-management/organizations#Manage-Cloud-AI), and set up integrations. Only
+owners can rename or delete an organization and configure
+[enterprise SSO](/cloud/account-management/enterprise-sso). See
+[user roles](/cloud/account-management/users#User-roles) for the full permissions breakdown.
+
+### <Icon name="angle-right" /> How do I delete an organization?
+
+You can delete an organization you own once it has no projects. First
+[delete](/cloud/account-management/projects#Delete-Project) or
+[transfer ownership](/cloud/account-management/projects#Transfer-ownership) of every project to
+another organization, then delete the organization from its settings.
+
 ### <Icon name="angle-right" /> What is my Organization ID?
 
 Your Organization ID is a unique identifier that is linked to your organization.
@@ -454,8 +533,8 @@ Instructions on how to find your ID are in the
    - Check the trash and spam folder
    - Verify it's the correct email address
 
-**If the troubleshooting tips above did not resolve the issue or involves SSO,
-reach out to [support](mailto:support@cypress.io).**
+If the troubleshooting tips above did not resolve the issue or involves SSO,
+reach out to [support](mailto:support@cypress.io).
 
 ### <Icon name="angle-right" /> Can I delete my Cypress account?
 
@@ -463,6 +542,53 @@ You can delete your Cypress account from
 [your Cypress Cloud profile](https://cloud.cypress.io/profile). Deleting your
 account cannot be undone! By deleting your Cypress account, all associated data
 in your account will be permanently deleted.
+
+### <Icon name="angle-right" /> How do I invite a user to Cypress Cloud?
+
+An organization [Owner or Admin](/cloud/account-management/users#User-roles) can
+invite users from the **Users & Teams** page by clicking **Invite User**, adding
+one or more email addresses, and selecting a [role](/cloud/account-management/users#User-roles).
+Invited users receive an email with a link to accept the invitation. You can also
+use **Copy invite link** to share your own message. Anyone who joins through that
+link is given the default **Member** role. See
+[Invite users](/cloud/account-management/users#Invite-users) for details.
+
+### <Icon name="angle-right" /> What are the Cypress Cloud user roles?
+
+Cypress Cloud has five roles that control what a user can see and change:
+**Viewer** (read-only access to projects and runs), **Member** (the everyday
+developer role, including record keys and App Quality configuration), **Team
+Admin** (manages members and settings for their own projects), **Org Admin**
+(manages all users and both organization and project settings), and **Org
+Owner** (full control, including billing, SSO, and deletion). See the full
+[permissions tables](/cloud/account-management/users#User-roles) for an
+exact breakdown.
+
+### <Icon name="angle-right" /> What is the difference between an Org Admin and an Org Owner?
+
+An **Org Admin** can manage all users and edit organization and project
+configurations, but cannot perform owner-only actions. An **Org Owner** can do
+everything an Org Admin can, plus invite or edit other owners, set up SSO, edit
+the organization name, and delete the organization. Only owners can grant other
+users 'owner' access. See
+[User roles](/cloud/account-management/users#User-roles).
+
+### <Icon name="angle-right" /> Can someone request access to my organization instead of being invited?
+
+Yes. If a teammate already has access to Cypress and your project's source code,
+they can request to join your organization directly from the Cypress App, and an
+Owner or Admin can accept or deny the request. This lets you onboard teammates
+without inviting everyone up front. Note that user requests are not available if
+your organization is configured for SSO. See
+[User requests](/cloud/account-management/users#User-requests).
+
+### <Icon name="angle-right" /> How do I change a user's email address in Cypress Cloud?
+
+To change a user's email, an **Owner** or **Admin** invites the new email address
+and removes the previous one. To update your billing email, use the
+[Billing & Usage](/cloud/account-management/billing-and-usage) page or contact
+[billing@cypress.io](mailto:billing@cypress.io). See
+[User updates](/cloud/account-management/users#User-updates).
 
 ## Teams
 
