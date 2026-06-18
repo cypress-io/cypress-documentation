@@ -1,13 +1,20 @@
 ---
-title: 'Manage organizations | Cypress Cloud'
-description: 'Understand the value of Cypress Cloud organizations: group projects, control access with users and teams, manage AI, and connect the tools your team already uses.'
+title: 'Organizations | Cypress Cloud'
+description: 'Cypress Cloud organizations group your projects, users, teams, billing, and integrations in one place to manage application quality and access control at scale.'
 sidebar_label: Organizations
 sidebar_position: 10
+keywords:
+  - Cypress Cloud organizations
+  - manage organization
+  - organization ID
+  - users and teams
+  - access control
+  - Cypress Cloud settings
 ---
 
 <ProductHeading product="cloud" />
 
-# Organizations
+# Cypress Cloud Organizations
 
 :::info
 
@@ -57,7 +64,7 @@ with Cypress teams.
 
 <DocsImage
   src="/img/cloud/organizations/cypress-organization-UUID.gif"
-  alt="Locate UUID gif"
+  alt="Locating and copying your Cypress Cloud Organization ID in Organization settings"
 />
 
 ## Managing Organizations
@@ -72,7 +79,7 @@ switcher and clicking **<Icon name="plus" /> Create new organization**.
 
 <DocsImage
   src="/img/cloud/organizations/create-org.jpg"
-  alt="Create new organization"
+  alt="Creating a new organization from the organization switcher in Cypress Cloud"
 />
 
 ### Manage Projects
@@ -113,7 +120,7 @@ entire organization from the organization settings.
 
 <DocsImage
   src="/img/faq/questions/cypress-ai-org-setting.png"
-  alt="Image showing the Cypress AI organization setting"
+  alt="Enabling or disabling Cloud AI for an entire organization in Cypress Cloud organization settings"
 />
 
 ### Delete Org
@@ -128,7 +135,7 @@ organization.
 
 <DocsImage
   src="/img/cloud/organizations/remove-organization-dialog.jpg"
-  alt="Delete Organization"
+  alt="Confirmation dialog for deleting an organization in Cypress Cloud"
   width="80%"
 />
 
@@ -181,3 +188,47 @@ automatic, and you meet your organization's security requirements.
 - [Azure AD](/cloud/account-management/enterprise-sso#Azure-AD)
 
 {/* prettier-ignore-end */}
+
+## Frequently asked questions
+
+### What is a Cypress Cloud organization?
+
+A Cypress Cloud organization is the top-level container that groups your
+[projects](/cloud/account-management/projects),
+[users](/cloud/account-management/users),
+[teams](/cloud/account-management/teams), billing and usage, and
+[integrations](#Integrations). It lets you manage access control and application quality across
+every project from one place instead of configuring each project individually.
+
+### How do I create an organization in Cypress Cloud?
+
+Open the organization switcher in [Cypress Cloud](https://on.cypress.io/cloud) and click
+**Create new organization**. A "Default Project" is created automatically, which you can rename and
+configure in [Project Settings](/cloud/account-management/projects#Project-settings).
+
+### Where do I find my Organization ID?
+
+Your Organization ID is a unique [UUID](https://tools.ietf.org/html/rfc4122) found under
+**Organization settings > Organization ID**. Click the clipboard icon to copy it. Cypress Support,
+Success, and Sales teams use this ID to reference your organization.
+
+### Can I have more than one organization?
+
+Yes. You can create multiple organizations to separate projects by team, business unit, or client,
+and switch between them using the organization switcher. Usage and
+[enterprise analytics](/cloud/features/analytics/enterprise-reporting) roll up within each
+organization.
+
+### Who can manage an organization?
+
+Organization owners and admins can invite users, create teams, configure
+[Cloud AI](#Manage-Cloud-AI), and set up integrations. Only owners can rename or delete an
+organization and configure [enterprise SSO](/cloud/account-management/enterprise-sso). See
+[user roles](/cloud/account-management/users#User-roles) for the full permissions breakdown.
+
+### How do I delete an organization?
+
+You can delete an organization you own once it has no projects. First
+[delete](/cloud/account-management/projects#Delete-Project) or
+[transfer ownership](/cloud/account-management/projects#Transfer-ownership) of every project to
+another organization, then delete the organization from its settings.
