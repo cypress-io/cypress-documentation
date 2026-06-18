@@ -14,33 +14,53 @@ sidebar_custom_props: { 'new_label': true }
 
 ##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
 
-- How teams are used in Cypress Cloud
-- How to assign users to teams
-- How to assign projects to teams
-- Best practices for team setup
+- The value teams bring to your Cypress Cloud organization
+- How teams give you control over project access
+- How to assign users and projects to teams
+- Best practices for getting the most out of team setup
 
 :::
 
-Teams can be defined in Cypress Cloud. A team can help you control which users have
-access to specific projects. This is accomplished by selecting which projects a team
-is allowed to access.
+Teams in Cypress Cloud let you shape your organization so that every person sees the
+projects relevant to their work — and nothing else. A team is a reusable grouping of
+users that is granted access to a specific set of projects, so you can manage access
+once at the team level instead of project by project, user by user.
 
-Organizations have many reasons for wanting to divide access into teams. Some of the most
-popular reasons are:
+## Why use teams
 
-- Increase efficiency and reduce clutter by only seeing the projects that you need to see
-- Multiple business units in your organization are sharing the same Cypress Cloud organization
-- Privacy and security when certain projects are only meant to be accessible to specific users
-  in an organization
-- Ability to understand Cypress usage, by team, in [Enterprise Reporting](/cloud/features/analytics/enterprise-reporting)
+As your organization grows, a single shared view of every project becomes harder to
+navigate and harder to govern. Teams solve this by aligning access in Cypress Cloud with
+how your organization actually works. The most valuable outcomes teams deliver are:
 
-_Note: [public projects](https://on.cypress.io/what-is-project-access) are visible to all users in the organization in Cypress Cloud_
+- **A focused, clutter-free experience.** Each person sees only the projects their team
+  needs, which makes navigating Cypress Cloud faster and reduces the chance of acting on
+  the wrong project.
+- **Clean separation for shared organizations.** When multiple business units or
+  subsidiaries share one Cypress Cloud organization, teams keep each unit's projects
+  cleanly separated while preserving a single billing relationship.
+- **Privacy and security by default.** Sensitive projects can be restricted to the
+  specific people who should see them, so access is intentional rather than open to
+  everyone.
+- **Distributed administration.** The dedicated _team admin_ role lets day-to-day team
+  members manage their own projects, removing bottlenecks and freeing organization
+  owners and admins from routine access requests.
+- **Usage insight by team.** Because access is organized by team, you can understand how
+  Cypress is used across your organization in
+  [Enterprise Reporting](/cloud/features/analytics/enterprise-reporting) — useful for
+  chargebacks, capacity planning, and measuring adoption.
+
+_Note: [public projects](https://on.cypress.io/what-is-project-access) are visible to all users in the organization in Cypress Cloud, regardless of team membership._
 
 ## Manage teams
 
-Organization [owner or admin](/cloud/account-management/users#User-roles) roles can create
-teams in Cypress Cloud. These organization owners and admins, along with a new role called
-the _team admin_, are then able to configure the team as required.
+Teams are flexible by design, so you can model them to fit your organization without
+running into artificial limits or rigid rules. Organization
+[owner or admin](/cloud/account-management/users#User-roles) roles can create teams in
+Cypress Cloud. These organization owners and admins, along with a role called the
+_team admin_, are then able to configure the team as required.
+
+This flexibility is what makes teams valuable at any scale — you can start small and
+expand your structure as your organization grows:
 
 - There is no limit on the number of teams that can be set up for your organization
 - All users in Cypress Cloud will be a member of the default team named _Everyone_
@@ -72,6 +92,11 @@ To delete a team, simply click on the _X_ icon at the right side of the team's r
 You will be prompted for confirmation before the team is deleted.
 
 ### Assign projects to a team
+
+Project assignment is the heart of what makes teams valuable: it is the control that
+decides exactly which projects a team's members can see and work with. Assigning the
+right projects keeps each team focused on what matters to them and keeps everything else
+out of view.
 
 Once a team has been created, it is important to assign projects to the team. If no
 projects are assigned to a team, any users that are a member of only this team will not
@@ -107,6 +132,12 @@ _Project access_ column. In the modal that appears there will be two options:
    />
 
 ### Assign users to a team
+
+Adding users to a team is how access translates into everyday productivity: members
+immediately gain the right view of Cypress Cloud, and you grant that access once at the
+team level rather than repeating it for every project. Cypress Cloud gives you two
+convenient places to manage membership so you can work from whichever view fits the task
+at hand.
 
 Once a team has been created and granted access to projects, the last step is to add
 users to the team. This will allow the users to have access to the projects in Cypress Cloud.
@@ -146,12 +177,16 @@ There are two places in Cypress Cloud where users can be added to an existing te
 
 ## Best practices
 
-Separating project access between multiple teams in Cypress Cloud is an optional setup. If your
-organization has no concerns or reasons to define teams, simply keep the default _Everyone_ team
-as it is defined. All users added to Cypress Cloud will automatically be associated with the
-Everyone team, and that team has access to all projects.
+The value of teams comes from matching their structure to how your organization actually
+operates — enough separation to stay focused and secure, without so much granularity that
+upkeep becomes a burden. Separating project access between multiple teams in Cypress Cloud
+is an optional setup. If your organization has no concerns or reasons to define teams,
+simply keep the default _Everyone_ team as it is defined. All users added to Cypress Cloud
+will automatically be associated with the Everyone team, and that team has access to all
+projects.
 
-For organizations that have a desire to divide into teams, a common setup is as follows:
+For organizations that have a desire to divide into teams, a common setup that balances
+focus, security, and low maintenance is as follows:
 
 1. Create a team that will be assigned to all organization-level users (Owner or Admin) and assign
    all projects to this team. This will provide visibility to all projects to your organization-level users.
