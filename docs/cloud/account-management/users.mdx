@@ -9,6 +9,13 @@ sidebar_label: Users
 
 # Manage users
 
+**A user is anyone who logs in to Cypress Cloud.** Managing users well is how you
+turn Cypress Cloud from a single-developer tool into a shared source of truth
+for your whole team: everyone sees the same test results, the right people get
+the right level of access, and onboarding a new teammate takes minutes instead
+of a support ticket. The features below (invitations, roles, self-service
+requests, and account updates) exist to make that growth fast and safe.
+
 :::info
 
 ##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
@@ -19,13 +26,6 @@ sidebar_label: Users
 - How to update a user's email and your billing contact
 
 :::
-
-**A user is anyone who logs in to Cypress Cloud.** Managing users well is how you
-turn Cypress Cloud from a single-developer tool into a shared source of truth
-for your whole team: everyone sees the same test results, the right people get
-the right level of access, and onboarding a new teammate takes minutes instead
-of a support ticket. The features below (invitations, roles, self-service
-requests, and account updates) exist to make that growth fast and safe.
 
 ## Invite users
 
@@ -55,39 +55,39 @@ you can click **Copy invite link** and all users who accept this invitation will
 the default role of **Member**.
 
 <DocsImage
-  src="/img/cloud/users/invite-user-dialog.jpg"
+  src="/img/cloud/users/invite-user-dialog.png"
   alt="Cypress Cloud Invite User dialog showing email entry and role selection"
 />
 
-### Sign Up with an Invitation:
+### Sign up with an invitation:
 
-Upon receiving the email, click **"Accept Invitation"** to be redirected to
+Upon receiving the email, click **Accept Invitation** to be redirected to
 Cypress Cloud. From there, you will have the choice of authentication type:
 
 - **Basic** (Email and Password)
 - **Social** (Google or GitHub)
 - **Single Sign On**
 
-#### **Sign Up with Basic Authentication**
+#### **Sign up with basic authentication**
 
-1. Click **"Don't have an account? Sign Up"**
-2. Click **"Sign up with Email"**
+1. Click **Don't have an account? Sign Up**
+2. Click **Sign up with Email**
 3. Type your **email address** and make a **password**
-4. Click **"Sign Up"**
+4. Click **Sign Up**
 
-#### **Sign Up with Social Authentication**
+#### **Sign up with social authentication**
 
-1. Click **"Don't have an account? Sign Up"**
-2. Click **"Sign up with Google"** or **"Sign up with GitHub"**
+1. Click **Don't have an account? Sign Up**
+2. Click **Sign up with Google** or **Sign up with GitHub**
 3. You may need to verify via your Social provider depending on your personal
    settings
 
-#### **Sign Up with Single Sign On (SSO) Authentication**
+#### **Sign up with single sign on (SSO) authentication**
 
 Refer to our
 [Enterprise SSO Guide](/cloud/account-management/enterprise-sso).
 
-#### Locked Out or Forgot Password
+#### Locked out or forgot password
 
 Try resetting your password. If you never received the email, try the
 following:
@@ -96,8 +96,8 @@ following:
 - Check your trash and spam folder
 - Verify you typed the correct email address
 
-**If the troubleshooting tips above did not resolve the issue or involves SSO,
-reach out to [support](mailto:support@cypress.io).**
+If the troubleshooting tips above did not resolve the issue or involves SSO,
+reach out to [support](mailto:support@cypress.io).
 
 ## User roles
 
@@ -121,66 +121,64 @@ Users can be assigned roles that affect their access to certain features of
 - **Org Admin:** Can manage all users within the organization, and edit both
   organization and project configurations. For people who run the account
   day to day.
-- **Org Owner:** Can manage all aspects of the organization and projects,
+- **Owner:** Can manage all aspects of the organization and projects,
   including billing, SSO, and deletion. Reserved for those ultimately
   accountable for the account.
 
-:::tip
+:::info
 
-We recommend assigning at least two **Org Owners** to every organization. Having
+We recommend assigning at least **two owner roles** to every organization. Having
 a second owner ensures continuity of ownership if one owner is unavailable or
 leaves the organization, so your team is never locked out of owner-only actions
 like managing billing, setting up SSO, or inviting and removing other owners.
 
 :::
 
-The permissions for each user role for Cypress Cloud:
+### Organization-level permissions
 
-**Organization-level permissions**
+| Permission                                | Viewer | Member | Team Admin | Org Admin | Owner |
+| ----------------------------------------- | ------ | ------ | ---------- | --------- | ----- |
+| View Enterprise Reporting                 | ✅     | ✅     | ✅         | ✅        | ✅    |
+| Assign members to a team                  |        |        | ✅         | ✅        | ✅    |
+| Remove members from a team                |        |        | ✅         | ✅        | ✅    |
+| View billing and usage information        |        |        |            | ✅        | ✅    |
+| Edit billing information                  |        |        |            | ✅        | ✅    |
+| Invite a Member                           |        |        |            | ✅        | ✅    |
+| Invite an Admin                           |        |        |            | ✅        | ✅    |
+| View invited users                        |        |        |            | ✅        | ✅    |
+| Resend invitation to invited user         |        |        |            | ✅        | ✅    |
+| View user requests to join organization   |        |        |            | ✅        | ✅    |
+| Accept user requests to join organization |        |        |            | ✅        | ✅    |
+| Edit users                                |        |        |            | ✅        | ✅    |
+| Remove users                              |        |        |            | ✅        | ✅    |
+| Create and edit teams                     |        |        |            | ✅        | ✅    |
+| Assign projects to a team                 |        |        |            | ✅        | ✅    |
+| Remove projects from a team               |        |        |            | ✅        | ✅    |
+| Set up organization GitHub Integration    |        |        |            | ✅        | ✅    |
+| Set up organization Slack Integration     |        |        |            | ✅        | ✅    |
+| Set up organization MS Teams Integration  |        |        |            | ✅        | ✅    |
+| Invite an owner                           |        |        |            |           | ✅    |
+| Edit an owner                             |        |        |            |           | ✅    |
+| Remove an owner                           |        |        |            |           | ✅    |
+| Edit organization name                    |        |        |            |           | ✅    |
+| Set up SSO                                |        |        |            |           | ✅    |
+| Delete organization                       |        |        |            |           | ✅    |
 
-| Permission                                | Viewer | Member | Team Admin | Org Admin | Org Owner |
-| ----------------------------------------- | ------ | ------ | ---------- | --------- | --------- |
-| View Enterprise Reporting                 | ✅     | ✅     | ✅         | ✅        | ✅        |
-| View billing and usage information        |        |        |            | ✅        | ✅        |
-| Edit billing information                  |        |        |            | ✅        | ✅        |
-| Invite a Member                           |        |        |            | ✅        | ✅        |
-| Invite an Admin                           |        |        |            | ✅        | ✅        |
-| View invited users                        |        |        |            | ✅        | ✅        |
-| Resend invitation to invited user         |        |        |            | ✅        | ✅        |
-| View user requests to join organization   |        |        |            | ✅        | ✅        |
-| Accept user requests to join organization |        |        |            | ✅        | ✅        |
-| Edit users                                |        |        |            | ✅        | ✅        |
-| Remove users                              |        |        |            | ✅        | ✅        |
-| Invite an Owner                           |        |        |            |           | ✅        |
-| Edit an Owner                             |        |        |            |           | ✅        |
-| Remove an Owner                           |        |        |            |           | ✅        |
-| Create and edit teams                     |        |        |            | ✅        | ✅        |
-| Assign projects to a team                 |        |        |            | ✅        | ✅        |
-| Remove projects from a team               |        |        |            | ✅        | ✅        |
-| Assign members to a team                  |        |        | ✅         | ✅        | ✅        |
-| Remove members from a team                |        |        | ✅         | ✅        | ✅        |
-| Set up organization GitHub Integration    |        |        |            | ✅        | ✅        |
-| Set up organization Slack Integration     |        |        |            | ✅        | ✅        |
-| Set up organization MS Teams Integration  |        |        |            | ✅        | ✅        |
-| Edit organization name                    |        |        |            |           | ✅        |
-| Set up SSO                                |        |        |            |           | ✅        |
-| Delete organization                       |        |        |            |           | ✅        |
+### Project-level permissions
 
-**Project-level permissions**
-
-| Permission                               | Viewer | Member | Team Admin | Org Admin | Org Owner |
-| ---------------------------------------- | ------ | ------ | ---------- | --------- | --------- |
-| View test results of private projects    | ✅     | ✅     | ✅         | ✅        | ✅        |
-| View record keys of projects             |        | ✅     | ✅         | ✅        | ✅        |
-| Edit App Quality configuration           |        | ✅     | ✅         | ✅        | ✅        |
-| Edit project name                        |        |        | ✅         | ✅        | ✅        |
-| Edit project status (private/public)     |        |        | ✅         | ✅        | ✅        |
-| Add or delete record keys                |        |        | ✅         | ✅        | ✅        |
-| Configure project GitHub Integration     |        |        | ✅         | ✅        | ✅        |
-| Configure project Slack Integration      |        |        | ✅         | ✅        | ✅        |
-| Configure project MS Teams Integration   |        |        | ✅         | ✅        | ✅        |
-| Transfer project to another organization |        |        | ✅         | ✅        | ✅        |
-| Delete project                           |        |        | ✅         | ✅        | ✅        |
+| Permission                               | Viewer | Member | Team Admin | Org Admin | Owner |
+| ---------------------------------------- | ------ | ------ | ---------- | --------- | ----- |
+| View test results of private projects    | ✅     | ✅     | ✅         | ✅        | ✅    |
+| View record keys of projects             |        | ✅     | ✅         | ✅        | ✅    |
+| Edit App Quality configuration           |        | ✅     | ✅         | ✅        | ✅    |
+| Edit project name                        |        |        | ✅         | ✅        | ✅    |
+| Edit project status (private/public)     |        |        | ✅         | ✅        | ✅    |
+| Add or delete record keys                |        |        | ✅         | ✅        | ✅    |
+| Configure project GitHub Integration     |        |        | ✅         | ✅        | ✅    |
+| Configure project Slack Integration      |        |        | ✅         | ✅        | ✅    |
+| Configure project MS Teams Integration   |        |        | ✅         | ✅        | ✅    |
+| Transfer project to another organization |        |        | ✅         | ✅        | ✅    |
+| Delete project                           |        |        | ✅         | ✅        | ✅    |
 
 ## User requests
 
