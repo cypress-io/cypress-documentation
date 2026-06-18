@@ -364,6 +364,30 @@ while not waiting indefinitely for runs that have failed or hung:
 - **Run timeout** (minutes): How long to wait for any activity from a run before
   marking it timed out. Applies throughout the entire run.
 
+### Test Replay
+
+[Test Replay](/cloud/features/test-replay) captures a full snapshot of your
+application (DOM, styles, network traffic, console logs, and more) so you can
+debug CI failures as if you were there. Because that capture happens during
+recording, the **Test Replay** section of your project settings gives you two
+controls over it:
+
+- **Test Replay recording.** Test Replay is on by default. Toggle it off to stop
+  capturing replay data for the project entirely. Keep in mind that captured
+  replays, including any test data they contain, are visible to everyone with
+  access to the project. See
+  [Opt-out of Test Replay](/cloud/features/test-replay#Opt-out-of-Test-Replay).
+- **Canvas elements.** Capturing `<canvas>` elements can be resource-intensive. If
+  your application renders many or large canvases and you notice slower recording,
+  disable this toggle, which sits just below the main Test Replay toggle, to skip
+  canvas capture while keeping the rest of Test Replay. See
+  [Canvas Elements](/cloud/features/test-replay#Canvas-Elements).
+
+<DocsImage
+  src="/img/cloud/features/test-replay/cypress-test-replay-canvas-elements-toggle-cloud.png"
+  alt="Test Replay canvas toggle in project settings"
+/>
+
 ## Managing your project
 
 These actions change who owns a project or remove it entirely. Because they
