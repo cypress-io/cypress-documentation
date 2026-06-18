@@ -388,6 +388,25 @@ controls over it:
   alt="Test Replay canvas toggle in project settings"
 />
 
+## App Quality configuration
+
+If your project uses [UI Coverage](/ui-coverage/get-started/introduction) or
+[Cypress Accessibility](/accessibility/get-started/introduction), the **App
+Quality** tab in your project settings is where you tune how those reports are
+scored. A built-in JSON editor, with linting and autocomplete, lets you control
+what is included in or excluded from your results, such as filtering out
+irrelevant elements and views, grouping related ones, and adjusting how elements
+are identified.
+
+Because it shapes every report, setting App Quality configuration is limited to
+admins by default. Saved changes can be applied to past runs with the
+**regenerate** button, so you can see the effect of a config change without
+re-running your tests.
+
+See the [UI Coverage configuration](/ui-coverage/configuration/overview) and
+[Accessibility configuration](/accessibility/configuration/overview) guides for
+the full list of options.
+
 ## Managing your project
 
 These actions change who owns a project or remove it entirely. Because they
@@ -553,6 +572,14 @@ a couple of clicks. **Team communication** integrations push run results into th
 channels you already watch, so the right people hear about a failure in seconds
 instead of discovering it hours later. In short, integrations close the loop
 between a test failing and your team acting on it.
+
+Once an integration is connected, you manage its per-project behavior from the
+**Integrations** tab of your project settings. Depending on the provider, this is
+where you connect a project to a specific repository, toggle commit **status
+checks** (run status and flaky test reporting), enable **pull or merge request
+comments** (including UI Coverage and Accessibility results), and mute
+notifications for the project. See each integration guide below for the options
+each provider supports.
 
 See our integration guides to learn more:
 
