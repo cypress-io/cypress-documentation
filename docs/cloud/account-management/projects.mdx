@@ -149,6 +149,15 @@ App.
 4. Find the **Record Keys** section.
 5. Click **Create New Key**. A new key will be automatically generated for your
    project.
+6. Copy the key and use it to record runs by passing it to
+   [`cypress run`](/app/references/command-line#cypress-run) with the
+   `--record --key <record-key>` flags, or by setting it as the
+   `CYPRESS_RECORD_KEY` [environment variable](/app/continuous-integration/overview#Environment-variables)
+   in your CI provider:
+
+   ```shell
+   cypress run --record --key <record-key>
+   ```
 
 #### Delete record key
 
