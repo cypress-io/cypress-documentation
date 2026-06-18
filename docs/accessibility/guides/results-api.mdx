@@ -45,7 +45,7 @@ Please reach out to Cypress Support to request support for a different provider.
 Install the `@cypress/extract-cloud-results` module in your install step in CI.
 
 The package is distributed from the Cypress CDN rather than the public npm registry. Install the tarball for
-the major version you want — the version is specified by the path segment in the URL (for example, `v1`):
+the major version you want. The version is specified by the path segment in the URL (for example, `v1`):
 
 ```shell
 npm install --force https://cdn.cypress.io/extract-cloud-results/v1/extract-cloud-results.tgz
@@ -288,7 +288,7 @@ The Accessibility results for the run are returned as an object containing the f
 ## Policy results
 
 The package also exports `getPolicyResults`, which evaluates the policies configured for your project against a
-run. It uses the same call signature as `getAccessibilityResults` and is product-agnostic — a single policy can
+run. It uses the same call signature as `getAccessibilityResults` and is product-agnostic. A single policy can
 check both Accessibility and UI Coverage metrics.
 
 ```javascript
@@ -360,7 +360,7 @@ type PolicyValidationResult =
 ## Waiting for results
 
 Reports are generated asynchronously after a run finishes. If you call `getAccessibilityResults` before the
-report has finished processing, the package does not fail — it polls for you automatically:
+report has finished processing, the package does not fail. It polls for you automatically:
 
 - It checks the report status, and while the report is still processing it waits and retries.
 - Polling runs for up to 30 attempts at 30-second intervals, i.e. up to ~15 minutes.
@@ -370,7 +370,7 @@ report has finished processing, the package does not fail — it polls for you a
   that includes the processed/total spec counts and a link to check the report, advising you to run the script
   again.
 
-This means you can safely call `getAccessibilityResults` immediately after your Cypress run completes — you
+This means you can safely call `getAccessibilityResults` immediately after your Cypress run completes, so you
 don't need to add your own sleep/wait logic.
 
 ## Errors
@@ -378,20 +378,20 @@ don't need to add your own sleep/wait logic.
 All errors are thrown to the caller as plain `Error` objects with a clear, actionable message (stack traces are
 stripped to avoid leaking internal paths). The errors you may encounter include:
 
-- **Missing project ID / record key** — neither the option nor the corresponding environment variable was provided.
-- **Invalid run tags** — `runTags` contained non-string values.
-- **Not running in a supported CI provider** — the environment couldn't be detected as one of the supported providers.
-- **No run found** — no run matching the current CI context and tags was recorded in the last seven days. (On Azure
+- **Missing project ID / record key**: neither the option nor the corresponding environment variable was provided.
+- **Invalid run tags**: `runTags` contained non-string values.
+- **Not running in a supported CI provider**: the environment couldn't be detected as one of the supported providers.
+- **No run found**: no run matching the current CI context and tags was recorded in the last seven days. (On Azure
   and CircleCI, the message also notes that Cypress 13.13.1+ is required.)
-- **Multiple runs found** — more than one run matched and they couldn't be disambiguated. The message lists the
+- **Multiple runs found**: more than one run matched and they couldn't be disambiguated. The message lists the
   candidate runs and instructs you to set distinct `--tag` values and pass them in via `runTags`.
-- **Test Replay disabled** — the report wasn't generated because Test Replay was off for that run. The message points
+- **Test Replay disabled**: the report wasn't generated because Test Replay was off for that run. The message points
   you to Project Settings.
-- **No report found** — the run exists but has no report of the requested type.
-- **Polling exhausted** — the report was still processing after the maximum polling window (~15 minutes). See
+- **No report found**: the run exists but has no report of the requested type.
+- **Polling exhausted**: the report was still processing after the maximum polling window (~15 minutes). See
   [Waiting for results](#waiting-for-results).
-- **Report errored** — report generation failed on Cypress Cloud's side (Cypress is notified automatically).
-- **App Quality disabled** — the product isn't enabled for the project.
+- **Report errored**: report generation failed on Cypress Cloud's side (Cypress is notified automatically).
+- **App Quality disabled**: the product isn't enabled for the project.
 
 In addition, a version-compatibility guard validates the package's major version against the current internal Cloud
 script and aborts with an "unsupported version" error if the installed package is too old or too new. Install the
