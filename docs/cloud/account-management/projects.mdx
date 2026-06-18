@@ -92,27 +92,27 @@ instantly without disrupting your other pipelines.
 
 :::caution
 
-<strong>Exposing a record key</strong>
+<strong>Keep your record key private</strong>
 
-Anyone that has access to both the `projectId` and the record key of a project
-can record runs to that organization's project in Cypress Cloud.
+Anyone with both your `projectId` and record key can record runs to your project
+in Cypress Cloud. Keep the record key out of reach of anyone outside your team,
+for two reasons:
 
-**You would not want people outside of your team running tests because:**
+1. **It can inflate your bill.** Cypress bills based on the number of recorded
+   tests, so unauthorized runs can consume your test allotment and push you over
+   your plan's limit.
+2. **It lets others write data to your project.** Someone could record runs that
+   capture content you never intended, such as videos of visits to unrelated
+   websites, polluting your run history.
 
-1. **This could drive up the number of tests you've run.** Since Cypress bills
-   based on the number of recorded tests - this means they can use up all
-   allotted tests and there would be consequences to that.
-2. **They can write any data they want to your Cypress Cloud.** They could edit
-   the test suite so that recorded tests record different things than the
-   project's original intent. This could including visiting different websites
-   and generating videos of visiting those websites, for example.
+If your record key is ever exposed, [delete it](#Delete-record-key) and
+[create a new one](#Create-new-record-key). A deleted key is permanently invalid:
+any run that uses it will fail to record.
 
-If a record key is exposed you should [delete it](#Delete-record-key) and
-[create a new record key](#Create-new-record-key). Deleted keys will be invalid;
-If a project is run with a deleted key it will not be able to record.
-
-You can set your record key as an environment variable to help protect it. Learn
-more [here](/app/continuous-integration/overview#Environment-variables).
+To avoid exposing the key in the first place, store it as an environment variable
+rather than in your source code. See
+[environment variables](/app/continuous-integration/overview#Environment-variables)
+for details.
 
 :::
 
