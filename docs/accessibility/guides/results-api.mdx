@@ -44,9 +44,15 @@ Please reach out to Cypress Support to request support for a different provider.
 
 Install the `@cypress/extract-cloud-results` module in your install step in CI.
 
+The package is distributed from the Cypress CDN rather than the public npm registry. Install the tarball for
+the major version you want — the version is specified by the path segment in the URL (for example, `v1`):
+
 ```shell
 npm install --force https://cdn.cypress.io/extract-cloud-results/v1/extract-cloud-results.tgz
 ```
+
+The package exports three async functions with identical call signatures; `getAccessibilityResults`, documented
+below, is one of them.
 
 :::caution
 
