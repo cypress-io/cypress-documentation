@@ -381,6 +381,13 @@
             "sharding"
           ],
           "badge": "community"
+        },
+        {
+          "name": "cypress-conditional-tags",
+          "description": "Access runtime tags (CLI) and test tags (config) inside Cypress test logic to build context-aware conditional behavior.",
+          "link": "https://github.com/JaydipManiya/cypress-conditional-tags",
+          "keywords": ["tags", "cli"],
+          "badge": "community"
         }
       ]
     },
