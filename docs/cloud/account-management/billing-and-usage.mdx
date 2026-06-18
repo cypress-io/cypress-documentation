@@ -31,6 +31,19 @@ Your plan meters two things that matter day to day: how many **test results** yo
   alt="Billing and Usage Results shows visuals of usage in your current billing period"
 />
 
+## Plan overview
+
+The card at the top of the page summarizes your subscription at a glance, so you always know what you are entitled to and when it renews:
+
+- **Current plan** — your plan tier and price.
+- **Included test results** — the number of [test results](#Cloud-test-results) included in your plan each billing period.
+- **Additional test results** — the per-unit price for usage beyond your included amount, so you can anticipate overage costs before they appear on an invoice.
+- **Users** — how many of your plan's [user](/cloud/account-management/users) seats are in use.
+- **Data Retention** — how long your recorded runs and their artifacts stay available in Cypress Cloud.
+- **Renews on** — the date your plan renews and your usage cycle resets.
+
+Use the **Contact us** button to reach the Cypress team about upgrading, changing, or asking questions about your plan.
+
 ## Cloud test results
 
 A **test result** is each passed or failed test recorded when you run [`cypress run --record`](/app/references/command-line#cypress-run); pending and skipped tests are not counted (see [what counts as a test result](/cloud/faq#What-counts-as-a-test-result)). It is the core unit Cypress Cloud meters, and it is what unlocks everything Cloud does for your team. In exchange for recording, each run becomes debuggable and measurable: you get [Test Replay](/cloud/features/test-replay) to reproduce failures exactly as they happened in CI, [Flaky Test Management](/cloud/features/flaky-test-management) to catch unreliable tests, [analytics](/cloud/features/analytics/overview) to track quality over time, and [Smart Orchestration](/cloud/features/smart-orchestration/overview) to run specs in parallel and cut CI time. Test results are the meter behind all of that value.
@@ -68,30 +81,6 @@ The **By project** tab shows your usage per project during the selected billing 
   alt="A graph is displayed showing Test Result usage, per project, for your selected billing period"
 />
 
-## Usage notification
-
-A **usage notification** emails your organization's owner and admins when your recorded test results reach a number you choose in the current billing cycle. Instead of remembering to check this page, you get told when you are approaching your limit, so you can upgrade or adjust before [parallelization is disabled and new results are hidden](/cloud/faq#What-happens-once-I-reach-the-test-results-limit). That early warning is the difference between a planned upgrade and a surprise interruption to your CI feedback, and it keeps owners and admins aware of usage trends without anyone having to monitor the dashboard manually.
-
-From the **Usage notification** card, click **Create notification**
-
-<DocsImage
-  src="/img/cloud/billing/usage-notification.png"
-  alt="Usage notification card with create notification button"
-  noBorder={true}
-/>
-
-Choose the threshold that triggers the email:
-
-- **Included with your plan** — notify when you reach the test results already included in your plan, so you hear about it right as you hit the ceiling.
-- **Custom** — notify at a number you set, which is useful for getting an earlier heads-up (for example, at 80% of your allowance) while you still have room to act.
-
-Click **Save notification** to enable it. The notification email is sent to the organization's owner and admins.
-
-<DocsImage
-  src="/img/cloud/billing/usage-notification-custom-test-results.png"
-  alt="Usage notification card with custom test results threshold"
-/>
-
 ## Prompt executions
 
 The **AI Prompts** card tracks [cy.prompt](/api/commands/prompt) usage in your organization for the current billing period, both the number of prompt executions and the number of steps those prompts ran. `cy.prompt` is the AI capability that turns natural-language steps into executable Cypress commands and can [self-heal](/api/commands/prompt) tests when selectors change. Its value is in the manual work it removes: faster test authoring from plain English, and fewer broken tests to fix when your UI evolves. This card shows you how broadly that value is being adopted across your organization.
@@ -126,6 +115,55 @@ The **By project** tab shows your prompt usage per project during the selected b
 />
 
 Studio AI recommendation limits (per user, per hour) are documented in [AI at Cypress](/cloud/features/cypress-ai-features#Usage-limits).
+
+## Usage notification
+
+A **usage notification** emails your organization's owner and admins when your recorded test results reach a number you choose in the current billing cycle. Instead of remembering to check this page, you get told when you are approaching your limit, so you can upgrade or adjust before [parallelization is disabled and new results are hidden](/cloud/faq#What-happens-once-I-reach-the-test-results-limit). That early warning is the difference between a planned upgrade and a surprise interruption to your CI feedback, and it keeps owners and admins aware of usage trends without anyone having to monitor the dashboard manually.
+
+From the **Usage notification** card, click **Create notification**
+
+<DocsImage
+  src="/img/cloud/billing/usage-notification.png"
+  alt="Usage notification card with create notification button"
+  noBorder={true}
+/>
+
+Choose the threshold that triggers the email:
+
+- **Included with your plan** — notify when you reach the test results already included in your plan, so you hear about it right as you hit the ceiling.
+- **Custom** — notify at a number you set, which is useful for getting an earlier heads-up (for example, at 80% of your allowance) while you still have room to act.
+
+Click **Save notification** to enable it. The notification email is sent to the organization's owner and admins.
+
+<DocsImage
+  src="/img/cloud/billing/usage-notification-custom-test-results.png"
+  alt="Usage notification card with custom test results threshold"
+/>
+
+## Payment method and billing email
+
+The **Payment method information** card shows the credit card on file and the email address your invoices are sent to, and lets an **Owner** or **Admin** keep both current without contacting support. Keeping these accurate means uninterrupted service and invoices that reach the right inbox, so a renewal never fails because of an expired card and finance always receives the bill.
+
+- **Credit card:** Click **Change** to update the card on file, for example when it expires or you switch to a corporate card.
+- **Invoices sent to:** this is the billing email address. Click **Change** to open the **Change billing email** dialog, enter the new address, and click **Update billing email**. Invoices and billing-related notifications are sent here, so point it at the inbox your finance or accounting team monitors.
+
+<DocsImage
+  src="/img/cloud/billing/update-cypress-billing-email.png"
+  alt="Update billing email dialog"
+/>
+
+To update other billing details, such as your billing address or company name, contact [billing@cypress.io](mailto:billing@cypress.io).
+
+## Invoices
+
+Every invoice for your organization is listed at the bottom of the **Billing & Usage** page, giving owners and admins self-serve access to a complete billing history for expense reporting, audits, and accounting, without having to request copies from support. Each row shows the invoice **status** (such as _Paid_ and the date it was paid), the invoice **ID**, the **invoice date**, the **amount invoiced**, any **credits** applied, and the **amount paid**.
+
+To download a past invoice, click **Download** on its row. This gives you a PDF you can forward to finance or attach to an expense report at any time, including for older billing periods.
+
+<DocsImage
+  src="/img/cloud/billing/billing-and-usage-invoices.png"
+  alt="Invoices section with list of invoices"
+/>
 
 ## Open Source Plan
 
@@ -169,31 +207,6 @@ To qualify, all Projects in your Organization must meet the following criteria:
 
 If you have any questions regarding the OSS plan, please feel free
 [contact us](mailto:hello@cypress.io).
-
-## Payment method and billing email
-
-The **Payment method information** card shows the credit card on file and the email address your invoices are sent to, and lets an **Owner** or **Admin** keep both current without contacting support. Keeping these accurate means uninterrupted service and invoices that reach the right inbox, so a renewal never fails because of an expired card and finance always receives the bill.
-
-- **Credit card:** Click **Change** to update the card on file, for example when it expires or you switch to a corporate card.
-- **Invoices sent to:** this is the billing email address. Click **Change** to open the **Change billing email** dialog, enter the new address, and click **Update billing email**. Invoices and billing-related notifications are sent here, so point it at the inbox your finance or accounting team monitors.
-
-<DocsImage
-  src="/img/cloud/billing/update-cypress-billing-email.png"
-  alt="Update billing email dialog"
-/>
-
-To update other billing details, such as your billing address or company name, contact [billing@cypress.io](mailto:billing@cypress.io).
-
-## Invoices
-
-Every invoice for your organization is listed at the bottom of the **Billing & Usage** page, giving owners and admins self-serve access to a complete billing history for expense reporting, audits, and accounting, without having to request copies from support. Each row shows the invoice **status** (such as _Paid_ and the date it was paid), the invoice **ID**, the **invoice date**, the **amount invoiced**, any **credits** applied, and the **amount paid**.
-
-To download a past invoice, click **Download** on its row. This gives you a PDF you can forward to finance or attach to an expense report at any time, including for older billing periods.
-
-<DocsImage
-  src="/img/cloud/billing/billing-and-usage-invoices.png"
-  alt="Invoices section with list of invoices"
-/>
 
 ## Common billing questions
 
