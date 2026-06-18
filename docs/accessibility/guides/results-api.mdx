@@ -198,7 +198,7 @@ The Accessibility results for the run are returned as an object containing the f
   runUrl: 'https://cloud.cypress.io/projects/:project_id/runs/:run_number'
 
   // The status of the identified build.
-  runStatus: 'passed' | 'failed' | 'errored' | 'timedOut' | 'cancelled' | 'noTests'
+  runStatus: 'errored' | 'failed' | 'passed' | 'timedOut' | 'noTests' | 'running' | 'overLimit' | 'cancelled'
 
    // The url that deep links into the summarized Accessibility report for the identified build.
   accessibilityReportUrl: 'https://cloud.cypress.io/[...]'
@@ -240,9 +240,10 @@ The Accessibility results for the run are returned as an object containing the f
     // The name of the rule. See https://github.com/dequelabs/axe-core/blob/develop/doc/rule-descriptions.md.
     name: string
     // The likely impact the rule has on a user with a disability.
-    severity: 'critical' | 'serious' | 'moderate' | 'minor'
-    // The status of the rule for the run.
-    status: 'violation'
+    // e.g. 'critical', 'serious', 'moderate', or 'minor'
+    severity: string
+    // The status of the rule for the run, e.g. 'violation'.
+    status: string
     // The url that deep links the report for this specific rule violation.
     accessibilityReportUrl: 'https://cloud.cypress.io/[...]'
   }]
@@ -288,42 +289,63 @@ getPolicyResults().then((results) => {
 })
 ```
 
-`getPolicyResults` resolves to an object with the following data:
+`getPolicyResults` resolves to a `PolicyResults` object:
 
-```javascript
-{
-  // The run number of the identified build.
+```typescript
+type RunStatus =
+  | 'errored' | 'failed' | 'passed' | 'timedOut'
+  | 'noTests' | 'running' | 'overLimit' | 'cancelled'
+
+type PolicyResults = {
   runNumber: number
-  // The run url for the identified build.
-  runUrl: 'https://cloud.cypress.io/projects/:project_id/runs/:run_number'
-  // The status of the identified build.
-  runStatus: 'passed' | 'failed' | 'errored' | 'timedOut' | 'cancelled' | 'noTests'
-
+  runUrl: string
+  runStatus: RunStatus
   // 'evaluated' when the project has policies that were checked, or
   // 'not-configured' when the project has no policies (in which case `policies` is null).
   policiesStatus: 'evaluated' | 'not-configured'
-
   // The evaluated policies, or null when policiesStatus is 'not-configured'.
-  policies: [{
-    // The name of the policy.
-    name: string
-    // true only if every validation result for this policy passed.
-    passed: boolean
-    // The individual checks that make up this policy (see below).
-    validationResults: ValidationResult[]
-  }] | null
+  policies: PolicyResult[] | null
 }
+
+type PolicyResult = {
+  // The name of the policy.
+  name: string
+  // true only if every validation result for this policy passed.
+  passed: boolean
+  validationResults: PolicyValidationResult[]
+}
+
+// Every validation result shares these base fields.
+type PolicyValidationResultBase = {
+  // Whether this check passed.
+  passed: boolean
+  // A human-readable description of the result.
+  message: string
+  // A deep link to the relevant report.
+  reportUrl: string
+  // The view pattern the policy was scoped to, if any.
+  viewMatch?: string
+  // The number of views the policy matched, if applicable.
+  matchedViewCount?: number
+}
+
+// A validation result is one of the following, discriminated by `metric`.
+type PolicyValidationResult =
+  // Score-based metrics compare a score against a minimum.
+  | (PolicyValidationResultBase & {
+      metric: 'accessibility.score' | 'uiCoverage.score'
+      score: number
+      minScore: number
+      failedViews?: { viewName: string; score: number; viewUrl: string }[]
+    })
+  // Count-based metrics compare a count against a maximum.
+  | (PolicyValidationResultBase & {
+      metric: 'accessibility.failedElements' | 'uiCoverage.untestedElements'
+      count: number
+      maxCount: number
+      failedViews?: { viewName: string; count: number; viewUrl: string }[]
+    })
 ```
-
-Each entry in `validationResults` reports:
-
-- the metric it checked — one of `accessibility.score`, `uiCoverage.score`, `accessibility.failedElements`, or
-  `uiCoverage.untestedElements`
-- whether the check passed
-- a human-readable message describing the result
-- the measured value and the configured threshold it was compared against
-- a link to the relevant report
-- where relevant, the specific views that failed the check
 
 ## Waiting for results
 
