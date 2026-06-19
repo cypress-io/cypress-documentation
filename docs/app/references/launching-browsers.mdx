@@ -401,9 +401,6 @@ tests. This is useful when your application only targets certain browsers, or
 when you want to test in a Chromium-based browser that Cypress doesn't detect on
 its own.
 
-For example, your web application might _only_ be designed to work in a Chrome
-browser, and not inside the Electron browser.
-
 In the [setupNodeEvents](/api/node-events/configuration-api) function, you can
 filter the list of browsers passed inside the `config` object and return the
 list of browsers you want available for selection during `cypress open`.
