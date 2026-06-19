@@ -177,8 +177,8 @@ _not_ [Cypress environment variables](/app/guides/environment-variables)
 Cypress needs to be able to authenticate properly when communicating to
 [Cypress Cloud](/cloud/get-started/introduction). When connecting through a proxy,
 oftentimes a self signed certificate is used as a CA. In order to handle this
-configuration, Cypress automatically reads from npm config's
-[`cafile`](https://docs.npmjs.com/cli/v8/using-npm/config#cafile) and
+configuration, when **running your tests**, Cypress automatically reads from npm
+config's [`cafile`](https://docs.npmjs.com/cli/v8/using-npm/config#cafile) and
 [`ca`](https://docs.npmjs.com/cli/v8/using-npm/config#ca) options and the
 [`NODE_EXTRA_CA_CERTS`](https://nodejs.org/api/cli.html#node_extra_ca_certsfile)
 node environment variable.
@@ -198,6 +198,21 @@ extension for the trusted CA.
 
 Note that the npm config is used as a replacement, and the node environment
 variable is used as an extension.
+
+:::caution
+
+**`NODE_EXTRA_CA_CERTS` does not apply to the binary download**
+
+The behavior above applies when Cypress runs your tests. The **install-time
+binary download** (`cypress install`) only reads npm's `cafile` and `ca`
+config values (via the `npm_config_cafile` and `npm_config_ca` environment
+variables) — it does **not** read `NODE_EXTRA_CA_CERTS`.
+
+If your binary download is being TLS-intercepted by a proxy that uses a custom
+CA, set `cafile` (or `ca`) in your `.npmrc` so that the download can complete.
+Setting `NODE_EXTRA_CA_CERTS` alone will not help at install time.
+
+:::
 
 ## View, unset, and set environment variables
 
