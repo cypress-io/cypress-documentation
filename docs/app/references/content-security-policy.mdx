@@ -47,6 +47,18 @@ setting the
 [`experimentalCspAllowList`](/app/references/experiments#Experimental-CSP-Allow-List)
 configuration option.
 
+:::caution
+
+Even with `experimentalCspAllowList` enabled, the CSP that reaches the browser
+is **not** byte-identical to your application's original policy. So that its
+injected scripts can execute, Cypress appends an auto-generated `nonce` value to
+the `default-src`, `script-src`, and `script-src-elem` directives whenever they
+are present and allowed. If you are verifying your application's CSP
+implementation, be aware that these three directives are modified by Cypress and
+the delivered header will differ from the one your server originally sent.
+
+:::
+
 For more information on CSP, see the
 [Content Security Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP)
 documentation on MDN.
