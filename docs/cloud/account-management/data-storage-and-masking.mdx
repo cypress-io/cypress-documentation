@@ -109,6 +109,8 @@ You can disable capturing data in Test Replay per project by following [this gui
 - Network traffic within your application under test
 - Browser console logs
 
+If you want to keep Test Replay enabled but exclude what your application renders to `<canvas>` elements, you can disable canvas capture on its own. Open project settings in Cypress Cloud and toggle off the canvas option in the Test Replay section, which sits below the main Test Replay recording toggle. This keeps the rest of Test Replay available while preventing canvas content from being captured. See [Canvas Elements](/cloud/features/test-replay#Canvas-Elements) for details.
+
 ### Screenshot controls
 
 **Why it matters:** Screenshots are invaluable for spotting visual regressions
