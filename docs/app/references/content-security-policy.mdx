@@ -68,6 +68,26 @@ mutates three directives, as described in [Nonce injection](#nonce-injection)
 below. If your test asserts on the exact header value, account for this
 modification.
 
+## Always-stripped directives
+
+Regardless of your `experimentalCspAllowList` configuration, Cypress always
+removes the following five directives from allowed CSP headers, because leaving
+them in place would prevent Cypress from functioning. They cannot be allowed
+through the allow list:
+
+| Stripped directive          | Reason                                                            |
+| --------------------------- | ---------------------------------------------------------------- |
+| `frame-ancestors`           | Prevents Cypress from loading a test application into an iframe. |
+| `navigate-to`               | Affects Cypress' ability to navigate to different URLs.          |
+| `require-trusted-types-for` | Might prevent Cypress from rewriting the DOM.                    |
+| `sandbox`                   | Can restrict access to script and iframe functionality.          |
+| `trusted-types`             | Could cause Cypress injections to be marked as untrusted.        |
+
+If your application relies on any of these directives, be aware they will not be
+present in the policy delivered to the browser during a Cypress test run. See
+[Strip Minimum CSP Directives](/app/references/experiments#Experimental-CSP-Allow-List)
+for the full breakdown.
+
 ## Nonce injection
 
 To allow its injected `<script>` tags to execute under your policy, Cypress
