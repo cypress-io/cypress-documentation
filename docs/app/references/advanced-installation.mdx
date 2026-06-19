@@ -98,7 +98,7 @@ order, using the first value it finds:
 This means options like `CYPRESS_INSTALL_BINARY`, `CYPRESS_CACHE_FOLDER`, and
 `CYPRESS_DOWNLOAD_MIRROR` can all be configured in `.npmrc`:
 
-```ini title=".npmrc"
+```shell title=".npmrc"
 cypress_install_binary=https://company.domain.com/cypress.zip
 cypress_cache_folder=/path/to/cypress/cache
 cypress_download_mirror=https://company.domain.com
@@ -445,7 +445,7 @@ export CYPRESS_DOWNLOAD_PATH_TEMPLATE='https://software.local/cypress/${platform
 To define `CYPRESS_DOWNLOAD_PATH_TEMPLATE` in `.npmrc`, put a backslash before
 every `$`:
 
-```ini
+```shell
 CYPRESS_DOWNLOAD_PATH_TEMPLATE=\${endpoint}/\${platform}-\${arch}/cypress.zip
 ```
 
@@ -471,7 +471,7 @@ instead of pointing to a file. This is equivalent to setting the
 `npm_config_ca` environment variable. Newlines in the PEM certificate are
 represented with `\n`:
 
-```ini title=".npmrc"
+```shell title=".npmrc"
 ca="-----BEGIN CERTIFICATE-----\nMIID...\n-----END CERTIFICATE-----"
 ```
 
