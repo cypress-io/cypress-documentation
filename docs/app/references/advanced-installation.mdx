@@ -246,6 +246,23 @@ ensure this, consider exporting this environment variable. For example, in a
 
 :::
 
+:::caution
+
+<strong>Relative paths resolve against the project root</strong>
+
+If you set `CYPRESS_CACHE_FOLDER` (or a local-file `CYPRESS_INSTALL_BINARY`) to
+a relative path, it is resolved relative to your **project root** — the
+directory containing `package.json` — and _not_ relative to
+`node_modules/cypress`. This is because Cypress installs the binary from a
+`postinstall` hook, where the current working directory is the package
+directory.
+
+For example, `CYPRESS_CACHE_FOLDER=.cache/Cypress` resolves to
+`<project-root>/.cache/Cypress`. To avoid ambiguity, prefer an absolute path
+(or one anchored with `~`, which Cypress expands to the user's home directory).
+
+:::
+
 ### Managing the binary cache
 
 The [`cypress cache`](./command-line#cypress-cache) command lets you inspect and
