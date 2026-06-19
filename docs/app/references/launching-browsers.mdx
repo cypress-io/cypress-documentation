@@ -168,6 +168,34 @@ Or Chrome for Testing:
 cypress run --browser chrome-for-testing
 ```
 
+:::tip
+
+<strong>Prefer Chrome for Testing for reliable, reproducible runs</strong>
+
+Where possible, we recommend running your tests in
+[Chrome for Testing](https://developer.chrome.com/blog/chrome-for-testing). It is
+a dedicated Chrome flavor that Google builds specifically for automation, and it
+has a few advantages over a standard, day-to-day Chrome install:
+
+- **No auto-update.** Regular Chrome is evergreen and silently updates itself,
+  which can change browser behavior between runs and cause tests that passed
+  yesterday to fail today. Chrome for Testing is pinned to a specific version and
+  never updates on its own, so your environment stays deterministic.
+- **Versioned, reproducible binaries.** A matching build is published for every
+  Chrome version and every major OS, so you can install the exact same browser
+  locally and in CI. See
+  [Download specific Chrome version](#Download-specific-Chrome-version).
+- **Built for automation, not browsing.** Because it is intended only for
+  testing, it is not subject to the enterprise/group
+  [policies](#Chrome-policy) often applied to branded Chrome (such as disabling
+  remote debugging), which removes a common cause of launch failures.
+- **Extension loading still works.** Standard Chrome 137 and above can no longer
+  load extensions via the Browser Launch API (see
+  [Customize the browser launch](#Customize-the-browser-launch)), but Chrome for
+  Testing and Chromium still can.
+
+:::
+
 #### Chrome policy
 
 If Chrome policy is set, ensure that
