@@ -43,7 +43,11 @@ Once set up, you'll need to modify a few things in the `App/index.html` file:
   attributes inside `<script>` tags. This is to prevent any SRI attribute
   mismatches, which can happen since Cypress must rewrite any
   [framebusting code](/app/references/configuration#modifyObstructiveCode).
-  This is recommended only when an application is under test.
+  This is recommended only when an application is under test. Alternatively,
+  enable the
+  [`removeSRIAttributes`](/app/references/configuration#removeSRIAttributes)
+  configuration option to strip these attributes automatically without editing
+  the application's source.
 - Uncomment the `authRedirect.js` `<script>` tag and comment out the
   `authPopup.js` `<script>` tag. Authentication
   [Pop ups](/app/references/trade-offs#Permanent-trade-offs) will not work

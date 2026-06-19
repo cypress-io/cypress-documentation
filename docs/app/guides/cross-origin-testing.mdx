@@ -554,7 +554,11 @@ flag also does the following:
   config option.
 - Removes
   [Subresource Integrity (SRI)](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity)
-  from modified scripts as they will not execute otherwise.
+  from modified third-party scripts as they will not execute otherwise. To also
+  remove SRI from first-party resources (and from `integrity` set via a runtime
+  DOM property assignment), use the
+  [`removeSRIAttributes`](/app/references/configuration#removeSRIAttributes)
+  configuration option.
 - Updates the `Sec-Fetch-Dest` Metadata header from `iframe` to `document` in
   cases where requests come from the application under test.
 
