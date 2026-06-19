@@ -447,6 +447,22 @@ Cypress, add the following to your `.npmrc`:
 cafile=/home/person/certs/ca.crt
 ```
 
+Alternatively, you can supply the certificate inline with the `ca` option
+instead of pointing to a file. This is equivalent to setting the
+`npm_config_ca` environment variable. Newlines in the PEM certificate are
+represented with `\n`:
+
+```ini title=".npmrc"
+ca="-----BEGIN CERTIFICATE-----\nMIID...\n-----END CERTIFICATE-----"
+```
+
+To supply more than one certificate, set `ca` to an array of strings. The same
+value can also be provided through the environment:
+
+```shell
+export npm_config_ca="-----BEGIN CERTIFICATE-----\nMIID...\n-----END CERTIFICATE-----"
+```
+
 If neither `cafile` nor `ca` are set, Cypress looks at the system environment
 variable `NODE_EXTRA_CA_CERTS` and uses the corresponding certificate(s) as an
 extension for the trusted certificate authority when downloading the Cypress
