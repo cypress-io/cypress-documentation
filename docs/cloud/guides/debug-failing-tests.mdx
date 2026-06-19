@@ -9,19 +9,6 @@ sidebar_position: 10
 
 # Debug Failing Tests in CI with Cypress Cloud
 
-:::info
-
-##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
-
-- Why a test that passes locally still fails in CI, and why that is so hard to debug
-- A step-by-step workflow to find the root cause of a failing CI test in Cypress Cloud
-- How to debug the exact CI run with [Test Replay](/cloud/features/test-replay) instead of reproducing it locally
-- How AI [Error Summaries](/cloud/features/cypress-ai-features#Error-Summaries) and [Cloud MCP](/cloud/integrations/cloud-mcp) speed up triage and root-cause analysis
-- How to tell a real regression apart from pre-existing [flake](/cloud/features/flaky-test-management) before you merge
-- Which Cypress Cloud tool to reach for, based on the symptom you are seeing
-
-:::
-
 When a Cypress test fails in continuous integration (CI), the hard part is rarely
 the fix. It's the investigation: the failure happened on a machine you can't see,
 in a browser session that no longer exists, on a commit you may have already moved
@@ -34,6 +21,19 @@ state of every test as it ran in CI, so you can debug the actual failure with th
 same tools you use locally, get an AI explanation of what went wrong, and confirm
 whether your change introduced the failure or simply surfaced existing
 instability. This guide walks through that workflow end to end.
+
+:::info
+
+##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
+
+- Why a test that passes locally still fails in CI, and why that is so hard to debug
+- A step-by-step workflow to find the root cause of a failing CI test in Cypress Cloud
+- How to debug the exact CI run with [Test Replay](/cloud/features/test-replay) instead of reproducing it locally
+- How AI [Error Summaries](/cloud/features/cypress-ai-features#Error-Summaries) and [Cloud MCP](/cloud/integrations/cloud-mcp) speed up triage and root-cause analysis
+- How to tell a real regression apart from pre-existing [flake](/cloud/features/flaky-test-management) before you merge
+- Which Cypress Cloud tool to reach for, based on the symptom you are seeing
+
+:::
 
 ## Why tests fail in CI but pass locally
 
