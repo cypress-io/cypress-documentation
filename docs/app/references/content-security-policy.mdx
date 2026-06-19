@@ -147,6 +147,32 @@ applied to a `<meta>` tag policy.
 
 :::
 
+## Interaction with code-modifying options
+
+Cypress options that rewrite your application's HTML or JavaScript can conflict
+with CSP directives that pin scripts by hash (for example a `script-src` value
+containing a `'sha256-...'` source). Because the hash is computed against the
+original code, any rewrite changes the bytes the browser hashes and the policy
+will reject the modified script.
+
+This affects the following options when combined with `experimentalCspAllowList`:
+
+- [`modifyObstructiveCode`](/app/references/configuration#Configuration-Options)
+- [`experimentalModifyObstructiveThirdPartyCode`](/app/references/experiments)
+- [`experimentalSourceRewriting`](/app/references/experiments)
+
+:::caution
+
+If you allow hash-based directives through `experimentalCspAllowList` while any
+of these code-modifying options are enabled, you can hit a mismatch between the
+original hashed value in the directive and the rewritten HTML or JS. If you see
+scripts being blocked, disable the code-modifying option or remove the
+hash-based directive from your allow list. See
+[Experimental CSP Allow List](/app/references/experiments#Experimental-CSP-Allow-List)
+for more detail.
+
+:::
+
 For more information on CSP, see the
 [Content Security Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP)
 documentation on MDN.
