@@ -35,9 +35,10 @@ tags into your application before any `<meta>` tag is parsed. This prevents any
 CSP directives from being applied to the script loaded by Cypress.
 
 The second implementation requires you to configure Cypress to allow the headers
-to be sent to your application. By default, Cypress will remove any CSP headers
-from the response before it is sent to the browser. This is done to prevent
-Cypress from being blocked by the browser's CSP implementation.
+to be sent to your application. By default, Cypress will remove both the
+`Content-Security-Policy` and `Content-Security-Policy-Report-Only` headers from
+the response before it is sent to the browser. This is done to prevent Cypress
+from being blocked by the browser's CSP implementation.
 
 For most application tests, this should not cause any issues. However, if you
 are testing your application's CSP implementation, you will need to configure
