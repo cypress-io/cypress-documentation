@@ -493,25 +493,11 @@ Any extra tabs (i.e. tabs other than the one opened by Cypress) will be closed b
 ### Disabled Barriers
 
 Cypress automatically disables certain functionality in the Cypress launched
-browser that tend to get in the way of automated testing.
-
-#### The Cypress launched browser automatically:
-
-- Ignores certificate errors.
-- Allows blocked pop-ups.
-- Disables 'Saving passwords'.
-- Disables 'Autofill forms and passwords'.
-- Disables asking to become your primary browser.
-- Disables device discovery notifications.
-- Disables language translations.
-- Disables restoring sessions.
-- Disables background network traffic.
-- Disables background and renderer throttling.
-- Disables prompts requesting permission to use devices like cameras or mics
-- Disables user gesture requirements for autoplaying videos.
-
-You can see all of the default chrome command line switches we send
-[here](https://github.com/cypress-io/cypress/blob/develop/packages/server/lib/util/chromium_flags.ts#L36).
+browser that tend to get in the way of automated testing. This includes various
+features and prompts that are commonly disabled in automation — for example,
+ignoring certificate errors, allowing blocked pop-ups, and disabling things like
+password saving, autofill, session restoring, background throttling, and device
+permission prompts.
 
 ## Browser Icon
 
