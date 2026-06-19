@@ -410,6 +410,20 @@ binary.
 Note that the npm config is used as a replacement, and the node environment
 variable is used as an extension.
 
+:::caution
+
+<strong>Deprecation: `CYPRESS_DOWNLOAD_USE_CA`</strong>
+
+Older guides, GitHub issues, and `.npmrc`/CI configurations may reference the
+`CYPRESS_DOWNLOAD_USE_CA` environment variable to opt into using the `ca` and
+`cafile` options from your npm config. This variable is **deprecated and no
+longer required to be set** — Cypress now reads these options automatically, as
+described above. Setting it has no effect and the Cypress CLI will print a
+warning that it is no longer required to be set. You can safely remove it from
+your configuration.
+
+:::
+
 ## Opt out of sending exception data to Cypress
 
 When an exception is thrown regarding Cypress, we send along the exception data
