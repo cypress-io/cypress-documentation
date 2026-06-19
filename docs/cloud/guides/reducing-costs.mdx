@@ -69,7 +69,9 @@ Cloud, roughly in order of impact:
    with Spec Prioritization and a smarter test strategy.
 4. **[Spend less engineering time on every failure](#Spend-less-engineering-time-on-every-failure)**
    with Test Replay, AI Error Summaries, and Flaky Test Management.
-5. **[Measure what you're saving](#Measure-what-youre-saving)** with run
+5. **[Hear about failures the moment they happen](#Hear-about-failures-the-moment-they-happen)**
+   with Slack, Microsoft Teams, and desktop notifications.
+6. **[Measure what you're saving](#Measure-what-youre-saving)** with run
    Recommendations and Analytics.
 
 The rest of this guide covers each lever in detail.
@@ -205,6 +207,24 @@ impossible. Cypress Cloud removes most of that work.
 For a complete walkthrough of this workflow, see the
 [Debug Failing Tests](/cloud/guides/debug-failing-tests) guide.
 
+## Hear about failures the moment they happen
+
+A failure costs nothing extra in compute once the run ends, but every minute
+before someone notices is turnaround time lost. The faster your team learns a run
+failed, the sooner the fix starts, so closing that gap is one of the cheapest
+speedups available.
+
+- **[Slack](/cloud/integrations/slack) and [Microsoft Teams](/cloud/integrations/microsoft-teams)**
+  notifications post run results straight into the channels your team already
+  watches, configurable by run status (failed, passed, flaky, canceled) and
+  filterable by tag or run group so people see only what's relevant.
+- **[Desktop notifications](/cloud/features/recorded-runs#Notifications)** from the
+  Cypress app alert you when a run starts, _starts to fail_, or finishes on your
+  current commit, so you can move on to other work and get pulled back the instant
+  something breaks instead of watching CI. This pairs naturally with
+  [Auto Cancellation](#Stop-paying-for-runs-youve-already-lost): the run stops early
+  and you hear about it immediately.
+
 ## Measure what you're saving
 
 You don't have to estimate the impact of these features. Cypress Cloud measures it
@@ -233,6 +253,7 @@ numbers.
 | Cut redundant tests covering the same flows                | [UI Coverage](/app/guides/test-performance#Find-and-eliminate-over-tested-UI-with-UI-Coverage)                                           |
 | Spend less time debugging CI failures                      | [Test Replay](/cloud/features/test-replay) + [AI Error Summaries](/cloud/features/cypress-ai-features#Error-Summaries)                   |
 | Stop chasing flake that isn't a real regression           | [Flaky Test Management](/cloud/features/flaky-test-management)                                                                            |
+| Find out a run failed sooner                               | [Slack](/cloud/integrations/slack) / [Teams](/cloud/integrations/microsoft-teams) / [desktop](/cloud/features/recorded-runs#Notifications) notifications |
 | Quantify the time and money you're saving                  | [Recommendations](/cloud/features/recorded-runs#Recommendations) + [Analytics](/cloud/features/analytics/project-analytics#Run-duration) |
 
 ## Get started
@@ -267,4 +288,6 @@ panel on each run predicts how much time these features would save your team.
 - [Smart Orchestration Overview](/cloud/features/smart-orchestration/overview) — how the orchestration features fit together
 - [Optimizing test performance](/app/guides/test-performance) — trim and streamline your suite
 - [Debug Failing Tests](/cloud/guides/debug-failing-tests) — find the root cause of a CI failure without reproducing it locally
+- [Slack](/cloud/integrations/slack) & [Microsoft Teams](/cloud/integrations/microsoft-teams) — notify your team of run results in chat
+- [Desktop notifications](/cloud/features/recorded-runs#Notifications) — get alerted from the Cypress app the moment a run fails
 - [Cypress Cloud FAQ](/cloud/faq#How-do-I-reduce-my-Cypress-Cloud-usage-or-lower-my-bill) — common cost and usage questions
