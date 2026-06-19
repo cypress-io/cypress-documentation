@@ -1,0 +1,109 @@
+---
+title: 'System Environment Variables'
+description: 'A complete reference of the OS-level environment variables that control the Cypress CLI and binary, including installation, Cloud recording, CI metadata, browser tuning, opt-outs, and standard third-party variables Cypress respects.'
+sidebar_label: 'System Environment Variables'
+---
+
+<ProductHeading product="app" />
+
+# System Environment Variables
+
+This page is a reference for the **OS-level (process) environment variables**
+that control the Cypress CLI and binary — how the binary is installed and
+verified, how runs are recorded to Cypress Cloud, how CI metadata is passed
+along, and how the browser and runtime behave.
+
+:::info
+
+**Looking for environment variables _inside_ your tests?**
+
+These system variables are different from the values you pass _into_ your test
+code. To read configuration and secrets from your specs (for example with
+[`cy.env()`](/api/commands/env) or
+[`Cypress.expose()`](/api/cypress-api/expose)), see
+[Environment Variables & Secrets](/app/guides/environment-variables).
+
+Note that any OS variable prefixed with `CYPRESS_` that is _not_ one of the
+reserved names below is treated as a test configuration override — Cypress
+strips the `CYPRESS_` prefix and adds it to your config. See
+[Set environment variables](/app/guides/environment-variables#Set-environment-variables).
+
+:::
+
+## Installation & binary management
+
+These variables are read by the Cypress CLI during `npm install` / `cypress install`
+and when launching the binary. See
+[Advanced Installation](/app/references/advanced-installation) for full details.
+
+| Name                             | Description                                                                                                                                                              |
+| -------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `CYPRESS_INSTALL_BINARY`         | Controls binary install: a version (e.g. `13.7.0`), a URL or local `.zip` path to install from, or `0` to skip downloading the binary entirely. [Details](/app/references/advanced-installation#Install-binary) |
+| `CYPRESS_DOWNLOAD_MIRROR`        | Download the binary from a mirror host instead of `download.cypress.io`. [Details](/app/references/advanced-installation#Mirroring)                                      |
+| `CYPRESS_DOWNLOAD_PATH_TEMPLATE` | Custom URL template for the binary download, using `${endpoint}`, `${platform}`, `${arch}`, and `${version}` tokens. [Details](/app/references/advanced-installation#Download-path-template) |
+| `CYPRESS_CACHE_FOLDER`           | Override the location where downloaded binaries are cached. [Details](/app/references/advanced-installation#Binary-cache)                                                |
+| `CYPRESS_RUN_BINARY`             | Point the CLI at an already-installed Cypress binary at runtime instead of the cached one. [Details](/app/references/advanced-installation#Run-binary)                  |
+| `CYPRESS_VERIFY_TIMEOUT`         | Timeout (ms) for the post-install verification smoke test. Default `30000`. See [`cypress verify`](/app/references/command-line#cypress-verify).                        |
+| `CYPRESS_SKIP_VERIFY`            | When `true`, skip the binary verification step. See [`cypress verify`](/app/references/command-line#cypress-verify).                                                    |
+
+## Cloud / recording
+
+Used when recording runs to [Cypress Cloud](/cloud/get-started/introduction)
+with [`cypress run --record`](/app/references/command-line#cypress-run).
+
+| Name                  | Description                                                                                                                                             |
+| --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `CYPRESS_RECORD_KEY`  | Secret [record key](/cloud/account-management/projects#Record-key) for `cypress run --record`; lets you omit `--key`. [Setup](/cloud/get-started/setup) |
+| `CYPRESS_PROJECT_ID`  | Project ID for Cloud recording (an alternative to `projectId` in your Cypress configuration).                                                          |
+
+## CI metadata override
+
+Set these when your CI provider isn't auto-detected, so the Cloud can link back
+to builds, pull requests, and grouped retries. See
+[Continuous Integration](/app/continuous-integration/overview#Environment-variables).
+
+| Name                       | Description                                                              |
+| -------------------------- | ----------------------------------------------------------------------- |
+| `CYPRESS_CI_BUILD_URL`     | URL of the CI build, shown in the Cloud.                                 |
+| `CYPRESS_PULL_REQUEST_ID`  | Pull request number/ID to associate with the run.                       |
+| `CYPRESS_PULL_REQUEST_URL` | Link to the pull request shown in the Cloud.                            |
+| `CYPRESS_RERUN_GROUP_ID`   | ID shared by a run and its CI retries so they group together correctly. |
+
+## Browser & runtime tuning
+
+| Name                              | Description                                                                                            |
+| --------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| `CYPRESS_CONNECT_RETRY_THRESHOLD` | Maximum number of retries when connecting to the browser. Default `62`.                               |
+| `CYPRESS_REMOTE_DEBUGGING_PORT`   | Use a fixed Chrome DevTools Protocol port instead of a random one.                                    |
+| `CYPRESS_EVERY_NTH_FRAME`         | Capture every Nth frame during the video screencast (performance tuning). Default `5`.                |
+| `CYPRESS_MAX_SAFE_FILENAME_BYTES` | Maximum byte length for generated screenshot/artifact filenames. Default `254`.                       |
+
+## Opt-outs
+
+| Name                               | Description                                                                                                                                  |
+| ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| `CYPRESS_CRASH_REPORTS`            | Set to `0` to opt out of sending exception/crash data to Cypress. [Details](/app/references/advanced-installation#Opt-out-of-sending-exception-data-to-Cypress) |
+| `CYPRESS_COMMERCIAL_RECOMMENDATIONS` | Set to `0` to opt out of commercial recommendation messaging in run output. [Details](/app/references/advanced-installation#Opt-out-of-Cypress-commercial-messaging) |
+
+## Standard & third-party variables Cypress respects
+
+Cypress also honors a number of standard environment variables that are not
+prefixed with `CYPRESS_`.
+
+| Name                                       | Description                                                                                                                                                                                      |
+| ------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `DEBUG`                                    | Enable debug logging, e.g. `DEBUG=cypress:*` or `DEBUG=cypress:cli`. See [Debugging](/app/references/troubleshooting#Print-DEBUG-logs).                                                          |
+| `HTTP_PROXY`, `HTTPS_PROXY`, `NO_PROXY`    | Proxy configuration (also `npm_config_proxy` / `npm_config_https_proxy` at lower priority during install). See [Proxy Configuration](/app/references/proxy-configuration).                        |
+| `NODE_EXTRA_CA_CERTS`                      | Extra CA certificate file (additive to system roots) used for TLS, including the binary download. [Details](/app/references/advanced-installation#Using-a-custom-certificate-authority-CA)        |
+| `npm_config_ca` / `npm_config_cafile`      | Custom CA (inline or file) honored during the binary download. These _replace_ the root set rather than adding to it.                                                                            |
+| `ELECTRON_EXTRA_LAUNCH_ARGS`               | Extra arguments passed to the Electron browser process. See [Launching Browsers](/app/references/launching-browsers).                                                                            |
+| `IGNORE_CHROME_PREFERENCES`                | Ignore persisted Chrome preferences when launching Chrome.                                                                                                                                       |
+| `NO_COLOR` / `FORCE_COLOR`                 | Disable or force colored terminal output.                                                                                                                                                       |
+
+## See also
+
+- [Advanced Installation](/app/references/advanced-installation)
+- [Command Line](/app/references/command-line)
+- [Proxy Configuration](/app/references/proxy-configuration)
+- [Continuous Integration](/app/continuous-integration/overview)
+- [Environment Variables & Secrets](/app/guides/environment-variables) (for values used _inside_ your tests)
