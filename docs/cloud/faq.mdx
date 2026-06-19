@@ -475,6 +475,63 @@ the Data Extract API require an Enterprise plan, and
 [Cloud MCP](/cloud/integrations/cloud-mcp) is included on every Cypress Cloud
 plan.
 
+## Enterprise Reporting
+
+### <Icon name="angle-right" /> What is Enterprise Reporting in Cypress Cloud?
+
+[Enterprise Reporting](/cloud/features/analytics/enterprise-reporting) is a Cypress Cloud feature that
+aggregates test data from every project in your organization into a single, cross-project view. It
+lets engineering leaders and platform teams track usage, spot trends and anomalies, monitor flaky
+tests, and govern their entire testing program from one place, instead of stitching together data from
+individual project dashboards.
+
+### <Icon name="angle-right" /> What plan do I need for Enterprise Reporting?
+
+Enterprise Reporting requires an
+[Enterprise Cypress Cloud plan](https://cypress.io/pricing). The same plan is required for the
+[Data Extract API](/cloud/integrations/data-extract-api) used to pull the underlying data
+programmatically.
+
+### <Icon name="angle-right" /> What can I track with Enterprise Reporting?
+
+Insights are organized into tabs that each answer a different question about your testing program:
+
+- **Overall Usage** – how many tests you record across the organization and how usage trends over time.
+- **Test Results** – pass and fail rates at the run, spec, and individual test level.
+- **Test Setup** – test types, suite size, Cypress versions, and smart orchestration adoption.
+- **Test Execution** – browsers used, execution times, and failure or error rates.
+- **Flaky Tests** – flake occurrences and flake rate across projects.
+- **UI Coverage** and **Cypress Accessibility** – score trends across projects over time.
+
+Every chart can be filtered by date range, project, team, and branch.
+
+### <Icon name="angle-right" /> What is the difference between project-level analytics and Enterprise Reporting?
+
+[Project-level analytics](/cloud/features/analytics/project-analytics) report on a single project,
+while [Enterprise Reporting](/cloud/features/analytics/enterprise-reporting) rolls data up across
+**every** project in your organization. Use project analytics to dig into one project, and Enterprise
+Reporting to compare projects, spot organization-wide trends, and govern your overall testing program.
+
+### <Icon name="angle-right" /> Is Enterprise Reporting data real-time?
+
+No. Data in Enterprise Reporting is not real-time. It is refreshed as of midnight UTC, so it reflects
+results through the end of the previous day. How far back you can look is determined by your
+organization's data retention limit in Cypress Cloud.
+
+### <Icon name="angle-right" /> How do I download or export data from Enterprise Reporting?
+
+Every chart in Enterprise Reporting can be exported. Hover over the chart, open the ellipsis (`...`)
+menu in the upper-right corner, and choose **Download results** to export the raw data as `.csv`,
+`.xlsx`, `.json`, or `.png`. See
+[Download data from Cloud](/cloud/features/analytics/enterprise-reporting#Download-data-from-Cloud).
+
+### <Icon name="angle-right" /> How do I access Cypress test data programmatically?
+
+Use the [Data Extract API](/cloud/integrations/data-extract-api), which provides full programmatic
+access to the data shown in Enterprise Reporting so you can pull it into your own analytics platform or
+automate workflows. The **Raw Data** tab in Enterprise Reporting shows sample data so you can preview
+it before integrating.
+
 ## Cypress Cloud Account
 
 ### <Icon name="angle-right" /> What is a Cypress Cloud organization?
