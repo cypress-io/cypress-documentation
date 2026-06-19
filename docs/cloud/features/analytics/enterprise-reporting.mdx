@@ -11,7 +11,7 @@ description: Enterprise Reporting in Cypress Cloud aggregates test data across e
 
 **Enterprise Reporting is a Cypress Cloud feature that aggregates test data from every project in your
 organization into a single, cross-project view.** It lets you track usage, spot trends and anomalies,
-monitor flaky tests, and govern your entire testing program from one place—without manually stitching
+monitor flaky tests, and govern your entire testing program from one place, without manually stitching
 together data from dozens of individual project dashboards.
 
 As your organization grows, so does the challenge of understanding the health of your test suites.
@@ -27,7 +27,7 @@ With Enterprise Reporting you can:
   projects, then drill down to a specific team, project, branch, or time period when something needs
   attention.
 - **Catch problems before they spread.** Surface rising flake rates, failing builds, and inconsistent
-  setups early—while they're still cheap to fix.
+  setups early, while they're still cheap to fix.
 - **Govern with confidence.** Verify that teams are on supported Cypress versions, using smart
   orchestration, and following consistent practices across the organization.
 - **Demonstrate impact.** Quantify how testing usage and quality are trending over time to justify
@@ -59,8 +59,8 @@ With Enterprise Reporting you can:
 If available in your Cypress plan, Enterprise Reporting is accessible by clicking on the **Enterprise
 Reporting** link in the left menu of Cypress Cloud.
 
-Insights are organized into tabs—**Overall Usage**, **Test Results**, **Test Setup**, **Test
-Execution**, **Flaky Tests**, and **Raw Data**—each answering a different category of question about
+Insights are organized into tabs (**Overall Usage**, **Test Results**, **Test Setup**, **Test
+Execution**, **Flaky Tests**, and **Raw Data**), each answering a different category of question about
 your testing program. Every tab presents interactive visual cards, and every card can be filtered by
 date range, project, team, and branch, so you can move fluidly from an organization-wide summary down
 to a single team or project. When the page first loads, data is displayed for all projects in your
@@ -99,7 +99,7 @@ branches that exist in your projects. The data on this tab correlates to what Cy
 
 Get a clear, organization-wide read on test health and pinpoint where failures are concentrated. The
 **Test Results** tab shows you how many of your runs, specs, or individual tests are passing or
-failing—at all three levels of granularity—so you can compare projects, identify the teams that need
+failing, at all three levels of granularity, so you can compare projects, identify the teams that need
 support, and confirm that quality is trending in the right direction.
 
 <DocsImage
@@ -157,14 +157,14 @@ aren't being dropped from your coverage.
 
 ### Flaky Tests
 
-Flake is one of the most expensive and trust-eroding problems in any test suite—it wastes CI minutes,
+Flake is one of the most expensive and trust-eroding problems in any test suite. It wastes CI minutes,
 slows developers down, and trains teams to ignore failures. The **Flaky Tests** tab makes flake
 visible and measurable across your entire organization so you can target it where it hurts most.
 
 View flaky test occurrences and rates for the whole organization or specific projects, as a single
 snapshot based on the start and end date filters or as a trend over time. Flake _rate_ is especially
 useful because it shows what % of runs in a project are flaky, allowing you to compare projects fairly
-regardless of how many runs each one has—so you can prioritize the projects where flake is doing the
+regardless of how many runs each one has, so you can prioritize the projects where flake is doing the
 most damage.
 
 <DocsImage
@@ -187,7 +187,7 @@ See trends in [Cypress Accessibility](https://www.cypress.io/accessibility?utm_m
 
 The screenshot below shows a subset of what you can monitor on this tab: an **overall accessibility score** for the filters you apply, **which projects have the highest scores**, and **score trends over time** (using **Start date**, **End date**, **Team**, **Projects**, and **Branch** to narrow the view).
 
-The same area includes additional charts—for example **severity breakdowns** of issues, **weekly average violations per accessibility rule** (to spot spikes on a specific rule), **weekly average failed rules by impact**, and **weekly average element-level violations by impact**—so you can track breadth and severity of failures, not only the headline percentage. For illustrated walkthroughs of these chart types, how to read them, and how they tie into downloads, the [Data Extract API](/cloud/integrations/data-extract-api), and AI-assisted follow-up, see **[Example accessibility charts](/accessibility/guides/detect-changes#Example-accessibility-charts)** in the Cypress Accessibility guide [Detect and manage changes](/accessibility/guides/detect-changes).
+The same area includes additional charts, for example **severity breakdowns** of issues, **weekly average violations per accessibility rule** (to spot spikes on a specific rule), **weekly average failed rules by impact**, and **weekly average element-level violations by impact**, so you can track breadth and severity of failures, not only the headline percentage. For illustrated walkthroughs of these chart types, how to read them, and how they tie into downloads, the [Data Extract API](/cloud/integrations/data-extract-api), and AI-assisted follow-up, see **[Example accessibility charts](/accessibility/guides/detect-changes#Example-accessibility-charts)** in the Cypress Accessibility guide [Detect and manage changes](/accessibility/guides/detect-changes).
 
 <DocsImage
   src="/img/cloud/features/analytics/a11y-enterprise-reporting.png"
