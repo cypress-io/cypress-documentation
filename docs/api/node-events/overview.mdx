@@ -193,7 +193,10 @@ each particular browser.
 
 You can use the `before:browser:launch` event to do things like:
 
-- Load a Chrome extension
+- Load a Chrome extension (note that standard Chrome 137+ can no longer load
+  extensions this way; we recommend
+  [Chrome for Testing](/app/references/launching-browsers#Chrome-Browsers) or
+  Chromium)
 - Enable or disable experimental chrome features
 - Control which Chrome components are loaded
 
