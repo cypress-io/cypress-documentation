@@ -94,6 +94,45 @@ requires restarting the Cypress server (for example, by stopping and relaunching
 
 :::
 
+### Configuration examples
+
+Strip the entire CSP header (the default — equivalent to omitting the option):
+
+:::cypress-config-example
+
+```js
+{
+  experimentalCspAllowList: false
+}
+```
+
+:::
+
+Keep the header, stripping only the directives that interfere with Cypress:
+
+:::cypress-config-example
+
+```js
+{
+  experimentalCspAllowList: true
+}
+```
+
+:::
+
+Keep the header and only the named directives (each must be one of the six
+allowable values):
+
+:::cypress-config-example
+
+```js
+{
+  experimentalCspAllowList: ['default-src', 'script-src', 'script-src-elem']
+}
+```
+
+:::
+
 Even with `experimentalCspAllowList` enabled, the CSP that reaches the browser
 is **not** byte-identical to your application's original policy — Cypress
 mutates three directives, as described in [Nonce injection](#nonce-injection)
