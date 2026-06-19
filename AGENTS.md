@@ -39,7 +39,10 @@ Each rule is a hard convention. See the linked section for the how and why.
   description, so make them **SEO-friendly**: lead with the key term and
   summarize the page accurately. Match the section's house style — API reference
   pages are terse (`'name | Cypress Documentation'` + one short sentence); guides
-  are more descriptive. Mirror a sibling file when unsure.
+  are more descriptive. Mirror a sibling file when unsure. Never add a `keywords`
+  field to frontmatter — Docusaurus only emits it as a `<meta name="keywords">`
+  tag that modern search engines ignore and that the site's own search doesn't
+  index, so it adds noise with no benefit.
 - Order with `sidebar_position` and `_category_.json`, not `sidebars.js`. Without
   a `sidebar_position`, pages sort alphabetically; if sibling files don't define
   one, match them and skip it rather than introducing positions.
