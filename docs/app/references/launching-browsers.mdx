@@ -110,9 +110,11 @@ In addition to the browsers found on your system, you'll notice that Electron is
 an available browser. The Electron browser is a version of Chromium that comes
 with [Electron](https://electron.atom.io/).
 
-The Electron browser's biggest advantage is that it comes baked into Cypress, so
-it requires no separate installation. That makes it a dependable default in CI,
-where you want a browser that is always present and version-matched to Cypress.
+The Electron browser comes bundled with Cypress, so it requires no separate
+installation and is always available. For this reason it is the default browser
+when running from the CLI. That said, because Electron is not a browser your end
+users run, we generally recommend testing in a browser they actually use, such as
+[Chrome for Testing](#Chrome-Browsers).
 
 By default, when running [cypress run](/app/references/command-line#cypress-run)
 from the CLI, Cypress launches all browsers headlessly. See
