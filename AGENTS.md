@@ -60,6 +60,13 @@ Each rule is a hard convention. See the linked section for the how and why.
 - Start every product page with `<ProductHeading product="…" />`. Use canonical
   names: Cypress App, Cypress Cloud, Cypress Accessibility, UI Coverage.
 - Reuse `docs/partials/_*.mdx` instead of repeating content.
+- End related pages with a `## See also` section (sentence-case H2, as the page's
+  last section): a short bulleted list of doc-to-doc links to closely related
+  pages, command names in backticks, with an optional `- short description` after
+  a link. It's standard on API reference pages (link 2–5 sibling
+  commands/utilities); add it to guides and other pages only when there are
+  genuinely related pages worth surfacing. Don't pad it with tangential links or
+  repeat links already prominent in the page body.
 - Tag every code block with a language; add `title="file.ext"` for file snippets.
 - Never use em dashes — they read as AI-generated; use commas, periods, or
   parentheses instead.
