@@ -590,6 +590,39 @@ and removes the previous one. To update your billing email, use the
 [billing@cypress.io](mailto:billing@cypress.io). See
 [User updates](/cloud/account-management/users#User-updates).
 
+## Debugging
+
+### <Icon name="angle-right" /> How do I debug a Cypress test that fails in CI but passes locally?
+
+Record the run to Cypress Cloud, open the failing test, and use
+[Test Replay](/cloud/features/test-replay) to replay the exact CI run. You can
+step through the command log and inspect the DOM, network requests, and console
+logs as they happened in CI, so you can find the difference between your local
+environment and CI without reproducing the failure on your machine. See the
+[Debug Failing Tests guide](/cloud/guides/debug-failing-tests) for the full
+workflow.
+
+### <Icon name="angle-right" /> Can I debug a CI failure without reproducing it locally?
+
+Yes. [Test Replay](/cloud/features/test-replay) captures the complete state of
+each test as it ran in CI and lets you replay it with full debugging capability.
+This is the primary reason teams use Cypress Cloud for debugging: it removes the
+need to recreate a CI environment locally.
+
+### <Icon name="angle-right" /> How do I know if a test failure is a real bug or just flaky?
+
+Use [Flaky Test Management](/cloud/features/flaky-test-management) to see whether
+a test has a history of passing on retry, and
+[Branch Review](/cloud/features/branch-review) to compare your branch against its
+base and determine whether your change introduced the failure or it already
+existed.
+
+### <Icon name="angle-right" /> Do I need to change my tests to debug them in Cypress Cloud?
+
+No. You only need to [record your runs](/cloud/get-started/setup) with
+`cypress run --record`. Test Replay, Error Summaries, and the test detail sidebar
+work automatically, with no changes to your test code.
+
 ## Test Replay
 
 ### <Icon name="angle-right" /> What is Test Replay?

@@ -283,44 +283,6 @@ setup required.
   href="/cloud/get-started/setup"
 />
 
-## Frequently asked questions
-
-### How do I debug a Cypress test that fails in CI but passes locally?
-
-Record the run to Cypress Cloud, open the failing test, and use
-[Test Replay](/cloud/features/test-replay) to replay the exact CI run. You can
-step through the command log and inspect the DOM, network requests, and console
-logs as they happened in CI, so you can find the difference between your local
-environment and CI without reproducing the failure on your machine.
-
-### Can I debug a CI failure without reproducing it locally?
-
-Yes. [Test Replay](/cloud/features/test-replay) captures the complete state of
-each test as it ran in CI and lets you replay it with full debugging capability.
-This is the primary reason teams use Cypress Cloud for debugging: it removes the
-need to recreate a CI environment locally.
-
-### How do I know if a test failure is a real bug or just flaky?
-
-Use [Flaky Test Management](/cloud/features/flaky-test-management) to see whether
-a test has a history of passing on retry, and
-[Branch Review](/cloud/features/branch-review) to compare your branch against its
-base and determine whether your change introduced the failure or it already
-existed.
-
-### Do I need to change my tests to debug them in Cypress Cloud?
-
-No. You only need to [record your runs](/cloud/get-started/setup) with
-`cypress run --record`. Test Replay, Error Summaries, and the test detail sidebar
-work automatically, with no changes to your test code.
-
-### Is Test Replay free?
-
-Test Replay is available on all Cypress Cloud plans, including the free plan, at
-no additional cost, subject to usage limits. It requires Cypress v13 or later and
-a Chromium-based browser. See the
-[Test Replay documentation](/cloud/features/test-replay#Get-Started) for details.
-
 ## See also
 
 - [Test Replay](/cloud/features/test-replay) — replay the exact CI run with full debug capability
@@ -331,3 +293,4 @@ a Chromium-based browser. See the
 - [Cloud MCP](/cloud/integrations/cloud-mcp) — debug from your AI coding assistant
 - [Test retries](/app/guides/test-retries) — the mechanism behind flake detection
 - [Set up Cypress Cloud](/cloud/get-started/setup) — record your runs in CI
+- [Cypress Cloud FAQ](/cloud/faq#Debugging) — common debugging questions answered
