@@ -204,8 +204,7 @@ You can use the `before:browser:launch` event to do things like:
 Standard, Chrome-branded browsers (for example, regular Google Chrome) version
 137 and above can no longer load extensions through the `before:browser:launch`
 event. This is because Chrome removed support for the `--load-extension` command
-line flag that Cypress relied on to load extensions. In an affected version of
-Chrome, Cypress will display a warning and the extension will not be loaded.
+line flag that Cypress relied on to load extensions.
 
 To continue loading extensions, run your tests in
 [Chrome for Testing](/app/references/launching-browsers#Chrome-Browsers) or
