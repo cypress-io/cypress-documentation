@@ -1113,6 +1113,67 @@ the Cypress's control. If the application is using `window.location.replace`
 method to set a _relative_ URL, try using the `experimentalSourceRewriting`
 option described in our [Experiments](/app/references/experiments) page.
 
+### <Icon name="angle-right" /> Why isn't my application's Content Security Policy (CSP) being enforced during tests? <E2EOnlyBadge />
+
+This is expected. By default Cypress strips both the `Content-Security-Policy`
+and `Content-Security-Policy-Report-Only` headers from responses before they
+reach the browser, so the policy is never enforced during a test run. This
+prevents a strict CSP from blocking the scripts Cypress injects to drive your
+application.
+
+If you need the policy enforced — for example to test the CSP itself — see
+[How do I test my application's Content Security Policy?](#How-do-I-test-my-applications-Content-Security-Policy)
+below. For the full picture, read the
+[Content Security Policy reference](/app/references/content-security-policy).
+
+### <Icon name="angle-right" /> How do I test my application's Content Security Policy (CSP)? <E2EOnlyBadge /> {#How-do-I-test-my-applications-Content-Security-Policy}
+
+Set the
+[`experimentalCspAllowList`](/app/references/experiments#Experimental-CSP-Allow-List)
+configuration option so Cypress keeps the CSP header instead of stripping it. It
+accepts three values:
+
+- `false` _(default)_ — strip the entire CSP header.
+- `true` — keep the header, removing only the directives that interfere with
+  Cypress.
+- an array of directive names — keep the header and only the named directives.
+
+:::cypress-config-example
+
+```js
+{
+  // keep the header, stripping only Cypress-interfering directives
+  experimentalCspAllowList: true
+}
+```
+
+:::
+
+This option only affects CSP delivered via HTTP headers, requires a Cypress
+server restart to change, and cannot be overridden per test. See the
+[Content Security Policy reference](/app/references/content-security-policy) for
+details, including the directives Cypress modifies or always removes.
+
+### <Icon name="angle-right" /> My scripts are still blocked by CSP even though Cypress strips the header. Why? <E2EOnlyBadge />
+
+The most common cause is that the policy is delivered with a
+[`<meta>` tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta#http-equiv)
+rather than an HTTP header. `experimentalCspAllowList` only operates on headers,
+so it cannot allow or strip a meta-tag policy. Look for `Refused to load…` /
+`Refused to execute…` CSP violation messages in the browser console to confirm.
+See the [Content Security Policy reference](/app/references/content-security-policy)
+for how Cypress handles each delivery method.
+
+### <Icon name="angle-right" /> Can I test CSP directives like `frame-ancestors` or `sandbox`? <E2EOnlyBadge />
+
+No. Cypress always removes `frame-ancestors`, `navigate-to`,
+`require-trusted-types-for`, `sandbox`, and `trusted-types` from allowed CSP
+headers — even with `experimentalCspAllowList` enabled — because leaving them in
+place would prevent Cypress from functioning. The behavior of these five
+directives cannot be tested through Cypress and must be verified outside of it.
+See [Always-stripped directives](/app/references/content-security-policy#always-stripped-directives)
+for the full list and the reason each is removed.
+
 ## Continuous Integration (CI/CD)
 
 ### <Icon name="angle-right" /> Why do my Cypress tests pass locally but not in CI?
