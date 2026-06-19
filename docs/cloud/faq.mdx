@@ -201,6 +201,72 @@ You can always run your tests in CI using
 flag which does not communicate with our external servers and will not record
 any test results.
 
+## Data Privacy and Security
+
+### <Icon name="angle-right" /> Does Cypress Cloud store my source code?
+
+No. Cypress Cloud never captures your application's source code or the code in
+any repositories associated with your project. What it does store for a recorded
+run is your terminal output, test results and definitions, Cypress configuration
+(minus environment variables), screenshots, videos, and CI/git environment
+details. When [Test Replay](#Test-Replay) is enabled, it also captures the
+rendered DOM and CSS, the Command Log, network traffic, and browser console logs
+for the application under test. See
+[Data Storage and Controls](/cloud/account-management/data-storage-and-masking)
+for the full list and the controls that govern it.
+
+### <Icon name="angle-right" /> How do I prevent sensitive data from being sent to Cypress Cloud?
+
+You stay in control of what leaves your environment. Cypress provides several
+controls you can combine to keep sensitive data out of the Cloud:
+
+- Set a project to [private](#What-is-the-difference-between-public-and-private-projects)
+  so only invited organization members can view its runs.
+- [Disable Test Replay](/cloud/features/test-replay#Opt-out-of-Test-Replay) to
+  stop capturing the DOM, network traffic, console logs, and Command Log.
+- [Black out elements](/cloud/account-management/data-storage-and-masking#Blackout-elements-in-screenshots)
+  or remove the Command Log from screenshots and videos.
+- Mask values in the
+  [Cypress Command Log](/cloud/account-management/data-storage-and-masking#Mask-data-in-the-Cypress-Command-Log),
+  including with `log: false` and custom `.type()` masking.
+- [Block requests](/app/references/configuration#blockHosts) to hosts you don't
+  want contacted or captured.
+
+See [Data Storage and Controls](/cloud/account-management/data-storage-and-masking)
+for step-by-step guidance on each option.
+
+### <Icon name="angle-right" /> How do I mask passwords and PII in screenshots and videos?
+
+Cypress lets you hide sensitive values so they never appear in locally saved
+screenshots and videos or to anyone viewing the run in Cypress Cloud. You can
+[black out specific elements](/cloud/account-management/data-storage-and-masking#Blackout-elements-in-screenshots)
+(such as fields that render PII), [remove the Cypress Command Log from
+screenshots](/cloud/account-management/data-storage-and-masking#Remove-Cypress-Command-Log-from-screenshots),
+pass `log: false` to commands, and
+[mask passwords in the Command Log](/cloud/account-management/data-storage-and-masking#Mask-Cypress-commands-in-the-Cypress-Command-Log)
+by overwriting `.type()`. See
+[Data Storage and Controls](/cloud/account-management/data-storage-and-masking#Screenshot-controls)
+for the full set of masking options.
+
+### <Icon name="angle-right" /> Is my test data used to train AI models?
+
+No. When [Cloud AI](#What-is-Cloud-AI) is enabled, test content may be shared
+with a session-bound AI model to enhance your test management experience, but
+your data is **not** used to train AI models and is never shared between
+customers. Organization admins and owners can enable or disable AI capabilities
+for the entire organization from the organization settings. See the
+[Cloud AI controls](/cloud/account-management/data-storage-and-masking#Cloud-AI-controls).
+
+### <Icon name="angle-right" /> Who can see my recorded test runs and data?
+
+It depends on your project's visibility. In a
+[private project](#What-is-the-difference-between-public-and-private-projects),
+only [users](/cloud/account-management/users) you explicitly invite to your
+organization can see its runs, screenshots, videos, and any captured data. In a
+public project, anyone who knows your `projectId` can view the recorded runs. You
+can change a project's visibility at any time in
+[project settings](/cloud/account-management/projects#Public-vs-Private).
+
 ## Using Cypress Cloud
 
 ### <Icon name="angle-right" /> What is the projectId for?
