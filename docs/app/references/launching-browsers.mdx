@@ -62,6 +62,15 @@ browser by using the drop down near the top right corner:
 Cypress officially supports the latest 3 major versions of Chrome, Firefox, and Edge.
 (For example, if the stable release of Chrome was 130, Cypress would officially support Chrome 128, 129, and 130.)
 
+:::info
+
+Cypress requires **Firefox 135 or newer**. Cypress automates Firefox through
+[WebDriver BiDi](https://w3c.github.io/webdriver-bidi/), which is only available
+in Firefox 135 and above. Attempting to run an older version of Firefox will
+result in an error. See [Firefox Browsers](#Firefox-Browsers) for details.
+
+:::
+
 See each browser's official release schedule for more information.
 
 - [Chrome Release Schedule](https://chromiumdash.appspot.com/schedule)
@@ -185,6 +194,14 @@ Check by browsing to **edge://policy**.
 ### Firefox Browsers
 
 Firefox-family browsers are supported by Cypress.
+
+:::caution
+
+Cypress requires **Firefox 135 or newer**. Starting with Firefox 135, Cypress
+automates Firefox using [WebDriver BiDi](https://w3c.github.io/webdriver-bidi/).
+Older versions of Firefox are not supported and will fail to launch.
+
+:::
 
 You can launch Firefox like this:
 
