@@ -2,12 +2,23 @@ const fs = require('fs')
 const path = require('path')
 
 /**
- * FAQ source files mapped to the routes they are published at.
- * `routeBasePath` is '/' for the docs, so docs/app/faq.mdx -> /app/faq.
+ * Source pages mapped to the routes they are published at. `routeBasePath` is
+ * '/' for the docs, so docs/app/faq.mdx -> /app/faq.
+ *
+ * Each entry may set:
+ *   - requireIconHeading: only treat `###` headings that begin with an <Icon>
+ *     as questions. Used by the Error Messages page, where icon-marked
+ *     headings are the actual errors and plain `###` headings are guide
+ *     subsections that should not become FAQ entries.
  */
-const FAQ_PAGES = [
+const STRUCTURED_DATA_PAGES = [
   { route: '/app/faq', file: 'docs/app/faq.mdx' },
   { route: '/cloud/faq', file: 'docs/cloud/faq.mdx' },
+  {
+    route: '/app/references/error-messages',
+    file: 'docs/app/references/error-messages.mdx',
+    requireIconHeading: true,
+  },
 ]
 
 /** Remove the leading YAML frontmatter block, if present. */
@@ -68,6 +79,8 @@ function inlinePartials(content, partialMap, seen = new Set(), depth = 0) {
  */
 function toPlainText(markdown) {
   let text = markdown
+  // Unescape Markdown backslash escapes (e.g. \< \> \* ) to their literals
+  text = text.replace(/\\([\\`*_{}\[\]()#+\-.!<>~|])/g, '$1')
   // Fenced code blocks
   text = text.replace(/```[\s\S]*?```/g, ' ')
   // HTML / MDX comments
@@ -104,8 +117,13 @@ function toPlainText(markdown) {
  * Parse the FAQ body into { question, answer } entries. Each `###` heading is
  * treated as a question; everything until the next `###`, `##` or `#` heading
  * is its answer. Headings inside fenced code blocks are ignored.
+ *
+ * Options:
+ *   - requireIconHeading: when true, only `###` headings that begin with an
+ *     <Icon> become questions; other `###` headings act as section breaks (so
+ *     guide subsections such as "The Problem" are not captured as entries).
  */
-function parseFaq(content) {
+function parseFaq(content, { requireIconHeading = false } = {}) {
   const lines = stripFrontmatter(content).split('\n')
   const entries = []
   let current = null
@@ -118,8 +136,17 @@ function parseFaq(content) {
       continue
     }
     if (!inFence && /^###\s+/.test(line)) {
+      const heading = line.replace(/^###\s+/, '')
+      // With requireIconHeading, a non-icon ### is a section break, not a question.
+      if (requireIconHeading && !/^<Icon[\s/>]/.test(heading)) {
+        if (current) {
+          entries.push(current)
+          current = null
+        }
+        continue
+      }
       if (current) entries.push(current)
-      current = { question: toPlainText(line.replace(/^###\s+/, '')), answerLines: [] }
+      current = { question: toPlainText(heading), answerLines: [] }
       continue
     }
     // An h1/h2 (category header or new section) ends the current answer.
@@ -160,10 +187,10 @@ function buildJsonLd(entries) {
 
 /**
  * Docusaurus plugin that generates FAQPage JSON-LD structured data from the
- * FAQ MDX files and exposes it as global data keyed by route. The swizzled
- * DocItem/Layout reads this and injects the JSON-LD <script> into the page
- * <head> for the matching FAQ routes, making the Q&As eligible for rich
- * results and AI citations.
+ * FAQ and Error Messages MDX files and exposes it as global data keyed by
+ * route. The swizzled DocItem/Layout reads this and injects the JSON-LD
+ * <script> into the page <head> for the matching routes, making the Q&As
+ * eligible for rich results and AI/answer-engine citations.
  */
 module.exports = async function faqStructuredDataPlugin(context) {
   return {
@@ -171,11 +198,13 @@ module.exports = async function faqStructuredDataPlugin(context) {
     async contentLoaded({ actions }) {
       const partialMap = loadPartialMap(context.siteDir)
       const byRoute = {}
-      for (const { route, file } of FAQ_PAGES) {
+      for (const { route, file, requireIconHeading } of STRUCTURED_DATA_PAGES) {
         const absolutePath = path.join(context.siteDir, file)
         if (!fs.existsSync(absolutePath)) continue
         const raw = fs.readFileSync(absolutePath, 'utf8')
-        const entries = parseFaq(inlinePartials(raw, partialMap))
+        const entries = parseFaq(inlinePartials(raw, partialMap), {
+          requireIconHeading,
+        })
         if (entries.length) byRoute[route] = buildJsonLd(entries)
       }
       actions.setGlobalData({ byRoute })

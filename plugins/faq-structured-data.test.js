@@ -79,6 +79,19 @@ describe('toPlainText', () => {
       'Select Custom > Add from the drawer'
     )
   })
+
+  test('unescapes markdown backslash escapes', () => {
+    expect(toPlainText('version 1\\.0 costs \\#1 priority')).toBe(
+      'version 1.0 costs #1 priority'
+    )
+  })
+
+  test('cleans an escaped angle-bracket placeholder (error title case)', () => {
+    // \< unescapes to <, then <…> is stripped as a tag-like token
+    expect(toPlainText('Queried from element: \\<…>')).toBe(
+      'Queried from element:'
+    )
+  })
 })
 
 // ---------------------------------------------------------------------------
@@ -178,6 +191,60 @@ describe('parseFaq', () => {
     expect(parseFaq(content)[0].answer).toBe(
       'First paragraph. Second paragraph.'
     )
+  })
+})
+
+// ---------------------------------------------------------------------------
+// parseFaq with requireIconHeading (Error Messages page)
+// ---------------------------------------------------------------------------
+
+describe('parseFaq with requireIconHeading', () => {
+  test('only icon-led ### headings become entries', () => {
+    const content = [
+      '## Test File Errors',
+      '',
+      '### <Icon name="exclamation-triangle" color="red" /> No tests found',
+      '',
+      'Cypress could not find tests.',
+      '',
+      '## Guide Section',
+      '',
+      '### The Problem',
+      '',
+      'Some explanatory prose that is not an error.',
+      '',
+      '### The Solution',
+      '',
+      'More guide prose.',
+    ].join('\n')
+
+    const result = parseFaq(content, { requireIconHeading: true })
+    expect(result).toEqual([
+      { question: 'No tests found', answer: 'Cypress could not find tests.' },
+    ])
+  })
+
+  test('a non-icon ### acts as a section break for the preceding entry', () => {
+    const content = [
+      '### <Icon name="exclamation-triangle" /> Real error',
+      '',
+      'The real answer.',
+      '',
+      '### Not an error',
+      '',
+      'This guide prose must not leak into the previous answer.',
+    ].join('\n')
+
+    const result = parseFaq(content, { requireIconHeading: true })
+    expect(result).toHaveLength(1)
+    expect(result[0].answer).toBe('The real answer.')
+  })
+
+  test('default behavior (no option) still captures non-icon headings', () => {
+    const content = ['### What is Cloud AI?', '', 'An answer.'].join('\n')
+    expect(parseFaq(content)).toEqual([
+      { question: 'What is Cloud AI?', answer: 'An answer.' },
+    ])
   })
 })
 
@@ -314,47 +381,93 @@ describe('inlinePartials', () => {
 // Integration against the real FAQ source files
 // ---------------------------------------------------------------------------
 
+const siteDir = path.resolve(__dirname, '..')
+
+/** Assert a parsed entry list produces a well-formed FAQPage JSON-LD object. */
+function expectWellFormedFaqPage(entries) {
+  expect(entries.length).toBeGreaterThan(0)
+  const json = buildJsonLd(entries)
+  expect(json['@context']).toBe('https://schema.org')
+  expect(json['@type']).toBe('FAQPage')
+  expect(
+    json.mainEntity.every(
+      (q) =>
+        q['@type'] === 'Question' &&
+        typeof q.name === 'string' &&
+        q.name.length > 0 &&
+        q.acceptedAnswer['@type'] === 'Answer' &&
+        typeof q.acceptedAnswer.text === 'string' &&
+        q.acceptedAnswer.text.length > 0 &&
+        // no leftover JSX/markdown tags should remain in the text
+        !/<[a-zA-Z][^>]*>/.test(q.name) &&
+        !/<[a-zA-Z][^>]*>/.test(q.acceptedAnswer.text)
+    )
+  ).toBe(true)
+}
+
+/** Count ### headings outside of fenced code blocks, optionally icon-led only. */
+function countHeadings(raw, { iconOnly = false } = {}) {
+  let count = 0
+  let inFence = false
+  for (const line of raw.split('\n')) {
+    if (/^\s*```/.test(line)) inFence = !inFence
+    else if (!inFence && /^###\s+/.test(line)) {
+      if (!iconOnly || /^###\s+<Icon[\s/>]/.test(line)) count += 1
+    }
+  }
+  return count
+}
+
 describe('integration with repository FAQ pages', () => {
-  const siteDir = path.resolve(__dirname, '..')
-  const faqFiles = [
-    'docs/app/faq.mdx',
-    'docs/cloud/faq.mdx',
-  ].filter((file) => fs.existsSync(path.join(siteDir, file)))
+  const faqFiles = ['docs/app/faq.mdx', 'docs/cloud/faq.mdx'].filter((file) =>
+    fs.existsSync(path.join(siteDir, file))
+  )
 
   test.each(faqFiles)(
     'every ### heading in %s yields a well-formed FAQPage entry',
     (file) => {
       const partialMap = loadPartialMap(siteDir)
       const raw = fs.readFileSync(path.join(siteDir, file), 'utf8')
-      const inlined = inlinePartials(raw, partialMap)
-      const entries = parseFaq(inlined)
+      const entries = parseFaq(inlinePartials(raw, partialMap))
 
-      // Count ### headings outside of fenced code blocks in the source.
-      let headingCount = 0
-      let inFence = false
-      for (const line of raw.split('\n')) {
-        if (/^\s*```/.test(line)) inFence = !inFence
-        else if (!inFence && /^###\s+/.test(line)) headingCount += 1
-      }
+      expect(entries.length).toBe(countHeadings(raw))
+      expectWellFormedFaqPage(entries)
+    }
+  )
+})
 
-      expect(entries.length).toBe(headingCount)
-      expect(entries.length).toBeGreaterThan(0)
+describe('integration with the Error Messages page', () => {
+  const file = 'docs/app/references/error-messages.mdx'
+  const exists = fs.existsSync(path.join(siteDir, file))
 
-      const json = buildJsonLd(entries)
-      expect(json['@type']).toBe('FAQPage')
+  test.runIf(exists)(
+    'captures only icon-marked errors as well-formed FAQPage entries',
+    () => {
+      const partialMap = loadPartialMap(siteDir)
+      const raw = fs.readFileSync(path.join(siteDir, file), 'utf8')
+      const entries = parseFaq(inlinePartials(raw, partialMap), {
+        requireIconHeading: true,
+      })
+
+      // One entry per icon-marked error heading; plain ### subsections excluded.
+      expect(entries.length).toBe(countHeadings(raw, { iconOnly: true }))
+      expect(entries.length).toBeLessThan(countHeadings(raw))
+
+      // None of the React Hydration guide subsections should leak in.
+      const guideHeadings = [
+        'The Problem',
+        'The Solution',
+        'Framework-Specific Setup',
+        'How It Works',
+        'Troubleshooting',
+        'Caveats and Considerations',
+        'See Also',
+      ]
       expect(
-        json.mainEntity.every(
-          (q) =>
-            q['@type'] === 'Question' &&
-            typeof q.name === 'string' &&
-            q.name.length > 0 &&
-            q.acceptedAnswer['@type'] === 'Answer' &&
-            typeof q.acceptedAnswer.text === 'string' &&
-            q.acceptedAnswer.text.length > 0 &&
-            // no leftover JSX/markdown tags should remain in the answer
-            !/<[a-zA-Z][^>]*>/.test(q.acceptedAnswer.text)
-        )
-      ).toBe(true)
+        entries.some((e) => guideHeadings.some((h) => e.question.startsWith(h)))
+      ).toBe(false)
+
+      expectWellFormedFaqPage(entries)
     }
   )
 })
