@@ -79,6 +79,38 @@ variable. These are set in your shell, CI configuration, or `.npmrc`.
 | `CYPRESS_VERIFY_TIMEOUT`          | Overrides the timeout duration for the `verify` command. The default value is 30000.           |
 | `CYPRESS_SKIP_VERIFY`             | Skips the [`verify` command](command-line#cypress-verify) when set to `true`                   |
 
+### When you'd reach for each
+
+The descriptions above say what each variable does. Here is the problem each one
+typically solves, so you can find the right tool for your situation:
+
+- **`CYPRESS_INSTALL_BINARY`**: Use this when the binary npm would install isn't
+  the one you want. Common goals: pin a binary version that differs from the npm
+  package, install from an internal URL when `download.cypress.io` is blocked, or
+  install from a local `.zip` on an offline machine. Setting it to `0` skips the
+  binary download entirely, which is handy for building base Docker images or
+  splitting install and download into separate, debuggable steps.
+- **`CYPRESS_DOWNLOAD_MIRROR`**: Use this when your network blocks the public
+  download server but you host an internal copy of it. It swaps the download host
+  for your mirror while keeping the same URL layout, so many machines can install
+  without each pinning a one-off URL.
+- **`CYPRESS_DOWNLOAD_PATH_TEMPLATE`**: Use this when your internal artifact
+  store doesn't match the `download.cypress.io` URL layout. It lets you describe
+  exactly how your server lays out files so Cypress can build the correct URL per
+  platform and version.
+- **`CYPRESS_CACHE_FOLDER`**: Use this to control where the downloaded binary is
+  stored. The most common goal is faster CI: point it at a directory your CI
+  provider caches between runs so the download becomes a cache hit. It's also
+  useful on locked-down machines where the default cache location isn't writable.
+- **`CYPRESS_RUN_BINARY`**: Use this when you want to launch a specific binary
+  already on disk instead of the one resolved from the cache, for example a
+  binary you unzipped to a known location.
+- **`CYPRESS_VERIFY_TIMEOUT`**: Use this when the one-time binary verification
+  step times out, which can happen on slow or heavily loaded machines.
+- **`CYPRESS_SKIP_VERIFY`**: Use this to skip binary verification, for example
+  when the binary lives in a read-only location and verification can't write its
+  results.
+
 ### Setting variables via npm config or package.json
 
 You don't have to export a shell variable to configure these options. This is
