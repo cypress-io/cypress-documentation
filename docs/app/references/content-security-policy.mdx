@@ -29,10 +29,25 @@ There are two ways to implement CSP:
 - [Meta tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta#http-equiv)
 - [HTTP header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy)
 
-The `<meta>` tag implementation is fully supported by Cypress without any
-configuration required. This is because Cypress loads the necessary `<script>`
-tags into your application before any `<meta>` tag is parsed. This prevents any
-CSP directives from being applied to the script loaded by Cypress.
+Cypress functions with the `<meta>` tag implementation without any configuration
+required. This works because Cypress loads the necessary `<script>` tags into
+your application before any `<meta>` tag is parsed, so the CSP directives are
+never applied to the script loaded by Cypress. This behavior relies on that
+ordering assumption rather than on any modification of the policy itself.
+
+:::caution
+
+Cypress' CSP handling applies only to policies delivered via HTTP headers, not
+those delivered via a `<meta>` tag:
+
+- [`experimentalCspAllowList`](/app/references/experiments#Experimental-CSP-Allow-List)
+  operates exclusively on HTTP headers. It does nothing for a meta-tag CSP, so
+  you cannot use the allow list to test a meta-delivered policy.
+- The `nonce` injection described below likewise applies only to headers, never
+  to `<meta>` tags. The "scripts are loaded before the `<meta>` tag is parsed"
+  ordering is the only mechanism that makes meta-tag CSP work with Cypress.
+
+:::
 
 The second implementation requires you to configure Cypress to allow the headers
 to be sent to your application. By default, Cypress will remove both the
