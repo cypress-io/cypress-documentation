@@ -1,6 +1,6 @@
 ---
 title: 'Content Security Policy (CSP) in Cypress'
-description: 'How Cypress handles Content Security Policy (CSP) and how to configure it to work with your application.'
+description: 'Why Cypress manages Content Security Policy (CSP), how to tell when you need to configure it, and how to allow your policy through for testing.'
 sidebar_label: 'Content Security Policy'
 e2eSpecific: true
 ---
@@ -13,62 +13,114 @@ e2eSpecific: true
 
 ##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
 
-- How Cypress handles Content Security Policy (CSP)
-- How to configure Cypress to work with your application's CSP
+- Why Cypress needs to manage your application's Content Security Policy (CSP)
+- How to recognize the signs that you need to configure CSP handling
+- What configuring CSP handling gives you, and what it cannot do
+- How to allow your CSP through with `experimentalCspAllowList`
 
 :::
 
-Content Security Policy (CSP) is a browser security feature that allows you to
-restrict the resources that can be loaded into your application. This can be
-problematic for Cypress, because it needs to inject JavaScript into your
-application in order to run tests and interact with the DOM. This page describes
-how Cypress handles CSP and how to configure it to work with your application.
+[Content Security Policy (CSP)](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP)
+is a browser security feature that restricts the resources — scripts, styles,
+frames, and more — that are allowed to load into a page. It is one of the most
+effective defenses against cross-site scripting (XSS), but it works by blocking
+anything the page author did not explicitly permit. That is exactly what makes
+it interesting for Cypress.
 
-There are two ways to implement CSP:
+## Why Cypress needs to manage CSP
 
-- [Meta tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta#http-equiv)
-- [HTTP header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy)
+To drive your application, Cypress injects its own `<script>` tags into the page
+and loads your app inside an iframe. A strict CSP is designed to stop precisely
+this kind of injection: an unmodified policy can block Cypress' scripts from
+executing, forbid the app from being framed, or restrict the DOM rewriting
+Cypress relies on. If Cypress did nothing, a security-conscious application could
+become untestable the moment it shipped a CSP.
+
+To avoid this, **Cypress removes CSP by default.** When a policy is delivered
+over HTTP headers, Cypress strips both the
+`Content-Security-Policy` and `Content-Security-Policy-Report-Only` headers from
+the response before it reaches the browser, so the browser never enforces the
+policy during a test run. For most tests — where you are exercising application
+behavior, not the policy itself — this is invisible and requires no
+configuration.
+
+## Signs you need to configure CSP handling
+
+Because Cypress strips CSP by default, two different symptoms point in opposite
+directions:
+
+- **Your app or its scripts are blocked even though Cypress strips headers.**
+  This usually means the policy is delivered with a
+  [`<meta>` tag](#how-csp-is-delivered) rather than an HTTP header, or that a
+  directive Cypress does not strip is interfering. Look for
+  `Refused to load…` / `Refused to execute…` CSP violation messages in the
+  browser console.
+- **You actually want the policy enforced.** If your goal is to _verify your own
+  CSP_ — for example asserting that a violation is reported, or that a forbidden
+  resource is blocked — the default behavior works against you, because the
+  policy you are trying to test has been removed. You will see your CSP simply
+  not taking effect during the test.
+
+If either of these describes you, you need to opt in to Cypress sending the CSP
+header through to the browser.
+
+## What configuring CSP handling gives you
+
+Opting in lets you **run your tests against a real, enforced policy** instead of
+no policy at all. This is valuable when:
+
+- You are testing the CSP implementation itself (reporting, blocking, allowed
+  sources).
+- Your application's behavior legitimately depends on CSP being present.
+- You want your test environment to mirror production as closely as possible.
+
+The trade-off is that Cypress still has to keep itself working, so the enforced
+policy is a *modified* version of yours rather than a byte-for-byte copy — see
+[Always-stripped directives](#always-stripped-directives) and
+[Nonce injection](#nonce-injection) for exactly what changes.
+
+## How CSP is delivered
+
+There are two ways to deliver a CSP, and Cypress treats them very differently:
+
+- [HTTP header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy) —
+  configurable, and the only form Cypress can allow through for testing.
+- [Meta tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta#http-equiv) —
+  supported automatically, but **not** configurable.
 
 Cypress functions with the `<meta>` tag implementation without any configuration
-required. This works because Cypress loads the necessary `<script>` tags into
-your application before any `<meta>` tag is parsed, so the CSP directives are
-never applied to the script loaded by Cypress. This behavior relies on that
-ordering assumption rather than on any modification of the policy itself.
+required. This works because Cypress loads its `<script>` tags into your
+application before any `<meta>` tag is parsed, so the CSP directives are never
+applied to the script loaded by Cypress. This relies on that ordering rather than
+on any modification of the policy itself.
 
 :::caution
 
-Cypress' CSP handling applies only to policies delivered via HTTP headers, not
-those delivered via a `<meta>` tag:
+Cypress' configurable CSP handling applies **only** to policies delivered via
+HTTP headers, not those delivered via a `<meta>` tag:
 
-- [`experimentalCspAllowList`](/app/references/experiments#Experimental-CSP-Allow-List)
+- [`experimentalCspAllowList`](#allowing-the-header-through-with-experimentalcspallowlist)
   operates exclusively on HTTP headers. It does nothing for a meta-tag CSP, so
   you cannot use the allow list to test a meta-delivered policy.
-- The `nonce` injection described below likewise applies only to headers, never
-  to `<meta>` tags. The "scripts are loaded before the `<meta>` tag is parsed"
-  ordering is the only mechanism that makes meta-tag CSP work with Cypress.
+- The [`nonce` injection](#nonce-injection) described below likewise applies only
+  to headers, never to `<meta>` tags. The "scripts are loaded before the
+  `<meta>` tag is parsed" ordering is the only mechanism that makes meta-tag CSP
+  work with Cypress.
 
 :::
 
-The second implementation requires you to configure Cypress to allow the headers
-to be sent to your application. By default, Cypress will remove both the
-`Content-Security-Policy` and `Content-Security-Policy-Report-Only` headers from
-the response before it is sent to the browser. This is done to prevent Cypress
-from being blocked by the browser's CSP implementation.
+## Allowing the header through with `experimentalCspAllowList`
 
-For most application tests, this should not cause any issues. However, if you
-are testing your application's CSP implementation, you will need to configure
-Cypress to allow the headers to be sent to the browser. You can do this by
-setting the
+By default Cypress strips the CSP header entirely. To keep it — so the browser
+enforces your policy during the test — configure the
 [`experimentalCspAllowList`](/app/references/experiments#Experimental-CSP-Allow-List)
-configuration option.
+option. It accepts three kinds of value:
 
-`experimentalCspAllowList` accepts three kinds of value:
-
-| Value      | Behavior                                                                                                                  |
-| ---------- | ------------------------------------------------------------------------------------------------------------------------- |
-| `false`    | _(default)_ Strip the entire CSP header. The policy is removed completely before the response reaches the browser.        |
-| `true`     | Keep the header, stripping only the directives that would interfere with Cypress (see below).                             |
-| `string[]` | Keep the header and the named directives, stripping everything else that Cypress would otherwise allow.                   |
+| Value      | Behavior                                                                                                            |
+| ---------- | ----------------------------------------------------------------------------------------------------------------- |
+| `false`    | _(default)_ Strip the entire CSP header. The policy is removed completely before the response reaches the browser. |
+| `true`     | Keep the header, stripping only the directives that would interfere with Cypress (see below).                      |
+| `string[]` | Keep the header and the named directives, stripping everything else that Cypress would otherwise allow.            |
 
 When using the array form, the values are validated and must be drawn from
 exactly these six allowable directives:
@@ -80,9 +132,9 @@ exactly these six allowable directives:
 - `script-src-elem`
 - `form-action`
 
-Any other directive name is rejected by validation. Regardless of which mode you
-choose, the [always-stripped directives](#always-stripped-directives) below are
-removed.
+Any other directive name is not accepted by the array. Regardless of which mode
+you choose, the [always-stripped directives](#always-stripped-directives) below
+are removed.
 
 :::caution
 
@@ -133,11 +185,14 @@ allowable values):
 
 :::
 
-Even with `experimentalCspAllowList` enabled, the CSP that reaches the browser
-is **not** byte-identical to your application's original policy — Cypress
-mutates three directives, as described in [Nonce injection](#nonce-injection)
-below. If your test asserts on the exact header value, account for this
-modification.
+:::caution
+
+Even with `experimentalCspAllowList` enabled, the CSP that reaches the browser is
+**not** byte-identical to your application's original policy — Cypress mutates
+three directives, as described in [Nonce injection](#nonce-injection) below. If
+your test asserts on the exact header value, account for this modification.
+
+:::
 
 ## Always-stripped directives
 
@@ -146,8 +201,8 @@ removes the following five directives from allowed CSP headers, because leaving
 them in place would prevent Cypress from functioning. They cannot be allowed
 through the allow list:
 
-| Stripped directive          | Reason                                                            |
-| --------------------------- | ---------------------------------------------------------------- |
+| Stripped directive          | Reason                                                           |
+| --------------------------- | --------------------------------------------------------------- |
 | `frame-ancestors`           | Prevents Cypress from loading a test application into an iframe. |
 | `navigate-to`               | Affects Cypress' ability to navigate to different URLs.          |
 | `require-trusted-types-for` | Might prevent Cypress from rewriting the DOM.                    |
@@ -222,6 +277,9 @@ for more detail.
 
 :::
 
-For more information on CSP, see the
-[Content Security Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP)
-documentation on MDN.
+## See also
+
+- [`experimentalCspAllowList`](/app/references/experiments#Experimental-CSP-Allow-List)
+  configuration reference
+- [Content Security Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP)
+  documentation on MDN
