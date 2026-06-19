@@ -148,6 +148,10 @@ Cypress automatically reads from your system's `HTTP_PROXY` environment variable
 and uses that proxy for all HTTP and HTTPS traffic. If an `HTTPS_PROXY`
 environment variable is set, HTTPS traffic will use that proxy instead.
 
+Setting `HTTP_PROXY` to a falsy value — `false`, `0`, or an empty string —
+disables the proxy entirely. This can be useful to turn off a proxy that is
+otherwise configured through your npm config or the Windows registry.
+
 If the `HTTP_PROXY` and `HTTPS_PROXY` environment variables are not set, Cypress
 falls back to your npm proxy configuration at runtime. npm exposes its
 [`proxy`](https://docs.npmjs.com/cli/v9/using-npm/config#proxy) and
@@ -161,7 +165,11 @@ environment variables, and Cypress applies them as follows:
 | `npm_config_https_proxy` | `HTTPS_PROXY` | if `HTTPS_PROXY` unset |
 
 A proxy set through the `HTTP_PROXY` or `HTTPS_PROXY` environment variable always
-takes precedence over the corresponding npm configuration.
+takes precedence over the corresponding npm configuration. Only npm's `proxy`
+and `https-proxy` values are used as a fallback — npm's
+[`noproxy`](https://docs.npmjs.com/cli/v9/using-npm/config#noproxy) configuration
+is **not** applied to `NO_PROXY` at runtime, so set `NO_PROXY` directly if you
+need to bypass the proxy for specific domains.
 
 To bypass the proxy for certain domains, a `NO_PROXY` environment variable can
 be set to a comma-separated list of domain names to not proxy traffic for.
@@ -413,3 +421,10 @@ if you rely on a separate HTTPS proxy it will not appear in this view even thoug
 Cypress still uses it.
 
 :::
+
+You can also view your proxy settings from the command line. Running
+`cypress info` prints the `HTTP_PROXY`, `HTTPS_PROXY`, and `NO_PROXY` values
+Cypress detects, making it a useful alternative to the Settings UI — especially
+in CI or other headless environments:
+
+<CypressInfoCommands />

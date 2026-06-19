@@ -9,6 +9,7 @@ import Btn from "@site/src/components/button";
 import ComponentOnlyBadge from "@site/src/components/component-only-badge";
 import TestReplayInfo from "@site/docs/partials/_test-replay-info.mdx";
 import CypressConfigFileTabs from "@site/src/components/cypress-config-file-tabs";
+import CypressInfoCommands from "@site/docs/partials/_cypress-info-commands.mdx";
 import CypressInstallCommands from "@site/docs/partials/_cypress-install-commands.mdx";
 import CypressCacheClearCommands from "@site/docs/partials/_cypress-cache-clear-commands.mdx";
 import CypressInstallBinaryCommands from "@site/docs/partials/_cypress-install-binary-commands.mdx";
@@ -179,6 +180,7 @@ export default {
   Btn,
   ComponentOnlyBadge,
   CypressConfigFileTabs,
+  CypressInfoCommands,
   CypressInstallCommands,
   CypressCacheClearCommands,
   CypressInstallBinaryCommands,
