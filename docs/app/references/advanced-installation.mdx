@@ -14,7 +14,7 @@ Cypress downloads the right binary for your operating system, caches it so it ca
 be reused across projects, and launches it when you run a test.
 
 This guide is for the situations where those defaults don't fit. It exists
-because real-world environments are messy — corporate proxies, air-gapped CI,
+because real-world environments are messy: corporate proxies, air-gapped CI,
 locked-down certificate stores, disk-constrained build agents, and containerized
 editors all change how (and whether) Cypress can reach the internet and where it
 can write files. Each setting below is an escape hatch for one of those
@@ -24,16 +24,16 @@ constraints.
 
 ##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
 
-- **How Cypress installs** — the npm module vs. the binary, and why that split
+- **How Cypress installs**: the npm module vs. the binary, and why that split
   matters
-- **Controlling the install** — installing a custom version, URL, or local file,
+- **Controlling the install**: installing a custom version, URL, or local file,
   or skipping the binary entirely
-- **Installing behind a firewall or mirror** — proxies, download mirrors, custom
+- **Installing behind a firewall or mirror**: proxies, download mirrors, custom
   URL templates, and custom certificate authorities
-- **Managing the binary cache** — where binaries live, how to relocate them, and
+- **Managing the binary cache**: where binaries live, how to relocate them, and
   how to prune or clear them
-- **Privacy controls** — opting out of crash reports and commercial messaging
-- **Environment-specific setup** — WSL, Dev Containers, and GitHub Codespaces
+- **Privacy controls**: opting out of crash reports and commercial messaging
+- **Environment-specific setup**: WSL, Dev Containers, and GitHub Codespaces
 
 :::
 
@@ -43,7 +43,7 @@ Understanding the install model makes almost every setting on this page
 self-explanatory. Installing Cypress happens in two distinct steps:
 
 1. **The npm module** (`cypress`) is added to your project like any other
-   dependency. This package is small — it's the command-line wrapper, TypeScript
+   dependency. This package is small: it's the command-line wrapper, TypeScript
    types, and the `cypress` binary launcher. It is _not_ the Cypress application
    itself.
 2. **The binary** (the actual Cypress application, including the bundled
@@ -59,12 +59,12 @@ matching binary in the cache and launches it.
 This two-step model is the "why" behind most of the variables below:
 
 - Because the binary is downloaded separately, you can point that download at a
-  different version, URL, or local file — see [Install binary](#Install-binary).
+  different version, URL, or local file. See [Install binary](#Install-binary).
 - Because it comes over the network, restricted environments need a way to route
   through a [proxy](#Proxy-configuration), a [mirror](#Mirroring), or a
   [custom CA](#Using-a-custom-certificate-authority-CA).
 - Because it lives in a shared cache, you can relocate, inspect, and prune that
-  cache — see [Binary cache](#Binary-cache).
+  cache. See [Binary cache](#Binary-cache).
 
 ## Environment variables
 
@@ -87,7 +87,7 @@ table below is the quick reference; each links to the section that explains the
 
 You don't have to export a shell variable to configure these options. This is
 valuable because shell exports don't persist across machines or CI agents,
-whereas committing the setting to your repo does — so the whole team and your CI
+whereas committing the setting to your repo does, so the whole team and your CI
 get the same behavior automatically.
 
 Every `CYPRESS_*` variable above can be set as a real environment variable, or
@@ -95,9 +95,9 @@ through your npm configuration. Cypress resolves each variable in the following
 order, using the first value it finds:
 
 1. The actual environment variable (e.g. `CYPRESS_INSTALL_BINARY`)
-2. `npm_config_<name>` — set via `.npmrc` or `npm config`
+2. `npm_config_<name>` (set via `.npmrc` or `npm config`)
 3. The lowercase `npm_config_<name>`
-4. `npm_package_config_<name>` — set via a `config` block in `package.json`
+4. `npm_package_config_<name>` (set via a `config` block in `package.json`)
 
 This means options like `CYPRESS_INSTALL_BINARY`, `CYPRESS_CACHE_FOLDER`, and
 `CYPRESS_DOWNLOAD_MIRROR` can all be configured in `.npmrc`:
@@ -163,11 +163,11 @@ In all cases, the fact that the binary was installed from a custom location _is
 not saved in your `package.json` file_. Every repeated installation needs to use
 the same environment variable to install the same binary. (This is exactly the
 problem [npm config / package.json](#Setting-variables-via-npm-config-or-packagejson)
-solves — commit the setting so it's applied on every install.)
+solves: commit the setting so it's applied on every install.)
 
 ### Skipping installation
 
-Sometimes you want the npm module without the binary download — for example, to
+Sometimes you want the npm module without the binary download, for example, to
 build a base Docker image and add the binary in a later layer, or to install the
 binary yourself with debug output. Setting `CYPRESS_INSTALL_BINARY=0` skips the
 download entirely.
@@ -298,12 +298,12 @@ CDN. If you are scripting pre-release installs, the URLs follow this pattern:
 https://cdn.cypress.io/beta/binary/<version>/<platform>-<arch>/<branch>-<sha>/cypress.zip
 ```
 
-- `<version>` — the Cypress version being built (e.g. `15.16.0`)
-- `<platform>-<arch>` — one of the supported
+- `<version>`: the Cypress version being built (e.g. `15.16.0`)
+- `<platform>-<arch>`: one of the supported
   [platform/architecture combinations](#Mirroring) (e.g. `darwin-arm64`,
   `linux-x64`)
-- `<branch>` — the branch the binary was built from (e.g. `develop`)
-- `<sha>` — the full commit SHA
+- `<branch>`: the branch the binary was built from (e.g. `develop`)
+- `<sha>`: the full commit SHA
 
 You can install a pre-release binary directly by pointing
 [`CYPRESS_INSTALL_BINARY`](#Install-binary) at one of these URLs:
@@ -319,7 +319,7 @@ rely on these being available past 60 days.
 
 The next four sections all address the same root problem: the machine running
 `npm install` can't (or shouldn't) download from `https://download.cypress.io`
-directly. Pick the approach that matches your constraint — a known download URL,
+directly. Pick the approach that matches your constraint: a known download URL,
 a full mirror, a custom URL layout, or a private certificate authority.
 
 ### Download URLs
@@ -498,7 +498,7 @@ variable is used as an extension.
 
 Once downloaded, the binary lives in a global cache so it can be reused across
 projects and CI runs instead of being re-downloaded every time. Knowing where
-that cache is — and being able to move it — is what makes Cypress fast in CI and
+that cache is (and being able to move it) is what makes Cypress fast in CI and
 predictable on shared machines.
 
 By default, global cache folders are:
@@ -548,8 +548,8 @@ ensure this, consider exporting this environment variable. For example, in a
 <strong>Relative paths resolve against the project root</strong>
 
 If you set `CYPRESS_CACHE_FOLDER` (or a local-file `CYPRESS_INSTALL_BINARY`) to
-a relative path, it is resolved relative to your **project root** — the
-directory containing `package.json` — and _not_ relative to
+a relative path, it is resolved relative to your **project root** (the
+directory containing `package.json`) and _not_ relative to
 `node_modules/cypress`. This is because Cypress installs the binary from a
 `postinstall` hook, where the current working directory is the package
 directory.
@@ -697,7 +697,7 @@ variables.
 ## Environment-specific setup
 
 These environments need extra setup because they don't provide a graphical
-display the way a normal desktop OS does — which is what the interactive Test
+display the way a normal desktop OS does, which is what the interactive Test
 Runner needs.
 
 ### Windows Subsystem for Linux
