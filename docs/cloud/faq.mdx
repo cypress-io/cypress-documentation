@@ -227,26 +227,6 @@ for the application under test. See
 [Data Storage and Controls](/cloud/account-management/data-storage-and-masking)
 for the full list and the controls that govern it.
 
-### <Icon name="angle-right" /> How do I prevent sensitive data from being sent to Cypress Cloud?
-
-You stay in control of what leaves your environment. Cypress provides several
-controls you can combine to keep sensitive data out of the Cloud:
-
-- Set a project to [private](#What-is-the-difference-between-public-and-private-projects)
-  so only invited organization members can view its runs.
-- [Disable Test Replay](/cloud/features/test-replay#Opt-out-of-Test-Replay) to
-  stop capturing the DOM, network traffic, console logs, and Command Log.
-- [Black out elements](/cloud/account-management/data-storage-and-masking#Blackout-elements-in-screenshots)
-  or remove the Command Log from screenshots and videos.
-- Mask values in the
-  [Cypress Command Log](/cloud/account-management/data-storage-and-masking#Mask-data-in-the-Cypress-Command-Log),
-  including with `log: false` and custom `.type()` masking.
-- [Block requests](/app/references/configuration#blockHosts) to hosts you don't
-  want contacted or captured.
-
-See [Data Storage and Controls](/cloud/account-management/data-storage-and-masking)
-for step-by-step guidance on each option.
-
 ### <Icon name="angle-right" /> How do I mask passwords and PII in screenshots and videos?
 
 Cypress lets you hide sensitive values so they never appear in locally saved
