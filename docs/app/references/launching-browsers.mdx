@@ -229,19 +229,6 @@ which tells Cypress to skip reading and writing Chrome preferences entirely:
 IGNORE_CHROME_PREFERENCES=1 cypress run --browser chrome
 ```
 
-:::caution
-
-When `IGNORE_CHROME_PREFERENCES` is set, Cypress no longer manages Chrome
-preferences, so any behavior controlled through preferences will not be applied.
-This includes preferences you set via `launchOptions.preferences` in the
-[`before:browser:launch`](/api/node-events/browser-launch-api#Change-browser-preferences)
-event, as well as Cypress's own preference-based defaults (such as disabling
-password saving/autofill and configuring the downloads folder). Settings applied
-through command-line switches are unaffected. Only use this escape hatch if your
-environment requires it.
-
-:::
-
 ### Edge Browsers
 
 Microsoft Edge-family (Chromium-based) browsers are supported by Cypress.
