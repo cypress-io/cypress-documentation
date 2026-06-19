@@ -404,3 +404,12 @@ steps:
   src="/img/app/configuration/test-runner-settings-proxy-configuration.jpg"
   alt="Proxy configuration in the Desktop app"
 />
+
+:::note
+
+The "Proxy Settings" section only displays the proxy resolved from `HTTP_PROXY`
+and the bypass list resolved from `NO_PROXY`. `HTTPS_PROXY` is not shown here, so
+if you rely on a separate HTTPS proxy it will not appear in this view even though
+Cypress still uses it.
+
+:::
