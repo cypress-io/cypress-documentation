@@ -62,6 +62,12 @@ setting the
 [`experimentalCspAllowList`](/app/references/experiments#Experimental-CSP-Allow-List)
 configuration option.
 
+Even with `experimentalCspAllowList` enabled, the CSP that reaches the browser
+is **not** byte-identical to your application's original policy — Cypress
+mutates three directives, as described in [Nonce injection](#nonce-injection)
+below. If your test asserts on the exact header value, account for this
+modification.
+
 ## Nonce injection
 
 To allow its injected `<script>` tags to execute under your policy, Cypress
