@@ -19,12 +19,30 @@ description: Enterprise Reporting in Cypress Cloud provides insights and data ac
 
 :::
 
-Enterprise Reporting is available within Cypress Cloud so that you can spot trends and anomalies,
-track usage, and govern your overall test program across all projects in your organization. Included
-is the ability to interact with visual cards that highlight usage, test metrics, test types, flake,
-build versions, and more. The raw data from all graphs presented in Cloud can be downloaded in a variety
-of formats. And if you prefer to programmatically retrieve test data for use within your own analytics
-platform, take a look at our [data extract API](/cloud/integrations/data-extract-api).
+As your organization grows, so does the challenge of understanding the health of your test suites.
+Individual project dashboards tell you how _one_ project is doing, but they can't answer the questions
+that engineering leaders and platform teams actually care about: _Is testing improving or degrading
+across the company? Which teams are adopting Cypress effectively? Where is flake quietly eroding
+developer trust and burning CI minutes? Are we getting a return on our testing investment?_
+
+**Enterprise Reporting answers these questions.** It rolls up data from every project in your
+organization into a single, cross-project view so you can spot trends and anomalies, track usage, and
+govern your entire testing program from one place—without manually stitching together data from
+dozens of dashboards.
+
+With Enterprise Reporting you can:
+
+- **See the whole picture.** Aggregate test results, usage, flake, and configuration across all
+  projects, then drill down to a specific team, project, branch, or time period when something needs
+  attention.
+- **Catch problems before they spread.** Surface rising flake rates, failing builds, and inconsistent
+  setups early—while they're still cheap to fix.
+- **Govern with confidence.** Verify that teams are on supported Cypress versions, using smart
+  orchestration, and following consistent practices across the organization.
+- **Demonstrate impact.** Quantify how testing usage and quality are trending over time to justify
+  investment and show progress to stakeholders.
+- **Own your data.** Download the raw data behind any chart, or pull it programmatically into your own
+  analytics platform with the [data extract API](/cloud/integrations/data-extract-api).
 
 :::tip
 
@@ -39,10 +57,12 @@ platform, take a look at our [data extract API](/cloud/integrations/data-extract
 If available in your Cypress plan, Enterprise Reporting is accessible by clicking on the **Enterprise
 Reporting** link in the left menu.
 
-Your insights are grouped into tabs named **Overall Usage**, **Test Results**, **Test
-Setup**, **Test Execution**, **Flaky Tests**, and **Raw Data**. When the page first loads, data is displayed for all projects in your
-organization for the current month and the preceding two months. However, the ability to customize your date range and projects is
-supported through the filters available on the page.
+Insights are organized into tabs—**Overall Usage**, **Test Results**, **Test Setup**, **Test
+Execution**, **Flaky Tests**, and **Raw Data**—each answering a different category of question about
+your testing program. Every tab presents interactive visual cards, and every card can be filtered by
+date range, project, team, and branch, so you can move fluidly from an organization-wide summary down
+to a single team or project. When the page first loads, data is displayed for all projects in your
+organization for the current month and the preceding two months.
 
 **A couple of things to note:**
 
@@ -54,12 +74,16 @@ The type of information and insights available on the various tabs are described
 
 ### Overall Usage
 
+Understand how Cypress is being adopted across your organization and whether that adoption is growing,
+plateauing, or concentrated in a handful of teams. This is the tab to reach for when you need to track
+consumption against your plan, plan capacity, or report on adoption to stakeholders. It answers
+questions like:
+
 - How many Cypress tests are you utilizing across all projects in your organization?
 - Where are those tests concentrated?
 - How has test utilization changed over time?
 
-These are a few of the questions that can be answered by the cards shown on the **Overall Usage** tab of Enterprise
-Reporting. Utilize the `Start Date` and `End Date` filters if you need to drill into a specific time period. The `Projects`
+Utilize the `Start Date` and `End Date` filters if you need to drill into a specific time period. The `Projects`
 filter can be used to filter the data by one or multiple projects. The `Branch` filter can be used to select one or more
 branches that exist in your projects. The data on this tab correlates to what Cypress Cloud
 [counts as a test result](/cloud/faq#What-counts-as-a-test-result).
@@ -71,8 +95,10 @@ branches that exist in your projects. The data on this tab correlates to what Cy
 
 ### Test Results
 
-How many of your runs, specs, or individual tests are passing or failing? The **Test Results** tab
-of Enterprise Reporting allows you to review the status rates of your tests from all three levels of granularity.
+Get a clear, organization-wide read on test health and pinpoint where failures are concentrated. The
+**Test Results** tab shows you how many of your runs, specs, or individual tests are passing or
+failing—at all three levels of granularity—so you can compare projects, identify the teams that need
+support, and confirm that quality is trending in the right direction.
 
 <DocsImage
   src="/img/cloud/features/analytics/enterprise-reporting-test-results.png"
@@ -81,14 +107,17 @@ of Enterprise Reporting allows you to review the status rates of your tests from
 
 ### Test Setup
 
-The **Test Setup** tab on Enterprise Reporting contains metrics that show how your runs are configured and maintained.
+Enforce consistency and best practices across teams. The **Test Setup** tab shows how your runs are
+configured and maintained, making it easy to spot projects that are out of date, missing performance
+optimizations, or drifting from your organization's standards. It answers questions like:
 
 - What is your proportion of end-to-end tests to [component tests](/app/component-testing/get-started)?
 - How has the size of your test suites changed over time across your organization?
 - What projects are configured and using Cypress smart orchestration capabilities?
 - Which version of Cypress are you using for your runs?
 
-These are some of the questions that will be answered by the data presented on this tab.
+Use these insights to drive upgrades, encourage adoption of smart orchestration to speed up CI, and
+keep configuration consistent across the organization.
 
 <DocsImage
   src="/img/cloud/features/analytics/enterprise-reporting-test-setup1.png"
@@ -102,14 +131,17 @@ These are some of the questions that will be answered by the data presented on t
 
 ### Test Execution
 
-The **Test Execution** tab on Enterprise Reporting helps you understand the environment and details around your Cypress runs.
+Understand the environments your tests run in and keep CI fast and reliable. The **Test Execution**
+tab surfaces the details around your Cypress runs so you can protect coverage, control execution time,
+and benchmark individual projects against organization-wide norms. It answers questions like:
 
 - Which browsers are being tested?
 - Are the browsers used for testing consistent across your organization or changing over time within a project?
-- Have there been changes to the text execution times of your Cypress runs?
+- Have there been changes to the test execution times of your Cypress runs?
 - What is the average failure or error rate of tests across your organization and how do individual projects compare to those averages?
 
-These are some of the questions that will be answered by the data presented on this tab.
+Use these insights to catch slowdowns before they frustrate developers and to ensure critical browsers
+aren't being dropped from your coverage.
 
 <DocsImage
   src="/img/cloud/features/analytics/enterprise-reporting-test-execution1.png"
@@ -123,10 +155,15 @@ These are some of the questions that will be answered by the data presented on t
 
 ### Flaky Tests
 
-The **Flaky Tests** tab on Enterprise Reporting allows you to see flaky test occurrences and rates for your entire organization or
-specific projects. This can be a single snapshot based on the start and end date filters, or can be viewed over time. Flake
-_rate_ can be helpful because it allows you to see what % of runs in a project are flaky. This allows easy comparison of flaky
-tests between projects regardless of the volume of runs occurring in the projects.
+Flake is one of the most expensive and trust-eroding problems in any test suite—it wastes CI minutes,
+slows developers down, and trains teams to ignore failures. The **Flaky Tests** tab makes flake
+visible and measurable across your entire organization so you can target it where it hurts most.
+
+View flaky test occurrences and rates for the whole organization or specific projects, as a single
+snapshot based on the start and end date filters or as a trend over time. Flake _rate_ is especially
+useful because it shows what % of runs in a project are flaky, allowing you to compare projects fairly
+regardless of how many runs each one has—so you can prioritize the projects where flake is doing the
+most damage.
 
 <DocsImage
   src="/img/cloud/features/analytics/enterprise-reporting-flaky-tests.png"
