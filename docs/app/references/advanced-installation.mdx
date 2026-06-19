@@ -402,6 +402,15 @@ when building the download URL, so your mirror will only ever receive `win32`
 requests with `arch=x64`.
 :::
 
+:::note
+On macOS, Cypress detects the machine's real architecture rather than relying on
+`process.arch`. If an x64 build of Node is running under Rosetta on Apple
+Silicon, Cypress still requests the native `darwin-arm64` binary. This is why the
+downloaded architecture can differ from `process.arch` (which would report
+`x64`), and your mirror may receive `arch=arm64` requests from an x64 Node
+process.
+:::
+
 If your mirror uses a different URL structure than `download.cypress.io`, use
 `CYPRESS_DOWNLOAD_PATH_TEMPLATE` together with `CYPRESS_DOWNLOAD_MIRROR`.
 See [Download path template](#Download-path-template) for examples.
