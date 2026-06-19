@@ -1,120 +1,259 @@
 ---
-title: 'Manage organizations | Cypress Cloud'
-description: 'Learn how to create projects, manage users, access billing and usage information, leverage third party integrations, and apply org-level settings.'
+title: 'Organizations | Cypress Cloud'
+description: 'Cypress Cloud organizations group your projects, users, teams, billing, and integrations in one place to manage application quality and access control at scale.'
 sidebar_label: Organizations
 sidebar_position: 10
 ---
 
 <ProductHeading product="cloud" />
 
-# Organizations
+# Cypress Cloud Organizations
+
+An organization is the home for everything your team does in Cypress Cloud. It groups your
+[projects](/cloud/account-management/projects), the [users](/cloud/account-management/users) who
+work on them, the [teams](/cloud/account-management/teams) that control access, your billing and
+usage, and the [integrations](#Integrations) that connect Cypress to the rest of your toolchain.
+
+The value of an organization is **central control**: instead of managing settings project by
+project, you administer access, AI capabilities, billing, and integrations once, in one place, and
+those decisions apply consistently across every project your team records to Cypress Cloud.
 
 :::info
 
 ##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
 
-- How to create and manage organizations
-- How to locate your Organization ID
-- How to integrate source control providers, issue management, and team communications with your org
+- Why organizations are the foundation for managing application quality at scale
+- How users, teams, and roles give you control over access and visibility
+- How org-level AI settings and integrations connect Cypress to your workflow
+- How to create, configure, and manage an organization
 
 :::
 
-Organizations are used to group and manage projects. Here you can create
-projects, manage users, access billing and usage information, leverage third
-party integrations, and apply org-level settings.
+## Why use organizations
 
-## Organization ID
+- **Group related work.** Keep all of a team, business unit, or company's projects together so
+  results, [enterprise analytics](/cloud/features/analytics/enterprise-reporting), and usage roll up in one place.
+- **Control who sees what.** Combine [user roles](/cloud/account-management/users#User-roles) and
+  [teams](/cloud/account-management/teams) to give each person access to exactly the projects they
+  need, no more, no less.
+- **Govern AI and security centrally.** Turn [Cloud AI](#Manage-Cloud-AI) on or off for everyone at
+  once, and enforce [enterprise SSO](/cloud/account-management/enterprise-sso) so access follows your
+  identity provider.
+- **Connect your existing tools.** Wire up source control, issue tracking, and chat once at the org
+  level so every project benefits from status checks, notifications, and linked tickets.
+- **Understand cost and usage.** Track [billing and usage](/cloud/account-management/billing-and-usage)
+  across all projects so you can plan capacity and attribute spend.
 
-An Organization's ID is a unique identifier in
-[UUID](https://tools.ietf.org/html/rfc4122) format that can be found under the
-"Organization settings" section of Cypress Cloud. This ID is used frequently by
-the Support, Success, and Sales teams to reference an Organization.
+## What's in an organization
 
-To locate your Organization's ID, go to "Organization settings" then
-Organization ID. Click on the clipboard icon to copy the ID for easy sharing
-with Cypress teams.
+An organization brings several areas of Cypress Cloud together. Each one has its own dedicated guide:
 
-<DocsImage
-  src="/img/cloud/organizations/cypress-organization-UUID.gif"
-  alt="Locate UUID gif"
-/>
+- **[Projects](/cloud/account-management/projects)** organize your recorded runs. A new organization
+  starts with a "Default Project" that you can rename and configure in
+  [project settings](/cloud/account-management/projects), and you can add as many
+  projects as you need.
+- **[Users](/cloud/account-management/users)** and **[teams](/cloud/account-management/teams)** control who can access what. Inviting users
+  gives them shared visibility into test health, while [roles](/cloud/account-management/users#User-roles) grant each person access to exactly the projects they need, no more, no less. This is what lets multiple business units share one organization, and lets you understand usage per team through [Enterprise Reporting](/cloud/features/analytics/enterprise-reporting).
+- **[Billing and usage](/cloud/account-management/billing-and-usage)** rolls up across every project
+  so you can review your plan, track usage, and attribute spend in one place.
+- **[Integrations](#Integrations)** connect Cypress to the source control, issue tracking, and chat
+  tools your team already uses, set up once and applied across every project.
 
-## Managing Organizations
+## Manage your organization
 
-### Create Org
+### Create organization
 
-You can create an organization from within
+Creating an organization gives your team a shared, persistent place to record runs and review
+quality together, rather than scattering results across individual accounts. You can create an
+organization from within
 [Cypress Cloud](https://on.cypress.io/cloud) by opening the organization
 switcher and clicking **<Icon name="plus" /> Create new organization**.
 
 <DocsImage
-  src="/img/cloud/organizations/create-org.jpg"
-  alt="Create new organization"
+  src="/img/cloud/organizations/create-new-organization.png"
+  alt="Creating a new organization from the organization switcher in Cypress Cloud"
 />
 
-### Manage Projects
+### Organization ID
 
-Once you create an organization, a new "Default Project" will be created for you. From here, you can adjust your [project settings](/cloud/account-management/projects) to fit your needs.
+Every organization has a unique identifier. This ID is how Cypress teams reference your organization,
+so having it handy makes it faster to get help, report an issue, or discuss your plan.
 
-### Manage Users and Teams
+To locate your Organization's ID, go to **Organization settings** then **Organization ID**. Click on
+the clipboard icon to copy the ID for easy sharing with Cypress teams.
 
-Organization owner or admin roles can [invite Cypress Cloud users](/cloud/account-management/users) to their organization. Those invited can be [assigned to a team](/cloud/account-management/teams). A team can help you control which users have access to specific projects and tests.
+<DocsImage
+  src="/img/cloud/organizations/organization-uuid.png"
+  alt="Locating and copying your Cypress Cloud organization ID in organization settings"
+/>
 
 ### Manage Cloud AI
 
-[Cloud AI](/cloud/faq#What-is-Cloud-AI) is enabled by default for all users on any Cloud plan.
+Managing AI at the organization level means you make one decision and it applies to everyone. This is useful
+both for teams that want AI assistance everywhere and for those with policies that require it to be
+off.
 
-Organization admins and owners can enable and disable the AI capabilities for their entire organization from the organization settings.
+[Cloud AI](/cloud/faq#What-is-Cloud-AI) is enabled by default for all users on any Cloud plan, and
+powers [AI features](/cloud/features/cypress-ai-features) like test authoring, error summaries, and
+test analysis. Organization admins and owners can enable or disable these AI capabilities for their
+entire organization from the organization settings.
 
 <DocsImage
   src="/img/faq/questions/cypress-ai-org-setting.png"
-  alt="Image showing the Cypress AI organization setting"
+  alt="Enabling or disabling Cloud AI for an entire organization in Cypress Cloud organization settings"
 />
 
-### Delete Org
+### Member privileges
 
-You can delete organizations that you own as long as they do not have any
-projects in the organization. You must first
-[delete](/cloud/account-management/projects#Delete-Project) or
-[transfer ownership](/cloud/account-management/projects#Transfer-ownership)
-of your projects your projects to another organization before you can delete the
-organization.
+Member privileges let owners and admins decide how much non-admin members can do at the organization
+level, so you can keep sensitive actions with your administrators without restricting day-to-day
+work.
+
+Today this controls **public project creation**.
+[Public projects](/cloud/account-management/projects#Public-vs-Private) are visible to anyone on the
+internet, so you may want to limit who can create them:
+
+- **Only admins:** only organization admins and owners can create public projects. Members can still
+  create private projects, but cannot expose runs publicly.
+- **Any member:** anyone in the organization can create public projects. This is the default.
+
+Adjust this under **Organization settings > Member Privileges**, then click **Update** to save.
 
 <DocsImage
-  src="/img/cloud/organizations/remove-organization-dialog.jpg"
-  alt="Delete Organization"
+  src="/img/cloud/organizations/member-privileges.png"
+  alt="Member privileges setting in Cypress Cloud organization settings"
+  noBorder={true}
+/>
+
+### Transfer an organization to another owner
+
+There is no single "transfer organization" button. Instead, you transfer ownership by giving the
+**Owner** role to another user in the organization. An organization can have more than one owner, so
+the new owner gains full control while you decide whether to keep or step back from your own access.
+
+Only an existing [owner](/cloud/account-management/users#User-roles) can grant the Owner role.
+
+1. Make sure the person is already a [user in your organization](/cloud/account-management/users#Invite-users).
+   If they are not, invite them first.
+2. Go to **Users & Teams** and select the **Users** tab.
+3. Find the user, edit their role, and set it to **Owner**.
+4. The user now has full owner permissions over the organization.
+
+If you no longer want to be an owner after the transfer, the new owner (or you) can lower your role
+to **Admin** or remove you from the organization. At least one owner must always remain.
+
+### Delete organization
+
+When an organization is no longer needed, removing it keeps your Cypress Cloud account tidy and
+ensures projects live where they belong. You can delete organizations that you own as long as they
+do not have any projects or an active subscription. You must first
+[delete](/cloud/account-management/projects#Delete-Project) or
+[transfer ownership](/cloud/account-management/projects#Transfer-ownership)
+of your projects to another organization before you can delete the
+organization.
+
+:::caution
+
+An organization with an active subscription cannot be deleted. If you need to delete an organization
+that still has an active subscription, contact [support@cypress.io](mailto:support@cypress.io).
+
+:::
+
+<DocsImage
+  src="/img/cloud/organizations/remove-organization-dialog.png"
+  alt="Confirmation dialog for deleting an organization in Cypress Cloud"
   width="80%"
 />
 
 ## Integrations
 
-Owner and admin roles can integrate Cypress Cloud with many third party tools
-under **Organization > Integrations** and edit those settings from within the
-**Project settings** page.
+Integrations are where an organization delivers value beyond Cypress Cloud itself: by connecting the
+tools your team already uses, your test results,
+[flaky test insights](/cloud/features/flaky-test-management),
+[UI Coverage](/ui-coverage/get-started/introduction), and
+[Accessibility](/accessibility/get-started/introduction) findings show up where work actually
+happens. Set integrations up
+once at the org level and every project benefits: failing code is kept out of your main branch,
+failures are linked to tickets, and the right people are notified automatically.
 
-See our integration guides to learn more:
+Owner and admin roles can configure these under **Organization > Integrations**, and adjust the
+settings from within the **Project settings** page.
 
-### Source Control Providers
+Cypress Cloud integrates with AI coding assistants, enterprise data and reporting, source control
+providers, issue management, team communication, and enterprise SSO. Explore the guides for each
+below to learn how to set them up.
+
+<DocsImage
+  src="/img/cloud/organizations/organization-integrations.png"
+  alt="Organization integrations page in Cypress Cloud"
+/>
 
 {/* prettier-ignore-start */}
+
+### AI coding assistants
+
+Give your AI coding assistants and agents real-time context on your application's health by
+connecting them to the [Cypress Cloud MCP](/cloud/integrations/cloud-mcp) server, so they can query
+run results, analyze failures, and audit flaky tests without manual copy-paste.
+
+- <Logo src="/img/logo/cypress-logo-circle-dark.png" alt="Cypress Logo" /> [Cypress Cloud MCP guide](/cloud/integrations/cloud-mcp)
+
+:::info
+
+<Icon useCypressIcon name="general-sparkle-double-large" className="inline mt-[-4px]" fillColor="white" /> Pair Cloud MCP with [Cypress AI Skills](/app/tooling/ai-skills), ready-made instruction sets that teach your AI tool common Cypress workflow patterns, so it writes and debugs tests the Cypress way.
+
+:::
+
+### Enterprise data and reporting
+
+Generate an API key to pull your enterprise test data, such as run status, spec results, run
+durations, and flaky test rates, into your own reporting and business intelligence tools.
+
+- <Logo src="/img/logo/cypress-logo-circle-dark.png" alt="Cypress Logo" /> [Data Extract API guide](/cloud/integrations/data-extract-api)
+
+### Source control providers
+
+Connect your repository to surface test results directly in pull requests and block failing code from
+merging with status checks, so regressions are caught before they reach your main branch.
 
 - <Logo src="/img/logo/github.svg" alt="GitHub Logo"/> [GitHub integration guide](/cloud/integrations/github)
 - <Logo src="/img/logo/gitlab.svg" alt="GitLab Logo" /> [GitLab integration guide](/cloud/integrations/gitlab)
 - <Logo src="/img/logo/bitbucket.svg" alt="Bitbucket Logo" /> [Bitbucket integration guide](/cloud/integrations/bitbucket)
+- <Logo src="/img/logo/github.svg" alt="GitHub Logo"/> [GitHub Enterprise integration guide](/cloud/integrations/github#GitHub-Enterprise)
+- <Logo src="/img/logo/gitlab.svg" alt="GitLab Logo" /> [GitLab for Enterprise integration guide](/cloud/integrations/gitlab#GitLab-for-Enterprise-Self-managed)
 
-### Issue Management
+### Issue management
+
+Turn test failures into tracked, actionable work by creating bidirectionally linked tickets, so
+nothing slips through the cracks.
 
 - <Logo src="/img/logo/jira.svg" alt="Jira Logo" /> [Jira integration guide](/cloud/integrations/jira)
 
-### Team Communication
+### Team communication
 
-- <Logo src="/img/logo/slack.svg" alt="Slack Logo" /> [Cypress integration for Slack guide](/cloud/integrations/slack)
-- <Logo src="/img/logo/ms-teams.svg" alt="Microsoft Teams Logo" /> [Cypress integration for Microsoft Teams guide](/cloud/integrations/teams)
+Keep your team informed in real time by sending run progress and results to the channels they already
+watch, so failures get attention without anyone refreshing a dashboard.
 
-### Enterprise SSO Authentication
+- <Logo src="/img/logo/slack.svg" alt="Slack Logo" /> [Slack integration guide](/cloud/integrations/slack)
+- <Logo src="/img/logo/ms-teams.svg" alt="Microsoft Teams Logo" /> [Microsoft Teams integration guide](/cloud/integrations/teams)
 
-- [Okta](/cloud/account-management/enterprise-sso#Okta)
-- [SAML](/cloud/account-management/enterprise-sso#SAML)
-- [Azure AD](/cloud/account-management/enterprise-sso#Azure-AD)
+### Enterprise SSO authentication
+
+Enforce access through your existing identity provider so the right people get in, offboarding is
+automatic, and you meet your organization's security requirements.
+
+- [Okta integration guide](/cloud/account-management/enterprise-sso#Okta)
+- [SAML integration guide](/cloud/account-management/enterprise-sso#SAML)
+- [Azure AD integration guide](/cloud/account-management/enterprise-sso#Azure-AD)
+- [OneLogin integration guide](/cloud/account-management/enterprise-sso#OneLogin)
 
 {/* prettier-ignore-end */}
+
+## See also
+
+- [Manage users](/cloud/account-management/users) - invite users and configure roles and permissions
+- [Manage teams](/cloud/account-management/teams) - control which users can access which projects
+- [Manage projects](/cloud/account-management/projects) - configure project settings, record keys, and access
+- [Billing & Usage](/cloud/account-management/billing-and-usage) - review your plan, usage, and billing
+- [Enterprise SSO](/cloud/account-management/enterprise-sso) - configure single sign-on for your organization
+- [Organization FAQ](/cloud/faq#Cypress-Cloud-Account) - answers to common questions about organizations
