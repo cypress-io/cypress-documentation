@@ -17,7 +17,7 @@ environment.
 
 This page explains exactly what data Cypress Cloud stores and how it's used, then
 walks through the controls you can use to limit, mask, or prevent that data from
-being captured — so you can get the full value of Cypress Cloud while meeting your
+being captured, so you can get the full value of Cypress Cloud while meeting your
 team's privacy, security, and compliance requirements.
 
 :::info
@@ -41,7 +41,7 @@ Please refer to the [Cypress Cloud Terms of Use](https://cypress.io/terms-of-use
 
 Understanding what Cypress Cloud stores is the first step in deciding which
 controls are right for your team. Each type of data exists to make debugging and
-collaboration easier — and each can be limited or turned off using the
+collaboration easier, and each can be limited or turned off using the
 [Data Controls](#Data-Controls) below.
 
 When you run Cypress via `cypress run` and pass the `--record` flag, the following data is stored in Cypress Cloud for every run. This is what powers your run history, surfaces flaky tests, and lets your whole team see results in one place:
@@ -54,7 +54,7 @@ When you run Cypress via `cypress run` and pass the `--record` flag, the followi
 - Videos
 - OS environment variables related to CI and git information
 
-When [Test Replay](/cloud/features/test-replay) capturing is enabled, the additional data outlined below is sent to Cypress Cloud. This is what makes it possible to replay and inspect a failed run exactly as it happened in CI — no more re-running tests locally to reproduce a problem. [See our guide on disabling Test Replay.](/cloud/features/test-replay#Opt-out-of-Test-Replay)
+When [Test Replay](/cloud/features/test-replay) capturing is enabled, the additional data outlined below is sent to Cypress Cloud. This is what makes it possible to replay and inspect a failed run exactly as it happened in CI, with no more re-running tests locally to reproduce a problem. [See our guide on disabling Test Replay.](/cloud/features/test-replay#Opt-out-of-Test-Replay)
 
 - The rendered DOM and CSS styles for the application under test
 - Cypress commands and events represented in the Command Log
@@ -70,7 +70,7 @@ You, the customer, own and are responsible for your test content. We trust that 
 ## Data Controls
 
 You decide what data Cypress Cloud sees. The controls below let you tune the
-balance between richer debugging context and tighter data privacy — from
+balance between richer debugging context and tighter data privacy, from
 restricting who can view a project, to masking individual values, to opting out
 of data capture entirely. Most teams use a combination of these to keep sensitive
 data out of the Cloud while still benefiting from features like Test Replay.
@@ -88,8 +88,8 @@ Setting a project to private means that only the users explicitly invited to the
 
 ### Test Replay controls
 
-**Why it matters:** Test Replay captures the most detail about your application —
-DOM, network traffic, and console logs. Disabling it gives you a single switch to
+**Why it matters:** Test Replay captures the most detail about your application,
+including the DOM, network traffic, and console logs. Disabling it gives you a single switch to
 stop all of that data from leaving your environment when the trade-off isn't right
 for a given project.
 
@@ -105,13 +105,13 @@ You can disable capturing data in Test Replay per project by following [this gui
 ### Screenshot controls
 
 **Why it matters:** Screenshots are invaluable for spotting visual regressions
-and understanding failures at a glance — but a single screenshot can also expose a
+and understanding failures at a glance, but a single screenshot can also expose a
 customer's name, an account number, or other sensitive details. These controls let
 you keep the debugging value while hiding what shouldn't be captured.
 
 #### Blackout elements in screenshots
 
-Cypress offers an option to black out (mask) an array of elements from screenshots. [See screenshot API docs.](/api/commands/screenshot#Arguments) This allows you to black out specific elements on screenshots so that they will not be visible in the locally saved screenshots or to any users that have access to the run in Cypress Cloud — ideal for hiding fields that render PII or other protected data.
+Cypress offers an option to black out (mask) an array of elements from screenshots. [See screenshot API docs.](/api/commands/screenshot#Arguments) This allows you to black out specific elements on screenshots so that they will not be visible in the locally saved screenshots or to any users that have access to the run in Cypress Cloud. This is ideal for hiding fields that render PII or other protected data.
 
 Add a control to your [support file](/app/references/configuration#Testing-Type-Specific-Options) to set the default blackout options for all screenshots.
 
@@ -166,7 +166,7 @@ it('sign in page', () => {
 
 **Why it matters:** Videos make it easy to see what happened during a run, but you
 may not want every run's video stored long-term. This control lets you keep videos
-only when they're useful — for example, for failing runs — and discard the rest.
+only when they're useful, for example for failing runs, and discard the rest.
 
 #### Disable video upload
 
@@ -216,7 +216,7 @@ To keep credentials out of the Command Log entirely, you can mask passwords by u
 
 ### Network requests controls
 
-**Why it matters:** Some hosts — analytics, third-party APIs, internal services —
+**Why it matters:** Some hosts, such as analytics, third-party APIs, and internal services,
 may handle data you don't want captured or contacted during a run. Blocking them
 keeps that traffic out of Cypress Cloud and keeps your tests focused on the
 application under test.
