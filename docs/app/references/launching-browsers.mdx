@@ -557,6 +557,49 @@ ignoring certificate errors, allowing blocked pop-ups, and disabling things like
 password saving, autofill, session restoring, background throttling, and device
 permission prompts.
 
+## Downloading Files
+
+When your application downloads a file, Cypress automatically saves it to the
+[`downloadsFolder`](/app/references/configuration#Downloads) (by default
+`cypress/downloads`) without showing the browser's native "Save As" prompt or
+download shelf. This lets you download a file during a test and then assert on
+its contents directly from disk.
+
+How Cypress configures automatic downloads depends on the browser family:
+
+| Browser family            | Mechanism                                                                                                                                  |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| Chrome / Edge / Electron  | The [Chrome DevTools Protocol](https://chromedevtools.github.io/devtools-protocol/) `Page.setDownloadBehavior` command, pointed at the `downloadsFolder`. |
+| Firefox                   | The `browser.download.*` preferences (e.g. `browser.download.dir` and `browser.download.folderList`) set on the browser profile.            |
+| WebKit (Experimental)     | [Playwright](https://playwright.dev/) download events, which save the downloaded file to the `downloadsFolder`.                             |
+
+### Asserting on a downloaded file
+
+Because downloads are saved to a known folder, you can read a file back and
+assert on its contents with [`cy.readFile()`](/api/commands/readfile):
+
+```js
+it('downloads a CSV file', () => {
+  cy.visit('/')
+  cy.get('[data-testid="download-csv"]').click()
+
+  // cypress/downloads/records.csv
+  cy.readFile('cypress/downloads/records.csv').should(
+    'contain',
+    'id,name,email'
+  )
+})
+```
+
+:::info
+
+For a complete example, see the
+[recipe showing how to download and validate CSV and Excel files](/app/references/recipes#Testing-the-DOM).
+If you need Cypress to recognize a download with an uncommon mime type, see
+[Support unique file download mime types](/api/node-events/browser-launch-api#Support-unique-file-download-mime-types).
+
+:::
+
 ## Browser Icon
 
 You might notice that if you already have the browser open you will see two of
