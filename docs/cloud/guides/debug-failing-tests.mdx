@@ -61,21 +61,21 @@ and often impossible.
 
 When a recorded run fails, the fastest path from red build to root cause is:
 
-1. **[Find the failing test](#step-1-go-straight-to-the-failing-test)** in
+1. **[Find the failing test](#Step-1-Go-straight-to-the-failing-test)** in
    Cypress Cloud, without scrolling through CI logs.
-2. **[Read the AI Error Summary](#step-2-read-the-ai-error-summary)** to
+2. **[Read the AI Error Summary](#Step-2-Read-the-AI-Error-Summary)** to
    understand what went wrong in plain language.
-3. **[Replay the exact CI run](#step-3-replay-the-exact-failure-with-test-replay)**
+3. **[Replay the exact CI run](#Step-3-Replay-the-exact-failure-with-Test-Replay)**
    with Test Replay to inspect the DOM, network, and console at the moment of
    failure.
-4. **[Check whether it's a regression or flake](#step-4-is-it-a-regression-or-flake)**
+4. **[Check whether it's a regression or flake](#Step-4-Is-it-a-regression-or-flake)**
    with Branch Review and Flaky Test Management.
-5. **[Fix and verify](#step-5-fix-and-verify)**, optionally without leaving your
+5. **[Fix and verify](#Step-5-Fix-and-verify)**, optionally without leaving your
    editor using Cloud MCP.
 
 The rest of this guide covers each step in detail.
 
-## Step 1: Go straight to the failing test {#step-1-go-straight-to-the-failing-test}
+## Step 1: Go straight to the failing test
 
 Instead of reading raw CI output, open the run in Cypress Cloud. The
 [**Tests for Review**](/cloud/features/recorded-runs#Tests-for-Review) panel on a
@@ -100,7 +100,7 @@ first; it often reframes the whole investigation.
 
 :::
 
-## Step 2: Read the AI Error Summary {#step-2-read-the-ai-error-summary}
+## Step 2: Read the AI Error Summary
 
 At the top of the failure, Cypress Cloud's AI
 [**Error Summaries**](/cloud/features/cypress-ai-features#Error-Summaries) give a
@@ -118,7 +118,7 @@ The full stack trace, error message, and point-of-failure code frame for each
 attempt sit directly below the summary in the
 [Attempts and errors](/cloud/features/recorded-runs#attempts-and-errors) section.
 
-## Step 3: Replay the exact failure with Test Replay {#step-3-replay-the-exact-failure-with-test-replay}
+## Step 3: Replay the exact failure with Test Replay
 
 This is the core of debugging in Cypress Cloud.
 [**Test Replay**](/cloud/features/test-replay) lets you replay the test _exactly_
@@ -161,7 +161,7 @@ session instead of a back-and-forth.
 
 :::
 
-## Step 4: Is it a regression or flake? {#step-4-is-it-a-regression-or-flake}
+## Step 4: Is it a regression or flake?
 
 Before you spend time on a fix, answer the question that determines what you're
 actually dealing with: **did my change cause this, or was it already broken or
@@ -201,7 +201,7 @@ is so easy to miss without dedicated tracking. See
 
 :::
 
-## Step 5: Fix and verify {#step-5-fix-and-verify}
+## Step 5: Fix and verify
 
 Once you understand the root cause:
 
