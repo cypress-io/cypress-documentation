@@ -433,6 +433,64 @@ in the **Settings** tab.
 
 Some browsers such as Internet Explorer are not currently supported.
 
+## Headless Mode
+
+When running [cypress run](/app/references/command-line#cypress-run) from the
+CLI, Cypress launches browsers **headlessly** by default — the browser runs
+without a visible UI, which is well suited to Continuous Integration. When
+running [cypress open](/app/references/command-line#cypress-open), the browser
+is **always headed**.
+
+How each browser is launched headlessly differs slightly:
+
+| Browser                | Default during `cypress run`                       | How it runs headless                |
+| ---------------------- | -------------------------------------------------- | ----------------------------------- |
+| Electron               | Headless (the default browser, typically used in CI) | Internal Electron headless mode   |
+| Chrome / Chromium / Edge | Headless                                          | Launched with `--headless=new`      |
+| Firefox                | Headless                                            | Launched with `-headless`           |
+
+To show the browser while running `cypress run`, pass the
+[`--headed`](/app/references/command-line#cypress-run-headed) flag:
+
+```shell
+cypress run --headed
+```
+
+Because Electron is the default browser, it is typically the one running in CI.
+You can also explicitly hide a headed browser with `--headless`.
+
+### Headless rendering defaults
+
+When a browser runs headlessly, there is no physical display, so Cypress uses
+the following defaults for rendering:
+
+- A default screen size of **1280x720**.
+- A device pixel ratio (DPR) forced to **1**.
+
+These defaults affect the size and resolution of screenshots and videos captured
+during the run. You can override them in the
+[`before:browser:launch`](/api/node-events/browser-launch-api#Set-screen-size-when-running-headless)
+event — for example, to change the window size or force a retina-like DPR for
+higher-resolution output.
+
+### Debugging headless-only failures
+
+Occasionally a test passes when the browser is headed but fails when run
+headlessly (or vice versa). When this happens, the quickest way to debug is to
+reproduce the failure locally with the browser shown:
+
+```shell
+cypress run --headed --no-exit --browser chrome
+```
+
+The `--headed` flag shows the browser so you can watch the run, and `--no-exit`
+keeps Cypress open afterward so you can inspect the
+[command log](/app/core-concepts/open-mode#Command-Log) and the application's
+final state. Comparing a headed run against a headless one — along with the
+recorded screenshots and videos — usually surfaces the difference, which is
+often related to the headless rendering defaults above (viewport/screen size or
+device pixel ratio).
+
 ## Browser Environment
 
 Cypress launches the browser in a way that's different from a regular browser
