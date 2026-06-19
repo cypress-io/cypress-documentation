@@ -84,6 +84,16 @@ Any other directive name is rejected by validation. Regardless of which mode you
 choose, the [always-stripped directives](#always-stripped-directives) below are
 removed.
 
+:::caution
+
+`experimentalCspAllowList` cannot be changed at runtime and cannot be overridden
+per test. Calling `Cypress.config('experimentalCspAllowList', ...)` from within a
+spec has no effect, and there is no per-test override. Changing the value
+requires restarting the Cypress server (for example, by stopping and relaunching
+`cypress open` or `cypress run`) for the new setting to take effect.
+
+:::
+
 Even with `experimentalCspAllowList` enabled, the CSP that reaches the browser
 is **not** byte-identical to your application's original policy — Cypress
 mutates three directives, as described in [Nonce injection](#nonce-injection)
