@@ -48,14 +48,14 @@ To set your proxy, set the `HTTP_PROXY` environment variable in a terminal
 before running Cypress. Select your operating system below:
 
 <OsTabs>
-  <TabItem value="linux" label="Linux">
+  <TabItem value="macos" label="macOS">
 
 ```shell
 export HTTP_PROXY=http://my-company-proxy.com
 ```
 
   </TabItem>
-  <TabItem value="macos" label="macOS">
+  <TabItem value="linux" label="Linux">
 
 ```shell
 export HTTP_PROXY=http://my-company-proxy.com
@@ -79,14 +79,14 @@ You can also set `NO_PROXY` to bypass the proxy for certain domains (by default,
 only `localhost` will be bypassed):
 
 <OsTabs>
-  <TabItem value="linux" label="Linux">
+  <TabItem value="macos" label="macOS">
 
 ```shell
 export NO_PROXY=localhost,google.com,apple.com
 ```
 
   </TabItem>
-  <TabItem value="macos" label="macOS">
+  <TabItem value="linux" label="Linux">
 
 ```shell
 export NO_PROXY=localhost,google.com,apple.com
@@ -195,14 +195,14 @@ are shown below.
 ### Set an environment variable for the current session
 
 <OsTabs>
-  <TabItem value="linux" label="Linux">
+  <TabItem value="macos" label="macOS">
 
 ```shell
 export SOME_VARIABLE=some-value
 ```
 
   </TabItem>
-  <TabItem value="macos" label="macOS">
+  <TabItem value="linux" label="Linux">
 
 ```shell
 export SOME_VARIABLE=some-value
@@ -225,14 +225,14 @@ $env:SOME_VARIABLE = "some-value"
 ### Set an environment variable for all future sessions
 
 <OsTabs>
-  <TabItem value="linux" label="Linux">
+  <TabItem value="macos" label="macOS">
 
 ```shell
 echo 'export SOME_VARIABLE=some-value' >> ~/.profile
 ```
 
   </TabItem>
-  <TabItem value="macos" label="macOS">
+  <TabItem value="linux" label="Linux">
 
 ```shell
 echo 'export SOME_VARIABLE=some-value' >> ~/.profile
@@ -251,14 +251,14 @@ setx SOME_VARIABLE some-value
 ### Unset an environment variable
 
 <OsTabs>
-  <TabItem value="linux" label="Linux">
+  <TabItem value="macos" label="macOS">
 
 ```shell
 unset SOME_VARIABLE
 ```
 
   </TabItem>
-  <TabItem value="macos" label="macOS">
+  <TabItem value="linux" label="Linux">
 
 ```shell
 unset SOME_VARIABLE
@@ -292,7 +292,7 @@ Do not print environment variables in CI runs where logs are captured and stored
 :::
 
 <OsTabs>
-  <TabItem value="linux" label="Linux">
+  <TabItem value="macos" label="macOS">
 
 ```shell title="All variables"
 env
@@ -303,7 +303,7 @@ env | grep -i proxy
 ```
 
   </TabItem>
-  <TabItem value="macos" label="macOS">
+  <TabItem value="linux" label="Linux">
 
 ```shell title="All variables"
 env
