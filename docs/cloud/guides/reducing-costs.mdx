@@ -69,9 +69,11 @@ Cloud, roughly in order of impact:
    with Spec Prioritization and a smarter test strategy.
 4. **[Spend less engineering time on every failure](#Spend-less-engineering-time-on-every-failure)**
    with Test Replay, AI Error Summaries, and Flaky Test Management.
-5. **[Hear about failures the moment they happen](#Hear-about-failures-the-moment-they-happen)**
+5. **[Spend less time maintaining brittle tests](#Spend-less-time-maintaining-brittle-tests)**
+   with `cy.prompt` self-healing.
+6. **[Hear about failures the moment they happen](#Hear-about-failures-the-moment-they-happen)**
    with Slack, Microsoft Teams, and desktop notifications.
-6. **[Measure what you're saving](#Measure-what-youre-saving)** with run
+7. **[Measure what you're saving](#Measure-what-youre-saving)** with run
    Recommendations and Analytics.
 
 The rest of this guide covers each lever in detail.
@@ -223,6 +225,26 @@ cost**.
 For a complete walkthrough of this workflow, see the
 [Debug Failing Tests](/cloud/guides/debug-failing-tests) guide.
 
+## Spend less time maintaining brittle tests
+
+Not all engineering time goes to failures that found a real bug. A large share is
+spent on tests that broke only because the UI changed underneath them: a renamed
+class, a restructured DOM, a selector that no longer matches. Each of these is time
+spent keeping the suite running rather than shipping product.
+
+[**`cy.prompt`**](/api/commands/prompt) reduces that maintenance. It turns
+natural-language steps into executable Cypress commands, and when you keep it
+running in your tests it **self-heals**: as your app changes, it automatically
+adapts the steps to the new UI instead of failing on a stale selector. The result
+is fewer brittle tests to fix by hand, so minor UI churn stops generating a steady
+stream of selector-update busywork. You can
+[see exactly which element each step resolved to](/api/commands/prompt#See-self-healed-steps-in-the-Command-Log)
+in the Command Log, and [view or export the generated code](/api/commands/prompt#View-and-export-generated-code)
+at any time, so self-healing never costs you visibility into what your tests do.
+
+The savings compound: every selector that heals itself is a failed run you never
+paid for, a debugging session you never started, and a fix you never had to push.
+
 ## Hear about failures the moment they happen
 
 A failure costs nothing extra in compute once the run ends, but every minute
@@ -269,6 +291,7 @@ numbers.
 | Cut redundant tests covering the same flows                | [UI Coverage](/app/guides/test-performance#Find-and-eliminate-over-tested-UI-with-UI-Coverage)                                           |
 | Spend less time debugging CI failures                      | [Test Replay](/cloud/features/test-replay) + [AI Error Summaries](/cloud/features/cypress-ai-features#Error-Summaries)                   |
 | Triage failures without leaving your editor                | [Cloud MCP](/cloud/integrations/cloud-mcp)                                                                                              |
+| Stop fixing selectors every time the UI changes            | [`cy.prompt` self-healing](/api/commands/prompt)                                                                                        |
 | Stop chasing flake that isn't a real regression           | [Flaky Test Management](/cloud/features/flaky-test-management)                                                                            |
 | Find out a run failed sooner                               | [Slack](/cloud/integrations/slack) / [Teams](/cloud/integrations/microsoft-teams) / [desktop](/cloud/features/recorded-runs#Notifications) notifications |
 | Quantify the time and money you're saving                  | [Recommendations](/cloud/features/recorded-runs#Recommendations) + [Analytics](/cloud/features/analytics/project-analytics#Run-duration) |
@@ -306,6 +329,7 @@ panel on each run predicts how much time these features would save your team.
 - [Optimizing test performance](/app/guides/test-performance) — trim and streamline your suite
 - [Debug Failing Tests](/cloud/guides/debug-failing-tests) — find the root cause of a CI failure without reproducing it locally
 - [Cloud MCP](/cloud/integrations/cloud-mcp) — triage Cypress Cloud results from your AI coding assistant
+- [`cy.prompt`](/api/commands/prompt) — self-healing tests that cut selector maintenance
 - [Slack](/cloud/integrations/slack) & [Microsoft Teams](/cloud/integrations/microsoft-teams) — notify your team of run results in chat
 - [Desktop notifications](/cloud/features/recorded-runs#Notifications) — get alerted from the Cypress app the moment a run fails
 - [Cypress Cloud FAQ](/cloud/faq#How-do-I-reduce-my-Cypress-Cloud-usage-or-lower-my-bill) — common cost and usage questions
