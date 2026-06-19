@@ -294,23 +294,15 @@ Do not print environment variables in CI runs where logs are captured and stored
 <OsTabs>
   <TabItem value="macos" label="macOS">
 
-```shell title="All variables"
+```shell
 env
-```
-
-```shell title="Variables containing proxy"
-env | grep -i proxy
 ```
 
   </TabItem>
   <TabItem value="linux" label="Linux">
 
-```shell title="All variables"
+```shell
 env
-```
-
-```shell title="Variables containing proxy"
-env | grep -i proxy
 ```
 
   </TabItem>
@@ -322,6 +314,36 @@ set
 
 ```shell title="PowerShell"
 Get-ChildItem Env:
+```
+
+  </TabItem>
+</OsTabs>
+
+### See the environment variables containing "proxy"
+
+<OsTabs>
+  <TabItem value="macos" label="macOS">
+
+```shell
+env | grep -i proxy
+```
+
+  </TabItem>
+  <TabItem value="linux" label="Linux">
+
+```shell
+env | grep -i proxy
+```
+
+  </TabItem>
+  <TabItem value="windows" label="Windows">
+
+```shell title="Command Prompt"
+set | findstr /I proxy
+```
+
+```shell title="PowerShell"
+Get-ChildItem Env: | Where-Object Name -Match 'proxy'
 ```
 
   </TabItem>
