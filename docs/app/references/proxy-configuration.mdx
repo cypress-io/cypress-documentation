@@ -75,8 +75,8 @@ $env:HTTP_PROXY = "http://my-company-proxy.com"
   </TabItem>
 </OsTabs>
 
-You can also set `NO_PROXY` to bypass the proxy for certain domains (by default,
-only `localhost` will be bypassed):
+You can also set `NO_PROXY` to bypass the proxy for additional domains (loopback
+addresses such as `localhost` are always bypassed):
 
 <OsTabs>
   <TabItem value="macos" label="macOS">
@@ -157,9 +157,13 @@ A proxy set through the `HTTP_PROXY` or `HTTPS_PROXY` environment variable alway
 takes precedence over the corresponding npm configuration.
 
 To bypass the proxy for certain domains, a `NO_PROXY` environment variable can
-be set to a comma-separated list of domain names to not proxy traffic for. By
-default, traffic to `localhost` will not be proxied. To make Cypress send
-traffic for `localhost` through the proxy, pass `<-loopback>` in `NO_PROXY`.
+be set to a comma-separated list of domain names to not proxy traffic for.
+
+Cypress always appends `127.0.0.1`, `::1`, and `localhost` to `NO_PROXY` so that
+loopback traffic is never proxied. This happens even when you set your own
+`NO_PROXY` entries — your list is added to, not replaced. The only way to send
+loopback traffic through the proxy is to include the special `<-loopback>` value
+in `NO_PROXY`, which removes the automatic loopback entries.
 
 If an uppercase and a lowercase version of the proxy settings are supplied (for
 example, `HTTP_PROXY` and `http_proxy` are both set), the lowercase variable
