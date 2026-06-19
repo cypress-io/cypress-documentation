@@ -179,9 +179,25 @@ You can also hide the entire left-hand Command Log while running tests by passin
 may not want every run's video stored long-term. This control lets you keep videos
 only when they're useful, for example for failing runs, and discard the rest.
 
+#### Disable video recording
+
+Video recording is **disabled by default**, so no video is captured or uploaded unless you opt in. If you want to be explicit, or you need to turn it back off after enabling it, set [`video`](/app/references/configuration#Videos) to `false` in your Cypress configuration:
+
+:::cypress-config-example
+
+```ts
+{
+  video: false
+}
+```
+
+:::
+
+With `video: false`, Cypress will not record a video for any spec, so there is nothing to upload to Cypress Cloud.
+
 #### Disable video upload
 
-You can delete videos that are recorded when you are passing `video: true` by following [this guide to control what is uploaded to Cypress Cloud](/app/guides/screenshots-and-videos#Control-which-videos-to-keep-and-upload-to-Cypress-Cloud).
+If you do record videos by passing `video: true` but only want to keep some of them, you can delete videos before they are uploaded by following [this guide to control what is uploaded to Cypress Cloud](/app/guides/screenshots-and-videos#Control-which-videos-to-keep-and-upload-to-Cypress-Cloud).
 
 ### Cypress Command Log controls
 
