@@ -204,6 +204,22 @@ impossible. Cypress Cloud removes most of that work.
   and tracks flaky tests automatically, so your team stops spending hours chasing
   intermittent failures that aren't real regressions.
 
+### Triage without leaving your editor with Cloud MCP
+
+Every context switch out of your editor to check a run, read errors, and figure out
+which failures are real has a time cost. [**Cloud MCP**](/cloud/integrations/cloud-mcp)
+closes that gap by connecting AI coding assistants like Claude, Cursor, and GitHub
+Copilot directly to your Cypress Cloud results. Instead of manually triaging which
+failures matter, you can ask your agent to pull the failing tests for a run,
+summarize the errors, and follow the Test Replay link straight to the root cause,
+all without leaving the editor you're already fixing the code in.
+
+> "Get the failed tests from the latest Cypress Cloud run on this branch, summarize
+> the errors, and tell me which are likely regressions versus known flake."
+
+Cloud MCP is generally available on **every Cypress Cloud plan at no additional
+cost**.
+
 For a complete walkthrough of this workflow, see the
 [Debug Failing Tests](/cloud/guides/debug-failing-tests) guide.
 
@@ -252,6 +268,7 @@ numbers.
 | Run fewer, more meaningful tests                           | [Optimizing test performance](/app/guides/test-performance)                                                                              |
 | Cut redundant tests covering the same flows                | [UI Coverage](/app/guides/test-performance#Find-and-eliminate-over-tested-UI-with-UI-Coverage)                                           |
 | Spend less time debugging CI failures                      | [Test Replay](/cloud/features/test-replay) + [AI Error Summaries](/cloud/features/cypress-ai-features#Error-Summaries)                   |
+| Triage failures without leaving your editor                | [Cloud MCP](/cloud/integrations/cloud-mcp)                                                                                              |
 | Stop chasing flake that isn't a real regression           | [Flaky Test Management](/cloud/features/flaky-test-management)                                                                            |
 | Find out a run failed sooner                               | [Slack](/cloud/integrations/slack) / [Teams](/cloud/integrations/microsoft-teams) / [desktop](/cloud/features/recorded-runs#Notifications) notifications |
 | Quantify the time and money you're saving                  | [Recommendations](/cloud/features/recorded-runs#Recommendations) + [Analytics](/cloud/features/analytics/project-analytics#Run-duration) |
@@ -288,6 +305,7 @@ panel on each run predicts how much time these features would save your team.
 - [Smart Orchestration Overview](/cloud/features/smart-orchestration/overview) — how the orchestration features fit together
 - [Optimizing test performance](/app/guides/test-performance) — trim and streamline your suite
 - [Debug Failing Tests](/cloud/guides/debug-failing-tests) — find the root cause of a CI failure without reproducing it locally
+- [Cloud MCP](/cloud/integrations/cloud-mcp) — triage Cypress Cloud results from your AI coding assistant
 - [Slack](/cloud/integrations/slack) & [Microsoft Teams](/cloud/integrations/microsoft-teams) — notify your team of run results in chat
 - [Desktop notifications](/cloud/features/recorded-runs#Notifications) — get alerted from the Cypress app the moment a run fails
 - [Cypress Cloud FAQ](/cloud/faq#How-do-I-reduce-my-Cypress-Cloud-usage-or-lower-my-bill) — common cost and usage questions
