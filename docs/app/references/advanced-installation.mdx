@@ -246,6 +246,19 @@ ensure this, consider exporting this environment variable. For example, in a
 
 :::
 
+### Managing the binary cache
+
+The [`cypress cache`](./command-line#cypress-cache) command lets you inspect and
+manage the binary cache. Run these with the appropriate package manager prefix
+described in [How to run commands](./command-line#How-to-run-commands).
+
+| Command                                                       | Description                                                                          |
+| ------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| [`cypress cache list`](./command-line#cypress-cache-list)     | Lists the cached Cypress versions. Add `--size` to also report each version's size.  |
+| [`cypress cache path`](./command-line#cypress-cache-path)     | Prints the path to the Cypress binary cache.                                         |
+| [`cypress cache prune`](./command-line#cypress-cache-prune)   | Deletes every cached binary except the version currently in use.                     |
+| [`cypress cache clear`](./command-line#cypress-cache-clear)   | Deletes all cached Cypress binaries.                                                 |
+
 ## Run binary
 
 Setting the environment variable `CYPRESS_RUN_BINARY` overrides where the npm
@@ -609,7 +622,9 @@ bun remove cypress
 </Tabs>
 
 To uninstall all cached Cypress binary versions, use the [cypress cache clear](./command-line#cypress-cache-clear) command with the appropriate package manager prefix described in [How to run commands](./command-line#How-to-run-commands).
+To remove only the older cached versions while keeping the one currently in use, use [cypress cache prune](./command-line#cypress-cache-prune) instead.
 Alternatively, delete the [Cypress binary cache](#Binary-cache) (see above) manually.
+See [Managing the binary cache](#Managing-the-binary-cache) for the full set of cache commands.
 
 To delete cached [Cypress App Data](./troubleshooting#Clear-App-Data), manually delete the following directories / folders:
 
