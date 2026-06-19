@@ -64,10 +64,13 @@ Cypress officially supports the latest 3 major versions of Chrome, Firefox, and 
 
 :::info
 
-Cypress requires **Firefox 135 or newer**. Cypress automates Firefox through
+Regardless of the above, Cypress cannot launch **Firefox versions older than 135**.
+Cypress automates Firefox through
 [WebDriver BiDi](https://w3c.github.io/webdriver-bidi/), which is only available
-in Firefox 135 and above. Attempting to run an older version of Firefox will
-result in an error. See [Firefox Browsers](#Firefox-Browsers) for details.
+in Firefox 135 and above, so older versions will fail with an error. Note this is
+a hard technical minimum, not an extension of official support — Cypress still
+officially supports only the latest 3 major versions. See
+[Firefox Browsers](#Firefox-Browsers) for details.
 
 :::
 
@@ -197,9 +200,10 @@ Firefox-family browsers are supported by Cypress.
 
 :::caution
 
-Cypress requires **Firefox 135 or newer**. Starting with Firefox 135, Cypress
-automates Firefox using [WebDriver BiDi](https://w3c.github.io/webdriver-bidi/).
-Older versions of Firefox are not supported and will fail to launch.
+Cypress automates Firefox using [WebDriver BiDi](https://w3c.github.io/webdriver-bidi/),
+which is only available starting in Firefox 135. **Firefox versions older than 135
+will fail to launch.** (Official support remains the latest 3 major versions — see
+[Browser versions supported](#Browser-versions-supported).)
 
 :::
 
