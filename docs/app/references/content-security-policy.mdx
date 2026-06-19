@@ -62,15 +62,31 @@ setting the
 [`experimentalCspAllowList`](/app/references/experiments#Experimental-CSP-Allow-List)
 configuration option.
 
+## Nonce injection
+
+To allow its injected `<script>` tags to execute under your policy, Cypress
+generates a random [`nonce`](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/nonce)
+for each response and appends a `'nonce-<value>'` source to the following
+directives of **every allowed CSP header**:
+
+- `script-src-elem`
+- `script-src`
+- `default-src`
+
+A directive is only modified if it is present in the policy and allowed through
+your [`experimentalCspAllowList`](/app/references/experiments#Experimental-CSP-Allow-List)
+configuration. The same `nonce` is also added to the `<script>` tags Cypress
+injects, so the browser permits them to run.
+
 :::caution
 
-Even with `experimentalCspAllowList` enabled, the CSP that reaches the browser
-is **not** byte-identical to your application's original policy. So that its
-injected scripts can execute, Cypress appends an auto-generated `nonce` value to
-the `default-src`, `script-src`, and `script-src-elem` directives whenever they
-are present and allowed. If you are verifying your application's CSP
+Because of this, the CSP that reaches the browser is **not** byte-identical to
+your application's original policy. If you are verifying your application's CSP
 implementation, be aware that these three directives are modified by Cypress and
 the delivered header will differ from the one your server originally sent.
+
+Nonce injection applies only to CSP delivered via HTTP headers — it is never
+applied to a `<meta>` tag policy.
 
 :::
 
