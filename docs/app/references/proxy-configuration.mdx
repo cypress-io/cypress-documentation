@@ -117,14 +117,21 @@ setx HTTP_PROXY http://my-company-proxy.com
 
 :::info
 
-When starting up after being installed, Cypress will attempt to load the proxy
-configured in the Windows registry by default.
+**Windows registry**
+
+On Windows, the proxy configured in the Windows registry is used as a
+_fallback_: Cypress only consults it when no proxy has been set through the
+`HTTP_PROXY`/`HTTPS_PROXY` environment variables or your npm config. When the
+registry value is used, the single configured proxy is applied to both
+`HTTP_PROXY` and `HTTPS_PROXY`.
 [Learn how to set your proxy settings system-wide in Windows.](https://www.howtogeek.com/tips/how-to-set-your-proxy-settings-in-windows-8.1/)
-When downloading Cypress for the first time, the `cypress` command line tool
-_does not_ read proxy settings from the Windows registry. If you need to
-configure a proxy for the installation to work — which is also the only way to
-define a proxy for `cypress install` — you must set the environment variables
-shown above.
+
+Note that the registry fallback only applies when running your tests. When
+downloading Cypress for the first time, the `cypress` command line tool _does
+not_ read proxy settings from the Windows registry. If you need to configure a
+proxy for the installation to work — which is also the only way to define a
+proxy for `cypress install` — you must set the environment variables shown
+above.
 
 :::
 
