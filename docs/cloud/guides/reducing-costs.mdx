@@ -1,33 +1,34 @@
 ---
-title: 'Reduce CI Costs with Cypress Cloud | Cypress Documentation'
-description: Cut the cost of running Cypress in CI. Use Auto Cancellation, Parallelization, Load Balancing, Spec Prioritization, and Cloud debugging tools to spend fewer CI minutes and less engineering time on every run.
+title: 'Lower CI Costs and Speed Up Feedback | Cypress Documentation'
+description: Cut CI compute spend and shorten engineering turnaround time with Cypress Cloud. Use Auto Cancellation, Parallelization, Load Balancing, Spec Prioritization, and Cloud debugging tools to spend fewer CI minutes and get answers faster on every run.
 sidebar_label: Reducing Costs
 sidebar_position: 20
 ---
 
 <ProductHeading product="cloud" />
 
-# Reduce CI Costs with Cypress Cloud
+# Lower CI Costs and Speed Up Feedback
 
-The cost of a test suite is not just the time it takes to run. Every CI run spends
-**compute** (the machines you pay your CI provider for) and **engineering time**
-(the hours your team spends waiting on runs, triaging failures, and reproducing
-problems they can't see). Both grow with the size of your suite and your team, and
-both are easy to overspend without realizing it.
+Every CI run costs your team two things at once: **compute**, the machines you pay
+your CI provider for, and **turnaround time**, the hours your team waits on runs,
+triages failures, and reproduces problems they can't see. These two are deeply
+linked. A run that finishes faster or stops sooner doesn't just trim the bill, it
+gets a developer an answer sooner so they can keep moving. Both grow with the size
+of your suite and your team, and both are easy to overspend without realizing it.
 
-**Cypress Cloud is built to drive both down.** When you
+**Cypress Cloud is built to drive both down together.** When you
 [record your runs](/cloud/get-started/setup), Cloud can stop runs that have already
 failed, distribute work so machines are never idle, surface failures sooner, and
-let you debug the exact CI failure without reproducing it locally. This guide walks
-through the levers that reduce cost, the Cloud feature behind each one, and how to
-measure what you save.
+let you debug the exact CI failure without reproducing it locally. The result is a
+cheaper pipeline _and_ a faster feedback loop. This guide walks through each lever,
+the Cloud feature behind it, and how to measure what you save.
 
 :::info
 
 ##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
 
-- The two kinds of cost a test suite incurs, and which Cloud feature attacks each one
-- How to stop paying for [runs that have already failed](#Stop-paying-for-runs-youve-already-lost)
+- How CI compute spend and engineering turnaround time feed each other, and which Cloud features improve both
+- How to stop paying for, and waiting on, [runs that have already failed](#Stop-paying-for-runs-youve-already-lost)
 - How to [finish runs faster](#Run-faster-on-the-machines-youre-already-paying-for) on the machines you already provision
 - How to [run the right tests at the right time](#Run-the-right-tests-at-the-right-time) instead of everything, every time
 - How to cut the [engineering time](#Spend-less-engineering-time-on-every-failure) spent triaging and reproducing failures
@@ -35,25 +36,30 @@ measure what you save.
 
 :::
 
-## The two kinds of cost
+## Cost is compute _and_ time
 
-Most teams think about test cost in terms of the CI bill, but that's only half of it:
+It's tempting to think about test cost only as the CI bill, but that's half the
+picture, and usually the smaller half:
 
 - **CI compute.** The machine-minutes your CI provider charges for. A slow suite,
   idle machines, or a run that keeps going after it's already failed all burn
   compute you pay for but don't benefit from.
-- **Engineering time.** The far larger, hidden cost. Developers waiting on a run
-  before they can merge, parsing CI logs to find what broke, and trying to
-  reproduce a CI-only failure on their laptop. This time rarely shows up on an
-  invoice, but it's where most of the real cost lives.
+- **Engineering turnaround time.** The larger, hidden cost. Developers waiting on a
+  run before they can merge, parsing CI logs to find what broke, and trying to
+  reproduce a CI-only failure on their laptop. This rarely shows up on an invoice,
+  but it's where most of the real cost lives, and it directly slows how fast your
+  team ships.
 
-The levers below address both. Several attack more than one at once: surfacing a
-failure sooner saves compute _and_ shortens the time a developer waits for an
-answer.
+These two move together far more often than they trade off. Surfacing a failure
+sooner stops the run earlier (saving compute) _and_ gets the developer their answer
+sooner (saving time). A balanced, parallelized run finishes faster (less time)
+_and_ wastes no idle machines (less compute). Almost every lever below improves both
+at once, which is why optimizing for one tends to pay off in the other.
 
-## Cost reduction at a glance
+## At a glance
 
-The most effective ways to cut cost with Cypress Cloud, roughly in order of impact:
+The most effective ways to cut compute spend and shorten turnaround with Cypress
+Cloud, roughly in order of impact:
 
 1. **[Stop paying for runs you've already lost](#Stop-paying-for-runs-youve-already-lost)**
    with Auto Cancellation.
@@ -77,10 +83,11 @@ holding CI machines long after you already know the outcome.
 
 [**Auto Cancellation**](/cloud/features/smart-orchestration/run-cancellation)
 stops that waste. When the number of failed tests crosses a threshold you set
-(1 by default), Cypress Cloud cancels the entire run across every machine. You get
-the signal you need, stop paying for tests you'll never look at, and free your CI
-pipeline to validate the fix. The slower and larger your suite, the more each
-cancellation saves.
+(1 by default), Cypress Cloud cancels the entire run across every machine. You stop
+paying for tests you'll never look at, and just as importantly you get the signal
+right away instead of waiting for a doomed run to grind to the end, so the developer
+can start on the fix and the freed-up pipeline can validate it sooner. The slower
+and larger your suite, the more each cancellation saves in both compute and waiting.
 
 <AutoCancellationBenefits />
 
