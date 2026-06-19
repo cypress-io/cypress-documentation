@@ -553,24 +553,6 @@ This enables you to do things like:
 
 [This part of the API is documented here.](/api/node-events/browser-launch-api)
 
-:::caution
-
-<strong>Loading extensions in Chrome 137 and above</strong>
-
-Chrome-branded browsers (e.g., standard Chrome) version 137 and above no longer
-support loading extensions via the [Browser Launch API](/api/node-events/browser-launch-api#Add-browser-extensions),
-because Chrome removed support for the `--load-extension` flag. If you attempt to
-load an extension in an affected Chrome version, Cypress will display a warning and
-the extension will not be loaded.
-
-To continue loading extensions, use
-[Chrome for Testing](#Chrome-Browsers) or [Chromium](#Chrome-Browsers) instead.
-See the Cypress Docker image examples for
-[Chrome for Testing](https://github.com/cypress-io/cypress-docker-images/tree/master/examples/chrome-for-testing)
-and [Chromium](https://github.com/cypress-io/cypress-docker-images/tree/master/examples/chromium).
-
-:::
-
 ### Distinguishing the Cypress browser
 
 You might notice that if you already have the browser open you will see two of
