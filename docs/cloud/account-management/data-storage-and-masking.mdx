@@ -1,6 +1,6 @@
 ---
 title: 'Data Storage and Controls | Cypress Cloud'
-description: 'Learn how to mask and control test data that is sent to Cypress Cloud'
+description: 'Understand what test data Cypress Cloud stores and use built-in controls to keep sensitive data private and meet your security and compliance needs.'
 sidebar_position: 80
 sidebar_label: Data Storage and Controls
 ---
@@ -8,6 +8,17 @@ sidebar_label: Data Storage and Controls
 <ProductHeading product="cloud" />
 
 # Data Storage and Controls
+
+Cypress Cloud captures the context around your test runs so you can debug
+failures faster, collaborate with your team, and gain insight into the health
+of your test suite over time. We also know that test runs can surface sensitive
+information, and that you need to stay in control of what leaves your
+environment.
+
+This page explains exactly what data Cypress Cloud stores and how it's used, then
+walks through the controls you can use to limit, mask, or prevent that data from
+being captured — so you can get the full value of Cypress Cloud while meeting your
+team's privacy, security, and compliance requirements.
 
 :::info
 
@@ -28,7 +39,12 @@ Please refer to the [Cypress Cloud Terms of Use](https://cypress.io/terms-of-use
 
 ## Types of Data
 
-When you run Cypress via `cypress run` and pass the `--record` flag, the following data is stored in Cypress Cloud for every run:
+Understanding what Cypress Cloud stores is the first step in deciding which
+controls are right for your team. Each type of data exists to make debugging and
+collaboration easier — and each can be limited or turned off using the
+[Data Controls](#Data-Controls) below.
+
+When you run Cypress via `cypress run` and pass the `--record` flag, the following data is stored in Cypress Cloud for every run. This is what powers your run history, surfaces flaky tests, and lets your whole team see results in one place:
 
 - Standard output in the terminal
 - Test results
@@ -38,7 +54,7 @@ When you run Cypress via `cypress run` and pass the `--record` flag, the followi
 - Videos
 - OS environment variables related to CI and git information
 
-When [Test Replay](/cloud/features/test-replay) capturing is enabled, the additional data outlined below will be sent to Cypress Cloud. [See our guide on disabling Test Replay.](/cloud/features/test-replay#Opt-out-of-Test-Replay)
+When [Test Replay](/cloud/features/test-replay) capturing is enabled, the additional data outlined below is sent to Cypress Cloud. This is what makes it possible to replay and inspect a failed run exactly as it happened in CI — no more re-running tests locally to reproduce a problem. [See our guide on disabling Test Replay.](/cloud/features/test-replay#Opt-out-of-Test-Replay)
 
 - The rendered DOM and CSS styles for the application under test
 - Cypress commands and events represented in the Command Log
@@ -47,17 +63,24 @@ When [Test Replay](/cloud/features/test-replay) capturing is enabled, the additi
 
 Cypress Cloud does not capture anything related to the code of your application under test or the code within any repositories that are associated with your project.
 
-When [Cloud AI](/cloud/faq#What-is-Cloud-AI) is enabled, test content may be shared with session-bound AI model to enhance your test management experience. Your data is not used to train AI models and will not be shared between customers.
+When [Cloud AI](/cloud/faq#What-is-Cloud-AI) is enabled, test content may be shared with a session-bound AI model to enhance your test management experience. Your data is not used to train AI models and will not be shared between customers.
 
 You, the customer, own and are responsible for your test content. We trust that customers will make decisions about the appropriateness of data to use in testing and will avoid use of PII, PHI, or other types of protected information. Cypress makes commercially reasonable efforts to protect confidentiality of information that is provided to Cypress Cloud.
 
 ## Data Controls
 
-We understand that controlling what data is sent to Cypress Cloud is important to our users. Cypress provides a number of ways to control what data is sent to Cypress Cloud.
+You decide what data Cypress Cloud sees. The controls below let you tune the
+balance between richer debugging context and tighter data privacy — from
+restricting who can view a project, to masking individual values, to opting out
+of data capture entirely. Most teams use a combination of these to keep sensitive
+data out of the Cloud while still benefiting from features like Test Replay.
 
 If you'd like more granular control over what data is sent to Cypress Cloud, please [contact us](https://www.cypress.io/contact/) to discuss your needs.
 
 ### Project access controls
+
+**Why it matters:** Controlling who can see a project is your first line of
+defense for keeping run data confidential within your organization.
 
 Cypress Cloud offers controls around the visibility of a project. You can set a project to be public or private. [See project access control settings.](/cloud/account-management/projects#Public-vs-Private)
 
@@ -65,9 +88,14 @@ Setting a project to private means that only the users explicitly invited to the
 
 ### Test Replay controls
 
+**Why it matters:** Test Replay captures the most detail about your application —
+DOM, network traffic, and console logs. Disabling it gives you a single switch to
+stop all of that data from leaving your environment when the trade-off isn't right
+for a given project.
+
 #### Disable Test Replay
 
-You can disable capturing data in Test Replay per project by following [this guide](/cloud/features/test-replay#Opt-out-of-Test-Replay). This means Test Replay will not be available for viewing or debugging in the project. This will prevent Cypress Cloud from capturing the following data:
+You can disable capturing data in Test Replay per project by following [this guide](/cloud/features/test-replay#Opt-out-of-Test-Replay). This means Test Replay will not be available for viewing or debugging in the project, but it guarantees Cypress Cloud never captures the following data:
 
 - The rendered DOM and CSS styles for the application under test
 - Cypress commands and events represented in the Command Log
@@ -76,9 +104,14 @@ You can disable capturing data in Test Replay per project by following [this gui
 
 ### Screenshot controls
 
+**Why it matters:** Screenshots are invaluable for spotting visual regressions
+and understanding failures at a glance — but a single screenshot can also expose a
+customer's name, an account number, or other sensitive details. These controls let
+you keep the debugging value while hiding what shouldn't be captured.
+
 #### Blackout elements in screenshots
 
-Cypress offers an option to black out (mask) an array of elements from screenshots. [See screenshot API docs.](/api/commands/screenshot#Arguments) This allows you to black out specific elements on screenshots so that they will not be visible in the locally saved screenshots or to any users that have access to the run in Cypress Cloud.
+Cypress offers an option to black out (mask) an array of elements from screenshots. [See screenshot API docs.](/api/commands/screenshot#Arguments) This allows you to black out specific elements on screenshots so that they will not be visible in the locally saved screenshots or to any users that have access to the run in Cypress Cloud — ideal for hiding fields that render PII or other protected data.
 
 Add a control to your [support file](/app/references/configuration#Testing-Type-Specific-Options) to set the default blackout options for all screenshots.
 
@@ -104,7 +137,9 @@ it('admin page loads', () => {
 
 #### Remove Cypress Command Log from screenshots
 
-Cypress offers an option to hide the Cypress Command Log from screenshots so that no information from that area will be captured in screenshots. See the [`cy.screenshot()`](/api/commands/screenshot#Arguments) command for more information.
+The Cypress Command Log can include typed values and assertion details. If you'd
+rather capture only the application itself, Cypress lets you hide the Command Log
+from screenshots so that no information from that area is captured. See the [`cy.screenshot()`](/api/commands/screenshot#Arguments) command for more information.
 
 Add a control to your [support file](/app/references/configuration#Testing-Type-Specific-Options) to set the default capture options for all screenshots.
 
@@ -129,11 +164,20 @@ it('sign in page', () => {
 
 ### Video controls
 
+**Why it matters:** Videos make it easy to see what happened during a run, but you
+may not want every run's video stored long-term. This control lets you keep videos
+only when they're useful — for example, for failing runs — and discard the rest.
+
 #### Disable video upload
 
 You can delete videos that are recorded when you are passing `video: true` by following [this guide to control what is uploaded to Cypress Cloud](/app/guides/screenshots-and-videos#Control-which-videos-to-keep-and-upload-to-Cypress-Cloud).
 
 ### Cypress Command Log controls
+
+**Why it matters:** The Command Log is one of Cypress's most powerful debugging
+features, but it can render sensitive values like passwords or tokens. These
+controls let you keep using it while preventing specific data from appearing in
+screenshots and videos.
 
 #### Turn off Cypress Command Log rendering
 
@@ -143,7 +187,8 @@ Note that when `--no-runner-ui` is set, data from the Cypress Command Log will s
 
 #### Mask data in the Cypress Command Log
 
-There are multiple ways to mask data in the Cypress Command Log. Note that when these strategies are used, data within test definitions will still be sent to Cypress Cloud.
+When you want to keep the Command Log but hide specific values, Cypress gives you
+several targeted ways to mask them. Note that when these strategies are used, data within test definitions will still be sent to Cypress Cloud.
 
 ##### `log: false` for Cypress commands
 
@@ -151,7 +196,7 @@ You can pass `log: false` as an option to Cypress-specific commands in your test
 
 ##### Disable logging of XHR/Fetch requests
 
-By default, Cypress logs all requests that match any [`cy.intercept()`](/api/commands/intercept) in the Cypress Command Log, as well as all XMLHttpRequests and fetch requests. You can use `cy.intercept()` to disable these logs by passing `{ log: false }` in the second parameter. See the [`cy.intercept()`](/api/commands/intercept#Disabling-logs-for-a-request) command for more information.
+By default, Cypress logs all requests that match any [`cy.intercept()`](/api/commands/intercept) in the Cypress Command Log, as well as all XMLHttpRequests and fetch requests. When those requests carry sensitive payloads, you can use `cy.intercept()` to disable these logs by passing `{ log: false }` in the second parameter. See the [`cy.intercept()`](/api/commands/intercept#Disabling-logs-for-a-request) command for more information.
 
 ```js
 beforeEach(() => {
@@ -162,7 +207,7 @@ beforeEach(() => {
 
 ##### Mask Cypress commands in the Cypress Command Log
 
-Users can mask passwords in the Cypress Command Log by using a custom command like the code below. [See our guide on masking the contents of the `.type()` command.](/api/cypress-api/custom-commands#Overwrite-type-command)
+To keep credentials out of the Command Log entirely, you can mask passwords by using a custom command like the code below. [See our guide on masking the contents of the `.type()` command.](/api/cypress-api/custom-commands#Overwrite-type-command)
 
 <DocsImage
   src="/img/api/custom-commands/custom-command-type-masked-password.png"
@@ -170,6 +215,11 @@ Users can mask passwords in the Cypress Command Log by using a custom command li
 />
 
 ### Network requests controls
+
+**Why it matters:** Some hosts — analytics, third-party APIs, internal services —
+may handle data you don't want captured or contacted during a run. Blocking them
+keeps that traffic out of Cypress Cloud and keeps your tests focused on the
+application under test.
 
 Cypress allows users to block requests from specified hosts. [See our blockHosts configuration guide.](/app/references/configuration#blockHosts)
 
@@ -179,6 +229,10 @@ Cypress allows users to block requests from specified hosts. [See our blockHosts
 />
 
 ### Cloud AI controls
+
+**Why it matters:** Cloud AI enhances your test management experience, and you stay
+in control of whether it's used. Admins can turn it on or off for the whole
+organization with a single setting.
 
 [Cloud AI](/cloud/faq#What-is-Cloud-AI) is enabled by default for all users on any Cloud plan.
 
