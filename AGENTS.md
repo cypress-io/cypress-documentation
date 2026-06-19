@@ -61,8 +61,11 @@ Each rule is a hard convention. See the linked section for the how and why.
   names: Cypress App, Cypress Cloud, Cypress Accessibility, UI Coverage.
 - Reuse `docs/partials/_*.mdx` instead of repeating content.
 - Tag every code block with a language; add `title="file.ext"` for file snippets.
-- Go easy on em dashes — they read as AI-generated; prefer commas, periods, or
-  parentheses.
+- Never use em dashes — they read as AI-generated; use commas, periods, or
+  parentheses instead.
+- Don't use minimizing words like "simply", "just", "easy", or "obviously" in
+  instructions. They undermine a reader who is struggling and add nothing; state
+  the step plainly instead.
 
 **Directives & tabs** — [tabs](./AGENTS_REFERENCE.md#tabs),
 [config](./AGENTS_REFERENCE.md#cypress-config-examples),
