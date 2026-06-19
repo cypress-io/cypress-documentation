@@ -587,11 +587,12 @@ the browser is **always headed** so you can watch and debug interactively.
 
 How each browser is launched headlessly differs slightly:
 
-| Browser                  | Default during `cypress run` | How it runs headless            |
-| ------------------------ | ---------------------------- | ------------------------------- |
-| Electron                 | Headless                     | Internal Electron headless mode |
-| Chrome / Chromium / Edge | Headless                     | Launched with `--headless=new`  |
-| Firefox                  | Headless                     | Launched with `-headless`       |
+| Browser                  | Default during `cypress run` | How it runs headless             |
+| ------------------------ | ---------------------------- | -------------------------------- |
+| Electron                 | Headless                     | Internal Electron headless mode  |
+| Chrome / Chromium / Edge | Headless                     | Launched with `--headless=new`   |
+| Firefox                  | Headless                     | Launched with `-headless`        |
+| WebKit (Experimental)    | Headless                     | Launched headless via Playwright |
 
 To show the browser while running `cypress run`, pass the
 [`--headed`](/app/references/command-line#cypress-run-headed) flag:
