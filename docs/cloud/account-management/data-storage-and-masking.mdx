@@ -241,6 +241,18 @@ To keep credentials out of the Command Log entirely, you can mask passwords by u
   alt="Cypress command log showing masked password as asterisks within the type command"
 />
 
+##### Keep secrets out of test code with `cy.env()`
+
+Masking hides values in the Command Log, but the data within your test definitions is still sent to Cypress Cloud. The most reliable way to keep a secret out of the Cloud is to never hard-code it in your spec files in the first place. Store sensitive values like API keys, tokens, passwords, and credentials as environment variables and retrieve them with [`cy.env()`](/api/commands/env), which returns only the values you explicitly request instead of serializing all environment variables into browser state.
+
+```js
+cy.env(['password']).then(({ password }) => {
+  cy.get('#password').type(password, { log: false })
+})
+```
+
+See the [Environment Variables & Secrets](/app/guides/environment-variables) guide for guidance on choosing the right API for secrets versus values that are safe to expose.
+
 ### Network requests controls
 
 **Why it matters:** Some hosts, such as analytics, third-party APIs, and internal services,
