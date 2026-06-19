@@ -1,0 +1,263 @@
+---
+title: 'Reduce CI Costs with Cypress Cloud | Cypress Documentation'
+description: Cut the cost of running Cypress in CI. Use Auto Cancellation, Parallelization, Load Balancing, Spec Prioritization, and Cloud debugging tools to spend fewer CI minutes and less engineering time on every run.
+sidebar_label: Reducing Costs
+sidebar_position: 20
+---
+
+<ProductHeading product="cloud" />
+
+# Reduce CI Costs with Cypress Cloud
+
+The cost of a test suite is not just the time it takes to run. Every CI run spends
+**compute** (the machines you pay your CI provider for) and **engineering time**
+(the hours your team spends waiting on runs, triaging failures, and reproducing
+problems they can't see). Both grow with the size of your suite and your team, and
+both are easy to overspend without realizing it.
+
+**Cypress Cloud is built to drive both down.** When you
+[record your runs](/cloud/get-started/setup), Cloud can stop runs that have already
+failed, distribute work so machines are never idle, surface failures sooner, and
+let you debug the exact CI failure without reproducing it locally. This guide walks
+through the levers that reduce cost, the Cloud feature behind each one, and how to
+measure what you save.
+
+:::info
+
+##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
+
+- The two kinds of cost a test suite incurs, and which Cloud feature attacks each one
+- How to stop paying for [runs that have already failed](#Stop-paying-for-runs-youve-already-lost)
+- How to [finish runs faster](#Run-faster-on-the-machines-youre-already-paying-for) on the machines you already provision
+- How to [run the right tests at the right time](#Run-the-right-tests-at-the-right-time) instead of everything, every time
+- How to cut the [engineering time](#Spend-less-engineering-time-on-every-failure) spent triaging and reproducing failures
+- How to [measure the time and money](#Measure-what-youre-saving) Cypress Cloud is saving you
+
+:::
+
+## The two kinds of cost
+
+Most teams think about test cost in terms of the CI bill, but that's only half of it:
+
+- **CI compute.** The machine-minutes your CI provider charges for. A slow suite,
+  idle machines, or a run that keeps going after it's already failed all burn
+  compute you pay for but don't benefit from.
+- **Engineering time.** The far larger, hidden cost. Developers waiting on a run
+  before they can merge, parsing CI logs to find what broke, and trying to
+  reproduce a CI-only failure on their laptop. This time rarely shows up on an
+  invoice, but it's where most of the real cost lives.
+
+The levers below address both. Several attack more than one at once: surfacing a
+failure sooner saves compute _and_ shortens the time a developer waits for an
+answer.
+
+## Cost reduction at a glance
+
+The most effective ways to cut cost with Cypress Cloud, roughly in order of impact:
+
+1. **[Stop paying for runs you've already lost](#Stop-paying-for-runs-youve-already-lost)**
+   with Auto Cancellation.
+2. **[Run faster on the machines you're already paying for](#Run-faster-on-the-machines-youre-already-paying-for)**
+   with Parallelization and Load Balancing.
+3. **[Run the right tests at the right time](#Run-the-right-tests-at-the-right-time)**
+   with Spec Prioritization and a smarter test strategy.
+4. **[Spend less engineering time on every failure](#Spend-less-engineering-time-on-every-failure)**
+   with Test Replay, AI Error Summaries, and Flaky Test Management.
+5. **[Measure what you're saving](#Measure-what-youre-saving)** with run
+   Recommendations and Analytics.
+
+The rest of this guide covers each lever in detail.
+
+## Stop paying for runs you've already lost
+
+Once a run has failed in CI, every additional minute finishing the rest of the
+suite is a minute you pay for but can't use. The fix still has to be written,
+pushed, and validated by a brand-new run, so the original keeps burning compute and
+holding CI machines long after you already know the outcome.
+
+[**Auto Cancellation**](/cloud/features/smart-orchestration/run-cancellation)
+stops that waste. When the number of failed tests crosses a threshold you set
+(1 by default), Cypress Cloud cancels the entire run across every machine. You get
+the signal you need, stop paying for tests you'll never look at, and free your CI
+pipeline to validate the fix. The slower and larger your suite, the more each
+cancellation saves.
+
+<AutoCancellationBenefits />
+
+:::info
+
+**Maximize the savings: pair with Spec Prioritization.** Combine Auto Cancellation
+with [Spec Prioritization](#Run-the-right-tests-at-the-right-time) to run
+previously failed specs first. Failures surface earlier in the run, so Auto
+Cancellation triggers earlier too, shortening runs even further.
+
+:::
+
+Auto Cancellation is a Smart Orchestration feature available on the
+[Business and Enterprise plans](https://cypress.io/pricing). You can tune the
+threshold per project, or override it per run with
+[`--auto-cancel-after-failures`](/app/references/command-line#auto-cancel-after-runs)
+(for example, disabling it on `main` or release branches where you want the full
+picture).
+
+## Run faster on the machines you're already paying for
+
+A shorter run is a cheaper run, both in compute and in the time developers wait
+before they can merge. Two Cloud features shrink wall-clock time without adding
+machines.
+
+### Parallelization
+
+[**Parallelization**](/cloud/features/smart-orchestration/parallelization) runs
+your spec files simultaneously across multiple CI machines instead of one after
+another, so a suite that takes 30 minutes on one machine can finish in a fraction
+of that across several. Add the
+[`--parallel`](/app/references/command-line#cypress-run-parallel) flag and provision
+the machines with your CI provider:
+
+```shell
+cypress run --record --key=<record_key> --parallel
+```
+
+### Load Balancing
+
+Running in parallel only helps if the work is split well. If one machine gets all
+the slow specs while the others sit idle, you pay for every machine but only move
+as fast as the slowest one.
+
+[**Load Balancing**](/cloud/features/smart-orchestration/load-balancing) solves
+this automatically. Cypress Cloud uses duration data from previous runs to hand out
+specs one at a time to whichever machine is free, keeping every machine busy until
+the last spec finishes. It's on by default whenever you run with
+`--record --parallel`, with nothing to configure and nothing to maintain as your
+suite changes. The result is the full value out of the CI resources you've already
+provisioned, which is often the difference between needing more machines and getting
+more out of the ones you have.
+
+:::tip
+
+To balance most efficiently, keep spec durations similar and split your slowest
+specs. Use the [Slowest Tests](/cloud/features/analytics/project-analytics#Slowest-tests)
+report to find the specs dominating your run time. See the
+[Test Performance guide](/app/guides/test-performance) for benchmarks and splitting
+strategies.
+
+:::
+
+## Run the right tests at the right time
+
+The cheapest test is the one you don't need to run. Beyond raw speed, you can cut
+cost by changing _which_ tests run, _when_, and _in what order_.
+
+### Surface failures sooner with Spec Prioritization
+
+[**Spec Prioritization**](/cloud/features/smart-orchestration/spec-prioritization)
+automatically runs the specs that failed in your previous run first. If a failure
+normally surfaces 20 minutes into a 30-minute run, every fix attempt means waiting
+20 minutes again just to see whether it worked. Prioritization collapses that wait
+to a few minutes, tightening the edit → run → verify loop. Paired with
+[Auto Cancellation](#Stop-paying-for-runs-youve-already-lost), the run stops as soon
+as the prioritized failures reappear, turning earlier feedback into shorter, cheaper
+runs.
+
+### Test the right things in the right place
+
+Some cost is structural: behavior covered redundantly, or the full suite running on
+every commit when a smaller slice would do. The
+[Optimizing test performance](/app/guides/test-performance) guide covers strategies
+that directly reduce how much you run:
+
+- **[Choose the right test level](/app/guides/test-performance#Choose-the-right-test-level)**
+  so behavior is covered where it's cheapest to test, instead of duplicating it
+  across many slow end-to-end tests.
+- **[Find and eliminate over-tested UI with UI Coverage](/app/guides/test-performance#Find-and-eliminate-over-tested-UI-with-UI-Coverage)**
+  to cut redundant tests that exercise the same flows.
+- **[Run the right tests at the right time](/app/guides/test-performance#Run-the-right-tests-at-the-right-time)**,
+  for example a fast smoke suite on every pull request and the full suite less
+  often.
+
+## Spend less engineering time on every failure
+
+The biggest cost of a failing test is usually not the compute, it's the engineer
+trying to understand it. A failure that happened on a machine you can't see, in a
+browser session that no longer exists, traditionally means parsing CI logs and
+trying to reproduce the problem locally, which is slow, frustrating, and often
+impossible. Cypress Cloud removes most of that work.
+
+- **[Test Replay](/cloud/features/test-replay)** lets you replay the exact CI run
+  with full developer tools: inspect the DOM, network, and console at the moment of
+  failure instead of reproducing it on your laptop. This removes the single most
+  expensive part of debugging CI: recreating an environment you can't see.
+- **[AI Error Summaries](/cloud/features/cypress-ai-features#Error-Summaries)** give
+  a plain-language explanation of what went wrong, so you get oriented in seconds
+  instead of parsing a raw stack trace.
+- **[Flaky Test Management](/cloud/features/flaky-test-management)** detects, scores,
+  and tracks flaky tests automatically, so your team stops spending hours chasing
+  intermittent failures that aren't real regressions.
+
+For a complete walkthrough of this workflow, see the
+[Debug Failing Tests](/cloud/guides/debug-failing-tests) guide.
+
+## Measure what you're saving
+
+You don't have to estimate the impact of these features. Cypress Cloud measures it
+for you, so you can justify the investment and tune your configuration with real
+numbers.
+
+- **[Recommendations](/cloud/features/recorded-runs#Recommendations).** Each run's
+  Overview surfaces a panel that simulates your recent runs under different Smart
+  Orchestration configurations and machine counts, then estimates how much time you
+  would save (or whether you're using more machines than you need).
+- **Auto Cancellation savings.** A canceled run's banner reports exactly how much
+  CI time the cancellation saved, for example _"01:02:08 saved in CI."_
+- **[Run Duration analytics](/cloud/features/analytics/project-analytics#Run-duration).**
+  Track your average run duration, average concurrency, and the time saved from
+  parallelization over time, so you can watch the trend as your suite and machine
+  count change.
+
+## Which lever should I pull?
+
+| Goal                                                       | Start here                                                                                                                                |
+| ---------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| Stop runs that have already failed                         | [Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation)                                                                |
+| Finish runs faster                                         | [Parallelization](/cloud/features/smart-orchestration/parallelization) + [Load Balancing](/cloud/features/smart-orchestration/load-balancing) |
+| Get the verdict on a fix sooner                            | [Spec Prioritization](/cloud/features/smart-orchestration/spec-prioritization)                                                           |
+| Run fewer, more meaningful tests                           | [Optimizing test performance](/app/guides/test-performance)                                                                              |
+| Cut redundant tests covering the same flows                | [UI Coverage](/app/guides/test-performance#Find-and-eliminate-over-tested-UI-with-UI-Coverage)                                           |
+| Spend less time debugging CI failures                      | [Test Replay](/cloud/features/test-replay) + [AI Error Summaries](/cloud/features/cypress-ai-features#Error-Summaries)                   |
+| Stop chasing flake that isn't a real regression           | [Flaky Test Management](/cloud/features/flaky-test-management)                                                                            |
+| Quantify the time and money you're saving                  | [Recommendations](/cloud/features/recorded-runs#Recommendations) + [Analytics](/cloud/features/analytics/project-analytics#Run-duration) |
+
+## Get started
+
+Every lever in this guide works on runs
+[recorded to Cypress Cloud](/cloud/get-started/setup) from your CI/CD pipeline.
+Load Balancing comes for free with parallel runs, while Auto Cancellation and Spec
+Prioritization are Smart Orchestration features on the
+[Business and Enterprise plans](https://cypress.io/pricing). Not sure whether
+upgrading is worth it? The [Recommendations](/cloud/features/recorded-runs#Recommendations)
+panel on each run predicts how much time these features would save your team.
+
+:::success
+
+<CloudFreePlan />
+
+:::
+
+<Btn
+  label="Record your first run ➜"
+  variant="indigo-dark"
+  className="mr-1"
+  href="/cloud/get-started/setup"
+/>
+
+## See also
+
+- [Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation) — stop runs that have already failed
+- [Parallelization](/cloud/features/smart-orchestration/parallelization) — run specs simultaneously across machines
+- [Load Balancing](/cloud/features/smart-orchestration/load-balancing) — keep every machine busy to minimize run time
+- [Spec Prioritization](/cloud/features/smart-orchestration/spec-prioritization) — run previously failed specs first
+- [Smart Orchestration Overview](/cloud/features/smart-orchestration/overview) — how the orchestration features fit together
+- [Optimizing test performance](/app/guides/test-performance) — trim and streamline your suite
+- [Debug Failing Tests](/cloud/guides/debug-failing-tests) — find the root cause of a CI failure without reproducing it locally
+- [Cypress Cloud FAQ](/cloud/faq#How-do-I-reduce-my-Cypress-Cloud-usage-or-lower-my-bill) — common cost and usage questions
