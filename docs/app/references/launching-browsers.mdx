@@ -158,6 +158,40 @@ If this is not the case, then Cypress will timeout, returning an `ECONNREFUSED` 
 Chrome policy is generally applied to a Chrome-branded browser only, not to Chromium or Chrome for Testing browsers.
 Check by browsing to **chrome://policy**.
 
+#### Skipping Chrome preference reads/writes
+
+To set up a consistent testing environment, Cypress reads and writes Chrome
+preference files inside its [isolated profile](#Cypress-Profile) in the browser's
+user-data directory (the `Preferences`, `Secure Preferences`, and `Local State`
+files). This is how Cypress applies preference-based settings — for example,
+disabling password saving and autofill, configuring the
+[downloads behavior](#Downloading-Files), and any preferences you set through the
+[`before:browser:launch`](/api/node-events/browser-launch-api#Change-browser-preferences)
+event.
+
+Some applications and environments **encrypt the user-data directory** (for
+example, certain enterprise security tooling). In that case, Cypress reading or
+writing the preference files can fail or corrupt the encrypted profile. To work
+around this, set the `IGNORE_CHROME_PREFERENCES` system environment variable,
+which tells Cypress to skip reading and writing Chrome preferences entirely:
+
+```shell
+IGNORE_CHROME_PREFERENCES=1 cypress run --browser chrome
+```
+
+:::caution
+
+When `IGNORE_CHROME_PREFERENCES` is set, Cypress no longer manages Chrome
+preferences, so any behavior controlled through preferences will not be applied.
+This includes preferences you set via `launchOptions.preferences` in the
+[`before:browser:launch`](/api/node-events/browser-launch-api#Change-browser-preferences)
+event, as well as Cypress's own preference-based defaults (such as disabling
+password saving/autofill and configuring the downloads folder). Settings applied
+through command-line switches are unaffected. Only use this escape hatch if your
+environment requires it.
+
+:::
+
 ### Edge Browsers
 
 Microsoft Edge-family (Chromium-based) browsers are supported by Cypress.
