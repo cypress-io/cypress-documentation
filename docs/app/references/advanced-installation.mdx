@@ -33,6 +33,38 @@ sidebar_label: 'Advanced Installation'
 | `CYPRESS_VERIFY_TIMEOUT`          | Overrides the timeout duration for the `verify` command. The default value is 30000.           |
 | `CYPRESS_SKIP_VERIFY`             | Skips the [`verify` command](command-line#cypress-verify) when `true`                          |
 
+### Setting variables via npm config or package.json
+
+Every `CYPRESS_*` variable above can be set as a real environment variable, or
+through your npm configuration. Cypress resolves each variable in the following
+order, using the first value it finds:
+
+1. The actual environment variable (e.g. `CYPRESS_INSTALL_BINARY`)
+2. `npm_config_<name>` — set via `.npmrc` or `npm config`
+3. The lowercase `npm_config_<name>`
+4. `npm_package_config_<name>` — set via a `config` block in `package.json`
+
+This means options like `CYPRESS_INSTALL_BINARY`, `CYPRESS_CACHE_FOLDER`, and
+`CYPRESS_DOWNLOAD_MIRROR` can all be configured in `.npmrc`:
+
+```ini title=".npmrc"
+cypress_install_binary=https://company.domain.com/cypress.zip
+cypress_cache_folder=/path/to/cypress/cache
+cypress_download_mirror=https://company.domain.com
+```
+
+or in a `config` block of your `package.json`:
+
+```json title="package.json"
+{
+  "config": {
+    "cypress_install_binary": "https://company.domain.com/cypress.zip",
+    "cypress_cache_folder": "/path/to/cypress/cache",
+    "cypress_download_mirror": "https://company.domain.com"
+  }
+}
+```
+
 ## Proxy configuration
 
 System [proxy properties](/app/references/proxy-configuration) `http_proxy`, `https_proxy` and `no_proxy` are respected
