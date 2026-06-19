@@ -568,6 +568,27 @@ functionality that has not yet been released, here is how:
    operating system and CPU architecture, and follow the instructions there to
    install the pre-release.
 
+The `cypress-bot` comments point at pre-release binaries hosted on the Cypress
+CDN. If you are scripting pre-release installs, the URLs follow this pattern:
+
+```text
+https://cdn.cypress.io/beta/binary/<version>/<platform>-<arch>/<branch>-<sha>/cypress.zip
+```
+
+- `<version>` — the Cypress version being built (e.g. `15.16.0`)
+- `<platform>-<arch>` — one of the supported
+  [platform/architecture combinations](#Mirroring) (e.g. `darwin-arm64`,
+  `linux-x64`)
+- `<branch>` — the branch the binary was built from (e.g. `develop`)
+- `<sha>` — the full commit SHA
+
+You can install a pre-release binary directly by pointing
+[`CYPRESS_INSTALL_BINARY`](#Install-binary) at one of these URLs:
+
+```shell
+CYPRESS_INSTALL_BINARY=https://cdn.cypress.io/beta/binary/15.16.0/darwin-arm64/develop-abcdef1234567890/cypress.zip npm install cypress
+```
+
 Cypress pre-releases are only available for 60 days after they are built. Do not
 rely on these being available past 60 days.
 
