@@ -86,6 +86,14 @@ Cypress Cloud offers controls around the visibility of a project. You can set a 
 
 Setting a project to private means that only the users explicitly invited to the organization will have visibility into the project, its runs, and any data captured by Cypress.
 
+For even finer-grained control, [teams](/cloud/account-management/teams) let you decide which users can see which projects _within_ your organization. Rather than every member seeing every private project, you assign projects to a team and add only the relevant users to it, so people see just the projects they need. This is useful when:
+
+- Multiple business units or clients share one Cypress Cloud organization and their projects (and the data captured in them) should stay isolated from one another.
+- Certain projects contain especially sensitive applications or data that only a specific group should be able to view.
+- You simply want to reduce clutter so each user sees only the projects relevant to their work.
+
+By default, all users belong to a built-in _Everyone_ team that has access to all projects. To enforce a stricter, need-to-know model, create teams aligned to your structure, assign each team only the projects it should access, and remove the _All projects_ assignment from the _Everyone_ team. See [Manage teams](/cloud/account-management/teams) for setup steps and best practices. Note that [public projects](/cloud/account-management/projects#Public-vs-Private) are outside the scope of teams and remain visible to everyone in the organization.
+
 ### Test Replay controls
 
 **Why it matters:** Test Replay captures the most detail about your application,
