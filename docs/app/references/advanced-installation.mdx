@@ -328,7 +328,8 @@ and `arch` query parameters, and serve the appropriate Cypress binary as a
 
 | `platform` | `arch`  | Notes                                                         |
 | ---------- | ------- | ------------------------------------------------------------- |
-| `linux`    | `x64`   |                                                               |
+| `linux`    | `x64`   | Linux Intel/AMD 64-bit                                        |
+| `linux`    | `arm64` | Linux ARM64 (e.g. AWS Graviton, Apple Silicon containers)     |
 | `darwin`   | `x64`   | macOS Intel                                                   |
 | `darwin`   | `arm64` | macOS Apple Silicon                                           |
 | `win32`    | `x64`   | Windows; also used for ARM64 Windows (no native ARM64 binary) |
