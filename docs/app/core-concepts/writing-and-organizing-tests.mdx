@@ -297,22 +297,33 @@ command, most often when you're stubbing
 [Network Requests](/app/guides/network-requests) so your tests don't depend on
 a live backend.
 
-### Plugins file
+### Node events (setupNodeEvents) {#Plugins-file}
 
 Your tests run in the browser, but some things, like touching the file system,
 talking to a database, or controlling how specs are bundled, can only happen in
-Node. The plugins file is where that Node-side code lives. It executes before
-the project is loaded, before the browser launches, and during your test run,
-and your tests reach it through the [cy.task()](/api/commands/task) command.
+Node. Cypress lets you run that Node-side code through the
+[`setupNodeEvents`](/app/references/configuration#setupNodeEvents) function in
+your [Cypress configuration](/app/references/configuration), defined per testing
+type under the `e2e` or `component` options. It runs in the background Node
+process before the project is loaded, before the browser launches, and during
+your test run, and your tests reach it through the
+[cy.task()](/api/commands/task) command.
 
-This makes it the right place to define how spec files are bundled via
-[preprocessors](/api/node-events/preprocessors-api), how browsers are found and
-launched via the [browser launch API](/api/node-events/browser-launch-api), and
-other tasks that need access to the operating system. Read our
+:::info
+
+In Cypress versions before 10, this code lived in a separate **plugins file**
+(`cypress/plugins/index.js` by default). Cypress now consolidates that logic
+into `setupNodeEvents` in the configuration file. If you're upgrading, see the
+[migration guide](/app/references/migration-guide#Plugins-File-Removed).
+
+:::
+
+This is where you tap into [Node events](/api/node-events/overview) to do things
+like control how spec files are bundled with
+[preprocessors](/api/node-events/preprocessors-api), find and launch browsers
+via the [browser launch API](/api/node-events/browser-launch-api), and run other
+tasks that need access to the operating system. Read our
 [plugins guide](/app/plugins/plugins-guide) for details and examples.
-
-The initial imported plugins file can be
-[configured to another file](/app/references/configuration#Folders--Files).
 
 ### Generated assets
 
