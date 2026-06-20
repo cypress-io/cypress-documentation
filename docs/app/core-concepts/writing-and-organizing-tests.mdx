@@ -915,26 +915,28 @@ behavior.
 - [Cypress configuration](/app/references/configuration)
 - [cypress.env.json](/app/guides/environment-variables#2-cypressenvjson)
 
-#### Folders
+#### Spec files
 
-- E2E directory (`cypress/e2e/` by default)
-- Support directory (`cypress/support/` by default)
-
-The folder, the files within the folder, and all child folders and their files
-(recursively) are watched.
+Cypress watches your entire project root for spec files&mdash;not just the
+`cypress/e2e/` and `cypress/support/` directories. Any file that matches your
+[`specPattern`](/app/references/configuration#e2e), wherever it lives in the
+project, is detected. When a change is made, the active spec file, the support
+file, and any files they `import` (or `require`) are recompiled through the
+[preprocessor](/api/node-events/preprocessors-api) and the browser reloads.
 
 :::info
 
-Those folder paths refer to the
-[default folder paths](/app/references/configuration#Folders--Files). If
-you've configured Cypress to use different folder paths then the folders
-specific to your configuration will be watched.
+The default `specPattern` and support file location refer to the
+[default configuration](/app/references/configuration#Folders--Files). If
+you've configured Cypress to use a different `specPattern` or support file then
+the files specific to your configuration will be watched.
 
 :::
 
 ### What isn't watched?
 
-Everything else; this includes, but isn't limited to, the following:
+Files that aren't part of the spec graph; this includes, but isn't limited to,
+the following:
 
 - Your application code
 - `node_modules`
