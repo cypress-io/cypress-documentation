@@ -255,12 +255,13 @@ You can launch Firefox like this:
 
 <CypressCommandTabs command="run --browser firefox" />
 
-Or Firefox Developer/Nightly Edition:
+Or Firefox Developer Edition:
 
-<CypressCommandTabs
-  command={`run --browser firefox:dev
-run --browser firefox:nightly`}
-/>
+<CypressCommandTabs command="run --browser firefox:dev" />
+
+Or Firefox Nightly:
+
+<CypressCommandTabs command="run --browser firefox:nightly" />
 
 To use this command in CI, you need to install these other browsers - or use one
 of our [docker images](/app/continuous-integration/overview#Cypress-Docker-Images).
