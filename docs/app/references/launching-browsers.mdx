@@ -120,9 +120,7 @@ from the CLI, Cypress launches all browsers headlessly. See
 
 #### You can also launch Electron headed:
 
-```shell
-cypress run --headed
-```
+<CypressCommandTabs command="run --headed" />
 
 Because Electron is the default browser, it is typically the one running in CI.
 If you are seeing failures in CI, an easy first debugging step is to run locally
@@ -134,9 +132,7 @@ All Chrome\* flavored browsers are detected and supported by Cypress.
 
 You can launch Chrome like this:
 
-```shell
-cypress run --browser chrome
-```
+<CypressCommandTabs command="run --browser chrome" />
 
 To use this command in CI, you need to install the browser you want - or use one
 of our [docker images](/app/continuous-integration/overview#Cypress-Docker-Images).
@@ -146,27 +142,19 @@ Chrome headed, you can pass the `--headed` argument to `cypress run`.
 
 You can also launch Chromium:
 
-```shell
-cypress run --browser chromium
-```
+<CypressCommandTabs command="run --browser chromium" />
 
 Or Chrome Beta:
 
-```shell
-cypress run --browser chrome:beta
-```
+<CypressCommandTabs command="run --browser chrome:beta" />
 
 Or Chrome Canary:
 
-```shell
-cypress run --browser chrome:canary
-```
+<CypressCommandTabs command="run --browser chrome:canary" />
 
 Or Chrome for Testing:
 
-```shell
-cypress run --browser chrome-for-testing
-```
+<CypressCommandTabs command="run --browser chrome-for-testing" />
 
 :::tip
 
@@ -224,9 +212,10 @@ writing the preference files can fail or corrupt the encrypted profile. To work
 around this, set the `IGNORE_CHROME_PREFERENCES` system environment variable,
 which tells Cypress to skip reading and writing Chrome preferences entirely:
 
-```shell
-IGNORE_CHROME_PREFERENCES=1 cypress run --browser chrome
-```
+<CypressCommandTabs
+  env="IGNORE_CHROME_PREFERENCES=1"
+  command="run --browser chrome"
+/>
 
 ### Edge Browsers
 
@@ -234,27 +223,19 @@ Microsoft Edge-family (Chromium-based) browsers are supported by Cypress.
 
 You can launch Microsoft Edge like this:
 
-```shell
-cypress run --browser edge
-```
+<CypressCommandTabs command="run --browser edge" />
 
 Or Microsoft Edge Beta:
 
-```shell
-cypress run --browser edge:beta
-```
+<CypressCommandTabs command="run --browser edge:beta" />
 
 Or Microsoft Edge Canary:
 
-```shell
-cypress run --browser edge:canary
-```
+<CypressCommandTabs command="run --browser edge:canary" />
 
 Or Microsoft Edge Dev:
 
-```shell
-cypress run --browser edge:dev
-```
+<CypressCommandTabs command="run --browser edge:dev" />
 
 #### Edge policy
 
@@ -272,16 +253,14 @@ Firefox-family browsers are supported by Cypress.
 
 You can launch Firefox like this:
 
-```shell
-cypress run --browser firefox
-```
+<CypressCommandTabs command="run --browser firefox" />
 
 Or Firefox Developer/Nightly Edition:
 
-```shell
-cypress run --browser firefox:dev
-cypress run --browser firefox:nightly
-```
+<CypressCommandTabs
+  command={`run --browser firefox:dev
+run --browser firefox:nightly`}
+/>
 
 To use this command in CI, you need to install these other browsers - or use one
 of our [docker images](/app/continuous-integration/overview#Cypress-Docker-Images).
@@ -335,9 +314,8 @@ behaves in Safari from Windows, Linux, or CI, without needing a Mac. To opt-in t
    ```
 4. Now, you should be able to use WebKit like any other browser. For example, to
    record with WebKit in CI:
-   ```shell
-   cypress run --browser webkit --record
-   ```
+
+<CypressCommandTabs command="run --browser webkit --record" />
 
 We built this experiment on top of the Playwright WebKit browser as a
 stepping stone towards creating a better UX with Cypress-provided browsers
@@ -379,13 +357,9 @@ npx playwright install-deps webkit
 If a browser isn't auto-detected, for example a portable install or a custom
 build, you can launch any supported browser by specifying a path to the binary:
 
-```shell
-cypress run --browser /usr/bin/chromium
-```
+<CypressCommandTabs command="run --browser /usr/bin/chromium" />
 
-```shell
-cypress open --browser /usr/bin/chromium
-```
+<CypressCommandTabs command="open --browser /usr/bin/chromium" />
 
 Cypress will automatically detect the type of browser supplied and launch it for
 you.
@@ -597,9 +571,7 @@ How each browser is launched headlessly differs slightly:
 To show the browser while running `cypress run`, pass the
 [`--headed`](/app/references/command-line#cypress-run-headed) flag:
 
-```shell
-cypress run --headed
-```
+<CypressCommandTabs command="run --headed" />
 
 Because Electron is the default browser, it is typically the one running in CI.
 You can also explicitly hide a headed browser with `--headless`.
@@ -624,9 +596,7 @@ Occasionally a test passes when the browser is headed but fails when run
 headlessly (or vice versa). When this happens, the quickest way to debug is to
 reproduce the failure locally with the browser shown:
 
-```shell
-cypress run --headed --no-exit --browser chrome
-```
+<CypressCommandTabs command="run --headed --no-exit --browser chrome" />
 
 The `--headed` flag shows the browser so you can watch the run, and `--no-exit`
 keeps Cypress open afterward so you can inspect the
