@@ -69,15 +69,15 @@ This two-step model is the "why" behind most of the variables below:
 Almost every behavior on this page is driven by a system-level (OS) environment
 variable. These are set in your shell, CI configuration, or `.npmrc`.
 
-| Name                              | Description                                                                                    |
-| --------------------------------- | ---------------------------------------------------------------------------------------------- |
-| `CYPRESS_INSTALL_BINARY`          | [Sets which Cypress binary to install: a version, URL, or local file](#Install-binary)          |
-| `CYPRESS_DOWNLOAD_MIRROR`         | [Downloads the Cypress binary from a mirror server](#Mirroring)                                |
-| `CYPRESS_DOWNLOAD_PATH_TEMPLATE`  | [Builds a custom URL to download the Cypress binary from](#Download-path-template)             |
-| `CYPRESS_CACHE_FOLDER`            | [Changes the location of the Cypress binary cache](#Binary-cache)                              |
-| `CYPRESS_RUN_BINARY`              | [Sets the path to the Cypress binary to launch at run time](#Run-binary)                       |
-| `CYPRESS_VERIFY_TIMEOUT`          | Overrides the timeout duration for the `verify` command. The default value is 30000.           |
-| `CYPRESS_SKIP_VERIFY`             | Skips the [`verify` command](command-line#cypress-verify) when set to `true`                   |
+| Name                             | Description                                                                            |
+| -------------------------------- | -------------------------------------------------------------------------------------- |
+| `CYPRESS_INSTALL_BINARY`         | [Sets which Cypress binary to install: a version, URL, or local file](#Install-binary) |
+| `CYPRESS_DOWNLOAD_MIRROR`        | [Downloads the Cypress binary from a mirror server](#Mirroring)                        |
+| `CYPRESS_DOWNLOAD_PATH_TEMPLATE` | [Builds a custom URL to download the Cypress binary from](#Download-path-template)     |
+| `CYPRESS_CACHE_FOLDER`           | [Changes the location of the Cypress binary cache](#Binary-cache)                      |
+| `CYPRESS_RUN_BINARY`             | [Sets the path to the Cypress binary to launch at run time](#Run-binary)               |
+| `CYPRESS_VERIFY_TIMEOUT`         | Overrides the timeout duration for the `verify` command. The default value is 30000.   |
+| `CYPRESS_SKIP_VERIFY`            | Skips the [`verify` command](command-line#cypress-verify) when set to `true`           |
 
 ### When you'd reach for each
 
@@ -364,11 +364,11 @@ mirror, a custom URL layout, or a private certificate authority.
 If your VPN, firewall, or proxy only permits traffic to approved hosts, add the
 following to your allowlist so the binary can be downloaded during `npm install`:
 
-| URL                          | Purpose                                                      |
-| ---------------------------- | ----------------------------------------------------------- |
-| `https://download.cypress.io`| Resolves the correct binary for your version and platform   |
-| `https://cdn.cypress.io`     | Serves the actual binary `.zip` (download requests redirect here, and pre-release binaries are hosted here) |
-| `https://registry.npmjs.org` | Installs the `cypress` npm package (or your configured npm registry) |
+| URL                           | Purpose                                                                                                     |
+| ----------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| `https://download.cypress.io` | Resolves the correct binary for your version and platform                                                   |
+| `https://cdn.cypress.io`      | Serves the actual binary `.zip` (download requests redirect here, and pre-release binaries are hosted here) |
+| `https://registry.npmjs.org`  | Installs the `cypress` npm package (or your configured npm registry)                                        |
 
 If you also run tests against Cypress Cloud, you'll need to allow additional
 URLs. See the full list of
@@ -467,12 +467,12 @@ URL for the platform and version being installed.
 
 **The following replacements are supported:**
 
-| Placeholder    | Replaced with                                  | Example                                       |
-| -------------- | ---------------------------------------------- | --------------------------------------------- |
-| `${endpoint}`  | The full base URL, including the version path  | `https://download.cypress.io/desktop/15.16.0` |
-| `${platform}`  | The platform being installed on                | `win32`, `linux`, `darwin`                    |
-| `${arch}`      | The architecture being installed on            | `x64`, `arm64` (always `x64` on Windows ARM64)|
-| `${version}`   | The version number being installed             | `15.16.0`                                     |
+| Placeholder   | Replaced with                                 | Example                                        |
+| ------------- | --------------------------------------------- | ---------------------------------------------- |
+| `${endpoint}` | The full base URL, including the version path | `https://download.cypress.io/desktop/15.16.0`  |
+| `${platform}` | The platform being installed on               | `win32`, `linux`, `darwin`                     |
+| `${arch}`     | The architecture being installed on           | `x64`, `arm64` (always `x64` on Windows ARM64) |
+| `${version}`  | The version number being installed            | `15.16.0`                                      |
 
 `${endpoint}` expands to `<base>/desktop/<version>`. If `CYPRESS_DOWNLOAD_MIRROR`
 is set, its value is used as `<base>` instead of `https://download.cypress.io`,
@@ -597,16 +597,16 @@ ensure this, consider exporting this environment variable. For example, in a
 
 Over time the cache accumulates a binary per Cypress version you've used, which
 can quietly consume disk space on CI agents and developer machines. The
-[`cypress cache`](./command-line#cypress-cache) command lets you inspect and
+[`cypress cache`](./command-line#cypress-cache-command) command lets you inspect and
 prune it. Run these with the appropriate package manager prefix described in
 [How to run commands](./command-line#How-to-run-commands).
 
-| Command                                                       | Description                                                                          |
-| ------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
-| [`cypress cache list`](./command-line#cypress-cache-list)     | Lists the cached Cypress versions. Add `--size` to also report each version's size.  |
-| [`cypress cache path`](./command-line#cypress-cache-path)     | Prints the path to the Cypress binary cache.                                         |
-| [`cypress cache prune`](./command-line#cypress-cache-prune)   | Deletes every cached binary except the version currently in use.                     |
-| [`cypress cache clear`](./command-line#cypress-cache-clear)   | Deletes all cached Cypress binaries.                                                 |
+| Command                                                     | Description                                                                         |
+| ----------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| [`cypress cache list`](./command-line#cypress-cache-list)   | Lists the cached Cypress versions. Add `--size` to also report each version's size. |
+| [`cypress cache path`](./command-line#cypress-cache-path)   | Prints the path to the Cypress binary cache.                                        |
+| [`cypress cache prune`](./command-line#cypress-cache-prune) | Deletes every cached binary except the version currently in use.                    |
+| [`cypress cache clear`](./command-line#cypress-cache-clear) | Deletes all cached Cypress binaries.                                                |
 
 ### Run binary
 
