@@ -130,6 +130,20 @@ your team already uses:
 - `.tsx`
 - `.coffee`
 
+Cypress also supports `ES2015` out of the box. You can use either
+`ES2015 modules` or `CommonJS modules`, which means you can `import` or
+`require` both **npm packages** and **local relative modules** to share code
+across specs.
+
+:::info
+
+<strong>Example Recipe</strong>
+
+Check out our recipe using
+[ES2015 and CommonJS modules](/app/references/recipes#Fundamentals).
+
+:::
+
 #### How Cypress finds your specs
 
 Cypress doesn't treat every file in your test folder as a spec. It only loads
@@ -166,20 +180,6 @@ Two other options refine that set:
 
 In short: `specPattern` is the master list, `excludeSpecPattern` subtracts from
 it, and `--spec` picks which of the remaining specs to run this time.
-
-:::
-
-Cypress also supports `ES2015` out of the box. You can use either
-`ES2015 modules` or `CommonJS modules`, which means you can `import` or
-`require` both **npm packages** and **local relative modules** to share code
-across specs.
-
-:::info
-
-<strong>Example Recipe</strong>
-
-Check out our recipe using
-[ES2015 and CommonJS modules](/app/references/recipes#Fundamentals).
 
 :::
 
