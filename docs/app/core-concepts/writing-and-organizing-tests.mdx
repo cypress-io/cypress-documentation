@@ -126,7 +126,7 @@ whose defaults are:
 - **E2E:** `cypress/e2e/**/*.cy.{js,jsx,ts,tsx}`
 - **Component:** `**/*.cy.{js,jsx,ts,tsx}`
 
-So a file named `cypress/e2e/login.js` is **not** picked up by default&mdash;it
+So a file named `cypress/e2e/login.js` is **not** picked up by default. It
 needs to be named `cypress/e2e/login.cy.js`. If your test isn't showing up,
 check that the filename matches `specPattern`. You can override `specPattern`
 in your [Cypress configuration](/app/references/configuration#e2e) to use a
@@ -417,7 +417,7 @@ test.
 
 Needing a low code approach to create tests? Use
 [Cypress Studio](/app/guides/cypress-studio) to record your browser
-interactions. With [Cypress Cloud](/cloud/get-started/introduction), you also get **Studio AI**—AI-powered assertion recommendations as you record.
+interactions. With [Cypress Cloud](/cloud/get-started/introduction), you also get **Studio AI**, AI-powered assertion recommendations as you record.
 
 :::
 
@@ -615,7 +615,7 @@ The behavior of running tests in a clean browser context is described as
 `testIsolation`.
 
 Test isolation is **enabled by default** (`testIsolation: true`) and applies
-only to end-to-end testing&mdash;it is not a configurable option for component
+only to end-to-end testing. It is not a configurable option for component
 testing. It is a global configuration and can be overridden for end-to-end
 testing at the `describe` level with the
 [`testIsolation`](/app/references/configuration#e2e) option.
@@ -933,7 +933,7 @@ behavior.
 
 #### Spec files
 
-Cypress watches your entire project root for spec files&mdash;not just the
+Cypress watches your entire project root for spec files, not just the
 `cypress/e2e/` and `cypress/support/` directories. Any file that matches your
 [`specPattern`](/app/references/configuration#e2e), wherever it lives in the
 project, is detected. When a change is made, the active spec file, the support
@@ -960,7 +960,7 @@ the following:
 
 If you're developing using a modern JS-based web application stack then you've
 likely got support for some form of hot module replacement which is responsible
-for watching your application code&mdash;HTML, CSS, JS, etc.&mdash;and
+for watching your application code (HTML, CSS, JS, etc.) and
 transparently reloading your application in response to changes.
 
 ### Configuration
