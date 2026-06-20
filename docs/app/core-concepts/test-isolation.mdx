@@ -77,7 +77,9 @@ Second, Cypress runs each test in a clean browser context so that the
 application under test behaves consistently every time it runs. To do this,
 Cypress resets the browser context by:
 
-- navigating to `about:blank` to clear the current page and DOM
+- navigating to `about:blank` to clear the current page and DOM (end-to-end
+  testing)
+- unmounting the rendered component to clear the DOM (component testing)
 - clearing [cookies](/api/cypress-api/cookies) in all domains
 - clearing
   [`localStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)
