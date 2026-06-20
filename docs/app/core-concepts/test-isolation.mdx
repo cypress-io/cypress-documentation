@@ -20,9 +20,9 @@ to prevent flaky, order-dependent tests.
 ##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
 
 - Why test isolation makes your tests reliable, deterministic, and easy to debug
-- How Cypress ensures test isolation
+- How test isolation works under the hood
 - How to configure test isolation in end-to-end and component testing
-- The trade-offs of enabling or disabling test isolation
+- The trade-offs of disabling test isolation, and how to do it safely
 
 :::
 
@@ -33,7 +33,7 @@ always be able to be run independently from one another **and still pass**.
 
 :::
 
-## Why does test isolation matter?
+## Why test isolation matters
 
 A test is only valuable if you can trust its result. The fastest way to lose
 that trust is to let one test leak state into the next: a cookie left behind, a
@@ -57,7 +57,7 @@ clean, known state, Cypress gives you tests that are:
   description of a behavior, because it includes everything required to reach
   the state it verifies.
 
-## How does Cypress ensure test isolation?
+## How test isolation works
 
 Cypress delivers this clean starting point in two layers, applied _in between_
 each test so the operation of one test cannot affect another.
@@ -91,17 +91,21 @@ Cypress resets the browser context by:
 This browser-context behavior is what the `testIsolation` configuration
 controls.
 
-Test isolation is a global configuration set with the
-[`testIsolation`](/app/references/configuration#e2e) option. For end-to-end
-testing, you can override it at the suite (`describe`) level, and only there.
-Overriding `testIsolation` on an individual test (`it`) is not supported.
+## Configuring test isolation
 
-## Test Isolation in End-to-End Testing
+Test isolation is controlled by the
+[`testIsolation`](/app/references/configuration#e2e) configuration option, which
+accepts a boolean value of `true` or `false` and defaults to `true`.
 
-Cypress supports enabling or disabling test isolation in end-to-end testing to
-describe if a suite of tests should run in a clean browser context or not.
+In end-to-end testing, you can set it globally in your Cypress configuration and
+override it for a suite at the `describe` level, and only there. Overriding
+`testIsolation` on an individual test (`it`) is not supported.
 
-### Test Isolation Enabled
+In component testing, test isolation is always on and cannot be configured. See
+[Test isolation in component testing](#Test-isolation-in-component-testing)
+below.
+
+## Writing isolated tests
 
 Test isolation is enabled by default and is the recommended setting. Because each
 test starts in a fresh browser context, write each test so it establishes
@@ -124,77 +128,14 @@ your tests isolated and reliable:
   something an earlier test did, it is not truly isolated. See
   [Having Tests Rely On The State Of Previous Tests](/app/core-concepts/best-practices#Having-Tests-Rely-On-The-State-Of-Previous-Tests).
 
-### Test Isolation Disabled
+## Keeping state without disabling isolation
 
-Setting `testIsolation: false` turns off exactly one thing: the browser-context
-reset between tests. When it is disabled, Cypress no longer:
-
-- clears [cookies](/api/cypress-api/cookies) in all domains
-- clears
-  [`localStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)
-  in all origins
-- clears
-  [`sessionStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage)
-  in all origins
-- navigates to `about:blank` between tests, so the application under test,
-  including its current page and DOM, stays loaded going into the next test
-
-As a result, this browser-level state carries over from one test to the next
-within that suite.
-
-There is one nuance to the page reset: it is decided by the _next_ test. If a
-test with isolation off is followed by a test that has isolation on, Cypress
-will still navigate to `about:blank` first so the isolated test starts clean.
-The page only persists when the following test also has isolation off.
-
-Additionally, the [`cy.session()`](/api/commands/session) command will still
-clear the browser context (cookies and storage) when it establishes a session,
-but it will no longer clear the current page as part of that process.
-
-Disabling test isolation trades away the guarantees above in exchange for
-sharing state between tests, so reserve it for suites where that trade-off is
-worth it. See [Test Isolation Trade-offs](#Test-Isolation-Trade-offs) below.
-
-### Quick Comparison
-
-| testIsolation | beforeEach test                                                                                                                                     | cy.session()                                                                                                                                        |
-| ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `true`        | - clears page by visiting `about:blank`<br/>- clears cookies in all domains<br/>- local storage in all domains<br/>- session storage in all domains | - clears page by visiting `about:blank`<br/>- clears cookies in all domains<br/>- local storage in all domains<br/>- session storage in all domains |
-| `false`       | does not alter the current browser context                                                                                                          | <br/>- clears cookies in all domains<br/>- local storage in all domains<br/>- session storage in all domains                                        |
-
-## Test Isolation in Component Testing
-
-Cypress does not support configuring the test isolation behavior in component
-testing. It is always on, which guarantees every component test renders into a
-clean context and verifies your component's behavior without interference from a
-previous test.
-
-The mechanism that provides this clean context differs by testing type. In
-end-to-end testing, Cypress always navigates to `about:blank` between every test
-to reset the page. In component testing, there is no page to navigate, so
-Cypress always unmounts the component instead. In both cases the goal is the
-same: each test starts from a clean slate and runs in isolation.
-
-When running component tests, Cypress always resets the browser context _before_
-each test by:
-
-- unmounting the rendered component under test
-- clearing [cookies](/api/cypress-api/cookies) in all domains
-- clearing
-  [`localStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)
-  in all domains
-- clearing
-  [`sessionStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage)
-  in all domains
-
-## Preserving Cookies and Storage Across Tests
-
-Because Cypress clears all cookies, localStorage, and sessionStorage before each
-test when test isolation is enabled, any state your application writes to the
-browser is gone by the next test. The goal is to keep the state you need without
-giving up the isolation that keeps your tests independent. There are three
-approaches, listed from the one that best preserves isolation to the one that
-gives it up.
+Because Cypress clears all cookies, `localStorage`, and `sessionStorage` before
+each test when test isolation is enabled, any state your application writes to
+the browser is gone by the next test. The following approaches let you keep the
+state you need while preserving the isolation that keeps your tests independent.
+If you instead need tests to share state with one another, see
+[Disabling test isolation](#Disabling-test-isolation).
 
 ### Re-set a known cookie in `beforeEach`
 
@@ -242,12 +183,44 @@ beforeEach(() => {
 were present when the session was first created, so server-set auth cookies are
 available in every test without a full login round-trip.
 
-### Disable test isolation for a suite
+## Disabling test isolation
 
-As a last resort, you can turn off test isolation for a specific `describe` block
-by setting `testIsolation: false`. State set in a `before` hook then persists
-across all tests in that suite. This gives up the per-test guarantees, so prefer
-the two approaches above when they fit:
+If a suite genuinely needs to share state between tests, you can disable test
+isolation for end-to-end testing by setting `testIsolation: false`, either
+globally or at the `describe` level.
+
+### What changes when you disable it
+
+Setting `testIsolation: false` turns off exactly one thing: the browser-context
+reset between tests. When it is disabled, Cypress no longer:
+
+- clears [cookies](/api/cypress-api/cookies) in all domains
+- clears
+  [`localStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)
+  in all origins
+- clears
+  [`sessionStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage)
+  in all origins
+- navigates to `about:blank` between tests, so the application under test,
+  including its current page and DOM, stays loaded going into the next test
+
+As a result, this browser-level state carries over from one test to the next
+within that suite.
+
+There is one nuance to the page reset: it is decided by the _next_ test. If a
+test with isolation off is followed by a test that has isolation on, Cypress
+will still navigate to `about:blank` first so the isolated test starts clean.
+The page only persists when the following test also has isolation off.
+
+Additionally, the [`cy.session()`](/api/commands/session) command will still
+clear the browser context (cookies and storage) when it establishes a session,
+but it will no longer clear the current page as part of that process.
+
+### Example
+
+Turn off test isolation for a specific `describe` block by setting
+`testIsolation: false`. State set in a `before` hook then persists across all
+tests in that suite:
 
 ```javascript
 describe('Marketing pages', { testIsolation: false }, () => {
@@ -267,15 +240,7 @@ describe('Marketing pages', { testIsolation: false }, () => {
 })
 ```
 
-:::caution
-
-Disabling test isolation means tests may affect each other's state. Verify that
-each test still passes when run in isolation (using `.only()`) before relying on
-this approach.
-
-:::
-
-## Test Isolation Trade-offs
+### Trade-offs and using it safely
 
 The upside of disabling test isolation is that tests in a suite can build on each
 other. You can log in once in the first test and have later tests start already
@@ -301,10 +266,26 @@ If you choose to disable it, use it deliberately and safely:
   previous test, the exact problem test isolation is designed to prevent.
 - Narrow the scope: apply `testIsolation: false` to the specific `describe`
   block that needs it rather than globally.
-- If you only need cookies or storage to persist (not the page), consider
-  whether [`cy.session()`](/api/commands/session) or setting state in a
-  `beforeEach` would give you the same speedup while keeping tests independent.
-  See [Preserving Cookies and Storage Across Tests](#Preserving-Cookies-and-Storage-Across-Tests).
+- If you only need cookies or storage to persist (not the page), prefer the
+  approaches in
+  [Keeping state without disabling isolation](#Keeping-state-without-disabling-isolation),
+  which give you the same speedup while keeping tests independent.
+
+## Test isolation in component testing
+
+Test isolation is always enabled in component testing and cannot be turned off or
+configured. As described in [How test isolation works](#How-test-isolation-works),
+Cypress isolates each component test by unmounting the rendered component and
+clearing cookies, `localStorage`, and `sessionStorage` before every test. This
+guarantees every component test renders into a clean context and verifies your
+component's behavior without interference from a previous test.
+
+## Quick reference
+
+| testIsolation | beforeEach test                                                                                                                                     | cy.session()                                                                                                                                        |
+| ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `true`        | - clears page by visiting `about:blank`<br/>- clears cookies in all domains<br/>- local storage in all domains<br/>- session storage in all domains | - clears page by visiting `about:blank`<br/>- clears cookies in all domains<br/>- local storage in all domains<br/>- session storage in all domains |
+| `false`       | does not alter the current browser context                                                                                                          | <br/>- clears cookies in all domains<br/>- local storage in all domains<br/>- session storage in all domains                                        |
 
 ## Frequently Asked Questions
 
