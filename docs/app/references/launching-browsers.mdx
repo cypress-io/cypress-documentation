@@ -643,14 +643,6 @@ download shelf. This is what makes downloads testable end-to-end: a native
 file-picker dialog would block an unattended run, so Cypress routes downloads to a
 known folder where you can assert on them directly from disk.
 
-How Cypress configures automatic downloads depends on the browser family:
-
-| Browser family           | Mechanism                                                                                                                                                 |
-| ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Chrome / Edge / Electron | The [Chrome DevTools Protocol](https://chromedevtools.github.io/devtools-protocol/) `Page.setDownloadBehavior` command, pointed at the `downloadsFolder`. |
-| Firefox                  | The `browser.download.*` preferences (e.g. `browser.download.dir` and `browser.download.folderList`) set on the browser profile.                          |
-| WebKit (Experimental)    | [Playwright](https://playwright.dev/) download events, which save the downloaded file to the `downloadsFolder`.                                           |
-
 ### Asserting on a downloaded file
 
 Because downloads are saved to a known folder, you can read a file back and
