@@ -353,9 +353,26 @@ rely on these being available past 60 days.
 
 ## Installing behind a firewall or mirror
 
-The next four sections all address the same root problem: the machine running
-`npm install` can't download from `https://download.cypress.io` directly. Pick the approach that matches your constraint: a known download URL,
-a full mirror, a custom URL layout, or a private certificate authority.
+These sections all address the same root problem: the machine running
+`npm install` can't download from `https://download.cypress.io` directly. The
+simplest fix is to allowlist the URLs Cypress needs. If that isn't possible, host
+the binary yourself and point Cypress at it with a known download URL, a full
+mirror, a custom URL layout, or a private certificate authority.
+
+### Allowlist URLs for installation
+
+If your VPN, firewall, or proxy only permits traffic to approved hosts, add the
+following to your allowlist so the binary can be downloaded during `npm install`:
+
+| URL                          | Purpose                                                      |
+| ---------------------------- | ----------------------------------------------------------- |
+| `https://download.cypress.io`| Resolves the correct binary for your version and platform   |
+| `https://cdn.cypress.io`     | Serves the actual binary `.zip` (download requests redirect here, and pre-release binaries are hosted here) |
+| `https://registry.npmjs.org` | Installs the `cypress` npm package (or your configured npm registry) |
+
+If you also run tests against Cypress Cloud, you'll need to allow additional
+URLs. See the full list of
+[subdomains to allow on a restrictive VPN](/cloud/faq#Im-working-with-a-restrictive-VPN-Which-subdomains-do-I-have-to-allow-on-my-VPN-for-Cypress-Cloud-to-work-properly).
 
 ### Download URLs
 
