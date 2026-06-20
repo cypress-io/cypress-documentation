@@ -117,10 +117,12 @@ Additionally, if you are storing sensitive variables in your
 
 ### Spec files
 
-Spec files are where your tests live. By default they're located in
-`cypress/e2e`, but you can [configure](/app/references/configuration#e2e) a
-different directory. To make adoption easy, Cypress lets you write specs in
-whichever flavor of JavaScript your team already uses:
+Spec files are where your tests live. For end-to-end testing they're located in
+`cypress/e2e` by default, while component testing specs typically live next to
+the components they test anywhere in your project. Either way, you can
+[configure](/app/references/configuration#e2e) a different location. To make
+adoption easy, Cypress lets you write specs in whichever flavor of JavaScript
+your team already uses:
 
 - `.js`
 - `.jsx`
