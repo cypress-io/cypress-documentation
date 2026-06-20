@@ -143,9 +143,33 @@ This convention lets you keep helper files and specs side by side without
 Cypress trying to run your helpers as tests. The trade-off is that a file named
 `cypress/e2e/login.js` is **not** discovered, while `cypress/e2e/login.cy.js`
 is. If a test you've written isn't showing up, the filename almost always
-doesn't match `specPattern` — that's the first thing to check. You can override
-`specPattern` in your [configuration](/app/references/configuration#e2e) if you
-prefer a different naming convention.
+doesn't match `specPattern`, so that's the first thing to check. You can
+override `specPattern` in your
+[configuration](/app/references/configuration#e2e) if you prefer a different
+naming convention.
+
+:::info
+
+<strong>How `specPattern`, `--spec`, and `excludeSpecPattern` work together</strong>
+
+`specPattern` defines the full set of files Cypress _considers_ to be specs.
+Two other options refine that set:
+
+- [`excludeSpecPattern`](/app/references/configuration#e2e) removes files from
+  the set. Any file matching `specPattern` but also matching
+  `excludeSpecPattern` is ignored, which is handy for hiding sample specs or a
+  group of work-in-progress files. By default this is
+  `*.hot-update.js` (plus `**/__snapshots__/*` and `**/__image_snapshots__/*`
+  for component testing).
+- The [`--spec`](/app/references/command-line#cypress-run-spec-lt-spec-gt)
+  command line flag (and the `spec` Module API option) limits a single run to a
+  subset of specs. It can only narrow what already matches `specPattern`, never
+  add files outside it.
+
+In short: `specPattern` is the master list, `excludeSpecPattern` subtracts from
+it, and `--spec` picks which of the remaining specs to run this time.
+
+:::
 
 Cypress also supports `ES2015` out of the box. You can use either
 `ES2015 modules` or `CommonJS modules`, which means you can `import` or
@@ -167,8 +191,8 @@ within your `cypress/e2e` folder.
 
 ### Fixture Files
 
-Fixtures are external pieces of static data your tests can load on demand —
-think of them as the canned data your tests run against. Keeping this data in
+Fixtures are external pieces of static data your tests can load on demand.
+Think of them as the canned data your tests run against. Keeping this data in
 its own file (rather than inline in the test) makes specs easier to read and
 lets you reuse the same data across many tests. Fixture files live in
 `cypress/fixtures` by default, but can be
@@ -182,8 +206,8 @@ a live backend.
 
 ### Asset Files
 
-When a run produces artifacts — files your app downloaded, screenshots, or
-videos — Cypress saves them to dedicated folders so you can inspect what
+When a run produces artifacts (files your app downloaded, screenshots, or
+videos), Cypress saves them to dedicated folders so you can inspect what
 happened after the fact. Because these are regenerated on every run, you'll
 usually want to keep them out of source control. For example, using the default
 folder locations:
@@ -290,7 +314,7 @@ results, and easily shared or browsed through our web interface. To learn more a
 
 The support file is your hook into every spec. It runs **before** every single
 spec file, which makes it the natural home for setup and behavior you want
-available everywhere — without importing it into each spec yourself. That's why
+available everywhere, without importing it into each spec yourself. That's why
 it's the recommended place for
 [custom commands](/api/cypress-api/custom-commands) and global overrides.
 
@@ -335,7 +359,7 @@ using, you can configure your `supportFile` accordingly.
 
 Cypress automatically creates an example support file for each configured
 testing type, with several commented-out examples to copy from. By default
-Cypress includes the type-specific file — `cypress/support/e2e.{js,jsx,ts,tsx}`
+Cypress includes the type-specific file: `cypress/support/e2e.{js,jsx,ts,tsx}`
 for E2E and `cypress/support/component.{js,jsx,ts,tsx}` for Component Testing.
 
 You can point `supportFile` at a different file or turn it off completely using
@@ -383,8 +407,8 @@ the files in the following order:
 
 ### Plugins file
 
-Your tests run in the browser, but some things — touching the file system,
-talking to a database, controlling how specs are bundled — can only happen in
+Your tests run in the browser, but some things, like touching the file system,
+talking to a database, or controlling how specs are bundled, can only happen in
 Node. The plugins file is where that Node-side code lives. It executes before
 the project is loaded, before the browser launches, and during your test run,
 and your tests reach it through the [cy.task()](/api/commands/task) command.
@@ -413,7 +437,7 @@ DEBUG=cypress:cli,cypress:data-context:sources:FileDataSource,cypress:data-conte
 ## Writing tests
 
 Cypress is built on top of [Mocha](/app/references/bundled-libraries#Mocha)
-and [Chai](/app/references/bundled-libraries#Chai) — two libraries the
+and [Chai](/app/references/bundled-libraries#Chai), two libraries the
 JavaScript community has relied on for years. Building on them rather than
 inventing a new test language means the syntax is already familiar and
 battle-tested: Cypress supports both Chai's `BDD` and `TDD` assertion styles,
@@ -649,14 +673,14 @@ To learn more about this behavior and the trade-offs of disabling it, review our
 ### Test Configuration
 
 Sometimes a test or suite needs different settings than the rest of your
-project — a specific viewport, a particular browser, or a different retry count.
+project, such as a specific viewport, a particular browser, or a different retry count.
 Rather than changing global configuration, you can apply
 [test configuration](/app/references/configuration#Test-Configuration) locally
 by passing a configuration object as the second argument to the test or suite
 function.
 
 These values take effect only for the suite or tests where they're set, then
-revert to their previous defaults once those tests complete — so the override
+revert to their previous defaults once those tests complete, so the override
 stays scoped and doesn't leak into the rest of your run.
 
 You can also pass an `expose` object so plugins can declare public configuration
@@ -750,7 +774,7 @@ it('should redirect unauthenticated user to sign-in page', {
 
 Because tests are just JavaScript, you can generate them programmatically. This
 keeps your specs DRY when you need to run the same assertions across a list of
-inputs — change the data and the tests follow, with no copy-paste.
+inputs: change the data and the tests follow, with no copy-paste.
 
 ```javascript
 describe('if your app uses jQuery', () => {
@@ -819,7 +843,7 @@ file by clicking on it.
 A big part of why Cypress feels productive is the tight feedback loop. When you
 run with [cypress open](/app/references/command-line#cypress-open), Cypress
 watches the filesystem for changes to your spec files. Soon after you add or
-update a test, Cypress reloads it and re-runs every test in that spec file — so
+update a test, Cypress reloads it and re-runs every test in that spec file, so
 you can write tests as you build a feature and the UI always reflects your
 latest edits, with no manual re-run.
 
