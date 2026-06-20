@@ -265,14 +265,18 @@ authenticated and on the right page, without re-visiting or re-establishing stat
 each time. For long, linear flows this can be faster and less repetitive.
 
 The risk is that tests become order-dependent. Because state leaks forward, a
-test can quietly start relying on something a previous test did. That creates two
-real hazards:
+test can quietly start relying on something a previous test did. That creates
+three real hazards:
 
 1. A test may pass only because of the test before it. Run it on its own and it
    fails.
 2. A failure early in the suite can cascade, causing later tests to fail for
    reasons that have nothing to do with what they are actually testing, making
    the real problem harder to find.
+3. [Test retries](/app/guides/test-retries) become unreliable. A retry re-runs
+   only the failed test, not the tests that built up the state it depends on, so
+   an order-dependent test often cannot reproduce the conditions it needs and
+   will keep failing on retry even when the underlying issue is intermittent.
 
 If you choose to disable it, use it deliberately and safely:
 
