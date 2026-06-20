@@ -1,12 +1,19 @@
 ---
-title: 'Test Isolation'
-description: Learn how test isolation makes your tests reliable, deterministic, and easy to debug, and how to configure it in end-to-end and component testing.
+title: 'Test Isolation in Cypress'
+sidebar_label: 'Test Isolation'
+description: 'Learn what test isolation is in Cypress, how it resets browser state before every test to prevent flaky tests, and how to enable, disable, or configure it.'
 sidebar_position: 45
 ---
 
 <ProductHeading product="app" />
 
-# Test Isolation
+# Test Isolation in Cypress
+
+**Test isolation** is a Cypress feature that runs every test in a clean browser
+context — clearing the page, cookies, local storage, and session storage before
+each test — so each test starts from a known state and can pass independently of
+every other test. It is enabled by default and is one of the most effective ways
+to prevent flaky, order-dependent tests.
 
 :::info
 
@@ -26,7 +33,7 @@ always be able to be run independently from one another **and still pass**.
 
 :::
 
-## Why Test Isolation Matters
+## Why does test isolation matter?
 
 A test is only valuable if you can trust its result. The fastest way to lose
 that trust is to let one test leak state into the next: a cookie left behind, a
@@ -55,7 +62,7 @@ process that actually works, and we built Cypress to guide developers toward
 writing independent tests from the start. Test isolation is the mechanism that
 makes that guidance the default.
 
-## How Cypress Ensures Test Isolation
+## How does Cypress ensure test isolation?
 
 Cypress delivers this clean starting point in two layers, applied _before_ each
 test so the operation of one test cannot affect another.
@@ -258,3 +265,44 @@ ensure they continue to run independently of one another. The best way to
 confirm this is to add a `.only()` to a test and verify it can still pass
 without the test before it. If it cannot, that test is no longer reliable on its
 own — the exact problem test isolation is designed to prevent.
+
+## Frequently Asked Questions
+
+### What is test isolation in Cypress?
+
+Test isolation is the practice of running each test in a clean browser context.
+Before every test, Cypress clears the page, cookies, local storage, and session
+storage so the test starts from a known state and does not inherit anything from
+the test that ran before it.
+
+### Does test isolation prevent flaky tests?
+
+It prevents one of the most common causes of flaky tests: state leaking from one
+test into the next. By guaranteeing a clean starting point, test isolation makes
+tests deterministic so they pass for the same reason every time, in any order.
+
+### Is test isolation enabled by default?
+
+Yes. The [`testIsolation`](/app/references/configuration#e2e) option defaults to
+`true` for end-to-end testing, and it is always on for component testing.
+
+### Can I disable test isolation?
+
+Yes, for end-to-end testing. Set `testIsolation: false` either globally in your
+Cypress configuration or at the suite (`describe`) level. Disabling it lets state
+persist across tests, so do this only when you understand the trade-offs.
+
+### Can I set test isolation on an individual test?
+
+No. The `testIsolation` option can only be overridden at the suite (`describe`)
+level. Setting it on an individual test (`it`) is not allowed and cannot be done.
+
+### What values does the `testIsolation` option accept?
+
+Only the boolean values `true` or `false`. It defaults to `true`, and any other
+value is invalid and will be rejected by Cypress.
+
+### Is test isolation available in component testing?
+
+Test isolation is always enabled in component testing and cannot be configured.
+Every component test renders into a clean browser context.
