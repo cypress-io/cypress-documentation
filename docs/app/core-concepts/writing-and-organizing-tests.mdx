@@ -618,8 +618,10 @@ debugging challenging.
 The behavior of running tests in a clean browser context is described as
 `testIsolation`.
 
-The test isolation is a global configuration and can be overridden for
-end-to-end testing at the `describe` level with the
+Test isolation is **enabled by default** (`testIsolation: true`) and applies
+only to end-to-end testing&mdash;it is not a configurable option for component
+testing. It is a global configuration and can be overridden for end-to-end
+testing at the `describe` level with the
 [`testIsolation`](/app/references/configuration#e2e) option.
 
 To learn more about this behavior and the trade-offs of disabling it, review our
