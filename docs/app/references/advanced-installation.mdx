@@ -167,9 +167,9 @@ they will only be used if the system properties are being resolved to not use a 
 ## Install binary
 
 `CYPRESS_INSTALL_BINARY` controls **which** binary the `postinstall` step
-fetches. This is the most common reason to visit this page: the version in npm
-isn't the one you want, or the public download server isn't reachable from where
-you're installing.
+fetches. People most often need this when the version published to npm isn't the
+one they want, or when the public download server isn't reachable from where
+they're installing.
 
 To override what is installed, you set `CYPRESS_INSTALL_BINARY` alongside the
 `npm install` command.
