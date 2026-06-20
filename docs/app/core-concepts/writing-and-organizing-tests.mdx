@@ -118,8 +118,6 @@ directory. Test files may be written as:
 - `.tsx`
 - `.coffee`
 
-:::info
-
 By default, Cypress only discovers spec files that include the `.cy.`
 infix in their filename. This is determined by the
 [`specPattern`](/app/references/configuration#e2e) configuration option,
@@ -133,8 +131,6 @@ needs to be named `cypress/e2e/login.cy.js`. If your test isn't showing up,
 check that the filename matches `specPattern`. You can override `specPattern`
 in your [Cypress configuration](/app/references/configuration#e2e) to use a
 different convention.
-
-:::
 
 Cypress also supports `ES2015` out of the box. You can use either
 `ES2015 modules` or `CommonJS modules`. This means you can `import` or `require`
