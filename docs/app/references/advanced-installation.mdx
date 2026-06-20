@@ -176,9 +176,12 @@ To override what is installed, you set `CYPRESS_INSTALL_BINARY` alongside the
 
 **This is helpful if you want to:**
 
-- Install a version different than the default npm package.
+- Override the installed binary version for a single install, without editing the
+  `cypress` version committed in your `package.json`. This is useful for quickly
+  testing a different version locally or in CI without changing committed files.
   ```shell
-  CYPRESS_INSTALL_BINARY=15.16.0 npm install cypress@15.16.1
+  # Downloads this binary version for this install only; package.json is untouched
+  CYPRESS_INSTALL_BINARY=15.16.0 npm install
   ```
 - Specify an external URL (to bypass a corporate firewall).
   ```shell
