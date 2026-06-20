@@ -194,9 +194,10 @@ To override what is installed, you set `CYPRESS_INSTALL_BINARY` alongside the
 
 In all cases, the fact that the binary was installed from a custom location _is
 not saved in your `package.json` file_. Every repeated installation needs to use
-the same environment variable to install the same binary. (This is exactly the
-problem [npm config / package.json](#Setting-variables-via-npm-config-or-packagejson)
-solves: commit the setting so it's applied on every install.)
+the same environment variable to install the same binary. If you'd rather not
+repeat the variable each time, set it in
+[npm config or `package.json`](#Setting-variables-via-npm-config-or-packagejson)
+so it's applied automatically on every install.
 
 ### Skipping installation
 
