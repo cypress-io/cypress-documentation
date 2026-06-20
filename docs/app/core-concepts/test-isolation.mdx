@@ -122,12 +122,46 @@ caching expensive setup such as logging in.
 
 ### Test Isolation Disabled
 
-When test isolation is disabled, Cypress will not alter the browser context
-before the test starts. The page does not clear between tests and cookies, local
-storage and session storage will be available across tests in that suite.
-Additionally, the [`cy.session()`](/api/commands/session) command will only
-clear the current browser context when establishing the browser session - the
-current page is not cleared.
+Setting `testIsolation: false` turns off exactly one thing: the browser-context
+reset between tests. When it is disabled, Cypress no longer:
+
+- clears [cookies](/api/cypress-api/cookies) in all domains
+- clears
+  [`localStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)
+  in all origins
+- clears
+  [`sessionStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage)
+  in all origins
+- navigates to `about:blank` between tests, so the application under test,
+  including its current page and DOM, stays loaded going into the next test
+
+As a result, this browser-level state carries over from one test to the next
+within that suite.
+
+There is one nuance to the page reset: it is decided by the _next_ test. If a
+test with isolation off is followed by a test that has isolation on, Cypress
+will still navigate to `about:blank` first so the isolated test starts clean.
+The page only persists when the following test also has isolation off.
+
+Disabling isolation does **not**, however, make tests share Cypress's in-test
+runtime. Everything Cypress resets to give each test a clean slate still happens
+before every test, regardless of the `testIsolation` setting:
+
+- [aliases](/api/commands/as) are reset
+- [spies](/api/commands/spy), [stubs](/api/commands/stub), and their agents are
+  restored
+- [clock mocks](/api/commands/clock) are restored
+- [intercept](/api/commands/intercept) routes are removed and server state is
+  reset
+- the [viewport](/api/commands/viewport) is reset to your configured default
+- extra tabs and windows opened during the previous test are closed
+
+So you will not inherit a frozen clock or a leftover intercept; only
+browser-level state (cookies, storage, and the loaded page) persists.
+
+Additionally, the [`cy.session()`](/api/commands/session) command will still
+clear the browser context (cookies and storage) when it establishes a session,
+but it will no longer clear the current page as part of that process.
 
 Disabling test isolation trades away the guarantees above in exchange for
 sharing state between tests, so reserve it for suites where that trade-off is
@@ -255,18 +289,34 @@ this approach.
 
 ## Test Isolation Trade-offs
 
-Disabling test isolation may improve the overall performance of end-to-end tests
-by skipping the per-test reset, but that speed comes at the cost of the very
-guarantees that make tests trustworthy. With isolation off, state can "leak"
-between tests, making later tests dependent on the results of earlier ones and
-potentially causing misleading failures. A test may fail not because of a real
-bug, but because an earlier test left the application in an unexpected state.
+The upside of disabling test isolation is that tests in a suite can build on each
+other. You can log in once in the first test and have later tests start already
+authenticated and on the right page, without re-visiting or re-establishing state
+each time. For long, linear flows this can be faster and less repetitive.
 
-If you choose to disable it, be extremely mindful of how tests are written and
-ensure they continue to run independently of one another. The best way to
-confirm this is to add a `.only()` to a test and verify it can still pass
-without the test before it. If it cannot, that test is no longer reliable on its
-own, the exact problem test isolation is designed to prevent.
+The risk is that tests become order-dependent. Because state leaks forward, a
+test can quietly start relying on something a previous test did. That creates two
+real hazards:
+
+1. A test may pass only because of the test before it. Run it on its own and it
+   fails.
+2. A failure early in the suite can cascade, causing later tests to fail for
+   reasons that have nothing to do with what they are actually testing, making
+   the real problem harder to find.
+
+If you choose to disable it, use it deliberately and safely:
+
+- Treat a `testIsolation: false` `describe` block as one connected sequence, and
+  order the tests intentionally.
+- Verify each test still passes on its own. Temporarily isolate it with
+  `.only()` and run it; if it fails alone, it has a hidden dependency on a
+  previous test, the exact problem test isolation is designed to prevent.
+- Narrow the scope: apply `testIsolation: false` to the specific `describe`
+  block that needs it rather than globally.
+- If you only need cookies or storage to persist (not the page), consider
+  whether [`cy.session()`](/api/commands/session) or setting state in a
+  `beforeEach` would give you the same speedup while keeping tests independent.
+  See [Preserving Cookies and Storage Across Tests](#Preserving-Cookies-and-Storage-Across-Tests).
 
 ## Frequently Asked Questions
 
