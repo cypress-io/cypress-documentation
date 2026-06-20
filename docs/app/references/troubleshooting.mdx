@@ -1,6 +1,6 @@
 ---
 title: 'Troubleshooting Cypress: Fix Common Errors & Issues'
-description: 'Troubleshoot common Cypress errors — failed installs, missing binary, browsers that will not launch, read ECONNRESET, and slow tests — with step-by-step fixes.'
+description: 'Troubleshoot common Cypress errors like failed installs, missing binary, browsers that will not launch, read ECONNRESET, and slow tests, with step-by-step fixes.'
 sidebar_label: Troubleshooting
 ---
 
@@ -19,7 +19,7 @@ sidebar_label: Troubleshooting
 :::
 
 Something not working the way you expect? Most Cypress problems fall into a
-handful of categories — a failed install or missing binary, a browser that
+handful of categories: a failed install or missing binary, a browser that
 won't launch, a dropped connection, or tests that run slowly or crash. This
 guide explains _why_ each happens and walks you through the fastest fix.
 
@@ -40,7 +40,7 @@ Jump straight to the section that matches what you're seeing:
 ## Start here
 
 Before digging into a specific fix, these first steps resolve a large share of
-issues — try them first.
+issues, so try them first.
 
 ### Update Cypress
 
@@ -81,7 +81,7 @@ reproduces the problem:
 
 ## Common fixes
 
-These are the fixes that resolve the most frequently reported Cypress issues —
+These are the fixes that resolve the most frequently reported Cypress issues:
 installation and binary problems, blocked extensions and URLs, corrupted app
 data, and capturing the logs you need to diagnose anything else.
 
@@ -103,7 +103,7 @@ exact folder Cypress is using instead of guessing at a default like
 overridden with the
 [`CYPRESS_CACHE_FOLDER`](/app/references/advanced-installation#Binary-cache)
 environment variable, so printing it is the only reliable way to know where
-your binaries actually live — especially in CI, where the cache folder is often
+your binaries actually live, especially in CI, where the cache folder is often
 relocated for caching between runs.
 
 ```shell
@@ -113,7 +113,7 @@ cypress cache path
 #### See what's installed
 
 Use `cypress cache list` when you suspect a stale or duplicate install is
-causing trouble — for example, a mismatch between the version in your
+causing trouble. For example, a mismatch between the version in your
 `package.json` and the version Cypress actually runs, or a CI cache that never
 seems to update. It prints a table of every cached version alongside the last
 time each binary was used, which makes it easy to spot old versions left behind
@@ -137,8 +137,9 @@ cypress cache list --size
 If `cypress cache list` reveals several old versions piling up, use
 `cypress cache prune` to delete every cached version _except_ the one currently
 installed. This is the safe way to reclaim disk space without forcing a full
-re-download of the binary you're actively using — ideal for trimming a bloated
-CI cache or freeing up space locally while keeping your current install intact.
+re-download of the binary you're actively using. It is ideal for trimming a
+bloated CI cache or freeing up space locally while keeping your current install
+intact.
 
 ```shell
 cypress cache prune
@@ -175,7 +176,7 @@ Common situations where it helps to verify this variable:
 - **CI caches the wrong folder.** Many CI configurations cache
   `CYPRESS_CACHE_FOLDER` to avoid re-downloading the binary on every run. If the
   variable is set during `cypress install` but missing (or different) when the
-  tests run — or vice versa — Cypress installs to one folder and looks in
+  tests run (or vice versa), Cypress installs to one folder and looks in
   another, and reports the binary as missing.
 - **The binary "disappears" between steps.** If different jobs, containers, or
   shells set `CYPRESS_CACHE_FOLDER` inconsistently, each one resolves a
@@ -240,7 +241,7 @@ an issue you have by clearing this app data.
 ### Print DEBUG logs
 
 When the on-screen error isn't enough to explain a failure, debug logs show you
-exactly what Cypress is doing under the hood — how it parsed your arguments,
+exactly what Cypress is doing under the hood: how it parsed your arguments,
 which browsers it found, and where a request or process stalled. They're the
 single most useful thing to capture before opening an issue or asking for help.
 
@@ -517,8 +518,8 @@ specific released version of Chromium for every platform.
 
 ## Diagnose specific issues
 
-The sections below cover specific, frequently-reported problems — a browser
-Cypress can't find, and the `read ECONNRESET` error — with the cause and the
+The sections below cover specific, frequently-reported problems, a browser
+Cypress can't find and the `read ECONNRESET` error, with the cause and the
 steps to fix each one.
 
 ### Launching browsers
@@ -687,7 +688,7 @@ at TCP.onStreamRead (node:internal/stream_base_commons:217:20) {
 
 …the connection between the browser and Cypress's local proxy is being
 **forcibly reset by software outside of Cypress**. This is an OS/network-layer
-reset, not a Cypress defect — Cypress cannot keep a connection alive that a
+reset, not a Cypress defect. Cypress cannot keep a connection alive that a
 third-party product tears down.
 
 Typical signals that point to this class of problem:
