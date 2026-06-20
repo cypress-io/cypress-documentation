@@ -336,13 +336,6 @@ clearing cookies, `localStorage`, and `sessionStorage` before every test. This
 guarantees every component test renders into a clean context and verifies your
 component's behavior without interference from a previous test.
 
-## Quick reference
-
-| testIsolation | beforeEach test                                                                                                                                     | cy.session()                                                                                                                                        |
-| ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `true`        | - clears page by visiting `about:blank`<br/>- clears cookies in all domains<br/>- local storage in all domains<br/>- session storage in all domains | - clears page by visiting `about:blank`<br/>- clears cookies in all domains<br/>- local storage in all domains<br/>- session storage in all domains |
-| `false`       | does not alter the current browser context                                                                                                          | <br/>- clears cookies in all domains<br/>- local storage in all domains<br/>- session storage in all domains                                        |
-
 ## Frequently Asked Questions
 
 ### What is test isolation in Cypress?
