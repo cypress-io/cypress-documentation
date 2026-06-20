@@ -20,7 +20,7 @@ sidebar_position: 30
 
 :::
 
-## Folder structure
+## Project structure
 
 Cypress favors **convention over configuration**. When you add a new project,
 Cypress scaffolds a suggested folder structure so you can start writing tests
@@ -85,7 +85,7 @@ Both:
 </TabItem>
 </Tabs>
 
-### Configuring Folder Structure
+### Configuring file locations
 
 These locations are conventions, not requirements. You can point Cypress at
 different folders for your tests, fixtures, and support files, which is useful
@@ -102,14 +102,14 @@ list of options.
 <strong>What files should I add to my '.gitignore file' ?</strong>
 
 Cypress may create
-[asset files](#Asset-Files) in a
-[`downloadsFolder`](#Download-Files), a
-[`screenshotsFolder`](#Screenshot-Files) or a
-[`videosFolder`](#Video-Files) to store any downloads,
+[asset files](#Generated-assets) in a
+[`downloadsFolder`](#Downloads), a
+[`screenshotsFolder`](#Screenshots) or a
+[`videosFolder`](#Videos) to store any downloads,
 screenshots or videos created during the testing of your application.
 Because these are generated artifacts rather than source, many users add these
 folders to their
-[.gitignore](https://git-scm.com/docs/gitignore) file (see [below](#Asset-Files) for an example).
+[.gitignore](https://git-scm.com/docs/gitignore) file (see [below](#Generated-assets) for an example).
 Additionally, if you are storing sensitive variables in your
 [Cypress configuration](/app/references/configuration) these should also be ignored when you check into source control.
 
@@ -186,127 +186,6 @@ Check out our recipe using
 To see an example of every command used in Cypress, open the
 [`2-advanced-examples` folder](https://github.com/cypress-io/cypress-example-kitchensink/tree/master/cypress/e2e/2-advanced-examples)
 within your `cypress/e2e` folder.
-
-### Fixture Files
-
-Fixtures are external pieces of static data your tests can load on demand.
-Think of them as the canned data your tests run against. Keeping this data in
-its own file (rather than inline in the test) makes specs easier to read and
-lets you reuse the same data across many tests. Fixture files live in
-`cypress/fixtures` by default, but can be
-[configured](/app/references/configuration#Folders--Files) to another
-directory.
-
-You typically load them with the [`cy.fixture()`](/api/commands/fixture)
-command, most often when you're stubbing
-[Network Requests](/app/guides/network-requests) so your tests don't depend on
-a live backend.
-
-### Asset Files
-
-When a run produces artifacts (files your app downloaded, screenshots, or
-videos), Cypress saves them to dedicated folders so you can inspect what
-happened after the fact. Because these are regenerated on every run, you'll
-usually want to keep them out of source control. For example, using the default
-folder locations:
-
-```text
-# Cypress asset folders to exclude from source control
-cypress/downloads/
-cypress/screenshots/
-cypress/videos/
-```
-
-#### Download Files
-
-Any files downloaded while testing an application's file download feature will
-be stored in the [`downloadsFolder`](/app/references/configuration#Downloads)
-which is set to `cypress/downloads` by default.
-
-```text
-/cypress
-  /downloads
-    - records.csv
-```
-
-#### Screenshot Files
-
-If screenshots were taken via the [cy.screenshot()](/api/commands/screenshot)
-command or automatically when a test fails, the screenshots are stored in the
-[`screenshotsFolder`](/app/references/configuration#Screenshots) which is set
-to `cypress/screenshots` by default.
-
-```text
-/cypress
-  /screenshots
-    /app.cy.js
-      - Navigates to main menu (failures).png
-```
-
-To learn more about screenshots and settings available, see
-[Screenshots and Videos](/app/guides/screenshots-and-videos#Screenshots)
-
-#### Video Files
-
-Any videos recorded of the run are stored in the
-[`videosFolder`](/app/references/configuration#Videos) which is set to
-`cypress/videos` by default.
-
-```text
-/cypress
-  /videos
-    - app.cy.js.mp4
-```
-
-#### Asset File Paths
-
-Generated screenshots and videos are saved inside their respective folders
-(`cypress/screenshots`, `cypress/videos`). The paths of the generated files will
-be stripped of any common ancestor paths shared between all spec files found by
-the `specPattern` option (or via the `--spec` command line option or `spec`
-module API option, if specified)
-
-**Example 1:**
-
-- Spec file found
-  - `cypress/e2e/path/to/file/one.cy.js`
-- Common ancestor paths (calculated at runtime)
-  - `cypress/e2e/path/to/file`
-- Generated screenshot file
-  - `cypress/screenshots/one.cy.js/your-screenshot.png`
-- Generated video file
-  - `cypress/videos/one.cy.js.mp4`
-
-**Example 2:**
-
-- Spec files found
-  - `cypress/e2e/path/to/file/one.cy.js`
-  - `cypress/e2e/path/to/two.cy.js`
-- Common ancestor paths (calculated at runtime)
-  - `cypress/e2e/path/to/`
-- Generated screenshot files
-  - `cypress/screenshots/file/one.cy.js/your-screenshot.png`
-  - `cypress/screenshots/two.cy.js/your-screenshot.png`
-- Generated video files
-  - `cypress/videos/file/one.cy.js.mp4`
-  - `cypress/videos/two.cy.js.mp4`
-
-#### Assets in Cypress Cloud
-
-<DocsImage
-  src="/img/cloud/features/test-replay/test-replay-ui.png"
-  alt="View of Test Replay"
-/>
-
-Managing these artifacts by hand gets tedious as a suite grows. Instead of
-administering assets yourself, you can
-[save them to the cloud with Cypress Cloud](/cloud/features/recorded-runs#Run-Details).
-
-Replay the test as it executed during the recorded run with full debug capability using [<Logo src="/img/cloud/features/test-replay/replay-icon.svg" alt="Replay Icon" /> Cypress Test Replay](/cloud/features/test-replay).
-
-Screenshots and videos are stored permanently, attached to their respective test
-results, and easily shared or browsed through our web interface. To learn more about videos and settings available, see
-[Screenshots and Videos](/app/guides/screenshots-and-videos#Screenshots).
 
 ### Support file
 
@@ -403,6 +282,21 @@ the files in the following order:
 1. `support/component.js` (your support file)
 2. `components/Button/Button.cy.js` (your spec file)
 
+### Fixtures
+
+Fixtures are external pieces of static data your tests can load on demand.
+Think of them as the canned data your tests run against. Keeping this data in
+its own file (rather than inline in the test) makes specs easier to read and
+lets you reuse the same data across many tests. Fixture files live in
+`cypress/fixtures` by default, but can be
+[configured](/app/references/configuration#Folders--Files) to another
+directory.
+
+You typically load them with the [`cy.fixture()`](/api/commands/fixture)
+command, most often when you're stubbing
+[Network Requests](/app/guides/network-requests) so your tests don't depend on
+a live backend.
+
 ### Plugins file
 
 Your tests run in the browser, but some things, like touching the file system,
@@ -420,7 +314,113 @@ other tasks that need access to the operating system. Read our
 The initial imported plugins file can be
 [configured to another file](/app/references/configuration#Folders--Files).
 
-### Troubleshooting
+### Generated assets
+
+When a run produces artifacts (files your app downloaded, screenshots, or
+videos), Cypress saves them to dedicated folders so you can inspect what
+happened after the fact. Because these are regenerated on every run, you'll
+usually want to keep them out of source control. For example, using the default
+folder locations:
+
+```text
+# Cypress asset folders to exclude from source control
+cypress/downloads/
+cypress/screenshots/
+cypress/videos/
+```
+
+#### Downloads
+
+Any files downloaded while testing an application's file download feature will
+be stored in the [`downloadsFolder`](/app/references/configuration#Downloads)
+which is set to `cypress/downloads` by default.
+
+```text
+/cypress
+  /downloads
+    - records.csv
+```
+
+#### Screenshots
+
+If screenshots were taken via the [cy.screenshot()](/api/commands/screenshot)
+command or automatically when a test fails, the screenshots are stored in the
+[`screenshotsFolder`](/app/references/configuration#Screenshots) which is set
+to `cypress/screenshots` by default.
+
+```text
+/cypress
+  /screenshots
+    /app.cy.js
+      - Navigates to main menu (failures).png
+```
+
+To learn more about screenshots and settings available, see
+[Screenshots and Videos](/app/guides/screenshots-and-videos#Screenshots)
+
+#### Videos
+
+Any videos recorded of the run are stored in the
+[`videosFolder`](/app/references/configuration#Videos) which is set to
+`cypress/videos` by default.
+
+```text
+/cypress
+  /videos
+    - app.cy.js.mp4
+```
+
+#### How asset file paths are generated
+
+Generated screenshots and videos are saved inside their respective folders
+(`cypress/screenshots`, `cypress/videos`). The paths of the generated files will
+be stripped of any common ancestor paths shared between all spec files found by
+the `specPattern` option (or via the `--spec` command line option or `spec`
+module API option, if specified)
+
+**Example 1:**
+
+- Spec file found
+  - `cypress/e2e/path/to/file/one.cy.js`
+- Common ancestor paths (calculated at runtime)
+  - `cypress/e2e/path/to/file`
+- Generated screenshot file
+  - `cypress/screenshots/one.cy.js/your-screenshot.png`
+- Generated video file
+  - `cypress/videos/one.cy.js.mp4`
+
+**Example 2:**
+
+- Spec files found
+  - `cypress/e2e/path/to/file/one.cy.js`
+  - `cypress/e2e/path/to/two.cy.js`
+- Common ancestor paths (calculated at runtime)
+  - `cypress/e2e/path/to/`
+- Generated screenshot files
+  - `cypress/screenshots/file/one.cy.js/your-screenshot.png`
+  - `cypress/screenshots/two.cy.js/your-screenshot.png`
+- Generated video files
+  - `cypress/videos/file/one.cy.js.mp4`
+  - `cypress/videos/two.cy.js.mp4`
+
+#### Storing assets in Cypress Cloud
+
+<DocsImage
+  src="/img/cloud/features/test-replay/test-replay-ui.png"
+  alt="View of Test Replay"
+/>
+
+Managing these artifacts by hand gets tedious as a suite grows. Instead of
+administering assets yourself, you can
+[save them to the cloud with Cypress Cloud](/cloud/features/recorded-runs#Run-Details).
+
+Replay the test as it executed during the recorded run with full debug capability using [<Logo src="/img/cloud/features/test-replay/replay-icon.svg" alt="Replay Icon" /> Cypress Test Replay](/cloud/features/test-replay).
+
+Screenshots and videos are stored permanently, attached to their respective test
+results, and easily shared or browsed through our web interface. To learn more about videos and settings available, see
+[Screenshots and Videos](/app/guides/screenshots-and-videos#Screenshots).
+
+### Troubleshooting spec discovery
 
 If Cypress does not find the spec files for some reason, you can troubleshoot
 its logic by opening or running Cypress with
@@ -514,6 +514,31 @@ describe('Unit test our math functions', () => {
 // -- End: Our Cypress Tests --
 ```
 
+### Assertion Styles
+
+Cypress supports both BDD (`expect`/`should`) and TDD (`assert`) style plain
+assertions, so you can write assertions in whichever style your team prefers.
+[Read more about plain assertions.](/app/references/assertions)
+
+```javascript
+it('can add numbers', () => {
+  expect(add(1, 2)).to.eq(3)
+})
+
+it('can subtract numbers', () => {
+  assert.equal(subtract(5, 12), -7, 'these numbers are equal')
+})
+```
+
+The [.should()](/api/commands/should) command and its alias
+[.and()](/api/commands/and) can also be used to more easily chain assertions off
+of Cypress commands.
+[Read more about assertions.](/app/core-concepts/introduction-to-cypress#Assertions)
+
+```js
+cy.wrap(add(1, 2)).should('equal', 3)
+```
+
 ### Hooks
 
 Hooks (also borrowed from
@@ -560,7 +585,7 @@ describe('Hooks', () => {
 })
 ```
 
-#### The order of hook and test execution is as follows:
+#### Hook and test execution order
 
 - All `before()` hooks run (once)
 - Any `beforeEach()` hooks run
@@ -575,7 +600,7 @@ describe('Hooks', () => {
 
 :::
 
-### Excluding and Including Tests
+### Focusing and skipping tests
 
 While developing, you rarely want to run the entire suite on every save.
 Cypress lets you focus on or skip specific tests so your feedback loop stays
@@ -768,7 +793,7 @@ it('should redirect unauthenticated user to sign-in page', {
 })
 ```
 
-### Dynamically Generate Tests
+### Dynamically generating tests
 
 Because tests are just JavaScript, you can generate them programmatically. This
 keeps your specs DRY when you need to run the same assertions across a list of
@@ -799,32 +824,7 @@ The code above will produce a suite with 4 tests:
   > triggers event: 'mouseleave'
 ```
 
-### Assertion Styles
-
-Cypress supports both BDD (`expect`/`should`) and TDD (`assert`) style plain
-assertions, so you can write assertions in whichever style your team prefers.
-[Read more about plain assertions.](/app/references/assertions)
-
-```javascript
-it('can add numbers', () => {
-  expect(add(1, 2)).to.eq(3)
-})
-
-it('can subtract numbers', () => {
-  assert.equal(subtract(5, 12), -7, 'these numbers are equal')
-})
-```
-
-The [.should()](/api/commands/should) command and its alias
-[.and()](/api/commands/and) can also be used to more easily chain assertions off
-of Cypress commands.
-[Read more about assertions.](/app/core-concepts/introduction-to-cypress#Assertions)
-
-```js
-cy.wrap(add(1, 2)).should('equal', 3)
-```
-
-## Running tests
+## Running and watching tests
 
 You can run a test by clicking on the spec filename. For example the
 [Cypress RealWorld App](https://github.com/cypress-io/cypress-example-realworld)
@@ -848,7 +848,7 @@ latest edits, with no manual re-run.
 :::info
 
 Remember to use
-[`.only`](/app/core-concepts/writing-and-organizing-tests#Excluding-and-Including-Tests)
+[`.only`](/app/core-concepts/writing-and-organizing-tests#Focusing-and-skipping-tests)
 to limit which tests are run: this can be especially useful when you've got a
 lot of tests in a single spec file that you're constantly editing; consider also
 splitting your tests into smaller files each dealing with logically related
@@ -931,7 +931,7 @@ you'll have to configure these explicitly if you want to use them.
 
 - [Cypress webpack Preprocessor](https://github.com/cypress-io/cypress/tree/develop/npm/webpack-preprocessor)
 
-## Test statuses
+## Understanding test results
 
 Once a spec finishes, knowing how to read its results is what turns a run into
 actionable feedback. Every test ends in one of four statuses: **passed**,
