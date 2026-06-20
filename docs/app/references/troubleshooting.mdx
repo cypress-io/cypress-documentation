@@ -57,6 +57,9 @@ Check these support resources for Cypress App issues:
 - Search this documentation (search is in the top right) 😉
 - Search [Stack Overflow](https://stackoverflow.com/questions/tagged/cypress)
   for relevant answers
+- Ask an AI assistant (such as ChatGPT, Claude, GitHub Copilot, or Cursor) and
+  point it at our docs so it answers from official Cypress content instead of
+  guessing. See [Ask an AI assistant](#Ask-an-AI-assistant) below.
 - If you still haven't found a solution,
   [open an issue](https://github.com/cypress-io/cypress/issues/new/choose) _with
   a reproducible example_.
@@ -64,6 +67,38 @@ Check these support resources for Cypress App issues:
 If your organization signs up for one of our
 [paid plans](https://www.cypress.io/pricing/), you can get dedicated email
 support, which gives you one-on-one help from our team.
+
+#### Ask an AI assistant
+
+AI coding assistants are great at answering Cypress questions, but only if they
+read the right source material. This documentation is published in
+machine-readable formats so an assistant can ground its answers in our official
+content rather than relying on (potentially outdated) memory.
+
+To get accurate help, point your assistant at the docs and give it context:
+
+- **Share the docs manifest.** Give the assistant
+  [`https://docs.cypress.io/llms.txt`](https://docs.cypress.io/llms.txt). This
+  is an [llms.txt](https://llmstxt.org/) manifest that describes the site and
+  links to full Markdown and JSON exports of every page, so the assistant knows
+  where to read.
+- **Link the exact page.** If your question maps to a specific guide, give the
+  assistant that page's URL. Every page is also available as plain Markdown
+  under `https://docs.cypress.io/llm/markdown/`, which is easier for an
+  assistant to parse than the HTML version.
+- **Ask it to cite the docs.** Request that it link the specific pages it used
+  so you can verify the answer against the source.
+- **Give it your context.** Include your Cypress version, the full error text,
+  your config, and a minimal reproducible example so the assistant can give a
+  precise answer instead of a generic one.
+
+:::caution
+
+Always verify AI-generated answers against the linked documentation. Assistants
+can confidently invent commands or options that don't exist, so confirm any
+suggested API or configuration on the page it cites.
+
+:::
 
 ### Isolate the problem
 
