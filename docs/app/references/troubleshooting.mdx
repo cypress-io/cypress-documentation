@@ -534,7 +534,7 @@ the end of the path:
 cypress open --browser C:/User/Application/browser.exe:chrome
 ```
 
-#### Cypress failed to make a connection to the Chrome DevTools Protocol
+### Cypress failed to make a connection to the Chrome DevTools Protocol
 
 Cypress controls Chrome, Chromium, and Edge through the
 [Chrome DevTools Protocol](https://chromedevtools.github.io/devtools-protocol/)
@@ -550,7 +550,7 @@ after retrying for 50 seconds.
 This means the browser launched but Cypress could not reach it on the remote
 debugging port.
 
-##### Check for a remote debugging policy
+#### Check for a remote debugging policy
 
 The most common cause in managed/enterprise environments is remote debugging
 being disabled by an enterprise or group policy. Cypress cannot drive the browser
@@ -583,7 +583,7 @@ connection failures.
 See [Chrome policy](/app/references/launching-browsers#Chrome-policy) and
 [Edge policy](/app/references/launching-browsers#Edge-policy) for more.
 
-##### Other things to check
+#### Other things to check
 
 If the policy is not the issue:
 
