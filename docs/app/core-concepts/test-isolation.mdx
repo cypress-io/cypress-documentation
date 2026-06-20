@@ -147,22 +147,6 @@ test with isolation off is followed by a test that has isolation on, Cypress
 will still navigate to `about:blank` first so the isolated test starts clean.
 The page only persists when the following test also has isolation off.
 
-Disabling isolation does **not**, however, make tests share Cypress's in-test
-runtime. Everything Cypress resets to give each test a clean slate still happens
-before every test, regardless of the `testIsolation` setting:
-
-- [aliases](/api/commands/as) are reset
-- [spies](/api/commands/spy), [stubs](/api/commands/stub), and their agents are
-  restored
-- [clock mocks](/api/commands/clock) are restored
-- [intercept](/api/commands/intercept) routes are removed and server state is
-  reset
-- the [viewport](/api/commands/viewport) is reset to your configured default
-- extra tabs and windows opened during the previous test are closed
-
-So you will not inherit a frozen clock or a leftover intercept; only
-browser-level state (cookies, storage, and the loaded page) persists.
-
 Additionally, the [`cy.session()`](/api/commands/session) command will still
 clear the browser context (cookies and storage) when it establishes a session,
 but it will no longer clear the current page as part of that process.
