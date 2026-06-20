@@ -450,18 +450,16 @@ URL for the platform and version being installed.
 
 **The following replacements are supported:**
 
-- `${endpoint}` is replaced with the full base URL including the version path
-  segment: `<base>/desktop/<version>` (e.g.
-  `https://download.cypress.io/desktop/15.16.0`).
-  If `CYPRESS_DOWNLOAD_MIRROR` is set, its value is used as `<base>` instead of
-  `https://download.cypress.io` (note that `/desktop/<version>` is still
-  appended).
-- `${platform}` is replaced with the platform the installation is running on
-  (e.g. `win32`, `linux`, `darwin`)
-- `${arch}` is replaced with the architecture the installation is running on
-  (e.g. `x64`, `arm64`). On Windows ARM64, this is always `x64`.
-- `${version}` is replaced with the version number
-  that's being installed (e.g. `15.16.0`)
+| Placeholder    | Replaced with                                  | Example                                       |
+| -------------- | ---------------------------------------------- | --------------------------------------------- |
+| `${endpoint}`  | The full base URL, including the version path  | `https://download.cypress.io/desktop/15.16.0` |
+| `${platform}`  | The platform being installed on                | `win32`, `linux`, `darwin`                    |
+| `${arch}`      | The architecture being installed on            | `x64`, `arm64` (always `x64` on Windows ARM64)|
+| `${version}`   | The version number being installed             | `15.16.0`                                     |
+
+`${endpoint}` expands to `<base>/desktop/<version>`. If `CYPRESS_DOWNLOAD_MIRROR`
+is set, its value is used as `<base>` instead of `https://download.cypress.io`,
+but `/desktop/<version>` is still appended.
 
 **Examples:**
 
