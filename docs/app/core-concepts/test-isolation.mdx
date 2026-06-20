@@ -55,6 +55,10 @@ end-to-end testing at the `describe` level with the
 overridden at the suite (`describe`) level — overriding `testIsolation` at the
 test (`it`) level is not allowed and cannot be done.
 
+The `testIsolation` option only accepts a boolean value of either `true` or
+`false`. It defaults to `true`. Any other value is invalid and will be rejected
+by Cypress.
+
 ## Test Isolation in End-to-End Testing
 
 Cypress supports enabling or disabling test isolation in end-to-end testing to

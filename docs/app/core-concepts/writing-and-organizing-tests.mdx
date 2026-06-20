@@ -603,7 +603,8 @@ The behavior of running tests in a clean browser context is described as
 
 The test isolation is a global configuration and can be overridden for
 end-to-end testing at the `describe` level with the
-[`testIsolation`](/app/references/configuration#e2e) option.
+[`testIsolation`](/app/references/configuration#e2e) option. This option only
+accepts a boolean value of either `true` or `false` and defaults to `true`.
 
 To learn more about this behavior and the trade-offs of disabling it, review our
 [Test Isolation guide](/app/core-concepts/test-isolation).
