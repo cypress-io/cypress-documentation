@@ -1202,7 +1202,13 @@ rendering as expected. For more information, check out the
 ### <Icon name="angle-right" /> Can I test a chrome extension? How do I load my chrome extension?
 
 Yes. You can test your extensions by
-[loading them when we launch the browser](/api/node-events/browser-launch-api).
+[loading them when we launch the browser](/api/node-events/browser-launch-api#Add-browser-extensions).
+
+Note that standard, Chrome-branded browsers version 137 and above can no longer
+load extensions this way, because Chrome removed the `--load-extension` flag. To
+keep loading extensions, we recommend using
+[Chrome for Testing](/app/references/launching-browsers#Chrome-Browsers) or
+Chromium instead.
 
 ### <Icon name="angle-right" /> Can I test my Electron app?
 
