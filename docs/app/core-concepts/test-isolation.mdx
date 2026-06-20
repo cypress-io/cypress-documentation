@@ -270,6 +270,11 @@ If you choose to disable it, use it deliberately and safely:
   approaches in
   [Keeping state without disabling isolation](#Keeping-state-without-disabling-isolation),
   which give you the same speedup while keeping tests independent.
+- Limit the cost of cascading failures with
+  [Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation) in
+  Cypress Cloud. It cancels a run after a chosen number of failures, so when an
+  early failure starts a cascade you stop wasting CI time on the tests that fail
+  as a consequence rather than on their own merits.
 
 ## Test isolation in component testing
 
