@@ -643,33 +643,6 @@ download shelf. This is what makes downloads testable end-to-end: a native
 file-picker dialog would block an unattended run, so Cypress routes downloads to a
 known folder where you can assert on them directly from disk.
 
-### Asserting on a downloaded file
-
-Because downloads are saved to a known folder, you can read a file back and
-assert on its contents with [`cy.readFile()`](/api/commands/readfile):
-
-```js
-it('downloads a CSV file', () => {
-  cy.visit('/')
-  cy.get('[data-testid="download-csv"]').click()
-
-  // cypress/downloads/records.csv
-  cy.readFile('cypress/downloads/records.csv').should(
-    'contain',
-    'id,name,email'
-  )
-})
-```
-
-:::info
-
-For a complete example, see the
-[recipe showing how to download and validate CSV and Excel files](/app/references/recipes#Testing-the-DOM).
-If you need Cypress to recognize a download with an uncommon mime type, see
-[Support unique file download mime types](/api/node-events/browser-launch-api#Support-unique-file-download-mime-types).
-
-:::
-
 ## Troubleshooting
 
 [Having issues launching installed browsers? Read more about troubleshooting browser launching](/app/references/troubleshooting#Launching-browsers)
