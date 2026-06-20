@@ -519,6 +519,24 @@ terminal.
 **Tip:** use the [cypress info](/app/references/command-line#cypress-info)
 command to see all locally detected browsers.
 
+:::info
+
+<strong>WebKit (experimental) is not auto-detected</strong>
+
+The per-platform tables below cover the Chromium- and Firefox-family browsers
+that Cypress discovers by scanning your system. The experimental `webkit`
+browser is the exception: it is not detected from a bundle identifier, `PATH`
+binary, or executable path. Instead, it is provided by the
+[`playwright-webkit`](https://www.npmjs.com/package/playwright-webkit) npm
+package that you install into your project, and it becomes available once you
+opt in to `experimentalWebKitSupport`. So if `webkit` is missing from
+`cypress info`, check that the package is installed and the experiment is
+enabled rather than looking for a system install. See
+[WebKit (Experimental)](/app/references/launching-browsers#WebKit-Experimental)
+for setup details.
+
+:::
+
 #### Mac
 
 On Mac, Cypress attempts to find installed browsers by their bundle identifier.
