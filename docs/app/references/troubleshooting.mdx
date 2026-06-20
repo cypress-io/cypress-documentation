@@ -63,13 +63,73 @@ problem:
 
 Below are some steps you can take to troubleshoot common issues with Cypress.
 
-### Clear Cypress cache
+### Manage the Cypress cache
 
-If you're having an issue during installation of Cypress, try removing the
-contents of the Cypress cache.
+Cypress downloads its binary to a global cache folder, separate from the npm
+package, so the same binary can be reused across every project and install on
+your machine. When you're troubleshooting installation or startup problems, the
+[`cypress cache`](/app/references/command-line#cypress-cache-command) commands
+let you inspect and clean up that cache. Each subcommand is useful in a
+different situation.
+
+#### Find the cache location
+
+When an error message references the binary path, or you need to manually
+inspect, back up, or delete cached files, use `cypress cache path` to print the
+exact folder Cypress is using instead of guessing at a default like
+`~/.cache/Cypress`. The location varies by operating system and can be
+overridden with the
+[`CYPRESS_CACHE_FOLDER`](/app/references/advanced-installation#Binary-cache)
+environment variable, so printing it is the only reliable way to know where
+your binaries actually live — especially in CI, where the cache folder is often
+relocated for caching between runs.
+
+```shell
+cypress cache path
+```
+
+#### See what's installed
+
+Use `cypress cache list` when you suspect a stale or duplicate install is
+causing trouble — for example, a mismatch between the version in your
+`package.json` and the version Cypress actually runs, or a CI cache that never
+seems to update. It prints a table of every cached version alongside the last
+time each binary was used, which makes it easy to spot old versions left behind
+by previous installs.
+
+```shell
+cypress cache list
+```
+
+Add the `--size` flag to also calculate how much disk space each version is
+using. This is helpful when the cache has grown large enough to fill up disk
+space on a developer machine or CI runner. Note that calculating size can be
+slow.
+
+```shell
+cypress cache list --size
+```
+
+#### Remove unused versions
+
+If `cypress cache list` reveals several old versions piling up, use
+`cypress cache prune` to delete every cached version _except_ the one currently
+installed. This is the safe way to reclaim disk space without forcing a full
+re-download of the binary you're actively using — ideal for trimming a bloated
+CI cache or freeing up space locally while keeping your current install intact.
+
+```shell
+cypress cache prune
+```
+
+#### Clear the entire cache
+
+If you're having an issue during installation of Cypress, or you suspect a
+corrupted or partially-downloaded binary, use `cypress cache clear` to remove
+the contents of the Cypress cache entirely.
 
 This will clear out all installed versions of Cypress that may be cached on your
-machine.
+machine, giving you a clean slate to reinstall from.
 
 <CypressCacheClearCommands />
 
