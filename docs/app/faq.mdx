@@ -1447,6 +1447,48 @@ Catching these issues at lint time (in-editor or pre-commit) is far cheaper than
 debugging a failing CI run — especially for flaky-test patterns like hard-coded
 waits that fail intermittently under load.
 
+## Test Isolation
+
+### <Icon name="angle-right" /> What is test isolation in Cypress?
+
+Test isolation is the practice of running each test in a clean browser context.
+Before every test, Cypress clears the page, cookies, local storage, and session
+storage so the test starts from a known state and does not inherit anything from
+the test that ran before it. Learn more in the
+[Test Isolation guide](/app/core-concepts/test-isolation).
+
+### <Icon name="angle-right" /> Does test isolation prevent flaky tests?
+
+It prevents one of the most common causes of flaky tests: state leaking from one
+test into the next. By guaranteeing a clean starting point, test isolation makes
+tests deterministic so they pass for the same reason every time, in any order.
+
+### <Icon name="angle-right" /> Is test isolation enabled by default?
+
+Yes. The [`testIsolation`](/app/references/configuration#e2e) option defaults to
+`true` for end-to-end testing, and it is always on for component testing.
+
+### <Icon name="angle-right" /> Can I disable test isolation?
+
+Yes, for end-to-end testing. Set `testIsolation: false` either globally in your
+Cypress configuration or at the suite (`describe`) level. Disabling it lets state
+persist across tests, so do this only when you understand the trade-offs.
+
+### <Icon name="angle-right" /> Can I set test isolation on an individual test?
+
+No. The `testIsolation` option can only be overridden at the suite (`describe`)
+level. Setting it on an individual test (`it`) is not allowed and cannot be done.
+
+### <Icon name="angle-right" /> What values does the `testIsolation` option accept?
+
+Only the boolean values `true` or `false`. It defaults to `true`, and any other
+value is invalid and will be rejected by Cypress.
+
+### <Icon name="angle-right" /> Is test isolation available in component testing?
+
+Test isolation is always enabled in component testing and cannot be configured.
+Every component test renders into a clean browser context.
+
 ## Component Testing
 
 ### <Icon name="angle-right" /> What is component testing?
