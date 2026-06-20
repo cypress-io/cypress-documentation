@@ -1,6 +1,6 @@
 ---
-title: 'Launching Browsers in Cypress'
-description: 'Learn how to launch browsers in Cypress, customize the list of available browsers, and troubleshoot browser launching issues.'
+title: 'Launching Browsers in Cypress: Chrome, Firefox, Edge & WebKit'
+description: 'Learn how Cypress launches and controls Chrome, Firefox, Edge, Electron, and WebKit. Choose and customize browsers, run headless, and fix launch issues.'
 sidebar_label: 'Launching Browsers'
 ---
 
@@ -12,32 +12,42 @@ sidebar_label: 'Launching Browsers'
 
 ##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
 
-- How to launch browsers in Cypress
-- How to customize the list of available browsers
+- Why Cypress launches and controls its own browser
+- Which browsers Cypress supports and how to choose between them
+- How the Cypress browser environment differs from a regular browser, and why
+- How headless mode and file downloads work
 - How to troubleshoot browser launching issues
-- Differences between Cypress browsers and regular browser environments
 
 :::
 
-When you run tests in Cypress, we launch a browser for you. This enables us to:
+When you run tests, Cypress launches and controls a real browser for you. Rather
+than attaching to a browser you already have open, Cypress starts its own
+instance so it can guarantee two things that make automated testing trustworthy:
 
-1. Create a clean, pristine testing environment.
-2. Access the privileged browser APIs for automation.
+1. **A clean, pristine testing environment.** Every run starts from a known,
+   isolated state, with no leftover cookies, history, cached logins, or
+   third-party extensions from your day-to-day browsing leaking into your tests.
+   This is what keeps runs reproducible and prevents "works on my machine"
+   flakiness.
+2. **Access to privileged browser automation APIs.** Driving the browser
+   directly is how Cypress reads and controls your application reliably, takes
+   screenshots and video, stubs the network, and more.
 
-Cypress currently supports Firefox and Chrome-family browsers (including Edge
-and Chrome for Testing). To run tests optimally across these browsers in CI, check out the
-strategies demonstrated in the
-[cross browser Testing](/app/guides/cross-browser-testing) guide.
+Cypress currently supports Chrome-family browsers (including Edge and Chrome for Testing)
+and Firefox, plus experimental WebKit. Testing across the browsers your users
+actually use gives you cross-browser confidence. For strategies to do this
+efficiently in CI, see the
+[Cross Browser Testing](/app/guides/cross-browser-testing) guide.
 
-## Browsers
+## Supported browsers
 
-When Cypress is initially launched, you can choose to test your application
-using number of browsers including:
+When Cypress is launched, you can choose to test your application using a number
+of browsers, including:
 
+- [Chrome for Testing](https://github.com/GoogleChromeLabs/chrome-for-testing/)
 - [Chrome](https://www.google.com/chrome/)
 - [Chrome Beta](https://www.google.com/chrome/beta/)
 - [Chrome Canary](https://www.google.com/chrome/canary/)
-- [Chrome for Testing](https://github.com/GoogleChromeLabs/chrome-for-testing/)
 - [Chromium](https://www.chromium.org/Home)
 - [Edge](https://www.microsoft.com/edge)
 - [Edge Beta](https://www.microsoftedgeinsider.com/download)
@@ -49,8 +59,11 @@ using number of browsers including:
 - [Firefox Nightly](https://www.mozilla.org/firefox/nightly/)
 - [WebKit (Experimental)](#WebKit-Experimental)
 
-Cypress automatically detects available browsers on your OS. You can switch the
-browser by using the drop down near the top right corner:
+Cypress automatically detects the browsers installed on your OS so you don't have
+to configure paths by hand. In `cypress open`, switch browsers using the drop
+down near the top right corner; in `cypress run`, choose one with the
+[`--browser`](/app/references/command-line#cypress-run-browser-lt-browser-name-or-path-gt)
+flag.
 
 <DocsImage
   src="/img/app/launching-browsers/browser-list-dropdown.png"
@@ -70,7 +83,20 @@ cypress run --headed
 ### Browser versions supported
 
 Cypress officially supports the latest 3 major versions of Chrome, Firefox, and Edge.
-(For example, if the stable release of Chrome was 130, Cypress would officially support Chrome 128, 129, and 130.)
+(For example, if the stable release of Chrome was 150, Cypress would officially support Chrome 148, 149, and 150.)
+
+Sticking to recent versions matters because these browsers are evergreen and
+their automation interfaces evolve quickly, so supporting the latest versions
+lets Cypress rely on stable, modern automation APIs.
+
+:::info
+
+Regardless of the above, Cypress cannot launch **Firefox versions older than 135**.
+Cypress automates Firefox through
+[WebDriver BiDi](https://w3c.github.io/webdriver-bidi/), which is only available
+in Firefox 135 and above, so older versions will fail with an error.
+
+:::
 
 See each browser's official release schedule for more information.
 
@@ -81,7 +107,9 @@ See each browser's official release schedule for more information.
 ### Download specific Chrome version
 
 The Chrome browser is evergreen - meaning it will automatically update itself,
-sometimes causing a breaking change in your automated tests.
+sometimes causing a breaking change in your automated tests. To keep your test
+runs deterministic, you can pin a fixed browser version instead of letting it
+drift.
 You can use the information in [Download Chromium](https://on.cypress.io/chromium-downloads) to download a
 specific released version of Chrome for Testing or Chromium for every platform.
 
@@ -112,9 +140,7 @@ All Chrome\* flavored browsers are detected and supported by Cypress.
 
 You can launch Chrome like this:
 
-```shell
-cypress run --browser chrome
-```
+<CypressCommandTabs command="run --browser chrome" />
 
 To use this command in CI, you need to install the browser you want - or use one
 of our [docker images](/app/continuous-integration/overview#Cypress-Docker-Images).
@@ -124,27 +150,47 @@ Chrome headed, you can pass the `--headed` argument to `cypress run`.
 
 You can also launch Chromium:
 
-```shell
-cypress run --browser chromium
-```
+<CypressCommandTabs command="run --browser chromium" />
 
 Or Chrome Beta:
 
-```shell
-cypress run --browser chrome:beta
-```
+<CypressCommandTabs command="run --browser chrome:beta" />
 
 Or Chrome Canary:
 
-```shell
-cypress run --browser chrome:canary
-```
+<CypressCommandTabs command="run --browser chrome:canary" />
 
 Or Chrome for Testing:
 
-```shell
-cypress run --browser chrome-for-testing
-```
+<CypressCommandTabs command="run --browser chrome-for-testing" />
+
+:::tip
+
+<strong>Prefer Chrome for Testing for reliable, reproducible runs</strong>
+
+Where possible, we recommend running your tests in
+[Chrome for Testing](https://developer.chrome.com/blog/chrome-for-testing). It is
+a dedicated Chrome flavor that Google builds specifically for automation, and it
+has a few advantages over a standard, day-to-day Chrome install:
+
+- **No auto-update.** Regular Chrome is evergreen and silently updates itself,
+  which can change browser behavior between runs and cause tests that passed
+  yesterday to fail today. Chrome for Testing is pinned to a specific version and
+  never updates on its own, so your environment stays deterministic.
+- **Versioned, reproducible binaries.** A matching build is published for every
+  Chrome version and every major OS, so you can install the exact same browser
+  locally and in CI. See
+  [Download specific Chrome version](#Download-specific-Chrome-version).
+- **Built for automation, not browsing.** Because it is intended only for
+  testing, it is not subject to the enterprise/group
+  [policies](#Chrome-policy) often applied to branded Chrome (such as disabling
+  remote debugging), which removes a common cause of launch failures.
+- **Extension loading still works.** Standard Chrome 137 and above can no longer
+  load extensions via the
+  [Browser Launch API](/api/node-events/browser-launch-api#Add-browser-extensions),
+  but Chrome for Testing and Chromium still can.
+
+:::
 
 #### Chrome policy
 
@@ -153,7 +199,31 @@ If Chrome policy is set, ensure that
 is either undefined or set to `true`.
 If this is not the case, then Cypress will timeout, returning an `ECONNREFUSED` error, attempting to connect to the browser.
 Chrome policy is generally applied to a Chrome-branded browser only, not to Chromium or Chrome for Testing browsers.
-Check by browsing to **chrome://policy**.
+Check by browsing to **chrome://policy**. See
+[Cypress failed to make a connection to the Chrome DevTools Protocol](/app/references/troubleshooting#Cypress-failed-to-make-a-connection-to-the-Chrome-DevTools-Protocol)
+for more.
+
+#### Skipping Chrome preference reads/writes
+
+To set up a consistent testing environment, Cypress reads and writes Chrome
+preference files inside its [isolated profile](#Cypress-Profile) in the browser's
+user-data directory (the `Preferences`, `Secure Preferences`, and `Local State`
+files). This is how Cypress applies preference-based settings, for example,
+disabling password saving and autofill, configuring the
+[downloads behavior](#Downloading-files), and any preferences you set through the
+[`before:browser:launch`](/api/node-events/browser-launch-api#Change-browser-preferences)
+event.
+
+Some applications and environments **encrypt the user-data directory** (for
+example, certain enterprise security tooling). In that case, Cypress reading or
+writing the preference files can fail or corrupt the encrypted profile. To work
+around this, set the `IGNORE_CHROME_PREFERENCES` system environment variable,
+which tells Cypress to skip reading and writing Chrome preferences entirely:
+
+<CypressCommandTabs
+  env="IGNORE_CHROME_PREFERENCES=1"
+  command="run --browser chrome"
+/>
 
 ### Edge Browsers
 
@@ -161,27 +231,19 @@ Microsoft Edge-family (Chromium-based) browsers are supported by Cypress.
 
 You can launch Microsoft Edge like this:
 
-```shell
-cypress run --browser edge
-```
+<CypressCommandTabs command="run --browser edge" />
 
 Or Microsoft Edge Beta:
 
-```shell
-cypress run --browser edge:beta
-```
+<CypressCommandTabs command="run --browser edge:beta" />
 
 Or Microsoft Edge Canary:
 
-```shell
-cypress run --browser edge:canary
-```
+<CypressCommandTabs command="run --browser edge:canary" />
 
 Or Microsoft Edge Dev:
 
-```shell
-cypress run --browser edge:dev
-```
+<CypressCommandTabs command="run --browser edge:dev" />
 
 #### Edge policy
 
@@ -189,7 +251,9 @@ If Edge policy is set, ensure that
 [RemoteDebuggingAllowed](https://learn.microsoft.com/en-us/deployedge/microsoft-edge-browser-policies/remotedebuggingallowed)
 is either undefined or set to `true`.
 If this is not the case, then Cypress will timeout, returning an `ECONNREFUSED` error, attempting to connect to the browser.
-Check by browsing to **edge://policy**.
+Check by browsing to **edge://policy**. See
+[Cypress failed to make a connection to the Chrome DevTools Protocol](/app/references/troubleshooting#Cypress-failed-to-make-a-connection-to-the-Chrome-DevTools-Protocol)
+for more.
 
 ### Firefox Browsers
 
@@ -197,16 +261,15 @@ Firefox-family browsers are supported by Cypress.
 
 You can launch Firefox like this:
 
-```shell
-cypress run --browser firefox
-```
+<CypressCommandTabs command="run --browser firefox" />
 
-Or Firefox Developer/Nightly Edition:
+Or Firefox Developer Edition:
 
-```shell
-cypress run --browser firefox:dev
-cypress run --browser firefox:nightly
-```
+<CypressCommandTabs command="run --browser firefox:dev" />
+
+Or Firefox Nightly:
+
+<CypressCommandTabs command="run --browser firefox:nightly" />
 
 To use this command in CI, you need to install these other browsers - or use one
 of our [docker images](/app/continuous-integration/overview#Cypress-Docker-Images).
@@ -245,9 +308,10 @@ Download the Mozilla geckodriver from the
 ### WebKit (Experimental)
 
 Cypress has [experimental](/app/references/experiments) support for WebKit,
-Safari's browser engine. Testing your app with WebKit is representative of how
-your app would run in Safari. To opt-in to `experimentalWebKitSupport`, follow
-these steps:
+Safari's browser engine. Because Apple does not ship Safari's automation on every
+platform, testing against WebKit is the practical way to validate how your app
+behaves in Safari from Windows, Linux, or CI, without needing a Mac. To opt-in to
+`experimentalWebKitSupport`, follow these steps:
 
 1. Add `experimentalWebKitSupport: true` to your
    [configuration](/app/references/configuration) to enable the experiment.
@@ -259,9 +323,8 @@ these steps:
    ```
 4. Now, you should be able to use WebKit like any other browser. For example, to
    record with WebKit in CI:
-   ```shell
-   cypress run --browser webkit --record # ...
-   ```
+
+<CypressCommandTabs command="run --browser webkit --record" />
 
 We built this experiment on top of the Playwright WebKit browser as a
 stepping stone towards creating a better UX with Cypress-provided browsers
@@ -284,6 +347,7 @@ npx playwright install-deps webkit
 #### Known Issues with `experimentalWebKitSupport`
 
 - `cy.origin()` is not yet supported.
+- [Test Replay](/cloud/features/test-replay) is not supported.
 - `cy.intercept()`'s `forceNetworkError` option is disabled.
 - When using `experimentalSingleTabRunMode` with video recording in WebKit, only
   the video for the first spec is recorded.
@@ -299,15 +363,10 @@ npx playwright install-deps webkit
 
 ### Launching by a path
 
-You can launch any supported browser by specifying a path to the binary:
+If a browser isn't auto-detected, for example a portable install or a custom
+build, you can launch any supported browser by specifying a path to the binary:
 
-```shell
-cypress run --browser /usr/bin/chromium
-```
-
-```shell
-cypress open --browser /usr/bin/chromium
-```
+<CypressCommandTabs command="open --browser /usr/bin/chromium" />
 
 Cypress will automatically detect the type of browser supplied and launch it for
 you.
@@ -319,10 +378,9 @@ you.
 ### Customize available browsers
 
 Sometimes you might want to modify the list of browsers found before running
-tests.
-
-For example, your web application might _only_ be designed to work in a Chrome
-browser, and not inside the Electron browser.
+tests. This is useful when your application only targets certain browsers, or
+when you want to test in a Chromium-based browser that Cypress doesn't detect on
+its own.
 
 In the [setupNodeEvents](/api/node-events/configuration-api) function, you can
 filter the list of browsers passed inside the `config` object and return the
@@ -416,27 +474,12 @@ If you modify the list of browsers, you can see the
 [resolved configuration](/app/references/configuration#Resolved-Configuration)
 in the **Settings** tab.
 
-### Unsupported Browsers
-
-Some browsers such as Internet Explorer are not currently supported.
-
-## Browser Environment
+## Browser environment
 
 Cypress launches the browser in a way that's different from a regular browser
-environment. But it launches in a way that we believe makes testing _more
-reliable_ and _accessible_.
-
-### Launching Browsers
-
-When Cypress goes to launch your browser it will give you an opportunity to
-modify the arguments used to launch the browser.
-
-This enables you to do things like:
-
-- Load your own extension
-- Enable or disable experimental features
-
-[This part of the API is documented here.](/api/node-events/browser-launch-api)
+environment. These differences are deliberate: each one removes a source of
+noise or unpredictability so that your tests are _more reliable_, _more
+reproducible_, and _easier to debug_.
 
 ### Cypress Profile
 
@@ -445,44 +488,50 @@ profile. This means things like `history` entries, `cookies`, and
 `3rd party extensions` from your regular browsing session will not affect your
 tests in Cypress.
 
-:::caution
+:::info
 
-<strong>Wait, I need my developer extensions!</strong>
+<strong>Using your developer extensions</strong>
 
-That's no problem - you have to reinstall them **once** in the Cypress launched
-browser. We'll continue to use this Cypress testing profile on subsequent
-launches so all of your configuration will be preserved.
+Because Cypress runs in its own profile, your usual extensions won't carry over
+automatically. If you rely on developer extensions, install them once in the
+Cypress-launched browser. Cypress reuses the same testing profile on every
+subsequent launch, so your extensions and other configuration are preserved.
 
 :::
+
+### Disabled Barriers
+
+Cypress automatically disables certain functionality in the Cypress launched
+browser that tend to get in the way of automated testing. This includes various
+features and prompts that are commonly disabled in automation, for example,
+ignoring certificate errors, allowing blocked pop-ups, and disabling things like
+password saving, autofill, session restoring, background throttling, and device
+permission prompts.
+
+The goal is to keep these native browser behaviors from interrupting an
+unattended run. A "Save password?" dialog or a throttled background tab can
+stall or destabilize a test, so Cypress turns them off up front.
 
 ### Extra Tabs
 
 Any extra tabs (i.e. tabs other than the one opened by Cypress) will be closed between tests. We recommend using your own browser instead of the one launched by Cypress for general-purpose browsing.
 
-### Disabled Barriers
+### Customize the browser launch
 
-Cypress automatically disables certain functionality in the Cypress launched
-browser that tend to get in the way of automated testing.
+When Cypress goes to launch your browser, it gives you an opportunity to modify
+the arguments, preferences, environment, and extensions used to launch it. This
+is the main extension point for tailoring the browser to your application's
+needs.
 
-#### The Cypress launched browser automatically:
+This enables you to do things like:
 
-- Ignores certificate errors.
-- Allows blocked pop-ups.
-- Disables 'Saving passwords'.
-- Disables 'Autofill forms and passwords'.
-- Disables asking to become your primary browser.
-- Disables device discovery notifications.
-- Disables language translations.
-- Disables restoring sessions.
-- Disables background network traffic.
-- Disables background and renderer throttling.
-- Disables prompts requesting permission to use devices like cameras or mics
-- Disables user gesture requirements for autoplaying videos.
+- Load your own extension
+- Enable or disable experimental features
+- Change command-line arguments, preferences, and environment variables
 
-You can see all of the default chrome command line switches we send
-[here](https://github.com/cypress-io/cypress/blob/develop/packages/server/lib/util/chromium_flags.ts#L36).
+[This part of the API is documented here.](/api/node-events/browser-launch-api)
 
-## Browser Icon
+### Distinguishing the Cypress browser
 
 You might notice that if you already have the browser open you will see two of
 the same browser icons in your dock.
@@ -492,22 +541,81 @@ the same browser icons in your dock.
   alt="Cypress icon with 2 Google Chrome icons"
 />
 
-We understand that when Cypress is running in its own profile it can be
-difficult to tell the difference between your normal browser and Cypress.
+Because Cypress runs in its own profile, it can be difficult to tell its browser
+apart from your normal one, and accidentally treating the Cypress browser like a
+regular one (or vice versa) leads to confusion.
 
-For this reason you may find downloading and using a browser's release channel
-versions (Dev, Canary, etc) useful. These browsers have different icons from the
-standard stable browser, making them more distinguishable. You can also use the
-bundled [Electron browser](#Electron-Browser), which does not have a dock icon.
-
-Additionally, in Chrome-based browsers, we've made the browser spawned by
+In Chrome-based browsers, we've made the browser spawned by
 Cypress look different than regular sessions. You'll see a darker theme around
-the chrome of the browser. You'll always be able to visually distinguish these.
+the chrome of the browser, so you'll always be able to visually distinguish them.
 
 <DocsImage
   src="/img/app/launching-browsers/cypress-browser-chrome.png"
   alt="Cypress Browser with darker chrome"
 />
+
+## Headless mode
+
+When running [cypress run](/app/references/command-line#cypress-run) from the
+CLI, Cypress launches browsers **headlessly** by default. The browser runs
+without a visible UI. This is what makes Cypress well suited to Continuous
+Integration, where there is no display to render to and headless runs are faster
+and lighter. When running [cypress open](/app/references/command-line#cypress-open),
+the browser is **always headed** so you can watch and debug interactively.
+
+How each browser is launched headlessly differs slightly:
+
+| Browser                  | Default during `cypress run` | How it runs headless             |
+| ------------------------ | ---------------------------- | -------------------------------- |
+| Electron                 | Headless                     | Internal Electron headless mode  |
+| Chrome / Chromium / Edge | Headless                     | Launched with `--headless=new`   |
+| Firefox                  | Headless                     | Launched with `-headless`        |
+| WebKit (Experimental)    | Headless                     | Launched headless via Playwright |
+
+To show the browser while running `cypress run`, pass the
+[`--headed`](/app/references/command-line#cypress-run-headed) flag:
+
+<CypressCommandTabs command="run --headed" />
+
+Because Electron is the default browser, it is typically the one running in CI.
+You can also explicitly hide a headed browser with `--headless`.
+
+### Headless rendering defaults
+
+When a browser runs headlessly, there is no physical display, so Cypress uses
+the following defaults for rendering:
+
+- A default screen size of **1280x720**.
+- A device pixel ratio (DPR) forced to **1**.
+
+Knowing these defaults matters because they determine the size and resolution of
+the screenshots and videos captured during the run. You can override them in the
+[`before:browser:launch`](/api/node-events/browser-launch-api#Set-screen-size-when-running-headless)
+event, for example, to change the window size or force a retina-like DPR for
+higher-resolution output.
+
+### Debugging headless-only failures
+
+Occasionally a test passes when the browser is headed but fails when run
+headlessly (or vice versa). When this happens, the quickest way to debug is to
+reproduce the failure locally with the browser shown:
+
+<CypressCommandTabs command="run --headed --no-exit --browser chrome" />
+
+The `--headed` flag shows the browser so you can watch the run, and `--no-exit`
+keeps Cypress open afterward so you can inspect the
+[command log](/app/core-concepts/open-mode#Command-Log) and the application's
+final state. Comparing a headed run against a headless one, along with the
+recorded screenshots and videos, usually surfaces the difference.
+
+## Downloading files
+
+When your application downloads a file, Cypress automatically saves it to the
+[`downloadsFolder`](/app/references/configuration#Downloads) (by default
+`cypress/downloads`) without showing the browser's native "Save As" prompt or
+download shelf. This is what makes downloads testable end-to-end: a native
+file-picker dialog would block an unattended run, so Cypress routes downloads to a
+known folder where you can assert on them directly from disk.
 
 ## Troubleshooting
 
@@ -517,3 +625,6 @@ the chrome of the browser. You'll always be able to visually distinguish these.
 
 - [Browser Launch API](/api/node-events/browser-launch-api)
 - [Cross browser Testing](/app/guides/cross-browser-testing)
+- [Command Line](/app/references/command-line)
+- [Configuration](/app/references/configuration)
+- [Troubleshooting](/app/references/troubleshooting#Launching-browsers)
