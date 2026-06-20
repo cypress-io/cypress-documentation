@@ -193,23 +193,10 @@ it's the recommended place for
 
 To control what loads first, set the
 [`supportFile`](/app/references/configuration#Testing-Type-Specific-Options)
-path. By default,
-[`supportFile`](/app/references/configuration#Testing-Type-Specific-Options)
-is set to look for one of the following files:
+path. By default it looks for:
 
-**Component:**
-
-- `cypress/support/component.js`
-- `cypress/support/component.jsx`
-- `cypress/support/component.ts`
-- `cypress/support/component.tsx`
-
-**E2E:**
-
-- `cypress/support/e2e.js`
-- `cypress/support/e2e.jsx`
-- `cypress/support/e2e.ts`
-- `cypress/support/e2e.tsx`
+- **E2E:** `cypress/support/e2e.{js,jsx,ts,tsx}`
+- **Component:** `cypress/support/component.{js,jsx,ts,tsx}`
 
 :::danger
 
