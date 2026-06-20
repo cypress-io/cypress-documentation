@@ -266,7 +266,7 @@ each time. For long, linear flows this can be faster and less repetitive.
 
 The risk is that tests become order-dependent. Because state leaks forward, a
 test can quietly start relying on something a previous test did. That creates
-three real hazards:
+several real hazards:
 
 1. A test may pass only because of the test before it. Run it on its own and it
    fails.
@@ -277,6 +277,21 @@ three real hazards:
    only the failed test, not the tests that built up the state it depends on, so
    an order-dependent test often cannot reproduce the conditions it needs and
    will keep failing on retry even when the underlying issue is intermittent.
+4. Failures are harder to reproduce and debug. With isolation on, you reproduce
+   a failing test by running just that test; with it off, you cannot isolate it
+   with `.only()`, because it depends on state built by earlier tests. You have
+   to replay the whole preceding sequence to recreate the conditions, which
+   lengthens the path from failure to fix.
+5. The suite becomes brittle to maintain. Because tests share a running state,
+   inserting, reordering, or deleting one test can silently break later tests
+   that depended on what it did, so edits have non-local effects that raise the
+   cost of every future change and review.
+6. Parallelization and Cloud orchestration are limited. An order-dependent flow
+   must stay in a single spec file and run serially on one machine, so that work
+   cannot be split across machines with
+   [load balancing](/cloud/features/smart-orchestration/load-balancing) or
+   [parallelization](/cloud/features/smart-orchestration/parallelization),
+   capping how much you can speed up a large dependent suite.
 
 If you choose to disable it, use it deliberately and safely:
 
