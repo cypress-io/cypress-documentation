@@ -147,6 +147,12 @@ testing. It is always on, which guarantees every component test renders into a
 clean context and verifies your component's behavior without interference from a
 previous test.
 
+The mechanism that provides this clean context differs by testing type. In
+end-to-end testing, Cypress always navigates to `about:blank` between every test
+to reset the page. In component testing, there is no page to navigate, so
+Cypress always unmounts the component instead. In both cases the goal is the
+same: each test starts from a clean slate and runs in isolation.
+
 When running component tests, Cypress always resets the browser context _before_
 each test by:
 
