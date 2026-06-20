@@ -261,15 +261,30 @@ If you choose to disable it, use it deliberately and safely:
 
 - Treat a `testIsolation: false` `describe` block as one connected sequence, and
   order the tests intentionally.
+- Do shared setup once in a `before` hook, not `beforeEach`. Because state now
+  persists across tests, establish the expensive starting state (such as logging
+  in or seeding data) a single time and let the rest of the suite build on it,
+  rather than redoing it before every test.
 - Verify each test still passes on its own. Temporarily isolate it with
   `.only()` and run it; if it fails alone, it has a hidden dependency on a
   previous test, the exact problem test isolation is designed to prevent.
 - Narrow the scope: apply `testIsolation: false` to the specific `describe`
   block that needs it rather than globally.
+- Keep the dependent sequence in a single spec file. Cypress Cloud
+  [load balancing](/cloud/features/smart-orchestration/load-balancing) and
+  [parallelization](/cloud/features/smart-orchestration/parallelization)
+  distribute whole spec files across machines, and spec files run independently
+  of one another, so an order-dependent flow must live in one spec file to stay
+  intact.
 - If you only need cookies or storage to persist (not the page), prefer the
   approaches in
   [Keeping state without disabling isolation](#Keeping-state-without-disabling-isolation),
-  which give you the same speedup while keeping tests independent.
+  which give you the same speedup while keeping tests independent. To reset only
+  specific state while keeping the page loaded, call
+  [`cy.clearAllCookies()`](/api/commands/clearallcookies),
+  [`cy.clearAllLocalStorage()`](/api/commands/clearalllocalstorage), or
+  [`cy.clearAllSessionStorage()`](/api/commands/clearallsessionstorage) in a
+  hook.
 - Limit the cost of cascading failures with
   [Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation) in
   Cypress Cloud. It cancels a run after a chosen number of failures, so when an
