@@ -51,7 +51,9 @@ consistently when run. This behavior is described as `testIsolation`.
 
 The test isolation is a global configuration and can be overridden for
 end-to-end testing at the `describe` level with the
-[`testIsolation`](/app/references/configuration#e2e) option.
+[`testIsolation`](/app/references/configuration#e2e) option. It can only be
+overridden at the suite (`describe`) level — overriding `testIsolation` at the
+test (`it`) level is not allowed and cannot be done.
 
 ## Test Isolation in End-to-End Testing
 
