@@ -198,13 +198,25 @@ path. By default it looks for:
 - **E2E:** `cypress/support/e2e.{js,jsx,ts,tsx}`
 - **Component:** `cypress/support/component.{js,jsx,ts,tsx}`
 
-:::info
-
-<Icon name="cogs" /> **supportFile per testing type**
+#### supportFile per testing type
 
 `supportFile` is configured separately for each testing type. Set it under the
 `e2e` key for end-to-end testing and under the `component` key for component
-testing in your Cypress configuration.
+testing in your Cypress configuration. For example, to override the default
+support file locations:
+
+:::cypress-config-example
+
+```ts
+{
+  e2e: {
+    supportFile: 'cypress/support/my-e2e-support.ts',
+  },
+  component: {
+    supportFile: 'cypress/support/my-component-support.ts',
+  },
+}
+```
 
 :::
 
