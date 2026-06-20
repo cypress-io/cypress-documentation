@@ -110,23 +110,40 @@ below.
 Test isolation is enabled by default and is the recommended setting. Because each
 test starts in a fresh browser context, write each test so it establishes
 everything it needs and never depends on a previous test. A few practices keep
-your tests isolated and reliable:
+your tests isolated, fast, and free of flake:
 
 - **Set up state in hooks, not in earlier tests.** Use a `beforeEach` hook to
   establish the state each test relies on, so every test is self-contained and
   passes whether run on its own or in a randomized order.
+- **Build state programmatically, not through the UI.** Since isolation
+  re-establishes state on every test, doing setup by clicking through the UI each
+  time is the main reason suites become slow. Hit your app's API with
+  [`cy.request()`](/api/commands/request) to log in or create records, or use
+  [`cy.task()`](/api/commands/task) to seed the back end, instead of driving the
+  UI. See
+  [Organizing Tests, Logging In, Controlling State](/app/core-concepts/best-practices#Organizing-Tests-Logging-In-Controlling-State).
 - **Re-visit the application in each test.** Since the page is reset between
   tests, call [`cy.visit()`](/api/commands/visit) (typically in a `beforeEach`)
   before interacting with your app.
+- **Confirm the app is ready before interacting.** Because each test starts from
+  a fresh page, assert that a known element or state is present after
+  [`cy.visit()`](/api/commands/visit), so commands do not run against a
+  half-loaded app and cause flake.
 - **Cache expensive setup with `cy.session()`.** Repeating a slow flow such as
   logging in for every test is wasteful.
   [`cy.session()`](/api/commands/session) caches and restores cookies and
-  storage so you can skip that repetition while keeping each test isolated. Call
+  storage so you can skip that repetition while keeping each test isolated. Pair
+  it with a programmatic login (a [`cy.request()`](/api/commands/request) to your
+  auth endpoint inside the session) so the expensive flow runs only once. Call
   [`cy.visit()`](/api/commands/visit) after it, since the page still starts
   blank.
 - **Do not rely on the order tests run in.** If a test passes only because of
   something an earlier test did, it is not truly isolated. See
   [Having Tests Rely On The State Of Previous Tests](/app/core-concepts/best-practices#Having-Tests-Rely-On-The-State-Of-Previous-Tests).
+- **Use test retries as a safety net in CI.** Enabling
+  [test retries](/app/guides/test-retries) re-runs a failed test to absorb
+  occasional flake from network blips or animations. Treat it as a backstop, not
+  a substitute for deterministic setup and assertions.
 
 ## Keeping state without disabling isolation
 
