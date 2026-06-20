@@ -138,6 +138,34 @@ running Cypress again.
 
 <CypressInstallBinaryCommands />
 
+#### Override the cache location with `CYPRESS_CACHE_FOLDER`
+
+By default Cypress stores the binary in a per-user cache folder, but the
+location can be changed with the
+[`CYPRESS_CACHE_FOLDER`](/app/references/advanced-installation#Binary-cache)
+environment variable. This is a frequent source of confusing
+`"the Cypress binary was not found"` errors and CI caching problems, so it's
+worth checking whenever the install and the run disagree about where the binary
+lives.
+
+Common situations where it helps to verify this variable:
+
+- **CI caches the wrong folder.** Many CI configurations cache
+  `CYPRESS_CACHE_FOLDER` to avoid re-downloading the binary on every run. If the
+  variable is set during `cypress install` but missing (or different) when the
+  tests run — or vice versa — Cypress installs to one folder and looks in
+  another, and reports the binary as missing.
+- **The binary "disappears" between steps.** If different jobs, containers, or
+  shells set `CYPRESS_CACHE_FOLDER` inconsistently, each one resolves a
+  different cache path. Run `cypress cache path` in the failing step to see
+  exactly where Cypress is looking.
+- **Permission or disk-space issues with the default location.** Pointing
+  `CYPRESS_CACHE_FOLDER` at a writable, persistent directory resolves installs
+  that fail because the default home-directory cache is read-only or ephemeral.
+
+Run `npx cypress cache path` in the same environment as the failing command to
+confirm which folder is actually in use.
+
 ### Allow the Cypress Chrome extension
 
 Cypress utilizes a Chrome extension in order to run properly. If you or your
