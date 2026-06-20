@@ -105,8 +105,10 @@ typically solves, so you can find the right tool for your situation:
 - **`CYPRESS_RUN_BINARY`**: Use this when you want to launch a specific binary
   already on disk instead of the one resolved from the cache, for example a
   binary you unzipped to a known location.
-- **`CYPRESS_VERIFY_TIMEOUT`**: Use this when the one-time binary verification
-  step times out, which can happen on slow or heavily loaded machines.
+- **`CYPRESS_VERIFY_TIMEOUT`**: Use this to adjust how long Cypress waits for the
+  one-time binary verification step before timing out. The default is 30 seconds
+  (`30000` ms); raise it on slow or heavily loaded machines where verification
+  needs more time.
 - **`CYPRESS_SKIP_VERIFY`**: Use this to skip binary verification, for example
   when the binary lives in a read-only location and verification can't write its
   results.
