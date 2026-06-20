@@ -158,9 +158,7 @@ Two other options refine that set:
 - [`excludeSpecPattern`](/app/references/configuration#e2e) removes files from
   the set. Any file matching `specPattern` but also matching
   `excludeSpecPattern` is ignored, which is handy for hiding sample specs or a
-  group of work-in-progress files. By default this is
-  `*.hot-update.js` (plus `**/__snapshots__/*` and `**/__image_snapshots__/*`
-  for component testing).
+  group of work-in-progress files.
 - The [`--spec`](/app/references/command-line#cypress-run-spec-lt-spec-gt)
   command line flag (and the `spec` Module API option) limits a single run to a
   subset of specs. It can only narrow what already matches `specPattern`, never
