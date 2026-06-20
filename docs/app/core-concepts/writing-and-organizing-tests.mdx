@@ -202,11 +202,9 @@ path. By default it looks for:
 
 <Icon name="cogs" /> **supportFile per testing type**
 
-Depending on which [testing type](/app/core-concepts/testing-types) you are
-using, you can configure your `supportFile` accordingly.
-
-- [Component](/app/references/configuration#component)
-- [E2E](/app/references/configuration#e2e)
+`supportFile` is configured separately for each testing type. Set it under the
+`e2e` key for end-to-end testing and under the `component` key for component
+testing in your Cypress configuration.
 
 :::
 
