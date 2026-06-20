@@ -1,27 +1,46 @@
 ---
-title: 'Troubleshooting Cypress App'
-description: 'Resources to help you troubleshoot Cypress App issues and common steps to isolate and resolve problems.'
+title: 'Troubleshooting Cypress'
+description: 'Fix common Cypress problems: installation and binary errors, browsers that will not launch, read ECONNRESET, slow or crashing tests, and how to capture debug logs.'
 sidebar_label: Troubleshooting
 ---
 
 <ProductHeading product="app" />
 
-# Troubleshooting
+# Troubleshooting Cypress
 
 :::info
 
 ##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
 
-- Resources to help you troubleshoot Cypress App issues
-- Common steps to isolate and resolve problems
+- How to diagnose and fix the most common Cypress errors
+- Where to look first when an install, browser, or test fails
+- How to capture debug logs to investigate deeper problems
 
 :::
 
+Something not working the way you expect? Most Cypress problems fall into a
+handful of categories — a failed install or missing binary, a browser that
+won't launch, a dropped connection, or tests that run slowly or crash. This
+guide explains _why_ each happens and walks you through the fastest fix.
+
+## Find your problem fast
+
+Jump straight to the section that matches what you're seeing:
+
+| Symptom you're seeing                                          | Where to go                                               |
+| -------------------------------------------------------------- | --------------------------------------------------------- |
+| Cypress won't install, or `"the Cypress binary was not found"` | [Manage the Cypress cache](#Manage-the-Cypress-cache)     |
+| A browser is missing or won't launch                           | [Launching browsers](#Launching-browsers)                 |
+| `Error: read ECONNRESET` crashes Cypress or the browser        | [Error: read ECONNRESET](#Error-read-ECONNRESET)          |
+| Tests are slow, crashing, or using too much memory             | [Log memory and CPU usage](#Log-memory-and-CPU-usage)     |
+| Cypress behaves oddly, especially after an upgrade             | [Clear App Data](#Clear-App-Data)                         |
+| You need more detail to diagnose an issue                      | [Print DEBUG logs](#Print-DEBUG-logs)                     |
+| You're on a corporate network and requests are blocked         | [Allow Cypress URLs on VPNs](#Allow-Cypress-URLs-on-VPNs) |
+
 ## Start here
 
-There are times when you will encounter errors or unexpected behavior with
-Cypress itself. This guide recommends some resources and steps to take to
-troubleshoot those problems.
+Before digging into a specific fix, these first steps resolve a large share of
+issues — try them first.
 
 ### Update Cypress
 
@@ -46,10 +65,11 @@ If your organization signs up for one of our
 [paid plans](https://www.cypress.io/pricing/), you can get dedicated email
 support, which gives you one-on-one help from our team.
 
-### Isolate the Problem
+### Isolate the problem
 
-When debugging a failing test, follow these general principles to isolate the
-problem:
+When a test is failing and you're not sure why, narrow down the cause before
+trying fixes. These principles help you find the smallest change that
+reproduces the problem:
 
 - Look at the screenshots, video, or [Test Replay](/cloud/features/test-replay) of the test. Test Replay will show you the exact steps that were taken during the test including
   console logs and requests.
@@ -59,9 +79,11 @@ problem:
 - Run the same test in different environments (local, CI, etc.) to isolate the problem to a specific environment.
 - Reduce the test to the smallest possible test that still reproduces the problem.
 
-## Troubleshooting Steps
+## Common fixes
 
-Below are some steps you can take to troubleshoot common issues with Cypress.
+These are the fixes that resolve the most frequently reported Cypress issues —
+installation and binary problems, blocked extensions and URLs, corrupted app
+data, and capturing the logs you need to diagnose anything else.
 
 ### Manage the Cypress cache
 
@@ -217,8 +239,14 @@ an issue you have by clearing this app data.
 
 ### Print DEBUG logs
 
-Cypress utilizes the [debug](https://github.com/debug-js/debug) module.
-That means you can receive helpful debugging output by running Cypress with a system-level environment variable `DEBUG` set to `cypress:*` prior to running `cypress run` or `cypress open`.
+When the on-screen error isn't enough to explain a failure, debug logs show you
+exactly what Cypress is doing under the hood — how it parsed your arguments,
+which browsers it found, and where a request or process stalled. They're the
+single most useful thing to capture before opening an issue or asking for help.
+
+Cypress uses the [debug](https://github.com/debug-js/debug) module, so you can
+turn this output on by setting the `DEBUG` environment variable to `cypress:*`
+before running `cypress run` or `cypress open`.
 
 :::tip
 
@@ -334,7 +362,7 @@ want to enable them
 | `cypress:server:preprocessor`    | Processing specs                                              |
 | `cypress:server:socket-e2e`      | Watching spec files                                           |
 | `cypress:server:task`            | Invoking the `cy.task()` command                              |
-| `cypress:server:socket-base`     | WebSocket messages between the browser and the Cypress server  |
+| `cypress:server:socket-base`     | WebSocket messages between the browser and the Cypress server |
 | `cypress:webpack`                | Bundling specs using webpack                                  |
 | `cypress:server:fixture`         | Loading fixture files                                         |
 | `cypress:server:record:ci-info`  | Git commit and CI information when recording to Cypress Cloud |
@@ -487,15 +515,19 @@ sometimes causing a breaking change in your automated tests.
 You can use the information in [Download Chromium](https://on.cypress.io/chromium-downloads) to download a
 specific released version of Chromium for every platform.
 
-## Specific Issues
+## Diagnose specific issues
+
+The sections below cover specific, frequently-reported problems — a browser
+Cypress can't find, and the `read ECONNRESET` error — with the cause and the
+steps to fix each one.
 
 ### Launching browsers
 
-Cypress attempts to
-[automatically find installed Chrome versions for you](/app/references/launching-browsers).
-However, probing for browsers across different environments can be error-prone.
-If Cypress cannot find a browser but you know you have it installed, there are
-ways to ensure that Cypress can "see" it.
+Cypress tries to
+[automatically find installed browsers for you](/app/references/launching-browsers),
+but probing across different operating systems and environments can be
+error-prone. If Cypress can't find a browser you know is installed, the steps
+below help Cypress "see" it.
 
 :::info
 
@@ -605,15 +637,15 @@ On Windows, Cypress scans the following locations to try to find each browser:
 | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `chrome`             | `C:/Program Files/Google/Chrome/Application/chrome.exe`, `C:/Program Files (x86)/Google/Chrome/Application/chrome.exe`                                                                                       |
 | `chrome:beta`        | `C:/Program Files/Google/Chrome Beta/Application/chrome.exe`, `C:/Program Files (x86)/Google/Chrome Beta/Application/chrome.exe`                                                                             |
-| `chrome:canary`      | `%LOCALAPPDATA%/Google/Chrome SxS/Application/chrome.exe`                                                                                                                                                   |
+| `chrome:canary`      | `%LOCALAPPDATA%/Google/Chrome SxS/Application/chrome.exe`                                                                                                                                                    |
 | `chrome-for-testing` | `C:/Program Files/Google/Chrome for Testing/chrome.exe`, `C:/Program Files (x86)/Google/Chrome for Testing/chrome.exe`                                                                                       |
 | `chromium`           | `C:/Program Files/Google/chrome-win/chrome.exe`, `C:/Program Files/Google/Chromium/chrome.exe`, `C:/Program Files (x86)/Google/chrome-win32/chrome.exe`, `C:/Program Files (x86)/Google/Chromium/chrome.exe` |
-| `firefox`            | `C:/Program Files/Mozilla Firefox/firefox.exe`, `C:/Program Files (x86)/Mozilla Firefox/firefox.exe`, `%LOCALAPPDATA%/Mozilla Firefox/firefox.exe`                                                          |
-| `firefox:dev`        | `C:/Program Files/Firefox Developer Edition/firefox.exe`, `C:/Program Files (x86)/Firefox Developer Edition/firefox.exe`, `%LOCALAPPDATA%/Firefox Developer Edition/firefox.exe`                            |
-| `firefox:nightly`    | `C:/Program Files/Firefox Nightly/firefox.exe`, `C:/Program Files (x86)/Firefox Nightly/firefox.exe`, `%LOCALAPPDATA%/Firefox Nightly/firefox.exe`                                                          |
+| `firefox`            | `C:/Program Files/Mozilla Firefox/firefox.exe`, `C:/Program Files (x86)/Mozilla Firefox/firefox.exe`, `%LOCALAPPDATA%/Mozilla Firefox/firefox.exe`                                                           |
+| `firefox:dev`        | `C:/Program Files/Firefox Developer Edition/firefox.exe`, `C:/Program Files (x86)/Firefox Developer Edition/firefox.exe`, `%LOCALAPPDATA%/Firefox Developer Edition/firefox.exe`                             |
+| `firefox:nightly`    | `C:/Program Files/Firefox Nightly/firefox.exe`, `C:/Program Files (x86)/Firefox Nightly/firefox.exe`, `%LOCALAPPDATA%/Firefox Nightly/firefox.exe`                                                           |
 | `edge`               | `C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe`                                                                                                                                               |
 | `edge:beta`          | `C:/Program Files (x86)/Microsoft/Edge Beta/Application/msedge.exe`                                                                                                                                          |
-| `edge:canary`        | `%LOCALAPPDATA%/Microsoft/Edge SxS/Application/msedge.exe`                                                                                                                                                  |
+| `edge:canary`        | `%LOCALAPPDATA%/Microsoft/Edge SxS/Application/msedge.exe`                                                                                                                                                   |
 | `edge:dev`           | `C:/Program Files (x86)/Microsoft/Edge Dev/Application/msedge.exe`                                                                                                                                           |
 
 For the current list, see
