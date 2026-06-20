@@ -74,8 +74,20 @@ clearing all:
 - extra browser tabs and windows opened during the test
 
 Second, Cypress runs each test in a clean browser context so that the
-application under test behaves consistently every time it runs. This
-browser-context behavior is what the `testIsolation` configuration controls.
+application under test behaves consistently every time it runs. To do this,
+Cypress resets the browser context by:
+
+- navigating to `about:blank` to clear the current page and DOM
+- clearing [cookies](/api/cypress-api/cookies) in all domains
+- clearing
+  [`localStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)
+  in all origins
+- clearing
+  [`sessionStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage)
+  in all origins
+
+This browser-context behavior is what the `testIsolation` configuration
+controls.
 
 Test isolation is a global configuration set with the
 [`testIsolation`](/app/references/configuration#e2e) option. For end-to-end
