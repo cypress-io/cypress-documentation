@@ -439,16 +439,6 @@ cypress:server:socket-base backend:request { eventName: 'http:request', args:
 You can increase the printed object depth using the `DEBUG_DEPTH` environment
 variable
 
-:::info
-
-Unlike the `cypress:*` namespaces above, which are defined by Cypress,
-`DEBUG_DEPTH` is not a Cypress-specific option. It is provided by the upstream
-[debug](https://github.com/debug-js/debug) module and controls how deeply nested
-objects are expanded when logged (via Node's `util.inspect`). It works with any
-tool that uses `debug`, not just Cypress.
-
-:::
-
 ```shell
 DEBUG=cypress:server:socket-base DEBUG_DEPTH=3 npx cypress run
 
