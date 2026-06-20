@@ -13,8 +13,8 @@ A preprocessor is the plugin responsible for preparing a
 or a [spec file](/app/core-concepts/writing-and-organizing-tests#Spec-files)
 for the browser.
 
-A preprocessor could transpile your file from another language (CoffeeScript or
-ClojureScript) or from a newer version of JavaScript (ES2017).
+A preprocessor could transpile your file from another language (ClojureScript)
+or from a newer version of JavaScript (ES2017).
 
 A preprocessor also typically watches the source files for changes, processes
 them again, and then notifies Cypress to re-run the tests.
@@ -38,7 +38,6 @@ The webpack preprocessor handles:
 
 - ES2015 and JSX via Babel
 - TypeScript
-- CoffeeScript `1.x.x`
 - Watching and caching files
 
 :::info
@@ -58,7 +57,6 @@ Editing the options allows you to do things like:
 
 - Add your own Babel plugins
 - Modify options for TypeScript compilation
-- Add support for CoffeeScript `2.x.x`
 
 ## Excluding files from being watched
 
@@ -166,11 +164,11 @@ eventually be served to the browser.
 
 :::note
 
-If, for example, the source file is `spec.coffee`, the preprocessor should:
+If, for example, the source file is `spec.cljs`, the preprocessor should:
 
 :::
 
-1. Compile the CoffeeScript into JavaScript `spec.js`
+1. Compile the ClojureScript into JavaScript `spec.js`
 2. Write that JavaScript file to disk (example: `/Users/foo/tmp/spec.js`)
 3. Resolve with the absolute path to that file: `/Users/foo/tmp/spec.js`
 
