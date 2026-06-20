@@ -77,11 +77,10 @@ Second, Cypress runs each test in a clean browser context so that the
 application under test behaves consistently every time it runs. This
 browser-context behavior is what the `testIsolation` configuration controls.
 
-The test isolation is a global configuration and can be overridden for
-end-to-end testing at the `describe` level with the
-[`testIsolation`](/app/references/configuration#e2e) option. It can only be
-overridden at the suite (`describe`) level. Overriding `testIsolation` at the
-test (`it`) level is not allowed and cannot be done.
+Test isolation is a global configuration set with the
+[`testIsolation`](/app/references/configuration#e2e) option. For end-to-end
+testing, you can override it at the suite (`describe`) level, and only there.
+Overriding `testIsolation` on an individual test (`it`) is not supported.
 
 ## Test Isolation in End-to-End Testing
 
