@@ -89,31 +89,26 @@ describe if a suite of tests should run in a clean browser context or not.
 
 ### Test Isolation Enabled
 
-Keeping test isolation enabled is what earns you the reliability, determinism,
-and debuggability described above, and it is the recommended default.
+Test isolation is enabled by default and is the recommended setting. Because each
+test starts in a fresh browser context, write each test so it establishes
+everything it needs and never depends on a previous test. A few practices keep
+your tests isolated and reliable:
 
-When test isolation is enabled, Cypress resets the browser context _before_ each
-test by:
-
-- clearing the dom state by visiting `about:blank`
-- clearing [cookies](/api/cypress-api/cookies) in all domains
-- clearing
-  [`localStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)
-  in all domains
-- clearing
-  [`sessionStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage)
-  in all domains
-
-Because the test starts in a fresh browser context, you must re-visit your
-application and perform the series of interactions needed to build the dom and
-browser state for each test. This small amount of repetition is what guarantees
-each test is self-contained and able to pass on its own.
-
-Additionally, the [`cy.session()`](/api/commands/session) command will inherit
-this configuration and will clear the page and current browser context when
-establishing a browser session. This is so tests can reliably pass when run
-standalone or in a randomized order, and lets you avoid the repetition above by
-caching expensive setup such as logging in.
+- **Set up state in hooks, not in earlier tests.** Use a `beforeEach` hook to
+  establish the state each test relies on, so every test is self-contained and
+  passes whether run on its own or in a randomized order.
+- **Re-visit the application in each test.** Since the page is reset between
+  tests, call [`cy.visit()`](/api/commands/visit) (typically in a `beforeEach`)
+  before interacting with your app.
+- **Cache expensive setup with `cy.session()`.** Repeating a slow flow such as
+  logging in for every test is wasteful.
+  [`cy.session()`](/api/commands/session) caches and restores cookies and
+  storage so you can skip that repetition while keeping each test isolated. Call
+  [`cy.visit()`](/api/commands/visit) after it, since the page still starts
+  blank.
+- **Do not rely on the order tests run in.** If a test passes only because of
+  something an earlier test did, it is not truly isolated. See
+  [Having Tests Rely On The State Of Previous Tests](/app/core-concepts/best-practices#Having-Tests-Rely-On-The-State-Of-Previous-Tests).
 
 ### Test Isolation Disabled
 
