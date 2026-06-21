@@ -12,7 +12,7 @@ sidebar_label: 'Proxy Configuration'
 
 Cypress needs Internet access to work. In many organizations that access is only
 available through a corporate proxy. Until Cypress knows about that proxy, it
-can't reach the sites and services it depends on, so several features fail —
+can't reach the sites and services it depends on, so several features fail,
 often with confusing errors:
 
 - Cypress can't load any web pages other than `localhost`.
@@ -27,8 +27,8 @@ Telling Cypress about your proxy once resolves all of these.
 Proxy settings come into play at **two distinct moments**, and keeping them
 separate makes the rest of this page much clearer:
 
-- **Installation** — when `npm install` / `cypress install` downloads Cypress.
-- **Running tests** — when the Cypress app loads your application and
+- **Installation**: when `npm install` / `cypress install` downloads Cypress.
+- **Running tests**: when the Cypress app loads your application and
   communicates with Cypress Cloud.
 
 Some settings apply to only one of these phases. That difference is a common
@@ -143,15 +143,15 @@ registry value is used, the single configured proxy is applied to both
 The registry fallback only applies when running your tests. When downloading
 Cypress for the first time, the `cypress` command line tool _does not_ read proxy
 settings from the Windows registry. If you need a proxy for the installation to
-work — which is also the only way to define a proxy for `cypress install` — you
-must set the environment variables shown above.
+work, you must set the environment variables shown above. This is also the only
+way to define a proxy for `cypress install`.
 
 :::
 
 ## How Cypress selects a proxy
 
 Cypress looks in several places for your proxy and uses the first one it finds.
-The sources it checks — and the certificate authority (CA) sources it trusts —
+The sources it checks, and the certificate authority (CA) sources it trusts,
 differ between installation and running tests:
 
 | Phase                          | Proxy resolution order (first match wins)                                     | Custom CA sources                         |
@@ -183,7 +183,7 @@ Cypress automatically reads from your system's `HTTP_PROXY` environment variable
 and uses that proxy for all HTTP and HTTPS traffic. If an `HTTPS_PROXY`
 environment variable is set, HTTPS traffic will use that proxy instead.
 
-Setting `HTTP_PROXY` to a falsy value — `false`, `0`, or an empty string —
+Setting `HTTP_PROXY` to a falsy value (`false`, `0`, or an empty string)
 disables the proxy entirely. This is useful to turn off a proxy that is
 otherwise configured through your npm config or the Windows registry.
 
@@ -201,7 +201,7 @@ environment variables, and Cypress applies them as follows:
 
 A proxy set through the `HTTP_PROXY` or `HTTPS_PROXY` environment variable always
 takes precedence over the corresponding npm configuration. Only npm's `proxy`
-and `https-proxy` values are used as a fallback — npm's
+and `https-proxy` values are used as a fallback. npm's
 [`noproxy`](https://docs.npmjs.com/cli/v9/using-npm/config#noproxy) configuration
 is **not** applied to `NO_PROXY`, so set `NO_PROXY` directly if you need to
 bypass the proxy for specific domains.
@@ -213,7 +213,7 @@ to a comma-separated list of domain names that should not be proxied.
 
 Cypress always appends `127.0.0.1`, `::1`, and `localhost` to `NO_PROXY` so that
 loopback traffic is never proxied. This happens even when you set your own
-`NO_PROXY` entries — your list is added to, not replaced. The only way to send
+`NO_PROXY` entries; your list is added to, not replaced. The only way to send
 loopback traffic through the proxy is to include the special `<-loopback>` value
 in `NO_PROXY`, which removes the automatic loopback entries.
 
@@ -259,8 +259,8 @@ environment variable and uses the corresponding certificate(s) as an
 
 The behavior above applies when Cypress runs your tests. The **install-time
 binary download** (`cypress install`) only reads npm's `cafile` and `ca` config
-values (via the `npm_config_cafile` and `npm_config_ca` environment variables) —
-it does **not** read `NODE_EXTRA_CA_CERTS`.
+values (via the `npm_config_cafile` and `npm_config_ca` environment variables).
+It does **not** read `NODE_EXTRA_CA_CERTS`.
 
 If your binary download is being TLS-intercepted by a proxy that uses a custom
 CA, set `cafile` (or `ca`) in your `.npmrc` so that the download can complete.
@@ -292,7 +292,7 @@ uses it.
 
 You can also check your proxy settings from the command line. Running
 `cypress info` prints the `HTTP_PROXY`, `HTTPS_PROXY`, and `NO_PROXY` values
-Cypress detects, which is a useful alternative to the Settings UI — especially in
+Cypress detects, which is a useful alternative to the Settings UI, especially in
 CI or other headless environments:
 
 <CypressCommandTabs command="info" />
