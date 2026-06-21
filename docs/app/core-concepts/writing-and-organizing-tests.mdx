@@ -522,12 +522,12 @@ assertions, so you can write assertions in whichever style your team prefers.
 [Read more about plain assertions.](/app/references/assertions)
 
 ```javascript
-it('can add numbers', () => {
-  expect(add(1, 2)).to.eq(3)
+it('asserts in BDD style with expect', () => {
+  expect('Jane Lane').to.have.length(9)
 })
 
-it('can subtract numbers', () => {
-  assert.equal(subtract(5, 12), -7, 'these numbers are equal')
+it('asserts in TDD style with assert', () => {
+  assert.lengthOf('Jane Lane', 9, 'name is 9 characters long')
 })
 ```
 
@@ -537,7 +537,7 @@ of Cypress commands.
 [Read more about assertions.](/app/core-concepts/introduction-to-cypress#Assertions)
 
 ```js
-cy.wrap(add(1, 2)).should('equal', 3)
+cy.get('[data-testid="profile-name"]').should('have.value', 'Jane Lane')
 ```
 
 ### Hooks
