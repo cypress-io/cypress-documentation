@@ -986,12 +986,11 @@ as pending rather than passed or failed.
 
 ### Skipped
 
-The last test status is for tests that you _meant_ to run, but these tests were
-skipped due to some run-time error. For example, imagine a group of tests
-sharing the same `beforeEach` hook - where you visit the page in the
-`beforeEach` hook.
+Unlike a pending test, which you deliberately leave out, a **skipped** test is
+one Cypress _meant_ to run but couldn't because a shared hook failed.
 
-If a command inside the `beforeEach` hook fails - for example, if we want to visit a non-existent page `/does-not-exist` instead of the `/` - and we change our `beforeEach` to fail:
+Imagine a block of tests that all share a `beforeEach` hook, and that hook
+errors — for example, it visits a page that doesn't exist:
 
 ```js
 beforeEach(() => {
@@ -999,25 +998,23 @@ beforeEach(() => {
 })
 ```
 
-When Cypress starts executing the first test, the `beforeEach` hook fails. Now
-the first test is marked as **failed**. BUT if the `beforeEach` hook failed
-once, why would we execute it _again_ before the second test? It would just fail
-the same way! So Cypress _skips_ the remaining tests in that block, because they
-would also fail due to the `beforeEach` hook failure.
+The hook fails before the first test can run, so that test is marked
+**failed**. Because the same hook would fail identically for every other test
+in the block, Cypress doesn't re-run it; it marks the remaining tests as
+**skipped** instead.
 
 <DocsImage
   src="/img/app/core-concepts/cypress-failed-and-skipped-tests.png"
   alt="Cypress showing one failed and one skipped test"
 />
 
-If we collapse the test commands, we can see the empty box marking the skipped
-test "adds 2 todos".
+Collapsing the command log shows the empty box next to the skipped test
+"adds 2 todos":
 
 <DocsImage
   src="/img/app/core-concepts/cypress-skipped-test.png"
   alt="Cypress showing one skipped test"
 />
 
-The tests that were meant to be executed but were skipped due to some run-time
-problem are marked "skipped" by Cypress. This is typically observed when a
-`before`, `beforeEach` or `afterEach` hook fails.
+In short, a test is skipped when a `before`, `beforeEach`, or `afterEach` hook
+fails and prevents the tests that depend on it from running.
