@@ -75,11 +75,11 @@ no policy at all. This is valuable when:
 - You want your test environment to mirror production as closely as possible.
 
 The trade-off is that Cypress still has to keep itself working, so the enforced
-policy is a *modified* version of yours rather than a byte-for-byte copy — see
+policy is a _modified_ version of yours rather than a byte-for-byte copy — see
 [Always-stripped directives](#always-stripped-directives) and
 [Nonce injection](#nonce-injection) for exactly what changes.
 
-## How CSP is delivered
+## How CSP is delivered {#how-csp-is-delivered}
 
 There are two ways to deliver a CSP, and Cypress treats them very differently:
 
@@ -99,7 +99,7 @@ on any modification of the policy itself.
 Cypress' configurable CSP handling applies **only** to policies delivered via
 HTTP headers, not those delivered via a `<meta>` tag:
 
-- [`experimentalCspAllowList`](#allowing-the-header-through-with-experimentalcspallowlist)
+- [`experimentalCspAllowList`](#experimentalcspallowlist)
   operates exclusively on HTTP headers. It does nothing for a meta-tag CSP, so
   you cannot use the allow list to test a meta-delivered policy.
 - The [`nonce` injection](#nonce-injection) described below likewise applies only
@@ -109,15 +109,15 @@ HTTP headers, not those delivered via a `<meta>` tag:
 
 :::
 
-## Allowing the header through with `experimentalCspAllowList`
+## Allowing the header through with `experimentalCspAllowList` {#experimentalcspallowlist}
 
 By default Cypress strips the CSP header entirely. To keep it — so the browser
 enforces your policy during the test — configure the
 [`experimentalCspAllowList`](/app/references/experiments#Experimental-CSP-Allow-List)
 option. It accepts three kinds of value:
 
-| Value      | Behavior                                                                                                            |
-| ---------- | ----------------------------------------------------------------------------------------------------------------- |
+| Value      | Behavior                                                                                                           |
+| ---------- | ------------------------------------------------------------------------------------------------------------------ |
 | `false`    | _(default)_ Strip the entire CSP header. The policy is removed completely before the response reaches the browser. |
 | `true`     | Keep the header, stripping only the directives that would interfere with Cypress (see below).                      |
 | `string[]` | Keep the header and the named directives, stripping everything else that Cypress would otherwise allow.            |
@@ -195,7 +195,7 @@ your test asserts on the exact header value, account for this modification.
 
 :::
 
-## Always-stripped directives
+## Always-stripped directives {#always-stripped-directives}
 
 Regardless of your `experimentalCspAllowList` configuration, Cypress always
 removes the following five directives from allowed CSP headers, because leaving
@@ -203,7 +203,7 @@ them in place would prevent Cypress from functioning. They cannot be allowed
 through the allow list:
 
 | Stripped directive          | Reason                                                           |
-| --------------------------- | --------------------------------------------------------------- |
+| --------------------------- | ---------------------------------------------------------------- |
 | `frame-ancestors`           | Prevents Cypress from loading a test application into an iframe. |
 | `navigate-to`               | Affects Cypress' ability to navigate to different URLs.          |
 | `require-trusted-types-for` | Might prevent Cypress from rewriting the DOM.                    |
@@ -224,7 +224,7 @@ present in the policy delivered to the browser during a Cypress test run. See
 [Strip Minimum CSP Directives](/app/references/experiments#Experimental-CSP-Allow-List)
 for the full breakdown.
 
-## Nonce injection
+## Nonce injection {#nonce-injection}
 
 To allow its injected `<script>` tags to execute under your policy, Cypress
 generates a random [`nonce`](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/nonce)
@@ -262,7 +262,7 @@ will reject the modified script.
 
 This affects the following options when combined with `experimentalCspAllowList`:
 
-- [`modifyObstructiveCode`](/app/references/configuration#Configuration-Options)
+- [`modifyObstructiveCode`](/app/references/configuration#modifyObstructiveCode)
 - [`experimentalModifyObstructiveThirdPartyCode`](/app/references/experiments)
 - [`experimentalSourceRewriting`](/app/references/experiments)
 
