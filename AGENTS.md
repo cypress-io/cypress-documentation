@@ -39,7 +39,10 @@ Each rule is a hard convention. See the linked section for the how and why.
   description, so make them **SEO-friendly**: lead with the key term and
   summarize the page accurately. Match the section's house style — API reference
   pages are terse (`'name | Cypress Documentation'` + one short sentence); guides
-  are more descriptive. Mirror a sibling file when unsure.
+  are more descriptive. Mirror a sibling file when unsure. Never add a `keywords`
+  field to frontmatter — Docusaurus only emits it as a `<meta name="keywords">`
+  tag that modern search engines ignore and that the site's own search doesn't
+  index, so it adds noise with no benefit.
 - Order with `sidebar_position` and `_category_.json`, not `sidebars.js`. Without
   a `sidebar_position`, pages sort alphabetically; if sibling files don't define
   one, match them and skip it rather than introducing positions.
@@ -57,9 +60,19 @@ Each rule is a hard convention. See the linked section for the how and why.
 - Start every product page with `<ProductHeading product="…" />`. Use canonical
   names: Cypress App, Cypress Cloud, Cypress Accessibility, UI Coverage.
 - Reuse `docs/partials/_*.mdx` instead of repeating content.
+- End related pages with a `## See also` section (sentence-case H2, as the page's
+  last section): a short bulleted list of doc-to-doc links to closely related
+  pages, command names in backticks, with an optional `- short description` after
+  a link. It's standard on API reference pages (link 2–5 sibling
+  commands/utilities); add it to guides and other pages only when there are
+  genuinely related pages worth surfacing. Don't pad it with tangential links or
+  repeat links already prominent in the page body.
 - Tag every code block with a language; add `title="file.ext"` for file snippets.
-- Go easy on em dashes — they read as AI-generated; prefer commas, periods, or
-  parentheses.
+- Never use em dashes — they read as AI-generated; use commas, periods, or
+  parentheses instead.
+- Don't use minimizing words like "simply", "just", "easy", or "obviously" in
+  instructions. They undermine a reader who is struggling and add nothing; state
+  the step plainly instead.
 
 **Directives & tabs** — [tabs](./AGENTS_REFERENCE.md#tabs),
 [config](./AGENTS_REFERENCE.md#cypress-config-examples),

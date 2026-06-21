@@ -91,6 +91,16 @@ caljajdfkjjjdehjdoimjkkakekklcck
 
 You can check the current company policies for your Chrome installation by typing `chrome://policy` into the address bar and pressing Enter.
 
+:::tip
+
+Enterprise or group policies are generally applied to standard, Chrome-branded
+browsers, not to Chromium or Chrome for Testing. If company policies are getting
+in the way of running Cypress, consider running your tests in
+[Chrome for Testing](/app/references/launching-browsers#Chrome-Browsers), which is
+built for automation and is not subject to these policies.
+
+:::
+
 ### Allow Cypress URLs on VPNs
 
 To send the data and results of your tests to
@@ -523,6 +533,68 @@ the end of the path:
 ```shell
 cypress open --browser C:/User/Application/browser.exe:chrome
 ```
+
+### Cypress failed to make a connection to the Chrome DevTools Protocol
+
+Cypress controls Chrome, Chromium, and Edge through the
+[Chrome DevTools Protocol](https://chromedevtools.github.io/devtools-protocol/)
+(CDP) over a remote debugging port. After launching the browser, Cypress retries
+the CDP connection for up to 50 seconds; if it never connects, the run fails with
+an error like:
+
+```
+Cypress failed to make a connection to the Chrome DevTools Protocol
+after retrying for 50 seconds.
+```
+
+This means the browser launched but Cypress could not reach it on the remote
+debugging port.
+
+#### Check for a remote debugging policy
+
+The most common cause in managed/enterprise environments is remote debugging
+being disabled by an enterprise or group policy. Cypress cannot drive the browser
+without it. To check:
+
+1. Open **chrome://policy** (or **edge://policy** for Edge) in the affected
+   browser.
+2. Look for the
+   [`RemoteDebuggingAllowed`](https://chromeenterprise.google/policies/#RemoteDebuggingAllowed)
+   policy.
+3. Ensure it is either undefined or set to enabled/`true`. If it is set to
+   disabled, Cypress will not be able to connect (this typically surfaces as an
+   `ECONNREFUSED` error).
+
+This policy applies only to the standalone Chrome and Edge browsers, and it does
+not affect the bundled
+[Electron browser](/app/references/launching-browsers#Electron-Browser), so
+testing with `--browser electron` is a useful way to confirm whether a policy is
+the cause:
+
+<CypressCommandTabs command="run --browser electron" />
+
+This policy is also generally not applied to Chromium or
+[Chrome for Testing](/app/references/launching-browsers#Chrome-Browsers), so
+running your tests in Chrome for Testing is another way to avoid policy-related
+connection failures.
+
+See [Chrome policy](/app/references/launching-browsers#Chrome-policy) and
+[Edge policy](/app/references/launching-browsers#Edge-policy) for more.
+
+#### Other things to check
+
+If the policy is not the issue:
+
+- **Network/firewall rules blocking `127.0.0.1` connections** on the remote
+  debugging port. A proxy or VPN that intercepts `localhost`/`127.0.0.1` traffic
+  will also prevent Cypress from connecting. Allow local connections, or exclude
+  `localhost` and `127.0.0.1` from any proxy.
+- **Security software that closes or sandboxes the browser process** immediately
+  after launch. Antivirus or endpoint protection may terminate the browser before
+  Cypress can connect.
+- **A custom `before:browser:launch` argument** preventing the browser from
+  starting. If you modify launch arguments, temporarily remove your
+  customizations to rule them out.
 
 ### Error: read ECONNRESET
 
