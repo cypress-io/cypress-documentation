@@ -1,13 +1,13 @@
 ---
-title: Introduction to Cypress
+title: Cypress Fundamentals
 description: Learn how Cypress works, including querying elements, chaining commands, and writing assertions that automatically wait and retry.
 sidebar_position: 10
-sidebar_label: Introduction
+sidebar_label: Fundamentals
 ---
 
 <ProductHeading product="app" />
 
-# Introduction to Cypress App
+# Cypress Fundamentals
 
 :::tip
 
@@ -17,19 +17,25 @@ it.
 
 :::
 
-Cypress was built to solve the most frustrating part of end-to-end and component
-testing: **flake**. Traditional tools force you to scatter manual waits, retries,
-and null checks throughout your tests just to keep them stable. Cypress takes a
-different approach. It understands that web applications are asynchronous, so it
-**automatically waits and retries** until your application reaches the state you
-expect.
+:::info
 
-The result is tests that read like a description of what a real user does, run
-deterministically every time, and give you confidence that your application
-works across both the client and the server.
+**New to Cypress?** Start with [Why Cypress?](/app/get-started/why-cypress) for
+what Cypress is and why teams use it, then
+[Install Cypress](/app/get-started/install-cypress) and
+[Open the App](/app/get-started/open-the-app). This guide assumes Cypress is
+already set up and focuses on how it works.
 
-This guide explains the handful of rules that make this possible. Once they click,
-you'll be able to write reliable Cypress tests for almost any application.
+:::
+
+Cypress works differently from the testing tools you may be used to, and a
+handful of core rules explain almost everything about it. Because web
+applications are asynchronous, Cypress **automatically waits and retries** until
+your application reaches the state you expect, rather than making you scatter
+manual waits, retries, and null checks throughout your tests.
+
+Once these rules click, you'll be able to write tests that read like a
+description of what a real user does, run deterministically every time, and
+verify your application across both the client and the server.
 
 :::info
 
