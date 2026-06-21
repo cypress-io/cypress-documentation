@@ -139,9 +139,11 @@ difference is the key to everything Cypress does for you. Let's look at why.
 
 ### Cypress retries queries automatically
 
-What happens when a query can't find any matching elements yet? In many testing
-tools, the query returns immediately with nothing, leaving you to add conditional
-checks and retry by hand, which quickly leads to flaky tests.
+Web apps are asynchronous: an element you're looking for may not be in the DOM
+at the instant your code runs. Without built-in retrying, a query returns
+whatever exists at that moment, which is nothing if your app hasn't rendered yet,
+leaving you to add conditional checks and manual waits that quickly lead to flaky
+tests.
 
 Cypress takes a different approach. When an element isn't there yet, it's _no big
 deal_: Cypress automatically retries the query until either:
