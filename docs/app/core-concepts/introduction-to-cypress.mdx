@@ -93,7 +93,7 @@ elements, then you **interact** with them, then you **assert** about the result.
 After that, we'll explain the chaining and asynchronous model that ties it all
 together.
 
-## Querying elements {#Querying-Elements}
+## Querying elements
 
 ### Selecting elements
 
@@ -137,7 +137,7 @@ const element = cy.get('.element')
 Instead, Cypress yields the element to the next command in the chain. That
 difference is the key to everything Cypress does for you. Let's look at why.
 
-### Cypress retries queries automatically {#Cypress-Retries-Queries-Automatically}
+### Cypress retries queries automatically
 
 What happens when a query can't find any matching elements yet? In many testing
 tools, the query returns immediately with nothing, leaving you to add conditional
@@ -416,7 +416,7 @@ you a high level of confidence that your application is working as expected.
 
 :::
 
-### Implicit assertions {#Implicit-Assertions}
+### Implicit assertions
 
 Many commands carry default, built-in assertions: requirements that can fail a
 test even when you haven't written an explicit assertion yourself.
@@ -658,7 +658,7 @@ term for this means your code must be **idempotent**.
 
 :::
 
-## Chaining commands and subjects {#Chaining-Commands-and-Subjects}
+## Chaining commands and subjects
 
 You've now seen the three building blocks of a test: querying, interacting, and
 asserting. They work together because Cypress chains commands, with each command
@@ -667,7 +667,7 @@ chain on your behalf, and the chain continues until it ends or an error is
 encountered. You never need to work with Promises directly, but knowing what's
 happening under the hood will make your tests easier to reason about.
 
-### Subject management {#Subject-Management}
+### Subject management
 
 Every Cypress chain begins with `cy.[command]`. What that first command _yields_
 determines which commands you can chain next.
@@ -816,7 +816,7 @@ The chaining you just saw works the way it does because of how Cypress executes
 commands: asynchronously, serially, and through a central queue. This section
 explains that model and the design decisions that flow from it.
 
-### Commands are asynchronous {#Commands-Are-Asynchronous}
+### Commands are asynchronous
 
 Here's the most important thing to internalize: Cypress commands don't do
 anything the moment you call them. Instead, each command adds itself to a queue
@@ -1094,7 +1094,7 @@ The test runs and correctly finishes.
   alt="Test reloads the page until the number 7 appears"
 />
 
-### Commands run serially {#Commands-Run-Serially}
+### Commands run serially
 
 Once your test function finishes running, Cypress goes to work executing the
 commands you queued up with the `cy.*` chains, one at a time, in order.
@@ -1177,7 +1177,7 @@ the timeout is reached, the test will fail.
 
 :::
 
-### The Cypress command queue {#The-Cypress-Command-Queue}
+### The Cypress command queue
 
 The `.then()` syntax may look like Promises, but Cypress commands and queries
 _are not_ Promises. They're serial commands added to a central queue and executed

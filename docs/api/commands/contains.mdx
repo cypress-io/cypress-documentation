@@ -187,7 +187,7 @@ cy.contains('ul', 'apples')
 #### Keep the form as the subject
 
 Here's an example that uses the selector to ensure that the `<form>` remains the
-[subject](/app/core-concepts/introduction-to-cypress#Subject-Management) for
+[subject](/app/core-concepts/introduction-to-cypress#Subject-management) for
 future chaining.
 
 ```html
@@ -465,14 +465,14 @@ cy.contains('Age').find('input').type('29')
 
 - `.contains()` will automatically [retry](/app/core-concepts/retry-ability)
   until the element(s)
-  [exist in the DOM](/app/core-concepts/introduction-to-cypress#Implicit-Assertions).
+  [exist in the DOM](/app/core-concepts/introduction-to-cypress#Implicit-assertions).
 - `.contains()`will automatically [retry](/app/core-concepts/retry-ability)
   until all chained assertions have passed.
 
 <HeaderTimeouts />
 
 - `.contains()` can time out waiting for the element(s) to
-  [exist in the DOM](/app/core-concepts/introduction-to-cypress#Implicit-Assertions).
+  [exist in the DOM](/app/core-concepts/introduction-to-cypress#Implicit-assertions).
 - `.contains()` can time out waiting for assertions you've added to pass.
 
 ## Command Log

@@ -942,10 +942,10 @@ cy.get('.list-item').contains('my text')
 
 Cypress commands are similar to Protractor code at first glance. Cypress
 commands are
-[not invoked immediately](/app/core-concepts/introduction-to-cypress#Commands-Are-Asynchronous)
+[not invoked immediately](/app/core-concepts/introduction-to-cypress#Commands-are-asynchronous)
 and are enqueued to run serially at a later time. Cypress commands might look
 like promises, but the
-[Cypress API is not an exact implementation of Promises](/app/core-concepts/introduction-to-cypress#The-Cypress-Command-Queue).
+[Cypress API is not an exact implementation of Promises](/app/core-concepts/introduction-to-cypress#The-Cypress-command-queue).
 The modern web is asynchronous, therefore you need to interact with modern web
 apps in an asynchronous fashion. This is why the Cypress API is asynchronous.
 This allows you to write deterministic tests since all of your commands are
