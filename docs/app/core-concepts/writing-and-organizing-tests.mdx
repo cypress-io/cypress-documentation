@@ -270,10 +270,25 @@ lets you reuse the same data across many tests. Fixture files live in
 [configured](/app/references/configuration#Folders--Files) to another
 directory.
 
-You typically load them with the [`cy.fixture()`](/api/commands/fixture)
-command, most often when you're stubbing
-[Network Requests](/app/guides/network-requests) so your tests don't depend on
-a live backend.
+Cypress recognizes a range of fixture file types and parses or encodes each
+based on its extension: `.json`, `.js`, `.coffee`, `.html`, `.txt`, `.csv`,
+`.png`, `.jpg`, `.jpeg`, `.gif`, `.tif`, `.tiff`, and `.zip`. Any other
+extension is read as `utf8` unless you pass a different encoding. See
+[`cy.fixture()`](/api/commands/fixture) for the full encoding details.
+
+There are a few ways to use a fixture:
+
+- [`cy.fixture()`](/api/commands/fixture) loads the file's contents directly,
+  most often when you're stubbing
+  [Network Requests](/app/guides/network-requests) so your tests don't depend on
+  a live backend.
+- A static `import`/`require` of a JSON fixture pulls the data into your spec at
+  build time, e.g. `import user from '../fixtures/user.json'`.
+- [`cy.intercept()`](/api/commands/intercept) can respond to a request straight
+  from a fixture with the `fixture` option, e.g.
+  `cy.intercept('GET', '/users', { fixture: 'users.json' })`.
+- [`.selectFile()`](/api/commands/selectfile) attaches a fixture to a file input
+  when you're testing uploads.
 
 ### Node events (setupNodeEvents) {#Plugins-file}
 
