@@ -367,29 +367,45 @@ Any videos recorded of the run are stored in the
 
 #### How asset file paths are generated
 
-Generated screenshots and videos are saved inside their respective folders
-(`cypress/screenshots`, `cypress/videos`). The paths of the generated files will
-be stripped of any common ancestor paths shared between all spec files found by
-the `specPattern` option (or via the `--spec` command line option or `spec`
-module API option, if specified)
+Screenshots and videos are saved inside their respective folders
+(`cypress/screenshots`, `cypress/videos`), and Cypress mirrors each spec's
+folder structure underneath so every asset lines up with the spec that produced
+it.
 
-**Example 1:**
+To keep those paths from getting needlessly deep, Cypress first removes the
+**common ancestor**: the longest folder path shared by _every_ spec in the run
+(the specs matched by `specPattern`, or by the `--spec` flag / `spec` Module API
+option when you've narrowed the run). Only the part of each spec's path that is
+unique is kept.
+
+One consequence is that the same spec can produce assets at different paths
+depending on which other specs ran alongside it, because adding or removing
+specs can change the shared ancestor. The examples below show the same
+`one.cy.js` spec generating different paths for exactly this reason.
+
+**Example 1 — a single spec in the run**
+
+The spec's entire folder path is shared (there's nothing to compare it
+against), so only the filename remains:
 
 - Spec file found
   - `cypress/e2e/path/to/file/one.cy.js`
-- Common ancestor paths (calculated at runtime)
+- Common ancestor (calculated at runtime)
   - `cypress/e2e/path/to/file`
 - Generated screenshot file
   - `cypress/screenshots/one.cy.js/your-screenshot.png`
 - Generated video file
   - `cypress/videos/one.cy.js.mp4`
 
-**Example 2:**
+**Example 2 — two specs in the run**
+
+Now the two specs only share `cypress/e2e/path/to/`, so the differing tail of
+each path (`file/`) is preserved:
 
 - Spec files found
   - `cypress/e2e/path/to/file/one.cy.js`
   - `cypress/e2e/path/to/two.cy.js`
-- Common ancestor paths (calculated at runtime)
+- Common ancestor (calculated at runtime)
   - `cypress/e2e/path/to/`
 - Generated screenshot files
   - `cypress/screenshots/file/one.cy.js/your-screenshot.png`
