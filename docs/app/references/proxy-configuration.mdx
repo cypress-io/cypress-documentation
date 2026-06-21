@@ -1,6 +1,6 @@
 ---
 title: 'Proxy Configuration in Cypress'
-description: 'How to configure Cypress to work with a corporate proxy'
+description: 'Why Cypress needs proxy configuration behind a corporate proxy, how it resolves your proxy settings, and how to configure them on macOS, Linux, and Windows'
 sidebar_label: 'Proxy Configuration'
 ---
 
@@ -8,104 +8,164 @@ sidebar_label: 'Proxy Configuration'
 
 # Proxy Configuration
 
-Cypress needs Internet access to work. Many companies require the use of a
-corporate proxy to access the Internet. If your company does this, many
-functions of Cypress will not work until you've configured Cypress to use your
-proxy:
+## Why configure a proxy
 
-- Cypress won't be able to load web pages besides `localhost`.
-- Cypress won't be able to warn you if your
-  [baseUrl](/app/references/configuration#Global) isn't available.
-- Cypress won't be able to connect to
-  [Cypress Cloud](/cloud/get-started/introduction) to log in or record test runs.
-- `npm install cypress` may fail while downloading the Cypress binary.
+Cypress needs Internet access to work. In many organizations that access is only
+available through a corporate proxy. Until Cypress knows about that proxy, it
+can't reach the sites and services it depends on, so several features fail,
+often with confusing errors:
 
-If you are experiencing any or all of these issues, you may need to configure
-Cypress with your proxy. Instructions are available for
-[macOS](#Set-a-proxy-on-Linux-or-macOS),
-[Linux](#Set-a-proxy-on-Linux-or-macOS), and [Windows](#Set-a-proxy-on-Windows).
+- Cypress can't load any web pages other than `localhost`.
+- Cypress can't warn you when your
+  [`baseUrl`](/app/references/configuration#Global) is unavailable.
+- Cypress can't connect to [Cypress Cloud](/cloud/get-started/introduction) to
+  log in or record test runs.
+- `npm install cypress` can fail while downloading the Cypress binary.
 
-:::caution
+Proxy settings come into play at **two distinct moments**, and keeping them
+separate makes the rest of this page much clearer:
 
-Proxy Auto-Configuration (PAC) files are not currently supported. If your
-organization uses a PAC file, contact a network administrator to ask what HTTP
-proxy you should be using to access the general Internet, then use that proxy
-with Cypress.
+- **Installation**: when `npm install` / `cypress install` downloads Cypress.
+- **Running tests**: when the Cypress app loads your application and
+  communicates with Cypress Cloud.
 
-:::
+Some settings apply to only one of these phases. That difference is a common
+source of "it installs but won't run" (or the reverse) confusion, so it is
+called out throughout this page.
 
-:::caution
+## Supported proxy types
 
-SOCKS proxies are not currently supported. A workaround is to set up an HTTP
-proxy locally that points to your SOCKS proxy, then using that HTTP proxy with
-Cypress.
+Cypress works with standard HTTP and HTTPS proxies. There are two exceptions to
+be aware of before you start:
+
+**Proxy Auto-Configuration (PAC) files are not supported.** If your organization
+uses a PAC file, contact a network administrator to ask which HTTP proxy you
+should use to access the general Internet, then use that proxy with Cypress.
+
+**SOCKS proxies are not supported.** As a workaround, set up a local HTTP proxy
+that points to your SOCKS proxy, then use that HTTP proxy with Cypress.
 [Read more about forwarding an HTTP proxy through SOCKS.](https://superuser.com/questions/423563/convert-http-requests-to-socks5)
 
-:::
+## Set a proxy
 
-## Set a proxy on Linux or macOS
+The quickest way to get started is to set the `HTTP_PROXY` environment variable
+in a terminal before running Cypress. Select your operating system below:
 
-To set your proxy on Linux or macOS, run the following command in a terminal
-before running Cypress:
+<OsTabs>
+  <TabItem value="macos" label="macOS">
 
 ```shell
 export HTTP_PROXY=http://my-company-proxy.com
 ```
 
-You can also set `NO_PROXY` to bypass the proxy for certain domains (by default,
-only `localhost` will be bypassed):
+  </TabItem>
+  <TabItem value="linux" label="Linux">
+
+```shell
+export HTTP_PROXY=http://my-company-proxy.com
+```
+
+  </TabItem>
+  <TabItem value="windows" label="Windows">
+
+```shell title="Command Prompt"
+set HTTP_PROXY=http://my-company-proxy.com
+```
+
+```shell title="PowerShell"
+$env:HTTP_PROXY = "http://my-company-proxy.com"
+```
+
+  </TabItem>
+</OsTabs>
+
+You can also set `NO_PROXY` to bypass the proxy for additional domains (loopback
+addresses such as `localhost` are always bypassed):
+
+<OsTabs>
+  <TabItem value="macos" label="macOS">
 
 ```shell
 export NO_PROXY=localhost,google.com,apple.com
 ```
 
-To make these changes permanent, you can add these commands to your shell's
-`~/.profile` (`~/.zsh_profile`, `~/.bash_profile`, etc.) to run them on every
-login.
+  </TabItem>
+  <TabItem value="linux" label="Linux">
 
-## Set a proxy on Windows
+```shell
+export NO_PROXY=localhost,google.com,apple.com
+```
 
-When starting up after being installed, Cypress will attempt to load the proxy
-configured in the Windows registry by default.
-[Learn how to set your proxy settings system-wide in Windows.](https://www.howtogeek.com/tips/how-to-set-your-proxy-settings-in-windows-8.1/)
+  </TabItem>
+  <TabItem value="windows" label="Windows">
+
+```shell title="Command Prompt"
+set NO_PROXY=localhost,google.com,apple.com
+```
+
+```shell title="PowerShell"
+$env:NO_PROXY = "localhost,google.com,apple.com"
+```
+
+  </TabItem>
+</OsTabs>
+
+The commands above set the proxy for the current terminal session only. To make
+the change permanent on macOS or Linux, add the `export` commands to your shell's
+`~/.profile` (`~/.zsh_profile`, `~/.bash_profile`, etc.) so they run on every
+login. On Windows, use `setx` to save the variable for all new shells:
+
+```shell title="Windows"
+setx HTTP_PROXY http://my-company-proxy.com
+```
 
 :::info
 
-When downloading Cypress for the first time, the `cypress` command line tool
-_does not_ read proxy settings from the Windows registry. If you need to
-configure a proxy for the installation to work, you must set the appropriate
-environment variables as described below.
+**Windows registry**
+
+On Windows, the proxy configured in the Windows registry is used as a
+_fallback_: Cypress only consults it when no proxy has been set through the
+`HTTP_PROXY`/`HTTPS_PROXY` environment variables or your npm config. When the
+registry value is used, the single configured proxy is applied to both
+`HTTP_PROXY` and `HTTPS_PROXY`.
+[Learn how to set your proxy settings system-wide in Windows.](https://www.howtogeek.com/tips/how-to-set-your-proxy-settings-in-windows-8.1/)
+
+The registry fallback only applies when running your tests. When downloading
+Cypress for the first time, the `cypress` command line tool _does not_ read proxy
+settings from the Windows registry. If you need a proxy for the installation to
+work, you must set the environment variables shown above. This is also the only
+way to define a proxy for `cypress install`.
 
 :::
 
-You can also set proxy environment variables before running Cypress to override
-the Windows registry. This is also the only way to define a proxy for
-`cypress install`. In Command Prompt, defining the required environment
-variables looks like this:
+## How Cypress selects a proxy
 
-```shell
-set HTTP_PROXY=http://my-company-proxy.com
-```
+Cypress looks in several places for your proxy and uses the first one it finds.
+The sources it checks, and the certificate authority (CA) sources it trusts,
+differ between installation and running tests:
 
-To accomplish the same thing in PowerShell:
+| Phase                          | Proxy resolution order (first match wins)                                     | Custom CA sources                         |
+| ------------------------------ | ----------------------------------------------------------------------------- | ----------------------------------------- |
+| Installation (binary download) | `HTTP_PROXY` / `HTTPS_PROXY`                                                  | npm `cafile`, `ca`                        |
+| Running tests                  | `HTTP_PROXY` / `HTTPS_PROXY` → npm `proxy` / `https-proxy` → Windows registry | npm `cafile`, `ca`, `NODE_EXTRA_CA_CERTS` |
 
-```shell
-$env:HTTP_PROXY = "http://my-company-proxy.com"
-```
+Two practical takeaways:
 
-To save the `HTTP_PROXY` variable and use your proxy for all new shells, use
-`setx`:
+- **Environment variables always win.** Setting `HTTP_PROXY` / `HTTPS_PROXY`
+  explicitly overrides every other source.
+- **The Windows registry and `NODE_EXTRA_CA_CERTS` are only used when running
+  tests**, never during installation. If your binary download is blocked or
+  TLS-intercepted, you must rely on environment variables and npm's
+  `cafile` / `ca`.
 
-```shell
-setx HTTP_PROXY http://my-company-proxy.com
-```
+The sections below describe each of these sources in detail.
 
 ## Proxy environment variables
 
 :::caution
 
 This section refers to your operating system's environment variables, _not_
-[Cypress environment variables](/app/guides/environment-variables)
+[Cypress environment variables](/app/guides/environment-variables).
 
 :::
 
@@ -113,35 +173,65 @@ Cypress automatically reads from your system's `HTTP_PROXY` environment variable
 and uses that proxy for all HTTP and HTTPS traffic. If an `HTTPS_PROXY`
 environment variable is set, HTTPS traffic will use that proxy instead.
 
-To bypass the proxy for certain domains, a `NO_PROXY` environment variable can
-be set to a comma-separated list of domain names to not proxy traffic for. By
-default, traffic to `localhost` will not be proxied. To make Cypress send
-traffic for `localhost` through the proxy, pass `<-loopback>` in `NO_PROXY`.
+Setting `HTTP_PROXY` to a falsy value (`false`, `0`, or an empty string)
+disables the proxy entirely. This is useful to turn off a proxy that is
+otherwise configured through your npm config or the Windows registry.
 
-If an uppercase and a lowercase version of the proxy settings are supplied (for
-example, `HTTP_PROXY` and `http_proxy` are both set), the lowercase variable
-will be preferred.
+If the `HTTP_PROXY` and `HTTPS_PROXY` environment variables are not set, Cypress
+falls back to your npm proxy configuration when running your tests. npm exposes
+its [`proxy`](https://docs.npmjs.com/cli/v9/using-npm/config#proxy) and
+[`https-proxy`](https://docs.npmjs.com/cli/v9/using-npm/config#https-proxy)
+config values as the `npm_config_proxy` and `npm_config_https_proxy`
+environment variables, and Cypress applies them as follows:
+
+| npm configuration        | Used as       | Condition              |
+| ------------------------ | ------------- | ---------------------- |
+| `npm_config_proxy`       | `HTTP_PROXY`  | if `HTTP_PROXY` unset  |
+| `npm_config_https_proxy` | `HTTPS_PROXY` | if `HTTPS_PROXY` unset |
+
+A proxy set through the `HTTP_PROXY` or `HTTPS_PROXY` environment variable always
+takes precedence over the corresponding npm configuration. Only npm's `proxy`
+and `https-proxy` values are used as a fallback. npm's
+[`noproxy`](https://docs.npmjs.com/cli/v9/using-npm/config#noproxy) configuration
+is **not** applied to `NO_PROXY`, so set `NO_PROXY` directly if you need to
+bypass the proxy for specific domains.
+
+### Bypassing the proxy with `NO_PROXY`
+
+To bypass the proxy for certain domains, set the `NO_PROXY` environment variable
+to a comma-separated list of domain names that should not be proxied.
+
+Cypress always appends `127.0.0.1`, `::1`, and `localhost` to `NO_PROXY` so that
+loopback traffic is never proxied. This happens even when you set your own
+`NO_PROXY` entries; your list is added to, not replaced. The only way to send
+loopback traffic through the proxy is to include the special `<-loopback>` value
+in `NO_PROXY`, which removes the automatic loopback entries.
+
+### Casing
+
+If an uppercase and a lowercase version of a proxy setting are both supplied (for
+example, `HTTP_PROXY` and `http_proxy`), the lowercase variable is preferred.
 
 ## Using a custom certificate authority (CA)
 
 :::caution
 
-This section refers to npm config variables and node environment variables,
-_not_ [Cypress environment variables](/app/guides/environment-variables)
+This section refers to npm config variables and Node environment variables,
+_not_ [Cypress environment variables](/app/guides/environment-variables).
 
 :::
 
-Cypress needs to be able to authenticate properly when communicating to
-[Cypress Cloud](/cloud/get-started/introduction). When connecting through a proxy,
-oftentimes a self signed certificate is used as a CA. In order to handle this
-configuration, Cypress automatically reads from npm config's
+When connecting through a proxy, a self-signed certificate is often used as a CA,
+and Cypress must trust it to authenticate with
+[Cypress Cloud](/cloud/get-started/introduction). When **running your tests**,
+Cypress automatically reads from npm config's
 [`cafile`](https://docs.npmjs.com/cli/v8/using-npm/config#cafile) and
 [`ca`](https://docs.npmjs.com/cli/v8/using-npm/config#ca) options and the
 [`NODE_EXTRA_CA_CERTS`](https://nodejs.org/api/cli.html#node_extra_ca_certsfile)
-node environment variable.
+Node environment variable.
 
-To mimic the behavior of npm and node, Cypress looks at `cafile` first and then
-`ca` and uses the corresponding certificate(s) as a replacement for the CA. For
+To mimic the behavior of npm and Node, Cypress looks at `cafile` first and then
+`ca`, using the corresponding certificate(s) as a **replacement** for the CA. For
 example, to use the CA at `/home/person/certs/ca.crt`, add the following to your
 `.npmrc`:
 
@@ -149,40 +239,142 @@ example, to use the CA at `/home/person/certs/ca.crt`, add the following to your
 cafile=/home/person/certs/ca.crt
 ```
 
-If neither `cafile` nor `ca` are set, Cypress looks at the system environment
-variable `NODE_EXTRA_CA_CERTS` and uses the corresponding certificate(s) as an
-extension for the trusted CA.
+If neither `cafile` nor `ca` is set, Cypress looks at the `NODE_EXTRA_CA_CERTS`
+environment variable and uses the corresponding certificate(s) as an
+**extension** of the trusted CAs.
 
-Note that the npm config is used as a replacement, and the node environment
-variable is used as an extension.
+:::caution
 
-## View, unset, and set environment variables
+**`NODE_EXTRA_CA_CERTS` does not apply to the binary download**
 
-In order to properly configure your proxy configuration, it can be helpful to
-know how to view currently set environment variables, unset unwanted environment
-variables, and set environment variables depending on your operating system.
+The behavior above applies when Cypress runs your tests. The **install-time
+binary download** (`cypress install`) only reads npm's `cafile` and `ca` config
+values (via the `npm_config_cafile` and `npm_config_ca` environment variables).
+It does **not** read `NODE_EXTRA_CA_CERTS`.
 
-### Linux or macOS
+If your binary download is being TLS-intercepted by a proxy that uses a custom
+CA, set `cafile` (or `ca`) in your `.npmrc` so that the download can complete.
+Setting `NODE_EXTRA_CA_CERTS` alone will not help at install time.
 
-#### Set an environment variable for the current session
+:::
+
+## View proxy settings in Cypress
+
+Once configured, you can confirm which proxy Cypress is actually using.
+
+From the Cypress app, open your project with `cypress open`, click the
+**Settings** tab, then expand the **Proxy Settings** section to view the proxy
+Cypress is currently using:
+
+<DocsImage
+  src="/img/app/configuration/test-runner-settings-proxy-configuration.jpg"
+  alt="Proxy configuration in the Desktop app"
+/>
+
+You can also check your proxy settings from the command line. Running
+`cypress info` prints the `HTTP_PROXY`, `HTTPS_PROXY`, and `NO_PROXY` values
+Cypress detects, which is a useful alternative to the Settings UI, especially in
+CI or other headless environments:
+
+<CypressCommandTabs command="info" />
+
+## Managing operating system environment variables
+
+Configuring a proxy often means viewing, setting, and clearing environment
+variables. The commands below show how to do that for the current session and
+permanently, per operating system. On Windows, the syntax differs between
+_Command Prompt_ and _PowerShell_, so both are shown.
+
+### Set an environment variable for the current session
+
+<OsTabs>
+  <TabItem value="macos" label="macOS">
 
 ```shell
 export SOME_VARIABLE=some-value
 ```
 
-#### Unset an environment variable
+  </TabItem>
+  <TabItem value="linux" label="Linux">
+
+```shell
+export SOME_VARIABLE=some-value
+```
+
+  </TabItem>
+  <TabItem value="windows" label="Windows">
+
+```shell title="Command Prompt"
+set SOME_VARIABLE=some-value
+```
+
+```shell title="PowerShell"
+$env:SOME_VARIABLE = "some-value"
+```
+
+  </TabItem>
+</OsTabs>
+
+### Set an environment variable for all future sessions
+
+<OsTabs>
+  <TabItem value="macos" label="macOS">
+
+```shell
+echo 'export SOME_VARIABLE=some-value' >> ~/.profile
+```
+
+  </TabItem>
+  <TabItem value="linux" label="Linux">
+
+```shell
+echo 'export SOME_VARIABLE=some-value' >> ~/.profile
+```
+
+  </TabItem>
+  <TabItem value="windows" label="Windows">
+
+```shell
+setx SOME_VARIABLE some-value
+```
+
+  </TabItem>
+</OsTabs>
+
+### Unset an environment variable
+
+<OsTabs>
+  <TabItem value="macos" label="macOS">
 
 ```shell
 unset SOME_VARIABLE
 ```
 
-`echo` will print nothing after `unset`:
+  </TabItem>
+  <TabItem value="linux" label="Linux">
 
 ```shell
-echo $SOME_VARIABLE
+unset SOME_VARIABLE
 ```
 
-#### See all the currently set environment variables
+  </TabItem>
+  <TabItem value="windows" label="Windows">
+
+```shell title="Command Prompt"
+set SOME_VARIABLE=
+```
+
+```shell title="PowerShell"
+Remove-Item Env:\SOME_VARIABLE
+```
+
+  </TabItem>
+</OsTabs>
+
+On macOS or Linux, `echo $SOME_VARIABLE` will print nothing once the variable has
+been unset.
+
+### See all the currently set environment variables
 
 :::caution
 
@@ -192,82 +384,67 @@ Do not print environment variables in CI runs where logs are captured and stored
 
 :::
 
-Print all env vars:
+<OsTabs>
+  <TabItem value="macos" label="macOS">
 
 ```shell
 env
 ```
 
-Print environment variables with `proxy` (case insensitive) in the name:
+  </TabItem>
+  <TabItem value="linux" label="Linux">
+
+```shell
+env
+```
+
+  </TabItem>
+  <TabItem value="windows" label="Windows">
+
+```shell title="Command Prompt"
+set
+```
+
+```shell title="PowerShell"
+Get-ChildItem Env:
+```
+
+  </TabItem>
+</OsTabs>
+
+### See the environment variables containing "proxy"
+
+<OsTabs>
+  <TabItem value="macos" label="macOS">
 
 ```shell
 env | grep -i proxy
 ```
 
-### Windows
-
-Setting environment variables in Windows is different depending on if you're
-using _command prompt_ or _PowerShell_.
-
-#### Set an environment variable for current session
-
-_Command prompt:_
+  </TabItem>
+  <TabItem value="linux" label="Linux">
 
 ```shell
-set SOME_VARIABLE=some-value
+env | grep -i proxy
 ```
 
-_PowerShell:_
+  </TabItem>
+  <TabItem value="windows" label="Windows">
 
-```shell
-$env:SOME_VARIABLE = "some-value"
+```shell title="Command Prompt"
+set | findstr /I proxy
 ```
 
-#### Set environment variable globally for all future sessions
-
-```shell
-setx SOME_VARIABLE some-value
+```shell title="PowerShell"
+Get-ChildItem Env: | Where-Object Name -Match 'proxy'
 ```
 
-#### Unset an environment variable in the current session
+  </TabItem>
+</OsTabs>
 
-_Command prompt:_
+## See also
 
-```shell
-set SOME_VARIABLE=
-```
-
-_PowerShell:_
-
-```shell
-Remove-Item Env:\SOME_VARIABLE
-```
-
-#### See all currently set environment variables
-
-_Command prompt:_
-
-```shell
-set
-```
-
-_PowerShell:_
-
-```shell
-Get-ChildItem Env:
-```
-
-## View proxy settings in Cypress
-
-Your current proxy settings can be viewed from within Cypress. Follow these
-steps:
-
-1. Open up your project in Cypress via `cypress open`.
-2. Click the "Settings" tab.
-3. Click the "Proxy Settings" section to expand it and view the proxy settings
-   that Cypress is currently using.
-
-<DocsImage
-  src="/img/app/configuration/test-runner-settings-proxy-configuration.jpg"
-  alt="Proxy configuration in the Desktop app"
-/>
+- [Environment Variables](/app/guides/environment-variables)
+- [Configuration](/app/references/configuration)
+- [Command Line](/app/references/command-line)
+- [Cypress Cloud](/cloud/get-started/introduction)

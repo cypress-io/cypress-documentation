@@ -1,4 +1,4 @@
-const URLs: Array<string> = Cypress.env('URLs')
+const URLs: Array<string> = Cypress.expose('URLs')
 
 // Mostly this is to get a UI Coverage and Accessibility report
 describe('Visit all Cloud pages', () => {
