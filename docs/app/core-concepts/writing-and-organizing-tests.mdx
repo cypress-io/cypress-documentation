@@ -220,8 +220,24 @@ support file locations:
 
 :::
 
+#### Organizing imports
+
 From your support file you can `import` or `require` other files to keep things
 organized as it grows.
+
+:::caution
+
+Keep your support file lean. Cypress bundles the support file and everything it
+imports, then loads that bundle **before every single spec file**, so the cost
+of anything you import there is paid on every spec run. Avoid importing large
+modules or anything that isn't needed for testing (especially Node.js-only code
+like database drivers or `fs`, which can't run in the browser). Import heavy or
+spec-specific code directly in the spec files that need it instead.
+
+See [Keep support and spec imports lean](/app/guides/test-performance#Keep-support-and-spec-imports-lean)
+in the test performance guide for examples.
+
+:::
 
 Because the support file runs first, it's a convenient place to define `before`
 or `beforeEach` behavior that should apply to every spec:
