@@ -40,7 +40,7 @@ already set up and focuses on how it works.
 
 :::
 
-## Anatomy of a Cypress Test
+## Anatomy of a Cypress test
 
 The best way to understand Cypress is to read a test. Notice how little code it
 takes, and how closely it reads like a description of what a user does:
@@ -93,9 +93,9 @@ elements, then you **interact** with them, then you **assert** about the result.
 After that, we'll explain the chaining and asynchronous model that ties it all
 together.
 
-## Querying Elements
+## Querying elements {#Querying-Elements}
 
-### Selecting Elements
+### Selecting elements
 
 You query for elements with [`cy.get()`](/api/commands/get), using the same CSS
 selectors you already use in the browser:
@@ -137,7 +137,7 @@ const element = cy.get('.element')
 Instead, Cypress yields the element to the next command in the chain. That
 difference is the key to everything Cypress does for you. Let's look at why.
 
-### Cypress Retries Queries Automatically
+### Cypress retries queries automatically {#Cypress-Retries-Queries-Automatically}
 
 What happens when a query can't find any matching elements yet? In many testing
 tools, the query returns immediately with nothing, leaving you to add conditional
@@ -212,7 +212,7 @@ functionality entirely and perform traditional synchronous work, use
 
 :::
 
-### Querying by Text Content
+### Querying by text content
 
 There's a more human way to locate elements: by the text a user actually sees on
 the page. The [`cy.contains()`](/api/commands/contains) command does exactly
@@ -241,7 +241,7 @@ consider the implications of using user-facing text to find DOM elements!
 
 :::
 
-## Interacting with Elements
+## Interacting with elements
 
 Once you've queried an element, you'll want to act on it. Cypress lets you click
 on and type into elements by chaining the [`.click()`](/api/commands/click) and
@@ -366,7 +366,7 @@ To express this with an assertion you'd write:
 cy.request('/users/1').its('body').should('deep.eq', { name: 'Jane' })
 ```
 
-### When To Assert?
+### When to assert?
 
 Cypress gives you dozens of assertions, yet sometimes the best test makes no
 explicit assertions at all. How can that be? Aren't assertions the whole point of
@@ -416,7 +416,7 @@ you a high level of confidence that your application is working as expected.
 
 :::
 
-### Implicit Assertions
+### Implicit assertions {#Implicit-Assertions}
 
 Many commands carry default, built-in assertions: requirements that can fail a
 test even when you haven't written an explicit assertion yourself.
@@ -466,7 +466,7 @@ DOM query.
 When you need to, most commands let you override or bypass these default failure
 conditions, typically by passing a `{force: true}` option.
 
-#### Example #1: Existence and Actionability
+#### Example #1: Existence and actionability
 
 ```js
 cy
@@ -483,7 +483,7 @@ Cypress will automatically _wait_ for elements to pass their implicit
 assertions. See [Timeouts](#Timeouts) below for more on how timeouts are
 determined.
 
-#### Example #2: Reversing the Implicit Assertion
+#### Example #2: Reversing the implicit assertion
 
 Most of the time you expect a queried element to eventually exist. But sometimes
 you want to wait until it _doesn't_.
@@ -512,7 +512,7 @@ If you want to disable the default existence assertion, you can add
 
 :::
 
-#### Example #3: Other Implicit Assertions
+#### Example #3: Other implicit assertions
 
 Other commands have other implicit assertions not related to the DOM.
 
@@ -532,7 +532,7 @@ setTimeout(() => {
 cy.wrap(obj).its('foo')
 ```
 
-### List of Assertions
+### List of assertions
 
 Cypress bundles [Chai](/app/references/bundled-libraries#Chai),
 [Chai-jQuery](/app/references/bundled-libraries#Chai-jQuery), and
@@ -542,7 +542,7 @@ built-in assertions. You can see a comprehensive list of them in
 [write your own assertions as Chai plugins](/app/references/recipes#Fundamentals) and
 use them in Cypress.
 
-### Writing Assertions
+### Writing assertions
 
 There are two ways to write assertions in Cypress:
 
@@ -550,7 +550,7 @@ There are two ways to write assertions in Cypress:
    [`.and()`](/api/commands/and).
 2. **As Mocha Assertions:** Using `expect`.
 
-### Command Assertions
+### Command assertions
 
 Using [`.should()`](/api/commands/should) or [`.and()`](/api/commands/and) is the
 preferred way to assert in Cypress. They're ordinary Cypress commands, so they
@@ -577,7 +577,7 @@ Because [`.should('have.class')`](/api/commands/should) doesn't change the
 subject, [`.and('have.attr')`](/api/commands/and) runs against the same element.
 This makes it quick to assert several things about a single subject.
 
-### Mocha Assertions
+### Mocha assertions
 
 Using `expect` lets you assert on any JavaScript object, not just the current
 subject. This is likely how you're used to writing assertions in unit tests:
@@ -658,7 +658,7 @@ term for this means your code must be **idempotent**.
 
 :::
 
-## Chaining Commands and Subjects
+## Chaining commands and subjects {#Chaining-Commands-and-Subjects}
 
 You've now seen the three building blocks of a test: querying, interacting, and
 asserting. They work together because Cypress chains commands, with each command
@@ -667,7 +667,7 @@ chain on your behalf, and the chain continues until it ends or an error is
 encountered. You never need to work with Promises directly, but knowing what's
 happening under the hood will make your tests easier to reason about.
 
-### Subject Management
+### Subject management {#Subject-Management}
 
 Every Cypress chain begins with `cy.[command]`. What that first command _yields_
 determines which commands you can chain next.
@@ -745,7 +745,7 @@ you to **store** and **save** references for future use.
 
 :::
 
-### Using [`.then()`](/api/commands/then) To Act On A Subject
+### Using [`.then()`](/api/commands/then) to act on a subject
 
 Need to step into the command flow and work with the subject directly? Add a
 [`.then()`](/api/commands/then) to your chain. Once the previous command
@@ -789,7 +789,7 @@ and what aliasing is.
 
 :::
 
-### Using Aliases to Refer to Previous Subjects
+### Using aliases to refer to previous subjects
 
 [Aliases](/app/core-concepts/variables-and-aliases) give you a clean way to
 refer back to a subject later in your test. It looks something like this:
@@ -810,13 +810,13 @@ re-queries the DOM each time you reference one. This is especially valuable with
 modern front-end frameworks that re-render frequently. Your alias always points at
 the current element, not a stale one.
 
-## How Cypress Runs Commands
+## How Cypress runs commands
 
 The chaining you just saw works the way it does because of how Cypress executes
 commands: asynchronously, serially, and through a central queue. This section
 explains that model and the design decisions that flow from it.
 
-### Commands Are Asynchronous
+### Commands are asynchronous {#Commands-Are-Asynchronous}
 
 Here's the most important thing to internalize: Cypress commands don't do
 anything the moment you call them. Instead, each command adds itself to a queue
@@ -848,7 +848,7 @@ it('hides the thing when it is clicked', () => {
 
 Cypress doesn't kick off the browser automation until the test function exits.
 
-#### Mixing Async and Sync Code
+#### Mixing async and sync code
 
 This matters most when you mix Cypress commands with plain synchronous code. The
 synchronous code runs _immediately_, before any of the queued Cypress commands
@@ -1013,7 +1013,7 @@ later in this guide.
 
 :::
 
-#### Avoid Loops
+#### Avoid loops
 
 For the same reason, JavaScript loops like `while` can produce surprising
 results. Suppose our application shows a random number on load, and we want the
@@ -1094,7 +1094,7 @@ The test runs and correctly finishes.
   alt="Test reloads the page until the number 7 appears"
 />
 
-### Commands Run Serially
+### Commands run serially {#Commands-Run-Serially}
 
 Once your test function finishes running, Cypress goes to work executing the
 commands you queued up with the `cy.*` chains, one at a time, in order.
@@ -1177,7 +1177,7 @@ the timeout is reached, the test will fail.
 
 :::
 
-### The Cypress Command Queue
+### The Cypress command queue {#The-Cypress-Command-Queue}
 
 The `.then()` syntax may look like Promises, but Cypress commands and queries
 _are not_ Promises. They're serial commands added to a central queue and executed
@@ -1299,7 +1299,7 @@ just in case".
 
 :::
 
-### Applying Timeouts
+### Applying timeouts
 
 You can change a command's timeout, which affects both its default assertions (if
 any) and any assertions you've chained onto it.
@@ -1307,7 +1307,7 @@ any) and any assertions you've chained onto it.
 Because assertions describe a condition of the _previous_ command, the `timeout`
 goes on that command, **not** on the assertion.
 
-#### Example #1: Implicit Assertion
+#### Example #1: Implicit assertion
 
 ```js
 // because .get() has an implicit assertion
@@ -1321,7 +1321,7 @@ Under the hood Cypress:
 
   ✨**and waits up to 4 seconds for it to exist in the DOM**✨
 
-#### Example #2: Additional Assertions
+#### Example #2: Additional assertions
 
 ```js
 // we've added 2 assertions to our test
@@ -1342,7 +1342,7 @@ seconds).
 Timeouts can be modified per command and this will affect all implicit
 assertions and any assertions chained after that command.
 
-#### Example #3: Modifying Timeouts
+#### Example #3: Modifying timeouts
 
 ```js
 // we've modified the timeout which affects the implicit
@@ -1379,7 +1379,7 @@ assertions!
 
 :::
 
-### Default Values
+### Default values
 
 Cypress uses different default timeouts depending on the command, chosen to match
 how long each kind of action realistically takes.
