@@ -302,15 +302,6 @@ process before the project is loaded, before the browser launches, and during
 your test run, and your tests reach it through the
 [cy.task()](/api/commands/task) command.
 
-:::info
-
-In Cypress versions before 10, this code lived in a separate **plugins file**
-(`cypress/plugins/index.js` by default). Cypress now consolidates that logic
-into `setupNodeEvents` in the configuration file. If you're upgrading, see the
-[migration guide](/app/references/migration-guide#Plugins-File-Removed).
-
-:::
-
 This is where you tap into [Node events](/api/node-events/overview) to do things
 like control how spec files are bundled with
 [preprocessors](/api/node-events/preprocessors-api), find and launch browsers
