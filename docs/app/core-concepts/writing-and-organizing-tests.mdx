@@ -200,19 +200,8 @@ path. By default it looks for:
 
 #### Execution
 
-Cypress executes the support file before the spec file. For example, when
-Cypress executes a spec file via `cypress open` or `cypress run`, it executes
-the files in the following order:
-
-**e2e example:**
-
-1. `support/e2e.js` (your support file)
-2. `e2e/spec-a.cy.js` (your spec file)
-
-**component example:**
-
-1. `support/component.js` (your support file)
-2. `components/Button/Button.cy.js` (your spec file)
+When Cypress runs a spec file via `cypress open` or `cypress run`, it loads the
+support file first and then the spec file.
 
 #### supportFile per testing type
 
