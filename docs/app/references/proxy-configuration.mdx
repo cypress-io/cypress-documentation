@@ -271,15 +271,6 @@ Cypress is currently using:
   alt="Proxy configuration in the Desktop app"
 />
 
-:::note
-
-The "Proxy Settings" section only displays the proxy resolved from `HTTP_PROXY`
-and the bypass list resolved from `NO_PROXY`. `HTTPS_PROXY` is not shown here, so
-a separate HTTPS proxy will not appear in this view even though Cypress still
-uses it.
-
-:::
-
 You can also check your proxy settings from the command line. Running
 `cypress info` prints the `HTTP_PROXY`, `HTTPS_PROXY`, and `NO_PROXY` values
 Cypress detects, which is a useful alternative to the Settings UI, especially in
