@@ -20,7 +20,7 @@ it.
 Cypress was built to solve the most frustrating part of end-to-end and component
 testing: **flake**. Traditional tools force you to scatter manual waits, retries,
 and null checks throughout your tests just to keep them stable. Cypress takes a
-different approach—it understands that web applications are asynchronous, so it
+different approach. It understands that web applications are asynchronous, so it
 **automatically waits and retries** until your application reaches the state you
 expect.
 
@@ -87,7 +87,7 @@ Can you read this? If you did, it might sound something like this:
 :::
 
 This is a relatively straightforward test, but consider how much of your
-application it exercises—every layer from the UI down to the server!
+application it exercises: every layer from the UI down to the server!
 
 For the rest of this guide, we'll unpack the rules of Cypress that make this
 example work. You'll learn how to write tests that behave as much like a real
@@ -151,7 +151,7 @@ That difference is the key to everything Cypress does for you. Let's look at why
 its selector?
 
 **Answer:** _Oops!_ It returns an empty jQuery collection. We get a real object
-to work with, but it doesn't contain the element we wanted—so the burden falls on
+to work with, but it doesn't contain the element we wanted, so the burden falls on
 us to add conditional checks and retry our queries by hand.
 
 ```js
@@ -213,7 +213,7 @@ In other tools, you'd be forced to defend against every one of these with a
 brittle mashup of arbitrary waits, conditional retries, and null checks
 littering your tests. Not in Cypress. With built-in retrying and
 [customizable timeouts](/app/references/configuration#Timeouts), Cypress handles
-all of this for you—so the flake simply never appears.
+all of this for you, so the flake simply never appears.
 
 :::tip
 
@@ -251,7 +251,7 @@ cy.get('.main').contains('New Post')
 ```
 
 This is exactly how a real user thinks about your app. They know they want to
-click the button labeled "Submit"—they have no idea (or interest) that it has a
+click the button labeled "Submit". They have no idea (or interest) that it has a
 `type` attribute of `submit` or a CSS class of `my-submit-button`. Testing the
 way a user experiences your app makes your tests more meaningful and more
 resilient to refactors.
@@ -327,7 +327,7 @@ As we saw in the first example, Cypress lets you click on and type into elements
 by chaining the [`.click()`](/api/commands/click) and
 [`.type()`](/api/commands/type) action commands onto a
 [`cy.get()`](/api/commands/get) or [`cy.contains()`](/api/commands/contains)
-query. This is chaining in action—let's look at it again:
+query. This is chaining in action. Let's look at it again:
 
 ```js
 cy.get('textarea.post-body').type('This is an excellent post.')
@@ -351,7 +351,7 @@ Here are even more action commands Cypress provides to interact with your app:
 
 Before performing their actions, these commands enforce a set of
 [guarantees](/app/core-concepts/interacting-with-elements) about the state the
-element must be in—just like a real user could only interact with something they
+element must be in, just like a real user could only interact with something they
 can actually see and reach.
 
 For example, before a [`.click()`](/api/commands/click) runs, Cypress
@@ -377,7 +377,7 @@ Cypress provides a simple but powerful algorithm when
 
 ### Asserting About Elements
 
-Assertions let you describe the _desired_ state of your application—that an
+Assertions let you describe the _desired_ state of your application: that an
 element is visible, or has a particular attribute, CSS class, or value. Rather
 than checking a condition once, Cypress automatically waits until your elements
 reach the state you describe, and only fails the test if they never do. Here's a
@@ -393,7 +393,7 @@ cy.get('input').should('not.have.value', 'US')
 
 In each of these examples, Cypress automatically _waits_ until the assertion
 passes. You never have to know or care about the precise moment your elements
-reach the expected state—Cypress figures that out for you.
+reach the expected state. Cypress figures that out for you.
 
 We will learn more about [assertions](#Assertions) later in this guide.
 
@@ -483,7 +483,7 @@ resolves, Cypress calls your callback with the yielded subject as its first
 argument.
 
 To keep chaining commands after your [`.then()`](/api/commands/then), return the
-subject you want to pass along—any value other than `null` or `undefined`.
+subject you want to pass along: any value other than `null` or `undefined`.
 Cypress yields that return value to the next command for you.
 
 #### Let's look at an example:
@@ -537,7 +537,7 @@ cy.get('@myElement') // re-queries the DOM as before
 
 Aliases let you reuse queries for more readable tests, and Cypress automatically
 re-queries the DOM each time you reference one. This is especially valuable with
-modern front-end frameworks that re-render frequently—your alias always points at
+modern front-end frameworks that re-render frequently. Your alias always points at
 the current element, not a stale one.
 
 ### Commands Are Asynchronous
@@ -576,7 +576,7 @@ Cypress doesn't kick off the browser automation until the test function exits.
 
 This matters most when you mix Cypress commands with plain synchronous code. The
 synchronous code runs _immediately_, before any of the queued Cypress commands
-above it have executed—which is rarely what you want.
+above it have executed, which is rarely what you want.
 
 <Icon name="exclamation-triangle" color="red" /> **Incorrect usage**
 
@@ -775,7 +775,7 @@ while (!found7) {
 ```
 
 The `while` loop never finishes, so the test function never returns control to
-Cypress—which means not even the first `cy.get('#result')` ever runs. The command
+Cypress, which means not even the first `cy.get('#result')` ever runs. The command
 queue just grows forever until the browser crashes.
 
 <Icon name="check-circle" color="green" /> **Correct test**
@@ -821,7 +821,7 @@ The test runs and correctly finishes.
 ### Commands Run Serially
 
 Once your test function finishes running, Cypress goes to work executing the
-commands you queued up with the `cy.*` chains—one at a time, in order.
+commands you queued up with the `cy.*` chains, one at a time, in order.
 
 #### Let's take another look at an example
 
@@ -885,7 +885,7 @@ quickly you'll never see them pending; others may take seconds, or even dozens o
 seconds, to resolve.
 
 Most commands time out after a few seconds, but commands that are expected to
-take longer—like [`cy.visit()`](/api/commands/visit)—naturally wait longer before
+take longer, like [`cy.visit()`](/api/commands/visit), naturally wait longer before
 timing out.
 
 These commands have their own particular timeout values which are documented in
@@ -910,7 +910,7 @@ repeatable, and consistent.
 
 Almost every command comes with built-in
 **[retry-ability](/app/core-concepts/retry-ability)**. Without it, assertions
-would fire at the wrong moment and fail at random—the very definition of a flaky
+would fire at the wrong moment and fail at random, the very definition of a flaky
 test.
 
 :::info
@@ -930,7 +930,7 @@ limitations:
 2. You cannot add a `.catch` error handler to a failed command.
 
 Cypress exists to give you consistent, non-flaky tests that behave identically
-from one run to the next. That guarantee isn't free—it comes with a few
+from one run to the next. That guarantee isn't free. It comes with a few
 trade-offs that may feel unfamiliar at first if you're coming from Promises or
 other libraries.
 
@@ -950,7 +950,7 @@ A lot of Cypress commands _mutate_ the state of the browser in some way.
 - [`.click()`](/api/commands/click) causes your application to react to click
   events.
 
-None of these commands are _idempotent_—they all cause side effects. Running them
+None of these commands are _idempotent_; they all cause side effects. Running them
 in parallel would make the outcome unpredictable, so Cypress runs commands in a
 controlled, serial order to keep results consistent. And since e2e tests mimic
 the actions of a real user, this serial model is a natural fit: a real user works
@@ -959,7 +959,7 @@ one step at a time, too.
 #### You cannot add a `.catch` error handler to a failed command
 
 Cypress has no built-in error recovery from a failed command. A command
-_eventually_ passes, or it fails—and when it fails, the remaining commands don't
+_eventually_ passes, or it fails. When it fails, the remaining commands don't
 run and the test as a whole fails.
 
 You might be wondering:
@@ -968,7 +968,7 @@ You might be wondering:
 > does (or doesn't) exist, I choose what to do?
 
 Cypress avoids this kind of conditional control flow because it leads to
-non-deterministic tests—different runs behaving differently, which undermines the
+non-deterministic tests, where different runs behave differently, which undermines the
 very consistency that makes a test trustworthy. There are only a handful of
 specific situations where control flow with Cypress commands is appropriate.
 
@@ -989,7 +989,7 @@ Assertions describe the **desired** state of your **elements**, your
 What sets Cypress apart from other testing tools is that assertions
 **automatically retry**. Think of them as **guards**: you describe what your
 application _should_ look like, and Cypress will **block, wait, and retry** until
-it reaches that state—or fail the test if it never does.
+it reaches that state, or fail the test if it never does.
 
 ### Asserting in English
 
@@ -1009,7 +1009,7 @@ cy.get('button').should('have.class', 'active')
 ```
 
 This test will pass even if the `.active` class is applied asynchronously after
-some unknown delay—or even if the button disappears from the DOM for a while
+some unknown delay, or even if the button disappears from the DOM for a while
 (replaced by a loading spinner, say) before coming back.
 
 ```javascript
@@ -1040,7 +1040,7 @@ cy.request('/users/1').its('body').should('deep.eq', { name: 'Jane' })
 
 ### When To Assert?
 
-Cypress gives you dozens of assertions—yet sometimes the best test makes no
+Cypress gives you dozens of assertions, yet sometimes the best test makes no
 explicit assertions at all. How can that be? Aren't assertions the whole point of
 testing?
 
@@ -1090,7 +1090,7 @@ you a high level of confidence that your application is working as expected.
 
 ### Implicit Assertions
 
-Many commands carry default, built-in assertions—requirements that can fail a
+Many commands carry default, built-in assertions: requirements that can fail a
 test even when you haven't written an explicit assertion yourself.
 
 #### For instance:
@@ -1226,7 +1226,7 @@ There are two ways to write assertions in Cypress:
 
 Using [`.should()`](/api/commands/should) or [`.and()`](/api/commands/and) is the
 preferred way to assert in Cypress. They're ordinary Cypress commands, so they
-apply to the subject currently yielded in the chain—and, crucially, they
+apply to the subject currently yielded in the chain and, crucially, they
 automatically retry.
 
 ```javascript
@@ -1336,7 +1336,7 @@ Almost every command can time out in some way, and retrying can't continue
 forever. A timeout is the upper bound on how long Cypress will wait and retry
 before giving up and failing the test.
 
-All assertions—whether built-in or added by you—share the timeout of the command
+All assertions, whether built-in or added by you, share the timeout of the command
 they're attached to.
 
 ### Applying Timeouts
@@ -1444,5 +1444,5 @@ default.
 
 ## Next steps
 
-- [Best Practices](/app/core-concepts/best-practices) — put what you've learned into practice with Cypress conventions for selectors, state management, and test structure.
-- [Cypress AI Skills](/app/tooling/ai-skills) — use your AI coding tool to write and review Cypress tests with these concepts built in.
+- [Best Practices](/app/core-concepts/best-practices): put what you've learned into practice with Cypress conventions for selectors, state management, and test structure.
+- [Cypress AI Skills](/app/tooling/ai-skills): use your AI coding tool to write and review Cypress tests with these concepts built in.
