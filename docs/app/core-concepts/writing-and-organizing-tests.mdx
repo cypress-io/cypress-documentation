@@ -380,8 +380,9 @@ unique is kept.
 
 One consequence is that the same spec can produce assets at different paths
 depending on which other specs ran alongside it, because adding or removing
-specs can change the shared ancestor. The examples below show the same
-`one.cy.js` spec generating different paths for exactly this reason.
+specs can change the shared ancestor. The examples below show how the kept
+portion of the path changes with the set of specs in the run: first a single
+end-to-end spec, then two colocated component specs.
 
 **Example 1 — a single spec in the run**
 
@@ -397,22 +398,23 @@ against), so only the filename remains:
 - Generated video file
   - `cypress/videos/one.cy.js.mp4`
 
-**Example 2 — two specs in the run**
+**Example 2 — two component specs in the run**
 
-Now the two specs only share `cypress/e2e/path/to/`, so the differing tail of
-each path (`file/`) is preserved:
+Component specs usually sit right next to the components they test. Here the two
+specs only share `src/components/`, so the differing tail of each path
+(`Button/`, `inputs/Input/`) is preserved:
 
 - Spec files found
-  - `cypress/e2e/path/to/file/one.cy.js`
-  - `cypress/e2e/path/to/two.cy.js`
+  - `src/components/Button/Button.cy.tsx`
+  - `src/components/inputs/Input/Input.cy.tsx`
 - Common ancestor (calculated at runtime)
-  - `cypress/e2e/path/to/`
+  - `src/components/`
 - Generated screenshot files
-  - `cypress/screenshots/file/one.cy.js/your-screenshot.png`
-  - `cypress/screenshots/two.cy.js/your-screenshot.png`
+  - `cypress/screenshots/Button/Button.cy.tsx/your-screenshot.png`
+  - `cypress/screenshots/inputs/Input/Input.cy.tsx/your-screenshot.png`
 - Generated video files
-  - `cypress/videos/file/one.cy.js.mp4`
-  - `cypress/videos/two.cy.js.mp4`
+  - `cypress/videos/Button/Button.cy.tsx.mp4`
+  - `cypress/videos/inputs/Input/Input.cy.tsx.mp4`
 
 :::tip
 
