@@ -22,8 +22,6 @@ often with confusing errors:
   log in or record test runs.
 - `npm install cypress` can fail while downloading the Cypress binary.
 
-Telling Cypress about your proxy once resolves all of these.
-
 Proxy settings come into play at **two distinct moments**, and keeping them
 separate makes the rest of this page much clearer:
 
@@ -40,21 +38,13 @@ called out throughout this page.
 Cypress works with standard HTTP and HTTPS proxies. There are two exceptions to
 be aware of before you start:
 
-:::caution
-
 **Proxy Auto-Configuration (PAC) files are not supported.** If your organization
 uses a PAC file, contact a network administrator to ask which HTTP proxy you
 should use to access the general Internet, then use that proxy with Cypress.
 
-:::
-
-:::caution
-
 **SOCKS proxies are not supported.** As a workaround, set up a local HTTP proxy
 that points to your SOCKS proxy, then use that HTTP proxy with Cypress.
 [Read more about forwarding an HTTP proxy through SOCKS.](https://superuser.com/questions/423563/convert-http-requests-to-socks5)
-
-:::
 
 ## Set a proxy
 
