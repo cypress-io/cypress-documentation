@@ -843,15 +843,6 @@ the project, is detected. When a change is made, the active spec file, the
 support file, and any files they `import` (or `require`) are recompiled through
 the [preprocessor](/api/node-events/preprocessors-api) and the browser reloads.
 
-:::info
-
-The default `specPattern` and support file location refer to the
-[default configuration](/app/references/configuration#Folders--Files). If
-you've configured Cypress to use a different `specPattern` or support file then
-the files specific to your configuration will be watched.
-
-:::
-
 #### What isn't watched?
 
 Files that aren't part of the spec graph; this includes, but isn't limited to,
