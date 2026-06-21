@@ -668,6 +668,71 @@ on a test suite or specific test.
 You can run a single test file or group of tests by passing the `--spec` flag to
 [cypress run](/app/references/command-line#cypress-run).
 
+### <Icon name="angle-right" /> Where should I put my spec files, and how does Cypress find them?
+
+Cypress discovers spec files using the
+[`specPattern`](/app/references/configuration#e2e) configuration option, which
+defaults to `cypress/e2e/**/*.cy.{js,jsx,ts,tsx}` for end-to-end testing and
+`**/*.cy.{js,jsx,ts,tsx}` for component testing. Any file anywhere in your
+project that matches `specPattern` is picked up, so you're free to organize
+specs into whatever folder structure suits your team. See
+[How Cypress finds your specs](/app/core-concepts/writing-and-organizing-tests#How-Cypress-finds-your-specs)
+for details.
+
+### <Icon name="angle-right" /> What hooks does Cypress support, and in what order do they run?
+
+Cypress uses [Mocha](https://mochajs.org/)'s hooks: `before`, `beforeEach`,
+`afterEach`, and `after`. `before` and `after` run once per suite, while
+`beforeEach` and `afterEach` run around every test. For the full execution order,
+including how hooks interleave with tests, see
+[Hooks](/app/core-concepts/writing-and-organizing-tests#Hooks).
+
+### <Icon name="angle-right" /> What's the difference between a pending test and a skipped test?
+
+A **pending** test is one you intentionally left out of the run — it has no body,
+it's marked with `.skip` / `xit`, or it's restricted to a browser you aren't
+currently running. A **skipped** test is one Cypress _meant_ to run but couldn't
+because a `before`, `beforeEach`, or `afterEach` hook failed. See
+[Pending](/app/core-concepts/writing-and-organizing-tests#Pending) and
+[Skipped](/app/core-concepts/writing-and-organizing-tests#Skipped) for examples.
+
+### <Icon name="angle-right" /> Why does Cypress skip the rest of my tests when a hook fails?
+
+If a hook shared by a block of tests (such as a `beforeEach`) fails, Cypress
+marks the first test as **failed** and **skips** the remaining tests in that
+block. Because the same hook would fail identically for every test, re-running it
+would only produce the same failure. Fix the hook and the rest of the tests will
+run. See
+[Skipped](/app/core-concepts/writing-and-organizing-tests#Skipped).
+
+### <Icon name="angle-right" /> How do I stop Cypress from re-running my tests every time I save a file?
+
+When running with [cypress open](/app/references/command-line#cypress-open),
+Cypress watches your spec files and re-runs them on save. To turn this off, set
+[`watchForFileChanges`](/app/references/configuration#Global) to `false`:
+
+:::cypress-config-example
+
+```ts
+{
+  watchForFileChanges: false,
+}
+```
+
+:::
+
+Nothing is watched during
+[cypress run](/app/references/command-line#cypress-run), so this option only
+affects `cypress open`. See
+[Disable file watching](/app/core-concepts/writing-and-organizing-tests#Disable-file-watching).
+
+### <Icon name="angle-right" /> What's the difference between `describe`, `context`, `it`, and `specify`?
+
+Nothing functional — they're aliases provided by Mocha. `context` is an alias of
+`describe` (used to group tests into a suite), and `specify` is an alias of `it`
+(used to define an individual test). Use whichever reads best for your tests. See
+[Test Structure](/app/core-concepts/writing-and-organizing-tests#Test-Structure).
+
 ### <Icon name="angle-right" /> How do I test uploading a file?
 
 It is possible to upload files in your application but it's different based on
