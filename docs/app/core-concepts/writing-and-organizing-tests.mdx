@@ -392,7 +392,7 @@ specs can change the shared ancestor. The examples below show how the kept
 portion of the path changes with the set of specs in the run: first a single
 end-to-end spec, then two colocated component specs.
 
-**Example 1 — a single spec in the run**
+**Example 1: a single spec in the run**
 
 The spec's entire folder path is shared (there's nothing to compare it
 against), so only the filename remains:
@@ -406,7 +406,7 @@ against), so only the filename remains:
 - Generated video file
   - `cypress/videos/one.cy.js.mp4`
 
-**Example 2 — two component specs in the run**
+**Example 2: two component specs in the run**
 
 Component specs usually sit right next to the components they test. Here the two
 specs only share `src/components/`, so the differing tail of each path
@@ -874,8 +874,8 @@ configuration property to `false` to disable file watching:
 
 :::info
 
-This only applies to [cypress open](/app/references/command-line#cypress-open) —
-**nothing** is watched during
+This only applies to [cypress open](/app/references/command-line#cypress-open).
+**Nothing** is watched during
 [cypress run](/app/references/command-line#cypress-run), so the
 `watchForFileChanges` property has no effect there.
 
@@ -943,10 +943,10 @@ can be fixed.
 A **pending** test is one that Cypress intentionally doesn't run because you
 told it not to. A test ends up pending in three ways:
 
-- **It has no body** — a placeholder for a test you haven't written yet, such
+- **It has no body**: a placeholder for a test you haven't written yet, such
   as `it('is not written yet')`.
-- **It's explicitly skipped** — using `it.skip()` or the `xit()` alias.
-- **It's excluded from the current browser** — a test configured with the
+- **It's explicitly skipped**: using `it.skip()` or the `xit()` alias.
+- **It's excluded from the current browser**: a test configured with the
   `browser` option to run only in a browser you aren't currently using.
 
 Each of the four tests below is pending (the browser-specific one is pending
@@ -990,7 +990,7 @@ Unlike a pending test, which you deliberately leave out, a **skipped** test is
 one Cypress _meant_ to run but couldn't because a shared hook failed.
 
 Imagine a block of tests that all share a `beforeEach` hook, and that hook
-errors — for example, it visits a page that doesn't exist:
+errors. For example, it visits a page that doesn't exist:
 
 ```js
 beforeEach(() => {
