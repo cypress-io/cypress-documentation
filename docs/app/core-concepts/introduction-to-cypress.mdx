@@ -37,15 +37,15 @@ you'll be able to write reliable Cypress tests for almost any application.
 
 - The rules Cypress follows so you can productively test your application
 - How to query elements the way a real user finds them
-- How Cypress chains commands and why those commands are asynchronous
 - How to interact with elements and write assertions that automatically retry
+- How Cypress chains commands and why those commands are asynchronous
 
 :::
 
-## Cypress Can Be Simple (Sometimes)
+## Anatomy of a Cypress Test
 
-Simplicity is about getting more done with less code. Let's look at an
-example:
+The best way to understand Cypress is to read a test. Notice how little code it
+takes, and how closely it reads like a description of what a user does:
 
 :::visit-mount-example
 
@@ -90,8 +90,10 @@ This is a relatively straightforward test, but consider how much of your
 application it exercises: every layer from the UI down to the server!
 
 For the rest of this guide, we'll unpack the rules of Cypress that make this
-example work. You'll learn how to write tests that behave as much like a real
-user as possible, and when it makes sense to take shortcuts.
+example work. Each section maps to a step you saw above: first you **query** for
+elements, then you **interact** with them, then you **assert** about the result.
+After that, we'll explain the chaining and asynchronous model that ties it all
+together.
 
 ## Querying Elements
 
@@ -212,8 +214,8 @@ might fail at the exact moment you run it:
 In other tools, you'd be forced to defend against every one of these with a
 brittle mashup of arbitrary waits, conditional retries, and null checks
 littering your tests. Not in Cypress. With built-in retrying and
-[customizable timeouts](/app/references/configuration#Timeouts), Cypress handles
-all of this for you, so the flake simply never appears.
+[customizable timeouts](#Timeouts), Cypress handles all of this for you, so the
+flake simply never appears.
 
 :::tip
 
@@ -265,75 +267,19 @@ consider the implications of using user-facing text to find DOM elements!
 
 :::
 
-### When Elements Are Missing
+## Interacting with Elements
 
-As we saw above, Cypress anticipates the asynchronous nature of web applications
-and doesn't give up the first time an element isn't found. Instead, it gives your
-app a window of time to finish whatever it's doing before failing.
-
-That window is called a `timeout`, and most commands let you customize it
-([the default is 4 seconds](/app/references/configuration#Timeouts)). Any command
-that supports this lists a `timeout` option in its API documentation, telling you
-how to set the number of milliseconds Cypress should keep retrying before it
-gives up.
-
-```js
-// Give this element 10 seconds to appear
-cy.get('.my-slow-selector', { timeout: 10000 })
-```
-
-You can also set the timeout globally via the
-[configuration setting: `defaultCommandTimeout`](/app/references/configuration#Timeouts).
-
-:::tip
-
-<strong>Core Concept</strong>
-
-To match the behavior of web applications, Cypress is asynchronous and relies on
-timeouts to know when to stop waiting on an app to get into the expected state.
-Timeouts can be configured globally, or on a per-command basis.
-
-:::
-
-:::info
-
-<strong>Timeouts and Performance</strong>
-
-There is a performance tradeoff here: **tests that have longer timeout periods
-take longer to fail**. Commands always proceed as soon as their expected
-criteria is met, so working tests will be performed as fast as your application
-allows. A test that fails due to timeout will consume the entire timeout period,
-by design. This means that while you _may_ want to increase your timeout period
-to suit specific parts of your app, you _don't_ want to make it "extra long,
-just in case".
-
-:::
-
-Later in this guide we'll go into much more detail about
-[Implicit Assertions](#Implicit-Assertions) and [Timeouts](#Timeouts).
-
-## Chains of Commands
-
-Understanding how Cypress chains commands together is key to using it well.
-Behind the scenes, Cypress manages a Promise chain on your behalf: each command
-yields a _subject_ to the next command, and the chain continues until it ends or
-an error is encountered. You never need to work with Promises directly, but
-knowing what's happening under the hood will make your tests easier to reason
-about.
-
-### Interacting With Elements
-
-As we saw in the first example, Cypress lets you click on and type into elements
-by chaining the [`.click()`](/api/commands/click) and
+Once you've queried an element, you'll want to act on it. Cypress lets you click
+on and type into elements by chaining the [`.click()`](/api/commands/click) and
 [`.type()`](/api/commands/type) action commands onto a
 [`cy.get()`](/api/commands/get) or [`cy.contains()`](/api/commands/contains)
-query. This is chaining in action. Let's look at it again:
+query:
 
 ```js
 cy.get('textarea.post-body').type('This is an excellent post.')
 ```
 
-We're chaining [`.type()`](/api/commands/type) onto
+Here we're chaining [`.type()`](/api/commands/type) onto
 [`cy.get()`](/api/commands/get), telling it to type into the subject yielded
 from the [`cy.get()`](/api/commands/get) query, which will be a DOM element.
 
@@ -371,17 +317,21 @@ to bypass these checks, most action commands accept a `force` option.
 <strong>Core Concept</strong>
 
 Cypress provides a simple but powerful algorithm when
-[ interacting with elements.](/app/core-concepts/interacting-with-elements)
+[interacting with elements.](/app/core-concepts/interacting-with-elements)
 
 :::
 
-### Asserting About Elements
+## Assertions
 
-Assertions let you describe the _desired_ state of your application: that an
-element is visible, or has a particular attribute, CSS class, or value. Rather
-than checking a condition once, Cypress automatically waits until your elements
-reach the state you describe, and only fails the test if they never do. Here's a
-quick look at assertions in action:
+Assertions describe the **desired** state of your **elements**, your
+**objects**, and your **application**: that an element is visible, has a
+particular attribute or CSS class, or that an object holds a certain value.
+
+What sets Cypress apart from other testing tools is that assertions
+**automatically retry**. Think of them as **guards**: you describe what your
+application _should_ look like, and Cypress will **block, wait, and retry** until
+it reaches that state, or fail the test if it never does. Here's a quick look at
+assertions in action:
 
 ```js
 cy.get(':checkbox').should('be.disabled')
@@ -394,602 +344,6 @@ cy.get('input').should('not.have.value', 'US')
 In each of these examples, Cypress automatically _waits_ until the assertion
 passes. You never have to know or care about the precise moment your elements
 reach the expected state. Cypress figures that out for you.
-
-We will learn more about [assertions](#Assertions) later in this guide.
-
-### Subject Management
-
-Every Cypress chain begins with `cy.[command]`. What that first command _yields_
-determines which commands you can chain next.
-
-#### All commands yield a value.
-
-Each command specifies what value it yields. For example,
-
-- [`cy.clearCookies()`](/api/commands/clearcookies) yields `null`. You can chain
-  off commands that yield `null`, as long as the next command doesn't expect to
-  receive a subject.
-- [`cy.contains()`](/api/commands/contains) yields a DOM element, allowing
-  further commands to be chained (assuming they expect a DOM subject) like
-  [`.click()`](/api/commands/click) or even
-  [`cy.contains()`](/api/commands/contains) again.
-- [`.click()`](/api/commands/click) yields the same subject it was originally
-  given.
-
-#### Some commands require a previous subject.
-
-- [`.click()`](/api/commands/click) requires a DOM element from the previous
-  command.
-- [`.its()`](/api/commands/its) requires a subject, but it can be of any type.
-- [`cy.contains()`](/api/commands/contains) behaves differently depending on the
-  previous subject. If chained directly off of `cy`, or if the previous command
-  yielded `null`, it will look at the entire document. But if the subject is a
-  DOM element, it will only look inside that container.
-- [`cy.clearCookies()`](/api/commands/clearcookies) does not require a previous
-  subject - it can be chained off of anything.
-
-#### Examples:
-
-In practice, this is much more intuitive than it sounds.
-
-```js
-cy.clearCookies() // Yields null
-  .visit('/fixtures/dom.html') // Does not care about the previous subject.
-
-cy.get('.main-container') // Yields an array of matching DOM elements
-  .contains('Headlines') // Yields the first DOM element containing content
-  .click() // Yields same DOM element from previous command.
-```
-
-:::tip
-
-<strong>Core Concept</strong>
-
-Cypress commands do not **return** their subjects, they **yield** them.
-Remember: Cypress commands are asynchronous and get queued for execution at a
-later time. During execution, subjects are yielded from one command to the next,
-and a lot of helpful Cypress code runs between each command to ensure everything
-is in order.
-
-:::
-
-:::info
-
-<strong>Don't continue a chain after acting on the DOM</strong>
-
-While it's possible in Cypress to act on the DOM and then continue chaining,
-this is usually unsafe, and can lead to stale elements. See the
-[Retry-ability Guide](/app/core-concepts/retry-ability) for more details.
-
-But the rule of thumb is simple: If you perform an action, like navigating the
-page, clicking a button or scrolling the viewport, end the chain of commands
-there and start fresh from `cy`.
-
-:::
-
-:::info
-
-To work around the need to reference elements, Cypress has a feature
-[known as aliasing](/app/core-concepts/variables-and-aliases). Aliasing helps
-you to **store** and **save** references for future use.
-
-:::
-
-#### Using [`.then()`](/api/commands/then) To Act On A Subject
-
-Need to step into the command flow and work with the subject directly? Add a
-[`.then()`](/api/commands/then) to your chain. Once the previous command
-resolves, Cypress calls your callback with the yielded subject as its first
-argument.
-
-To keep chaining commands after your [`.then()`](/api/commands/then), return the
-subject you want to pass along: any value other than `null` or `undefined`.
-Cypress yields that return value to the next command for you.
-
-#### Let's look at an example:
-
-```js
-cy
-  // Find the el with id 'some-link'
-  .get('#some-link')
-
-  .then(($myElement) => {
-    // ...massage the subject with some arbitrary code
-
-    // grab its href property
-    const href = $myElement.prop('href')
-
-    // strip out the 'hash' character and everything after it
-    return href.replace(/(#.*)/, '')
-  })
-  .then((href) => {
-    // href is now the new subject
-    // which we can work with now
-  })
-```
-
-:::tip
-
-<strong>Core Concept</strong>
-
-We have many more examples and use cases of [cy.then()](/api/commands/then) in
-our [Core Concept Guide](/app/core-concepts/variables-and-aliases) that
-teaches you how to properly deal with asynchronous code, when to use variables,
-and what aliasing is.
-
-:::
-
-#### Using Aliases to Refer to Previous Subjects
-
-[Aliases](/app/core-concepts/variables-and-aliases) give you a clean way to
-refer back to a subject later in your test. It looks something like this:
-
-```js
-cy.get('.my-selector')
-  .as('myElement') // sets the alias
-  .click()
-
-/* many more actions */
-
-cy.get('@myElement') // re-queries the DOM as before
-  .click()
-```
-
-Aliases let you reuse queries for more readable tests, and Cypress automatically
-re-queries the DOM each time you reference one. This is especially valuable with
-modern front-end frameworks that re-render frequently. Your alias always points at
-the current element, not a stale one.
-
-### Commands Are Asynchronous
-
-Here's the most important thing to internalize: Cypress commands don't do
-anything the moment you call them. Instead, each command adds itself to a queue
-to be run later. This is what we mean when we say Cypress commands are
-asynchronous.
-
-#### Take this short test, for example:
-
-:::visit-mount-example
-
-```js
-it('hides the thing when it is clicked', () => {
-  -{cy.visit('/my/resource/path')::cy.mount(<MyComponent />)}- // Nothing happens yet
-
-  cy.get(".hides-when-clicked") // Still nothing happening
-    .should("be.visible") // Still absolutely nothing
-    .click() // Nope, nothing
-
-  cy.get('.hides-when-clicked') // Still nothing happening
-    .should('not.be.visible') // Definitely nothing happening yet
-})
-
-// Ok, the test function has finished executing...
-// We've queued all of these commands and now
-// Cypress will begin running them in order!
-```
-
-:::
-
-Cypress doesn't kick off the browser automation until the test function exits.
-
-#### Mixing Async and Sync code
-
-This matters most when you mix Cypress commands with plain synchronous code. The
-synchronous code runs _immediately_, before any of the queued Cypress commands
-above it have executed, which is rarely what you want.
-
-<Icon name="exclamation-triangle" color="red" /> **Incorrect usage**
-
-In the example below, the `el` evaluates immediately, before the `cy.visit()`
-has executed, so will always evaluate to an empty array.
-
-```js
-it('does not work as we expect', () => {
-  cy.visit('/my/resource/path') // Nothing happens yet
-
-  cy.get('.awesome-selector') // Still nothing happening
-    .click() // Nope, nothing
-
-  // Cypress.$ is synchronous, so evaluates immediately
-  // there is no element to find yet because
-  // the cy.visit() was only queued to visit
-  // and did not actually visit the application
-  let el = Cypress.$('.new-el') // evaluates immediately as []
-
-  if (el.length) {
-    // evaluates immediately as 0
-    cy.get('.another-selector')
-  } else {
-    // this will always run
-    // because the 'el.length' is 0
-    // when the code executes
-    cy.get('.optional-selector')
-  }
-})
-
-// Ok, the test function has finished executing...
-// We've queued all of these commands and now
-// Cypress will begin running them in order!
-```
-
-<Icon name="check-circle" color="green" /> **Correct usage**
-
-Below is one way the code above could be rewritten in order to ensure the
-commands run as expected.
-
-```js
-it('does not work as we expect', () => {
-  cy.visit('/my/resource/path') // Nothing happens yet
-
-  cy.get('.awesome-selector') // Still nothing happening
-    .click() // Nope, nothing
-    .then(() => {
-      // placing this code inside the .then() ensures
-      // it runs after the cypress commands 'execute'
-      let el = Cypress.$('.new-el') // evaluates after .then()
-
-      if (el.length) {
-        cy.get('.another-selector')
-      } else {
-        cy.get('.optional-selector')
-      }
-    })
-})
-
-// Ok, the test function has finished executing...
-// We've queued all of these commands and now
-// Cypress will begin running them in order!
-```
-
-<Icon name="exclamation-triangle" color="red" /> **Incorrect usage**
-
-In the example below, the check on the `username` value gets evaluated
-immediately, before the `cy.visit()` has executed, so will always evaluate to
-`undefined`.
-
-```js
-it('test', () => {
-  let username = undefined // evaluates immediately as undefined
-
-  cy.visit('https://example.cypress.io') // Nothing happens yet
-  cy.get('.user-name') // Still, nothing happens yet
-    .then(($el) => {
-      // Nothing happens yet
-      // this line evaluates after the .then executes
-      username = $el.text()
-    })
-
-  // this evaluates before the .then() above
-  // so the username is still undefined
-  if (username) {
-    // evaluates immediately as undefined
-    cy.contains(username).click()
-  } else {
-    // this will always run
-    // because username will always
-    // evaluate to undefined
-    cy.contains('My Profile').click()
-  }
-})
-
-// Ok, the test function has finished executing...
-// We've queued all of these commands and now
-// Cypress will begin running them in order!
-```
-
-<Icon name="check-circle" color="green" /> **Correct usage**
-
-Below is one way the code above could be rewritten in order to ensure the
-commands run as expected.
-
-```js
-it('test', () => {
-  let username = undefined // evaluates immediately as undefined
-
-  cy.visit('https://example.cypress.io') // Nothing happens yet
-  cy.get('.user-name') // Still, nothing happens yet
-    .then(($el) => {
-      // Nothing happens yet
-      // this line evaluates after the .then() executes
-      username = $el.text()
-
-      // evaluates after the .then() executes
-      // it's the correct value gotten from the $el.text()
-      if (username) {
-        cy.contains(username).click()
-      } else {
-        cy.get('My Profile').click()
-      }
-    })
-})
-
-// Ok, the test function has finished executing...
-// We've queued all of these commands and now
-// Cypress will begin running them in order!
-```
-
-:::tip
-
-<strong>Core Concept</strong>
-
-Each Cypress command (and chain of commands) returns immediately, having only
-been appended to a queue to be executed at a later time.
-
-You purposefully **cannot** do anything useful with the return value from a
-command. Commands are enqueued and managed entirely behind the scenes.
-
-We've designed our API this way because the DOM is a highly mutable object that
-constantly goes stale. For Cypress to prevent flake, and know when to proceed,
-we manage commands in a highly controlled deterministic way.
-
-:::
-
-:::info
-
-<strong>Why can't I use async / await?</strong>
-
-If you're a modern JS programmer you might hear "asynchronous" and think: **why
-can't I just use `async/await`** instead of learning some proprietary API?
-
-Cypress's APIs are built very differently from what you're likely used to: but
-these design patterns are incredibly intentional. We'll go into more detail
-later in this guide.
-
-:::
-
-#### Avoid loops
-
-For the same reason, JavaScript loops like `while` can produce surprising
-results. Suppose our application shows a random number on load, and we want the
-test to stop once it finds the number 7. If any other number appears, the test
-reloads the page and checks again.
-
-**Note:** you can find this application and the correct test in our
-[Recipes](https://github.com/cypress-io/cypress-example-recipes#testing-the-dom).
-
-<Icon name="exclamation-triangle" color="red" /> **Incorrect test**
-
-The test written below **WILL NOT work** and most likely will crash your browser.
-
-```js
-let found7 = false
-
-while (!found7) {
-  // this schedules an infinite number
-  // of "cy.get..." commands, eventually crashing
-  // before any of them have a chance to run
-  // and set found7 to true
-  cy.get('#result')
-    .should('not.be.empty')
-    .invoke('text')
-    .then((text) => parseInt(text, 10))
-    .then((number) => {
-      if (number === 7) {
-        found7 = true
-        cy.log('lucky **7**')
-      } else {
-        cy.reload()
-      }
-    })
-}
-```
-
-The `while` loop never finishes, so the test function never returns control to
-Cypress, which means not even the first `cy.get('#result')` ever runs. The command
-queue just grows forever until the browser crashes.
-
-<Icon name="check-circle" color="green" /> **Correct test**
-
-The fix is to let the queued commands actually run before deciding whether to
-continue. Recursion does exactly that.
-
-```js
-const checkAndReload = () => {
-  // get the element's text, convert into a number
-  cy.get('#result')
-    .should('not.be.empty')
-    .invoke('text')
-    .then((text) => parseInt(text, 10))
-    .then((number) => {
-      // if the expected number is found
-      // stop adding any more commands
-      if (number === 7) {
-        cy.log('lucky **7**')
-
-        return
-      }
-
-      // otherwise insert more Cypress commands
-      // by calling the function after reload
-      cy.wait(500, { log: false })
-      cy.reload()
-      checkAndReload()
-    })
-}
-
-cy.visit('public/index.html')
-checkAndReload()
-```
-
-The test runs and correctly finishes.
-
-<DocsImage
-  src="/img/app/core-concepts/lucky-7.gif"
-  alt="Test reloads the page until the number 7 appears"
-/>
-
-### Commands Run Serially
-
-Once your test function finishes running, Cypress goes to work executing the
-commands you queued up with the `cy.*` chains, one at a time, in order.
-
-#### Let's take another look at an example
-
-:::visit-mount-example
-
-```js
-it('hides the thing when it is clicked', () => {
-  -{cy.visit('/my/resource/path')::cy.mount(<MyComponent />)}- // 1.
-
-  cy.get('.hides-when-clicked') // 2
-    .should('be.visible') // 3
-    .click() // 4
-
-  cy.get('.hides-when-clicked') // 5
-    .should('not.be.visible') // 6
-});
-```
-
-:::
-
-The test above would cause an execution in this order:
-
-:::note
-
-1. Visit the URL (or mount the component).
-2. Find an element by its selector.
-3. Assert that the element is visible.
-4. Perform a click action on that element.
-5. Find an element by its selector.
-6. Assert that the element is no longer visible.
-
-:::
-
-These actions will always happen serially (one after the other), never in
-parallel (at the same time). Why?
-
-To illustrate this, let's revisit that list of actions and expose some of the
-hidden **✨ magic ✨** Cypress does for us at each step:
-
-:::note
-
-1. Visit the URL ✨ **and wait for the page load event to fire after all
-   external resources have loaded** ✨ (or mount the component ✨ **and wait for
-   the component to finish mounting** ✨)
-2. Find an element by its selector ✨ **and retry until it is found in the DOM**
-   ✨
-3. Assert that the element is visible ✨ **and retry until the assertion
-   passes** ✨
-4. Perform a click action on that element ✨ **after we wait for the element to
-   reach an actionable state** ✨
-5. Find an element by its selector ✨ **and retry until it is found in the DOM**
-   ✨
-6. Assert that the element is no longer visible ✨ **and retry until the
-   assertion passes** ✨
-
-:::
-
-As you can see, Cypress does a lot of work behind each step to ensure your
-application is in the state your commands expect. Some commands resolve so
-quickly you'll never see them pending; others may take seconds, or even dozens of
-seconds, to resolve.
-
-Most commands time out after a few seconds, but commands that are expected to
-take longer, like [`cy.visit()`](/api/commands/visit), naturally wait longer before
-timing out.
-
-These commands have their own particular timeout values which are documented in
-the [Cypress configuration](/app/references/configuration).
-
-:::tip
-
-<strong>Core Concept</strong>
-
-Any waiting or retrying that is necessary to ensure a step was successful must
-complete before the next step begins. If they don't complete successfully before
-the timeout is reached, the test will fail.
-
-:::
-
-### The Cypress Command Queue
-
-The `.then()` syntax may look like Promises, but Cypress commands and queries
-_are not_ Promises. They're serial commands added to a central queue and executed
-asynchronously, and that design is precisely what makes your tests deterministic,
-repeatable, and consistent.
-
-Almost every command comes with built-in
-**[retry-ability](/app/core-concepts/retry-ability)**. Without it, assertions
-would fire at the wrong moment and fail at random, the very definition of a flaky
-test.
-
-:::info
-
-While Cypress does have a [`.then()`](/api/commands/then) command, Cypress
-commands are not Promises and cannot be `await`ed. If you'd like to learn more
-about handling asynchronous Cypress Commands please read our
-[Variables and Aliases Guide](/app/core-concepts/variables-and-aliases).
-
-:::
-
-Because of this, Cypress makes a couple of design choices that may surprise
-developers used to Promise-based testing. These are intentional, not technical
-limitations:
-
-1. You cannot **race** or run multiple commands at the same time (in parallel).
-2. You cannot add a `.catch` error handler to a failed command.
-
-Cypress exists to give you consistent, non-flaky tests that behave identically
-from one run to the next. That guarantee isn't free. It comes with a few
-trade-offs that may feel unfamiliar at first if you're coming from Promises or
-other libraries.
-
-Let's look at each trade-off in depth:
-
-#### You cannot race or run multiple commands at the same time
-
-Cypress guarantees that it will execute all of its commands and queries
-_deterministically_ and identically every time they are run.
-
-A lot of Cypress commands _mutate_ the state of the browser in some way.
-
-- [`cy.request()`](/api/commands/request) automatically gets + sets cookies to
-  and from the remote server.
-- [`cy.clearCookies()`](/api/commands/clearcookies) clears all of the browser
-  cookies.
-- [`.click()`](/api/commands/click) causes your application to react to click
-  events.
-
-None of these commands are _idempotent_; they all cause side effects. Running them
-in parallel would make the outcome unpredictable, so Cypress runs commands in a
-controlled, serial order to keep results consistent. And since e2e tests mimic
-the actions of a real user, this serial model is a natural fit: a real user works
-one step at a time, too.
-
-#### You cannot add a `.catch` error handler to a failed command
-
-Cypress has no built-in error recovery from a failed command. A command
-_eventually_ passes, or it fails. When it fails, the remaining commands don't
-run and the test as a whole fails.
-
-You might be wondering:
-
-> How do I create conditional control flow, using if/else? So that if an element
-> does (or doesn't) exist, I choose what to do?
-
-Cypress avoids this kind of conditional control flow because it leads to
-non-deterministic tests, where different runs behave differently, which undermines the
-very consistency that makes a test trustworthy. There are only a handful of
-specific situations where control flow with Cypress commands is appropriate.
-
-That said, as long as you understand the pitfalls, it _is_ possible. You can read
-all about [conditional testing](/app/guides/conditional-testing) here.
-
-## Assertions
-
-As we mentioned previously in this guide:
-
-:::note
-
-Assertions describe the **desired** state of your **elements**, your
-**objects**, and your **application**.
-
-:::
-
-What sets Cypress apart from other testing tools is that assertions
-**automatically retry**. Think of them as **guards**: you describe what your
-application _should_ look like, and Cypress will **block, wait, and retry** until
-it reaches that state, or fail the test if it never does.
 
 ### Asserting in English
 
@@ -1044,7 +398,7 @@ Cypress gives you dozens of assertions, yet sometimes the best test makes no
 explicit assertions at all. How can that be? Aren't assertions the whole point of
 testing?
 
-#### Consider this example:
+**Consider this example:**
 
 :::visit-mount-example
 
@@ -1093,7 +447,7 @@ you a high level of confidence that your application is working as expected.
 Many commands carry default, built-in assertions: requirements that can fail a
 test even when you haven't written an explicit assertion yourself.
 
-#### For instance:
+For instance:
 
 - [`cy.visit()`](/api/commands/visit) expects the page to send `text/html`
   content with a `200` status code.
@@ -1330,14 +684,646 @@ term for this means your code must be **idempotent**.
 
 :::
 
+## Chaining Commands and Subjects
+
+You've now seen the three building blocks of a test: querying, interacting, and
+asserting. They work together because Cypress chains commands, with each command
+yielding a _subject_ to the next. Behind the scenes Cypress manages a Promise
+chain on your behalf, and the chain continues until it ends or an error is
+encountered. You never need to work with Promises directly, but knowing what's
+happening under the hood will make your tests easier to reason about.
+
+### Subject Management
+
+Every Cypress chain begins with `cy.[command]`. What that first command _yields_
+determines which commands you can chain next.
+
+#### All commands yield a value
+
+Each command specifies what value it yields. For example,
+
+- [`cy.clearCookies()`](/api/commands/clearcookies) yields `null`. You can chain
+  off commands that yield `null`, as long as the next command doesn't expect to
+  receive a subject.
+- [`cy.contains()`](/api/commands/contains) yields a DOM element, allowing
+  further commands to be chained (assuming they expect a DOM subject) like
+  [`.click()`](/api/commands/click) or even
+  [`cy.contains()`](/api/commands/contains) again.
+- [`.click()`](/api/commands/click) yields the same subject it was originally
+  given.
+
+#### Some commands require a previous subject
+
+- [`.click()`](/api/commands/click) requires a DOM element from the previous
+  command.
+- [`.its()`](/api/commands/its) requires a subject, but it can be of any type.
+- [`cy.contains()`](/api/commands/contains) behaves differently depending on the
+  previous subject. If chained directly off of `cy`, or if the previous command
+  yielded `null`, it will look at the entire document. But if the subject is a
+  DOM element, it will only look inside that container.
+- [`cy.clearCookies()`](/api/commands/clearcookies) does not require a previous
+  subject - it can be chained off of anything.
+
+**Examples**
+
+In practice, this is much more intuitive than it sounds.
+
+```js
+cy.clearCookies() // Yields null
+  .visit('/fixtures/dom.html') // Does not care about the previous subject.
+
+cy.get('.main-container') // Yields an array of matching DOM elements
+  .contains('Headlines') // Yields the first DOM element containing content
+  .click() // Yields same DOM element from previous command.
+```
+
+:::tip
+
+<strong>Core Concept</strong>
+
+Cypress commands do not **return** their subjects, they **yield** them.
+Remember: Cypress commands are asynchronous and get queued for execution at a
+later time. During execution, subjects are yielded from one command to the next,
+and a lot of helpful Cypress code runs between each command to ensure everything
+is in order.
+
+:::
+
+:::info
+
+<strong>Don't continue a chain after acting on the DOM</strong>
+
+While it's possible in Cypress to act on the DOM and then continue chaining,
+this is usually unsafe, and can lead to stale elements. See the
+[Retry-ability Guide](/app/core-concepts/retry-ability) for more details.
+
+But the rule of thumb is simple: If you perform an action, like navigating the
+page, clicking a button or scrolling the viewport, end the chain of commands
+there and start fresh from `cy`.
+
+:::
+
+:::info
+
+To work around the need to reference elements, Cypress has a feature
+[known as aliasing](/app/core-concepts/variables-and-aliases). Aliasing helps
+you to **store** and **save** references for future use.
+
+:::
+
+### Using [`.then()`](/api/commands/then) To Act On A Subject
+
+Need to step into the command flow and work with the subject directly? Add a
+[`.then()`](/api/commands/then) to your chain. Once the previous command
+resolves, Cypress calls your callback with the yielded subject as its first
+argument.
+
+To keep chaining commands after your [`.then()`](/api/commands/then), return the
+subject you want to pass along: any value other than `null` or `undefined`.
+Cypress yields that return value to the next command for you.
+
+**Let's look at an example:**
+
+```js
+cy
+  // Find the el with id 'some-link'
+  .get('#some-link')
+
+  .then(($myElement) => {
+    // ...massage the subject with some arbitrary code
+
+    // grab its href property
+    const href = $myElement.prop('href')
+
+    // strip out the 'hash' character and everything after it
+    return href.replace(/(#.*)/, '')
+  })
+  .then((href) => {
+    // href is now the new subject
+    // which we can work with now
+  })
+```
+
+:::tip
+
+<strong>Core Concept</strong>
+
+We have many more examples and use cases of [cy.then()](/api/commands/then) in
+our [Core Concept Guide](/app/core-concepts/variables-and-aliases) that
+teaches you how to properly deal with asynchronous code, when to use variables,
+and what aliasing is.
+
+:::
+
+### Using Aliases to Refer to Previous Subjects
+
+[Aliases](/app/core-concepts/variables-and-aliases) give you a clean way to
+refer back to a subject later in your test. It looks something like this:
+
+```js
+cy.get('.my-selector')
+  .as('myElement') // sets the alias
+  .click()
+
+/* many more actions */
+
+cy.get('@myElement') // re-queries the DOM as before
+  .click()
+```
+
+Aliases let you reuse queries for more readable tests, and Cypress automatically
+re-queries the DOM each time you reference one. This is especially valuable with
+modern front-end frameworks that re-render frequently. Your alias always points at
+the current element, not a stale one.
+
+## How Cypress Runs Commands
+
+The chaining you just saw works the way it does because of how Cypress executes
+commands: asynchronously, serially, and through a central queue. This section
+explains that model and the design decisions that flow from it.
+
+### Commands Are Asynchronous
+
+Here's the most important thing to internalize: Cypress commands don't do
+anything the moment you call them. Instead, each command adds itself to a queue
+to be run later. This is what we mean when we say Cypress commands are
+asynchronous.
+
+**Take this short test, for example:**
+
+:::visit-mount-example
+
+```js
+it('hides the thing when it is clicked', () => {
+  -{cy.visit('/my/resource/path')::cy.mount(<MyComponent />)}- // Nothing happens yet
+
+  cy.get(".hides-when-clicked") // Still nothing happening
+    .should("be.visible") // Still absolutely nothing
+    .click() // Nope, nothing
+
+  cy.get('.hides-when-clicked') // Still nothing happening
+    .should('not.be.visible') // Definitely nothing happening yet
+})
+
+// Ok, the test function has finished executing...
+// We've queued all of these commands and now
+// Cypress will begin running them in order!
+```
+
+:::
+
+Cypress doesn't kick off the browser automation until the test function exits.
+
+#### Mixing Async and Sync Code
+
+This matters most when you mix Cypress commands with plain synchronous code. The
+synchronous code runs _immediately_, before any of the queued Cypress commands
+above it have executed, which is rarely what you want.
+
+<Icon name="exclamation-triangle" color="red" /> **Incorrect usage**
+
+In the example below, the `el` evaluates immediately, before the `cy.visit()`
+has executed, so will always evaluate to an empty array.
+
+```js
+it('does not work as we expect', () => {
+  cy.visit('/my/resource/path') // Nothing happens yet
+
+  cy.get('.awesome-selector') // Still nothing happening
+    .click() // Nope, nothing
+
+  // Cypress.$ is synchronous, so evaluates immediately
+  // there is no element to find yet because
+  // the cy.visit() was only queued to visit
+  // and did not actually visit the application
+  let el = Cypress.$('.new-el') // evaluates immediately as []
+
+  if (el.length) {
+    // evaluates immediately as 0
+    cy.get('.another-selector')
+  } else {
+    // this will always run
+    // because the 'el.length' is 0
+    // when the code executes
+    cy.get('.optional-selector')
+  }
+})
+
+// Ok, the test function has finished executing...
+// We've queued all of these commands and now
+// Cypress will begin running them in order!
+```
+
+<Icon name="check-circle" color="green" /> **Correct usage**
+
+Below is one way the code above could be rewritten in order to ensure the
+commands run as expected.
+
+```js
+it('does not work as we expect', () => {
+  cy.visit('/my/resource/path') // Nothing happens yet
+
+  cy.get('.awesome-selector') // Still nothing happening
+    .click() // Nope, nothing
+    .then(() => {
+      // placing this code inside the .then() ensures
+      // it runs after the cypress commands 'execute'
+      let el = Cypress.$('.new-el') // evaluates after .then()
+
+      if (el.length) {
+        cy.get('.another-selector')
+      } else {
+        cy.get('.optional-selector')
+      }
+    })
+})
+
+// Ok, the test function has finished executing...
+// We've queued all of these commands and now
+// Cypress will begin running them in order!
+```
+
+<Icon name="exclamation-triangle" color="red" /> **Incorrect usage**
+
+In the example below, the check on the `username` value gets evaluated
+immediately, before the `cy.visit()` has executed, so will always evaluate to
+`undefined`.
+
+```js
+it('test', () => {
+  let username = undefined // evaluates immediately as undefined
+
+  cy.visit('https://example.cypress.io') // Nothing happens yet
+  cy.get('.user-name') // Still, nothing happens yet
+    .then(($el) => {
+      // Nothing happens yet
+      // this line evaluates after the .then executes
+      username = $el.text()
+    })
+
+  // this evaluates before the .then() above
+  // so the username is still undefined
+  if (username) {
+    // evaluates immediately as undefined
+    cy.contains(username).click()
+  } else {
+    // this will always run
+    // because username will always
+    // evaluate to undefined
+    cy.contains('My Profile').click()
+  }
+})
+
+// Ok, the test function has finished executing...
+// We've queued all of these commands and now
+// Cypress will begin running them in order!
+```
+
+<Icon name="check-circle" color="green" /> **Correct usage**
+
+Below is one way the code above could be rewritten in order to ensure the
+commands run as expected.
+
+```js
+it('test', () => {
+  let username = undefined // evaluates immediately as undefined
+
+  cy.visit('https://example.cypress.io') // Nothing happens yet
+  cy.get('.user-name') // Still, nothing happens yet
+    .then(($el) => {
+      // Nothing happens yet
+      // this line evaluates after the .then() executes
+      username = $el.text()
+
+      // evaluates after the .then() executes
+      // it's the correct value gotten from the $el.text()
+      if (username) {
+        cy.contains(username).click()
+      } else {
+        cy.get('My Profile').click()
+      }
+    })
+})
+
+// Ok, the test function has finished executing...
+// We've queued all of these commands and now
+// Cypress will begin running them in order!
+```
+
+:::tip
+
+<strong>Core Concept</strong>
+
+Each Cypress command (and chain of commands) returns immediately, having only
+been appended to a queue to be executed at a later time.
+
+You purposefully **cannot** do anything useful with the return value from a
+command. Commands are enqueued and managed entirely behind the scenes.
+
+We've designed our API this way because the DOM is a highly mutable object that
+constantly goes stale. For Cypress to prevent flake, and know when to proceed,
+we manage commands in a highly controlled deterministic way.
+
+:::
+
+:::info
+
+<strong>Why can't I use async / await?</strong>
+
+If you're a modern JS programmer you might hear "asynchronous" and think: **why
+can't I just use `async/await`** instead of learning some proprietary API?
+
+Cypress's APIs are built very differently from what you're likely used to: but
+these design patterns are incredibly intentional. We'll go into more detail
+later in this guide.
+
+:::
+
+#### Avoid Loops
+
+For the same reason, JavaScript loops like `while` can produce surprising
+results. Suppose our application shows a random number on load, and we want the
+test to stop once it finds the number 7. If any other number appears, the test
+reloads the page and checks again.
+
+**Note:** you can find this application and the correct test in our
+[Recipes](https://github.com/cypress-io/cypress-example-recipes#testing-the-dom).
+
+<Icon name="exclamation-triangle" color="red" /> **Incorrect test**
+
+The test written below **WILL NOT work** and most likely will crash your browser.
+
+```js
+let found7 = false
+
+while (!found7) {
+  // this schedules an infinite number
+  // of "cy.get..." commands, eventually crashing
+  // before any of them have a chance to run
+  // and set found7 to true
+  cy.get('#result')
+    .should('not.be.empty')
+    .invoke('text')
+    .then((text) => parseInt(text, 10))
+    .then((number) => {
+      if (number === 7) {
+        found7 = true
+        cy.log('lucky **7**')
+      } else {
+        cy.reload()
+      }
+    })
+}
+```
+
+The `while` loop never finishes, so the test function never returns control to
+Cypress, which means not even the first `cy.get('#result')` ever runs. The command
+queue just grows forever until the browser crashes.
+
+<Icon name="check-circle" color="green" /> **Correct test**
+
+The fix is to let the queued commands actually run before deciding whether to
+continue. Recursion does exactly that.
+
+```js
+const checkAndReload = () => {
+  // get the element's text, convert into a number
+  cy.get('#result')
+    .should('not.be.empty')
+    .invoke('text')
+    .then((text) => parseInt(text, 10))
+    .then((number) => {
+      // if the expected number is found
+      // stop adding any more commands
+      if (number === 7) {
+        cy.log('lucky **7**')
+
+        return
+      }
+
+      // otherwise insert more Cypress commands
+      // by calling the function after reload
+      cy.wait(500, { log: false })
+      cy.reload()
+      checkAndReload()
+    })
+}
+
+cy.visit('public/index.html')
+checkAndReload()
+```
+
+The test runs and correctly finishes.
+
+<DocsImage
+  src="/img/app/core-concepts/lucky-7.gif"
+  alt="Test reloads the page until the number 7 appears"
+/>
+
+### Commands Run Serially
+
+Once your test function finishes running, Cypress goes to work executing the
+commands you queued up with the `cy.*` chains, one at a time, in order.
+
+**Let's take another look at an example:**
+
+:::visit-mount-example
+
+```js
+it('hides the thing when it is clicked', () => {
+  -{cy.visit('/my/resource/path')::cy.mount(<MyComponent />)}- // 1.
+
+  cy.get('.hides-when-clicked') // 2
+    .should('be.visible') // 3
+    .click() // 4
+
+  cy.get('.hides-when-clicked') // 5
+    .should('not.be.visible') // 6
+});
+```
+
+:::
+
+The test above would cause an execution in this order:
+
+:::note
+
+1. Visit the URL (or mount the component).
+2. Find an element by its selector.
+3. Assert that the element is visible.
+4. Perform a click action on that element.
+5. Find an element by its selector.
+6. Assert that the element is no longer visible.
+
+:::
+
+These actions will always happen serially (one after the other), never in
+parallel (at the same time). Why?
+
+To illustrate this, let's revisit that list of actions and expose some of the
+hidden **✨ magic ✨** Cypress does for us at each step:
+
+:::note
+
+1. Visit the URL ✨ **and wait for the page load event to fire after all
+   external resources have loaded** ✨ (or mount the component ✨ **and wait for
+   the component to finish mounting** ✨)
+2. Find an element by its selector ✨ **and retry until it is found in the DOM**
+   ✨
+3. Assert that the element is visible ✨ **and retry until the assertion
+   passes** ✨
+4. Perform a click action on that element ✨ **after we wait for the element to
+   reach an actionable state** ✨
+5. Find an element by its selector ✨ **and retry until it is found in the DOM**
+   ✨
+6. Assert that the element is no longer visible ✨ **and retry until the
+   assertion passes** ✨
+
+:::
+
+As you can see, Cypress does a lot of work behind each step to ensure your
+application is in the state your commands expect. Some commands resolve so
+quickly you'll never see them pending; others may take seconds, or even dozens of
+seconds, to resolve.
+
+Most commands time out after a few seconds, but commands that are expected to
+take longer, like [`cy.visit()`](/api/commands/visit), naturally wait longer before
+timing out.
+
+These commands have their own particular timeout values which are documented in
+the [Cypress configuration](/app/references/configuration).
+
+:::tip
+
+<strong>Core Concept</strong>
+
+Any waiting or retrying that is necessary to ensure a step was successful must
+complete before the next step begins. If they don't complete successfully before
+the timeout is reached, the test will fail.
+
+:::
+
+### The Cypress Command Queue
+
+The `.then()` syntax may look like Promises, but Cypress commands and queries
+_are not_ Promises. They're serial commands added to a central queue and executed
+asynchronously, and that design is precisely what makes your tests deterministic,
+repeatable, and consistent.
+
+Almost every command comes with built-in
+**[retry-ability](/app/core-concepts/retry-ability)**. Without it, assertions
+would fire at the wrong moment and fail at random, the very definition of a flaky
+test.
+
+:::info
+
+While Cypress does have a [`.then()`](/api/commands/then) command, Cypress
+commands are not Promises and cannot be `await`ed. If you'd like to learn more
+about handling asynchronous Cypress Commands please read our
+[Variables and Aliases Guide](/app/core-concepts/variables-and-aliases).
+
+:::
+
+Because of this, Cypress makes a couple of design choices that may surprise
+developers used to Promise-based testing. These are intentional, not technical
+limitations:
+
+1. You cannot **race** or run multiple commands at the same time (in parallel).
+2. You cannot add a `.catch` error handler to a failed command.
+
+Cypress exists to give you consistent, non-flaky tests that behave identically
+from one run to the next. That guarantee isn't free. It comes with a few
+trade-offs that may feel unfamiliar at first if you're coming from Promises or
+other libraries.
+
+Let's look at each trade-off in depth:
+
+#### You cannot race or run multiple commands at the same time
+
+Cypress guarantees that it will execute all of its commands and queries
+_deterministically_ and identically every time they are run.
+
+A lot of Cypress commands _mutate_ the state of the browser in some way.
+
+- [`cy.request()`](/api/commands/request) automatically gets + sets cookies to
+  and from the remote server.
+- [`cy.clearCookies()`](/api/commands/clearcookies) clears all of the browser
+  cookies.
+- [`.click()`](/api/commands/click) causes your application to react to click
+  events.
+
+None of these commands are _idempotent_; they all cause side effects. Running them
+in parallel would make the outcome unpredictable, so Cypress runs commands in a
+controlled, serial order to keep results consistent. And since e2e tests mimic
+the actions of a real user, this serial model is a natural fit: a real user works
+one step at a time, too.
+
+#### You cannot add a `.catch` error handler to a failed command
+
+Cypress has no built-in error recovery from a failed command. A command
+_eventually_ passes, or it fails. When it fails, the remaining commands don't
+run and the test as a whole fails.
+
+You might be wondering:
+
+> How do I create conditional control flow, using if/else? So that if an element
+> does (or doesn't) exist, I choose what to do?
+
+Cypress avoids this kind of conditional control flow because it leads to
+non-deterministic tests, where different runs behave differently, which undermines the
+very consistency that makes a test trustworthy. There are only a handful of
+specific situations where control flow with Cypress commands is appropriate.
+
+That said, as long as you understand the pitfalls, it _is_ possible. You can read
+all about [conditional testing](/app/guides/conditional-testing) here.
+
 ## Timeouts
 
-Almost every command can time out in some way, and retrying can't continue
-forever. A timeout is the upper bound on how long Cypress will wait and retry
-before giving up and failing the test.
+Cypress can't retry forever. A `timeout` is the upper bound on how long Cypress
+will wait and retry before giving up and failing the test. It's what lets Cypress
+anticipate the asynchronous nature of web applications: instead of failing the
+first time an element isn't found, Cypress gives your app a window of time to
+finish whatever it's doing.
+
+Most commands let you customize this window
+([the default is 4 seconds](/app/references/configuration#Timeouts)). Any command
+that supports it lists a `timeout` option in its API documentation, telling you
+how many milliseconds Cypress should keep retrying before it gives up.
+
+```js
+// Give this element 10 seconds to appear
+cy.get('.my-slow-selector', { timeout: 10000 })
+```
+
+You can also set the timeout globally via the
+[configuration setting: `defaultCommandTimeout`](/app/references/configuration#Timeouts).
 
 All assertions, whether built-in or added by you, share the timeout of the command
 they're attached to.
+
+:::tip
+
+<strong>Core Concept</strong>
+
+To match the behavior of web applications, Cypress is asynchronous and relies on
+timeouts to know when to stop waiting on an app to get into the expected state.
+Timeouts can be configured globally, or on a per-command basis.
+
+:::
+
+:::info
+
+<strong>Timeouts and Performance</strong>
+
+There is a performance tradeoff here: **tests that have longer timeout periods
+take longer to fail**. Commands always proceed as soon as their expected
+criteria is met, so working tests will be performed as fast as your application
+allows. A test that fails due to timeout will consume the entire timeout period,
+by design. This means that while you _may_ want to increase your timeout period
+to suit specific parts of your app, you _don't_ want to make it "extra long,
+just in case".
+
+:::
 
 ### Applying Timeouts
 
