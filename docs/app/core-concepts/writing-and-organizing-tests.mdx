@@ -294,10 +294,10 @@ There are a few ways to use a fixture:
 
 Your tests run in the browser, but some things, like touching the file system,
 talking to a database, or controlling how specs are bundled, can only happen in
-Node. Cypress lets you run that Node-side code through the
+Node.js. Cypress lets you run that Node.js-side code through the
 [`setupNodeEvents`](/app/references/configuration#setupNodeEvents) function in
 your [Cypress configuration](/app/references/configuration), defined per testing
-type under the `e2e` or `component` options. It runs in the background Node
+type under the `e2e` or `component` options. It runs in the background Node.js
 process before the project is loaded, before the browser launches, and during
 your test run, and your tests reach it through the
 [cy.task()](/api/commands/task) command.
