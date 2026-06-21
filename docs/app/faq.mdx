@@ -1121,7 +1121,7 @@ reach the browser, so the policy is never enforced during a test run. This
 prevents a strict CSP from blocking the scripts Cypress injects to drive your
 application.
 
-If you need the policy enforced — for example to test the CSP itself — see
+If you need the policy enforced (for example to test the CSP itself), see
 [How do I test my application's Content Security Policy?](#How-do-I-test-my-applications-Content-Security-Policy)
 below. For the full picture, read the
 [Content Security Policy reference](/app/references/content-security-policy).
@@ -1133,10 +1133,10 @@ Set the
 configuration option so Cypress keeps the CSP header instead of stripping it. It
 accepts three values:
 
-- `false` _(default)_ — strip the entire CSP header.
-- `true` — keep the header, removing only the directives that interfere with
+- `false` _(default)_: strip the entire CSP header.
+- `true`: keep the header, removing only the directives that interfere with
   Cypress.
-- an array of directive names — keep the header and only the named directives.
+- an array of directive names: keep the header and only the named directives.
 
 :::cypress-config-example
 
@@ -1168,7 +1168,7 @@ for how Cypress handles each delivery method.
 
 No. Cypress always removes `frame-ancestors`, `navigate-to`,
 `require-trusted-types-for`, `sandbox`, and `trusted-types` from allowed CSP
-headers — even with `experimentalCspAllowList` enabled — because leaving them in
+headers, even with `experimentalCspAllowList` enabled, because leaving them in
 place would prevent Cypress from functioning. The behavior of these five
 directives cannot be tested through Cypress and must be verified outside of it.
 See [Always-stripped directives](/app/references/content-security-policy#always-stripped-directives)
