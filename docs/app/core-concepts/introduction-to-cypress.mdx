@@ -95,28 +95,20 @@ together.
 
 ## Querying Elements
 
-### Cypress is Like jQuery
+### Selecting Elements
 
-If you've used [jQuery](https://jquery.com/) before, you'll feel right at home.
-You may be used to querying for elements like this:
-
-```js
-$('.my-selector')
-```
-
-In Cypress, querying elements is the same:
+You query for elements with [`cy.get()`](/api/commands/get), using the same CSS
+selectors you already use in the browser:
 
 ```js
 cy.get('.my-selector')
 ```
 
-In fact, Cypress
-[bundles jQuery](/app/references/bundled-libraries#Other-Library-Utilities)
-and exposes many of its DOM traversal methods, so you can navigate complex HTML
-structures with the APIs you already know.
+Cypress supports the full range of CSS selectors, and you can chain DOM traversal
+methods to drill into complex HTML structures:
 
 ```js
-// Each Cypress query is equivalent to its jQuery counterpart.
+// Drill down into nested elements.
 cy.get('#main-content').find('.article').children('img[src^="/static"]').first()
 ```
 
@@ -124,51 +116,35 @@ cy.get('#main-content').find('.article').children('img[src^="/static"]').first()
 
 <strong>Core Concept</strong>
 
-Cypress leverages jQuery's powerful selector engine to help make tests familiar
-and readable for modern web developers.
+Cypress includes a powerful
+[selector engine](/app/references/bundled-libraries#Other-Library-Utilities) and
+many DOM traversal helpers, so selecting elements feels familiar and stays
+readable.
 
 Interested in the best practices for selecting elements?
 [Read here](/app/core-concepts/best-practices#Selecting-Elements).
 
 :::
 
-There's one important difference: accessing the elements returned from a query
-doesn't work the same way.
+There's one thing to know up front: a query like
+[`cy.get()`](/api/commands/get) does **not** return the element synchronously.
 
 ```js
-// This is fine, jQuery returns the element synchronously.
-const $jqElement = $('.element')
-
 // This will not work! Cypress does not return the element synchronously.
-const $cyElement = cy.get('.element')
+const element = cy.get('.element')
 ```
 
-That difference is the key to everything Cypress does for you. Let's look at why.
+Instead, Cypress yields the element to the next command in the chain. That
+difference is the key to everything Cypress does for you. Let's look at why.
 
-### Cypress is _Not_ Like jQuery
+### Cypress Retries Queries Automatically
 
-**Question:** What happens when jQuery can't find any matching DOM elements from
-its selector?
+What happens when a query can't find any matching elements yet? In many testing
+tools, the query returns immediately with nothing, leaving you to add conditional
+checks and retry by hand, which quickly leads to flaky tests.
 
-**Answer:** _Oops!_ It returns an empty jQuery collection. We get a real object
-to work with, but it doesn't contain the element we wanted, so the burden falls on
-us to add conditional checks and retry our queries by hand.
-
-```js
-// $() returns immediately with an empty collection.
-const $myElement = $('.element').first()
-
-// Leads to ugly conditional checks
-// and worse - flaky tests!
-if ($myElement.length) {
-  doSomething($myElement)
-}
-```
-
-**Question:** What happens when Cypress can't find any matching DOM elements
-from its selector?
-
-**Answer:** _No big deal!_ Cypress automatically retries the query until either:
+Cypress takes a different approach. When an element isn't there yet, it's _no big
+deal_: Cypress automatically retries the query until either:
 
 #### 1. The element is found
 
