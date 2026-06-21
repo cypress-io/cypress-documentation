@@ -162,6 +162,16 @@ override `specPattern` in your
 [configuration](/app/references/configuration#e2e) if you prefer a different
 naming convention.
 
+If you still can't tell why a spec isn't being picked up, open or run Cypress
+with [debug logs](/app/references/troubleshooting#Print-DEBUG-logs) enabled to
+see exactly how it resolves spec files:
+
+```shell
+DEBUG=cypress:cli,cypress:data-context:sources:FileDataSource,cypress:data-context:sources:ProjectDataSource npx cypress open
+## or
+DEBUG=cypress:cli,cypress:data-context:sources:FileDataSource,cypress:data-context:sources:ProjectDataSource npx cypress run
+```
+
 :::info
 
 <strong>How `specPattern`, `--spec`, and `excludeSpecPattern` work together</strong>
@@ -452,18 +462,6 @@ for the length of your
 [data retention](/cloud/account-management/billing-and-usage#Plan-overview)
 period, and are easily shared or browsed through our web interface. To learn more about videos and settings available, see
 [Screenshots and Videos](/app/guides/screenshots-and-videos#Screenshots).
-
-### Troubleshooting spec discovery
-
-If Cypress does not find the spec files for some reason, you can troubleshoot
-its logic by opening or running Cypress with
-[debug logs](/app/references/troubleshooting#Print-DEBUG-logs) enabled:
-
-```shell
-DEBUG=cypress:cli,cypress:data-context:sources:FileDataSource,cypress:data-context:sources:ProjectDataSource npx cypress open
-## or
-DEBUG=cypress:cli,cypress:data-context:sources:FileDataSource,cypress:data-context:sources:ProjectDataSource npx cypress run
-```
 
 ## Writing tests
 
