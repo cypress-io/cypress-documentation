@@ -612,43 +612,21 @@ suites will also be executed. This gives us the ability to run one test at a
 time and is the recommended way to write a test suite.
 
 ```javascript
-// -- Start: Our Application Code --
-function fizzbuzz(num) {
-  if (num % 3 === 0 && num % 5 === 0) {
-    return 'fizzbuzz'
-  }
-
-  if (num % 3 === 0) {
-    return 'fizz'
-  }
-
-  if (num % 5 === 0) {
-    return 'buzz'
-  }
-}
-// -- End: Our Application Code --
-
-// -- Start: Our Cypress Tests --
-describe('Unit Test FizzBuzz', () => {
-  function numsExpectedToEq(arr, expected) {
-    // loop through the array of nums and make
-    // sure they equal what is expected
-    arr.forEach((num) => {
-      expect(fizzbuzz(num)).to.eq(expected)
-    })
-  }
-
-  // only run this test
-  it.only('returns "fizz" when number is multiple of 3', () => {
-    numsExpectedToEq([9, 12, 18], 'fizz')
+describe('Account settings', () => {
+  // with .only, just this test runs and the other two are skipped
+  it.only('updates the email address', () => {
+    cy.get('[data-testid="email"]').clear().type('jane@example.com')
+    cy.get('[data-testid="save"]').click()
+    cy.contains('Profile updated').should('be.visible')
   })
 
-  it('returns "buzz" when number is multiple of 5', () => {
-    numsExpectedToEq([10, 20, 25], 'buzz')
+  it('updates the display name', () => {
+    cy.get('[data-testid="profile-name"]').clear().type('Jane Lane')
+    cy.get('[data-testid="save"]').click()
   })
 
-  it('returns "fizzbuzz" when number is multiple of both 3 and 5', () => {
-    numsExpectedToEq([15, 30, 60], 'fizzbuzz')
+  it('uploads a new avatar', () => {
+    cy.get('[data-testid="avatar"]').selectFile('cypress/fixtures/avatar.png')
   })
 })
 ```
@@ -657,8 +635,8 @@ To skip a specified suite or test, append `.skip()` to the function. All nested
 suites will also be skipped.
 
 ```javascript
-it.skip('returns "fizz" when number is multiple of 3', () => {
-  numsExpectedToEq([9, 12, 18], 'fizz')
+it.skip('uploads a new avatar', () => {
+  cy.get('[data-testid="avatar"]').selectFile('cypress/fixtures/avatar.png')
 })
 ```
 
