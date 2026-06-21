@@ -1,6 +1,6 @@
 ---
 title: Introduction to Cypress
-description: Learn the basics of Cypress, including querying elements, chaining commands, and interacting with elements.
+description: Learn how Cypress works, including querying elements, chaining commands, and writing assertions that automatically wait and retry.
 sidebar_position: 10
 sidebar_label: Introduction
 ---
@@ -17,20 +17,34 @@ it.
 
 :::
 
+Cypress was built to solve the most frustrating part of end-to-end and component
+testing: **flake**. Traditional tools force you to scatter manual waits, retries,
+and null checks throughout your tests just to keep them stable. Cypress takes a
+different approach—it understands that web applications are asynchronous, so it
+**automatically waits and retries** until your application reaches the state you
+expect.
+
+The result is tests that read like a description of what a real user does, run
+deterministically every time, and give you confidence that your application
+works across both the client and the server.
+
+This guide explains the handful of rules that make this possible. Once they click,
+you'll be able to write reliable Cypress tests for almost any application.
+
 :::info
 
 ##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
 
 - The rules Cypress follows so you can productively test your application
-- How to query elements in Cypress
-- How Cypress uses command chains and the asynchronous nature of Cypress commands
-- How to interact with elements and assert about elements
+- How to query elements the way a real user finds them
+- How Cypress chains commands and why those commands are asynchronous
+- How to interact with elements and write assertions that automatically retry
 
 :::
 
 ## Cypress Can Be Simple (Sometimes)
 
-Simplicity is all about getting more done with less typing. Let's look at an
+Simplicity is about getting more done with less code. Let's look at an
 example:
 
 :::visit-mount-example
@@ -72,13 +86,12 @@ Can you read this? If you did, it might sound something like this:
 
 :::
 
-This is a relatively straightforward test, but consider how much code has been
-covered by it, both on the client and the server!
+This is a relatively straightforward test, but consider how much of your
+application it exercises—every layer from the UI down to the server!
 
-For the remainder of this guide, we'll explore the basics of Cypress that make
-this example work. We'll demystify the rules Cypress follows so you can
-productively test your application to act as much like a user as possible, as
-well as discuss how to take shortcuts when it's useful.
+For the rest of this guide, we'll unpack the rules of Cypress that make this
+example work. You'll learn how to write tests that behave as much like a real
+user as possible, and when it makes sense to take shortcuts.
 
 ## Querying Elements
 
@@ -301,11 +314,12 @@ Later in this guide we'll go into much more detail about
 
 ## Chains of Commands
 
-It's very important to understand the mechanism Cypress uses to chain commands
-together. It manages a Promise chain on your behalf, with each command yielding
-a 'subject' to the next command, until the chain ends or an error is
-encountered. The developer should not need to use Promises directly, but
-understanding how they work is helpful!
+Understanding how Cypress chains commands together is key to using it well.
+Behind the scenes, Cypress manages a Promise chain on your behalf: each command
+yields a _subject_ to the next command, and the chain continues until it ends or
+an error is encountered. You never need to work with Promises directly, but
+knowing what's happening under the hood will make your tests easier to reason
+about.
 
 ### Interacting With Elements
 
