@@ -414,6 +414,24 @@ each path (`file/`) is preserved:
   - `cypress/videos/file/one.cy.js.mp4`
   - `cypress/videos/two.cy.js.mp4`
 
+:::tip
+
+**Want stable, predictable paths?** Rather than reconstructing where an asset
+landed, read the path Cypress actually used:
+
+- [`cy.screenshot()`](/api/commands/screenshot) reports the saved location to
+  its `onAfterScreenshot` callback, and you can pass an explicit `name` to
+  control the filename.
+- The [`after:screenshot`](/api/node-events/after-screenshot-api) and
+  [`after:spec`](/api/node-events/after-spec-api) Node events hand you the
+  resolved `path` (and video path) after each screenshot or spec finishes.
+
+If you still need the folder layout itself to be consistent, keep all your specs
+under a single common directory so the common ancestor doesn't shift as you add,
+remove, or filter specs.
+
+:::
+
 #### Storing assets in Cypress Cloud
 
 <DocsImage
