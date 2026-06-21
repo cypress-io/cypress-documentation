@@ -940,12 +940,17 @@ can be fixed.
 
 ### Pending
 
-You can write _placeholder_ tests in several ways as shown below, and Cypress
-knows NOT to run them. Additionally, you can conditionally specify which
-browser(s) and tests should run, including if the test should not run for the
-browser currently being tested, it is marked as _pending_.
+A **pending** test is one that Cypress intentionally doesn't run because you
+told it not to. A test ends up pending in three ways:
 
-Cypress marks all the tests below as _pending_.
+- **It has no body** — a placeholder for a test you haven't written yet, such
+  as `it('is not written yet')`.
+- **It's explicitly skipped** — using `it.skip()` or the `xit()` alias.
+- **It's excluded from the current browser** — a test configured with the
+  `browser` option to run only in a browser you aren't currently using.
+
+Each of the four tests below is pending (the browser-specific one is pending
+whenever the run isn't using Chrome):
 
 ```js
 describe('TodoMVC', () => {
@@ -971,16 +976,13 @@ describe('TodoMVC', () => {
 })
 ```
 
-All four tests above are marked _pending_ when Cypress finishes running the spec
-file.
-
 <DocsImage
   src="/img/app/core-concepts/cypress-pending-tests.png"
   alt="Cypress with four pending test"
 />
 
-So remember - if you (the test writer) knowingly skip a test using one of the
-above three ways, Cypress counts it as a _pending_ test.
+In each case you've knowingly told Cypress to hold off, so it reports the test
+as pending rather than passed or failed.
 
 ### Skipped
 
