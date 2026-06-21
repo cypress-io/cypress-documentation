@@ -303,11 +303,10 @@ Assertions describe the **desired** state of your **elements**, your
 **objects**, and your **application**: that an element is visible, has a
 particular attribute or CSS class, or that an object holds a certain value.
 
-What sets Cypress apart from other testing tools is that assertions
-**automatically retry**. Think of them as **guards**: you describe what your
-application _should_ look like, and Cypress will **block, wait, and retry** until
-it reaches that state, or fail the test if it never does. Here's a quick look at
-assertions in action:
+In Cypress, assertions **automatically retry**. Think of them as **guards**: you
+describe what your application _should_ look like, and Cypress will **block,
+wait, and retry** until it reaches that state, or fail the test if it never does.
+Here's a quick look at assertions in action:
 
 ```js
 cy.get(':checkbox').should('be.disabled')
