@@ -857,18 +857,27 @@ modern JS-based stack, you likely already have some form of hot module
 replacement watching your application code (HTML, CSS, JS, etc.) and reloading
 it in response to changes, so Cypress doesn't duplicate that work.
 
-#### Disabling file watching
+#### Disable file watching
 
 Set the [`watchForFileChanges`](/app/references/configuration#Global)
-configuration property to `false` to disable file watching.
+configuration property to `false` to disable file watching:
 
-:::caution
+:::cypress-config-example
 
-**Nothing** is watched during
-[cypress run](/app/references/command-line#cypress-run).
+```ts
+{
+  watchForFileChanges: false,
+}
+```
 
-The `watchForFileChanges` property is only in effect when running Cypress using
-[cypress open](/app/references/command-line#cypress-open).
+:::
+
+:::info
+
+This only applies to [cypress open](/app/references/command-line#cypress-open) —
+**nothing** is watched during
+[cypress run](/app/references/command-line#cypress-run), so the
+`watchForFileChanges` property has no effect there.
 
 :::
 
