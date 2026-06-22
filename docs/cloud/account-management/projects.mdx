@@ -9,6 +9,13 @@ sidebar_position: 20
 
 # Projects
 
+A **project** is how Cypress Cloud organizes everything it knows about a single
+test suite: its recorded runs, analytics, settings, and integrations. Connecting
+a project unlocks the value of Cypress Cloud. Instead of test results that
+vanish in CI logs, you get a durable, searchable history of every run, the
+tools to make those runs faster and cheaper, and the integrations to surface
+results where your team already works.
+
 :::info
 
 ##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
@@ -20,17 +27,6 @@ sidebar_position: 20
 - How to integrate with source control providers, issue management, and team communication tools
 
 :::
-
-A **project** is how Cypress Cloud organizes everything it knows about a single
-test suite: its recorded runs, analytics, settings, and integrations. Connecting
-a project unlocks the value of Cypress Cloud. Instead of test results that
-vanish in CI logs, you get a durable, searchable history of every run, the
-tools to make those runs faster and cheaper, and the integrations to surface
-results where your team already works.
-
-This page walks through each project-level feature and, just as importantly,
-**why you'd use it**, so you can decide which settings deliver the most value
-for your team.
 
 ## Identification
 
@@ -68,7 +64,7 @@ If you're using source control, we recommend that you check your Cypress
 configuration file, including the `projectId`, into source control. If you don't
 want your `projectId` visible in your source code you can set it as an
 environment variable using the name `CYPRESS_PROJECT_ID`. The exact mechanism
-for doing so depends on your system but could be something like:
+for doing so depends on your operating system:
 
 ```shell
 export CYPRESS_PROJECT_ID={projectId}
