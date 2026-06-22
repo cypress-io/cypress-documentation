@@ -843,24 +843,15 @@ covers `integrity` defined in any of the following ways:
   [`webpack-subresource-integrity`](https://www.npmjs.com/package/webpack-subresource-integrity)'s
   `script.integrity = sriHashes[chunkId]`)
 
-This option complements
+`removeSRIAttributes` is the first-party counterpart to
 [`experimentalModifyObstructiveThirdPartyCode`](/app/guides/cross-origin-testing#Modifying-Obstructive-Third-Party-Code),
-which only removes SRI for third-party resources. `removeSRIAttributes`
-additionally handles first-party resources and the runtime property-assignment
-pattern.
+which removes SRI only for third-party resources. Enable both options to strip
+SRI across first- and third-party resources.
 
-The option is additive and backwards-compatible. It defaults to `false`, so
-default behavior is unchanged: `experimentalModifyObstructiveThirdPartyCode`
-continues to strip SRI for third-party resources, and `modifyObstructiveCode`
-alone still strips nothing. Enable `removeSRIAttributes` only if your application
-uses SRI and you see resources blocked under test.
-
-:::caution
-
-Removing SRI attributes weakens a security control that protects against tampered
-resources. Enable this option only for applications under test.
-
-:::
+This option defaults to `false`, so existing behavior is unchanged. Enable it
+only if your application uses SRI and you see first-party resources blocked under
+test. Because removing SRI disables a check that protects against tampered
+resources, enable it only for applications under test.
 
 ### setupNodeEvents
 
