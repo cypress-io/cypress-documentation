@@ -1,6 +1,7 @@
 ---
-title: Spec Prioritization
-description: Run failed specs first to save time and reduce CI costs with Cypress Cloud's Spec Prioritization feature.
+title: 'Spec Prioritization: Run Failed Specs First | Cypress Cloud'
+sidebar_label: Spec Prioritization
+description: Run previously failed specs first with Cypress Cloud Spec Prioritization to surface failures sooner, debug faster, and cut CI costs.
 sidebar_position: 40
 ---
 
@@ -12,64 +13,140 @@ sidebar_position: 40
 
 ##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
 
+- What Spec Prioritization is and how it speeds up your feedback loop
+- How running failed specs first accelerates debugging and CI iterations
+- How to amplify the savings by pairing Spec Prioritization with Auto Cancellation
 - How to enable Spec Prioritization in Cypress Cloud
-- How to save time by running failed specs first
-- How to reduce CI costs by using Spec Prioritization with Auto Cancellation
+- How to confirm Spec Prioritization took effect and trace which run it prioritized
 
 :::
 
-It is often helpful to be **aware of test failures earlier within a CI test run
-so that debugging and iterations can resume and progress much faster**. Being
-able to catch issues sooner within the CI process can save valuable time in
-troubleshooting failures and deploying fixes.
+## What is Spec Prioritization?
 
-For example, consider you have a test suite consisting of several spec files that take **30
-minutes** to execute, but failures start to occur within one spec at the **20 minute**
-marker. A subsequent code change aimed at resolving the issue will have to be
-validated after running the CI build and waiting **20 minutes**. This process and
-waiting continues until the issue is fixed.
+**Spec Prioritization automatically runs the specs that failed in your previous
+Cypress run first.** Instead of waiting for the same failures to resurface late
+in a run, Cypress Cloud surfaces them right away, so you find out whether your
+latest change worked in minutes instead of waiting for the entire suite to
+finish.
 
-By running failed specs first, the issues can be surfaced earlier and reduce
-that 20 minute wait to potentially a few minutes. **Considering that a test
-suite has multiple spec files, this orchestration strategy will always save
-time.**
+The longer it takes to learn that a test is still broken, the slower your whole
+team moves. Every minute spent waiting on CI is a minute not spent shipping.
+Spec Prioritization shrinks that wait by putting the specs most likely to fail,
+the ones that _just_ failed, at the front of the line.
 
-### Activate Spec Prioritization in Cypress Cloud
+<Icon name="check-circle" color="green" /> **Benefits:** Running previously
+failed specs first will:
+
+1. **Surface failures sooner.** Get the verdict on your fix in the first few
+   minutes of a run instead of the last.
+2. **Accelerate debugging.** Tighten the edit → run → verify loop so fixes and
+   iterations progress faster.
+3. **Reduce CI costs.** Paired with
+   [Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation),
+   runs stop as soon as the prioritized failures reappear, cutting wasted
+   compute and lowering your bill.
+
+## Why does Spec Prioritization matter?
+
+Consider a test suite of several spec files that takes **30 minutes** to run,
+where a failure first occurs **20 minutes** in. Without Spec Prioritization,
+every attempt to fix that failure means kicking off CI and waiting **20
+minutes** all over again just to see whether the change worked, repeating
+that cycle until it's resolved.
+
+With Spec Prioritization, the spec that failed runs **first**. That 20-minute
+wait collapses to a few minutes, and you get an answer almost immediately. Across
+a suite with multiple spec files and multiple debugging iterations, **this time
+savings compounds with every run**.
+
+Spec Prioritization only moves previously failed specs to the front of the run.
+The remaining specs still run in their usual
+[load-balanced](/cloud/features/smart-orchestration/load-balancing) order and
+across all your
+[parallelized](/cloud/features/smart-orchestration/parallelization) machines, so
+you keep every other Smart Orchestration benefit while getting failures sooner.
+
+:::info
+
+<strong>CI Tip: Maximize Your Savings</strong>
+
+On its own, Spec Prioritization changes the _order_ specs run in, surfacing
+failures earlier so you can react sooner. To turn that earlier feedback into
+shorter runs and lower CI bills, pair it with
+[Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation). When
+the prioritized failures reappear at the start of a run, Auto Cancellation stops
+the run right away, avoiding wasted compute on specs you already know will need
+another pass.
+
+:::
+
+## Enable Spec Prioritization
 
 :::tip
 
 **Spec Prioritization** is a _Smart Orchestration_ feature available to users
 with a
 [Business or Enterprise tier Cypress Cloud plan](https://cypress.io/pricing).
+
 Wondering if upgrading your Team tier subscription is worth it? Check out the
 [recommendations](/cloud/features/recorded-runs#Recommendations) on the run
 overview page to see how much time we predict these features would save you.
 
 :::
 
-Spec Prioritization is a _Smart Orchestration_ feature that is managed within a
-project's settings.
+**To enable or disable Spec Prioritization at the Project level** (must be an admin user):
 
-**To enable or disable this feature at the Project level (must be an admin user):**
-
-1. Select the desired project within Projects view to visit Cypress Cloud.
-2. Click "Project Settings" with the right-hand sidebar.
-3. Scroll to the Smart Orchestration section within Project Settings page.
-4. Toggle "Spec Prioritization".
+1. Select the desired project within **Projects** in Cypress Cloud.
+2. Click **Project Settings**.
+3. Scroll to the **Smart Orchestration** section within Project Settings.
+4. Toggle **Spec Prioritization** to enable or disable it.
 
 <DocsImage
   src="/img/cloud/features/smart-orchestration/spec-prioritization-active.png"
-  alt="Enable Spec Prioritization"
+  alt="Spec Prioritization toggle enabled in Cypress Cloud project settings under the Smart Orchestration section"
 />
 
-:::info
+## How do I know Spec Prioritization took effect?
 
-<strong>CI Tip: Reduce Costs</strong>
+### Run Properties tab
 
-Note that Spec Prioritization **alone** will not save time as it purely alters
-the order in which specs are run. However, when used in tandem with
-[Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation) it can
-result in shorter test runs due to cancellation being triggered earlier, leading
-to significantly reduced CI costs.
+The quickest way to check is the **Properties** tab of a run. Its Smart
+Orchestration section lists each feature with its status for that run, so a
+**Spec Prioritization** value of **Applied** confirms Cypress Cloud reordered the
+specs.
 
-:::
+You can also trace _which_ run drove the order: when Spec Prioritization fires,
+the run displays a **"Prioritized failed specs from run #X"** label, where **#X**
+links back to the source run whose failures were moved to the front of the line.
+Following that link shows exactly which previous failures Cypress Cloud was
+reacting to.
+
+<DocsImage
+  src="/img/cloud/features/smart-orchestration/spec-prioritization-applied.png"
+  alt="Run Properties tab Smart Orchestration section showing Spec Prioritization marked Applied with a 'Prioritized failed specs from run #98296' link, and Auto Cancellation marked Disabled"
+/>
+
+If the status reads anything other than **Applied**, double-check that Spec
+Prioritization is toggled on in your
+[project settings](#Enable-Spec-Prioritization) and that the previous run
+actually recorded test failures for Cypress Cloud to prioritize (as opposed to timeouts or other non-test failures).
+
+### Specs tab
+
+To see prioritization at the individual spec level, open the
+[Specs tab](/cloud/features/recorded-runs#Specs-tab). Sorting by **Timeline** might help you find the spec that was moved up. Each spec that was moved up
+is marked with the Smart Orchestration icon, and hovering it shows
+a **"Prioritized by failed specs"** tooltip.
+
+<DocsImage
+  src="/img/cloud/features/smart-orchestration/spec-prioritization-spec-icon.png"
+  alt="Specs tab row marked with the Smart Orchestration lightning icon and a 'Prioritized by failed specs' tooltip indicating the spec was run first by Spec Prioritization"
+/>
+
+## See also
+
+- [Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation) - pair with Spec Prioritization to stop broken runs early and cut CI costs
+- [Smart Orchestration Overview](/cloud/features/smart-orchestration/overview) - all the ways Cypress Cloud speeds up and optimizes your CI runs
+- [Parallelization](/cloud/features/smart-orchestration/parallelization) - run spec files simultaneously across multiple CI machines
+- [Load Balancing](/cloud/features/smart-orchestration/load-balancing) - distribute specs across machines to minimize overall run duration
+- [Spec Prioritization FAQ](/cloud/faq#Spec-Prioritization)

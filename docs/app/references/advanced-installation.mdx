@@ -32,8 +32,6 @@ sidebar_label: 'Advanced Installation'
 | `CYPRESS_RUN_BINARY`              | [Location of Cypress binary at run-time](#Run-binary)                                          |
 | `CYPRESS_VERIFY_TIMEOUT`          | Overrides the timeout duration for the `verify` command. The default value is 30000.           |
 | `CYPRESS_SKIP_VERIFY`             | Skips the [`verify` command](command-line#cypress-verify) when `true`                          |
-| ~~CYPRESS_SKIP_BINARY_INSTALL~~   | <Badge type="danger">removed</Badge> use `CYPRESS_INSTALL_BINARY=0` instead                    |
-| ~~CYPRESS_BINARY_VERSION~~        | <Badge type="danger">removed</Badge> use `CYPRESS_INSTALL_BINARY` instead                      |
 
 ## Proxy configuration
 
@@ -399,7 +397,7 @@ config file to download the Cypress binary.
 For example, to use the CA at `/home/person/certs/ca.crt` when downloading
 Cypress, add the following to your `.npmrc`:
 
-```shell
+```shell title=".npmrc"
 cafile=/home/person/certs/ca.crt
 ```
 
