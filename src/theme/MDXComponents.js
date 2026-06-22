@@ -44,6 +44,7 @@ import WarningSetupNodeEvents from '@site/docs/partials/_warning-setup-node-even
 import ViewFilters from '@site/docs/partials/_viewfilters.mdx'
 import Views from '@site/docs/partials/_views.mdx'
 import LineBreak from '@site/src/components/line-break'
+import OsTabs from '@site/src/components/os-tabs'
 import Logo from '@site/src/components/logo'
 import AccordionBlock from '@site/src/components/accordion-block'
 import CloudFreePlan from '@site/docs/partials/_cloud_free_plan.mdx'
@@ -216,6 +217,7 @@ export default {
   Views,
   Logo,
   LineBreak,
+  OsTabs,
   AccordionBlock,
   CloudFreePlan,
   CiProviderCloudSteps,

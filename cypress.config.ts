@@ -48,7 +48,8 @@ export default defineConfig({
 
       const URLs = walk(path).filter((file) => file !== undefined).map((file) => file.slice(5))
 
-      config.env.URLs = URLs
+      config.expose = config.expose || {}
+      config.expose.URLs = URLs
 
       return config
     },
