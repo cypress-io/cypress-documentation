@@ -314,13 +314,13 @@ it might be good enough for the job.
 
 <UrlAllowList />
 
-## Rerun Optimization
+## Re-run optimization
 
 ### <Icon name="angle-right" /> Can I rerun only failed tests?
 
 Yes, depending on where you are running tests:
 
-- **In CI**, [Rerun Optimization](/cloud/features/smart-orchestration/rerun-optimization)
+- **In CI**, [Re-run optimization](/cloud/features/smart-orchestration/rerun-optimization)
   re-runs only the spec files that contained failures when you trigger a rerun of a
   recorded build. It operates at the **spec** level: if any test in a spec failed,
   the whole spec is re-executed.
@@ -329,16 +329,16 @@ Yes, depending on where you are running tests:
 - **During a single run**, [test retries](/app/guides/test-retries) automatically
   re-attempt failed individual tests before the run finishes.
 
-### <Icon name="angle-right" /> How is Rerun Optimization different from test retries?
+### <Icon name="angle-right" /> How is Re-run optimization different from test retries?
 
 They solve different problems. [Test retries](/app/guides/test-retries)
 automatically retries a failed _individual test_ within a single run, in real time,
-to absorb flake before the run finishes. **Rerun Optimization** changes what
+to absorb flake before the run finishes. **Re-run optimization** changes what
 happens when you re-run an _entire CI build_ after it has completed, re-executing
 only the spec files that contained failures. You can use both together: test
-retries reduce flake within a run, and Rerun Optimization speeds up the reruns you still need.
+retries reduce flake within a run, and Re-run optimization speeds up the reruns you still need.
 
-### <Icon name="angle-right" /> Does Rerun Optimization carry forward my passing test results?
+### <Icon name="angle-right" /> Does Re-run optimization carry forward my passing test results?
 
 No, not currently. A rerun-optimized run shows only the specs that were re-executed. Specs that
 passed in the anchor run are skipped and do not appear in the rerun's results.
@@ -349,7 +349,7 @@ Reporter output (JUnit/XML and custom reporters) reflects only the re-executed
 specs, so a rerun-optimized run reports fewer specs and tests than a full run.
 Adjust any CI guardrails that assert on fixed test counts.
 
-### <Icon name="angle-right" /> Does Rerun Optimization require recording to Cypress Cloud?
+### <Icon name="angle-right" /> Does Re-run optimization require recording to Cypress Cloud?
 
 Yes. Runs must be recorded to Cypress Cloud with the `--record` flag, and the
 feature is available on Business or Enterprise plans, or during a free trial.
@@ -359,7 +359,7 @@ feature is available on Business or Enterprise plans, or during a free trial.
 If the anchor run contained no failing specs, there is nothing to re-execute and
 the optimized rerun completes without running any specs.
 
-### <Icon name="angle-right" /> How do I know Rerun Optimization was applied?
+### <Icon name="angle-right" /> How do I know Re-run optimization was applied?
 
 The Cypress App prints a notice in the CLI output naming the run it is retrying
 from, and the run is labeled with a **Re-run** tag in Cypress Cloud.
