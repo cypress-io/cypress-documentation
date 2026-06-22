@@ -180,7 +180,6 @@ To override what is installed, you set `CYPRESS_INSTALL_BINARY` alongside the
   `cypress` version committed in your `package.json`. This is useful for quickly
   testing a different version locally or in CI without changing committed files.
   ```shell
-  # Downloads this binary version for this install only; package.json is untouched
   CYPRESS_INSTALL_BINARY=15.16.0 npm install
   ```
 - Specify an external URL (to bypass a corporate firewall).
@@ -381,7 +380,7 @@ If you want to download a specific Cypress version for a given platform
 air-gapped installs: download the `.zip` once, host it internally, and point
 `CYPRESS_INSTALL_BINARY` at it.
 
-The download server URL is `https://download.cypress.io`.
+**The download server URL is `https://download.cypress.io`.**
 
 We currently have the following downloads available:
 
@@ -439,20 +438,16 @@ and `arch` query parameters, and serve the appropriate Cypress binary as a
 | `darwin`   | `arm64` | macOS Apple Silicon                                           |
 | `win32`    | `x64`   | Windows; also used for ARM64 Windows (no native ARM64 binary) |
 
-:::note
 On Windows ARM64 machines, Cypress automatically substitutes `arm64` with `x64`
 when building the download URL, so your mirror will only ever receive `win32`
 requests with `arch=x64`.
-:::
 
-:::note
 On macOS, Cypress detects the machine's real architecture rather than relying on
 `process.arch`. If an x64 build of Node is running under Rosetta on Apple
 Silicon, Cypress still requests the native `darwin-arm64` binary. This is why the
 downloaded architecture can differ from `process.arch` (which would report
 `x64`), and your mirror may receive `arch=arm64` requests from an x64 Node
 process.
-:::
 
 If your mirror uses a different URL structure than `download.cypress.io`, use
 `CYPRESS_DOWNLOAD_PATH_TEMPLATE` together with `CYPRESS_DOWNLOAD_MIRROR`.
@@ -478,28 +473,81 @@ URL for the platform and version being installed.
 is set, its value is used as `<base>` instead of `https://download.cypress.io`,
 but `/desktop/<version>` is still appended.
 
-**Examples:**
+#### Examples:
 
 To install the binary from a download mirror that matches the exact file
 structure of `https://cdn.cypress.io`:
 
+<Tabs groupId="operating-system">
+<TabItem value="macos" label="macOS" default>
+
 ```shell
 export CYPRESS_DOWNLOAD_MIRROR=https://cypress-download.local
 export CYPRESS_DOWNLOAD_PATH_TEMPLATE='${endpoint}/${platform}-${arch}/cypress.zip'
-# Example of a resulting URL: https://cypress-download.local/desktop/15.16.0/linux-x64/cypress.zip
 ```
+
+</TabItem>
+<TabItem value="linux" label="Linux">
+
+```shell
+export CYPRESS_DOWNLOAD_MIRROR=https://cypress-download.local
+export CYPRESS_DOWNLOAD_PATH_TEMPLATE='${endpoint}/${platform}-${arch}/cypress.zip'
+```
+
+</TabItem>
+<TabItem value="windows" label="Windows">
+
+```shell title="Command Prompt"
+set CYPRESS_DOWNLOAD_MIRROR=https://cypress-download.local
+set CYPRESS_DOWNLOAD_PATH_TEMPLATE='${endpoint}/${platform}-${arch}/cypress.zip'
+```
+
+```shell title="PowerShell"
+$env:CYPRESS_DOWNLOAD_MIRROR = "https://cypress-download.local"
+$env:CYPRESS_DOWNLOAD_PATH_TEMPLATE = '${endpoint}/${platform}-${arch}/cypress.zip'
+```
+
+</TabItem>
+</Tabs>
+
+**Example of a resulting URL:** `https://cypress-download.local/desktop/15.16.0/linux-x64/cypress.zip`
 
 To install the binary from a download server with a custom file structure:
 
+<Tabs groupId="operating-system">
+<TabItem value="macos" label="macOS" default>
+
 ```shell
-export CYPRESS_DOWNLOAD_PATH_TEMPLATE='https://software.local/cypress/${platform}/${arch}/${version}/cypress.zip'
-# Example of a resulting URL: https://software.local/cypress/linux/x64/15.16.0/cypress.zip
+export CYPRESS_DOWNLOAD_PATH_TEMPLATE='${endpoint}/${platform}-${arch}/cypress.zip'
 ```
+
+</TabItem>
+<TabItem value="linux" label="Linux">
+
+```shell
+export CYPRESS_DOWNLOAD_PATH_TEMPLATE='${endpoint}/${platform}-${arch}/cypress.zip'
+```
+
+</TabItem>
+<TabItem value="windows" label="Windows">
+
+```shell title="Command Prompt"
+set CYPRESS_DOWNLOAD_PATH_TEMPLATE='${endpoint}/${platform}-${arch}/cypress.zip'
+```
+
+```shell title="PowerShell"
+$env:CYPRESS_DOWNLOAD_PATH_TEMPLATE = '${endpoint}/${platform}-${arch}/cypress.zip'
+```
+
+</TabItem>
+</Tabs>
+
+**Example of a resulting URL:** `https://software.local/cypress/linux/x64/15.16.0/cypress.zip`
 
 To define `CYPRESS_DOWNLOAD_PATH_TEMPLATE` in `.npmrc`, put a backslash before
 every `$`:
 
-```shell
+```shell title=".npmrc"
 CYPRESS_DOWNLOAD_PATH_TEMPLATE=\${endpoint}/\${platform}-\${arch}/cypress.zip
 ```
 
@@ -532,9 +580,33 @@ ca="-----BEGIN CERTIFICATE-----\nMIID...\n-----END CERTIFICATE-----"
 To supply more than one certificate, set `ca` to an array of strings. The same
 value can also be provided through the environment:
 
+<Tabs groupId="operating-system">
+<TabItem value="macos" label="macOS" default>
+
 ```shell
 export npm_config_ca="-----BEGIN CERTIFICATE-----\nMIID...\n-----END CERTIFICATE-----"
 ```
+
+</TabItem>
+<TabItem value="linux" label="Linux">
+
+```shell
+export npm_config_ca="-----BEGIN CERTIFICATE-----\nMIID...\n-----END CERTIFICATE-----"
+```
+
+</TabItem>
+<TabItem value="windows" label="Windows">
+
+```shell title="Command Prompt"
+set npm_config_ca="-----BEGIN CERTIFICATE-----\nMIID...\n-----END CERTIFICATE-----"
+```
+
+```shell title="PowerShell"
+$env:npm_config_ca = "-----BEGIN CERTIFICATE-----\nMIID...\n-----END CERTIFICATE-----"
+```
+
+</TabItem>
+</Tabs>
 
 If neither `cafile` nor `ca` are set, Cypress looks at the system environment
 variable `NODE_EXTRA_CA_CERTS` and uses the corresponding certificate(s) as an
@@ -562,13 +634,33 @@ The most common reason to relocate the cache is CI caching: pointing
 turns a multi-minute download into a cache hit. Set the environment variable to
 override the default:
 
-```shell
-CYPRESS_CACHE_FOLDER=~/Desktop/cypress_cache npm install
-```
+<Tabs groupId="operating-system">
+<TabItem value="macos" label="macOS" default>
 
 ```shell
-CYPRESS_CACHE_FOLDER=~/Desktop/cypress_cache npm run test
+export CYPRESS_CACHE_FOLDER=~/Desktop/cypress_cache
 ```
+
+</TabItem>
+<TabItem value="linux" label="Linux">
+
+```shell
+export CYPRESS_CACHE_FOLDER=~/.cache/Cypress
+```
+
+</TabItem>
+<TabItem value="windows" label="Windows">
+
+```shell title="Command Prompt"
+set CYPRESS_CACHE_FOLDER=~/.cache/Cypress
+```
+
+```shell title="PowerShell"
+$env:CYPRESS_CACHE_FOLDER = "~/.cache/Cypress"
+```
+
+</TabItem>
+</Tabs>
 
 Cypress will automatically replace the `~` with the user's home directory. So
 you can pass `CYPRESS_CACHE_FOLDER` as a string from CI configuration files, for
@@ -641,32 +733,62 @@ See [How to run commands](./command-line.mdx#How-to-run-commands).
 
 :::
 
-#### Mac
+<Tabs groupId="operating-system">
+<TabItem value="macos" label="macOS" default>
 
 ```shell
 CYPRESS_RUN_BINARY=~/Downloads/Cypress.app/Contents/MacOS/Cypress npx cypress run
 ```
 
-#### Linux
+</TabItem>
+<TabItem value="linux" label="Linux">
 
 ```shell
 CYPRESS_RUN_BINARY=~/Downloads/Cypress/Cypress npx cypress run
 ```
 
-#### Windows
+</TabItem>
+<TabItem value="windows" label="Windows">
 
 ```shell
-CYPRESS_RUN_BINARY=~/Downloads/Cypress/Cypress.exe npx cypress run
+CYPRESS_RUN_BINARY=C:\Users\YourUsername\Downloads\Cypress\Cypress.exe npx cypress run
 ```
 
-:::tip
+</TabItem>
+</Tabs>
 
 Cypress assumes that `CYPRESS_RUN_BINARY` points to a writeable directory structure so that it can save and re-use
 the results of verifying the Cypress binary.
 If you encounter a `permission denied` failure message from [cypress verify](./command-line.mdx#cypress-verify),
 you may be able to work around the failure by setting the environment variable `CYPRESS_SKIP_VERIFY` to `true`.
 
-:::
+<Tabs groupId="operating-system">
+<TabItem value="macos" label="macOS" default>
+
+```shell
+export CYPRESS_SKIP_VERIFY=true
+```
+
+</TabItem>
+<TabItem value="linux" label="Linux">
+
+```shell
+export CYPRESS_SKIP_VERIFY=true
+```
+
+</TabItem>
+<TabItem value="windows" label="Windows">
+
+```shell title="Command Prompt"
+set CYPRESS_SKIP_VERIFY=true
+```
+
+```shell title="PowerShell"
+$env:CYPRESS_SKIP_VERIFY = "true"
+```
+
+</TabItem>
+</Tabs>
 
 ## Privacy and messaging
 
@@ -722,6 +844,34 @@ If you would like to opt out of all commercial messaging, you can do so by
 setting `CYPRESS_COMMERCIAL_RECOMMENDATIONS=0` in your system environment
 variables.
 
+<Tabs groupId="operating-system">
+<TabItem value="macos" label="macOS" default>
+
+```shell
+export CYPRESS_COMMERCIAL_RECOMMENDATIONS=0
+```
+
+</TabItem>
+<TabItem value="linux" label="Linux">
+
+```shell
+export CYPRESS_COMMERCIAL_RECOMMENDATIONS=0
+```
+
+</TabItem>
+<TabItem value="windows" label="Windows">
+
+```shell title="Command Prompt"
+set CYPRESS_COMMERCIAL_RECOMMENDATIONS=0
+```
+
+```shell title="PowerShell"
+$env:CYPRESS_COMMERCIAL_RECOMMENDATIONS = "0"
+```
+
+</TabItem>
+</Tabs>
+
 ## Environment-specific setup
 
 These environments need extra setup because they don't provide a graphical
@@ -752,7 +902,7 @@ Cypress.io does not specifically support the use of Cypress under Windows Subsys
 
 Add the feature to your `devcontainer.json` and forward the necessary ports:
 
-```json
+```json title="devcontainer.json"
 {
   "image": "cypress/included",
   "forwardPorts": [6080, 5901],
@@ -829,10 +979,19 @@ To remove only the older cached versions while keeping the one currently in use,
 Alternatively, delete the [Cypress binary cache](#Binary-cache) (see above) manually.
 See [Managing the binary cache](#Managing-the-binary-cache) for the full set of cache commands.
 
-To delete cached [Cypress App Data](./troubleshooting#Clear-App-Data), manually delete the following directories / folders:
+**To delete cached [Cypress App Data](./troubleshooting#Clear-App-Data), manually delete the following directories / folders:**
 
 - macOS: `~/Library/Application Support/Cypress`
 - Linux: `~/.config/Cypress`
 - Windows: `$APPDATA/Cypress` (POSIX-syntax) or `%APPDATA%\Cypress` (Windows-syntax)
 
 Refer to your package manager documentation for details of package manager `cache clean` commands to remove other packages cached by npm, Yarn, pnpm or Bun.
+
+## See also
+
+- [Install Cypress](/app/get-started/install-cypress)
+- [Command Line](/app/references/command-line) - `cypress cache`, `cypress verify`, and
+  `cypress install`
+- [Troubleshooting](/app/references/troubleshooting)
+- [Continuous Integration Overview](/app/continuous-integration/overview) - caching the
+  binary and Cypress Docker images
