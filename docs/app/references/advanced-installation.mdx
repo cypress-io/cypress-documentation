@@ -683,7 +683,7 @@ better product.
 If you would like to opt out of sending any exception data to Cypress, you can
 do so by setting `CYPRESS_CRASH_REPORTS=0` in your system environment variables.
 Set the variable before installing Cypress, using the approach for your
-operating system:
+operating system. To make this permanent, add the command to your shell's `~/.profile` (for example, `~/.zshprofile` or `~/.bash_profile`) so it runs on every login.
 
 <Tabs groupId="operating-system">
 <TabItem value="macos" label="macOS" default>
@@ -692,9 +692,6 @@ operating system:
 export CYPRESS_CRASH_REPORTS=0
 ```
 
-To make this permanent, add the command to your shell's `~/.profile`
-(`~/.zprofile`, `~/.bash_profile`, etc.) so it runs on every login.
-
 </TabItem>
 <TabItem value="linux" label="Linux">
 
@@ -702,29 +699,15 @@ To make this permanent, add the command to your shell's `~/.profile`
 export CYPRESS_CRASH_REPORTS=0
 ```
 
-To make this permanent, add the command to your shell's `~/.profile`
-(`~/.bashrc`, `~/.zshrc`, etc.) so it runs on every login.
-
 </TabItem>
 <TabItem value="windows" label="Windows">
 
-In the Command Prompt:
-
-```shell
+```shell title="Command Prompt"
 set CYPRESS_CRASH_REPORTS=0
 ```
 
-In PowerShell:
-
-```shell
+```shell title="PowerShell"
 $env:CYPRESS_CRASH_REPORTS = "0"
-```
-
-To save the `CYPRESS_CRASH_REPORTS` variable for use in all new shells, use
-`setx`:
-
-```shell
-setx CYPRESS_CRASH_REPORTS 0
 ```
 
 </TabItem>
