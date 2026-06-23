@@ -179,13 +179,13 @@ For every test, Cypress compares two things against an earlier recorded version
 of the same test:
 
 - The **test body**, the code inside the test.
-- The test's **hooks**: the `before`, `beforeEach`, `afterEach`, and `after`
-  blocks that run around it.
+- The test's **hooks**: the code inside the `before`, `beforeEach`,
+  `afterEach`, and `after` blocks that run around it.
 
 If either the body or the hooks differ, the test is marked **Modified**. If
 Cypress has no earlier version to compare against, the test is **New**.
 
-A test is matched by its **spec file path** and its **full title**. Renaming the
+A test is matched by its **spec file path** and its **test title**. Renaming the
 spec file, or changing a `describe`/`it` title, causes Cypress to treat it as a
 brand-new test rather than a modification of the old one.
 
