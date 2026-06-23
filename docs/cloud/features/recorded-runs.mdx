@@ -178,8 +178,8 @@ another branch or run.
 For every test, Cypress compares two things against an earlier recorded version
 of the same test:
 
-- The **test body** — the code inside the test.
-- The test's **hooks** — the `before`, `beforeEach`, `afterEach`, and `after`
+- The **test body**, the code inside the test.
+- The test's **hooks**: the `before`, `beforeEach`, `afterEach`, and `after`
   blocks that run around it.
 
 If either the body or the hooks differ, the test is marked **Modified**. If
@@ -190,11 +190,11 @@ spec file, or changing a `describe`/`it` title, causes Cypress to treat it as a
 brand-new test rather than a modification of the old one.
 
 **Which earlier version Cypress compares against:** Cypress doesn't only compare
-a test to its previous run on the same branch — it also considers your project's
+a test to its previous run on the same branch. It also considers your project's
 base branch (e.g. `main` or `develop`). This means a test can appear Modified
 even if you didn't change it in your current branch. The first time a branch
 runs, its tests are compared against the base branch's versions, so a difference
-from the baseline is flagged as Modified — it means "this test looks different
+from the baseline is flagged as Modified. This means "this test looks different
 from the baseline," not necessarily "you just edited this."
 
 :::tip
