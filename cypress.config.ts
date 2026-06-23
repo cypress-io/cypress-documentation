@@ -8,8 +8,6 @@ export default defineConfig({
   viewportHeight: 800,
   viewportWidth: 1200,
   experimentalMemoryManagement: true,
-  // These specs walk ~315 pages; video encoding adds time per spec and isn't
-  // needed (failures still capture screenshots and Cloud has Test Replay).
   video: false,
   retries: {
     runMode: 2,

@@ -58,20 +58,15 @@ jobs:
     resource_class: medium+
     steps:
       - checkout
-      # Reuse node_modules across runs.
       - restore_cache:
           keys:
             - npm-cache-project-{{ checksum "package-lock.json" }}
-      # Reuse the downloaded Cypress binary across runs. ~/.cache/Cypress is an
-      # absolute path, so this cache is shared consistently by every job/run.
       - restore_cache:
           keys:
             - cypress-cache-{{ checksum "package-lock.json" }}
       - run:
           name: Install Dependencies
           command: npm ci
-      # postinstall is overridden to patch-package, so npm ci does NOT download
-      # the Cypress binary. Fetch it explicitly (no-op on a cache hit).
       - run:
           name: Install Cypress binary
           command: npx cypress install
@@ -83,8 +78,6 @@ jobs:
           key: cypress-cache-{{ checksum "package-lock.json" }}
           paths:
             - ~/.cache/Cypress
-      # Build the static site once so the tests run against the production
-      # build (served statically) instead of the dev server.
       - run:
           name: Build site for tests
           command: npm run build
@@ -105,9 +98,6 @@ jobs:
       - attach_workspace:
           at: ~/
       - cypress/run-tests:
-          # Serve the prebuilt static site (dist/) rather than the dev server.
-          # docusaurus serve avoids per-route on-demand compilation, so the
-          # ~315 page visits load far faster.
           start-command: 'npm run serve'
           cypress-command: 'npx wait-on http://localhost:3000 && npx cypress run --parallel --record'
 
@@ -139,7 +129,6 @@ workflows:
           name: Run Tests in Parallel
           requires:
             - Install & Persist To Workspace
-      # Run Algolia scraper only on main.
       - release:
           name: 'Run Algolia scraper'
           requires:
