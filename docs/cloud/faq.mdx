@@ -94,7 +94,7 @@ means your [test run data](/cloud/features/recorded-runs#Latest-Runs) is being
 We consider each time the `it()` function is called to be a single test. So you
 will generally have several tests recorded within each spec file and likely
 several spec files within a single run. Only the
-[passed and failed tests](/app/core-concepts/writing-and-organizing-tests#Test-statuses)
+[passed and failed tests](/app/core-concepts/writing-and-organizing-tests#Understanding-test-results)
 are counted. The pending and skipped tests are NOT counted.
 
 You can always see how many tests you've recorded from your organization's
@@ -589,6 +589,70 @@ and removes the previous one. To update your billing email, use the
 [Billing & Usage](/cloud/account-management/billing-and-usage) page or contact
 [billing@cypress.io](mailto:billing@cypress.io). See
 [User updates](/cloud/account-management/users#User-updates).
+
+## Teams
+
+### <Icon name="angle-right" /> What is a team in Cypress Cloud?
+
+A [team](/cloud/account-management/teams) is a reusable group of users that is granted
+access to a specific set of projects. Teams let you control project access once at the
+team level, instead of project by project, user by user, so each person sees only the
+projects relevant to their work.
+
+### <Icon name="angle-right" /> Who can create and manage teams?
+
+Organization [owner or admin](/cloud/account-management/users#User-roles) roles can create
+teams. Once a team exists, owners, admins, and the dedicated
+[team admin](/cloud/account-management/teams#Manage-teams) role can configure it by assigning
+projects and members. The team admin role lets day-to-day team members manage their own
+projects without routing every request through organization-level admins.
+
+### <Icon name="angle-right" /> Do teams affect access to public projects?
+
+No. [Public projects](https://on.cypress.io/what-is-project-access) are visible to all
+Cypress Cloud users, including those outside of your organization, regardless of team
+membership. Teams only control access to private projects.
+
+### <Icon name="angle-right" /> What is the _Everyone_ team?
+
+Every user in your organization is automatically a member of a default team named _Everyone_,
+which has access to all projects by default. If you don't need to separate project access,
+you can leave the _Everyone_ team as-is. When you adopt a team structure, you can remove the
+_All projects_ assignment from the _Everyone_ team to enforce access through your own teams.
+See [Manage teams](/cloud/account-management/teams) for setup best practices.
+
+## Debugging
+
+### <Icon name="angle-right" /> How do I debug a Cypress test that fails in CI but passes locally?
+
+Record the run to Cypress Cloud, open the failing test, and use
+[Test Replay](/cloud/features/test-replay) to replay the exact CI run. You can
+step through the command log and inspect the DOM, network requests, and console
+logs as they happened in CI, so you can find the difference between your local
+environment and CI without reproducing the failure on your machine. See the
+[Debug Failing Tests guide](/cloud/guides/debug-failing-tests) for the full
+workflow.
+
+### <Icon name="angle-right" /> Can I debug a CI failure without reproducing it locally?
+
+Yes. [Test Replay](/cloud/features/test-replay) captures the complete state of
+each test as it ran in CI and lets you replay it with full debugging capability.
+This is the primary reason teams use Cypress Cloud for debugging: it removes the
+need to recreate a CI environment locally.
+
+### <Icon name="angle-right" /> How do I know if a test failure is a real bug or just flaky?
+
+Use [Flaky Test Management](/cloud/features/flaky-test-management) to see whether
+a test has a history of passing on retry, and
+[Branch Review](/cloud/features/branch-review) to compare your branch against its
+base and determine whether your change introduced the failure or it already
+existed.
+
+### <Icon name="angle-right" /> Do I need to change my tests to debug them in Cypress Cloud?
+
+No. You only need to [record your runs](/cloud/get-started/setup) with
+`cypress run --record`. Test Replay, Error Summaries, and the test detail sidebar
+work automatically, with no changes to your test code.
 
 ## Test Replay
 
