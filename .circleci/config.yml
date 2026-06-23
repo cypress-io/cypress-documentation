@@ -92,7 +92,7 @@ jobs:
       name: cypress/default
       node-version: 22.15.1
     resource_class: large
-    parallelism: 6
+    parallelism: 8
     steps:
       - checkout
       - attach_workspace:

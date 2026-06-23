@@ -1,3 +1,3 @@
 import { visitAllPages } from '../support/visitAllPages'
 
-visitAllPages('ui-coverage')
+visitAllPages('api', 1, 3)
