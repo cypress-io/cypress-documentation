@@ -41,6 +41,15 @@ const EYEBROWS = {
 }
 const DEFAULT_EYEBROW = 'Cypress Documentation'
 
+// Section-specific SEO title suffix. Docusaurus appends the global site title
+// ("| Cypress Documentation") to every page; for these sections we rewrite the
+// <title>/og:title suffix at build time so the SEO title reads e.g.
+// "Page name | Cypress Accessibility Documentation". The OG card is unaffected
+// (it always shows the bare page title).
+const SECTION_TITLE_SUFFIX = {
+  accessibility: 'Cypress Accessibility Documentation',
+}
+
 const FONT = 'Helvetica, Arial, sans-serif'
 
 function escapeXml(str) {
@@ -232,6 +241,32 @@ function eyebrowForSegments(segments) {
   return EYEBROWS[segments[0]] || DEFAULT_EYEBROW
 }
 
+/**
+ * Replace the trailing "| <from>" SEO suffix with "| <to>" in the <title> tag
+ * and the og:title / twitter:title meta tags (leaving the OG card untouched).
+ */
+function replaceTitleSuffix(html, from, to) {
+  const fromSuffix = ` | ${from}`
+  const toSuffix = ` | ${to}`
+  // <title>…</title>
+  html = html.replace(/(<title[^>]*>)([\s\S]*?)(<\/title>)/i, (m, open, text, close) =>
+    text.endsWith(fromSuffix)
+      ? open + text.slice(0, -fromSuffix.length) + toSuffix + close
+      : m
+  )
+  // og:title / twitter:title content="…"
+  html = html.replace(
+    /(<meta[^>]*\b(?:property|name)="(?:og:title|twitter:title)"[^>]*\bcontent=")([^"]*)(")/gi,
+    (m, open, content, close) => {
+      const decoded = decodeEntities(content)
+      return decoded.endsWith(fromSuffix)
+        ? open + content.slice(0, content.length - fromSuffix.length) + toSuffix + close
+        : m
+    }
+  )
+  return html
+}
+
 module.exports = async function ogImageCardsPlugin(context) {
   const { siteConfig, siteDir } = context
   const siteTitle = siteConfig.title // "Cypress Documentation"
@@ -280,6 +315,14 @@ module.exports = async function ogImageCardsPlugin(context) {
           ),
           cardUrl
         )
+
+        // For configured sections, swap the global "| Cypress Documentation"
+        // SEO suffix for the section-specific one (e.g. Accessibility).
+        const sectionSuffix = SECTION_TITLE_SUFFIX[segments[0]]
+        if (sectionSuffix && sectionSuffix !== siteTitle) {
+          html = replaceTitleSuffix(html, siteTitle, sectionSuffix)
+        }
+
         fs.writeFileSync(file, html)
         generated++
       }
