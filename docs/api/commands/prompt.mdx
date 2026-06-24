@@ -613,6 +613,21 @@ Cypress.ElementSelector.defaults({
 
 For more examples and details, see the [ElementSelector API documentation](/api/cypress-api/element-selector-api).
 
+### Download a prompt report for a run
+
+The **Code** button exports one test at a time. To capture **every** `cy.prompt` from a recorded run at once, download a report from Cypress Cloud — useful for auditing AI-generated code across a CI build, sharing it with your team, or feeding it into other tools.
+
+1. Open the run in [Cypress Cloud](https://cloud.cypress.io) and select its **Properties** tab.
+2. Scroll to the **cy.prompt** section. It summarizes the run's `cy.prompt` usage, including the number of prompts in the run and the number of self-healed tests.
+3. Click **Download report** and choose a format: **JSON**, **YAML**, or **Markdown**.
+
+The report lists each prompt grouped by spec and test, along with the natural language steps and the Cypress code that was generated from them.
+
+<DocsImage
+  src="/img/api/prompt/cy-prompt-download-report-markdown.jpeg"
+  alt="Example of a downloaded cy.prompt run report in Markdown format"
+/>
+
 ## Setup
 
 ### Authentication & usage
