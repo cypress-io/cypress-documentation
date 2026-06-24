@@ -16,6 +16,7 @@ const DEFAULT_TITLE_SUFFIX = 'Cypress Documentation'
 
 const SECTION_TITLE_SUFFIX = {
   accessibility: 'Cypress Accessibility Documentation',
+  api: 'Cypress API Documentation',
   cloud: 'Cypress Cloud Documentation',
   'ui-coverage': 'Cypress UI Coverage Documentation',
 }
