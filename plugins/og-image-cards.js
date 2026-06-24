@@ -16,6 +16,10 @@ const path = require('path')
 
 const WIDTH = 1200
 const HEIGHT = 630
+// Render at 2x (2400x1260) so cards stay crisp on high-DPI screens where
+// Slack/X/LinkedIn may display them larger than 1200 device pixels. The layout
+// math below stays in 1200x630 logical units; an SVG viewBox scales it up.
+const SCALE = 2
 const PAD = 80
 const MAX_WIDTH = WIDTH - PAD * 2
 
@@ -166,7 +170,7 @@ function buildSvg({ logoBase64, eyebrow, title, description }) {
 
   const hills = HILLS.map((h) => `<path d="${h.d}" fill="${h.fill}"/>`).join('')
 
-  return `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="${WIDTH}" height="${HEIGHT}">
+  return `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="${WIDTH * SCALE}" height="${HEIGHT * SCALE}" viewBox="0 0 ${WIDTH} ${HEIGHT}">
   <rect width="${WIDTH}" height="${HEIGHT}" fill="${BG}"/>
   ${hills}
   <image x="${PAD}" y="56" width="56" height="56" xlink:href="data:image/png;base64,${logoBase64}"/>
@@ -198,9 +202,11 @@ async function loadLogoBase64(siteDir) {
   const logoSvg = fs.readFileSync(
     path.join(siteDir, 'static/img/logo/cypress-logomark-white.svg')
   )
+  // The logomark is drawn at 56 logical px; at 2x that's 112 device px, so
+  // rasterize larger (224) for a crisp downscale.
   _logoBase64 = (
-    await sharp(logoSvg, { density: 384 })
-      .resize(168, 168, {
+    await sharp(logoSvg, { density: 512 })
+      .resize(224, 224, {
         fit: 'contain',
         background: { r: 0, g: 0, b: 0, alpha: 0 },
       })
