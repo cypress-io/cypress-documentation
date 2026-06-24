@@ -130,8 +130,8 @@ const config = {
       metadata: [
         { property: 'og:type', content: 'website' },
         { property: 'og:site_name', content: 'Cypress Documentation' },
-        { property: 'og:image:width', content: '1200' },
-        { property: 'og:image:height', content: '630' },
+        { property: 'og:image:width', content: '2400' },
+        { property: 'og:image:height', content: '1260' },
         { property: 'og:image:alt', content: 'Cypress Documentation' },
       ],
       navbar: {
