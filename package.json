@@ -22,6 +22,7 @@
     "test": "cypress run",
     "test:plugins": "npm --prefix ./plugins/cypressRemarkPlugins run test && npm --prefix ./plugins/llm run test && npm run test:faq-plugin",
     "test:faq-plugin": "vitest run plugins/faq-structured-data.test.js",
+    "preview:og": "node scripts/preview-og-cards.js",
     "write-translations": "docusaurus write-translations",
     "write-heading-ids": "docusaurus write-heading-ids",
     "typecheck": "tsc",
@@ -49,7 +50,8 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "remark-directive": "^3.0.0",
-    "sass": "^1.70.0"
+    "sass": "^1.70.0",
+    "sharp": "^0.35.2"
   },
   "devDependencies": {
     "@docusaurus/module-type-aliases": "^3.9.2",
