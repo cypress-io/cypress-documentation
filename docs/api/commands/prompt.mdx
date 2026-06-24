@@ -11,14 +11,14 @@ sidebar_custom_props: { 'ai_icon': true, 'new_label': true }
 
 # prompt
 
-`cy.prompt` is a Cypress command that uses AI to convert natural language test steps into executable Cypress tests. It helps developers and QA engineers generate tests faster, experiment with self-healing end-to-end tests, and reduce ongoing test maintenance. You can view the generated Cypress code at any time using the **Code** button in the Command Log, giving you full visibility into what commands were created from your prompts.
+`cy.prompt` turns plain-English test steps into real, executable Cypress commands using AI. Describe what you want to test the way you'd explain it to a teammate — `'click the login button'`, `'verify the dashboard loads'` — and `cy.prompt` figures out the selectors and commands for you.
 
-**`cy.prompt` supports two flexible workflows:**
+It's built for two jobs:
 
-1. **Generate and export** - Use AI to quickly create tests, review the generated code, and save it to your test files for predictable, version-controlled tests
-2. **Continuous self-healing** - Keep `cy.prompt` running in your tests to automatically adapt when your app changes
+- **Generate tests fast.** Describe a flow in natural language, run it, and review the Cypress code that was generated. Export that code to commit predictable, version-controlled tests — or keep iterating in plain English.
+- **Cut maintenance with self-healing.** Leave `cy.prompt` in your tests and it adapts automatically when your UI changes, so a renamed class or a restructured DOM doesn't break the run.
 
-You can choose the workflow that fits your project's needs.
+You always have full visibility into what the AI generated. Click the **Code** button in the Command Log to see the exact Cypress commands behind every step, then choose the workflow that fits your project.
 
 :::note
 
@@ -44,9 +44,10 @@ _The demo above shows `cy.prompt` in action with [Cypress Studio](/app/guides/cy
 
 ## Why use cy.prompt for AI-powered testing?
 
-- **Reduce test maintenance**: Let AI and self-healing selectors absorb many minor UI changes instead of constantly updating selectors by hand.
-- **Accelerate test creation**: Turn plain-English test ideas into runnable Cypress tests without having to hand-write every command.
-- **Improve collaboration**: Product owners, QA, and developers can all contribute natural language steps that become real tests.
+- **Write tests faster**: Turn plain-English test ideas into runnable Cypress commands without hand-writing every selector and assertion.
+- **Spend less time on maintenance**: Self-healing selectors absorb many routine UI changes, so minor markup edits don't send you back to update tests.
+- **Lower the barrier to contributing**: Product owners, QA, and developers can all describe steps in natural language that become real tests.
+- **Stay in control**: Every step maps to standard Cypress commands you can view, export, and commit — there's no black box.
 
 ## Syntax
 
@@ -113,15 +114,13 @@ When you call `cy.prompt`, Cypress performs a multi-step process:
 
 4. **Cache for speed:** Generated code is cached and shared across machines and environments, including CI. Re-running the same test does not re-call the AI model unless the prompt or DOM changes in a way that invalidates the cached code. This means that once a prompt is cached, it benefits all team members and CI runs without additional AI calls.
 
-5. **Self-heal if needed:** If cached selectors fail (element renamed, attributes changed, etc.), Cypress regenerates code for that step. This 'self-healing' happens automatically on future attempts.
+5. **Self-heal if needed:** If cached selectors fail (an element was renamed, attributes changed, and so on), Cypress regenerates code for that step automatically on the next run. See [self-healing](#See-self-healed-steps-in-the-Command-Log).
 
-6. **Choose your workflow:** `cy.prompt` supports two flexible workflows depending on your project needs.
-   - **Export the code** - Save generated code to your test file for predictable, version-controlled tests
-   - **Keep it running** - Let `cy.prompt` continue to self-heal and adapt to changes
+From there, you decide how `cy.prompt` fits into your project: export the generated code and commit it, or keep `cy.prompt` running so it continues to self-heal. The next section walks through both.
 
 ## Choose your workflow
 
-`cy.prompt` supports two flexible workflows depending on your project needs. Both workflows give you full visibility into what code was generated, so you can always inspect and modify the results.
+`cy.prompt` supports two workflows. Both give you full visibility into the generated code, so you can always inspect and modify the results — the difference is whether you commit that code or let `cy.prompt` keep running.
 
 ### Workflow 1: Generate once, commit to source control
 
@@ -161,12 +160,6 @@ After the test runs, click the **Code** button in the Command Log to view the ge
 
 This workflow lets you use AI to quickly generate test code, then commit the exact generated code to your repository for predictable, version-controlled tests.
 
-<DocsVideo
-  src="/img/api/prompt/cy-prompt-demo.mp4"
-  autoPlay={true}
-  title="cy.prompt written for login screen using Cypress Studio"
-/>
-
 ### Workflow 2: Continuous AI-powered testing
 
 Keep `cy.prompt` in your tests and let it self-heal and adapt to changes.
@@ -201,14 +194,13 @@ dynamically generated selectors), `cy.prompt` will attempt to self-heal on every
 
 #### Solutions
 
-To avoid self-healing on every run, you can:
+To keep a step from self-healing on every run, point it at something stable:
 
-- Target an element by its content. In this case, you should consider using [text-based targeting](#Targeting-elements-by-text-content).
-- Use placeholders to store a dynamic value of the element you are targeting. In this case, you could consider using [placeholders](#Placeholders).
-- Update the ElementSelector API to prioritize a different attribute or selector that is more stable. In this case, you could consider using [ElementSelector API](/api/cypress-api/element-selector-api).
+- **Target by visible text** with [text-based targeting](#Targeting-elements-by-text-content) when the content is more stable than the selector.
+- **Use [placeholders](#Placeholders)** to supply a dynamic value at runtime instead of baking it into the step.
+- **Configure the [ElementSelector API](/api/cypress-api/element-selector-api)** to prioritize a more stable attribute or selector.
 
-The right targeting strategy is the one that aligns with what is actually stable in
-your application.
+The right strategy is the one that matches what is actually stable in your application.
 
 #### Viewing generated code
 
@@ -250,8 +242,7 @@ identifier. Use this when:
 - You want the test to fail if the content changes, because the content itself is what
   you are asserting on.
 
-When test content is not specified,Cypress resolves the element by its structural role in the DOM. This resolves to `cy.get(selector)` and is better suited for elements where the selector is stable and the content may change
-— for example, a submit button whose label varies by locale.
+**Unquoted descriptions** resolve to `cy.get(selector)`, where Cypress identifies the element by its structural role in the DOM. Use this when the selector is stable and the content may change — for example, a submit button whose label varies by locale.
 
 ```javascript
 'click the login button'
@@ -426,25 +417,21 @@ Wait for an amount of time or wait for an already aliased intercept to resolve b
 
 ## Placeholders
 
-The placeholder option provides a way to use dynamic and sensitive values while maintaining cache efficiency.
+Placeholders let you feed dynamic and sensitive values into a prompt without invalidating the cache or sending those values to the AI.
 
 ### The caching problem
 
-`cy.prompt` works by caching your prompt steps so it doesn't need to reach out to the AI every time. This makes tests run faster, and caching is honored across machines and environments, including CI. This means that once a prompt is cached, all team members and CI runs benefit from the cached code without additional AI calls.
+`cy.prompt` caches the code it generates for your steps so it doesn't call the AI on every run. That cache is shared across machines and environments, including CI, so once a prompt is cached the whole team and every CI run reuse it for free.
 
-However, there's a challenge: **any change to your prompt steps invalidates the cache**, forcing a new AI call.
-
-This becomes problematic when you have **dynamic values** that change each time cy.prompt is run (like timestamps, user IDs, or randomly generated data)
-
-Without placeholders, the cache would always be invalidated because these dynamic values would be hardcoded directly in your steps.
+The catch: **any change to your step strings invalidates the cache** and forces a new AI call. That's a problem when a step contains a **dynamic value** that changes each run — a timestamp, user ID, or randomly generated data. Hardcoded directly in the step, those values would bust the cache every time.
 
 ### The placeholder solution
 
-Placeholders let you use dynamic and sensitive values while maintaining cache efficiency:
+Reference values with the `{{placeholder}}` syntax and pass them through the `placeholders` option instead of inlining them. This keeps the step string constant, so:
 
-- **Cache-friendly**: Changes to placeholder values don't invalidate the cache
-- **Runtime substitution**: `{{placeholder}}` syntax gets replaced with actual values at execution time
-- **Privacy-protected**: Placeholder values are never sent to AI services, keeping sensitive data secure
+- **Cache stays valid**: changing a placeholder's value doesn't invalidate the cache.
+- **Values are substituted at runtime**: `{{placeholder}}` is replaced with the real value when the step executes.
+- **Sensitive data stays private**: placeholder values are never sent to the AI.
 
 ### Example usage
 
@@ -532,9 +519,7 @@ Placeholder values are never sent to the AI model.
 
 ## See self-healed steps in the Command Log
 
-cy.prompt self-heals when the element it needs to interact with has changed since the last time the step ran, enabling self-healing Cypress tests that adapt as your UI evolves.
-
-When `cy.prompt` self-heals a step, Cypress makes that change visible directly in the Command Log so you can understand exactly what changed and which element the step resolved to.
+`cy.prompt` self-heals a step when the element it needs has changed since the step last ran, so your tests keep passing as the UI evolves. When that happens, Cypress surfaces the change directly in the Command Log so you can see exactly what changed and which element the step resolved to.
 
 <DocsImage
   src="/img/api/prompt/cy-prompt-self-healed-command-log.png"
@@ -579,12 +564,12 @@ This level of detail makes it easy to tell whether a self-heal reflects an inten
 
 ## View and export generated code
 
-At any time during or after a test run, you can view the exact Cypress code that `cy.prompt` generated from your natural language steps. Combined with the self-healed tags and Console details in the Command Log, this gives you a clear, auditable record of what happened during `cy.prompt` execution so you can debug AI-generated tests and reduce flaky end-to-end tests over time. This transparency is built into every `cy.prompt` execution.
+During or after any test run, you can view the exact Cypress code that `cy.prompt` generated from your natural language steps — there's no black box. Combined with the self-healed tags and Console details in the Command Log, this gives you an auditable record of what happened during execution, so you can debug AI-generated tests and reduce flaky end-to-end tests over time.
 
 ### How to view generated code
 
 - **Run your test** with `cy.prompt` in Cypress App
-- **Click the "Code" button** - This button appears next to each `cy.prompt` command in the Command Log (event for failing tests)
+- **Click the "Code" button** - This button appears next to each `cy.prompt` command in the Command Log, even for failing tests
 
 <DocsImage
   src="/img/api/prompt/cy-prompt-export-code.png"
