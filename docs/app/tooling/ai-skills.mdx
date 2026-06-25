@@ -58,7 +58,7 @@ Before writing a single line, the cypress-author skill reads your project: your 
 
 In practice, that means:
 
-- **Selectors that hold up.** The skill follows a defined hierarchy (`data-cy`, `data-test`, `data-testid`) and flags selectors that are likely to break under normal maintenance.
+- **Selectors that hold up.** The skill attempts to follow the selector priority configured with [`Cypress.ElementSelector`](/api/cypress-api/element-selector-api) and flags selectors that are likely to break under normal maintenance.
 - **Code that fits your project.** It matches your language (TypeScript or JavaScript) and existing type patterns, and reuses your existing helpers and custom commands rather than reinventing them.
 - **Only APIs your Cypress version supports.** The skill checks your Cypress version and limits suggestions to what is actually available to your project.
 
