@@ -8,6 +8,7 @@ export default defineConfig({
   viewportHeight: 800,
   viewportWidth: 1200,
   experimentalMemoryManagement: true,
+  video: false,
   retries: {
     runMode: 2,
     openMode: 0,
