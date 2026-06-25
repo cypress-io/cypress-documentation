@@ -273,11 +273,20 @@ The right strategy is the one that matches what is actually stable in your appli
 
 ### See what self-healed
 
-You can see that a step self-healed in three places:
+You can see that a step self-healed in several places.
+
+In the Command Log:
 
 - **Test** - The test entry shows when at least one `cy.prompt` step self-healed during the run.
 - **Prompt** - The `cy.prompt` command is marked when one or more of its steps self-healed.
 - **Step** - Individual prompt steps show a **Self-healed** tag when the element they resolved to has changed since the last time that step ran.
+
+In [Cypress Cloud](https://cloud.cypress.io):
+
+- **Runs list** - A run that includes self-healed tests is flagged in the runs list.
+- **Run overview** - Filter the tests in a run by those that self-healed.
+- **Run properties** - See how many prompt definitions ran and how many self-healed in the run.
+- **Test Replay** - Review the self-heal directly in the [Test Replay](/cloud/features/test-replay) of the test.
 
 <DocsImage
   src="/img/api/prompt/cy-prompt-self-healed-prompt-level-logs.png"
