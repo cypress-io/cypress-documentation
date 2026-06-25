@@ -255,7 +255,7 @@ If Cypress cannot interpret a step, you'll see a dialog prompting you to refine 
 
 ### How often should self-healing happen?
 
-`cy.prompt` self-heals when a **selector** becomes invalid between runs. Self-healing works
+`cy.prompt` self-heals when a **selector or its text content** changes between runs. Self-healing works
 best when it catches occasional, unexpected changes, **not when it fires on every run**.
 
 If you use `cy.prompt` to target an element whose content changes frequently (like
