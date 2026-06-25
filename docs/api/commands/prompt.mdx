@@ -621,12 +621,35 @@ The **Code** button exports one test at a time. To capture **every** `cy.prompt`
 2. Scroll to the **cy.prompt** section. It summarizes the run's `cy.prompt` usage, including the number of prompts in the run and the number of self-healed tests.
 3. Click **Download report** and choose a format: **JSON**, **YAML**, or **Markdown**.
 
-The report lists each prompt grouped by spec and test, along with the natural language steps and the Cypress code that was generated from them.
+The report lists each prompt grouped by spec and test, along with the natural language steps and the Cypress code that was generated from them. For example, a downloaded Markdown report looks like this:
 
-<DocsImage
-  src="/img/api/prompt/cy-prompt-download-report-markdown.jpeg"
-  alt="Example of a downloaded cy.prompt run report in Markdown format"
-/>
+````markdown
+# cy.prompt export — build 10595
+
+_Project: d9sdrd · Exported: 2026-06-24T22:17:03.291Z_
+
+## Spec: `cypress/e2e/blog.cy.ts`
+
+### Test: _["Blog","should render the blog list page"]_
+
+**Prompts:**
+
+- "Validate the presence of the blog category tabs: All, Releases, Community, Education, Customer Stories, Company"
+- "Validate that the "All" tab has the class "text-indigo-500""
+
+```javascript
+// Prompt step 1: Validate the presence of the blog category tabs: All, Releases, Community, Education, Customer Stories, Company
+cy.get('#tab-all').should('be.visible')
+cy.get('#tab-releases').should('be.visible')
+cy.get('#tab-community').should('be.visible')
+cy.get('#tab-education').should('be.visible')
+cy.get('#tab-customer\\ stories').should('be.visible')
+cy.get('#tab-company').should('be.visible')
+
+// Prompt step 2: Validate that the "All" tab has the class "text-indigo-500"
+cy.get('#tab-all').should('have.class', 'text-indigo-500')
+```
+````
 
 ## Setup
 
