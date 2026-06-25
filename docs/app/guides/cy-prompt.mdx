@@ -103,7 +103,7 @@ When you call `cy.prompt`, Cypress performs a multi-step process:
 
 3. **Generate Cypress code:** Commands are generated and executed in sequence. The Command Log shows both your natural language step and the commands Cypress ran. You can view the complete generated code at any time using the **Code** button in the Command Log.
 
-4. **Cache for speed:** Generated code is cached and shared across machines and environments, including CI. Re-running the same test does not re-call the AI model unless the prompt or DOM changes in a way that invalidates the cached code. This means that once a prompt is cached, it benefits all team members and CI runs without additional AI calls.
+4. **Cache for speed:** Generated code is cached and shared across machines and environments, including CI. Re-running the same test does not re-call the AI model unless the prompt or DOM changes in a way that invalidates the cached code. This means that once a prompt is cached, it benefits all team members and CI runs without an additional performance hit.
 
 5. **Self-heal if needed:** If cached selectors fail (an element was renamed, attributes changed, and so on), Cypress regenerates code for that step automatically on the next run. See [Self-healing](#Self-healing).
 
