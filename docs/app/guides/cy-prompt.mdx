@@ -83,11 +83,11 @@ Once you're connected, add a `cy.prompt` call to an E2E test and run it:
 
 ```typescript
 cy.prompt([
-  'visit https://cloud.cypress.io/login',
-  'type "user@example.com" in the email field',
-  'type "password123" in the password field',
-  'click the login button',
-  'verify we are redirected to the dashboard',
+  'visit /products',
+  'search for "laptop" in the search field',
+  'click the first product in the results',
+  'click the "Add to Cart" button',
+  'verify the cart shows 1 item',
 ])
 ```
 
