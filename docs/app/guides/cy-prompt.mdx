@@ -258,7 +258,7 @@ If Cypress cannot interpret a step, you'll see a dialog prompting you to refine 
 `cy.prompt` self-heals when a **selector or its text content** changes between runs. Self-healing works
 best when it catches occasional, unexpected changes, **not when it fires on every run**.
 
-If you use `cy.prompt` to target an element whose content changes frequently (like
+If you use `cy.prompt` to target an element whose selector changes frequently (like
 dynamically generated selectors), `cy.prompt` will attempt to self-heal on every run. This increases AI calls, slows test execution, and reduces the cache benefit that makes `cy.prompt` fast in CI. This is not what you want.
 
 ### Keep self-healing from firing every run
@@ -271,7 +271,7 @@ To keep a step from self-healing on every run, point it at something stable:
 
 The right strategy is the one that matches what is actually stable in your application.
 
-### See self-healed steps in the Command Log
+### See what self-healed
 
 You can see that a step self-healed in three places:
 
