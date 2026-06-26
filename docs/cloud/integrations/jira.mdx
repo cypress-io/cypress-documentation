@@ -1,8 +1,8 @@
 ---
-title: 'Jira Integration | Cypress Documentation'
+title: Integrate Jira with Cypress Cloud
 description: 'Create Jira issues directly from failing tests in Cypress Cloud, track issue history per test case, and link every issue back to the exact test run that surfaced the failure.'
-sidebar_position: 30
 sidebar_label: Jira
+sidebar_position: 30
 ---
 
 <ProductHeading product="cloud" plan="team" />
@@ -102,6 +102,14 @@ per organization.
      alt="Jira integration completed view in Cypress Cloud showing connected projects"
    />
 
+## How project data stays in sync
+
+Cypress keeps the list of available Jira projects current through three mechanisms:
+
+- **On install:** When the Cypress app is first connected to a Jira site, it automatically pulls in all accessible projects in the background.
+- **Real-time updates:** Jira pushes changes to Cypress whenever projects are created, renamed, archived, or deleted, so the list stays current without any user action.
+- **Manual sync:** The **Sync** button in the integration settings lets you trigger an on-demand refresh if something looks out of date.
+
 ## Create a Jira issue from a test
 
 You can file a Jira issue from any test result. Here is how to do it for a failing test:
@@ -163,7 +171,7 @@ After an issue is created or linked for a test, you can review it from the test'
 
 1. Find the **Jira issue** section and expand it.
 
-Inside the expanded section, click the issue to open it directly in Jira. The section also lists **assignee**, **status**, and **date created** for that ticket so you can triage from the test result without copying keys into Jira manually.
+Inside the expanded section, click the issue to open it directly in Jira. The section also lists **assignee**, **status**, and **date created** for that ticket so you can triage from the test result without copying keys into Jira manually. The issue status is fetched live from Jira each time you view the test result, so it always reflects the current state of the ticket rather than a cached snapshot.
 
 <DocsImage
   src="/img/cloud/integrations/jira/dashboard-jira-integration-inline-issue.png"

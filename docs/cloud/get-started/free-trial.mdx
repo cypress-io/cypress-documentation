@@ -1,134 +1,93 @@
 ---
-title: Free Trial
-description: Start a free trial of Cypress Cloud and explore all features available in our Enterprise plan.
+title: Try Cypress Cloud free for 30 days
+description: Start a free 30-day trial of Cypress Cloud and experience every Enterprise feature, including 50,000 test results, with no credit card required.
+sidebar_label: Free Trial
 sidebar_position: 15
 ---
 
 <ProductHeading product="cloud" />
 
-# Free Trial of Cypress Cloud
+# Try Cypress Cloud free for 30 days
+
+A free trial is the fastest way to see what Cypress Cloud does for your team. Cloud is the quality platform that sits on top of your Cypress tests, bringing debugging, orchestration, and analytics together in one place. For **30 days** you get an all-access pass to every feature in our [Enterprise plan](https://www.cypress.io/pricing), the same capabilities the largest Cypress teams rely on, plus **50,000 test results** to put it to work on your own suite.
+
+No credit card is required to start, and your account stays yours when the trial ends.
+
+<Btn
+  label="Start your free trial ➜"
+  variant="indigo-dark"
+  className="mr-1"
+  href="https://cloud.cypress.io/signup"
+/>
+<Btn
+  label="See a demo"
+  icon="action-play-small"
+  className="mr-1"
+  href="https://www.youtube.com/watch?v=vFLShoCM8pA"
+/>
+<Btn
+  label="Explore an example project"
+  icon="technology-terminal-log"
+  href="https://cloud.cypress.io/projects/7s5okt"
+/>
 
 :::info
 
 ##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
 
-- How to start a free trial of Cypress Cloud
-- The benefits of using Cypress Cloud
-- How to explore the features of Cypress Cloud during your trial
+- Why a Cypress Cloud trial is worth your time
+- Exactly what's included during the 30 days
+- How the trial works, and what happens when it ends
+- How existing customers can trial Enterprise features
 
 :::
 
-Your free trial of Cypress Cloud provides a 30 day all-access pass to Cypress Cloud features.
-This is the same list of Cloud features available in our Enterprise plan as described on the
-[Cypress Cloud pricing page](https://www.cypress.io/pricing). 50,000 test results are included!
+## Why teams trial Cypress Cloud
 
-Experiencing the capabilities of Cypress Cloud during a trial is the quickest way to realize
-that your testing life wouldn't be the same without it! After starting your trial you can select
-and subscribe to a Cypress Cloud plan at any time.
+The [Cypress App](https://www.cypress.io/app#browser_testing) is open source and trusted by developers everywhere to write end-to-end and component tests. Cypress Cloud is the quality platform built around it, turning every test run into insight your whole team can act on. Recording your runs to the Cloud removes the slow, expensive, and frustrating parts of running tests in CI:
 
-However, if you determine that subscribing to a Cloud plan is
-not workable at the end of 30 days, rest assured that your account will remain available to you
-and revert to our _Starter_ plan. The _Starter_ plan is free, but does not have the same
-set of features. The _Starter_ plan will also limit data retention to 30 days and test results
-to 500 per monthly period. Details of the _Starter_ plan are available on the
-[pricing page](https://www.cypress.io/pricing).
+- **Slow feedback and rising CI bills.** [Smart Orchestration](/cloud/features/smart-orchestration/overview) runs your specs across multiple machines and [balances the load](/cloud/features/smart-orchestration/load-balancing#Balance-strategy) automatically, [Spec Prioritization](/cloud/features/smart-orchestration/spec-prioritization) runs recently failed specs first, and [Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation) stops a run once it has already failed, so every pipeline finishes faster and uses less compute.
+- **Failures you can't reproduce locally.** [Test Replay](/cloud/features/test-replay) replays the exact run from CI with full debug capability, so triage is a single click instead of a guessing game.
+- **Flaky tests that erode trust.** [Flaky Test Management](/cloud/features/flaky-test-management) surfaces unreliable tests before your team starts ignoring real failures.
+- **Regressions reaching your main branch.** Status checks from the [GitHub](/cloud/integrations/github), [GitLab](/cloud/integrations/gitlab), and [Bitbucket](/cloud/integrations/bitbucket) integrations keep failing code out of your protected branches.
+- **No visibility into quality over time.** [Analytics](/cloud/features/analytics/overview) track test health at the project and organization level, so you can see when speed or reliability starts to slip and act before it becomes a problem.
 
-:::caution
-
-<Icon name="exclamation-triangle" /> The only restriction during a free trial is
-that you are not allowed to
-[transfer](/cloud/account-management/projects#Transfer-ownership) existing
-Cypress Cloud projects into your free trial organization.
-
-:::
-
-## How Cypress Cloud adds value to your Cypress tests
-
-The [Cypress App](https://www.cypress.io/app#browser_testing) is loved by software professionals
-all around the world. The Cypress App is open source and provides you extensive support for
-creating both end-to-end and component tests.
-
-Are you new to Cypress and not familiar with writing Cypress tests? Check out our docs on
-[Why Cypress](/app/get-started/why-cypress) and
-[Key Differences](/app/get-started/why-cypress) which will help you on your journey
-of [getting started](/app/get-started/install-cypress) with Cypress. You can then write
-your own Cypress tests or use the built-in [Cypress Studio](/app/guides/cypress-studio)
-to help generate and record your tests while you simply interact with your application!
-
-With a Cloud account, you also get **Studio AI** (AI-powered assertion recommendations as you record) and [cy.prompt()](/api/commands/prompt) for natural-language test generation. See [AI at Cypress](/cloud/features/cypress-ai-features) for more details.
-
-By [starting your free trial](https://cloud.cypress.io/signup) with Cypress Cloud you will unlock
-amazing new capabilities when your Cypress tests are recorded to the Cloud. Here is why you should
-start using Cypress Cloud:
-
-### Test Replay
-
-Available in Cypress v13 and up, [Test Replay](/cloud/features/test-replay), our
-interactive debugging tool, helps you swiftly troubleshoot and debug failed or flaky test runs as they
-occur in CI. This ensures your team stays focused on delivering high-quality software without the
-hassle of reproducing issues.
+A trial lets you measure all of this against your own suite, in your own CI, and see real results within days.
 
 <DocsVideo
   title="Test Replay Product Demo"
   src="https://youtube.com/embed/vFLShoCM8pA"
 />
 
-### Unlock Peak Developer Productivity
+New to Cypress? Start with [Why Cypress](/app/get-started/why-cypress) and [installing Cypress](/app/get-started/install-cypress), then write your first tests or generate them with [Cypress Studio](/app/guides/cypress-studio). With a Cloud account you also unlock **Studio AI** for AI-powered assertion recommendations and [`cy.prompt()`](/api/commands/prompt) for natural-language test generation. See [AI at Cypress](/cloud/features/cypress-ai-features) for the full picture.
 
-Empower your team to achieve peak productivity with Cypress Cloud. Seamlessly integrate with
-[Jira](/cloud/integrations/jira), [GitHub](/cloud/integrations/github),
-[GitLab](/cloud/integrations/gitlab),
-[Bitbucket](/cloud/integrations/bitbucket),
-[Slack](/cloud/integrations/slack), [Microsoft Teams](/cloud/integrations/teams), and
-[SSO](/cloud/account-management/enterprise-sso) to streamline your development workflow.
-With centralized project management and version control, developers can effortlessly collaborate,
-track issues, and manage code changes, all within their familiar environments.
+## What's included in your trial
 
-### Explore Comprehensive Insights
+Your trial includes the complete Enterprise feature set:
 
-Unlock a treasure trove of insights with our [advanced analytics](/cloud/features/analytics/overview).
-Quickly identify and resolve flaky tests, ensuring rock-solid reliability. Our comprehensive analytics
-offer a panoramic view of your testing landscape, shedding light on improvement or deterioration
-trends over time, both at the project and organization levels.
+- [**Test Replay**](/cloud/features/test-replay): debug CI failures by replaying the exact run, not a reproduction of it.
+- [**Smart Orchestration**](/cloud/features/smart-orchestration/overview): [parallelize tests](/cloud/features/smart-orchestration/parallelization), [prioritize failed specs](/cloud/features/smart-orchestration/spec-prioritization), and [auto-cancel runs](/cloud/features/smart-orchestration/run-cancellation) to cut both wall-clock time and CI spend.
+- [**Flaky Test Management**](/cloud/features/flaky-test-management#Flake-Detection): automatically detect and track unreliable tests.
+- [**Analytics & insights**](/cloud/features/analytics/overview): a panoramic view of test health and trends across every project and organization.
+- [**Integrations**](/cloud/integrations/github): [GitHub](/cloud/integrations/github), [GitLab](/cloud/integrations/gitlab), [Bitbucket](/cloud/integrations/bitbucket), [Jira](/cloud/integrations/jira), [Slack](/cloud/integrations/slack), and [Microsoft Teams](/cloud/integrations/microsoft-teams), including secure integrations for self-managed instances.
+- [**Single Sign-On (SSO)**](/cloud/account-management/enterprise-sso): simplify and secure access for your whole team.
+- [**Enterprise Reporting**](/cloud/features/analytics/enterprise-reporting): track usage and govern test suites across every project in your organization.
+- [**Data Extract API**](/cloud/integrations/data-extract-api): pull your test data out of Cypress Cloud to automate reporting and SDLC workflows.
+- [**AI at Cypress**](/cloud/features/cypress-ai-features): author tests faster with [Studio AI](/app/guides/cypress-studio) assertion recommendations and [`cy.prompt()`](/api/commands/prompt) natural-language test generation, and connect your AI coding assistants to your run data with the [Cypress Cloud MCP server](/cloud/integrations/cloud-mcp).
+- **Robust support**: submit tickets directly from Cypress Cloud and get help from our team throughout your trial.
 
-### Maximize Testing Efficiency
+:::caution
 
-Experience enhanced testing efficiency with Cypress Cloud’s
-[Smart Orchestration](/cloud/features/smart-orchestration/overview) capabilities.
-Seamlessly [parallelize tests](/cloud/features/smart-orchestration/parallelization) for faster
-execution, [prioritize failed specs](/cloud/features/smart-orchestration/spec-prioritization) to
-address critical issues promptly, and automate
-[test run cancellation](/cloud/features/smart-orchestration/run-cancellation) based on custom
-thresholds. Intelligent test coordination, powered by Cypress Cloud, ensures you get the most out
-of your testing efforts.
+<Icon name="exclamation-triangle" /> The only restriction during a free trial is
+that you cannot
+[transfer](/cloud/account-management/projects#Transfer-ownership) existing
+Cypress Cloud projects into your trial organization.
 
-### Robust Support
+:::
 
-During your trial period, our dedicated team of experts is here to offer support, ensuring your
-experience with Cypress Cloud is seamless. Access the help menu and submit tickets directly from
-Cypress Cloud for any questions or issues that arise.
+## How the trial works
 
-Our free trial offers access to paid and Enterprise plan features, including:
-
-- [Flake Detection](/cloud/features/flaky-test-management#Flake-Detection): Quickly identify and resolve
-  flaky tests, ensuring reliable test results.
-- [Smart Orchestration](/cloud/features/smart-orchestration/overview): Enhance testing efficiency with
-  features like [test parallelization](/cloud/features/smart-orchestration/parallelization) and
-  [automated run cancellation](/cloud/features/smart-orchestration/run-cancellation) based on custom
-  thresholds.
-- [Single Sign-On (SSO)](/cloud/account-management/enterprise-sso): Simplify and secure access
-  for your team.
-- Integrations for On-Prem Instances: Seamlessly integrate with your existing infrastructure.
-- [Enterprise Reporting](/cloud/features/analytics/enterprise-reporting): Spot trends and anomalies,
-  track usage, and govern your overall test suites across all projects in your organization.
-- [Data Extract API](/cloud/integrations/data-extract-api): Automatically download and extract
-  test data from Cypress Cloud, allowing endless possibilities for automating your SDLC workflows and
-  generating custom reporting.
-
-## Free trial onboarding process
-
-When you begin a free trial with Cypress Cloud you will notice a progress indicator in the
-navigation sidebar that helps you gain understanding of the features and capabilities of Cloud.
+When you start a trial, a progress indicator appears in the navigation sidebar to guide you through the features and capabilities of Cypress Cloud.
 
 <DocsImage
   src="/img/cloud/get-started/free-trial/trial-progress-bar.jpg"
@@ -137,37 +96,35 @@ navigation sidebar that helps you gain understanding of the features and capabil
 
 <br />
 <br />
-If you click the progress indicator you will be presented with an onboarding
-guide that will introduce and showcase the features of Cypress Cloud using your
-own Cypress tests that have been recorded to Cloud. Progress through the
-exploration of Cypress Cloud at your own pace as you and the other members of
-your organization have **30 days** to experience **all** of the capabilities
-that Cypress Cloud provides!
+
+Click the indicator to open an onboarding guide that showcases each feature using
+your own tests recorded to the Cloud. Move through it at your own pace. You and
+everyone in your organization have the full **30 days** to experience **all** of
+the capabilities Cypress Cloud provides.
 
 <DocsImage
   src="/img/cloud/get-started/free-trial/trial-ci-setup.jpg"
   alt="Free trial CI setup"
 />
 
-## Existing Customers
+## What happens when the trial ends
 
-Are you already subscribed to a Cypress Cloud plan and would like to see and experience
-all features of Cypress Cloud during a trial period? If no changes have been
-made to your Cloud subscription for at least 90 days and you have not recently participated
-in a Cloud trial, then you will be able to opt-in to a trial of all features available in
-our Enterprise plan. An owner or admin in your organization will see a button to opt-in to
-this trial on the [Billing & Usage page](/cloud/account-management/billing-and-usage).
+You can choose and subscribe to a paid plan at any point during or after the trial. If a paid plan isn't the right fit when the 30 days are up, nothing is lost. Your account stays available to you and moves to our free **Starter** plan.
+
+The Starter plan keeps you running with a smaller feature set: data retention is limited to 30 days and test results to 500 per monthly period. You can compare every plan side by side on the [pricing page](https://www.cypress.io/pricing).
+
+## Existing customers
+
+Already on a Cypress Cloud plan and want to experience the full Enterprise feature set? If your subscription hasn't changed in at least 90 days and you haven't recently been in a trial, an owner or admin in your organization can opt in from the [Billing & Usage page](/cloud/account-management/billing-and-usage).
+
+During this trial your existing test-result and user limits still apply, but every Cloud feature is unlocked for your organization to explore. If you decide to stay on your current plan when the trial ends, no action is needed.
 
 :::info
 
 <Icon name="question-circle" color="green" /> **Need immediate access?** If you
-do not see the trial opt-in button in your account and would like to immediately
-begin the trial of all Cloud features, please [contact
-us](mailto:support@cypress.io).
+don't see the trial opt-in button in your account and want to start a trial of
+all Cloud features right away, please [contact us](mailto:support@cypress.io).
 
 :::
 
-The number of test results and users, as defined by your existing plan, will continue to
-be enforced during this trial period. All features available in Cloud will be
-unlocked for your organization to explore. At the end of this trial period, if you elect to
-remain in your current plan without any changes, no action on your part will be necessary.
+Have a question you don't see answered here? [We've answered common questions about Cypress Cloud in our FAQ](/cloud/faq).

@@ -1,6 +1,7 @@
 ---
-title: Retry-ability
+title: 'Retry-ability in Cypress'
 description: Understand how Cypress retries commands, queries, and assertions to help you write faster tests with fewer run-time surprises.
+sidebar_label: Retry-ability
 sidebar_position: 50
 ---
 
@@ -180,6 +181,72 @@ the "first item" assertion failed.
   alt="Retrying multiple assertions"
 />
 
+## Assertions as retry boundaries
+
+When a `.should()` assertion appears **in the middle** of a query chain—with
+more queries chained after it—the assertion acts as a retry boundary. Once the
+assertion passes, Cypress locks in the subject at that point and advances
+through the command queue. Queries that follow the assertion will retry from
+that locked-in subject, **not** from the beginning of the chain.
+
+This becomes a problem when the application re-renders the DOM after the
+mid-chain assertion passes. The element passed to the subsequent queries may
+already be detached from the DOM, and Cypress cannot requery from the top of
+the chain because the prior assertion already succeeded. You may see an error
+like:
+
+```
+cy.children() failed because the page updated as a result of this command,
+but you tried to continue the command chain. The subject is no longer
+attached to the DOM, and Cypress cannot requery the page after commands
+such as cy.children().
+```
+
+#### <Icon name="exclamation-triangle" color="red" /> Mid-chain assertion with risk of a stale subject
+
+```javascript
+cy.get('.list')
+  .find('li')
+  .eq(2)
+  .should('contain', 'Header') // once this passes, the li element is locked in
+  .children('.child')
+  .eq(3) // if the DOM re-renders, this li may be detached
+  .should('contain', 'child') // retry only reruns from .children(), not .get()
+```
+
+If the page re-renders between the two assertions, the `li` matched by
+`.should('contain', 'Header')` may be replaced in the DOM. When Cypress retries
+from `.children('.child')`, it uses the original—now-detached—`li` as the
+subject and fails.
+
+#### <Icon name="check-circle" color="green" /> Split the chain at assertion boundaries
+
+Break the chain into separate statements so each re-query starts fresh from the
+top:
+
+```javascript
+cy.get('.list').find('li').eq(2).should('contain', 'Header')
+cy.get('.list')
+  .find('li')
+  .eq(2)
+  .children('.child')
+  .eq(3)
+  .should('contain', 'child')
+```
+
+Or use a [`.should(callbackFn)`](/api/commands/should#Function) to keep all
+assertions retrying together against a freshly-queried element:
+
+```javascript
+cy.get('.list')
+  .find('li')
+  .eq(2)
+  .should(($li) => {
+    expect($li).to.contain('Header')
+    expect($li.children('.child').eq(3)).to.contain('child')
+  })
+```
+
 ## Implicit Assertions
 
 Often a Cypress command has built-in assertions that will cause the command to
@@ -315,6 +382,48 @@ cy.get('.new-todo').as('new')
 cy.get('@new').type('todo A{enter}')
 cy.get('@new').type('todo B{enter}')
 cy.get('@new').should('have.class', 'active')
+```
+
+### Multiple sequential actions on the same element
+
+When performing several actions on a single element — such as focusing an input,
+clearing it, typing a value, and blurring — you have two good options.
+
+**Option 1: Direct chaining.** Action commands like
+[`.focus()`](/api/commands/focus), [`.clear()`](/api/commands/clear),
+[`.type()`](/api/commands/type), and [`.blur()`](/api/commands/blur) each yield
+the same element they received, so you can chain them in a single expression:
+
+```javascript
+// ✅ Recommended for stable elements
+cy.get('#payment-input').focus().clear().type('new value').blur()
+```
+
+**Option 2: Separate `cy.get()` calls.** If your application re-renders between
+actions and might replace the DOM node, use a separate query for each action.
+Cypress re-runs all queries leading up to each action, so a fresh element
+reference is used every time:
+
+```javascript
+// ✅ Recommended when the element may re-render between actions
+cy.get('#payment-input').focus()
+cy.get('#payment-input').clear()
+cy.get('#payment-input').type('new value')
+cy.get('#payment-input').blur()
+```
+
+Avoid wrapping multiple actions in a `.then()` callback with `cy.wrap()`. The
+`.then()` callback is **not** retried and does not add retry-ability protection.
+The element reference captured by `.then()` can become stale if the DOM updates:
+
+```javascript
+// ❌ Avoid: .then() is not retried; $el can become stale
+cy.get('#payment-input').then(($el) => {
+  cy.wrap($el).focus()
+  cy.wrap($el).clear()
+  cy.wrap($el).type('new value')
+  cy.wrap($el).blur()
+})
 ```
 
 :::caution

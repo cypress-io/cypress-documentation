@@ -13,6 +13,7 @@ sidebar_label: Configuration
 ##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
 
 - How to configure Cypress to change the default behavior of Cypress
+- How Cypress loads config files as ESM or CommonJS
 - Configuration options available in Cypress
 - How to view and override configuration at runtime
 
@@ -26,19 +27,98 @@ will create a Cypress configuration file for you. This file will be
 [TypeScript](/app/tooling/typescript-support) apps. This file is used to
 store any configuration specific to Cypress.
 
-Cypress additionally supports config files with `.mjs` or `.cjs` extensions.
+Cypress additionally supports config files with `.mjs` and `.cjs` extensions.
 
 Using a `.mjs` file will allow you to use
-[ESM Module](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)
+[ESM](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)
 syntax in your config without the need of a transpiler step.
 
-A '.cjs' file uses the [CommonJS](https://nodejs.org/api/modules.html) module
+A `.cjs` file uses [CommonJS](https://nodejs.org/api/modules.html) module
 syntax, which is the default for JavaScript files. All JavaScript config
 examples in our docs use the CommonJS format.
+
+For TypeScript config files (`.ts`, `.mts`, `.cts`), see
+[TypeScript Support](/app/tooling/typescript-support#Processing-your-Cypress-configuration-and-plugins).
 
 If you [configure your tests to record](/cloud/get-started/setup#Setup) the
 results to [Cypress Cloud](/cloud/get-started/introduction) the
 `projectId` will be stored in the config file as well.
+
+### ESM vs CommonJS
+
+Starting in Cypress [15.17.0](/app/references/changelog#15-17-0), Cypress
+determines whether your config loads as **ESM** or **CommonJS** _before_ running
+it, using the same rules as Node.js. Cypress then loads the file with only
+`import()` (ESM) or `require()` (CommonJS) and does **not** fall back to the
+other format if loading fails.
+
+The same rules apply to plugin code in `setupNodeEvents` — Cypress evaluates your
+config and plugins in a Node.js child process, so the module system for that
+file determines which APIs are available (for example `import.meta.resolve` in
+ESM or `require()` in CommonJS).
+
+| Config file extension | Nearest `package.json` `"type"` | Loaded as |
+| --------------------- | ------------------------------- | --------- |
+| `.mjs`                | (any)                           | ESM       |
+| `.cjs`                | (any)                           | CommonJS  |
+| `.js`                 | `"module"`                      | ESM       |
+| `.js`                 | omitted or `"commonjs"`         | CommonJS  |
+
+Cypress walks up from the config file to find the **nearest** `package.json`.
+If a parent directory has its own `package.json` without `"type": "module"`, that
+scope wins over an ancestor that is ESM-only.
+
+Use the file extension and `package.json` `"type"` that match how the config is
+written:
+
+- **ESM config** — use `import` / `export default` and ESM-only APIs such as
+  `import.meta.resolve` and `import.meta.dirname`:
+
+```javascript title="cypress.config.js (ESM project)"
+import { defineConfig } from 'cypress'
+
+export default defineConfig({
+  e2e: {
+    setupNodeEvents(on, config) {
+      // import.meta is available in ESM configs
+      return config
+    },
+  },
+})
+```
+
+- **CommonJS config** — use `require()` and `module.exports`:
+
+```javascript title="cypress.config.js (CommonJS project)"
+const { defineConfig } = require('cypress')
+
+module.exports = defineConfig({
+  e2e: {
+    setupNodeEvents(on, config) {
+      // require() is available in CommonJS configs
+      return config
+    },
+  },
+})
+```
+
+If your project has `"type": "module"` but you need CommonJS syntax in the
+config, rename the file to `cypress.config.cjs`. If your project is CommonJS
+but you want ESM syntax, use `cypress.config.mjs` or set `"type": "module"`
+in `package.json`.
+
+To call CommonJS-only dependencies from an ESM config (or the reverse), use
+Node's interoperability helpers — for example `createRequire(import.meta.url)`
+to `require()` from an ESM file.
+
+:::caution
+
+Configs that previously loaded only because Cypress retried the alternate module
+format may now fail with a clear load error. That behavior is intentional: it
+matches Node.js and ensures ESM-only APIs such as `import.meta.resolve` work
+reliably in config and plugin code.
+
+:::
 
 ## Intelligent Code Completion
 
@@ -76,6 +156,7 @@ default values.
 | `includeShadowDom`     | `false`                               | Whether to traverse shadow DOM boundaries and include elements within the shadow DOM in the results of query commands (e.g. [`cy.get()`](/api/commands/get)).                                                                                                                                              |
 | `numTestsKeptInMemory` | Default based on `run` or `open` mode | The number of tests for which snapshots and command data are kept in memory. `numTestsKeptInMemory` is set to `50` by default during `cypress open` and set to `0` by default during `cypress run`. Reduce this number if you are experiencing high memory consumption in your browser during a test run.  |
 | `port`                 | `null`                                | Port used to host Cypress. Normally this is a randomly generated port.                                                                                                                                                                                                                                     |
+| `projectId`            | `null`                                | The unique ID used to record test results to [Cypress Cloud](/cloud/get-started/introduction). Set automatically when you [connect your project to Cypress Cloud](/cloud/get-started/setup#Setup).                                                                                                         |
 | `redirectionLimit`     | `20`                                  | The number of times that the application under test can redirect before erroring.                                                                                                                                                                                                                          |
 | `reporter`             | `spec`                                | The [reporter](/app/tooling/reporters) used during `cypress run`.                                                                                                                                                                                                                                          |
 | `reporterOptions`      | `null`                                | The [reporter options](/app/tooling/reporters#Reporter-Options) used. Supported options depend on the reporter.                                                                                                                                                                                            |
@@ -114,42 +195,42 @@ you should understand well. The default values listed here are meaningful.
 
 ### Screenshots
 
-| Option                   | Default               | Description                                                                                                                                           |
-| ------------------------ | --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `screenshotOnRunFailure` | `true`                | Whether Cypress will take a screenshot when a test fails during `cypress run`.                                                                        |
-| `screenshotsFolder`      | `cypress/screenshots` | Path to folder where screenshots will be saved from [`cy.screenshot()`](/api/commands/screenshot) command or after a test fails during `cypress run`. |
-| `trashAssetsBeforeRuns`  | `true`                | Whether Cypress will trash assets within the `downloadsFolder`, `screenshotsFolder`, and `videosFolder` before tests run with `cypress run`.          |
+| Option                   | Default               | Description                                                                                                                                                                                                                                   |
+| ------------------------ | --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `screenshotOnRunFailure` | `true`                | Whether Cypress will take a screenshot when a test fails during `cypress run`.                                                                                                                                                                |
+| `screenshotsFolder`      | `cypress/screenshots` | Path to folder where screenshots will be saved from [`cy.screenshot()`](/api/commands/screenshot) command or after a test fails during `cypress run`.                                                                                         |
+| `trashAssetsBeforeRuns`  | `true`                | Whether Cypress will trash assets within the `downloadsFolder`, `screenshotsFolder`, and `videosFolder` before tests run with `cypress run`. This clears the **entire contents** of those folders, including all files and nested subfolders. |
 
 For more options regarding screenshots, view the
 [Cypress.Screenshot API](/api/cypress-api/screenshot-api).
 
 ### Videos
 
-<VideoRecordingSupportedBrowsers />
-
-| Option                  | Default          | Description                                                                                                                                                                                                                                                                                                                   |
-| ----------------------- | ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `trashAssetsBeforeRuns` | `true`           | Whether Cypress will trash assets within the `downloadsFolder`, `screenshotsFolder`, and `videosFolder` before tests run with `cypress run`.                                                                                                                                                                                  |
-| `videoCompression`      | `false`          | The quality setting for the video compression, in Constant Rate Factor (CRF). The value can be `false` or `0` to disable compression or a CRF between `1` and `51`, where a lower value results in better quality (at the expense of a higher file size). Setting this option to `true` will result in a default CRF of `32`. |
-| `videosFolder`          | `cypress/videos` | Where Cypress will automatically save the video of the test run when tests run with `cypress run`.                                                                                                                                                                                                                            |
-| `video`                 | `false`          | Whether Cypress will capture a video of the tests run with `cypress run`.                                                                                                                                                                                                                                                     |
+| Option                  | Default          | Description                                                                                                                                                                                                                                                                                                                                     |
+| ----------------------- | ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `trashAssetsBeforeRuns` | `true`           | Whether Cypress will trash assets within the `downloadsFolder`, `screenshotsFolder`, and `videosFolder` before tests run with `cypress run`. This clears the **entire contents** of those folders, including all files and nested subfolders—not only screenshots and videos. [Please read the notes for more details.](#trashAssetsBeforeRuns) |
+| `videoCompression`      | `false`          | The quality setting for the video compression, in Constant Rate Factor (CRF). The value can be `false` or `0` to disable compression or a CRF between `1` and `51`, where a lower value results in better quality (at the expense of a higher file size). Setting this option to `true` will result in a default CRF of `32`.                   |
+| `videosFolder`          | `cypress/videos` | Where Cypress will automatically save the video of the test run when tests run with `cypress run`.                                                                                                                                                                                                                                              |
+| `video`                 | `false`          | Whether Cypress will capture a video of the tests run with `cypress run`.                                                                                                                                                                                                                                                                       |
 
 ### Downloads
 
-| Option                  | Default             | Description                                                                                                                                  |
-| ----------------------- | ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
-| `downloadsFolder`       | `cypress/downloads` | Path to folder where files downloaded during a test are saved.                                                                               |
-| `trashAssetsBeforeRuns` | `true`              | Whether Cypress will trash assets within the `downloadsFolder`, `screenshotsFolder`, and `videosFolder` before tests run with `cypress run`. |
+| Option                  | Default             | Description                                                                                                                                                                                                                                                                                                                                     |
+| ----------------------- | ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `downloadsFolder`       | `cypress/downloads` | Path to folder where files downloaded during a test are saved.                                                                                                                                                                                                                                                                                  |
+| `trashAssetsBeforeRuns` | `true`              | Whether Cypress will trash assets within the `downloadsFolder`, `screenshotsFolder`, and `videosFolder` before tests run with `cypress run`. This clears the **entire contents** of those folders, including all files and nested subfolders—not only screenshots and videos. [Please read the notes for more details.](#trashAssetsBeforeRuns) |
 
 ### Browser
 
-| Option                  | Default | Description                                                                                                                                                                                                                                                                                                                                           |
-| ----------------------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `defaultBrowser`        | `null`  | The default browser to launch if the "--browser" command line option is not provided. This option only affects the first browser launch; changing this option after the browser is already launched will have no effect.                                                                                                                              |
-| `chromeWebSecurity`     | `true`  | Whether to enable Chromium-based browser's Web Security for same-origin policy and insecure mixed content.                                                                                                                                                                                                                                            |
-| `blockHosts`            | `null`  | A String or Array of hosts that you wish to block traffic for. [Please read the notes for examples on using this.](#blockHosts)                                                                                                                                                                                                                       |
-| `modifyObstructiveCode` | `true`  | Whether Cypress will search for and replace obstructive JS code in `.js` or `.html` files. [Please read the notes for more information on this setting.](#modifyObstructiveCode)                                                                                                                                                                      |
-| `userAgent`             | `null`  | Enables you to override the default user agent the browser sends in all request headers. User agent values are typically used by servers to help identify the operating system, browser, and browser version. See [User-Agent MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent) for example user agent values. |
+| Option                  | Default | Description                                                                                                                                                                                                                                                                                                                                            |
+| ----------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `defaultBrowser`        | `null`  | The default browser to launch if the "--browser" command line option is not provided. This option only affects the first browser launch; changing this option after the browser is already launched will have no effect.                                                                                                                               |
+| `chromeWebSecurity`     | `true`  | Whether to enable Chromium-based browser's Web Security for same-origin policy and insecure mixed content.                                                                                                                                                                                                                                             |
+| `blockHosts`            | `null`  | A String or Array of hosts that you wish to block traffic for. [Please read the notes for examples on using this.](#blockHosts)                                                                                                                                                                                                                        |
+| `hosts`                 | `null`  | An Object of hostname patterns to IP addresses. Acts like a Cypress-specific `/etc/hosts` file, letting Cypress resolve custom hostnames within tests. [Please read the notes for examples on using this.](#hosts)                                                                                                                                     |
+| `modifyObstructiveCode` | `true`  | Whether Cypress will search for and replace obstructive JS code in `.js` or `.html` files. [Please read the notes for more information on this setting.](#modifyObstructiveCode)                                                                                                                                                                       |
+| `removeSRIAttributes`   | `false` | Whether Cypress will remove [Subresource Integrity (SRI)](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity) `integrity` attributes from `<script>` and `<link>` elements so that proxy-rewritten first-party resources are not blocked. [Please read the notes for more information on this setting.](#removeSRIAttributes) |
+| `userAgent`             | `null`  | Enables you to override the default user agent the browser sends in all request headers. User agent values are typically used by servers to help identify the operating system, browser, and browser version. See [User-Agent MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent) for example user agent values.  |
 
 ### Viewport
 
@@ -160,15 +241,28 @@ For more options regarding screenshots, view the
 
 ### Actionability
 
-| Option                       | Default | Description                                                                                                                                                                                                                                                            |
-| ---------------------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `animationDistanceThreshold` | `5`     | The distance in pixels an element must exceed over time to be considered animating.                                                                                                                                                                                    |
-| `keystrokeDelay`             | `10`    | Time, in milliseconds, between each keystroke when typing with [`cy.type()`](/api/commands/type). Must be a positive number. To disable the delay entirely, use [`Cypress.Keyboard.defaults({ keystrokeDelay: 0 })`](/api/cypress-api/keyboard-api) in a support file. |
-| `waitForAnimations`          | `true`  | Whether to wait for elements to finish animating before executing commands.                                                                                                                                                                                            |
-| `scrollBehavior`             | `top`   | Viewport position to which an element should be scrolled before executing commands. Can be `'center'`, `'top'`, `'bottom'`, `'nearest'`, or `false`. `false` disables scrolling.                                                                                       |
+| Option                       | Default | Description                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| ---------------------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `animationDistanceThreshold` | `5`     | The distance in pixels an element must exceed over time to be considered animating.                                                                                                                                                                                                                                                                                                                                                    |
+| `keystrokeDelay`             | `10`    | Time, in milliseconds, between each keystroke when typing with [`cy.type()`](/api/commands/type). Must be a positive number. To disable the delay entirely, use [`Cypress.Keyboard.defaults({ keystrokeDelay: 0 })`](/api/cypress-api/keyboard-api) in a support file.                                                                                                                                                                 |
+| `waitForAnimations`          | `true`  | Whether to wait for elements to finish animating before executing commands.                                                                                                                                                                                                                                                                                                                                                            |
+| `scrollBehavior`             | `top`   | Viewport position to which an element should be scrolled before executing commands. Can be `'center'`, `'top'`, `'bottom'`, `'nearest'`, or `false`. `'nearest'` scrolls the minimum amount needed to bring the element into view (aligns to top if above the viewport, bottom if below, and does not scroll if already visible). `false` disables scrolling. See [Scrolling](/app/core-concepts/interacting-with-elements#Scrolling). |
 
 For more information, see the docs on
 [actionability](/app/core-concepts/interacting-with-elements#Actionability).
+
+### System
+
+These values are set by Cypress at startup and are read-only — they cannot be changed in your Cypress configuration file. They can be accessed via [`Cypress.config()`](/api/cypress-api/config). The `browsers` property is an exception: it can also be modified in [`setupNodeEvents`](#setupNodeEvents) to filter or add custom browsers.
+
+| Option                | Default         | Description                                                                                                                                          |
+| --------------------- | --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `arch`                | `os.arch()`     | The underlying OS CPU architecture. Common values are `x64`, `arm`, and `arm64`.                                                                     |
+| `browsers`            | `[]`            | A list of browsers found on your system. Populated by Cypress at startup. Can be filtered or extended in [`setupNodeEvents`](#setupNodeEvents).      |
+| `isInteractive`       | `true`          | Whether Cypress is running in interactive mode (`cypress open`). Set to `false` during `cypress run`. See [Notes](#isInteractive) for usage.         |
+| `platform`            | `os.platform()` | The underlying OS platform name (e.g. `linux`, `darwin`, `win32`).                                                                                   |
+| `resolvedNodePath`    | `null`          | The path to the Node.js binary used for [`cy.task()`](/api/commands/task) and [`cy.exec()`](/api/commands/exec) commands. Set by Cypress at startup. |
+| `resolvedNodeVersion` | `null`          | The version of Node.js used by Cypress. Set by Cypress at startup.                                                                                   |
 
 ### Experiments
 
@@ -373,6 +467,12 @@ The configuration values passed in will only take effect during the suite or
 test where they are set. The values will then reset to the previous default
 values after the suite or test is complete.
 
+You can also pass an `expose` object so plugins can declare public configuration
+per suite or test with [`Cypress.expose()`](/api/cypress-api/expose). Expose
+overrides are merged across nested suites and tests, with test-level keys taking
+precedence. Override keys are applied at test start and restored after each test
+without affecting unrelated values set in hooks.
+
 #### Syntax
 
 ```javascript
@@ -516,6 +616,44 @@ matched.
   src="/img/app/references/blocked-host.png"
   alt="Network tab of dev tools showing blocked host"
 />
+
+### hosts
+
+By passing an object with hostname patterns as keys and IP addresses as values,
+you can resolve custom hostnames to specific IP addresses within Cypress. This
+is the equivalent of adding entries to your machine's `/etc/hosts` file, but
+scoped to Cypress's network proxy — no changes to your OS are required.
+
+To map a hostname:
+
+- ✅ Pass an exact hostname
+- ✅ Use wildcard `*` patterns (e.g., `*.example.com`)
+- ❌ Do **NOT** include protocol: `http://` or `https://`
+
+:::info
+
+Wildcard patterns use the same glob syntax supported by
+[`minimatch`](/api/utilities/minimatch). When in doubt you can test whether a
+pattern matches yourself.
+
+:::
+
+:::cypress-config-example
+
+```ts
+{
+  hosts: {
+    "not.public.host.com": "191.1.191.111",
+    "*.loc": "127.0.0.1",
+  },
+}
+```
+
+:::
+
+This is useful when testing against hostnames that have no public DNS entries,
+or when you need multiple domain names to resolve to local test servers without
+editing your system hosts file.
 
 ### devServer
 
@@ -670,6 +808,51 @@ case, please disable this option.
 Details for `experimentalModifyObstructiveThirdPartyCode` can be found
 [here](/app/guides/cross-origin-testing#Modifying-Obstructive-Third-Party-Code).
 
+Because rewriting these scripts changes their bytes, any pinned
+[Subresource Integrity (SRI)](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity)
+hash on the resource will no longer match and the browser will block it. If your
+application uses SRI, enable [`removeSRIAttributes`](#removeSRIAttributes) so the
+rewritten resources are not blocked.
+
+### removeSRIAttributes
+
+When this option is enabled, Cypress removes
+[Subresource Integrity (SRI)](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity)
+`integrity` attributes from `<script>` and `<link>` elements as they are served
+to the browser.
+
+Cypress's proxy rewrites obstructive JS and HTML (see
+[`modifyObstructiveCode`](#modifyObstructiveCode)) before it reaches the browser.
+Rewriting changes the resource's bytes, which invalidates any pinned SRI hash, so
+the browser refuses to execute or apply the resource and reports an error such
+as:
+
+```
+Failed to find a valid digest in the 'integrity' attribute for resource '…' …
+The resource has been blocked.
+```
+
+Enabling `removeSRIAttributes` strips the `integrity` attribute so these
+resources load normally under test. It applies to **first-party** resources, and
+covers `integrity` defined in any of the following ways:
+
+- a static HTML attribute (for example,
+  `<script src="app.js" integrity="sha384-…">`)
+- a JavaScript string literal assigned to the attribute
+- a runtime DOM property assignment (for example,
+  [`webpack-subresource-integrity`](https://www.npmjs.com/package/webpack-subresource-integrity)'s
+  `script.integrity = sriHashes[chunkId]`)
+
+`removeSRIAttributes` is the first-party counterpart to
+[`experimentalModifyObstructiveThirdPartyCode`](/app/guides/cross-origin-testing#Modifying-Obstructive-Third-Party-Code),
+which removes SRI only for third-party resources. Enable both options to strip
+SRI across first- and third-party resources.
+
+This option defaults to `false`, so existing behavior is unchanged. Enable it
+only if your application uses SRI and you see first-party resources blocked under
+test. Because removing SRI disables a check that protects against tampered
+resources, enable it only for applications under test.
+
 ### setupNodeEvents
 
 The `setupNodeEvents` function allows you to tap into, modify, or extend the
@@ -698,12 +881,60 @@ an [`e2e`](#e2e) or [`component`](#component) testing specific option.
 
 See the [plugins guide](/app/plugins/plugins-guide) for more information.
 
+### trashAssetsBeforeRuns
+
+When `trashAssetsBeforeRuns` is `true` (the default), Cypress clears out old
+assets before each `cypress run` so that the results you collect only come from
+the current run. This **only** happens during `cypress run`. Assets are never
+trashed when using `cypress open`.
+
+Cypress trashes the following three folders:
+
+- [`downloadsFolder`](#Downloads) (`cypress/downloads` by default)
+- [`screenshotsFolder`](#Screenshots) (`cypress/screenshots` by default)
+- [`videosFolder`](#Videos) (`cypress/videos` by default)
+
+For each of these folders, Cypress removes the **entire contents** of the
+folder, every file and every nested subfolder. The folder itself is preserved; only its
+contents are cleared.
+
+How the contents are removed depends on the operating system:
+
+- On **macOS** and **Windows**, each item is moved to the system trash / Recycle
+  Bin, so it can be recovered if needed.
+- On **Linux**, the folders are emptied directly and the contents are
+  **permanently deleted**.
+
 ### Test files not found when using `spec` parameter
 
 When using the `--spec <path or mask>` argument, make it relative to the
-project's folder. If the specs are still missing, run Cypress with
-[DEBUG logs](/app/references/troubleshooting#Print-DEBUG-logs) with the
-following setting to see how Cypress is looking for spec files:
+project's folder.
+
+The `--spec` argument only runs specs that **also match the configured
+[`specPattern`](#e2e)**. Cypress computes the intersection of the
+`--spec` value and `specPattern`, so any spec file outside the configured
+`specPattern` will not be found — even if you pass its exact path.
+
+For example, the default `e2e.specPattern` is
+`cypress/e2e/**/*.cy.{js,jsx,ts,tsx}`. If your spec lives outside
+`cypress/e2e/`, passing its path via `--spec` will not run it until you also
+update `specPattern` in your Cypress config to include that location:
+
+```js
+// cypress.config.js
+module.exports = defineConfig({
+  e2e: {
+    specPattern: [
+      'cypress/e2e/**/*.cy.{js,jsx,ts,tsx}',
+      'tests/**/*.cy.{js,jsx,ts,tsx}',
+    ],
+  },
+})
+```
+
+If the specs are still missing after verifying the path and `specPattern`, run
+Cypress with [DEBUG logs](/app/references/troubleshooting#Print-DEBUG-logs)
+with the following setting to see how Cypress is looking for spec files:
 
 ```shell
 DEBUG=cypress:cli,cypress:data-context:sources:FileDataSource,cypress:data-context:sources:ProjectDataSource
@@ -711,29 +942,32 @@ DEBUG=cypress:cli,cypress:data-context:sources:FileDataSource,cypress:data-conte
 
 ## History
 
-| Version                                      | Changes                                                                                                                                       |
-| -------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
-| [15.10.0](/app/references/changelog#15-10-0) | Updated `env` to no longer be settable via test configuration.                                                                                |
-| [15.10.0](/app/references/changelog#15-10-0) | Added `expose` option for exposing public configuration values.                                                                               |
-| [14.0.0](/app/references/changelog#14-0-0)   | Added support for re-enabling superdomain navigation with the `injectDocumentDomain` configuration option                                     |
-| [13.16.0](/app/references/changelog#13-16-0) | Added `defaultBrowser` option.                                                                                                                |
-| [13.4.0](/app/references/changelog#13-4-0)   | Added support for configuring the Experimental Flake Detection strategy via `retries.experimentalStrategy` and `retries.experimentalOptions`. |
-| [13.0.0](/app/references/changelog#13-0-0)   | Removed `nodeVersion` option.                                                                                                                 |
-| [13.0.0](/app/references/changelog#13-0-0)   | Removed `videoUploadOnPasses` option.                                                                                                         |
-| [11.0.0](/app/references/changelog#11-0-0)   | Removed `e2e.experimentalSessionAndOrigin` option.                                                                                            |
-| [10.4.0](/app/references/changelog#10-4-0)   | Added `e2e.testIsolation` option.                                                                                                             |
-| [10.0.0](/app/references/changelog#10-0-0)   | Reworked page to support new `cypress.config.js` and deprecated `cypress.json` files.                                                         |
-| [8.7.0](/app/references/changelog#8-7-0)     | Added `slowTestThreshold` option.                                                                                                             |
-| [8.0.0](/app/references/changelog#8-0-0)     | Added `clientCertificates` option and removed `firefoxGcInterval` configuration.                                                              |
-| [7.0.0](/app/references/changelog#7-0-0)     | Added `e2e` and `component` options.                                                                                                          |
-| [7.0.0](/app/references/changelog#7-0-0)     | Added `redirectionLimit` option.                                                                                                              |
-| [6.1.0](/app/references/changelog#6-1-0)     | Added `scrollBehavior` option.                                                                                                                |
-| [5.2.0](/app/references/changelog#5-2-0)     | Added `includeShadowDom` option.                                                                                                              |
-| [5.0.0](/app/references/changelog#5-0-0)     | Added `retries` configuration.                                                                                                                |
-| [5.0.0](/app/references/changelog#5-0-0)     | Renamed `blacklistHosts` configuration to `blockHosts`.                                                                                       |
-| [4.1.0](/app/references/changelog#4-12-0)    | Added `screenshotOnRunFailure` configuration.                                                                                                 |
-| [4.0.0](/app/references/changelog#4-0-0)     | Added `firefoxGcInterval` configuration.                                                                                                      |
-| [3.5.0](/app/references/changelog#3-5-0)     | Added `nodeVersion` configuration.                                                                                                            |
+| Version                                      | Changes                                                                                                                                                                         |
+| -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [15.18.0](/app/references/changelog#15-18-0) | Added `removeSRIAttributes` option.                                                                                                                                             |
+| [15.17.0](/app/references/changelog#15-17-0) | Cypress config and plugin files now load as ESM or CommonJS using Node.js module semantics (file extension and nearest `package.json` `"type"`), with no cross-format fallback. |
+| [15.17.0](/app/references/changelog#15-17-0) | Added support for overriding [`Cypress.expose()`](/api/cypress-api/expose) values via test configuration.                                                                       |
+| [15.10.0](/app/references/changelog#15-10-0) | Updated `env` to no longer be settable via test configuration.                                                                                                                  |
+| [15.10.0](/app/references/changelog#15-10-0) | Added `expose` option for exposing public configuration values.                                                                                                                 |
+| [14.0.0](/app/references/changelog#14-0-0)   | Added support for re-enabling superdomain navigation with the `injectDocumentDomain` configuration option                                                                       |
+| [13.16.0](/app/references/changelog#13-16-0) | Added `defaultBrowser` option.                                                                                                                                                  |
+| [13.4.0](/app/references/changelog#13-4-0)   | Added support for configuring the Experimental Flake Detection strategy via `retries.experimentalStrategy` and `retries.experimentalOptions`.                                   |
+| [13.0.0](/app/references/changelog#13-0-0)   | Removed `nodeVersion` option.                                                                                                                                                   |
+| [13.0.0](/app/references/changelog#13-0-0)   | Removed `videoUploadOnPasses` option.                                                                                                                                           |
+| [11.0.0](/app/references/changelog#11-0-0)   | Removed `e2e.experimentalSessionAndOrigin` option.                                                                                                                              |
+| [10.4.0](/app/references/changelog#10-4-0)   | Added `e2e.testIsolation` option.                                                                                                                                               |
+| [10.0.0](/app/references/changelog#10-0-0)   | Reworked page to support new `cypress.config.js` and deprecated `cypress.json` files.                                                                                           |
+| [8.7.0](/app/references/changelog#8-7-0)     | Added `slowTestThreshold` option.                                                                                                                                               |
+| [8.0.0](/app/references/changelog#8-0-0)     | Added `clientCertificates` option and removed `firefoxGcInterval` configuration.                                                                                                |
+| [7.0.0](/app/references/changelog#7-0-0)     | Added `e2e` and `component` options.                                                                                                                                            |
+| [7.0.0](/app/references/changelog#7-0-0)     | Added `redirectionLimit` option.                                                                                                                                                |
+| [6.1.0](/app/references/changelog#6-1-0)     | Added `scrollBehavior` option.                                                                                                                                                  |
+| [5.2.0](/app/references/changelog#5-2-0)     | Added `includeShadowDom` option.                                                                                                                                                |
+| [5.0.0](/app/references/changelog#5-0-0)     | Added `retries` configuration.                                                                                                                                                  |
+| [5.0.0](/app/references/changelog#5-0-0)     | Renamed `blacklistHosts` configuration to `blockHosts`.                                                                                                                         |
+| [4.1.0](/app/references/changelog#4-12-0)    | Added `screenshotOnRunFailure` configuration.                                                                                                                                   |
+| [4.0.0](/app/references/changelog#4-0-0)     | Added `firefoxGcInterval` configuration.                                                                                                                                        |
+| [3.5.0](/app/references/changelog#3-5-0)     | Added `nodeVersion` configuration.                                                                                                                                              |
 
 ## See also
 

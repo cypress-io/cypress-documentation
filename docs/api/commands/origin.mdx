@@ -1,5 +1,5 @@
 ---
-title: 'origin | Cypress Documentation'
+title: 'cy.origin()'
 description: Visit multiple domains of different origin in a single test in Cypress.
 sidebar_label: origin
 e2eSpecific: true
@@ -304,6 +304,9 @@ do this with `cy.origin()`.
 
 <Icon name="exclamation-triangle" color="#f0ad4e" /> **Inefficient Usage**
 
+<Tabs>
+<TabItem value="cypress/support/commands.js">
+
 ```js
 Cypress.Commands.add('login', (username, password) => {
   // Remember to pass in arguments via `args`
@@ -320,6 +323,36 @@ Cypress.Commands.add('login', (username, password) => {
 })
 ```
 
+</TabItem>
+<TabItem value="cypress/support/commands.ts">
+
+```typescript
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      login(username: string, password: string): Chainable<void>
+    }
+  }
+}
+
+Cypress.Commands.add('login', (username, password) => {
+  // Remember to pass in arguments via `args`
+  const args = { username, password }
+  cy.origin('cypress.io', { args }, ({ username, password }) => {
+    // Go to https://example.cypress.com/login
+    cy.visit('/login')
+    cy.contains('Username').find('input').type(username)
+    cy.contains('Password').find('input').type(password)
+    cy.get('button').contains('Login').click()
+  })
+  // Confirm we're back at the primary origin before continuing
+  cy.url().should('contain', '/home')
+})
+```
+
+</TabItem>
+</Tabs>
+
 Having to go through an entire login flow before every test is not very
 performant. Up until now you could get around this problem by putting login code
 in the first test of your file, then performing subsequent tests reusing the
@@ -332,6 +365,9 @@ cache session information and reuse it across tests. So now let's enhance our
 custom login command with `cy.session()` for a complete syndicated login flow
 with session caching and validation. No mocking, no workarounds, no third-party
 plugins!
+
+<Tabs>
+<TabItem value="cypress/support/commands.js">
 
 ```js
 Cypress.Commands.add('login', (username, password) => {
@@ -356,6 +392,44 @@ Cypress.Commands.add('login', (username, password) => {
   )
 })
 ```
+
+</TabItem>
+<TabItem value="cypress/support/commands.ts">
+
+```typescript
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      login(username: string, password: string): Chainable<void>
+    }
+  }
+}
+
+Cypress.Commands.add('login', (username, password) => {
+  const args = { username, password }
+  cy.session(
+    // Username & password can be used as the cache key too
+    args,
+    () => {
+      cy.origin('cypress.io', { args }, ({ username, password }) => {
+        cy.visit('/login')
+        cy.contains('Username').find('input').type(username)
+        cy.contains('Password').find('input').type(password)
+        cy.get('button').contains('Login').click()
+      })
+      cy.url().should('contain', '/home')
+    },
+    {
+      validate() {
+        cy.request('/api/user').its('status').should('eq', 200)
+      },
+    }
+  )
+})
+```
+
+</TabItem>
+</Tabs>
 
 ## Learn More
 
@@ -464,11 +538,34 @@ and setting up custom commands to run within the `cy.origin()` callback:
 
 `cypress/support/commands.js`:
 
+<Tabs>
+<TabItem value="cypress/support/commands.js">
+
 ```js
 Cypress.Commands.add('clickLink', (label) => {
   cy.get('a').contains(label).click()
 })
 ```
+
+</TabItem>
+<TabItem value="cypress/support/commands.ts">
+
+```typescript
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      clickLink(label: string): Chainable<JQuery<HTMLElement>>
+    }
+  }
+}
+
+Cypress.Commands.add('clickLink', (label) => {
+  cy.get('a').contains(label).click()
+})
+```
+
+</TabItem>
+</Tabs>
 
 `cypress/support/e2e.js`:
 

@@ -1,5 +1,5 @@
 ---
-title: 'Built-in and Custom Reporters in Cypress: Setup Guide'
+title: 'Built-in and custom reporters in Cypress: setup guide'
 description: Learn how to use custom reporters in Cypress to output test results in different formats.
 sidebar_label: Reporters
 ---
@@ -333,7 +333,7 @@ Then we can combine them using the
 [mochawesome-merge](https://github.com/antontelesh/mochawesome-merge) utility.
 
 ```shell
-npx mochawesome-merge "cypress/results/*.json" > mochawesome.json
+npx mochawesome-merge cypress/results/*.json -o mochawesome.json
 ```
 
 We can now generate a combined HTML report from the `mochawesome.json` file

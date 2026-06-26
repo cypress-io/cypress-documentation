@@ -1,6 +1,7 @@
 ---
-title: Custom Frameworks
+title: 'Custom frameworks'
 description: Learn how to create a custom Framework Definition and Mount Adapter for your favorite library or framework.
+sidebar_label: Custom Frameworks
 sidebar_position: 100
 ---
 
@@ -241,11 +242,34 @@ When a user configures Component Testing with your Framework Definition we
 automatically configure a `cy.mount` command using your `mount` function in the
 Component Testing `supportFile`:
 
+<Tabs>
+<TabItem value="cypress/support/component.js">
+
 ```js
 import { mount } from '@lmiller1990/cypress-ct-solid-js'
 
 Cypress.Commands.add('mount', mount)
 ```
+
+</TabItem>
+<TabItem value="cypress/support/component.ts">
+
+```ts
+import { mount } from '@lmiller1990/cypress-ct-solid-js'
+
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      mount: typeof mount
+    }
+  }
+}
+
+Cypress.Commands.add('mount', mount)
+```
+
+</TabItem>
+</Tabs>
 
 ## package.json
 

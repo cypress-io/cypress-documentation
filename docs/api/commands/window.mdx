@@ -1,5 +1,5 @@
 ---
-title: 'window | Cypress Documentation'
+title: 'cy.window()'
 description: Get the window object of the page that is currently active in Cypress.
 sidebar_label: window
 slug: /api/commands/window
@@ -73,6 +73,33 @@ Our test can confirm the property was properly set.
 
 ```javascript
 cy.window().its('tags.foo').should('equal', 'bar')
+```
+
+#### TypeScript: custom window properties
+
+`cy.window()` yields an `AUTWindow` object typed as
+`Window & typeof globalThis & Cypress.ApplicationWindow`. To avoid TypeScript
+errors when accessing custom properties your application sets on `window`,
+extend the `Cypress.ApplicationWindow` interface:
+
+```typescript
+// cypress/support/e2e.ts (or a *.d.ts file included by your cypress/tsconfig.json)
+declare namespace Cypress {
+  interface ApplicationWindow {
+    // add the properties your app sets on window
+    env: {
+      DISABLE: boolean
+    }
+  }
+}
+```
+
+After augmenting the interface, TypeScript will recognize the custom property:
+
+```typescript
+cy.window().then((win) => {
+  win.env.DISABLE = true // no TypeScript error
+})
 ```
 
 **Note:** Cypress commands are asynchronous, so you cannot check a property

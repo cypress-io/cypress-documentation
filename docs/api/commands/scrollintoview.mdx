@@ -1,5 +1,5 @@
 ---
-title: 'scrollIntoView | Cypress Documentation'
+title: 'cy.scrollIntoView()'
 description: Scroll an element into view in Cypress.
 sidebar_label: scrollIntoView
 ---
@@ -60,7 +60,8 @@ Pass in an options object to change the default behavior of `.scrollIntoView()`.
 ### Scrolling
 
 ```javascript
-cy.get('button#checkout').scrollIntoView().should('be.visible')
+cy.get('button#checkout').scrollIntoView()
+cy.get('button#checkout').should('be.visible')
 ```
 
 ### Options
@@ -104,8 +105,10 @@ or
 
 <HeaderAssertions />
 
-- `.scrollIntoView()` will automatically wait for assertions you have chained to
-  pass
+- `.scrollIntoView()` itself will not be retried — it fires once. Assertions
+  chained after `.scrollIntoView()` will be retried until they pass or time out.
+  See
+  [Only queries are retried](/app/core-concepts/retry-ability#Only-queries-are-retried).
 
 <HeaderTimeouts />
 
@@ -116,7 +119,8 @@ or
 **_Assert element is visible after scrolling it into view_**
 
 ```javascript
-cy.get('#scroll-horizontal button').scrollIntoView().should('be.visible')
+cy.get('#scroll-horizontal button').scrollIntoView()
+cy.get('#scroll-horizontal button').should('be.visible')
 ```
 
 The commands above will display in the Command Log as:

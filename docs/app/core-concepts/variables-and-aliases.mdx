@@ -1,6 +1,7 @@
 ---
-title: Variables and Aliases
+title: 'Variables and aliases in Cypress'
 description: Learn how to handle asynchronous code in Cypress, when to assign variables, how to use aliases to share objects between hooks and tests, and how to alias DOM elements, intercepts, and requests.
+sidebar_label: Variables and Aliases
 sidebar_position: 40
 ---
 
@@ -407,9 +408,9 @@ By using [`cy.get()`](/api/commands/get) we avoid the use of `this`.
 Keep in mind that there are use cases for both approaches because they have one
 major difference.
 
-When using `this.users`, it is stored on the context when it is first evaluated.
-But when using `cy.get('@users')`, any queries are re-evaluated every time the
-alias is accessed.
+`this.users` is stored on the Mocha context when `.as()` first runs and never
+re-evaluates — it behaves like a static snapshot. `cy.get('@users')` re-executes
+the full query chain every time it is accessed, returning fresh results.
 
 ```javascript
 const favorites = { color: 'blue' }
@@ -442,26 +443,26 @@ After you alias DOM elements, you can then later access them for reuse.
 cy.get('table').find('tr').as('rows')
 ```
 
-Internally, Cypress has made a reference to the `<tr>` collection returned as
-the alias "rows". To reference these same "rows" later, you can use the
-[`cy.get()`](/api/commands/get) command.
+Internally, Cypress stores the **query chain** that produced the `<tr>`
+collection — not the elements themselves. To access the alias later, use the
+[`cy.get()`](/api/commands/get) command with the `@` prefix.
 
 ```javascript
-// Cypress returns the reference to the <tr>'s
-// which allows us to continue to chain commands
-// finding the 1st row.
+// Cypress re-runs the query chain to get fresh <tr>'s,
+// then chains .first() and .click() on the result.
 cy.get('@rows').first().click()
 ```
 
-Because we've used the `@` character in [`cy.get()`](/api/commands/get), instead
-of querying the DOM for elements, [`cy.get()`](/api/commands/get) looks for an
-existing alias called `rows` and returns the reference (if it finds it).
+Because we've used the `@` character in [`cy.get()`](/api/commands/get), Cypress
+looks up the alias called `rows` and **re-executes its query chain** against the
+current DOM — it does not return a cached element reference.
 
 #### Stale Elements:
 
 In many single-page applications, the JavaScript re-renders parts of the DOM
-constantly. This is why we always re-run queries when you fetch an alias, so you
-never end up with stale elements.
+constantly. Because Cypress stores the **query chain** — not the resolved
+elements — every access of a default alias re-runs those queries against the
+current DOM, so you never end up with stale element references.
 
 ```html
 <ul id="todos">
@@ -547,6 +548,53 @@ cy.contains('Successfully created user: Brian')
 [We have a much more detailed and comprehensive guide on routing Network Requests.](/app/guides/network-requests)
 
 :::
+
+#### Accessing multiple intercepted requests
+
+When you alias a `cy.intercept()` route, Cypress silently tracks **every**
+request that matches it — not just the most recent one. By default,
+`cy.get('@alias')` and `cy.wait('@alias')` only surface the most recent
+matching request. The `.all` suffix and numeric index notation expose the full
+history Cypress was already keeping.
+
+This is useful in several situations:
+
+**Asserting request count.** The most common need is proving your app made
+_exactly_ the expected number of requests — not just that it made at least one.
+For example, verifying a polling interval doesn't fire again after some time:
+
+```js
+cy.wait('@getList')
+cy.tick(10000)
+cy.get('@getList.all').should('have.length', 1) // still only one request
+```
+
+Without `.all` there is no clean way to assert count. You can only assert
+whether a request happened, not how many times.
+
+**Sequential requests with different data.** When your app paginates or retries,
+requests share a route but carry different parameters. The numeric index lets you
+validate each one independently:
+
+```js
+cy.get('@getUsers.1').its('request.url').should('include', 'page=1')
+cy.get('@getUsers.2').its('request.url').should('include', 'page=2')
+```
+
+**Why not multiple `cy.wait()` calls?** `cy.wait('@alias')` called twice will
+consume two requests in order, which is useful for _sequencing_ — but it doesn't
+catch a third unexpected request, and once consumed you can't go back to inspect
+an earlier one. `cy.get('@alias.all')` is backward-looking: it queries everything
+Cypress has already captured. The two complement each other — use `cy.wait()` to
+let requests settle, then `cy.get('@alias.all')` to assert on the full history:
+
+```js
+cy.wait('@getUsers') // let requests settle
+cy.get('@getUsers.all') // then assert on everything captured
+  .should('have.length', 2)
+```
+
+<InterceptAliasIndex />
 
 ### Requests
 

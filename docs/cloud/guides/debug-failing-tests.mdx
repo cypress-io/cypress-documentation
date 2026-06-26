@@ -1,0 +1,301 @@
+---
+title: Debug failing tests in CI with Cypress Cloud
+description: Debug failing and flaky Cypress tests in CI with Cypress Cloud. Use Test Replay, AI error summaries, Branch Review, and Cloud MCP to find the root cause of a CI failure without reproducing it locally.
+sidebar_label: Debug Failing Tests
+sidebar_position: 10
+---
+
+<ProductHeading product="cloud" />
+
+# Debug Failing Tests in CI with Cypress Cloud
+
+When a Cypress test fails in continuous integration (CI), the hard part is rarely
+the fix. It's the investigation: the failure happened on a machine you can't see,
+in a browser session that no longer exists, on a commit you may have already moved
+past. The traditional answer (a screenshot, a video, and a stack trace) tells you
+_that_ a test failed, but rarely _why_.
+
+**Cypress Cloud closes that gap.** When you
+[record your runs](/cloud/get-started/setup), Cypress Cloud captures the complete
+state of every test as it ran in CI, so you can debug the actual failure with the
+same tools you use locally, get an AI explanation of what went wrong, and confirm
+whether your change introduced the failure or simply surfaced existing
+instability. This guide walks through that workflow end to end.
+
+:::info
+
+##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
+
+- Why a test that passes locally still fails in CI, and why that is so hard to debug
+- A step-by-step workflow to find the root cause of a failing CI test in Cypress Cloud
+- How to debug the exact CI run with [Test Replay](/cloud/features/test-replay) instead of reproducing it locally
+- How AI [Error Summaries](/cloud/features/cypress-ai-features#Error-Summaries) and [Cloud MCP](/cloud/integrations/cloud-mcp) speed up triage and root-cause analysis
+- How to tell a real regression apart from pre-existing [flake](/cloud/features/flaky-test-management) before you merge
+- Which Cypress Cloud tool to reach for, based on the symptom you are seeing
+
+:::
+
+## Why tests fail in CI but pass locally
+
+Most "works on my machine" failures come down to a difference between your laptop
+and the CI environment that is invisible after the run ends:
+
+- **Timing and race conditions.** CI machines are often slower or more heavily
+  loaded, so an element that was always ready locally now renders a beat late.
+- **Network conditions.** A slow, rate-limited, or intermittently failing API
+  response changes behavior that was instant on your machine.
+- **Test order and shared state.** In CI, specs may run in
+  [parallel](/cloud/features/smart-orchestration/parallelization) or a different
+  order, exposing state leaking between tests.
+- **Environment differences.** Different browser versions, viewport sizes,
+  operating systems, time zones, seed data, or feature flags.
+- **True regressions.** Sometimes the test is right and the code is wrong, the
+  failure is a real bug your change introduced.
+
+The common thread is that the evidence you need (the DOM, network traffic,
+console errors, and the order things happened in) lived in a browser session that
+is gone by the time you read the failure. Reproducing it locally is guesswork,
+and often impossible.
+
+## The debugging workflow at a glance
+
+When a recorded run fails, the fastest path from red build to root cause is:
+
+1. **[Find the failing test](#Step-1-Go-straight-to-the-failing-test)** in
+   Cypress Cloud, without scrolling through CI logs.
+2. **[Read the AI Error Summary](#Step-2-Read-the-AI-Error-Summary)** to
+   understand what went wrong in plain language.
+3. **[Replay the exact CI run](#Step-3-Replay-the-exact-failure-with-Test-Replay)**
+   with Test Replay to inspect the DOM, network, and console at the moment of
+   failure.
+4. **[Check whether it's a regression or flake](#Step-4-Is-it-a-regression-or-flake)**
+   with Branch Review and Flaky Test Management.
+5. **[Fix and verify](#Step-5-Fix-and-verify)**, optionally without leaving your
+   editor using Cloud MCP.
+
+The rest of this guide covers each step in detail.
+
+## Step 1: Go straight to the failing test
+
+Instead of reading raw CI output, open the run in Cypress Cloud. The
+[**Tests for Review**](/cloud/features/recorded-runs#Tests-for-Review) panel on a
+run's [Overview](/cloud/features/recorded-runs#Overview-tab) tab consolidates the
+results that actually need a human, ordered by **Failed**, then **Flaky**, then
+**Modified**. Rather than scanning an entire suite, you go straight to the handful
+of tests that matter.
+
+Clicking a test opens the
+[test detail sidebar](/cloud/features/recorded-runs#Test-detail-sidebar), your
+home base for debugging a single failure. It surfaces the error, every retry
+attempt, artifacts, the test's recent pass/fail history, and the
+[git commits that changed the test](/cloud/features/recorded-runs#Test-Code-History),
+all in one place.
+
+<DocsImage
+  src="/img/cloud/runs/sidebar-header.png"
+  alt="Test detail sidebar header showing the test status, spec, and shortcuts to Test Replay, screenshots, output, and creating an issue"
+/>
+
+:::info
+
+The [**Previous runs**](/cloud/features/recorded-runs#Previous-runs) timeline in
+the sidebar instantly tells you whether you're looking at a brand-new regression
+or a long-standing flaky test, and exactly when its behavior changed. Check it
+first; it often reframes the whole investigation.
+
+:::
+
+## Step 2: Read the AI Error Summary
+
+At the top of the failure, Cypress Cloud's AI
+[**Error Summaries**](/cloud/features/cypress-ai-features#Error-Summaries) give a
+plain-language explanation of what went wrong and what led to the failure, so you
+don't have to parse a raw stack trace to get oriented. Paired with the
+[**Test Intent Summary**](/cloud/features/recorded-runs#test-intent-summary)
+(an AI description of what the test is _supposed_ to verify) you can understand
+both the goal of the test and the reason it failed in seconds, before opening a
+single artifact.
+
+<DocsImage
+  src="/img/cloud/runs/sidebar-errors-and-attempts.png"
+  alt="Test sidebar attempts and errors"
+/>
+
+The full stack trace, error message, and point-of-failure code frame for each
+attempt sit directly below the summary in the
+[Attempts and errors](/cloud/features/recorded-runs#attempts-and-errors) section.
+
+## Step 3: Replay the exact failure with Test Replay
+
+This is the core of debugging in Cypress Cloud.
+[**Test Replay**](/cloud/features/test-replay) lets you replay the test _exactly_
+as it ran in CI, with full debugging capability. You are not looking at a video
+recording, you are stepping through the real run.
+
+With Test Replay you can:
+
+- **Time travel** to the exact moment of failure and step through the
+  [command log](/app/core-concepts/open-mode#Command-Log), just like in the
+  Cypress app.
+- **Open developer tools** to inspect the DOM exactly as it rendered in CI,
+  including styles, attributes, shadow DOM, and iframes.
+- **Inspect network requests, responses, and console logs** and line them up with
+  the exact moment they returned or printed during the run.
+- **See canvas elements as they rendered**, giving you the visual context you need
+  when debugging deeply interactive UIs like maps, charts, and games.
+- **Scrub the timeline** and play back the failure at different speeds.
+- **Switch instantly between test attempts** to compare a passing run against a
+  failing one on the same code and narrow down the cause of flake.
+
+<DocsVideo
+  src="https://youtube.com/embed/vFLShoCM8pA"
+  title="Debugging a CI failure with Test Replay"
+/>
+
+Because Test Replay reproduces the run itself, **you no longer need to reproduce
+CI failures on your own machine.** That single capability removes the most
+expensive and frustrating part of debugging CI: the guesswork of trying to
+recreate an environment you can't see. A timing issue, a missing network
+response, or an unexpected DOM state that would be invisible in a screenshot is
+right there to inspect.
+
+:::info
+
+Test Replay is also **shareable**. The link preserves the exact timestamp, so you
+can drop a teammate at the precise moment the test reached an important state and
+they land on exactly what you see, turning "I can't reproduce it" into a
+collaborative debugging session instead of a back-and-forth.
+
+:::
+
+## Step 4: Is it a regression or flake?
+
+Before you spend time on a fix, answer the question that determines what you're
+actually dealing with: **did my change cause this, or was it already broken or
+unstable?**
+
+### Use Branch Review to isolate what your change broke
+
+[**Branch Review**](/cloud/features/branch-review) compares the run on your branch
+against its base branch in a single view, so you can instantly see the failures
+your Pull Request _introduced_ versus problems that already existed on `main`.
+Open a new failure to see the base branch (passing) and your branch (failing)
+side by side, then use Test Replay and the code diff on each to pinpoint exactly
+what your change broke, without re-running anything locally.
+
+<DocsImage
+  src="/img/cloud/features/branch-review/test-comparison.png"
+  alt="Branch Review test comparison showing the base branch and feature branch results side by side, with Test Replay, artifacts, and code change diffs"
+/>
+
+This is also the fastest way to **stop chasing pre-existing flake**: if a test was
+already failing intermittently on the base branch, Branch Review makes that
+obvious so you don't waste time on noise you didn't create.
+
+### Use Flaky Test Management when a test passes on retry
+
+If a test fails and then passes on a [retry](/app/guides/test-retries) with no
+code change, it's **flaky**, and flake needs a different approach than a hard
+failure.
+[**Flaky Test Management**](/cloud/features/flaky-test-management) automatically
+detects, scores, and tracks flaky tests from your recorded runs. From a flaky
+test's detail panel you can open any flaky run in Test Replay and **compare a
+passing attempt against a failing one on the same code**, which is often the
+fastest way to spot the race condition, timing issue, or environmental dependency
+behind the flake.
+
+<DocsImage
+  src="/img/cloud/features/test-replay/test-replay-ui.png"
+  alt="Debugging a flaky test attempt in Test Replay"
+/>
+
+:::caution
+
+A test can pass after retries and still be flaky. The build goes green, but the
+underlying instability (and its cost) is still there. This is exactly why flake
+is so easy to miss without dedicated tracking. See
+[failure rate vs. flake rate](/cloud/features/flaky-test-management#Failure-rate-vs-flake-rate).
+
+:::
+
+## Step 5: Fix and verify
+
+Once you understand the root cause:
+
+- **Fix the issue**, whether it's a true bug in your application, a timing
+  assumption in the test, or a missing wait on a network request you spotted in
+  Test Replay.
+- **Re-record the run** and use [Branch Review](/cloud/features/branch-review) to
+  confirm the failure is now _resolved_ and that you didn't introduce new failures
+  or flake elsewhere.
+- **Keep failing code out of `main`.** With the
+  [GitHub](/cloud/integrations/github),
+  [GitLab](/cloud/integrations/gitlab), and
+  [Bitbucket](/cloud/integrations/bitbucket) integrations, status checks can block
+  a merge until your tests are green, and PR comments surface failure and
+  [flake](/cloud/features/flaky-test-management#Flake-Alerting) details with deep
+  links back into Cypress Cloud.
+
+### Debug from your editor with Cloud MCP
+
+You can run much of this workflow without leaving your AI coding assistant.
+[**Cloud MCP**](/cloud/integrations/cloud-mcp) connects assistants like Claude,
+Cursor, and GitHub Copilot directly to your Cypress Cloud results, closing the
+context gap between CI and your editor. Instead of manually triaging which
+failures are real, you can ask your agent to pull the failing tests for a run,
+read the error details and stack traces, and follow the Test Replay link straight
+to the root cause.
+
+> "Get the failed tests from the latest Cypress Cloud run on this branch,
+> summarize the errors, and tell me which are likely regressions versus known
+> flake."
+
+Cloud MCP is generally available on **every Cypress Cloud plan at no additional
+cost**.
+
+## Which tool should I use?
+
+Different symptoms call for different Cypress Cloud tools. Use this as a quick
+reference:
+
+| Symptom                                         | Start here                                                                                                                             |
+| ----------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| A test fails in CI and I can't reproduce it     | [Test Replay](/cloud/features/test-replay)                                                                                             |
+| I don't understand the stack trace              | [AI Error Summaries](/cloud/features/cypress-ai-features#Error-Summaries)                                                              |
+| A test passes on retry without code changes     | [Flaky Test Management](/cloud/features/flaky-test-management)                                                                         |
+| Did my PR cause this, or was it already broken? | [Branch Review](/cloud/features/branch-review)                                                                                         |
+| When did this test start failing?               | [Previous runs](/cloud/features/recorded-runs#Previous-runs) & [Test Code History](/cloud/features/recorded-runs#Test-Code-History)    |
+| I want to debug without leaving my editor       | [Cloud MCP](/cloud/integrations/cloud-mcp)                                                                                             |
+| Keep failing or flaky code from merging         | [GitHub](/cloud/integrations/github) / [GitLab](/cloud/integrations/gitlab) / [Bitbucket](/cloud/integrations/bitbucket) status checks |
+
+## Get started
+
+Every capability in this guide works on runs
+[recorded to Cypress Cloud](/cloud/get-started/setup) from your CI/CD pipeline.
+You keep writing and running tests exactly as you do today, recording is the only
+setup required.
+
+:::success
+
+<CloudFreePlan />
+
+:::
+
+<Btn
+  label="Record your first run ➜"
+  variant="indigo-dark"
+  className="mr-1"
+  href="/cloud/get-started/setup"
+/>
+
+## See also
+
+- [Test Replay](/cloud/features/test-replay) — replay the exact CI run with full debug capability
+- [Recorded Runs](/cloud/features/recorded-runs) — view, filter, and analyze every recorded run
+- [Branch Review](/cloud/features/branch-review) — compare branches to catch regressions before merge
+- [Flaky Test Management](/cloud/features/flaky-test-management) — detect, score, and fix flaky tests
+- [Cypress AI](/cloud/features/cypress-ai-features) — AI error summaries, test intent, and more
+- [Cloud MCP](/cloud/integrations/cloud-mcp) — debug from your AI coding assistant
+- [Test retries](/app/guides/test-retries) — the mechanism behind flake detection
+- [Set up Cypress Cloud](/cloud/get-started/setup) — record your runs in CI
+- [Cypress Cloud FAQ](/cloud/faq#Debugging) — common debugging questions answered

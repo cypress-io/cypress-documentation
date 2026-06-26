@@ -1,5 +1,5 @@
 ---
-title: 'IDE Integration with Cypress: VSCode, IntelliJ, and more'
+title: 'IDE integration with Cypress: VSCode, IntelliJ, and more'
 description: 'Learn how to open files in your IDE, set up intelligent code completion, and find extensions and plugins for popular IDEs.'
 sidebar_label: 'IDE Integration'
 ---
@@ -87,6 +87,14 @@ with Cypress.
 - [Test Automation plugin](https://plugins.jetbrains.com/plugin/20175-test-automation): The official plugin, developed and maintained by JetBrains, offering robust support for Cypress and compatible with IntelliJ IDEA, CLion, GoLand, PhpStorm, PyCharm, Rider, RubyMine, and WebStorm. It encompasses all the features found in JetBrains Aqua.
 
 - [Cypress Support](https://plugins.jetbrains.com/plugin/13819-intellij-cypress): Integrates Cypress under the common Intellij test framework.
+
+### Linting
+
+The official [`eslint-plugin-cypress`](https://github.com/cypress-io/eslint-plugin-cypress)
+integrates with any ESLint-capable editor. It configures Cypress and Mocha globals — eliminating
+false "undefined variable" errors in spec files — and provides lint rules that flag Cypress
+anti-patterns as you write tests. See the
+[full rules list](https://github.com/cypress-io/eslint-plugin-cypress#rules).
 
 ## Intelligent Code Completion
 
@@ -191,7 +199,7 @@ regular JavaScript spec files.
 Adding a
 [`tsconfig.json`](http://www.typescriptlang.org/docs/handbook/tsconfig-json.html)
 inside your
-[`cypress` folder](/app/core-concepts/writing-and-organizing-tests#Folder-structure)
+[`cypress` folder](/app/core-concepts/writing-and-organizing-tests#Project-structure)
 with the following configuration should get intelligent code completion working.
 
 ```json

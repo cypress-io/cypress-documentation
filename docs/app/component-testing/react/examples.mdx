@@ -1,8 +1,8 @@
 ---
-title: React Examples
-description: Learn how to mount a React component, pass data to a React component, test event handlers, and customize `cy.mount()` for React Router and Redux.
-sidebar_position: 30
+title: 'React examples'
+description: Learn how to mount a React component, pass data to a React component, test event handlers, and customize cy.mount() for React Router and Redux.
 sidebar_label: Examples
+sidebar_position: 30
 ---
 
 <ProductHeading product="app" />
@@ -104,11 +104,11 @@ Cypress.Commands.add('mount', (component, options = {}) => {
 ```
 
 </TabItem>
-<TabItem value="Typings">
+<TabItem value="cypress/support/component.tsx">
 
-```ts
-import { MountOptions, MountReturn } from 'cypress/react'
-import { MemoryRouterProps } from 'react-router-dom'
+```tsx
+import { mount, MountOptions, MountReturn } from 'cypress/react'
+import { MemoryRouter, MemoryRouterProps } from 'react-router-dom'
 
 declare global {
   namespace Cypress {
@@ -125,6 +125,14 @@ declare global {
     }
   }
 }
+
+Cypress.Commands.add('mount', (component, options = {}) => {
+  const { routerProps = { initialEntries: ['/'] }, ...mountOptions } = options
+
+  const wrapped = <MemoryRouter {...routerProps}>{component}</MemoryRouter>
+
+  return mount(wrapped, mountOptions)
+})
 ```
 
 </TabItem>
@@ -181,11 +189,13 @@ Cypress.Commands.add('mount', (component, options = {}) => {
 ```
 
 </TabItem>
-<TabItem value="Typings">
+<TabItem value="cypress/support/component.tsx">
 
-```ts
-import { MountOptions, MountReturn } from 'cypress/react'
+```tsx
+import { mount, MountOptions, MountReturn } from 'cypress/react'
+import { Provider } from 'react-redux'
 import { EnhancedStore } from '@reduxjs/toolkit'
+import { getStore } from '../../src/store'
 import { RootState } from './src/StoreState'
 
 declare global {
@@ -203,6 +213,14 @@ declare global {
     }
   }
 }
+
+Cypress.Commands.add('mount', (component, options = {}) => {
+  const { reduxStore = getStore(), ...mountOptions } = options
+
+  const wrapped = <Provider store={reduxStore}>{component}</Provider>
+
+  return mount(wrapped, mountOptions)
+})
 ```
 
 </TabItem>

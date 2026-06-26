@@ -1,8 +1,8 @@
 ---
-title: 'Frequently Asked Questions | Cypress Documentation'
+title: 'Frequently asked questions: Cypress App'
 description: 'Get answers to common questions about Cypress, including general questions, how-to questions, and more.'
-sidebar_position: 200
 sidebar_label: FAQ
+sidebar_position: 200
 ---
 
 <ProductHeading product="app" />
@@ -77,7 +77,18 @@ testing).
 
 ### <Icon name="angle-right" /> We use WebSockets; will Cypress work with that?
 
-Yes.
+Yes. Cypress transparently proxies WebSocket connections, so your application's
+WebSocket traffic will work as expected during tests.
+
+However, **stubbing or mocking individual WebSocket frames/messages** is not
+natively supported. If your tests need to control the messages sent over a
+WebSocket connection, see the
+[Multiple browsers open at the same time](/app/references/trade-offs#Multiple-browsers-open-at-the-same-time)
+section of the Trade-offs guide for recommended strategies such as:
+
+- Stubbing callbacks in your application code directly
+- Using your server to simulate the other participant
+- Introducing a helper HTTP server that acts as a WebSocket client
 
 ### <Icon name="angle-right" /> Is it possible to use cypress on `.jspa`?
 
@@ -416,9 +427,9 @@ explains this in detail.
 
 <strong>Remember</strong>
 
-DOM based commands will automatically
-[retry](/app/core-concepts/retry-ability) and wait for their corresponding
-elements to exist before failing.
+DOM [queries](/app/core-concepts/retry-ability#Commands-Queries-and-Assertions)
+will automatically [retry](/app/core-concepts/retry-ability) and wait for their
+corresponding elements to exist before failing.
 
 :::
 
@@ -651,11 +662,76 @@ replicating the page object pattern.
 ### <Icon name="angle-right" /> Can I run a single test or group of tests?
 
 You can run a group of tests or a single test by placing an
-[`.only`](/app/core-concepts/writing-and-organizing-tests#Excluding-and-Including-Tests)
+[`.only`](/app/core-concepts/writing-and-organizing-tests#Focusing-and-skipping-tests)
 on a test suite or specific test.
 
 You can run a single test file or group of tests by passing the `--spec` flag to
 [cypress run](/app/references/command-line#cypress-run).
+
+### <Icon name="angle-right" /> Where should I put my spec files, and how does Cypress find them?
+
+Cypress discovers spec files using the
+[`specPattern`](/app/references/configuration#e2e) configuration option, which
+defaults to `cypress/e2e/**/*.cy.{js,jsx,ts,tsx}` for end-to-end testing and
+`**/*.cy.{js,jsx,ts,tsx}` for component testing. Any file anywhere in your
+project that matches `specPattern` is picked up, so you're free to organize
+specs into whatever folder structure suits your team. See
+[How Cypress finds your specs](/app/core-concepts/writing-and-organizing-tests#How-Cypress-finds-your-specs)
+for details.
+
+### <Icon name="angle-right" /> What hooks does Cypress support, and in what order do they run?
+
+Cypress uses [Mocha](https://mochajs.org/)'s hooks: `before`, `beforeEach`,
+`afterEach`, and `after`. `before` and `after` run once per suite, while
+`beforeEach` and `afterEach` run around every test. For the full execution order,
+including how hooks interleave with tests, see
+[Hooks](/app/core-concepts/writing-and-organizing-tests#Hooks).
+
+### <Icon name="angle-right" /> What's the difference between a pending test and a skipped test?
+
+A **pending** test is one you intentionally left out of the run. It has no body,
+it's marked with `.skip` / `xit`, or it's restricted to a browser you aren't
+currently running. A **skipped** test is one Cypress _meant_ to run but couldn't
+because a `before`, `beforeEach`, or `afterEach` hook failed. See
+[Pending](/app/core-concepts/writing-and-organizing-tests#Pending) and
+[Skipped](/app/core-concepts/writing-and-organizing-tests#Skipped) for examples.
+
+### <Icon name="angle-right" /> Why does Cypress skip the rest of my tests when a hook fails?
+
+If a hook shared by a block of tests (such as a `beforeEach`) fails, Cypress
+marks the first test as **failed** and **skips** the remaining tests in that
+block. Because the same hook would fail identically for every test, re-running it
+would only produce the same failure. Fix the hook and the rest of the tests will
+run. See
+[Skipped](/app/core-concepts/writing-and-organizing-tests#Skipped).
+
+### <Icon name="angle-right" /> How do I stop Cypress from re-running my tests every time I save a file?
+
+When running with [cypress open](/app/references/command-line#cypress-open),
+Cypress watches your spec files and re-runs them on save. To turn this off, set
+[`watchForFileChanges`](/app/references/configuration#Global) to `false`:
+
+:::cypress-config-example
+
+```ts
+{
+  watchForFileChanges: false,
+}
+```
+
+:::
+
+Nothing is watched during
+[cypress run](/app/references/command-line#cypress-run), so this option only
+affects `cypress open`. See
+[Disable file watching](/app/core-concepts/writing-and-organizing-tests#Disable-file-watching).
+
+### <Icon name="angle-right" /> What's the difference between `describe`, `context`, `it`, and `specify`?
+
+Nothing functional. They're aliases provided by Mocha. `context` is an alias of
+`describe` (used to group tests into a suite), and `specify` is an alias of `it`
+(used to define an individual test). Use whichever reads best for your tests. See
+[Test Structure](/app/core-concepts/writing-and-organizing-tests#Test-Structure).
 
 ### <Icon name="angle-right" /> How do I test uploading a file?
 
@@ -742,12 +818,73 @@ By default, Cypress automatically
 [clears all cookies, local storage and session **before** each test](/app/core-concepts/test-isolation)
 to prevent state from leaking between tests.
 
-You can preserve session details across tests using the
-[`cy.session()`](/api/commands/session) command.
+There are three common approaches, depending on your use case:
 
-Alternatively, you can disable
-[`testIsolation`](/app/references/configuration#e2e) at the suite or e2e
-configuration-level to prevent the clearing of browser state.
+**Option 1: Re-set a known cookie value before each test**
+
+If you know the cookie value ahead of time (for example, a cookie consent banner
+or a feature flag cookie), use [`cy.setCookie()`](/api/commands/setcookie) in a
+`beforeEach` hook so the cookie is present at the start of every test:
+
+```javascript
+beforeEach(() => {
+  cy.setCookie('cookieConsent', 'accepted')
+})
+```
+
+**Option 2: Use `cy.session()` to cache and restore server-set cookies**
+
+If your cookie is generated by the server after login (e.g. a session or auth
+token cookie), use [`cy.session()`](/api/commands/session) to capture and replay
+the full browser context (cookies, localStorage, and sessionStorage) for every
+subsequent test without repeating the login flow:
+
+```javascript
+const login = (username, password) => {
+  cy.session([username, password], () => {
+    cy.visit('/login')
+    cy.get('[data-test=username]').type(username)
+    cy.get('[data-test=password]').type(password)
+    cy.get('form').contains('Log In').click()
+    cy.url().should('contain', '/dashboard')
+  })
+}
+
+beforeEach(() => {
+  login('myuser', 'password123')
+  cy.visit('/dashboard')
+})
+```
+
+**Option 3: Disable test isolation for a suite**
+
+You can disable [`testIsolation`](/app/references/configuration#e2e) at the
+`describe` level to prevent Cypress from clearing browser state between tests in
+that suite. Use a `before` hook (not `beforeEach`) to set up state once:
+
+```javascript
+describe('suite with shared cookies', { testIsolation: false }, () => {
+  before(() => {
+    cy.setCookie('cookieConsent', 'accepted')
+    cy.visit('/home')
+  })
+
+  it('test one', () => {
+    // cookieConsent cookie is present
+  })
+
+  it('test two', () => {
+    // cookieConsent cookie is still present
+  })
+})
+```
+
+:::caution
+
+Disabling test isolation means tests may affect each other's state. Ensure each
+test can still pass independently before relying on this approach.
+
+:::
 
 ### <Icon name="angle-right" /> Some of my elements animate in; how do I work around that?
 
@@ -1041,6 +1178,67 @@ the Cypress's control. If the application is using `window.location.replace`
 method to set a _relative_ URL, try using the `experimentalSourceRewriting`
 option described in our [Experiments](/app/references/experiments) page.
 
+### <Icon name="angle-right" /> Why isn't my application's Content Security Policy (CSP) being enforced during tests? <E2EOnlyBadge />
+
+This is expected. By default Cypress strips both the `Content-Security-Policy`
+and `Content-Security-Policy-Report-Only` headers from responses before they
+reach the browser, so the policy is never enforced during a test run. This
+prevents a strict CSP from blocking the scripts Cypress injects to drive your
+application.
+
+If you need the policy enforced (for example to test the CSP itself), see
+[How do I test my application's Content Security Policy?](#How-do-I-test-my-applications-Content-Security-Policy)
+below. For the full picture, read the
+[Content Security Policy reference](/app/references/content-security-policy).
+
+### <Icon name="angle-right" /> How do I test my application's Content Security Policy (CSP)? <E2EOnlyBadge /> {#How-do-I-test-my-applications-Content-Security-Policy}
+
+Set the
+[`experimentalCspAllowList`](/app/references/experiments#Experimental-CSP-Allow-List)
+configuration option so Cypress keeps the CSP header instead of stripping it. It
+accepts three values:
+
+- `false` _(default)_: strip the entire CSP header.
+- `true`: keep the header, removing only the directives that interfere with
+  Cypress.
+- an array of directive names: keep the header and only the named directives.
+
+:::cypress-config-example
+
+```js
+{
+  // keep the header, stripping only Cypress-interfering directives
+  experimentalCspAllowList: true
+}
+```
+
+:::
+
+This option only affects CSP delivered via HTTP headers, requires a Cypress
+server restart to change, and cannot be overridden per test. See the
+[Content Security Policy reference](/app/references/content-security-policy) for
+details, including the directives Cypress modifies or always removes.
+
+### <Icon name="angle-right" /> My scripts are still blocked by CSP even though Cypress strips the header. Why? <E2EOnlyBadge />
+
+The most common cause is that the policy is delivered with a
+[`<meta>` tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta#http-equiv)
+rather than an HTTP header. `experimentalCspAllowList` only operates on headers,
+so it cannot allow or strip a meta-tag policy. Look for `Refused to load…` /
+`Refused to execute…` CSP violation messages in the browser console to confirm.
+See the [Content Security Policy reference](/app/references/content-security-policy)
+for how Cypress handles each delivery method.
+
+### <Icon name="angle-right" /> Can I test CSP directives like `frame-ancestors` or `sandbox`? <E2EOnlyBadge />
+
+No. Cypress always removes `frame-ancestors`, `navigate-to`,
+`require-trusted-types-for`, `sandbox`, and `trusted-types` from allowed CSP
+headers, even with `experimentalCspAllowList` enabled, because leaving them in
+place would prevent Cypress from functioning. The behavior of these five
+directives cannot be tested through Cypress and must be verified outside of it.
+See [Always-stripped directives](/app/references/content-security-policy#always-stripped-directives)
+for the full list and the reason each is removed.
+
 ## Continuous Integration (CI/CD)
 
 ### <Icon name="angle-right" /> Why do my Cypress tests pass locally but not in CI?
@@ -1130,7 +1328,13 @@ rendering as expected. For more information, check out the
 ### <Icon name="angle-right" /> Can I test a chrome extension? How do I load my chrome extension?
 
 Yes. You can test your extensions by
-[loading them when we launch the browser](/api/node-events/browser-launch-api).
+[loading them when we launch the browser](/api/node-events/browser-launch-api#Add-browser-extensions).
+
+Note that standard, Chrome-branded browsers version 137 and above can no longer
+load extensions this way, because Chrome removed the `--load-extension` flag. To
+keep loading extensions, we recommend using
+[Chrome for Testing](/app/references/launching-browsers#Chrome-Browsers) or
+Chromium instead.
 
 ### <Icon name="angle-right" /> Can I test my Electron app?
 
@@ -1348,12 +1552,26 @@ scenarios, you might be interested in these articles:
 Yes, by using the newer API command [cy.intercept()](/api/commands/intercept) as
 described in the [Working with GraphQL](/app/guides/network-requests#Working-with-GraphQL)
 
-### <Icon name="angle-right" /> Is there an ESLint plugin for Cypress or a list of globals?
+### <Icon name="angle-right" /> Is there an ESLint plugin for Cypress or a list of globals? {#is-there-an-eslint-plugin-for-cypress-or-a-list-of-globals}
 
-Yes! Check out our
-[ESLint plugin](https://github.com/cypress-io/eslint-plugin-cypress). It will
-set up all the globals you need for running Cypress, including browser globals
-and [Mocha](https://mochajs.org/) globals.
+Yes! Check out our official
+[`eslint-plugin-cypress`](https://github.com/cypress-io/eslint-plugin-cypress).
+It does two things:
+
+**1. Globals setup:** configures `cy`, `Cypress`, `expect`, and all
+[Mocha](https://mochajs.org/) globals (`it`, `describe`, `before`, `beforeEach`,
+etc.) so ESLint stops flagging them as undefined. Without this, linting fails on
+every Cypress spec file, blocking CI pipelines and adding noise to code reviews.
+
+**2. Best-practice lint rules:** catches Cypress anti-patterns in your editor
+_before_ tests ever run, which reduces flaky tests and avoids wasted CI time.
+See the [full rules list](https://github.com/cypress-io/eslint-plugin-cypress#rules)
+in the official repo for what's available and which rules are enabled by the
+`recommended` config.
+
+Catching these issues at lint time (in-editor or pre-commit) is far cheaper than
+debugging a failing CI run, especially for flaky-test patterns like hard-coded
+waits that fail intermittently under load.
 
 ## Component Testing
 
@@ -1409,8 +1627,16 @@ While you can use the `mount` function in your tests, we recommend using
 [custom command](/api/cypress-api/custom-commands) in the
 **cypress/support/component.js** file:
 
-```ts title=cypress/support/component.js
+```typescript title="cypress/support/component.ts"
 import { mount } from 'cypress/react'
+
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      mount: typeof mount
+    }
+  }
+}
 
 Cypress.Commands.add('mount', mount)
 ```
@@ -1434,10 +1660,14 @@ If something appears missing from the spec list, make sure the files have the
 
 ### <Icon name="angle-right" /> How do I fix ESLint errors for things like using the global Cypress objects?
 
-If you experience ESLint errors in your code editor around Cypress globals,
-install the
+If you experience ESLint errors in your code editor around Cypress globals (`cy`,
+`Cypress`, `expect`, `it`, `describe`, etc.), install the official
 [`eslint-plugin-cypress`](https://www.npmjs.com/package/eslint-plugin-cypress)
-ESLint plugin.
+plugin. It registers all Cypress and Mocha globals so ESLint recognizes them,
+and it also ships rules that flag common Cypress anti-patterns before your tests
+run. See the
+[ESLint plugin FAQ entry](#is-there-an-eslint-plugin-for-cypress-or-a-list-of-globals)
+for the full list of rules and the value each provides.
 
 ### <Icon name="angle-right" /> Why isn't TypeScript recognizing the global Cypress objects or custom cypress commands (eg: `cy.mount`)?
 

@@ -1,6 +1,6 @@
 ---
-title: 'each | Cypress Documentation'
-description: Iterate through an array like structure in Cypress (arrays or objects with a `length` property).
+title: 'cy.each()'
+description: Iterate through an array like structure in Cypress (arrays or objects with a length property).
 sidebar_label: each
 ---
 
@@ -10,9 +10,6 @@ sidebar_label: each
 
 Iterate through an array like structure (arrays or objects with a `length`
 property).
-
-It is [unsafe](/app/core-concepts/retry-ability#Only-queries-are-retried) to
-chain further commands that rely on the subject after `.each()`.
 
 ## Syntax
 
@@ -32,7 +29,6 @@ cy.getCookies().each(() => {...}) // Iterate through each cookie
 <Icon name="exclamation-triangle" color="red" /> **Incorrect Usage**
 
 ```javascript
-
 cy.each(() => {...})            // Errors, cannot be chained off 'cy'
 cy.clock().each(() => {...})    // Errors, 'clock' does not yield an array
 ```
@@ -43,15 +39,19 @@ cy.clock().each(() => {...})    // Errors, 'clock' does not yield an array
 
 Pass a function that is invoked with the following arguments:
 
-- `value`
-- `index`
-- `collection`
+- `value` - the current item in the collection
+- `index` - the 0-based index of the current item in the collection
+- `collection` - the original collection being iterated over
 
 <HeaderYields />
 
 - `.each()` yields the same subject it was given.
-- It is [unsafe](/app/core-concepts/retry-ability#Only-queries-are-retried)
-  to chain further commands that rely on the subject after `.each()`.
+- Because `.each()` is not a
+  [query](/app/core-concepts/retry-ability#Only-queries-are-retried), it is
+  unsafe to chain further commands that act or assert on DOM elements after
+  `.each()`, as those elements may have re-rendered and gone stale during
+  iteration. Reading the yielded subject in a
+  [`.then()`](/api/commands/then) callback (as in the example below) is safe.
 
 ## Examples
 
@@ -87,6 +87,11 @@ cy.get('li')
     expect($lis).to.have.length(3) // true
   })
 ```
+
+Here the `.then()` callback only _reads_ the yielded array, which is safe. If
+instead you needed to act or assert on DOM elements that your application may
+have re-rendered during iteration, re-query them with a Cypress query rather
+than reusing the subject yielded by `.each()`.
 
 ### Promises
 

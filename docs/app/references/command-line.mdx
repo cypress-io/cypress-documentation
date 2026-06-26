@@ -1,5 +1,5 @@
 ---
-title: 'Command Line Interface (CLI) Commands and Options for Cypress'
+title: 'Command line interface (CLI) commands and options in Cypress'
 description: 'Learn how to run Cypress from the command line using npm, Yarn, or pnpm.'
 sidebar_label: 'Command Line'
 ---
@@ -23,7 +23,7 @@ You can alternatively require and run Cypress as a node module using our
 ## How to run commands
 
 You can run Cypress from your **project root** using a command which
-depends on the package manager you are using: npm, Yarn or pnpm.
+depends on the package manager you are using: npm, Yarn, pnpm or Bun.
 For example, you would prefix the command
 [cypress run](#cypress-run) as shown:
 
@@ -39,6 +39,7 @@ and record the results with Cypress Cloud, the command should be:
     {label: 'npm', value: 'npm'},
     {label: 'Yarn', value: 'yarn'},
     {label: 'pnpm', value: 'pnpm'},
+    {label: 'Bun', value: 'bun'},
   ]}>
   <TabItem value="npm">
 
@@ -58,6 +59,13 @@ yarn cypress run --record --spec "cypress/e2e/my-spec.cy.js"
 
 ```shell
 pnpm cypress run --record --spec "cypress/e2e/my-spec.cy.js"
+```
+
+  </TabItem>
+  <TabItem value="bun">
+
+```shell
+bunx cypress run --record --spec "cypress/e2e/my-spec.cy.js"
 ```
 
   </TabItem>
@@ -97,6 +105,7 @@ Running the script `e2e:chrome` as follows will run the command you defined:
     {label: 'npm', value: 'npm'},
     {label: 'Yarn', value: 'yarn'},
     {label: 'pnpm', value: 'pnpm'},
+    {label: 'Bun', value: 'bun'},
   ]}>
   <TabItem value="npm">
 
@@ -116,6 +125,13 @@ yarn e2e:chrome
 
 ```shell
 pnpm e2e:chrome
+```
+
+  </TabItem>
+  <TabItem value="bun">
+
+```shell
+bun run e2e:chrome
 ```
 
   </TabItem>
@@ -146,6 +162,7 @@ The option [`--spec`](#cypress-run-spec-lt-spec-gt) allows you to specify which 
     {label: 'npm', value: 'npm'},
     {label: 'Yarn', value: 'yarn'},
     {label: 'pnpm', value: 'pnpm'},
+    {label: 'Bun', value: 'bun'},
   ]}>
   <TabItem value="npm">
 
@@ -168,6 +185,13 @@ pnpm e2e:chrome --spec "cypress/e2e/my-spec.cy.js"
 ```
 
   </TabItem>
+  <TabItem value="bun">
+
+```shell
+bun run e2e:chrome --spec "cypress/e2e/my-spec.cy.js"
+```
+
+  </TabItem>
 </Tabs>
 
 Refer to each package manager's documentation for full details of command and script usage:
@@ -177,6 +201,7 @@ Refer to each package manager's documentation for full details of command and sc
   [`npm-run-script`](https://docs.npmjs.com/cli/run-script.html)).
 - [Yarn CLI](https://classic.yarnpkg.com/lang/en/docs/cli/)
 - [pnpm CLI](https://pnpm.io/pnpm-cli)
+- [Bun CLI](https://bun.sh/docs/cli/run)
 
 ## Commands
 
@@ -479,8 +504,11 @@ cypress run --posix-exit-codes
 
 #### `cypress run --project <project-path>` {#cypress-run-project-lt-project-path-gt}
 
-To see this in action we've set up an
-[example repo to demonstrate this here](https://github.com/cypress-io/cypress-test-nested-projects).
+By default, Cypress expects your `cypress.config.js` (or `cypress.config.ts`) to
+be found in the current working directory. Use `--project` to point Cypress at a
+different directory. This is useful when you have multiple Cypress projects in
+one repository and want to run a specific one without changing your working
+directory.
 
 ```shell
 cypress run --project ./some/nested/folder
@@ -561,6 +589,16 @@ Useful for when [Test Replay](/cloud/features/test-replay) is enabled and you wo
 Run tests specifying a single test file to run instead of all tests. The spec
 path should be an absolute path or can be relative to the current working
 directory.
+
+:::caution
+
+`--spec` only runs specs that **also match the configured
+[`specPattern`](/app/references/configuration#e2e)**. Specs located
+outside the configured `specPattern` will not be found. See
+[Test files not found when using `spec` parameter](/app/references/configuration#Test-files-not-found-when-using-spec-parameter)
+for details.
+
+:::
 
 ```shell
 cypress run --spec "cypress/e2e/examples/actions.cy.js"
@@ -784,8 +822,11 @@ cypress open --port 8080
 
 #### `cypress open --project <project-path>` {#cypress-open-project-lt-project-path-gt}
 
-To see this in action we've set up an
-[example repo to demonstrate this here](https://github.com/cypress-io/cypress-test-nested-projects).
+By default, Cypress looks for your `cypress.config.js` (or `cypress.config.ts`)
+in the current working directory. Use `--project` to open Cypress for a project
+located in a different directory. This is useful when you have multiple Cypress
+projects in one repository and want to open a specific one without changing your
+working directory.
 
 ```shell
 cypress open --project ./some/nested/folder

@@ -1,5 +1,5 @@
 ---
-title: 'Cypress.expose | Cypress Documentation'
+title: 'Cypress.expose()'
 description: 'Read and write public configuration values in Cypress using Cypress.expose(). Learn syntax, examples, security considerations, and how it differs from cy.env().'
 sidebar_label: 'expose'
 sidebar_position: 120
@@ -136,6 +136,70 @@ Cypress.expose({
 Cypress.expose() // => {pluginConfig: 'updated-value', featureFlag: true}
 ```
 
+### Declare expose values with test configuration
+
+You can pass an `expose` object as part of suite- or test-level [test configuration](/app/references/configuration#Test-Configuration). This is useful when a plugin or preprocessor needs different public configuration values per suite or test.
+
+Override keys are applied at test start and restored after each test completes. Suite- and test-level overrides are merged, with test-level keys taking precedence. Values set at runtime with `Cypress.expose()` outside of test configuration overrides are not automatically restored between tests.
+
+```javascript
+describe('checkout', { expose: { flow: 'guest' } }, () => {
+  it('applies suite expose values', () => {
+    expect(Cypress.expose('flow')).to.eq('guest')
+  })
+
+  it(
+    'merges test-level expose values with suite values',
+    { expose: { step: 'payment' } },
+    () => {
+      expect(Cypress.expose('flow')).to.eq('guest')
+      expect(Cypress.expose('step')).to.eq('payment')
+    }
+  )
+})
+```
+
+When suite- and test-level expose define the same key, the test-level value takes precedence:
+
+```javascript
+describe('orders', { expose: { status: 'pending' } }, () => {
+  it('uses the test-level value', { expose: { status: 'complete' } }, () => {
+    expect(Cypress.expose('status')).to.eq('complete')
+  })
+})
+```
+
+Expose overrides persist through hooks for the current test. Only keys declared in test configuration overrides are restored after each test:
+
+```javascript
+describe('hook lifecycle', { expose: { source: 'suite' } }, () => {
+  beforeEach(() => {
+    Cypress.expose('source', 'beforeEach')
+  })
+
+  afterEach(() => {
+    expect(Cypress.expose('source')).to.eq('beforeEach')
+  })
+
+  it('sees hook mutations during the test body', () => {
+    expect(Cypress.expose('source')).to.eq('beforeEach')
+  })
+})
+```
+
+If you mutate an overridden value during a test, the next test without an override for that key sees the pre-override value again:
+
+```javascript
+it('applies the override', { expose: { token: 'override' } }, () => {
+  Cypress.expose('token', 'mutated')
+  expect(Cypress.expose('token')).to.eq('mutated')
+})
+
+it('restores the key after the override test completes', () => {
+  expect(Cypress.expose('token')).to.eq(undefined)
+})
+```
+
 ## Configuration sources
 
 Read the [Environment Variables & Secrets](/app/guides/environment-variables) guide for more details.
@@ -248,9 +312,10 @@ See [`cy.env()`](/api/commands/env) for more details.
 
 ## History
 
-| Version                                      | Changes                           |
-| -------------------------------------------- | --------------------------------- |
-| [15.10.0](/app/references/changelog#15-10-0) | `Cypress.expose()` API introduced |
+| Version                                      | Changes                                                           |
+| -------------------------------------------- | ----------------------------------------------------------------- |
+| [15.17.0](/app/references/changelog#15-17-0) | Added test configuration overrides for `Cypress.expose()` values. |
+| [15.10.0](/app/references/changelog#15-10-0) | `Cypress.expose()` API introduced                                 |
 
 ## See also
 
@@ -258,3 +323,4 @@ See [`cy.env()`](/api/commands/env) for more details.
 - [`Cypress.env()`](/api/cypress-api/env) - Deprecated API
 - [Migration Guide to `cy.env()`](/app/references/migration-guide#Migrating-away-from-Cypressenv) - Guide for migrating from `Cypress.env()`
 - [Configuration options](/app/references/configuration)
+- [Test Configuration](/app/references/configuration#Test-Configuration)

@@ -1,5 +1,5 @@
 ---
-title: 'Migrate from Playwright to Cypress: Complete Migration Guide'
+title: 'Migrate from Playwright to Cypress: complete migration guide'
 description: 'Step-by-step guide to migrate end-to-end and component tests from Playwright to Cypress. Compare syntax, learn retry-ability, network stubbing, auth patterns, CI parallelization, and Cloud features.'
 sidebar_label: Migrating from Playwright
 ---
@@ -183,6 +183,12 @@ option reference.
 | `use.screenshot` | `screenshotOnRunFailure`                 | Default is `true`                                                                           |
 | `use.video`      | `video`                                  | Default is `false`                                                                          |
 | `use.viewport`   | `viewportWidth` / `viewportHeight`       | Set at top level or scoped under testing type                                               |
+
+For Cypress-specific anti-patterns not covered by configuration options — such as hard-coded
+`cy.wait()` calls, assigning command return values, and unsafe chaining — the official
+[`eslint-plugin-cypress`](https://github.com/cypress-io/eslint-plugin-cypress) provides lint
+rules that catch these issues in-editor. See the
+[full rules list](https://github.com/cypress-io/eslint-plugin-cypress#rules).
 
 ## CLI/Command line migration
 
@@ -1091,6 +1097,14 @@ If you interact with the same iframe across multiple tests, extract the frame
 access into a custom command to avoid repeating the boilerplate:
 
 ```ts title="cypress/support/commands.ts"
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      getIframeBody(selector: string): Chainable<JQuery<HTMLElement>>
+    }
+  }
+}
+
 Cypress.Commands.add('getIframeBody', (selector: string) => {
   return cy
     .get(selector)
@@ -1462,6 +1476,14 @@ export const test = base.extend({
 <Badge type="success">After: Cypress</Badge>
 
 ```ts title="support.cy.ts"
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      login(username: string, password: string): Chainable<void>
+    }
+  }
+}
+
 Cypress.Commands.add('login', (username: string, password: string) => {
   cy.session([username, password], () => {
     cy.visit('/login')

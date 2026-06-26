@@ -197,6 +197,21 @@ You can use the `before:browser:launch` event to do things like:
 - Enable or disable experimental chrome features
 - Control which Chrome components are loaded
 
+:::caution
+
+<strong>Loading extensions in Chrome 137 and above</strong>
+
+Standard, Chrome-branded browsers (for example, regular Google Chrome) version
+137 and above can no longer load extensions through the `before:browser:launch`
+event. This is because Chrome removed support for the `--load-extension` command
+line flag that Cypress relied on to load extensions.
+
+To continue loading extensions, run your tests in
+[Chrome for Testing](/app/references/launching-browsers#Chrome-Browsers) or
+Chromium, which still support extension loading.
+
+:::
+
 Check out our [Browser Launch API docs](/api/node-events/browser-launch-api) which
 describe how to use this event.
 

@@ -31,8 +31,10 @@ cypress/videos
 .vercel
 
 .nuxt
-.husky
 themes
 .eslintcache
 db.json
 .claude/settings.local.json
+
+# OG card preview output
+.og-preview

@@ -1,5 +1,5 @@
 ---
-title: 'type | Cypress Documentation'
+title: 'cy.type()'
 description: Type into a DOM element in Cypress.
 sidebar_label: type
 slug: /api/commands/type
@@ -499,7 +499,8 @@ $('#username').on('keydown', (e) => {
 
 // Cypress will not insert any characters if keydown, keypress, or textInput
 // are cancelled - which matches the default browser behavior
-cy.get('#username').type('bob@gmail.com').should('have.value', '') // true
+cy.get('#username').type('bob@gmail.com')
+cy.get('#username').should('have.value', '') // true
 ```
 
 #### Preventing `mousedown` does not prevent typing

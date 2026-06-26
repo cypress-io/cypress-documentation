@@ -1,5 +1,5 @@
 ---
-title: 'Run Cypress tests in AWS CodeBuild: Step-by-Step Guide'
+title: 'Run Cypress tests in AWS CodeBuild: step-by-step guide'
 description: Learn how to set up and run Cypress tests in AWS CodeBuild, cache dependencies and build artifacts, run tests in parallel, and use Cypress Cloud with AWS CodeBuild.
 sidebar_label: AWS CodeBuild
 ---
@@ -128,6 +128,7 @@ Cypress locally and in CI are published to the
 - [Cypress 'base' Amazon ECR Public Gallery](https://gallery.ecr.aws/cypress-io/cypress/base)
 - [Cypress 'browsers' Amazon ECR Public Gallery](https://gallery.ecr.aws/cypress-io/cypress/browsers)
 - [Cypress 'included' Amazon ECR Public Gallery](https://gallery.ecr.aws/cypress-io/cypress/included)
+- [Cypress 'factory' Amazon ECR Public Gallery](https://gallery.ecr.aws/cypress-io/cypress/factory)
 
 Read about [Cypress docker variants](/app/continuous-integration/overview#Cypress-Docker-variants) to decide which image is best for your project.
 
@@ -339,15 +340,20 @@ phases:
 
 :::caution
 
-Dashboard analytics are dependent on your CI environment reliably providing
-commit SHA data (typically via a system environment variable) which is not always
-present by default. This is not a problem for most users, but if you are facing
-integration issues with your CodeBuild setup, please make sure the git
-information is being sent properly by following
-[these guidelines](//app/continuous-integration/overview#Git-information),
-or just see
-[the example `codebuild.yml` file at the top of this page](#Basic-Setup). If you
-are still facing issues after this, please
+Dashboard analytics depend on Cypress receiving
+[git commit information](/app/continuous-integration/overview#Git-information).
+The `buildspec.yml` examples above export this via `git` CLI commands, which
+require a `.git` directory. If CodeBuild downloads your source as a zip archive
+instead of performing a `git clone`, those commands will fail with
+`fatal: not a git repository`.
+
+To fix this, configure your CodeBuild project to clone the repository using the
+[Git clone depth setting](https://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref-env-vars.html)
+in the AWS Console. If git clone is not an option, CodeBuild always populates
+`CODEBUILD_RESOLVED_SOURCE_VERSION` with the commit SHA, which you can use to
+retrieve commit metadata from your source provider's API instead.
+
+If you are still facing issues, please
 [contact us](mailto:hello@cypress.io).
 
 :::

@@ -1,6 +1,7 @@
 ---
-title: Parallelization
+title: Parallelize tests in Cypress Cloud
 description: Run tests in parallel across multiple machines to save time and money in Continuous Integration.
+sidebar_label: Parallelization
 sidebar_position: 20
 ---
 
@@ -122,11 +123,24 @@ project. You can see the results of this run on
 
 ### Without parallelization
 
-In this example, a single machine runs a job named `1x-electron`, defined in the
-project's
-[circle.yml](https://github.com/cypress-io/cypress-example-kitchensink/blob/aabb10cc1bb9dee88e1bf28e0af5e9661427ee7a/circle.yml#L41)
-file. Cypress runs all 19 spec files one by one alphabetically in this job. It
-takes **1:51** to complete all of the tests.
+In this example, a single machine runs all spec files serially. Below is an
+example `.circleci/config.yml` using the
+[Cypress CircleCI Orb](https://github.com/cypress-io/circleci-orb):
+
+```yaml title=".circleci/config.yml"
+version: 2.1
+orbs:
+  cypress: cypress-io/cypress@6
+workflows:
+  build:
+    jobs:
+      - cypress/run:
+          start-command: 'npm run start'
+          cypress-command: 'npx cypress run --record'
+```
+
+Cypress runs all 19 spec files one by one alphabetically. It takes **1:51** to
+complete all of the tests.
 
 ```text
 1x-electron, Machine #1
@@ -167,10 +181,23 @@ When we run the same tests with parallelization, Cypress uses its
 [load balance strategy](/cloud/features/smart-orchestration/load-balancing#Balance-strategy)
 to order to specs to run based on the spec's previous run history. During the
 same CI run as above, we ran _all_ tests again, but this time with
-parallelization across 2 machines. This job was named `2x-electron` in the
-project's
-[circle.yml](https://github.com/cypress-io/cypress-example-kitchensink/blob/aabb10cc1bb9dee88e1bf28e0af5e9661427ee7a/circle.yml#L53)
-file and it finished in **59 seconds**.
+parallelization across 2 machines. By adding `parallelism: 2` and the
+`--parallel` flag to the `.circleci/config.yml`:
+
+```yaml title=".circleci/config.yml"
+version: 2.1
+orbs:
+  cypress: cypress-io/cypress@6
+workflows:
+  build:
+    jobs:
+      - cypress/run:
+          parallelism: 2
+          start-command: 'npm run start'
+          cypress-command: 'npx cypress run --record --parallel'
+```
+
+It finished in **59 seconds**.
 
 ```text
 2x-electron, Machine #1, 9 specs          2x-electron, Machine #2, 10 specs

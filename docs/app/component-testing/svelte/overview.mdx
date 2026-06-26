@@ -1,8 +1,8 @@
 ---
-title: Svelte Component Testing
+title: 'Svelte component testing'
 description: Learn how to set up component tests in Svelte, configure Cypress for Svelte projects, and test Svelte components with Vite and a custom Webpack config.
-sidebar_position: 10
 sidebar_label: Overview
+sidebar_position: 10
 ---
 
 <ProductHeading product="app" />
@@ -72,7 +72,13 @@ For usage and examples, visit the
 Cypress Component Testing works out of the box with [Vite](https://vitejs.dev/),
 and a custom [Webpack](https://webpack.js.org/) config. Cypress will
 automatically detect one of these frameworks during setup and configure them
-properly. The examples below are for reference purposes.
+properly.
+
+For a full explanation of how the dev server and bundler work — including
+automatic config detection and override options — see
+[Component Testing Configuration — Dev Server and Bundler](/app/component-testing/component-framework-configuration#Dev-Server-and-Bundler).
+
+The examples below are for quick reference.
 
 ### Svelte with Vite
 
@@ -135,3 +141,7 @@ in manually via the `webpackConfig` option.
 #### Svelte Webpack Sample Apps
 
 - [Svelte 5 Webpack 5 with Typescript](https://github.com/cypress-io/cypress-component-testing-apps/tree/main/svelte-webpack-ts)
+
+## See also
+
+- [Component Testing code coverage](/app/tooling/code-coverage#component-testing-code-coverage)

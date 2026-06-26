@@ -1,8 +1,8 @@
 ---
-title: 'Frequently Asked Questions (FAQ) | Cypress Cloud'
+title: 'Frequently asked questions (FAQ) in Cypress Cloud'
 description: 'Get answers to common questions about Cypress Cloud.'
-sidebar_position: 200
 sidebar_label: FAQ
+sidebar_position: 200
 ---
 
 <ProductHeading product="cloud" />
@@ -94,7 +94,7 @@ means your [test run data](/cloud/features/recorded-runs#Latest-Runs) is being
 We consider each time the `it()` function is called to be a single test. So you
 will generally have several tests recorded within each spec file and likely
 several spec files within a single run. Only the
-[passed and failed tests](/app/core-concepts/writing-and-organizing-tests#Test-statuses)
+[passed and failed tests](/app/core-concepts/writing-and-organizing-tests#Understanding-test-results)
 are counted. The pending and skipped tests are NOT counted.
 
 You can always see how many tests you've recorded from your organization's
@@ -129,7 +129,9 @@ to your runs unless you have invited them.
 Tests running with the `--record` flag will run as normal when the limit is
 reached, but parallelization will be disabled and new test results will be
 hidden from the dashboard until your plan is upgraded or a new usage cycle
-begins. The usage cycle resets each month.
+begins. The usage cycle resets at the start of each billing period, which is
+monthly on most plans, though some annual plans use an annual test results
+allowance.
 
 In order to avoid any interruption in service, we recommend that you review your
 usage and select a plan that satisfies your usage requirements. You can do this
@@ -148,6 +150,45 @@ Downgrading your account will **not** result in loss of access to Cypress Cloud.
 However, it will make your Cypress Cloud account subject to the limitations of
 your new plan. For example, downgrading to the _Starter_ plan will limit data
 retention to 30 days and test results to 500 per billing period.
+
+### <Icon name="angle-right" /> When does my billing period reset?
+
+Your usage cycle resets at the start of each billing period, at which point
+your recorded [test result](#What-counts-as-a-test-result) and AI usage counters
+return to zero for the new period. Most plans bill monthly, though some annual
+plans use an annual test results allowance. You can confirm the dates of your
+current period on your organization's
+[Billing & Usage](/cloud/account-management/billing-and-usage) page.
+
+### <Icon name="angle-right" /> How do I reduce my Cypress Cloud usage or lower my bill?
+
+Because Cypress Cloud meters
+[test results](#What-counts-as-a-test-result) (each passed or failed test
+recorded with `--record`), the most effective way to reduce usage is to record
+fewer, more meaningful tests. A few common approaches:
+
+- Record only the runs you need insight into, rather than every local run.
+- Remove redundant or obsolete tests, and avoid recording the same suite
+  multiple times against the same commit.
+- [Choose the right test level](/app/guides/test-performance#Choose-the-right-test-level)
+  so behavior is covered where it is cheapest to test, instead of duplicating it
+  across many end-to-end tests.
+- [Find and eliminate over-tested UI with UI Coverage](/app/guides/test-performance#Find-and-eliminate-over-tested-UI-with-UI-Coverage)
+  to cut redundant tests that cover the same flows.
+- [Run the right tests at the right time](/app/guides/test-performance#Run-the-right-tests-at-the-right-time),
+  for example a smaller smoke suite on every PR and the full suite less often.
+- Use the **By project** tab on the
+  [Billing & Usage](/cloud/account-management/billing-and-usage) page to find
+  which projects consume the most of your plan, then focus there.
+
+For more ways to trim and streamline your suite, see the
+[Optimizing test performance](/app/guides/test-performance) guide.
+
+If your usage consistently exceeds your plan, compare options on the
+[pricing page](https://www.cypress.io/pricing); moving to a larger plan is
+often more cost-effective than purchasing additional test results. You can also
+**schedule a demo** from the pricing page to talk through the plan that best
+fits your usage.
 
 ### <Icon name="angle-right" /> Can I choose not to use Cypress Cloud?
 
@@ -273,7 +314,206 @@ it might be good enough for the job.
 
 <UrlAllowList />
 
+## Spec Prioritization
+
+### <Icon name="angle-right" /> What is Spec Prioritization?
+
+[Spec Prioritization](/cloud/features/smart-orchestration/spec-prioritization) is
+a [Smart Orchestration](/cloud/features/smart-orchestration/overview) feature
+that automatically runs the specs that failed in your previous Cypress run
+first. Instead of waiting for the same failures to resurface late in a run,
+Cypress Cloud surfaces them right away so you learn whether your latest change
+worked in minutes rather than at the end of the run.
+
+### <Icon name="angle-right" /> Does Spec Prioritization make my tests run faster?
+
+On its own, Spec Prioritization changes the _order_ specs run in, not the total
+duration, so it surfaces failures earlier without shortening the run. To turn
+that earlier feedback into shorter runs and lower CI costs, pair it with
+[Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation): when
+the prioritized failures reappear at the start of a run, the run is canceled
+right away, avoiding wasted compute on specs you already know will need another
+pass.
+
+### <Icon name="angle-right" /> What plan do I need to use Spec Prioritization?
+
+Spec Prioritization is available on the
+[Business and Enterprise tiers](https://cypress.io/pricing). Not sure if
+upgrading is worth it? The
+[recommendations](/cloud/features/recorded-runs#Recommendations) on the run
+overview page predict how much time Smart Orchestration features would save your
+suite.
+
+### <Icon name="angle-right" /> How do I enable Spec Prioritization?
+
+An admin can toggle it on at the project level: open the project in Cypress
+Cloud, go to **Project Settings**, scroll to the **Smart Orchestration** section,
+and toggle **Spec Prioritization**. See the
+[Spec Prioritization guide](/cloud/features/smart-orchestration/spec-prioritization#Enable-Spec-Prioritization)
+for the full steps.
+
+### <Icon name="angle-right" /> How do I know Spec Prioritization took effect?
+
+When Spec Prioritization fires, the run's detail tab displays a **"Prioritized
+failed specs from run #X"** label, where **#X** links back to the source run
+whose failures were moved to the front. The label only appears when Cypress Cloud
+actually reordered specs, so its presence confirms prioritization took effect and
+lets you trace which previous failures drove the order. If you don't see it,
+confirm the feature is toggled on and that the previous run recorded failures to
+prioritize.
+
+## Auto Cancellation
+
+### <Icon name="angle-right" /> What is Auto Cancellation in Cypress?
+
+[Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation) is a
+Cypress Cloud [Smart Orchestration](/cloud/features/smart-orchestration/overview)
+feature that automatically cancels a recorded run once the number of failed
+tests reaches a threshold you configure. It stops Cypress from handing out new
+specs, marks the run as canceled, and reports how much CI time was saved, so you
+don't pay for tests that run after a run has already failed. It is available on
+the Business and Enterprise plans.
+
+### <Icon name="angle-right" /> How many test failures trigger an auto cancellation?
+
+By default, a single failure cancels the run. You can set a higher threshold in
+your project's Smart Orchestration settings, or override it per run with the
+[`--auto-cancel-after-failures`](/app/references/command-line#auto-cancel-after-runs)
+CLI flag. Only genuinely failed tests count toward the threshold; flaky tests (which
+fail an attempt but then pass on retry) are not considered and never trigger an
+auto cancellation.
+
+### <Icon name="angle-right" /> Does Auto Cancellation stop tests that are already running?
+
+No. Specs that are already in progress when the threshold is reached finish
+running so you still get their complete results. Cypress only stops handing out
+_new_ specs. In a parallelized run, this means machines can keep running the
+specs they had already started at the moment of cancellation, but none of them
+will pick up a new spec once the run is canceled.
+
+### <Icon name="angle-right" /> How do I disable Auto Cancellation for a single run?
+
+Pass `--auto-cancel-after-failures false` to `cypress run`. This overrides the
+project setting for that run only, which is useful for important branches that
+need the full suite to run every time.
+
+### <Icon name="angle-right" /> Is Auto Cancellation free?
+
+No. Auto Cancellation is a paid Smart Orchestration feature available on the
+[Business and Enterprise Cypress Cloud plans](https://cypress.io/pricing).
+
+### <Icon name="angle-right" /> What is the difference between Auto Cancellation and manual cancellation?
+
+Auto Cancellation is triggered automatically when a run reaches the configured
+failure threshold, and the UI labels it _"canceled due to auto-cancellation."_
+A manual cancellation happens when a user cancels the run from Cypress Cloud,
+which the UI labels _"manually canceled"_ and attributes to that user.
+
+### <Icon name="angle-right" /> How do I find the tests that triggered an auto cancellation?
+
+The failed tests that triggered the cancellation are the ones counted toward
+your threshold. The fastest way to reach them is to click the **failed** test
+indicator in the [run header](/cloud/features/recorded-runs#Run-header), which
+opens the [Test Results tab](/cloud/features/recorded-runs#Test-Results-tab)
+pre-filtered to the failures, or to use the
+[Tests for Review](/cloud/features/recorded-runs#Tests-for-Review) panel, which
+orders results by failures first. Open a failed test's
+[detail sidebar](/cloud/features/recorded-runs#Test-detail-sidebar) and
+[Test Replay](/cloud/features/test-replay) to debug it. Note that a canceled run
+only includes results for specs that had already started, so it may not contain
+every failure the full suite would have produced.
+
+## Flaky Test Management
+
+### <Icon name="angle-right" /> What is a flaky test?
+
+A flaky test is one that both passes and fails across retry attempts without any
+change to the code. It fails once, runs again on the same code, and passes. See
+[Flaky Test Management](/cloud/features/flaky-test-management) for how Cypress
+Cloud detects and tracks them.
+
+### <Icon name="angle-right" /> How does Cypress detect flaky tests?
+
+With [test retries](/app/guides/test-retries) enabled, Cypress Cloud records
+every retry attempt from your recorded CI runs and flags any test that fails an
+attempt before ultimately passing as flaky, then scores it by
+[severity](/cloud/features/flaky-test-management#Flake-severity) based on its
+flake rate.
+
+### <Icon name="angle-right" /> What causes flaky tests?
+
+Flake usually comes from timing issues, race conditions, or differences between
+your local and CI environments. [Test Replay](/cloud/features/test-replay) lets
+you compare a passing and failing attempt on the same code to find the cause.
+
+### <Icon name="angle-right" /> How do I fix a flaky test?
+
+Open a failing attempt from the flaky test details panel in
+[Test Replay](/cloud/features/test-replay) to inspect the DOM, network requests,
+and console at the moment of failure, then compare it against a passing attempt
+on the same code to pinpoint the root cause.
+
+### <Icon name="angle-right" /> How is flake rate calculated?
+
+Flake rate is the share of recent runs affected by flake: the number of runs
+where the spec had a flaky test divided by the total number of runs in the
+current window. See
+[Flake severity](/cloud/features/flaky-test-management#Flake-severity) for how
+flake rate maps to severity levels.
+
+### <Icon name="angle-right" /> Do I need test retries enabled to detect flaky tests?
+
+Yes. [Test retries](/app/guides/test-retries#Configure-Test-Retries) are the
+fundamental mechanism that lets Cypress Cloud detect flaky tests, so enabling
+them is required for any Flaky Test Management feature.
+
+### <Icon name="angle-right" /> Which Cypress Cloud plan is required for Flaky Test Management?
+
+Flake detection, analytics, and alerting require a
+[Team Cypress Cloud plan](https://cypress.io/pricing). Enterprise Reporting and
+the Data Extract API require an Enterprise plan, and
+[Cloud MCP](/cloud/integrations/cloud-mcp) is included on every Cypress Cloud
+plan.
+
 ## Cypress Cloud Account
+
+### <Icon name="angle-right" /> What is a Cypress Cloud organization?
+
+A Cypress Cloud organization is the top-level container that groups your
+[projects](/cloud/account-management/projects),
+[users](/cloud/account-management/users),
+[teams](/cloud/account-management/teams), billing and usage, and
+[integrations](/cloud/account-management/organizations#Integrations). It lets you manage access
+control and application quality across every project from one place instead of configuring each
+project individually.
+
+### <Icon name="angle-right" /> How do I create an organization in Cypress Cloud?
+
+Open the organization switcher in [Cypress Cloud](https://on.cypress.io/cloud) and click
+**Create new organization**. A "Default Project" is created automatically, which you can rename and
+configure in [Project Settings](/cloud/account-management/projects#Project-settings).
+
+### <Icon name="angle-right" /> Can I have more than one organization?
+
+Yes. You can create multiple organizations to separate projects by team, business unit, or client,
+and switch between them using the organization switcher. Usage and
+[enterprise analytics](/cloud/features/analytics/enterprise-reporting) roll up within each
+organization.
+
+### <Icon name="angle-right" /> Who can manage an organization?
+
+Organization owners and admins can invite users, create teams, configure
+[Cloud AI](/cloud/account-management/organizations#Manage-Cloud-AI), and set up integrations. Only
+owners can rename or delete an organization and configure
+[single sign-on (SSO)](/cloud/account-management/enterprise-sso). See
+[user roles](/cloud/account-management/users#User-roles) for the full permissions breakdown.
+
+### <Icon name="angle-right" /> How do I delete an organization?
+
+You can delete an organization you own once it has no projects. First
+[delete](/cloud/account-management/projects#Delete-Project) or
+[transfer ownership](/cloud/account-management/projects#Transfer-ownership) of every project to
+another organization, then delete the organization from its settings.
 
 ### <Icon name="angle-right" /> What is my Organization ID?
 
@@ -293,8 +533,8 @@ Instructions on how to find your ID are in the
    - Check the trash and spam folder
    - Verify it's the correct email address
 
-**If the troubleshooting tips above did not resolve the issue or involves SSO,
-reach out to [support](mailto:support@cypress.io).**
+If the troubleshooting tips above did not resolve the issue or involves SSO,
+reach out to [support](mailto:support@cypress.io).
 
 ### <Icon name="angle-right" /> Can I delete my Cypress account?
 
@@ -302,6 +542,117 @@ You can delete your Cypress account from
 [your Cypress Cloud profile](https://cloud.cypress.io/profile). Deleting your
 account cannot be undone! By deleting your Cypress account, all associated data
 in your account will be permanently deleted.
+
+### <Icon name="angle-right" /> How do I invite a user to Cypress Cloud?
+
+An organization [Owner or Admin](/cloud/account-management/users#User-roles) can
+invite users from the **Users & Teams** page by clicking **Invite User**, adding
+one or more email addresses, and selecting a [role](/cloud/account-management/users#User-roles).
+Invited users receive an email with a link to accept the invitation. You can also
+use **Copy invite link** to share your own message. Anyone who joins through that
+link is given the default **Member** role. See
+[Invite users](/cloud/account-management/users#Invite-users) for details.
+
+### <Icon name="angle-right" /> What are the Cypress Cloud user roles?
+
+Cypress Cloud has five roles that control what a user can see and change:
+**Viewer** (read-only access to projects and runs), **Member** (the everyday
+developer role, including record keys and App Quality configuration), **Team
+Admin** (manages members and settings for their own projects), **Org Admin**
+(manages all users and both organization and project settings), and **Org
+Owner** (full control, including billing, SSO, and deletion). See the full
+[permissions tables](/cloud/account-management/users#User-roles) for an
+exact breakdown.
+
+### <Icon name="angle-right" /> What is the difference between an Org Admin and an Org Owner?
+
+An **Org Admin** can manage all users and edit organization and project
+configurations, but cannot perform owner-only actions. An **Org Owner** can do
+everything an Org Admin can, plus invite or edit other owners, set up SSO, edit
+the organization name, and delete the organization. Only owners can grant other
+users 'owner' access. See
+[User roles](/cloud/account-management/users#User-roles).
+
+### <Icon name="angle-right" /> Can someone request access to my organization instead of being invited?
+
+Yes. If a teammate already has access to Cypress and your project's source code,
+they can request to join your organization directly from the Cypress App, and an
+Owner or Admin can accept or deny the request. This lets you onboard teammates
+without inviting everyone up front. Note that user requests are not available if
+your organization is configured for SSO. See
+[User requests](/cloud/account-management/users#User-requests).
+
+### <Icon name="angle-right" /> How do I change a user's email address in Cypress Cloud?
+
+To change a user's email, an **Owner** or **Admin** invites the new email address
+and removes the previous one. To update your billing email, use the
+[Billing & Usage](/cloud/account-management/billing-and-usage) page or contact
+[billing@cypress.io](mailto:billing@cypress.io). See
+[User updates](/cloud/account-management/users#User-updates).
+
+## Teams
+
+### <Icon name="angle-right" /> What is a team in Cypress Cloud?
+
+A [team](/cloud/account-management/teams) is a reusable group of users that is granted
+access to a specific set of projects. Teams let you control project access once at the
+team level, instead of project by project, user by user, so each person sees only the
+projects relevant to their work.
+
+### <Icon name="angle-right" /> Who can create and manage teams?
+
+Organization [owner or admin](/cloud/account-management/users#User-roles) roles can create
+teams. Once a team exists, owners, admins, and the dedicated
+[team admin](/cloud/account-management/teams#Manage-teams) role can configure it by assigning
+projects and members. The team admin role lets day-to-day team members manage their own
+projects without routing every request through organization-level admins.
+
+### <Icon name="angle-right" /> Do teams affect access to public projects?
+
+No. [Public projects](https://on.cypress.io/what-is-project-access) are visible to all
+Cypress Cloud users, including those outside of your organization, regardless of team
+membership. Teams only control access to private projects.
+
+### <Icon name="angle-right" /> What is the _Everyone_ team?
+
+Every user in your organization is automatically a member of a default team named _Everyone_,
+which has access to all projects by default. If you don't need to separate project access,
+you can leave the _Everyone_ team as-is. When you adopt a team structure, you can remove the
+_All projects_ assignment from the _Everyone_ team to enforce access through your own teams.
+See [Manage teams](/cloud/account-management/teams) for setup best practices.
+
+## Debugging
+
+### <Icon name="angle-right" /> How do I debug a Cypress test that fails in CI but passes locally?
+
+Record the run to Cypress Cloud, open the failing test, and use
+[Test Replay](/cloud/features/test-replay) to replay the exact CI run. You can
+step through the command log and inspect the DOM, network requests, and console
+logs as they happened in CI, so you can find the difference between your local
+environment and CI without reproducing the failure on your machine. See the
+[Debug Failing Tests guide](/cloud/guides/debug-failing-tests) for the full
+workflow.
+
+### <Icon name="angle-right" /> Can I debug a CI failure without reproducing it locally?
+
+Yes. [Test Replay](/cloud/features/test-replay) captures the complete state of
+each test as it ran in CI and lets you replay it with full debugging capability.
+This is the primary reason teams use Cypress Cloud for debugging: it removes the
+need to recreate a CI environment locally.
+
+### <Icon name="angle-right" /> How do I know if a test failure is a real bug or just flaky?
+
+Use [Flaky Test Management](/cloud/features/flaky-test-management) to see whether
+a test has a history of passing on retry, and
+[Branch Review](/cloud/features/branch-review) to compare your branch against its
+base and determine whether your change introduced the failure or it already
+existed.
+
+### <Icon name="angle-right" /> Do I need to change my tests to debug them in Cypress Cloud?
+
+No. You only need to [record your runs](/cloud/get-started/setup) with
+`cypress run --record`. Test Replay, Error Summaries, and the test detail sidebar
+work automatically, with no changes to your test code.
 
 ## Test Replay
 

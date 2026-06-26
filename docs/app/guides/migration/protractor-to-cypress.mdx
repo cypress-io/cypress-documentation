@@ -1,5 +1,5 @@
 ---
-title: 'Migrating from Protractor to Cypress: A Guide'
+title: 'Migrate from Protractor to Cypress: complete migration guide'
 description: 'Migrate from Protractor to Cypress with this guide. Learn how to work with the DOM, write assertions, and use the Angular schematic to configure Cypress.'
 sidebar_label: Migrating from Protractor
 ---
@@ -28,15 +28,6 @@ migration guide to help you and your team transition from Protractor to Cypress.
 To start, let's look at a quick code sample to see how approachable Cypress is
 coming from Protractor. In this scenario, we have a test to validate that a user
 can sign up for a new account.
-
-:::tip
-
-To see how this conversion would work with some of your own test code, you can
-paste it into the interactive
-[Cypress Migrator tool](https://migrator.cypress.io/), which will generate the
-equivalent Cypress code.
-
-:::
 
 <Badge type="danger">Before: Protractor</Badge>
 
@@ -267,6 +258,20 @@ yarn add concurrently --dev
 ```
 
   </TabItem>
+  <TabItem value="pnpm">
+
+```bash
+pnpm add --save-dev concurrently
+```
+
+  </TabItem>
+  <TabItem value="bun">
+
+```bash
+bun add --dev concurrently
+```
+
+  </TabItem>
 </Tabs>
 
 Then we will update our `package.json` with the following scripts:
@@ -296,6 +301,20 @@ npm run cy:open
 
 ```bash
 yarn run cy:open
+```
+
+  </TabItem>
+  <TabItem value="pnpm">
+
+```bash
+pnpm run cy:open
+```
+
+  </TabItem>
+  <TabItem value="bun">
+
+```bash
+bun run cy:open
 ```
 
   </TabItem>
@@ -1024,12 +1043,36 @@ it('should display the username of a logged in user', () => {
 Cypress also provides a [Custom Command](/api/cypress-api/custom-commands) API
 to enable you to add methods to the `cy` global directly:
 
+<Tabs>
+<TabItem value="cypress/support/commands.js">
+
 ```js
 Cypress.Commands.add('login', (username, password) => {
   cy.get('.username').type(username)
   cy.get('.password').type(password)
 })
 ```
+
+</TabItem>
+<TabItem value="cypress/support/commands.ts">
+
+```ts
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      login(username: string, password: string): Chainable<void>
+    }
+  }
+}
+
+Cypress.Commands.add('login', (username: string, password: string) => {
+  cy.get('.username').type(username)
+  cy.get('.password').type(password)
+})
+```
+
+</TabItem>
+</Tabs>
 
 You can use your own custom commands in any of your tests:
 

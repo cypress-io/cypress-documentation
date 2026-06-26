@@ -1,6 +1,7 @@
 ---
-title: Best Practices
+title: 'Cypress best practices'
 description: Best practices for organizing tests, selecting elements, and controlling state in Cypress.
+sidebar_label: Best Practices
 sidebar_position: 80
 ---
 
@@ -266,6 +267,10 @@ Luckily, it is possible to avoid both of these problems.
 2. Don't target elements that may change their `textContent`
 3. Add `data-*` attributes to make it easier to target elements
 
+The [`cypress/require-data-selectors`](https://github.com/cypress-io/eslint-plugin-cypress#rules)
+rule in [`eslint-plugin-cypress`](https://github.com/cypress-io/eslint-plugin-cypress) can
+enforce `data-*` selectors automatically at lint time.
+
 ### How It Works
 
 Given a button that we want to interact with:
@@ -317,8 +322,18 @@ custom commands for selecting elements for testing:
 - `getBySelLike` yields elements with a `data-test` attribute that **contains**
   a specified selector.
 
-```ts
-// cypress/support/commands.ts
+```typescript title="cypress/support/commands.ts"
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      getBySel(selector: string, ...args: any[]): Chainable<JQuery<HTMLElement>>
+      getBySelLike(
+        selector: string,
+        ...args: any[]
+      ): Chainable<JQuery<HTMLElement>>
+    }
+  }
+}
 
 Cypress.Commands.add('getBySel', (selector, ...args) => {
   return cy.get(`[data-test=${selector}]`, ...args)
@@ -407,6 +422,10 @@ closures to access and store](/app/core-concepts/variables-and-aliases) what
 Commands yield you.
 
 :::
+
+The [`cypress/no-assigning-return-values`](https://github.com/cypress-io/eslint-plugin-cypress#rules)
+rule in [`eslint-plugin-cypress`](https://github.com/cypress-io/eslint-plugin-cypress) flags
+this pattern automatically at lint time.
 
 Many first time users look at Cypress code and think it runs synchronously.
 
@@ -1046,7 +1065,9 @@ met.
 
 In Cypress, you almost never need to use `cy.wait()` for an arbitrary amount of
 time. If you are finding yourself doing this, there is likely a much simpler
-way.
+way. The [`cypress/no-unnecessary-waiting`](https://github.com/cypress-io/eslint-plugin-cypress#rules)
+rule in [`eslint-plugin-cypress`](https://github.com/cypress-io/eslint-plugin-cypress) flags
+`cy.wait(<number>)` at lint time, before tests ever run.
 
 Let's imagine the following examples:
 
