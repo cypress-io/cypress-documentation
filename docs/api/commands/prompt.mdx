@@ -74,6 +74,351 @@ cy.prompt([
   .should('equal', 'en-US')
 ```
 
+## Examples
+
+Several of these examples use [placeholders](/app/guides/cy-prompt#Placeholders) for dynamic or sensitive values. For the concepts behind these examples, see the [AI Test Generation guide](/app/guides/cy-prompt).
+
+### Gherkin-style tests
+
+`cy.prompt` can execute Gherkin-style tests, making test automation accessible to a broader audience including product managers, QA engineers, and stakeholders who are familiar with behavior-driven development (BDD) patterns. This expands the pool of people who can write and maintain tests without requiring deep technical knowledge of Cypress APIs. This is also a great way to get started with test automation and get buy-in from stakeholders who are familiar with BDD patterns.
+
+#### Benefits for Cucumber users:
+
+- **Familiar syntax**: If you're already using Cucumber/Gherkin, `cy.prompt` accepts the same Given/When/Then/And structure
+- **No step definitions**: Unlike traditional Cucumber, you don't need to write step definition files - `cy.prompt` interprets the steps directly
+- **Improved performance**: Tests run without the overhead of Cucumber's step definition mapping
+- **Simplified maintenance**: No need to maintain separate step definition files that can become out of sync with your tests
+
+#### Gherkin example 1: Successful user registration with valid data
+
+```javascript
+describe('Feature: User Registration', () => {
+  it('Scenario: Successful user registration with valid data', () => {
+    cy.prompt(
+      [
+        'Given the user is on the "/register" page',
+        'When the user enters "Avery Lopez" in the name field',
+        'And the user enters "avery.lopez@example.com" in the email field',
+        'And the user enters {{password}} in the password field',
+        'And the user enters {{password}} in the confirm password field',
+        'And the user selects "admin" from the role dropdown',
+        'And the user checks the terms and conditions checkbox',
+        'And the user clicks the "Register User" button',
+        'Then the user should see a success notification',
+        'And the user should be added to the user list',
+      ],
+      {
+        placeholders: {
+          password: 'PASSWORD_PLACEHOLDER', // Use cy.env(['PASSWORD']) to get the actual value
+        },
+      }
+    )
+  })
+})
+```
+
+The generated code may look like:
+
+```javascript
+describe('Feature: User Registration', () => {
+  it('Scenario: Successful user registration with valid data', () => {
+    // Prompt step 1: Given the user is on the "/register" page
+    cy.visit('/register')
+
+    // Prompt step 2: When the user enters "Avery Lopez" in the name field
+    cy.get('#full-name').type('Avery Lopez')
+
+    // Prompt step 3: And the user enters "avery.lopez@example.com" in the email field
+    cy.get('#email').type('avery.lopez@example.com')
+
+    // Prompt step 4: And the user enters "password123" in the password field
+    cy.get('#password').type('password123')
+
+    // Prompt step 5: And the user enters "password123" in the confirm password field
+    cy.get('#confirm-password').type('password123')
+
+    // Prompt step 6: And the user selects "admin" from the role dropdown
+    cy.get('#role').select('admin')
+
+    // Prompt step 7: And the user checks the terms and conditions checkbox
+    cy.get('#terms').check()
+
+    // Prompt step 8: And the user clicks the "Register User" button
+    cy.get('#registration-form .btn-success').click()
+
+    // Prompt step 9: Then the user should see a success notification
+    cy.get('.success').should('be.visible')
+
+    // Prompt step 10: And the user should be added to the user list
+    cy.get('#user-list').should('contain', 'Avery')
+  })
+})
+```
+
+#### Gherkin example 2: User cannot be deactivated if already inactive
+
+```javascript
+describe('Feature: User Status Management', () => {
+  it('Scenario: User cannot be deactivated if already inactive', () => {
+    cy.visit('/user-management')
+    cy.prompt([
+      'Given there is an inactive user on the page',
+      'When the admin tries to deactivate the already inactive user',
+      'But the user is already in inactive status',
+      'Then the system should show a message that user is already inactive',
+      'But the user status should remain unchanged',
+    ])
+  })
+})
+```
+
+The generated code may look like:
+
+```javascript
+describe('Feature: User Status Management', () => {
+  it('Scenario: User cannot be deactivated if already inactive', () => {
+    cy.visit('/user-management')
+
+    // Prompt step 1: Given there is an inactive user on the page
+    cy.get('#user-list .status-inactive').should('be.visible')
+
+    // Prompt step 2: When the admin tries to deactivate the already inactive user
+    cy.get('#user-list div:nth-child(3) > .user-actions > .btn-danger').click()
+
+    // Prompt step 3: But the user is already in inactive status
+    cy.get('#user-list .status-inactive').should('contain', 'inactive')
+
+    // Prompt step 4: Then the system should show a warning message
+    cy.get('.warning-notification').should('be.visible')
+
+    // Prompt step 5: But the user status should remain unchanged
+    cy.get('#user-list .status-inactive').should('contain', 'inactive')
+  })
+})
+```
+
+#### Gherkin example 3: Admin manages user status
+
+```javascript
+it('Scenario Outline: Admin manages user status', () => {
+  cy.visit('/users')
+
+  const Examples = [
+    { status: 'pending', action: 'activates', new_status: 'active' },
+    { status: 'active', action: 'deactivates', new_status: 'inactive' },
+    { status: 'inactive', action: 'activates', new_status: 'active' },
+  ]
+
+  Examples.forEach((example) => {
+    cy.prompt([
+      `Given there is a(n) ${example.status} user on the page`,
+      `When the admin ${example.action} the user`,
+      `Then the user status should change to ${example.new_status}`,
+    ])
+  })
+})
+```
+
+The commands in the generated code may look like:
+
+<DocsImage
+  src="/img/api/prompt/gherkin-example-cy-prompt-command-log.png"
+  alt="Command log for Gherkin example 3"
+/>
+
+### Login flow
+
+```javascript
+cy.env(['ADMIN_PASSWORD']).then(({ adminPassword }) => {
+  cy.prompt(
+    [
+      'visit the login page',
+      'type "user@example.com" in the email field',
+      'type {{password}} in the password field',
+      'click the login button',
+      'verify we are redirected to the dashboard',
+    ],
+    {
+      placeholders: { password: adminPassword },
+    }
+  )
+})
+```
+
+### E-commerce checkout
+
+```javascript
+cy.prompt([
+  'visit https://example.com/products',
+  'search for "wireless headphones"',
+  'click on the first search result',
+  'click the "Add to Cart" button',
+  'verify the cart icon shows 1 item',
+  'click the cart icon',
+  'click the "Proceed to Checkout" button',
+  'fill in shipping information',
+  'select standard shipping',
+  'enter credit card details',
+  'click the "Place Order" button',
+  'verify the order confirmation page loads',
+])
+```
+
+:::info
+When `cy.prompt` resolves the credit card fields in this flow, field values are
+automatically excluded before any data is sent to the AI model. See
+[Sensitive data handling](/app/guides/cy-prompt#Sensitive-data-handling).
+:::
+
+### Search functionality
+
+```javascript
+cy.prompt([
+  'search for "united states"',
+  'pick "United States" from the list',
+  'clear the search field',
+  'look for "canada"',
+  'choose "Canada" from the suggestions',
+])
+```
+
+### Settings configuration
+
+```javascript
+cy.prompt([
+  'toggle on the "Enable Notifications" switch',
+  'verify the notification shows "Enable Notifications enabled"',
+  'verify the notifications toggle is enabled',
+  'verify the toggle switch is in the on position',
+])
+```
+
+### Dynamic testing with loops
+
+If you need to test a loop of steps, you can use the `placeholders` option to pass in the dynamic values. This optimizes caching so that the prompt does not need to be called out to AI for each iteration of the loop.
+
+```javascript
+const matchingSearchTerms = ['cypress', 'testing', 'automation']
+const nonMatchingSearchTerms = ['cyprus', 'fuzzy', 'wrong']
+
+matchingSearchTerms.forEach((term) => {
+  cy.prompt(
+    [
+      `type "{{term}}" in the search input`,
+      `verify the search results contain "{{term}}"`,
+    ],
+    {
+      placeholders: {
+        term,
+      },
+    }
+  )
+})
+
+nonMatchingSearchTerms.forEach((term) => {
+  cy.prompt(
+    [
+      `type "{{term}}" in the search input`,
+      `verify the search results does not contain "{{term}}"`,
+    ],
+    {
+      placeholders: {
+        term,
+      },
+    }
+  )
+})
+```
+
+### Cross-origin testing
+
+```javascript
+cy.origin('https://cloud.cypress.io/login', () => {
+  cy.prompt(
+    [
+      'type "may@example.com" in the email field',
+      'type {{password}} in the password field',
+      'click the login button',
+    ],
+    {
+      placeholders: {
+        password: 'PASSWORD_PLACEHOLDER',
+      },
+    }
+  )
+})
+```
+
+### Mixed with traditional Cypress
+
+```javascript
+const electronicsCount = Cypress.expose('staging') === true ? 5 : 25
+
+// Confirm the UI works in staging environment
+cy.task('seedStagingDB')
+cy.visit(`${Cypress.expose('stagingUrl')}/products`)
+cy.prompt(
+  [
+    'filter by category "Electronics"',
+    'sort by price high to low',
+    `verify the product count is {{electronicsCount}}`,
+    'verify the sort indicator is "Price: High to Low"',
+  ],
+  {
+    placeholders: {
+      electronicsCount,
+    },
+  }
+)
+
+// Confirm the UI works in production environment
+cy.task('seedProductionDB')
+cy.visit(`${Cypress.expose('productionUrl')}/products`)
+cy.prompt(
+  [
+    'filter by category "Electronics"',
+    'sort by price high to low',
+    `verify the product count is {{electronicsCount}}`,
+    'verify the sort indicator is "Price: High to Low"',
+  ],
+  {
+    placeholders: {
+      electronicsCount,
+    },
+  }
+)
+```
+
+Or to further clean up the `cy.prompt` call:
+
+```javascript
+const electronicsCount = Cypress.expose('staging') === true ? 5 : 25
+const electronicsFilterPrompt = [
+  'filter by category "Electronics"',
+  'sort by price high to low',
+  `verify the product count is {{electronicsCount}}`,
+  'verify the sort indicator is "Price: High to Low"',
+]
+
+// Confirm the UI works in staging environment
+cy.task('seedStagingDB')
+cy.visit(`${Cypress.expose('stagingUrl')}/products`)
+cy.prompt(electronicsFilterPrompt, {
+  placeholders: {
+    electronicsCount,
+  },
+})
+
+// Confirm the UI works in production environment
+cy.task('seedProductionDB')
+cy.visit(`${Cypress.expose('stagingUrl')}/products`)
+cy.prompt(electronicsFilterPrompt, {
+  placeholders: {
+    electronicsCount,
+  },
+})
+```
+
 ## Supported actions
 
 `cy.prompt` supports the actions below. For guidance on phrasing steps clearly, see [Write effective prompts](/app/guides/cy-prompt#Write-effective-prompts).
