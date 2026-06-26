@@ -24,9 +24,11 @@ New to `cy.prompt`? Start with the [**AI Test Generation** guide](/app/guides/cy
 ```typescript
 interface PromptCommand {
   (
-    steps: string[], // array of steps to execute
+    // array of steps to execute
+    steps: string[],
     options?: {
-      placeholders?: { [key: string]: string } // redacted dynamic inputs that are ignored for cache identity
+      // redacted dynamic inputs that are ignored for cache identity
+      placeholders?: { [key: string]: string }
     }
   ): void
 }
@@ -42,9 +44,9 @@ An array of steps to execute.
 
 Pass in an options object to `cy.prompt()`.
 
-| Option         | Default | Description                                                                                                                                |
-| -------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
-| `placeholders` | `{}`    | Dynamic or sensitive values that enable high performance caching. See [placeholders](/app/guides/cy-prompt#Placeholders) for more details. |
+| Option         | Default | Description                                                                                                                                              |
+| -------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `placeholders` | `{}`    | Dynamic or sensitive values that enable caching and are excluded from AI calls. See [placeholders](/app/guides/cy-prompt#Placeholders) for more details. |
 
 <HeaderYields />
 
