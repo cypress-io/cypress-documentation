@@ -74,6 +74,140 @@ cy.prompt([
   .should('equal', 'en-US')
 ```
 
+## Supported actions
+
+`cy.prompt` supports the actions below. For guidance on phrasing steps clearly, see [Write effective prompts](/app/guides/cy-prompt#Write-effective-prompts).
+
+### Navigate to pages
+
+```javascript
+'visit https://example.cypress.io'
+'navigate to /login' // with baseUrl set
+```
+
+### Interact with elements
+
+#### Click
+
+```javascript
+'click the login button'
+'hit the "x" button'
+'click the button containing "Edit"'
+'expand the FAQ section'
+'close the Technical Information section'
+'switch to the Settings tab'
+'force click the submit button'
+'double click the product image'
+'right click the file item'
+```
+
+#### Type and inputs
+
+```javascript
+'type "john.doe@company.com" in the email field'
+'type {enter} in the email field'
+'write "42" in the number field'
+'put "No comment" in the textarea'
+'fill the search input with "cypress"'
+'force type "text" in the hidden input'
+'clear the username field'
+'focus on the search input'
+'blur the filter input'
+```
+
+#### Form and controls
+
+```javascript
+'select "Canada" from the country dropdown'
+'pick "United States" from the list'
+'choose "Newest" from the suggestions'
+'check "I agree"'
+'uncheck "Send me updates"'
+'toggle the "Dark Mode" switch'
+'submit the contact form'
+```
+
+#### Scroll
+
+```javascript
+'scroll the sales section into view'
+'scroll to todays date in the calendar'
+```
+
+#### Keyboard, mouse, and other events
+
+```javascript
+'press "Tab" to focus the next field'
+'press "Enter" to choose the current selection'
+'hover over the "Help" button'
+'trigger a mousemove event on the .bar-chart'
+```
+
+### Verify results
+
+```javascript
+'make sure the confirmation button is visible'
+'verify an alert exists'
+'expect the notification to contain the text "Email sent"'
+'confirm that the [data-cy="result"] element has the text "Success"'
+'the toast should not contain the text "Failed"'
+'the current URL should be "https://cloud.cypress.io/login"'
+'I expect the email field to have the value "anika.mehta@email.com"'
+'verify the "Remember me" input is disabled'
+'the "Login" button should be enabled'
+'now the product should have the class "loading"'
+'assert the "I agree" checkbox is checked'
+'validate that the #error-message is empty'
+'the "Profile" tab should be active'
+'the modal ought to be displayed'
+'verify both checkboxes are checked'
+'the search input should have focus'
+'and "United States" is selected'
+'ensure that the counter shows 5'
+'verify the counter has the id "reset"'
+'confirm that the code frame includes HTML "<span class="token">'
+```
+
+#### Non-existence assertions
+
+You can verify that elements do not exist to generate `not.exist` assertions, but **only when you provide an exact CSS selector or when you use [text-based targeting](/app/guides/cy-prompt#Targeting-elements-by-text-content)**. Natural language descriptions for non-existence are not currently supported. Additionally, ensure that your intention is to verify that the element does not exist in the DOM, not that it is not visible.
+
+```javascript
+'verify #error-message does not exist'
+'the ".loading-spinner" should not exist'
+'make sure the "Error" message does not exist'
+'confirm "Reset" button does not exist'
+```
+
+### Change the viewport
+
+```javascript
+'set the viewport to 400x600'
+```
+
+### Wait
+
+Wait for an amount of time or wait for an already aliased intercept to resolve before moving on to the next command in Cypress.
+
+```javascript
+'wait 2 seconds'
+'wait 500 milliseconds'
+'wait for @customer alias'
+'wait for the @users request to finish'
+```
+
+### Command options
+
+```javascript
+'go to "/users" with a timeout of 10 seconds'
+'dismiss the modal using a timeout of 6 seconds'
+'force click the submit button'
+'force click the "Close" button'
+'force type "text" in the hidden input field'
+'force check the "I agree" checkbox'
+'force uncheck the "Send updates" checkbox'
+```
+
 ## Examples
 
 Several of these examples use [placeholders](/app/guides/cy-prompt#Placeholders) for dynamic or sensitive values. For the concepts behind these examples, see the [AI Test Generation guide](/app/guides/cy-prompt).
@@ -419,151 +553,17 @@ cy.prompt(electronicsFilterPrompt, {
 })
 ```
 
-## Supported actions
-
-`cy.prompt` supports the actions below. For guidance on phrasing steps clearly, see [Write effective prompts](/app/guides/cy-prompt#Write-effective-prompts).
-
-### Navigate to pages
-
-```javascript
-'visit https://example.cypress.io'
-'navigate to /login' // with baseUrl set
-```
-
-### Interact with elements
-
-#### Click
-
-```javascript
-'click the login button'
-'hit the "x" button'
-'click the button containing "Edit"'
-'expand the FAQ section'
-'close the Technical Information section'
-'switch to the Settings tab'
-'force click the submit button'
-'double click the product image'
-'right click the file item'
-```
-
-#### Type and inputs
-
-```javascript
-'type "john.doe@company.com" in the email field'
-'type {enter} in the email field'
-'write "42" in the number field'
-'put "No comment" in the textarea'
-'fill the search input with "cypress"'
-'force type "text" in the hidden input'
-'clear the username field'
-'focus on the search input'
-'blur the filter input'
-```
-
-#### Form and controls
-
-```javascript
-'select "Canada" from the country dropdown'
-'pick "United States" from the list'
-'choose "Newest" from the suggestions'
-'check "I agree"'
-'uncheck "Send me updates"'
-'toggle the "Dark Mode" switch'
-'submit the contact form'
-```
-
-#### Scroll
-
-```javascript
-'scroll the sales section into view'
-'scroll to todays date in the calendar'
-```
-
-#### Keyboard, mouse, and other events
-
-```javascript
-'press "Tab" to focus the next field'
-'press "Enter" to choose the current selection'
-'hover over the "Help" button'
-'trigger a mousemove event on the .bar-chart'
-```
-
-### Verify results
-
-```javascript
-'make sure the confirmation button is visible'
-'verify an alert exists'
-'expect the notification to contain the text "Email sent"'
-'confirm that the [data-cy="result"] element has the text "Success"'
-'the toast should not contain the text "Failed"'
-'the current URL should be "https://cloud.cypress.io/login"'
-'I expect the email field to have the value "anika.mehta@email.com"'
-'verify the "Remember me" input is disabled'
-'the "Login" button should be enabled'
-'now the product should have the class "loading"'
-'assert the "I agree" checkbox is checked'
-'validate that the #error-message is empty'
-'the "Profile" tab should be active'
-'the modal ought to be displayed'
-'verify both checkboxes are checked'
-'the search input should have focus'
-'and "United States" is selected'
-'ensure that the counter shows 5'
-'verify the counter has the id "reset"'
-'confirm that the code frame includes HTML "<span class="token">'
-```
-
-#### Non-existence assertions
-
-You can verify that elements do not exist to generate `not.exist` assertions, but **only when you provide an exact CSS selector or when you use [text-based targeting](/app/guides/cy-prompt#Targeting-elements-by-text-content)**. Natural language descriptions for non-existence are not currently supported. Additionally, ensure that your intention is to verify that the element does not exist in the DOM, not that it is not visible.
-
-```javascript
-'verify #error-message does not exist'
-'the ".loading-spinner" should not exist'
-'make sure the "Error" message does not exist'
-'confirm "Reset" button does not exist'
-```
-
-### Change the viewport
-
-```javascript
-'set the viewport to 400x600'
-```
-
-### Wait
-
-Wait for an amount of time or wait for an already aliased intercept to resolve before moving on to the next command in Cypress.
-
-```javascript
-'wait 2 seconds'
-'wait 500 milliseconds'
-'wait for @customer alias'
-'wait for the @users request to finish'
-```
-
-### Command options
-
-```javascript
-'go to "/users" with a timeout of 10 seconds'
-'dismiss the modal using a timeout of 6 seconds'
-'force click the submit button'
-'force click the "Close" button'
-'force type "text" in the hidden input field'
-'force check the "I agree" checkbox'
-'force uncheck the "Send updates" checkbox'
-```
-
 ## Limitations
 
 These apply to all `cy.prompt` usage unless noted otherwise.
 
 | Limitation       | Details                                                                                                                                                                                                                                                                                                                                                        |
 | ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Command Coverage | Not all Cypress APIs supported - see [Supported actions](#Supported-actions)                                                                                                                                                                                                                                                                                   |
 | Authentication   | Requires Cypress Cloud account and/or valid record key                                                                                                                                                                                                                                                                                                         |
-| Test Type        | E2E tests only (component testing not yet supported)                                                                                                                                                                                                                                                                                                           |
+| Test Type        | E2E tests only (component testing not supported)                                                                                                                                                                                                                                                                                                               |
 | Browser Support  | Chromium-based browsers only (Chrome, Edge, Electron)                                                                                                                                                                                                                                                                                                          |
 | Language Support | Optimized for English prompts; other languages are not guaranteed                                                                                                                                                                                                                                                                                              |
-| Command Coverage | Not all Cypress APIs supported - see [Supported actions](#Supported-actions)                                                                                                                                                                                                                                                                                   |
 | Assertions       | 'not.exist' assertions from natural language are not supported. However, 'not.exist' assertions work when you provide an exact CSS selector (e.g., `'verify #error-message does not exist'`) or when you use [text-based targeting](/app/guides/cy-prompt#Targeting-elements-by-text-content). [See issue](https://github.com/cypress-io/cypress/issues/33274) |
 | Multi-Element    | Assertions on multiple elements are not currently supported [See issue](https://github.com/cypress-io/cypress/issues/32787)                                                                                                                                                                                                                                    |
 | Cookies/Sessions | Clearing cookies or sessions is not supported [See issue](https://github.com/cypress-io/cypress/issues/32810)                                                                                                                                                                                                                                                  |
@@ -582,6 +582,6 @@ For pricing and per-hour usage limits, see [Pricing and usage limits](/app/guide
 
 ## See also
 
-- [AI Test Generation](/app/guides/cy-prompt)
-- [Cypress Studio](/app/guides/cypress-studio)
-- [ElementSelector API](/api/cypress-api/element-selector-api)
+- [AI Test Generation](/app/guides/cy-prompt) - for generating tests from natural language
+- [Cypress Studio](/app/guides/cypress-studio) - for creating tests in a visual editor and using AI to generate assertions
+- [ElementSelector API](/api/cypress-api/element-selector-api) - for customizing how Cypress selects elements in Studio and cy.prompt()
