@@ -1,17 +1,3 @@
-const URLs: Array<string> = Cypress.expose('URLs')
+import { visitAllPages } from '../support/visitAllPages'
 
-// Mostly this is to get a UI Coverage and Accessibility report
-describe('Visit all Accessibility pages', () => {
-  URLs.forEach((URL) => {
-    if (!URL.startsWith('accessibility')) return
-
-    it(`Visit ${URL} `, () => {
-      cy.visit(URL)
-      cy.get('h1')
-        .should('be.visible')
-        .and('not.have.text', 'Page Not Found')
-        
-      cy.get('[aria-label="Switch to dark mode"]').click()
-    })
-  })
-})
+visitAllPages('accessibility')
