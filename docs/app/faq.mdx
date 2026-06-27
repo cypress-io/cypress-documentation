@@ -649,8 +649,8 @@ arbitrary server by default, so you have to tell the browser which origins are
 allowed to use integrated authentication.
 
 In your
-[`setupNodeEvents`](/app/plugins/plugins-guide#Using-a-plugin) function (the
-"plugins file"), listen for the
+[`setupNodeEvents`](/app/plugins/plugins-guide#Using-a-plugin) function, listen
+for the
 [`before:browser:launch`](/api/node-events/browser-launch-api) event and add the
 relevant Chromium auth flags, such as `--auth-server-allowlist` and
 `--auth-negotiate-delegate-allowlist`:
@@ -662,8 +662,6 @@ relevant Chromium auth flags, such as `--auth-server-allowlist` and
   e2e: {
     setupNodeEvents(on, config) {
       on('before:browser:launch', (browser, launchOptions) => {
-        // Kerberos auth is only relevant for Chromium-based browsers,
-        // which excludes Electron
         if (browser.family === 'chromium' && browser.name !== 'electron') {
           launchOptions.args.push('--auth-server-allowlist=*.example.com')
           launchOptions.args.push(
@@ -681,18 +679,12 @@ relevant Chromium auth flags, such as `--auth-server-allowlist` and
 :::
 
 Replace `*.example.com` with the domain(s) you want the browser to authenticate
-against. Some notes:
+against.
 
-- These flags only apply to **Chromium-based** browsers (Chrome, Chromium, Edge).
-  They have no effect in Electron or Firefox, so guard the code with a
-  `browser.family` / `browser.name` check as shown above.
-- The machine running Cypress must already have a valid Kerberos ticket (for
-  example, the user is logged into the domain, or a ticket has been obtained via
-  `kinit`). The browser flags only authorize Chrome to _use_ that ticket for the
-  listed origins. They do not obtain one for you.
-- On older versions of Chromium these flags were named
-  `--auth-server-whitelist` and `--auth-negotiate-delegate-whitelist`. Use the
-  `-allowlist` spelling on current versions.
+Note that the machine running Cypress must already have a valid Kerberos ticket
+(for example, the user is logged into the domain, or a ticket has been obtained
+via `kinit`). The browser flags only authorize Chrome to _use_ that ticket for
+the listed origins. They do not obtain one for you.
 
 See the [Browser Launch API](/api/node-events/browser-launch-api) for more on
 modifying browser launch arguments.
