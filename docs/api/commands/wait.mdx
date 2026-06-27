@@ -121,8 +121,8 @@ Pass in an options object to change the default behavior of `cy.wait()`.
 :::info
 
 `response.body` is only parsed into an `object` when the response includes a
-`Content-Type: application/json` header. Responses that omit this header — such
-as a `304 Not Modified` or `301` redirect — yield `response.body` as a `string`.
+`Content-Type: application/json` header. Responses that omit this header, such
+as a `304 Not Modified` or `301` redirect, yield `response.body` as a `string`.
 See
 [the note about `body`](/api/commands/intercept#Response-object-properties) in
 the `cy.intercept()` documentation for details and an example.
