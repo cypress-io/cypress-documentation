@@ -432,6 +432,78 @@ In the second `.then()` block, `cy.get('@favoriteColor')` runs
 `cy.wrap(favorites).its('color')` fresh each time, but `this.favoriteColor` was set when
 the alias was first stored, back when our favorite color was blue.
 
+### Combining results from multiple commands
+
+A common question is how to wait for several commands and then work with all of
+their results at once. The intuitive approach is to nest a `.then()` for each
+command, but this quickly creates a "pyramid" of callbacks that is hard to read:
+
+```js
+// 🚨 hard to read — a new level of nesting for every command
+cy.fixture('user.json').then((user) => {
+  cy.fixture('address.json').then((address) => {
+    cy.fixture('payment.json').then((payment) => {
+      cy.request('POST', '/api/checkout', { user, address, payment })
+    })
+  })
+})
+```
+
+Because Cypress runs commands serially, you don't need to nest at all. Alias each
+result with [`.as()`](/api/commands/as) and then read them together inside a
+single `.then(function () {})` callback. By the time the callback runs, every
+preceding alias has resolved:
+
+```js
+// ✅ flat and readable — each command aliases its result
+cy.fixture('user.json').as('user')
+cy.fixture('address.json').as('address')
+cy.fixture('payment.json').as('payment')
+
+cy.then(function () {
+  // all three aliases are now available together
+  cy.request('POST', '/api/checkout', {
+    user: this.user,
+    address: this.address,
+    payment: this.payment,
+  })
+})
+```
+
+:::caution
+
+<strong>Arrow Functions</strong>
+
+Remember that accessing aliases with `this.*` requires the regular
+`function () {}` syntax. Accessing aliases as properties with `this.*` will not
+work if you use
+[arrow functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions).
+
+:::
+
+If you prefer to avoid `this`, you can read each alias back with the `@` syntax
+inside the callback instead:
+
+```js
+cy.fixture('user.json').as('user')
+cy.fixture('address.json').as('address')
+cy.fixture('payment.json').as('payment')
+
+cy.then(() => {
+  cy.get('@user').then((user) => {
+    cy.get('@address').then((address) => {
+      cy.get('@payment').then((payment) => {
+        cy.request('POST', '/api/checkout', { user, address, payment })
+      })
+    })
+  })
+})
+```
+
+This works, but the alias-with-`this` pattern above is usually the cleanest way
+to keep multiple command results available at the same time without deep
+nesting.
+
 ### Elements
 
 Aliases have other special characteristics when being used with DOM elements.
