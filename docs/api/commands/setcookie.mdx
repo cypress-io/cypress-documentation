@@ -42,7 +42,7 @@ Pass in an options object to change the default behavior of `cy.setCookie()`.
 | Option     | Default                                                     | Description                                                                                                                                                                                                           |
 | ---------- | ----------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `log`      | `true`                                                      | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log)                                                                                                                                   |
-| `domain`   | Hostname of the current URL                                 | The domain the cookie is visible to. By default the resulting cookie is **not** host-only — it is matched for this host _and all of its subdomains_. To restrict the cookie to a single exact host, pass `hostOnly: true`. See [Cookie scope](#Cookie-scope-host-only-vs-domain-cookies). |
+| `domain`   | Hostname of the current URL                                 | The domain the cookie is visible to. By default the resulting cookie is **not** host-only; it is matched for this host _and all of its subdomains_. To restrict the cookie to a single exact host, pass `hostOnly: true`. See [Cookie scope](#Cookie-scope-host-only-vs-domain-cookies). |
 | `expiry`   | 20 years into the future                                    | When the cookie expires, specified in seconds since [Unix Epoch](https://en.wikipedia.org/wiki/Unix_time).                                                                                                            |
 | `hostOnly` | `false`                                                     | Whether the cookie is a host-only cookie. When `true`, the cookie is scoped to one exact host (the request's host must exactly match the cookie's domain) and is not attached to requests for sibling or parent hosts. See [Cookie scope](#Cookie-scope-host-only-vs-domain-cookies). |
 | `httpOnly` | `false`                                                     | Whether the cookie is an HTTP only cookie                                                                                                                                                                             |
@@ -93,7 +93,7 @@ cookie matches that host **and all of its subdomains**.
 This matters for [`cy.request()`](/api/commands/request#Cookies), which pulls
 matching cookies from the cookie jar by domain match before sending a request.
 Because the default cookie is a domain cookie, it can be attached to a
-`cy.request()` aimed at a _different_ host that domain-matches it — for example
+`cy.request()` aimed at a _different_ host that domain-matches it, for example
 a sibling host on the same registrable domain. This is working as designed, but
 can be surprising when you set a convenience cookie for your app and see it
 appear on an unrelated request.
@@ -101,7 +101,7 @@ appear on an unrelated request.
 ```javascript
 cy.visit('https://app.example.com')
 
-// Default: domain cookie — matches app.example.com AND its subdomains
+// Default: domain cookie, matches app.example.com AND its subdomains
 cy.setCookie('cookieconsent_status', 'dismiss')
 
 // Host-only: matches ONLY the exact host it was set on
