@@ -1,7 +1,7 @@
 ---
-title: 'Azure Active Directory Authentication: Cypress Guide'
-sidebar_label: Azure Active Directory Authentication
+title: 'Testing Azure Active Directory authentication in Cypress'
 description: Learn how to set up Cypress to test against an Azure Active Directory web app and authenticate with Azure Active Directory using `cy.origin()`.
+sidebar_label: Azure Active Directory Authentication
 ---
 
 <ProductHeading product="app" />
@@ -42,8 +42,14 @@ Once set up, you'll need to modify a few things in the `App/index.html` file:
   [`integrity`](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity)
   attributes inside `<script>` tags. This is to prevent any SRI attribute
   mismatches, which can happen since Cypress must rewrite any
-  [framebusting code](/app/references/configuration#modifyObstructiveCode).
-  This is recommended only when an application is under test.
+  [framebusting code](/app/references/configuration#modifyObstructiveCode). The
+  recommended way to do this is to enable the
+  [`removeSRIAttributes`](/app/references/configuration#removeSRIAttributes)
+  configuration option, which strips these attributes automatically without
+  editing the application's source. If you'd rather not change your Cypress
+  configuration, you can instead remove the `integrity` attributes from the
+  `<script>` tags manually. Either approach is recommended only when an
+  application is under test.
 - Uncomment the `authRedirect.js` `<script>` tag and comment out the
   `authPopup.js` `<script>` tag. Authentication
   [Pop ups](/app/references/trade-offs#Permanent-trade-offs) will not work
