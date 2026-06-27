@@ -99,15 +99,12 @@ can be surprising when you set a convenience cookie for your app and see it
 appear on an unrelated request.
 
 ```javascript
-// Default: a domain cookie for app.example.com.
-// Stored as .app.example.com, so it is also attached to requests for
-// api.app.example.com and any other subdomain of app.example.com.
 cy.visit('https://app.example.com')
+
+// Default: domain cookie — matches app.example.com AND its subdomains
 cy.setCookie('cookieconsent_status', 'dismiss')
 
-// hostOnly: true scopes the cookie to the exact host.
-// Only attached to requests for app.example.com — not its subdomains,
-// siblings, or parent hosts.
+// Host-only: matches ONLY the exact host it was set on
 cy.setCookie('cookieconsent_status', 'dismiss', { hostOnly: true })
 ```
 
