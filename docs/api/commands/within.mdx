@@ -213,7 +213,10 @@ cy.get('.ag-header-cell')
   .type('hello') // operates on `.ag-header-cell`, not the input
 
 // ✓ Query the inner element directly so it becomes the yielded subject.
-cy.get('.ag-header-cell').first().find('.ag-text-field-input').type('hello')
+cy.get('.ag-header-cell')
+  .first()
+  .find('.ag-text-field-input')
+  .type('hello')
 ```
 
 ## Rules
