@@ -641,6 +641,54 @@ Check out our
 You use the [`before:browser:launch`](/api/node-events/browser-launch-api) plugin
 event.
 
+### <Icon name="angle-right" /> How do I get Kerberos authentication working in Chrome?
+
+Kerberos (integrated/SPNEGO authentication) works in Chrome via the browser
+launch args. Chromium-based browsers do not negotiate Kerberos against an
+arbitrary server by default, so you have to tell the browser which origins are
+allowed to use integrated authentication.
+
+In your
+[`setupNodeEvents`](/app/plugins/plugins-guide#Using-a-plugin) function, listen
+for the
+[`before:browser:launch`](/api/node-events/browser-launch-api) event and add the
+relevant Chromium auth flags, such as `--auth-server-allowlist` and
+`--auth-negotiate-delegate-allowlist`:
+
+:::cypress-config-example
+
+```ts
+{
+  e2e: {
+    setupNodeEvents(on, config) {
+      on('before:browser:launch', (browser, launchOptions) => {
+        if (browser.family === 'chromium' && browser.name !== 'electron') {
+          launchOptions.args.push('--auth-server-allowlist=*.example.com')
+          launchOptions.args.push(
+            '--auth-negotiate-delegate-allowlist=*.example.com'
+          )
+        }
+
+        return launchOptions
+      })
+    },
+  },
+}
+```
+
+:::
+
+Replace `*.example.com` with the domain(s) you want the browser to authenticate
+against.
+
+Note that the machine running Cypress must already have a valid Kerberos ticket
+(for example, the user is logged into the domain, or a ticket has been obtained
+via `kinit`). The browser flags only authorize Chrome to _use_ that ticket for
+the listed origins. They do not obtain one for you.
+
+See the [Browser Launch API](/api/node-events/browser-launch-api) for more on
+modifying browser launch arguments.
+
 ### <Icon name="angle-right" /> Can I make cy.request() poll until a condition is met?
 
 Yes. You do it the
