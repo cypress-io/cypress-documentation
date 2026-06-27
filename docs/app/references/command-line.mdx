@@ -662,18 +662,18 @@ Cypress Cloud will display any tags sent with the appropriate run.
 />
 
 Tags are also useful for surfacing environment details that Cypress Cloud
-does not record on its own, such as the Node.js version or the browser a run
-used. By tagging runs with these values you can easily differentiate runs that
-were executed against different versions in the same matrix. For example, when
-running across multiple browsers and Node.js versions you can include both in
-the tags:
+does not record on its own, such as the Node.js version a run used. By tagging
+runs with these values you can easily differentiate runs that were executed
+against different versions in the same matrix. For example, when testing across
+multiple Node.js versions in CI you can include the version in the tags:
 
 ```shell
-cypress run --record --browser "${browser}" --tag "${browser},${nodeVersion}"
+cypress run --record --tag "node-${nodeVersion}"
 ```
 
-This makes runs that use the same spec set but a different browser or Node.js
-version easy to tell apart in Cypress Cloud.
+This makes runs that use the same spec set but a different Node.js version (or
+any other build/environment detail Cypress Cloud does not capture) easy to tell
+apart in Cypress Cloud.
 
 :::info
 
