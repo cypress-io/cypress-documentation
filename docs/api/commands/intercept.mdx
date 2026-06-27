@@ -1287,6 +1287,29 @@ modified:
 `Content-Type: application/json` and the body contains valid JSON, this will be
 an `object`. And if the body contains binary content, this will be a buffer.
 
+Cypress relies on the `Content-Type: application/json` header to decide whether
+to parse the body as JSON. If that header is absent, the body is yielded as a
+`string` even when it contains JSON. This commonly happens with responses that
+omit a `Content-Type` header — for example, a `304 Not Modified` response, which
+[per RFC 7232](https://datatracker.ietf.org/doc/html/rfc7232#section-4.1) is not
+expected to include representation metadata such as `Content-Type`, or a `301`
+redirect. When asserting on `response.body` for these responses, either assert
+against the string value or parse it yourself with `JSON.parse()`:
+
+```js
+cy.wait('@getResource').then(({ response }) => {
+  // when no `Content-Type: application/json` header is present,
+  // `response.body` is a string and must be parsed before
+  // asserting on its properties
+  const body =
+    typeof response.body === 'string'
+      ? JSON.parse(response.body)
+      : response.body
+
+  expect(body).to.have.property('id')
+})
+```
+
 `res` also has some optional properties which can be set to control
 Cypress-specific behavior:
 
