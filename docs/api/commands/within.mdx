@@ -215,6 +215,7 @@ cy.get('.ag-header-cell')
 // ✓ Query the inner element directly so it becomes the yielded subject.
 cy.get('.ag-header-cell')
   .first()
+  // the input is now the yielded subject, so `.type()` operates on it
   .find('.ag-text-field-input')
   .type('hello')
 ```
