@@ -446,14 +446,24 @@ and that element must be focusable. Targeting a child node causes `.type()` to
 fail because the child is not itself editable.
 
 A common fix is to [`.click()`](/api/commands/click) the editable element first
-to place the cursor, then chain `.type()`:
+to place the cursor, then [`.type()`](/api/commands/type) into it. Because
+`.click()` is an action command and not a
+[query](/app/core-concepts/retry-ability#Only-queries-are-retried), query the
+element again for `.type()` rather than chaining off `.click()`, so you act on a
+fresh, non-stale subject (the editor may re-render when it gains focus):
 
 ```javascript
 // ✗ Targets a child node, which is not contenteditable
 cy.get('.editor p').type('Hello, World')
 
-// ✓ Targets the element with the contenteditable attribute
+// ✗ Chains `.type()` off the `.click()` action command, acting on a
+// potentially stale subject
 cy.get('[contenteditable]').click().type('Hello, World')
+
+// ✓ Targets the element with the contenteditable attribute and requeries
+// it for `.type()`
+cy.get('[contenteditable]').click()
+cy.get('[contenteditable]').type('Hello, World')
 ```
 
 Rich text editors such as CKEditor, Quill, Draft.js, and ProseMirror often
