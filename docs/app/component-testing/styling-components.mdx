@@ -323,6 +323,40 @@ Or via an `@import` statement
 }
 ```
 
+When fonts are loaded from local files like this, the files must be served by
+your component testing dev server so the browser can fetch them. Where you place
+the files and how you reference them depends on your bundler:
+
+- **Vite**: Put the font files in your project's
+  [`public` directory](https://vite.dev/guide/assets#the-public-directory)
+  (`public/` by default) and reference them with root-relative paths, for
+  example `url('/fonts/fira/woff2/FiraSans-Regular.woff2')`. Cypress sets Vite's
+  `base` to match its
+  [`devServerPublicPathRoute`](/app/component-testing/component-framework-configuration#devServerPublicPathRoute),
+  and Vite rewrites these paths and serves the files accordingly.
+
+- **Webpack**: `webpack-dev-server` does not serve a static directory by
+  default. Either `import` the font from a module so the bundler emits it, or add
+  a [`static`](https://webpack.js.org/configuration/dev-server/#devserverstatic)
+  entry to the `devServer` section of your webpack config so the files are
+  served:
+
+  ```js
+  // webpack.config.js
+  const path = require('path')
+
+  module.exports = {
+    devServer: {
+      static: {
+        directory: path.join(__dirname, 'public'),
+      },
+    },
+  }
+  ```
+
+If your fonts are not loading, open the browser's network tab and confirm the
+request for the font file resolves rather than returning a 404.
+
 ### Icon Fonts: None of my icons are rendering
 
 ### Theme Providers: My components don't look right/compile because they can't access providers
