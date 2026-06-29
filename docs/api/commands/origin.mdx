@@ -638,18 +638,17 @@ it('also uses cy.origin() + custom command', () => {
 
 #### Page objects
 
-A common question is how to use [Page Object](https://martinfowler.com/bliki/PageObject.html)
-class methods inside `cy.origin()`. You cannot pass a class instance into the
-callback: closures from the outer scope are not available (see
-[Serialization](#Serialization)), and the
-[structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm)
-used for the `args` option cannot transfer functions or class methods, so a page
-object passed through `args` arrives stripped of its methods.
+A common question is how to use Page Object class methods inside `cy.origin()`.
+You cannot pass a class instance into the callback: the callback is not a
+closure, so it has no access to variables defined or imported outside it (see
+[Serialization](#Serialization)), and a class passed through the `args` option
+arrives without its methods.
 
 Instead, import the page object _inside_ the callback with `Cypress.require()`
 and instantiate it there:
 
-`cypress/support/LoginPage.js`:
+<Tabs>
+<TabItem value="cypress/support/LoginPage.js">
 
 ```js
 export class LoginPage {
@@ -663,7 +662,26 @@ export class LoginPage {
 }
 ```
 
-`cypress/e2e/spec.cy.js`:
+</TabItem>
+<TabItem value="cypress/support/LoginPage.ts">
+
+```ts
+export class LoginPage {
+  fillUsername(username: string) {
+    cy.get('[data-test-id="username"]').type(username)
+  }
+
+  fillPassword(password: string) {
+    cy.get('[data-test-id="password"]').type(password)
+  }
+}
+```
+
+</TabItem>
+</Tabs>
+
+<Tabs>
+<TabItem value="cypress/e2e/spec.cy.js">
 
 ```js
 it('logs in on a secondary origin', () => {
@@ -681,6 +699,29 @@ it('logs in on a secondary origin', () => {
   )
 })
 ```
+
+</TabItem>
+<TabItem value="cypress/e2e/spec.cy.ts">
+
+```ts
+it('logs in on a secondary origin', () => {
+  cy.origin(
+    'cypress.io',
+    { args: { username, password } },
+    ({ username, password }) => {
+      const { LoginPage } = Cypress.require('../support/LoginPage')
+      const loginPage = new LoginPage()
+
+      cy.visit('/login')
+      loginPage.fillUsername(username)
+      loginPage.fillPassword(password)
+    }
+  )
+})
+```
+
+</TabItem>
+</Tabs>
 
 Any data the methods need, such as the credentials above, is still passed in
 through the `args` option as serializable values.

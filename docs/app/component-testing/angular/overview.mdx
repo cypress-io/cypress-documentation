@@ -146,7 +146,7 @@ Cypress builds your component specs with the Angular build pipeline. When you do
 (including `assets`, `styles`, and `stylePreprocessorOptions`) from the default
 application project in your `angular.json`. When you **do** provide your own
 [`projectConfig`](#Options-API), it _replaces_ the configuration Cypress detects
-from `angular.json` — so any build options your styles rely on must be repeated
+from `angular.json`, so any build options your styles rely on must be repeated
 in your `buildOptions`. The two issues below are usually a result of this.
 
 ### Sass `@use` / `@import` can't find a stylesheet
@@ -194,12 +194,12 @@ resolve the imports:
 
 ### Tailwind CSS v4 utility classes aren't applied
 
-With [Tailwind CSS v4](https://tailwindcss.com/blog/tailwindcss-v4), you may find
-that your own styles load correctly but Tailwind utility classes such as
-`bg-red-500` have no effect — the class is present on the element in the DevTools
-inspector, but no rule is generated for it. This is because Tailwind v4 generates
-utilities through its own build plugin, which is not part of the Angular build
-pipeline Cypress uses to compile your `styles`.
+With Tailwind CSS v4, you may find that your own styles load correctly but
+Tailwind utility classes such as `bg-red-500` have no effect. The class is
+present on the element in the DevTools inspector, but no rule is generated for
+it. This is because Tailwind v4 generates utilities through its own build
+plugin, which is not part of the Angular build pipeline Cypress uses to compile
+your `styles`.
 
 A reliable workaround is to precompile your Tailwind stylesheet into a plain CSS
 file with the [Tailwind CLI](https://tailwindcss.com/docs/installation/tailwind-cli)
@@ -207,9 +207,39 @@ and load that compiled file through `buildOptions.styles`.
 
 Install the CLI:
 
+<Tabs>
+  <TabItem value="npm">
+
 ```shell
 npm install -D @tailwindcss/cli
 ```
+
+  </TabItem>
+
+  <TabItem value="yarn">
+
+```shell
+yarn add -D @tailwindcss/cli
+```
+
+  </TabItem>
+
+  <TabItem value="pnpm">
+
+```shell
+pnpm add -D @tailwindcss/cli
+```
+
+  </TabItem>
+
+  <TabItem value="bun">
+
+```shell
+bun add -d @tailwindcss/cli
+```
+
+  </TabItem>
+</Tabs>
 
 Compile your stylesheet before opening or running Cypress, then point
 `buildOptions.styles` at the compiled output:
