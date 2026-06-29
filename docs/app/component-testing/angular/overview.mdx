@@ -156,7 +156,7 @@ If your Sass resolves imports through paths configured in `angular.json` under
 testing like:
 
 ```
-Can't find stylesheet to import.
+❌ Can't find stylesheet to import.
 @use 'mixins'
 ```
 
@@ -164,20 +164,33 @@ This happens when a custom `projectConfig` omits those include paths. Add the
 same `stylePreprocessorOptions` to your `buildOptions` so the Sass compiler can
 resolve the imports:
 
-```ts title=cypress.config.ts
-options: {
-  projectConfig: {
-    root: '',
-    sourceRoot: 'src',
-    buildOptions: {
-      styles: ['src/styles.scss'],
-      stylePreprocessorOptions: {
-        includePaths: ['src/styles'],
+:::cypress-config-example
+
+```ts
+{
+  component: {
+    devServer: {
+      framework: 'angular',
+      bundler: 'webpack',
+      options: {
+        projectConfig: {
+          root: '',
+          sourceRoot: 'src',
+          buildOptions: {
+            styles: ['src/styles.scss'],
+            stylePreprocessorOptions: {
+              includePaths: ['src/styles'],
+            },
+          },
+        },
       },
     },
+    specPattern: '**/*.cy.ts',
   },
-},
+}
 ```
+
+:::
 
 ### Tailwind CSS v4 utility classes aren't applied
 
@@ -211,15 +224,28 @@ Compile your stylesheet before opening or running Cypress, then point
 }
 ```
 
-```ts title=cypress.config.ts
-options: {
-  projectConfig: {
-    buildOptions: {
-      styles: ['cypress/support/compiled-styles.css'],
+:::cypress-config-example
+
+```ts
+{
+  component: {
+    devServer: {
+      framework: 'angular',
+      bundler: 'webpack',
+      options: {
+        projectConfig: {
+          buildOptions: {
+            styles: ['cypress/support/compiled-styles.css'],
+          },
+        },
+      },
     },
+    specPattern: '**/*.cy.ts',
   },
-},
+}
 ```
+
+:::
 
 ## See also
 
