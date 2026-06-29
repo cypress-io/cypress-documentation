@@ -410,7 +410,10 @@ const devServerPublicPathRoute = CypressInstance.config(
   'devServerPublicPathRoute'
 )
 
-let importPromise = Promise.resolve()
+// `onSpecWindow` expects an array of functions that each return a dynamic
+// `import()`. Cypress invokes them in order, so the support file (if any)
+// must be added before the spec.
+const importsToLoad = []
 
 // If you do not bundle your support file along with the tests,
 // you need to add a separate import statement for the support file.
@@ -420,19 +423,15 @@ if (supportFilePath) {
     CypressInstance.config('projectRoot'),
     ''
   )
-  importPromise = importPromise.then(
-    () => import(`${devServerPublicPathRoute}${relative}`)
-  )
+  importsToLoad.push(() => import(`${devServerPublicPathRoute}${relative}`))
 }
 
 // load the spec - you can extend the load function to also load css
 const { relative } = CypressInstance.spec
-importPromise = importPromise.then(
-  () => import(`${devServerPublicPathRoute}/${relative}`)
-)
+importsToLoad.push(() => import(`${devServerPublicPathRoute}/${relative}`))
 
 // trigger loading the imports
-CypressInstance.onSpecWindow(window, importPromise)
+CypressInstance.onSpecWindow(window, importsToLoad)
 
 // then start the test process
 CypressInstance.action('app:window:before:load', window)
