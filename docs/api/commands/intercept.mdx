@@ -279,6 +279,43 @@ cy.intercept(
 cy.intercept({ url: '/temporary-error', times: 1 }, { forceNetworkError: true })
 ```
 
+### Matching array query parameters
+
+The `query` matcher compares each query parameter against a single string value,
+so it cannot match repeated, array-style parameters such as
+`?ids[]=1&ids[]=2` (commonly produced by libraries like axios). The following
+will _not_ match that request:
+
+```js
+// 🚫 does not work - the array parameter is ignored
+cy.intercept({
+  pathname: '/items',
+  query: {
+    ids: '1',
+  },
+})
+```
+
+Instead, match the request with a `RegExp` `url`, or use a
+[`routeHandler`](#routeHandler-Function) function and read the repeated values
+with [`URLSearchParams.getAll()`](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams/getAll):
+
+```js
+// match any request to `/items` that includes an `ids` parameter
+cy.intercept({ method: 'GET', url: /\/items\?.*ids/ }).as('items')
+```
+
+```js
+// inspect every `ids` value and only stub when `1` is present
+cy.intercept('/items*', (req) => {
+  const ids = new URL(req.url).searchParams.getAll('ids[]')
+
+  if (ids.includes('1')) {
+    req.reply({ fixture: 'items.json' })
+  }
+}).as('items')
+```
+
 ### Pattern Matching
 
 ```js
