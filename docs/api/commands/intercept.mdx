@@ -283,8 +283,7 @@ cy.intercept({ url: '/temporary-error', times: 1 }, { forceNetworkError: true })
 
 The `query` matcher compares each query parameter against a single string value,
 so it cannot match repeated, array-style parameters such as
-`?ids[]=1&ids[]=2` (commonly produced by libraries like axios). The following
-will _not_ match that request:
+`?ids[]=1&ids[]=2`. The following will _not_ match that request:
 
 ```js
 // 🚫 does not work - the array parameter is ignored
