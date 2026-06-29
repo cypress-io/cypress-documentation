@@ -645,7 +645,10 @@ closure, so it has no access to variables defined or imported outside it (see
 arrives without its methods.
 
 Instead, import the page object _inside_ the callback with `Cypress.require()`
-and instantiate it there:
+and instantiate it there. As with any use of `Cypress.require()` in a callback,
+this requires enabling the
+[`experimentalOriginDependencies`](/app/references/experiments) option in your
+Cypress configuration (see [Dependencies / Sharing Code](#Dependencies--Sharing-Code)).
 
 <Tabs>
 <TabItem value="cypress/support/LoginPage.js">
