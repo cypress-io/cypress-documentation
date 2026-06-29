@@ -458,6 +458,28 @@ it('can create a blog post', () => {
 })
 ```
 
+:::caution
+
+When a session is cached across specs, every spec that uses it must call
+`cy.session()` with the **same** `id`, `setup`, `validate`, and
+`cacheAcrossSpecs` value. If any of these differ between specs, Cypress throws an
+error rather than reusing the session. For this reason, define the session once
+in a shared custom command or helper function (as in the example above) and call
+that everywhere, rather than copying the `cy.session()` call into each spec.
+
+:::
+
+:::info
+
+The cross-spec cache lives in memory for a single `cypress run` on a single
+machine. It is not written to disk and is not shared between machines, so:
+
+- A new `cypress run` starts with an empty cache and runs `setup` again.
+- When specs are split across machines in parallel CI, `setup` runs at least
+  once per machine.
+
+:::
+
 ### Multiple login commands
 
 A more complex app may require multiple login commands, which may require
