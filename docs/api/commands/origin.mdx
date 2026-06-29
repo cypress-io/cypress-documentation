@@ -636,6 +636,72 @@ it('also uses cy.origin() + custom command', () => {
 })
 ```
 
+#### Page objects
+
+A common question is how to use [Page Object](https://martinfowler.com/bliki/PageObject.html)
+class methods inside `cy.origin()`. You cannot pass a class instance into the
+callback: closures from the outer scope are not available (see
+[Serialization](#Serialization)), and the
+[structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm)
+used for the `args` option cannot transfer functions or class methods, so a page
+object passed through `args` arrives stripped of its methods.
+
+Instead, import the page object _inside_ the callback with `Cypress.require()`
+and instantiate it there:
+
+`cypress/support/LoginPage.js`:
+
+```js
+export class LoginPage {
+  fillUsername(username) {
+    cy.get('[data-test-id="username"]').type(username)
+  }
+
+  fillPassword(password) {
+    cy.get('[data-test-id="password"]').type(password)
+  }
+}
+```
+
+`cypress/e2e/spec.cy.js`:
+
+```js
+it('logs in on a secondary origin', () => {
+  cy.origin(
+    'cypress.io',
+    { args: { username, password } },
+    ({ username, password }) => {
+      const { LoginPage } = Cypress.require('../support/LoginPage')
+      const loginPage = new LoginPage()
+
+      cy.visit('/login')
+      loginPage.fillUsername(username)
+      loginPage.fillPassword(password)
+    }
+  )
+})
+```
+
+Any data the methods need, such as the credentials above, is still passed in
+through the `args` option as serializable values.
+
+If you would rather not import the class, pass only the serializable data the
+page object holds, such as a map of selectors, through `args` and call the
+Cypress commands directly inside the callback:
+
+```js
+import selectors from '../support/selectors.json'
+
+cy.origin(
+  'cypress.io',
+  { args: { selectors, username } },
+  ({ selectors, username }) => {
+    cy.visit('/login')
+    cy.get(selectors.username).type(username)
+  }
+)
+```
+
 ### Callback restrictions
 
 Because of the way in which the callback is transmitted and executed, there are
