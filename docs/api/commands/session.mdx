@@ -469,16 +469,12 @@ that everywhere, rather than copying the `cy.session()` call into each spec.
 
 :::
 
-:::info
-
 The cross-spec cache lives in memory for a single `cypress run` on a single
 machine. It is not written to disk and is not shared between machines, so:
 
 - A new `cypress run` starts with an empty cache and runs `setup` again.
 - When specs are split across machines in parallel CI, `setup` runs at least
   once per machine.
-
-:::
 
 ### Multiple login commands
 
