@@ -86,6 +86,39 @@ Pass in an options object to change the default behavior of `.not()`.
 cy.get('ul>li').not('.active').should('have.length', 4) // true
 ```
 
+### Contains
+
+#### Yield the elements that do not contain some text
+
+There is no built-in negation for [`cy.contains()`](/api/commands/contains). To
+select the elements that do _not_ contain a piece of text, select the full set
+of elements and then remove the matching ones with the
+[jQuery :contains](https://api.jquery.com/contains-selector/) selector. The
+match is a case-sensitive substring match.
+
+```html
+<ul>
+  <li>Test: Name</li>
+  <li>Test: Name (1)</li>
+  <li>Test: Name (2)</li>
+  <li>Test: Name (3)</li>
+</ul>
+```
+
+```javascript
+// yields only <li>Test: Name</li>, the item without a numeric suffix
+cy.get('li').not(':contains("(")').should('have.length', 1)
+```
+
+The same approach works with [`.filter()`](/api/commands/filter) and the
+[:not()](https://api.jquery.com/not-selector/) selector when you would rather
+keep a positive filter:
+
+```javascript
+// yields the rows that are not disabled
+cy.get('tr').filter(':not(.disabled)')
+```
+
 ## Rules
 
 <HeaderRequirements />
@@ -131,4 +164,5 @@ following:
 
 ## See also
 
+- [`cy.contains()`](/api/commands/contains)
 - [`.filter()`](/api/commands/filter)
