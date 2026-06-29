@@ -227,28 +227,7 @@ cy.get('div').contains('capital sentence', { matchCase: false }) // pass
 
 ### Inverting `cy.contains()`
 
-`cy.contains()` has no built-in negation, so there is no way to ask it directly
-for the elements that do _not_ contain a piece of text. Instead, select the full
-set of elements and remove the matching ones with
-[`.not()`](/api/commands/not) and the
-[jQuery :contains](https://api.jquery.com/contains-selector/) selector.
-
-```html
-<ul>
-  <li>Test: Name</li>
-  <li>Test: Name (1)</li>
-  <li>Test: Name (2)</li>
-  <li>Test: Name (3)</li>
-</ul>
-```
-
-```javascript
-// yields only <li>Test: Name</li>, the item without a numeric suffix
-cy.get('li').not(':contains("(")')
-```
-
-See [`.not()`](/api/commands/not) and [`.filter()`](/api/commands/filter) for
-more inverted-selection examples.
+<InvertedContainsSelection />
 
 ### Scopes
 
