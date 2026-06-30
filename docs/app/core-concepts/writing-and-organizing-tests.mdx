@@ -843,7 +843,7 @@ describe('Login scenarios', () => {
 Each `it()` title comes straight from the data, so the row's `title` is what
 shows up in your test output.
 
-For formats that need parsing in Node.js first — such as **CSV or Excel** — read
+For formats that need parsing in Node.js first, such as **CSV or Excel**, read
 and parse the file inside
 [`setupNodeEvents`](/app/references/configuration#setupNodeEvents) and hand the
 parsed rows to the browser with the `expose` configuration, then read them in
@@ -879,7 +879,7 @@ import { parse } from 'csv-parse/sync'
 
 :::
 
-```javascript
+```javascript title="cypress/e2e/login.cy.js"
 describe('Login scenarios', () => {
   Cypress.expose('scenarios').forEach((scenario) => {
     it(scenario.title, () => {
@@ -888,15 +888,6 @@ describe('Login scenarios', () => {
   })
 })
 ```
-
-:::info
-
-Generating tests from external data works because the file is read in Node.js
-and the rows are available synchronously when the spec loads. Reaching for
-`cy.fixture()` or `cy.task()` to build the `it()` blocks won't work, since those
-run asynchronously inside a test, after the suite has already been defined.
-
-:::
 
 ## Running and watching tests
 
