@@ -121,7 +121,7 @@ globally in [configuration](/app/references/configuration).
 | `log`                      | `true`                                                      | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log)                                                                                                                      |
 | `url`                      | `null`                                                      | The URL to make the request to                                                                                                                                                                           |
 | `method`                   | `GET`                                                       | The HTTP method to use in the request                                                                                                                                                                    |
-| `auth`                     | `null`                                                      | Adds Authorization headers for [HTTP Basic Authentication](#HTTP-Basic-Authentication). [Accepts these options.](https://github.com/cypress-io/request#http-authentication)                               |
+| `auth`                     | `null`                                                      | Adds Authorization headers for [HTTP Basic Authentication](#HTTP-Basic-Authentication).                                                                                                                  |
 | `body`                     | `null`                                                      | Body to send along with the request                                                                                                                                                                      |
 | `failOnStatusCode`         | `true`                                                      | Whether to fail on response codes other than `2xx` and `3xx`                                                                                                                                             |
 | `followRedirect`           | `true`                                                      | Whether to automatically follow redirects                                                                                                                                                                |
@@ -254,21 +254,7 @@ cy.request({
 ```
 
 The `auth` option also accepts `user`/`pass` as aliases for
-`username`/`password`, along with the other
-[authentication options](https://github.com/cypress-io/request#http-authentication)
-supported by the underlying request library (such as `bearer`).
-
-:::caution
-
-The `auth` option only sets an `Authorization` header — it does **not** change
-the request's `Content-Type`. If the server responds with `415 Unsupported
-Media Type`, the body is being sent with a content type the endpoint doesn't
-accept. By default an object `body` is sent as `application/json`; set
-[`form: true`](#HTML-form-submissions-using-form-option) for
-`application/x-www-form-urlencoded`, or set an explicit `Content-Type` via the
-`headers` option to match what the server expects.
-
-:::
+`username`/`password`.
 
 #### Download a PDF file
 
