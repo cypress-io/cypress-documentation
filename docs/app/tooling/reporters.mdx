@@ -150,6 +150,16 @@ npx cypress run --reporter junit \
   --reporter-options "mochaFile=results/my-test-output.xml,toConsole=true"
 ```
 
+:::caution
+
+When running multiple spec files, a static `mochaFile` name like
+`results/my-test-output.xml` is **overwritten by each spec**, so the final
+report only contains the results from the last spec that ran. Use the `[hash]`
+token to write one file per spec, then merge them. See
+[Merging reports across spec files](#Merging-reports-across-spec-files) below.
+
+:::
+
 ## Merging reports across spec files
 
 Each spec file is processed completely separately during each `cypress run`
@@ -158,9 +168,11 @@ unique reports for each specfile, use the `[hash]` in the `mochaFile` filename.
 
 The following configuration will create separate XML files in the `results`
 folder. You can then merge the reported output in a separate step using a 3rd
-party tool. For example, for the
-[Mochawesome](https://github.com/adamgruber/mochawesome) reporter, you can use
-the [mochawesome-merge](https://github.com/antontelesh/mochawesome-merge) tool.
+party tool. For JUnit XML reports, you can use
+[junit-report-merger](https://www.npmjs.com/package/junit-report-merger), and
+for the [Mochawesome](https://github.com/adamgruber/mochawesome) reporter, you
+can use the
+[mochawesome-merge](https://github.com/antontelesh/mochawesome-merge) tool.
 
 #### Cypress configuration
 

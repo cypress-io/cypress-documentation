@@ -225,6 +225,10 @@ cy.get('div').contains('capital sentence', { matchCase: false }) // pass
 
 ## Notes
 
+### Inverting `cy.contains()`
+
+<InvertedContainsSelection />
+
 ### Scopes
 
 `.contains()` acts differently whether it's starting a series of commands or
@@ -508,6 +512,8 @@ outputs the following:
 ## See also
 
 - [`cy.get()`](/api/commands/get)
+- [`.filter()`](/api/commands/filter)
 - [`.invoke()`](/api/commands/invoke)
+- [`.not()`](/api/commands/not)
 - [`.within()`](/api/commands/within)
 - [Retry-ability](/app/core-concepts/retry-ability)
