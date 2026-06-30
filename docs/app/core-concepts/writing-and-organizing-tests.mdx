@@ -810,6 +810,94 @@ The code above will produce a suite with 4 tests:
   > triggers event: 'mouseleave'
 ```
 
+#### Driving tests from external data
+
+A common use of dynamic tests is **data-driven testing**: keeping your test
+cases (and often their titles) in an external data source, then generating one
+test per row. The important constraint is that the `describe()`/`it()` structure
+is built **synchronously when the spec loads**. Cypress commands like
+[`cy.fixture()`](/api/commands/fixture) and [`cy.task()`](/api/commands/task)
+run _inside_ a test and resolve asynchronously, so they can supply data
+**within** a test but cannot be used to create the `it()` blocks themselves. The
+data has to be available at load time.
+
+For **JSON** data, a static `import`/`require` is all you need, since the bundler
+inlines it at build time:
+
+```javascript
+import scenarios from '../fixtures/scenarios.json'
+
+describe('Login scenarios', () => {
+  scenarios.forEach((scenario) => {
+    it(scenario.title, () => {
+      cy.visit('/login')
+      cy.get('[data-testid="username"]').type(scenario.username)
+      cy.get('[data-testid="password"]').type(scenario.password)
+      cy.get('[data-testid="submit"]').click()
+      cy.contains(scenario.expectedMessage).should('be.visible')
+    })
+  })
+})
+```
+
+Each `it()` title comes straight from the data, so the row's `title` is what
+shows up in your test output.
+
+For formats that need parsing in Node.js first — such as **CSV or Excel** — read
+and parse the file inside
+[`setupNodeEvents`](/app/references/configuration#setupNodeEvents) and hand the
+parsed rows to the browser with the `expose` configuration, then read them in
+your spec with [`Cypress.expose()`](/api/cypress-api/expose). Use `expose` only
+for non-sensitive data, since exposed values are accessible in the browser
+context.
+
+:::cypress-config-example
+
+```ts
+// parse the file with any Node.js library, e.g. `xlsx` for Excel or
+// `csv-parse` for CSV, then expose the rows to the browser
+import { readFileSync } from 'fs'
+import { parse } from 'csv-parse/sync'
+```
+
+```ts
+{
+  e2e: {
+    setupNodeEvents(on, config) {
+      const csv = readFileSync('cypress/fixtures/scenarios.csv', 'utf8')
+
+      config.expose = {
+        ...config.expose,
+        scenarios: parse(csv, { columns: true }),
+      }
+
+      return config
+    },
+  },
+}
+```
+
+:::
+
+```javascript
+describe('Login scenarios', () => {
+  Cypress.expose('scenarios').forEach((scenario) => {
+    it(scenario.title, () => {
+      // scenario.<column> holds the data for this row
+    })
+  })
+})
+```
+
+:::info
+
+Generating tests from external data works because the file is read in Node.js
+and the rows are available synchronously when the spec loads. Reaching for
+`cy.fixture()` or `cy.task()` to build the `it()` blocks won't work, since those
+run asynchronously inside a test, after the suite has already been defined.
+
+:::
+
 ## Running and watching tests
 
 You can run a test by clicking on the spec filename. For example the
