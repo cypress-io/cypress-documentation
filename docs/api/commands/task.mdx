@@ -216,6 +216,55 @@ on('task', {
 
 :::
 
+### Run Node code before each test
+
+There is no `setupNodeEvents` event that fires before each individual test — the
+most granular lifecycle events available in Node are
+[`before:spec`](/api/node-events/before-spec-api) and
+[`after:spec`](/api/node-events/after-spec-api), which run once per spec file.
+Individual tests only exist inside the browser, so to run Node code before
+_every_ test, register a global `beforeEach` hook in your
+[support file](/app/core-concepts/writing-and-organizing-tests#Support-file) that
+calls `cy.task()`. Because it lives in the support file, it applies to every test
+in every spec without duplicating code.
+
+A common use case is tagging your application's server logs with the name of the
+test that is currently running, so that when a test fails you can correlate it
+with the exact backend requests it made.
+
+```javascript
+// cypress/support/e2e.js
+beforeEach(function () {
+  cy.task('logTestStart', {
+    title: this.currentTest.fullTitle(),
+    spec: Cypress.spec.relative,
+  })
+})
+```
+
+:::cypress-config-plugin-example
+
+```ts
+import fs from 'fs'
+```
+
+```ts
+on('task', {
+  logTestStart({ title, spec }) {
+    // write a marker to a log that your app server also writes to,
+    // so server-side logs can be tied back to the test that triggered them
+    fs.appendFileSync(
+      'logs/test-run.log',
+      `[${spec}] ▶ starting: ${title}\n`
+    )
+
+    return null
+  },
+})
+```
+
+:::
+
 ### Return a Promise from an asynchronous task
 
 ```javascript
