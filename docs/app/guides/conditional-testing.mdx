@@ -446,7 +446,7 @@ cy.get('body').then(($body) => {
 ## Ending a test early
 
 A related question is how to **stop a test partway through** once some condition
-is met - for example, after iterating over a set of links - while keeping the
+is met (for example, after iterating over a set of links) while keeping the
 steps that already ran visible in the Command Log.
 
 Cypress does not have an API to abort a single test midway and have it count as
@@ -454,8 +454,8 @@ Cypress does not have an API to abort a single test midway and have it count as
 states: **passed**, **failed**, or **pending** (skipped). There is no "passed,
 but stopped early" status.
 
-The reliable way to "stop here" is the same idea as everywhere else on this page:
-don't try to abort a queue that is already running - instead, conditionally
+The reliable way to "stop here" is the same idea as everywhere else on this page.
+Rather than abort a queue that is already running, conditionally
 **avoid enqueuing** the remaining commands. Make the decision inside a
 [.then()](/api/commands/then) so it happens at the right point in the command
 queue:
@@ -490,7 +490,7 @@ are only added from within the conditional.
 
 :::
 
-If you instead want the early exit to be treated as a **failure** - a true abort -
+If you instead want the early exit to be treated as a **failure** (a true abort),
 throw an error. The steps already in the Command Log remain visible, and Cypress
 skips the remaining commands, just like any other failed test:
 
