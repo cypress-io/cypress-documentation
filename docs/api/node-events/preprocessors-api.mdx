@@ -60,6 +60,72 @@ Editing the options allows you to do things like:
 - Modify options for TypeScript compilation
 - Add support for CoffeeScript `2.x.x`
 
+## Resolving import path aliases
+
+If your spec or support files import modules through path aliases (for example
+`import { user } from '@/fixtures/user'`), the preprocessor that bundles those
+files must know how to resolve the alias, otherwise the spec fails to compile
+with a "module not found" error.
+
+The default webpack preprocessor does **not** read aliases from your
+`package.json` `_moduleAliases` field, and it does **not** automatically apply
+the `compilerOptions.paths` from your `tsconfig.json` (those are a TypeScript
+type-checking feature, not a bundler feature). You need to tell the bundler about
+the aliases explicitly.
+
+The most direct option is to add a `resolve.alias` entry to the webpack config
+you pass to the preprocessor:
+
+:::cypress-config-plugin-example
+
+```javascript
+const webpackPreprocessor = require('@cypress/webpack-preprocessor')
+const path = require('path')
+
+const options = webpackPreprocessor.defaultOptions
+options.webpackOptions.resolve = {
+  ...options.webpackOptions.resolve,
+  alias: {
+    '@': path.resolve(__dirname, '../../src'),
+  },
+}
+
+on('file:preprocessor', webpackPreprocessor(options))
+```
+
+:::
+
+To reuse the aliases already declared under `compilerOptions.paths` in your
+`tsconfig.json` instead of restating them, add
+[`tsconfig-paths-webpack-plugin`](https://www.npmjs.com/package/tsconfig-paths-webpack-plugin)
+to `resolve.plugins`:
+
+:::cypress-config-plugin-example
+
+```javascript
+const webpackPreprocessor = require('@cypress/webpack-preprocessor')
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin')
+
+const options = webpackPreprocessor.defaultOptions
+options.webpackOptions.resolve = {
+  ...options.webpackOptions.resolve,
+  plugins: [new TsconfigPathsPlugin()],
+}
+
+on('file:preprocessor', webpackPreprocessor(options))
+```
+
+:::
+
+:::info
+
+This page covers aliases in **end-to-end** spec and support files, which are
+bundled by the preprocessor. For **component testing**, aliases are resolved by
+the dev server's Vite or Webpack config instead. See
+[Resolving import path aliases](/app/component-testing/component-framework-configuration#Resolving-import-path-aliases).
+
+:::
+
 ## Excluding files from being watched
 
 Certain tools generate files as a side effect of a build (for example,
