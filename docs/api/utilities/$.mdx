@@ -58,6 +58,36 @@ cy.wrap($li)
 
 ## Notes
 
+### Cypress.$ runs immediately and does not wait for `cy` commands
+
+`Cypress.$` queries the application under test's DOM _synchronously_, at the
+moment the line of code runs. Unlike [`cy.get()`](/api/commands/get), it is not
+a queued command and does not wait for previous `cy` commands to finish.
+
+```javascript
+cy.visit('/page-with-list')
+// runs immediately, before cy.visit() has navigated, so it queries the
+// previous (blank) page and returns an empty jQuery object: [jQuery{0}]
+const $items = Cypress.$('li')
+```
+
+To query the DOM _after_ prior commands have run, move the query into a
+[`.then()`](/api/commands/then) callback, which Cypress defers until the
+preceding commands finish, or query off an element yielded by `cy`:
+
+```javascript
+cy.visit('/page-with-list')
+cy.get('body').then(($body) => {
+  // runs after cy.visit() has finished and the page has rendered
+  const $items = $body.find('li')
+})
+```
+
+If you reached for `Cypress.$` to conditionally do something based on whether an
+element exists, read the
+[Conditional Testing](/app/guides/conditional-testing) guide first. The DOM
+must be in a known, stable state for this to be reliable.
+
 ### Cypress.$ vs. cy.$$
 
 You can also query DOM elements with `cy.$$`. But `Cypress.$` and `cy.$$` are
