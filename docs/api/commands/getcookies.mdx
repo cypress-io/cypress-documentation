@@ -74,6 +74,28 @@ cy.getCookies()
   })
 ```
 
+#### Build a `Cookie` header for `cy.request()`
+
+You can combine the cookies for the current domain into a single `Cookie`
+header string and pass it to [`cy.request()`](/api/commands/request).
+
+```javascript
+cy.getCookies().then((cookies) => {
+  const cookieHeader = cookies.map((c) => `${c.name}=${c.value}`).join('; ')
+
+  cy.request({
+    url: '/api/protected',
+    headers: {
+      Cookie: cookieHeader,
+    },
+  })
+})
+```
+
+Note that `cy.request()` automatically sends the browser's cookies for the
+request URL, so setting the `Cookie` header manually is only necessary for
+custom scenarios.
+
 ## Rules
 
 <HeaderRequirements />
