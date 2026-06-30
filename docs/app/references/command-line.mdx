@@ -553,6 +553,18 @@ Now you can omit the `--key` flag.
 cypress run --record
 ```
 
+:::caution
+
+`CYPRESS_RECORD_KEY` must be set as an actual operating system environment
+variable (as shown above with `export`) — Cypress reads it directly from your
+shell or CI environment. Adding it to your
+[`cypress.env.json`](/app/guides/environment-variables#2-cypressenvjson)
+file or the `env` block of your Cypress configuration does **not** enable
+recording, since those only populate test environment variables. If you don't
+want to set an environment variable, pass the key inline with `--key` instead.
+
+:::
+
 For more information on recording runs, see the
 [Cypress Cloud setup instructions](/cloud/get-started/setup#Setup). For an
 in-depth explanation of how Cypress uses your record key and `projectId` to save
