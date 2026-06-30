@@ -623,16 +623,7 @@ Cypress app or in [Cypress Cloud](https://on.cypress.io/cloud).
 You will want to then
 [add the key to your config file or as an environment variable](/app/continuous-integration/overview#Record-tests).
 
-:::caution
-
-`CYPRESS_RECORD_KEY` must be set as an actual operating system environment
-variable (for example via `export CYPRESS_RECORD_KEY=...` or your CI provider's
-secrets). It is **not** read from `cypress.env.json` or the `env` block of your
-Cypress configuration — those only populate test environment variables. If you
-placed your record key there, move it to an OS-level environment variable or
-pass it inline with [`--key`](/app/references/command-line#cypress-run-record-key-lt-record-key-gt).
-
-:::
+<RecordKeyEnvVar />
 
 ### <Icon name="exclamation-triangle" color="red" /> The `cypress ci` command has been deprecated
 
