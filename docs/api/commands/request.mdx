@@ -121,7 +121,7 @@ globally in [configuration](/app/references/configuration).
 | `log`                      | `true`                                                      | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log)                                                                                                                      |
 | `url`                      | `null`                                                      | The URL to make the request to                                                                                                                                                                           |
 | `method`                   | `GET`                                                       | The HTTP method to use in the request                                                                                                                                                                    |
-| `auth`                     | `null`                                                      | Adds Authorization headers. [Accepts these options.](https://github.com/request/request#http-authentication)                                                                                             |
+| `auth`                     | `null`                                                      | Adds Authorization headers for [HTTP Basic Authentication](#HTTP-Basic-Authentication).                                                                                                                  |
 | `body`                     | `null`                                                      | Body to send along with the request                                                                                                                                                                      |
 | `failOnStatusCode`         | `true`                                                      | Whether to fail on response codes other than `2xx` and `3xx`                                                                                                                                             |
 | `followRedirect`           | `true`                                                      | Whether to automatically follow redirects                                                                                                                                                                |
@@ -231,6 +231,30 @@ cy.request({
   expect(resp.redirectedToUrl).to.eq('http://localhost:8082/unauthorized')
 })
 ```
+
+#### HTTP Basic Authentication
+
+To send a request to an endpoint protected by
+[HTTP Basic Authentication](https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication),
+provide the credentials with the `auth` option. Cypress base64-encodes them and
+attaches an `Authorization` header to the request.
+
+```javascript
+cy.request({
+  method: 'POST',
+  url: 'https://api.example.com/query',
+  auth: {
+    username: 'jane.lane',
+    password: 'password123',
+  },
+  body: {
+    cpId: 709916,
+  },
+})
+```
+
+The `auth` option also accepts `user`/`pass` as aliases for
+`username`/`password`.
 
 #### Download a PDF file
 
