@@ -302,9 +302,9 @@ contains it inside the `<head>`:
 </html>
 ```
 
-This is the most common cause of "my Tailwind classes appear in the DOM but
-aren't styled" (or a mount error) in a Next.js component testing setup. With the
-element in place, import your global stylesheet as usual from
+A missing marker element is a common cause of "my Tailwind classes appear in the
+DOM but aren't styled" (or a mount error) in a Next.js component testing setup.
+With the element in place, import your global stylesheet as usual from
 `cypress/support/component.js`:
 
 ```js title="cypress/support/component.js"
