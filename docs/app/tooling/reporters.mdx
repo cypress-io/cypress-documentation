@@ -368,6 +368,131 @@ results, timing information, and even test bodies are included.
 For more information, see
 [Integrating Mochawesome reporter with Cypress's](http://antontelesh.github.io/testing/2019/02/04/mochawesome-merge.html)
 
+## Including screenshots in JUnit reports
+
+When a test fails, Cypress automatically captures a
+[screenshot](/app/guides/screenshots-and-videos#Screenshots). Some CI providers —
+such as [GitLab CI/CD](/app/continuous-integration/gitlab-ci) — can display these
+screenshots next to the failed test in their test report UI, but only when the
+JUnit XML references each screenshot as an attachment using the
+`[[ATTACHMENT|<path>]]` syntax inside a `<system-out>` element of the failing
+`<testcase>`. See GitLab's
+[Unit test reports](https://docs.gitlab.com/ci/testing/unit_test_reports/)
+documentation for details.
+
+:::caution
+
+The `attachments` option of
+[`mocha-junit-reporter`](https://github.com/michaelleeallen/mocha-junit-reporter)
+works by setting `this.test.attachments` from within a test. This does **not**
+work in Cypress: each spec runs Mocha in the browser, while the reporter runs in
+the Node.js process, where Cypress rebuilds the test objects from a fixed set of
+properties. Custom properties added to the test object in the browser are not
+forwarded to the reporter. Attach the screenshots to the JUnit XML _after_ the
+run instead, as shown below.
+
+:::
+
+First, configure the `junit` reporter to write one XML file per spec into a
+folder (see [Reporter Options](#Reporter-Options) and
+[Merging reports across spec files](#Merging-reports-across-spec-files)):
+
+:::cypress-config-example
+
+```ts
+{
+  reporter: 'junit',
+  reporterOptions: {
+    mochaFile: 'cypress/results/results-[hash].xml'
+  }
+}
+```
+
+:::
+
+Then, in your [setupNodeEvents](/app/plugins/plugins-guide#Using-a-plugin)
+function, record the path of each failure screenshot with the
+[`after:screenshot`](/api/node-events/after-screenshot-api) event and inject an
+`[[ATTACHMENT|...]]` reference into the matching failed `<testcase>` once the run
+completes with the [`after:run`](/api/node-events/after-run-api) event:
+
+:::cypress-config-plugin-example
+
+```ts
+import fs from 'fs'
+import path from 'path'
+
+// Adds an [[ATTACHMENT|path]] reference to each failed <testcase> so GitLab
+// can show the screenshot in its test report. GitLab resolves attachment
+// paths relative to $CI_PROJECT_DIR, which is the working directory in CI.
+function attachScreenshots(resultsDir: string, screenshots: string[]) {
+  if (!fs.existsSync(resultsDir)) return
+
+  for (const file of fs.readdirSync(resultsDir)) {
+    if (!file.endsWith('.xml')) continue
+
+    const xmlPath = path.join(resultsDir, file)
+    const xml = fs
+      .readFileSync(xmlPath, 'utf8')
+      .replace(
+        /<testcase\b([^>]*)>([\s\S]*?)<\/testcase>/g,
+        (testcase, attrs, body) => {
+          if (!body.includes('<failure')) return testcase
+
+          const name = (attrs.match(/name="([^"]*)"/)?.[1] ?? '')
+            .replace(/&quot;/g, '"')
+            .replace(/&amp;/g, '&')
+
+          // Cypress names failure screenshots "<suite> -- <test> (failed).png"
+          const screenshot = screenshots.find((p) =>
+            path.basename(p).includes(`${name} (failed)`)
+          )
+
+          if (!screenshot) return testcase
+
+          const relativePath = path.relative(process.cwd(), screenshot)
+
+          return testcase.replace(
+            '</testcase>',
+            `<system-out>[[ATTACHMENT|${relativePath}]]</system-out></testcase>`
+          )
+        }
+      )
+
+    fs.writeFileSync(xmlPath, xml)
+  }
+}
+```
+
+```ts
+const failureScreenshots: string[] = []
+
+on('after:screenshot', (details) => {
+  if (details.path.includes('(failed)')) {
+    failureScreenshots.push(details.path)
+  }
+})
+
+on('after:run', () => {
+  attachScreenshots('cypress/results', failureScreenshots)
+})
+```
+
+:::
+
+Finally, make sure your CI uploads both the screenshots and the JUnit XML and
+points the provider at the report. For GitLab CI/CD, see
+[Run Cypress in GitLab CI](/app/continuous-integration/gitlab-ci#Displaying-test-results-in-GitLab).
+
+:::info
+
+The example matches each failure screenshot to its `<testcase>` by the test
+title found in the screenshot filename. If you capture additional screenshots
+with [`cy.screenshot()`](/api/commands/screenshot) or use custom filenames,
+adjust the matching logic accordingly.
+
+:::
+
 ## History
 
 | Version                            | Changes                                                                                                                                         |

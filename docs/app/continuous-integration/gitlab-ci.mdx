@@ -122,6 +122,46 @@ test:
     expire_in: 1 day
 ```
 
+## Displaying test results in GitLab
+
+GitLab can display Cypress results in the
+[merge request widget and pipeline test report](https://docs.gitlab.com/ci/testing/unit_test_reports/)
+when the job produces a JUnit XML report referenced under
+`artifacts:reports:junit`.
+
+Configure Cypress to output JUnit XML (see
+[Reporters](/app/tooling/reporters#Reporter-Options)), then upload the report —
+and the screenshots — as artifacts and point GitLab at the generated files.
+
+```yaml
+stages:
+  - test
+
+test:
+  image: cypress/browsers:22.15.0
+  stage: test
+  script:
+    # install dependencies
+    - npm ci
+    # start the server in the background
+    - npm start &
+    # run Cypress tests, writing one JUnit XML file per spec
+    - npx cypress run --reporter junit --reporter-options "mochaFile=cypress/results/results-[hash].xml"
+  artifacts:
+    when: always
+    paths:
+      - cypress/screenshots/**/*.png
+      - cypress/results/**/*.xml
+    reports:
+      junit:
+        - cypress/results/**/*.xml
+    expire_in: 1 day
+```
+
+To also show the screenshot of each failed test directly in the GitLab test
+report, see
+[Including screenshots in JUnit reports](/app/tooling/reporters#Including-screenshots-in-JUnit-reports).
+
 ## Parallelization
 
 [Cypress Cloud](/cloud/get-started/introduction) offers the ability to
