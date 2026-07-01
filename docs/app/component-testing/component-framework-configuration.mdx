@@ -195,6 +195,85 @@ import webpackConfig from './webpack.config'
 
 :::
 
+### Resolving import path aliases
+
+If your components import modules through path aliases (for example
+`import Button from '@/components/Button'` or `import { api } from '~/lib/api'`),
+those aliases must be resolvable by the bundler Cypress uses, otherwise the spec
+fails to compile with a "module not found" (or "failed to resolve import")
+error.
+
+Cypress does **not** define any aliases of its own. It resolves them exactly the
+way your dev server does, using the bundler config it detects or the one you pass
+in:
+
+- **Vite**: aliases come from the `resolve.alias` of the `vite.config` Cypress
+  detects, or the `viteConfig` you pass to `devServer`.
+- **Webpack**: aliases come from the `resolve.alias` of the `webpack.config`
+  Cypress detects, or the `webpackConfig` you pass to `devServer`.
+
+So if your aliases are declared in a standalone `vite.config` or `webpack.config`
+at (or above) your project root, Cypress picks them up automatically and no extra
+configuration is needed.
+
+#### Meta-frameworks that own the bundler config
+
+Some meta-frameworks (such as **Nuxt**) configure Vite internally rather than
+through a standalone `vite.config` file. Cypress only reads a discoverable
+`vite.config`/`webpack.config`. It does **not** execute `nuxt.config` (or
+similar) to extract the bundler settings those frameworks generate at runtime.
+As a result, framework-provided aliases like Nuxt's `@/` and `~/` are not visible
+to Cypress and must be declared explicitly via `viteConfig`:
+
+:::cypress-config-example
+
+```ts
+import { fileURLToPath } from 'url'
+```
+
+```ts
+{
+  component: {
+    devServer: {
+      framework: 'vue',
+      bundler: 'vite',
+      viteConfig: {
+        resolve: {
+          alias: {
+            '@': fileURLToPath(new URL('./', import.meta.url)),
+            '~': fileURLToPath(new URL('./', import.meta.url)),
+          },
+        },
+      },
+    },
+  },
+}
+```
+
+:::
+
+The aliases you pass are merged with Cypress's own Vite settings, so you only need
+to declare the ones your components rely on. The same applies to Webpack
+meta-frameworks: declare the aliases under `webpackConfig.resolve.alias`.
+
+#### Aliases defined in `tsconfig.json`
+
+Aliases declared only under `compilerOptions.paths` in `tsconfig.json` are a
+TypeScript type-checking feature. Neither Vite nor Webpack reads them when
+bundling, so Cypress does not resolve them either. To make `tsconfig` paths work
+at bundle time, add the matching plugin to the config you give Cypress:
+
+- **Vite**: use
+  [`vite-tsconfig-paths`](https://www.npmjs.com/package/vite-tsconfig-paths) in
+  your `vite.config` (or in the `viteConfig` you pass to `devServer`).
+- **Webpack**: use
+  [`tsconfig-paths-webpack-plugin`](https://www.npmjs.com/package/tsconfig-paths-webpack-plugin)
+  under `resolve.plugins` in your `webpack.config` (or the `webpackConfig` you
+  pass to `devServer`).
+
+This is the same plugin your app already needs to resolve `tsconfig` paths at
+build time, so reusing your existing bundler config is usually enough.
+
 ### Function syntax (advanced)
 
 If you need direct access to the dev server API — for example, to pass options
@@ -410,7 +489,10 @@ const devServerPublicPathRoute = CypressInstance.config(
   'devServerPublicPathRoute'
 )
 
-let importPromise = Promise.resolve()
+// `onSpecWindow` expects an array of functions that each return a dynamic
+// `import()`. Cypress invokes them in order, so the support file (if any)
+// must be added before the spec.
+const importsToLoad = []
 
 // If you do not bundle your support file along with the tests,
 // you need to add a separate import statement for the support file.
@@ -420,19 +502,15 @@ if (supportFilePath) {
     CypressInstance.config('projectRoot'),
     ''
   )
-  importPromise = importPromise.then(
-    () => import(`${devServerPublicPathRoute}${relative}`)
-  )
+  importsToLoad.push(() => import(`${devServerPublicPathRoute}${relative}`))
 }
 
 // load the spec - you can extend the load function to also load css
 const { relative } = CypressInstance.spec
-importPromise = importPromise.then(
-  () => import(`${devServerPublicPathRoute}/${relative}`)
-)
+importsToLoad.push(() => import(`${devServerPublicPathRoute}/${relative}`))
 
 // trigger loading the imports
-CypressInstance.onSpecWindow(window, importPromise)
+CypressInstance.onSpecWindow(window, importsToLoad)
 
 // then start the test process
 CypressInstance.action('app:window:before:load', window)

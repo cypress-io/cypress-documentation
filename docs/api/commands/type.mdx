@@ -438,6 +438,30 @@ cy.get('input[type=text]').type('Test all the things', { force: true })
   - `url`
   - `tel`
 
+### Contenteditable Elements
+
+`.type()` supports `contenteditable` elements, but you must target the element
+that actually has the `contenteditable` attribute, not one of its child nodes,
+and that element must be focusable. Targeting a child node causes `.type()` to
+fail because the child is not itself editable.
+
+A common fix is to [`.click()`](/api/commands/click) the editable element first
+to place the cursor, then [`.type()`](/api/commands/type) into it:
+
+```javascript
+// ✗ Targets a child node, which is not contenteditable
+cy.get('.editor p').type('Hello, World')
+
+// ✓ Targets the element with the contenteditable attribute
+cy.get('[contenteditable]').click()
+cy.get('[contenteditable]').type('Hello, World')
+```
+
+Rich text editors such as CKEditor, Quill, Draft.js, and ProseMirror often
+manage their own selection and DOM. For these editors, clicking to place the
+cursor first (as shown above) or dispatching input through the editor's own API
+may be necessary.
+
 ### Actionability
 
 `.type()` is an "action command" that follows all the rules of

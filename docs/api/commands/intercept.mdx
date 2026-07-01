@@ -279,6 +279,42 @@ cy.intercept(
 cy.intercept({ url: '/temporary-error', times: 1 }, { forceNetworkError: true })
 ```
 
+### Matching array query parameters
+
+The `query` matcher compares each query parameter against a single string value,
+so it cannot match repeated, array-style parameters such as
+`?ids[]=1&ids[]=2`. The following will _not_ match that request:
+
+```js
+// 🚫 does not work - the array parameter is ignored
+cy.intercept({
+  pathname: '/items',
+  query: {
+    ids: '1',
+  },
+})
+```
+
+Instead, match the request with a `RegExp` `url`, or use a
+[`routeHandler`](#routeHandler-Function) function and read the repeated values
+with [`URLSearchParams.getAll()`](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams/getAll):
+
+```js
+// match any request to `/items` that includes an `ids` parameter
+cy.intercept({ method: 'GET', url: /\/items\?.*ids/ }).as('items')
+```
+
+```js
+// inspect every `ids` value and only stub when `1` is present
+cy.intercept('/items*', (req) => {
+  const ids = new URL(req.url).searchParams.getAll('ids[]')
+
+  if (ids.includes('1')) {
+    req.reply({ fixture: 'items.json' })
+  }
+}).as('items')
+```
+
 ### Pattern Matching
 
 ```js
@@ -1286,6 +1322,29 @@ modified:
 **Note about `body`:** If the response header contains
 `Content-Type: application/json` and the body contains valid JSON, this will be
 an `object`. And if the body contains binary content, this will be a buffer.
+
+Cypress relies on the `Content-Type: application/json` header to decide whether
+to parse the body as JSON. If that header is absent, the body is yielded as a
+`string` even when it contains JSON. This commonly happens with responses that
+omit a `Content-Type` header. For example, a `304 Not Modified` response, which
+[per RFC 7232](https://datatracker.ietf.org/doc/html/rfc7232#section-4.1) is not
+expected to include representation metadata such as `Content-Type`, or a `301`
+redirect. When asserting on `response.body` for these responses, either assert
+against the string value or parse it yourself with `JSON.parse()`:
+
+```js
+cy.wait('@getResource').then(({ response }) => {
+  // when no `Content-Type: application/json` header is present,
+  // `response.body` is a string and must be parsed before
+  // asserting on its properties
+  const body =
+    typeof response.body === 'string'
+      ? JSON.parse(response.body)
+      : response.body
+
+  expect(body).to.have.property('id')
+})
+```
 
 `res` also has some optional properties which can be set to control
 Cypress-specific behavior:

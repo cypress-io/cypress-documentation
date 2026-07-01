@@ -32,8 +32,10 @@ import HeaderYields from '@site/docs/partials/_header-yields.mdx'
 import Icon from '@site/src/components/icon'
 import ImportMountFunctions from '@site/docs/partials/_import-mount-functions.mdx'
 import IntellisenseCodeCompletion from '@site/docs/partials/_intellisense-code-completion.mdx'
+import InvertedContainsSelection from '@site/docs/partials/_inverted-contains-selection.mdx'
 import ProductHeading from '@site/src/components/product-heading'
 import Profiles from '@site/docs/partials/_profiles.mdx'
+import RecordKeyEnvVar from '@site/docs/partials/_record-key-env-var.mdx'
 import SignificantAttributes from '@site/docs/partials/_significantattributes.mdx'
 import SourceMaps from '@site/docs/partials/_source-maps.mdx'
 import SupportFileConfiguration from '@site/docs/partials/_support-file-configuration.mdx'
@@ -203,8 +205,10 @@ export default {
   Icon,
   ImportMountFunctions,
   IntellisenseCodeCompletion,
+  InvertedContainsSelection,
   ProductHeading,
   Profiles,
+  RecordKeyEnvVar,
   SignificantAttributes,
   SourceMaps,
   SupportFileConfiguration,
