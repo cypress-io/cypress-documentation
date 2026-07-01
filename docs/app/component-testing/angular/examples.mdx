@@ -420,7 +420,7 @@ it('surfaces a render error', () => {
 
 ### Testing with a custom `ErrorHandler`
 
-The idiomatic way to observe render errors in Angular is a custom
+The recommended way to observe render errors in Angular is a custom
 [`ErrorHandler`](https://angular.dev/api/core/ErrorHandler) provider. Angular
 routes errors thrown during change detection to the `ErrorHandler`, so you can
 provide one backed by a [`cy.stub()`](/api/commands/stub) and assert it was

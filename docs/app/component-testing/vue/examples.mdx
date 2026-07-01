@@ -101,7 +101,7 @@ it('surfaces a render error', () => {
 
 ### Testing with `onErrorCaptured`
 
-The idiomatic way to render fallback UI in Vue is a wrapper component that uses
+The recommended way to render fallback UI in Vue is a wrapper component that uses
 the [`onErrorCaptured`](https://vuejs.org/api/composition-api-lifecycle#onerrorcaptured)
 lifecycle hook to catch errors from its descendants. You can mount a component
 inside such a wrapper and assert that the fallback UI is displayed:

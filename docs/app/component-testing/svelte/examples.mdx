@@ -96,7 +96,7 @@ it('surfaces a render error', () => {
 
 ### Testing with `<svelte:boundary>`
 
-The idiomatic way to render fallback UI in Svelte 5 is
+The recommended way to render fallback UI in Svelte 5 is
 [`<svelte:boundary>`](https://svelte.dev/docs/svelte/svelte-boundary) with a
 `failed` snippet. Rather than nesting components through `cy.mount()`, the
 cleanest approach is a dedicated fixture component that imports the failing
