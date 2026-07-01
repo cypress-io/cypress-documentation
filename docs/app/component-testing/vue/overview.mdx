@@ -138,6 +138,45 @@ in manually via the `webpackConfig` option.
 
 - [Vue 3 Webpack 5 with TypeScript](https://github.com/cypress-io/cypress-component-testing-apps/tree/main/vue3-webpack-ts)
 
+## Using Cypress with Nuxt
+
+Cypress does not ship a dedicated [Nuxt](https://nuxt.com/) framework definition,
+and it does not read `nuxt.config`. Instead, you component test a Nuxt 3+ app the
+same way you test any Vue 3 + Vite project, by setting the `vue` framework and the
+`vite` bundler:
+
+:::cypress-config-example
+
+```ts
+{
+  component: {
+    devServer: {
+      framework: 'vue',
+      bundler: 'vite',
+    },
+  },
+}
+```
+
+:::
+
+Nuxt 2 is not supported, as it is built on Vue 2, which has reached end-of-life.
+See
+[Nuxt 2 CT no longer supported](/app/references/migration-guide#Nuxt-2-CT-no-longer-supported)
+in the migration guide.
+
+Because Cypress does not execute `nuxt.config`, the bundler behavior Nuxt
+normally provides is not applied for you. Account for the following in the config
+you pass to Cypress:
+
+- **Path aliases** — Nuxt's `~` and `@` aliases are not visible to Cypress.
+  Declare the ones your components use via `viteConfig`. See
+  [Meta-frameworks that own the bundler config](/app/component-testing/component-framework-configuration#Meta-frameworks-that-own-the-bundler-config).
+- **Auto-imports** — Nuxt auto-imports components and composables (such as `ref`,
+  `useRoute`, and `useRuntimeConfig`). These are not available when a component is
+  mounted in isolation, so either import what your component relies on explicitly
+  or add the equivalent Vite plugin to your `viteConfig`.
+
 ## See also
 
 - [Component Testing code coverage](/app/tooling/code-coverage#component-testing-code-coverage)
