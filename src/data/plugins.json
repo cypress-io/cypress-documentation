@@ -26,13 +26,6 @@
           "badge": "community"
         },
         {
-          "name": "cypress-rollup-preprocessor",
-          "description": "Cypress preprocessor for bundling JavaScript via rollup.",
-          "link": "https://github.com/lmarqs/cypress-rollup-preprocessor",
-          "keywords": ["rollup"],
-          "badge": "community"
-        },
-        {
           "name": "@bahmutov/cypress-esbuild-preprocessor",
           "description": "Bundle Cypress specs using esbuild.",
           "link": "https://github.com/bahmutov/cypress-esbuild-preprocessor",
@@ -516,13 +509,6 @@
           "badge": "community"
         },
         {
-          "name": "cypress-commands",
-          "description": "A collection of Cypress commands to extend and complement the defaults.",
-          "link": "https://github.com/Lakitna/cypress-commands",
-          "keywords": ["commands"],
-          "badge": "community"
-        },
-        {
           "name": "cypress-recurse",
           "description": "A way to re-run Cypress commands until a predicate function returns true.",
           "link": "https://github.com/bahmutov/cypress-recurse",
@@ -941,18 +927,6 @@
             "image-diff",
             "image comparison",
             "image snapshot"
-          ],
-          "badge": "community"
-        },
-        {
-          "name": "Micoo",
-          "description": "Cypress plugin for doing visual regression testing with Micoo services",
-          "link": "https://github.com/Mikuu/Micoo/tree/master/clients/micoocypress",
-          "keywords": [
-            "visual regression testing",
-            "visual testing",
-            "screenshots comparison",
-            "testing service"
           ],
           "badge": "community"
         }
