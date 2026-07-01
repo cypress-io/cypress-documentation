@@ -431,13 +431,6 @@
           "badge": "community"
         },
         {
-          "name": "cy-view",
-          "description": "Run tests on multiple URLs at various viewport sizes.",
-          "link": "https://github.com/andrewmcoupe/cy-view",
-          "keywords": ["viewports"],
-          "badge": "community"
-        },
-        {
           "name": "cypress-axe",
           "description": "Helps test your applications for accessibility issues using axe-core.",
           "link": "https://github.com/avanslaars/cypress-axe",
@@ -485,13 +478,6 @@
             "cdp",
             "commands"
           ],
-          "badge": "community"
-        },
-        {
-          "name": "cypress-fill-command",
-          "description": "A Cypress command for fill inputs.",
-          "link": "https://github.com/DanielFerrariR/cypress-fill-command",
-          "keywords": ["commands"],
           "badge": "community"
         },
         {
@@ -832,13 +818,6 @@
           "badge": "official"
         },
         {
-          "name": "cypress-angular-unit-test",
-          "description": "Test Angular component using Cypress Test Runner.",
-          "link": "https://github.com/bahmutov/cypress-angular-unit-test",
-          "keywords": ["component", "angular"],
-          "badge": "community"
-        },
-        {
           "name": "cypress-ct-custom-devserver",
           "description": "Simplified API for creating custom dev servers for Cypress.",
           "link": "https://github.com/fochlac/cypress-ct-custom-devserver",
@@ -1012,13 +991,6 @@
           "description": "Logs to terminal and files mimicking cypress UI. Logs all cypress commands, request/response data and browser console logs.",
           "link": "https://github.com/archfz/cypress-terminal-report",
           "keywords": ["reporter", "logs", "terminal", "CI", "CLI"],
-          "badge": "community"
-        },
-        {
-          "name": "autoset-status-cypress-testrail-reporter",
-          "description": "TestRail Reporter which auto-set status for specific TestRun for Cypress.",
-          "link": "https://github.com/dkuznetsov21/autoset-status-cypress-testrail-reporter",
-          "keywords": ["testrail", "reporter", "autoset", "status"],
           "badge": "community"
         },
         {
