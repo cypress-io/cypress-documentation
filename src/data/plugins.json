@@ -195,13 +195,6 @@
           "badge": "community"
         },
         {
-          "name": "cypress-expect-n-assertions",
-          "description": "Cypress helper that checks number of expected and actual assertions in the test.",
-          "link": "https://github.com/bahmutov/cypress-expect-n-assertions",
-          "keywords": ["test", "assertion"],
-          "badge": "community"
-        },
-        {
           "name": "cypress-hmr-restarter",
           "description": "Restarts tests when receiving webpack-dev-server HMR updates.",
           "link": "https://github.com/Svish/cypress-hmr-restarter",
@@ -523,13 +516,6 @@
           "badge": "community"
         },
         {
-          "name": "cypress-cy-select",
-          "description": "data-cy shorthand notation for cypress get and find functions.",
-          "link": "https://github.com/FlorianGoussin/cypress-cy-select",
-          "keywords": ["commands", "shorthand"],
-          "badge": "community"
-        },
-        {
           "name": "Cypress-SignalR-Mock",
           "description": "Easy way to publish messages from and to your SignalR hubs in Cypress E2E tests.",
           "link": "https://github.com/JasonLandbridge/Cypress-SignalR-Mock",
@@ -555,13 +541,6 @@
           "description": "Custom commands for indexedDb. Allows populating, modifying and asserting data stored in indexedDb.",
           "link": "https://github.com/thisdot/open-source/tree/main/libs/cypress-indexeddb",
           "keywords": ["commands", "indexedDb"],
-          "badge": "community"
-        },
-        {
-          "name": "cypress-layout-inspector",
-          "description": "A simple utility to provide layout testing functionality to Cypress via custom assertions.",
-          "link": "https://github.com/msmps/cypress-layout-inspector",
-          "keywords": ["testing", "ui", "dom", "assertions"],
           "badge": "community"
         },
         {
@@ -965,13 +944,6 @@
           "description": "Logs to terminal and files mimicking cypress UI. Logs all cypress commands, request/response data and browser console logs.",
           "link": "https://github.com/archfz/cypress-terminal-report",
           "keywords": ["reporter", "logs", "terminal", "CI", "CLI"],
-          "badge": "community"
-        },
-        {
-          "name": "cypress-testrail-reporter",
-          "description": "Custom reporter for publishing Cypress results to a TestRail test run.",
-          "link": "https://github.com/Vivify-Ideas/cypress-testrail-reporter",
-          "keywords": ["testrail", "reporter"],
           "badge": "community"
         },
         {
