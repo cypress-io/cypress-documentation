@@ -620,13 +620,6 @@
           "badge": "community"
         },
         {
-          "name": "cypress-react-selector",
-          "description": "cypress custom commands to locate react elements by component, props and state.",
-          "link": "https://github.com/abhinaba-ghosh/cypress-react-selector",
-          "keywords": ["react", "commands", "locator"],
-          "badge": "community"
-        },
-        {
           "name": "cypress-layout-inspector",
           "description": "A simple utility to provide layout testing functionality to Cypress via custom assertions.",
           "link": "https://github.com/msmps/cypress-layout-inspector",
