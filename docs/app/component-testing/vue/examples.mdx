@@ -106,10 +106,8 @@ the [`onErrorCaptured`](https://vuejs.org/api/composition-api-lifecycle#onerrorc
 lifecycle hook to catch errors from its descendants. You can mount a component
 inside such a wrapper and assert that the fallback UI is displayed:
 
-<Tabs>
-<TabItem value="ErrorBoundary.cy.js">
-
 ```js
+// ErrorBoundary.cy.js
 import { h } from 'vue'
 import ErrorBoundary from './ErrorBoundary.vue'
 import ChildWithError from './ChildWithError.vue'
@@ -131,10 +129,11 @@ it('displays the fallback UI on error', () => {
 })
 ```
 
-</TabItem>
-<TabItem value="ErrorBoundary.vue">
+Where `ErrorBoundary` captures the error with `onErrorCaptured` and renders
+fallback UI:
 
 ```html
+<!-- ErrorBoundary.vue -->
 <template>
   <div v-if="error" data-cy="fallback">Something went wrong.</div>
   <slot v-else />
@@ -154,9 +153,6 @@ onErrorCaptured((err) => {
 })
 </script>
 ```
-
-</TabItem>
-</Tabs>
 
 ## Using Slots
 

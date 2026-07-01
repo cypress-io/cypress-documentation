@@ -96,10 +96,8 @@ which renders fallback UI via `getDerivedStateFromError()`. You can mount a
 component wrapped in your Error Boundary and assert that the fallback UI is
 displayed:
 
-<Tabs>
-<TabItem value="ErrorBoundary.cy.jsx">
-
 ```jsx
+// ErrorBoundary.cy.jsx
 import { ErrorBoundary } from './ErrorBoundary'
 
 const errorMessage = 'I crashed!'
@@ -128,10 +126,10 @@ it('displays the fallback UI on error', () => {
 })
 ```
 
-</TabItem>
-<TabItem value="ErrorBoundary.jsx">
+Where `ErrorBoundary` renders fallback UI from `getDerivedStateFromError()`:
 
 ```jsx
+// ErrorBoundary.jsx
 import React from 'react'
 
 export class ErrorBoundary extends React.Component {
@@ -161,9 +159,6 @@ export class ErrorBoundary extends React.Component {
   }
 }
 ```
-
-</TabItem>
-</Tabs>
 
 ## Custom Mount Commands
 

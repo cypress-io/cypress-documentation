@@ -102,10 +102,8 @@ The idiomatic way to render fallback UI in Svelte 5 is
 cleanest approach is a dedicated fixture component that imports the failing
 component directly, then mount that fixture and assert the fallback is shown:
 
-<Tabs>
-<TabItem value="ErrorBoundary.cy.js">
-
 ```js
+// ErrorBoundary.cy.js
 import ErrorBoundary from './ErrorBoundary.svelte'
 
 it('displays the fallback UI on error', () => {
@@ -125,10 +123,11 @@ it('displays the fallback UI on error', () => {
 })
 ```
 
-</TabItem>
-<TabItem value="ErrorBoundary.svelte">
+Where the `ErrorBoundary` fixture wraps the failing component in a
+`<svelte:boundary>` with a `failed` snippet:
 
 ```html
+<!-- ErrorBoundary.svelte -->
 <script>
   import ChildWithError from './ChildWithError.svelte'
 </script>
@@ -141,6 +140,3 @@ it('displays the fallback UI on error', () => {
   {/snippet}
 </svelte:boundary>
 ```
-
-</TabItem>
-</Tabs>
