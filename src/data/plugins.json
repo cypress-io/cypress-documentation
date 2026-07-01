@@ -959,13 +959,6 @@
           "badge": "community"
         },
         {
-          "name": "Visual Regression Tracker",
-          "description": "Integration with open source service for visual testing and managing its results.",
-          "link": "https://github.com/Visual-Regression-Tracker/agent-cypress",
-          "keywords": ["screenshots", "image-diff", "visual regression"],
-          "badge": "community"
-        },
-        {
           "name": "Cypress Image Diff",
           "description": "Visual regression testing plugin maintained by DIT - UK Gov.",
           "link": "https://github.com/uktrade/cypress-image-diff",
