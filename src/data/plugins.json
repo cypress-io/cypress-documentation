@@ -690,13 +690,6 @@
           "badge": "community"
         },
         {
-          "name": "@datashard/snapshot",
-          "description": "Adds Snapshot command. Adds value / object / DOM element snapshot testing support to Cypress test runner",
-          "link": "https://github.com/datashard/snapshot",
-          "keywords": ["snapshot", "comparison", "commands"],
-          "badge": "community"
-        },
-        {
           "name": "cypress-plugin-dotenv",
           "description": "Load .env variables in Cypress.",
           "link": "https://github.com/MohamadKh75/cypress-plugin-dotenv",
