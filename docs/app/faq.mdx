@@ -80,9 +80,10 @@ testing).
 Yes. Cypress transparently proxies WebSocket connections, so your application's
 WebSocket traffic will work as expected during tests.
 
-However, **stubbing or mocking individual WebSocket frames/messages** is not
-natively supported. If your tests need to control the messages sent over a
-WebSocket connection, see the
+However, **`cy.intercept()` does not intercept WebSocket connections** — it
+cannot match the connection (even with `resourceType: 'websocket'`) or stub,
+spy on, or wait for individual frames/messages. If your tests need to control
+the messages sent over a WebSocket connection, see the
 [Multiple browsers open at the same time](/app/references/trade-offs#Multiple-browsers-open-at-the-same-time)
 section of the Trade-offs guide for recommended strategies such as:
 

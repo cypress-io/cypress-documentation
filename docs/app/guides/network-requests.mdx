@@ -540,8 +540,10 @@ WebSocket traffic will work as expected during tests.
 
 ### Limitations
 
-Stubbing or mocking individual WebSocket messages/frames is **not** natively
-supported by `cy.intercept()`. If your application relies on receiving specific
+`cy.intercept()` does **not** intercept WebSocket connections. It cannot match
+the WebSocket upgrade request (even with `resourceType: 'websocket'`) and cannot
+spy on, stub, or wait for individual messages/frames — that traffic is proxied
+outside the interception layer. If your application relies on receiving specific
 WebSocket messages during a test, consider the following strategies:
 
 1. **Stub application callbacks directly** — Use [`cy.stub()`](/api/commands/stub)

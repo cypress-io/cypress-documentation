@@ -103,12 +103,14 @@ time.
 
 :::info
 
-**WebSocket support:** Cypress transparently proxies WebSocket connections, and
-[`cy.intercept()`](/api/commands/intercept) can observe the WebSocket upgrade
-request via `resourceType: 'websocket'`. However, stubbing or mocking
-individual WebSocket **frames/messages** is not natively supported. The
-strategies described below are the recommended way to test real-time,
-message-driven features.
+**WebSocket support:** Cypress transparently proxies WebSocket connections, so
+your application's WebSocket traffic works as expected during tests. However,
+[`cy.intercept()`](/api/commands/intercept) does **not** intercept WebSocket
+connections — it cannot match the upgrade request or spy on, stub, or wait for
+individual frames/messages. (`resourceType: 'websocket'` appears in the
+interception types, but the WebSocket upgrade is proxied outside the
+interception layer, so no route will match it.) The strategies described below
+are the recommended way to test real-time, message-driven features.
 
 :::
 
@@ -205,7 +207,7 @@ cy.request('http://localhost:8081/disconnect')
 And the HTTP server code would look something like this...
 
 ```js
-const client = require('socket.io:client')
+const client = require('socket.io-client')
 const express = require('express')
 
 const app = express()
