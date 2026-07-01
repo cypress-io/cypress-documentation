@@ -165,14 +165,6 @@ export class ErrorBoundary extends React.Component {
 </TabItem>
 </Tabs>
 
-:::caution
-
-An Error Boundary renders fallback UI, but it does **not** stop the error from
-propagating to Cypress. The `cy.on('uncaught:exception')` handler is required
-regardless of whether you use an Error Boundary.
-
-:::
-
 ## Custom Mount Commands
 
 ### Customizing `cy.mount()`

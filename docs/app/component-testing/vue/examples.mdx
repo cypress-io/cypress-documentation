@@ -158,14 +158,6 @@ onErrorCaptured((err) => {
 </TabItem>
 </Tabs>
 
-:::caution
-
-`onErrorCaptured` renders fallback UI, but it does **not** stop the error from
-propagating to Cypress. The `cy.on('uncaught:exception')` handler is required
-regardless of whether you use an error-capturing wrapper.
-
-:::
-
 ## Using Slots
 
 ### Default Slot

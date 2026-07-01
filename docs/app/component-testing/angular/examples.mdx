@@ -451,14 +451,6 @@ it('routes render errors to the ErrorHandler', () => {
 })
 ```
 
-:::caution
-
-A custom `ErrorHandler` observes the error, but it does **not** stop the error
-from propagating to Cypress. The `cy.on('uncaught:exception')` handler is
-required regardless of whether you provide a custom `ErrorHandler`.
-
-:::
-
 ## Custom Mount Commands
 
 ### Customizing `cy.mount()`

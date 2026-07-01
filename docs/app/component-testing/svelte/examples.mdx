@@ -144,11 +144,3 @@ it('displays the fallback UI on error', () => {
 
 </TabItem>
 </Tabs>
-
-:::caution
-
-`<svelte:boundary>` renders fallback UI, but it does **not** stop the error from
-propagating to Cypress. The `cy.on('uncaught:exception')` handler is required
-regardless of whether you use a boundary.
-
-:::
