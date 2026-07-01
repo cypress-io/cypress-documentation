@@ -89,24 +89,13 @@ relying on it, and adjust as needed.
 
 :::
 
-You might expect to assert that mounting a component throws:
+`cy.mount()` is an asynchronous Cypress command: it _enqueues_ the mount and
+returns immediately, before the component ever renders. When a component throws
+during render, the error surfaces as an uncaught exception rather than as a
+synchronous throw.
 
-```js
-// ❌ This does NOT work
-it('throws when a prop is missing', () => {
-  expect(() => cy.mount(UserProfile)).to.throw()
-})
-```
-
-This assertion silently passes without testing anything. `cy.mount()` is an
-asynchronous Cypress command: it _enqueues_ the mount and returns immediately,
-before the component ever renders. There is no synchronous error for
-`expect().to.throw()` to catch, so the assertion is meaningless (and
-`.not.to.throw()` would "pass" for the same reason).
-
-Instead, when a component throws during render, the error surfaces as an
-uncaught exception. By default Cypress fails the test on any uncaught
-exception, so to assert on a render error you listen for it with
+By default Cypress fails the test on any uncaught exception, so to assert on a
+render error you listen for it with
 [`cy.on('uncaught:exception')`](/api/cypress-api/catalog-of-events#Uncaught-Exceptions)
 and return `false` to prevent Cypress from failing the test:
 
