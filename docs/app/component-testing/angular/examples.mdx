@@ -398,6 +398,94 @@ cy.get('@countChange').should('have.been.called')
 
 These spies can automatically be created if `autoSpyOutputs: true` is configured. The suffix in this case will be `ChangeSpy`.
 
+## Testing Error States
+
+:::info
+
+The Angular example below is drafted from the verified React pattern but has
+**not** yet been run locally against a real project. Run it in your own setup
+before relying on it, and adjust as needed.
+
+:::
+
+You might expect to assert that mounting a component throws:
+
+```ts
+// ❌ This does NOT work
+it('throws when data is missing', () => {
+  expect(() => cy.mount(UserProfileComponent)).to.throw()
+})
+```
+
+This assertion silently passes without testing anything. `cy.mount()` is an
+asynchronous Cypress command: it _enqueues_ the mount and returns immediately,
+before the component ever renders. There is no synchronous error for
+`expect().to.throw()` to catch, so the assertion is meaningless (and
+`.not.to.throw()` would "pass" for the same reason).
+
+Instead, when a component throws during render, the error surfaces as an
+uncaught exception. By default Cypress fails the test on any uncaught
+exception, so to assert on a render error you listen for it with
+[`cy.on('uncaught:exception')`](/api/cypress-api/catalog-of-events#Uncaught-Exceptions)
+and return `false` to prevent Cypress from failing the test:
+
+```ts
+import { UserProfileComponent } from './user-profile.component'
+
+it('surfaces a render error', () => {
+  cy.on('uncaught:exception', (err) => {
+    // Assert on the error thrown during render...
+    expect(err.message).to.include('user is required')
+
+    // ...and return false so Cypress does not fail the test.
+    return false
+  })
+
+  cy.mount(UserProfileComponent)
+})
+```
+
+### Testing with a custom `ErrorHandler`
+
+The idiomatic way to observe render errors in Angular is a custom
+[`ErrorHandler`](https://angular.dev/api/core/ErrorHandler) provider. Angular
+routes errors thrown during change detection to the `ErrorHandler`, so you can
+provide one backed by a [`cy.stub()`](/api/commands/stub) and assert it was
+called:
+
+```ts
+import { ErrorHandler } from '@angular/core'
+import { ChildWithErrorComponent } from './child-with-error.component'
+
+it('routes render errors to the ErrorHandler', () => {
+  const handleError = cy.stub().as('handleError')
+
+  // A custom ErrorHandler observes the error, but it does NOT stop the error
+  // from propagating to Cypress as an uncaught exception. Cypress fails on
+  // uncaught exceptions by default, so we must still suppress that behavior.
+  cy.on('uncaught:exception', (err) => {
+    // Only suppress the specific error we expect.
+    expect(err.message).to.include('I crashed!')
+
+    return false
+  })
+
+  cy.mount(ChildWithErrorComponent, {
+    providers: [{ provide: ErrorHandler, useValue: { handleError } }],
+  })
+
+  cy.get('@handleError').should('have.been.called')
+})
+```
+
+:::caution
+
+A custom `ErrorHandler` observes the error, but it does **not** stop the error
+from propagating to Cypress. The `cy.on('uncaught:exception')` handler is
+required regardless of whether you provide a custom `ErrorHandler`.
+
+:::
+
 ## Custom Mount Commands
 
 ### Customizing `cy.mount()`

@@ -79,6 +79,120 @@ it('clicking + fires a change event with the incremented value', () => {
 })
 ```
 
+## Testing Error States
+
+:::info
+
+The Vue example below is drafted from the verified React pattern but has **not**
+yet been run locally against a real project. Run it in your own setup before
+relying on it, and adjust as needed.
+
+:::
+
+You might expect to assert that mounting a component throws:
+
+```js
+// ❌ This does NOT work
+it('throws when a prop is missing', () => {
+  expect(() => cy.mount(UserProfile)).to.throw()
+})
+```
+
+This assertion silently passes without testing anything. `cy.mount()` is an
+asynchronous Cypress command: it _enqueues_ the mount and returns immediately,
+before the component ever renders. There is no synchronous error for
+`expect().to.throw()` to catch, so the assertion is meaningless (and
+`.not.to.throw()` would "pass" for the same reason).
+
+Instead, when a component throws during render, the error surfaces as an
+uncaught exception. By default Cypress fails the test on any uncaught
+exception, so to assert on a render error you listen for it with
+[`cy.on('uncaught:exception')`](/api/cypress-api/catalog-of-events#Uncaught-Exceptions)
+and return `false` to prevent Cypress from failing the test:
+
+```js
+import UserProfile from './UserProfile.vue'
+
+it('surfaces a render error', () => {
+  cy.on('uncaught:exception', (err) => {
+    // Assert on the error thrown during render...
+    expect(err.message).to.include('user is required')
+
+    // ...and return false so Cypress does not fail the test.
+    return false
+  })
+
+  cy.mount(UserProfile)
+})
+```
+
+### Testing with `onErrorCaptured`
+
+The idiomatic way to render fallback UI in Vue is a wrapper component that uses
+the [`onErrorCaptured`](https://vuejs.org/api/composition-api-lifecycle#onerrorcaptured)
+lifecycle hook to catch errors from its descendants. You can mount a component
+inside such a wrapper and assert that the fallback UI is displayed:
+
+<Tabs>
+<TabItem value="ErrorBoundary.cy.js">
+
+```js
+import { h } from 'vue'
+import ErrorBoundary from './ErrorBoundary.vue'
+import ChildWithError from './ChildWithError.vue'
+
+it('displays the fallback UI on error', () => {
+  // onErrorCaptured renders fallback UI, but it does NOT stop the error from
+  // propagating to Cypress as an uncaught exception. Cypress fails on uncaught
+  // exceptions by default, so we must still suppress that behavior.
+  cy.on('uncaught:exception', (err) => {
+    // Only suppress the specific error we expect.
+    expect(err.message).to.include('I crashed!')
+
+    return false
+  })
+
+  cy.mount(() => h(ErrorBoundary, () => h(ChildWithError)))
+
+  cy.get('[data-cy=fallback]').should('contain', 'Something went wrong.')
+})
+```
+
+</TabItem>
+<TabItem value="ErrorBoundary.vue">
+
+```html
+<template>
+  <div v-if="error" data-cy="fallback">Something went wrong.</div>
+  <slot v-else />
+</template>
+
+<script setup>
+import { ref, onErrorCaptured } from 'vue'
+
+const error = ref(null)
+
+onErrorCaptured((err) => {
+  error.value = err
+
+  // Returning false stops the error from propagating further up the Vue tree,
+  // but it still reaches Cypress as an uncaught exception.
+  return false
+})
+</script>
+```
+
+</TabItem>
+</Tabs>
+
+:::caution
+
+`onErrorCaptured` renders fallback UI, but it does **not** stop the error from
+propagating to Cypress. The `cy.on('uncaught:exception')` handler is required
+regardless of whether you use an error-capturing wrapper.
+
+:::
+
 ## Using Slots
 
 ### Default Slot
