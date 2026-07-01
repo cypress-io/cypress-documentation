@@ -1575,6 +1575,37 @@ import { registerCommands } from './commands'
 registerCommands()
 ```
 
+#### 7. Don't pre-bundle a shared command library for the browser
+
+When you extract custom commands into a shared package to reuse across projects,
+ship them as **source** (or type definitions) and let Cypress's file preprocessor
+bundle them. Do not pre-bundle the package with a Node-targeted bundler such as
+esbuild.
+
+Cypress bundles your support and spec files with its default preprocessor
+([`@cypress/webpack-batteries-included-preprocessor`](https://github.com/cypress-io/cypress/tree/develop/npm/webpack-batteries-included-preprocessor)),
+which injects a browser `process` shim and Node.js polyfills. Pre-bundling the
+library yourself bypasses that step, so Node-only code can leak into the browser
+bundle and fail at runtime with errors like `process is not defined`.
+
+Two things keep a shared command library browser-safe:
+
+- **Import `cypress` for its types only**, so the reference is erased at build
+  time and never pulls the Node CLI into your bundle. Use `import type` or a
+  triple-slash reference, and register commands against the runtime globals
+  (`Cypress`, `cy`):
+
+  ```typescript
+  import type { } from 'cypress'
+  // or: /// <reference types="cypress" />
+
+  Cypress.Commands.add('login', (email, password) => { ... })
+  ```
+
+- **Let Cypress preprocess the files.** Importing the library's source from your
+  support file (rather than a pre-built browser bundle) lets Cypress apply the
+  polyfills above.
+
 ## History
 
 | Version                                    | Changes                      |
