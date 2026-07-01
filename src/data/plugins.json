@@ -663,13 +663,6 @@
           "badge": "community"
         },
         {
-          "name": "cypress-plugin-dotenv",
-          "description": "Load .env variables in Cypress.",
-          "link": "https://github.com/MohamadKh75/cypress-plugin-dotenv",
-          "keywords": ["testing", "commands", ".env", "environment variables"],
-          "badge": "community"
-        },
-        {
           "name": "cypress-intercept-formdata",
           "description": "Work with Cypress' Intercept multipart/form-data requests",
           "link": "https://github.com/yoavniran/cypress-intercept-formdata",
