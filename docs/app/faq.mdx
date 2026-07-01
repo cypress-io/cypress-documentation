@@ -885,7 +885,7 @@ cy.get('iframe')
   // iframe to exist.
   .its('0.contentDocument.body')
   // Wait for the iframe document to finish rendering its content before
-  // continuing — otherwise you may query an empty body.
+  // continuing, otherwise you may query an empty body.
   .should('not.be.empty')
   // Re-wrap the raw DOM body so the rest of the chain is a Cypress subject
   // with built-in retry-ability.
@@ -937,7 +937,7 @@ cy.iframe('#my-iframe').find('[data-testid="submit"]').click()
 
 The community [`cypress-iframe`](https://www.npmjs.com/package/cypress-iframe)
 plugin (`cy.iframe()` / `cy.frameLoaded()` / `.iframe()`) essentially packages the
-patterns above — grabbing the frame's body and adding retries until it loads. For
+patterns above by grabbing the frame's body and adding retries until it loads. For
 most same-origin iframes on modern Cypress versions it is optional, but it can
 still be a convenient shorthand if you interact with many iframes.
 
@@ -951,7 +951,7 @@ still be a convenient shorthand if you interact with many iframes.
   [Cross-origin iframes](/app/guides/cross-origin-testing#Cross-origin-iframes) in
   the Cross Origin Testing guide.
 - **[`cy.origin()`](/api/commands/origin) does not help here.** `cy.origin()`
-  handles top-level navigation to another origin — it cannot reach into an
+  handles top-level navigation to another origin. It cannot reach into an
   embedded cross-origin `<iframe>`.
 - **Workaround for cross-origin iframes:** setting
   [`chromeWebSecurity`](/app/references/configuration#Browser) to `false` lets
