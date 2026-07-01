@@ -216,19 +216,6 @@
           "badge": "community"
         },
         {
-          "name": "cypress-browser-permissions",
-          "description": "Controls permissions for desktop notifications, geolocation, and other browser APIs",
-          "link": "https://github.com/kamranayub/cypress-browser-permissions",
-          "keywords": [
-            "permissions",
-            "notifications",
-            "geolocation",
-            "camera",
-            "microphone"
-          ],
-          "badge": "community"
-        },
-        {
           "name": "cypress-repeat",
           "description": "Run Cypress multiple times in a row, great at finding test flake.",
           "link": "https://github.com/bahmutov/cypress-repeat",
