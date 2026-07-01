@@ -1119,6 +1119,13 @@ cy.getIframeBody('#payment-frame').within(() => {
 })
 ```
 
+This works for **same-origin** iframes. Unlike Playwright's `frameLocator`,
+Cypress cannot reach into a **cross-origin** iframe unless you set
+[`chromeWebSecurity`](/app/references/configuration#Browser) to `false` in
+Chromium-family browsers. See
+[How do I test elements inside an iframe?](/app/faq#How-do-I-test-elements-inside-an-iframe)
+for the full details and restrictions.
+
 ## Shadow DOM
 
 For Shadow DOM in Cypress, you can traverse explicitly:

@@ -624,6 +624,59 @@ cy.createUser({
 })
 ```
 
+#### Query inside an iframe
+
+Cypress has no dedicated command for switching into an iframe, so a custom command
+is a convenient way to reuse the same-origin pattern of reading the frame's
+`contentDocument.body` and re-wrapping it with [`cy.wrap()`](/api/commands/wrap).
+The `.should('not.be.empty')` assertion waits for the frame's document to load
+before proceeding.
+
+<Tabs>
+<TabItem value="cypress/support/commands.js">
+
+```js
+Cypress.Commands.add('getIframeBody', (selector) => {
+  return cy
+    .get(selector)
+    .its('0.contentDocument.body')
+    .should('not.be.empty')
+    .then(cy.wrap)
+})
+```
+
+</TabItem>
+<TabItem value="cypress/support/commands.ts">
+
+```typescript
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      getIframeBody(selector: string): Chainable<JQuery<HTMLElement>>
+    }
+  }
+}
+
+Cypress.Commands.add('getIframeBody', (selector) => {
+  return cy
+    .get(selector)
+    .its('0.contentDocument.body')
+    .should('not.be.empty')
+    .then(cy.wrap)
+})
+```
+
+</TabItem>
+</Tabs>
+
+```js title="spec.cy.js"
+cy.getIframeBody('#my-iframe').find('[data-testid="submit"]').click()
+```
+
+This works for same-origin iframes only. For the cross-origin restrictions, see
+[How do I test elements inside an iframe?](/app/faq#How-do-I-test-elements-inside-an-iframe)
+in the FAQ.
+
 :::info
 
 <strong>Command Log</strong>
