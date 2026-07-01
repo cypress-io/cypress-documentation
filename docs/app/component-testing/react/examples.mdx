@@ -68,6 +68,131 @@ it('clicking + fires a change event with the incremented value', () => {
 })
 ```
 
+## Testing Error States
+
+When migrating from React Testing Library, you might expect to assert that
+mounting a component throws:
+
+```js
+// ❌ This does NOT work
+it('throws when data is missing', () => {
+  expect(() => cy.mount(<UserProfile />)).to.throw()
+})
+```
+
+This assertion silently passes without testing anything. `cy.mount()` is an
+asynchronous Cypress command: it _enqueues_ the mount and returns immediately,
+before the component ever renders. There is no synchronous error for
+`expect().to.throw()` to catch, so the assertion is meaningless (and
+`.not.to.throw()` would "pass" for the same reason).
+
+Instead, when a component throws during render, the error surfaces as an
+uncaught exception. By default Cypress fails the test on any uncaught
+exception, so to assert on a render error you listen for it with
+[`cy.on('uncaught:exception')`](/api/cypress-api/catalog-of-events#Uncaught-Exceptions)
+and return `false` to prevent Cypress from failing the test:
+
+```jsx
+import { UserProfile } from './UserProfile'
+
+it('surfaces a render error', () => {
+  cy.on('uncaught:exception', (err) => {
+    // Assert on the error thrown during render...
+    expect(err.message).to.include('user is required')
+
+    // ...and return false so Cypress does not fail the test.
+    return false
+  })
+
+  cy.mount(<UserProfile />)
+})
+```
+
+### Testing Error Boundaries
+
+The idiomatic way to handle render errors in React is an
+[Error Boundary](https://react.dev/reference/react/Component#catching-rendering-errors-with-an-error-boundary),
+which renders fallback UI via `getDerivedStateFromError()`. You can mount a
+component wrapped in your Error Boundary and assert that the fallback UI is
+displayed:
+
+<Tabs>
+<TabItem value="ErrorBoundary.cy.jsx">
+
+```jsx
+import { ErrorBoundary } from './ErrorBoundary'
+
+const errorMessage = 'I crashed!'
+const ChildWithError = () => {
+  throw new Error(errorMessage)
+}
+
+it('displays the fallback UI on error', () => {
+  // An Error Boundary renders fallback UI, but it does NOT stop the error
+  // from propagating to Cypress as an uncaught exception. Cypress fails on
+  // uncaught exceptions by default, so we must still suppress that behavior.
+  cy.on('uncaught:exception', (err) => {
+    // Only suppress the specific error we expect.
+    expect(err.message).to.include(errorMessage)
+
+    return false
+  })
+
+  cy.mount(
+    <ErrorBoundary name="ChildWithError">
+      <ChildWithError />
+    </ErrorBoundary>
+  )
+
+  cy.get('header h1').should('contain', 'Something went wrong.')
+})
+```
+
+</TabItem>
+<TabItem value="ErrorBoundary.jsx">
+
+```jsx
+import React from 'react'
+
+export class ErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = { error: null }
+  }
+
+  static getDerivedStateFromError(error) {
+    return { error }
+  }
+
+  render() {
+    const { name } = this.props
+    const { error } = this.state
+
+    if (error) {
+      return (
+        <header>
+          <h1>Something went wrong.</h1>
+          <h2>{`${name} failed to load`}</h2>
+        </header>
+      )
+    }
+
+    return this.props.children
+  }
+}
+```
+
+</TabItem>
+</Tabs>
+
+:::caution
+
+An Error Boundary renders fallback UI, but it does **not** stop the error from
+propagating to Cypress. The `cy.on('uncaught:exception')` handler is required
+regardless of whether you use an Error Boundary.
+
+:::
+
 ## Custom Mount Commands
 
 ### Customizing `cy.mount()`
