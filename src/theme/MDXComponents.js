@@ -7,6 +7,7 @@ import AutoCancellationBenefits from '@site/docs/partials/_auto-cancellation-ben
 import Badge from '@site/src/components/badge'
 import Btn from '@site/src/components/button'
 import ComponentOnlyBadge from '@site/src/components/component-only-badge'
+import ComponentTestingErrorStates from '@site/docs/partials/_component-testing-error-states.mdx'
 import TestReplayInfo from '@site/docs/partials/_test-replay-info.mdx'
 import CypressConfigFileTabs from '@site/src/components/cypress-config-file-tabs'
 import CypressInstallCommands from '@site/docs/partials/_cypress-install-commands.mdx'
@@ -181,6 +182,7 @@ export default {
   Badge,
   Btn,
   ComponentOnlyBadge,
+  ComponentTestingErrorStates,
   CypressConfigFileTabs,
   CypressInstallCommands,
   CypressCacheClearCommands,
