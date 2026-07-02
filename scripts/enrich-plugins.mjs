@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 // @ts-check
 /**
- * Enriches the curated plugin list (src/data/plugins.json) with live trust
- * signals pulled from the npm registry and GitHub, writing the result to
+ * Enriches the curated plugin list (src/data/plugins.json) with live signals
+ * pulled from the npm registry and GitHub, writing the result to
  * src/data/plugins-generated.json.
  *
  * The generated file is consumed by the PluginsList component and is committed

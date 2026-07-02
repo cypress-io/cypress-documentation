@@ -117,7 +117,7 @@ Each entry supports the following fields:
 | `badge`       | no       | One of `official`, `verified`, or `community` (defaults to `community`).                                                   |
 | `npm`         | no       | The npm package name. Set this only when it differs from `name` (for example an official monorepo package or scoped name). |
 
-Trust signals shown on each card — latest version, last published date, Cypress
+Signals shown on each card — latest version, last published date, Cypress
 compatibility, weekly downloads, and GitHub stars — are generated automatically
 into [`plugins-generated.json`](/src/data/plugins-generated.json) by
 `npm run enrich:plugins`. You do not need to edit that file by hand; it is
@@ -147,7 +147,7 @@ Each plugin submitted to the plugins list should have the following:
    - [bugs](https://docs.npmjs.com/cli/v11/configuring-npm/package-json#bugs) for the command [npm bugs](https://docs.npmjs.com/cli/v11/commands/npm-bugs)
 
 Categories are displayed alphabetically, and plugins are sorted within each
-category by trust tier and then by most recently published first (so the entry
+category by badge tier and then by most recently published first (so the entry
 order in `plugins.json` does not matter):
 
 - official (Cypress owned)

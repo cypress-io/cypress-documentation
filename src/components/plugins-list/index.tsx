@@ -24,7 +24,7 @@ const GENERATED = (generatedJSON && generatedJSON.plugins) || {}
 const BADGE_ORDER = ['official', 'verified', 'community', 'deprecated']
 const BADGE_RANK = Object.fromEntries(BADGE_ORDER.map((b, i) => [b, i]))
 
-/** Sort by trust tier (official → verified → community → deprecated), then by
+/** Sort by badge tier (official → verified → community → deprecated), then by
  *  most recently published first. Entries without a publish date sort last,
  *  with a stable alphabetical fallback. */
 function comparePlugins(a, b) {
@@ -88,7 +88,7 @@ function useMounted() {
   return mounted
 }
 
-/** Merge a plugin's curated entry with its generated trust metadata. */
+/** Merge a plugin's curated entry with its generated metadata. */
 function withMeta(plugin) {
   const meta = GENERATED[plugin.name] || {}
   const badge = meta.deprecated ? 'deprecated' : plugin.badge
@@ -108,7 +108,7 @@ function Badge({ badge }) {
   )
 }
 
-function TrustSignals({ meta }) {
+function Signals({ meta }) {
   // `stale` depends on the current date, so only evaluate it after mount to
   // keep server and client markup identical during hydration.
   const mounted = useMounted()
@@ -214,7 +214,7 @@ function PluginCard({ plugin, onSelectTag }) {
         </p>
       )}
 
-      <TrustSignals meta={meta} />
+      <Signals meta={meta} />
 
       <div className={s.keywords}>
         {plugin.keywords?.map((keyword, index) => (
@@ -374,10 +374,10 @@ export default function PluginsList() {
           className={s.select}
           value={badgeFilter}
           onChange={(e) => setBadgeFilter(e.target.value)}
-          aria-label="Filter by trust level"
+          aria-label="Filter by badge"
           data-cy="plugins-badge-filter"
         >
-          <option value="all">All trust levels</option>
+          <option value="all">All badges</option>
           {BADGE_ORDER.map((badge) => (
             <option key={badge} value={badge}>
               {badge[0].toUpperCase() + badge.slice(1)}

@@ -14,13 +14,13 @@ describe('Plugins list', () => {
     cy.get(resultCount).should('contain', 'Showing')
   })
 
-  it('explains every trust level in the badge legend', () => {
+  it('explains every badge in the legend', () => {
     cy.get('[aria-label="What the badges mean"]').within(() => {
       cy.contains('official').should('be.visible')
       cy.contains('verified').should('be.visible')
       cy.contains('community').should('be.visible')
       cy.contains('deprecated').should('be.visible')
-      // The key trust message for the largest group.
+      // The key message for the largest group.
       cy.contains('not reviewed by Cypress').should('be.visible')
     })
   })
@@ -91,7 +91,7 @@ describe('Plugins list', () => {
     })
   })
 
-  it('sorts each category by trust tier', () => {
+  it('sorts each category by badge tier', () => {
     cy.get(categoryFilter).select('Component Testing')
     const rank = { official: 0, verified: 1, community: 2, deprecated: 3 }
     cy.get('li.card').then(($cards) => {
@@ -109,7 +109,7 @@ describe('Plugins list', () => {
 
   it('lists no deprecated plugins', () => {
     // Deprecated plugins are curated out of the list, so filtering by the
-    // Deprecated trust level yields the empty state. (Enrichment auto-flags a
+    // The Deprecated badge yields the empty state. (Enrichment auto-flags a
     // plugin deprecated when it is unpublished/moved, which is the signal to
     // remove it here.)
     cy.get(badgeFilter).select('Deprecated')
@@ -123,7 +123,7 @@ describe('Plugins list', () => {
     cy.get('[data-cy="plugin-cypress-testing-library"]').should('not.exist')
   })
 
-  it('surfaces npm and version trust signals on a card', () => {
+  it('surfaces npm and version signals on a card', () => {
     cy.get(search).type('cucumber')
     cy.get('[data-cy="plugin-Cucumber"]').within(() => {
       cy.contains('Updated').should('be.visible')
