@@ -26,6 +26,20 @@ npm run test:plugins  # vitest unit tests for plugins/
 3. `npm run test:plugins` — only when you touched `plugins/`.
 4. `npm test` (with `npm run start` running) — for nav/routing or broad changes.
 
+## Pull requests
+
+When opening a PR, fill out **[`.github/pull_request_template.md`](./.github/pull_request_template.md)**
+(GitHub loads it into the PR body automatically). It is the historical record of
+the change: complete every section, explaining _why_ the change was made, not
+just _what_ changed.
+
+For a **release PR** (opened from a `releases/*` branch to document a specific
+product release), use the release template instead:
+**[`.github/PULL_REQUEST_TEMPLATE/release.md`](./.github/PULL_REQUEST_TEMPLATE/release.md)**.
+Select it by appending `?template=release.md` to the compare URL. Name the
+target release, list every included change, and make sure a new changelog entry
+is one of them.
+
 ## Rules
 
 Each rule is a hard convention. See the linked section for the how and why.
