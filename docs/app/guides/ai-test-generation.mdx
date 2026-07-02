@@ -510,11 +510,10 @@ cy.get('#tab-all').should('have.class', 'text-indigo-500')
 ## Pricing and usage limits
 
 Cypress Cloud meters [`cy.prompt`](/api/commands/prompt) usage at the organization
-level as **cy.prompt executions**. Each time a `cy.prompt` command runs in open
-mode or run mode counts as one execution. Plan limits apply per billing period
-and are pro-rated to your contract term. See the
-[cy.prompt FAQ](/cloud/faq#cyprompt) for execution counting, the grace period,
-limit behavior, and billing details.
+level as **cy.prompt executions**, with separate per-user hourly limits on runs
+that are not recording to Cypress Cloud. The
+[cy.prompt FAQ](/cloud/faq#cyprompt) is the full reference for execution counting,
+usage limits, the grace period, billing, and usage notifications.
 
 :::note
 
@@ -525,35 +524,6 @@ prior to the cutoff. See
 in the Cloud FAQ.
 
 :::
-
-The limits below apply to **runs that are not recording to Cypress Cloud** and
-supplement organization-level execution metering for local authoring workflows.
-
-There are two sets of limits: per-user hourly limits and per-prompt limits.
-
-### Per-user hourly limits
-
-_Usage limits only apply to runs that are not recording to Cypress Cloud._
-
-**User limits on projects with free accounts:**
-
-- 100 prompts per hour per user
-- 500 prompt steps per hour per user
-
-**User limits on projects with paid accounts (or on free trial):**
-
-- 600 prompts per hour per user
-- 3,000 prompt steps per hour per user
-
-### Per-prompt limits
-
-- Up to 50 steps per `cy.prompt` call to maintain context fidelity and produce reliable, executable commands.
-- System-wide limits apply to the total input length processed by `cy.prompt`. Very long prompts may be rejected or require splitting.
-
-To improve reliability and performance, consider the following:
-
-- Keep one action or assertion per step.
-- Split long flows into multiple `cy.prompt` calls.
 
 ## Privacy and security
 

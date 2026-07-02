@@ -747,6 +747,27 @@ has changed since the step last ran, so tests keep passing as the UI evolves. Wh
 [Self-healing](/app/guides/ai-test-generation#Self-healing) in the AI Test
 Generation guide.
 
+### <Icon name="angle-right" /> What are the cy.prompt usage limits?
+
+Beyond your plan's execution allowance, `cy.prompt` has two additional sets of
+limits.
+
+**Per-user hourly limits** apply only to runs that are not recording to Cypress
+Cloud:
+
+- Free accounts: 100 prompts per hour per user, and 500 prompt steps per hour per
+  user.
+- Paid accounts (or on a free trial): 600 prompts per hour per user, and 3,000
+  prompt steps per hour per user.
+
+**Per-prompt limits** apply to every `cy.prompt` call:
+
+- Up to 50 steps per call, to maintain context fidelity and produce reliable,
+  executable commands.
+- System-wide limits apply to the total input length. Very long prompts may be
+  rejected or require splitting. To stay within these limits, keep one action or
+  assertion per step and split long flows into multiple `cy.prompt` calls.
+
 ### <Icon name="angle-right" />My organization show as over limit during the `cy.prompt` grace period, will I be charged anything for this?
 
 No. There are no charges or limiting behavior related to any usage prior to the
