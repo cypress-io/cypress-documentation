@@ -106,6 +106,24 @@ data added to the [`plugins.json`](/src/data/plugins.json) file.
 Your plugin entry should have a name, description, link to the plugin's code (for example to a repository on GitHub),
 as well as any keywords.
 
+Each entry supports the following fields:
+
+| Field         | Required | Description                                                                                                                |
+| ------------- | -------- | -------------------------------------------------------------------------------------------------------------------------- |
+| `name`        | yes      | Display name. If the plugin is published to npm, this is usually the package name.                                         |
+| `description` | yes      | Short summary of what the plugin does. Basic HTML is allowed.                                                              |
+| `link`        | yes      | URL to the plugin's source or documentation.                                                                               |
+| `keywords`    | no       | Array of tags used for search and filtering.                                                                               |
+| `badge`       | no       | One of `official`, `verified`, or `community` (defaults to `community`).                                                   |
+| `npm`         | no       | The npm package name. Set this only when it differs from `name` (for example an official monorepo package or scoped name). |
+
+Trust signals shown on each card — latest version, last published date, Cypress
+compatibility, weekly downloads, and GitHub stars — are generated automatically
+into [`plugins-generated.json`](/src/data/plugins-generated.json) by
+`npm run enrich:plugins`. You do not need to edit that file by hand; it is
+refreshed from the npm registry and GitHub. Setting an accurate `npm` field is
+what lets the script find these signals for your plugin.
+
 We want to showcase plugins that work and have a good developer experience. This
 means that a good plugin generally has:
 
@@ -128,12 +146,17 @@ Each plugin submitted to the plugins list should have the following:
    - [repository](https://docs.npmjs.com/cli/v11/configuring-npm/package-json#repository) for the command [npm repo](https://docs.npmjs.com/cli/v11/commands/npm-repo)
    - [bugs](https://docs.npmjs.com/cli/v11/configuring-npm/package-json#bugs) for the command [npm bugs](https://docs.npmjs.com/cli/v11/commands/npm-bugs)
 
-Plugins are listed in the following order:
+Plugins are listed in the following order within each category:
 
 - official (Cypress owned)
 - verified (community owned and verified by Cypress)
 - community (community owned and unverified)
 - deprecated (npm registry missing, source repo archived or incompatible with v10+)
+
+The `deprecated` state is applied automatically by `npm run enrich:plugins` when
+a package is unpublished from npm, its npm entry is marked deprecated, or its
+source repository is archived. Deprecated plugins are flagged in the UI and are
+candidates for removal.
 
 ### Adding Pages
 

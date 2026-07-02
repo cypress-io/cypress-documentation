@@ -16,6 +16,7 @@
     "lint:markdown:fix": "prettier --write '**/*.{md,mdx}'",
     "lint:frontmatter": "node scripts/lint-frontmatter.js",
     "lint:frontmatter:fix": "node scripts/lint-frontmatter.js --fix",
+    "enrich:plugins": "node ./scripts/enrich-plugins.mjs",
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",
     "clear": "docusaurus clear",

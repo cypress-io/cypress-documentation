@@ -1,3 +1,7 @@
+.root {
+  margin-top: 1rem;
+}
+
 section {
   margin-bottom: 3rem;
 }
@@ -43,6 +47,8 @@ body ul.pluginsList li {
   padding: 20px;
   padding-top: 12px;
   margin: 0 !important;
+  display: flex;
+  flex-direction: column;
 }
 
 ul.pluginsList li p {
@@ -54,7 +60,7 @@ ul.pluginsList li p {
 }
 
 .pluginTitle {
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid var(--ifm-color-emphasis-200, #eee);
   margin-bottom: 0.6em;
 }
 
@@ -66,6 +72,8 @@ ul.pluginsList li p {
   padding-right: 0;
 }
 
+/* -------- Badges -------- */
+
 .badge {
   display: inline-block;
   color: #fff;
@@ -74,6 +82,7 @@ ul.pluginsList li p {
   font-weight: 700;
   padding: 0.25em 0.8em;
   line-height: 0.75rem;
+  text-transform: capitalize;
 }
 
 .badgePill {
@@ -97,8 +106,130 @@ ul.pluginsList li p {
   background-color: var(--ifm-color-red-600);
 }
 
+/* -------- Badge legend -------- */
+
+.legend {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 0.5rem 1.5rem;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 8px;
+  background-color: var(--ifm-background-surface-color);
+}
+
+.legendItem {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.legendText {
+  font-size: 0.85rem;
+  color: var(--ifm-color-emphasis-700);
+  line-height: 1.4;
+}
+
+/* -------- Controls -------- */
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.search {
+  flex: 1 1 260px;
+  min-width: 220px;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.95rem;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 6px;
+  background-color: var(--ifm-background-color);
+  color: var(--ifm-font-color-base);
+}
+
+.select {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.95rem;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 6px;
+  background-color: var(--ifm-background-color);
+  color: var(--ifm-font-color-base);
+  cursor: pointer;
+}
+
+.search:focus,
+.select:focus {
+  outline: 2px solid var(--ifm-color-primary);
+  outline-offset: 1px;
+}
+
+.resultCount {
+  font-size: 0.85rem;
+  color: var(--ifm-color-emphasis-600);
+  margin-bottom: 1.5rem;
+}
+
+.empty {
+  padding: 2rem;
+  text-align: center;
+  color: var(--ifm-color-emphasis-600);
+}
+
+/* -------- Trust signals -------- */
+
+.signals {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.6rem;
+  margin: 0.25rem 0 0.6rem;
+}
+
+.signal {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.75rem;
+  color: var(--ifm-color-emphasis-700);
+  background-color: var(--ifm-color-emphasis-100);
+  border-radius: 6px;
+  padding: 0.1rem 0.45rem;
+  white-space: nowrap;
+}
+
+a.signal:hover {
+  color: var(--ifm-color-primary);
+  text-decoration: none;
+  border-bottom: 0;
+}
+
+.signalStale {
+  color: var(--ifm-color-warning-darker, #8a6d00);
+  background-color: var(--ifm-color-warning-contrast-background, #fff8e6);
+}
+
+.deprecatedNotice {
+  font-size: 0.8rem;
+  color: var(--ifm-color-danger-darker, #a01c1c);
+  background-color: var(--ifm-color-danger-contrast-background, #fdecea);
+  border-radius: 6px;
+  padding: 0.4rem 0.6rem;
+  margin: 0 0 0.5rem !important;
+}
+
+/* -------- Keywords -------- */
+
+.keywords {
+  margin-top: auto;
+  padding-top: 0.4rem;
+}
+
 .keyword {
   font-weight: 300;
+  font-size: 0.85rem;
   color: var(--ifm-color-gray-800);
 
   html[data-theme='dark'] & {

@@ -12,8 +12,8 @@ hide_table_of_contents: true
 
 import PluginsList from '@site/src/components/plugins-list'
 
-Plugins provide a way to support and extend the behavior of Cypress. Follow
-these instructions to
+Plugins provide a way to support and extend the behavior of Cypress. This page
+lists plugins created by Cypress and the community. Follow these instructions to
 [submit your own plugin](https://github.com/cypress-io/cypress-documentation/blob/master/CONTRIBUTING.md#adding-plugins).
 
 :::info
@@ -25,4 +25,65 @@ Check out our [How to use Plugins](/app/plugins/plugins-guide) or our
 
 :::
 
+## Choosing a trustworthy plugin
+
+Each plugin is labeled with a badge that tells you who maintains it and whether
+Cypress has reviewed it:
+
+- <strong>Official</strong> — built and maintained by the Cypress team.
+- <strong>Verified</strong> — community-owned and reviewed by the Cypress team.
+- <strong>Community</strong> — community-owned and <strong>not</strong> reviewed
+  by Cypress.
+- <strong>Deprecated</strong> — no longer maintained, moved, or removed from
+  npm.
+
+:::caution
+
+Community plugins are contributed by third parties and are **not vetted,
+audited, or endorsed by Cypress**. You install and run them at your own risk.
+Before adding one to your project, take a moment to evaluate it.
+
+:::
+
+To help you decide, each entry surfaces live signals pulled from the npm
+registry and GitHub. When you're weighing a plugin, check that:
+
+- It was **published recently** — entries not updated in over 18 months are
+  flagged as potentially unmaintained.
+- It **supports your version of Cypress** (shown when the plugin declares it).
+- It has **healthy adoption** (weekly npm downloads and GitHub stars).
+- Its repository is **active** — browse the source, open issues, and
+  documentation before installing.
+
+Use the search box and filters below to narrow the list by keyword, category, or
+trust level.
+
 <PluginsList />
+
+## How plugins are reviewed
+
+Plugins are listed in order of trust within each category — **official**, then
+**verified**, then **community**, with **deprecated** entries flagged. To earn a
+place on this list, a plugin should have:
+
+- Its purpose articulated up front, an installation guide, and documented
+  options and API — users shouldn't have to read the source to get started.
+- Integration tests with Cypress that demonstrate real-world usage.
+- A CI pipeline and compatibility with at least the latest major version of
+  Cypress.
+- Populated npm `package.json` fields (`homepage`, `repository`, and `bugs`).
+
+See the [contributing guide](https://github.com/cypress-io/cypress-documentation/blob/master/CONTRIBUTING.md#adding-plugins)
+for the full criteria and how the **verified** badge is granted.
+
+## Keeping this list current
+
+The trust signals on each card (latest version, last published date, Cypress
+compatibility, downloads, and stars) are refreshed automatically from the npm
+registry and GitHub, so a plugin that stops being maintained becomes easy to
+spot. A plugin is marked **deprecated** — and eventually removed — when it is
+unpublished from npm, its source repository is archived, or it becomes
+incompatible with supported versions of Cypress.
+
+Found something out of date or a plugin that should be added or removed? Please
+[open a pull request or issue](https://github.com/cypress-io/cypress-documentation/blob/master/CONTRIBUTING.md#adding-plugins).
