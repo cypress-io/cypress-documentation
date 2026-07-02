@@ -270,13 +270,16 @@ export default function PluginsList() {
     controlsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
 
-  // Merge metadata once and keep the curated category structure.
+  // Merge metadata, sort plugins within each category, and list the categories
+  // themselves alphabetically.
   const categories = useMemo(
     () =>
-      pluginsJSON.plugins.map((category) => ({
-        ...category,
-        plugins: category.plugins.map(withMeta).sort(comparePlugins),
-      })),
+      pluginsJSON.plugins
+        .map((category) => ({
+          ...category,
+          plugins: category.plugins.map(withMeta).sort(comparePlugins),
+        }))
+        .sort((a, b) => a.name.localeCompare(b.name)),
     []
   )
 

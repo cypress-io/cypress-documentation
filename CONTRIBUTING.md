@@ -146,8 +146,9 @@ Each plugin submitted to the plugins list should have the following:
    - [repository](https://docs.npmjs.com/cli/v11/configuring-npm/package-json#repository) for the command [npm repo](https://docs.npmjs.com/cli/v11/commands/npm-repo)
    - [bugs](https://docs.npmjs.com/cli/v11/configuring-npm/package-json#bugs) for the command [npm bugs](https://docs.npmjs.com/cli/v11/commands/npm-bugs)
 
-Plugins are sorted within each category by trust tier, and then by most
-recently published first (so the entry order in `plugins.json` does not matter):
+Categories are displayed alphabetically, and plugins are sorted within each
+category by trust tier and then by most recently published first (so the entry
+order in `plugins.json` does not matter):
 
 - official (Cypress owned)
 - verified (community owned and verified by Cypress)

@@ -84,6 +84,13 @@ describe('Plugins list', () => {
     cy.get('[data-cy="plugin-cypress-vite"]').should('not.exist')
   })
 
+  it('lists categories in alphabetical order', () => {
+    cy.get('section[data-cy^="plugin-"] > h2').then(($h2) => {
+      const names = [...$h2].map((el) => el.textContent.trim())
+      expect(names).to.deep.equal([...names].sort((a, b) => a.localeCompare(b)))
+    })
+  })
+
   it('sorts each category by trust tier', () => {
     cy.get(categoryFilter).select('Component Testing')
     const rank = { official: 0, verified: 1, community: 2, deprecated: 3 }
