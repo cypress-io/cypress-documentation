@@ -1,6 +1,6 @@
 <!--
 Fill in every section. This template doubles as the historical record of the
-change, so future readers (and agents) can understand not just what changed but
+change, so future readers can understand not just what changed but
 why. Delete a section only if it is genuinely not applicable, and say so.
 -->
 
@@ -19,5 +19,5 @@ Closes #<!-- issue number, or remove this line if none -->
 
 ## Notes for reviewers
 
-<!-- Anything a human reviewer should focus on: decisions made, alternatives
+<!-- Anything a reviewer should focus on: decisions made, alternatives
 considered, areas of uncertainty, or follow-ups intentionally left out. -->
