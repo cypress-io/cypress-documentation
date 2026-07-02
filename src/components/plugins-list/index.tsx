@@ -22,6 +22,24 @@ function createMarkup(html) {
 const GENERATED = (generatedJSON && generatedJSON.plugins) || {}
 
 const BADGE_ORDER = ['official', 'verified', 'community', 'deprecated']
+const BADGE_RANK = Object.fromEntries(BADGE_ORDER.map((b, i) => [b, i]))
+
+/** Sort by trust tier (official → verified → community → deprecated), then by
+ *  most recently published first. Entries without a publish date sort last,
+ *  with a stable alphabetical fallback. */
+function comparePlugins(a, b) {
+  const ta = BADGE_RANK[a.badge] ?? BADGE_ORDER.length
+  const tb = BADGE_RANK[b.badge] ?? BADGE_ORDER.length
+  if (ta !== tb) return ta - tb
+  const da = a.meta?.lastPublished
+    ? Date.parse(a.meta.lastPublished)
+    : -Infinity
+  const db = b.meta?.lastPublished
+    ? Date.parse(b.meta.lastPublished)
+    : -Infinity
+  if (da !== db) return db - da
+  return a.name.localeCompare(b.name)
+}
 
 const BADGE_INFO = {
   official: 'Built and maintained by the Cypress team.',
@@ -257,7 +275,7 @@ export default function PluginsList() {
     () =>
       pluginsJSON.plugins.map((category) => ({
         ...category,
-        plugins: category.plugins.map(withMeta),
+        plugins: category.plugins.map(withMeta).sort(comparePlugins),
       })),
     []
   )

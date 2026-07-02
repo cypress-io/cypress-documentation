@@ -84,6 +84,22 @@ describe('Plugins list', () => {
     cy.get('[data-cy="plugin-cypress-vite"]').should('not.exist')
   })
 
+  it('sorts each category by trust tier', () => {
+    cy.get(categoryFilter).select('Component Testing')
+    const rank = { official: 0, verified: 1, community: 2, deprecated: 3 }
+    cy.get('li.card').then(($cards) => {
+      const ranks = [...$cards].map((card) => {
+        const badge = card
+          .querySelector('[class*="badge"]')
+          ?.textContent?.trim()
+          .toLowerCase()
+        return rank[badge] ?? 9
+      })
+      // Ranks appear in non-decreasing order (official → verified → community).
+      expect(ranks).to.deep.equal([...ranks].sort((a, b) => a - b))
+    })
+  })
+
   it('lists no deprecated plugins', () => {
     // Deprecated plugins are curated out of the list, so filtering by the
     // Deprecated trust level yields the empty state. (Enrichment auto-flags a
