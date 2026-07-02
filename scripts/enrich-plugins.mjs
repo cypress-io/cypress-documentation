@@ -87,15 +87,31 @@ function cypressCompat(versionManifest) {
   return undefined
 }
 
-/** Parse "owner/repo" out of a GitHub URL, or null. */
+/** Parse "owner/repo" out of a GitHub URL, or null. Subpath links
+ *  (`…/tree/…`, `…/blob/…`) are skipped: they point into a repo — often a
+ *  monorepo like cypress-io/cypress — where repo-level stars would reflect the
+ *  whole repo rather than the individual package. */
 function parseGitHub(link) {
   if (!link) return null
-  const m = /github\.com\/([^/]+)\/([^/#?]+)/i.exec(link)
+  const m = /github\.com\/([^/]+)\/([^/#?]+)(\/[^#?]*)?/i.exec(link)
   if (!m) return null
   const owner = m[1]
   const repo = m[2].replace(/\.git$/, '')
+  const rest = m[3] || ''
   if (owner === 'sponsors' || owner === 'marketplace') return null
+  if (/^\/(tree|blob)\//.test(rest)) return null
   return { owner, repo }
+}
+
+/** npm reserves removed package names under a `0.0.x-security` placeholder
+ *  described as "security holding package". Treat those as not published. */
+function isSecurityPlaceholder(latest, versionManifest) {
+  if (/-security$/.test(latest || '')) return true
+  const desc = versionManifest && versionManifest.description
+  return (
+    typeof desc === 'string' &&
+    desc.toLowerCase() === 'security holding package'
+  )
 }
 
 /**
@@ -111,9 +127,10 @@ function parseGitHub(link) {
 async function resolveNpm(plugin) {
   const candidates = []
   if (plugin.npm) candidates.push(plugin.npm)
-  // A plugin `name` that looks like a package specifier (lowercase, no spaces).
+  // Also try the display name when it looks like a package specifier (lowercase,
+  // no spaces). This is a fallback: if an explicit `npm` value is wrong or has
+  // been removed, a valid display name can still resolve.
   if (
-    !plugin.npm &&
     plugin.name &&
     !/\s/.test(plugin.name) &&
     /^(@[\w.-]+\/)?[\w.-]+$/.test(plugin.name) &&
@@ -125,7 +142,8 @@ async function resolveNpm(plugin) {
   let notFound = false
   for (const candidate of [...new Set(candidates)]) {
     const result = await npmManifest(candidate)
-    if (result.data) return { pkg: result.data.name, manifest: result.data }
+    if (result.data)
+      return { pkg: result.data.name, manifest: result.data, notFound: false }
     if (result.notFound) notFound = true
   }
   return { pkg: plugin.npm || null, manifest: null, notFound }
@@ -140,10 +158,13 @@ async function weeklyDownloads(pkg) {
   return data.downloads
 }
 
-/** Best-effort GitHub repo stats. */
+/** Best-effort GitHub repo stats. `applicable` is false when there's no usable
+ *  repo to query (missing link, or a subpath/monorepo link); `ok` is false on a
+ *  transient failure, so callers can preserve prior stats instead of dropping
+ *  them. */
 async function githubStats(link) {
   const gh = parseGitHub(link)
-  if (!gh) return {}
+  if (!gh) return { applicable: false, ok: false }
   const headers = process.env.GITHUB_TOKEN
     ? { authorization: `Bearer ${process.env.GITHUB_TOKEN}` }
     : {}
@@ -151,8 +172,10 @@ async function githubStats(link) {
     `${GITHUB_API}/repos/${gh.owner}/${gh.repo}`,
     headers
   )
-  if (!data || data.__status) return {}
+  if (!data || data.__status) return { applicable: true, ok: false }
   return {
+    applicable: true,
+    ok: true,
     stars:
       typeof data.stargazers_count === 'number'
         ? data.stargazers_count
@@ -162,54 +185,84 @@ async function githubStats(link) {
   }
 }
 
-/** Enrich a single plugin entry. Returns [name, metadata] or null. */
+/**
+ * Enrich a single plugin entry. Returns [name, metadata] or null.
+ *
+ * Metadata is rebuilt from scratch each run (rather than spreading the prior
+ * value) so a signal can never go stale. Each source's fields are only carried
+ * over from `existing` when that source fails *transiently* — a definitive 404
+ * or a healthy fresh fetch always wins.
+ */
 async function enrichPlugin(plugin, existing) {
-  const meta = { ...(existing || {}) }
-  const { pkg, manifest, notFound } = await resolveNpm(plugin)
+  const prior = existing || {}
+  const meta = {}
+  const markDeprecated = (reason) => {
+    meta.deprecated = true
+    if (!meta.deprecatedReason && reason) meta.deprecatedReason = reason
+  }
 
+  const { pkg, manifest, notFound } = await resolveNpm(plugin)
   if (pkg) meta.npm = pkg
 
+  // --- npm-registry-derived signals ---
   if (manifest) {
-    // Fresh registry data: recompute the derived deprecation state rather than
-    // trusting a possibly-stale value carried over from a previous run.
-    delete meta.deprecated
-    delete meta.deprecatedReason
     const latest = manifest['dist-tags'] && manifest['dist-tags'].latest
-    if (latest) {
+    const vm =
+      latest && manifest.versions ? manifest.versions[latest] : undefined
+    if (latest && isSecurityPlaceholder(latest, vm)) {
+      // npm is holding this name for security; the plugin is effectively gone.
+      markDeprecated(
+        'This npm package name is a security placeholder; the plugin is no longer published.'
+      )
+    } else if (latest) {
       meta.version = latest
       if (manifest.time && manifest.time[latest]) {
         meta.lastPublished = manifest.time[latest]
       }
-      const versionManifest = manifest.versions && manifest.versions[latest]
-      const compat = cypressCompat(versionManifest)
+      const compat = cypressCompat(vm)
       if (compat) meta.cypressVersion = compat
-      // npm-level deprecation on the latest version.
-      if (versionManifest && typeof versionManifest.deprecated === 'string') {
-        meta.deprecated = true
-        meta.deprecatedReason = versionManifest.deprecated
-      }
+      if (vm && typeof vm.deprecated === 'string') markDeprecated(vm.deprecated)
+      const dl = await weeklyDownloads(pkg)
+      if (typeof dl === 'number') meta.weeklyDownloads = dl
+      else if (prior.weeklyDownloads !== undefined)
+        meta.weeklyDownloads = prior.weeklyDownloads
     }
-  } else if (pkg && meta.npm && notFound) {
-    // The package definitively 404s (removed/unpublished) -> deprecated. A
-    // transient registry failure leaves any prior metadata untouched instead.
-    meta.deprecated = true
-    meta.deprecatedReason =
-      meta.deprecatedReason || 'Package not found on the npm registry.'
+  } else if (pkg && notFound) {
+    // Definitively removed from npm -> deprecated. Deliberately drop any prior
+    // version/date/compat so a card never shows a deprecation notice alongside
+    // stale "freshness" signals.
+    markDeprecated('Package not found on the npm registry.')
+  } else if (pkg) {
+    // Transient registry failure for a known package -> keep prior npm signals.
+    for (const k of [
+      'version',
+      'lastPublished',
+      'cypressVersion',
+      'weeklyDownloads',
+    ]) {
+      if (prior[k] !== undefined) meta[k] = prior[k]
+    }
+    if (prior.deprecated) markDeprecated(prior.deprecatedReason)
   }
 
-  if (pkg) {
-    const dl = await weeklyDownloads(pkg)
-    if (typeof dl === 'number') meta.weeklyDownloads = dl
-  }
-
+  // --- GitHub-derived signals ---
   const gh = await githubStats(plugin.link)
-  if (typeof gh.stars === 'number') meta.stars = gh.stars
-  if (gh.pushedAt) meta.repoPushedAt = gh.pushedAt
-  if (gh.archived) {
-    meta.archived = true
-    meta.deprecated = true
-    meta.deprecatedReason =
-      meta.deprecatedReason || 'Source repository is archived.'
+  if (gh.ok) {
+    if (typeof gh.stars === 'number') meta.stars = gh.stars
+    if (gh.pushedAt) meta.repoPushedAt = gh.pushedAt
+    if (gh.archived) {
+      meta.archived = true
+      markDeprecated('Source repository is archived.')
+    }
+  } else if (gh.applicable) {
+    // Transient GitHub failure -> keep prior stats (incl. an archived flag, so
+    // an archived repo isn't silently un-deprecated just because GitHub failed).
+    if (prior.stars !== undefined) meta.stars = prior.stars
+    if (prior.repoPushedAt !== undefined) meta.repoPushedAt = prior.repoPushedAt
+    if (prior.archived) {
+      meta.archived = true
+      markDeprecated('Source repository is archived.')
+    }
   }
 
   return Object.keys(meta).length ? [plugin.name, meta] : null

@@ -213,17 +213,6 @@
       "lastPublished": "2021-02-02T18:40:01.242Z",
       "cypressVersion": "^5.2.0"
     },
-    "@this-dot/cypress-indexeddb": {
-      "npm": "@this-dot/cypress-indexeddb",
-      "version": "2.0.1",
-      "lastPublished": "2023-03-18T14:55:25.613Z",
-      "cypressVersion": "> 12.6.0"
-    },
-    "cy-mobile-commands": {
-      "npm": "cy-mobile-commands",
-      "version": "0.3.0",
-      "lastPublished": "2021-10-31T17:01:10.627Z"
-    },
     "cy-spok": {
       "npm": "cy-spok",
       "version": "1.7.0",
@@ -242,12 +231,6 @@
       "lastPublished": "2024-06-17T11:03:13.954Z",
       "cypressVersion": "^13.11.0"
     },
-    "cypress-dragndrop-kit": {
-      "npm": "cypress-dragndrop-kit",
-      "version": "1.1.0",
-      "lastPublished": "2025-08-22T11:57:58.013Z",
-      "cypressVersion": "^15.0.0"
-    },
     "cypress-env": {
       "npm": "cypress-env",
       "version": "2.0.1",
@@ -265,35 +248,11 @@
       "lastPublished": "2026-05-22T00:18:27.876Z",
       "cypressVersion": "15.15.0"
     },
-    "cypress-localstorage-commands": {
-      "npm": "cypress-localstorage-commands",
-      "version": "2.3.0",
-      "lastPublished": "2026-03-16T10:45:35.731Z",
-      "cypressVersion": ">=2.1.0"
-    },
     "cypress-plugin-steps": {
       "npm": "cypress-plugin-steps",
       "version": "1.2.1",
       "lastPublished": "2025-05-28T11:06:44.337Z",
       "cypressVersion": ">=10"
-    },
-    "cypress-plugin-tab": {
-      "npm": "cypress-plugin-tab",
-      "version": "2.0.0",
-      "lastPublished": "2026-03-02T20:34:48.410Z",
-      "cypressVersion": ">=10"
-    },
-    "cypress-real-dnd": {
-      "npm": "cypress-real-dnd",
-      "version": "0.1.4",
-      "lastPublished": "2026-06-26T13:37:43.444Z",
-      "cypressVersion": ">=12"
-    },
-    "cypress-real-events": {
-      "npm": "cypress-real-events",
-      "version": "1.15.0",
-      "lastPublished": "2025-09-05T11:48:36.585Z",
-      "cypressVersion": "^4.x || ^5.x || ^6.x || ^7.x || ^8.x || ^9.x || ^10.x || ^11.x || ^12.x || ^13.x || ^14.x || ^15.x"
     },
     "cypress-recurse": {
       "npm": "cypress-recurse",
@@ -354,6 +313,18 @@
       "version": "2.1.8",
       "lastPublished": "2025-02-10T15:21:04.121Z",
       "cypressVersion": "^14.0.1"
+    },
+    "cypress-localstorage-commands": {
+      "npm": "cypress-localstorage-commands",
+      "version": "2.3.0",
+      "lastPublished": "2026-03-16T10:45:35.731Z",
+      "cypressVersion": ">=2.1.0"
+    },
+    "@this-dot/cypress-indexeddb": {
+      "npm": "@this-dot/cypress-indexeddb",
+      "version": "2.0.1",
+      "lastPublished": "2023-03-18T14:55:25.613Z",
+      "cypressVersion": "> 12.6.0"
     },
     "cypress-a11y-report": {
       "npm": "cypress-a11y-report",
@@ -511,6 +482,35 @@
       "version": "1.3.0",
       "lastPublished": "2022-09-22T11:48:27.931Z",
       "cypressVersion": "^9.5.0"
+    },
+    "cypress-real-events": {
+      "npm": "cypress-real-events",
+      "version": "1.15.0",
+      "lastPublished": "2025-09-05T11:48:36.585Z",
+      "cypressVersion": "^4.x || ^5.x || ^6.x || ^7.x || ^8.x || ^9.x || ^10.x || ^11.x || ^12.x || ^13.x || ^14.x || ^15.x"
+    },
+    "cypress-real-dnd": {
+      "npm": "cypress-real-dnd",
+      "version": "0.1.4",
+      "lastPublished": "2026-06-26T13:37:43.444Z",
+      "cypressVersion": ">=12"
+    },
+    "cypress-dragndrop-kit": {
+      "npm": "cypress-dragndrop-kit",
+      "version": "1.1.0",
+      "lastPublished": "2025-08-22T11:57:58.013Z",
+      "cypressVersion": "^15.0.0"
+    },
+    "cy-mobile-commands": {
+      "npm": "cy-mobile-commands",
+      "version": "0.3.0",
+      "lastPublished": "2021-10-31T17:01:10.627Z"
+    },
+    "cypress-plugin-tab": {
+      "npm": "cypress-plugin-tab",
+      "version": "2.0.0",
+      "lastPublished": "2026-03-02T20:34:48.410Z",
+      "cypressVersion": ">=10"
     }
   }
 }
