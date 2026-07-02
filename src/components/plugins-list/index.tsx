@@ -7,7 +7,6 @@ import {
   faStar,
   faExclamationTriangle,
 } from '@fortawesome/free-solid-svg-icons'
-import { faNpm } from '@fortawesome/free-brands-svg-icons'
 import s from './style.module.css'
 // @ts-ignore
 import pluginsJSON from '@site/src/data/plugins.json'
@@ -101,7 +100,6 @@ function TrustSignals({ meta }) {
         rel="noopener noreferrer"
         title="View on npm"
       >
-        <FontAwesomeIcon icon={faNpm} />
         <span>
           {meta.npm}
           {meta.version ? `@${meta.version}` : ''}
