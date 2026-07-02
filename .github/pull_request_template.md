@@ -17,13 +17,6 @@ here so the reasoning survives after the source is gone. -->
 
 Closes #<!-- issue number, or remove this line if none -->
 
-## Author
-
-<!-- Who or what produced this change, for historical context. -->
-
-- [ ] AI agent (name/model: <!-- e.g. Claude Code -->), reviewed by a human
-- [ ] Human
-
 ## Notes for reviewers
 
 <!-- Anything a human reviewer should focus on: decisions made, alternatives

@@ -31,8 +31,7 @@ npm run test:plugins  # vitest unit tests for plugins/
 When opening a PR, fill out **[`.github/pull_request_template.md`](./.github/pull_request_template.md)**
 (GitHub loads it into the PR body automatically). It is the historical record of
 the change, so most PRs here are agent-authored and human-reviewed: complete
-every section, explaining _why_ the change was made, and mark yourself as the AI
-author under **Author** so the provenance is clear.
+every section, explaining _why_ the change was made, not just _what_ changed.
 
 ## Rules
 
