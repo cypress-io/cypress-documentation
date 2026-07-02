@@ -743,7 +743,7 @@ page. For migrating from `cy.prompt` to regular Cypress code, see the
 ### <Icon name="angle-right" /> What is AI self-healing?
 
 [`cy.prompt`](/api/commands/prompt) self-heals a step when the element it needs
-has changed since the step last ran, so tests keep passing as the UI evolves. When possible, the step may self-heal from a cache of previously-successful selectors for the element referenced that spec. If no good selector exists, `cy.prompt` will create a new one using AI to find the appropriate element. See
+has changed since the step last ran, so tests keep passing as the UI evolves. When possible, the step may self-heal from a cache of previously-successful selectors for the element referenced in that spec. If no good selector exists, `cy.prompt` will create a new one using AI to find the appropriate element. See
 [Self-healing](/app/guides/ai-test-generation#Self-healing) in the AI Test
 Generation guide.
 
