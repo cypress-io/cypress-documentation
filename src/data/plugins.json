@@ -679,20 +679,6 @@
           "badge": "community"
         },
         {
-          "name": "WordPress ReactJS Boilerplate",
-          "description": "Complete WordPress Plugin Boilerplate including Cypress.io E2E tests.",
-          "link": "https://github.com/matzeeable/wp-reactjs-starter",
-          "keywords": ["wp", "wordpress"],
-          "badge": "community"
-        },
-        {
-          "name": "Next Right Now - Next.js Boilerplate",
-          "description": "Next.js boilerplate with Jest/Cypress and CI/CD pipeline built-in (monorepo, multi-tenants).",
-          "link": "https://github.com/UnlyEd/next-right-now",
-          "keywords": ["next.js", "react", "monorepo", "multi-tenants"],
-          "badge": "community"
-        },
-        {
           "name": "cypress-rails",
           "description": "Ruby gem to run Cypress against Rails apps, replacing Capybara in system tests.",
           "link": "https://github.com/testdouble/cypress-rails",
