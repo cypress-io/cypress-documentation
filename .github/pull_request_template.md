@@ -17,13 +17,6 @@ here so the reasoning survives after the source is gone. -->
 
 Closes #<!-- issue number, or remove this line if none -->
 
-## Changes
-
-<!-- A short bulleted list of the concrete edits: pages added/edited/moved,
-components touched, partials changed, redirects added, etc. -->
-
--
-
 ## Verification
 
 <!-- Check what you ran. See the "Verify ladder" in AGENTS.md. Paste relevant
