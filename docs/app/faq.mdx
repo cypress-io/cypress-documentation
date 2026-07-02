@@ -1,6 +1,6 @@
 ---
 title: 'Frequently asked questions: Cypress App'
-description: 'Get answers to common questions about Cypress, including general questions, how-to questions, and more.'
+description: 'Get answers to common questions about Cypress, including cy.prompt, how-to questions, and more.'
 sidebar_label: FAQ
 sidebar_position: 200
 ---
@@ -1868,3 +1868,34 @@ files inside that folder should use.
 Don't forget to update your
 [`specPattern`](/app/references/configuration#component)
 to include the new file location.
+
+## cy.prompt
+
+The `cy.prompt` command supports natural language testing directly within the Cypress App. It requires a free or paid Cypress Cloud account. For Cloud-related `cy.prompt` execution limits, billing, and usage information, see the [Cloud FAQ](/cloud/faq#cyprompt).
+
+### <Icon name="angle-right" /> What happens when AI is disabled for my organization and the `cy.prompt` is called in the app?
+
+Any **pre-existing** prompt commands and steps that are called in the app will attempt to run based on previously cached generated code. AI-dependent functionality will no longer work. This includes most self-healing behavior and
+the creation of new prompt commands.
+
+### <Icon name="angle-right" /> How do I migrate from cy.prompt code to regular Cypress code?
+
+If you plan to do this as you write tests, use the **Code** button in the
+Cypress App's command log. It gives you the code for any prompt and allows you to
+save it. This represents an author-only use of `cy.prompt`.
+
+If you plan to do this after tests have been recorded, download a full report of
+all the test code and related `cy.prompt` steps, and where they are located in
+your test suite. This is available in the **Properties** tab in the cy.prompt
+area for a specific run. See
+[View and export generated code](/app/guides/ai-test-generation#View-and-export-generated-code)
+for step-by-step instructions.
+
+### <Icon name="angle-right" /> What limitations does cy.prompt have?
+
+See the [Limitations](/api/commands/prompt#Limitations) section in the
+[`cy.prompt` API reference](/api/commands/prompt) to learn what commands and
+other techniques are not supported.
+
+Review the steps of your generated tests to confirm they are behaving as
+intended, especially if attempting steps that are documented as not supported.
