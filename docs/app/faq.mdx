@@ -1875,12 +1875,8 @@ The `cy.prompt` command supports natural language testing directly within the Cy
 
 ### <Icon name="angle-right" /> What happens when AI is disabled for my organization and the `cy.prompt` is called in the app?
 
-Any **pre-existing** prompt commands and steps that are called in the app will function based on previously cached generated code, but operations that
-require AI to function will fail. This includes most self-healing behavior and
-the creation of new prompt commands. This minimizes disruption if you have chosen to disable AI after creating some natural language tests.
-
-Organization admins and owners can enable or disable AI capabilities from
-[organization settings](/cloud/account-management/organizations#Manage-Cloud-AI).
+Any **pre-existing** prompt commands and steps that are called in the app will attempt to run based on previously cached generated code. AI-dependent functionality will no longer work. This includes most self-healing behavior and
+the creation of new prompt commands.
 
 ### <Icon name="angle-right" /> How do I migrate from cy.prompt code to regular Cypress code?
 
