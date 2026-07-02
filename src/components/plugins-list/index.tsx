@@ -23,27 +23,20 @@ const BADGE_INFO = {
     'No longer maintained, moved, or removed from npm. Look for an alternative.',
 }
 
-const MONTHS = [
-  'Jan',
-  'Feb',
-  'Mar',
-  'Apr',
-  'May',
-  'Jun',
-  'Jul',
-  'Aug',
-  'Sep',
-  'Oct',
-  'Nov',
-  'Dec',
-]
+// Fixed locale + UTC so the server and client render the same string (no
+// hydration mismatch). Intl is built in, so no date library is needed.
+const monthYearFormatter = new Intl.DateTimeFormat('en-US', {
+  month: 'short',
+  year: 'numeric',
+  timeZone: 'UTC',
+})
 
-/** Deterministic "Mon YYYY" so server and client render identically. */
+/** Format an ISO date as e.g. "Jun 2026". */
 function formatMonthYear(iso) {
   if (!iso) return null
   const d = new Date(iso)
   if (Number.isNaN(d.getTime())) return null
-  return `${MONTHS[d.getUTCMonth()]} ${d.getUTCFullYear()}`
+  return monthYearFormatter.format(d)
 }
 
 function monthsSince(iso) {
