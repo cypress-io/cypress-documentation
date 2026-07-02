@@ -144,7 +144,7 @@ function TrustSignals({ meta }) {
         className={clsx(s.signal, stale && s.signalStale)}
         title={
           stale
-            ? 'Not published in over 18 months — may be unmaintained.'
+            ? 'Not published in over 18 months; may be unmaintained.'
             : 'Latest npm publish date.'
         }
       >
