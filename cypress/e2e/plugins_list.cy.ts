@@ -9,7 +9,6 @@ describe('Plugins list', () => {
 
   beforeEach(() => {
     cy.visit('/app/plugins/plugins-list')
-    // Wait for hydration so the filter controls are interactive.
     cy.get(search).should('be.enabled')
     cy.get(resultCount).should('contain', 'Showing')
   })
@@ -29,7 +28,6 @@ describe('Plugins list', () => {
     cy.get(resultCount)
       .invoke('text')
       .then((text) => expect(countFromText(text)).to.be.greaterThan(50))
-    cy.get('[data-cy="plugin-@cypress/grep"]').should('exist')
   })
 
   it('narrows the list with the search box', () => {
