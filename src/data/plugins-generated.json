@@ -319,11 +319,6 @@
       "lastPublished": "2024-06-19T21:59:44.657Z",
       "cypressVersion": ">13.0.0"
     },
-    "cypress-graphql": {
-      "npm": "cypress-graphql",
-      "version": "0.0.1-security",
-      "lastPublished": "2023-03-21T22:50:47.582Z"
-    },
     "cypress-har-generator": {
       "npm": "@neuralegion/cypress-har-generator",
       "version": "5.17.1",
@@ -354,8 +349,11 @@
       "lastPublished": "2026-05-15T20:52:42.185Z",
       "cypressVersion": "15.13.0"
     },
-    "cypress-sql": {
-      "npm": "cypress-sql"
+    "@dankieu/cypress-sql": {
+      "npm": "@dankieu/cypress-sql",
+      "version": "2.1.8",
+      "lastPublished": "2025-02-10T15:21:04.121Z",
+      "cypressVersion": "^14.0.1"
     },
     "cypress-a11y-report": {
       "npm": "cypress-a11y-report",

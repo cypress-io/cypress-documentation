@@ -21,7 +21,7 @@
         },
         {
           "name": "Cucumber",
-          "description": "Run cucumber/gherkin-syntaxed specs with cypress.io.",
+          "description": "Run Cucumber/Gherkin-syntax specs with Cypress.",
           "link": "https://github.com/badeball/cypress-cucumber-preprocessor",
           "keywords": ["file-watcher", "cucumber"],
           "badge": "community",
@@ -36,7 +36,7 @@
         },
         {
           "name": "cypress-vite",
-          "description": "Cypress preproccessor for running specs using vite.",
+          "description": "Cypress preprocessor for running specs using Vite.",
           "link": "https://github.com/mammadataei/cypress-vite",
           "keywords": ["vite"],
           "badge": "community"
@@ -417,7 +417,7 @@
         },
         {
           "name": "cypress-env",
-          "description": " This utility simplifies the process of handling different environments (such as test, staging, and production) by providing a environment-specific settings in your Cypress tests.",
+          "description": "This utility simplifies the process of handling different environments (such as test, staging, and production) by providing environment-specific settings in your Cypress tests.",
           "link": "https://github.com/alecmestroni/cypress-env",
           "keywords": [
             "multi",
@@ -530,13 +530,6 @@
           "badge": "community"
         },
         {
-          "name": "cypress-graphql",
-          "description": "Custom commands to stub, spy, or test GraphQL operations.",
-          "link": "https://github.com/Shopify/cypress-graphql",
-          "keywords": ["graphql", "mocking", "networking", "commands"],
-          "badge": "community"
-        },
-        {
           "name": "cypress-har-generator",
           "description": "Generate HTTP Archive (HAR) while running tests.",
           "link": "https://github.com/NeuraLegion/cypress-har-generator",
@@ -606,8 +599,8 @@
           "badge": "community"
         },
         {
-          "name": "cypress-sql",
-          "description": "The @dankieu/cypress-sql package supports the following database connections Sql server, Mysql, OracleDB, Postgress",
+          "name": "@dankieu/cypress-sql",
+          "description": "Cypress commands to query SQL Server, MySQL, OracleDB, and Postgres databases.",
           "link": "https://github.com/testervippro/cypress-sql",
           "keywords": ["sql", "database", "test", "commands", "oracle"],
           "badge": "community"
@@ -932,7 +925,7 @@
           "name": "cypress-mailpit",
           "description": "A collection of useful Cypress commands for testing Emails utilizing the Mailpit RestAPI. Comes with TypeScript support",
           "link": "https://github.com/pushpak1300/cypress-mailpit",
-          "keywords": ["mailpit", "email", "test", "commands", "email"],
+          "keywords": ["mailpit", "email", "test", "commands"],
           "badge": "community"
         },
         {
