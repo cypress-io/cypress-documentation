@@ -425,8 +425,7 @@
             "wait-until",
             "recursive-promise",
             "check-async-value",
-            "check-value",
-            "open-source-saturday"
+            "check-value"
           ],
           "badge": "verified"
         },
