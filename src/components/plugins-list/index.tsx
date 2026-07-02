@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faClock,
@@ -166,7 +166,7 @@ function TrustSignals({ meta }) {
   return <div className={s.signals}>{items}</div>
 }
 
-function PluginCard({ plugin }) {
+function PluginCard({ plugin, onSelectTag }) {
   const { meta } = plugin
   return (
     <li className="card" data-cy={`plugin-${plugin.name}`}>
@@ -199,10 +199,19 @@ function PluginCard({ plugin }) {
 
       <div className={s.keywords}>
         {plugin.keywords?.map((keyword, index) => (
-          <span key={index} className={s.keyword}>
-            {' '}
+          <a
+            key={index}
+            className={s.keyword}
+            href={`?search=${encodeURIComponent(keyword)}`}
+            onClick={(e) => {
+              e.preventDefault()
+              onSelectTag(keyword)
+            }}
+            title={`Search plugins tagged "${keyword}"`}
+            data-cy="plugin-tag"
+          >
             #{keyword}
-          </span>
+          </a>
         ))}
       </div>
     </li>
@@ -213,6 +222,33 @@ export default function PluginsList() {
   const [query, setQuery] = useState('')
   const [badgeFilter, setBadgeFilter] = useState('all')
   const [categoryFilter, setCategoryFilter] = useState('all')
+  const controlsRef = useRef(null)
+
+  // Seed the search from a shareable `?search=` param on load. Done in an
+  // effect (not the initial state) so server and client first render agree.
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    const initial = new URLSearchParams(window.location.search).get('search')
+    if (initial) setQuery(initial)
+  }, [])
+
+  // Update the search and reflect it in the URL so the current filter is
+  // linkable, without triggering a navigation.
+  const applyQuery = (value) => {
+    setQuery(value)
+    if (typeof window === 'undefined') return
+    const url = new URL(window.location.href)
+    if (value) url.searchParams.set('search', value)
+    else url.searchParams.delete('search')
+    window.history.replaceState(null, '', url)
+  }
+
+  // Clicking a keyword tag filters the list by that tag and scrolls back to
+  // the controls so the applied search is visible.
+  const selectTag = (tag) => {
+    applyQuery(tag)
+    controlsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
 
   // Merge metadata once and keep the curated category structure.
   const categories = useMemo(
@@ -270,13 +306,13 @@ export default function PluginsList() {
         ))}
       </div>
 
-      <div className={s.controls}>
+      <div className={s.controls} ref={controlsRef}>
         <input
           type="search"
           className={s.search}
           placeholder="Search plugins by name, keyword, or description…"
           value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          onChange={(e) => applyQuery(e.target.value)}
           aria-label="Search plugins"
           data-cy="plugins-search"
         />
@@ -335,7 +371,11 @@ export default function PluginsList() {
 
             <ul className={clsx(s.pluginsList, '!pl-0')}>
               {category.plugins.map((plugin) => (
-                <PluginCard key={plugin.name} plugin={plugin} />
+                <PluginCard
+                  key={plugin.name}
+                  plugin={plugin}
+                  onSelectTag={selectTag}
+                />
               ))}
             </ul>
           </section>

@@ -48,6 +48,17 @@ describe('Plugins list', () => {
       })
   })
 
+  it('filters the list when a keyword tag is clicked', () => {
+    cy.get('[data-cy="plugin-cypress-axe"]')
+      .contains('a', '#accessibility')
+      .click()
+    cy.get(search).should('have.value', 'accessibility')
+    cy.get('[data-cy="plugin-cypress-axe"]').should('be.visible')
+    cy.get('[data-cy="plugin-cypress-vite"]').should('not.exist')
+    // The applied search is reflected in a shareable URL.
+    cy.location('search').should('contain', 'search=accessibility')
+  })
+
   it('shows an empty state when nothing matches', () => {
     cy.get(search).type('zzzznotarealpluginxyz')
     cy.get(resultCount).should('contain', 'Showing 0 plugins')
