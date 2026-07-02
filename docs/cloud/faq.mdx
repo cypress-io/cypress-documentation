@@ -786,23 +786,21 @@ the plan has 2,000 built-in cy.prompt executions for the year, you would have
 
 ### <Icon name="angle-right" /> What happens when I exceed my allowed limit of cy.prompt executions?
 
-You will see warnings in the Cypress Cloud UI in the lead-up to exceeding your
-limit, and after it is crossed.
+You will see warnings in the Cypress Cloud UI as you approach your limit, and
+after you cross it.
 
 On a paid plan:
 
-- There is no functional disruption and no automatic charges for moderate
-  executions over your limit.
-- We ask you to proactively right-size your plan to match your usage.
-- Outside of cases where this process is abused, you will not experience
-  unexpected changes in behavior or costs from running in excess of the defined
-  limit.
+- Your tests and `cy.prompt` will run normally. You will not be charged for
+  prompt executions over your plan's limit.
+- If you regularly go over your limit, we ask that you update your plan to
+  match your usage.
 
 On a free plan:
 
-- AI self-healing and new prompt creation will be disabled for the remainder of
-  the monthly renewal cycle.
-- When your plan renews, these functions will work normally again.
+- AI self-healing and new prompt creation will be turned off for the rest of
+  your monthly billing cycle.
+- When your plan renews, these features will work again.
 
 ### <Icon name="angle-right" /> What happens when AI is disabled for my organization?
 
