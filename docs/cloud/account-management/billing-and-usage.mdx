@@ -93,6 +93,8 @@ The **AI Prompts** card tracks [cy.prompt](/api/commands/prompt) usage in your o
 
 The "Prompt execution" information conveys how many times the [cy.prompt](/api/commands/prompt) command has been executed in your organization, either on developer machines or in CI. Each [cy.prompt](/api/commands/prompt) command can define more than one step to be executed. We also break down the number of commands that took place in "Open mode" or in "Run mode". Together this tells you not just how much AI is being used, but _where_: whether developers are authoring tests interactively, or whether self-healing is running in CI, so you can see how your team is putting AI to work.
 
+For limit behavior, the grace period, and what happens when you exceed your allowance, see [cy.prompt](/cloud/faq#cyprompt) in the Cloud FAQ.
+
 ### Usage over time
 
 Click the **Usage details** button in order to view graphs of your cy.prompt AI usage.
@@ -115,7 +117,7 @@ The **By project** tab shows your prompt usage per project during the selected b
 
 ## Usage notification
 
-A **usage notification** emails your organization's owner and admins when your recorded test results reach a number you choose in the current billing cycle. Instead of remembering to check this page, you get told when you are approaching your limit, so you can upgrade or adjust before [parallelization is disabled and new results are hidden](/cloud/faq#What-happens-once-I-reach-the-test-results-limit). That early warning is the difference between a planned upgrade and a surprise interruption to your CI feedback, and it keeps owners and admins aware of usage trends without anyone having to monitor the dashboard manually.
+A **usage notification** emails your organization's owner and admins when your recorded test results reach a number you choose in the current billing cycle. You can also set thresholds for [`cy.prompt`](/api/commands/prompt) execution usage on this page. See [Can I be notified of usage approaching limits?](/cloud/faq#Can-I-be-notified-of-usage-approaching-limits) in the Cloud FAQ. Instead of remembering to check this page, you get told when you are approaching your limit, so you can upgrade or adjust before [parallelization is disabled and new results are hidden](/cloud/faq#What-happens-once-I-reach-the-test-results-limit). That early warning is the difference between a planned upgrade and a surprise interruption to your CI feedback, and it keeps owners and admins aware of usage trends without anyone having to monitor the dashboard manually.
 
 From the **Usage notification** card, click **Create notification**
 
@@ -210,6 +212,7 @@ If you have any questions regarding the OSS plan, please feel free
 - [What counts as a test result?](/cloud/faq#What-counts-as-a-test-result)
 - [What happens once I reach the test results limit?](/cloud/faq#What-happens-once-I-reach-the-test-results-limit)
 - [When does my billing period reset?](/cloud/faq#When-does-my-billing-period-reset)
+- [cy.prompt usage and limits](/cloud/faq#cyprompt)
 - [How do I reduce my Cypress Cloud usage or lower my bill?](/cloud/faq#How-do-I-reduce-my-Cypress-Cloud-usage-or-lower-my-bill)
 - [What happens if I downgrade my account?](/cloud/faq#What-happens-if-I-downgrade-my-account)
 - [How much does it cost?](/cloud/faq#How-much-does-it-cost)
