@@ -117,12 +117,12 @@ Each entry supports the following fields:
 | `badge`       | no       | One of `official`, `verified`, or `community` (defaults to `community`).                                                   |
 | `npm`         | no       | The npm package name. Set this only when it differs from `name` (for example an official monorepo package or scoped name). |
 
-Signals shown on each card — latest version, last published date, Cypress
-compatibility, weekly downloads, and GitHub stars — are generated automatically
-into [`plugins-generated.json`](/src/data/plugins-generated.json) by
+Signals shown on each card — latest version, last published date, and Cypress
+compatibility — are generated automatically into
+[`plugins-generated.json`](/src/data/plugins-generated.json) by
 `npm run enrich:plugins`. You do not need to edit that file by hand; it is
-refreshed from the npm registry and GitHub. Setting an accurate `npm` field is
-what lets the script find these signals for your plugin.
+refreshed from the npm registry. Setting an accurate `npm` field is what lets
+the script find these signals for your plugin.
 
 We want to showcase plugins that work and have a good developer experience. This
 means that a good plugin generally has:

@@ -3,8 +3,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faClock,
   faCog,
-  faDownload,
-  faStar,
   faExclamationTriangle,
   faTimes,
 } from '@fortawesome/free-solid-svg-icons'
@@ -73,13 +71,6 @@ function monthsSince(iso) {
   return (Date.now() - then) / (1000 * 60 * 60 * 24 * 30.44)
 }
 
-function formatDownloads(n) {
-  if (typeof n !== 'number') return null
-  if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1)}M`
-  if (n >= 1_000) return `${(n / 1_000).toFixed(1)}k`
-  return String(n)
-}
-
 /** False during SSR and the first client render, true afterwards. Lets us defer
  *  `Date.now()`-dependent output so server and client markup always match. */
 function useMounted() {
@@ -116,7 +107,6 @@ function Signals({ meta }) {
   const updated = formatMonthYear(meta.lastPublished)
   const age = monthsSince(meta.lastPublished)
   const stale = mounted && typeof age === 'number' && age > 18
-  const downloads = formatDownloads(meta.weeklyDownloads)
   const npmUrl = meta.npm ? `https://www.npmjs.com/package/${meta.npm}` : null
 
   const items = []
@@ -158,26 +148,6 @@ function Signals({ meta }) {
       <span key="cy" className={s.signal} title="Supported Cypress versions">
         <FontAwesomeIcon icon={faCog} />
         <span>Cypress {meta.cypressVersion}</span>
-      </span>
-    )
-  }
-  if (downloads) {
-    items.push(
-      <span
-        key="dl"
-        className={s.signal}
-        title="npm downloads in the last week"
-      >
-        <FontAwesomeIcon icon={faDownload} />
-        <span>{downloads}/wk</span>
-      </span>
-    )
-  }
-  if (typeof meta.stars === 'number') {
-    items.push(
-      <span key="stars" className={s.signal} title="GitHub stars">
-        <FontAwesomeIcon icon={faStar} />
-        <span>{meta.stars.toLocaleString('en-US')}</span>
       </span>
     )
   }

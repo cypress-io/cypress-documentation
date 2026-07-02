@@ -28,7 +28,6 @@ const SOURCE = resolve(ROOT, 'src/data/plugins.json')
 const OUTPUT = resolve(ROOT, 'src/data/plugins-generated.json')
 
 const REGISTRY = 'https://registry.npmjs.org'
-const DOWNLOADS = 'https://api.npmjs.org/downloads/point/last-week'
 const GITHUB_API = 'https://api.github.com'
 const CONCURRENCY = 6
 
@@ -89,8 +88,8 @@ function cypressCompat(versionManifest) {
 
 /** Parse "owner/repo" out of a GitHub URL, or null. Subpath links
  *  (`…/tree/…`, `…/blob/…`) are skipped: they point into a repo — often a
- *  monorepo like cypress-io/cypress — where repo-level stars would reflect the
- *  whole repo rather than the individual package. */
+ *  monorepo like cypress-io/cypress — whose archived status wouldn't reflect the
+ *  individual package. */
 function parseGitHub(link) {
   if (!link) return null
   const m = /github\.com\/([^/]+)\/([^/#?]+)(\/[^#?]*)?/i.exec(link)
@@ -149,20 +148,11 @@ async function resolveNpm(plugin) {
   return { pkg: plugin.npm || null, manifest: null, notFound }
 }
 
-/** Best-effort weekly download count. The downloads API needs the `/` in a
- *  scoped name percent-encoded (e.g. `@cypress%2Fgrep`). */
-async function weeklyDownloads(pkg) {
-  const data = await fetchJson(`${DOWNLOADS}/${pkg.replace(/\//g, '%2F')}`)
-  if (!data || data.__status || typeof data.downloads !== 'number')
-    return undefined
-  return data.downloads
-}
-
-/** Best-effort GitHub repo stats. `applicable` is false when there's no usable
- *  repo to query (missing link, or a subpath/monorepo link); `ok` is false on a
- *  transient failure, so callers can preserve prior stats instead of dropping
- *  them. */
-async function githubStats(link) {
+/** Check whether a plugin's GitHub repo is archived (used to flag deprecation).
+ *  `applicable` is false when there's no usable repo to query (missing link, or
+ *  a subpath/monorepo link); `ok` is false on a transient failure, so callers
+ *  can preserve a prior archived flag instead of dropping it. */
+async function githubArchived(link) {
   const gh = parseGitHub(link)
   if (!gh) return { applicable: false, ok: false }
   const headers = process.env.GITHUB_TOKEN
@@ -173,16 +163,7 @@ async function githubStats(link) {
     headers
   )
   if (!data || data.__status) return { applicable: true, ok: false }
-  return {
-    applicable: true,
-    ok: true,
-    stars:
-      typeof data.stargazers_count === 'number'
-        ? data.stargazers_count
-        : undefined,
-    archived: data.archived === true ? true : undefined,
-    pushedAt: typeof data.pushed_at === 'string' ? data.pushed_at : undefined,
-  }
+  return { applicable: true, ok: true, archived: data.archived === true }
 }
 
 /**
@@ -222,10 +203,6 @@ async function enrichPlugin(plugin, existing) {
       const compat = cypressCompat(vm)
       if (compat) meta.cypressVersion = compat
       if (vm && typeof vm.deprecated === 'string') markDeprecated(vm.deprecated)
-      const dl = await weeklyDownloads(pkg)
-      if (typeof dl === 'number') meta.weeklyDownloads = dl
-      else if (prior.weeklyDownloads !== undefined)
-        meta.weeklyDownloads = prior.weeklyDownloads
     }
   } else if (pkg && notFound) {
     // Definitively removed from npm -> deprecated. Deliberately drop any prior
@@ -234,35 +211,24 @@ async function enrichPlugin(plugin, existing) {
     markDeprecated('Package not found on the npm registry.')
   } else if (pkg) {
     // Transient registry failure for a known package -> keep prior npm signals.
-    for (const k of [
-      'version',
-      'lastPublished',
-      'cypressVersion',
-      'weeklyDownloads',
-    ]) {
+    for (const k of ['version', 'lastPublished', 'cypressVersion']) {
       if (prior[k] !== undefined) meta[k] = prior[k]
     }
     if (prior.deprecated) markDeprecated(prior.deprecatedReason)
   }
 
-  // --- GitHub-derived signals ---
-  const gh = await githubStats(plugin.link)
+  // --- GitHub: archived repos are treated as deprecated ---
+  const gh = await githubArchived(plugin.link)
   if (gh.ok) {
-    if (typeof gh.stars === 'number') meta.stars = gh.stars
-    if (gh.pushedAt) meta.repoPushedAt = gh.pushedAt
     if (gh.archived) {
       meta.archived = true
       markDeprecated('Source repository is archived.')
     }
-  } else if (gh.applicable) {
-    // Transient GitHub failure -> keep prior stats (incl. an archived flag, so
-    // an archived repo isn't silently un-deprecated just because GitHub failed).
-    if (prior.stars !== undefined) meta.stars = prior.stars
-    if (prior.repoPushedAt !== undefined) meta.repoPushedAt = prior.repoPushedAt
-    if (prior.archived) {
-      meta.archived = true
-      markDeprecated('Source repository is archived.')
-    }
+  } else if (gh.applicable && prior.archived) {
+    // Transient GitHub failure -> keep a prior archived flag so an archived repo
+    // isn't silently un-deprecated just because GitHub failed.
+    meta.archived = true
+    markDeprecated('Source repository is archived.')
   }
 
   return Object.keys(meta).length ? [plugin.name, meta] : null
