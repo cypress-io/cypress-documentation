@@ -111,6 +111,27 @@
           "link": "https://github.com/th3fallen/cypress-rspack-dev-server",
           "keywords": ["component", "Rspack", "dev-server"],
           "badge": "community"
+        },
+        {
+          "name": "@cypress/vite-dev-server",
+          "description": "Official Vite dev server for Cypress Component Testing.",
+          "link": "https://github.com/cypress-io/cypress/tree/develop/npm/vite-dev-server",
+          "keywords": ["component", "component-testing", "vite", "dev-server"],
+          "badge": "official",
+          "npm": "@cypress/vite-dev-server"
+        },
+        {
+          "name": "@cypress/webpack-dev-server",
+          "description": "Official webpack dev server for Cypress Component Testing.",
+          "link": "https://github.com/cypress-io/cypress/tree/develop/npm/webpack-dev-server",
+          "keywords": [
+            "component",
+            "component-testing",
+            "webpack",
+            "dev-server"
+          ],
+          "badge": "official",
+          "npm": "@cypress/webpack-dev-server"
         }
       ]
     },
@@ -204,6 +225,19 @@
           "link": "https://github.com/bahmutov/cypress-repeat",
           "badge": "community",
           "keywords": ["cli", "ci", "repeat", "retry", "flake"]
+        },
+        {
+          "name": "cypress-split",
+          "description": "Split Cypress specs across parallel CI machines for speed.",
+          "link": "https://github.com/bahmutov/cypress-split",
+          "keywords": [
+            "parallel",
+            "sharding",
+            "split",
+            "ci",
+            "continuous-integration"
+          ],
+          "badge": "community"
         }
       ]
     },
@@ -273,6 +307,13 @@
           "description": "Visual Studio Code extension for cypress and cucumber preprocessor.",
           "link": "https://marketplace.visualstudio.com/items?itemName=Shelex.vscode-cy-helper",
           "keywords": ["vscode", "extension", "intellisense"],
+          "badge": "community"
+        },
+        {
+          "name": "cypress-html-validate",
+          "description": "Validate HTML markup in your Cypress tests using html-validate.",
+          "link": "https://gitlab.com/html-validate/cypress-html-validate",
+          "keywords": ["html", "html-validate", "validation", "linting"],
           "badge": "community"
         }
       ]
@@ -348,6 +389,19 @@
           "description": "A companion Cypress plugin for `cy-grep` that re-runs the last failed test(s).",
           "link": "https://github.com/dennisbergevin/cypress-plugin-last-failed",
           "keywords": ["grep", "ui", "failure", "results"],
+          "badge": "community"
+        },
+        {
+          "name": "cypress-each",
+          "description": "Adds describe.each and it.each for data-driven Cypress tests.",
+          "link": "https://github.com/bahmutov/cypress-each",
+          "keywords": [
+            "each",
+            "data-driven",
+            "describe-each",
+            "it-each",
+            "test-selection"
+          ],
           "badge": "community"
         }
       ]
@@ -519,6 +573,13 @@
           "link": "https://github.com/NoelDeMartin/cypress-solid",
           "keywords": ["solid", "solid-protocol", "commands", "solidjs"],
           "badge": "community"
+        },
+        {
+          "name": "cypress-data-session",
+          "description": "cy.dataSession command for flexible, cached test-data setup.",
+          "link": "https://github.com/bahmutov/cypress-data-session",
+          "keywords": ["commands", "test-data", "data-session", "caching"],
+          "badge": "community"
         }
       ]
     },
@@ -587,6 +648,13 @@
           "description": "Easy way to publish messages from and to your SignalR hubs in Cypress E2E tests.",
           "link": "https://github.com/JasonLandbridge/Cypress-SignalR-Mock",
           "keywords": ["commands", "signalr", "mock", "websocket"],
+          "badge": "community"
+        },
+        {
+          "name": "cypress-network-idle",
+          "description": "Wait for network requests to go idle before continuing the test.",
+          "link": "https://github.com/bahmutov/cypress-network-idle",
+          "keywords": ["network", "idle", "wait", "commands"],
           "badge": "community"
         }
       ]
@@ -661,6 +729,13 @@
           "description": "Helps test your applications for accessibility issues using axe-core.",
           "link": "https://github.com/avanslaars/cypress-axe",
           "keywords": ["accessibility", "a11y", "axe-core", "wcag"],
+          "badge": "community"
+        },
+        {
+          "name": "cypress-accessibility-checker",
+          "description": "IBM Equal Access accessibility checker for Cypress.",
+          "link": "https://github.com/IBMa/equal-access",
+          "keywords": ["accessibility", "a11y", "ibm", "equal-access", "wcag"],
           "badge": "community"
         }
       ]
@@ -792,6 +867,13 @@
           "link": "https://github.com/antontelesh/mochawesome-merge",
           "keywords": ["reporter", "mochawesome", "merge", "json", "reports"],
           "badge": "community"
+        },
+        {
+          "name": "@reportportal/agent-js-cypress",
+          "description": "Reporter that sends Cypress results to ReportPortal.",
+          "link": "https://github.com/reportportal/agent-js-cypress",
+          "keywords": ["reporter", "reportportal", "reporting"],
+          "badge": "community"
         }
       ]
     },
@@ -873,7 +955,8 @@
             "visual regression",
             "screenshots"
           ],
-          "badge": "community"
+          "badge": "community",
+          "npm": "@simonsmith/cypress-image-snapshot"
         },
         {
           "name": "Cypress Visual Regression",
@@ -918,6 +1001,18 @@
             "screenshots",
             "visual regression",
             "screenshots comparison"
+          ],
+          "badge": "community"
+        },
+        {
+          "name": "@chromatic-com/cypress",
+          "description": "Chromatic visual regression testing for Cypress.",
+          "link": "https://github.com/chromaui/chromatic-e2e",
+          "keywords": [
+            "visual regression",
+            "visual testing",
+            "chromatic",
+            "screenshots"
           ],
           "badge": "community"
         }
@@ -1085,7 +1180,8 @@
           "description": "Smart, Fast and Extensible Build System.",
           "link": "https://nx.dev/cypress/overview",
           "keywords": ["angular", "react", "cli", "monorepo"],
-          "badge": "community"
+          "badge": "community",
+          "npm": "@nx/cypress"
         }
       ],
       "description": "Add and run Cypress within application frameworks, monorepos, and their CLIs."
