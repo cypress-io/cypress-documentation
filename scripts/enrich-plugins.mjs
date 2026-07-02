@@ -54,12 +54,17 @@ async function fetchJson(url, headers = {}) {
   }
 }
 
-/** Does an npm package with this exact name exist? Returns its packument or null.
- *  The registry accepts scoped names (`@scope/name`) unencoded in the path. */
+/** Look up a package's packument. The registry accepts scoped names
+ *  (`@scope/name`) unencoded in the path. Returns:
+ *   - { data }      on success,
+ *   - { notFound }  on a definitive 404 (package does not exist), or
+ *   - {}            on any transient failure (network error, timeout, 5xx),
+ *  so callers can tell "genuinely gone" apart from "couldn't reach the registry". */
 async function npmManifest(pkg) {
   const data = await fetchJson(`${REGISTRY}/${pkg}`)
-  if (!data || data.__status) return null
-  return data
+  if (data && !data.__status && data.name) return { data }
+  if (data && data.__status === 404) return { notFound: true }
+  return {}
 }
 
 /** Extract a supported Cypress version range from a package manifest, if any. */
@@ -100,7 +105,8 @@ function parseGitHub(link) {
  * monorepo subpaths (e.g. cypress-io/cypress/tree/.../npm/webpack-preprocessor)
  * and generic repo names would resolve to the wrong package. Entries whose
  * display name isn't the package should set an explicit `npm` field.
- * Returns the manifest too so callers don't re-fetch.
+ * Returns the manifest too so callers don't re-fetch, plus `notFound` which is
+ * true only when a candidate got a definitive 404 (not a transient failure).
  */
 async function resolveNpm(plugin) {
   const candidates = []
@@ -116,16 +122,19 @@ async function resolveNpm(plugin) {
     candidates.push(plugin.name)
   }
 
+  let notFound = false
   for (const candidate of [...new Set(candidates)]) {
-    const manifest = await npmManifest(candidate)
-    if (manifest && manifest.name) return { pkg: manifest.name, manifest }
+    const result = await npmManifest(candidate)
+    if (result.data) return { pkg: result.data.name, manifest: result.data }
+    if (result.notFound) notFound = true
   }
-  return { pkg: plugin.npm || null, manifest: null }
+  return { pkg: plugin.npm || null, manifest: null, notFound }
 }
 
-/** Best-effort weekly download count. */
+/** Best-effort weekly download count. The downloads API needs the `/` in a
+ *  scoped name percent-encoded (e.g. `@cypress%2Fgrep`). */
 async function weeklyDownloads(pkg) {
-  const data = await fetchJson(`${DOWNLOADS}/${pkg}`)
+  const data = await fetchJson(`${DOWNLOADS}/${pkg.replace(/\//g, '%2F')}`)
   if (!data || data.__status || typeof data.downloads !== 'number')
     return undefined
   return data.downloads
@@ -156,11 +165,15 @@ async function githubStats(link) {
 /** Enrich a single plugin entry. Returns [name, metadata] or null. */
 async function enrichPlugin(plugin, existing) {
   const meta = { ...(existing || {}) }
-  const { pkg, manifest } = await resolveNpm(plugin)
+  const { pkg, manifest, notFound } = await resolveNpm(plugin)
 
   if (pkg) meta.npm = pkg
 
   if (manifest) {
+    // Fresh registry data: recompute the derived deprecation state rather than
+    // trusting a possibly-stale value carried over from a previous run.
+    delete meta.deprecated
+    delete meta.deprecatedReason
     const latest = manifest['dist-tags'] && manifest['dist-tags'].latest
     if (latest) {
       meta.version = latest
@@ -176,8 +189,9 @@ async function enrichPlugin(plugin, existing) {
         meta.deprecatedReason = versionManifest.deprecated
       }
     }
-  } else if (pkg && meta.npm) {
-    // We had an npm name but the registry returned nothing -> package removed.
+  } else if (pkg && meta.npm && notFound) {
+    // The package definitively 404s (removed/unpublished) -> deprecated. A
+    // transient registry failure leaves any prior metadata untouched instead.
     meta.deprecated = true
     meta.deprecatedReason =
       meta.deprecatedReason || 'Package not found on the npm registry.'
@@ -205,7 +219,9 @@ async function main() {
   const source = JSON.parse(await readFile(SOURCE, 'utf8'))
   let existing = {}
   try {
-    existing = JSON.parse(await readFile(OUTPUT, 'utf8'))
+    const prior = JSON.parse(await readFile(OUTPUT, 'utf8'))
+    // Prior metadata lives under the `plugins` key of the generated file.
+    existing = (prior && prior.plugins) || {}
   } catch {
     existing = {}
   }

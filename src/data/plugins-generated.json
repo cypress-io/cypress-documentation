@@ -66,8 +66,8 @@
     },
     "cypress-rspack-dev-server": {
       "npm": "cypress-rspack-dev-server",
-      "version": "2.1.0",
-      "lastPublished": "2026-06-19T09:23:50.554Z",
+      "version": "2.2.0",
+      "lastPublished": "2026-07-02T04:44:44.332Z",
       "cypressVersion": ">=15.17.0"
     },
     "cypress-load-balancer": {

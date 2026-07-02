@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faClock,
@@ -61,6 +61,14 @@ function formatDownloads(n) {
   return String(n)
 }
 
+/** False during SSR and the first client render, true afterwards. Lets us defer
+ *  `Date.now()`-dependent output so server and client markup always match. */
+function useMounted() {
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => setMounted(true), [])
+  return mounted
+}
+
 /** Merge a plugin's curated entry with its generated trust metadata. */
 function withMeta(plugin) {
   const meta = GENERATED[plugin.name] || {}
@@ -82,10 +90,13 @@ function Badge({ badge }) {
 }
 
 function TrustSignals({ meta }) {
+  // `stale` depends on the current date, so only evaluate it after mount to
+  // keep server and client markup identical during hydration.
+  const mounted = useMounted()
   if (!meta) return null
   const updated = formatMonthYear(meta.lastPublished)
   const age = monthsSince(meta.lastPublished)
-  const stale = typeof age === 'number' && age > 18
+  const stale = mounted && typeof age === 'number' && age > 18
   const downloads = formatDownloads(meta.weeklyDownloads)
   const npmUrl = meta.npm ? `https://www.npmjs.com/package/${meta.npm}` : null
 
