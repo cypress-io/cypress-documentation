@@ -19,6 +19,8 @@
 import { readFile, writeFile } from 'node:fs/promises'
 import { fileURLToPath } from 'node:url'
 import { dirname, resolve } from 'node:path'
+import got from 'got'
+import pMap from 'p-map'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const ROOT = resolve(__dirname, '..')
@@ -29,31 +31,33 @@ const REGISTRY = 'https://registry.npmjs.org'
 const DOWNLOADS = 'https://api.npmjs.org/downloads/point/last-week'
 const GITHUB_API = 'https://api.github.com'
 const CONCURRENCY = 6
-const TIMEOUT_MS = 15000
 
-/** Fetch JSON with a timeout. Returns null on any failure (never throws). */
+// A pre-configured got instance handles the timeout, automatic retries, and
+// JSON parsing that we'd otherwise wire up by hand.
+const http = got.extend({
+  timeout: { request: 15000 },
+  retry: { limit: 2 },
+  responseType: 'json',
+  throwHttpErrors: false,
+  headers: { accept: 'application/json' },
+})
+
+/** Fetch JSON. Returns the body on 2xx, `{ __status }` on an HTTP error, or
+ *  null on a network/timeout failure (after retries). Never throws. */
 async function fetchJson(url, headers = {}) {
-  const controller = new AbortController()
-  const timer = setTimeout(() => controller.abort(), TIMEOUT_MS)
   try {
-    const res = await fetch(url, {
-      signal: controller.signal,
-      headers: { accept: 'application/json', ...headers },
-    })
-    if (!res.ok) return { __status: res.status }
-    return await res.json()
+    const res = await http(url, { headers })
+    if (res.statusCode >= 200 && res.statusCode < 300) return res.body
+    return { __status: res.statusCode }
   } catch {
     return null
-  } finally {
-    clearTimeout(timer)
   }
 }
 
-/** Does an npm package with this exact name exist? Returns its latest manifest or null. */
+/** Does an npm package with this exact name exist? Returns its packument or null.
+ *  The registry accepts scoped names (`@scope/name`) unencoded in the path. */
 async function npmManifest(pkg) {
-  const data = await fetchJson(
-    `${REGISTRY}/${encodeURIComponent(pkg).replace('%40', '@')}`
-  )
+  const data = await fetchJson(`${REGISTRY}/${pkg}`)
   if (!data || data.__status) return null
   return data
 }
@@ -197,23 +201,6 @@ async function enrichPlugin(plugin, existing) {
   return Object.keys(meta).length ? [plugin.name, meta] : null
 }
 
-/** Simple promise pool. */
-async function mapPool(items, limit, fn) {
-  const results = []
-  let i = 0
-  const workers = Array.from(
-    { length: Math.min(limit, items.length) },
-    async () => {
-      while (i < items.length) {
-        const idx = i++
-        results[idx] = await fn(items[idx], idx)
-      }
-    }
-  )
-  await Promise.all(workers)
-  return results
-}
-
 async function main() {
   const source = JSON.parse(await readFile(SOURCE, 'utf8'))
   let existing = {}
@@ -229,11 +216,15 @@ async function main() {
   }
   console.log(`Enriching ${flat.length} plugins (concurrency ${CONCURRENCY})…`)
 
-  const entries = await mapPool(flat, CONCURRENCY, async (plugin) => {
-    const result = await enrichPlugin(plugin, existing[plugin.name])
-    process.stdout.write(result ? '.' : 'x')
-    return result
-  })
+  const entries = await pMap(
+    flat,
+    async (plugin) => {
+      const result = await enrichPlugin(plugin, existing[plugin.name])
+      process.stdout.write(result ? '.' : 'x')
+      return result
+    },
+    { concurrency: CONCURRENCY }
+  )
   process.stdout.write('\n')
 
   const generated = {}
