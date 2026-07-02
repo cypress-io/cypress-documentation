@@ -571,7 +571,7 @@
           "name": "cypress-solid",
           "description": "A Cypress plugin to help you test applications using the Solid Protocol.",
           "link": "https://github.com/NoelDeMartin/cypress-solid",
-          "keywords": ["solid", "solid-protocol", "commands", "solidjs"],
+          "keywords": ["solid", "solid-protocol", "solidproject", "commands"],
           "badge": "community"
         },
         {
