@@ -48,8 +48,6 @@ const BADGE_INFO = {
     'No longer maintained, moved, or removed from npm. Look for an alternative.',
 }
 
-// Fixed locale + UTC so the server and client render the same string (no
-// hydration mismatch). Intl is built in, so no date library is needed.
 const monthYearFormatter = new Intl.DateTimeFormat('en-US', {
   month: 'short',
   year: 'numeric',
