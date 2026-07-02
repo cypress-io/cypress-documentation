@@ -335,9 +335,9 @@
           "npm": "@cypress/puppeteer"
         },
         {
-          "name": "cypress-testing-library",
+          "name": "@testing-library/cypress",
           "description": "🐅 Simple and complete custom Cypress commands and utilities that encourage good testing practices.",
-          "link": "https://github.com/kentcdodds/cypress-testing-library",
+          "link": "https://github.com/testing-library/cypress-testing-library",
           "keywords": [
             "testing-library",
             "dom-testing-library",
@@ -400,13 +400,6 @@
           "description": "A custom command to download different kinds of files and store them on your local machine",
           "link": "https://github.com/Xvier/cypress-downloadfile",
           "keywords": ["commands", "downloading"],
-          "badge": "community"
-        },
-        {
-          "name": "cypress-drag-drop",
-          "description": "Adds a cypress child command for drag'n'drop support.",
-          "link": "https://github.com/4teamwork/cypress-drag-drop",
-          "keywords": ["dragndrop", "drag", "drop", "commands"],
           "badge": "community"
         },
         {
@@ -746,20 +739,6 @@
             "screenshots",
             "CI",
             "CLI"
-          ],
-          "badge": "community"
-        },
-        {
-          "name": "cypress-xray-plugin",
-          "description": "A plugin for uploading Cypress test results to Xray, including evidence such as screenshots, videos or custom data. Fully compatible with Cucumber.",
-          "link": "https://github.com/csvtuda/cypress-xray-plugin",
-          "keywords": [
-            "reporter",
-            "xray",
-            "jira",
-            "cucumber",
-            "screenshot",
-            "video"
           ],
           "badge": "community"
         },

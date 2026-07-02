@@ -62,24 +62,20 @@ describe('Plugins list', () => {
     cy.get('[data-cy="plugin-cypress-vite"]').should('not.exist')
   })
 
-  it('filters by trust level and flags deprecated plugins', () => {
+  it('lists no deprecated plugins', () => {
+    // Deprecated plugins are curated out of the list, so filtering by the
+    // Deprecated trust level yields the empty state. (Enrichment auto-flags a
+    // plugin deprecated when it is unpublished/moved, which is the signal to
+    // remove it here.)
     cy.get(badgeFilter).select('Deprecated')
-    cy.get('li.card').should('have.length.greaterThan', 0)
-    // Every remaining card carries the deprecated badge (badge text is
-    // lowercase in the DOM and only capitalized via CSS, so match loosely).
-    cy.get('li.card').each(($card) => {
-      cy.wrap($card)
-        .contains(/deprecated/i)
-        .should('exist')
-    })
-    // A known moved package is flagged with an explanatory notice.
-    cy.get('[data-cy="plugin-cypress-testing-library"]')
-      .contains(/deprecated/i)
-      .should('exist')
-    cy.get('[data-cy="plugin-cypress-testing-library"]').should(
-      'contain',
-      'moved'
-    )
+    cy.get(resultCount).should('contain', 'Showing 0 plugins')
+    cy.contains('No plugins match your search').should('be.visible')
+  })
+
+  it('lists the maintained testing-library successor', () => {
+    cy.get(search).type('testing-library')
+    cy.get('[data-cy="plugin-@testing-library/cypress"]').should('be.visible')
+    cy.get('[data-cy="plugin-cypress-testing-library"]').should('not.exist')
   })
 
   it('surfaces npm and version trust signals on a card', () => {

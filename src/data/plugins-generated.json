@@ -195,12 +195,11 @@
       "lastPublished": "2025-10-03T19:26:39.725Z",
       "cypressVersion": ">=13.6.0"
     },
-    "cypress-testing-library": {
-      "npm": "cypress-testing-library",
-      "version": "4.0.0",
-      "lastPublished": "2019-05-30T18:10:23.579Z",
-      "deprecated": true,
-      "deprecatedReason": "🚨  cypress-testing-library has moved to @testing-library/cypress. Please uninstall cypress-testing-library and install @testing-library/cypress instead, or use an older version of cypress-testing-library. Learn more about this change here: https://github.com/testing-library/dom-testing-library/issues/260 Thanks! :)"
+    "@testing-library/cypress": {
+      "npm": "@testing-library/cypress",
+      "version": "10.1.3",
+      "lastPublished": "2026-04-29T16:38:28.373Z",
+      "cypressVersion": ">=12"
     },
     "cypress-wait-until": {
       "npm": "cypress-wait-until",
@@ -242,13 +241,6 @@
       "version": "1.2.4",
       "lastPublished": "2024-06-17T11:03:13.954Z",
       "cypressVersion": "^13.11.0"
-    },
-    "cypress-drag-drop": {
-      "npm": "cypress-drag-drop",
-      "version": "1.1.1",
-      "lastPublished": "2018-12-20T17:04:46.085Z",
-      "deprecated": true,
-      "deprecatedReason": "This package has been moved to https://www.npmjs.com/package/@4tw/cypress-drag-drop."
     },
     "cypress-dragndrop-kit": {
       "npm": "cypress-dragndrop-kit",
@@ -435,14 +427,6 @@
       "npm": "cypress-xray-junit-reporter",
       "version": "1.2.3",
       "lastPublished": "2026-05-19T08:12:50.452Z"
-    },
-    "cypress-xray-plugin": {
-      "npm": "cypress-xray-plugin",
-      "version": "8.5.0",
-      "lastPublished": "2025-04-08T12:31:03.648Z",
-      "cypressVersion": ">=10.0.0 < 15",
-      "deprecated": true,
-      "deprecatedReason": "This package is no longer being maintained and has been migrated to: @csvtuda/cypress-xray-plugin (https://www.npmjs.com/package/@csvtuda/cypress-xray-plugin)"
     },
     "mochawesome-merge": {
       "npm": "mochawesome-merge",
