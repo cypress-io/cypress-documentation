@@ -59,6 +59,17 @@ describe('Plugins list', () => {
     cy.location('search').should('contain', 'search=accessibility')
   })
 
+  it('clears the search with the clear button', () => {
+    // The clear button only appears once there is a query.
+    cy.get('[data-cy=plugins-search-clear]').should('not.exist')
+    cy.get(search).type('accessibility')
+    cy.get('[data-cy=plugins-search-clear]').click()
+    cy.get(search).should('have.value', '')
+    cy.get('[data-cy=plugins-search-clear]').should('not.exist')
+    cy.get('[data-cy="plugin-cypress-vite"]').should('exist')
+    cy.location('search').should('not.contain', 'search=')
+  })
+
   it('shows an empty state when nothing matches', () => {
     cy.get(search).type('zzzznotarealpluginxyz')
     cy.get(resultCount).should('contain', 'Showing 0 plugins')

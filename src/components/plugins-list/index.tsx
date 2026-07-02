@@ -6,6 +6,7 @@ import {
   faDownload,
   faStar,
   faExclamationTriangle,
+  faTimes,
 } from '@fortawesome/free-solid-svg-icons'
 import s from './style.module.css'
 // @ts-ignore
@@ -223,6 +224,7 @@ export default function PluginsList() {
   const [badgeFilter, setBadgeFilter] = useState('all')
   const [categoryFilter, setCategoryFilter] = useState('all')
   const controlsRef = useRef(null)
+  const searchRef = useRef(null)
 
   // Seed the search from a shareable `?search=` param on load. Done in an
   // effect (not the initial state) so server and client first render agree.
@@ -307,15 +309,32 @@ export default function PluginsList() {
       </div>
 
       <div className={s.controls} ref={controlsRef}>
-        <input
-          type="search"
-          className={s.search}
-          placeholder="Search plugins by name, keyword, or description…"
-          value={query}
-          onChange={(e) => applyQuery(e.target.value)}
-          aria-label="Search plugins"
-          data-cy="plugins-search"
-        />
+        <div className={s.searchWrap}>
+          <input
+            type="search"
+            ref={searchRef}
+            className={s.search}
+            placeholder="Search plugins by name, keyword, or description…"
+            value={query}
+            onChange={(e) => applyQuery(e.target.value)}
+            aria-label="Search plugins"
+            data-cy="plugins-search"
+          />
+          {query && (
+            <button
+              type="button"
+              className={s.clearBtn}
+              aria-label="Clear search"
+              data-cy="plugins-search-clear"
+              onClick={() => {
+                applyQuery('')
+                searchRef.current?.focus()
+              }}
+            >
+              <FontAwesomeIcon icon={faTimes} />
+            </button>
+          )}
+        </div>
         <select
           className={s.select}
           value={categoryFilter}
