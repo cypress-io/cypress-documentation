@@ -1,4 +1,13 @@
 import React, { useMemo, useState } from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {
+  faClock,
+  faCog,
+  faDownload,
+  faStar,
+  faExclamationTriangle,
+} from '@fortawesome/free-solid-svg-icons'
+import { faNpm } from '@fortawesome/free-brands-svg-icons'
 import s from './style.module.css'
 // @ts-ignore
 import pluginsJSON from '@site/src/data/plugins.json'
@@ -92,8 +101,11 @@ function TrustSignals({ meta }) {
         rel="noopener noreferrer"
         title="View on npm"
       >
-        📦 {meta.npm}
-        {meta.version ? `@${meta.version}` : ''}
+        <FontAwesomeIcon icon={faNpm} />
+        <span>
+          {meta.npm}
+          {meta.version ? `@${meta.version}` : ''}
+        </span>
       </a>
     )
   }
@@ -108,14 +120,16 @@ function TrustSignals({ meta }) {
             : 'Latest npm publish date.'
         }
       >
-        🕒 Updated {updated}
+        <FontAwesomeIcon icon={faClock} />
+        <span>Updated {updated}</span>
       </span>
     )
   }
   if (meta.cypressVersion) {
     items.push(
       <span key="cy" className={s.signal} title="Supported Cypress versions">
-        ⚙️ Cypress {meta.cypressVersion}
+        <FontAwesomeIcon icon={faCog} />
+        <span>Cypress {meta.cypressVersion}</span>
       </span>
     )
   }
@@ -126,14 +140,16 @@ function TrustSignals({ meta }) {
         className={s.signal}
         title="npm downloads in the last week"
       >
-        ⬇️ {downloads}/wk
+        <FontAwesomeIcon icon={faDownload} />
+        <span>{downloads}/wk</span>
       </span>
     )
   }
   if (typeof meta.stars === 'number') {
     items.push(
       <span key="stars" className={s.signal} title="GitHub stars">
-        ⭐ {meta.stars.toLocaleString('en-US')}
+        <FontAwesomeIcon icon={faStar} />
+        <span>{meta.stars.toLocaleString('en-US')}</span>
       </span>
     )
   }
@@ -162,7 +178,11 @@ function PluginCard({ plugin }) {
 
       {meta && meta.deprecated && (
         <p className={s.deprecatedNotice}>
-          ⚠️ {meta.deprecatedReason || 'This plugin is no longer maintained.'}
+          <FontAwesomeIcon
+            icon={faExclamationTriangle}
+            className={s.noticeIcon}
+          />
+          {meta.deprecatedReason || 'This plugin is no longer maintained.'}
         </p>
       )}
 

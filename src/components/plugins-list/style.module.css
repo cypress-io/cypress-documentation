@@ -220,6 +220,10 @@ a.signal:hover {
   margin: 0 0 0.5rem !important;
 }
 
+.noticeIcon {
+  margin-right: 0.4rem;
+}
+
 /* -------- Keywords -------- */
 
 .keywords {
