@@ -160,13 +160,6 @@
           "badge": "community"
         },
         {
-          "name": "cly",
-          "description": "A prototype of generating quicker project scaffolding for Cypress.",
-          "link": "https://github.com/bahmutov/cly",
-          "keywords": ["cypress cli", "prototype", "CLI", "scaffolding"],
-          "badge": "community"
-        },
-        {
           "name": "cypress-watch-and-reload",
           "description": "Reloads Cypress when one of the watched files changes.",
           "link": "https://github.com/bahmutov/cypress-watch-and-reload",
@@ -195,13 +188,6 @@
           "badge": "community"
         },
         {
-          "name": "cypress-hmr-restarter",
-          "description": "Restarts tests when receiving webpack-dev-server HMR updates.",
-          "link": "https://github.com/Svish/cypress-hmr-restarter",
-          "keywords": ["webpack", "webpack-dev-server", "hmr"],
-          "badge": "community"
-        },
-        {
           "name": "cypress-repeat",
           "description": "Run Cypress multiple times in a row, great at finding test flake.",
           "link": "https://github.com/bahmutov/cypress-repeat",
@@ -212,13 +198,6 @@
           "name": "cypress-expect",
           "description": "Cypress CLI wrapper where you can specify the total number of expected tests.",
           "link": "https://github.com/bahmutov/cypress-expect",
-          "keywords": ["cli"],
-          "badge": "community"
-        },
-        {
-          "name": "cy-search",
-          "description": "Search Cypress documentation from the terminal.",
-          "link": "https://github.com/bahmutov/cy-search",
           "keywords": ["cli"],
           "badge": "community"
         },
@@ -277,13 +256,6 @@
           "description": "A Cypress plugin which automatically adds and enables IntelliSense for custom commands",
           "link": "https://github.com/ExpediaGroup/cypress-codegen",
           "keywords": ["commands", "development", "codegen"],
-          "badge": "community"
-        },
-        {
-          "name": "cypress-backoff",
-          "description": "A Cypress plugin to apply different timeout strategies to retried tests",
-          "link": "https://github.com/joostvanwollingen/cypress-backoff",
-          "keywords": ["retries", "backoff"],
           "badge": "community"
         },
         {
@@ -604,13 +576,6 @@
           "description": "A Cypress plugin to add a tab command.",
           "link": "https://github.com/Bkucera/cypress-plugin-tab",
           "keywords": ["commands"],
-          "badge": "community"
-        },
-        {
-          "name": "cypress-plugin-multiple-click",
-          "description": "Click multiple times in Cypress.",
-          "link": "https://github.com/MohamadKh75/cypress-plugin-multiple-click",
-          "keywords": ["testing", "commands", "click"],
           "badge": "community"
         },
         {
