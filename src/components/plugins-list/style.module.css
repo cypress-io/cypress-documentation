@@ -250,19 +250,20 @@ ul.pluginsList li p {
 
 /* The theme styles in-content links (div.markdown a) with a dotted
    border-bottom and the link color, at a higher specificity than a plain
-   `a.signal`. Scope to div.markdown so we can override both: drop the dotted
-   underline and keep the npm link dark like the other signals (for contrast on
-   the chip). */
-:global(div.markdown) .signals a.signal {
-  color: var(--ifm-color-emphasis-700);
+   `a.signal`. Scope to div.markdown so we can override it: keep the npm link
+   blue like a link but drop the dotted underline. The light value is nudged
+   slightly darker than the default link color so it clears 4.5:1 on the chip;
+   dark mode uses the theme link color (bright enough on the dark chip). */
+:global(div.markdown) .signals a.signal,
+:global(div.markdown) .signals a.signal:hover {
+  color: #4453da;
   text-decoration: none;
   border-bottom: 0;
 }
 
-:global(div.markdown) .signals a.signal:hover {
-  color: var(--ifm-color-emphasis-900);
-  text-decoration: none;
-  border-bottom: 0;
+html[data-theme='dark'] :global(div.markdown) .signals a.signal,
+html[data-theme='dark'] :global(div.markdown) .signals a.signal:hover {
+  color: var(--ifm-link-color);
 }
 
 .signalStale {
