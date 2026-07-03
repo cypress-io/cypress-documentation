@@ -49,6 +49,17 @@ body ul.pluginsList li {
   margin: 0 !important;
   display: flex;
   flex-direction: column;
+  /* The .card class styles these as clickable (pointer cursor + hover border
+     glow), but the cards aren't interactive, so neutralize that. */
+  cursor: default;
+  border-color: var(--ifm-color-emphasis-200);
+}
+
+body ul.pluginsList li:hover {
+  animation: none;
+  border-color: var(--ifm-color-emphasis-200);
+  box-shadow: var(--ifm-global-shadow-lw);
+  outline: none;
 }
 
 ul.pluginsList li p {
