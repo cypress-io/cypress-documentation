@@ -108,12 +108,12 @@ block.
 
 The configuration file location is configurable using the `--config-file` command line flag or the `configFile` Module API option.
 
-|                      | Playwright                       | Cypress                  |
-| -------------------- | -------------------------------- | ------------------------ |
-| Default config file  | `playwright.config.ts`           | `cypress.config.ts`      |
-| Test files           | `testDir: './tests'`             | `e2e.specPattern` (glob) |
-| E2E-specific options | `use: { ... }`                   | `e2e: { ... }`           |
-| Node event hooks     | `globalSetup` / `globalTeardown` | `e2e.setupNodeEvents`    |
+| <span className="sr-only">Configuration</span> | Playwright                       | Cypress                  |
+| ---------------------------------------------- | -------------------------------- | ------------------------ |
+| Default config file                            | `playwright.config.ts`           | `cypress.config.ts`      |
+| Test files                                     | `testDir: './tests'`             | `e2e.specPattern` (glob) |
+| E2E-specific options                           | `use: { ... }`                   | `e2e: { ... }`           |
+| Node event hooks                               | `globalSetup` / `globalTeardown` | `e2e.setupNodeEvents`    |
 
 <Badge type="danger">Before: Playwright</Badge>
 
@@ -1361,10 +1361,10 @@ Playwright Component Testing is **experimental** and uses a `mount` fixture (for
 
 ### Framework and bundler support
 
-|            | Playwright Component Testing                     | Cypress Component Testing                                                                                                                                                                                                            |
-| ---------- | ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Frameworks | Experimental packages for React, Vue, and Svelte | Official mounting libraries for [React](/app/component-testing/react/overview), [Vue](/app/component-testing/vue/overview), [Angular](/app/component-testing/angular/overview), and [Svelte](/app/component-testing/svelte/overview) |
-| Bundlers   | Vite                                             | Vite & Webpack                                                                                                                                                                                                                       |
+| <span className="sr-only">Capability</span> | Playwright Component Testing                     | Cypress Component Testing                                                                                                                                                                                                            |
+| ------------------------------------------- | ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Frameworks                                  | Experimental packages for React, Vue, and Svelte | Official mounting libraries for [React](/app/component-testing/react/overview), [Vue](/app/component-testing/vue/overview), [Angular](/app/component-testing/angular/overview), and [Svelte](/app/component-testing/svelte/overview) |
+| Bundlers                                    | Vite                                             | Vite & Webpack                                                                                                                                                                                                                       |
 
 See [Component Testing](/app/component-testing/get-started) for more details.
 
