@@ -248,15 +248,18 @@ ul.pluginsList li p {
   white-space: nowrap;
 }
 
-/* The npm link is an anchor, so it would otherwise inherit the theme link
-   color (too light on the chip). Keep it dark like the other signals. */
-a.signal {
+/* The theme styles in-content links (div.markdown a) with a dotted
+   border-bottom and the link color, at a higher specificity than a plain
+   `a.signal`. Scope to div.markdown so we can override both: drop the dotted
+   underline and keep the npm link dark like the other signals (for contrast on
+   the chip). */
+:global(div.markdown) .signals a.signal {
   color: var(--ifm-color-emphasis-700);
   text-decoration: none;
   border-bottom: 0;
 }
 
-a.signal:hover {
+:global(div.markdown) .signals a.signal:hover {
   color: var(--ifm-color-emphasis-900);
   text-decoration: none;
   border-bottom: 0;
