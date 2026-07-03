@@ -79,6 +79,81 @@ it('clicking + fires a change event with the incremented value', () => {
 })
 ```
 
+## Testing Error States
+
+<ComponentTestingErrorStates />
+
+```js
+import UserProfile from './UserProfile.vue'
+
+it('surfaces a render error', () => {
+  cy.on('uncaught:exception', (err) => {
+    // Assert on the error thrown during render...
+    expect(err.message).to.include('user is required')
+
+    // ...and return false so Cypress does not fail the test.
+    return false
+  })
+
+  cy.mount(UserProfile)
+})
+```
+
+### Testing with `onErrorCaptured`
+
+The recommended way to render fallback UI in Vue is a wrapper component that uses
+the [`onErrorCaptured`](https://vuejs.org/api/composition-api-lifecycle#onerrorcaptured)
+lifecycle hook to catch errors from its descendants. You can mount a component
+inside such a wrapper and assert that the fallback UI is displayed:
+
+```js
+// ErrorBoundary.cy.js
+import { h } from 'vue'
+import ErrorBoundary from './ErrorBoundary.vue'
+import ChildWithError from './ChildWithError.vue'
+
+it('displays the fallback UI on error', () => {
+  // onErrorCaptured renders fallback UI, but it does NOT stop the error from
+  // propagating to Cypress as an uncaught exception. Cypress fails on uncaught
+  // exceptions by default, so we must still suppress that behavior.
+  cy.on('uncaught:exception', (err) => {
+    // Only suppress the specific error we expect.
+    expect(err.message).to.include('I crashed!')
+
+    return false
+  })
+
+  cy.mount(() => h(ErrorBoundary, () => h(ChildWithError)))
+
+  cy.get('[data-cy=fallback]').should('contain', 'Something went wrong.')
+})
+```
+
+Where `ErrorBoundary` captures the error with `onErrorCaptured` and renders
+fallback UI:
+
+```html
+<!-- ErrorBoundary.vue -->
+<template>
+  <div v-if="error" data-cy="fallback">Something went wrong.</div>
+  <slot v-else />
+</template>
+
+<script setup>
+  import { ref, onErrorCaptured } from 'vue'
+
+  const error = ref(null)
+
+  onErrorCaptured((err) => {
+    error.value = err
+
+    // Returning false stops the error from propagating further up the Vue tree,
+    // but it still reaches Cypress as an uncaught exception.
+    return false
+  })
+</script>
+```
+
 ## Using Slots
 
 ### Default Slot
