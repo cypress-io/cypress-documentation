@@ -211,6 +211,9 @@ export default function PluginsList() {
   const [categoryFilter, setCategoryFilter] = useState('all')
   const controlsRef = useRef(null)
   const searchRef = useRef(null)
+  // Flips to true once mounted, so tests can wait for hydration before the
+  // controls are interactive.
+  const hydrated = useMounted()
 
   // Seed the search from a shareable `?search=` param on load. Done in an
   // effect (not the initial state) so server and client first render agree.
@@ -287,7 +290,11 @@ export default function PluginsList() {
   )
 
   return (
-    <div className={s.root}>
+    <div
+      className={s.root}
+      data-cy="plugins-list"
+      data-hydrated={hydrated ? 'true' : 'false'}
+    >
       <div className={s.legend} aria-label="What the badges mean">
         {BADGE_ORDER.map((badge) => (
           <span key={badge} className={s.legendItem}>

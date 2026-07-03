@@ -9,8 +9,13 @@ describe('Plugins list', () => {
 
   beforeEach(() => {
     cy.visit('/app/plugins/plugins-list')
-    cy.get(search).should('be.enabled')
-    cy.get(resultCount).should('contain', 'Showing')
+    // Wait for the component to hydrate so typing/clicking updates React state
+    // (otherwise interactions can race hydration and be dropped).
+    cy.get('[data-cy=plugins-list]').should(
+      'have.attr',
+      'data-hydrated',
+      'true'
+    )
   })
 
   it('explains every badge in the legend', () => {
@@ -107,9 +112,8 @@ describe('Plugins list', () => {
 
   it('lists no deprecated plugins', () => {
     // Deprecated plugins are curated out of the list, so filtering by the
-    // The Deprecated badge yields the empty state. (Enrichment auto-flags a
-    // plugin deprecated when it is unpublished/moved, which is the signal to
-    // remove it here.)
+    // Deprecated badge yields the empty state. (Enrichment auto-flags a plugin
+    // deprecated when it is unpublished/moved, which is the signal to remove it.)
     cy.get(badgeFilter).select('Deprecated')
     cy.get(resultCount).should('contain', 'Showing 0 plugins')
     cy.contains('No plugins match your search').should('be.visible')
