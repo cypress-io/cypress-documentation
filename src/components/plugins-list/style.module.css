@@ -241,11 +241,13 @@ ul.pluginsList li p {
    color (too light on the chip). Keep it dark like the other signals. */
 a.signal {
   color: var(--ifm-color-emphasis-700);
+  text-decoration: none;
+  border-bottom: 0;
 }
 
 a.signal:hover {
   color: var(--ifm-color-emphasis-900);
-  text-decoration: underline;
+  text-decoration: none;
   border-bottom: 0;
 }
 
