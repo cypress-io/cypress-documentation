@@ -1,0 +1,67 @@
+[
+  {
+    "objectID": "docs-clean-redundant-cypress",
+    "description": "On the Cypress docs a 'cypress' token is usually redundant; removing it broadens matches (e.g. 'cypress intercept' -> 'intercept').",
+    "enabled": true,
+    "conditions": [{ "pattern": "cypress", "anchoring": "contains" }],
+    "consequence": {
+      "params": {
+        "query": { "edits": [{ "type": "remove", "delete": "cypress" }] }
+      }
+    }
+  },
+  {
+    "objectID": "docs-clean-how-to",
+    "description": "Strip the 'how to' filler common in documentation searches.",
+    "enabled": true,
+    "conditions": [{ "pattern": "how to", "anchoring": "contains" }],
+    "consequence": {
+      "params": {
+        "query": {
+          "edits": [
+            { "type": "remove", "delete": "how" },
+            { "type": "remove", "delete": "to" }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "objectID": "docs-clean-how-do-i",
+    "description": "Strip the 'how do i' filler common in documentation searches.",
+    "enabled": true,
+    "conditions": [{ "pattern": "how do i", "anchoring": "contains" }],
+    "consequence": {
+      "params": {
+        "query": {
+          "edits": [
+            { "type": "remove", "delete": "how" },
+            { "type": "remove", "delete": "do" },
+            { "type": "remove", "delete": "i" }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "objectID": "docs-clean-doc-filler",
+    "description": "Remove low-value documentation filler tokens (example/examples/tutorial) so the meaningful terms drive ranking.",
+    "enabled": true,
+    "conditions": [
+      { "pattern": "example", "anchoring": "contains" },
+      { "pattern": "examples", "anchoring": "contains" },
+      { "pattern": "tutorial", "anchoring": "contains" }
+    ],
+    "consequence": {
+      "params": {
+        "query": {
+          "edits": [
+            { "type": "remove", "delete": "example" },
+            { "type": "remove", "delete": "examples" },
+            { "type": "remove", "delete": "tutorial" }
+          ]
+        }
+      }
+    }
+  }
+]

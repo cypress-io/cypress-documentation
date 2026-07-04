@@ -116,7 +116,19 @@
       ["wait", "retryability"],
       ["isolation", "testisolation"],
       ["component", "ct"],
-      ["open", "interactive"]
+      ["open", "interactive"],
+      ["mock", "intercept"],
+      ["mocking", "stubbing"],
+      ["signin", "login"],
+      ["assert", "assertion", "should"],
+      ["hook", "hooks"],
+      ["beforeeach", "hooks"],
+      ["aftereach", "hooks"],
+      ["upload", "selectfile"],
+      ["selector", "selectors"],
+      ["datacy", "selector"],
+      ["viewport", "responsive"],
+      ["variable", "variables"]
     ]
   }
 }
