@@ -60,8 +60,10 @@ function openMobileDrawer() {
       if ($toggle.attr('aria-expanded') === 'true' || n >= 6) {
         return
       }
+      // Re-querying the toggle on the next iteration yields a tick for React to
+      // flush the click (discrete events flush synchronously), so aria-expanded
+      // is up to date without an explicit wait.
       cy.wrap($toggle).click()
-      cy.wait(300)
       ensureExpanded(n + 1)
     })
   }
