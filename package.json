@@ -56,7 +56,7 @@
     "react-dom": "^18.2.0",
     "remark-directive": "^3.0.0",
     "sass": "^1.70.0",
-    "sharp": "^0.35.2"
+    "sharp": "^0.35.3"
   },
   "devDependencies": {
     "@docusaurus/module-type-aliases": "^3.9.2",
