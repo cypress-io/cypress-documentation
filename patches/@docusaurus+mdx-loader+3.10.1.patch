@@ -1,0 +1,44 @@
+diff --git a/node_modules/@docusaurus/mdx-loader/lib/remark/headings/index.js b/node_modules/@docusaurus/mdx-loader/lib/remark/headings/index.js
+index 30008bd..2527510 100644
+--- a/node_modules/@docusaurus/mdx-loader/lib/remark/headings/index.js
++++ b/node_modules/@docusaurus/mdx-loader/lib/remark/headings/index.js
+@@ -108,19 +108,33 @@ const plugin = function plugin({ anchorsMaintainCase, }) {
+                 return undefined;
+             }
+             function extractIdFromText() {
+-                const headingText = getHeadingText(heading);
+-                return (extractClassicSyntaxHeadingId(heading, headingText) ??
+-                    slugs.slug(headingText, { maintainCase: anchorsMaintainCase }));
++                let headingText = getHeadingText(heading);
++                const classicSyntaxHeadingId = extractClassicSyntaxHeadingId(heading, headingText);
++                if (classicSyntaxHeadingId) {
++                    return classicSyntaxHeadingId;
++                }
++                // if the heading is a semver version number, replace the dots with dashes
++                headingText = parseVersionHeading(headingText);
++                // remove any spaces that might be cause by things like having icons in the headings
++                headingText = headingText.trim();
++                return slugs.slug(headingText, { maintainCase: true });
+             }
+             // All the ways we can extract an id, ordered by priority
+             // /!\ the extraction methods can perform AST cleanup side effects
+             const id = extractAlreadyExistingId() ??
+                 extractCommentId(heading) ??
+                 extractIdFromText();
+-            data.id = id;
+-            properties.id = id;
++            data.id = id.trim();
++            properties.id = id.trim();
+         });
+     };
+ };
++function parseVersionHeading(heading) {
++    const isSemVer = /^[\d]*.?[\d]*.?[\d]*$/g;
++    if (heading.match(isSemVer)) {
++        return heading.replaceAll('.', '-');
++    }
++    return heading;
++}
+ exports.default = plugin;
+ //# sourceMappingURL=index.js.map
+\ No newline at end of file
