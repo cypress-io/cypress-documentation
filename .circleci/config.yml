@@ -51,6 +51,16 @@ jobs:
           at: ~/repo
       - run: npm run lint
 
+  unit-tests:
+    <<: *job-defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/repo
+      - run:
+          name: Search / Algolia unit tests
+          command: npm run test:search
+
   install-and-persist:
     executor:
       name: cypress/default
@@ -121,6 +131,10 @@ workflows:
       - build
       - lint:
           name: "Lint JS/CSS/Markdown"
+          requires:
+            - build
+      - unit-tests:
+          name: "Unit Tests (Search/Algolia)"
           requires:
             - build
       - install-and-persist:

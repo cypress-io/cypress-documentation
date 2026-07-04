@@ -16,6 +16,11 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext'
 import { createPortal } from 'react-dom'
 import translations from '@theme/SearchTranslations'
 import { IconObjectMagnifyingGlass } from '@cypress-design/react-icon'
+import {
+  boostCurrentSection,
+  getCurrentSectionLvl0,
+  mergeFacetFilters,
+} from './searchRanking'
 let DocSearchModal = null
 
 /**
@@ -102,46 +107,6 @@ function ResultsFooter({ state, onClose }) {
       </Translate>
     </Link>
   )
-}
-function mergeFacetFilters(f1, f2) {
-  const normalize = (f) => (typeof f === 'string' ? [f] : f)
-  return [...normalize(f1), ...normalize(f2)]
-}
-
-/**
- * Maps the first path segment of the current URL to the Algolia
- * `hierarchy.lvl0` value the crawler assigns to that product section (derived
- * from the active navbar item — see scripts/search/config.json). These strings
- * must match the values present in the index exactly.
- */
-const SECTION_LVL0_BY_PREFIX = {
-  app: 'App',
-  api: 'API',
-  cloud: 'Cloud',
-  'ui-coverage': 'UI Coverage',
-  accessibility: 'Accessibility',
-}
-
-function getCurrentSectionLvl0(pathname) {
-  const segment = pathname.split('/').filter(Boolean)[0]
-  return SECTION_LVL0_BY_PREFIX[segment] ?? null
-}
-
-/**
- * Soft-boosts results from the section the reader is currently in to the top of
- * the list, preserving Algolia's relevance order within each partition and
- * keeping every other result visible. This is the client-side equivalent of an
- * Algolia `optionalFilters` boost, which isn't available on the current plan.
- */
-function boostCurrentSection(items, sectionLvl0) {
-  if (!sectionLvl0) return items
-  const inSection = []
-  const others = []
-  for (const item of items) {
-    if (item.hierarchy?.lvl0 === sectionLvl0) inSection.push(item)
-    else others.push(item)
-  }
-  return [...inSection, ...others]
 }
 function DocSearch({ contextualSearch, externalUrlRegex, ...props }) {
   const { siteMetadata } = useDocusaurusContext()
