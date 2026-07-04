@@ -15,7 +15,7 @@ export default defineConfig({
     openMode: 0,
   },
   e2e: {
-    supportFile: false,
+    supportFile: "cypress/support/e2e.ts",
     baseUrl: "http://localhost:3000",
     setupNodeEvents(on, config) {
       const path = 'docs';
