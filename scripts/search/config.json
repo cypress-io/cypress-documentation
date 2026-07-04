@@ -129,7 +129,8 @@
       ["datacy", "selector"],
       ["viewport", "responsive"],
       ["variable", "variables"],
-      ["goto", "visit"]
+      ["goto", "visit"],
+      ["setrequestinterception", "intercept"]
     ]
   }
 }
