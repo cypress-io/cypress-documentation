@@ -130,7 +130,24 @@
       ["viewport", "responsive"],
       ["variable", "variables"],
       ["goto", "visit"],
-      ["setrequestinterception", "intercept"]
+      ["setrequestinterception", "intercept"],
+      ["locator", "get"],
+      ["queryselector", "get"],
+      ["findelement", "get"],
+      ["waitforselector", "get"],
+      ["getbytestid", "get"],
+      ["cssselector", "get"],
+      ["fill", "type"],
+      ["sendkeys", "type"],
+      ["selectoption", "select"],
+      ["setinputfiles", "selectfile"],
+      ["waitfortimeout", "wait"],
+      ["waitforresponse", "intercept"],
+      ["waitforrequest", "intercept"],
+      ["goback", "go"],
+      ["expect", "should"],
+      ["beforeall", "hooks"],
+      ["afterall", "hooks"]
     ]
   }
 }
