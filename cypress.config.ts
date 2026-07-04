@@ -53,10 +53,6 @@ export default defineConfig({
       config.expose = config.expose || {}
       config.expose.URLs = URLs
 
-      // Optional: `cypress run --env limitPerSection=2` to spot-check a few
-      // pages per section instead of every page. Exposed here (rather than read
-      // via the deprecated `Cypress.env()`) because the spec needs it
-      // synchronously at load time to build the list of tests.
       config.expose.limitPerSection = Number(config.env.limitPerSection) || 0
 
       return config
