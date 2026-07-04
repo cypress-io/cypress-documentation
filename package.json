@@ -25,6 +25,7 @@
     "test": "cypress run",
     "test:plugins": "npm --prefix ./plugins/cypressRemarkPlugins run test && npm --prefix ./plugins/llm run test && npm run test:faq-plugin",
     "test:faq-plugin": "vitest run plugins/faq-structured-data.test.js",
+    "test:search": "vitest run src/theme/SearchBar/searchRanking.test.js scripts/search/algolia-client.test.mjs scripts/search/scrape-and-compare-algolia-index.test.mjs",
     "preview:og": "node scripts/preview-og-cards.js",
     "test:titles": "npm run build && node scripts/test-titles.js",
     "write-translations": "docusaurus write-translations",
