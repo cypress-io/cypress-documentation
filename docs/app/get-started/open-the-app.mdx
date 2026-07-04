@@ -151,9 +151,36 @@ every time. Pass the testing type and browser directly to
 [`cypress open`](/app/references/command-line#cypress-open) to land straight
 on your specs:
 
+<Tabs>
+  <TabItem value="npm">
+
 ```shell
 npx cypress open --e2e --browser chrome
 ```
+
+  </TabItem>
+  <TabItem value="yarn">
+
+```shell
+yarn cypress open --e2e --browser chrome
+```
+
+  </TabItem>
+  <TabItem value="pnpm">
+
+```shell
+pnpm cypress open --e2e --browser chrome
+```
+
+  </TabItem>
+  <TabItem value="bun">
+
+```shell
+bunx cypress open --e2e --browser chrome
+```
+
+  </TabItem>
+</Tabs>
 
 This is a handy addition to your npm scripts for the testing type you use most.
 
