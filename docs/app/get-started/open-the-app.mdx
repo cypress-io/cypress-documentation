@@ -1,6 +1,6 @@
 ---
 title: 'Open the Cypress app: step-by-step guide'
-description: 'Open the Cypress app to run tests interactively, watch them execute in a real browser, and debug failures visually — with guided setup that configures your project for you.'
+description: 'Open the Cypress app to run tests interactively, watch them execute in a real browser, and debug failures visually, with guided setup that configures your project for you.'
 sidebar_label: Open the App
 sidebar_position: 40
 ---
@@ -25,7 +25,7 @@ The Cypress app is where you'll spend most of your time while writing tests:
 it runs your tests in a real browser as you work, re-runs them automatically
 when you save a file, and lets you travel back through each step of a test to
 see exactly what happened. Opening the app for the first time also sets up
-your project for you — the Launchpad generates the configuration and folder
+your project for you: the Launchpad generates the configuration and folder
 structure Cypress needs, so you can go from installation to a running test
 without writing any config by hand.
 
@@ -42,7 +42,7 @@ After a moment, the Cypress Launchpad will open.
 
 Typing the full command works fine, but adding Cypress to the `scripts` field
 in your `package.json` gives you a shorter command that's consistent for
-everyone working in the project — teammates don't need to know how Cypress is
+everyone working in the project. Teammates don't need to know how Cypress is
 invoked, only that `npm run cy:open` starts it.
 
 ```json title="package.json"
@@ -74,7 +74,7 @@ Use a descriptive, non-ambiguous name such as `cy:open` or `cy:run`.
 ### CLI tools
 
 Installing Cypress through npm also gives you access to many other CLI
-commands — for running tests headlessly in CI, checking your installation,
+commands for running tests headlessly in CI, checking your installation,
 managing the binary cache, and more. Cypress is also a fully baked JavaScript
 library you can import into your Node scripts.
 
@@ -88,8 +88,8 @@ Read more in the [command line reference](/app/references/command-line).
 />
 
 When Cypress opens, the Launchpad is the first thing you'll see. It walks you
-through the decisions and configuration a new project needs — choosing a
-testing type, generating configuration files, and picking a browser — so you
+through the decisions and configuration a new project needs (choosing a
+testing type, generating configuration files, and picking a browser) so you
 don't have to set any of this up manually. If your project is already
 configured, the Launchpad gets you back to your tests in a couple of clicks.
 
@@ -108,8 +108,8 @@ you want to do?
 
 - **[E2E Testing](/app/core-concepts/testing-types#What-is-E2E-Testing)** runs
   your whole application in the browser and visits pages the way a user would.
-  It's the best way to verify complete user journeys — logging in, filling out
-  forms, checking out — across your entire stack.
+  It's the best way to verify complete user journeys across your entire
+  stack, like logging in, filling out forms, and checking out.
 - **[Component Testing](/app/core-concepts/testing-types#What-is-Component-Testing)**
   mounts individual components of your app in isolation. It's a fast, focused
   way to test a component's behavior across many states and props without
@@ -117,7 +117,7 @@ you want to do?
 
 For more background on this decision, read
 [Testing Types](/app/core-concepts/testing-types). If you're not sure which to
-pick, choose **E2E Testing** for now — this isn't a permanent choice, and you
+pick, choose **E2E Testing** for now. This isn't a permanent choice, and you
 can set up the other testing type at any time later.
 
 ### Step 2: Review the generated configuration
@@ -135,7 +135,7 @@ configuration format up front.
 
 You can read about what each file does in the
 [Cypress configuration reference](/app/references/configuration), or simply
-scroll down and click **Continue** — the defaults work well for most projects,
+scroll down and click **Continue**. The defaults work well for most projects,
 and you can adjust the configuration whenever you need to.
 
 ### Step 3: Launch a browser
@@ -148,7 +148,7 @@ and you can adjust the configuration whenever you need to.
 Finally, the Launchpad shows the compatible browsers it found on your system,
 including the Electron browser that ships with Cypress. Running your tests in
 the same browsers your users rely on gives you confidence that your app works
-where it matters — and you can switch browsers at any time, even in the middle
+where it matters, and you can switch browsers at any time, even in the middle
 of a testing session.
 
 To learn more about your options here, see the
@@ -183,6 +183,6 @@ You're set up and ready to write your first test:
 - Chose Component Testing?
   [Get started with Component Testing](/app/component-testing/get-started).
 
-To get the most out of the app itself — the Command Log, time-travel
-debugging, and Cypress Studio — read about
+To get the most out of the app itself, including the Command Log, time-travel
+debugging, and Cypress Studio, read about
 [Open Mode](/app/core-concepts/open-mode).
