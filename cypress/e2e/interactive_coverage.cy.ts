@@ -35,7 +35,9 @@ function exerciseContentTabs() {
 }
 
 function exerciseSearch() {
-  cy.contains('Search ⌘K').click()
+  // Target the search button, not the "Search ⌘K" label — that label is hidden
+  // below the sm breakpoint, so matching its text fails at mobile widths.
+  cy.contains('button', 'Search ⌘K').click()
   cy.get('.DocSearch-Modal').should('be.visible')
   cy.get('.DocSearch-Input').type('cypress')
   cy.get('body').type('{esc}')
