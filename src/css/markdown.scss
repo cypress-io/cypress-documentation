@@ -46,6 +46,18 @@ div.markdown {
     --ifm-h5-font-size: 1.2rem;
   }
 
+  // "What you'll learn" callout label. Rendered as a non-heading (see
+  // src/components/what-youll-learn) to avoid the heading-order violation it
+  // caused as an h5 following the page h1, but styled to match that h5 exactly.
+  p.what-youll-learn {
+    color: var(--ifm-heading-color);
+    font-family: var(--ifm-heading-font-family);
+    font-weight: var(--ifm-heading-font-weight);
+    line-height: var(--ifm-heading-line-height);
+    margin: var(--ifm-heading-margin-top) 0 var(--ifm-heading-margin-bottom) 0;
+    font-size: 1.2rem;
+  }
+
   p {
     margin-bottom: 1rem;
   }
