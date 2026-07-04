@@ -2,7 +2,7 @@ import React, { useCallback, useMemo, useRef, useState, useEffect } from 'react'
 import { useDocSearchKeyboardEvents } from '@docsearch/react'
 import Head from '@docusaurus/Head'
 import Link from '@docusaurus/Link'
-import { useHistory } from '@docusaurus/router'
+import { useHistory, useLocation } from '@docusaurus/router'
 import {
   isRegexpStringMatch,
   useSearchLinkCreator,
@@ -25,7 +25,7 @@ let DocSearchModal = null
  */
 async function initializeInsights(appId, apiKey) {
   if (typeof window === 'undefined') return false
-  
+
   try {
     // Wait for the library to be loaded (insights prop loads it asynchronously)
     let attempts = 0
@@ -33,18 +33,18 @@ async function initializeInsights(appId, apiKey) {
       await new Promise((resolve) => setTimeout(resolve, 100))
       attempts++
     }
-    
+
     if (!window.aa || typeof window.aa !== 'function') {
       return false
     }
-    
+
     // Initialize with credentials (idempotent - safe to call multiple times)
     window.aa('init', {
       appId,
       apiKey,
       useCookie: true,
     })
-    
+
     return true
   } catch (e) {
     if (process.env.NODE_ENV === 'development') {
@@ -57,21 +57,23 @@ async function initializeInsights(appId, apiKey) {
 function Hit({ hit, children, appId, apiKey }) {
   const handleClick = useCallback(async () => {
     if (!hit.objectID || !appId || !apiKey) return
-    
+
     // Ensure insights is initialized before sending events
     await initializeInsights(appId, apiKey)
-    
+
     // Get queryID from hit (attached via transformItems)
     const queryID = hit.queryID || hit.__autocomplete_queryID
     if (!queryID) return // No queryID means clickAnalytics isn't working
-    
+
     try {
       // Send click event to Algolia Insights
       window.aa('clickedObjectIDsAfterSearch', {
         eventName: 'Result Clicked',
         index: hit.__autocomplete_indexName || hit.index || 'cypress_docs',
         objectIDs: [hit.objectID],
-        positions: [hit.__position || hit.__autocomplete_id || hit.position || 1],
+        positions: [
+          hit.__position || hit.__autocomplete_id || hit.position || 1,
+        ],
         queryID: queryID,
       })
     } catch (error) {
@@ -105,6 +107,42 @@ function mergeFacetFilters(f1, f2) {
   const normalize = (f) => (typeof f === 'string' ? [f] : f)
   return [...normalize(f1), ...normalize(f2)]
 }
+
+/**
+ * Maps the first path segment of the current URL to the Algolia
+ * `hierarchy.lvl0` value the crawler assigns to that product section (derived
+ * from the active navbar item — see scripts/search/config.json). These strings
+ * must match the values present in the index exactly.
+ */
+const SECTION_LVL0_BY_PREFIX = {
+  app: 'App',
+  api: 'API',
+  cloud: 'Cloud',
+  'ui-coverage': 'UI Coverage',
+  accessibility: 'Accessibility',
+}
+
+function getCurrentSectionLvl0(pathname) {
+  const segment = pathname.split('/').filter(Boolean)[0]
+  return SECTION_LVL0_BY_PREFIX[segment] ?? null
+}
+
+/**
+ * Soft-boosts results from the section the reader is currently in to the top of
+ * the list, preserving Algolia's relevance order within each partition and
+ * keeping every other result visible. This is the client-side equivalent of an
+ * Algolia `optionalFilters` boost, which isn't available on the current plan.
+ */
+function boostCurrentSection(items, sectionLvl0) {
+  if (!sectionLvl0) return items
+  const inSection = []
+  const others = []
+  for (const item of items) {
+    if (item.hierarchy?.lvl0 === sectionLvl0) inSection.push(item)
+    else others.push(item)
+  }
+  return [...inSection, ...others]
+}
 function DocSearch({ contextualSearch, externalUrlRegex, ...props }) {
   const { siteMetadata } = useDocusaurusContext()
   const processSearchResultUrl = useSearchResultUrlProcessor()
@@ -129,6 +167,11 @@ function DocSearch({ contextualSearch, externalUrlRegex, ...props }) {
     }
   }, [props.appId, props.apiKey])
   const history = useHistory()
+  const location = useLocation()
+  // Track the reader's current section so the (once-created) transformItems
+  // closure below can read the up-to-date value on every search.
+  const currentSectionRef = useRef(null)
+  currentSectionRef.current = getCurrentSectionLvl0(location.pathname)
   const searchContainer = useRef(null)
   const searchButtonRef = useRef(null)
   const [isOpen, setIsOpen] = useState(false)
@@ -181,7 +224,7 @@ function DocSearch({ contextualSearch, externalUrlRegex, ...props }) {
   }).current
   // Store the latest queryID from search responses
   const queryIDRef = useRef(null)
-  
+
   const transformItems = useRef((items) => {
     const transformedItems = props.transformItems
       ? // Custom transformItems
@@ -193,20 +236,20 @@ function DocSearch({ contextualSearch, externalUrlRegex, ...props }) {
           // Attach queryID to each hit for click tracking (if available)
           queryID: queryIDRef.current || item.queryID,
         }))
-    
-    return transformedItems
+
+    // Prefer results from the product section the reader is currently in.
+    return boostCurrentSection(transformedItems, currentSectionRef.current)
   }).current
   const resultsFooterComponent = useMemo(
     () =>
       // eslint-disable-next-line react/no-unstable-nested-components
-      (footerProps) =>
-        <ResultsFooter {...footerProps} onClose={onClose} />,
+      (footerProps) => <ResultsFooter {...footerProps} onClose={onClose} />,
     [onClose]
   )
   const transformSearchClient = useCallback(
     (searchClient) => {
       searchClient.addAlgoliaAgent('docusaurus', siteMetadata.docusaurusVersion)
-      
+
       // Capture queryID from search responses for click tracking
       const originalSearch = searchClient.search.bind(searchClient)
       searchClient.search = function (requests) {
@@ -217,7 +260,7 @@ function DocSearch({ contextualSearch, externalUrlRegex, ...props }) {
           return response
         })
       }
-      
+
       return searchClient
     },
     [siteMetadata.docusaurusVersion]
