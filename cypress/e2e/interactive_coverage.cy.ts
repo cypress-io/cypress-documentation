@@ -9,10 +9,15 @@ const REPRESENTATIVE_PAGES = [
 
 function exerciseSidebar() {
   cy.get('nav[aria-label="Docs sidebar"]').then(($nav) => {
-    const buttons = $nav.find('button:visible').toArray()
-    buttons.forEach((el) => {
-      cy.wrap(el).scrollIntoView().click()
-    })
+    const collapsed = $nav
+      .find('button:visible')
+      .toArray()
+      .filter((el) => el.querySelector('[class*="-rotate-90"]'))
+    if (collapsed.length === 0) {
+      return
+    }
+    cy.wrap(collapsed[0]).scrollIntoView().click()
+    exerciseSidebar()
   })
 }
 
