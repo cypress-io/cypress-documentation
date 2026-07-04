@@ -7,22 +7,27 @@
 // with, so UI Coverage reports it as untested (these buttons were the largest
 // untested element group in Cypress Cloud run #1612).
 //
-// This spec visits one representative page per docs section — plus the two
-// historically noisiest views, `command-line` and `changelog` — and exercises
-// that chrome so those elements are recorded as tested. We deliberately visit a
-// small, representative set rather than every page to keep this off the hot
-// path of the full-site walk (search opens the Algolia DocSearch modal, which
-// is comparatively slow).
+// This spec exercises that chrome on one representative page per docs section.
+// The chrome is identical on every page, so a single page per section is enough
+// to record those elements as tested without putting the (comparatively slow)
+// search-modal interaction on the hot path of the full-site walk. Content tabs
+// are exercised opportunistically where a page happens to have them.
 
+// The page list is exposed by `setupNodeEvents` in cypress.config.ts, the same
+// source the `visitAllPages` and page-title specs use. Deriving the pages from
+// it at runtime means this list can't go stale as pages are added, renamed, or
+// removed.
+const URLs: Array<string> = Cypress.expose('URLs')
+
+// The alphabetically-first page of each top-level section (`app`, `api`,
+// `cloud`, `ui-coverage`, `accessibility`, ...). Sorting keeps the selection
+// deterministic and independent of filesystem walk order.
 const REPRESENTATIVE_PAGES = [
-  '/app/get-started/why-cypress',
-  '/app/references/command-line', // riskiest reference view + in-content tabs
-  '/api/table-of-contents',
-  '/cloud/get-started/introduction',
-  '/ui-coverage/get-started/introduction',
-  '/accessibility/get-started/introduction',
-  '/app/references/changelog', // historically the noisiest view
+  ...new Set(URLs.map((url) => url.split('/')[0])),
 ]
+  .sort()
+  .map((section) => URLs.filter((url) => url.split('/')[0] === section).sort()[0])
+  .filter(Boolean)
 
 // Click every currently-visible collapsible category toggle in the docs
 // sidebar. React preserves the toggle button nodes across the expand/collapse
