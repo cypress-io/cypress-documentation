@@ -61,8 +61,6 @@ npm run cy:open
 
 :::caution
 
-<strong>Best Practice</strong>
-
 Don't name a script `cypress`, especially if you use Yarn as your package
 manager. When running commands on the Cypress binary (e.g. `yarn cypress verify`),
 Yarn will reference the script of the same name instead, and
@@ -73,16 +71,16 @@ Use a descriptive, non-ambiguous name such as `cy:open` or `cy:run`.
 
 ## The Launchpad
 
-<DocsImage
-  src="/img/app/core-concepts/open-mode/the-launchpad.png"
-  alt="The Launchpad window"
-/>
-
 When Cypress opens, the Launchpad is the first thing you'll see. It walks you
 through the decisions and configuration a new project needs (choosing a
 testing type, generating configuration files, and picking a browser) so you
 don't have to set any of this up manually. If your project is already
 configured, the Launchpad gets you back to your tests in a couple of clicks.
+
+<DocsImage
+  src="/img/app/core-concepts/open-mode/the-launchpad.png"
+  alt="The Launchpad window"
+/>
 
 The first time you open Cypress in a project, the Launchpad takes you through
 the following steps in order.
