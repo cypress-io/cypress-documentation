@@ -26,6 +26,7 @@ without writing any config by hand.
 - How the Launchpad guides you through choosing a testing type, generating
   configuration, and launching a browser
 - How to skip the setup prompts once your project is configured
+- The benefits of logging in to Cypress Cloud from the app
 
 :::
 
@@ -183,6 +184,29 @@ bunx cypress open --e2e --browser chrome
 </Tabs>
 
 This is a handy addition to your npm scripts for the testing type you use most.
+
+## Log in to the app
+
+You can use the Cypress app without an account, but logging in to
+[Cypress Cloud](/cloud/get-started/introduction) from the profile menu in the
+top right unlocks insights from your recorded runs, right inside the app:
+
+- **See run history alongside your specs.** The Specs page shows each spec's
+  latest run statuses, average duration, and flaky-test annotations, so you
+  can spot slow or unreliable tests before you even run them.
+- **Review recorded runs without leaving the app.** The Runs page shows your
+  project's recorded runs, scoped to your current git branch.
+- **Debug CI failures locally.** The Debug page surfaces failed tests from
+  your latest recorded run, lets you re-run just those failures, and opens
+  [Test Replay](/cloud/features/test-replay) so you can see exactly what
+  happened in CI.
+- **Get notified when runs finish.** Cloud run notifications appear in the
+  app, and clicking one takes you straight to the run.
+
+To populate this data, your project needs to record runs to Cypress Cloud.
+[Setting up a project to record](/cloud/get-started/setup) takes a few
+minutes, and Cypress Cloud has a free plan to get you started. Learn more
+about these features in [Open Mode](/app/core-concepts/open-mode).
 
 ## Troubleshooting
 
