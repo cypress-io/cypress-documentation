@@ -509,39 +509,21 @@ cy.get('#tab-all').should('have.class', 'text-indigo-500')
 
 ## Pricing and usage limits
 
-`cy.prompt` is free to use during the beta period. Users are limited by the number of `cy.prompt` definitions and steps they can run per hour. This limit is higher for paid accounts and lower for free accounts. Our intention is to not limit normal usage of the feature.
+Cypress Cloud meters [`cy.prompt`](/api/commands/prompt) usage at the organization
+level as **cy.prompt executions**, with separate per-user hourly limits on runs
+that are not recording to Cypress Cloud. The
+[cy.prompt FAQ](/cloud/faq#cyprompt) is the full reference for execution counting,
+usage limits, the grace period, billing, and usage notifications.
 
 :::note
 
-Please note that pricing and usage limitations are subject to future adjustments. We commit to keeping you informed of any such changes.
+Through August 1, 2026, accumulated usage before that date is ignored for
+billing purposes. There are no charges or limiting behavior related to usage
+prior to the cutoff. See
+[What happens at the end of the grace period?](/cloud/faq#What-happens-at-the-end-of-the-cyprompt-grace-period)
+in the Cloud FAQ.
 
 :::
-
-There are two sets of limits: per-user hourly limits and per-prompt limits.
-
-### Per-user hourly limits
-
-_Usage limits only apply to runs that are not recording to Cypress Cloud._
-
-**User limits on projects with free accounts:**
-
-- 100 prompts per hour per user
-- 500 prompt steps per hour per user
-
-**User limits on projects with paid accounts (or on free trial):**
-
-- 600 prompts per hour per user
-- 3,000 prompt steps per hour per user
-
-### Per-prompt limits
-
-- Up to 50 steps per `cy.prompt` call to maintain context fidelity and produce reliable, executable commands.
-- During the beta period, system-wide limits apply to the total input length processed by `cy.prompt`. Very long prompts may be rejected or require splitting.
-
-To improve reliability and performance, consider the following:
-
-- Keep one action or assertion per step.
-- Split long flows into multiple `cy.prompt` calls.
 
 ## Privacy and security
 

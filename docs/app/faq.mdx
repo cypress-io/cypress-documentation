@@ -1,6 +1,6 @@
 ---
 title: 'Frequently asked questions: Cypress App'
-description: 'Get answers to common questions about Cypress, including general questions, how-to questions, and more.'
+description: 'Get answers to common questions about Cypress, including cy.prompt, how-to questions, and more.'
 sidebar_label: FAQ
 sidebar_position: 200
 ---
@@ -866,8 +866,98 @@ fuss with your database.
 
 ### <Icon name="angle-right" /> How do I test elements inside an iframe?
 
-We have an [open proposal](https://github.com/cypress-io/cypress/issues/136) to
-expand the APIs to support "switching into" an iframe and then back out of them.
+Cypress can interact with elements inside a **same-origin** `<iframe>` today, so a
+third-party plugin is usually not required. There is no dedicated "switch into an
+iframe" command yet (see the [open proposal](https://github.com/cypress-io/cypress/issues/136)),
+but you can reach into the iframe's document with existing commands and then chain
+the usual `cy.*` queries and actions off of it.
+
+#### Query into a same-origin iframe
+
+The most common approach is to grab the iframe element, read its
+`contentDocument.body`, and re-wrap it with [`cy.wrap()`](/api/commands/wrap) so
+you can continue chaining commands into the iframe:
+
+```javascript
+cy.get('iframe')
+  // '0' indexes into the jQuery object to get the raw <iframe> DOM element,
+  // then reads its document body. `.its()` retries, so this waits for the
+  // iframe to exist.
+  .its('0.contentDocument.body')
+  // Wait for the iframe document to finish rendering its content before
+  // continuing, otherwise you may query an empty body.
+  .should('not.be.empty')
+  // Re-wrap the raw DOM body so the rest of the chain is a Cypress subject
+  // with built-in retry-ability.
+  .then(cy.wrap)
+  .find('[data-testid="submit"]')
+  .click()
+```
+
+An equivalent pattern uses jQuery's `.contents()` to reach the iframe document:
+
+```javascript
+cy.get('iframe')
+  .its('0.contentDocument')
+  .should('exist')
+  .its('body')
+  .should('not.be.empty')
+  .then(cy.wrap)
+  .find('h1')
+  .should('have.text', 'Hello, iframe')
+```
+
+To keep specs readable, wrap either pattern in a custom command:
+
+```javascript title="cypress/support/commands.js"
+Cypress.Commands.add('iframe', (iframeSelector) => {
+  return cy
+    .get(iframeSelector)
+    .its('0.contentDocument.body')
+    .should('not.be.empty')
+    .then(cy.wrap)
+})
+```
+
+```javascript
+cy.iframe('#my-iframe').find('[data-testid="submit"]').click()
+```
+
+#### Why the extra steps?
+
+- `.its('0.contentDocument.body')` yields a **raw DOM element**. Passing it through
+  [`cy.wrap()`](/api/commands/wrap) turns it back into a Cypress subject, which
+  restores [retry-ability](/app/core-concepts/retry-ability) for the `.find()`,
+  `.click()`, assertions, and everything else that follows.
+- The `.should('not.be.empty')` assertion is important: an `<iframe>` loads its
+  document asynchronously, so without waiting you may query the body before its
+  content has rendered.
+
+#### The `cypress-iframe` plugin
+
+The community [`cypress-iframe`](https://www.npmjs.com/package/cypress-iframe)
+plugin (`cy.iframe()` / `cy.frameLoaded()` / `.iframe()`) essentially packages the
+patterns above by grabbing the frame's body and adding retries until it loads. For
+most same-origin iframes on modern Cypress versions it is optional, but it can
+still be a convenient shorthand if you interact with many iframes.
+
+#### Restrictions
+
+- **Cross-origin iframes are not supported.** Because of the browser's
+  [same-origin policy](https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy),
+  reading `contentDocument` on an iframe served from a different origin (a Stripe
+  payment form, an embedded YouTube/Vimeo video, an Auth0 login, a Disqus comment
+  widget, etc.) returns `null`, so none of the patterns above will work. See
+  [Cross-origin iframes](/app/guides/cross-origin-testing#Cross-origin-iframes) in
+  the Cross Origin Testing guide.
+- **[`cy.origin()`](/api/commands/origin) does not help here.** `cy.origin()`
+  handles top-level navigation to another origin. It cannot reach into an
+  embedded cross-origin `<iframe>`.
+- **Workaround for cross-origin iframes:** setting
+  [`chromeWebSecurity`](/app/references/configuration#Browser) to `false` lets
+  Chromium-family browsers access cross-origin iframes embedded in your app. This
+  is not supported in Firefox or WebKit. See
+  [Disabling Web Security](/app/guides/cross-origin-testing#Disabling-Web-Security).
 
 ### <Icon name="angle-right" /> How do I preserve cookies / localStorage in between my tests?
 
@@ -1778,3 +1868,34 @@ files inside that folder should use.
 Don't forget to update your
 [`specPattern`](/app/references/configuration#component)
 to include the new file location.
+
+## cy.prompt
+
+The `cy.prompt` command supports natural language testing directly within the Cypress App. It requires a free or paid Cypress Cloud account. For Cloud-related `cy.prompt` execution limits, billing, and usage information, see the [Cloud FAQ](/cloud/faq#cyprompt).
+
+### <Icon name="angle-right" /> What happens when AI is disabled for my organization and the `cy.prompt` is called in the app?
+
+Any **pre-existing** prompt commands and steps that are called in the app will attempt to run based on previously cached generated code. AI-dependent functionality will no longer work. This includes most self-healing behavior and
+the creation of new prompt commands.
+
+### <Icon name="angle-right" /> How do I migrate from cy.prompt code to regular Cypress code?
+
+If you plan to do this as you write tests, use the **Code** button in the
+Cypress App's command log. It gives you the code for any prompt and allows you to
+save it. This represents an author-only use of `cy.prompt`.
+
+If you plan to do this after tests have been recorded, download a full report of
+all the test code and related `cy.prompt` steps, and where they are located in
+your test suite. This is available in the **Properties** tab in the cy.prompt
+area for a specific run. See
+[View and export generated code](/app/guides/ai-test-generation#View-and-export-generated-code)
+for step-by-step instructions.
+
+### <Icon name="angle-right" /> What limitations does cy.prompt have?
+
+See the [Limitations](/api/commands/prompt#Limitations) section in the
+[`cy.prompt` API reference](/api/commands/prompt) to learn what commands and
+other techniques are not supported.
+
+Review the steps of your generated tests to confirm they are behaving as
+intended, especially if attempting steps that are documented as not supported.
