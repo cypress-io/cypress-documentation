@@ -1,10 +1,6 @@
 import { describe, expect, test, vi } from 'vitest'
 import { AlgoliaClient, selectIndexEntries } from './algolia-client.mjs'
 
-// ---------------------------------------------------------------------------
-// selectIndexEntries
-// ---------------------------------------------------------------------------
-
 describe('selectIndexEntries', () => {
   const indices = [
     { name: 'cypress_docs', entries: 4200 },
@@ -30,10 +26,6 @@ describe('selectIndexEntries', () => {
   })
 })
 
-// ---------------------------------------------------------------------------
-// AlgoliaClient constructor validation
-// ---------------------------------------------------------------------------
-
 describe('AlgoliaClient constructor', () => {
   test('throws when the index name is missing', () => {
     expect(() => new AlgoliaClient('', 'key', 'app')).toThrowError(
@@ -57,10 +49,6 @@ describe('AlgoliaClient constructor', () => {
     expect(() => new AlgoliaClient('idx', 'key', 'app')).not.toThrow()
   })
 })
-
-// ---------------------------------------------------------------------------
-// getEntriesForIndex (with an injected fetch, no network)
-// ---------------------------------------------------------------------------
 
 describe('getEntriesForIndex', () => {
   const makeFetch = (items) =>

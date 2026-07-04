@@ -4,10 +4,6 @@ import {
   parseScraperHits,
 } from './scrape-and-compare-algolia-index.mjs'
 
-// ---------------------------------------------------------------------------
-// parseScraperHits
-// ---------------------------------------------------------------------------
-
 describe('parseScraperHits', () => {
   test('parses the "Nb hits: N" line', () => {
     expect(parseScraperHits('Nb hits: 4321')).toBe(4321)
@@ -40,10 +36,6 @@ describe('parseScraperHits', () => {
     expect(parseScraperHits(null)).toBeNull()
   })
 })
-
-// ---------------------------------------------------------------------------
-// evaluateScrape
-// ---------------------------------------------------------------------------
 
 const DEFAULTS = { acceptableDelta: 1000, acceptableDeltaRatio: 0.05 }
 

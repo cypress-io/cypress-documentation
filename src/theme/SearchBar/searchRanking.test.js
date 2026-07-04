@@ -6,10 +6,6 @@ import {
   mergeFacetFilters,
 } from './searchRanking.js'
 
-// ---------------------------------------------------------------------------
-// getCurrentSectionLvl0
-// ---------------------------------------------------------------------------
-
 describe('getCurrentSectionLvl0', () => {
   test.each([
     ['/app/get-started/why-cypress', 'App'],
@@ -51,10 +47,6 @@ describe('getCurrentSectionLvl0', () => {
     expect(getCurrentSectionLvl0(null)).toBeNull()
   })
 })
-
-// ---------------------------------------------------------------------------
-// boostCurrentSection
-// ---------------------------------------------------------------------------
 
 const hit = (id, lvl0) => ({ id, hierarchy: { lvl0 } })
 
@@ -111,10 +103,6 @@ describe('boostCurrentSection', () => {
   })
 })
 
-// ---------------------------------------------------------------------------
-// assignDisplayPositions
-// ---------------------------------------------------------------------------
-
 describe('assignDisplayPositions', () => {
   test('stamps a 1-based display position reflecting the final order', () => {
     const items = [hit(1, 'App'), hit(2, 'API'), hit(3, 'Cloud')]
@@ -143,10 +131,6 @@ describe('assignDisplayPositions', () => {
     expect(assignDisplayPositions([])).toEqual([])
   })
 })
-
-// ---------------------------------------------------------------------------
-// mergeFacetFilters
-// ---------------------------------------------------------------------------
 
 describe('mergeFacetFilters', () => {
   test('merges two arrays', () => {
