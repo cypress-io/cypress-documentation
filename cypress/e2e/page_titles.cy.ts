@@ -4,7 +4,8 @@ const URLs: Array<string> = Cypress.expose('URLs')
 
 // Optional: `cypress run --env limitPerSection=2` to spot-check a few pages
 // per section instead of every page (useful for fast local iteration).
-const limitPerSection = Number(Cypress.env('limitPerSection')) || 0
+// Exposed from setupNodeEvents so it works with `allowCypressEnv: false`.
+const limitPerSection: number = Cypress.expose('limitPerSection')
 
 function selectUrls(urls: string[]): string[] {
   if (!limitPerSection) return urls
