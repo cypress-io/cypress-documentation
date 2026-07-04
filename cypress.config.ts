@@ -4,6 +4,7 @@ import { join } from 'path'
 
 export default defineConfig({
   projectId: 'imown1',
+  allowCypressEnv: false,
   fixturesFolder: false,
   viewportHeight: 800,
   viewportWidth: 1200,
@@ -52,6 +53,8 @@ export default defineConfig({
 
       config.expose = config.expose || {}
       config.expose.URLs = URLs
+
+      config.expose.limitPerSection = Number(config.env.limitPerSection) || 0
 
       return config
     },
