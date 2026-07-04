@@ -7,9 +7,14 @@ const REPRESENTATIVE_PAGES = [
   .map((section) => URLs.filter((url) => url.split('/')[0] === section).sort()[0])
   .filter(Boolean)
 
-function exerciseSidebar() {
-  cy.get('nav[aria-label="Docs sidebar"]').then(($nav) => {
-    const collapsed = $nav
+const VIEWPORTS = [
+  { name: 'desktop', width: 1200, height: 800 },
+  { name: 'mobile', width: 375, height: 812 },
+]
+
+function expandSidebar(root: string) {
+  cy.get(root).then(($el) => {
+    const collapsed = $el
       .find('button:visible')
       .toArray()
       .filter((el) => el.querySelector('[class*="-rotate-90"]'))
@@ -17,7 +22,7 @@ function exerciseSidebar() {
       return
     }
     cy.wrap(collapsed[0]).scrollIntoView().click()
-    exerciseSidebar()
+    expandSidebar(root)
   })
 }
 
@@ -37,17 +42,41 @@ function exerciseSearch() {
   cy.get('.DocSearch-Modal').should('not.exist')
 }
 
+function exerciseDesktopChrome() {
+  expandSidebar('nav[aria-label="Docs sidebar"]')
+  exerciseContentTabs()
+  exerciseSearch()
+}
+
+function exerciseMobileChrome() {
+  cy.get('.navbar__toggle:visible').first().click()
+  cy.get('.navbar-sidebar').should('be.visible')
+  expandSidebar('.navbar-sidebar')
+  cy.get('.navbar-sidebar__back:visible').click()
+  cy.get('.navbar-sidebar__close:visible').click()
+  cy.get('.navbar-sidebar').should('not.be.visible')
+  exerciseContentTabs()
+  exerciseSearch()
+}
+
 describe('Interactive UI Coverage', () => {
-  REPRESENTATIVE_PAGES.forEach((URL) => {
-    it(`exercises interactive chrome on ${URL}`, () => {
-      cy.visit(URL)
-      cy.get('h1').should('be.visible').and('not.have.text', 'Page Not Found')
+  VIEWPORTS.forEach((viewport) => {
+    describe(viewport.name, () => {
+      REPRESENTATIVE_PAGES.forEach((URL) => {
+        it(`exercises interactive chrome on ${URL}`, () => {
+          cy.viewport(viewport.width, viewport.height)
+          cy.visit(URL)
+          cy.get('h1').should('be.visible').and('not.have.text', 'Page Not Found')
 
-      exerciseSidebar()
-      exerciseContentTabs()
-      exerciseSearch()
+          if (viewport.name === 'mobile') {
+            exerciseMobileChrome()
+          } else {
+            exerciseDesktopChrome()
+          }
 
-      cy.get('[aria-label="Switch to dark mode"]').click()
+          cy.get('[aria-label="Switch to dark mode"]:visible').first().click()
+        })
+      })
     })
   })
 })
