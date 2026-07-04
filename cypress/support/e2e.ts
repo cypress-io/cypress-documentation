@@ -1,8 +1,5 @@
-// The Osano cookie-consent script (injected site-wide by plugins/osano.js)
-// renders a banner that overlays the page and intercepts clicks, which makes
-// interaction tests flaky. Stub the script request so the CMP never
-// initializes and the banner never renders — for every spec except the
-// dedicated osano.cy.ts, which opts out to exercise the real banner.
+// Stub the Osano consent script so its banner can't overlay the page and cause
+// flake — for every spec except osano.cy.ts, which tests the real banner.
 beforeEach(() => {
   if (Cypress.spec.name === 'osano.cy.ts') {
     return

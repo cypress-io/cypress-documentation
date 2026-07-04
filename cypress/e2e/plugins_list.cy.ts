@@ -127,8 +127,7 @@ describe('Plugins list', () => {
 
   it('surfaces npm and version signals on a card', () => {
     cy.get(search).type('cucumber')
-    // The Cucumber card can render below the fold; scroll it into view so the
-    // visibility assertions hold under experimentalFastVisibility, which ties
+    // Scroll the below-the-fold card in; experimentalFastVisibility ties
     // visibility to the viewport.
     cy.get('[data-cy="plugin-Cucumber"]').scrollIntoView()
     cy.get('[data-cy="plugin-Cucumber"]').within(() => {

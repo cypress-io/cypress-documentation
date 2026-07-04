@@ -35,8 +35,7 @@ function exerciseContentTabs() {
 }
 
 function exerciseSearch() {
-  // Target the search button, not the "Search ⌘K" label — that label is hidden
-  // below the sm breakpoint, so matching its text fails at mobile widths.
+  // Match the button, not the "Search ⌘K" label, which is hidden below `sm`.
   cy.contains('button', 'Search ⌘K').click()
   cy.get('.DocSearch-Modal').should('be.visible')
   cy.get('.DocSearch-Input').type('cypress')
@@ -51,18 +50,14 @@ function exerciseDesktopChrome() {
 }
 
 function openMobileDrawer() {
-  // The toggle can miss its first click if it fires before the navbar hydrates.
-  // Retry until the toggle reports expanded — using its aria-expanded React
-  // state rather than the drawer's CSS visibility, which lags behind the open
-  // animation and would otherwise cause a retry to toggle the drawer back shut.
+  // Retry the toggle until it reports expanded — its first click can be dropped
+  // pre-hydration. Keying off aria-expanded (React state) rather than the
+  // drawer's animating CSS visibility avoids re-clicking a drawer that's opening.
   const ensureExpanded = (n: number) => {
     cy.get('.navbar__toggle:visible', { timeout: 15000 }).first().then(($toggle) => {
       if ($toggle.attr('aria-expanded') === 'true' || n >= 6) {
         return
       }
-      // Re-querying the toggle on the next iteration yields a tick for React to
-      // flush the click (discrete events flush synchronously), so aria-expanded
-      // is up to date without an explicit wait.
       cy.wrap($toggle).click()
       ensureExpanded(n + 1)
     })
@@ -77,8 +72,7 @@ function openMobileDrawer() {
 function exerciseMobileChrome() {
   openMobileDrawer()
   expandSidebar('.navbar-sidebar')
-  // The "back to main menu" button only exists while the secondary (docs
-  // sidebar) menu is shown, so click it only when present.
+  // The back button only exists while the secondary menu is shown.
   cy.get('.navbar-sidebar').then(($drawer) => {
     const back = $drawer.find('.navbar-sidebar__back:visible')
     if (back.length) {
