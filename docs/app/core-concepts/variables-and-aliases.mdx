@@ -50,7 +50,7 @@ const form = cy.get('form')
 button.click()
 ```
 
-### Closures
+## Closures
 
 To access what each Cypress command yields you use
 [`.then()`](/api/commands/then).
@@ -103,7 +103,7 @@ commands.
 
 :::
 
-### Debugging
+## Debugging
 
 Using `.then()` functions is an excellent opportunity to use
 [`debugger`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/debugger).
@@ -132,7 +132,7 @@ cy.get('button').then(($btn) => {
 })
 ```
 
-### Variables
+## Variables
 
 Typically in Cypress you hardly need to ever use `const`, `let`, or `var`. When
 using closures you'll always have access to the objects that were yielded to you

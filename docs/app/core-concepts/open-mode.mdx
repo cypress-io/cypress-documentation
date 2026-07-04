@@ -23,7 +23,7 @@ sidebar_position: 60
 
 The Cypress app includes an interactive workflow called open mode. In Cypress open mode you can run specs, watch the Command Log update in real time, and inspect the application or component under test. You can [open the app](/app/get-started/open-the-app), use Cypress Studio to record interactions and edit tests inline, and debug with time travel snapshots and console output. Open mode is best for local development, while recorded runs in Cypress Cloud provide history and analytics when needed.
 
-### Launchpad
+## Launchpad
 
 <DocsImage
   src="/img/app/core-concepts/open-mode/the-launchpad.png"
@@ -35,7 +35,7 @@ The Launchpad helps you choose a testing type, pick a browser, and open your pro
 To bypass the Launchpad's manual selection steps, run
 [`cypress open`](/app/references/command-line#cypress-open) with `--browser` and either `--component` or `--e2e`. The Launchpad will still open briefly (it handles configuration errors and other edge cases), but you'll land directly on the Specs page without having to click through the testing type and browser prompts.
 
-### Specs
+## Specs
 
 <DocsImage
   src="/img/app/core-concepts/open-mode/spec-explorer.png"
@@ -46,19 +46,19 @@ After you pick a browser, the Specs page lists your spec files with name, path, 
 
 The Specs page shows:
 
-#### Last updated
+### Last updated
 
 Shows when the spec file last changed on your machine, based on git or filesystem data. Values can differ across machines.
 
-#### Latest runs
+### Latest runs
 
 Shows the last time the spec ran and the last four statuses. Results are scoped to your current git branch when available, then the default branch, then all branches. Data comes from Cypress Cloud.
 
-#### Average duration
+### Average duration
 
 Shows the average time to run the spec, calculated from the last four runs. Useful for spotting slow specs. Data comes from Cypress Cloud.
 
-#### Flake annotation
+### Flake annotation
 
 :::info
 
@@ -71,7 +71,7 @@ can pass and fail across multiple retry attempts without any code changes.
 
 Specs with flaky tests show an indicator next to the name. Hover to see rate, severity, and last flaky across the last 50 runs. Click to open Flaky Test Analytics in Cypress Cloud.
 
-#### Running Specs
+### Running Specs
 
 <DocsImage src="/img/app/core-concepts/open-mode/spec-page.png" alt="Specs" />
 
@@ -87,7 +87,7 @@ You can run multiple specs sequentially using [`experimentalRunAllSpecs`](/app/r
 
 :::
 
-### Runs
+## Runs
 
 When your project records to [Cypress Cloud](/cloud/get-started/introduction), the app shows your latest [recorded runs](/cloud/features/recorded-runs#Latest-Runs) directly in open mode. This gives branch scoped results in context while you debug locally.
 
@@ -101,7 +101,7 @@ When your project records to [Cypress Cloud](/cloud/get-started/introduction), t
   alt="Recorded Runs"
 />
 
-### Debug
+## Debug
 
 The Debug page in the Cypress app helps you investigate failed CI test runs recorded to [Cypress Cloud](/cloud/get-started/introduction) without leaving the app. You can review failures, rerun only the failed tests, and open [Test Replay](/cloud/features/test-replay) along with screenshots, videos, and logs.
 
@@ -110,18 +110,18 @@ The Debug page in the Cypress app helps you investigate failed CI test runs reco
   alt="Cypress Debug page showing failed tests"
 />
 
-#### What the Debug page shows
+### What the Debug page shows
 
 - Latest completed [recorded run](/cloud/features/recorded-runs#Latest-Runs) that matches the `HEAD` commit of your working directory
 - If none is found, the most recent run on your current branch, then the default branch
 - The first 100 failed tests, each with a link to view the full run in Cypress Cloud and open Test Replay
 
-#### Requirements
+### Requirements
 
 - **Authentication:** Sign in to Cypress Cloud using the profile in the top right.
 - **Git information:**Provide git metadata so the app can match your `HEAD` commit and branch. In environments like `docker` or `docker-compose`, pass git information with [custom system environment variables](/app/continuous-integration/overview#Git-information)
 
-### Cloud run notifications
+## Cloud run notifications
 
 Get notifications in the Cypress app for recorded runs from [Cypress Cloud](/cloud/get-started/introduction). Notifications appear in open mode when you are signed in and your project records to Cloud. Click a notification to open the run in Cypress Cloud. Learn more in [Cloud run notifications](/cloud/features/recorded-runs#Notifications).
 
