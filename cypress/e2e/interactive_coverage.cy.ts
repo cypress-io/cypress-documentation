@@ -51,21 +51,24 @@ function exerciseDesktopChrome() {
 }
 
 function openMobileDrawer() {
-  // The toggle can miss its first click if it fires before the navbar hydrates,
-  // so retry until the drawer actually opens.
-  const attempt = (n: number) => {
-    cy.get('body').then(($body) => {
-      const drawer = $body.find('.navbar-sidebar')
-      const isOpen = drawer.length > 0 && drawer.css('visibility') !== 'hidden'
-      if (isOpen || n >= 6) {
+  // The toggle can miss its first click if it fires before the navbar hydrates.
+  // Retry until the toggle reports expanded — using its aria-expanded React
+  // state rather than the drawer's CSS visibility, which lags behind the open
+  // animation and would otherwise cause a retry to toggle the drawer back shut.
+  const ensureExpanded = (n: number) => {
+    cy.get('.navbar__toggle:visible', { timeout: 15000 }).first().then(($toggle) => {
+      if ($toggle.attr('aria-expanded') === 'true' || n >= 6) {
         return
       }
-      cy.get('.navbar__toggle:visible').first().click()
-      cy.wait(200)
-      attempt(n + 1)
+      cy.wrap($toggle).click()
+      cy.wait(300)
+      ensureExpanded(n + 1)
     })
   }
-  attempt(0)
+  ensureExpanded(0)
+  cy.get('.navbar__toggle:visible', { timeout: 15000 })
+    .first()
+    .should('have.attr', 'aria-expanded', 'true')
   cy.get('.navbar-sidebar').should('be.visible')
 }
 
