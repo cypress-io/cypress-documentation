@@ -420,6 +420,14 @@ browser cookies.
 In other words, `cy.request()` transparently performs all of the underlying
 functions as if it came from the browser.
 
+Cookies are pulled from the cookie jar by domain match. A cookie set without
+`hostOnly: true` is a domain cookie, so it can be attached to a `cy.request()`
+aimed at a _different_ host that domain-matches it (for example a sibling
+subdomain on the same registrable domain). If a cookie shows up on a request
+unexpectedly, see
+[Cookie scope (host-only vs. domain cookies)](/api/commands/setcookie#Cookie-scope-host-only-vs-domain-cookies)
+for how to scope it to a single exact host with `hostOnly: true`.
+
 ### [`cy.intercept()`](/api/commands/intercept)
 
 #### `cy.request()` sends requests to actual endpoints, bypassing those defined using `cy.intercept()`
