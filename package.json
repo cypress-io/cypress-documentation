@@ -67,7 +67,7 @@
     "got": "^14.6.6",
     "gray-matter": "^4.0.3",
     "husky": "^9.1.7",
-    "lint-staged": "^16.2.3",
+    "lint-staged": "^17.0.8",
     "node-fetch": "^3.3.2",
     "p-map": "^7.0.5",
     "patch-package": "^8.0.0",
