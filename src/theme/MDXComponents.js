@@ -51,6 +51,7 @@ import OsTabs from '@site/src/components/os-tabs'
 import Logo from '@site/src/components/logo'
 import ScrollableTable from '@site/src/components/scrollable-table'
 import WhatYoullLearn from '@site/src/components/what-youll-learn'
+import CalloutLabel from '@site/src/components/callout-label'
 import AccordionBlock from '@site/src/components/accordion-block'
 import CloudFreePlan from '@site/docs/partials/_cloud_free_plan.mdx'
 import CiProviderCloudSteps from '@site/docs/partials/_ci_provider_cloud_steps.mdx'
@@ -181,6 +182,7 @@ export default {
   // scrollable-region-focusable)
   table: ScrollableTable,
   WhatYoullLearn,
+  CalloutLabel,
   AnatomyOfAnError,
   AccessibilityPremiumNote,
   AttributeFilters,
