@@ -202,7 +202,7 @@ attached to the DOM, and Cypress cannot requery the page after commands
 such as cy.children().
 ```
 
-#### <Icon name="exclamation-triangle" color="red" /> Mid-chain assertion with risk of a stale subject
+### <Icon name="exclamation-triangle" color="red" /> Mid-chain assertion with risk of a stale subject
 
 ```javascript
 cy.get('.list')
@@ -219,7 +219,7 @@ If the page re-renders between the two assertions, the `li` matched by
 from `.children('.child')`, it uses the original—now-detached—`li` as the
 subject and fails.
 
-#### <Icon name="check-circle" color="green" /> Split the chain at assertion boundaries
+### <Icon name="check-circle" color="green" /> Split the chain at assertion boundaries
 
 Break the chain into separate statements so each re-query starts fresh from the
 top:
