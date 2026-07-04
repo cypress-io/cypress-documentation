@@ -18,6 +18,7 @@
  * This script's purpose is to ALERT us when this does happen.
  */
 import util from 'util'
+import path from 'path'
 import { exec as execOriginal } from 'child_process'
 import { fileURLToPath } from 'url'
 import { AlgoliaClient } from './algolia-client.mjs'
@@ -222,9 +223,12 @@ const main = async () => {
 }
 
 // Only run the scraper when invoked directly (e.g. from CI), not when this
-// module is imported by tests.
+// module is imported by tests. Both sides are resolved to an absolute path so
+// the check holds regardless of how node was invoked (e.g. CI runs it with a
+// relative path: `node ./scripts/search/scrape-and-compare-algolia-index.mjs`).
 const invokedDirectly =
-  process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]
+  process.argv[1] &&
+  path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)
 if (invokedDirectly) {
   main()
 }

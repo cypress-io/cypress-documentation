@@ -1,5 +1,6 @@
 import { describe, expect, test } from 'vitest'
 import {
+  assignDisplayPositions,
   boostCurrentSection,
   getCurrentSectionLvl0,
   mergeFacetFilters,
@@ -107,6 +108,39 @@ describe('boostCurrentSection', () => {
 
   test('handles an empty list', () => {
     expect(boostCurrentSection([], 'App')).toEqual([])
+  })
+})
+
+// ---------------------------------------------------------------------------
+// assignDisplayPositions
+// ---------------------------------------------------------------------------
+
+describe('assignDisplayPositions', () => {
+  test('stamps a 1-based display position reflecting the final order', () => {
+    const items = [hit(1, 'App'), hit(2, 'API'), hit(3, 'Cloud')]
+    expect(
+      assignDisplayPositions(items).map((h) => h.__displayPosition)
+    ).toEqual([1, 2, 3])
+  })
+
+  test('reflects the boosted order, not the original Algolia rank', () => {
+    // A hit that Algolia ranked 3rd but that gets boosted to the top should
+    // report display position 1, so click analytics match what the user saw.
+    const items = [hit(1, 'App'), hit(2, 'App'), hit(3, 'API')]
+    const boosted = boostCurrentSection(items, 'API')
+    const positioned = assignDisplayPositions(boosted)
+    expect(positioned[0]).toMatchObject({ id: 3, __displayPosition: 1 })
+    expect(positioned.map((h) => h.__displayPosition)).toEqual([1, 2, 3])
+  })
+
+  test('does not mutate the input items', () => {
+    const items = [hit(1, 'App')]
+    assignDisplayPositions(items)
+    expect(items[0]).not.toHaveProperty('__displayPosition')
+  })
+
+  test('handles an empty list', () => {
+    expect(assignDisplayPositions([])).toEqual([])
   })
 })
 

@@ -61,6 +61,22 @@ export function boostCurrentSection(items, sectionLvl0) {
 }
 
 /**
+ * Stamps each hit with its 1-based position in the list as displayed to the
+ * user. Because {@link boostCurrentSection} reorders hits on the client, the
+ * rank Algolia originally assigned (`__position`) no longer matches what the
+ * user sees. Click-analytics events must report the displayed position, so we
+ * record it here — after any reordering — under `__displayPosition`, which the
+ * click handler reads first.
+ *
+ * @template T
+ * @param {T[]} items
+ * @returns {(T & { __displayPosition: number })[]}
+ */
+export function assignDisplayPositions(items) {
+  return items.map((item, index) => ({ ...item, __displayPosition: index + 1 }))
+}
+
+/**
  * Merges two facet-filter values (each of which may be a string or an array)
  * into a single flat array.
  *

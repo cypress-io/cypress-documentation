@@ -17,6 +17,7 @@ import { createPortal } from 'react-dom'
 import translations from '@theme/SearchTranslations'
 import { IconObjectMagnifyingGlass } from '@cypress-design/react-icon'
 import {
+  assignDisplayPositions,
   boostCurrentSection,
   getCurrentSectionLvl0,
   mergeFacetFilters,
@@ -77,7 +78,13 @@ function Hit({ hit, children, appId, apiKey }) {
         index: hit.__autocomplete_indexName || hit.index || 'cypress_docs',
         objectIDs: [hit.objectID],
         positions: [
-          hit.__position || hit.__autocomplete_id || hit.position || 1,
+          // __displayPosition is stamped after client-side reordering so the
+          // reported position matches what the user saw (see searchRanking.js).
+          hit.__displayPosition ||
+            hit.__position ||
+            hit.__autocomplete_id ||
+            hit.position ||
+            1,
         ],
         queryID: queryID,
       })
@@ -202,8 +209,14 @@ function DocSearch({ contextualSearch, externalUrlRegex, ...props }) {
           queryID: queryIDRef.current || item.queryID,
         }))
 
-    // Prefer results from the product section the reader is currently in.
-    return boostCurrentSection(transformedItems, currentSectionRef.current)
+    // Prefer results from the product section the reader is currently in, then
+    // record each hit's final displayed position so click analytics report the
+    // rank the user actually saw rather than Algolia's original ordering.
+    const boosted = boostCurrentSection(
+      transformedItems,
+      currentSectionRef.current
+    )
+    return assignDisplayPositions(boosted)
   }).current
   const resultsFooterComponent = useMemo(
     () =>
