@@ -84,14 +84,11 @@ configured, the Launchpad gets you back to your tests in a couple of clicks.
 />
 
 The first time you open Cypress in a project, the Launchpad takes you through
-the following steps in order.
+the following steps in order. You'll only see this full setup once: on later
+opens, the Launchpad remembers your configuration, and you can
+[skip the prompts entirely](#Skip-the-setup-prompts) from the command line.
 
 ### Step 1: Choose a testing type
-
-<DocsImage
-  src="/img/app/get-started/open-the-app/choose-testing-type.png"
-  alt="The Launchpad test type selector"
-/>
 
 The Launchpad presents your biggest decision first: what type of testing do
 you want to do?
@@ -110,12 +107,12 @@ For more background on this decision, read
 pick, choose **E2E Testing** for now. This isn't a permanent choice, and you
 can set up the other testing type at any time later.
 
-### Step 2: Review the generated configuration
-
 <DocsImage
-  src="/img/app/get-started/open-the-app/scaffolded-files.png"
-  alt="The Launchpad scaffolded files list"
+  src="/img/app/get-started/open-the-app/choose-testing-type.png"
+  alt="The Launchpad test type selector"
 />
+
+### Step 2: Review the generated configuration
 
 Next, the Launchpad generates a set of configuration files tailored to your
 chosen testing type and lists each change for you to review. This scaffolding
@@ -128,12 +125,22 @@ You can read about what each file does in
 scroll down and click **Continue**. The defaults work well for most projects,
 and you can adjust the configuration whenever you need to.
 
-### Step 3: Launch a browser
-
 <DocsImage
-  src="/img/app/get-started/open-the-app/select-browser.png"
-  alt="The Launchpad browser selector"
+  src="/img/app/get-started/open-the-app/scaffolded-files.png"
+  alt="The Launchpad scaffolded files list"
 />
+
+:::info
+
+If you chose Component Testing, the Launchpad shows two extra screens before
+generating configuration files: it auto-detects your front-end framework and
+bundler, then verifies that the required dependencies are installed. See the
+[Component Testing setup guide](/app/component-testing/get-started) for a
+full walkthrough.
+
+:::
+
+### Step 3: Launch a browser
 
 Finally, the Launchpad shows the compatible browsers it found on your system,
 including the Electron browser that ships with Cypress. Running your tests in
@@ -144,6 +151,11 @@ of a testing session.
 To learn more about your options here, see the
 [guide on launching browsers](/app/references/launching-browsers). Pick a
 browser and click **Start** to begin testing.
+
+<DocsImage
+  src="/img/app/get-started/open-the-app/select-browser.png"
+  alt="The Launchpad browser selector"
+/>
 
 ## Skip the setup prompts
 
@@ -215,8 +227,7 @@ top right unlocks insights from your recorded runs, right inside the app:
 The run insights require your project to
 [record runs to Cypress Cloud](/cloud/get-started/setup), and the AI features
 require a linked project. Setup takes a few minutes, and Cypress Cloud has a
-free plan to get you started. Learn more about these features in
-[Open Mode](/app/core-concepts/open-mode).
+free plan to get you started.
 
 ## Troubleshooting
 
