@@ -63,7 +63,7 @@
     "@docusaurus/tsconfig": "3.9.2",
     "@prettier/sync": "^0.6.1",
     "@types/turndown": "^5.0.6",
-    "cypress": "^15.16.0",
+    "cypress": "^15.18.0",
     "got": "^14.6.6",
     "gray-matter": "^4.0.3",
     "husky": "^9.1.7",
