@@ -439,6 +439,12 @@ div[class^='codeBlockTitle'] {
   display: none;
 }
 
+/* a11y: darken the Osano cookie-dialog storage-policy text so it meets the
+   4.5:1 contrast ratio on the dialog's light background (was #838391 = 3.24:1) */
+.osano-cm-storage-policy {
+  color: var(--ifm-color-gray-700) !important;
+}
+
 .logo {
   width: 20px;
   display: inline-block;

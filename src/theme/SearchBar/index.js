@@ -248,7 +248,7 @@ function DocSearch({ contextualSearch, externalUrlRegex, ...props }) {
         onMouseOver={importDocSearchModalIfNeeded}
         onClick={onOpen}
         ref={searchButtonRef}
-        className="gap-[16px] sm:w-[180px] bg-white dark:bg-gray-1000 text-gray-400 dark:text-gray-600 rounded-full p-[12px] sm:px-[16px] sm:h-[38px] border border-gray-100 dark:border-gray-900 flex items-center xl:mx-[16px]"
+        className="gap-[16px] sm:w-[180px] bg-white dark:bg-gray-1000 text-gray-700 dark:text-gray-500 rounded-full p-[12px] sm:px-[16px] sm:h-[38px] border border-gray-100 dark:border-gray-900 flex items-center xl:mx-[16px]"
       >
         <IconObjectMagnifyingGlass fillColor="transparent" />
         <span className="hidden sm:inline">Search ⌘K</span>

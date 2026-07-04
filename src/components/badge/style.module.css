@@ -29,6 +29,8 @@ h1 > .badge {
 
 .caution {
   background-color: #e6a700;
+  /* dark text so the badge meets 4.5:1 contrast (white on #e6a700 was 2.12:1) */
+  color: var(--ifm-color-orange-1000);
 }
 
 .info {
