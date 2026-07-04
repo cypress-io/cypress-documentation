@@ -51,10 +51,10 @@ function exerciseDesktopChrome() {
 
 function openMobileDrawer() {
   // Retry the toggle until it reports expanded — its first click can be dropped
-  // pre-hydration. Keying off aria-expanded (React state) rather than the
-  // drawer's animating CSS visibility avoids re-clicking a drawer that's opening.
+  // pre-hydration. Query without `:visible` (the toggle is hidden once the
+  // drawer covers it) and key off aria-expanded, which stays accurate.
   const ensureExpanded = (n: number) => {
-    cy.get('.navbar__toggle:visible', { timeout: 15000 }).first().then(($toggle) => {
+    cy.get('.navbar__toggle', { timeout: 15000 }).first().then(($toggle) => {
       if ($toggle.attr('aria-expanded') === 'true' || n >= 6) {
         return
       }
@@ -63,9 +63,7 @@ function openMobileDrawer() {
     })
   }
   ensureExpanded(0)
-  cy.get('.navbar__toggle:visible', { timeout: 15000 })
-    .first()
-    .should('have.attr', 'aria-expanded', 'true')
+  cy.get('.navbar__toggle').first().should('have.attr', 'aria-expanded', 'true')
   cy.get('.navbar-sidebar').should('be.visible')
 }
 
