@@ -128,7 +128,8 @@
       ["selector", "selectors"],
       ["datacy", "selector"],
       ["viewport", "responsive"],
-      ["variable", "variables"]
+      ["variable", "variables"],
+      ["goto", "visit"]
     ]
   }
 }
