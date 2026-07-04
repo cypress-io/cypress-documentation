@@ -50,11 +50,36 @@ function exerciseDesktopChrome() {
   exerciseSearch()
 }
 
-function exerciseMobileChrome() {
-  cy.get('.navbar__toggle:visible').first().click()
+function openMobileDrawer() {
+  // The toggle can miss its first click if it fires before the navbar hydrates,
+  // so retry until the drawer actually opens.
+  const attempt = (n: number) => {
+    cy.get('body').then(($body) => {
+      const drawer = $body.find('.navbar-sidebar')
+      const isOpen = drawer.length > 0 && drawer.css('visibility') !== 'hidden'
+      if (isOpen || n >= 6) {
+        return
+      }
+      cy.get('.navbar__toggle:visible').first().click()
+      cy.wait(200)
+      attempt(n + 1)
+    })
+  }
+  attempt(0)
   cy.get('.navbar-sidebar').should('be.visible')
+}
+
+function exerciseMobileChrome() {
+  openMobileDrawer()
   expandSidebar('.navbar-sidebar')
-  cy.get('.navbar-sidebar__back:visible').click()
+  // The "back to main menu" button only exists while the secondary (docs
+  // sidebar) menu is shown, so click it only when present.
+  cy.get('.navbar-sidebar').then(($drawer) => {
+    const back = $drawer.find('.navbar-sidebar__back:visible')
+    if (back.length) {
+      cy.wrap(back.first()).click()
+    }
+  })
   cy.get('.navbar-sidebar__close:visible').click()
   cy.get('.navbar-sidebar').should('not.be.visible')
   exerciseContentTabs()
