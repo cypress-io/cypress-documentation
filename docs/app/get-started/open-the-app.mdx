@@ -202,11 +202,21 @@ top right unlocks insights from your recorded runs, right inside the app:
   happened in CI.
 - **Get notified when runs finish.** Cloud run notifications appear in the
   app, and clicking one takes you straight to the run.
+- **Get AI assertion recommendations in Cypress Studio.** As you record
+  interactions with [Cypress Studio](/app/guides/cypress-studio), Studio AI
+  watches what changes in your UI and recommends assertions for you to review
+  and keep, so you don't have to guess what to assert after every click.
+- **Generate tests from natural language with `cy.prompt`.** Logging in lets
+  you use [`cy.prompt`](/api/commands/prompt) to turn plain-language steps
+  like `'click the login button'` into real, executable Cypress commands,
+  with self-healing when your UI changes. Learn more in
+  [AI Test Generation](/app/guides/ai-test-generation).
 
-To populate this data, your project needs to record runs to Cypress Cloud.
-[Setting up a project to record](/cloud/get-started/setup) takes a few
-minutes, and Cypress Cloud has a free plan to get you started. Learn more
-about these features in [Open Mode](/app/core-concepts/open-mode).
+The run insights require your project to
+[record runs to Cypress Cloud](/cloud/get-started/setup), and the AI features
+require a linked project. Setup takes a few minutes, and Cypress Cloud has a
+free plan to get you started. Learn more about these features in
+[Open Mode](/app/core-concepts/open-mode).
 
 ## Troubleshooting
 
