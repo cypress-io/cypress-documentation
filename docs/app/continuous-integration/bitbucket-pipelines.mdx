@@ -208,13 +208,13 @@ pipelines:
         script:
           - npm ci
     - parallel:
-      # run N steps in parallel
-      - step:
-          <<: *e2e
-      - step:
-          <<: *e2e
-      - step:
-          <<: *e2e
+        # run N steps in parallel
+        - step:
+            <<: *e2e
+        - step:
+            <<: *e2e
+        - step:
+            <<: *e2e
 definitions:
   caches:
     npm: $HOME/.npm
