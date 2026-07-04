@@ -39,8 +39,8 @@
     "@cypress-design/react-button": "^1.0.1",
     "@cypress-design/react-docmenu": "^1.0.2",
     "@cypress-design/react-tag": "^1.0.3",
-    "@docusaurus/core": "^3.9.2",
-    "@docusaurus/preset-classic": "^3.9.2",
+    "@docusaurus/core": "^3.10.1",
+    "@docusaurus/preset-classic": "^3.10.1",
     "@fortawesome/fontawesome-svg-core": "^6.5.1",
     "@fortawesome/free-brands-svg-icons": "^6.5.1",
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
@@ -59,8 +59,8 @@
     "sharp": "^0.35.2"
   },
   "devDependencies": {
-    "@docusaurus/module-type-aliases": "^3.9.2",
-    "@docusaurus/tsconfig": "3.9.2",
+    "@docusaurus/module-type-aliases": "^3.10.1",
+    "@docusaurus/tsconfig": "3.10.1",
     "@prettier/sync": "^0.6.1",
     "@types/turndown": "^5.0.6",
     "cypress": "^15.16.0",
