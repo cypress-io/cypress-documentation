@@ -14,6 +14,15 @@ This is the **Cypress Documentation** site, built with
 - The LLM-docs pipeline lives in `plugins/llm`. At build time it reprocesses
   content into stripped-down markdown and chunked JSON published under `/llm`,
   with `/llms.txt` as the index (both are build output, not committed files).
+- The plugin sub-packages (`plugins/cypressRemarkPlugins`, `plugins/llm`) are
+  **never installed on their own**: they have no lockfiles and are not npm
+  workspaces, and the root's `npm --prefix … run build`/`run test` scripts only
+  run their scripts. Everything they use (typescript, prettier, vitest, the
+  remark/unist ecosystem, etc.) resolves from the repository root's
+  `node_modules`, so their `package.json` files intentionally declare **no**
+  `dependencies`/`devDependencies`. Declare any new plugin dependency in the
+  **root** `package.json` — pins added to a plugin's own `package.json` are
+  never installed and just drift stale.
 - Reusable React/MDX components live in `src/components` and are registered in
   `src/theme/MDXComponents.js`.
 

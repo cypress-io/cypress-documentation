@@ -114,3 +114,10 @@ Each rule is a hard convention. See the linked section for the how and why.
 - Links to `www.cypress.io` / `on.cypress.io` / `learn.cypress.io` need UTM
   params (`utm_source=docs.cypress.io` + a placement `utm_medium`). Do not add
   them to internal links or `cloud.cypress.io`.
+
+**Plugins** — [details](./AGENTS_REFERENCE.md#project-layout)
+
+- The sub-packages in `plugins/` are never installed on their own; all of their
+  dependencies resolve from the repository root's `node_modules`. Declare new
+  dependencies in the **root** `package.json`, never in a plugin's own
+  `package.json` (pins there are never installed and just drift stale).

@@ -2,28 +2,16 @@
   "name": "tstojs",
   "version": "1.0.0",
   "description": "",
+  "//": "This package is never installed on its own — it has no lockfile and is not an npm workspace; `npm --prefix` only runs its scripts. All dependencies (typescript, prettier, unist-util-visit, @types/*, vitest, etc.) resolve from the repository root's node_modules, so declare any new dependency in the root package.json.",
   "main": "dist/index.js",
   "scripts": {
     "prebuild": "rm -rf ./dist",
     "build": "tsc",
-    "build:watch": "yarn prebuild && tsc --watch",
-    "test": "vitest run",
-    "test2": "jest",
-    "test:watch": "jest --watch"
+    "test": "vitest run"
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "@types/prettier": "^2.6.3",
-    "prettier": "^2.7.1",
-    "typescript": "^6.0.3",
-    "unist-util-visit": "^2.0.3"
-  },
   "files": [
     "dist"
-  ],
-  "devDependencies": {
-    "@types/mdast": "^3.0.10",
-    "@types/unist": "^2.0.6"
-  }
+  ]
 }
