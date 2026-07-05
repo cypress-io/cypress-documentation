@@ -180,9 +180,13 @@ Instead of adding triple slash directives to each JavaScript spec file, some
 IDEs (like VS Code) understand a common `jsconfig.json` file in the root of the
 project. In that file, include the Cypress module and your test folders:
 
+{/* prettier-ignore */}
 ```json title="jsconfig.json"
 {
-  "include": ["./node_modules/cypress", "cypress/**/*.js"]
+  "include": [
+    "./node_modules/cypress",
+    "cypress/**/*.js"
+  ]
 }
 ```
 
