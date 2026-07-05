@@ -359,6 +359,22 @@ cy.exec('rake db:seed').its('code').should('eq', 0)
 cy.exec('rake db:seed').its('exitCode').should('eq', 0)
 ```
 
+### cy.stub 3-argument signature removed
+
+The deprecated 3 argument signature of [`cy.stub()`](/api/commands/stub) — `cy.stub(object, name, fn)` — is no longer supported. Use `cy.stub(object, name).callsFake(fn)` instead.
+
+<Badge type="danger">Before</Badge>
+
+```javascript
+cy.stub(user, 'getName', () => 'Jane')
+```
+
+<Badge type="success">After</Badge>
+
+```javascript
+cy.stub(user, 'getName').callsFake(() => 'Jane')
+```
+
 ### Unsupported Linux Distributions
 
 Prebuilt binaries for Linux are no longer compatible with Linux distributions based on glibc `<2.31`.
@@ -466,6 +482,16 @@ module.exports = (on) => {
 }
 ```
 
+### Vite `4` is no longer supported
+
+`@cypress/vite-dev-server` no longer supports Vite `4` for component testing. The minimum supported Vite version is now `5`. Review the [Vite migration guide](https://vite.dev/guide/migration) for any changes needed in your own Vite configuration when upgrading.
+
+### `@cypress/vite-dev-server` is now ESM-only
+
+`@cypress/vite-dev-server`, used for Vite-based component testing, is now an ESM-only package and can no longer be used from a CommonJS context.
+
+If your Cypress configuration is CommonJS — for example a `cypress.config.cjs`, or a `cypress.config.js` using `require()` and `module.exports` without `"type": "module"` in your `package.json` — move it to an ESM context: convert the config to use `import`/`export default` (a `cypress.config.mjs`, or set `"type": "module"` in your `package.json`), or use a TypeScript config (`cypress.config.ts`).
+
 ### Angular `17` CT no longer supported
 
 With [LTS end](https://angular.dev/reference/releases#actively-supported-versions) for Angular 17, the minimum required Angular version for component testing is now `18.0.0`.
@@ -494,10 +520,18 @@ import { mount } from `cypress/angular`
 import { mount } from `@cypress/angular`
 ```
 
+### `@cypress/angular` requires zone.js `0.14.0+`
+
+`@cypress/angular` now requires a minimum [zone.js](https://www.npmjs.com/package/zone.js) version of `0.14.0`. If your project uses Angular component testing and resolves a `zone.js` version below `0.14.0`, update it:
+
+```sh
+npm install --save-dev zone.js@^0.14.0
+```
+
 ### Selector Playground API changes
 
 The `Cypress.SelectorPlayground` API has been renamed to
-[`Cypress.ElementSelector`](/api/cypress-api/element-selector-api). Additionally, the `onElement` function has been removed as an option to the `defaults` method.
+[`Cypress.ElementSelector`](/api/cypress-api/element-selector-api). Additionally, the `getSelector` method has been removed, and the `onElement` function has been removed as an option to the `defaults` method.
 
 This change was made in order to reflect its use in features beyond just the Selector Playground - like Cypress Studio.
 
@@ -619,12 +653,34 @@ and issue any newly necessary `cy.origin()` commands.
 
 :::
 
+Additionally, the `experimentalSkipDomainInjection` configuration option has been removed — its behavior (not injecting `document.domain`) is now the default. Remove it from your configuration. If you still need the legacy `document.domain` injection behavior, set [`injectDocumentDomain`](/app/references/configuration#injectDocumentDomain) to `true` instead, keeping in mind the deprecation warnings above.
+
 ### Deprecation of `resourceType` on `cy.intercept`
 
 The `resourceType` option on [`cy.intercept`](/api/commands/intercept) has been deprecated in Cypress 14.0.0. We anticipate the types of the `resourceType` to change in the future or be completely removed
 from the API.
 
 Our intention is to replace essential functionality dependent on the `resourceType` within Cypress in a future version (like [hiding network logs that are not fetch/xhr](/api/commands/intercept#Disabling-logs-for-a-request)). If you're using `resourceType` in your tests, please leave feedback on which `resourceType` values are important to you in this [GitHub issue](https://github.com/cypress-io/cypress/issues/30447).
+
+### `experimentalFetchPolyfill` removed
+
+The `experimentalFetchPolyfill` configuration option, deprecated since Cypress [6.0.0](/app/references/changelog#6-0-0), has been removed. Remove it from your configuration and use [`cy.intercept()`](/api/commands/intercept) to handle `fetch` requests.
+
+### `before:browser:launch` browser arguments
+
+The second argument of the [`before:browser:launch`](/api/node-events/browser-launch-api) node event is no longer yielded as an array of browser arguments. This behavior had been deprecated since Cypress [4.0.0](/app/references/changelog#4-0-0). Update any handler that treats the second argument as an array to use the `launchOptions` object (for example, `launchOptions.args`) instead.
+
+### `open-ct` and `run-ct` commands removed
+
+The `cypress open-ct` and `cypress run-ct` CLI commands, deprecated since Cypress [10.0](#Migrating-to-Cypress-100), have been removed. Update any npm scripts or CI jobs to use [`cypress open --component`](/app/references/command-line#cypress-open) or [`cypress run --component`](/app/references/command-line#cypress-run) respectively.
+
+### Undocumented `Cypress.backend` methods removed
+
+The undocumented `Cypress.backend('firefox:force:gc')` and `Cypress.backend('log:memory:pressure')` methods have been removed. There is no replacement; remove any calls to them.
+
+### Fetch from `about:blank` in Electron no longer supported
+
+It is no longer possible to make a `fetch` or `XMLHttpRequest` request from the `about:blank` page in Electron (for example, `cy.window().then((win) => win.fetch('<some-url>'))` before any navigation). Use [`cy.request()`](/api/commands/request) instead, or perform an initial navigation with [`cy.visit()`](/api/commands/visit) first.
 
 ### CT Just in Time Compile changes
 
@@ -653,6 +709,10 @@ If you would like to disable JIT compilation, you can do so by setting [`justInT
 :::
 
 For users with the existing `experimentalJustInTimeCompile` flag set, you can remove this flag from your configuration.
+
+### `webpack-dev-server` v3 no longer supported
+
+`@cypress/webpack-dev-server` no longer supports `webpack-dev-server` version 3, and now ships with `webpack-dev-server` version 5 by default. If you are still using `webpack` version 4, install `webpack-dev-server` version 4 alongside Cypress.
 
 ### React `<18` CT no longer supported
 
@@ -697,6 +757,10 @@ import { mount } from 'cypress/react'
 ```ts
 import { mount } from '@cypress/react'
 ```
+
+### Next.js `<15` CT no longer supported
+
+Component testing no longer supports Next.js versions 10, 11, 12, and 13. The minimum supported Next.js version is now `15.0.4` — versions `15.0.0` - `15.0.3` depend on the React 19 Release Candidate and are not officially supported by Cypress, but should still work.
 
 ### Angular `<17.2.0` CT no longer supported
 
@@ -899,7 +963,7 @@ version 13.
 
 You may need to allowlist `capture.cypress.io` if you work with a strict VPN. See our FAQ section about [VPN subdomain allowlisting](/cloud/faq#Im-working-with-a-restrictive-VPN-Which-subdomains-do-I-have-to-allow-on-my-VPN-for-Cypress-Cloud-to-work-properly).
 
-With Test Replay enabled, the Cypress Runner UI is hidden by default when recording a run to the Cloud. If the Runner UI is needed during the run, you can enable it by passing [`--runner-ui`](/app/references/command-line#cypress-run-runner-ui) to the [`cypress run`](/app/references/command-line#cypress-run) command.
+With Test Replay enabled, the Cypress Runner UI is hidden by default when recording a run to the Cloud. This has two side effects: recorded video will not show the Runner, and a screenshot taken with `capture: 'runner'` is captured as if `capture: 'viewport'` were passed. If the Runner UI is needed during the run, you can enable it by passing [`--runner-ui`](/app/references/command-line#cypress-run-runner-ui) to the [`cypress run`](/app/references/command-line#cypress-run) command.
 
 You can [opt-out](/cloud/features/test-replay#Opt-out-of-Test-Replay) of this feature in Cloud project-level settings.
 
@@ -942,6 +1006,10 @@ You can enable this with the `videoCompression` [configuration](/app/references/
 
 :::
 
+### `nodeVersion` configuration option removed
+
+The deprecated `nodeVersion` configuration option has been removed. Remove it from your configuration — Cypress now always uses the Node.js version it was launched with to execute your [setupNodeEvents](/app/references/configuration#setupNodeEvents).
+
 ### `cy.readFile()` is now a query command
 
 In Cypress `v13`, the [`.readFile()`](/api/commands/readfile) command is now a query.
@@ -970,6 +1038,10 @@ to use `Cypress.Commands.overwriteQuery('readFile', function() { ... })` rather
 than `Cypress.Commands.overwrite('readFile', () => { ... })`. For more details
 on overwriting queries, see the
 [Overwriting Existing Queries](/api/cypress-api/custom-queries#Overwriting-Existing-Queries).
+
+### Module API, `after:run`, and `after:spec` changes
+
+The properties and values returned by the [Module API](/app/references/module-api) and included in the arguments of handlers for the [`after:run`](/api/node-events/after-run-api) and [`after:spec`](/api/node-events/after-spec-api) events have been changed to be more consistent. If you use the Module API (the return value of `cypress.run()`) or read the result arguments in `after:run` or `after:spec` handlers within [setupNodeEvents](/app/references/configuration#setupNodeEvents), review that code against the linked API documentation and update any property access to the new result shape.
 
 ## Migrating to Cypress 12.0
 
