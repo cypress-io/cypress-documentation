@@ -14,6 +14,8 @@ sidebar_label: 'IDE Integration'
 
 - How to set up intelligent code completion (IntelliSense) for Cypress commands
 - How to jump from the Cypress app straight to a file in your IDE
+- How Cypress Studio provides an IDE-like editing experience inside the
+  Cypress app
 - Which extensions and plugins add Cypress support to VS Code, JetBrains IDEs,
   and other editors
 - How to lint your tests and connect AI coding assistants to Cypress
@@ -247,6 +249,39 @@ Preference**.
   alt="screenshot of Cypress test-runner settings tab with file opener preference panel"
 />
 
+## Edit Tests Inside Cypress with Studio
+
+Integration works in both directions: your IDE connects to Cypress, and the
+Cypress app offers an IDE-like editing experience of its own through
+[Cypress Studio](/app/guides/cypress-studio). For end-to-end tests, Studio
+opens a code panel alongside your running test, so you can see and edit the
+code of each test while you debug it, right next to the application it's
+testing.
+
+Inside the Studio panel you can:
+
+- **Watch test code write itself as you interact.** Studio translates clicks,
+  typing, and selections in your app into Cypress commands in real time, and
+  you see each command appear in the code panel as it's written.
+- **Edit test code inline.** Change any part of the test directly in the code
+  panel, with undo, redo, and reset. Saving writes to your spec file on disk,
+  so the changes are immediately visible in your IDE too.
+- **Debug failing tests where they fail.** When a line causes a test failure,
+  Studio highlights that line in the code panel. You can fix it there and
+  save, without reproducing the failure separately in your editor.
+- **Review AI recommendations inline.** With
+  [Studio AI](/app/guides/cypress-studio#AI-smart-recommendations) (requires a
+  [Cypress Cloud](/cloud/get-started/introduction) connection), suggested
+  assertions appear directly in your test code as you record, each with an
+  AI-generated comment explaining what it validates. Hover to see before and
+  after DOM snapshots of what changed, run the test to verify a suggestion
+  passes, then accept or reject each one.
+
+Studio complements your IDE rather than replacing it. Use Studio for the
+parts of test authoring that benefit from seeing the app live, such as
+recording interactions, picking selectors, and choosing assertions, and your
+IDE for everything else.
+
 ## Debugging from Your IDE
 
 Cypress tests run in the browser, not in Node.js, so you can't attach your
@@ -376,6 +411,7 @@ For an overview of all AI capabilities across the Cypress App and Cloud, see
 ## See also
 
 - [TypeScript support](/app/tooling/typescript-support)
+- [Cypress Studio](/app/guides/cypress-studio)
 - [Custom commands](/api/cypress-api/custom-commands)
 - [Debugging](/app/guides/debugging)
 - [Cypress AI Skills](/app/tooling/ai-skills)
