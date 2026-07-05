@@ -25,9 +25,9 @@ sidebar_label: 'Visual Testing'
 Functional tests verify that your application _behaves_ correctly - a user can
 type into a form, click a button, and see the expected result. But an
 application can pass every functional test and still ship visibly broken: a CSS
-change collapses a layout, a font fails to load, a button renders off-screen,
-or an overlay covers the content underneath. Visual testing verifies that your
-application _looks_ correct.
+change misaligns elements, a brand color renders wrong, a custom font silently
+falls back to a default, or an icon renders at the wrong size. Visual testing
+verifies that your application _looks_ correct.
 
 Consider this functional test of a TodoMVC application:
 
@@ -108,6 +108,18 @@ Cypress does not perform image comparison itself - the built-in
 not compare them. Instead, Cypress provides a stable platform for
 [plugins](/app/plugins/plugins-guide) and integrations that add visual testing,
 so you can choose the approach that fits your team.
+
+:::info
+
+**Accessibility testing** is a great companion to visual testing. Accessibility
+scans assert on visual aspects of your application that image comparison can't
+evaluate on its own - like whether text has sufficient color contrast against
+its background - and they check them against defined standards rather than a
+baseline image. See our [accessibility testing guide](/app/guides/accessibility-testing)
+and [Cypress Accessibility](/accessibility/get-started/introduction) in Cypress
+Cloud to learn more.
+
+:::
 
 ## Choosing a visual testing solution
 
