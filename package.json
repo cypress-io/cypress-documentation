@@ -50,7 +50,7 @@
     "clsx": "^2.1.0",
     "docusaurus-plugin-image-zoom": "^2.0.0",
     "docusaurus-plugin-sass": "0.2.5",
-    "postcss": "^8.4.34",
+    "postcss": "^8.5.16",
     "prism-react-renderer": "^2.4.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
