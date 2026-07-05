@@ -1,6 +1,6 @@
 ---
 title: 'IDE Integration with Cypress: VS Code, JetBrains, and More'
-description: 'Set up Cypress in your IDE — IntelliSense code completion, extensions for VS Code and JetBrains, ESLint rules, and one-click file opening from the Cypress app.'
+description: 'Set up Cypress in your IDE with IntelliSense code completion, extensions for VS Code and JetBrains, ESLint rules, and one-click file opening from the Cypress app.'
 sidebar_label: 'IDE Integration'
 ---
 
@@ -20,8 +20,8 @@ sidebar_label: 'IDE Integration'
 
 :::
 
-Cypress integrates with the IDEs and code editors you already use — Visual
-Studio Code, JetBrains IDEs, Vim, and more. Because Cypress tests are written
+Cypress integrates with the IDEs and code editors you already use, including
+Visual Studio Code, JetBrains IDEs, Vim, and more. Because Cypress tests are written
 in JavaScript or TypeScript, your editor's existing language tooling applies to
 your test code, and Cypress ships with TypeScript type declarations so
 autocomplete works with little or no setup.
@@ -29,8 +29,8 @@ autocomplete works with little or no setup.
 A well-configured editor pays off across your whole testing workflow:
 
 - **Write tests faster.** Autocomplete every Cypress command and assertion,
-  with inline documentation and examples — no switching to the docs to check a
-  signature.
+  with inline documentation and examples, so you never switch to the docs to
+  check a signature.
 - **Catch mistakes as you type.** The official ESLint plugin flags Cypress
   anti-patterns before you ever run a test.
 - **Debug without hunting.** Click an error or file path in the Cypress app to
@@ -82,7 +82,7 @@ included. Modern text editors use these type declarations to show IntelliSense
 inside spec files. TypeScript support is built in to
 [Visual Studio Code](https://code.visualstudio.com/),
 [Visual Studio](https://www.visualstudio.com/), and
-[JetBrains IDEs](https://www.jetbrains.com/webstorm/) — if you use another
+[JetBrains IDEs](https://www.jetbrains.com/webstorm/). If you use another
 editor, see
 [TypeScript's Editor Support doc](https://github.com/Microsoft/TypeScript/wiki/TypeScript-Editor-Support)
 to configure [TypeScript support](/app/tooling/typescript-support) first.
@@ -162,7 +162,7 @@ working:
 When you click a file path or an [error](/app/guides/debugging#Errors) in the
 [command log](/app/core-concepts/open-mode#Command-Log), Cypress opens the file
 on your system. If the editor supports inline highlighting, the file opens with
-the cursor located on the line and column of interest — taking you from a
+the cursor located on the line and column of interest, taking you from a
 failing test to the responsible code in one click.
 
 <DocsImage
@@ -201,7 +201,7 @@ Preference**.
 The official
 [`eslint-plugin-cypress`](https://github.com/cypress-io/eslint-plugin-cypress)
 integrates with any ESLint-capable editor. It configures Cypress and Mocha
-globals — eliminating false "undefined variable" errors in spec files — and
+globals, eliminating false "undefined variable" errors in spec files, and
 provides lint rules that flag Cypress anti-patterns as you write tests. See the
 [full rules list](https://github.com/cypress-io/eslint-plugin-cypress#rules).
 
@@ -242,14 +242,14 @@ The core Cypress developer experience doesn't depend on any extension, though:
 and [linting](#Linting) via `eslint-plugin-cypress` work the same in any VS
 Code-based editor. These editors' AI capabilities also pair well with
 [Cypress AI Skills](/app/tooling/ai-skills) and
-[Cloud MCP](/cloud/integrations/cloud-mcp) — see
+[Cloud MCP](/cloud/integrations/cloud-mcp), covered in
 [AI-assisted Cypress workflows](#AI-assisted-Cypress-workflows) below.
 
 ### JetBrains IDEs
 
 - [Test Automation](https://plugins.jetbrains.com/plugin/20175-test-automation):
   The official plugin developed and maintained by JetBrains, with dedicated
-  Cypress support — run and debug tests from the editor across IntelliJ IDEA
+  Cypress support. Run and debug tests from the editor across IntelliJ IDEA
   Ultimate, WebStorm, PhpStorm, PyCharm, GoLand, Rider, RubyMine, and other
   JetBrains IDEs. It includes the test automation capabilities previously
   offered in JetBrains Aqua, which was discontinued in 2025.
@@ -262,24 +262,24 @@ Code-based editor. These editors' AI capabilities also pair well with
 ### Vim and Neovim
 
 - [vim-test](https://github.com/vim-test/vim-test): A multi-framework test
-  runner with a dedicated Cypress runner — run the nearest test, the current
+  runner with a dedicated Cypress runner. Run the nearest test, the current
   file, or the whole suite from Vim. Neovim users can use it through
   [neotest-vim-test](https://github.com/nvim-neotest/neotest-vim-test).
 
 ## AI-Assisted Cypress Workflows {#AI-assisted-Cypress-workflows}
 
-If you use an AI coding assistant in your editor — Cursor, GitHub Copilot,
-Claude Code, and others — Cypress provides official tooling to make it better
+If you use an AI coding assistant in your editor, such as Cursor, GitHub
+Copilot, or Claude Code, Cypress provides official tooling to make it better
 at writing and maintaining tests:
 
 - [**Cypress AI Skills**](/app/tooling/ai-skills): Instruction sets that teach
   your AI tool Cypress best practices for authoring, explaining, and reviewing
-  tests — durable selectors, correct APIs for your Cypress version, and your
+  tests: durable selectors, correct APIs for your Cypress version, and your
   project's existing conventions.
 - [**Cloud MCP**](/cloud/integrations/cloud-mcp): Connect your AI assistant to
   [Cypress Cloud](/cloud/get-started/introduction) so it can pull real run
-  data — failed and flaky tests, accessibility results, and Test Replay
-  links — to investigate and fix failures without leaving your editor.
+  data, including failed and flaky tests, accessibility results, and Test
+  Replay links, to investigate and fix failures without leaving your editor.
 - [**`cy.prompt()`**](/api/commands/prompt): Write test steps in natural
   language with AI-driven element resolution and self-healing, reducing
   reliance on brittle hand-written selectors.
