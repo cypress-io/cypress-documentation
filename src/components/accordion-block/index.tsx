@@ -4,6 +4,7 @@ import Accordion from '@cypress-design/react-accordion'
 interface McpConfigBlockProps {
   title: string
   description?: string
+  icon?: React.ReactNode
   open?: boolean
   children: React.ReactNode
 }
@@ -11,6 +12,7 @@ interface McpConfigBlockProps {
 export default function AccordionBlock({
   title,
   description,
+  icon,
   open = false,
   children,
 }: McpConfigBlockProps) {
@@ -18,6 +20,7 @@ export default function AccordionBlock({
     <Accordion
       title={title}
       description={description}
+      iconEl={icon}
       separator
       fullWidthContent
       open={open}
