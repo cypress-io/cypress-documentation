@@ -44,7 +44,7 @@ VS Code, JetBrains IDEs, Vim, and VS Code forks like Cursor.
 
 ## Recommended Setup
 
-Three steps give you a fully configured editor in a few minutes:
+Five steps give you a fully configured editor in a few minutes:
 
 1. **Turn on IntelliSense.** In a TypeScript project, add
    `"types": ["cypress"]` to your
@@ -60,6 +60,14 @@ Three steps give you a fully configured editor in a few minutes:
 3. **Set your [file opener preference](#File-Opener-Preference)** the first
    time you click a file path in the Cypress app, so errors and stack traces
    open directly in your editor.
+4. **Add [Cypress AI Skills](/app/tooling/ai-skills) to your AI agent.** If
+   you use an AI coding assistant, run `npx skills add cypress-io/ai-toolkit`
+   to teach it Cypress best practices for authoring, explaining, and reviewing
+   tests.
+5. **Install the [Cloud MCP](/cloud/integrations/cloud-mcp) server.** If you
+   record runs to [Cypress Cloud](/cloud/get-started/introduction), connect
+   your AI assistant to `https://mcp.cypress.io/mcp` so it can investigate
+   failed and flaky tests without leaving your editor.
 
 The rest of this guide covers each step in detail, plus
 [editor-specific extensions](#Extensions-Plugins) and
