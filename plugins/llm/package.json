@@ -15,7 +15,7 @@
     "mdast-util-to-string": "^4.0.0",
     "remark-gfm": "^4.0.0",
     "remark-parse": "^11.0.0",
-    "typescript": "^5.9.3",
+    "typescript": "^6.0.3",
     "unified": "^11.0.0",
     "unist-util-visit": "^5.0.0"
   },

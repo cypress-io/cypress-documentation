@@ -16,7 +16,7 @@
   "dependencies": {
     "@types/prettier": "^2.6.3",
     "prettier": "^2.7.1",
-    "typescript": "^5.9.3",
+    "typescript": "^6.0.3",
     "unist-util-visit": "^2.0.3"
   },
   "files": [
