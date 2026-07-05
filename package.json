@@ -50,12 +50,12 @@
     "clsx": "^2.1.0",
     "docusaurus-plugin-image-zoom": "^2.0.0",
     "docusaurus-plugin-sass": "0.2.6",
-    "postcss": "^8.4.34",
+    "postcss": "^8.5.16",
     "prism-react-renderer": "^2.4.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "remark-directive": "^3.0.0",
-    "sass": "^1.70.0",
+    "sass": "^1.101.0",
     "sharp": "^0.35.3"
   },
   "devDependencies": {
@@ -64,20 +64,20 @@
     "@prettier/sync": "^0.6.1",
     "@types/turndown": "^5.0.6",
     "cypress": "^15.18.0",
-    "got": "^14.6.6",
+    "got": "^15.1.0",
     "gray-matter": "^4.0.3",
     "husky": "^9.1.7",
-    "lint-staged": "^16.2.3",
+    "lint-staged": "^17.0.8",
     "node-fetch": "^3.3.2",
     "p-map": "^7.0.5",
     "patch-package": "^8.0.0",
     "prettier": "^3.9.4",
-    "sanitize-html": "^2.17.3",
+    "sanitize-html": "^2.17.5",
     "turndown": "^7.2.4",
     "turndown-plugin-gfm": "1.0.2",
     "typescript": "^5.3.3",
     "vitest": "^4.1.4",
-    "wait-on": "^8.0.1"
+    "wait-on": "^9.0.10"
   },
   "browserslist": {
     "production": [
