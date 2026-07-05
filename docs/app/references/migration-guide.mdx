@@ -318,10 +318,6 @@ Many community plugins have already adopted the new API. Update to at least the 
 | [cypress-voice-plugin](https://github.com/dennisbergevin/cypress-voice-plugin)                                       | 2.0.0+  | Move options from `env` to `expose`                                                      |
 | [cypress-watch-and-reload](https://github.com/bahmutov/cypress-watch-and-reload)                                     | 2.1.0+  | Requires Cypress 15.11+                                                                  |
 
-##### Plugins not yet migrated
-
-The following plugins still call `Cypress.env()` and will trigger the deprecation warning (and throw errors with `allowCypressEnv: false`) until they release a migrated version: [@badeball/cypress-cucumber-preprocessor](https://github.com/badeball/cypress-cucumber-preprocessor), [@neuralegion/cypress-har-generator](https://github.com/NeuraLegion/cypress-har-generator), [@pactflow/pact-cypress-adapter](https://github.com/pactflow/pact-cypress-adapter), [@simonsmith/cypress-image-snapshot](https://github.com/simonsmith/cypress-image-snapshot), [allure-cypress](https://github.com/allure-framework/allure-js), [cypress-conditional-tags](https://github.com/JaydipManiya/cypress-conditional-tags), [cypress-mailslurp](https://github.com/mailslurp/cypress-mailslurp), and [cypress-perf-baseline](https://github.com/vimukthi101/cypress-perf-baseline). Check each project for newer releases before setting `allowCypressEnv: false`.
-
 If a plugin you depend on isn't listed here, search its shipped code for `Cypress.env()` to check whether it has migrated.
 
 ### Lock it down with `allowCypressEnv: false`
