@@ -51,7 +51,7 @@ task, and what good output looks like.
 
 Think of a generic AI tool as a brilliant but inexperienced new hire. Without
 guidance, it will do its best, but it won't know your team's standards, your
-project's conventions, or what good Cypress looks like. A skill is the expert
+project's conventions, or what good Cypress tests look like. A skill is the expert
 SOP manual you hand them on day one.
 
 ## Available Cypress skills
@@ -88,7 +88,8 @@ In practice, that means:
   JavaScript) and existing type patterns, and reuses your helpers, custom
   commands, and fixtures rather than reinventing them.
 - **Only APIs your Cypress version supports.** The skill detects your Cypress
-  version and limits suggestions to what is actually available in your project.
+  version and limits suggestions to what is actually available in that Cypress
+  version.
 
 ### `cypress-explain`: understand and review tests
 
@@ -151,21 +152,91 @@ Cypress skills.
 
 Install all skills by running:
 
-```bash
+<Tabs>
+  <TabItem value="npm">
+
+```shell
 npx skills add cypress-io/ai-toolkit
 ```
 
+  </TabItem>
+
+  <TabItem value="yarn">
+
+```shell
+yarn dlx skills add cypress-io/ai-toolkit
+```
+
+  </TabItem>
+
+  <TabItem value="pnpm">
+
+```shell
+pnpm dlx skills add cypress-io/ai-toolkit
+```
+
+  </TabItem>
+
+  <TabItem value="bun">
+
+```shell
+bunx skills add cypress-io/ai-toolkit
+```
+
+  </TabItem>
+</Tabs>
+
 Or install each skill individually:
 
-```bash
+<Tabs>
+  <TabItem value="npm">
+
+```shell
 npx skills add https://github.com/cypress-io/ai-toolkit --skill cypress-author
 npx skills add https://github.com/cypress-io/ai-toolkit --skill cypress-explain
 npx skills add https://github.com/cypress-io/ai-toolkit --skill cypress-docs
 ```
 
-For update and remove commands, see [skills.sh](https://skills.sh/).
+  </TabItem>
 
-### Install with the GitHub CLI
+  <TabItem value="yarn">
+
+```shell
+yarn dlx skills add https://github.com/cypress-io/ai-toolkit --skill cypress-author
+yarn dlx skills add https://github.com/cypress-io/ai-toolkit --skill cypress-explain
+yarn dlx skills add https://github.com/cypress-io/ai-toolkit --skill cypress-docs
+```
+
+  </TabItem>
+
+  <TabItem value="pnpm">
+
+```shell
+pnpm dlx skills add https://github.com/cypress-io/ai-toolkit --skill cypress-author
+pnpm dlx skills add https://github.com/cypress-io/ai-toolkit --skill cypress-explain
+pnpm dlx skills add https://github.com/cypress-io/ai-toolkit --skill cypress-docs
+```
+
+  </TabItem>
+
+  <TabItem value="bun">
+
+```shell
+bunx skills add https://github.com/cypress-io/ai-toolkit --skill cypress-author
+bunx skills add https://github.com/cypress-io/ai-toolkit --skill cypress-explain
+bunx skills add https://github.com/cypress-io/ai-toolkit --skill cypress-docs
+```
+
+  </TabItem>
+</Tabs>
+
+Skills installed this way don't update automatically. To update your installed
+skills to their latest versions, run `npx skills update`. Note that the update
+check only tracks project-level installs, not global ones. See
+[skills.sh](https://skills.sh/) for the full CLI reference, including how to
+list and remove installed skills.
+
+### <Icon name="github" /> Install with the GitHub CLI
 
 The [GitHub CLI](https://cli.github.com/manual/gh_skill) also supports
 installing agent skills.
@@ -193,10 +264,11 @@ Installation steps vary by tool.
 2. Decide whether you want the skill installed globally or scoped to a single
    project.
 3. Copy it into your agent's skills location. Common locations:
-   - **Cursor** (global): `~/.cursor/skills`
-   - **Claude Code** (project): `{PROJECT_DIR}/.claude/skills`
-   - **Other tools**: check your tool's documentation for its skills or custom
-     instructions directory.
+   - <Icon name="hexagon-nodes" /> **Cursor** (global): `~/.cursor/skills`
+   - <Icon name="claude" /> **Claude Code** (project):
+     `{PROJECT_DIR}/.claude/skills`
+   - <Icon name="laptop-code" /> **Other tools**: check your tool's
+     documentation for its skills or custom instructions directory.
 
 ### Check your installed version
 
@@ -343,7 +415,7 @@ anti-patterns directly in your prompt to override or extend them. The skill
 will mix your additions with its own.
 
 For teams with consistent preferences, consider contributing your improvements
-back to the
+back to the open source
 [Cypress AI Toolkit repository](https://github.com/cypress-io/ai-toolkit/), or
 define a project-level skill that builds on top of the defaults.
 
