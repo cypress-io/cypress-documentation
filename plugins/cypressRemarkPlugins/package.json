@@ -7,10 +7,7 @@
   "scripts": {
     "prebuild": "rm -rf ./dist",
     "build": "tsc",
-    "build:watch": "yarn prebuild && tsc --watch",
-    "test": "vitest run",
-    "test2": "jest",
-    "test:watch": "jest --watch"
+    "test": "vitest run"
   },
   "author": "",
   "license": "ISC",
