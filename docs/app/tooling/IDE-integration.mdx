@@ -6,7 +6,7 @@ sidebar_label: 'IDE Integration'
 
 <ProductHeading product="app" />
 
-# IDE Integration
+# IDE Integration with Cypress
 
 :::info
 
@@ -42,6 +42,29 @@ Most of this guide applies to any editor. The
 [Extensions & Plugins](#Extensions-Plugins) section covers tooling specific to
 VS Code, JetBrains IDEs, Vim, and VS Code forks like Cursor.
 
+## Recommended Setup
+
+Three steps give you a fully configured editor in a few minutes:
+
+1. **Turn on IntelliSense.** In a TypeScript project, add
+   `"types": ["cypress"]` to your
+   [`tsconfig.json`](/app/tooling/typescript-support#Configure-tsconfigjson).
+   In a JavaScript project, add a
+   [triple slash directive](#Triple-slash-directives) to your spec files or a
+   [`jsconfig.json`](#Reference-type-declarations-via-jsconfig) to your
+   project root.
+2. **Install
+   [`eslint-plugin-cypress`](https://github.com/cypress-io/eslint-plugin-cypress)**
+   so your editor recognizes Cypress globals and flags anti-patterns as you
+   type. See [Linting](#Linting).
+3. **Set your [file opener preference](#File-Opener-Preference)** the first
+   time you click a file path in the Cypress app, so errors and stack traces
+   open directly in your editor.
+
+The rest of this guide covers each step in detail, plus
+[editor-specific extensions](#Extensions-Plugins) and
+[AI tooling](#AI-assisted-Cypress-workflows).
+
 ## Intelligent Code Completion {#Intelligent-Code-Completion}
 
 IntelliSense gives you intelligent code suggestions directly in your IDE while
@@ -52,6 +75,9 @@ code example, and a link to the full documentation page.
 
 #### Autocomplete while typing Cypress commands
 
+As you type, your editor suggests every available Cypress command and chained
+method, with inline documentation for each.
+
 <DocsVideo
   src="/img/snippets/intellisense-cypress-assertion-matchers.mp4"
   title="Intellisense Autocomplete Cypress commands"
@@ -59,12 +85,18 @@ code example, and a link to the full documentation page.
 
 #### Signature help when writing and hovering on Cypress commands
 
+Typing or hovering on a command shows its full signature, argument types, a
+usage example, and a link to its documentation page.
+
 <DocsVideo
   src="/img/snippets/intellisense-method-signature-examples.mp4"
   title="Intellisense on hover"
 />
 
 #### Autocomplete while typing assertion chains, only showing DOM assertions when testing a DOM element
+
+Assertion chains autocomplete too. When the subject is a DOM element, Cypress
+narrows the suggestions to DOM assertions.
 
 <DocsVideo
   src="/img/snippets/intellisense-assertion-chainers.mp4"
@@ -87,9 +119,13 @@ editor, see
 [TypeScript's Editor Support doc](https://github.com/Microsoft/TypeScript/wiki/TypeScript-Editor-Support)
 to configure [TypeScript support](/app/tooling/typescript-support) first.
 
-If your project uses TypeScript with a properly configured
-[`tsconfig.json`](/app/tooling/typescript-support), IntelliSense should work
-out of the box. For JavaScript projects, use one of the approaches below.
+**TypeScript projects:** IntelliSense works out of the box once your
+[`tsconfig.json` is configured](/app/tooling/typescript-support#Configure-tsconfigjson)
+with `"types": ["cypress"]`. See
+[TypeScript support](/app/tooling/typescript-support) for the complete setup,
+including types for custom commands.
+
+**JavaScript projects:** use one of the approaches below.
 
 #### Triple slash directives {#Triple-slash-directives}
 
@@ -123,7 +159,7 @@ and you describe them in `cypress/support/index.d.ts`, use:
 /// <reference types="../support" />
 ```
 
-#### Reference type declarations via `jsconfig`
+#### Reference type declarations via `jsconfig` {#Reference-type-declarations-via-jsconfig}
 
 Instead of adding triple slash directives to each JavaScript spec file, some
 IDEs (like VS Code) understand a common `jsconfig.json` file in the root of the
@@ -138,24 +174,31 @@ project. In that file, include the Cypress module and your test folders:
 IntelliSense should now show help for `cy` commands inside regular JavaScript
 spec files.
 
-#### Reference type declarations via `tsconfig`
+If your editor doesn't support `jsconfig.json`, a
+[`tsconfig.json`](/app/tooling/typescript-support#Configure-tsconfigjson) with
+`"allowJs": true` in its `compilerOptions` works the same way for JavaScript
+spec files.
 
-Adding a
-[`tsconfig.json`](http://www.typescriptlang.org/docs/handbook/tsconfig-json.html)
-inside your
-[`cypress` folder](/app/core-concepts/writing-and-organizing-tests#Project-structure)
-with the following configuration should get intelligent code completion
-working:
+### IntelliSense isn't working?
 
-```json
-{
-  "compilerOptions": {
-    "allowJs": true,
-    "types": ["cypress"]
-  },
-  "include": ["**/*.*"]
-}
-```
+If you don't see Cypress suggestions in your spec files, work through these
+common causes:
+
+- **Cypress types aren't visible to your spec files.** Confirm that
+  `"types": ["cypress"]` appears in the `tsconfig.json` (or `jsconfig.json`)
+  that actually covers your spec files. A config in another folder may not
+  include your `cypress` directory in its `include` patterns.
+- **Your editor is using stale type information.** Restart the TypeScript
+  server. In VS Code, open the command palette (`cmd+shift+p` on Mac,
+  `ctrl+shift+p` on Windows) and run "TypeScript: Restart TS Server". If that
+  doesn't help, restart the editor.
+- **Jest types are clashing with Cypress types.** If your project also uses
+  Jest, `@types/jest` defines the same globals (`describe`, `it`, `expect`)
+  and can override Cypress's definitions. See
+  [Clashing types with Jest](/app/tooling/typescript-support#Clashing-types-with-Jest).
+- **Your editor is using a different TypeScript version.** In VS Code, run
+  "TypeScript: Select TypeScript Version" from the command palette and choose
+  your workspace version.
 
 ## Open Files in Your IDE {#File-Opener-Preference}
 
@@ -196,6 +239,24 @@ Preference**.
   alt="screenshot of Cypress test-runner settings tab with file opener preference panel"
 />
 
+## Debugging from Your IDE
+
+Cypress tests run in the browser, not in Node.js, so you can't attach your
+editor's Node debugger to a running test. Debugging happens in the browser
+instead:
+
+- Use the browser's Developer Tools together with
+  [`debugger`](/app/guides/debugging#Using-debugger),
+  [`.debug()`](/api/commands/debug), and [`cy.pause()`](/api/commands/pause)
+  to halt a test mid-run and inspect your application's state.
+- Your editor's Node debugger still applies to the parts of Cypress that run
+  in Node: the
+  [`setupNodeEvents`](/api/node-events/overview) function in your Cypress
+  configuration and any [`cy.task()`](/api/commands/task) code.
+
+See the [Debugging guide](/app/guides/debugging) for the full workflow,
+including source maps, step-through debugging, and console logs.
+
 ## Linting
 
 The official
@@ -231,6 +292,23 @@ recent updates and compatibility with your Cypress version.
 - [Test Utils](https://marketplace.visualstudio.com/items?itemName=chrisbreiding.test-utils):
   Add or remove `.only` and `.skip` modifiers with keyboard shortcuts or the
   command palette. Works with Cypress and other Mocha-style test frameworks.
+
+:::tip
+
+**Standardize your team's setup** by committing a `.vscode/extensions.json`
+file to your repository. VS Code prompts everyone who opens the project to
+install the recommended extensions:
+
+```json title=".vscode/extensions.json"
+{
+  "recommendations": [
+    "dbaeumer.vscode-eslint",
+    "dpanshug.cypress-test-explorer"
+  ]
+}
+```
+
+:::
 
 ### Cursor, Windsurf, and other VS Code forks
 
