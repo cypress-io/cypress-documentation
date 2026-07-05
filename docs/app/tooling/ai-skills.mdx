@@ -255,10 +255,45 @@ bunx skills add https://github.com/cypress-io/ai-toolkit --skill cypress-docs
 </Tabs>
 
 Skills installed this way don't update automatically. To update your installed
-skills to their latest versions, run `npx skills update`. Note that the update
-check only tracks project-level installs, not global ones. See
-[skills.sh](https://skills.sh/) for the full CLI reference, including how to
-list and remove installed skills.
+skills to their latest versions, run:
+
+<Tabs>
+  <TabItem value="npm">
+
+```shell
+npx skills update
+```
+
+  </TabItem>
+
+  <TabItem value="yarn">
+
+```shell
+yarn dlx skills update
+```
+
+  </TabItem>
+
+  <TabItem value="pnpm">
+
+```shell
+pnpm dlx skills update
+```
+
+  </TabItem>
+
+  <TabItem value="bun">
+
+```shell
+bunx skills update
+```
+
+  </TabItem>
+</Tabs>
+
+Note that the update check only tracks project-level installs, not global ones.
+See [skills.sh](https://skills.sh/) for the full CLI reference, including how
+to list and remove installed skills.
 
 ### <Icon name="github" /> Install with the GitHub CLI
 
