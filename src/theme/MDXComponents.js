@@ -117,8 +117,6 @@ import {
   faClipboardCheck,
   faFilter,
   faChartDiagram,
-  faCommentNodes,
-  faHexagonNodes,
   faHexagonNodesBolt,
 } from '@fortawesome/free-solid-svg-icons'
 
@@ -178,8 +176,6 @@ library.add(
   faClipboardCheck,
   faFilter,
   faChartDiagram,
-  faCommentNodes,
-  faHexagonNodes,
   faHexagonNodesBolt
 )
 
