@@ -1,6 +1,6 @@
 ---
-title: 'IDE integration with Cypress: VSCode, IntelliJ, and more'
-description: 'Learn how to open files in your IDE, set up intelligent code completion, and find extensions and plugins for popular IDEs.'
+title: 'IDE Integration with Cypress: VS Code, JetBrains, and More'
+description: 'Set up Cypress in your IDE — IntelliSense code completion, extensions for VS Code and JetBrains, ESLint rules, and one-click file opening from the Cypress app.'
 sidebar_label: 'IDE Integration'
 ---
 
@@ -12,138 +12,92 @@ sidebar_label: 'IDE Integration'
 
 <WhatYoullLearn />
 
-- How to open files in your IDE
-- Extensions and plugins for popular IDEs
-- How to set up intelligent code completion in your IDE
+- How to set up intelligent code completion (IntelliSense) for Cypress commands
+- How to jump from the Cypress app straight to a file in your IDE
+- Which extensions and plugins add Cypress support to VS Code, JetBrains IDEs,
+  and other editors
+- How to lint your tests and connect AI coding assistants to Cypress
 
 :::
 
-## File Opener Preference
+Cypress integrates with the IDEs and code editors you already use — Visual
+Studio Code, JetBrains IDEs, Vim, and more. Because Cypress tests are written
+in JavaScript or TypeScript, your editor's existing language tooling applies to
+your test code, and Cypress ships with TypeScript type declarations so
+autocomplete works with little or no setup.
 
-When clicking on a file path or an [error](/app/guides/debugging#Errors) in
-the [command log](/app/core-concepts/open-mode#Command-Log), Cypress will
-attempt to open the file on your system. If the editor supports inline
-highlighting of the file, the file will open with the cursor located on the line
-and column of interest.
+A well-configured editor pays off across your whole testing workflow:
 
-<DocsImage
-  src="/img/app/core-concepts/open-mode/open-file-in-IDE.gif"
-  alt="Open file in your IDE"
-/>
+- **Write tests faster.** Autocomplete every Cypress command and assertion,
+  with inline documentation and examples — no switching to the docs to check a
+  signature.
+- **Catch mistakes as you type.** The official ESLint plugin flags Cypress
+  anti-patterns before you ever run a test.
+- **Debug without hunting.** Click an error or file path in the Cypress app to
+  open the file in your editor, with the cursor on the exact line and column.
+- **Stay in one place.** Extensions let you run specs, toggle `.only`, and
+  navigate custom commands directly from your editor.
 
-The first time you click a file path, Cypress will prompt you to select which
-location you prefer to open the file. You can choose to open it in your:
+Most of this guide applies to any editor. The
+[Extensions & Plugins](#Extensions-Plugins) section covers tooling specific to
+VS Code, JetBrains IDEs, Vim, and VS Code forks like Cursor.
 
-- File system (e.g. Finder on MacOS, File Explore on Windows)
-- An IDE located on your system
-- A specified application path
+## Intelligent Code Completion {#Intelligent-Code-Completion}
 
-:::caution
+IntelliSense gives you intelligent code suggestions directly in your IDE while
+writing tests. A typical IntelliSense popup shows the command definition, a
+code example, and a link to the full documentation page.
 
-Cypress attempts to find available file editors on your system and display those
-as options. If your preferred editor is not listed, you can specify the (full)
-path to it by selecting **Other**. Cypress will make every effort to open the
-file, _but it is not guaranteed to work with every application_.
+### What IntelliSense gives you
 
-:::
-
-After setting your file opener preference, any files will automatically open in
-your selected application without prompting you to choose. If you want to change
-your selection, you can do so in the **Settings** tab of Cypress by clicking
-under **File Opener Preference**.
-
-<DocsImage
-  src="/img/app/IDE-integration/file-opener-preference-settings-tab.png"
-  alt="screenshot of Cypress test-runner settings tab with file opener preference panel"
-/>
-
-## Extensions & Plugins
-
-There are many third-party IDE extensions and plugins to help integrate your IDE
-with Cypress.
-
-### Visual Studio Code
-
-- [Cypress Fixture-IntelliSense](https://marketplace.visualstudio.com/items?itemName=JosefBiehler.cypress-fixture-intellisense):
-  Supports your [cy.fixture()](/api/commands/fixture) by providing intellisense
-  for existing fixtures.
-- [Cypress Helper](https://marketplace.visualstudio.com/items?itemName=shevtsov.vscode-cy-helper):
-  Various helpers and commands for integration with Cypress.
-- [Cypress Snippets](https://marketplace.visualstudio.com/items?itemName=andrew-codes.cypress-snippets):
-  Useful Cypress code snippets.
-- [Cypress Snippets](https://marketplace.visualstudio.com/items?itemName=CliffSu.cypress-snippets):
-  This extension includes the newest and most common cypress snippets.
-- [Open Cypress](https://marketplace.visualstudio.com/items?itemName=tnrich.vscode-extension-open-cypress):
-  Allows you to open Cypress specs and single `it()` blocks directly from VS
-  Code.
-- [Test Utils](https://marketplace.visualstudio.com/items?itemName=chrisbreiding.test-utils):
-  Easily add or remove `.only` and `.skip` modifiers with keyboard shortcuts or
-  the command palette.
-- [Cypress Test Explorer](https://marketplace.visualstudio.com/items?itemName=dpanshug.cypress-test-explorer):
-  Helps you discover, navigate and run Cypress tests directly from the editor.
-
-### IntelliJ Platform
-
-- [Test Automation plugin](https://plugins.jetbrains.com/plugin/20175-test-automation): The official plugin, developed and maintained by JetBrains, offering robust support for Cypress and compatible with IntelliJ IDEA, CLion, GoLand, PhpStorm, PyCharm, Rider, RubyMine, and WebStorm. It encompasses all the features found in JetBrains Aqua.
-
-- [Cypress Support](https://plugins.jetbrains.com/plugin/13819-intellij-cypress): Integrates Cypress under the common Intellij test framework.
-
-### Linting
-
-The official [`eslint-plugin-cypress`](https://github.com/cypress-io/eslint-plugin-cypress)
-integrates with any ESLint-capable editor. It configures Cypress and Mocha globals — eliminating
-false "undefined variable" errors in spec files — and provides lint rules that flag Cypress
-anti-patterns as you write tests. See the
-[full rules list](https://github.com/cypress-io/eslint-plugin-cypress#rules).
-
-## Intelligent Code Completion
-
-### Writing Tests
-
-#### Features
-
-IntelliSense is available for Cypress. It offers intelligent code suggestions
-directly in your IDE while writing tests. A typical IntelliSense popup shows
-command definition, a code example and a link to the full documentation page.
-
-##### Autocomplete while typing Cypress commands
+#### Autocomplete while typing Cypress commands
 
 <DocsVideo
   src="/img/snippets/intellisense-cypress-assertion-matchers.mp4"
   title="Intellisense Autocomplete Cypress commands"
 />
 
-##### Signature help when writing and hovering on Cypress commands
+#### Signature help when writing and hovering on Cypress commands
 
 <DocsVideo
   src="/img/snippets/intellisense-method-signature-examples.mp4"
   title="Intellisense on hover"
 />
 
-##### Autocomplete while typing assertion chains, including only showing DOM assertions if testing on a DOM element.
+#### Autocomplete while typing assertion chains, only showing DOM assertions when testing a DOM element
 
 <DocsVideo
   src="/img/snippets/intellisense-assertion-chainers.mp4"
   title="Intellisense Autocomplete DOM assertions"
 />
 
-#### Set up in your Dev Environment
+### Set up IntelliSense
 
-This document assumes you have
+This guide assumes you have
 [installed Cypress](/app/get-started/install-cypress).
 
 Cypress comes with TypeScript
 [type declarations](https://github.com/cypress-io/cypress/tree/develop/cli/types)
-included. Modern text editors can use these type declarations to show
-IntelliSense inside spec files.
+included. Modern text editors use these type declarations to show IntelliSense
+inside spec files. TypeScript support is built in to
+[Visual Studio Code](https://code.visualstudio.com/),
+[Visual Studio](https://www.visualstudio.com/), and
+[JetBrains IDEs](https://www.jetbrains.com/webstorm/) — if you use another
+editor, see
+[TypeScript's Editor Support doc](https://github.com/Microsoft/TypeScript/wiki/TypeScript-Editor-Support)
+to configure [TypeScript support](/app/tooling/typescript-support) first.
 
-##### Triple slash directives
+If your project uses TypeScript with a properly configured
+[`tsconfig.json`](/app/tooling/typescript-support), IntelliSense should work
+out of the box. For JavaScript projects, use one of the approaches below.
+
+#### Triple slash directives {#Triple-slash-directives}
 
 The simplest way to see IntelliSense when typing a Cypress command or assertion
 is to add a
 [triple-slash directive](http://www.typescriptlang.org/docs/handbook/triple-slash-directives.html)
-to the head of your JavaScript or TypeScript testing file. This will turn the
-IntelliSense on a per file basis. Copy the comment line below and paste it into
+to the head of your JavaScript or TypeScript testing file. This turns
+IntelliSense on for that file. Copy the comment line below and paste it into
 your spec file.
 
 ```js
@@ -156,10 +110,10 @@ your spec file.
 />
 
 If you write [custom commands](/api/cypress-api/custom-commands) and provide
-TypeScript definitions for them, you can use the triple slash directives to show
-IntelliSense, even if your project uses only JavaScript. For example, if your
-custom commands are written in `cypress/support/commands.js` and you describe
-them in `cypress/support/index.d.ts` use:
+TypeScript definitions for them, you can use triple slash directives to show
+IntelliSense for those too, even if your project uses only JavaScript. For
+example, if your custom commands are written in `cypress/support/commands.js`
+and you describe them in `cypress/support/index.d.ts`, use:
 
 ```js
 // type definitions for Cypress object "cy"
@@ -169,21 +123,11 @@ them in `cypress/support/index.d.ts` use:
 /// <reference types="../support" />
 ```
 
-If the triple slash directive does not work, please refer to your code editor in
-[TypeScript's Editor Support doc](https://github.com/Microsoft/TypeScript/wiki/TypeScript-Editor-Support)
-and follow the instructions for your IDE to get
-[TypeScript support](/app/tooling/typescript-support) and intelligent code
-completion configured in your developer environment first. TypeScript support is
-built in for [Visual Studio Code](https://code.visualstudio.com/),
-[Visual Studio](https://www.visualstudio.com/), and
-[WebStorm](https://www.jetbrains.com/webstorm/) - all other editors require
-extra setup.
-
-##### Reference type declarations via `jsconfig`
+#### Reference type declarations via `jsconfig`
 
 Instead of adding triple slash directives to each JavaScript spec file, some
 IDEs (like VS Code) understand a common `jsconfig.json` file in the root of the
-project. In that file, you can include the Cypress module and your test folders.
+project. In that file, include the Cypress module and your test folders:
 
 ```json
 {
@@ -191,16 +135,17 @@ project. In that file, you can include the Cypress module and your test folders.
 }
 ```
 
-The Intelligent Code Completion should now show help for `cy` commands inside
-regular JavaScript spec files.
+IntelliSense should now show help for `cy` commands inside regular JavaScript
+spec files.
 
-##### Reference type declarations via `tsconfig`
+#### Reference type declarations via `tsconfig`
 
 Adding a
 [`tsconfig.json`](http://www.typescriptlang.org/docs/handbook/tsconfig-json.html)
 inside your
 [`cypress` folder](/app/core-concepts/writing-and-organizing-tests#Project-structure)
-with the following configuration should get intelligent code completion working.
+with the following configuration should get intelligent code completion
+working:
 
 ```json
 {
@@ -212,6 +157,139 @@ with the following configuration should get intelligent code completion working.
 }
 ```
 
-### See also
+## Open Files in Your IDE {#File-Opener-Preference}
 
-- [Adding custom properties to the global `window` with the right TypeScript type](https://github.com/bahmutov/test-todomvc-using-app-actions#intellisense)
+When you click a file path or an [error](/app/guides/debugging#Errors) in the
+[command log](/app/core-concepts/open-mode#Command-Log), Cypress opens the file
+on your system. If the editor supports inline highlighting, the file opens with
+the cursor located on the line and column of interest — taking you from a
+failing test to the responsible code in one click.
+
+<DocsImage
+  src="/img/app/core-concepts/open-mode/open-file-in-IDE.gif"
+  alt="Open file in your IDE"
+/>
+
+The first time you click a file path, Cypress prompts you to select where you
+prefer to open the file. You can choose to open it in your:
+
+- File system (e.g. Finder on macOS, File Explorer on Windows)
+- An IDE located on your system
+- A specified application path
+
+:::caution
+
+Cypress attempts to find available file editors on your system and display
+those as options. If your preferred editor is not listed, you can specify the
+(full) path to it by selecting **Other**. Cypress will make every effort to
+open the file, _but it is not guaranteed to work with every application_.
+
+:::
+
+After setting your file opener preference, files automatically open in your
+selected application without prompting you to choose. To change your
+selection, go to the **Settings** tab of Cypress and click under **File Opener
+Preference**.
+
+<DocsImage
+  src="/img/app/IDE-integration/file-opener-preference-settings-tab.png"
+  alt="screenshot of Cypress test-runner settings tab with file opener preference panel"
+/>
+
+## Linting
+
+The official
+[`eslint-plugin-cypress`](https://github.com/cypress-io/eslint-plugin-cypress)
+integrates with any ESLint-capable editor. It configures Cypress and Mocha
+globals — eliminating false "undefined variable" errors in spec files — and
+provides lint rules that flag Cypress anti-patterns as you write tests. See the
+[full rules list](https://github.com/cypress-io/eslint-plugin-cypress#rules).
+
+## Extensions & Plugins {#Extensions-Plugins}
+
+Editor extensions add deeper Cypress integration: running specs from the
+editor, navigating to custom command definitions, and managing `.only` /
+`.skip` modifiers.
+
+:::caution
+
+Except where noted, these extensions are built and maintained by community
+authors, not by Cypress. Before adopting one, check its marketplace listing for
+recent updates and compatibility with your Cypress version.
+
+:::
+
+### Visual Studio Code
+
+- [Cypress Test Explorer](https://marketplace.visualstudio.com/items?itemName=dpanshug.cypress-test-explorer):
+  Discover, navigate, and run Cypress tests from VS Code's native Testing
+  sidebar. Reads the `specPattern` from your Cypress configuration and lets you
+  run tests headlessly or open them in the Cypress app.
+- [Cypress Helper](https://marketplace.visualstudio.com/items?itemName=shevtsov.vscode-cy-helper):
+  Go-to-definition for custom commands, autocomplete for fixtures and aliases,
+  and code lenses to open specs in Cypress.
+- [Test Utils](https://marketplace.visualstudio.com/items?itemName=chrisbreiding.test-utils):
+  Add or remove `.only` and `.skip` modifiers with keyboard shortcuts or the
+  command palette. Works with Cypress and other Mocha-style test frameworks.
+
+### Cursor, Windsurf, and other VS Code forks
+
+VS Code forks such as Cursor and Windsurf install extensions from the
+[Open VSX](https://open-vsx.org/) registry rather than the Visual Studio
+Marketplace, so some extensions above may not be available in those editors.
+The core Cypress developer experience doesn't depend on any extension, though:
+[IntelliSense](#Intelligent-Code-Completion) from the bundled type declarations
+and [linting](#Linting) via `eslint-plugin-cypress` work the same in any VS
+Code-based editor. These editors' AI capabilities also pair well with
+[Cypress AI Skills](/app/tooling/ai-skills) and
+[Cloud MCP](/cloud/integrations/cloud-mcp) — see
+[AI-assisted Cypress workflows](#AI-assisted-Cypress-workflows) below.
+
+### JetBrains IDEs
+
+- [Test Automation](https://plugins.jetbrains.com/plugin/20175-test-automation):
+  The official plugin developed and maintained by JetBrains, with dedicated
+  Cypress support — run and debug tests from the editor across IntelliJ IDEA
+  Ultimate, WebStorm, PhpStorm, PyCharm, GoLand, Rider, RubyMine, and other
+  JetBrains IDEs. It includes the test automation capabilities previously
+  offered in JetBrains Aqua, which was discontinued in 2025.
+- [Cypresso](https://plugins.jetbrains.com/plugin/13819-cypresso) (formerly
+  "Cypress Support"): A community plugin that integrates Cypress under the
+  common IntelliJ test framework, with run configurations, debugging, and
+  Cucumber support. Requires a JetBrains IDE with JavaScript support, such as
+  IntelliJ IDEA Ultimate or WebStorm.
+
+### Vim and Neovim
+
+- [vim-test](https://github.com/vim-test/vim-test): A multi-framework test
+  runner with a dedicated Cypress runner — run the nearest test, the current
+  file, or the whole suite from Vim. Neovim users can use it through
+  [neotest-vim-test](https://github.com/nvim-neotest/neotest-vim-test).
+
+## AI-Assisted Cypress Workflows {#AI-assisted-Cypress-workflows}
+
+If you use an AI coding assistant in your editor — Cursor, GitHub Copilot,
+Claude Code, and others — Cypress provides official tooling to make it better
+at writing and maintaining tests:
+
+- [**Cypress AI Skills**](/app/tooling/ai-skills): Instruction sets that teach
+  your AI tool Cypress best practices for authoring, explaining, and reviewing
+  tests — durable selectors, correct APIs for your Cypress version, and your
+  project's existing conventions.
+- [**Cloud MCP**](/cloud/integrations/cloud-mcp): Connect your AI assistant to
+  [Cypress Cloud](/cloud/get-started/introduction) so it can pull real run
+  data — failed and flaky tests, accessibility results, and Test Replay
+  links — to investigate and fix failures without leaving your editor.
+- [**`cy.prompt()`**](/api/commands/prompt): Write test steps in natural
+  language with AI-driven element resolution and self-healing, reducing
+  reliance on brittle hand-written selectors.
+
+For an overview of all AI capabilities across the Cypress App and Cloud, see
+[Cypress AI](/cloud/features/cypress-ai-features).
+
+## See also
+
+- [TypeScript support](/app/tooling/typescript-support)
+- [Custom commands](/api/cypress-api/custom-commands)
+- [Debugging](/app/guides/debugging)
+- [Cypress AI Skills](/app/tooling/ai-skills)
