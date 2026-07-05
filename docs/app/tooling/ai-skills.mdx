@@ -336,9 +336,20 @@ Installation steps vary by tool.
 
 ### Check your installed version
 
-Each skill declares its version in its `SKILL.md` file. Check that file to see
-which version you have installed. Skills don't have automatic update
-notifications, so check back periodically for new releases.
+Each skill declares its version in the frontmatter of its `SKILL.md` file,
+under the `metadata.version` key:
+
+```md title="skills/cypress-author/SKILL.md"
+---
+name: cypress-author
+description: 'Creates, updates, and fixes Cypress tests ...'
+metadata:
+  version: 1.0.1
+---
+```
+
+Check that file to see which version you have installed. Skills don't have
+automatic update notifications, so check back periodically for new releases.
 
 ## How to use Cypress AI Skills
 
