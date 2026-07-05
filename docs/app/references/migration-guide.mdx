@@ -950,12 +950,18 @@ it('renders', () => {
 ## Migrating to Cypress 13.0
 
 <CopyPrompt
-  prompt={`Read https://docs.cypress.io/llm/markdown/app/references/migration-guide.md, focusing on the "Migrating to Cypress 13.0" section, then upgrade this project from Cypress 12 to 13. If the project isn't on Cypress 12.x yet, stop and tell me — majors should be upgraded one at a time. Before installing, verify my Node.js version is 16+ (18+ recommended) and flag anything unsupported. Detect my package manager, update the cypress dependency, and fix every breaking change in that section that affects my code and config, calling out behavior changes like video recording being off by default. Finish by running npx cypress verify and my Cypress tests, then summarize what changed and anything you couldn't safely automate.`}
+  prompt={`Read https://docs.cypress.io/llm/markdown/app/references/migration-guide.md, focusing on the "Migrating to Cypress 13.0" section, then upgrade this project from Cypress 12 to 13. If the project isn't on Cypress 12.x yet, stop and tell me — majors should be upgraded one at a time. Before installing, verify my Node.js version is 16+ (18+ recommended) and, if I use TypeScript, that it's 4.x or newer, and flag anything unsupported. Detect my package manager, update the cypress dependency, and fix every breaking change in that section that affects my code and config, calling out behavior changes like video recording being off by default. Finish by running npx cypress verify and my Cypress tests, then summarize what changed and anything you couldn't safely automate.`}
 />
 
 This guide details the changes and how to change your code to migrate to Cypress
 version 13.
 [See the full changelog for version v13.0](/app/references/changelog#13-0-0).
+
+### Node.js 16+ support
+
+Node.js 14 support has been removed and Node.js 16 support has been deprecated. Node.js 16 may continue to work with Cypress `v13`, but is not supported moving forward, to closer coincide with [Node.js 16's end-of-life](https://nodejs.org/en/blog/announcements/nodejs16-eol) schedule. It is recommended that users update to at least Node.js 18.
+
+Additionally, the minimum supported TypeScript version is `4.x`.
 
 ### Cypress Cloud Test Replay
 
@@ -1046,7 +1052,7 @@ The properties and values returned by the [Module API](/app/references/module-ap
 ## Migrating to Cypress 12.0
 
 <CopyPrompt
-  prompt={`Read https://docs.cypress.io/llm/markdown/app/references/migration-guide.md, focusing on the "Migrating to Cypress 12.0" section, then upgrade this project from Cypress 11 to 12. If the project isn't on Cypress 11.x yet, stop and tell me — majors should be upgraded one at a time. Before installing, verify my Node.js version is 14+ and flag anything unsupported. Detect my package manager, update the cypress dependency, and fix every breaking change in that section that affects my code and config, paying special attention to test isolation being enabled by default — audit my tests for state shared between tests and fix them or configure testIsolation as that section describes. Finish by running npx cypress verify and my Cypress tests, then summarize what changed and anything you couldn't safely automate.`}
+  prompt={`Read https://docs.cypress.io/llm/markdown/app/references/migration-guide.md, focusing on the "Migrating to Cypress 12.0" section, then upgrade this project from Cypress 11 to 12. If the project isn't on Cypress 11.x yet, stop and tell me — majors should be upgraded one at a time. Before installing, verify my Node.js version is 14, 16, or 18+ and flag anything unsupported. Detect my package manager, update the cypress dependency, and fix every breaking change in that section that affects my code and config, paying special attention to test isolation being enabled by default — audit my tests for state shared between tests and fix them or configure testIsolation as that section describes. Finish by running npx cypress verify and my Cypress tests, then summarize what changed and anything you couldn't safely automate.`}
 />
 
 This guide details the changes and how to change your code to migrate to Cypress
@@ -1062,6 +1068,12 @@ free of issues in the majority of use cases. With releasing this as GA, the
 [Test Isolation](/app/core-concepts/writing-and-organizing-tests#Test-Isolation)
 is enabled by default.
 
+One exception: using `require` and `import` with a callback supplied to
+[`cy.origin()`](/api/commands/origin) is not enabled by default. To leverage
+external dependencies in `cy.origin()` callbacks, set the
+[`e2e.experimentalOriginDependencies`](/app/references/experiments#End-to-End-Testing)
+configuration option to `true`.
+
 ### Node.js 14+ support
 
 Cypress comes bundled with its own
@@ -1069,17 +1081,19 @@ Cypress comes bundled with its own
 However, installing the `cypress` npm package uses the Node.js version installed
 on your system.
 
-Node.js 12 reached its end of life on April 30, 2022.
-[See Node's release schedule](https://github.com/nodejs/Release). This Node.js
-version will no longer be supported when installing Cypress. The minimum Node.js
-version supported to install Cypress is Node.js 14+.
+Node.js 12, 15, and 17 have reached their end of life and are no longer
+supported when installing Cypress.
+[See Node's release schedule](https://github.com/nodejs/Release). Installing
+Cypress now requires Node.js 14, 16, or 18+.
 
 ### Test Isolation
 
 The
 [`testIsolation`](/app/core-concepts/writing-and-organizing-tests#Test-Isolation)
-config option is enabled by default. This means Cypress resets the browser
-context _before_ each test by:
+config option is enabled by default. Additionally, the `testIsolation`
+configuration values have changed from `on` or `off` to `true` or `false` — if
+you configured this option while it was experimental, update its value. Test
+isolation means Cypress resets the browser context _before_ each test by:
 
 - clearing the dom state by visiting `about:blank`
 - clearing [cookies](/api/cypress-api/cookies) in all domains
@@ -1306,6 +1320,17 @@ The `Cypress.Cookies.defaults` and `Cypress.Cookies.preserveOnce` APIs been
 removed. Use the [`cy.session()`](/api/commands/session) command to preserve
 cookies (and local and session storage) between tests.
 
+#### Cookie commands now use `hostname` instead of `superdomain`
+
+The cookie commands now use the `hostname` as the domain by default instead of
+the `superdomain`. This change aligns Cypress' cookie rules with the browser
+cookie rules. This may affect what cookies are returned by
+[`cy.getCookie()`](/api/commands/getcookie), what cookies are set with
+[`cy.setCookie()`](/api/commands/setcookie), and the cookies cleared with
+[`cy.clearCookies()`](/api/commands/clearcookies). If your tests depend on
+cookies being shared across subdomains, pass an explicit `domain` option to
+these commands.
+
 If you were using `Cypress.Cookies.preserveOnce` to preserve a specific cookie
 within a single spec, this might look like the following:
 
@@ -1474,6 +1499,16 @@ cy.get('tr')
 +  })
 ```
 
+#### `cy.request()` query string handling
+
+The [`cy.request()`](/api/commands/request) command now uses
+[`querystringify`](https://www.npmjs.com/package/querystringify) to stringify
+and parse the `qs` option. This change aligns with how the
+[`cy.visit()`](/api/commands/visit) command generates urls with query
+parameters. If you pass complex values (like arrays or nested objects) in the
+`qs` option, verify the generated query strings still match what your server
+expects.
+
 #### `Cypress.Commands.overwrite()`
 
 In Cypress 12.0.0, we introduced a new command type, called queries. A query is
@@ -1536,6 +1571,19 @@ version 11.0.
 As of Cypress 11, Component Testing is now generally available. There are some
 minor breaking changes. Most projects should be able to migrate without any code
 modifications.
+
+#### Repeated `mount` calls
+
+Subsequent `cy.mount()` calls within the same test now remove the previously
+mounted component from the DOM. If a test relies on multiple mounted components
+existing at the same time, combine them into a single mounted component.
+
+#### Vue `mount` return value
+
+`mount` from `cypress/vue` now returns an object with both the `VueWrapper`
+(`wrapper`) and the component instance (`component`), instead of the
+`VueWrapper` itself. Update any code that consumes the yielded value
+accordingly.
 
 #### Changes to Mounting Options
 
@@ -1790,6 +1838,21 @@ export default defineConfig({
 
 Vite 3+ users could make use of the
 [`mergeConfig`](https://vitejs.dev/guide/api-javascript.html#mergeconfig) API.
+
+### `cy.session()` requires a setup function
+
+[`cy.session()`](/api/commands/session) now requires a `setup` function to be
+provided when a session is created. If you were calling `cy.session()` without
+a setup argument, add one that recreates the session's browser state (for
+example, logging in).
+
+### Cypress Cloud communication verifies certificate authorities
+
+Communication with Cypress Cloud now verifies certificate authorities (CAs) and
+rejects any unauthorized calls. If your network intercepts this traffic with a
+self-signed CA, set the `npm_config_ca`, `npm_config_cafile`, or
+`NODE_EXTRA_CA_CERTS` environment variable so recorded runs can reach Cypress
+Cloud.
 
 ## Migrating to Cypress 10.0
 
