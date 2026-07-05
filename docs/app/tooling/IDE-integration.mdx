@@ -150,7 +150,7 @@ to the head of your JavaScript or TypeScript testing file. This turns
 IntelliSense on for that file. Copy the comment line below and paste it into
 your spec file.
 
-```js
+```js title="spec.cy.js"
 /// <reference types="Cypress" />
 ```
 
@@ -163,10 +163,10 @@ your spec file.
 If you write [custom commands](/api/cypress-api/custom-commands) and provide
 TypeScript definitions for them, you can use triple slash directives to show
 IntelliSense for those too, even if your project uses only JavaScript. For
-example, if your custom commands are written in `cypress/support/commands.js`
-and you describe them in `cypress/support/index.d.ts`, use:
+example, if you describe your custom commands in
+`cypress/support/index.d.ts`, use:
 
-```js
+```js title="cypress/support/commands.js"
 // type definitions for Cypress object "cy"
 /// <reference types="cypress" />
 
@@ -180,7 +180,7 @@ Instead of adding triple slash directives to each JavaScript spec file, some
 IDEs (like VS Code) understand a common `jsconfig.json` file in the root of the
 project. In that file, include the Cypress module and your test folders:
 
-```json
+```json title="jsconfig.json"
 {
   "include": ["./node_modules/cypress", "cypress/**/*.js"]
 }
@@ -191,8 +191,17 @@ spec files.
 
 If your editor doesn't support `jsconfig.json`, a
 [`tsconfig.json`](/app/tooling/typescript-support#Configure-tsconfigjson) with
-`"allowJs": true` in its `compilerOptions` works the same way for JavaScript
-spec files.
+`allowJs` enabled works the same way for JavaScript spec files:
+
+```json title="tsconfig.json"
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "types": ["cypress"]
+  },
+  "include": ["cypress/**/*.js"]
+}
+```
 
 ### IntelliSense isn't working?
 
@@ -311,7 +320,9 @@ The official
 [`eslint-plugin-cypress`](https://github.com/cypress-io/eslint-plugin-cypress)
 integrates with any ESLint-capable editor. It configures Cypress and Mocha
 globals, eliminating false "undefined variable" errors in spec files, and
-provides lint rules that flag Cypress anti-patterns as you write tests. See the
+provides lint rules that flag Cypress anti-patterns as you write tests.
+
+See the
 [full rules list](https://github.com/cypress-io/eslint-plugin-cypress#rules).
 
 ## Extensions & Plugins {#Extensions-Plugins}
@@ -363,13 +374,6 @@ install the recommended extensions:
 VS Code forks such as Cursor and Windsurf install extensions from the
 [Open VSX](https://open-vsx.org/) registry rather than the Visual Studio
 Marketplace, so some extensions above may not be available in those editors.
-The core Cypress developer experience doesn't depend on any extension, though:
-[IntelliSense](#Intelligent-Code-Completion) from the bundled type declarations
-and [linting](#Linting) via `eslint-plugin-cypress` work the same in any VS
-Code-based editor. These editors' AI capabilities also pair well with
-[Cypress AI Skills](/app/tooling/ai-skills) and
-[Cloud MCP](/cloud/integrations/cloud-mcp), covered in
-[AI-assisted Cypress workflows](#AI-assisted-Cypress-workflows) below.
 
 ### JetBrains IDEs
 
