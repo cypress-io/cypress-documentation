@@ -48,7 +48,7 @@
     "@mdx-js/react": "^3.0.0",
     "autoprefixer": "^10.5.2",
     "clsx": "^2.1.0",
-    "docusaurus-plugin-image-zoom": "^2.0.0",
+    "docusaurus-plugin-image-zoom": "^3.0.1",
     "docusaurus-plugin-sass": "0.2.6",
     "postcss": "^8.5.16",
     "prism-react-renderer": "^2.4.1",
