@@ -15,13 +15,14 @@ Visual Studio Code, JetBrains IDEs, Vim, and more.
 
 <WhatYoullLearn />
 
-- How to set up intelligent code completion (IntelliSense) for Cypress commands
+- How to set up intelligent code completion (IntelliSense) and linting for
+  Cypress
 - How to jump from the Cypress app straight to a file in your IDE
 - How Cypress Studio provides an IDE-like editing experience inside the
   Cypress app
 - Which extensions and plugins add Cypress support to VS Code, JetBrains IDEs,
   and other editors
-- How to lint your tests and connect AI coding assistants to Cypress
+- How to connect AI coding assistants to Cypress
 
 :::
 
@@ -29,23 +30,11 @@ Because Cypress tests are written in JavaScript or TypeScript, your editor's
 existing language tooling applies to your test code, and Cypress ships with
 TypeScript type declarations so autocomplete works with little or no setup.
 
-A well-configured editor pays off across your whole testing workflow:
-
-- **Write tests faster.** Autocomplete every Cypress command and assertion,
-  with inline documentation and examples, so you never switch to the docs to
-  check a signature.
-- **Catch mistakes as you type.** The official ESLint plugin flags Cypress
-  anti-patterns before you ever run a test.
-- **Debug without hunting.** Click an error or file path in the Cypress app to
-  open the file in your editor, with the cursor on the exact line and column.
-- **Stay in one place.** Extensions let you run specs, toggle `.only`, and
-  navigate custom commands directly from your editor.
-
 Most of this guide applies to any editor. The
-[Extensions & Plugins](#Extensions-Plugins) section covers tooling specific to
-VS Code, JetBrains IDEs, Vim, and VS Code forks like Cursor.
+[Extensions and plugins](#Extensions-Plugins) section covers tooling specific
+to VS Code, JetBrains IDEs, Vim, and VS Code forks like Cursor.
 
-## Recommended Setup
+## Recommended setup
 
 Five steps give you a fully configured editor in a few minutes:
 
@@ -76,7 +65,7 @@ The rest of this guide covers each step in detail, plus
 [editor-specific extensions](#Extensions-Plugins) and
 [AI tooling](#AI-assisted-Cypress-workflows).
 
-## Intelligent Code Completion {#Intelligent-Code-Completion}
+## Intelligent code completion {#Intelligent-Code-Completion}
 
 IntelliSense gives you intelligent code suggestions directly in your IDE while
 writing tests. A typical IntelliSense popup shows the command definition, a
@@ -84,7 +73,7 @@ code example, and a link to the full documentation page.
 
 ### What IntelliSense gives you
 
-#### Autocomplete while typing Cypress commands
+#### Command autocomplete
 
 As you type, your editor suggests every available Cypress command and chained
 method, with inline documentation for each.
@@ -95,7 +84,7 @@ method, with inline documentation for each.
   title="Intellisense Autocomplete Cypress commands"
 />
 
-#### Signature help when writing and hovering on Cypress commands
+#### Signature help and inline docs
 
 Typing or hovering on a command shows its full signature, argument types, a
 usage example, and a link to its documentation page.
@@ -106,7 +95,7 @@ usage example, and a link to its documentation page.
   title="Intellisense on hover"
 />
 
-#### Autocomplete while typing assertion chains, only showing DOM assertions when testing a DOM element
+#### DOM-aware assertion autocomplete
 
 Assertion chains autocomplete too. When the subject is a DOM element, Cypress
 narrows the suggestions to DOM assertions.
@@ -228,7 +217,18 @@ common causes:
   "TypeScript: Select TypeScript Version" from the command palette and choose
   your workspace version.
 
-## Open Files in Your IDE {#File-Opener-Preference}
+## Linting
+
+The official
+[`eslint-plugin-cypress`](https://github.com/cypress-io/eslint-plugin-cypress)
+integrates with any ESLint-capable editor. It configures Cypress and Mocha
+globals, eliminating false "undefined variable" errors in spec files, and
+provides lint rules that flag Cypress anti-patterns as you write tests.
+
+See the
+[full rules list](https://github.com/cypress-io/eslint-plugin-cypress#rules).
+
+## Open files in your IDE {#File-Opener-Preference}
 
 When you click a file path or an [error](/app/guides/debugging#Errors) in the
 [command log](/app/core-concepts/open-mode#Command-Log), Cypress opens the file
@@ -267,7 +267,7 @@ Preference**.
   alt="screenshot of Cypress test-runner settings tab with file opener preference panel"
 />
 
-## Edit Tests Inside Cypress with Studio
+## Edit tests inside Cypress with Studio
 
 Integration works in both directions: your IDE connects to Cypress, and the
 Cypress app offers an IDE-like editing experience of its own through
@@ -300,7 +300,7 @@ parts of test authoring that benefit from seeing the app live, such as
 recording interactions, picking selectors, and choosing assertions, and your
 IDE for everything else.
 
-## Debugging from Your IDE
+## Debugging from your IDE
 
 Cypress tests run in the browser, not in Node.js, so you can't attach your
 editor's Node debugger to a running test. Debugging happens in the browser
@@ -318,18 +318,7 @@ instead:
 See the [Debugging guide](/app/guides/debugging) for the full workflow,
 including source maps, step-through debugging, and console logs.
 
-## Linting
-
-The official
-[`eslint-plugin-cypress`](https://github.com/cypress-io/eslint-plugin-cypress)
-integrates with any ESLint-capable editor. It configures Cypress and Mocha
-globals, eliminating false "undefined variable" errors in spec files, and
-provides lint rules that flag Cypress anti-patterns as you write tests.
-
-See the
-[full rules list](https://github.com/cypress-io/eslint-plugin-cypress#rules).
-
-## Extensions & Plugins {#Extensions-Plugins}
+## Extensions and plugins {#Extensions-Plugins}
 
 Editor extensions add deeper Cypress integration: running specs from the
 editor, navigating to custom command definitions, and managing `.only` /
@@ -373,11 +362,13 @@ install the recommended extensions:
 
 :::
 
-### Cursor, Windsurf, and other VS Code forks
+:::note
 
-VS Code forks such as Cursor and Windsurf install extensions from the
-[Open VSX](https://open-vsx.org/) registry rather than the Visual Studio
-Marketplace, so some extensions above may not be available in those editors.
+**Using Cursor, Windsurf, or another VS Code fork?** These editors install
+extensions from the [Open VSX](https://open-vsx.org/) registry rather than the
+Visual Studio Marketplace, so some extensions above may not be available.
+
+:::
 
 ### JetBrains IDEs
 
@@ -400,7 +391,7 @@ Marketplace, so some extensions above may not be available in those editors.
   file, or the whole suite from Vim. Neovim users can use it through
   [neotest-vim-test](https://github.com/nvim-neotest/neotest-vim-test).
 
-## AI-Assisted Cypress Workflows {#AI-assisted-Cypress-workflows}
+## AI-assisted Cypress workflows {#AI-assisted-Cypress-workflows}
 
 If you use an AI coding assistant in your editor, such as Cursor, GitHub
 Copilot, or Claude Code, Cypress provides official tooling to make it better
