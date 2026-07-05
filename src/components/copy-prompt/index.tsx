@@ -36,7 +36,7 @@ export default function CopyPrompt({
     try {
       await navigator.clipboard.writeText(prompt)
     } catch {
-      // Clipboard API unavailable (e.g. insecure context) — fall back to a
+      // Clipboard API unavailable (e.g. insecure context); fall back to a
       // hidden textarea + execCommand copy.
       const textarea = document.createElement('textarea')
       textarea.value = prompt
