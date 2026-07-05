@@ -10,6 +10,10 @@ sidebar_label: 'Migration Guide'
 
 ## Migrating away from Cypress.env()
 
+<CopyPrompt
+  prompt={`Read https://docs.cypress.io/llm/markdown/app/references/migration-guide.md, focusing on the "Migrating away from Cypress.env()" section, then migrate this project off Cypress.env(). Find every Cypress.env() usage, classify each value as sensitive or public, and migrate sensitive reads to cy.env() and public values to Cypress.expose() with a top-level expose block in my Cypress config. Check for --env CLI flags and plugins that rely on Cypress.env(), and show me the proposed changes before applying them. Once every Cypress.env() call is gone, add allowCypressEnv: false to my config and run my Cypress tests to confirm nothing broke.`}
+/>
+
 Starting with Cypress 15.10.0, `Cypress.env()` has been deprecated and will be removed in a future major version. This guide helps you migrate to [`cy.env()`](/api/commands/env) (for sensitive values) or [`Cypress.expose()`](/api/cypress-api/expose) (for public/non-sensitive values), depending on your use case.
 
 ### Why Cypress.env() is deprecated
@@ -325,6 +329,10 @@ When `allowCypressEnv` is set to `false`:
 
 ## Migrating to Cypress 15.0
 
+<CopyPrompt
+  prompt={`Read https://docs.cypress.io/llm/markdown/app/references/migration-guide.md, focusing on the "Migrating to Cypress 15.0" section, then upgrade this project from Cypress 14 to 15. If the project isn't on Cypress 14.x yet, stop and tell me — majors should be upgraded one at a time. Before installing, verify my environment meets the requirements in that section (Node.js 20, 22, or 24+, a supported Linux distribution, and webpack 5 / Vite 5 / Angular 18+ if I use component testing) and flag anything unsupported. Detect my package manager, update the cypress dependency, and fix every breaking change in that section that affects my code and config. Finish by running npx cypress verify and my Cypress tests, then summarize what changed and anything you couldn't safely automate.`}
+/>
+
 This guide details the code changes needed to migrate to Cypress
 version 15.
 [See the full changelog for version v15.0](/app/references/changelog#15-0-0).
@@ -513,6 +521,10 @@ Cypress.ElementSelector.defaults({
 ```
 
 ## Migrating to Cypress 14.0
+
+<CopyPrompt
+  prompt={`Read https://docs.cypress.io/llm/markdown/app/references/migration-guide.md, focusing on the "Migrating to Cypress 14.0" section, then upgrade this project from Cypress 13 to 14. If the project isn't on Cypress 13.x yet, stop and tell me — majors should be upgraded one at a time. Before installing, verify my environment meets the requirements in that section (Node.js 18+, macOS 11+, a supported Linux distribution, and — if I use component testing — that my framework and bundler versions are still supported) and flag anything unsupported. Detect my package manager, update the cypress dependency, and fix every breaking change in that section that affects my code and config. Finish by running npx cypress verify and my Cypress tests, then summarize what changed and anything you couldn't safely automate.`}
+/>
 
 This guide details the code changes needed to migrate to Cypress
 version 14.
@@ -873,6 +885,10 @@ it('renders', () => {
 
 ## Migrating to Cypress 13.0
 
+<CopyPrompt
+  prompt={`Read https://docs.cypress.io/llm/markdown/app/references/migration-guide.md, focusing on the "Migrating to Cypress 13.0" section, then upgrade this project from Cypress 12 to 13. If the project isn't on Cypress 12.x yet, stop and tell me — majors should be upgraded one at a time. Before installing, verify my Node.js version is 16+ (18+ recommended) and flag anything unsupported. Detect my package manager, update the cypress dependency, and fix every breaking change in that section that affects my code and config, calling out behavior changes like video recording being off by default. Finish by running npx cypress verify and my Cypress tests, then summarize what changed and anything you couldn't safely automate.`}
+/>
+
 This guide details the changes and how to change your code to migrate to Cypress
 version 13.
 [See the full changelog for version v13.0](/app/references/changelog#13-0-0).
@@ -956,6 +972,10 @@ on overwriting queries, see the
 [Overwriting Existing Queries](/api/cypress-api/custom-queries#Overwriting-Existing-Queries).
 
 ## Migrating to Cypress 12.0
+
+<CopyPrompt
+  prompt={`Read https://docs.cypress.io/llm/markdown/app/references/migration-guide.md, focusing on the "Migrating to Cypress 12.0" section, then upgrade this project from Cypress 11 to 12. If the project isn't on Cypress 11.x yet, stop and tell me — majors should be upgraded one at a time. Before installing, verify my Node.js version is 14+ and flag anything unsupported. Detect my package manager, update the cypress dependency, and fix every breaking change in that section that affects my code and config, paying special attention to test isolation being enabled by default — audit my tests for state shared between tests and fix them or configure testIsolation as that section describes. Finish by running npx cypress verify and my Cypress tests, then summarize what changed and anything you couldn't safely automate.`}
+/>
 
 This guide details the changes and how to change your code to migrate to Cypress
 version 12.0.
@@ -1431,6 +1451,10 @@ name.
 
 ## Migrating to Cypress 11.0
 
+<CopyPrompt
+  prompt={`Read https://docs.cypress.io/llm/markdown/app/references/migration-guide.md, focusing on the "Migrating to Cypress 11.0" section, then upgrade this project from Cypress 10 to 11. If the project isn't on Cypress 10.x yet, stop and tell me — majors should be upgraded one at a time. Detect my package manager, update the cypress dependency, and fix every breaking change in that section that affects my code and config — if I use component testing, update my devServer configuration and any removed mounting APIs (mountHook, unmount, mountCallback) as that section describes. Finish by running npx cypress verify and my Cypress tests, then summarize what changed and anything you couldn't safely automate.`}
+/>
+
 This guide details the changes and how to change your code to migrate to Cypress
 version 11.0.
 [See the full changelog for version 11.0](/app/references/changelog#11-0-0).
@@ -1696,6 +1720,10 @@ Vite 3+ users could make use of the
 [`mergeConfig`](https://vitejs.dev/guide/api-javascript.html#mergeconfig) API.
 
 ## Migrating to Cypress 10.0
+
+<CopyPrompt
+  prompt={`Read https://docs.cypress.io/llm/markdown/app/references/migration-guide.md, focusing on the "Migrating to Cypress 10.0" section, then upgrade this project from Cypress 9 to 10. If the project isn't on Cypress 9.x yet, stop and tell me — majors should be upgraded one at a time. Detect my package manager and update the cypress dependency, then apply the configuration migration that section describes: convert cypress.json to a cypress.config file, move the plugins file into setupNodeEvents, rename support files and spec file locations to the new defaults, and update any removed config options or APIs my code uses. Finish by running npx cypress verify and my Cypress tests, then summarize what changed and anything you couldn't safely automate.`}
+/>
 
 This guide details the changes and how to change your code to migrate to Cypress
 version 10.0.
