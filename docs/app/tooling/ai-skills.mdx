@@ -370,7 +370,7 @@ of the TODO app in our
 [Kitchen Sink example](https://github.com/cypress-io/cypress-example-kitchensink).
 
 ```skill
-Review the acceptance criteria of the "Mark all complete" flow:
+/cypress-explain Review the acceptance criteria of the "Mark all complete" flow:
 - Clicking the checkbox toggles every task's completed state to completed
 - All tasks move to the "Completed" task list
 - The footer shows 0 active items are left
@@ -397,7 +397,7 @@ You can ask your coding agent to author tests that call `cy.prompt()` so those
 behaviors are built into the specs it generates.
 
 ```skill
-Write a new Cypress test that uses cy.prompt() to:
+/cypress-author Write a new Cypress test that uses cy.prompt() to:
 
 1. Visit the shopping cart page
 2. Remove the "Vegetables" item from the cart
@@ -407,7 +407,7 @@ Write a new Cypress test that uses cy.prompt() to:
 ### Explain a Cypress concept
 
 ```skill
-How does cy.intercept() work, and when should I use cy.wait('@alias') with it?
+/cypress-explain How does cy.intercept() work, and when should I use cy.wait('@alias') with it?
 ```
 
 ### Look up official Cypress documentation
@@ -431,13 +431,13 @@ Prompt for component tests when you'd rather not wire up `cy.mount()`,
 providers, stubs, and baseline assertions by hand.
 
 ```skill
-Write component tests for the CheckoutSummary component. Review the current implementation before starting. The tests should verify it renders correctly with an empty cart, shows a line item for each product, and disables the "Place order" button when stock is unavailable.
+/cypress-author Write component tests for the CheckoutSummary component. Review the current implementation before starting. The tests should verify it renders correctly with an empty cart, shows a line item for each product, and disables the "Place order" button when stock is unavailable.
 ```
 
 ### Fix a failing test
 
 ```skill
-The "verify there are 2 notifications" test in notifications.cy.ts is failing with an ".notification is not visible" error. Fix it.
+/cypress-author The "verify there are 2 notifications" test in notifications.cy.ts is failing with an ".notification is not visible" error. Fix it.
 ```
 
 :::tip
@@ -451,7 +451,7 @@ real-time run failures.
 ### Summarize test coverage in plain language
 
 ```skill
-Summarize what the tests in cypress/e2e/onboarding.cy.ts cover in plain language, as if explaining it to a product manager.
+/cypress-explain Summarize what the tests in cypress/e2e/onboarding.cy.ts cover in plain language, as if explaining it to a product manager.
 ```
 
 ## Troubleshooting
