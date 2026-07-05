@@ -283,7 +283,12 @@ cy.mySnapshotCommand()
 
 Also consider disabling CSS animations and transitions in your test
 environment, or waiting for them to finish, so a snapshot never lands
-mid-animation.
+mid-animation. Note that Cypress's
+[`waitForAnimations` and `animationDistanceThreshold`](/app/references/configuration#Actionability)
+configuration options only apply to action commands like
+[`.click()`](/api/commands/click) - they ensure an element has stopped moving
+before Cypress interacts with it, but they don't prevent a snapshot from
+capturing an animation still in progress elsewhere on the page.
 
 ### Control time-dependent content
 
