@@ -121,8 +121,10 @@ div.markdown {
 
   .alert,
   & {
-    // add border bottom to code tags that are in a link
-    a:has(> code) {
+    // give links that wrap a code tag a pill-style border; :not(.cy-button-width)
+    // raises specificity above the base link rule so its dotted border-bottom
+    // doesn't double up with the code tag's dotted text-decoration underline
+    a:not(.cy-button-width):has(> code) {
       &,
       &:hover {
         border: 0.1rem solid rgba(0, 0, 0, 0.1);
