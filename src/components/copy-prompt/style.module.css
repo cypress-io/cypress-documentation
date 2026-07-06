@@ -1,27 +1,18 @@
-/*
- * Admonition-weight card: bordered, theme-adaptive, sitting below the page
- * content in visual hierarchy. Spacing sits on the design system's 4px grid.
- * The expanded prompt keeps the site's dark code-block surface in both
- * color modes.
- */
 .copyPrompt {
   border: 1px solid var(--ifm-color-emphasis-200);
   background-color: var(--ifm-background-surface-color);
-  /* 8px, on the 4px grid */
   border-radius: 0.5rem;
-  /* smaller top/bottom than sides: line-height already adds vertical air */
+  /* line-height adds vertical air, so top/bottom padding is smaller */
   padding: 1rem 1.5rem;
   margin-bottom: var(--ifm-leading);
 }
 
-/* The theme's `.markdown p` rule outranks a bare module class, so scope the
-   paragraph margins under the card to win; otherwise theme margins unbalance
-   the card's spacing. */
+/* paragraph margins are scoped under the card to outrank the theme's
+   `.markdown p` rule */
 .copyPrompt p.title {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  /* 16px / 24px */
   font-size: 1rem;
   line-height: 1.5rem;
   font-weight: 600;
@@ -35,7 +26,6 @@
 }
 
 .copyPrompt p.subtext {
-  /* 14px / 20px: supporting text */
   font-size: 0.875rem;
   line-height: 1.25rem;
   color: var(--ifm-color-emphasis-700);
@@ -49,12 +39,10 @@
   gap: 1rem;
 }
 
-/* Link-styled disclosure toggle */
 .toggle {
   display: inline-flex;
   align-items: center;
   gap: 0.25rem;
-  /* 14px / 20px */
   font-size: 0.875rem;
   line-height: 1.25rem;
   font-weight: 500;
@@ -81,7 +69,6 @@
 
 .copyPrompt p.promptText {
   font-family: var(--ifm-font-family-monospace);
-  /* 14px / 20px, line-height on the grid */
   font-size: 0.875rem;
   line-height: 1.25rem;
   color: var(--ifm-color-gray-100);
@@ -89,17 +76,15 @@
   border-radius: 0.5rem;
   padding: 0.75rem 1rem;
   margin: 0.75rem 0 0;
-  /* long URLs may lack break points; keep them inside the card */
+  /* the docs URL has no natural break points */
   overflow-wrap: anywhere;
 }
 
-/* Kept in the DOM but out of view and out of the accessibility tree while
-   collapsed, so expanding is instant. */
 .copyPrompt p.promptTextCollapsed {
   display: none;
 }
 
-/* Indigo reads too dark on dark surfaces; step down per the contrast rule. */
+/* indigo-500 lacks contrast on dark surfaces */
 :global([data-theme='dark']) .sparkle,
 :global([data-theme='dark']) .toggle {
   color: var(--ifm-color-indigo-300);

@@ -107,10 +107,8 @@ export class MarkdownExporter {
 
   /**
    * Recursively writes `index.md` in each directory under `rootDir`, listing
-   * sibling `.md` files and subfolders. `fragmentDirs` (doc ids whose folders
-   * hold per-h2 section files) are skipped entirely — no `index.md` inside
-   * them and no listing in their parent's index — so the indexes stay a
-   * page-level map.
+   * sibling `.md` files and subfolders. `fragmentDirs` (per-h2 section
+   * folders) get no `index.md` and no listing in their parent's index.
    */
   buildMarkdownDirectoryIndexes(fragmentDirs: ReadonlySet<string> = new Set()): void {
     ensureDir(this.markdownRoot)

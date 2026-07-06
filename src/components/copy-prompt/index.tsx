@@ -5,11 +5,9 @@ import Icon from '@cypress-design/react-icon'
 import s from './style.module.css'
 
 interface CopyPromptProps {
-  /** The full prompt text; always what the copy button copies. */
+  /** Full prompt text; the copy button always copies all of it. */
   prompt: string
-  /** Per-card heading naming the outcome, e.g. "Upgrade to Cypress 15 with your AI assistant". */
   title?: string
-  /** One-line supporting text under the title. */
   subtext?: string
 }
 
@@ -18,13 +16,9 @@ const DEFAULT_SUBTEXT =
   'Copies a ready-made prompt for Claude Code, Cursor, or Copilot.'
 
 /**
- * A copyable AI prompt used in guides to hand readers a ready-made prompt for
- * their AI coding assistant, e.g. to walk a project through a version
- * migration. Renders as a light, admonition-weight card: title, one-line
- * supporting text, a copy button, and a "Show prompt" disclosure that reveals
- * the full prompt (kept in the DOM and hidden with CSS when collapsed).
- * The whole card carries data-sanitize so the LLM export drops it — an AI
- * reading the exported page needs the page's content, not the prompt card.
+ * Card offering a ready-made prompt for the reader's AI coding assistant,
+ * e.g. to walk a project through a version migration. data-sanitize keeps
+ * the card out of the LLM markdown export.
  */
 export default function CopyPrompt({
   prompt,
@@ -47,8 +41,7 @@ export default function CopyPrompt({
       await navigator.clipboard.writeText(prompt)
       succeeded = true
     } catch {
-      // Clipboard API unavailable (e.g. insecure context); fall back to a
-      // hidden textarea + execCommand copy.
+      // Clipboard API is unavailable in insecure contexts
       const textarea = document.createElement('textarea')
       textarea.value = prompt
       textarea.setAttribute('readonly', '')
@@ -86,8 +79,8 @@ export default function CopyPrompt({
       <p className={s.subtext}>{subtext}</p>
       <div className={s.actions}>
         <Button
-          // variant/size are untyped until @cypress-design/constants-button
-          // ships its types; same workaround as src/components/button
+          // variant/size lack types without @cypress-design/constants-button;
+          // same workaround as src/components/button
           {...({
             variant:
               colorMode === 'dark'
@@ -119,15 +112,13 @@ export default function CopyPrompt({
           />
         </button>
       </div>
-      {/* Kept in the DOM when collapsed (display:none removes it from view
-          and the a11y tree) so expanding never re-renders mid-read. */}
+      {/* stays in the DOM when collapsed; CSS hides it */}
       <p
         id={promptId}
         className={expanded ? s.promptText : s.promptTextCollapsed}
       >
         &ldquo;{prompt}&rdquo;
       </p>
-      {/* polite live region so screen readers announce the copy */}
       <span aria-live="polite" className={s.srOnly}>
         {copied ? 'Prompt copied to clipboard' : ''}
       </span>

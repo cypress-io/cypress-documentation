@@ -8,8 +8,7 @@ export function writeSitemap(
     fragmentDirs: ReadonlySet<string> = new Set(),
 ) {
     // Walk all files under /llm, write all to a `sitemap-llm.xml` file. Also include `llms.txt`.
-    // Per-h2 section files (under `llm/markdown/<doc-id>/` for doc ids in `fragmentDirs`) are
-    // excluded so the sitemap stays a page-level map instead of listing thousands of fragments.
+    // Files in `fragmentDirs` (per-h2 section folders) are excluded to keep the sitemap page-level.
     const markdownPrefix = 'llm/markdown/';
     const llmFiles = walkDir(distRoot, path.join(distRoot, 'llm')).filter((file) => {
         if (!file.startsWith(markdownPrefix)) {

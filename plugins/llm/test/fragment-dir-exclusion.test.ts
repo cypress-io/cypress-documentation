@@ -54,7 +54,7 @@ describe('buildMarkdownDirectoryIndexes with fragment dirs', () => {
     expect(fs.existsSync(path.join(markdownRoot, 'app', 'real-section', 'index.md'))).toBe(true)
   })
 
-  test('without fragment dirs the previous behavior is unchanged', () => {
+  test('lists and indexes all subdirs when no fragment dirs are passed', () => {
     const distRoot = makeTempDir()
     makeMarkdownTree(distRoot)
     const exporter = new MarkdownExporter(distRoot, path.join(distRoot, 'llm'))

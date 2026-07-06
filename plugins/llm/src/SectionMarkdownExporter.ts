@@ -21,15 +21,10 @@ type SectionSlice = {
 }
 
 /**
- * Emits one markdown file per `##` section of an exported page, at
- * `markdown/<doc-id>/<h2-slug>.md` next to the page's full markdown export at
- * `markdown/<doc-id>.md`. A section file contains the `##` heading plus
- * everything up to the next `##` (so nested `###`/`####` content is included),
- * letting an LLM fetch a single topic — e.g. one major version of the
- * migration guide — without spending tokens on the whole page.
- *
- * Section slugs match the anchors used by the chunked JSON export (both use
- * `slugify`), so `<doc-id>/<slug>.md` corresponds to chunk id `<doc-id>#<slug>`.
+ * Emits one markdown file per `##` section of a page, at
+ * `markdown/<doc-id>/<h2-slug>.md`, so an LLM can fetch a single topic
+ * without spending tokens on the whole page. Slugs match the chunked JSON
+ * anchors: `<doc-id>/<slug>.md` corresponds to chunk id `<doc-id>#<slug>`.
  */
 export class SectionMarkdownExporter {
   private readonly markdownRoot: string
@@ -40,11 +35,7 @@ export class SectionMarkdownExporter {
     this.markdownRoot = path.join(exportRoot, 'markdown')
   }
 
-  /**
-   * Doc ids (posix paths relative to the markdown root) that received a
-   * fragment directory. Used to keep fragment files out of the directory
-   * indexes and the LLM sitemap, which stay page-level maps.
-   */
+  /** Doc ids (posix, relative to the markdown root) that own a fragment dir. */
   getFragmentDirs(): ReadonlySet<string> {
     return this.fragmentDirs
   }
@@ -84,11 +75,7 @@ export class SectionMarkdownExporter {
     return { sectionCount: sections.length }
   }
 
-  /**
-   * Splits markdown into one slice per `##` heading; a slice runs to the next
-   * heading of level 2 or above (mirrors the chunked JSON boundary logic).
-   * Duplicate heading slugs on one page get `-2`, `-3`, … suffixes.
-   */
+  /** Mirrors the chunked JSON boundary logic; duplicate slugs get `-2`, `-3`, … suffixes. */
   private splitByH2(markdown: string): SectionSlice[] {
     const tree = this.markdownProcessor.parse(markdown)
     const headings: { level: number; text: string; startOffset: number }[] = []

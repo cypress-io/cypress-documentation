@@ -84,9 +84,9 @@ export async function runLlmExport(options?: LlmExportRunOptions): Promise<void>
     }
   }
 
-  // Fragment dirs stay out of the directory indexes and the LLM sitemap —
-  // unless a real docs directory shares the page's name (its pages must stay
-  // indexed, so that one folder keeps normal treatment).
+  // Fragment dirs stay out of the directory indexes and the LLM sitemap.
+  // A fragment dir sharing its name with a real docs directory is exempt so
+  // that directory's pages stay indexed.
   const fragmentDirs = new Set(
     [...sectionExporter.getFragmentDirs()].filter(
       (docId) => !fs.existsSync(path.join(docsRoot, docId)),
