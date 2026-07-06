@@ -2,13 +2,10 @@
   border: 1px solid var(--ifm-color-emphasis-200);
   background-color: var(--ifm-background-surface-color);
   border-radius: 0.5rem;
-  /* line-height adds vertical air, so top/bottom padding is smaller */
   padding: 1rem 1.5rem;
   margin-bottom: var(--ifm-leading);
 }
 
-/* paragraph margins are scoped under the card to outrank the theme's
-   `.markdown p` rule */
 .copyPrompt p.title {
   display: flex;
   align-items: center;
@@ -84,7 +81,6 @@
   display: none;
 }
 
-/* indigo-500 lacks contrast on dark surfaces */
 :global([data-theme='dark']) .sparkle,
 :global([data-theme='dark']) .toggle {
   color: var(--ifm-color-indigo-300);
