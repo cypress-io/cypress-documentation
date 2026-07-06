@@ -21,7 +21,6 @@ describe('Plugins list', () => {
   it('explains every badge in the legend', () => {
     cy.get('[aria-label="What the badges mean"]').within(() => {
       cy.contains('official').should('be.visible')
-      cy.contains('verified').should('be.visible')
       cy.contains('community').should('be.visible')
       cy.contains('deprecated').should('be.visible')
       // The key message for the largest group.
@@ -96,7 +95,7 @@ describe('Plugins list', () => {
 
   it('sorts each category by badge tier', () => {
     cy.get(categoryFilter).select('Component Testing')
-    const rank = { official: 0, verified: 1, community: 2, deprecated: 3 }
+    const rank = { official: 0, community: 1, deprecated: 2 }
     cy.get('li.card').then(($cards) => {
       const ranks = [...$cards].map((card) => {
         const badge = card
@@ -105,7 +104,7 @@ describe('Plugins list', () => {
           .toLowerCase()
         return rank[badge] ?? 9
       })
-      // Ranks appear in non-decreasing order (official → verified → community).
+      // Ranks appear in non-decreasing order (official → community → deprecated).
       expect(ranks).to.deep.equal([...ranks].sort((a, b) => a - b))
     })
   })

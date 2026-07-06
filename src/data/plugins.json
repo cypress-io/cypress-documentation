@@ -467,7 +467,7 @@
             "dom-testing-library",
             "react-testing-library"
           ],
-          "badge": "verified"
+          "badge": "community"
         },
         {
           "name": "cypress-wait-until",
@@ -481,7 +481,7 @@
             "check-async-value",
             "check-value"
           ],
-          "badge": "verified"
+          "badge": "community"
         },
         {
           "name": "@swimlane/cy-dom-diff",
@@ -885,7 +885,7 @@
           "name": "Applitools",
           "description": "Fast, easy and reliable visual UI testing with Cypress.",
           "link": "https://applitools.com/tutorials/sdks/cypress/quickstart/getting-started",
-          "badge": "verified",
+          "badge": "community",
           "keywords": ["screenshots", "visual regression", "visual-ai"]
         },
         {
@@ -899,7 +899,7 @@
             "visual testing",
             "ci"
           ],
-          "badge": "verified"
+          "badge": "community"
         },
         {
           "name": "Happo",
@@ -911,7 +911,7 @@
             "visual testing",
             "cross-browser"
           ],
-          "badge": "verified"
+          "badge": "community"
         },
         {
           "name": "Percy",
@@ -923,7 +923,7 @@
             "visual testing",
             "cross-browser"
           ],
-          "badge": "verified"
+          "badge": "community"
         },
         {
           "name": "SmartBear VisualTest",
@@ -936,7 +936,7 @@
             "visual regression",
             "screenshots comparison"
           ],
-          "badge": "verified"
+          "badge": "community"
         },
         {
           "name": "Sauce Labs Visual",
@@ -1053,7 +1053,7 @@
           "description": "NTLM authentication support for Cypress.",
           "link": "https://github.com/bjowes/cypress-ntlm-auth",
           "keywords": ["authentication", "ntlm", "auth", "windows", "sso"],
-          "badge": "verified"
+          "badge": "community"
         },
         {
           "name": "Cypress AWS Secrets Manager",

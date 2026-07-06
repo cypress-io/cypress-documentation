@@ -105,10 +105,6 @@ ul.pluginsList li p {
   background-color: var(--ifm-color-teal-500);
 }
 
-.badgePill.badgeVerified {
-  background-color: var(--ifm-color-jade-500);
-}
-
 .badgePill.badgeCommunity {
   background-color: var(--ifm-color-indigo-500);
 }

@@ -114,7 +114,7 @@ Each entry supports the following fields:
 | `description` | yes      | Short summary of what the plugin does. Basic HTML is allowed.                                                              |
 | `link`        | yes      | URL to the plugin's source or documentation.                                                                               |
 | `keywords`    | no       | Array of tags used for search and filtering.                                                                               |
-| `badge`       | no       | One of `official`, `verified`, or `community` (defaults to `community`).                                                   |
+| `badge`       | no       | One of `official` or `community` (defaults to `community`).                                                                |
 | `npm`         | no       | The npm package name. Set this only when it differs from `name` (for example an official monorepo package or scoped name). |
 
 Signals shown on each card — latest version, last published date, and Cypress
@@ -151,8 +151,7 @@ category by badge tier and then by most recently published first (so the entry
 order in `plugins.json` does not matter):
 
 - official (Cypress owned)
-- verified (community owned and verified by Cypress)
-- community (community owned and unverified)
+- community (community owned)
 - deprecated (npm registry missing, source repo archived or incompatible with v10+)
 
 The `deprecated` state is applied automatically by `npm run enrich:plugins` when
