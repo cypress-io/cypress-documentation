@@ -13,7 +13,7 @@ interface CopyPromptProps {
 
 const DEFAULT_TITLE = 'Do this migration with your AI assistant'
 const DEFAULT_SUBTEXT =
-  'Copies a ready-made prompt for Claude Code, Cursor, or Copilot.'
+  'Copies a ready-made prompt that walks your AI coding assistant through this migration. Works with any AI tool that can read and edit your project.'
 
 /**
  * Card offering a ready-made prompt for the reader's AI coding assistant,
