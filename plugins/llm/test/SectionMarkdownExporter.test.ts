@@ -41,10 +41,6 @@ function readSection(exportRoot: string, relPath: string) {
   return matter(raw)
 }
 
-// ---------------------------------------------------------------------------
-// splitting
-// ---------------------------------------------------------------------------
-
 describe('h2 splitting', () => {
   test('writes one file per h2, named by heading slug', () => {
     const { exportRoot, result } = runExport(
@@ -130,10 +126,6 @@ describe('h2 splitting', () => {
   })
 })
 
-// ---------------------------------------------------------------------------
-// fragment dir tracking
-// ---------------------------------------------------------------------------
-
 describe('getFragmentDirs', () => {
   test('records the doc id of each page that produced sections', () => {
     const { exporter } = runExport(['# T', '', '## One', '', 'Content.'].join('\n'))
@@ -145,10 +137,6 @@ describe('getFragmentDirs', () => {
     expect(exporter.getFragmentDirs().size).toBe(0)
   })
 })
-
-// ---------------------------------------------------------------------------
-// frontmatter
-// ---------------------------------------------------------------------------
 
 describe('section frontmatter', () => {
   test('carries the section id, heading title, and page metadata', () => {

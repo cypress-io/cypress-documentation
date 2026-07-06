@@ -31,10 +31,6 @@ function makeMarkdownTree(distRoot: string): string {
   return markdownRoot
 }
 
-// ---------------------------------------------------------------------------
-// directory indexes
-// ---------------------------------------------------------------------------
-
 describe('buildMarkdownDirectoryIndexes with fragment dirs', () => {
   test('fragment dirs get no index.md and are not listed in the parent index', () => {
     const distRoot = makeTempDir()
@@ -66,10 +62,6 @@ describe('buildMarkdownDirectoryIndexes with fragment dirs', () => {
     expect(appIndex).toContain('guide/index.md')
   })
 })
-
-// ---------------------------------------------------------------------------
-// sitemap
-// ---------------------------------------------------------------------------
 
 describe('writeSitemap with fragment dirs', () => {
   test('excludes files inside fragment dirs but keeps pages and other dirs', () => {

@@ -105,11 +105,7 @@ export class MarkdownExporter {
     }
   }
 
-  /**
-   * Recursively writes `index.md` in each directory under `rootDir`, listing
-   * sibling `.md` files and subfolders. `fragmentDirs` (per-h2 section
-   * folders) get no `index.md` and no listing in their parent's index.
-   */
+  /** Recursively writes `index.md` in each directory under `rootDir`, listing sibling `.md` files and subfolders. */
   buildMarkdownDirectoryIndexes(fragmentDirs: ReadonlySet<string> = new Set()): void {
     ensureDir(this.markdownRoot)
     this.processDir(this.markdownRoot, fragmentDirs)
@@ -146,10 +142,9 @@ export class MarkdownExporter {
     for (const entry of entries) {
       if (entry.isDirectory()) {
         const relSub = toPosixPath(path.relative(this.markdownRoot, path.join(dir, entry.name)))
-        if (fragmentDirs.has(relSub)) {
-          continue
+        if (!fragmentDirs.has(relSub)) {
+          subdirs.push(entry.name)
         }
-        subdirs.push(entry.name)
       } else if (entry.isFile() && /\.md$/i.test(entry.name)) {
         if (entry.name.toLowerCase() === 'index.md') {
           alreadyHasIndex = true

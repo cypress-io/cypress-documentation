@@ -79,15 +79,10 @@ export default function CopyPrompt({
       <p className={s.subtext}>{subtext}</p>
       <div className={s.actions}>
         <Button
-          // variant/size lack types without @cypress-design/constants-button;
-          // same workaround as src/components/button
-          {...({
-            variant:
-              colorMode === 'dark'
-                ? 'outline-indigo-dark-mode'
-                : 'outline-indigo',
-            size: 32,
-          } as any)}
+          variant={
+            colorMode === 'dark' ? 'outline-indigo-dark-mode' : 'outline-indigo'
+          }
+          size="32"
           onClick={copyPrompt}
           aria-label="Copy prompt to clipboard"
         >
