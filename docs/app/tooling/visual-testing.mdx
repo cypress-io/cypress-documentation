@@ -195,9 +195,8 @@ browsers and viewport widths at once. They provide a web-based review workflow
 where your team approves or rejects visual changes, and they integrate with
 pull requests so visual review becomes part of your code review process.
 
-These services solve the hardest operational problems of visual testing
-(baseline management, cross-browser rendering, flake from environment
-differences, and team review) in exchange for a subscription.
+These services handle baseline management, cross-browser rendering, rendering
+environment consistency, and team review in exchange for a subscription.
 
 The services with official Cypress integrations are described in
 [Visual testing services](#Visual-testing-services) below.
@@ -352,8 +351,7 @@ The following commercial services provide official Cypress integrations:
 ### Applitools
 
 Applitools Eyes uses AI-assisted comparison ("Visual AI") rather than strict
-pixel diffing, which reduces false positives from anti-aliasing and minor
-rendering shifts. It supports end-to-end and component tests, cross-browser
+pixel diffing. It supports end-to-end and component tests, cross-browser
 rendering via the Ultrafast Grid, and root cause analysis of visual changes.
 
 See [Applitools' Cypress documentation](https://applitools.com/tutorials/sdks/cypress/quickstart/getting-started).
@@ -420,8 +418,8 @@ See [VisualTest's Cypress documentation](https://support.smartbear.com/visualtes
 
 ### Wopee.io
 
-Wopee.io integrates with Cypress to add autonomous visual validation to your
-existing tests, aiming to increase coverage with minimal additional test code.
+Wopee.io integrates with Cypress to add visual validation to your existing
+tests, with baselines managed and reviewed on the Wopee.io platform.
 
 See [Wopee.io's Cypress documentation](https://docs.wopee.io/integrations/cypress/01-getting-started/?utm_source=cypress_docs).
 
