@@ -14,9 +14,9 @@
     },
     "Cucumber": {
       "npm": "@badeball/cypress-cucumber-preprocessor",
-      "version": "25.0.0",
-      "lastPublished": "2026-06-28T15:02:46.363Z",
-      "cypressVersion": "^12.0.0 || ^13.0.0 || ^14.0.0 || >=15.0.0 <=15.17.0"
+      "version": "26.0.0",
+      "lastPublished": "2026-07-04T19:34:14.847Z",
+      "cypressVersion": "^12.0.0 || ^13.0.0 || ^14.0.0 || >=15.0.0 <=15.17.0 || ^15.18.0"
     },
     "cypress-markdown-preprocessor": {
       "npm": "cypress-markdown-preprocessor",
@@ -456,6 +456,18 @@
       "lastPublished": "2026-05-26T15:36:17.688Z",
       "cypressVersion": "^15.1.0"
     },
+    "Sauce Labs Visual": {
+      "npm": "@saucelabs/cypress-visual-plugin",
+      "version": "0.10.1",
+      "lastPublished": "2026-06-08T16:07:56.083Z",
+      "cypressVersion": "^12.0.0 || ^13.0.0 || ^14.0.0 || ^15.0.0"
+    },
+    "LambdaTest SmartUI": {
+      "npm": "@lambdatest/cypress-driver",
+      "version": "1.0.9-beta.3",
+      "lastPublished": "2026-02-14T08:35:39.930Z",
+      "cypressVersion": ">=10"
+    },
     "Cypress Image Snapshot": {
       "npm": "@simonsmith/cypress-image-snapshot",
       "version": "10.0.4",
@@ -464,8 +476,8 @@
     },
     "Visual Regression Diff": {
       "npm": "@frsource/cypress-plugin-visual-regression-diff",
-      "version": "4.0.2",
-      "lastPublished": "2026-06-28T10:29:07.959Z",
+      "version": "4.1.1",
+      "lastPublished": "2026-07-05T23:35:01.444Z",
       "cypressVersion": ">=13.0.0"
     },
     "@chromatic-com/cypress": {

@@ -119,6 +119,7 @@ import {
   faChartDiagram,
   faHexagonNodes,
   faHexagonNodesBolt,
+  faUniversalAccess,
 } from '@fortawesome/free-solid-svg-icons'
 
 library.add(
@@ -178,7 +179,8 @@ library.add(
   faFilter,
   faChartDiagram,
   faHexagonNodes,
-  faHexagonNodesBolt
+  faHexagonNodesBolt,
+  faUniversalAccess
 )
 
 export default {
