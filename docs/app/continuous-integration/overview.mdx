@@ -104,36 +104,7 @@ The [start-server-and-test](https://github.com/bahmutov/start-server-and-test)
 module starts your server, waits until a URL responds, runs your test command,
 and shuts the server down when the tests finish.
 
-<Tabs>
-  <TabItem value="npm">
-
-    ```shell
-    npm install start-server-and-test --save-dev
-    ```
-
-  </TabItem>
-  <TabItem value="yarn">
-
-    ```shell
-    yarn add start-server-and-test --dev
-    ```
-
-  </TabItem>
-  <TabItem value="pnpm">
-
-    ```shell
-    pnpm add --save-dev start-server-and-test
-    ```
-
-  </TabItem>
-  <TabItem value="bun">
-
-    ```shell
-    bun add --dev start-server-and-test
-    ```
-
-  </TabItem>
-</Tabs>
+<PackageManagerTabs install="start-server-and-test" dev />
 
 In your `package.json` scripts, pass the command that boots your server, the
 URL your server is hosted on, and your Cypress test command.
@@ -255,9 +226,7 @@ To record tests:
    or via the
    [`CYPRESS_RECORD_KEY` environment variable](#Environment-variables).
 
-```shell
-npx cypress run --record --key=abc123
-```
+<CypressCommandTabs command="run --record --key=abc123" />
 
 [Read the full guide on Cypress Cloud.](/cloud/get-started/introduction)
 
@@ -275,9 +244,7 @@ have your tests run in parallel. Parallelization requires recording to
 [Cypress Cloud](/cloud/get-started/introduction), which load-balances specs
 across your machines.
 
-```shell
-npx cypress run --record --key=abc123 --parallel
-```
+<CypressCommandTabs command="run --record --key=abc123 --parallel" />
 
 [Read the full guide on parallelization.](/cloud/features/smart-orchestration/parallelization)
 
@@ -550,17 +517,13 @@ to protect your Record Key.
 
 Instead of hard coding it into your run command like this:
 
-```shell
-npx cypress run --record --key abc-key-123
-```
+<CypressCommandTabs command="run --record --key abc-key-123" />
 
 You can set the record key as the environment variable `CYPRESS_RECORD_KEY`
 and we'll automatically use that value. You can now omit the `--key` flag when
 recording.
 
-```shell
-npx cypress run --record
-```
+<CypressCommandTabs command="run --record" />
 
 Set `CYPRESS_RECORD_KEY` in your CI provider's settings as a secret or masked
 environment variable so it doesn't appear in your configuration files or build
@@ -639,9 +602,7 @@ cy.env(['SERVICE_API_TOKEN']).then(({ SERVICE_API_TOKEN }) => {
 For non-sensitive configuration that is safe to appear in browser state, like
 feature flags or API versions, pass values with the `--expose` CLI flag:
 
-```shell
-npx cypress run --expose apiVersion=v2,featureFlag=true
-```
+<CypressCommandTabs command="run --expose apiVersion=v2,featureFlag=true" />
 
 and read them synchronously with
 [`Cypress.expose()`](/api/cypress-api/expose):
