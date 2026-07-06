@@ -1,28 +1,41 @@
 ---
-title: 'How to use Cypress plugins'
-description: 'Learn how to install and use Cypress plugins.'
+title: 'How to Use Cypress Plugins: Install, Register, and Verify'
+description: 'Install Cypress plugins from npm, register them in setupNodeEvents or your support file, and verify they work. Includes a full @cypress/grep setup example.'
 sidebar_label: 'How to use Plugins'
 sidebar_position: 10
 ---
 
 <ProductHeading product="app" />
 
-# How to use Cypress Plugins
+# How to Use Cypress Plugins
+
+Plugins add capabilities that don't ship with Cypress itself: accessibility and
+visual testing, custom commands, code coverage, richer reporters, framework
+integrations, and more. They're versioned npm packages, so you can add one to
+your project in a couple of minutes and update it independently of Cypress.
 
 :::info
 
 <WhatYoullLearn />
 
-- How to install a plugin
-- How to use a plugin
+- Where to find plugins and what they can do
+- How to install a plugin with npm, Yarn, pnpm, or Bun
+- Where to register a plugin: `setupNodeEvents`, your support file, or both
+- How to verify a plugin works and fix common setup mistakes
 
 :::
 
-Cypress maintains a curated list of plugins created by us and the community.
-Plugins from our [official list](/app/plugins/plugins-list) are npm modules. This enables them to
-be versioned and updated separately without needing to update Cypress itself.
+## Find a plugin
 
-You can install any published plugin using npm:
+Browse the [list of plugins](/app/plugins/plugins-list) maintained by Cypress.
+It curates official and community plugins across categories like custom
+commands, visual testing, accessibility, network and API helpers, reporters,
+and CI integrations. Each entry shows its latest version, supported Cypress
+versions, and how recently it was updated, so you can pick one with confidence.
+
+## Installing a plugin
+
+Install the plugin as a dev dependency with your package manager:
 
 <Tabs>
   <TabItem value="npm">
@@ -58,23 +71,145 @@ bun add --dev <plugin name>
   </TabItem>
 </Tabs>
 
+Before installing, check the plugin's supported Cypress versions, shown as a
+badge on the [list of plugins](/app/plugins/plugins-list) and usually stated in
+the plugin's README.
+
 ## Using a plugin
 
-Add your plugin to the
-[`setupNodeEvents`](/app/references/configuration#setupNodeEvents)
-function in the [Cypress configuration](/app/references/configuration). Please follow any additional instructions provided by the plugin's documentation.
-Here's an example of what this might look like:
+Installing the package isn't enough on its own: you also need to register the
+plugin with Cypress. Where you register it depends on where the plugin's code
+needs to run, and the plugin's README will tell you which it needs:
+
+- **In [`setupNodeEvents`](/app/references/configuration#setupNodeEvents) in
+  your Cypress configuration** for plugins that run in Node: preprocessors,
+  browser launch handling, tasks, and anything that touches the file system or
+  test results.
+- **In your
+  [support file](/app/core-concepts/writing-and-organizing-tests#Support-file)**
+  for plugins that run in the browser alongside your tests: custom commands,
+  assertion libraries, and overrides of built-in behavior.
+- **In both**, for plugins with a Node piece and a browser piece.
+
+### Register in the Cypress configuration
+
+Node-side plugins typically export a setup function that you call inside
+`setupNodeEvents`, passing along `on` and `config` so the plugin can bind to
+[Node events](/api/node-events/overview):
 
 :::cypress-config-plugin-example
 
 ```ts
-// bind to the event we care about
-on('<event>', (arg1, arg2) => {
-  // plugin stuff here
-})
+import { configurePlugin } from 'my-cypress-plugin'
+```
+
+```ts
+configurePlugin(on, config)
+
+// return the config so any changes the plugin makes take effect
+return config
 ```
 
 :::
 
-For information on writing plugins, please check out our
-[Node Events Overview](/api/node-events/overview).
+:::caution
+
+Code in `setupNodeEvents` executes in Node, not the browser. It has direct
+access to the file system and operating system, but you cannot call `cy`
+commands or the `Cypress` API there. If a plugin adds custom commands, it
+belongs in the support file instead.
+
+:::
+
+### Register in the support file
+
+Browser-side plugins are imported (or registered with a function call) in your
+support file, which loads before every spec:
+
+```ts title="cypress/support/e2e.js"
+import 'my-cypress-plugin'
+```
+
+Any custom commands the plugin adds are then available in all of your tests.
+
+### Example: setting up @cypress/grep
+
+[`@cypress/grep`](https://github.com/cypress-io/cypress/tree/develop/npm/grep)
+filters which tests run by title or tag, and is a good example of a plugin that
+registers in both places. Install it:
+
+```shell
+npm install @cypress/grep --save-dev
+```
+
+Register it in your support file so it can filter tests in the browser:
+
+```ts title="cypress/support/e2e.js"
+import { register as registerCypressGrep } from '@cypress/grep'
+
+registerCypressGrep()
+```
+
+Add its Node plugin to your configuration so it can skip loading specs with no
+matching tests:
+
+:::cypress-config-plugin-example
+
+```ts
+import { plugin } from '@cypress/grep/plugin'
+```
+
+```ts
+plugin(config)
+
+return config
+```
+
+:::
+
+Then verify it works by running only tests with "login" in the title:
+
+```shell
+npx cypress run --expose grep=login
+```
+
+## Troubleshooting
+
+If a plugin doesn't seem to do anything, or errors on startup, work through
+these checks:
+
+- **Follow the plugin's own README.** Registration details vary between
+  plugins, and some require extra configuration beyond the patterns shown
+  above.
+- **Confirm you registered it in the right place.** An error like
+  `cy is not defined` inside `setupNodeEvents` means browser-side code is
+  running in Node; move that registration to your support file.
+- **Return the `config` object** from `setupNodeEvents` if the plugin modifies
+  configuration. Forgetting to return it silently discards the plugin's
+  changes.
+- **Restart Cypress after configuration changes.** Changes to the Cypress
+  configuration file, including newly registered plugins, require restarting
+  `cypress open`.
+- **Check version compatibility.** A plugin built for an older Cypress major
+  version may fail on the current one. Compare the supported versions badge on
+  the [list of plugins](/app/plugins/plugins-list) with your installed Cypress
+  version.
+
+## Writing your own plugin
+
+Anyone can create and publish a plugin. If no existing plugin covers your use
+case, read the [Node Events Overview](/api/node-events/overview) to learn how
+plugins hook into Cypress, then
+[submit it to the plugins list](https://github.com/cypress-io/cypress-documentation/blob/master/CONTRIBUTING.md#adding-plugins)
+so others can find it.
+
+## See also
+
+- [List of plugins](/app/plugins/plugins-list): browse official and community
+  plugins
+- [Node Events Overview](/api/node-events/overview): the events available in
+  `setupNodeEvents`
+- [Configuration](/app/references/configuration#setupNodeEvents): reference for
+  `setupNodeEvents` and other options
+- [Writing and Organizing Tests](/app/core-concepts/writing-and-organizing-tests#Support-file):
+  how the support file works
