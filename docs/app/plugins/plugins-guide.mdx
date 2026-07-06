@@ -36,15 +36,15 @@ commands, visual testing, network and API helpers, reporters, and CI
 integrations. Each entry shows its latest version, supported Cypress versions,
 and how recently it was updated, so you can pick one with confidence.
 
-## Security considerations
+## Where plugin code runs
 
-A plugin is a regular npm dependency, so the habits you already use for other
-packages apply here too.
+Code registered in `setupNodeEvents` runs in Node, where it can access the
+file system, the network, and environment variables. Code registered in your
+support file runs in the browser alongside your tests and your application
+under test.
 
-It also helps to know where plugin code runs. Code registered in
-`setupNodeEvents` runs in Node, where it can access the file system, the
-network, and environment variables. Code registered in your support file runs
-in the browser alongside your tests and your application under test.
+Beyond that, a plugin is a regular npm dependency, so the habits you already
+use for other packages apply here too.
 
 ## Installing a plugin
 
