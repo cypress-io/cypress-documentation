@@ -288,6 +288,38 @@ Update to version 4.0.0+ of `@cypress/code-coverage` and follow its [migration g
 
 Update to version 6.0.0+ of `@cypress/grep` and follow its [migration guide](https://github.com/cypress-io/cypress/tree/develop/npm/grep#migration) to move from environment variables to `--expose` CLI flags and `expose` config.
 
+##### Community plugins
+
+Many community plugins have already adopted the new API. Update to at least the version listed below to stop the `Cypress.env()` deprecation warning, and make the config change noted, if any.
+
+| Plugin                                                                                                               | Version | Config changes                                                                           |
+| -------------------------------------------------------------------------------------------------------------------- | ------- | ---------------------------------------------------------------------------------------- |
+| [@bahmutov/cy-api](https://github.com/bahmutov/cy-api)                                                               | 2.3.0+  | Move options from `env` to `expose`                                                      |
+| [@chromatic-com/cypress](https://github.com/chromaui/chromatic-e2e)                                                  | 0.12.5+ | Move options from `env` to `expose`; requires Cypress 15.10+                             |
+| [@frsource/cypress-plugin-visual-regression-diff](https://github.com/FRSOURCE/cypress-plugin-visual-regression-diff) | 4.1.0+  | Move options from `env` to `expose`                                                      |
+| [@percy/cypress](https://github.com/percy/percy-cypress)                                                             | 3.1.8+  | Move `PERCY_*` values from `env` to `expose` (unexposed still warns)                     |
+| [cypress-data-session](https://github.com/bahmutov/cypress-data-session)                                             | 3.0.0+  | Move options from `env` to `expose`; requires Cypress 15.10+                             |
+| [cypress-fail-fast](https://github.com/javierbrea/cypress-fail-fast)                                                 | 8.0.0+  | Move options from `env` to `expose`; renamed (`FAIL_FAST_STRATEGY` → `failFastStrategy`) |
+| [cypress-firebase](https://github.com/prescottprue/cypress-firebase)                                                 | 4.4.0+  | Set `allowCypressEnv: false` to disable its `Cypress.env()` fallback                     |
+| [cypress-image-diff-js](https://github.com/uktrade/cypress-image-diff)                                               | 2.7.0+  | None                                                                                     |
+| [cypress-localstorage-commands](https://github.com/javierbrea/cypress-localstorage-commands)                         | 2.3.0+  | None                                                                                     |
+| [cypress-maildev](https://github.com/Clebiez/cypress-maildev)                                                        | 2.0.0+  | Move `MAILDEV_*` values from `env` to `expose`                                           |
+| [cypress-mailosaur](https://github.com/mailosaur/cypress-mailosaur)                                                  | 4.0.0+  | None                                                                                     |
+| [cypress-mailpit](https://github.com/pushpak1300/cypress-mailpit)                                                    | 2.0.0+  | Move `MAILPIT_URL` from `env` to `expose`; keep credentials in `env`                     |
+| [cypress-mongodb](https://github.com/Zaista/cypress-mongodb)                                                         | 7.0.0+  | None                                                                                     |
+| [cypress-network-idle](https://github.com/bahmutov/cypress-network-idle)                                             | 2.0.1+  | None; requires Cypress 15.10+                                                            |
+| [cypress-ntlm-auth](https://github.com/bjowes/cypress-ntlm-auth)                                                     | 4.2.4+  | None                                                                                     |
+| [cypress-plugin-api](https://github.com/filiphric/cypress-plugin-api)                                                | 2.12.0+ | Move options from `env` to `expose` (unexposed options still warn)                       |
+| [cypress-plugin-grep-boxes](https://github.com/dennisbergevin/cypress-plugin-grep-boxes)                             | 3.0.0+  | Move options from `env` to `expose`                                                      |
+| [cypress-plugin-last-failed](https://github.com/dennisbergevin/cypress-plugin-last-failed)                           | 3.0.0+  | Requires Cypress 15.10+; also update `@cypress/grep` to 6.0.0+                           |
+| [cypress-plugin-xhr-toggle](https://github.com/filiphric/cypress-plugin-xhr-toggle)                                  | 1.3.0+  | Move `hideXhr` from `env` to `expose` (unexposed still warns)                            |
+| [cypress-runner-themes](https://github.com/dingraham/cypress-runner-themes)                                          | 1.1.0+  | Move `theme` from `env` to `expose` (unexposed still warns)                              |
+| [cypress-visual-regression](https://github.com/cypress-visual-regression/cypress-visual-regression)                  | 6.0.0+  | Move options from `env` to `expose`                                                      |
+| [cypress-voice-plugin](https://github.com/dennisbergevin/cypress-voice-plugin)                                       | 2.0.0+  | Move options from `env` to `expose`                                                      |
+| [cypress-watch-and-reload](https://github.com/bahmutov/cypress-watch-and-reload)                                     | 2.1.0+  | Requires Cypress 15.11+                                                                  |
+
+If a plugin you depend on isn't listed here, search its shipped code for `Cypress.env()` to check whether it has migrated.
+
 ### Lock it down with `allowCypressEnv: false`
 
 Once you've migrated all `Cypress.env()` invocations to either `cy.env()` or `Cypress.expose()`, you should set `allowCypressEnv: false` in your Cypress configuration.
