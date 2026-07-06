@@ -939,6 +939,32 @@
           "badge": "verified"
         },
         {
+          "name": "Sauce Labs Visual",
+          "description": "Visual testing for Cypress tests, reviewed on the Sauce Labs platform.",
+          "link": "https://docs.saucelabs.com/visual-testing/integrations/cypress/",
+          "npm": "@saucelabs/cypress-visual-plugin",
+          "keywords": [
+            "screenshots",
+            "visual regression",
+            "visual testing",
+            "cross-browser"
+          ],
+          "badge": "community"
+        },
+        {
+          "name": "LambdaTest SmartUI",
+          "description": "Visual regression testing for Cypress tests on LambdaTest's SmartUI cloud.",
+          "link": "https://www.lambdatest.com/support/docs/smartui-cypress-sdk/",
+          "npm": "@lambdatest/cypress-driver",
+          "keywords": [
+            "screenshots",
+            "visual regression",
+            "visual testing",
+            "cross-browser"
+          ],
+          "badge": "community"
+        },
+        {
           "name": "Cypress Image Diff",
           "description": "Visual regression testing plugin maintained by DIT - UK Gov.",
           "link": "https://github.com/uktrade/cypress-image-diff",

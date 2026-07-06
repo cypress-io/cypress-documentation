@@ -17,6 +17,7 @@ import CypressEnvVsCypressExpose from '@site/docs/partials/_cy-env-vs-cypress-ex
 import CypressOpenCommands from '@site/docs/partials/_cypress-open-commands.mdx'
 import CypressRunCommands from '@site/docs/partials/_cypress-run-commands.mdx'
 import CypressCommandTabs from '@site/src/components/cypress-command-tabs'
+import PackageManagerTabs from '@site/src/components/package-manager-tabs'
 import DefaultSelectorPriority from '@site/docs/partials/_default-selector-priority.mdx'
 import DocsImage from '@site/src/components/docs-image'
 import DocsVideo from '@site/src/components/docs-video'
@@ -119,6 +120,7 @@ import {
   faChartDiagram,
   faHexagonNodes,
   faHexagonNodesBolt,
+  faUniversalAccess,
 } from '@fortawesome/free-solid-svg-icons'
 
 library.add(
@@ -178,7 +180,8 @@ library.add(
   faFilter,
   faChartDiagram,
   faHexagonNodes,
-  faHexagonNodesBolt
+  faHexagonNodesBolt,
+  faUniversalAccess
 )
 
 export default {
@@ -205,6 +208,7 @@ export default {
   CypressOpenCommands,
   CypressRunCommands,
   CypressCommandTabs,
+  PackageManagerTabs,
   DefaultSelectorPriority,
   DocsImage,
   DocsVideo,

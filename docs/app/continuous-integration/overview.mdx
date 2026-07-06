@@ -695,10 +695,10 @@ To better diagnose the error, add
 to your CI setup. This will print where the binary is located and what versions
 are already present.
 
-```shell
-npx cypress cache path
-npx cypress cache list
-```
+<CypressCommandTabs
+  command={`cache path
+cache list`}
+/>
 
 If the required binary version is not found in the cache, you can try the
 following:

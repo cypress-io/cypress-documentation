@@ -152,144 +152,20 @@ Cypress skills.
 
 Install all skills by running:
 
-<Tabs>
-  <TabItem value="npm">
-
-```shell
-npx skills add cypress-io/ai-toolkit
-```
-
-  </TabItem>
-
-  <TabItem value="yarn">
-
-```shell
-yarn dlx skills add cypress-io/ai-toolkit
-```
-
-  </TabItem>
-
-  <TabItem value="pnpm">
-
-```shell
-pnpm dlx skills add cypress-io/ai-toolkit
-```
-
-  </TabItem>
-
-  <TabItem value="bun">
-
-```shell
-bunx skills add cypress-io/ai-toolkit
-```
-
-  </TabItem>
-</Tabs>
+<PackageManagerTabs exec="skills add cypress-io/ai-toolkit" />
 
 Or install each skill individually:
 
-<Tabs>
-  <TabItem value="npm">
-
-```shell
-npx skills add https://github.com/cypress-io/ai-toolkit --skill cypress-author
-```
-
-```shell
-npx skills add https://github.com/cypress-io/ai-toolkit --skill cypress-explain
-```
-
-```shell
-npx skills add https://github.com/cypress-io/ai-toolkit --skill cypress-docs
-```
-
-  </TabItem>
-
-  <TabItem value="yarn">
-
-```shell
-yarn dlx skills add https://github.com/cypress-io/ai-toolkit --skill cypress-author
-```
-
-```shell
-yarn dlx skills add https://github.com/cypress-io/ai-toolkit --skill cypress-explain
-```
-
-```shell
-yarn dlx skills add https://github.com/cypress-io/ai-toolkit --skill cypress-docs
-```
-
-  </TabItem>
-
-  <TabItem value="pnpm">
-
-```shell
-pnpm dlx skills add https://github.com/cypress-io/ai-toolkit --skill cypress-author
-```
-
-```shell
-pnpm dlx skills add https://github.com/cypress-io/ai-toolkit --skill cypress-explain
-```
-
-```shell
-pnpm dlx skills add https://github.com/cypress-io/ai-toolkit --skill cypress-docs
-```
-
-  </TabItem>
-
-  <TabItem value="bun">
-
-```shell
-bunx skills add https://github.com/cypress-io/ai-toolkit --skill cypress-author
-```
-
-```shell
-bunx skills add https://github.com/cypress-io/ai-toolkit --skill cypress-explain
-```
-
-```shell
-bunx skills add https://github.com/cypress-io/ai-toolkit --skill cypress-docs
-```
-
-  </TabItem>
-</Tabs>
+<PackageManagerTabs
+  exec={`skills add https://github.com/cypress-io/ai-toolkit --skill cypress-author
+skills add https://github.com/cypress-io/ai-toolkit --skill cypress-explain
+skills add https://github.com/cypress-io/ai-toolkit --skill cypress-docs`}
+/>
 
 Skills installed this way don't update automatically. To update your installed
 skills to their latest versions, run:
 
-<Tabs>
-  <TabItem value="npm">
-
-```shell
-npx skills update
-```
-
-  </TabItem>
-
-  <TabItem value="yarn">
-
-```shell
-yarn dlx skills update
-```
-
-  </TabItem>
-
-  <TabItem value="pnpm">
-
-```shell
-pnpm dlx skills update
-```
-
-  </TabItem>
-
-  <TabItem value="bun">
-
-```shell
-bunx skills update
-```
-
-  </TabItem>
-</Tabs>
+<PackageManagerTabs exec="skills update" />
 
 Note that the update check only tracks project-level installs, not global ones.
 See [skills.sh](https://skills.sh/) for the full CLI reference, including how
