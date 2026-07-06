@@ -96,9 +96,12 @@ Each rule is a hard convention. See the linked section for the how and why.
   `:::cypress-config-plugin-example`). Never hand-write `defineConfig` + tabs.
 - TS/JS examples → one `ts` block tagged `copyTsToJs`; never maintain a JS copy.
 - E2E-vs-component snippets → `:::visit-mount-example`.
+- Package-manager commands → `<PackageManagerTabs>` (with `install`, `run`, or
+  `exec`) or `<CypressCommandTabs>` for `cypress` subcommands. Never hand-write
+  npm/Yarn/pnpm/Bun tab sets.
 - Tabs sync via a shared `groupId`. Fixed orders: package managers
-  **npm → Yarn → pnpm**; frameworks **React → Angular → Vue → Svelte**; JS before
-  TS.
+  **npm → Yarn → pnpm → Bun**; frameworks **React → Angular → Vue → Svelte**; JS
+  before TS.
 
 **Admonitions** — [details](./AGENTS_REFERENCE.md#admonition-blocks)
 

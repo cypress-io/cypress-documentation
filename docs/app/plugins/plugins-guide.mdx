@@ -142,9 +142,7 @@ Any custom commands the plugin adds are then available in all of your tests.
 filters which tests run by title or tag, and is a good example of a plugin that
 registers in both places. Install it:
 
-```shell
-npm install @cypress/grep --save-dev
-```
+<PackageManagerTabs install="@cypress/grep" dev />
 
 Register it in your support file so it can filter tests in the browser:
 
@@ -173,9 +171,7 @@ return config
 
 Then verify it works by running only tests with "login" in the title:
 
-```shell
-npx cypress run --expose grep=login
-```
+<CypressCommandTabs command="run --expose grep=login" />
 
 ## Troubleshooting
 

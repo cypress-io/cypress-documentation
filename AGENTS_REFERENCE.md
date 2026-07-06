@@ -182,41 +182,47 @@ syncing and the initial selection.
 
 ### Package-manager commands
 
-Install / CLI commands: one tab per manager with `groupId="package-manager"` and
-`defaultValue="npm"`. Order is always **npm → Yarn → pnpm** (labels `npm`,
-`Yarn`, `pnpm`). Reach for the shared
-`docs/partials/_cypress-install-commands.mdx` partial when showing the basic
-install rather than re-authoring it.
+**Never hand-write npm/Yarn/pnpm/Bun tab sets.** Generate them with
+`<PackageManagerTabs>` (globally available, no import), which renders the
+command for every supported package manager in the canonical order
+(**npm → Yarn → pnpm → Bun**) with the shared `groupId="package-manager"` so
+the reader's choice syncs site-wide. Give it exactly one of three props,
+matching how the command is executed:
 
-````mdx
-<Tabs groupId="package-manager" defaultValue="npm" values={[
-  {label: 'npm', value: 'npm'},
-  {label: 'Yarn', value: 'yarn'},
-  {label: 'pnpm', value: 'pnpm'},
-]}>
-  <TabItem value="npm">
+```mdx
+<!-- Add a dependency: npm install / yarn add / pnpm add / bun add -->
 
-```shell
-npm install cypress --save-dev
+<PackageManagerTabs install="cypress" dev />
+
+<!-- Run an installed dependency's binary: npx / yarn / pnpm / bunx -->
+
+<PackageManagerTabs run="cypress open" />
+
+<!-- Download and run a one-off command: npx / yarn dlx / pnpm dlx / bunx -->
+
+<PackageManagerTabs exec="skills add cypress-io/ai-toolkit" />
 ```
 
-  </TabItem>
-  <TabItem value="yarn">
+- `dev` (with `install`) saves as a dev dependency (`--save-dev` / `--dev`).
+- `env="CYPRESS_RECORD_KEY=abc123"` prepends environment variable
+  assignment(s) to each generated command.
+- `run` / `exec` accept multiple commands on separate lines (pass a template
+  literal: `run={`cypress run\ncypress open`}`).
 
-```shell
-yarn add cypress --dev
-```
+For `cypress` subcommands there is the earlier `<CypressCommandTabs>`
+shorthand, which prepends `cypress` for you:
+`<CypressCommandTabs command="run --browser chrome" />` is equivalent to
+`<PackageManagerTabs run="cypress run --browser chrome" />`. Either is fine.
 
-  </TabItem>
-  <TabItem value="pnpm">
+The most common commands already exist as shared partials; reach for them
+rather than re-authoring: `<CypressInstallCommands />`, `<CypressOpenCommands />`,
+`<CypressRunCommands />`, `<CypressCacheClearCommands />`, and
+`<CypressInstallBinaryCommands />`.
 
-```shell
-pnpm add --save-dev cypress
-```
-
-  </TabItem>
-</Tabs>
-````
+Only fall back to explicit `<Tabs groupId="package-manager">` + `<TabItem>`s
+when the per-manager commands differ irregularly and can't be generated (e.g.
+`npm ci --foreground-scripts` vs `yarn install --frozen-lockfile`). Keep the
+canonical tab order and labels (`npm`, `Yarn`, `pnpm`, `Bun`) when you do.
 
 ### TypeScript / JavaScript examples
 
