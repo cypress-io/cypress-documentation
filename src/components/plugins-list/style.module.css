@@ -120,9 +120,12 @@ ul.pluginsList li p {
 /* -------- Badge legend -------- */
 
 .legend {
+  /* One badge per row at every viewport width. The badge pills share a
+     max-content column so every description starts at the same x position. */
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 0.5rem 1.5rem;
+  grid-template-columns: max-content 1fr;
+  align-items: baseline;
+  gap: 0.6rem 0.75rem;
   padding: 1rem 1.25rem;
   margin-bottom: 1.5rem;
   border: 1px solid var(--ifm-color-emphasis-200);
@@ -130,10 +133,14 @@ ul.pluginsList li p {
   background-color: var(--ifm-background-surface-color);
 }
 
+/* Promote each item's badge and description to cells of the legend grid so
+   the two columns stay aligned across rows. */
 .legendItem {
-  display: flex;
-  align-items: baseline;
-  gap: 0.5rem;
+  display: contents;
+}
+
+.legendItem > .badge {
+  justify-self: start;
 }
 
 .legendText {
@@ -200,13 +207,25 @@ ul.pluginsList li p {
 }
 
 .select {
-  padding: 0.5rem 0.75rem;
+  padding: 0.5rem 2.4rem 0.5rem 0.75rem;
   font-size: 0.95rem;
   border: 1px solid var(--ifm-color-emphasis-300);
   border-radius: 6px;
   background-color: var(--ifm-background-color);
   color: var(--ifm-font-color-base);
   cursor: pointer;
+  /* Replace the native dropdown arrow (flush against the right border in most
+     browsers) with a chevron inset from the edge. */
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%23606770' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round' d='M4 6.25l4 4 4-4'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.9rem center;
+  background-size: 0.85em;
+}
+
+html[data-theme='dark'] .select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%23b8bfc9' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round' d='M4 6.25l4 4 4-4'/%3E%3C/svg%3E");
 }
 
 .search:focus,
