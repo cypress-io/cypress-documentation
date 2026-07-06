@@ -33,7 +33,7 @@ major CI provider.
 
 :::
 
-## What is continuous integration? {#What-is-Continuous-Integration}
+## What is Continuous Integration?
 
 Continuous integration is the practice of merging code changes into a shared
 repository frequently, where each change is verified by an automated build and
@@ -53,7 +53,7 @@ breaks a user flow fails the build instead of shipping.
   title="Continuous Integration with Cypress"
 />
 
-### Install and run Cypress {#Basics}
+### Install and run Cypress
 
 Running Cypress in CI is almost the same as running it locally in your
 terminal. You generally only need to do two things:
@@ -246,7 +246,7 @@ npx cypress run --record --key=abc123 --parallel
 
 [Read the full guide on parallelization.](/cloud/features/smart-orchestration/parallelization)
 
-## Cypress Docker images {#Cypress-Docker-Images}
+## Cypress Docker Images
 
 CI providers, such as [GitHub Actions](https://docs.github.com/en/actions/using-jobs/running-jobs-in-a-container) and
 [CircleCI](https://circleci.com/docs/executor-intro/#docker), allow workflows to run using
@@ -307,7 +307,7 @@ You can find examples that use Cypress Docker images below:
 - [Real World App - GitHub Actions](https://github.com/cypress-io/cypress-realworld-app/blob/develop/.github/workflows/main.yml)
 - [cypress-docker-images - GitHub Actions](https://github.com/cypress-io/cypress-docker-images/blob/master/.github/workflows/example-cypress-github-action.yml)
 
-## CI examples {#CI-Examples}
+## CI Examples
 
 We maintain in-depth setup guides for the most popular CI providers, and
 working example configurations for many others.
@@ -485,7 +485,7 @@ repository.
 
 You can set various environment variables to modify how Cypress runs.
 
-#### Configuration values {#Configuration-Values}
+#### Configuration Values
 
 You can set any [configuration value](/app/references/configuration) as an
 environment variable by prefixing it with `CYPRESS_`. This overrides values in
@@ -558,7 +558,7 @@ to see why the commit information is unavailable.
 DEBUG=cypress:server:record
 ```
 
-#### CI build information {#CI-Build-Information}
+#### CI Build Information
 
 In some newer CI providers, Cypress can't map the system environment variables required
 to link back to builds or pull requests. In this case we provide users some
@@ -571,7 +571,7 @@ environment variables to help pass that information along.
 Setting these will allow links within the Cloud run to take you to the
 appropriate place.
 
-#### Custom environment variables {#Custom-Environment-Variables}
+#### Custom Environment Variables
 
 You can also set custom environment variables for use in your tests. Prefix
 the variable with `CYPRESS_` in your CI environment:

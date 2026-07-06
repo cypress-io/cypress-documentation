@@ -381,6 +381,9 @@ Rules for building the hash:
   anchors above. Only fall back to an explicit `{#CustomId}` at the end of a
   heading in the rare cases where the regular casing-based reference does not
   work (see the `docs/partials/_header-*.mdx` files, e.g. `{#Yields}`).
+  Preserving inbound links to a renamed heading is **not** one of those cases:
+  keep the original heading text (including its casing) instead of attaching a
+  custom ID to new wording.
 - `npm run write-heading-ids` generates explicit IDs for headings if you want
   them materialized.
 
