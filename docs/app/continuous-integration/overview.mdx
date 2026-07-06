@@ -204,6 +204,8 @@ work to collect the backgrounded PID and then kill it after `cypress run`.
 
 :::
 
+#### `concurrently` module
+
 A general-purpose process runner like
 [concurrently](https://github.com/open-cli-tools/concurrently) can compose the
 same flow: start the server and a `wait-on`-gated test command together, kill
@@ -229,16 +231,26 @@ Recording tests allows you to:
 - Get the entire stack trace of failed tests.
 - View screenshots taken when tests fail and when using
   [`cy.screenshot()`](/api/commands/screenshot).
-- Watch a video of your entire test run or a clip at the point of test failure
-  when the `video` configuration is enabled.
+- Detect and manage [flaky tests](/cloud/features/flaky-test-management) that
+  pass and fail across recorded runs.
+- Analyze trends in your test suite with
+  [Analytics](/cloud/features/analytics/overview), like run duration,
+  most common errors, and slowest tests.
+- Generate [UI Coverage](/ui-coverage/get-started/introduction) and
+  [Cypress Accessibility](/accessibility/get-started/introduction) reports
+  from your recorded runs with no additional test code or configuration
+  (premium solutions).
 - See which machines ran each test when
   [parallelized](/cloud/features/smart-orchestration/parallelization).
 
 To record tests:
 
-1. [Set up your project to record](/cloud/get-started/setup#Setup)
+1. [Set up your project to record](/cloud/get-started/setup#Setup) and copy
+   your record key.
 2. [Pass the `--record` flag to `cypress run`](/app/references/command-line#cypress-run)
-   within CI.
+   within CI, along with the record key, either inline with the `--key` flag
+   or via the
+   [`CYPRESS_RECORD_KEY` environment variable](#Environment-variables).
 
 ```shell
 npx cypress run --record --key=abc123
@@ -301,7 +313,7 @@ Cypress Docker images are available from:
 - [cypress/browsers](https://github.com/cypress-io/cypress-docker-images/tree/master/browsers) builds on the
   [cypress/base](https://github.com/cypress-io/cypress-docker-images/tree/master/base) image.
   For `Linux/amd64` images it adds **Chrome**, **Firefox** and **Edge** browsers.
-  For `Linux/arm64` images it adds only **Firefox** browsers from version `136.0.2` and above.
+  For `Linux/arm64` images it adds only **Firefox** browsers from version `136` and above.
   Chrome and Edge browsers are currently not available for `Linux/arm64`.
   A corresponding image `<tag>` allows selection of the combined Node.js and browser versions.
   The version tags for the unavailable Chrome and Edge browsers on the `Linux/arm64` platform are empty place-holders only,
