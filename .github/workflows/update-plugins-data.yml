@@ -8,6 +8,7 @@ on:
 
 permissions:
   contents: write
+  pull-requests: write
 
 concurrency:
   group: update-plugins-data
@@ -40,14 +41,15 @@ jobs:
           # checking whether plugin repos are archived.
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Commit and push if changed
-        run: |
-          if git diff --quiet -- src/data/plugins-generated.json; then
-            echo "Plugins data is already up to date."
-            exit 0
-          fi
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add src/data/plugins-generated.json
-          git commit -m "chore: update plugins data (nightly)"
-          git push origin main
+      - name: Open pull request if changed
+        uses: peter-evans/create-pull-request@v7
+        with:
+          add-paths: src/data/plugins-generated.json
+          branch: automation/update-plugins-data
+          delete-branch: true
+          commit-message: 'chore: update plugins data (nightly)'
+          title: 'chore: update plugins data'
+          body: |
+            Nightly refresh of `src/data/plugins-generated.json` via `npm run enrich:plugins`.
+
+            Automated by the `update-plugins-data` workflow.
