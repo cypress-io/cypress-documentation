@@ -1,35 +1,43 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useId, useRef, useState } from 'react'
+import { useColorMode } from '@docusaurus/theme-common'
 import Button from '@cypress-design/react-button'
 import Icon from '@cypress-design/react-icon'
 import s from './style.module.css'
 
 interface CopyPromptProps {
-  /** The prompt text shown in the card and copied to the clipboard. */
+  /** The full prompt text; always what the copy button copies. */
   prompt: string
-  /**
-   * Short hint rendered under the button. Defaults to a generic "paste into
-   * your AI assistant" note; pass an empty string to hide it.
-   */
-  hint?: string
+  /** Per-card heading naming the outcome, e.g. "Upgrade to Cypress 15 with your AI assistant". */
+  title?: string
+  /** One-line supporting text under the title. */
+  subtext?: string
 }
 
-const DEFAULT_HINT =
-  'Copy this prompt into your AI assistant (Claude, Cursor, Copilot, etc.) to get hands-on help.'
+const DEFAULT_TITLE = 'Do this migration with your AI assistant'
+const DEFAULT_SUBTEXT =
+  'Copies a ready-made prompt for Claude Code, Cursor, or Copilot. Paste it with your project open.'
+const COPIED_SUBTEXT = 'Paste into your AI tool with your project open.'
 
 /**
- * A copyable AI prompt, styled like a code block. Used in guides to hand
- * readers a ready-made prompt for their AI coding assistant, e.g. to walk a
- * project through a version migration. The card shows a two-line preview;
- * the button always copies the full prompt.
+ * A copyable AI prompt used in guides to hand readers a ready-made prompt for
+ * their AI coding assistant, e.g. to walk a project through a version
+ * migration. Renders as a light, admonition-weight card: title, one-line
+ * supporting text, a copy button, and a "Show prompt" disclosure that reveals
+ * the full prompt. The prompt is always present in the DOM (hidden with CSS
+ * when collapsed) so the docs' LLM markdown export keeps the full text.
  */
 export default function CopyPrompt({
   prompt,
-  hint = DEFAULT_HINT,
+  title = DEFAULT_TITLE,
+  subtext = DEFAULT_SUBTEXT,
 }: CopyPromptProps): React.JSX.Element {
   const [copied, setCopied] = useState(false)
+  const [expanded, setExpanded] = useState(false)
+  const promptId = useId()
   const resetTimeout = useRef<ReturnType<typeof setTimeout> | undefined>(
     undefined
   )
+  const { colorMode } = useColorMode()
 
   useEffect(() => () => clearTimeout(resetTimeout.current), [])
 
@@ -59,32 +67,70 @@ export default function CopyPrompt({
     if (!succeeded) {
       return
     }
+    ;(window as any).FS?.event?.('Copied AI Prompt', { prompt_title: title })
     setCopied(true)
     clearTimeout(resetTimeout.current)
-    resetTimeout.current = setTimeout(() => setCopied(false), 2000)
+    resetTimeout.current = setTimeout(() => setCopied(false), 3000)
   }
 
   return (
-    <div className={s.copyPrompt}>
-      <p className={s.promptText}>&ldquo;{prompt}&rdquo;</p>
-      <Button
-        // variant/size are untyped until @cypress-design/constants-button
-        // ships its types; same workaround as src/components/button
-        {...({ variant: 'outline-indigo-dark-mode', size: 32 } as any)}
-        onClick={copyPrompt}
-        aria-label="Copy prompt to clipboard"
-      >
+    <section className={s.copyPrompt}>
+      <p className={s.title}>
         <Icon
-          name={copied ? 'checkmark' : 'general-clipboard'}
-          className="mr-1"
+          name="general-sparkle-triple"
+          className={s.sparkle}
+          aria-hidden="true"
         />
-        {copied ? 'Copied' : 'Copy prompt'}
-      </Button>
+        {title}
+      </p>
+      <p className={s.subtext}>{copied ? COPIED_SUBTEXT : subtext}</p>
+      <div className={s.actions}>
+        <Button
+          // variant/size are untyped until @cypress-design/constants-button
+          // ships its types; same workaround as src/components/button
+          {...({
+            variant:
+              colorMode === 'dark'
+                ? 'outline-indigo-dark-mode'
+                : 'outline-indigo',
+            size: 32,
+          } as any)}
+          onClick={copyPrompt}
+          aria-label="Copy prompt to clipboard"
+        >
+          <Icon
+            name={copied ? 'checkmark' : 'general-clipboard'}
+            className="mr-1"
+          />
+          {copied ? 'Copied' : 'Copy prompt'}
+        </Button>
+        <button
+          type="button"
+          className={s.toggle}
+          aria-expanded={expanded}
+          aria-controls={promptId}
+          onClick={() => setExpanded((e) => !e)}
+        >
+          {expanded ? 'Hide prompt' : 'Show prompt'}
+          <Icon
+            name={expanded ? 'chevron-up-small' : 'chevron-down-small'}
+            className={s.chevron}
+            aria-hidden="true"
+          />
+        </button>
+      </div>
+      {/* Kept in the DOM when collapsed so the LLM export includes the full
+          prompt; display:none removes it from view and the a11y tree. */}
+      <p
+        id={promptId}
+        className={expanded ? s.promptText : s.promptTextCollapsed}
+      >
+        &ldquo;{prompt}&rdquo;
+      </p>
       {/* polite live region so screen readers announce the copy */}
       <span aria-live="polite" className={s.srOnly}>
         {copied ? 'Prompt copied to clipboard' : ''}
       </span>
-      {hint && <p className={s.hint}>{hint}</p>}
-    </div>
+    </section>
   )
 }

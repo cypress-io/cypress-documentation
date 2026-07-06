@@ -1,11 +1,12 @@
 /*
- * Surface matches the site's code blocks, which use the same dark theme in
- * both light and dark color modes (--ifm-code-background-color). Spacing sits
- * on the design system's 4px grid; text colors follow the "300 or lighter on
- * dark surfaces" contrast rule.
+ * Admonition-weight card: bordered, theme-adaptive, sitting below the page
+ * content in visual hierarchy. Spacing sits on the design system's 4px grid.
+ * The expanded prompt keeps the site's dark code-block surface in both
+ * color modes.
  */
 .copyPrompt {
-  background-color: var(--ifm-code-background-color);
+  border: 1px solid var(--ifm-color-emphasis-200);
+  background-color: var(--ifm-background-surface-color);
   /* 8px, on the 4px grid */
   border-radius: 0.5rem;
   /* smaller top/bottom than sides: line-height already adds vertical air */
@@ -13,41 +14,99 @@
   margin-bottom: var(--ifm-leading);
 }
 
-.promptText {
+/* The theme's `.markdown p` rule outranks a bare module class, so scope the
+   paragraph margins under the card to win; otherwise theme margins unbalance
+   the card's spacing. */
+.copyPrompt p.title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  /* 16px / 24px */
+  font-size: 1rem;
+  line-height: 1.5rem;
+  font-weight: 600;
+  color: var(--ifm-heading-color);
+  margin: 0;
+}
+
+.sparkle {
+  color: var(--ifm-color-indigo-500);
+  flex-shrink: 0;
+}
+
+.copyPrompt p.subtext {
+  /* 14px / 20px: supporting text */
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: var(--ifm-color-emphasis-700);
+  margin: 0.25rem 0 0.75rem;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+/* Link-styled disclosure toggle */
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  /* 14px / 20px */
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 500;
+  color: var(--ifm-color-indigo-500);
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+.toggle:hover {
+  text-decoration: underline;
+}
+
+.toggle:focus-visible {
+  outline: 2px solid var(--ifm-color-indigo-500);
+  outline-offset: 2px;
+  border-radius: 0.25rem;
+}
+
+.chevron {
+  flex-shrink: 0;
+}
+
+.copyPrompt p.promptText {
   font-family: var(--ifm-font-family-monospace);
-  /* 14px / 20px: supporting text on the type scale, line-height on the grid */
+  /* 14px / 20px, line-height on the grid */
   font-size: 0.875rem;
   line-height: 1.25rem;
   color: var(--ifm-color-gray-100);
-  /* Break lines at any character, terminal-style, so the two preview lines
-     fill the full card width instead of wrapping early at the long docs URL
-     and leaving a ragged right edge. */
-  word-break: break-all;
-  /* Show a two-line preview ending in an ellipsis; the full text stays in
-     the DOM and is what the copy button copies. */
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
-  overflow: hidden;
-}
-
-.hint {
-  /* 12px / 16px: fine print, line-height on the grid */
-  font-size: 0.75rem;
-  line-height: 1rem;
-  color: var(--ifm-color-gray-300);
-}
-
-/* The theme's `.markdown p` rule outranks a bare module class, so scope the
-   margins under the card to win; otherwise the hint keeps a 16px bottom
-   margin and the card's bottom spacing reads as double the top. */
-.copyPrompt p.promptText {
-  margin: 0 0 0.75rem;
-}
-
-.copyPrompt p.hint {
+  background-color: var(--ifm-code-background-color);
+  border-radius: 0.5rem;
+  padding: 0.75rem 1rem;
   margin: 0.75rem 0 0;
+  /* long URLs may lack break points; keep them inside the card */
+  overflow-wrap: anywhere;
+}
+
+/* Kept in the DOM (for the LLM markdown export) but out of view and out of
+   the accessibility tree while collapsed. */
+.copyPrompt p.promptTextCollapsed {
+  display: none;
+}
+
+/* Indigo reads too dark on dark surfaces; step down per the contrast rule. */
+:global([data-theme='dark']) .sparkle,
+:global([data-theme='dark']) .toggle {
+  color: var(--ifm-color-indigo-300);
+}
+
+:global([data-theme='dark']) .toggle:focus-visible {
+  outline-color: var(--ifm-color-indigo-300);
 }
 
 .srOnly {
