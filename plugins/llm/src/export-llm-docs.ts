@@ -10,6 +10,7 @@
  * 4. Write `dist/llms.txt` (site manifest) and per-directory `index.md` listings under the markdown export root.
  */
 
+import fs from 'fs'
 import path from 'path'
 import {
   JsonExporter,
@@ -83,7 +84,16 @@ export async function runLlmExport(options?: LlmExportRunOptions): Promise<void>
     }
   }
 
-  mdExporter.buildMarkdownDirectoryIndexes()
+  // Fragment dirs stay out of the directory indexes and the LLM sitemap —
+  // unless a real docs directory shares the page's name (its pages must stay
+  // indexed, so that one folder keeps normal treatment).
+  const fragmentDirs = new Set(
+    [...sectionExporter.getFragmentDirs()].filter(
+      (docId) => !fs.existsSync(path.join(docsRoot, docId)),
+    ),
+  )
+
+  mdExporter.buildMarkdownDirectoryIndexes(fragmentDirs)
   if (config.emit?.json) {
     jsonExporter.exportIndex({ gitSha, generatedAt })
   }
@@ -91,7 +101,7 @@ export async function runLlmExport(options?: LlmExportRunOptions): Promise<void>
   const manifestWriter = new ManifestWriter(distRoot)
   manifestWriter.write(config)
 
-  writeSitemap(config.url, distRoot)
+  writeSitemap(config.url, distRoot, fragmentDirs)
 
   writeApiCatalog(config.url, distRoot)
 

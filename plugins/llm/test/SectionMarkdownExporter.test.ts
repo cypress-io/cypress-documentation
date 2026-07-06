@@ -33,7 +33,7 @@ function runExport(body: string, relFromDocs = 'app/references/migration-guide.m
   const exportRoot = makeTempDir()
   const exporter = new SectionMarkdownExporter(exportRoot)
   const result = exporter.exportFile({ relFromDocs, metadata: METADATA, bodyWithHeading: body })
-  return { exportRoot, result }
+  return { exportRoot, exporter, result }
 }
 
 function readSection(exportRoot: string, relPath: string) {
@@ -127,6 +127,22 @@ describe('h2 splitting', () => {
     expect(
       fs.existsSync(path.join(exportRoot, 'markdown', 'app/references/migration-guide')),
     ).toBe(false)
+  })
+})
+
+// ---------------------------------------------------------------------------
+// fragment dir tracking
+// ---------------------------------------------------------------------------
+
+describe('getFragmentDirs', () => {
+  test('records the doc id of each page that produced sections', () => {
+    const { exporter } = runExport(['# T', '', '## One', '', 'Content.'].join('\n'))
+    expect([...exporter.getFragmentDirs()]).toEqual(['app/references/migration-guide'])
+  })
+
+  test('does not record pages without h2 sections', () => {
+    const { exporter } = runExport(['# Title only', '', 'Body.'].join('\n'))
+    expect(exporter.getFragmentDirs().size).toBe(0)
   })
 })
 

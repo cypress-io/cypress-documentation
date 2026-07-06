@@ -34,9 +34,19 @@ type SectionSlice = {
 export class SectionMarkdownExporter {
   private readonly markdownRoot: string
   private readonly markdownProcessor = unified().use(remarkParse).use(remarkGfm)
+  private readonly fragmentDirs = new Set<string>()
 
   constructor(exportRoot: string) {
     this.markdownRoot = path.join(exportRoot, 'markdown')
+  }
+
+  /**
+   * Doc ids (posix paths relative to the markdown root) that received a
+   * fragment directory. Used to keep fragment files out of the directory
+   * indexes and the LLM sitemap, which stay page-level maps.
+   */
+  getFragmentDirs(): ReadonlySet<string> {
+    return this.fragmentDirs
   }
 
   exportFile(params: {
@@ -53,6 +63,7 @@ export class SectionMarkdownExporter {
 
     const sectionDir = path.join(this.markdownRoot, docId)
     ensureDir(sectionDir)
+    this.fragmentDirs.add(toPosixPath(docId))
     const pagePath = `/llm/markdown/${toPosixPath(docId)}.md`
 
     for (const section of sections) {
