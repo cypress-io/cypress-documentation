@@ -1,6 +1,6 @@
 ---
 title: 'How to Use Cypress Plugins: Install, Register, and Verify'
-description: 'Install Cypress plugins from npm, register them in setupNodeEvents or your support file, vet community plugins for security, and troubleshoot plugin issues.'
+description: 'Install Cypress plugins from npm, register them in setupNodeEvents or your support file, and troubleshoot plugin issues. Includes a @cypress/grep example.'
 sidebar_label: 'How to use Plugins'
 sidebar_position: 10
 ---
@@ -19,7 +19,7 @@ your project in a couple of minutes and update it independently of Cypress.
 <WhatYoullLearn />
 
 - Where to find plugins and what they can do
-- How to evaluate a community plugin before adding it to your project
+- Where plugin code runs: in Node, in the browser, or both
 - How to install a plugin with npm, Yarn, pnpm, or Bun
 - Where to register a plugin: `setupNodeEvents`, your support file, or both
 - How to verify a plugin works and fix common setup mistakes
@@ -39,32 +39,12 @@ and how recently it was updated, so you can pick one with confidence.
 ## Security considerations
 
 A plugin is a regular npm dependency, so the habits you already use for other
-packages apply here too. The badges on the
-[list of plugins](/app/plugins/plugins-list) are a good starting point:
-**Official** plugins are built and maintained by the Cypress team, **Verified**
-plugins are community-owned and reviewed by Cypress, and **Community** plugins
-are published independently, so it's worth a closer look before adopting one.
+packages apply here too.
 
 It also helps to know where plugin code runs. Code registered in
 `setupNodeEvents` runs in Node, where it can access the file system, the
 network, and environment variables. Code registered in your support file runs
-in the browser alongside your tests and your application under test. Neither is
-cause for concern with a well-maintained plugin; it's simply more reach than a
-typical utility library, which makes the usual dependency habits worth
-following:
-
-- **Check the maintenance signals** on the list: how recently the plugin was
-  updated, and whether it supports your Cypress version. An actively
-  maintained plugin will keep receiving fixes.
-- **Skim the source.** Most plugins are small, so a few minutes of reading
-  shows you what the plugin does with your configuration and environment.
-- **Pin the version** with a lockfile and review changes when you update, the
-  same way you handle other dependencies.
-- **Include plugins in your dependency scanning**, such as `npm audit` or an
-  automated tool like Dependabot, alongside your other dev dependencies.
-- **Give test runs only the environment variables they need.** This is good
-  practice for any CI job, and it keeps your configuration tidy as your suite
-  grows.
+in the browser alongside your tests and your application under test.
 
 ## Installing a plugin
 
