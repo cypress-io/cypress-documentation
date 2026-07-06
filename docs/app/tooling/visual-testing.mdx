@@ -159,6 +159,11 @@ Actively maintained plugins include:
 - [Cypress Visual Regression](https://github.com/cypress-visual-regression/cypress-visual-regression)
 - [Visual Regression Diff](https://github.com/FRSOURCE/cypress-plugin-visual-regression-diff)
 
+If you want an open source option with a review workflow,
+[Pixeleye](https://pixeleye.io/docs/integrations/cypress) is a self-hostable
+visual review platform with a Cypress integration - a middle ground between
+local pixel diffing and a commercial service.
+
 See the Visual Testing section of our [plugins list](/app/plugins/plugins-list)
 for the full set.
 
@@ -390,6 +395,14 @@ Happo's infrastructure.
 
 See [Happo's Cypress documentation](https://docs.happo.io/docs/cypress).
 
+### LambdaTest SmartUI
+
+LambdaTest SmartUI captures screenshots during your Cypress tests via its SDK
+and compares them across browsers and resolutions on LambdaTest's cloud, with
+configurable comparison options and a web dashboard for reviewing changes.
+
+See [SmartUI's Cypress documentation](https://www.lambdatest.com/support/docs/smartui-cypress-sdk/).
+
 ### Percy
 
 Percy (from BrowserStack) captures DOM snapshots during your Cypress tests via
@@ -398,6 +411,15 @@ responsive widths in Percy's cloud, with a review and approval workflow for
 visual changes.
 
 See [Percy's Cypress documentation](https://docs.percy.io/docs/cypress).
+
+### Sauce Labs Visual
+
+Sauce Labs Visual adds visual testing to your Cypress tests through an
+official plugin, with automatic baseline creation, region ignoring, and DOM
+capture, reviewed on the Sauce Labs platform. Note that snapshots are only
+captured during `cypress run`, not `cypress open`.
+
+See [Sauce Labs' Cypress documentation](https://docs.saucelabs.com/visual-testing/integrations/cypress/).
 
 ### SmartBear VisualTest
 
