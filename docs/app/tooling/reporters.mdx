@@ -88,9 +88,7 @@ You would specify the path to your custom reporter in either of the ways below.
 
 #### Command Line
 
-```shell
-npx cypress run --reporter reporters/custom.js
-```
+<CypressCommandTabs command="run --reporter reporters/custom.js" />
 
 ### Installed via npm
 
@@ -110,9 +108,7 @@ When using custom reporters via npm, specify the package name.
 
 #### Command line
 
-```shell
-npx cypress run --reporter mochawesome
-```
+<CypressCommandTabs command="run --reporter mochawesome" />
 
 ## Reporter Options
 
@@ -145,10 +141,7 @@ into an XML file.
 
 ### Command line
 
-```shell
-npx cypress run --reporter junit \
-  --reporter-options "mochaFile=results/my-test-output.xml,toConsole=true"
-```
+<CypressCommandTabs command='run --reporter junit --reporter-options "mochaFile=results/my-test-output.xml,toConsole=true"' />
 
 :::caution
 
@@ -191,10 +184,7 @@ can use the
 
 ### Command line
 
-```shell
-npx cypress run --reporter junit \
-  --reporter-options "mochaFile=results/my-test-output-[hash].xml"
-```
+<CypressCommandTabs command='run --reporter junit --reporter-options "mochaFile=results/my-test-output-[hash].xml"' />
 
 ## Multiple reporters
 
@@ -223,9 +213,10 @@ We need to install additional dependencies:
   the actual junit reporter, as we cannot use the `junit` reporter that comes
   with Cypress
 
-```shell
-npm install cypress-multi-reporters mocha-junit-reporter --save-dev
-```
+<PackageManagerTabs
+  install="cypress-multi-reporters mocha-junit-reporter"
+  dev
+/>
 
 Specify your reporter and reporterOptions in your Cypress configuration or via
 the [command line](/app/references/command-line).
@@ -247,10 +238,7 @@ the [command line](/app/references/command-line).
 
 #### Command line
 
-```shell
-npx cypress run --reporter cypress-multi-reporters \
-  --reporter-options configFile=reporter-config.json
-```
+<CypressCommandTabs command="run --reporter cypress-multi-reporters --reporter-options configFile=reporter-config.json" />
 
 Then add the separate `reporter-config.json` file (defined in your
 configuration) to enable `spec` and `junit` reporters and direct the `junit`
@@ -305,9 +293,10 @@ JSON file per test file, and then combine all JSON reports into a single report.
 
 We need to install some additional dependencies.
 
-```shell
-npm install mochawesome mochawesome-merge mochawesome-report-generator --save-dev
-```
+<PackageManagerTabs
+  install="mochawesome mochawesome-merge mochawesome-report-generator"
+  dev
+/>
 
 We need to configure the reporter in your
 [Cypress configuration](/app/references/configuration) to skip the HTML
@@ -334,27 +323,20 @@ folder.
 
 #### Command line
 
-```shell
-npx cypress run --reporter mochawesome \
-  --reporter-options reportDir="cypress/results",overwrite=false,html=false,json=true
-```
+<CypressCommandTabs command='run --reporter mochawesome --reporter-options reportDir="cypress/results",overwrite=false,html=false,json=true' />
 
 Our run will generate files
 `cypress/results/mochawesome.json, cypress/results/mochawesome_001.json, ...`.
 Then we can combine them using the
 [mochawesome-merge](https://github.com/antontelesh/mochawesome-merge) utility.
 
-```shell
-npx mochawesome-merge cypress/results/*.json -o mochawesome.json
-```
+<PackageManagerTabs run="mochawesome-merge cypress/results/*.json -o mochawesome.json" />
 
 We can now generate a combined HTML report from the `mochawesome.json` file
 using the
 [https://github.com/adamgruber/mochawesome-report-generator](https://github.com/adamgruber/mochawesome-report-generator):
 
-```shell
-npx marge mochawesome.json
-```
+<PackageManagerTabs run="marge mochawesome.json" />
 
 It generates the beautiful standalone HTML report file
 `mochawesome-report/mochawesome.html` shown below. As you can see all test

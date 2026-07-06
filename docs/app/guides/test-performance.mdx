@@ -145,15 +145,14 @@ If you're running tests in parallel and your total run time isn't improving as e
 
 Run Cypress App with debug logs enabled to print CPU and memory consumption every 10 seconds. If CPU is consistently above 100%, the machine is saturated. Most CI providers also expose utilization graphs in their job UI.
 
-```shell
-DEBUG=cypress:server:util:process_profiler npx cypress run
-```
+<CypressCommandTabs
+  env="DEBUG=cypress:server:util:process_profiler"
+  command="run"
+/>
 
 ### Available system resources
 
-```shell
-npx cypress info
-```
+<CypressCommandTabs command="info" />
 
 ```shell
 node -p 'os.cpus()'
@@ -1014,9 +1013,7 @@ Not every CI event warrants a full test suite run. A push to a feature branch ne
 
 #### Installation and setup
 
-```shell
-npm install --save-dev @cypress/grep
-```
+<PackageManagerTabs install="@cypress/grep" dev />
 
 Register the plugin in your support file:
 
@@ -1066,16 +1063,17 @@ Common tagging strategies:
 
 #### Run tagged subsets in CI
 
-```shell
-# PR check: only smoke and critical tests
-npx cypress run --expose grepTags="@smoke @critical",grepFilterSpecs=true,grepOmitFiltered=true
+PR check: only smoke and critical tests.
 
-# Pre-merge: full suite minus known slow tests
-npx cypress run --expose grepTags="-@slow",grepFilterSpecs=true
+<CypressCommandTabs command='run --expose grepTags="@smoke @critical",grepFilterSpecs=true,grepOmitFiltered=true' />
 
-# Nightly: everything
-npx cypress run
-```
+Pre-merge: full suite minus known slow tests.
+
+<CypressCommandTabs command='run --expose grepTags="-@slow",grepFilterSpecs=true' />
+
+Nightly: everything.
+
+<CypressCommandTabs command="run" />
 
 #### `grepFilterSpecs`: the key performance option
 
