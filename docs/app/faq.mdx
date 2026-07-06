@@ -57,6 +57,29 @@ In addition to the App, Cypress offers solutions like the [Cypress Cloud](/cloud
 
 You can see our evaluation of Cypress against some frameworks in our [Migrating from Playwright](/app/guides/migration/playwright-to-cypress), [Migrating from Selenium](/app/guides/migration/selenium-to-cypress), and [Migrating from Protractor](/app/guides/migration/protractor-to-cypress) guides.
 
+### <Icon name="angle-right" /> Does Cypress use Jest, Jasmine, or Mocha?
+
+Cypress is not built on Jest or Jasmine. It bundles
+[Mocha](/app/references/bundled-libraries#Mocha) as its test framework and
+[Chai](/app/references/bundled-libraries#Chai) for assertions, so tests are
+structured with `describe()` and `it()`, and assertions use Chai's globally
+available `expect` and `assert` (or the [`.should()`](/api/commands/should)
+command). Jest-style `expect` matchers aren't available by default. You can
+still run Jest for unit tests in the same project; if you use TypeScript, see
+[Clashing types with Jest](/app/tooling/typescript-support#Clashing-types-with-Jest)
+to keep the two runners' global types from conflicting.
+
+### <Icon name="angle-right" /> Can I use a different assertion library with Cypress?
+
+Cypress assertions are built on
+[Chai](/app/references/bundled-libraries#Chai), and Chai can't be swapped for
+another assertion library. It is extensible, though: you can install any Chai
+plugin and register it with `chai.use()` in your
+[support file](/app/core-concepts/writing-and-organizing-tests#Support-file) to
+add new assertions, which then work in both `expect()` and
+[`.should()`](/api/commands/should). See
+[Adding New Assertions](/app/references/assertions#Adding-New-Assertions).
+
 ### <Icon name="angle-right" /> Do you support X language or X framework?
 
 Any and all. Ruby, Node, C#, PHP - none of that matters. Cypress tests anything
