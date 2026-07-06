@@ -1,6 +1,6 @@
 ---
 title: 'How to Use Cypress Plugins: Install, Register, and Verify'
-description: 'Install Cypress plugins from npm, register them in setupNodeEvents or your support file, and verify they work. Includes a full @cypress/grep setup example.'
+description: 'Install Cypress plugins from npm, register them in setupNodeEvents or your support file, vet community plugins for security, and troubleshoot plugin issues.'
 sidebar_label: 'How to use Plugins'
 sidebar_position: 10
 ---
@@ -9,9 +9,9 @@ sidebar_position: 10
 
 # How to Use Cypress Plugins
 
-Plugins add capabilities that don't ship with Cypress itself: accessibility and
-visual testing, custom commands, code coverage, richer reporters, framework
-integrations, and more. They're versioned npm packages, so you can add one to
+Plugins add capabilities that don't ship with Cypress itself: visual testing,
+custom commands, code coverage, richer reporters, framework integrations, and
+more. They're versioned npm packages, so you can add one to
 your project in a couple of minutes and update it independently of Cypress.
 
 :::info
@@ -19,9 +19,12 @@ your project in a couple of minutes and update it independently of Cypress.
 <WhatYoullLearn />
 
 - Where to find plugins and what they can do
+- How to evaluate a community plugin before adding it to your project
 - How to install a plugin with npm, Yarn, pnpm, or Bun
 - Where to register a plugin: `setupNodeEvents`, your support file, or both
 - How to verify a plugin works and fix common setup mistakes
+- How to tell whether a bug belongs to a plugin or to Cypress, and where to
+  report it
 
 :::
 
@@ -29,9 +32,40 @@ your project in a couple of minutes and update it independently of Cypress.
 
 Browse the [list of plugins](/app/plugins/plugins-list) maintained by Cypress.
 It curates official and community plugins across categories like custom
-commands, visual testing, accessibility, network and API helpers, reporters,
-and CI integrations. Each entry shows its latest version, supported Cypress
-versions, and how recently it was updated, so you can pick one with confidence.
+commands, visual testing, network and API helpers, reporters, and CI
+integrations. Each entry shows its latest version, supported Cypress versions,
+and how recently it was updated, so you can pick one with confidence.
+
+## Security considerations
+
+A plugin is third-party code that runs with significant access, in two
+sensitive places:
+
+- Code registered in `setupNodeEvents` runs in Node with the same permissions
+  as Cypress itself: it can read and write files, make network requests, and
+  read environment variables, including any secrets available in CI.
+- Code registered in your support file runs in the browser alongside your
+  tests, with access to your application under test and any data your tests
+  handle, such as session cookies, tokens, and test account credentials.
+
+Cypress builds and maintains plugins with the **Official** badge on the
+[list of plugins](/app/plugins/plugins-list), and reviews those with the
+**Verified** badge. **Community** plugins are not reviewed by Cypress, and
+inclusion on the list is not a security endorsement. Before adding one, apply
+the same diligence you would to any other dependency:
+
+- **Check the maintenance signals** on the list: how recently it was updated,
+  and whether it supports your Cypress version. An abandoned plugin won't
+  receive security fixes.
+- **Review the source.** Most plugins are small. Look at what the plugin does
+  with your configuration, environment variables, and network access, and
+  check its own dependencies.
+- **Pin the version** with a lockfile and review changes when you update,
+  rather than floating on the latest release.
+- **Include plugins in your dependency scanning**, such as `npm audit` or an
+  automated tool like Dependabot, the same as your other dev dependencies.
+- **Limit what CI secrets can reach.** Only expose the environment variables a
+  test run actually needs, so a compromised dependency has less to steal.
 
 ## Installing a plugin
 
@@ -195,6 +229,36 @@ these checks:
   the [list of plugins](/app/plugins/plugins-list) with your installed Cypress
   version.
 
+## Plugin issue or Cypress issue?
+
+When something breaks in a project that uses plugins, isolate which side owns
+the problem before reporting it, so your issue lands where it can be fixed:
+
+1. **Read the error and stack trace.** A stack trace that points into the
+   plugin's package in `node_modules` is a strong signal the plugin is
+   involved.
+2. **Disable the plugin and run again.** Comment out its registration in
+   `setupNodeEvents` and your support file, then re-run the failing command or
+   test.
+3. **Report it where it reproduces:**
+   - If the problem still occurs with the plugin disabled, it isn't caused by
+     the plugin. Work through the
+     [troubleshooting guide](/app/references/troubleshooting), search
+     [existing Cypress issues](https://github.com/cypress-io/cypress/issues),
+     and if it's new,
+     [open an issue against Cypress](https://github.com/cypress-io/cypress/issues/new/choose)
+     with a reproducible example.
+   - If the problem only occurs with the plugin registered, report it on the
+     plugin's own repository, not the Cypress repository. Search its existing
+     issues first, and include your Cypress version, the plugin version, and a
+     minimal reproduction. The Cypress team doesn't maintain community plugins
+     and can't fix bugs in them.
+
+If the failure started right after a Cypress upgrade, first check that the
+plugin supports the new version. A compatibility gap is a plugin issue: the
+plugin's repository is the right place to report it, even though the Cypress
+upgrade surfaced it.
+
 ## Writing your own plugin
 
 Anyone can create and publish a plugin. If no existing plugin covers your use
@@ -213,3 +277,5 @@ so others can find it.
   `setupNodeEvents` and other options
 - [Writing and Organizing Tests](/app/core-concepts/writing-and-organizing-tests#Support-file):
   how the support file works
+- [Troubleshooting](/app/references/troubleshooting): isolate and report
+  problems in Cypress itself
