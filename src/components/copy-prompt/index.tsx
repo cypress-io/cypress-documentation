@@ -33,8 +33,10 @@ export default function CopyPrompt({
   useEffect(() => () => clearTimeout(resetTimeout.current), [])
 
   const copyPrompt = async () => {
+    let succeeded = false
     try {
       await navigator.clipboard.writeText(prompt)
+      succeeded = true
     } catch {
       // Clipboard API unavailable (e.g. insecure context); fall back to a
       // hidden textarea + execCommand copy.
@@ -45,8 +47,16 @@ export default function CopyPrompt({
       textarea.style.opacity = '0'
       document.body.appendChild(textarea)
       textarea.select()
-      document.execCommand('copy')
-      document.body.removeChild(textarea)
+      try {
+        succeeded = document.execCommand('copy')
+      } catch {
+        succeeded = false
+      } finally {
+        document.body.removeChild(textarea)
+      }
+    }
+    if (!succeeded) {
+      return
     }
     setCopied(true)
     clearTimeout(resetTimeout.current)
