@@ -75,6 +75,8 @@
   border-radius: 0.5rem;
   padding: 0.75rem 1rem;
   margin: 0.75rem 0 0;
+  /* preserve the prompt's line breaks so numbered steps stay readable */
+  white-space: pre-wrap;
   /* the docs URL has no natural break points */
   overflow-wrap: anywhere;
 }
