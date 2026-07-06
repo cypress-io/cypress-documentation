@@ -228,7 +228,10 @@ Recording tests allows you to:
 - Debug failures with [Test Replay](/cloud/features/test-replay), which
   captures the state of your application so you can inspect the DOM, network
   requests, and console logs at every step of the failed test.
-- Get the entire stack trace of failed tests.
+- Get the entire stack trace of failed tests, or hand that same failure
+  context to your AI coding agent through
+  [Cypress Cloud MCP](/cloud/integrations/cloud-mcp) so it can debug the
+  failing run for you.
 - View screenshots taken when tests fail and when using
   [`cy.screenshot()`](/api/commands/screenshot).
 - Detect and manage [flaky tests](/cloud/features/flaky-test-management) that
@@ -525,10 +528,11 @@ the Cypress configuration.
 
 **_Typical use cases would be modifying things like:_**
 
-- `CYPRESS_BASE_URL`
-- `CYPRESS_VIDEO`
-- `CYPRESS_VIDEO_COMPRESSION`
-- `CYPRESS_REPORTER`
+- `CYPRESS_BASE_URL` - point tests at a preview or staging deployment
+- `CYPRESS_REPORTER` - switch to a CI-friendly reporter like `junit`
+- `CYPRESS_DEFAULT_COMMAND_TIMEOUT` - allow more time on slower CI machines
+- `CYPRESS_VIEWPORT_WIDTH` and `CYPRESS_VIEWPORT_HEIGHT` - vary the screen
+  size per CI job
 
 The install-time variable
 [`CYPRESS_INSTALL_BINARY`](/app/references/advanced-installation#Download-URLs)
@@ -605,32 +609,46 @@ appropriate place.
 
 #### Custom Environment Variables
 
-You can also set custom environment variables for use in your tests. Prefix
-the variable with `CYPRESS_` in your CI environment:
+You can also set custom values for use in your tests. Which API you use
+depends on whether the value is sensitive.
+
+**_Private values: `cy.env()`_**
+
+For secrets like API tokens, set an OS environment variable prefixed with
+`CYPRESS_` using your CI provider's secret or masked variable settings:
 
 ```shell
-export CYPRESS_EXTERNAL_API_SERVER=https://corp.acme.co
+export CYPRESS_SERVICE_API_TOKEN=secret-token-123
 ```
 
-Cypress strips the prefix, and your tests can read the value with
-[`cy.env()`](/api/commands/env):
+Cypress strips the prefix, and your tests read the value with
+[`cy.env()`](/api/commands/env), which retrieves only the values you request
+without serializing them into browser state:
 
 ```javascript
-cy.env(['EXTERNAL_API_SERVER']).then(({ EXTERNAL_API_SERVER }) => {
+cy.env(['SERVICE_API_TOKEN']).then(({ SERVICE_API_TOKEN }) => {
   cy.request({
-    method: 'POST',
-    url: `${EXTERNAL_API_SERVER}/users/1`,
-    body: {
-      foo: 'bar',
-      baz: 'quux',
-    },
+    url: 'https://api.example.com/users',
+    headers: { Authorization: `Bearer ${SERVICE_API_TOKEN}` },
   })
 })
 ```
 
-For public, non-sensitive values that need synchronous access, you can instead
-pass them with the `--expose` CLI flag and read them with
-[`Cypress.expose()`](/api/cypress-api/expose).
+**_Public values: `Cypress.expose()`_**
+
+For non-sensitive configuration that is safe to appear in browser state, like
+feature flags or API versions, pass values with the `--expose` CLI flag:
+
+```shell
+npx cypress run --expose apiVersion=v2,featureFlag=true
+```
+
+and read them synchronously with
+[`Cypress.expose()`](/api/cypress-api/expose):
+
+```javascript
+const apiVersion = Cypress.expose('apiVersion') // => 'v2'
+```
 
 Refer to the dedicated
 [Environment Variables & Secrets guide](/app/guides/environment-variables) for more
