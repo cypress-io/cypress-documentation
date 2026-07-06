@@ -15,8 +15,7 @@ interface CopyPromptProps {
 
 const DEFAULT_TITLE = 'Do this migration with your AI assistant'
 const DEFAULT_SUBTEXT =
-  'Copies a ready-made prompt for Claude Code, Cursor, or Copilot. Paste it with your project open.'
-const COPIED_SUBTEXT = 'Paste into your AI tool with your project open.'
+  'Copies a ready-made prompt for Claude Code, Cursor, or Copilot.'
 
 /**
  * A copyable AI prompt used in guides to hand readers a ready-made prompt for
@@ -83,7 +82,7 @@ export default function CopyPrompt({
         />
         {title}
       </p>
-      <p className={s.subtext}>{copied ? COPIED_SUBTEXT : subtext}</p>
+      <p className={s.subtext}>{subtext}</p>
       <div className={s.actions}>
         <Button
           // variant/size are untyped until @cypress-design/constants-button
