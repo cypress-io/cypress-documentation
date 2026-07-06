@@ -38,34 +38,33 @@ and how recently it was updated, so you can pick one with confidence.
 
 ## Security considerations
 
-A plugin is third-party code that runs with significant access, in two
-sensitive places:
+A plugin is a regular npm dependency, so the habits you already use for other
+packages apply here too. The badges on the
+[list of plugins](/app/plugins/plugins-list) are a good starting point:
+**Official** plugins are built and maintained by the Cypress team, **Verified**
+plugins are community-owned and reviewed by Cypress, and **Community** plugins
+are published independently, so it's worth a closer look before adopting one.
 
-- Code registered in `setupNodeEvents` runs in Node with the same permissions
-  as Cypress itself: it can read and write files, make network requests, and
-  read environment variables, including any secrets available in CI.
-- Code registered in your support file runs in the browser alongside your
-  tests, with access to your application under test and any data your tests
-  handle, such as session cookies, tokens, and test account credentials.
+It also helps to know where plugin code runs. Code registered in
+`setupNodeEvents` runs in Node, where it can access the file system, the
+network, and environment variables. Code registered in your support file runs
+in the browser alongside your tests and your application under test. Neither is
+cause for concern with a well-maintained plugin; it's simply more reach than a
+typical utility library, which makes the usual dependency habits worth
+following:
 
-Cypress builds and maintains plugins with the **Official** badge on the
-[list of plugins](/app/plugins/plugins-list), and reviews those with the
-**Verified** badge. **Community** plugins are not reviewed by Cypress, and
-inclusion on the list is not a security endorsement. Before adding one, apply
-the same diligence you would to any other dependency:
-
-- **Check the maintenance signals** on the list: how recently it was updated,
-  and whether it supports your Cypress version. An abandoned plugin won't
-  receive security fixes.
-- **Review the source.** Most plugins are small. Look at what the plugin does
-  with your configuration, environment variables, and network access, and
-  check its own dependencies.
-- **Pin the version** with a lockfile and review changes when you update,
-  rather than floating on the latest release.
+- **Check the maintenance signals** on the list: how recently the plugin was
+  updated, and whether it supports your Cypress version. An actively
+  maintained plugin will keep receiving fixes.
+- **Skim the source.** Most plugins are small, so a few minutes of reading
+  shows you what the plugin does with your configuration and environment.
+- **Pin the version** with a lockfile and review changes when you update, the
+  same way you handle other dependencies.
 - **Include plugins in your dependency scanning**, such as `npm audit` or an
-  automated tool like Dependabot, the same as your other dev dependencies.
-- **Limit what CI secrets can reach.** Only expose the environment variables a
-  test run actually needs, so a compromised dependency has less to steal.
+  automated tool like Dependabot, alongside your other dev dependencies.
+- **Give test runs only the environment variables they need.** This is good
+  practice for any CI job, and it keeps your configuration tidy as your suite
+  grows.
 
 ## Installing a plugin
 
