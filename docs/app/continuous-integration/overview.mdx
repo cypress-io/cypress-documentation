@@ -88,6 +88,16 @@ executes, so your tests may try to visit your local server before it is ready.
 Instead of adding an arbitrary wait (like `sleep 20`), use a tool that waits
 for the server to respond.
 
+:::tip
+
+If you run your tests with the official
+[Cypress GitHub Action](https://github.com/cypress-io/github-action), its
+`start` and `wait-on` options boot and wait for your server without any extra
+packages. See our
+[GitHub Actions guide](/app/continuous-integration/github-actions).
+
+:::
+
 #### `start-server-and-test` module
 
 The [start-server-and-test](https://github.com/bahmutov/start-server-and-test)
@@ -193,6 +203,16 @@ However, if you're running this script locally you'll have to do a bit more
 work to collect the backgrounded PID and then kill it after `cypress run`.
 
 :::
+
+A general-purpose process runner like
+[concurrently](https://github.com/open-cli-tools/concurrently) can compose the
+same flow: start the server and a `wait-on`-gated test command together, kill
+the server when the tests finish (`-k`), and pass or fail based on the test
+command alone (`-s first`).
+
+```shell
+npx concurrently -k -s first "npm start" "npx wait-on http://localhost:8080 && npx cypress run"
+```
 
 ### Record tests
 
