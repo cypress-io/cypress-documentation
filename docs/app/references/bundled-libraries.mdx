@@ -43,6 +43,15 @@ version Cypress runs, and no version needs to be installed for Cypress to work.
 
 :::
 
+If you write your tests in TypeScript, note that Cypress also ships type
+definitions for these bundled globals. Projects that install `@types/chai` or
+`@types/jquery`, or that run Jest alongside Cypress, can end up with clashing
+global types. See
+[Configure tsconfig.json](/app/tooling/typescript-support#Configure-tsconfigjson)
+and
+[Clashing types with Jest](/app/tooling/typescript-support#Clashing-types-with-Jest)
+for the recommended setup.
+
 ## Mocha
 
 Cypress uses [Mocha](https://mochajs.org/)'s `bdd` interface to structure and
@@ -99,6 +108,13 @@ cy.get('[data-testid="greeting"]').should('contain', 'Jane')
 // explicit
 expect(user.name).to.equal('Jane')
 ```
+
+The bundled Chai is also extensible. Install any Chai plugin, register it with
+`chai.use()` in your
+[support file](/app/core-concepts/writing-and-organizing-tests#Support-file),
+and its assertions work in both `expect()` and `.should()`. See
+[Adding New Assertions](/app/references/assertions#Adding-New-Assertions) for
+details.
 
 See the full [list of available Chai assertions](/app/references/assertions#Chai).
 
