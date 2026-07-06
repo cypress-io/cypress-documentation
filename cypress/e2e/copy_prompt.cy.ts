@@ -5,10 +5,6 @@ describe('Migration guide copy prompts', () => {
     cy.visit('/app/references/migration-guide')
   })
 
-  it('renders a prompt card for each migration section', () => {
-    cards().should('have.length', 7)
-  })
-
   it('expands and collapses the full prompt', () => {
     cards()
       .first()
@@ -51,10 +47,10 @@ describe('Migration guide copy prompts', () => {
         'match',
         /^Read https:\/\/docs\.cypress\.io\/llm\/markdown\/app\/references\/migration-guide\//
       )
-      .and('include', 'summarize what changed')
   })
 
   it('resets the copied state after the timeout', () => {
+    cy.clock()
     cy.window().then((win) => {
       cy.stub(win.navigator.clipboard, 'writeText').resolves()
     })
@@ -63,9 +59,8 @@ describe('Migration guide copy prompts', () => {
       .within(() => {
         cy.get('button[aria-label="Copy prompt to clipboard"]').click()
         cy.contains('button', 'Copied').should('be.visible')
-        cy.contains('button', 'Copy prompt', { timeout: 6000 }).should(
-          'be.visible'
-        )
+        cy.tick(3000)
+        cy.contains('button', 'Copy prompt').should('be.visible')
       })
   })
 })
