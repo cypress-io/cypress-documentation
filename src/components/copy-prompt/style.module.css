@@ -1,20 +1,25 @@
 /*
- * Matches the site's code blocks, which use the same dark theme in both light
- * and dark color modes (--ifm-code-background-color is #282a36 everywhere).
+ * Surface matches the site's code blocks, which use the same dark theme in
+ * both light and dark color modes (--ifm-code-background-color). Spacing sits
+ * on the design system's 4px grid; text colors follow the "300 or lighter on
+ * dark surfaces" contrast rule.
  */
 .copyPrompt {
   background-color: var(--ifm-code-background-color);
-  border-radius: var(--ifm-global-radius, 0.5rem);
-  padding: 1.25rem 1.5rem;
+  /* 8px, on the 4px grid */
+  border-radius: 0.5rem;
+  /* smaller top/bottom than sides: line-height already adds vertical air */
+  padding: 1rem 1.5rem;
   margin-bottom: var(--ifm-leading);
 }
 
 .promptText {
   font-family: var(--ifm-font-family-monospace);
+  /* 14px / 20px: supporting text on the type scale, line-height on the grid */
   font-size: 0.875rem;
-  line-height: 1.7;
+  line-height: 1.25rem;
   color: var(--ifm-color-gray-100);
-  margin: 0 0 1rem;
+  margin: 0 0 0.75rem;
   /* Show a two-line preview ending in an ellipsis; the full text stays in
      the DOM and is what the copy button copies. */
   display: -webkit-box;
@@ -24,37 +29,11 @@
   overflow: hidden;
 }
 
-.copyButton {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-family: var(--ifm-font-family-monospace);
-  font-size: 0.875rem;
-  color: var(--ifm-color-white);
-  background-color: var(--ifm-code-background-color-light);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 0.375rem;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-  transition:
-    background-color 0.2s,
-    border-color 0.2s;
-}
-
-.copyButton:hover,
-.copyButton:focus-visible {
-  background-color: rgba(255, 255, 255, 0.15);
-  border-color: rgba(255, 255, 255, 0.4);
-}
-
-.copyIcon {
-  font-size: 0.875rem;
-}
-
 .hint {
-  font-size: 0.8rem;
-  line-height: 1.5;
-  color: var(--ifm-color-gray-400);
+  /* 12px / 16px: fine print, line-height on the grid */
+  font-size: 0.75rem;
+  line-height: 1rem;
+  color: var(--ifm-color-gray-300);
   margin: 0.75rem 0 0;
 }
 
