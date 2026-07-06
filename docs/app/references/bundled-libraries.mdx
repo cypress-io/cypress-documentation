@@ -1,6 +1,6 @@
 ---
-title: 'Bundled libraries in Cypress'
-description: 'Open source testing libraries bundled with Cypress: Mocha, Chai, Sinon, and more'
+title: 'Bundled Libraries in Cypress'
+description: 'Cypress bundles Mocha, Chai, Chai-jQuery, Sinon, Sinon-Chai, Lodash, jQuery, and more, so you can write tests immediately with no extra installation or configuration.'
 sidebar_label: 'Bundled Libraries'
 ---
 
@@ -8,127 +8,181 @@ sidebar_label: 'Bundled Libraries'
 
 # Bundled Libraries
 
+Cypress ships with a set of proven open source testing libraries built in:
+[Mocha](https://mochajs.org/) structures your tests,
+[Chai](https://www.chaijs.com/) powers your assertions, and
+[Sinon](https://sinonjs.org/) provides spies and stubs, alongside utility
+libraries like [Lodash](https://lodash.com/) and [jQuery](https://jquery.com/).
+You don't install, import, or configure any of them. They're bundled inside
+Cypress and ready to use in every test.
+
+If you've written JavaScript tests before, these tools will feel familiar, and
+what you already know about them carries over directly to Cypress.
+
+## What's included
+
+| Library                         | What it does                        | How you use it in Cypress                                                                                                                        |
+| ------------------------------- | ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| [Mocha](#Mocha)                 | Test framework and runner syntax    | `describe()`, `it()`, `beforeEach()`, and other hooks                                                                                            |
+| [Chai](#Chai)                   | Assertion library                   | `expect()`, `assert()`, and [`.should()`](/api/commands/should)                                                                                  |
+| [Chai-jQuery](#Chai-jQuery)     | DOM-specific assertions             | Chainers like `have.class` and `be.visible` on DOM subjects                                                                                      |
+| [Sinon](#Sinon)                 | Spies, stubs, and fake timers       | [`cy.spy()`](/api/commands/spy), [`cy.stub()`](/api/commands/stub), [`cy.clock()`](/api/commands/clock), [`Cypress.sinon`](/api/utilities/sinon) |
+| [Sinon-Chai](#Sinon-Chai)       | Assertions on spies and stubs       | Chainers like `have.been.calledOnce`                                                                                                             |
+| [Lodash](#Utility-libraries)    | General-purpose utility functions   | [`Cypress._`](/api/utilities/_)                                                                                                                  |
+| [jQuery](#Utility-libraries)    | DOM traversal and manipulation      | [`Cypress.$`](/api/utilities/$)                                                                                                                  |
+| [minimatch](#Utility-libraries) | Glob pattern matching               | [`Cypress.minimatch`](/api/utilities/minimatch)                                                                                                  |
+| [blob-util](#Utility-libraries) | Blob and base64 conversion          | [`Cypress.Blob`](/api/utilities/blob)                                                                                                            |
+| [Buffer](#Utility-libraries)    | Binary data handling in the browser | [`Cypress.Buffer`](/api/utilities/buffer)                                                                                                        |
+| [Bluebird](#Utility-libraries)  | Promise library                     | [`Cypress.Promise`](/api/utilities/promise)                                                                                                      |
+
 :::info
 
-Cypress relies on many open source testing libraries to lend
-stability and familiarity to the platform from the get-go. If you've been
-testing in JavaScript, you'll recognize many old friends in this list.
+Cypress always uses its own bundled versions of these libraries. Installing a
+different version of Mocha, Chai, or Sinon in your project won't change the
+version Cypress runs, and no version needs to be installed for Cypress to work.
 
 :::
 
 ## Mocha
 
-<Icon name="github" url="http://mochajs.org/" />
+Cypress uses [Mocha](https://mochajs.org/)'s `bdd` interface to structure and
+run your tests. Every test you write, whether end-to-end or component, sits on
+the harness Mocha provides:
 
-Cypress has adopted Mocha's `bdd` syntax, which fits perfectly with both
-integration and unit testing. All of the tests you'll be writing sit on the
-fundamental harness Mocha provides, namely:
+- [`describe()`](https://mochajs.org/#bdd)
+- [`context()`](https://mochajs.org/#bdd)
+- [`it()`](https://mochajs.org/#bdd)
+- [`before()`](https://mochajs.org/#hooks)
+- [`beforeEach()`](https://mochajs.org/#hooks)
+- [`afterEach()`](https://mochajs.org/#hooks)
+- [`after()`](https://mochajs.org/#hooks)
+- [`.only()`](https://mochajs.org/#exclusive-tests)
+- [`.skip()`](https://mochajs.org/#inclusive-tests)
 
-- [`describe()`](http://mochajs.org/#bdd)
-- [`context()`](http://mochajs.org/#bdd)
-- [`it()`](http://mochajs.org/#bdd)
-- [`before()`](http://mochajs.org/#hooks)
-- [`beforeEach()`](http://mochajs.org/#hooks)
-- [`afterEach()`](http://mochajs.org/#hooks)
-- [`after()`](http://mochajs.org/#hooks)
-- [`.only()`](http://mochajs.org/#exclusive-tests)
-- [`.skip()`](http://mochajs.org/#exclusive-tests)
+```javascript
+describe('Checkout', () => {
+  beforeEach(() => {
+    cy.visit('/cart')
+  })
 
-Additionally, Mocha gives us excellent
-[`async` support](http://mochajs.org/#asynchronous-code). Cypress has extended
-Mocha, sanding off the rough edges, weird edge cases, bugs, and error messages.
-These fixes are all completely transparent.
+  it('completes an order', () => {
+    // test body
+  })
+})
+```
 
-:::info
+Cypress extends Mocha under the hood, smoothing over edge cases and improving
+error messages. These changes are transparent: you write standard Mocha syntax,
+and Cypress handles the rest.
 
-[Check out our guide to writing and organizing tests.](/app/core-concepts/writing-and-organizing-tests)
-
-:::
+Read our guide on
+[writing and organizing tests](/app/core-concepts/writing-and-organizing-tests)
+for how to structure specs with Mocha's syntax.
 
 ## Chai
 
-<Icon name="github" url="http://chaijs.com/" />
+While Mocha structures your tests, [Chai](https://www.chaijs.com/) gives you
+readable assertions with clear error messages. Every assertion in Cypress is
+built on Chai, and you can use it two ways:
 
-While Mocha provides us a framework to structure our tests, Chai gives us the
-ability to easily write assertions. Chai gives us readable assertions with
-excellent error messages. Cypress extends this, fixes several common pitfalls,
-and wraps Chai's DSL using
-[subjects](/app/core-concepts/introduction-to-cypress#Assertions) and the
-[`.should()`](/api/commands/should) command.
+- **Implicitly**, by chaining [`.should()`](/api/commands/should) or
+  [`.and()`](/api/commands/and) off a Cypress command. Cypress applies the
+  Chai assertion to the command's
+  [subject](/app/core-concepts/introduction-to-cypress#Assertions) and retries
+  it until it passes or times out.
+- **Explicitly**, with the globally available `expect` and `assert` functions.
 
-:::note
+```javascript
+// implicit, retried automatically
+cy.get('[data-testid="greeting"]').should('contain', 'Jane')
 
-<Icon
-  name="chevron-right"
-  url="/app/references/assertions#Chai"
-  callout="List of available Chai Assertions"
-/>
+// explicit
+expect(user.name).to.equal('Jane')
+```
 
-:::
+See the full [list of available Chai assertions](/app/references/assertions#Chai).
 
 ## Chai-jQuery
 
-<Icon name="github" url="https://github.com/chaijs/chai-jquery" />
+Most end-to-end assertions are about the DOM. Cypress bundles
+[Chai-jQuery](https://github.com/chaijs/chai-jquery), which extends Chai with
+jQuery-specific chainers, so you can assert directly on the elements your
+commands yield:
 
-When writing integration tests, you will likely work a lot with the DOM. Cypress
-brings in Chai-jQuery, which automatically extends Chai with specific jQuery
-chainer methods.
+```javascript
+cy.get('[data-testid="submit"]').should('have.class', 'active')
+cy.get('[data-testid="modal"]').should('be.visible')
+```
 
-:::note
+See the full
+[list of available Chai-jQuery assertions](/app/references/assertions#Chai-jQuery).
 
-<Icon
-  name="chevron-right"
-  url="/app/references/assertions#Chai-jQuery"
-  callout="List of available Chai-jQuery Assertions"
-/>
+## Sinon
 
-:::
+When you need to verify or control how functions behave, Cypress provides
+[Sinon](https://sinonjs.org/)'s test doubles through built-in commands:
 
-## Sinon.js
+- [`cy.spy()`](/api/commands/spy) wraps a function to record its calls without
+  changing its behavior.
+- [`cy.stub()`](/api/commands/stub) replaces a function and controls its
+  behavior.
+- [`cy.clock()`](/api/commands/clock) and [`cy.tick()`](/api/commands/tick)
+  control time in your application using Sinon's fake timers.
 
-<Icon name="github" url="https://github.com/sinonjs/sinon" />
+Cypress also exposes the full library as
+[`Cypress.sinon`](/api/utilities/sinon), so Sinon's matchers and other APIs are
+available anywhere in your tests.
 
-When writing unit tests, or even in integration-like tests, you often need to
-ability to stub and spy methods. Cypress includes two methods,
-[`cy.stub()`](/api/commands/stub) and [`cy.spy()`](/api/commands/spy) that
-return Sinon stubs and spies, respectively.
-
-Cypress also exposes a utility so that `sinon` can be called anywhere inside of
-your tests using [`Cypress.sinon`](/api/utilities/sinon).
-
-:::info
-
-[Check out our guide for working with spies, stubs, and clocks.](/app/guides/stubs-spies-and-clocks)
-
-:::
+Read our guide on
+[stubs, spies, and clocks](/app/guides/stubs-spies-and-clocks) for patterns and
+examples.
 
 ## Sinon-Chai
 
-<Icon name="github" url="https://github.com/cypress-io/sinon-chai" />
+To assert on spies and stubs with the same `.should()` syntax you use
+everywhere else, Cypress bundles
+[Sinon-Chai](https://github.com/cypress-io/sinon-chai), which extends Chai with
+Sinon-specific chainers:
 
-When working with `stubs` or `spies` you'll regularly want to use those when
-writing Chai assertions. Cypress bundles in Sinon-Chai which extends Chai
-allowing you to [write assertions](https://github.com/cypress-io/sinon-chai)
-about `stubs` and `spies`.
+```javascript
+const stub = cy.stub().as('alert')
 
-:::note
+cy.on('window:alert', stub)
+cy.get('[data-testid="delete"]').click()
+cy.get('@alert').should('have.been.calledOnce')
+```
 
-<Icon
-  name="chevron-right"
-  url="/app/references/assertions#Sinon-Chai"
-  callout="List of available Sinon-Chai Assertions"
-/>
+See the full
+[list of available Sinon-Chai assertions](/app/references/assertions#Sinon-Chai).
 
-:::
+## Utility libraries
 
-## Other Library Utilities
+Cypress also bundles these libraries on the `Cypress` object. They're available
+anywhere in your tests, with no imports required:
 
-Cypress also bundles the following tools on the `Cypress` object. These can be
-used anywhere inside of your tests.
+- [`Cypress._`](/api/utilities/_): [Lodash](https://lodash.com/), for working
+  with arrays, objects, and data transformations.
+- [`Cypress.$`](/api/utilities/$): [jQuery](https://jquery.com/), for DOM
+  traversal outside of Cypress commands. DOM commands like
+  [`cy.get()`](/api/commands/get) also yield jQuery objects.
+- [`Cypress.minimatch`](/api/utilities/minimatch):
+  [minimatch](https://github.com/isaacs/minimatch), for testing glob patterns
+  against URLs or paths.
+- [`Cypress.Blob`](/api/utilities/blob):
+  [blob-util](https://github.com/nolanlawson/blob-util), for converting between
+  blobs, base64 strings, and other binary formats.
+- [`Cypress.Buffer`](/api/utilities/buffer): a
+  [Buffer polyfill](https://github.com/feross/buffer) for working with binary
+  data in the browser, such as file uploads.
+- [`Cypress.Promise`](/api/utilities/promise):
+  [Bluebird](https://github.com/petkaantonov/bluebird), for creating and
+  managing promises inside your tests.
 
-- [`Cypress._`](/api/utilities/_) (lodash)
-- [`Cypress.$`](/api/utilities/$) (jQuery)
-- [`Cypress.minimatch`](/api/utilities/minimatch) (minimatch.js)
-- [`Cypress.Blob`](/api/utilities/blob) (Blob utils)
-- [`Cypress.Buffer`](/api/utilities/buffer) (Buffer utils)
-- [`Cypress.Promise`](/api/utilities/promise) (Bluebird)
+## See also
+
+- [Assertions reference](/app/references/assertions): every Chai, Chai-jQuery,
+  and Sinon-Chai assertion available in Cypress
+- [Introduction to Cypress](/app/core-concepts/introduction-to-cypress)
+- [Writing and Organizing Tests](/app/core-concepts/writing-and-organizing-tests)
+- [Stubs, Spies, and Clocks](/app/guides/stubs-spies-and-clocks)
+- [Troubleshooting](/app/references/troubleshooting)
