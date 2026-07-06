@@ -8,7 +8,7 @@
 
 .copyPrompt p.title {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 0.5rem;
   font-size: 1rem;
   line-height: 1.5rem;
@@ -20,6 +20,8 @@
 .sparkle {
   color: var(--ifm-color-indigo-500);
   flex-shrink: 0;
+  /* centers the 16px icon on the title's 24px first line */
+  margin-top: 0.25rem;
 }
 
 .copyPrompt p.subtext {
