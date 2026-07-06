@@ -55,8 +55,8 @@ export default function CopyPrompt({
       textarea.style.position = 'fixed'
       textarea.style.opacity = '0'
       document.body.appendChild(textarea)
-      textarea.select()
       try {
+        textarea.select()
         succeeded = document.execCommand('copy')
       } catch {
         succeeded = false
