@@ -1,6 +1,6 @@
 ---
 title: 'Visual testing in Cypress'
-description: 'Learn how visual testing catches appearance regressions that functional tests miss, which visual testing plugins and services work with Cypress, and best practices for reliable visual tests.'
+description: 'Learn how visual testing catches appearance regressions that functional tests miss, how to choose between visual testing plugins and services, and how to write reliable visual tests.'
 sidebar_label: 'Visual Testing'
 ---
 
@@ -14,9 +14,9 @@ sidebar_label: 'Visual Testing'
 
 - Why visual testing catches bugs that functional tests miss
 - How visual testing works: baselines, diffs, and review
-- The open source plugins and commercial services that add visual testing to
-  Cypress
-- Best practices for writing stable, reliable visual tests
+- How to choose between open source plugins and commercial services
+- How to write reliable visual tests and what to snapshot
+- The commercial services with official Cypress integrations
 
 :::
 
@@ -123,7 +123,21 @@ Cloud to learn more.
 
 ## Choosing a visual testing solution
 
-Visual testing tools for Cypress fall into two broad categories.
+Visual testing tools for Cypress fall into two broad categories: open source
+plugins that compare images in your own infrastructure, and commercial services
+that handle comparison and review in their cloud.
+
+|                                         | Open source plugins                                    | Commercial services                              |
+| --------------------------------------- | ------------------------------------------------------ | ------------------------------------------------ |
+| **Cost**                                | Free                                                   | Paid subscription                                |
+| **Image comparison**                    | Pixel-by-pixel, on your machine or in CI               | Rendered and compared in the service's cloud     |
+| **Baseline management**                 | Image files you store and update, usually in your repo | Managed by the service with an approval workflow |
+| **Reviewing changes**                   | Diff images from local runs or CI artifacts            | Web dashboard with pull request integration      |
+| **Cross-browser & responsive coverage** | One environment per configured run                     | Many browsers and viewport widths per snapshot   |
+| **Rendering consistency**               | Your responsibility (Docker, pinned browsers)          | Handled by the service's infrastructure          |
+
+Whichever you choose, the practices in
+[Writing reliable visual tests](#Writing-reliable-visual-tests) below apply.
 
 ### Open source plugins
 
@@ -179,73 +193,20 @@ These services solve the hardest operational problems of visual testing -
 baseline management, cross-browser rendering, flake from environment
 differences, and team review - in exchange for a subscription.
 
-The following services provide official Cypress integrations:
+The services with official Cypress integrations are described in
+[Visual testing services](#Visual-testing-services) below.
 
-#### Applitools
-
-Applitools Eyes uses AI-assisted comparison ("Visual AI") rather than strict
-pixel diffing, which reduces false positives from anti-aliasing and minor
-rendering shifts. It supports end-to-end and component tests, cross-browser
-rendering via the Ultrafast Grid, and root cause analysis of visual changes.
-
-See [Applitools' Cypress documentation](https://applitools.com/tutorials/sdks/cypress/quickstart/getting-started).
-
-#### Argos
-
-Argos captures screenshots during your Cypress runs and provides a review
-workflow with CI and pull request integration to detect and approve visual
-changes.
-
-See [Argos' Cypress documentation](https://docs.argos-ci.com/cypress).
-
-#### Chromatic
-
-Chromatic leverages your existing Cypress setup - configuration, mocking, and
-tests - to enable visual testing of your application's UI. With the Chromatic
-plugin installed, Chromatic captures an archive of your UI while your Cypress
-tests run, then renders and diffs it in Chromatic's cloud.
-
-See [Chromatic's Cypress documentation](https://www.chromatic.com/docs/cypress/setup/?utm_source=cypress_docs)
-and their [blog on visual testing with Cypress](https://www.chromatic.com/blog/how-to-visual-test-with-cypress/?utm_source=cypress_docs).
-
-#### Happo
-
-Happo supports both full-page screenshots and component-level snapshots taken
-during Cypress tests, rendered across multiple browsers and screen sizes in
-Happo's infrastructure.
-
-See [Happo's Cypress documentation](https://docs.happo.io/docs/cypress).
-
-#### Percy
-
-Percy (from BrowserStack) captures DOM snapshots during your Cypress tests via
-the `cy.percySnapshot()` command, then renders them across browsers and
-responsive widths in Percy's cloud, with a review and approval workflow for
-visual changes.
-
-See [Percy's Cypress documentation](https://docs.percy.io/docs/cypress).
-
-#### SmartBear VisualTest
-
-SmartBear VisualTest adds visual regression commands to your Cypress tests for
-full-page, element, and multi-device captures, with a web dashboard for
-reviewing and approving changes.
-
-See [VisualTest's Cypress documentation](https://support.smartbear.com/visualtest/docs/en/software-development-kits--sdks-/cypress-sdk.html).
-
-#### Wopee.io
-
-Wopee.io integrates with Cypress to add autonomous visual validation to your
-existing tests, aiming to increase coverage with minimal additional test code.
-
-See [Wopee.io's Cypress documentation](https://docs.wopee.io/integrations/cypress/01-getting-started/?utm_source=cypress_docs).
-
-## Best practices
+## Writing reliable visual tests
 
 Visual tests fail for one of two reasons: the application changed, or something
 else changed - test data, timing, fonts, the rendering environment. The value
 of visual testing depends on eliminating that second category, so failures
-always mean something. These practices keep visual tests trustworthy.
+always mean something.
+
+The first four practices below all serve a single goal: **make every test run
+render exactly the same pixels**, by controlling both what your application
+displays and the environment it renders in. The last practice covers what to
+snapshot in the first place.
 
 ### Wait for the page to stabilize before snapshotting
 
@@ -289,6 +250,30 @@ configuration options only apply to action commands like
 [`.click()`](/api/commands/click) - they ensure an element has stopped moving
 before Cypress interacts with it, but they don't prevent a snapshot from
 capturing an animation still in progress elsewhere on the page.
+
+### Use a consistent rendering environment
+
+:::tip
+
+<Icon name="check-circle" color="green" /> **Best Practice:** Generate and
+compare screenshots in the same environment, with a fixed viewport.
+
+:::
+
+The same page can render slightly differently across operating systems,
+browser versions, display scaling, and installed fonts - enough to fail a
+pixel comparison even though nothing changed. If you use a plugin that compares
+pixels locally:
+
+- Generate baselines in the same environment where comparisons run - for
+  example, run both in the same [Docker image](/app/continuous-integration/overview#Cypress-Docker-Images)
+  in CI, rather than creating baselines on a laptop and comparing in CI.
+- Set an explicit, consistent [viewport size](/app/references/configuration#Viewport)
+  for your tests.
+- Pin browser versions where possible.
+
+Cloud-based services largely remove this problem by rendering snapshots in
+their own consistent infrastructure.
 
 ### Control time-dependent content
 
@@ -337,68 +322,97 @@ widgets - most visual testing tools let you hide or mask specific elements so
 they're excluded from comparison. Prefer masking a small region over raising
 the failure threshold for the whole page.
 
-### Use a consistent rendering environment
+### What should you visually test?
 
 :::tip
 
-<Icon name="check-circle" color="green" /> **Best Practice:** Generate and
-compare screenshots in the same environment, with a fixed viewport.
+<Icon name="check-circle" color="green" /> **Best Practice:** Snapshot the
+states that matter, and prefer element-level diffs over full pages.
 
 :::
 
-The same page can render slightly differently across operating systems,
-browser versions, display scaling, and installed fonts - enough to fail a
-pixel comparison even though nothing changed. If you use a plugin that compares
-pixels locally:
+Every snapshot is an image someone has to review when it changes. Snapshot key
+pages, shared components, and meaningful application states rather than adding
+a snapshot to every test. A small set of deliberate visual checkpoints stays
+maintainable; hundreds of incidental ones train your team to approve diffs
+without looking.
 
-- Generate baselines in the same environment where comparisons run - for
-  example, run both in the same [Docker image](/app/continuous-integration/overview#Cypress-Docker-Images)
-  in CI, rather than creating baselines on a laptop and comparing in CI.
-- Set an explicit, consistent [viewport size](/app/references/configuration#Viewport)
-  for your tests.
-- Pin browser versions where possible.
+Prefer visual diffs of individual DOM elements over the entire page. Full-page
+snapshots are useful for catching layout-level regressions, but every component
+on the page becomes a reason for the snapshot to fail. Targeting a specific
+element keeps an unrelated change in component "X" from failing the visual
+tests for component "Y", and makes review faster because each diff has one
+clear owner.
 
-Cloud-based services largely remove this problem by rendering snapshots in
-their own consistent infrastructure.
+[Cypress Component Testing](/app/component-testing/get-started) is a natural
+fit for visual testing: component tests render a single component in a
+controlled environment, the surface area is small, the data is fully controlled
+by the test, and a diff points directly at the component that changed. Several
+of the tools on this page support Cypress component tests as well as
+end-to-end tests.
 
-### Snapshot elements rather than whole pages
+## Visual testing services
 
-:::tip
+The following commercial services provide official Cypress integrations:
 
-<Icon name="check-circle" color="green" /> **Best Practice:** Prefer visual
-diffs of individual DOM elements over the entire page.
+### Applitools
 
-:::
+Applitools Eyes uses AI-assisted comparison ("Visual AI") rather than strict
+pixel diffing, which reduces false positives from anti-aliasing and minor
+rendering shifts. It supports end-to-end and component tests, cross-browser
+rendering via the Ultrafast Grid, and root cause analysis of visual changes.
 
-Full-page snapshots are useful for catching layout-level regressions, but every
-component on the page becomes a reason for the snapshot to fail. Targeting a
-specific element keeps an unrelated change in component "X" from failing the
-visual tests for component "Y", and makes review faster because each diff has
-one clear owner.
+See [Applitools' Cypress documentation](https://applitools.com/tutorials/sdks/cypress/quickstart/getting-started).
 
-### Take fewer, more intentional snapshots
+### Argos
 
-Every snapshot is an image someone has to review when it changes. Snapshot the
-states that matter - key pages, important components, meaningful application
-states - rather than adding a snapshot to every test. A small set of
-deliberate visual checkpoints stays maintainable; hundreds of incidental ones
-train your team to approve diffs without looking.
+Argos captures screenshots during your Cypress runs and provides a review
+workflow with CI and pull request integration to detect and approve visual
+changes.
 
-### Combine visual testing with component testing
+See [Argos' Cypress documentation](https://docs.argos-ci.com/cypress).
 
-:::tip
+### Chromatic
 
-<Icon name="check-circle" color="green" /> **Best Practice:** Use [Cypress
-Component Testing](/app/component-testing/get-started) to visually test
-components in isolation.
+Chromatic leverages your existing Cypress setup - configuration, mocking, and
+tests - to enable visual testing of your application's UI. With the Chromatic
+plugin installed, Chromatic captures an archive of your UI while your Cypress
+tests run, then renders and diffs it in Chromatic's cloud.
 
-:::
+See [Chromatic's Cypress documentation](https://www.chromatic.com/docs/cypress/setup/?utm_source=cypress_docs)
+and their [blog on visual testing with Cypress](https://www.chromatic.com/blog/how-to-visual-test-with-cypress/?utm_source=cypress_docs).
 
-Component tests render a single component in a controlled environment, which
-makes them a natural fit for visual testing: the surface area is small, the
-data is fully controlled by the test, and a diff points directly at the
-component that changed. Several of the tools above support Cypress component
-tests as well as end-to-end tests.
+### Happo
+
+Happo supports both full-page screenshots and component-level snapshots taken
+during Cypress tests, rendered across multiple browsers and screen sizes in
+Happo's infrastructure.
+
+See [Happo's Cypress documentation](https://docs.happo.io/docs/cypress).
+
+### Percy
+
+Percy (from BrowserStack) captures DOM snapshots during your Cypress tests via
+the `cy.percySnapshot()` command, then renders them across browsers and
+responsive widths in Percy's cloud, with a review and approval workflow for
+visual changes.
+
+See [Percy's Cypress documentation](https://docs.percy.io/docs/cypress).
+
+### SmartBear VisualTest
+
+SmartBear VisualTest adds visual regression commands to your Cypress tests for
+full-page, element, and multi-device captures, with a web dashboard for
+reviewing and approving changes.
+
+See [VisualTest's Cypress documentation](https://support.smartbear.com/visualtest/docs/en/software-development-kits--sdks-/cypress-sdk.html).
+
+### Wopee.io
+
+Wopee.io integrates with Cypress to add autonomous visual validation to your
+existing tests, aiming to increase coverage with minimal additional test code.
+
+See [Wopee.io's Cypress documentation](https://docs.wopee.io/integrations/cypress/01-getting-started/?utm_source=cypress_docs).
 
 ## See also
 
