@@ -22,7 +22,7 @@ sidebar_label: 'Visual Testing'
 
 ## Why visual testing?
 
-Functional tests verify that your application _behaves_ correctly - a user can
+Functional tests verify that your application _behaves_ correctly: a user can
 type into a form, click a button, and see the expected result. But an
 application can pass every functional test and still ship visibly broken: a CSS
 change misaligns elements, a brand color renders wrong, a custom font silently
@@ -61,21 +61,21 @@ element overlap, or the overall layout of a page. Covering appearance
 property-by-property quickly becomes cumbersome to write and maintain.
 
 Visual testing solves this by comparing an image of your application against a
-known-good baseline, so any unexpected visible change is caught - whether or
+known-good baseline, so any unexpected visible change is caught, whether or
 not you thought to assert about it.
 
 ## How visual testing works
 
 Visual testing tools for Cypress follow the same general workflow:
 
-1. **Capture** - During your Cypress test, a command captures an image of the
+1. **Capture:** During your Cypress test, a command captures an image of the
    page or a specific element. Because the capture happens inside your test,
-   you can drive the application into any state first - logged in, mid-workflow,
-   with a modal open - using the Cypress commands you already know.
-2. **Compare** - The captured image is compared against a previously approved
+   you can drive the application into any state first (logged in, mid-workflow,
+   with a modal open) using the Cypress commands you already know.
+2. **Compare:** The captured image is compared against a previously approved
    **baseline** image. If the difference exceeds a configured threshold, the
    comparison fails.
-3. **Review** - You review the reported differences. If the change is
+3. **Review:** You review the reported differences. If the change is
    unintended, you've caught a visual regression. If the change is intentional,
    you approve the new image as the baseline for future runs.
 
@@ -90,7 +90,7 @@ from completed todos:
 ```
 
 A functional test asserting the `completed` class still passes, but a visual
-comparison fails and shows exactly what changed - the baseline image
+comparison fails and shows exactly what changed: the baseline image
 (_Expected result_) has the label text with the line through, while the new
 image (_Actual result_) does not:
 
@@ -103,7 +103,7 @@ Most tools also provide a difference view that highlights the changed pixels:
 
 <DocsImage src="/img/app/visual-testing/diff-2.png" alt="Highlighted changes" />
 
-Cypress does not perform image comparison itself - the built-in
+Cypress does not perform image comparison itself. The built-in
 [`cy.screenshot()`](/api/commands/screenshot) command captures images but does
 not compare them. Instead, Cypress provides a stable platform for
 [plugins](/app/plugins/plugins-guide) and integrations that add visual testing,
@@ -113,8 +113,8 @@ so you can choose the approach that fits your team.
 
 **Accessibility testing** is a great companion to visual testing. Accessibility
 scans assert on visual aspects of your application that image comparison can't
-evaluate on its own - like whether text has sufficient color contrast against
-its background - and they check them against defined standards rather than a
+evaluate on its own, like whether text has sufficient color contrast against
+its background, and they check them against defined standards rather than a
 baseline image. See our [accessibility testing guide](/app/guides/accessibility-testing)
 and [Cypress Accessibility](/accessibility/get-started/introduction) in Cypress
 Cloud to learn more.
@@ -161,14 +161,14 @@ Actively maintained plugins include:
 
 If you want an open source option with a review workflow,
 [Pixeleye](https://pixeleye.io/docs/integrations/cypress) is a self-hostable
-visual review platform with a Cypress integration - a middle ground between
+visual review platform with a Cypress integration, a middle ground between
 local pixel diffing and a commercial service.
 
 See the Visual Testing section of our [plugins list](/app/plugins/plugins-list)
 for the full set.
 
 Each plugin has its own setup and command names, but usage follows the same
-shape - drive the app to the state you want, then take a snapshot:
+shape. Drive the app to the state you want, then take a snapshot:
 
 ```js
 it('completes todo', () => {
@@ -189,14 +189,14 @@ it('completes todo', () => {
 Commercial visual testing services handle capture, storage, comparison, and
 review for you. Instead of (or in addition to) diffing raw pixels locally, most
 of these services upload a snapshot of the page from your test run and render
-it in their own consistent cloud infrastructure - often across multiple
+it in their own consistent cloud infrastructure, often across multiple
 browsers and viewport widths at once. They provide a web-based review workflow
 where your team approves or rejects visual changes, and they integrate with
 pull requests so visual review becomes part of your code review process.
 
-These services solve the hardest operational problems of visual testing -
-baseline management, cross-browser rendering, flake from environment
-differences, and team review - in exchange for a subscription.
+These services solve the hardest operational problems of visual testing
+(baseline management, cross-browser rendering, flake from environment
+differences, and team review) in exchange for a subscription.
 
 The services with official Cypress integrations are described in
 [Visual testing services](#Visual-testing-services) below.
@@ -204,7 +204,7 @@ The services with official Cypress integrations are described in
 ## Writing reliable visual tests
 
 Visual tests fail for one of two reasons: the application changed, or something
-else changed - test data, timing, fonts, the rendering environment. The value
+else changed, like test data, timing, fonts, or the rendering environment. The value
 of visual testing depends on eliminating that second category, so failures
 always mean something.
 
@@ -229,7 +229,7 @@ an intermediate state and get a false failure.
 <Icon name="exclamation-triangle" color="red" /> **Incorrect Usage**
 
 ```js
-// the application takes time to add the new item -
+// the application takes time to add the new item, so
 // sometimes the snapshot is taken BEFORE the item appears
 cy.get('.new-todo').type('write tests{enter}')
 cy.mySnapshotCommand()
@@ -252,7 +252,7 @@ environment, or waiting for them to finish, so a snapshot never lands
 mid-animation. Note that Cypress's
 [`waitForAnimations` and `animationDistanceThreshold`](/app/references/configuration#Actionability)
 configuration options only apply to action commands like
-[`.click()`](/api/commands/click) - they ensure an element has stopped moving
+[`.click()`](/api/commands/click). They ensure an element has stopped moving
 before Cypress interacts with it, but they don't prevent a snapshot from
 capturing an animation still in progress elsewhere on the page.
 
@@ -266,11 +266,11 @@ compare screenshots in the same environment, with a fixed viewport.
 :::
 
 The same page can render slightly differently across operating systems,
-browser versions, display scaling, and installed fonts - enough to fail a
+browser versions, display scaling, and installed fonts, enough to fail a
 pixel comparison even though nothing changed. If you use a plugin that compares
 pixels locally:
 
-- Generate baselines in the same environment where comparisons run - for
+- Generate baselines in the same environment where comparisons run. For
   example, run both in the same [Docker image](/app/continuous-integration/overview#Cypress-Docker-Images)
   in CI, rather than creating baselines on a laptop and comparing in CI.
 - Set an explicit, consistent [viewport size](/app/references/configuration#Viewport)
@@ -322,8 +322,8 @@ cy.wait('@getItems')
 cy.mySnapshotCommand()
 ```
 
-For dynamic content you can't control - ads, animated media, third-party
-widgets - most visual testing tools let you hide or mask specific elements so
+For dynamic content you can't control, such as ads, animated media, or
+third-party widgets, most visual testing tools let you hide or mask specific elements so
 they're excluded from comparison. Prefer masking a small region over raising
 the failure threshold for the whole page.
 
@@ -379,8 +379,8 @@ See [Argos' Cypress documentation](https://docs.argos-ci.com/cypress).
 
 ### Chromatic
 
-Chromatic leverages your existing Cypress setup - configuration, mocking, and
-tests - to enable visual testing of your application's UI. With the Chromatic
+Chromatic leverages your existing Cypress setup (configuration, mocking, and
+tests) to enable visual testing of your application's UI. With the Chromatic
 plugin installed, Chromatic captures an archive of your UI while your Cypress
 tests run, then renders and diffs it in Chromatic's cloud.
 
