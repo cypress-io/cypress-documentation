@@ -23,6 +23,7 @@ import {
   DEFAULT_LLM_EXPORT_CONFIG,
   countMarkdownAndJsonFiles,
   getGitSha,
+  stripMarkdownExtension,
   toPosixPath,
   walkDocs,
 } from './utils'
@@ -73,11 +74,16 @@ export async function runLlmExport(options?: LlmExportRunOptions): Promise<void>
       gitSha,
     })
 
-    sectionCount += sectionExporter.exportFile({
-      relFromDocs,
-      metadata,
-      bodyWithHeading,
-    }).sectionCount
+    // A page whose doc id names a real docs directory gets no section export:
+    // its fragment files would share that directory with nested page exports
+    // and could silently overwrite them.
+    if (!fs.existsSync(path.join(docsRoot, stripMarkdownExtension(relFromDocs)))) {
+      sectionCount += sectionExporter.exportFile({
+        relFromDocs,
+        metadata,
+        bodyWithHeading,
+      }).sectionCount
+    }
 
     if (emitJson) {
       jsonExporter.exportFile({ relFromDocs, metadata, mdOutPath, bodyWithHeading, config })
@@ -85,13 +91,7 @@ export async function runLlmExport(options?: LlmExportRunOptions): Promise<void>
   }
 
   // Fragment dirs stay out of the directory indexes and the LLM sitemap.
-  // A fragment dir sharing its name with a real docs directory is exempt so
-  // that directory's pages stay indexed.
-  const fragmentDirs = new Set(
-    [...sectionExporter.getFragmentDirs()].filter(
-      (docId) => !fs.existsSync(path.join(docsRoot, docId)),
-    ),
-  )
+  const fragmentDirs = sectionExporter.getFragmentDirs()
 
   mdExporter.buildMarkdownDirectoryIndexes(fragmentDirs)
   if (config.emit?.json) {

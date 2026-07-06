@@ -23,8 +23,10 @@ type SectionSlice = {
 /**
  * Emits one markdown file per `##` section of a page, at
  * `markdown/<doc-id>/<h2-slug>.md`, so an LLM can fetch a single topic
- * without spending tokens on the whole page. Slugs match the chunked JSON
- * anchors: `<doc-id>/<slug>.md` corresponds to chunk id `<doc-id>#<slug>`.
+ * without spending tokens on the whole page. `<doc-id>/<slug>.md` corresponds
+ * to chunk id `<doc-id>#<slug>` in the chunked JSON export, except for
+ * duplicate headings on one page, where files get `-2`, `-3`, … suffixes
+ * while chunk ids repeat the plain slug.
  */
 export class SectionMarkdownExporter {
   private readonly markdownRoot: string
