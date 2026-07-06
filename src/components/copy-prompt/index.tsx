@@ -22,8 +22,9 @@ const DEFAULT_SUBTEXT =
  * their AI coding assistant, e.g. to walk a project through a version
  * migration. Renders as a light, admonition-weight card: title, one-line
  * supporting text, a copy button, and a "Show prompt" disclosure that reveals
- * the full prompt. The prompt is always present in the DOM (hidden with CSS
- * when collapsed) so the docs' LLM markdown export keeps the full text.
+ * the full prompt (kept in the DOM and hidden with CSS when collapsed).
+ * The whole card carries data-sanitize so the LLM export drops it — an AI
+ * reading the exported page needs the page's content, not the prompt card.
  */
 export default function CopyPrompt({
   prompt,
@@ -73,7 +74,7 @@ export default function CopyPrompt({
   }
 
   return (
-    <section className={s.copyPrompt}>
+    <section className={s.copyPrompt} data-sanitize="">
       <p className={s.title}>
         <Icon
           name="general-sparkle-triple"
@@ -118,8 +119,8 @@ export default function CopyPrompt({
           />
         </button>
       </div>
-      {/* Kept in the DOM when collapsed so the LLM export includes the full
-          prompt; display:none removes it from view and the a11y tree. */}
+      {/* Kept in the DOM when collapsed (display:none removes it from view
+          and the a11y tree) so expanding never re-renders mid-read. */}
       <p
         id={promptId}
         className={expanded ? s.promptText : s.promptTextCollapsed}

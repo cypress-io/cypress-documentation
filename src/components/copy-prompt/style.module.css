@@ -93,8 +93,8 @@
   overflow-wrap: anywhere;
 }
 
-/* Kept in the DOM (for the LLM markdown export) but out of view and out of
-   the accessibility tree while collapsed. */
+/* Kept in the DOM but out of view and out of the accessibility tree while
+   collapsed, so expanding is instant. */
 .copyPrompt p.promptTextCollapsed {
   display: none;
 }
