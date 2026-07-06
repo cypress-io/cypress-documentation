@@ -125,15 +125,6 @@ return config
 
 :::
 
-:::caution
-
-Code in `setupNodeEvents` executes in Node, not the browser. It has direct
-access to the file system and operating system, but you cannot call `cy`
-commands or the `Cypress` API there. If a plugin adds custom commands, it
-belongs in the support file instead.
-
-:::
-
 ### Register in the support file
 
 Browser-side plugins are imported (or registered with a function call) in your
