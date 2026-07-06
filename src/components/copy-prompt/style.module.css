@@ -15,6 +15,13 @@
   line-height: 1.7;
   color: var(--ifm-color-gray-100);
   margin: 0 0 1rem;
+  /* Show a two-line preview ending in an ellipsis; the full text stays in
+     the DOM and is what the copy button copies. */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
 }
 
 .copyButton {
