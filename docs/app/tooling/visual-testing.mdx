@@ -225,26 +225,14 @@ only after you confirm the page is done changing.
 
 Snapshot commands capture whatever is on screen at that moment. If the
 application is still rendering, animating, or waiting on data, you'll capture
-an intermediate state and get a false failure.
-
-<Icon name="exclamation-triangle" color="red" /> **Incorrect Usage**
-
-```js
-// the application takes time to add the new item, so
-// sometimes the snapshot is taken BEFORE the item appears
-cy.get('.new-todo').type('write tests{enter}')
-cy.mySnapshotCommand()
-```
-
-<Icon name="check-circle" color="green" /> **Correct Usage**
+an intermediate state and get a false failure. Use a functional assertion to
+confirm the page has updated before taking the snapshot:
 
 ```js
-// use a functional assertion to ensure
-// the application has re-rendered the page
 cy.get('.new-todo').type('write tests{enter}')
+// assert the new item is displayed before snapshotting,
+// otherwise the snapshot can be taken before the app re-renders
 cy.contains('.todo-list li', 'write tests')
-// great, the new item is displayed,
-// now we can take the snapshot
 cy.mySnapshotCommand()
 ```
 
