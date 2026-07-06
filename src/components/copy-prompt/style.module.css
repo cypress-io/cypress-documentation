@@ -19,6 +19,10 @@
   font-size: 0.875rem;
   line-height: 1.25rem;
   color: var(--ifm-color-gray-100);
+  /* Break lines at any character, terminal-style, so the two preview lines
+     fill the full card width instead of wrapping early at the long docs URL
+     and leaving a ragged right edge. */
+  word-break: break-all;
   /* Show a two-line preview ending in an ellipsis; the full text stays in
      the DOM and is what the copy button copies. */
   display: -webkit-box;
